@@ -24,44 +24,36 @@
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			removed(target, 1)
 			qdel(src)
-			return -1
+			return 0
 		if(target.mind in ticker.mode.get_gangsters())
 			ticker.mode.remove_gangster(target.mind)
 			if(!silent)
 				target.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
 			removed(target, 1)
 			qdel(src)
-			return -1
+			return 0
 		if(target.mind in ticker.mode.revolutionaries)
 			ticker.mode.remove_revolutionary(target.mind)
 		if(!silent)
 			if(target.mind in ticker.mode.cult)
-				target << "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>"
+				to_chat(target, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			else
-				target << "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>"
+				to_chat(target, "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
 		return 1
 	return 0
 
 /obj/item/weapon/implant/mindshield/removed(mob/target, silent = 0, special = 0)
 	if(..())
 		if(target.stat != DEAD && !silent)
-			target << "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>"
+			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")
 		return 1
 	return 0
 
 /obj/item/weapon/implanter/mindshield
 	name = "implanter (mindshield)"
-
-/obj/item/weapon/implanter/mindshield/New()
-	imp = new /obj/item/weapon/implant/mindshield(src)
-	..()
-	update_icon()
-
+	imp_type = /obj/item/weapon/implant/mindshield
 
 /obj/item/weapon/implantcase/mindshield
 	name = "implant case - 'Mindshield'"
 	desc = "A glass case containing a mindshield implant."
-
-/obj/item/weapon/implantcase/mindshield/New()
-	imp = new /obj/item/weapon/implant/mindshield(src)
-	..()
+	imp_type = /obj/item/weapon/implant/mindshield

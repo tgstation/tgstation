@@ -48,10 +48,10 @@
 	. = ..(Proj)
 
 /mob/living/silicon/pai/stripPanelUnequip(obj/item/what, mob/who, where) //prevents stripping
-	src << "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>"
+	to_chat(src, "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")
 
 /mob/living/silicon/pai/stripPanelEquip(obj/item/what, mob/who, where) //prevents stripping
-	src << "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>"
+	to_chat(src, "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")
 
 /mob/living/silicon/pai/IgniteMob(var/mob/living/silicon/pai/P)
 	return FALSE //No we're not flammable
@@ -60,7 +60,7 @@
 	emitterhealth = Clamp((emitterhealth - amount), -50, emittermaxhealth)
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
-	src << "<span class='userdanger'>The impact degrades your holochassis!</span>"
+	to_chat(src, "<span class='userdanger'>The impact degrades your holochassis!</span>")
 	hit_slowdown += amount
 	return amount
 

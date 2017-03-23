@@ -27,7 +27,7 @@
 
 
 
-/mob/living/carbon/true_devil/New()
+/mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
 
 	create_internal_organs()
@@ -36,6 +36,7 @@
 /mob/living/carbon/true_devil/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
+	internal_organs += new /obj/item/organ/eyes
 	..()
 
 
@@ -82,11 +83,11 @@
 	if(stat == DEAD)
 		msg += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>\n"
 	else if(health < (maxHealth/10))
-		msg += "<span class='warning'>You can see hellfire inside of its gaping wounds.</span>\n"
+		msg += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>\n"
 	else if(health < (maxHealth/2))
-		msg += "<span class='warning'>You can see hellfire inside of its wounds.</span>\n"
+		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
 	msg += "*---------*</span>"
-	user << msg
+	to_chat(user, msg)
 
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
@@ -150,8 +151,8 @@
 		var/datum/objective/newobjective = new
 		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
 		S.mind.objectives += newobjective
-		S << S.playstyle_string
-		S << "<B>Objective #[1]</B>: [newobjective.explanation_text]"
+		to_chat(S, S.playstyle_string)
+		to_chat(S, "<B>Objective #[1]</B>: [newobjective.explanation_text]")
 		return
 	else
 		return ..()

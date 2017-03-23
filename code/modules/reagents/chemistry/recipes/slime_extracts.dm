@@ -121,10 +121,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 5, "Gold Slime")
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 5, "Gold Slime"), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimecritlesser
 	name = "Slime Crit Lesser"
@@ -137,10 +137,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 3, "Lesser Gold Slime", "neutral")
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 3, "Lesser Gold Slime", "neutral"), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimecritfriendly
 	name = "Slime Crit Friendly"
@@ -153,10 +153,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
-	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 1, "Friendly Gold Slime", "neutral")
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Friendly Gold Slime", "neutral"), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 //Silver
 /datum/chemical_reaction/slime/slimebork
@@ -289,10 +289,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(src, "freeze", 50, TIMER_NORMAL, holder)
+	addtimer(CALLBACK(src, .proc/freeze, holder), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimefreeze/proc/freeze(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -339,10 +339,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/TU = get_turf(holder.my_atom)
 	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(src, "slime_burn", 50, TIMER_NORMAL, holder)
+	addtimer(CALLBACK(src, .proc/slime_burn, holder), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimefire/proc/slime_burn(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -551,10 +551,10 @@
 	message_admins("Slime Explosion reaction started at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>. Last Fingerprint: [touch_msg]")
 	log_game("Slime Explosion reaction started at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"].")
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	addtimer(src, "boom", 50, TIMER_NORMAL, holder)
+	addtimer(CALLBACK(src, .proc/boom, holder), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -785,5 +785,17 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/slimepotion/transference/P = new /obj/item/slimepotion/transference
 	P.loc = get_turf(holder.my_atom)
+	..()
+
+/datum/chemical_reaction/slime/flight_potion
+	name = "Flight Potion"
+	id = "flightpotion"
+	required_reagents = list("holywater" = 5, "uranium" = 5)
+	required_other = 1
+	required_container = /obj/item/slime_extract/rainbow
+
+/datum/chemical_reaction/slime/flight_potion/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	new/obj/item/weapon/reagent_containers/glass/bottle/potion/flight(get_turf(holder.my_atom))
 	..()
 

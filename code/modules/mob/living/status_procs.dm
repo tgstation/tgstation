@@ -32,7 +32,7 @@
 		"visible_message" = message, "self_message" = self_message, "examine_message" = examine_message)
 
 /mob/living/Stun(amount, updating = 1, ignore_canstun = 0)
-	if(!stat && islist(stun_absorption))
+	if(!stat && islist(stun_absorption) && (status_flags & CANSTUN || ignore_canstun))
 		var/priority_absorb_key
 		var/highest_priority
 		for(var/i in stun_absorption)
@@ -46,15 +46,15 @@
 				else if(priority_absorb_key["visible_message"])
 					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
 				else if(priority_absorb_key["self_message"])
-					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
+					to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
 			priority_absorb_key["stuns_absorbed"] += amount
 			return 0
-	..()
+	return ..()
 
 ///////////////////////////////// WEAKEN /////////////////////////////////////
 
 /mob/living/Weaken(amount, updating = 1, ignore_canweaken = 0)
-	if(!stat && islist(stun_absorption))
+	if(!stat && islist(stun_absorption) && (status_flags & CANWEAKEN || ignore_canweaken))
 		var/priority_absorb_key
 		var/highest_priority
 		for(var/i in stun_absorption)
@@ -68,7 +68,7 @@
 				else if(priority_absorb_key["visible_message"])
 					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
 				else if(priority_absorb_key["self_message"])
-					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
+					to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
 			priority_absorb_key["stuns_absorbed"] += amount
 			return 0
-	..()
+	return ..()

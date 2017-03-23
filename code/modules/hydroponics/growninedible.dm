@@ -39,7 +39,7 @@
 		if(seed)
 			msg += seed.get_analyzer_text()
 		msg += "</span>"
-		usr << msg
+		to_chat(usr, msg)
 		return
 
 /obj/item/weapon/grown/proc/add_juice()
@@ -54,36 +54,11 @@
 			T.on_cross(src, AM)
 	..()
 
-
-// Glow gene procs
-/obj/item/weapon/grown/Destroy()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G && ismob(loc))
-			loc.AddLuminosity(-G.get_lum(seed))
-	return ..()
-
 /obj/item/weapon/grown/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_throw_impact(src, hit_atom)
-
-/obj/item/weapon/grown/pickup(mob/user)
-	..()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G)
-			SetLuminosity(0)
-			user.AddLuminosity(G.get_lum(seed))
-
-/obj/item/weapon/grown/dropped(mob/user)
-	..()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G)
-			user.AddLuminosity(-G.get_lum(seed))
-			SetLuminosity(G.get_lum(seed))
 
 /obj/item/weapon/grown/microwave_act(obj/machine/microwave/M)
 	return

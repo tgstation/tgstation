@@ -2,6 +2,8 @@
  * Wood floor
  * Grass floor
  * Carpet floor
+ * Fake pits
+ * Fake space
  */
 
 /turf/open/floor/wood
@@ -13,13 +15,30 @@
 	if(..())
 		return
 	if(istype(C, /obj/item/weapon/screwdriver))
-		if(broken || burnt)
-			return
-		user << "<span class='danger'>You unscrew the planks.</span>"
-		new floor_tile(src)
-		make_plating()
-		playsound(src, C.usesound, 80, 1)
+		pry_tile(C, user)
 		return
+
+/turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
+	var/is_screwdriver = istype(C, /obj/item/weapon/screwdriver)
+	playsound(src, C.usesound, 80, 1)
+	return remove_tile(user, silent, make_tile = is_screwdriver)
+
+/turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
+	if(broken || burnt)
+		broken = 0
+		burnt = 0
+		if(user && !silent)
+			to_chat(user, "<span class='danger'>You remove the broken planks.</span>")
+	else
+		if(make_tile)
+			if(user && !silent)
+				to_chat(user, "<span class='danger'>You unscrew the planks.</span>")
+			if(floor_tile)
+				new floor_tile(src)
+		else
+			if(user && !silent)
+				to_chat(user, "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>")
+	return make_plating()
 
 /turf/open/floor/wood/cold
 	temperature = 255.37
@@ -36,10 +55,9 @@
 	flags = NONE
 	var/ore_type = /obj/item/weapon/ore/glass
 
-/turf/open/floor/grass/New()
+/turf/open/floor/grass/Initialize()
 	..()
-	spawn(1)
-		update_icon()
+	update_icon()
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/shovel) && params)
@@ -76,14 +94,11 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	slowdown = 0
 
-/turf/open/floor/grass/snow/basalt/New()
+/turf/open/floor/grass/snow/basalt/Initialize()
 	..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
-		switch(icon_state)
-			if("basalt1", "basalt2", "basalt3")
-				SetLuminosity(1, 1)
-
+		set_basalt_light(src)
 
 /turf/open/floor/carpet
 	name = "carpet"
@@ -93,13 +108,12 @@
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
-	canSmoothWith = null
+	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/chasm)
 	flags = NONE
 
-/turf/open/floor/carpet/New()
+/turf/open/floor/carpet/Initialize()
 	..()
-	spawn(1)
-		update_icon()
+	update_icon()
 
 /turf/open/floor/carpet/update_icon()
 	if(!..())
@@ -123,14 +137,14 @@
 	burnt = 1
 	update_icon()
 
-/turf/open/floor/carpet/carpetsymbol
-	icon_state = "carpetsymbol"
-	smooth = SMOOTH_FALSE
 
-/turf/open/floor/carpet/carpetsymbol2
-	icon_state = "carpetstar"
-	smooth = SMOOTH_FALSE
 
+turf/open/floor/fakepit
+	desc = "A clever illusion designed to look like a bottomless pit."
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
+	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
+	icon = 'icons/turf/floors/Chasms.dmi'
+	icon_state = "smooth"
 
 /turf/open/floor/fakespace
 	icon = 'icons/turf/space.dmi'
@@ -139,6 +153,6 @@
 	broken_states = list("damaged")
 	plane = PLANE_SPACE
 
-/turf/open/floor/fakespace/New()
+/turf/open/floor/fakespace/Initialize()
 	..()
 	icon_state = "[rand(0,25)]"

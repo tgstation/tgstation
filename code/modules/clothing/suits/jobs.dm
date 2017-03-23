@@ -30,15 +30,13 @@
 	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
-	hooded = 1
-	hoodtype = /obj/item/clothing/head/chaplain_hood
+	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
 
-/obj/item/clothing/head/chaplain_hood
+/obj/item/clothing/head/hooded/chaplain_hood
 	name = "chaplain hood"
 	desc = "For protecting your identity when immolating demons."
 	icon_state = "chaplain_hood"
 	body_parts_covered = HEAD
-	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/suit/nun

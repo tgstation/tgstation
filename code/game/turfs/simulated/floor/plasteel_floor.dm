@@ -185,18 +185,15 @@
 /turf/open/floor/plasteel/arrival/corner
 	icon_state = "arrivalcorner"
 
-
-/turf/open/floor/plasteel/escape
-	icon_state = "escape"
-/turf/open/floor/plasteel/escape/corner
-	icon_state = "escapecorner"
-
-
 /turf/open/floor/plasteel/caution
 	icon_state = "caution"
 /turf/open/floor/plasteel/caution/corner
 	icon_state = "cautioncorner"
 
+/turf/open/floor/plasteel/escape
+	icon_state = "escape"
+/turf/open/floor/plasteel/escape/corner
+	icon_state = "escapecorner"
 
 /turf/open/floor/plasteel/whitebot
 	icon_state = "whitebot"
@@ -257,30 +254,6 @@
 	icon_state = "podhatch"
 /turf/open/floor/plasteel/podhatch/corner
 	icon_state = "podhatchcorner"
-
-
-
-/turf/open/floor/plasteel/circuit
-	icon_state = "bcircuit"
-/turf/open/floor/plasteel/airless/circuit
-	icon_state = "bcircuit"
-/turf/open/floor/plasteel/circuit/off
-	icon_state = "bcircuitoff"
-
-/turf/open/floor/plasteel/circuit/gcircuit
-	icon_state = "gcircuit"
-/turf/open/floor/plasteel/airless/circuit/gcircuit
-	icon_state = "gcircuit"
-/turf/open/floor/plasteel/circuit/gcircuit/off
-	icon_state = "gcircuitoff"
-/turf/open/floor/plasteel/circuit/gcircuit/animated
-	icon_state = "gcircuitanim"
-
-/turf/open/floor/plasteel/circuit/rcircuit
-	icon_state = "rcircuit"
-/turf/open/floor/plasteel/circuit/rcircuit/animated
-	icon_state = "rcircuitanim"
-
 
 
 /turf/open/floor/plasteel/loadingarea

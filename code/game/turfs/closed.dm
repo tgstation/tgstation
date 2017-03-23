@@ -10,6 +10,9 @@
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
 
+/turf/closed/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
+	return
+
 /turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
 	return 0
 
@@ -26,29 +29,22 @@
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
-	icon = 'icons/misc/fullscreen.dmi'
-	icon_state = "title"
+	icon = 'config/title_screens/images/blank.png'
+	icon_state = ""
 	layer = FLY_LAYER
-	var/titlescreen = TITLESCREEN
 
 /turf/closed/indestructible/splashscreen/New()
+	SStitle.title_screen = src
 	..()
-	if(titlescreen)
-		icon_state = titlescreen
 
 /turf/closed/indestructible/riveted
+	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
-
-/turf/closed/indestructible/riveted/New()
-	..()
-	if(smooth)
-		queue_smooth(src)
-		icon_state = ""
+	smooth = SMOOTH_TRUE
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
-	smooth = SMOOTH_TRUE
 
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"
@@ -58,8 +54,18 @@
 
 /turf/closed/indestructible/fakeglass
 	name = "window"
-	icon_state = "fakewindows"
+	icon_state = "fake_window"
 	opacity = 0
+	smooth = SMOOTH_TRUE
+	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
+
+/turf/closed/indestructible/fakeglass/Initialize()
+	..()
+	icon_state = null //set the icon state to null, so our base state isn't visible
+	var/image/I = image('icons/obj/structures.dmi', loc = src, icon_state = "grille")
+	underlays += I //add a grille underlay
+	I = image('icons/turf/floors.dmi', loc = src, icon_state = "plating")
+	underlays += I //add the plating underlay, below the grille
 
 /turf/closed/indestructible/fakedoor
 	name = "Centcom Access"
@@ -97,3 +103,9 @@
 	icon_state = "necro"
 	explosion_block = 50
 	baseturf = /turf/closed/indestructible/necropolis
+
+/turf/closed/indestructible/riveted/hierophant
+	name = "wall"
+	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
+	icon = 'icons/turf/walls/hierophant_wall.dmi'
+	icon_state = "wall"

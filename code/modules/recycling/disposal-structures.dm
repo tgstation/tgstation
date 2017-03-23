@@ -150,7 +150,7 @@
 /obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
 
-	if(make_from && !qdeleted(make_from))
+	if(make_from && !QDELETED(make_from))
 		base_icon_state = make_from.base_state
 		setDir(make_from.dir)
 		dpdir = make_from.dpdir
@@ -254,7 +254,7 @@
 	if(isfloorturf(T)) //intact floor, pop the tile
 		floorturf = T
 		if(floorturf.floor_tile)
-			PoolOrNew(floorturf.floor_tile, T)
+			new floorturf.floor_tile(T)
 		floorturf.make_plating()
 
 	if(direction)		// direction is specified
@@ -273,7 +273,7 @@
 		AM.forceMove(src.loc)
 		AM.pipe_eject(direction)
 		if(target)
-			AM.throw_at_fast(target, eject_range, 1)
+			AM.throw_at(target, eject_range, 1)
 	H.vent_gas(T)
 	qdel(H)
 
@@ -303,12 +303,12 @@
 		if(can_be_deconstructed(user))
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "<span class='notice'>You start slicing the disposal pipe...</span>"
+				to_chat(user, "<span class='notice'>You start slicing the disposal pipe...</span>")
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
 					if(!src || !W.isOn()) return
 					deconstruct()
-					user << "<span class='notice'>You slice the disposal pipe.</span>"
+					to_chat(user, "<span class='notice'>You slice the disposal pipe.</span>")
 	else
 		return ..()
 
@@ -423,11 +423,11 @@
 /obj/structure/disposalpipe/sortjunction/examine(mob/user)
 	..()
 	if(sortTypes.len>0)
-		user << "It is tagged with the following tags:"
+		to_chat(user, "It is tagged with the following tags:")
 		for(var/t in sortTypes)
-			user << TAGGERLOCATIONS[t]
+			to_chat(user, TAGGERLOCATIONS[t])
 	else
-		user << "It has no sorting tags set."
+		to_chat(user, "It has no sorting tags set.")
 
 
 /obj/structure/disposalpipe/sortjunction/proc/updatedir()
@@ -467,10 +467,10 @@
 		if(O.currTag > 0)// Tag set
 			if(O.currTag in sortTypes)
 				sortTypes -= O.currTag
-				user << "<span class='notice'>Removed \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
+				to_chat(user, "<span class='notice'>Removed \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
 			else
 				sortTypes |= O.currTag
-				user << "<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
+				to_chat(user, "<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 	else
 		return ..()
@@ -583,7 +583,7 @@
 
 /obj/structure/disposalpipe/trunk/can_be_deconstructed(mob/user)
 	if(linked)
-		user << "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>"
+		to_chat(user, "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>")
 	else
 		. = 1
 
@@ -683,7 +683,7 @@
 		for(var/atom/movable/AM in H)
 			AM.forceMove(T)
 			AM.pipe_eject(dir)
-			AM.throw_at_fast(target, eject_range, 1)
+			AM.throw_at(target, eject_range, 1)
 
 		H.vent_gas(T)
 		qdel(H)
@@ -695,20 +695,20 @@
 		if(mode==0)
 			mode=1
 			playsound(src.loc, I.usesound, 50, 1)
-			user << "<span class='notice'>You remove the screws around the power connection.</span>"
+			to_chat(user, "<span class='notice'>You remove the screws around the power connection.</span>")
 		else if(mode==1)
 			mode=0
 			playsound(src.loc, I.usesound, 50, 1)
-			user << "<span class='notice'>You attach the screws around the power connection.</span>"
+			to_chat(user, "<span class='notice'>You attach the screws around the power connection.</span>")
 
 	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
+			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 			if(do_after(user,20*I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
-				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
+				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
 				stored.update_icon()

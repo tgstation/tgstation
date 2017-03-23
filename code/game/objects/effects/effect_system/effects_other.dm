@@ -36,7 +36,7 @@
 	if(processing)
 		processing = 0
 		if(number < 3)
-			var/obj/effect/particle_effect/steam/I = PoolOrNew(/obj/effect/particle_effect/steam, oldposition)
+			var/obj/effect/particle_effect/steam/I = new /obj/effect/particle_effect/steam(oldposition)
 			number++
 			I.setDir(holder.dir)
 			oldposition = get_turf(holder)
@@ -73,7 +73,7 @@
 		var/turf/T = get_turf(holder)
 		if(T != oldposition)
 			if(!T.has_gravity() || !nograv_required)
-				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
+				var/obj/effect/particle_effect/ion_trails/I = new effect_type(oldposition)
 				set_dir(I)
 				if(fade)
 					flick(fadetype, I)
@@ -130,7 +130,7 @@
 
 		for(var/mob/M in viewers(1, location))
 			if (prob (50 * amount))
-				M << "<span class='danger'>The explosion knocks you down.</span>"
+				to_chat(M, "<span class='danger'>The explosion knocks you down.</span>")
 				M.Weaken(rand(1,5))
 		return
 	else

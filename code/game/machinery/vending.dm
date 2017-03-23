@@ -76,7 +76,7 @@
 	power_change()
 
 /obj/item/weapon/circuitboard/machine/vendor
-	name = "circuit board (Booze-O-Mat Vendor)"
+	name = "Booze-O-Mat Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/boozeomat
 	origin_tech = "programming=1"
 	req_components = list(
@@ -96,14 +96,14 @@
 		position = (position == names_paths.len) ? 1 : (position + 1)
 		var/typepath = names_paths[position]
 
-		user << "<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>"
+		to_chat(user, "<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>")
 		set_type(typepath)
 	else
 		return ..()
 
 /obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
 	build_path = typepath
-	name = "circuit board ([names_paths[build_path]] Vendor)"
+	name = "[names_paths[build_path]] Vendor (Machine Board)"
 	req_components = list(initial(typepath.refill_canister) = 3)
 
 /obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
@@ -224,15 +224,16 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!compartment_access_check(user))
 			return
-		if(junk_check(W))
+		var/obj/item/weapon/reagent_containers/food/snacks/S = W
+		if(!S.junkiness)
 			if(!iscompartmentfull(user))
 				if(!user.drop_item())
 					return
 				W.loc = src
 				food_load(W)
-				user << "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>"
+				to_chat(user, "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>")
 		else
-			user << "<span class='notice'>[src]'s chef compartment does not accept junk food.</span>"
+			to_chat(user, "<span class='notice'>[src]'s chef compartment does not accept junk food.</span>")
 
 	else if(istype(W, /obj/item/weapon/storage/bag/tray))
 		if(!compartment_access_check(user))
@@ -243,16 +244,16 @@
 		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
 			if(iscompartmentfull(user))
 				break
-			if(junk_check(S))
+			if(!S.junkiness)
 				T.remove_from_storage(S, src)
 				food_load(S)
 				loaded++
 			else
 				denied_items++
 		if(denied_items)
-			user << "<span class='notice'>[src] refuses some items.</span>"
+			to_chat(user, "<span class='notice'>[src] refuses some items.</span>")
 		if(loaded)
-			user << "<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>"
+			to_chat(user, "<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>")
 		updateUsrDialog()
 		return
 
@@ -262,20 +263,15 @@
 /obj/machinery/vending/snack/proc/compartment_access_check(user)
 	req_access_txt = chef_compartment_access
 	if(!allowed(user) && !emagged && scan_id)
-		user << "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>"
+		to_chat(user, "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>")
 		req_access_txt = "0"
 		return 0
 	req_access_txt = "0"
 	return 1
 
-/obj/machinery/vending/snack/proc/junk_check(obj/item/weapon/reagent_containers/food/snacks/S)
-	if(S.junkiness)
-		return 0
-	return 1
-
 /obj/machinery/vending/snack/proc/iscompartmentfull(mob/user)
 	if(contents.len >= 30) // no more than 30 dishes can fit inside
-		user << "<span class='warning'>[src]'s chef compartment is full.</span>"
+		to_chat(user, "<span class='warning'>[src]'s chef compartment is full.</span>")
 		return 1
 	return 0
 
@@ -298,13 +294,14 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(anchored)
 			panel_open = !panel_open
-			user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
+			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
 			cut_overlays()
 			if(panel_open)
 				add_overlay(image(icon, "[initial(icon_state)]-panel"))
+			playsound(src.loc, W.usesound, 50, 1)
 			updateUsrDialog()
 		else
-			user << "<span class='warning'>You must first secure [src].</span>"
+			to_chat(user, "<span class='warning'>You must first secure [src].</span>")
 		return
 	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
@@ -315,27 +312,27 @@
 			return
 		W.loc = src
 		coin = W
-		user << "<span class='notice'>You insert [W] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 		return
 	else if(istype(W, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
-			user << "<span class='notice'>It does nothing.</span>"
+			to_chat(user, "<span class='notice'>It does nothing.</span>")
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/weapon/vending_refill/canister = W
 			if(canister.charges[STANDARD_CHARGE] == 0)
-				user << "<span class='notice'>This [canister.name] is empty!</span>"
+				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else
 				var/transfered = refill_inventory(canister,product_records,STANDARD_CHARGE)
 				transfered += refill_inventory(canister,coin_records,COIN_CHARGE)
 				transfered += refill_inventory(canister,hidden_records,CONTRABAND_CHARGE)
 				if(transfered)
-					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
+					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
 				else
-					user << "<span class='notice'>The [name] is fully stocked.</span>"
+					to_chat(user, "<span class='notice'>The [name] is fully stocked.</span>")
 			return
 		else
-			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
+			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 	else
 		return ..()
 
@@ -362,7 +359,7 @@
 /obj/machinery/vending/emag_act(mob/user)
 	if(!emagged)
 		emagged  = 1
-		user << "<span class='notice'>You short out the product lock on [src].</span>"
+		to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/attack_ai(mob/user)
 	return attack_hand(user)
@@ -433,21 +430,21 @@
 		if(iscyborg(usr))
 			var/mob/living/silicon/robot/R = usr
 			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-				usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
+				to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 				return
 		else
-			usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
+			to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 			return
 
 	if(href_list["remove_coin"])
 		if(!coin)
-			usr << "<span class='notice'>There is no coin in this machine.</span>"
+			to_chat(usr, "<span class='notice'>There is no coin in this machine.</span>")
 			return
 
 		coin.loc = loc
 		if(!usr.get_active_held_item())
 			usr.put_in_hands(coin)
-		usr << "<span class='notice'>You remove [coin] from [src].</span>"
+		to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
 		coin = null
 
 
@@ -471,11 +468,11 @@
 
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
-			usr << "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>"
+			to_chat(usr, "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
 			return
 
 		if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
-			usr << "<span class='warning'>Access denied.</span>"	//Unless emagged of course
+			to_chat(usr, "<span class='warning'>Access denied.</span>"	)
 			flick(icon_deny,src)
 			return
 
@@ -492,20 +489,20 @@
 				return
 		else if(R in coin_records)
 			if(!coin)
-				usr << "<span class='warning'>You need to insert a coin to get this item!</span>"
+				to_chat(usr, "<span class='warning'>You need to insert a coin to get this item!</span>")
 				vend_ready = 1
 				return
 			if(coin.string_attached)
 				if(prob(50))
 					if(usr.put_in_hands(coin))
-						usr << "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>"
+						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
 						coin = null
 					else
-						usr << "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>"
+						to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
 						qdel(coin)
 						coin = null
 				else
-					usr << "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>"
+					to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
 					qdel(coin)
 					coin = null
 			else
@@ -517,7 +514,7 @@
 			return
 
 		if (R.amount <= 0)
-			usr << "<span class='warning'>Sold out.</span>"
+			to_chat(usr, "<span class='warning'>Sold out.</span>")
 			vend_ready = 1
 			return
 		else
@@ -676,7 +673,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/assist
 	products = list(	/obj/item/device/assembly/prox_sensor = 5,/obj/item/device/assembly/igniter = 3,/obj/item/device/assembly/signaler = 4,
 						/obj/item/weapon/wirecutters = 1, /obj/item/weapon/cartridge/signal = 4)
-	contraband = list(/obj/item/device/flashlight = 5,/obj/item/device/assembly/timer = 2, /obj/item/device/assembly/voice = 2, /obj/item/device/assembly/health = 2)
+	contraband = list(/obj/item/device/assembly/timer = 2, /obj/item/device/assembly/voice = 2, /obj/item/device/assembly/health = 2)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
@@ -704,6 +701,28 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	refill_canister = /obj/item/weapon/vending_refill/snack
 	var/chef_compartment_access = "28"
 
+/obj/machinery/vending/snack/random
+	name = "\improper Random Snackies"
+	desc = "Uh oh!"
+
+/obj/machinery/vending/snack/random/New()
+    ..()
+    var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
+    new T(get_turf(src))
+    qdel(src)
+
+/obj/machinery/vending/snack/blue
+	icon_state = "snackblue"
+
+/obj/machinery/vending/snack/orange
+	icon_state = "snackorange"
+
+/obj/machinery/vending/snack/green
+	icon_state = "snackgreen"
+
+/obj/machinery/vending/snack/teal
+	icon_state = "snackteal"
+
 /obj/machinery/vending/sustenance
 	name = "\improper Sustenance Vendor"
 	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement."
@@ -728,10 +747,66 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
-					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
-	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 6)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers = 6)
+	premium = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/air = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cola
+
+/obj/machinery/vending/cola/random
+	name = "\improper Random Drinkies"
+	desc = "Uh oh!"
+
+/obj/machinery/vending/cola/random/New()
+    ..()
+    var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
+    new T(get_turf(src))
+    qdel(src)
+
+/obj/machinery/vending/cola/blue
+	icon_state = "Cola_Machine"
+
+/obj/machinery/vending/cola/black
+	icon_state = "cola_black"
+
+/obj/machinery/vending/cola/red
+	icon_state = "red_cola"
+	name = "\improper Space Cola Vendor"
+	desc = "It vends cola, in space."
+	product_slogans = "Cola in space!"
+
+/obj/machinery/vending/cola/space_up
+	icon_state = "space_up"
+	name = "\improper Space-up! Vendor"
+	desc = "Indulge in an explosion of flavor."
+	product_slogans = "Space-up! Like a hull breach in your mouth."
+
+/obj/machinery/vending/cola/starkist
+	icon_state = "starkist"
+	name = "\improper Star-kist Vendor"
+	desc = "The taste of a star in liquid form."
+	product_slogans = "Drink the stars! Star-kist!"
+
+/obj/machinery/vending/cola/sodie
+	icon_state = "soda"
+
+/obj/machinery/vending/cola/pwr_game
+	icon_state = "pwr_game"
+	name = "\improper Pwr Game Vendor"
+	desc = "You want it, we got it. Brought to you in partnership with Vlad's Salads."
+	product_slogans = "The POWER that gamers crave! PWR GAME!"
+
+/obj/machinery/vending/cola/shamblers
+	name = "\improper Shambler's Vendor"
+	desc = "~Shake me up some of that Shambler's Juice!~"
+	icon_state = "shamblers_juice"
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers = 10)
+	product_slogans = "~Shake me up some of that Shambler's Juice!~"
+	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
+
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -765,7 +840,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/cigarette
 	name = "\improper ShadyCigs Deluxe"
-	desc = "If you want to get cancer, might as well do it in style"
+	desc = "If you want to get cancer, might as well do it in style."
 	product_slogans = "Space cigs taste good like a cigarette should.;I'd rather toolbox than switch.;Smoke!;Don't believe the reports - smoke today!"
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
 	icon_state = "cigs"
@@ -918,8 +993,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/head/snowman = 1,
 					/obj/item/clothing/mask/joy = 1,
 					/obj/item/clothing/head/cueball = 1,
-					/obj/item/clothing/under/scratch = 1)
-	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2)
+					/obj/item/clothing/under/scratch = 1,
+        			/obj/item/clothing/under/sailor = 1)
+	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2, /obj/item/clothing/glasses/sunglasses/blindfold = 1, /obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2, /obj/item/clothing/head/pirate/captain = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1, /obj/item/weapon/skub = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
 
@@ -949,10 +1025,23 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "tool"
 	icon_deny = "tool-deny"
 	//req_access_txt = "12" //Maintenance access
-	products = list(/obj/item/stack/cable_coil/random = 10,/obj/item/weapon/crowbar = 5,/obj/item/weapon/weldingtool = 3,/obj/item/weapon/wirecutters = 5,
-					/obj/item/weapon/wrench = 5,/obj/item/device/analyzer = 5,/obj/item/device/t_scanner = 5,/obj/item/weapon/screwdriver = 5)
-	contraband = list(/obj/item/weapon/weldingtool/hugetank = 2,/obj/item/clothing/gloves/color/fyellow = 2)
-	premium = list(/obj/item/clothing/gloves/color/yellow = 1)
+	products = list(
+		/obj/item/stack/cable_coil/random = 10,
+		/obj/item/weapon/crowbar = 5,
+		/obj/item/weapon/weldingtool = 3,
+		/obj/item/weapon/wirecutters = 5,
+		/obj/item/weapon/wrench = 5,
+		/obj/item/device/analyzer = 5,
+		/obj/item/device/t_scanner = 5,
+		/obj/item/weapon/screwdriver = 5,
+		/obj/item/device/flashlight/glowstick = 3,
+		/obj/item/device/flashlight/glowstick/red = 3,
+		/obj/item/device/flashlight = 5)
+	contraband = list(
+		/obj/item/weapon/weldingtool/hugetank = 2,
+		/obj/item/clothing/gloves/color/fyellow = 2)
+	premium = list(
+		/obj/item/clothing/gloves/color/yellow = 1)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 
@@ -1022,7 +1111,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/under/skirt/black=1,/obj/item/clothing/under/skirt/blue=1,/obj/item/clothing/under/skirt/red=1,/obj/item/clothing/under/skirt/purple=1,
 	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/stripeddress=1, /obj/item/clothing/under/sailordress=1, /obj/item/clothing/under/redeveninggown=1, /obj/item/clothing/under/blacktango=1,
 	/obj/item/clothing/under/plaid_skirt=1,/obj/item/clothing/under/plaid_skirt/blue=1,/obj/item/clothing/under/plaid_skirt/purple=1,/obj/item/clothing/under/plaid_skirt/green=1,
-	/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
+	/obj/item/clothing/glasses/regular=1,/obj/item/clothing/glasses/regular/jamjar=1,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
 	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
 	/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
 	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,

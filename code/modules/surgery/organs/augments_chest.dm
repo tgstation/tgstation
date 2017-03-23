@@ -22,7 +22,7 @@
 
 	if(owner.nutrition <= hunger_threshold)
 		synthesizing = TRUE
-		owner << "<span class='notice'>You feel less hungry...</span>"
+		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
 		owner.nutrition += 50
 		sleep(50)
 		synthesizing = FALSE
@@ -30,8 +30,8 @@
 /obj/item/organ/cyberimp/chest/nutriment/emp_act(severity)
 	if(!owner)
 		return
-	owner.reagents.add_reagent("????",poison_amount / severity) //food poisoning
-	owner << "<span class='warning'>You feel like your insides are burning.</span>"
+	owner.reagents.add_reagent("bad_food", poison_amount / severity)
+	to_chat(owner, "<span class='warning'>You feel like your insides are burning.</span>")
 
 
 /obj/item/organ/cyberimp/chest/nutriment/plus
@@ -57,10 +57,11 @@
 /obj/item/organ/cyberimp/chest/reviver/on_life()
 	if(reviving)
 		if(owner.stat == UNCONSCIOUS)
-			addtimer(src, "heal", 30)
+			addtimer(CALLBACK(src, .proc/heal), 30)
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
+			to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [revive_cost/10] seconds.</span>")
 		return
 
 	if(cooldown > world.time)
@@ -72,20 +73,21 @@
 
 	revive_cost = 0
 	reviving = TRUE
+	to_chat(owner, "<span class='notice'>You feel a faint buzzing as your reviver implant starts patching your wounds...</span>")
 
 /obj/item/organ/cyberimp/chest/reviver/proc/heal()
-	if(prob(90) && owner.getOxyLoss())
-		owner.adjustOxyLoss(-3)
+	if(owner.getOxyLoss())
+		owner.adjustOxyLoss(-5)
 		revive_cost += 5
-	if(prob(75) && owner.getBruteLoss())
-		owner.adjustBruteLoss(-1)
-		revive_cost += 20
-	if(prob(75) && owner.getFireLoss())
-		owner.adjustFireLoss(-1)
-		revive_cost += 20
-	if(prob(40) && owner.getToxLoss())
+	if(owner.getBruteLoss())
+		owner.adjustBruteLoss(-2)
+		revive_cost += 40
+	if(owner.getFireLoss())
+		owner.adjustFireLoss(-2)
+		revive_cost += 40
+	if(owner.getToxLoss())
 		owner.adjustToxLoss(-1)
-		revive_cost += 50
+		revive_cost += 40
 
 /obj/item/organ/cyberimp/chest/reviver/emp_act(severity)
 	if(!owner)
@@ -98,17 +100,18 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.stat != DEAD && prob(50 / severity))
-			H.heart_attack = TRUE
-			addtimer(src, "undo_heart_attack", 600 / severity)
+		if(H.stat != DEAD && prob(50 / severity) && H.can_heartattack())
+			H.set_heartattack(TRUE)
+			to_chat(H, "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
+			addtimer(CALLBACK(src, .proc/undo_heart_attack), 600 / severity)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
 	var/mob/living/carbon/human/H = owner
 	if(!istype(H))
 		return
-	H.heart_attack = FALSE
+	H.set_heartattack(FALSE)
 	if(H.stat == CONSCIOUS)
-		H << "<span class='notice'>You feel your heart beating again!</span>"
+		to_chat(H, "<span class='notice'>You feel your heart beating again!</span>")
 
 
 /obj/item/organ/cyberimp/chest/thrusters
@@ -143,17 +146,17 @@
 	if(!on)
 		if(crit_fail)
 			if(!silent)
-				owner << "<span class='warning'>Your thrusters set seems to be broken!</span>"
+				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
 			return 0
 		on = 1
 		if(allow_thrust(0.01))
 			ion_trail.start()
 			if(!silent)
-				owner << "<span class='notice'>You turn your thrusters set on.</span>"
+				to_chat(owner, "<span class='notice'>You turn your thrusters set on.</span>")
 	else
 		ion_trail.stop()
 		if(!silent)
-			owner << "<span class='notice'>You turn your thrusters set off.</span>"
+			to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
 		on = 0
 	update_icon()
 

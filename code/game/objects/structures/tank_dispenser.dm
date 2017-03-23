@@ -54,18 +54,18 @@
 		default_unfasten_wrench(user, I, time = 20)
 		return
 	else if(user.a_intent != INTENT_HARM)
-		user << "<span class='notice'>[I] does not fit into [src].</span>"
+		to_chat(user, "<span class='notice'>[I] does not fit into [src].</span>")
 		return
 	else
 		return ..()
 	if(full)
-		user << "<span class='notice'>[src] can't hold any more of [I].</span>"
+		to_chat(user, "<span class='notice'>[src] can't hold any more of [I].</span>")
 		return
 
 	if(!user.drop_item())
 		return
 	I.loc = src
-	user << "<span class='notice'>You put [I] in [src].</span>"
+	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 	update_icon()
 
 /obj/structure/tank_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
@@ -88,13 +88,13 @@
 	switch(action)
 		if("plasma")
 			var/obj/item/weapon/tank/internals/plasma/tank = locate() in src
-			if(tank)
+			if(tank && Adjacent(usr))
 				usr.put_in_hands(tank)
 				plasmatanks--
 			. = TRUE
 		if("oxygen")
 			var/obj/item/weapon/tank/internals/oxygen/tank = locate() in src
-			if(tank)
+			if(tank && Adjacent(usr))
 				usr.put_in_hands(tank)
 				oxygentanks--
 			. = TRUE

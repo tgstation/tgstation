@@ -107,10 +107,10 @@
 
 /datum/objective/mutiny/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey || !target.current.client)
+		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 			return 1
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z > ZLEVEL_STATION) || target.current.client.is_afk())			//If they leave the station or go afk they count as dead for this
+		if(T && (T.z > ZLEVEL_STATION) || (target.current.client && target.current.client.is_afk()))			//If they leave the station or go afk they count as dead for this
 			return 2
 		return 0
 	return 1
@@ -656,7 +656,7 @@ var/global/list/possible_items_special = list()
 	if (ticker)
 		var/n_p = 1 //autowin
 		if (ticker.current_state == GAME_STATE_SETTING_UP)
-			for(var/mob/new_player/P in player_list)
+			for(var/mob/dead/new_player/P in player_list)
 				if(P.client && P.ready && P.mind!=owner)
 					n_p ++
 		else if (ticker.current_state == GAME_STATE_PLAYING)

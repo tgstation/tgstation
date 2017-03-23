@@ -66,6 +66,7 @@
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
+		instance.backdrop(mymob)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -129,6 +130,7 @@
 			qdel(thing)
 		screenoverlays.Cut()
 	mymob = null
+
 	return ..()
 
 /mob/proc/create_mob_hud()
@@ -200,9 +202,9 @@
 			if(infodisplay.len)
 				screenmob.client.screen -= infodisplay
 
-	if(plane_masters.len)
-		for(var/thing in plane_masters)
-			screenmob.client.screen += plane_masters[thing]
+	for(var/thing in plane_masters)
+		screenmob.client.screen += plane_masters[thing]
+
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	mymob.update_action_buttons(1)
@@ -215,7 +217,7 @@
 	..()
 	hidden_inventory_update(viewmob)
 
-/datum/hud/robot/show_hud(version = 0)
+/datum/hud/robot/show_hud(version = 0, mob/viewmob)
 	..()
 	update_robot_modules_display()
 
@@ -243,9 +245,9 @@
 
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset
-		usr << "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>"
+		to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 	else
-		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"
+		to_chat(usr, "<span class ='warning'>This mob type does not use a HUD.</span>")
 
 
 //(re)builds the hand ui slots, throwing away old ones

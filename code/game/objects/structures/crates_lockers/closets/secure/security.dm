@@ -37,6 +37,7 @@
 
 /obj/structure/closet/secure_closet/hop/New()
 	..()
+	new /obj/item/clothing/neck/cloak/hop(src)
 	new /obj/item/clothing/under/rank/head_of_personnel(src)
 	new /obj/item/clothing/head/hopcap(src)
 	new /obj/item/weapon/cartridge/hop(src)
@@ -180,10 +181,7 @@
 	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
-	new /obj/item/ammo_box/c38(src)
-	new /obj/item/ammo_box/c38(src)
-	new /obj/item/weapon/storage/belt/holster(src)
-	new /obj/item/weapon/gun/ballistic/revolver/detective(src)
+	new /obj/item/weapon/storage/belt/holster/full(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"

@@ -69,7 +69,7 @@
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(!H.client || !istype(H))
 			return
-		H << "<span class='danger'>Honk...</span>"
+		to_chat(H, "<span class='danger'>Honk...</span>")
 		H << 'sound/spookoween/scary_clown_appear.ogg'
 		var/turf/T = get_turf(H)
 		if(T)
@@ -91,7 +91,7 @@
 			else if (prob(5))
 				var/turf/T = get_turf(H)
 				if(T)
-					spawn_atom_to_turf(/obj/effect/mob_spawn/human/corpse/clown, H, 1)
+					spawn_atom_to_turf(/obj/effect/mob_spawn/human/clown/corpse, H, 1)
 			else if (prob(1))
 				spawn_atom_to_turf(/mob/living/simple_animal/hostile/retaliate/clown, H, 1)
 

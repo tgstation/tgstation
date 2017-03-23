@@ -55,7 +55,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telecomms/bus
-	name = "circuit board (Bus Mainframe)"
+	name = "Bus Mainframe (Machine Board)"
 	build_path = /obj/machinery/telecomms/bus
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(

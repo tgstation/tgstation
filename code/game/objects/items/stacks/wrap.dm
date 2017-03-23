@@ -59,7 +59,7 @@
 		if(!I.can_be_package_wrapped())
 			return
 		if(user.is_holding(I))
-			if(!user.unEquip(I))
+			if(!user.dropItemToGround(I))
 				return
 		else if(!isturf(I.loc))
 			return
@@ -71,6 +71,7 @@
 				user.put_in_hands(P)
 			I.forceMove(P)
 			var/size = round(I.w_class)
+			P.name = "[weightclass2text(size)] parcel"
 			P.w_class = size
 			size = min(size, 5)
 			P.icon_state = "deliverypackage[size]"
@@ -80,23 +81,23 @@
 		if(O.opened)
 			return
 		if(!O.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
-			user << "<span class='warning'>You can't wrap this!</span>"
+			to_chat(user, "<span class='warning'>You can't wrap this!</span>")
 			return
 		if(use(3))
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			P.icon_state = O.delivery_icon
-			O.loc = P
+			O.forceMove(P)
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)
 		else
-			user << "<span class='warning'>You need more paper!</span>"
+			to_chat(user, "<span class='warning'>You need more paper!</span>")
 			return
 	else
-		user << "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
+		to_chat(user, "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on [target]</font>")
+	user.log_message("<font color='blue'>Has used [name] on [target]</font>", INDIVIDUAL_ATTACK_LOG)
 
 /obj/item/stack/packageWrap/Destroy()
 	if(!amount)

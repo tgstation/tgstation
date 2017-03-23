@@ -8,7 +8,7 @@
 
 
 
-/obj/item/weapon/twohanded/required/ctf
+/obj/item/weapon/twohanded/ctf
 	name = "banner"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banner"
@@ -21,69 +21,66 @@
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	flags = HANDSLOW
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
-/obj/item/weapon/twohanded/required/ctf/New()
-	..()
-	if(!reset)
-		reset = new reset_path(get_turf(src))
-
-/obj/item/weapon/twohanded/required/ctf/Destroy()
+/obj/item/weapon/twohanded/ctf/Destroy()
 	if(reset)
 		qdel(reset)
 		reset = null
 	. = ..()
 
-/obj/item/weapon/twohanded/required/ctf/initialize()
+/obj/item/weapon/twohanded/ctf/Initialize()
+	..()
+	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/weapon/twohanded/required/ctf/process()
+/obj/item/weapon/twohanded/ctf/process()
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in player_list)
 			var/area/mob_area = get_area(M)
 			if(istype(mob_area, /area/ctf))
-				M << "<span class='userdanger'>\The [src] has been returned \
-					to base!</span>"
+				to_chat(M, "<span class='userdanger'>\The [src] has been returned to base!</span>")
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/twohanded/required/ctf/attack_hand(mob/living/user)
+/obj/item/weapon/twohanded/ctf/attack_hand(mob/living/user)
 	if(!user)
 		return
 	if(team in user.faction)
-		user << "You can't move your own flag!"
+		to_chat(user, "You can't move your own flag!")
 		return
 	if(loc == user)
-		if(!user.unEquip(src))
+		if(!user.dropItemToGround(src))
 			return
 	anchored = FALSE
 	pickup(user)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 		return
+	user.anchored = TRUE
 	for(var/mob/M in player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
-			M << "<span class='userdanger'>\The [src] has been taken!</span>"
+			to_chat(M, "<span class='userdanger'>\The [src] has been taken!</span>")
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/twohanded/required/ctf/dropped(mob/user)
+/obj/item/weapon/twohanded/ctf/dropped(mob/user)
 	..()
+	user.anchored = FALSE
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
 	for(var/mob/M in player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
-			M << "<span class='userdanger'>\The [src] has been dropped!</span>"
+			to_chat(M, "<span class='userdanger'>\The [src] has been dropped!</span>")
 	anchored = TRUE
 
 
-/obj/item/weapon/twohanded/required/ctf/red
+/obj/item/weapon/twohanded/ctf/red
 	name = "red flag"
 	icon_state = "banner-red"
 	item_state = "banner-red"
@@ -92,7 +89,7 @@
 	reset_path = /obj/effect/ctf/flag_reset/red
 
 
-/obj/item/weapon/twohanded/required/ctf/blue
+/obj/item/weapon/twohanded/ctf/blue
 	name = "blue flag"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
@@ -119,6 +116,13 @@
 	desc = "This is where a blue banner used to play capture the flag \
 		would go."
 
+/proc/toggle_all_ctf(mob/user)
+	var/ctf_enabled = FALSE
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		ctf_enabled = CTF.toggle_ctf()
+	message_admins("[key_name_admin(user)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+	notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+
 /obj/machinery/capture_the_flag
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."
@@ -140,12 +144,14 @@
 	var/ctf_enabled = FALSE
 	var/ctf_gear = /datum/outfit/ctf
 	var/instagib_gear = /datum/outfit/ctf/instagib
-	var/list/dead_barricades = list()
+
+	var/list/obj/effect/ctf/dead_barricade/dead_barricades = list()
+	var/list/obj/structure/barricade/security/ctf/living_barricades = list()
 
 	var/static/ctf_object_typecache
 	var/static/arena_cleared = FALSE
 
-/obj/machinery/capture_the_flag/New()
+/obj/machinery/capture_the_flag/Initialize()
 	..()
 	if(!ctf_object_typecache)
 		ctf_object_typecache = typecacheof(list(
@@ -155,7 +161,7 @@
 			/obj/machinery,
 			/obj/structure,
 			/obj/effect/ctf,
-			/obj/item/weapon/twohanded/required/ctf
+			/obj/item/weapon/twohanded/ctf
 		))
 	poi_list |= src
 
@@ -175,8 +181,8 @@
 		else
 			// The changes that you've been hit with no shield but not
 			// instantly critted are low, but have some healing.
-			M.adjustBruteLoss(-1)
-			M.adjustFireLoss(-1)
+			M.adjustBruteLoss(-5)
+			M.adjustFireLoss(-5)
 
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
@@ -194,12 +200,17 @@
 
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
+		if(user.client && user.client.holder)
+			var/response = alert("Enable CTF?", "CTF", "Yes", "No")
+			if(response == "Yes")
+				toggle_all_ctf(user)
 		return
-	if(ticker.current_state != GAME_STATE_PLAYING)
+
+	if(ticker.current_state < GAME_STATE_PLAYING)
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
-			user << "It must be more than [respawn_cooldown/10] seconds from your last death to respawn!"
+			to_chat(user, "It must be more than [respawn_cooldown/10] seconds from your last death to respawn!")
 			return
 		var/client/new_team_member = user.client
 		if(user.mind && user.mind.current)
@@ -211,10 +222,10 @@
 		if(CTF == src || CTF.ctf_enabled == FALSE)
 			continue
 		if(user.ckey in CTF.team_members)
-			user << "No switching teams while the round is going!"
+			to_chat(user, "No switching teams while the round is going!")
 			return
 		if(CTF.team_members.len < src.team_members.len)
-			user << "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up."
+			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up.")
 			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
@@ -223,11 +234,11 @@
 	spawn_team_member(new_team_member)
 
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
-	if(isliving(body) && body.z == src.z)
+	if(isliving(body) && (team in body.faction))
 		var/turf/T = get_turf(body)
 		new /obj/effect/ctf/ammo(T)
 		recently_dead_ckeys += body.ckey
-		addtimer(src, "clear_cooldown", respawn_cooldown, TIMER_UNIQUE, body.ckey)
+		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 		body.dust()
 
 /obj/machinery/capture_the_flag/proc/clear_cooldown(var/ckey)
@@ -248,16 +259,15 @@
 			attack_ghost(ghost)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/twohanded/required/ctf))
-		var/obj/item/weapon/twohanded/required/ctf/flag = I
+	if(istype(I, /obj/item/weapon/twohanded/ctf))
+		var/obj/item/weapon/twohanded/ctf/flag = I
 		if(flag.team != src.team)
-			user.unEquip(flag)
-			flag.loc = get_turf(flag.reset)
+			user.transferItemToLoc(flag, get_turf(flag.reset), TRUE)
 			points++
 			for(var/mob/M in player_list)
 				var/area/mob_area = get_area(M)
 				if(istype(mob_area, /area/ctf))
-					M << "<span class='userdanger'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>"
+					to_chat(M, "<span class='userdanger'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
 		if(points >= points_to_win)
 			victory()
 
@@ -265,10 +275,10 @@
 	for(var/mob/M in mob_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
-			M << "<span class='narsie'>[team] team wins!</span>"
-			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
-			for(var/obj/item/weapon/twohanded/required/ctf/W in M)
-				M.unEquip(W)
+			to_chat(M, "<span class='narsie'>[team] team wins!</span>")
+			to_chat(M, "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>")
+			for(var/obj/item/weapon/twohanded/ctf/W in M)
+				M.dropItemToGround(W)
 			M.dust()
 	for(var/obj/machinery/control_point/control in machines)
 		control.icon_state = "dominator"
@@ -280,7 +290,7 @@
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
 			CTF.arena_cleared = FALSE
-			addtimer(CTF, "start_ctf", 300)
+			addtimer(CALLBACK(CTF, .proc/start_ctf), 300)
 
 /obj/machinery/capture_the_flag/proc/toggle_ctf()
 	if(!ctf_enabled)
@@ -292,9 +302,16 @@
 
 /obj/machinery/capture_the_flag/proc/start_ctf()
 	ctf_enabled = TRUE
-	for(var/obj/effect/ctf/dead_barricade/ded in dead_barricades)
-		ded.respawn()
+	for(var/d in dead_barricades)
+		var/obj/effect/ctf/dead_barricade/D = d
+		D.respawn()
+
 	dead_barricades.Cut()
+
+	for(var/b in living_barricades)
+		var/obj/structure/barricade/security/ctf/B = b
+		B.obj_integrity = B.max_integrity
+
 	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=\ref[src];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
 
 	if(!arena_cleared)
@@ -338,7 +355,7 @@
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
 	. = ..()
-	addtimer(src, "floor_vanish", 1)
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
 	if(isturf(loc))
@@ -362,14 +379,21 @@
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 50
-	flags = NODROP | DROPDEL
+
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf/dropped()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
+
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf/proc/floor_vanish()
+	if(isturf(loc))
+		qdel(src)
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
 /obj/item/ammo_box/magazine/recharge/ctf/dropped()
 	. = ..()
-	addtimer(src, "floor_vanish", 1)
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
 
 /obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
 	if(isturf(loc))
@@ -429,6 +453,7 @@
 	ears = /obj/item/device/radio/headset
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
+	toggle_helmet = FALSE // see the whites of their eyes
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/syndicate
@@ -502,6 +527,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
+	anchored = TRUE
 	alpha = 255
 
 /obj/structure/trap/examine(mob/user)
@@ -509,7 +535,7 @@
 
 /obj/structure/trap/ctf/trap_effect(mob/living/L)
 	if(!(src.team in L.faction))
-		L << "<span class='danger'><B>Stay out of the enemy spawn!</B></span>"
+		to_chat(L, "<span class='danger'><B>Stay out of the enemy spawn!</B></span>")
 		L.death()
 
 /obj/structure/trap/ctf/red
@@ -523,6 +549,18 @@
 /obj/structure/barricade/security/ctf
 	name = "barrier"
 	desc = "A barrier. Provides cover in fire fights."
+	deploy_time = 0
+	deploy_message = 0
+
+/obj/structure/barricade/security/ctf/Initialize(mapload)
+	..()
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		CTF.living_barricades += src
+
+/obj/structure/barricade/security/ctf/Destroy()
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		CTF.living_barricades -= src
+	. = ..()
 
 /obj/structure/barricade/security/ctf/make_debris()
 	new /obj/effect/ctf/dead_barricade(get_turf(src))
@@ -544,7 +582,7 @@
 	alpha = 255
 	invisibility = 0
 
-/obj/effect/ctf/ammo/New()
+/obj/effect/ctf/ammo/Initialize(mapload)
 	..()
 	QDEL_IN(src, AMMO_DROP_LIFETIME)
 
@@ -565,10 +603,9 @@
 			var/outfit = CTF.ctf_gear
 			var/datum/outfit/O = new outfit
 			for(var/obj/item/weapon/gun/G in M)
-				M.unEquip(G)
 				qdel(G)
 			O.equip(M)
-			M << "<span class='notice'>Ammunition reloaded!</span>"
+			to_chat(M, "<span class='notice'>Ammunition reloaded!</span>")
 			playsound(get_turf(M), 'sound/weapons/shotgunpump.ogg', 50, 1, -1)
 			qdel(src)
 			break
@@ -579,12 +616,13 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barrier0"
 
-/obj/effect/ctf/dead_barricade/New()
+/obj/effect/ctf/dead_barricade/Initialize(mapload)
+	..()
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		CTF.dead_barricades += src
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		new /obj/structure/barricade/security/ctf(get_turf(src))
 		qdel(src)
 
@@ -623,5 +661,13 @@
 				for(var/mob/M in player_list)
 					var/area/mob_area = get_area(M)
 					if(istype(mob_area, /area/ctf))
-						M << "<span class='userdanger'>[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!</span>"
+						to_chat(M, "<span class='userdanger'>[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!</span>")
 				break
+
+#undef WHITE_TEAM
+#undef RED_TEAM
+#undef BLUE_TEAM
+#undef FLAG_RETURN_TIME
+#undef INSTAGIB_RESPAWN
+#undef DEFAULT_RESPAWN
+#undef AMMO_DROP_LIFETIME

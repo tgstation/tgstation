@@ -84,12 +84,14 @@ research holder datum.
 //Adds a tech to known_tech list. Checks to make sure there aren't duplicates and updates existing tech's levels if needed.
 //Input: datum/tech; Output: Null
 /datum/research/proc/AddTech2Known(datum/tech/T)
+	if(!T)
+		return
 	if(known_tech[T.id])
 		var/datum/tech/known = known_tech[T.id]
 		if(T.level > known.level)
 			known.level = T.level
 		return
-	known_tech[T.id] = T
+	known_tech[T.id] = T.copy()
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
 	if(known_designs[D.id])
@@ -297,6 +299,11 @@ research holder datum.
 		cost += i*rare
 
 	return cost
+
+/datum/tech/proc/copy()
+	var/datum/tech/T = new type()
+	T.level = level
+	return T
 
 /obj/item/weapon/disk/tech_disk
 	name = "technology disk"

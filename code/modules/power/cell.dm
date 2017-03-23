@@ -86,9 +86,9 @@
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
 	if(rigged)
-		user << "<span class='danger'>This power cell seems to be faulty!</span>"
+		to_chat(user, "<span class='danger'>This power cell seems to be faulty!</span>")
 	else
-		user << "The charge meter reads [round(src.percent() )]%."
+		to_chat(user, "The charge meter reads [round(src.percent() )]%.")
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -98,7 +98,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
-		user << "<span class='notice'>You inject the solution into the power cell.</span>"
+		to_chat(user, "<span class='notice'>You inject the solution into the power cell.</span>")
 		if(S.reagents.has_reagent("plasma", 5))
 			rigged = 1
 		S.reagents.clear_reagents()
@@ -140,7 +140,7 @@
 
 /obj/item/weapon/stock_parts/cell/ex_act(severity, target)
 	..()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		switch(severity)
 			if(2)
 				if(prob(50))

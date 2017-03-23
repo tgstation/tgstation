@@ -45,7 +45,7 @@
 			nuke_code = nuke.r_code
 
 		Mind.store_memory("<B>Station Self-Destruct Device Code</B>: [nuke_code]", 0, 0)
-		Mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+		to_chat(Mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
 
 		var/datum/objective/nuclear/O = new()
 		O.owner = Mind
@@ -53,7 +53,7 @@
 
 	Mind.transfer_to(operative)
 
-	message_admins("[operative.key] has been made into lone operative by an event.")
-	log_game("[operative.key] was spawned as a lone operative by an event.")
+	message_admins("[key_name_admin(operative)] has been made into lone operative by an event.")
+	log_game("[key_name(operative)] was spawned as a lone operative by an event.")
 	spawned_mobs += operative
 	return SUCCESSFUL_SPAWN

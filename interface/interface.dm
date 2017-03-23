@@ -8,7 +8,7 @@
 			return
 		src << link(config.wikiurl)
 	else
-		src << "<span class='danger'>The wiki URL is not set in the server configuration.</span>"
+		to_chat(src, "<span class='danger'>The wiki URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/forum()
@@ -20,7 +20,7 @@
 			return
 		src << link(config.forumurl)
 	else
-		src << "<span class='danger'>The forum URL is not set in the server configuration.</span>"
+		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/rules()
@@ -32,7 +32,7 @@
 			return
 		src << link(config.rulesurl)
 	else
-		src << "<span class='danger'>The rules URL is not set in the server configuration.</span>"
+		to_chat(src, "<span class='danger'>The rules URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/github()
@@ -44,7 +44,7 @@
 			return
 		src << link(config.githuburl)
 	else
-		src << "<span class='danger'>The Github URL is not set in the server configuration.</span>"
+		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/reportissue()
@@ -52,11 +52,15 @@
 	set desc = "Report an issue"
 	set hidden = 1
 	if(config.githuburl)
-		if(alert("This will open the Github issue reporter in your browser. Are you sure?",,"Yes","No")=="No")
+		var/message = "This will open the Github issue reporter in your browser. Are you sure?"
+		if(revdata.testmerge.len)
+			message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
+			message += revdata.GetTestMergeInfo(FALSE)
+		if(tgalert(src, message, "Report Issue","Yes","No")=="No")
 			return
 		src << link("[config.githuburl]/issues/new")
 	else
-		src << "<span class='danger'>The Github URL is not set in the server configuration.</span>"
+		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/hotkeys_help()
@@ -130,6 +134,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t3 = grab-intent
 \t4 = harm-intent
 \tNumpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
+\tAlt(HOLD) = Alter movement intent
 </font>"}
 
 	var/other = {"<font color='purple'>
@@ -152,6 +157,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+2 = disarm-intent
 \tCtrl+3 = grab-intent
 \tCtrl+4 = harm-intent
+\tCtrl+'+/-' OR
+\tShift+Mousewheel = Ghost zoom in/out
 \tDEL = pull
 \tINS = cycle-intents-right
 \tHOME = drop

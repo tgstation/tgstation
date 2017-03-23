@@ -45,7 +45,6 @@
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
-	var/area/master				// master area used for power calcluations
 	var/list/related			// the other areas of the same type as this
 
 	var/parallax_movedir = 0
@@ -60,6 +59,8 @@
 									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 	flags = CAN_BE_DIRTY
 
+	var/list/firedoors
+	var/firedoors_last_closed_on = 0
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -96,10 +97,9 @@ var/list/teleportlocs = list()
 
 
 
-/area/New()
+/area/Initialize()
 	icon_state = ""
 	layer = AREA_LAYER
-	master = src
 	uid = ++global_uid
 	related = list(src)
 	map_name = name // Save the initial (the name set in the map) name of the area.
@@ -111,8 +111,11 @@ var/list/teleportlocs = list()
 		power_equip = 1
 		power_environ = 1
 
-		if (lighting_use_dynamic != DYNAMIC_LIGHTING_IFSTARLIGHT)
-			lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
+			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+			luminosity = 0
+		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 	..()
 
@@ -120,7 +123,12 @@ var/list/teleportlocs = list()
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
+	if(!IS_DYNAMIC_LIGHTING(src))
+		add_overlay(/obj/effect/fullbright)
 
+/area/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
@@ -183,6 +191,24 @@ var/list/teleportlocs = list()
 		return 1
 	return 0
 
+/area/proc/ModifyFiredoors(opening)
+	if(firedoors)
+		firedoors_last_closed_on = world.time
+		for(var/FD in firedoors)
+			var/obj/machinery/door/firedoor/D = FD
+			var/cont = !D.welded
+			if(cont && opening)	//don't open if adjacent area is on fire
+				for(var/I in D.affecting_areas)
+					var/area/A = I
+					if(A.fire)
+						cont = FALSE
+						break
+			if(cont)
+				if(D.operating)
+					D.nextstate = opening ? OPEN : CLOSED
+				else if(!(D.density ^ opening))
+					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
+
 /area/proc/firealert(obj/source)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
@@ -192,12 +218,7 @@ var/list/teleportlocs = list()
 	for(var/area/RA in related)
 		if (!( RA.fire ))
 			RA.set_fire_alarm_effect()
-			for(var/obj/machinery/door/firedoor/D in RA)
-				if(!D.welded)
-					if(D.operating)
-						D.nextstate = CLOSED
-					else if(!D.density)
-						addtimer(D, "close", 0)
+			RA.ModifyFiredoors(FALSE)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
@@ -212,18 +233,15 @@ var/list/teleportlocs = list()
 	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
 		p.triggerAlarm("Fire", src, cameras, source)
 
+	START_PROCESSING(SSobj, src)
+
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
 		if (RA.fire)
 			RA.fire = 0
 			RA.mouse_opacity = 0
 			RA.updateicon()
-			for(var/obj/machinery/door/firedoor/D in RA)
-				if(!D.welded)
-					if(D.operating)
-						D.nextstate = OPEN
-					else if(D.density)
-						addtimer(D, "open", 0)
+			RA.ModifyFiredoors(TRUE)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 
@@ -236,6 +254,19 @@ var/list/teleportlocs = list()
 	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
 		p.cancelAlarm("Fire", src, source)
 
+	STOP_PROCESSING(SSobj, src)
+
+/area/process()
+	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
+		for(var/area/RA in related)
+			RA.ModifyFiredoors(FALSE)
+
+/area/proc/close_and_lock_door(obj/machinery/door/DOOR)
+	set waitfor = FALSE
+	DOOR.close()
+	if(DOOR.density)
+		DOOR.lock()
+
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
 		return
@@ -247,17 +278,14 @@ var/list/teleportlocs = list()
 		RA.set_fire_alarm_effect()
 		//Lockdown airlocks
 		for(var/obj/machinery/door/DOOR in RA)
-			spawn(0)
-				DOOR.close()
-				if(DOOR.density)
-					DOOR.lock()
+			close_and_lock_door(DOOR)
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
 	for (var/mob/living/silicon/SILICON in player_list)
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			addtimer(SILICON, "cancelAlarm", 600, TIMER_NORMAL,"Burglar",src,trigger)
+			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1
@@ -294,7 +322,7 @@ var/list/teleportlocs = list()
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					addtimer(D, "open", 0)
+					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 
 /area/proc/updateicon()
 	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
@@ -306,15 +334,11 @@ var/list/teleportlocs = list()
 			icon_state = "party"
 		else
 			icon_state = "blue-red"
-		invisibility = INVISIBILITY_LIGHTING
 	else
-	//	new lighting behaviour with obj lights
 		icon_state = null
-		invisibility = INVISIBILITY_MAXIMUM
 
 /area/space/updateicon()
 	icon_state = null
-	invisibility = INVISIBILITY_MAXIMUM
 
 /*
 #define EQUIP 1
@@ -324,17 +348,17 @@ var/list/teleportlocs = list()
 
 /area/proc/powered(chan)		// return true if the area has power to given channel
 
-	if(!master.requires_power)
+	if(!requires_power)
 		return 1
-	if(master.always_unpowered)
+	if(always_unpowered)
 		return 0
 	switch(chan)
 		if(EQUIP)
-			return master.power_equip
+			return power_equip
 		if(LIGHT)
-			return master.power_light
+			return power_light
 		if(ENVIRON)
-			return master.power_environ
+			return power_environ
 
 	return 0
 
@@ -353,19 +377,19 @@ var/list/teleportlocs = list()
 	var/used = 0
 	switch(chan)
 		if(LIGHT)
-			used += master.used_light
+			used += used_light
 		if(EQUIP)
-			used += master.used_equip
+			used += used_equip
 		if(ENVIRON)
-			used += master.used_environ
+			used += used_environ
 		if(TOTAL)
-			used += master.used_light + master.used_equip + master.used_environ
+			used += used_light + used_equip + used_environ
 		if(STATIC_EQUIP)
-			used += master.static_equip
+			used += static_equip
 		if(STATIC_LIGHT)
-			used += master.static_light
+			used += static_light
 		if(STATIC_ENVIRON)
-			used += master.static_environ
+			used += static_environ
 	return used
 
 /area/proc/addStaticPower(value, powerchannel)
@@ -378,23 +402,23 @@ var/list/teleportlocs = list()
 			static_environ += value
 
 /area/proc/clear_usage()
-
-	master.used_equip = 0
-	master.used_light = 0
-	master.used_environ = 0
+	used_equip = 0
+	used_light = 0
+	used_environ = 0
 
 /area/proc/use_power(amount, chan)
 
 	switch(chan)
 		if(EQUIP)
-			master.used_equip += amount
+			used_equip += amount
 		if(LIGHT)
-			master.used_light += amount
+			used_light += amount
 		if(ENVIRON)
-			master.used_environ += amount
+			used_environ += amount
 
 
 /area/Entered(A)
+	set waitfor = FALSE
 	if(!isliving(A))
 		return
 
@@ -416,9 +440,9 @@ var/list/teleportlocs = list()
 		if(!L.client.played)
 			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
 			L.client.played = 1
-			spawn(600)			//ewww - this is very very bad
-				if(L.&& L.client)
-					L.client.played = 0
+			sleep(600)			//ewww - this is very very bad
+			if(L.&& L.client)
+				L.client.played = 0
 
 /atom/proc/has_gravity(turf/T)
 	if(!T || !isturf(T))
@@ -441,4 +465,5 @@ var/list/teleportlocs = list()
 	power_environ = 0
 	always_unpowered = 0
 	valid_territory = 0
+	blob_allowed = 0
 	addSorted()

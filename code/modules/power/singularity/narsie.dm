@@ -11,6 +11,9 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
+	light_power = 0.7
+	light_range = 15
+	light_color = rgb(255, 0, 0)
 	var/clashing = FALSE //If Nar-Sie is fighting Ratvar
 
 /obj/singularity/narsie/large
@@ -41,7 +44,7 @@
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
 	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, null, 0, loc_override = src.loc)
-	PoolOrNew(/obj/effect/particle_effect/smoke/sleeping, src.loc)
+	new /obj/effect/particle_effect/smoke/sleeping(src.loc)
 
 
 /obj/singularity/narsie/process()
@@ -63,15 +66,17 @@
 
 
 /obj/singularity/narsie/Bump(atom/A)
-	forceMove(get_turf(A))
-	A.narsie_act()
+	var/turf/T = get_turf(A)
+	if(T == loc)
+		T = get_step(A, A.dir) //please don't slam into a window like a bird, nar-sie
+	forceMove(T)
 
 
 /obj/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in viewers(consume_range, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				M << "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>"
+				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>")
 				M.apply_effect(3, STUN)
 
 
@@ -126,12 +131,12 @@
 /obj/singularity/narsie/proc/acquire(atom/food)
 	if(food == target)
 		return
-	target << "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>"
+	to_chat(target, "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>")
 	target = food
 	if(isliving(target))
-		target << "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>"
+		to_chat(target, "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>")
 	else
-		target << "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>"
+		to_chat(target, "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>")
 
 //Wizard narsie
 /obj/singularity/narsie/wizard

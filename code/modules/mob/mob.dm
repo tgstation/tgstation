@@ -20,7 +20,7 @@
 	return QDEL_HINT_HARDDEL
 
 var/next_mob_id = 0
-/mob/New()
+/mob/Initialize()
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
 	if(stat == DEAD)
@@ -28,6 +28,7 @@ var/next_mob_id = 0
 	else
 		living_mob_list += src
 	prepare_huds()
+	can_ride_typecache = typecacheof(can_ride_typecache)
 	..()
 
 /atom/proc/prepare_huds()
@@ -52,7 +53,7 @@ var/next_mob_id = 0
 		if(gas[MOLES])
 			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
 
-	usr << t
+	to_chat(usr, t)
 
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
@@ -80,9 +81,9 @@ var/next_mob_id = 0
 	// voice muffling
 	if(stat == UNCONSCIOUS)
 		if(type & 2) //audio
-			src << "<I>... You can almost hear something ...</I>"
+			to_chat(src, "<I>... You can almost hear something ...</I>")
 	else
-		src << msg
+		to_chat(src, msg)
 
 // Show a message to all player mobs who sees this atom
 // Show a message to the src mob (if the src is a mob)
@@ -115,12 +116,14 @@ var/next_mob_id = 0
 					msg = blind_message
 				else
 					continue
+
 			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
+				if(T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
 					if(blind_message)
 						msg = blind_message
 					else
 						continue
+
 		M.show_message(msg,1,blind_message,2)
 
 // Show a message to all mobs in earshot of this one
@@ -196,7 +199,7 @@ var/next_mob_id = 0
 			qdel(W)
 		else
 			if(!disable_warning)
-				src << "<span class='warning'>You are unable to equip that!</span>" //Only print if qdel_on_fail is false
+				to_chat(src, "<span class='warning'>You are unable to equip that!</span>" )
 		return 0
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
 	return 1
@@ -267,7 +270,7 @@ var/next_mob_id = 0
 	set category = "IC"
 
 	if(is_blind(src))
-		src << "<span class='notice'>Something is there but you can't see it.</span>"
+		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
 	face_atom(A)
@@ -290,7 +293,7 @@ var/next_mob_id = 0
 	if (!tile)
 		return 0
 
-	PoolOrNew(/obj/effect/overlay/temp/point, list(A,invisibility))
+	new /obj/effect/overlay/temp/point(A,invisibility)
 
 	return 1
 
@@ -337,6 +340,23 @@ var/next_mob_id = 0
 			M.LAssailant = null
 		else
 			M.LAssailant = usr
+
+/mob/proc/spin(spintime, speed)
+	set waitfor = 0
+	var/D = dir
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		setDir(D)
+		spintime -= speed
 
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
@@ -391,7 +411,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.show_memory(src)
 	else
-		src << "You don't have a mind datum for some reason, so you can't look at your notes, if you had any."
+		to_chat(src, "You don't have a mind datum for some reason, so you can't look at your notes, if you had any.")
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
@@ -403,7 +423,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.store_memory(msg)
 	else
-		src << "You don't have a mind datum for some reason, so you can't add a note to it."
+		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
@@ -412,12 +432,12 @@ var/next_mob_id = 0
 	if (!( abandon_allowed ))
 		return
 	if ((stat != 2 || !( ticker )))
-		usr << "<span class='boldnotice'>You must be dead to use this!</span>"
+		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	usr << "<span class='boldnotice'>Please roleplay correctly!</span>"
+	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
@@ -428,7 +448,7 @@ var/next_mob_id = 0
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
 
-	var/mob/new_player/M = new /mob/new_player()
+	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		qdel(M)
@@ -445,6 +465,19 @@ var/next_mob_id = 0
 	set category = "OOC"
 	reset_perspective(null)
 	unset_machine()
+
+//suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
+/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+	set name = ".click"
+	set hidden = TRUE
+	set category = null
+	return
+
+/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+	set name = ".dblclick"
+	set hidden = TRUE
+	set category = null
+	return
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
@@ -467,7 +500,8 @@ var/next_mob_id = 0
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				usr.stripPanelUnequip(what,src,slot)
+				if(!(what.flags & ABSTRACT))
+					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
 
@@ -508,7 +542,7 @@ var/next_mob_id = 0
 /mob/proc/see(message)
 	if(!is_active())
 		return 0
-	src << message
+	to_chat(src, message)
 	return 1
 
 /mob/proc/show_viewers(message)
@@ -519,12 +553,16 @@ var/next_mob_id = 0
 	..()
 
 	if(statpanel("Status"))
-		stat(null, "Map: [MAP_NAME]")
-		if(nextmap && istype(nextmap))
-			stat(null, "Next Map: [nextmap.friendlyname]")
-		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
+		if (client)
+			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
+		stat(null, "Map: [SSmapping.config.map_name]")
+		var/datum/map_config/cached = SSmapping.next_map_config
+		if(cached)
+			stat(null, "Next Map: [cached.map_name]")
+		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
+		stat(null, "Station Time: [worldtime2text()]")
+		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
 		if(SSshuttle.emergency)
-			stat(null, "Current Shuttle: [SSshuttle.emergency.name]")
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
@@ -547,7 +585,7 @@ var/next_mob_id = 0
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
 				stat(null)
-				for(var/datum/subsystem/SS in Master.subsystems)
+				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
 			cameranet.stat_entry()
 
@@ -644,11 +682,14 @@ var/next_mob_id = 0
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
-	update_action_buttons_icon()
+	update_action_buttons_icon(status_only=TRUE)
 	if(isliving(src))
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))
 			canmove = 0
+	if(!lying && lying_prev)
+		if(client)
+			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
 	return canmove
 
@@ -712,22 +753,31 @@ var/next_mob_id = 0
 	if(mind)
 		return mind.grab_ghost(force = force)
 
-/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
+/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null, flashwindow)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
-		ghost.notify_cloning(message, sound, source)
+		ghost.notify_cloning(message, sound, source, flashwindow)
 		return ghost
 
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	mob_spell_list += S
 	S.action.Grant(src)
 
+/mob/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
+	if(!spell)
+		return
+	for(var/X in mob_spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		if(istype(S, spell))
+			mob_spell_list -= S
+			qdel(S)
+
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
 	setDir(angle2dir(rotation+dir2angle(dir)))
 
 //You can buckle on mobs if you're next to them since most are dense
-/mob/buckle_mob(mob/living/M, force = 0)
+/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
 		return 0
 	var/turf/T = get_turf(src)
@@ -791,11 +841,28 @@ var/next_mob_id = 0
 /mob/proc/canUseTopic()
 	return
 
-/mob/proc/faction_check(mob/target)
-	for(var/F in faction)
-		if(F in target.faction)
-			return 1
-	return 0
+/mob/proc/faction_check_mob(mob/target, exact_match)
+	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
+		var/list/faction_src = faction.Copy()
+		var/list/faction_target = target.faction.Copy()
+		if(!("\ref[src]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
+			faction_src -= "\ref[src]" //if we don't do this, we'll never have an exact match.
+		if(!("\ref[target]" in faction_src))
+			faction_target -= "\ref[target]" //same thing here.
+		return faction_check(faction_src, faction_target, TRUE)
+	return faction_check(faction, target.faction, FALSE)
+
+/proc/faction_check(list/faction_A, list/faction_B, exact_match)
+	var/list/match_list
+	if(exact_match)
+		match_list = faction_A&faction_B //only items in both lists
+		var/length = LAZYLEN(match_list)
+		if(length)
+			return (length == LAZYLEN(faction_A)) //if they're not the same len(gth) or we don't have a len, then this isn't an exact match.
+	else
+		match_list = faction_A&faction_B
+		return LAZYLEN(match_list)
+	return FALSE
 
 
 //This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
@@ -918,6 +985,6 @@ var/next_mob_id = 0
 
 /mob/vv_get_var(var_name)
 	switch(var_name)
-		if ("attack_log")
-			return debug_variable(var_name, attack_log, 0, src, FALSE)
+		if("logging")
+			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()

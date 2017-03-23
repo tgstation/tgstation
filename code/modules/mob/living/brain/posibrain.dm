@@ -37,10 +37,10 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
 	if(newlymade || !posibrain_notif_cooldown)
-		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
+		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
 		if(!newlymade)
 			posibrain_notif_cooldown = 1
-			addtimer(src, "reset_posibrain_cooldown", askDelay, TIMER_NORMAL)
+			addtimer(CALLBACK(src, .proc/reset_posibrain_cooldown), askDelay)
 
 /obj/item/device/mmi/posibrain/proc/reset_posibrain_cooldown()
 	posibrain_notif_cooldown = 0
@@ -48,7 +48,7 @@ var/global/posibrain_notif_cooldown = 0
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
 	if(brainmob && !brainmob.key && !notified)
 		//Start the process of requesting a new ghost.
-		user << begin_activation_message
+		to_chat(user, begin_activation_message)
 		ping_ghosts("requested", FALSE)
 		notified = 1
 		used = 0
@@ -73,7 +73,7 @@ var/global/posibrain_notif_cooldown = 0
 		return
 
 	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
-	if(posi_ask == "No" || qdeleted(src))
+	if(posi_ask == "No" || QDELETED(src))
 		return
 	transfer_personality(user)
 
@@ -98,7 +98,7 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 	if(used || (brainmob && brainmob.key)) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		candidate << "This brain has already been taken! Please try your possesion again later!"
+		to_chat(candidate, "This brain has already been taken! Please try your possession again later!")
 		return FALSE
 	notified = 0
 	if(candidate.mind && !isobserver(candidate))
@@ -106,7 +106,7 @@ var/global/posibrain_notif_cooldown = 0
 	else
 		brainmob.ckey = candidate.ckey
 	name = "[initial(name)] ([brainmob.name])"
-	brainmob << welcome_message
+	to_chat(brainmob, welcome_message)
 	brainmob.mind.assigned_role = new_role
 	brainmob.stat = CONSCIOUS
 	dead_mob_list -= brainmob
@@ -118,31 +118,20 @@ var/global/posibrain_notif_cooldown = 0
 	return TRUE
 
 
-/obj/item/device/mmi/posibrain/examine()
-
-	set src in oview()
-
-	if(!usr || !src)
-		return
-	if((usr.disabilities & BLIND || usr.stat) && !isobserver(usr))
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
-	msg += "<span class='warning'>"
-
+/obj/item/device/mmi/posibrain/examine(mob/user)
+	. = ..()
+	var/msg
 	if(brainmob && brainmob.key)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
-					msg += "It appears to be in stand-by mode.\n" //afk
+					msg = "It appears to be in stand-by mode." //afk
 			if(DEAD)
-				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+				msg = "<span class='deadsay'>It appears to be completely inactive.</span>"
 	else
-		msg += "[dead_message]\n"
-	msg += "<span class='info'>*---------*</span>"
-	usr << msg
-	return
+		msg = "[dead_message]"
+
+	to_chat(user, msg)
 
 /obj/item/device/mmi/posibrain/New()
 	brainmob = new(src)

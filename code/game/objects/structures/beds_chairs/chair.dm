@@ -13,10 +13,19 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
+	layer = OBJ_LAYER
 
-/obj/structure/chair/New()
+/obj/structure/chair/Initialize()
 	..()
-	handle_layer()
+	if(!anchored)	//why would you put these on the shuttle?
+		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+
+/obj/structure/chair/Destroy()
+	RemoveFromLatejoin()
+	return ..()
+
+/obj/structure/chair/proc/RemoveFromLatejoin()
+	latejoin -= src	//These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -65,10 +74,14 @@
 			buckled_mob.setDir(direction)
 
 /obj/structure/chair/proc/handle_layer()
-	if(dir == NORTH)
-		layer = ABOVE_ALL_MOB_LAYER
+	if(has_buckled_mobs() && dir == NORTH)
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
+
+/obj/structure/chair/post_buckle_mob(mob/living/M)
+	..()
+	handle_layer()
 
 /obj/structure/chair/proc/spin()
 	setDir(turn(dir, 90))
@@ -94,7 +107,7 @@
 /obj/structure/chair/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -135,16 +148,21 @@
 	var/image/armrest = null
 	item_chair = null
 
-/obj/structure/chair/comfy/New()
+/obj/structure/chair/comfy/Initialize()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
 	return ..()
 
+/obj/structure/chair/comfy/Destroy()
+	QDEL_NULL(armrest)
+	return ..()
+
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
+	..()
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
-		overlays -= armrest
+		cut_overlay(armrest)
 
 
 /obj/structure/chair/comfy/brown
@@ -192,7 +210,7 @@
 		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags & NODECONSTRUCT)
 			return
 		if(usr.incapacitated())
-			usr << "<span class='warning'>You can't do that right now!</span>"
+			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
@@ -232,10 +250,10 @@
 /obj/item/chair/proc/plant(mob/user)
 	for(var/obj/A in get_turf(loc))
 		if(istype(A,/obj/structure/chair))
-			user << "<span class='danger'>There is already a chair here.</span>"
+			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return
 		if(A.density && !(A.flags & ON_BORDER))
-			user << "<span class='danger'>There is already something here.</span>"
+			to_chat(user, "<span class='danger'>There is already something here.</span>")
 			return
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
@@ -252,7 +270,6 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	user.unEquip(src,1) //Even NODROP chairs are destroyed.
 	qdel(src)
 
 

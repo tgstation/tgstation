@@ -33,7 +33,7 @@
 		return
 	var/stun_amount = 5 + (severity-1 ? 0 : 5)
 	owner.Stun(stun_amount)
-	owner << "<span class='warning'>Your body seizes up!</span>"
+	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
 	return stun_amount
 
 
@@ -55,16 +55,18 @@
 				stored_items += I
 
 		var/list/L = owner.get_empty_held_indexes()
-		if(L && L.len == owner.held_items.len)
-			owner << "<span class='notice'>You are not holding any items, your hands relax...</span>"
+		if(LAZYLEN(L) == owner.held_items.len)
+			to_chat(owner, "<span class='notice'>You are not holding any items, your hands relax...</span>")
 			active = 0
 			stored_items = list()
 		else
 			for(var/obj/item/I in stored_items)
-				owner << "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>"
+				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>")
+				I.flags |= NODROP
+
 	else
 		release_items()
-		owner << "<span class='notice'>Your hands relax...</span>"
+		to_chat(owner, "<span class='notice'>Your hands relax...</span>")
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
@@ -72,18 +74,19 @@
 		return
 	var/range = severity ? 10 : 5
 	var/atom/A
-	release_items()
+	if(active)
+		release_items()
 	..()
 	for(var/obj/item/I in stored_items)
 		A = pick(oview(range))
 		I.throw_at(A, range, 2)
-		owner << "<span class='warning'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))] spasms and throws the [I.name]!</span>"
+		to_chat(owner, "<span class='warning'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))] spasms and throws the [I.name]!</span>")
 	stored_items = list()
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
-		I.flags ^= NODROP
+		I.flags &= ~NODROP
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
@@ -113,7 +116,7 @@
 	if(crit_fail)
 		return
 	crit_fail = TRUE
-	addtimer(src, "reboot", 90 / severity)
+	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
@@ -133,7 +136,7 @@
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	if(prob(60/severity))
-		owner << "<span class='warning'>Your breathing tube suddenly closes!</span>"
+		to_chat(owner, "<span class='warning'>Your breathing tube suddenly closes!</span>")
 		owner.losebreath += 2
 
 
@@ -153,8 +156,11 @@
 
 /obj/item/weapon/storage/box/cyber_implants/bundle
 	name = "boxed cybernetic implants"
-	var/list/boxed = list(/obj/item/organ/cyberimp/eyes/xray,/obj/item/organ/cyberimp/eyes/thermals,
-						/obj/item/organ/cyberimp/brain/anti_stun, /obj/item/organ/cyberimp/chest/reviver)
+	var/list/boxed = list(
+		/obj/item/organ/eyes/robotic/xray,
+		/obj/item/organ/eyes/robotic/thermals,
+		/obj/item/organ/cyberimp/brain/anti_stun,
+		/obj/item/organ/cyberimp/chest/reviver)
 	var/amount = 5
 
 /obj/item/weapon/storage/box/cyber_implants/bundle/New()

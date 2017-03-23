@@ -14,6 +14,10 @@
 	var/metal = 0
 	var/lifetime = 40
 	var/reagent_divisor = 7
+	var/static/list/blacklisted_turfs = typecacheof(list(
+	/turf/open/space/transit,
+	/turf/open/chasm,
+	/turf/open/floor/plating/lava))
 
 
 /obj/effect/particle_effect/foam/metal
@@ -104,9 +108,12 @@
 		if(foundfoam)
 			continue
 
+		if(is_type_in_typecache(T, blacklisted_turfs))
+			continue
+
 		for(var/mob/living/L in T)
 			foam_mob(L)
-		var/obj/effect/particle_effect/foam/F = PoolOrNew(src.type, T)
+		var/obj/effect/particle_effect/foam/F = new src.type(T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
 		F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
@@ -137,7 +144,7 @@
 
 /datum/effect_system/foam_spread/New()
 	..()
-	chemholder = PoolOrNew(/obj)
+	chemholder = new /obj()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	chemholder.reagents = R
 	R.my_atom = chemholder
@@ -165,7 +172,7 @@
 	if(foundfoam)//If there was already foam where we start, we add our foaminess to it.
 		foundfoam.amount += amount
 	else
-		var/obj/effect/particle_effect/foam/F = PoolOrNew(effect_type, location)
+		var/obj/effect/particle_effect/foam/F = new effect_type(location)
 		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
 		F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
@@ -213,7 +220,7 @@
 /obj/structure/foamedmetal/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	user << "<span class='warning'>You hit the metal foam but bounce off it!</span>"
+	to_chat(user, "<span class='warning'>You hit the metal foam but bounce off it!</span>")
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)

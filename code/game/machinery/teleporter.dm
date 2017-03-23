@@ -12,13 +12,14 @@
 	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
-	link_power_station()
 	..()
-	return
 
-/obj/machinery/computer/teleporter/initialize()
+/obj/machinery/computer/teleporter/Initialize()
+	..()
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
@@ -40,12 +41,11 @@
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
-			if(!user.unEquip(L))
-				user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
+			if(!user.transferItemToLoc(L, src))
+				to_chat(user, "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return
-			L.loc = src
 			locked = L
-			user << "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>"
+			to_chat(user, "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>")
 	else
 		return ..()
 
@@ -162,65 +162,47 @@
 		locked = null
 
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)
+	var/list/L = list()
+	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
-		var/list/L = list()
-		var/list/areaindex = list()
-
 		for(var/obj/item/device/radio/beacon/R in teleportbeacons)
 			var/turf/T = get_turf(R)
-			if (!T)
+			if(!T)
 				continue
 			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
 				continue
-			var/tmpname = T.loc.name
-			if(areaindex[tmpname])
-				tmpname = "[tmpname] ([++areaindex[tmpname]])"
-			else
-				areaindex[tmpname] = 1
-			L[tmpname] = R
+			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in tracked_implants)
-			if (!I.imp_in || !ismob(I.loc))
+		for(var/obj/item/weapon/implant/tracking/I in tracked_implants)
+			if(!I.imp_in || !ismob(I.loc))
 				continue
 			else
 				var/mob/M = I.loc
-				if (M.stat == 2)
-					if (M.timeofdeath + 6000 < world.time)
+				if(M.stat == DEAD)
+					if(M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)
 					continue
 				if(T.z == ZLEVEL_CENTCOM)
 					continue
-				var/tmpname = M.real_name
-				if(areaindex[tmpname])
-					tmpname = "[tmpname] ([++areaindex[tmpname]])"
-				else
-					areaindex[tmpname] = 1
-				L[tmpname] = I
+				L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
 
 	else
-		var/list/L = list()
-		var/list/areaindex = list()
 		var/list/S = power_station.linked_stations
 		if(!S.len)
-			user << "<span class='alert'>No connected stations located.</span>"
+			to_chat(user, "<span class='alert'>No connected stations located.</span>")
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			var/turf/T = get_turf(R)
-			if (!T || !R.teleporter_hub || !R.teleporter_console)
+			if(!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
 			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
 				continue
-			var/tmpname = T.loc.name
-			if(areaindex[tmpname])
-				tmpname = "[tmpname] ([++areaindex[tmpname]])"
-			else
-				areaindex[tmpname] = 1
-			L[tmpname] = R
+			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
 		if(target)
@@ -233,7 +215,6 @@
 			if(trg.teleporter_console)
 				trg.teleporter_console.stat &= ~NOPOWER
 				trg.teleporter_console.update_icon()
-	return
 
 /obj/machinery/teleport
 	name = "teleport"
@@ -254,12 +235,11 @@
 
 /obj/machinery/teleport/hub/New()
 	..()
-	link_power_station()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/teleporter_hub
-	name = "circuit board (Teleporter Hub)"
+	name = "Teleporter Hub (Machine Board)"
 	build_path = /obj/machinery/teleport/hub
 	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
@@ -267,7 +247,8 @@
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
-/obj/machinery/teleport/hub/initialize()
+/obj/machinery/teleport/hub/Initialize()
+	..()
 	link_power_station()
 
 /obj/machinery/teleport/hub/Destroy()
@@ -293,7 +274,7 @@
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	if(z == ZLEVEL_CENTCOM)
-		M << "You can't use this here."
+		to_chat(M, "You can't use this here.")
 	if(is_ready())
 		teleport(M)
 		use_power(5000)
@@ -324,7 +305,7 @@
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
-						M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
+						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
 						human.set_species(/datum/species/fly)
 
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
@@ -369,10 +350,9 @@
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
 	B.apply_default_parts(src)
-	link_console_and_hub()
 
 /obj/item/weapon/circuitboard/machine/teleporter_station
-	name = "circuit board (Teleporter Station)"
+	name = "Teleporter Station (Machine Board)"
 	build_path = /obj/machinery/teleport/station
 	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
 	req_components = list(
@@ -381,7 +361,8 @@
 							/obj/item/weapon/stock_parts/console_screen = 1)
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
-/obj/machinery/teleport/station/initialize()
+/obj/machinery/teleport/station/Initialize()
+	..()
 	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()
@@ -419,15 +400,15 @@
 		var/obj/item/device/multitool/M = W
 		if(panel_open)
 			M.buffer = src
-			user << "<span class='caution'>You download the data to the [W.name]'s buffer.</span>"
+			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
 		else
 			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 				if(linked_stations.len < efficiency)
 					linked_stations.Add(M.buffer)
 					M.buffer = null
-					user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
+					to_chat(user, "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
 				else
-					user << "<span class='alert'>This station can't hold more information, try to use better parts.</span>"
+					to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
 		return
 	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
@@ -442,7 +423,7 @@
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			link_console_and_hub()
-			user << "<span class='caution'>You reconnect the station to nearby machinery.</span>"
+			to_chat(user, "<span class='caution'>You reconnect the station to nearby machinery.</span>")
 			return
 	else
 		return ..()

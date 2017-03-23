@@ -17,3 +17,8 @@
 /mob/living/silicon/robot/experience_pressure_difference(pressure_difference, direction)
 	if(!magpulse)
 		return ..()
+
+/mob/living/silicon/robot/Moved()
+	. = ..()
+	if(riding_datum)
+		riding_datum.on_vehicle_move()

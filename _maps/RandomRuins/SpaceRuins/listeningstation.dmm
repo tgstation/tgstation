@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/space,
 /area/space)
@@ -250,7 +250,7 @@
 	},
 /area/ruin/unpowered/no_grav)
 "M" = (
-/turf/open/floor/plasteel/airless/circuit/gcircuit,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "N" = (
 /turf/closed/wall/r_wall,

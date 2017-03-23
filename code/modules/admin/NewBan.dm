@@ -103,7 +103,7 @@ var/savefile/Banlist
 
 	Banlist.cd = "/base"
 	if ( Banlist.dir.Find("[ckey][computerid]") )
-		usr << text("<span class='danger'>Ban already exists.</span>")
+		to_chat(usr, text("<span class='danger'>Ban already exists.</span>"))
 		return 0
 	else
 		Banlist.dir.Add("[ckey][computerid]")
@@ -117,9 +117,9 @@ var/savefile/Banlist
 		if (temp)
 			Banlist["minutes"] << bantimestamp
 		if(!temp)
-			add_note(ckey, "Permanently banned - [reason]", null, bannedby, 0, null, 0)
+			create_message("note", ckey, bannedby, "Permanently banned - [reason]", null, null, 0, 0)
 		else
-			add_note(ckey, "Banned for [minutes] minutes - [reason]", null, bannedby, 0, null, 0)
+			create_message("note", ckey, bannedby, "Banned for [minutes] minutes - [reason]", null, null, 0, 0)
 	return 1
 
 /proc/RemoveBan(foldername)
@@ -134,11 +134,11 @@ var/savefile/Banlist
 	if (!Banlist.dir.Remove(foldername)) return 0
 
 	if(!usr)
-		log_admin("Ban Expired: [key]")
+		log_admin_private("Ban Expired: [key]")
 		message_admins("Ban Expired: [key]")
 	else
 		ban_unban_log_save("[key_name(usr)] unbanned [key]")
-		log_admin("[key_name(usr)] unbanned [key]")
+		log_admin_private("[key_name(usr)] unbanned [key]")
 		message_admins("[key_name_admin(usr)] unbanned: [key]")
 		feedback_inc("ban_unban",1)
 		usr.client.holder.DB_ban_unban( ckey(key), BANTYPE_ANY_FULLBAN)

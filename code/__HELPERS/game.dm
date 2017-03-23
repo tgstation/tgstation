@@ -17,12 +17,6 @@
 	var/area/Y = get_area(X)
 	return Y.name
 
-/proc/get_area_master(O)
-	var/area/A = get_area(O)
-	if(A && A.master)
-		A = A.master
-	return A
-
 /proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)
@@ -43,6 +37,31 @@
 		areas |= T.loc
 	return areas
 
+/proc/get_adjacent_areas(atom/center)
+	. = list(get_area(get_ranged_target_turf(center, NORTH, 1)),
+			get_area(get_ranged_target_turf(center, SOUTH, 1)),
+			get_area(get_ranged_target_turf(center, EAST, 1)),
+			get_area(get_ranged_target_turf(center, WEST, 1)))
+	listclearnulls(.)
+
+/proc/get_open_turf_in_dir(atom/center, dir)
+	var/turf/open/T = get_ranged_target_turf(center, dir, 1)
+	if(istype(T))
+		return T
+
+/proc/get_adjacent_open_turfs(atom/center)
+	. = list(get_open_turf_in_dir(center, NORTH),
+			get_open_turf_in_dir(center, SOUTH),
+			get_open_turf_in_dir(center, EAST),
+			get_open_turf_in_dir(center, WEST))
+	listclearnulls(.)
+
+/proc/get_adjacent_open_areas(atom/center)
+	. = list()
+	var/list/adjacent_turfs = get_adjacent_open_turfs(center)
+	for(var/I in adjacent_turfs)
+		. |= get_area(I)
+
 // Like view but bypasses luminosity check
 
 /proc/get_hear(range, atom/source)
@@ -56,13 +75,13 @@
 	return heard
 
 /proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
-	var/area/our_area = get_area_master(the_area)
+	var/area/our_area = get_area(the_area)
 	for(var/C in living_mob_list)
 		if(!istype(C, check_type))
 			continue
 		if(C == must_be_alone)
 			continue
-		if(our_area == get_area_master(C))
+		if(our_area == get_area(C))
 			return 0
 	return 1
 
@@ -319,24 +338,22 @@
 	O.screen_loc = screen_loc
 	return O
 
-/proc/Show2Group4Delay(obj/O, list/group, delay=0)
-	if(!isobj(O))
-		return
-	if(!group)
-		group = clients
-	for(var/client/C in group)
-		C.screen += O
-	if(delay)
-		spawn(delay)
-			for(var/client/C in group)
-				C.screen -= O
+/proc/remove_images_from_clients(image/I, list/show_to)
+	for(var/client/C in show_to)
+		C.images -= I
 
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	spawn(duration)
-		for(var/client/C in show_to)
-			C.images -= I
+	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration)
+
+/proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
+	var/list/viewing = list()
+	for(var/m in viewers(target))
+		var/mob/M = m
+		if(M.client)
+			viewing += M.client
+	flick_overlay(I, viewing, duration)
 
 /proc/get_active_player_count(var/alive_check = 0, var/afk_check = 0, var/human_check = 0)
 	// Get active players who are playing in the round
@@ -397,7 +414,30 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null)
+/proc/showCandidatePollWindow(mob/dead/observer/G, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
+	set waitfor = 0
+
+	G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
+	if(flashwindow)
+		window_flash(G.client)
+	switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+		if(1)
+			to_chat(G, "<span class='notice'>Choice registered: Yes.</span>")
+			if((world.time-time_passed)>poll_time)
+				to_chat(G, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
+				G << 'sound/machines/buzz-sigh.ogg'
+			else
+				candidates += G
+		if(2)
+			to_chat(G, "<span class='danger'>Choice registered: No.</span>")
+		if(3)
+			var/list/L = poll_ignore[ignore_category]
+			if(!L)
+				poll_ignore[ignore_category] = list()
+			poll_ignore[ignore_category] += G.ckey
+			to_chat(G, "<span class='danger'>Choice registered: Never for this round.</span>")
+
+/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null, flashwindow = TRUE)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	if (!Question)
@@ -415,24 +455,8 @@
 		if (jobbanType)
 			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
 				continue
-		spawn(0)
-			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
-			switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
-				if(1)
-					G << "<span class='notice'>Choice registered: Yes.</span>"
-					if((world.time-time_passed)>poll_time)
-						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
-						G << 'sound/machines/buzz-sigh.ogg'
-					else
-						candidates += G
-				if(2)
-					G << "<span class='danger'>Choice registered: No.</span>"
-				if(3)
-					var/list/L = poll_ignore[ignore_category]
-					if(!L)
-						poll_ignore[ignore_category] = list()
-					poll_ignore[ignore_category] += G.ckey
-					G << "<span class='danger'>Choice registered: Never for this round.</span>"
+
+		showCandidatePollWindow(G, poll_time, Question, candidates, ignore_category, time_passed, flashwindow)
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.
@@ -440,11 +464,13 @@
 		if(!G.key || !G.client)
 			candidates.Remove(G)
 
+	listclearnulls(candidates)
+
 	return candidates
 
 /proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
 	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
-	if(!M || qdeleted(M) || !M.loc)
+	if(!M || QDELETED(M) || !M.loc)
 		return list()
 	return L
 
@@ -453,7 +479,7 @@
 	var/i=1
 	for(var/v in mobs)
 		var/atom/A = v
-		if(!A || qdeleted(A) || !A.loc)
+		if(!A || QDELETED(A) || !A.loc)
 			mobs.Cut(i,i+1)
 		else
 			++i
@@ -472,12 +498,41 @@
 
 	return new_character
 
-/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of world << where needed
+/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of to_chat(world, where needed)
 	for(var/M in player_list)
 		if(M && !isnewplayer(M))
-			M << thing
+			to_chat(M, thing)
 
-/proc/window_flash(var/client_or_usr)
-	if (!client_or_usr)
+/proc/window_flash(client/C, ignorepref = FALSE)
+	if(ismob(C))
+		var/mob/M = C
+		if(M.client)
+			C = M.client
+	if(!C || (!C.prefs.windowflashing && !ignorepref))
 		return
-	winset(client_or_usr, "mainwindow", "flash=5")
+	winset(C, "mainwindow", "flash=5")
+
+/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+	if(ticker.current_state != GAME_STATE_PLAYING || !character)
+		return
+	var/area/A = get_area(character)
+	var/message = "<span class='game deadsay'><span class='name'>\
+		[character.real_name]</span> ([rank]) has arrived at the station at \
+		<span class='name'>[A.name]</span>.</span>"
+	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if((!announcement_systems.len) || (!character.mind))
+		return
+	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
+		return
+
+	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+
+/proc/GetRedPart(const/hexa)
+	return hex2num(copytext(hexa, 2, 4))
+
+/proc/GetGreenPart(const/hexa)
+	return hex2num(copytext(hexa, 4, 6))
+
+/proc/GetBluePart(const/hexa)
+	return hex2num(copytext(hexa, 6, 8))

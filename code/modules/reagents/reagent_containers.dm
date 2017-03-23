@@ -21,6 +21,10 @@
 		var/datum/disease/F = new spawned_disease(0)
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", disease_amount, data)
+
+	add_initial_reagents()
+
+/obj/item/weapon/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 
@@ -34,7 +38,7 @@
 					amount_per_transfer_from_this = possible_transfer_amounts[i+1]
 				else
 					amount_per_transfer_from_this = possible_transfer_amounts[1]
-				user << "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>"
+				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
 				return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
@@ -63,7 +67,7 @@
 		covered = "mask"
 	if(covered)
 		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
-		user << "<span class='warning'>You have to remove [who] [covered] first!</span>"
+		to_chat(user, "<span class='warning'>You have to remove [who] [covered] first!</span>")
 		return 0
 	return 1
 
@@ -71,7 +75,7 @@
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			R.on_ex_act()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		..()
 
 /obj/item/weapon/reagent_containers/fire_act(exposed_temperature, exposed_volume)
@@ -81,12 +85,15 @@
 
 /obj/item/weapon/reagent_containers/throw_impact(atom/target)
 	. = ..()
+	SplashReagents(target, TRUE)
 
+/obj/item/weapon/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)
 		return
 
 	if(ismob(target) && target.reagents)
-		reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
+		if(thrown)
+			reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
 		var/mob/M = target
 		var/R
 		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
@@ -99,14 +106,18 @@
 			add_logs(thrownby, M, "splashed", R)
 		reagents.reaction(target, TOUCH)
 
-	else if((target.CanPass(src, get_turf(src))) && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
+	else if((target.CanPass(src, get_turf(src))) && thrown && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
 		return
 
 	else
+		if(isturf(target) && reagents.reagent_list.len && thrownby)
+			add_logs(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "at [target][COORD(target)]")
+			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] at [COORD(target)].")
+			message_admins("[key_name_admin(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
-		if(qdeleted(src))
+		if(QDELETED(src))
 			return
 
 	reagents.clear_reagents()

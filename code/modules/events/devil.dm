@@ -32,15 +32,15 @@
 
 	var/mob/living/carbon/human/devil = create_event_devil(spawn_loc)
 	Mind.transfer_to(devil)
-	ticker.mode.finalize_devil(Mind)
+	ticker.mode.finalize_devil(Mind, FALSE)
 	ticker.mode.add_devil_objectives(src, 2)
 	Mind.announceDevilLaws()
 	Mind.announce_objectives()
 
 
 	spawned_mobs += devil
-	message_admins("[key] has been made into a devil by an event.")
-	log_game("[key] was spawned as a devil by an event.")
+	message_admins("[key_name_admin(devil)] has been made into a devil by an event.")
+	log_game("[key_name(devil)] was spawned as a devil by an event.")
 	var/datum/job/jobdatum = SSjob.GetJob("Assistant")
 	devil.job = jobdatum.title
 	jobdatum.equip(devil)

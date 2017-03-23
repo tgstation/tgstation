@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/ed209
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot.  He looks less than thrilled."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "ed2090"
 	density = 1
 	anchored = 0
@@ -42,7 +42,7 @@
 	var/shoot_sound = 'sound/weapons/Taser.ogg'
 
 
-/mob/living/simple_animal/bot/ed209/New(loc,created_name,created_lasercolor)
+/mob/living/simple_animal/bot/ed209/Initialize(mapload,created_name,created_lasercolor)
 	..()
 	if(created_name)
 		name = created_name
@@ -178,7 +178,7 @@ Auto Patrol[]"},
 	..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
+			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = 0
@@ -306,13 +306,13 @@ Auto Patrol[]"},
 	target = null
 	last_found = world.time
 	frustration = 0
-	addtimer(src, "handle_automated_action", 0) //ensure bot quickly responds
+	INVOKE_ASYNC(src, .proc/handle_automated_action) //ensure bot quickly responds
 
 /mob/living/simple_animal/bot/ed209/proc/back_to_hunt()
 	anchored = 0
 	frustration = 0
 	mode = BOT_HUNT
-	addtimer(src, "handle_automated_action", 0) //ensure bot quickly responds
+	INVOKE_ASYNC(src, .proc/handle_automated_action) //ensure bot quickly responds
 
 // look for a criminal in view of the bot
 
@@ -358,7 +358,7 @@ Auto Patrol[]"},
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.add_overlay(image('icons/obj/aibots.dmi', "hs_hole"))
+	Sa.add_overlay(image('icons/mob/aibots.dmi', "hs_hole"))
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -446,7 +446,7 @@ Auto Patrol[]"},
 	if(severity==2 && prob(70))
 		..(severity-1)
 	else
-		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+		new /obj/effect/overlay/temp/emp(loc)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12,src))
 			if(C.stat==2)

@@ -14,8 +14,8 @@
  */
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
-/proc/sanitizeSQL(t as text)
-	var/sqltext = dbcon.Quote(t);
+/proc/sanitizeSQL(t)
+	var/sqltext = dbcon.Quote("[t]");
 	return copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
 
 /proc/format_table_name(table as text)
@@ -81,14 +81,21 @@
 		return text		//only accepts the text if it has some non-spaces
 
 // Used to get a properly sanitized input, of max_length
-/proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN)
+// no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
+/proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as text|null
-	return trim(html_encode(name), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
+	if(no_trim)
+		return copytext(html_encode(name), 1, max_length)
+	else
+		return trim(html_encode(name), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
 // Used to get a properly sanitized multiline input, of max_length
-/proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN)
+/proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as message|null
-	return html_encode(trim(name, max_length))
+	if(no_trim)
+		return copytext(html_encode(name), 1, max_length)
+	else
+		return trim(html_encode(name), max_length)
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(t_in, allow_numbers=0, max_length=MAX_NAME_LEN)
@@ -205,6 +212,20 @@
 	var/start = length(text) - length(suffix)
 	if(start)
 		return findtextEx(text, suffix, start, null)
+
+//Checks if any of a given list of needles is in the haystack
+/proc/text_in_list(haystack, list/needle_list, start=1, end=0)
+	for(var/needle in needle_list)
+		if(findtext(haystack, needle, start, end))
+			return 1
+	return 0
+
+//Like above, but case sensitive
+/proc/text_in_list_case(haystack, list/needle_list, start=1, end=0)
+	for(var/needle in needle_list)
+		if(findtextEx(haystack, needle, start, end))
+			return 1
+	return 0
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
@@ -444,7 +465,7 @@ var/list/binary = list("0","1")
 //As far as SS13 is concerned this is write only data. You can't change something
 //in the json file and have it be reflected in the in game item/mob it came from.
 //(That's what things like savefiles are for) Note that this list is not shuffled.
-/proc/twitterize(list/proposed, filename, cullshort = 0, storemax = 1000)
+/proc/twitterize(list/proposed, filename, cullshort = 1, storemax = 1000)
 	if(!islist(proposed) || !filename || !config.log_twitter)
 		return
 
@@ -457,19 +478,21 @@ var/list/binary = list("0","1")
 
 	var/list/accepted = list()
 	for(var/string in proposed)
-		if(findtext(string,is_website) || findtext(string,is_email) || findtext(string,all_invalid_symbols))
+		if(findtext(string,is_website) || findtext(string,is_email) || findtext(string,all_invalid_symbols) || !findtext(string,alphanumeric))
 			continue
 		var/buffer = ""
 		var/early_culling = TRUE
-		for(var/pos = 1, pos != lentext(string), pos++)
+		for(var/pos = 1, pos <= lentext(string), pos++)
 			var/let = copytext(string, pos, (pos + 1) % lentext(string))
 			if(early_culling && !findtext(let,alphanumeric))
 				continue
 			early_culling = FALSE
 			buffer += let
+		if(!findtext(buffer,alphanumeric))
+			continue
 		var/punctbuffer = ""
 		var/cutoff = lentext(buffer)
-		for(var/pos = lentext(buffer), pos != 0, pos--)
+		for(var/pos = lentext(buffer), pos >= 0, pos--)
 			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
 			if(findtext(let,alphanumeric))
 				break
@@ -480,13 +503,13 @@ var/list/binary = list("0","1")
 			var/exclaim = FALSE
 			var/question = FALSE
 			var/periods = 0
-			for(var/pos = lentext(punctbuffer), pos != 0, pos--)
-				var/punct = copytext(buffer, pos, (pos + 1) % lentext(buffer))
-				if(!exclaim && punct == "!")
+			for(var/pos = lentext(punctbuffer), pos >= 0, pos--)
+				var/punct = copytext(punctbuffer, pos, (pos + 1) % lentext(punctbuffer))
+				if(!exclaim && findtext(punct,"!"))
 					exclaim = TRUE
-				if(!question && punct == "?")
+				if(!question && findtext(punct,"?"))
 					question = TRUE
-				if(!exclaim && !question && punct == ".")
+				if(!exclaim && !question && findtext(punct,"."))
 					periods += 1
 			if(exclaim)
 				if(question)
@@ -496,12 +519,13 @@ var/list/binary = list("0","1")
 			else if(question)
 				punctbuffer = "?"
 			else if(periods)
-				if(periods >= 3)
+				if(periods > 1)
 					punctbuffer = "..."
 				else
 					punctbuffer = "" //Grammer nazis be damned
 			buffer = copytext(buffer, 1, cutoff) + punctbuffer
-
+		if(!findtext(buffer,alphanumeric))
+			continue
 		if(!buffer || lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted)
 			continue
 
@@ -521,10 +545,68 @@ var/list/binary = list("0","1")
 					break
 
 	var/list/finalized = list()
-	finalized["data"] = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
+	finalized = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
 	listclearnulls(finalized)
-	if(!isemptylist(finalized) && finalized.len > storemax)
+	if(!isemptylist(finalized) && length(finalized) > storemax)
 		finalized.Cut(storemax + 1)
 	fdel(log)
 
-	log << json_encode(finalized)
+	var/list/tosend = list()
+	tosend["data"] = finalized
+	log << json_encode(tosend)
+
+//Used for applying byonds text macros to strings that are loaded at runtime
+/proc/apply_text_macros(string)
+	var/next_backslash = findtext(string, "\\")
+	if(!next_backslash)
+		return string
+	
+	var/leng = length(string)
+
+	var/next_space = findtext(string, " ", next_backslash + 1)
+	if(!next_space)
+		next_space = leng - next_backslash
+
+	if(!next_space)	//trailing bs
+		return string
+
+	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
+	var/macro = lowertext(copytext(string, next_backslash + 1, next_space))
+	var/rest = next_backslash > leng ? "" : copytext(string, next_space + 1)
+
+	//See http://www.byond.com/docs/ref/info.html#/DM/text/macros
+	switch(macro)
+		//prefixes/agnostic
+		if("the")
+			rest = text("\the []", rest)
+		if("a")
+			rest = text("\a []", rest)
+		if("an")
+			rest = text("\an []", rest)
+		if("proper")
+			rest = text("\proper []", rest)
+		if("improper")
+			rest = text("\improper []", rest)
+		if("roman")
+			rest = text("\roman []", rest)
+		//postfixes
+		if("th")
+			base = text("[]\th", rest)
+		if("s")
+			base = text("[]\s", rest)
+		if("he")
+			base = text("[]\he", rest)
+		if("she")
+			base = text("[]\she", rest)
+		if("his")
+			base = text("[]\his", rest)
+		if("himself")
+			base = text("[]\himself", rest)
+		if("herself")
+			base = text("[]\herself", rest)
+		if("hers")
+			base = text("[]\hers", rest)
+
+	. = base
+	if(rest)
+		. += .(rest)
