@@ -1051,6 +1051,7 @@
 #include "code\modules\atmospherics\machinery\components\unary_devices\vent_pump.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\vent_scrubber.dm"
 #include "code\modules\atmospherics\machinery\other\meter.dm"
+#include "code\modules\atmospherics\machinery\other\miner.dm"
 #include "code\modules\atmospherics\machinery\other\zvent.dm"
 #include "code\modules\atmospherics\machinery\pipes\manifold.dm"
 #include "code\modules\atmospherics\machinery\pipes\manifold4w.dm"
