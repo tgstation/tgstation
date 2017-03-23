@@ -425,6 +425,8 @@
 	var/list/keys = list()
 	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
 
+	var/datum/emote/ref
+	var/list/emote_list = ref.emote_list
 	for(var/e in emote_list)
 		if(e in keys)
 			continue

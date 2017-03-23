@@ -1,8 +1,6 @@
 #define EMOTE_VISIBLE 1
 #define EMOTE_AUDIBLE 2
 
-var/global/list/emote_list = list()
-
 /datum/emote
 	var/key = "" //What calls the emote
 	var/key_third_person = "" //This will also call the emote
@@ -21,6 +19,7 @@ var/global/list/emote_list = list()
 	var/list/mob_type_allowed_typecache = list() //Types that are allowed to use that emote
 	var/list/mob_type_blacklist_typecache = list() //Types that are NOT allowed to use that emote
 	var/stat_allowed = CONSCIOUS
+	var/static/list/emote_list = list()
 
 /datum/emote/New()
 	..()
