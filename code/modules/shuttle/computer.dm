@@ -71,12 +71,6 @@
 			else
 				to_chat(usr, "<span class='notice'>Unable to comply.</span>")
 
-/mob/camera/aiEye/remote/ship_scanner
-	name = "holo-drone"
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "construction_drone"
-
-
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(!emagged)
 		src.req_access = list()
