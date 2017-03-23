@@ -14,6 +14,9 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	var/list/botPool_l = list() //list of all npcs using the pool
 	var/list/botPool_l_non = list() //list of all non SNPC mobs using the pool
 
+	var/NPCsToSpawn = 25
+	var/populated_centcomm = FALSE
+
 /datum/controller/subsystem/npcpool/proc/insertBot(toInsert)
 	if(istype(toInsert,/mob/living/carbon/human/interactive))
 		botPool_l |= toInsert
@@ -44,6 +47,9 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	var/npcCount = 1
 
 	cleanNull()
+
+	if(!populated_centcomm && EMERGENCY_ESCAPED_OR_ENDGAMED)
+		PopulateCentcomm()		
 
 	//SNPC handling
 	for(var/mob/living/carbon/human/interactive/check in botPool_l)
@@ -125,3 +131,32 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		botPool_l = SSnpc.botPool_l
 	if (istype(SSnpc.botPool_l_non))
 		botPool_l_non = SSnpc.botPool_l_non
+
+/datum/controller/subsystem/npcpool/proc/PopulateCentcomm()
+	set waitfor = FALSE
+	populated_centcomm = TRUE
+
+	var/list/centcomm_areas = list()
+	for(var/area/centcom/evac/D in sortedAreas)
+		centcomm_areas += D
+		CHECK_TICK
+	
+	if(!centcomm_areas.len)
+		return
+
+	for(var/I in 1 to NPCsToSpawn)
+		var/list/candidates = get_area_turfs(pick(centcomm_areas))
+		if(!LAZYLEN(candidates))
+			break
+		
+		while(candidates.len)
+			var/turf/T = pick(candidates)
+			if(!is_blocked_turf(T))
+				new /mob/living/carbon/human/interactive(T)
+				break
+			else
+				candidates -= T
+		if(!candidates.len)
+			break
+		CHECK_TICK
+		
