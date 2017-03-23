@@ -1,5 +1,7 @@
 GLOBAL_REAL(config, /datum/configuration)
 
+GLOBAL_VAR(revdata, /datum/getrev)
+
 GLOBAL_VAR(host)
 GLOBAL_VAR(join_motd)
 GLOBAL_VAR(station_name)

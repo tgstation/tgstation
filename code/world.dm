@@ -36,7 +36,7 @@
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 	load_configuration()
-	revdata.DownloadPRDetails()
+	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
 	load_admins()
@@ -101,8 +101,8 @@
 		s["host"] = host ? host : null
 		s["active_players"] = get_active_player_count()
 		s["players"] = GLOB.clients.len
-		s["revision"] = revdata.commit
-		s["revision_date"] = revdata.date
+		s["revision"] = GLOB.revdata.commit
+		s["revision_date"] = GLOB.revdata.date
 
 		var/list/adm = get_admin_counts()
 		var/list/presentmins = adm["present"]
@@ -270,7 +270,7 @@
 	F << the_mode
 
 /world/proc/load_motd()
-	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + revdata.GetTestMergeInfo()
+	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
 
 /world/proc/load_configuration()
 	config = new /datum/configuration()
