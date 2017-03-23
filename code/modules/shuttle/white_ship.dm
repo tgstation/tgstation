@@ -108,19 +108,6 @@
 	var/acceleration = 1
 	var/mob/living/eye_user = null
 	var/obj/machinery/computer/engi_nav/origin
-	var/eye_initialized = 0
-	var/visible_icon = 0
-	var/image/user_image = null
-	/*
-			user.vision_flags = SEE_TURFS
-			user.darkness_view = 1
-			user.invis_view = SEE_INVISIBLE_MINIMUM
-			to_chat(user, "<span class='notice'>You activate the ship's scanners to search for a destination.</span>")
-			user.invis_update()
-			user.client.eye = locate(125,125,1)
-			user.client.change_view(125)
-			C.mouse_pointer_icon
-			*/
 
 /mob/camera/aiEye/nav/Destroy()
 	eye_user = null
@@ -171,7 +158,7 @@
 	N.eye_user = null
 	if(C.client)
 		C.reset_perspective(null)
-
+		C.client.change_view(7)
 	C.remote_control = null
 	C.unset_machine()
 	src.Remove(C)
@@ -198,36 +185,173 @@
 		return
 	var/mob/living/C = target
 	var/mob/camera/aiEye/nav/N = C.remote_control
-	var/list/zees = list(1,2,3,4,5,7,8,9)
+	var/list/zees = list(1,7,8,9,10,11,12)
 	var/selection = input(C,"Select Local Quadrant Number", "Quadrant Number") as null|anything in zees
 	N.setLoc(locate(125,125,selection))
 
 
+
 // Ship's construction systems
 
-/obj/machinery/computer/camera_advanced/base_construction/ship
-	name = "long distance construction console"
 
-/obj/machinery/computer/camera_advanced/base_construction/CreateEye()
-	eyeobj = new /mob/camera/aiEye/remote/base_construction/ship(get_turf(src))
-	eyeobj.origin = src
 
-/datum/action/innate/aux_base/ship
-	var/obj/machinery/computer/camera_advanced/base_construction/ship
+/obj/machinery/computer/ship_construction
+	name = "ship contruction console"
+	desc = "An engineering computer integrated with a camera-assisted rapid construction drone."
+	var/obj/item/weapon/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
+	var/datum/action/innate/camera_off/engi_ship = new
+	var/datum/action/innate/engi_ship/switch_mode/switch_mode_action = new //Action for switching the RCD's build modes
+	var/datum/action/innate/engi_ship/build/build_action = new //Action for using the RCD
+	var/datum/action/innate/engi_ship/airlock_type/airlock_mode_action = new //Action for setting the airlock type
+	var/datum/action/innate/engi_ship/recaller/rec = new // BRING HIM HOME
+	var/mob/camera/aiEye/construction/eyeobj
 
-/datum/action/innate/aux_base/ship/check_spot()
-	if(get_dist(origin, remote_eye) > 60)
-		return FALSE
+/obj/machinery/computer/ship_construction/attack_hand(mob/user)
+	if(!eyeobj)
+		eyeobj = new(get_turf(src))
+		eyeobj.origin = src
+	GrantActions(user)
+	user.remote_control = eyeobj
+	user.reset_perspective(eyeobj)
+	user.sight |= SEE_TURFS
+	user.update_sight()
+
+
+/obj/machinery/computer/ship_construction/New()
+	..()
+	RCD = new /obj/item/weapon/rcd/internal(src)
+
+/obj/machinery/computer/ship_construction/Destroy()
+	qdel(RCD)
+	return ..()
+
+/obj/machinery/computer/ship_construction/proc/GrantActions(mob/living/user)
+	engi_ship.target = user
+	engi_ship.Grant(user)
+	switch_mode_action.target = src
+	switch_mode_action.Grant(user)
+	build_action.target = src
+	build_action.Grant(user)
+	airlock_mode_action.target = src
+	airlock_mode_action.Grant(user)
+	rec.target = src
+	rec.Grant(user)
+
+/obj/machinery/computer/ship_construction/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/rcd_ammo) || istype(W, /obj/item/stack/sheet))
+		RCD.attackby(W, user, params) //If trying to feed the console more materials, pass it along to the RCD.
 	else
-		return TRUE
+		return ..()
 
-
-/mob/camera/aiEye/remote/base_construction/ship
+/mob/camera/aiEye/construction
 	name = "nss dauntless holo-drone"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "construction_drone"
+	invisibility = INVISIBILITY_MAXIMUM
+	var/obj/machinery/computer/ship_construction/origin
 
 
-/mob/camera/aiEye/remote/base_construction/ship/setLoc(var/t)
-	if(get_dist(src,origin)<60)
+/mob/camera/aiEye/construction/setLoc(var/t)
+	if(get_dist(origin, t) < 75)
+		t = get_turf(t)
 		loc = t
 	else
-		world << "movement failed, distance is [get_dist(t,origin)]"
+		playsound(origin, 'sound/machines/buzz-sigh.ogg', 60, 1)
+
+/mob/camera/aiEye/construction/relaymove(mob/user, direct)
+	dir = direct //This camera eye is visible as a drone, and needs to keep the dir updated
+	..()
+
+/datum/action/innate/engi_ship //Parent aux base action
+	var/mob/living/C //Mob using the action
+	var/mob/camera/aiEye/construction/remote_eye //Console's eye mob
+	var/obj/machinery/computer/ship_construction/B //Console itself
+
+/datum/action/innate/engi_ship/Activate()
+	if(!target)
+		return TRUE
+	C = owner
+	remote_eye = C.remote_control
+	B = target
+	if(!B.RCD) //The console must always have an RCD.
+		B.RCD = new /obj/item/weapon/rcd/internal(src) //If the RCD is lost somehow, make a new (empty) one!
+
+/datum/action/innate/engi_ship/proc/check_spot()
+	var/turf/build_target = get_turf(remote_eye)
+	if(get_dist(remote_eye.origin, build_target) > 75 || build_target.z != ZLEVEL_STATION)
+		to_chat(owner, "<span class='warning'>The ship is out of range, recall to its position and try again.</span>")
+		return FALSE
+	return TRUE
+
+/datum/action/innate/camera_off/engi_ship
+	name = "Log out"
+
+/datum/action/innate/camera_off/engi_ship/Activate()
+	if(!owner || !owner.remote_control)
+		return
+
+	var/mob/camera/aiEye/construction/remote_eye = owner.remote_control
+
+	var/obj/machinery/computer/ship_construction/origin = remote_eye.origin
+	origin.switch_mode_action.Remove(target)
+	origin.build_action.Remove(target)
+	origin.airlock_mode_action.Remove(target)
+	origin.rec.Remove(target)
+	..()
+
+//*******************FUNCTIONS*******************
+
+/datum/action/innate/engi_ship/build
+	name = "Build"
+	button_icon_state = "build"
+
+/datum/action/innate/engi_ship/build/Activate()
+	if(..())
+		return
+
+	if(!check_spot())
+		return
+
+	var/atom/movable/rcd_target
+	var/turf/target_turf = get_turf(remote_eye)
+
+	//Find airlocks
+	rcd_target = locate(/obj/machinery/door/airlock) in target_turf
+
+	if(!rcd_target)
+		rcd_target = locate (/obj/structure) in target_turf
+
+	if(!rcd_target || !rcd_target.anchored)
+		rcd_target = target_turf
+
+	owner.changeNext_move(CLICK_CD_RANGE)
+	B.RCD.afterattack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
+	playsound(target_turf, 'sound/items/Deconstruct.ogg', 60, 1)
+
+/datum/action/innate/engi_ship/switch_mode
+	name = "Switch Mode"
+	button_icon_state = "builder_mode"
+
+/datum/action/innate/engi_ship/switch_mode/Activate()
+	if(..())
+		return
+	var/list/buildlist = list("Walls and Floors" = 1,"Airlocks" = 2,"Deconstruction" = 3,"Windows and Grilles" = 4)
+	var/buildmode = input("Set construction mode.", "construction options", null) in buildlist
+	B.RCD.mode = buildlist[buildmode]
+	to_chat(owner, "Build mode is now [buildmode].")
+
+/datum/action/innate/engi_ship/airlock_type
+	name = "Select Airlock Type"
+	button_icon_state = "airlock_select"
+
+/datum/action/innate/engi_ship/airlock_type/Activate()
+	if(..())
+		return
+	B.RCD.change_airlock_setting()
+
+/datum/action/innate/engi_ship/recaller/recall
+	name = "Recall the Holo-drone"
+	button_icon_state = "mech_overload_off"
+
+/datum/action/innate/engi_ship/recaller/recall/Activate()
+	remote_eye.setLoc(get_turf(B))

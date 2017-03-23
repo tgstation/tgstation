@@ -15546,7 +15546,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/engi_ship)
 "Qm" = (
-/obj/machinery/computer/camera_advanced/base_construction/ship,
+/obj/machinery/computer/ship_construction,
 /turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "Qn" = (
@@ -15597,7 +15597,7 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "Qu" = (
-/obj/machinery/computer/camera_advanced/base_construction/ship,
+/obj/machinery/computer/ship_construction,
 /turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "Qv" = (
