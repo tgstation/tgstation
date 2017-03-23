@@ -270,7 +270,7 @@ Proc for attack log creation, because really why not
 			. = 0
 			break
 
-		if(Tloc && (QDELETED(target) || Tloc != target.loc))
+		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
 				. = 0
 				break
