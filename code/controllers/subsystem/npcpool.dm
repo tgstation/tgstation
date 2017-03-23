@@ -16,6 +16,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 
 	var/NPCsToSpawn = 15
 	var/populated_centcomm = FALSE
+	var/list/spawned_npcs = list()
 
 /datum/controller/subsystem/npcpool/proc/insertBot(toInsert)
 	if(istype(toInsert,/mob/living/carbon/human/interactive))
@@ -152,11 +153,20 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		while(candidates.len)
 			var/turf/T = pick(candidates)
 			if(!is_blocked_turf(T))
-				new /mob/living/carbon/human/interactive(T)
+				spawned_npcs += new /mob/living/carbon/human/interactive(T)
 				break
 			else
 				candidates -= T
 		if(!candidates.len)
 			break
+		if(!populated_centcomm)
+			return
 		CHECK_TICK
 		
+/datum/controller/subsystem/npcpool/proc/DepopulateCentcom()
+	populated_centcomm = FALSE
+	NPCsToSpawn = 0
+	sleep(1)	//wait for the loop to end
+	for(var/I in spawned_npcs)
+		qdel(I)
+	LAZYCLEARLIST(spawned_npcs)
