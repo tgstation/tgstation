@@ -1,7 +1,7 @@
 
 /obj/item/weapon/gun/energy/beam_rifle
-	name = ""
-	desc = ""
+	name = "particle acceleration rifle"
+	desc = "A powerful marksman rifle that uses highly focused particle beams to obliterate targets."
 	icon = 'icons/obj/guns/'
 	icon_state = ""
 	item_state = ""
@@ -154,8 +154,8 @@
 /datum/action/item_action/beam_rifle_power
 	name = "Adjust Power Output"
 	var/obj/item/weapon/gun/energy/beam_rifle/gun
-	button_icon_state = "
-	background_icon_state = "
+	button_icon_state = ""
+	background_icon_state = ""
 
 /datum/action/item_action/beam_rifle_power/Trigger()
 	gun.select_power(owner)
@@ -164,6 +164,8 @@
 /obj/item/ammo_casing/energy/beam_rifle
 	name = "particle acceleration lens"
 	desc = "Don't look into barrel!"
+
+/obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/energy/beam_rifle
 	select_name = "narrow-beam"
 	e_cost = 2000
@@ -174,10 +176,10 @@
 	var/projectile_damage = 20
 	delay = 40
 
-/obj/item/ammo_casing/energy/beam_rifle/proc/update_damage(power)
+/obj/item/ammo_casing/energy/beam_rifle/hitscan/proc/update_damage(power)
 	projectile_damage = power
 
-/obj/item/ammo_casing/energy/beam_rifle/ready_proj(atom/target, mob/living/user, quiet, zone_override)
+/obj/item/ammo_casing/energy/beam_rifle/hitscan/ready_proj(atom/target, mob/living/user, quiet, zone_override)
 	BB.damage = projectile_damage
 	. = ..(target, user, quiet, zone_override)
 
