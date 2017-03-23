@@ -43,6 +43,7 @@
 	var/has_gravity = 0
 	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+	var/no_observers = 0 		//Stop ghosts from moving freely around the area
 
 	var/no_air = null
 	var/list/related			// the other areas of the same type as this

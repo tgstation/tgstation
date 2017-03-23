@@ -286,6 +286,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(updatedir)
 		setDir(direct )//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	if(NewLoc)
+		var/area/new_area = get_area(NewLoc)
+		if(new_area.no_observers)
+			src << "You can't move around here!"
+			var/area/old_area = get_area(loc)
+			if(old_area.no_observers)
+				loc = pick(latejoin)
+			else
+				return
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.Crossed(src)
@@ -379,6 +387,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!L || !L.len)
 		to_chat(usr, "No area available.")
+
+	if(thearea.no_observers)
+		usr << "This area does not allow ghosts!"
+		return
 
 	usr.loc = pick(L)
 	update_parallax_contents()
