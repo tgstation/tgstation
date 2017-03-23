@@ -81,7 +81,15 @@
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_void/cyborg)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
-	to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
+	if(!ratvar_awakens)
+		to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
+	else
+		..()
+
+/obj/item/clockwork/slab/cyborg/ratvar_act()
+	..()
+	if(!ratvar_awakens)
+		SStgui.close_uis(src)
 
 /obj/item/clockwork/slab/New()
 	..()
@@ -492,6 +500,9 @@
 		return
 	while(LAZYLEN(quickbound) < index)
 		quickbound += null
+	var/datum/clockwork_scripture/quickbind_slot = all_scripture[quickbound[index]]
+	if(quickbind_slot && !quickbind_slot.quickbind)
+		return //we can't unbind things we can't normally bind
 	quickbound[index] = scripture
 	update_quickbind()
 
