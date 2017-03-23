@@ -79,7 +79,7 @@
 
 /obj/vehicle/space/speedbike/speedwagon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
-	riding_datum = new/datum/riding/space/speedwagon //byond god is unhappy if this indentation is not present [3/21/2017] see for yourself
+	riding_datum = new/datum/riding/space/speedwagon 
 
 /obj/vehicle/space/speedbike/speedwagon/Moved()
 	. = ..()
