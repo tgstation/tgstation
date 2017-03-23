@@ -9,7 +9,7 @@
 	var/mob/living/silicon/pai/pai
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
-/obj/item/device/paicard/New()
+/obj/item/device/paicard/Initialize()
 	..()
 	pai_card_list += src
 	add_overlay("pai-off")

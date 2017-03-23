@@ -1,5 +1,4 @@
 GLOBAL_REAL(SSpai, /datum/controller/subsystem/pai)
-var/list/obj/item/device/paicard/pai_card_list = list()
 
 /datum/controller/subsystem/pai
 	name = "pAI"
@@ -9,6 +8,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 	var/list/candidates = list()
 	var/ghost_spam = FALSE
 	var/spam_delay = 100
+	var/list/pai_card_list = list()
 
 /datum/controller/subsystem/pai/New()
 	NEW_SS_GLOBAL(SSpai)
