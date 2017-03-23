@@ -168,7 +168,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	if(!skip_roundend_check)
 		UNTIL(!populated_centcomm || ticker.current_state == GAME_STATE_FINISHED)
 	
-	if(NPCsToSpawn.len)
+	if(NPCsToSpawn)
 		for(var/I in spawn_locs)
 			spawned_npcs += new /mob/living/carbon/human/interactive(I)
 
