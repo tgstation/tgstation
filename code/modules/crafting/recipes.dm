@@ -262,7 +262,7 @@
 	time = 100
 	category = CAT_WEAPON
 
-datum/crafting_recipe/lmusket
+/datum/crafting_recipe/lmusket
 	name = "Laser Musket"
 	result = /obj/item/weapon/gun/energy/l_musket
 	reqs = list(/obj/item/weaponcrafting/reciever = 1,
