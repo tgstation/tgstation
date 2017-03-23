@@ -383,7 +383,7 @@
 	attitude += rand(-10,10)
 	slyness += rand(-10,10)
 
-/mob/living/carbon/human/interactive/Destroy())
+/mob/living/carbon/human/interactive/Destroy()
 	SSnpc.stop_processing(src)
 	return ..()
 
