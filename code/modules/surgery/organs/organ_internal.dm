@@ -541,7 +541,7 @@
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
 
 /obj/item/organ/tongue/can_speak_in_language(datum/language/dt)
-	. = is_type_in_typecache(languages_possible, dt)
+	. = is_type_in_typecache(dt, languages_possible)
 
 /obj/item/organ/tongue/lizard
 	name = "forked tongue"

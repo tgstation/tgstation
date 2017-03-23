@@ -293,4 +293,4 @@
 	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
 		. = TRUE
 	else
-		. = istype(dt, /datum/language/drone)
+		. = ispath(dt, /datum/language/drone)

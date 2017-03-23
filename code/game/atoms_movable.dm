@@ -573,10 +573,7 @@
 	languages = null
 
 /atom/movable/proc/has_language(datum/language/dt)
-	if(languages && languages.len)
-		. = languages[dt]
-	else
-		. = FALSE
+	. = is_type_in_typecache(dt, languages)
 
 /atom/movable/proc/can_speak_in_language(datum/language/dt)
 	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))

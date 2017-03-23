@@ -193,7 +193,7 @@
 	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
 		. = TRUE
 	else
-		. = istype(dt, /datum/language/ratvar)
+		. = ispath(dt, /datum/language/ratvar)
 
 /obj/item/drone_shell/dusty
 	name = "derelict drone shell"
