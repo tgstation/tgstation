@@ -31,6 +31,17 @@
 	if(gun_light && gun_light.on)
 		add_overlay("mini-light")
 
+/obj/item/weapon/gun/energy/l_musket
+	name = "laser musket"
+	desc = "A makeshift low-power disabling weapon. Named after an ancient weapon of similar reliability."
+	icon_state = "lasercannon"
+	item_state = "laser"
+	w_class = WEIGHT_CLASS_BULKY
+	cell_type = /obj/item/weapon/stock_parts/cell{charge = 150; maxcharge = 150}
+	ammo_type = /obj/item/ammo_casing/energy/m_disabler
+	ammo_x_offset = 3
+	slot_flags = SLOT_BACK
+
 /obj/item/weapon/gun/energy/e_gun/mini/practice_phaser
 	name = "practice phaser"
 	desc = "A modified version of the basic phaser gun, this one fires less concentrated energy bolts designed for target practice."

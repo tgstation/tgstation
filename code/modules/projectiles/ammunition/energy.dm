@@ -130,6 +130,12 @@
 	e_cost = 50
 	fire_sound = 'sound/weapons/taser2.ogg'
 
+/obj/item/ammo_casing/energy/m_disabler
+	projectile_type = /obj/item/projectile/beam/m_disabler
+	select_name  = "disable"
+	e_cost = 50
+	fire_sound = 'sound/weapons/taser2.ogg'
+
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma
 	select_name = "plasma burst"

@@ -262,6 +262,10 @@
 	time = 100
 	category = CAT_WEAPON
 
+///datum/crafting_recipe/ishotgun
+//	name = "Laser Musket"
+//	result =
+
 /datum/crafting_recipe/chainsaw
 	name = "Chainsaw"
 	result = /obj/item/weapon/twohanded/required/chainsaw
