@@ -58,6 +58,7 @@
 	else
 		user.clean_blood()
 	reagents.reaction(user, TOUCH)
+	reagents.clear_reagents()
 
 
 /obj/structure/sink/attackby(obj/item/O, mob/user, params)

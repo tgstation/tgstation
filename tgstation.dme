@@ -1760,6 +1760,7 @@
 #include "code\modules\paperwork\photography.dm"
 #include "code\modules\paperwork\stamps.dm"
 #include "code\modules\plumbing\_the_tank.dm"
+#include "code\modules\plumbing\shower.dm"
 #include "code\modules\plumbing\sink.dm"
 #include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"
