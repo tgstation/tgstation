@@ -14,7 +14,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	var/list/botPool_l = list() //list of all npcs using the pool
 	var/list/botPool_l_non = list() //list of all non SNPC mobs using the pool
 
-	var/NPCsToSpawn = 25
+	var/NPCsToSpawn = 15
 	var/populated_centcomm = FALSE
 
 /datum/controller/subsystem/npcpool/proc/insertBot(toInsert)
