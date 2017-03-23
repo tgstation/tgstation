@@ -71,7 +71,7 @@ var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
 	new/datum/stack_recipe("sandbags", /obj/structure/barricade/sandbags, 1, time = 25, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/sandbags/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/sandbags/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = sandbag_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -96,7 +96,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	new/datum/stack_recipe("AI Core Statue", /obj/structure/statue/diamond/ai2, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/diamond/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/diamond/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = diamond_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -120,7 +120,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	new/datum/stack_recipe("Engineer Statue", /obj/structure/statue/uranium/eng, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/uranium/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/uranium/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = uranium_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -146,7 +146,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	new/datum/stack_recipe("Scientist Statue", /obj/structure/statue/plasma/scientist, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/plasma/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/plasma/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = plasma_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -186,7 +186,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("CMO Statue", /obj/structure/statue/gold/cmo, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/gold/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/gold/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = gold_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -213,7 +213,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	new/datum/stack_recipe("Med Borg Statue", /obj/structure/statue/silver/medborg, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/silver/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/silver/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = silver_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -235,7 +235,7 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	new/datum/stack_recipe("Clown Statue", /obj/structure/statue/bananium/clown, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/bananium/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/bananium/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = clown_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -261,7 +261,7 @@ var/global/list/datum/stack_recipe/titanium_recipes = list ( \
 	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20), \
 	)
 
-/obj/item/stack/sheet/mineral/titanium/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/titanium/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = titanium_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -288,7 +288,7 @@ var/global/list/datum/stack_recipe/plastitanium_recipes = list ( \
 	new/datum/stack_recipe("plas-titanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
 	)
 
-/obj/item/stack/sheet/mineral/plastitanium/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/plastitanium/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = plastitanium_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -313,7 +313,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
 	)
 
-/obj/item/stack/sheet/mineral/snow/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/snow/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = snow_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
@@ -373,6 +373,6 @@ var/global/list/datum/stack_recipe/abductor_recipes = list ( \
 	new/datum/stack_recipe("Abductor Sciencist Statue", /obj/structure/statue/bananium/clown, 5, one_per_turf = 1, on_floor = 1)*/
 	)
 
-/obj/item/stack/sheet/mineral/abductor/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/abductor/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = abductor_recipes
 	..()

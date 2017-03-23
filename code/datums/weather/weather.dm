@@ -67,7 +67,7 @@
 		var/mob/M = V
 		if(M.z == target_z)
 			if(telegraph_message)
-				M << telegraph_message
+				to_chat(M, telegraph_message)
 			if(telegraph_sound)
 				M << sound(telegraph_sound)
 	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
@@ -81,7 +81,7 @@
 		var/mob/M = V
 		if(M.z == target_z)
 			if(weather_message)
-				M << weather_message
+				to_chat(M, weather_message)
 			if(weather_sound)
 				M << sound(weather_sound)
 	START_PROCESSING(SSweather, src)
@@ -96,7 +96,7 @@
 		var/mob/M = V
 		if(M.z == target_z)
 			if(end_message)
-				M << end_message
+				to_chat(M, end_message)
 			if(end_sound)
 				M << sound(end_sound)
 	STOP_PROCESSING(SSweather, src)
@@ -141,4 +141,4 @@
 				N.icon = 'icons/turf/areas.dmi'
 				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
 				N.invisibility = INVISIBILITY_MAXIMUM
-				N.opacity = 0
+				N.set_opacity(FALSE)

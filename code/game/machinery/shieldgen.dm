@@ -17,7 +17,6 @@
 	air_update_turf(1)
 
 /obj/structure/emergency_shield/Destroy()
-	opacity = 0
 	density = 0
 	air_update_turf(1)
 	return ..()
@@ -48,9 +47,9 @@
 /obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage was dealt
-		opacity = 1
+		set_opacity(1)
 		spawn(20)
-			opacity = 0
+			set_opacity(0)
 
 /obj/structure/emergency_shield/sanguine
 	name = "sanguine barrier"
@@ -135,10 +134,10 @@
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
 	if(locked)
-		user << "<span class='warning'>The machine is locked, you are unable to use it!</span>"
+		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
 		return
 	if(panel_open)
-		user << "<span class='warning'>The panel must be closed before operating this machine!</span>"
+		to_chat(user, "<span class='warning'>The panel must be closed before operating this machine!</span>")
 		return
 
 	if (active)
@@ -153,7 +152,7 @@
 				"<span class='italics'>You hear heavy droning.</span>")
 			shields_up()
 		else
-			user << "<span class='warning'>The device must first be secured to the floor!</span>"
+			to_chat(user, "<span class='warning'>The device must first be secured to the floor!</span>")
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user, params)
@@ -161,46 +160,46 @@
 		playsound(src.loc, W.usesound, 100, 1)
 		panel_open = !panel_open
 		if(panel_open)
-			user << "<span class='notice'>You open the panel and expose the wiring.</span>"
+			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
 		else
-			user << "<span class='notice'>You close the panel.</span>"
+			to_chat(user, "<span class='notice'>You close the panel.</span>")
 	else if(istype(W, /obj/item/stack/cable_coil) && (stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
-			user << "<span class='warning'>You need one length of cable to repair [src]!</span>"
+			to_chat(user, "<span class='warning'>You need one length of cable to repair [src]!</span>")
 			return
-		user << "<span class='notice'>You begin to replace the wires...</span>"
+		to_chat(user, "<span class='notice'>You begin to replace the wires...</span>")
 		if(do_after(user, 30, target = src))
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
 			obj_integrity = max_integrity
 			stat &= ~BROKEN
-			user << "<span class='notice'>You repair \the [src].</span>"
+			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(locked)
-			user << "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>"
+			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
 			return
 		if(!anchored && !isinspace())
 			playsound(src.loc, W.usesound, 100, 1)
-			user << "<span class='notice'>You secure \the [src] to the floor!</span>"
+			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
 			anchored = 1
 		else if(anchored)
 			playsound(src.loc, W.usesound, 100, 1)
-			user << "<span class='notice'>You unsecure \the [src] from the floor!</span>"
+			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
-				user << "<span class='notice'>\The [src] shuts off!</span>"
+				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
 				shields_down()
 			anchored = 0
 
 	else if(W.GetID())
 		if(allowed(user))
 			locked = !locked
-			user << "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>"
+			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
 		else
-			user << "<span class='danger'>Access denied.</span>"
+			to_chat(user, "<span class='danger'>Access denied.</span>")
 
 	else
 		return ..()
@@ -276,13 +275,13 @@
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
 	if(!anchored)
-		user << "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>"
+		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>")
 		return 1
 	if(locked && !issilicon(user))
-		user << "<span class='warning'>The controls are locked!</span>"
+		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return 1
 	if(power != 1)
-		user << "<span class='warning'>\The [src] needs to be powered by wire underneath!</span>"
+		to_chat(user, "<span class='warning'>\The [src] needs to be powered by wire underneath!</span>")
 		return 1
 
 	if(active >= 1)
@@ -376,27 +375,27 @@
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
-			user << "<span class='warning'>Turn off the field generator first!</span>"
+			to_chat(user, "<span class='warning'>Turn off the field generator first!</span>")
 			return
 
 		else if(!anchored && !isinspace()) //Can't fasten this thing in space
 			playsound(src.loc, W.usesound, 75, 1)
-			user << "<span class='notice'>You secure the external reinforcing bolts to the floor.</span>"
+			to_chat(user, "<span class='notice'>You secure the external reinforcing bolts to the floor.</span>")
 			anchored = 1
 			return
 
 		else //You can unfasten it tough, if you somehow manage to fasten it.
 			playsound(src.loc, W.usesound, 75, 1)
-			user << "<span class='notice'>You undo the external reinforcing bolts.</span>"
+			to_chat(user, "<span class='notice'>You undo the external reinforcing bolts.</span>")
 			anchored = 0
 			return
 
 	if(W.GetID())
 		if (allowed(user))
 			locked = !locked
-			user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
+			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
 		else
-			user << "<span class='danger'>Access denied.</span>"
+			to_chat(user, "<span class='danger'>Access denied.</span>")
 
 	else
 		add_fingerprint(user)
@@ -438,7 +437,7 @@
 	anchored = 1
 	density = 1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	luminosity = 3
+	light_range = 3
 	var/needs_power = 0
 	var/active = 1
 	var/delay = 5

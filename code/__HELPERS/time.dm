@@ -2,8 +2,9 @@
 /proc/worldtime2text()
 	return gameTimestamp("hh:mm:ss")
 
-/proc/time_stamp(format = "hh:mm:ss")
-	return time2text(world.timeofday, format)
+/proc/time_stamp(format = "hh:mm:ss", show_ds)
+	var/time_string = time2text(world.timeofday, format)
+	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
 /proc/gameTimestamp(format = "hh:mm:ss") // Get the game time in text
 	return time2text(world.time - timezoneOffset + 432000 - round_start_time, format)
@@ -21,8 +22,10 @@
 			//return 1
 
 //returns timestamp in a sql and ISO 8601 friendly format
-/proc/SQLtime()
-	return time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
+/proc/SQLtime(timevar)
+	if(!timevar)
+		timevar = world.realtime
+	return time2text(timevar, "YYYY-MM-DD hh:mm:ss")
 
 
 /var/midnight_rollovers = 0

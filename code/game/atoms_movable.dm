@@ -26,10 +26,14 @@
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 	var/floating = FALSE
 
-/atom/movable/SDQL_update(const/var_name, new_value)
-	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
+/atom/movable/vv_edit_var(var_name, var_value)
+	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
+	var/static/list/careful_edits = list("bound_x", "bound_y", "bound_width", "bound_height")
+	if(var_name in banned_edits)
 		return FALSE	//PLEASE no.
-	. = ..()
+	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
+		return FALSE
+	return ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -87,16 +91,6 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-	//Objects with opacity will trigger nearby lights of the old location to update at next SSlighting fire
-	if(opacity)
-		if (isturf(OldLoc))
-			OldLoc.UpdateAffectingLights()
-		if (isturf(loc))
-			loc.UpdateAffectingLights()
-	else
-		if(light)
-			light.changed()
-
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -109,9 +103,60 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+
+	if(flags & CLEAN_ON_MOVE)
+		clean_on_move()
 	return 1
 
-/atom/movable/Destroy()
+/atom/movable/proc/clean_on_move()
+	var/turf/tile = loc
+	if(isturf(tile))
+		tile.clean_blood()
+		for(var/A in tile)
+			if(is_cleanable(A))
+				qdel(A)
+			else if(istype(A, /obj/item))
+				var/obj/item/cleaned_item = A
+				cleaned_item.clean_blood()
+			else if(ishuman(A))
+				var/mob/living/carbon/human/cleaned_human = A
+				if(cleaned_human.lying)
+					if(cleaned_human.head)
+						cleaned_human.head.clean_blood()
+						cleaned_human.update_inv_head()
+					if(cleaned_human.wear_suit)
+						cleaned_human.wear_suit.clean_blood()
+						cleaned_human.update_inv_wear_suit()
+					else if(cleaned_human.w_uniform)
+						cleaned_human.w_uniform.clean_blood()
+						cleaned_human.update_inv_w_uniform()
+					if(cleaned_human.shoes)
+						cleaned_human.shoes.clean_blood()
+						cleaned_human.update_inv_shoes()
+					cleaned_human.clean_blood()
+					cleaned_human.wash_cream()
+					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
+
+/atom/movable/Destroy(force)
+	var/inform_admins = HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+	var/stationloving = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+
+	if(inform_admins && force)
+		var/turf/T = get_turf(src)
+		message_admins("[src] has been !!force deleted!! in [ADMIN_COORDJMP(T)].")
+		log_game("[src] has been !!force deleted!! in [COORD(T)].")
+
+	if(stationloving && !force)
+		var/turf/currentturf = get_turf(src)
+		var/turf/targetturf = relocate()
+		log_game("[src] has been destroyed in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
+		if(inform_admins)
+			message_admins("[src] has been destroyed in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
+		return QDEL_HINT_LETMELIVE
+
+	if(stationloving && force)
+		STOP_PROCESSING(SSinbounds, src)
+
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
@@ -430,3 +475,78 @@
 	else if (!on && floating)
 		animate(src, pixel_y = initial(pixel_y), time = 10)
 		floating = FALSE
+
+/* Stationloving
+*
+* A stationloving atom will always teleport back to the station
+* if it ever leaves the station z-levels or Centcom. It will also,
+* when Destroy() is called, will teleport to a random turf on the
+* station.
+*
+* The turf is guaranteed to be "safe" for normal humans, probably.
+* If the station is SUPER SMASHED UP, it might not work.
+*
+* Here are some important procs:
+* relocate()
+* moves the atom to a safe turf on the station
+*
+* check_in_bounds()
+* regularly called and checks if `in_bounds()` returns true. If false, it
+* triggers a `relocate()`.
+*
+* in_bounds()
+* By default, checks that the atom's z is the station z or centcom.
+*/
+
+/atom/movable/proc/set_stationloving(state, inform_admins=FALSE)
+	var/currently = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+
+	if(inform_admins)
+		SET_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+	else
+		CLEAR_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+
+	if(state == currently)
+		return
+	else if(!state)
+		STOP_PROCESSING(SSinbounds, src)
+		CLEAR_SECONDARY_FLAG(src, STATIONLOVING)
+	else
+		START_PROCESSING(SSinbounds, src)
+		SET_SECONDARY_FLAG(src, STATIONLOVING)
+
+/atom/movable/proc/relocate()
+	var/targetturf = find_safe_turf(ZLEVEL_STATION)
+	if(!targetturf)
+		if(blobstart.len > 0)
+			targetturf = get_turf(pick(blobstart))
+		else
+			throw EXCEPTION("Unable to find a blobstart landmark")
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
+	else if(istype(loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src, targetturf)
+	else
+		forceMove(targetturf)
+	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
+	return targetturf
+
+/atom/movable/proc/check_in_bounds()
+	if(in_bounds())
+		return
+	else
+		var/turf/currentturf = get_turf(src)
+		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		var/turf/targetturf = relocate()
+		log_game("[src] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
+		if(HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE))
+			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
+
+/atom/movable/proc/in_bounds()
+	. = FALSE
+	var/turf/currentturf = get_turf(src)
+	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
+		. = TRUE

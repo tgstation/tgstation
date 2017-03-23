@@ -1,5 +1,7 @@
 //use this define to highlight docking port bounding boxes (ONLY FOR DEBUG USE)
-// #define DOCKING_PORT_HIGHLIGHT
+#ifdef TESTING
+#define DOCKING_PORT_HIGHLIGHT
+#endif
 
 //NORTH default dir
 /obj/docking_port
@@ -119,6 +121,7 @@
 	var/turf/T1 = locate(L[3],L[4],z)
 	for(var/turf/T in block(T0,T1))
 		T.color = _color
+		LAZYINITLIST(T.atom_colours)
 		T.maptext = null
 	if(_color)
 		var/turf/T = locate(L[1], L[2], z)
@@ -239,8 +242,7 @@
 
 /obj/docking_port/mobile/Initialize(mapload)
 	..()
-	if(!mapload)
-		return
+
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
 		areaInstance = A
@@ -312,6 +314,10 @@
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
 	if(!check_dock(S))
+		testing("check_dock failed on request for [src]")
+		return
+	
+	if(mode == SHUTTLE_IGNITING && destination == S)
 		return
 
 	switch(mode)
@@ -393,10 +399,10 @@
 
 	qdel(src, force=TRUE)
 
-/obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1)
+/obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += new /obj/effect/overlay/temp/ripple(t)
+		ripples += new /obj/effect/overlay/temp/ripple(t, animate_time)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	for(var/R in ripples)
@@ -463,7 +469,9 @@
 		if(!A0)
 			A0 = new area_type(null)
 		for(var/turf/T0 in L0)
+			var/area/old = T0.loc
 			A0.contents += T0
+			T0.change_area(old, A0)
 	if (istype(S1, /obj/docking_port/stationary/transit))
 		areaInstance.parallax_movedir = preferred_direction
 	else
@@ -483,7 +491,9 @@
 		if(T0.type != T0.baseturf) //So if there is a hole in the shuttle we don't drag along the space/asteroid/etc to wherever we are going next
 			T0.copyTurf(T1)
 			T1.baseturf = destination_turf_type
+			var/area/old = T1.loc
 			areaInstance.contents += T1
+			T1.change_area(old, areaInstance)
 
 			//copy over air
 			if(isopenturf(T1))
@@ -497,15 +507,12 @@
 		if(rotation)
 			T1.shuttleRotate(rotation)
 
-		//lighting stuff
-		T1.redraw_lighting()
 		SSair.remove_from_active(T1)
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
 
 		T0.ChangeTurf(turf_type)
 
-		T0.redraw_lighting()
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
@@ -555,6 +562,10 @@
 							a hyperspace ripple!</span>",
 							"<span class='userdanger'>You feel an immense \
 							crushing pressure as the space around you ripples.</span>")
+					if(M.key || M.get_ghost(TRUE))
+						feedback_add_details("shuttle_gib", "[type]")
+					else
+						feedback_add_details("shuttle_gib_unintelligent", "[type]")
 					M.gib()
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
@@ -602,8 +613,9 @@
 /obj/docking_port/mobile/proc/check_effects()
 	if(!ripples.len)
 		if((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL))
-			if(timeLeft(1) <= SHUTTLE_RIPPLE_TIME)
-				create_ripples(destination)
+			var/tl = timeLeft(1)
+			if(tl <= SHUTTLE_RIPPLE_TIME)
+				create_ripples(destination, tl)
 
 	var/obj/docking_port/stationary/S0 = get_docked()
 	if(areaInstance.parallax_movedir && istype(S0, /obj/docking_port/stationary/transit) && timeLeft(1) <= PARALLAX_LOOP_TIME)
@@ -707,5 +719,20 @@
 		if(S.shuttleId == id)
 			return S
 	return null
+
+/obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
+	var/s
+	switch(phase)
+		if(HYPERSPACE_WARMUP)
+			s = 'sound/effects/hyperspace_begin.ogg'
+		if(HYPERSPACE_LAUNCH)
+			s = 'sound/effects/hyperspace_progress.ogg'
+		if(HYPERSPACE_END)
+			s = 'sound/effects/hyperspace_end.ogg'
+		else
+			CRASH("Invalid hyperspace sound phase: [phase]")
+	for(var/A in areas)
+		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
+			playsound(E, s, 100, FALSE, max(width, height) - world.view)
 
 #undef DOCKING_PORT_HIGHLIGHT

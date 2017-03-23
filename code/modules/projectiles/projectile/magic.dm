@@ -35,10 +35,9 @@
 			C.regenerate_organs()
 		if(target.revive(full_heal = 1))
 			target.grab_ghost(force = TRUE) // even suicides
-			target << "<span class='notice'>You rise with a start, \
-				you're alive!!!</span>"
+			to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
 		else if(target.stat != DEAD)
-			target << "<span class='notice'>You feel great!</span>"
+			to_chat(target, "<span class='notice'>You feel great!</span>")
 
 /obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -155,8 +154,8 @@
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
-				Robot.clear_inherent_laws()
-				Robot.clear_zeroth_law(0)
+				Robot.clear_inherent_laws(0)
+				Robot.clear_zeroth_law(0, 0)
 				Robot.connected_ai = null
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
@@ -265,20 +264,19 @@
 
 	new_mob.languages_spoken |= HUMAN
 	new_mob.languages_understood |= HUMAN
-	new_mob.attack_log = M.attack_log
+	new_mob.logging = M.logging
 
 	// Some forms can still wear some items
 	for(var/obj/item/W in contents)
 		new_mob.equip_to_appropriate_slot(W)
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+	M.log_message("<font color='orange'>became [new_mob.real_name].</font>", INDIVIDUAL_ATTACK_LOG)
 
 	new_mob.a_intent = INTENT_HARM
 
 	M.wabbajack_act(new_mob)
 
-	new_mob << "<span class='warning'>Your form morphs into that of \
-		a [randomize].</span>"
+	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
 	qdel(M)
 	return new_mob
@@ -291,37 +289,42 @@
 	nodamage = 1
 
 /obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
+	target.animate_atom_living(firer)
 	..()
-	if((istype(target, /obj/item) || istype(target, /obj/structure)) && !is_type_in_list(target, protected_objects))
-		if(istype(target, /obj/structure/statue/petrified))
-			var/obj/structure/statue/petrified/P = target
+
+/atom/proc/animate_atom_living(var/mob/living/owner = null)
+	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, protected_objects))
+		if(istype(src, /obj/structure/statue/petrified))
+			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
 				var/mob/living/L = P.petrified_mob
-				var/mob/living/simple_animal/hostile/statue/S = new (P.loc, firer)
+				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
-				S.faction = list("\ref[firer]")
+				if(owner)
+					S.faction = list("\ref[owner]")
 				S.icon = P.icon
 				S.icon_state = P.icon_state
-				S.overlays = P.overlays
+				S.copy_overlays(P, TRUE)
 				S.color = P.color
 				S.atom_colours = P.atom_colours.Copy()
 				if(L.mind)
 					L.mind.transfer_to(S)
-					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
+					if(owner)
+						to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>")
 				P.loc = S
-				qdel(src)
 				return
 		else
-			var/obj/O = target
+			var/obj/O = src
 			if(istype(O, /obj/item/weapon/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
 
-	else if(istype(target, /mob/living/simple_animal/hostile/mimic/copy))
+	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = target
-		C.ChangeOwner(firer)
+		var/mob/living/simple_animal/hostile/mimic/copy/C = src
+		if(owner)
+			C.ChangeOwner(owner)
 
 /obj/item/projectile/magic/spellblade
 	name = "blade energy"

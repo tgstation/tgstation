@@ -210,6 +210,9 @@
 /area/shuttle/escape)
 "aM" = (
 /obj/machinery/chem_dispenser,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aN" = (
@@ -263,28 +266,28 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aW" = (
-/turf/open/floor/plasteel/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/yellow,
 /area/shuttle/escape)
 "aX" = (
-/turf/open/floor/plasteel/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel/yellow,
 /area/shuttle/escape)
 "aY" = (
-/turf/open/floor/plasteel/whitered,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel/whitered,
 /area/shuttle/escape)
 "aZ" = (
-/turf/open/floor/plasteel/whitered,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/whitered,
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/destructible/cult/forge{
@@ -294,16 +297,16 @@
 /turf/open/floor/plasteel/yellow,
 /area/shuttle/escape)
 "bb" = (
-/turf/open/floor/plasteel/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel/yellow,
 /area/shuttle/escape)
 "bc" = (
-/turf/open/floor/plasteel/whitered,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel/whitered,
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/destructible/cult/forge{
@@ -328,6 +331,59 @@
 /area/shuttle/escape)
 "bh" = (
 /turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/escape)
+"bi" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/escape)
+"bj" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle/red,
+/area/shuttle/escape)
+"bk" = (
+/obj/structure/chair/wood,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/cult,
+/area/shuttle/escape)
+"bl" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bm" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bn" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bo" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bp" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -365,13 +421,13 @@ at
 al
 as
 aE
-aI
+bm
 aI
 aI
 aE
 ab
 aE
-aI
+bo
 aW
 ba
 be
@@ -384,7 +440,7 @@ ab
 ag
 ae
 ab
-al
+bj
 al
 al
 aB
@@ -454,17 +510,17 @@ bg
 ac
 af
 ad
-ae
+bi
 ai
 an
-au
+bk
 ay
 ab
+bl
 aq
 aq
 aq
-aq
-aq
+bn
 aH
 ab
 ab
@@ -563,7 +619,7 @@ aR
 aT
 as
 av
-aE
+bp
 aZ
 bd
 be

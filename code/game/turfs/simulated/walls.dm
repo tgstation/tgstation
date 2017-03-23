@@ -114,12 +114,12 @@
 		dismantle_wall(1)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		user << text("<span class='notice'>You punch the wall.</span>")
+		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 	return 1
 
 /turf/closed/wall/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user << "<span class='notice'>You push the wall but nothing happens!</span>"
+	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	..()
@@ -128,7 +128,7 @@
 /turf/closed/wall/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	//get the user's location
@@ -154,8 +154,8 @@
 	//check for wall mounted frames
 	if(istype(W,/obj/item/wallframe))
 		var/obj/item/wallframe/F = W
-		if(F.try_build(src))
-			F.attach(src)
+		if(F.try_build(src, user))
+			F.attach(src, user)
 		return 1
 	//Poster stuff
 	else if(istype(W,/obj/item/weapon/poster))
@@ -169,23 +169,23 @@
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
-			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
+			to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
 			playsound(src, W.usesound, 100, 1)
 			if(do_after(user, slicing_duration*W.toolspeed, target = src))
 				if(!iswallturf(src) || !user || !WT || !WT.isOn() || !T)
 					return 1
 				if( user.loc == T && user.get_active_held_item() == WT )
-					user << "<span class='notice'>You remove the outer plating.</span>"
+					to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 					dismantle_wall()
 					return 1
 	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
-		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
+		to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*W.toolspeed, target = src))
 			if(!iswallturf(src) || !user || !W || !T)
 				return 1
 			if( user.loc == T && user.get_active_held_item() == W )
-				user << "<span class='notice'>You remove the outer plating.</span>"
+				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 				dismantle_wall()
 				visible_message("The wall was sliced apart by [user]!", "<span class='italics'>You hear metal being sliced apart.</span>")
 				return 1
@@ -206,7 +206,7 @@
 
 
 /turf/closed/wall/proc/thermitemelt(mob/user)
-	overlays = list()
+	cut_overlays()
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 	O.name = "thermite"
 	O.desc = "Looks hot."
@@ -257,3 +257,17 @@
 
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
+
+/turf/closed/wall/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
+	return FALSE
+
+/turf/closed/wall/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the wall.</span>")
+			ChangeTurf(/turf/open/floor/plating)
+			return TRUE
+	return FALSE

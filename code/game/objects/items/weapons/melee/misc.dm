@@ -34,7 +34,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	origin_tech = "combat=5,biotech=5"
+	origin_tech = "combat=5;biotech=5"
 	w_class = WEIGHT_CLASS_HUGE
 	force = 20
 	throwforce = 10
@@ -83,7 +83,7 @@
 
 	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
-		user << "<span class ='danger'>You club yourself over the head.</span>"
+		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -154,14 +154,14 @@
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
 	if(on)
-		user << "<span class ='warning'>You extend the baton.</span>"
+		to_chat(user, "<span class ='warning'>You extend the baton.</span>")
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
 		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
 		force = 10 //stunbaton damage
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
-		user << "<span class ='notice'>You collapse the baton.</span>"
+		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
 		icon_state = "telebaton_0"
 		item_state = null //no sprite for concealment even when in hand
 		slot_flags = SLOT_BELT

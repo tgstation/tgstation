@@ -15,14 +15,14 @@ var/global/ntnet_card_uid = 1
 
 /obj/item/weapon/computer_hardware/network_card/diagnostics(var/mob/user)
 	..()
-	user << "NIX Unique ID: [identification_id]"
-	user << "NIX User Tag: [identification_string]"
-	user << "Supported protocols:"
-	user << "511.m SFS (Subspace) - Standard Frequency Spread"
+	to_chat(user, "NIX Unique ID: [identification_id]")
+	to_chat(user, "NIX User Tag: [identification_string]")
+	to_chat(user, "Supported protocols:")
+	to_chat(user, "511.m SFS (Subspace) - Standard Frequency Spread")
 	if(long_range)
-		user << "511.n WFS/HB (Subspace) - Wide Frequency Spread/High Bandiwdth"
+		to_chat(user, "511.n WFS/HB (Subspace) - Wide Frequency Spread/High Bandiwdth")
 	if(ethernet)
-		user << "OpenEth (Physical Connection) - Physical network connection port"
+		to_chat(user, "OpenEth (Physical Connection) - Physical network connection port")
 
 /obj/item/weapon/computer_hardware/network_card/New(var/l)
 	..(l)

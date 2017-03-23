@@ -32,7 +32,7 @@
 /obj/structure/destructible/clockwork/powered/mending_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='inathneq_small'>It requires at least <b>[heal_cost]W</b> to attempt to repair clockwork mobs, structures, or converted silicons.</span>"
+		to_chat(user, "<span class='inathneq_small'>It requires at least <b>[heal_cost]W</b> to attempt to repair clockwork mobs, structures, or converted silicons.</span>")
 
 /obj/structure/destructible/clockwork/powered/mending_motor/forced_disable(bad_effects)
 	if(active)
@@ -45,7 +45,7 @@
 /obj/structure/destructible/clockwork/powered/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY) && is_servant_of_ratvar(user))
 		if(total_accessable_power() < MIN_CLOCKCULT_POWER)
-			user << "<span class='warning'>[src] needs more power to function!</span>"
+			to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
 			return 0
 		toggle(0, user)
 
@@ -64,10 +64,10 @@
 						S.adjustHealth(-(8 * efficiency))
 						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
 					else
-						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
+						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>")
 						break
 				else
-					S << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
+					to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 					break
 		else if(is_type_in_typecache(M, mending_motor_typecache))
 			T = get_turf(M)
@@ -97,10 +97,10 @@
 						S.heal_ordered_damage(8 * efficiency, damage_heal_order)
 						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
 					else
-						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
+						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>")
 						break
 				else
-					S << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
+					to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 					break
 	. = ..()
 	if(. < heal_cost)

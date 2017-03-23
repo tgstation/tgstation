@@ -1,6 +1,6 @@
 /proc/create_message(type, target_ckey, admin_ckey, text, timestamp, server, secret, logged = 1, browse)
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+	if(!dbcon.Connect())
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!type)
 		return
@@ -10,9 +10,7 @@
 			return
 		new_ckey = sanitizeSQL(new_ckey)
 		var/DBQuery/query_find_ckey = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ckey = '[new_ckey]'")
-		if(!query_find_ckey.Execute())
-			var/err = query_find_ckey.ErrorMsg()
-			log_game("SQL ERROR obtaining ckey from player table. Error : \[[err]\]\n")
+		if(!query_find_ckey.warn_execute())
 			return
 		if(!query_find_ckey.NextRow())
 			if(alert(usr, "[new_ckey] has not been seen before, are you sure you want to create a [type] for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
@@ -47,12 +45,10 @@
 			else
 				return
 	var/DBQuery/query_create_message = dbcon.NewQuery("INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, secret) VALUES ('[type]', '[target_ckey]', '[admin_ckey]', '[text]', '[timestamp]', '[server]', '[secret]')")
-	if(!query_create_message.Execute())
-		var/err = query_create_message.ErrorMsg()
-		log_game("SQL ERROR creating new [type] in messages table. Error : \[[err]\]\n")
+	if(!query_create_message.warn_execute())
 		return
 	if(logged)
-		log_admin("[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]: [text]")
+		log_admin_private("[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]: [text]")
 		message_admins("[key_name_admin(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]:<br>[text]")
 		if(browse)
 			browse_messages("[type]")
@@ -60,8 +56,8 @@
 			browse_messages(target_ckey = target_ckey)
 
 /proc/delete_message(message_id, logged = 1, browse)
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+	if(!dbcon.Connect())
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -70,21 +66,17 @@
 	var/target_ckey
 	var/text
 	var/DBQuery/query_find_del_message = dbcon.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id]")
-	if(!query_find_del_message.Execute())
-		var/err = query_find_del_message.ErrorMsg()
-		log_game("SQL ERROR obtaining type, targetckey, adminckey text from messages table. Error : \[[err]\]\n")
+	if(!query_find_del_message.warn_execute())
 		return
 	if(query_find_del_message.NextRow())
 		type = query_find_del_message.item[1]
 		target_ckey = query_find_del_message.item[2]
 		text = query_find_del_message.item[4]
 	var/DBQuery/query_del_message = dbcon.NewQuery("DELETE FROM [format_table_name("messages")] WHERE id = [message_id]")
-	if(!query_del_message.Execute())
-		var/err = query_del_message.ErrorMsg()
-		log_game("SQL ERROR deleting [type] from messages table. Error : \[[err]\]\n")
+	if(!query_del_message.warn_execute())
 		return
 	if(logged)
-		log_admin("[key_name(usr)] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]: [text]")
+		log_admin_private("[key_name(usr)] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]: [text]")
 		message_admins("[key_name_admin(usr)] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]:<br>[text]")
 		if(browse)
 			browse_messages("[type]")
@@ -92,16 +84,14 @@
 			browse_messages(target_ckey = target_ckey)
 
 /proc/edit_message(message_id, browse)
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+	if(!dbcon.Connect())
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
 		return
 	var/DBQuery/query_find_edit_message = dbcon.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id]")
-	if(!query_find_edit_message.Execute())
-		var/err = query_find_edit_message.ErrorMsg()
-		log_game("SQL ERROR obtaining type, targetckey, adminckey, text from messages table. Error : \[[err]\]\n")
+	if(!query_find_edit_message.warn_execute())
 		return
 	if(query_find_edit_message.NextRow())
 		var/type = query_find_edit_message.item[1]
@@ -115,11 +105,9 @@
 		new_text = sanitizeSQL(new_text)
 		var/edit_text = sanitizeSQL("Edited by [editor_ckey] on [SQLtime()] from<br>[old_text]<br>to<br>[new_text]<hr>")
 		var/DBQuery/query_edit_message = dbcon.NewQuery("UPDATE [format_table_name("messages")] SET text = '[new_text]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id]")
-		if(!query_edit_message.Execute())
-			var/err = query_edit_message.ErrorMsg()
-			log_game("SQL ERROR editing messages table. Error : \[[err]\]\n")
+		if(!query_edit_message.warn_execute())
 			return
-		log_admin("[key_name(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_text] to [new_text]")
+		log_admin_private("[key_name(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_text] to [new_text]")
 		message_admins("[key_name_admin(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from<br>[old_text]<br>to<br>[new_text]")
 		if(browse)
 			browse_messages("[type]")
@@ -127,16 +115,14 @@
 			browse_messages(target_ckey = target_ckey)
 
 /proc/toggle_message_secrecy(message_id)
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+	if(!dbcon.Connect())
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
 		return
 	var/DBQuery/query_find_message_secret = dbcon.NewQuery("SELECT type, targetckey, adminckey, secret FROM [format_table_name("messages")] WHERE id = [message_id]")
-	if(!query_find_message_secret.Execute())
-		var/err = query_find_message_secret.ErrorMsg()
-		log_game("SQL ERROR obtaining type, targetckey, adminckey, secret from messages table. Error : \[[err]\]\n")
+	if(!query_find_message_secret.warn_execute())
 		return
 	if(query_find_message_secret.NextRow())
 		var/type = query_find_message_secret.item[1]
@@ -146,17 +132,15 @@
 		var/editor_ckey = sanitizeSQL(usr.ckey)
 		var/edit_text = "Made [secret ? "not secret" : "secret"] by [editor_ckey] on [SQLtime()]<hr>"
 		var/DBQuery/query_message_secret = dbcon.NewQuery("UPDATE [format_table_name("messages")] SET secret = NOT secret, lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id]")
-		if(!query_message_secret.Execute())
-			var/err = query_message_secret.ErrorMsg()
-			log_game("SQL ERROR toggling message secrecy. Error : \[[err]\]\n")
+		if(!query_message_secret.warn_execute())
 			return
-		log_admin("[key_name(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
+		log_admin_private("[key_name(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
 		message_admins("[key_name_admin(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
 		browse_messages(target_ckey = target_ckey)
 
 /proc/browse_messages(type, target_ckey, index, linkless = 0, filter)
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+	if(!dbcon.Connect())
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/output
 	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
@@ -183,9 +167,7 @@
 				output += "|<a href='?_src_=holder;showwatchfilter=1'>\[Filter offline clients\]</a></center>"
 		output += ruler
 		var/DBQuery/query_get_type_messages = dbcon.NewQuery("SELECT id, targetckey, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]'")
-		if(!query_get_type_messages.Execute())
-			var/err = query_get_type_messages.ErrorMsg()
-			log_game("SQL ERROR obtaining id, targetckey, adminckey, text, timestamp, server, lasteditor from messages table. Error : \[[err]\]\n")
+		if(!query_get_type_messages.warn_execute())
 			return
 		while(query_get_type_messages.NextRow())
 			var/id = query_get_type_messages.item[1]
@@ -208,10 +190,8 @@
 			output += "<br>[text]<hr style='background:#000000; border:0; height:1px'>"
 	if(target_ckey)
 		target_ckey = sanitizeSQL(target_ckey)
-		var/DBQuery/query_get_messages = dbcon.NewQuery("SELECT type, secret, id, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' ORDER BY timestamp")
-		if(!query_get_messages.Execute())
-			var/err = query_get_messages.ErrorMsg()
-			log_game("SQL ERROR obtaining type, secret, id, adminckey, text, timestamp, server, lasteditor from messages table. Error : \[[err]\]\n")
+		var/DBQuery/query_get_messages = dbcon.NewQuery("SELECT type, secret, id, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' ORDER BY timestamp DESC")
+		if(!query_get_messages.warn_execute())
 			return
 		var/messagedata
 		var/watchdata
@@ -255,9 +235,9 @@
 					notedata += data
 		output += "<h2><center>[target_ckey]</center></h2><center>"
 		if(!linkless)
-			output += "<a href='?_src_=holder;addmessage=[target_ckey]'>\[Add message\]</a>"
+			output += "<a href='?_src_=holder;addnote=[target_ckey]'>\[Add note\]</a>"
+			output += " <a href='?_src_=holder;addmessage=[target_ckey]'>\[Add message\]</a>"
 			output += " <a href='?_src_=holder;addwatch=[target_ckey]'>\[Add to watchlist\]</a>"
-			output += " <a href='?_src_=holder;addnote=[target_ckey]'>\[Add note\]</a>"
 			output += " <a href='?_src_=holder;showmessageckey=[target_ckey]'>\[Refresh page\]</a></center>"
 		else
 			output += " <a href='?_src_=holder;showmessageckeylinkless=[target_ckey]'>\[Refresh page\]</a></center>"
@@ -286,9 +266,7 @@
 			else
 				search = "^[index]"
 		var/DBQuery/query_list_messages = dbcon.NewQuery("SELECT DISTINCT targetckey FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey REGEXP '[search]' ORDER BY targetckey")
-		if(!query_list_messages.Execute())
-			var/err = query_list_messages.ErrorMsg()
-			log_game("SQL ERROR obtaining distinct targetckey from messages table. Error : \[[err]\]\n")
+		if(!query_list_messages.warn_execute())
 			return
 		while(query_list_messages.NextRow())
 			index_ckey = query_list_messages.item[1]
@@ -299,8 +277,8 @@
 	usr << browse(output, "window=browse_messages;size=900x500")
 
 proc/get_message_output(type, target_ckey)
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+	if(!dbcon.Connect())
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!type)
 		return
@@ -311,9 +289,7 @@ proc/get_message_output(type, target_ckey)
 	if(type == "message" || type == "watchlist entry")
 		query += " AND targetckey = '[target_ckey]'"
 	var/DBQuery/query_get_message_output = dbcon.NewQuery(query)
-	if(!query_get_message_output.Execute())
-		var/err = query_get_message_output.ErrorMsg()
-		log_game("SQL ERROR obtaining id, adminckey, text, timestamp, lasteditor from messages table. Error : \[[err]\]\n")
+	if(!query_get_message_output.warn_execute())
 		return
 	while(query_get_message_output.NextRow())
 		var/message_id = query_get_message_output.item[1]
@@ -326,9 +302,7 @@ proc/get_message_output(type, target_ckey)
 				output += "<font color='red' size='3'><b>Admin message left by <span class='prefix'>[admin_ckey]</span> on [timestamp]</b></font>"
 				output += "<br><font color='red'>[text]</font><br>"
 				var/DBQuery/query_message_read = dbcon.NewQuery("UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = [message_id]")
-				if(!query_message_read.Execute())
-					var/err = query_message_read.ErrorMsg()
-					log_game("SQL ERROR updating message type. Error : \[[err]\]\n")
+				if(!query_message_read.warn_execute())
 					return
 			if("watchlist entry")
 				message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(target_ckey)] is on the watchlist and has just connected - Reason: [text]</font>")
@@ -361,8 +335,6 @@ proc/get_message_output(type, target_ckey)
 		var/admin_ckey = note.group[3]
 		var/DBQuery/query_convert_time = dbcon.NewQuery("SELECT ADDTIME(STR_TO_DATE('[timestamp]','%d-%b-%Y'), '0')")
 		if(!query_convert_time.Execute())
-			var/err = query_convert_time.ErrorMsg()
-			log_game("SQL ERROR converting timestamp. Error : \[[err]\]\n")
 			return
 		if(query_convert_time.NextRow())
 			timestamp = query_convert_time.item[1]
@@ -374,7 +346,7 @@ proc/get_message_output(type, target_ckey)
 /*alternatively this proc can be run once to pass through every note and attempt to convert it before deleting the file, if done then AUTOCONVERT_NOTES should be turned off
 this proc can take several minutes to execute fully if converting and cause DD to hang if converting a lot of notes; it's not advised to do so while a server is live
 /proc/mass_convert_notes()
-	world << "Beginning mass note conversion"
+	to_chat(world, "Beginning mass note conversion")
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)
 		log_game("Error: Cannot access [NOTESFILE]")
@@ -382,7 +354,7 @@ this proc can take several minutes to execute fully if converting and cause DD t
 	notesfile.cd = "/"
 	for(var/ckey in notesfile.dir)
 		convert_notes_sql(ckey)
-	world << "Deleting NOTESFILE"
+	to_chat(world, "Deleting NOTESFILE")
 	fdel(NOTESFILE)
-	world << "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES"*/
+	to_chat(world, "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES")*/
 #undef NOTESFILE

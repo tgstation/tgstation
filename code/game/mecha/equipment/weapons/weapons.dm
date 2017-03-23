@@ -100,10 +100,21 @@
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/Laser.ogg'
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
+	equip_cooldown = 35
+	name = "\improper MKI Tesla Cannon"
+	desc = "A weapon for combat exosuits. Fires bolts of electricity similar to the experimental tesla engine"
+	icon_state = "mecha_ion"
+	origin_tech = "materials=4;engineering=4;combat=6;magnets=6"
+	energy_drain = 500
+	projectile = /obj/item/projectile/energy/tesla_cannon
+	fire_sound = 'sound/magic/lightningbolt.ogg'
+
+
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
 	name = "eZ-13 MK2 heavy pulse rifle"
-	desc = "A weapon for combat exosuits. Shoots powerful destructive blasts capable of demloishing obstacles."
+	desc = "A weapon for combat exosuits. Shoots powerful destructive blasts capable of demolishing obstacles."
 	icon_state = "mecha_pulse"
 	energy_drain = 120
 	origin_tech = "materials=3;combat=6;powerstorage=4"
@@ -113,7 +124,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
 	equip_cooldown = 10
 	name = "217-D Heavy Plasma Cutter"
-	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demloishing solid obstacles."
+	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demolishing solid obstacles."
 	icon_state = "mecha_plasmacutter"
 	item_state = "plasmacutter"
 	energy_drain = 30
@@ -163,7 +174,7 @@
 			var/mob/living/carbon/human/H = M
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue
-		M << "<font color='red' size='7'>HONK</font>"
+		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.stuttering += 20
 		M.adjustEarDamage(0, 30)
@@ -380,7 +391,7 @@
 //Classic extending punching glove, but weaponised!
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
 	name = "\improper Oingo Boingo Punch-face"
-	desc = "Equipment for clown exosuits. Delivers fun to right to your face!"
+	desc = "Equipment for clown exosuits. Delivers fun right to your face!"
 	icon_state = "mecha_punching_glove"
 	energy_drain = 250
 	equip_cooldown = 20

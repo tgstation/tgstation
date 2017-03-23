@@ -1,10 +1,9 @@
-var/datum/subsystem/garbage_collector/SSgarbage
+var/datum/controller/subsystem/garbage_collector/SSgarbage
 
-/datum/subsystem/garbage_collector
+/datum/controller/subsystem/garbage_collector
 	name = "Garbage"
 	priority = 15
 	wait = 5
-	display_order = 2
 	flags = SS_FIRE_IN_LOBBY|SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 
 	var/collection_timeout = 3000// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
@@ -24,6 +23,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
+	var/list/sleptDestroy = list()	//Same as above but these are paths that slept during their Destroy call
 
 	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
 	// all types that did not respect qdel(A, force=TRUE) and returned one
@@ -34,10 +34,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/list/qdel_list = list()	// list of all types that have been qdel()eted
 #endif
 
-/datum/subsystem/garbage_collector/New()
+/datum/controller/subsystem/garbage_collector/New()
 	NEW_SS_GLOBAL(SSgarbage)
 
-/datum/subsystem/garbage_collector/stat_entry(msg)
+/datum/controller/subsystem/garbage_collector/stat_entry(msg)
 	msg += "Q:[queue.len]|D:[delslasttick]|G:[gcedlasttick]|"
 	msg += "GR:"
 	if (!(delslasttick+gcedlasttick))
@@ -52,14 +52,14 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
 	..(msg)
 
-/datum/subsystem/garbage_collector/fire()
+/datum/controller/subsystem/garbage_collector/fire()
 	HandleToBeQueued()
 	if(state == SS_RUNNING)
 		HandleQueue()
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
-/datum/subsystem/garbage_collector/proc/HandleToBeQueued()
+/datum/controller/subsystem/garbage_collector/proc/HandleToBeQueued()
 	var/list/tobequeued = src.tobequeued
 	var/starttime = world.time
 	var/starttimeofday = world.timeofday
@@ -70,7 +70,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		Queue(ref)
 		tobequeued.Cut(1, 2)
 
-/datum/subsystem/garbage_collector/proc/HandleQueue()
+/datum/controller/subsystem/garbage_collector/proc/HandleQueue()
 	delslasttick = 0
 	gcedlasttick = 0
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
@@ -124,12 +124,12 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			++gcedlasttick
 			++totalgcs
 
-/datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
+/datum/controller/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
-/datum/subsystem/garbage_collector/proc/Queue(datum/A)
+/datum/controller/subsystem/garbage_collector/proc/Queue(datum/A)
 	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
 		return
 	if (A.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
@@ -145,12 +145,12 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	queue[refid] = gctime
 
-/datum/subsystem/garbage_collector/proc/HardQueue(datum/A)
+/datum/controller/subsystem/garbage_collector/proc/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
 
-/datum/subsystem/garbage_collector/Recover()
+/datum/controller/subsystem/garbage_collector/Recover()
 	if (istype(SSgarbage.queue))
 		queue |= SSgarbage.queue
 	if (istype(SSgarbage.tobequeued))
@@ -168,13 +168,17 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		del(D)
 	else if(isnull(D.gc_destroyed))
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
+		var/start_time = world.time
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
+		if(world.time != start_time)
+			SSgarbage.sleptDestroy["[D.type]"]++
 		if(!D)
 			return
 		switch(hint)
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 			if (QDEL_HINT_IWILLGC)
+				D.gc_destroyed = world.time
 				return
 			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
 				if(!force)
@@ -346,11 +350,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 //if find_references isn't working for some datum
 //update this list using tools/DMTreeToGlobalsList
 /datum/proc/find_references_in_globals()
-	SearchVar(last_irc_status)
-	SearchVar(failed_db_connections)
-	SearchVar(nextmap)
-	SearchVar(mapchanging)
-	SearchVar(rebootingpendingmapchange)
 	SearchVar(clockwork_construction_value)
 	SearchVar(clockwork_caches)
 	SearchVar(clockwork_daemons)
@@ -395,7 +394,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(WALLITEMS_INVERSE)
 	SearchVar(sortInstance)
 	SearchVar(config)
-	SearchVar(protected_config)
 	SearchVar(host)
 	SearchVar(join_motd)
 	SearchVar(station_name)
@@ -413,8 +411,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(Debug2)
 	SearchVar(comms_key)
 	SearchVar(comms_allowed)
-	SearchVar(cross_address)
-	SearchVar(cross_allowed)
 	SearchVar(medal_hub)
 	SearchVar(medal_pass)
 	SearchVar(medals_enabled)
@@ -474,12 +470,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(timezoneOffset)
 	SearchVar(fileaccess_timer)
 	SearchVar(TAB)
-	SearchVar(map_ready)
 	SearchVar(data_core)
 	SearchVar(CELLRATE)
 	SearchVar(CHARGELEVEL)
 	SearchVar(powernets)
-	SearchVar(map_name)
 	SearchVar(hair_styles_list)
 	SearchVar(hair_styles_male_list)
 	SearchVar(hair_styles_female_list)
@@ -554,12 +548,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(ruin_landmarks)
 	SearchVar(awaydestinations)
 	SearchVar(sortedAreas)
-	SearchVar(map_templates)
-	SearchVar(ruins_templates)
-	SearchVar(space_ruins_templates)
-	SearchVar(lava_ruins_templates)
-	SearchVar(shuttle_templates)
-	SearchVar(shelter_templates)
 	SearchVar(transit_markers)
 	SearchVar(clients)
 	SearchVar(admins)
@@ -684,8 +672,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(wire_colors)
 	SearchVar(wire_color_directory)
 	SearchVar(wire_name_directory)
-	SearchVar(possiblethemes)
-	SearchVar(max_secret_rooms)
 	SearchVar(blood_splatter_icons)
 	SearchVar(all_radios)
 	SearchVar(radiochannels)
@@ -763,8 +749,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(fire_overlay)
 	SearchVar(acid_overlay)
 	SearchVar(BUMP_TELEPORTERS)
-	SearchVar(contrabandposters)
-	SearchVar(legitposters)
 	SearchVar(blacklisted_glowshroom_turfs)
 	SearchVar(PDAs)
 	SearchVar(rod_recipes)
@@ -796,7 +780,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(brass_recipes)
 	SearchVar(disposalpipeID2State)
 	SearchVar(RPD_recipes)
-	SearchVar(highlander_claymores)
 	SearchVar(biblenames)
 	SearchVar(biblestates)
 	SearchVar(bibleitemstates)
@@ -842,7 +825,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(pipenetwarnings)
 	SearchVar(the_gateway)
 	SearchVar(potentialRandomZlevels)
-	SearchVar(maploader)
 	SearchVar(use_preloader)
 	SearchVar(_preloader)
 	SearchVar(swapmaps_iconcache)
@@ -950,7 +932,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(GALOSHES_DONT_HELP)
 	SearchVar(SLIDE_ICE)
 	SearchVar(limb_icon_cache)
-	SearchVar(ALIEN_AFK_BRACKET)
 	SearchVar(MIN_IMPREGNATION_TIME)
 	SearchVar(MAX_IMPREGNATION_TIME)
 	SearchVar(MIN_ACTIVE_TIME)

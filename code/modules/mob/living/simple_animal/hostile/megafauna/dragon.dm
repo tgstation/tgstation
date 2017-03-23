@@ -53,7 +53,7 @@ Difficulty: Medium
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 
-/mob/living/simple_animal/hostile/megafauna/dragon/New()
+/mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
 
@@ -96,7 +96,7 @@ Difficulty: Medium
 	duration = 12
 	pixel_z = 500
 
-/obj/effect/overlay/temp/fireball/New(loc)
+/obj/effect/overlay/temp/fireball/Initialize(loc)
 	..()
 	animate(src, pixel_z = 0, time = 12)
 
@@ -104,7 +104,7 @@ Difficulty: Medium
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "sniper_zoom"
 	layer = BELOW_MOB_LAYER
-	luminosity = 2
+	light_range = 2
 	duration = 12
 
 /obj/effect/overlay/temp/dragon_swoop
@@ -121,7 +121,7 @@ Difficulty: Medium
 /obj/effect/overlay/temp/target/ex_act()
 	return
 
-/obj/effect/overlay/temp/target/New(loc)
+/obj/effect/overlay/temp/target/Initialize(loc)
 	..()
 	INVOKE_ASYNC(src, .proc/fall)
 
@@ -178,7 +178,7 @@ Difficulty: Medium
 		J.hotspot_expose(700,50,1)
 		for(var/mob/living/L in J.contents - hit_things)
 			L.adjustFireLoss(20)
-			L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
 			hit_things += L
 		previousturf = J
 		sleep(1)
@@ -247,7 +247,7 @@ Difficulty: Medium
 	if(!istype(A))
 		return
 	if(swoop_cooldown >= world.time)
-		src << "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>"
+		to_chat(src, "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>")
 		return
 	swoop_attack(1, A)
 

@@ -45,7 +45,6 @@
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
-	var/area/master				// master area used for power calcluations
 	var/list/related			// the other areas of the same type as this
 
 	var/parallax_movedir = 0
@@ -98,10 +97,9 @@ var/list/teleportlocs = list()
 
 
 
-/area/New()
+/area/Initialize()
 	icon_state = ""
 	layer = AREA_LAYER
-	master = src
 	uid = ++global_uid
 	related = list(src)
 	map_name = name // Save the initial (the name set in the map) name of the area.
@@ -113,14 +111,20 @@ var/list/teleportlocs = list()
 		power_equip = 1
 		power_environ = 1
 
-		if (lighting_use_dynamic != DYNAMIC_LIGHTING_IFSTARLIGHT)
-			lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
+			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+			luminosity = 0
+		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 	..()
 
 	power_change()		// all machines set to current power level, also updates icon
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
+
+	if(!IS_DYNAMIC_LIGHTING(src))
+		add_overlay(/obj/effect/fullbright)
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -238,6 +242,8 @@ var/list/teleportlocs = list()
 			RA.mouse_opacity = 0
 			RA.updateicon()
 			RA.ModifyFiredoors(TRUE)
+			for(var/obj/machinery/firealarm/F in RA)
+				F.update_icon()
 
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		aiPlayer.cancelAlarm("Fire", src, source)
@@ -255,6 +261,12 @@ var/list/teleportlocs = list()
 		for(var/area/RA in related)
 			RA.ModifyFiredoors(FALSE)
 
+/area/proc/close_and_lock_door(obj/machinery/door/DOOR)
+	set waitfor = FALSE
+	DOOR.close()
+	if(DOOR.density)
+		DOOR.lock()
+
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
 		return
@@ -266,10 +278,7 @@ var/list/teleportlocs = list()
 		RA.set_fire_alarm_effect()
 		//Lockdown airlocks
 		for(var/obj/machinery/door/DOOR in RA)
-			spawn(0)
-				DOOR.close()
-				if(DOOR.density)
-					DOOR.lock()
+			close_and_lock_door(DOOR)
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
@@ -325,15 +334,11 @@ var/list/teleportlocs = list()
 			icon_state = "party"
 		else
 			icon_state = "blue-red"
-		invisibility = INVISIBILITY_LIGHTING
 	else
-	//	new lighting behaviour with obj lights
 		icon_state = null
-		invisibility = INVISIBILITY_MAXIMUM
 
 /area/space/updateicon()
 	icon_state = null
-	invisibility = INVISIBILITY_MAXIMUM
 
 /*
 #define EQUIP 1
@@ -343,17 +348,17 @@ var/list/teleportlocs = list()
 
 /area/proc/powered(chan)		// return true if the area has power to given channel
 
-	if(!master.requires_power)
+	if(!requires_power)
 		return 1
-	if(master.always_unpowered)
+	if(always_unpowered)
 		return 0
 	switch(chan)
 		if(EQUIP)
-			return master.power_equip
+			return power_equip
 		if(LIGHT)
-			return master.power_light
+			return power_light
 		if(ENVIRON)
-			return master.power_environ
+			return power_environ
 
 	return 0
 
@@ -372,19 +377,19 @@ var/list/teleportlocs = list()
 	var/used = 0
 	switch(chan)
 		if(LIGHT)
-			used += master.used_light
+			used += used_light
 		if(EQUIP)
-			used += master.used_equip
+			used += used_equip
 		if(ENVIRON)
-			used += master.used_environ
+			used += used_environ
 		if(TOTAL)
-			used += master.used_light + master.used_equip + master.used_environ
+			used += used_light + used_equip + used_environ
 		if(STATIC_EQUIP)
-			used += master.static_equip
+			used += static_equip
 		if(STATIC_LIGHT)
-			used += master.static_light
+			used += static_light
 		if(STATIC_ENVIRON)
-			used += master.static_environ
+			used += static_environ
 	return used
 
 /area/proc/addStaticPower(value, powerchannel)
@@ -397,23 +402,23 @@ var/list/teleportlocs = list()
 			static_environ += value
 
 /area/proc/clear_usage()
-
-	master.used_equip = 0
-	master.used_light = 0
-	master.used_environ = 0
+	used_equip = 0
+	used_light = 0
+	used_environ = 0
 
 /area/proc/use_power(amount, chan)
 
 	switch(chan)
 		if(EQUIP)
-			master.used_equip += amount
+			used_equip += amount
 		if(LIGHT)
-			master.used_light += amount
+			used_light += amount
 		if(ENVIRON)
-			master.used_environ += amount
+			used_environ += amount
 
 
 /area/Entered(A)
+	set waitfor = FALSE
 	if(!isliving(A))
 		return
 
@@ -435,9 +440,9 @@ var/list/teleportlocs = list()
 		if(!L.client.played)
 			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
 			L.client.played = 1
-			spawn(600)			//ewww - this is very very bad
-				if(L.&& L.client)
-					L.client.played = 0
+			sleep(600)			//ewww - this is very very bad
+			if(L.&& L.client)
+				L.client.played = 0
 
 /atom/proc/has_gravity(turf/T)
 	if(!T || !isturf(T))

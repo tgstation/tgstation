@@ -53,7 +53,7 @@
 		sleep(5)
 		if(!QDELETED(src))
 			density = 0
-			SetOpacity(0)
+			set_opacity(0)
 			update_icon()
 	else
 		var/srcturf = get_turf(src)
@@ -64,7 +64,7 @@
 		density = 1
 		sleep(5)
 		if(!QDELETED(src))
-			SetOpacity(1)
+			set_opacity(1)
 			update_icon()
 	air_update_turf(1)
 	opening = 0
@@ -94,22 +94,22 @@
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user, params)
 	if(opening)
-		user << "<span class='warning'>You must wait until the door has stopped moving!</span>"
+		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving!</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(density)
 			var/turf/T = get_turf(src)
 			if(T.density)
-				user << "<span class='warning'>[src] is blocked!</span>"
+				to_chat(user, "<span class='warning'>[src] is blocked!</span>")
 				return
 			if(!isfloorturf(T))
-				user << "<span class='warning'>[src] bolts must be tightened on the floor!</span>"
+				to_chat(user, "<span class='warning'>[src] bolts must be tightened on the floor!</span>")
 				return
 			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
 			ChangeToWall()
 		else
-			user << "<span class='warning'>You can't reach, close it first!</span>"
+			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

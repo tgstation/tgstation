@@ -11,7 +11,7 @@
 	bound_height = 96
 	pixel_x = -32
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	luminosity = 1
+	light_range = 1
 	var/boss = FALSE
 	var/is_anyone_home = FALSE
 
@@ -28,7 +28,7 @@
 	is_anyone_home = TRUE
 	sleep(50)
 	if(boss)
-		user << "<span class='notice'>There's no response.</span>"
+		to_chat(user, "<span class='notice'>There's no response.</span>")
 		is_anyone_home = FALSE
 		return 0
 	boss = TRUE
@@ -44,7 +44,7 @@
 	log_game("[key_name(user)] summoned Legion.")
 	for(var/mob/M in player_list)
 		if(M.z == z)
-			M << "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>"
+			to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>")
 			M << 'sound/creatures/legion_spawn.ogg'
 			flash_color(M, flash_color = "#FF0000", flash_time = 50)
 	var/image/door_overlay = image('icons/effects/effects.dmi', "legiondoor")

@@ -126,7 +126,7 @@
 					return
 				I.loc = src
 				inserted_id = I
-			else usr << "<span class='danger'>No valid ID.</span>"
+			else to_chat(usr, "<span class='danger'>No valid ID.</span>")
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
@@ -209,6 +209,7 @@
 	..()
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
+		new /datum/data/mining_equipment("Extra Id",       			/obj/item/weapon/card/id/mining, 				                   	250),
 		new /datum/data/mining_equipment("Science Goggles",       	/obj/item/clothing/glasses/science, 				                   	250),
 		new /datum/data/mining_equipment("Monkey Cube",				/obj/item/weapon/reagent_containers/food/snacks/monkeycube,        		300),
 		new /datum/data/mining_equipment("Toolbelt",				/obj/item/weapon/storage/belt/utility,	    							350),
@@ -252,15 +253,15 @@
 		if(points)
 			var/obj/item/weapon/card/id/C = I
 			C.mining_points += points
-			user << "<span class='info'>You transfer [points] points to [C].</span>"
+			to_chat(user, "<span class='info'>You transfer [points] points to [C].</span>")
 			points = 0
 		else
-			user << "<span class='info'>There's no points left on [src].</span>"
+			to_chat(user, "<span class='info'>There's no points left on [src].</span>")
 	..()
 
 /obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
-	user << "There's [points] point\s on the card."
+	to_chat(user, "There's [points] point\s on the card.")
 
 ///Conscript kit
 /obj/item/weapon/card/mining_access_card
@@ -275,7 +276,7 @@
 		I.access |= access_mining_station
 		I.access |= access_mineral_storeroom
 		I.access |= access_cargo
-		user  << "You upgrade [I] with mining access."
+		to_chat(user, "You upgrade [I] with mining access.")
 		qdel(src)
 	..()
 

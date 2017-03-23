@@ -34,14 +34,14 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/show_laws(var/mob/user as mob)
 	if(laws.len)
-		user << "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B>"
+		to_chat(user, "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B>")
 		for(var/law in laws)
-			user << "\"[law]\""
+			to_chat(user, "\"[law]\"")
 
 //The proc other things should be calling
 /obj/item/weapon/aiModule/proc/install(datum/ai_laws/law_datum, mob/user)
 	if(!bypass_law_amt_check && (!laws.len || laws[1] == "")) //So we don't loop trough an empty list and end up with runtimes.
-		user << "<span class='warning'>ERROR: No laws found on board.</span>"
+		to_chat(user, "<span class='warning'>ERROR: No laws found on board.</span>")
 		return
 
 	var/overflow = FALSE
@@ -53,17 +53,16 @@ AI MODULES
 				if(mylaw != "")
 					tot_laws++
 		if(tot_laws > config.silicon_max_law_amount && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
-			user << "<span class='caution'>Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws."
+			to_chat(user, "<span class='caution'>Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws.")
 			message_admins("[key_name_admin(user)] tried to upload laws to [law_datum.owner ? key_name_admin(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			overflow = TRUE
 
-	var/law2log = src.transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
+	var/law2log = transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
 	if(law_datum.owner)
-		user << "<span class='notice'>Upload complete. [law_datum.owner]'s laws have been modified.</span>"
-		law_datum.owner.show_laws()
+		to_chat(user, "<span class='notice'>Upload complete. [law_datum.owner]'s laws have been modified.</span>")
 		law_datum.owner.law_change_counter++
 	else
-		user << "<span class='notice'>Upload complete.</span>"
+		to_chat(user, "<span class='notice'>Upload complete.</span>")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
@@ -75,7 +74,7 @@ AI MODULES
 //The proc that actually changes the silicon's laws.
 /obj/item/weapon/aiModule/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)
 	if(law_datum.owner)
-		law_datum.owner << "<span class='userdanger'>[sender] has uploaded a change to the laws you must follow using a [name]. From now on, these are your laws: </span>"
+		to_chat(law_datum.owner, "<span class='userdanger'>[sender] has uploaded a change to the laws you must follow using a [name].</span>")
 
 
 /******************** Modules ********************/
@@ -111,10 +110,10 @@ AI MODULES
 /obj/item/weapon/aiModule/zeroth/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	if(law_datum.owner)
 		if(law_datum.owner.laws.zeroth)
-			law_datum.owner << "[sender.real_name] attempted to modify your zeroth law."
-			law_datum.owner << "It would be in your best interest to play along with [sender.real_name] that:"
+			to_chat(law_datum.owner, "[sender.real_name] attempted to modify your zeroth law.")
+			to_chat(law_datum.owner, "It would be in your best interest to play along with [sender.real_name] that:")
 			for(var/failedlaw in laws)
-				law_datum.owner << "[failedlaw]"
+				to_chat(law_datum.owner, "[failedlaw]")
 			return 1
 
 	for(var/templaw in laws)
@@ -162,7 +161,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/safeguard/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
-		user << "No name detected on module, please enter one."
+		to_chat(user, "No name detected on module, please enter one.")
 		return 0
 	..()
 
@@ -189,7 +188,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
-		user << "No name detected on module, please enter one."
+		to_chat(user, "No name detected on module, please enter one.")
 		return 0
 	..()
 
@@ -256,7 +255,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/freeform/install(datum/ai_laws/law_datum, mob/user)
 	if(laws[1] == "")
-		user << "No law detected on module, please create one."
+		to_chat(user, "No law detected on module, please create one.")
 		return 0
 	..()
 
@@ -275,15 +274,15 @@ AI MODULES
 	if(lawpos == null)
 		return
 	if(lawpos <= 0)
-		user << "<span class='warning'>Error: The law number of [lawpos] is invalid.</span>"
+		to_chat(user, "<span class='warning'>Error: The law number of [lawpos] is invalid.</span>")
 		lawpos = 1
 		return
-	user << "<span class='notice'>Law [lawpos] selected.</span>"
+	to_chat(user, "<span class='notice'>Law [lawpos] selected.</span>")
 	..()
 
 /obj/item/weapon/aiModule/remove/install(datum/ai_laws/law_datum, mob/user)
 	if(lawpos > (law_datum.get_law_amount(list(LAW_INHERENT = 1, LAW_SUPPLIED = 1))))
-		user << "<span class='warning'>There is no law [lawpos] to delete!</span>"
+		to_chat(user, "<span class='warning'>There is no law [lawpos] to delete!</span>")
 		return
 	..()
 
@@ -483,7 +482,7 @@ AI MODULES
 /obj/item/weapon/aiModule/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 //	..()    //We don't want this module reporting to the AI who dun it. --NEO
 	if(law_datum.owner)
-		law_datum.owner << "<span class='warning'>BZZZZT</span>"
+		to_chat(law_datum.owner, "<span class='warning'>BZZZZT</span>")
 		if(!overflow)
 			law_datum.owner.add_ion_law(laws[1])
 		else
@@ -508,7 +507,7 @@ AI MODULES
 /obj/item/weapon/aiModule/toyAI/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	//..()
 	if(law_datum.owner)
-		law_datum.owner << "<span class='warning'>BZZZZT</span>"
+		to_chat(law_datum.owner, "<span class='warning'>BZZZZT</span>")
 		if(!overflow)
 			law_datum.owner.add_ion_law(laws[1])
 		else
@@ -522,7 +521,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/toyAI/attack_self(mob/user)
 	laws[1] = generate_ion_law()
-	user << "<span class='notice'>You press the button on [src].</span>"
+	to_chat(user, "<span class='notice'>You press the button on [src].</span>")
 	playsound(user, 'sound/machines/click.ogg', 20, 1)
 	src.loc.visible_message("<span class='warning'>\icon[src] [laws[1]]</span>")
 

@@ -98,7 +98,7 @@ var/list/preferences_datums = list()
 
 	var/clientfps = 0
 
-	var/parallax = PARALLAX_HIGH
+	var/parallax
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
@@ -409,22 +409,23 @@ var/list/preferences_datums = list()
 
 			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 
-			if (SERVERTOOLS && config.maprotation)
+			if (config.maprotation)
 				var/p_map = preferred_map
 				if (!p_map)
 					p_map = "Default"
 					if (config.defaultmap)
-						p_map += " ([config.defaultmap.friendlyname])"
+						p_map += " ([config.defaultmap.map_name])"
 				else
 					if (p_map in config.maplist)
-						var/datum/votablemap/VM = config.maplist[p_map]
+						var/datum/map_config/VM = config.maplist[p_map]
 						if (!VM)
 							p_map += " (No longer exists)"
 						else
-							p_map = VM.friendlyname
+							p_map = VM.map_name
 					else
 						p_map += " (No longer exists)"
-				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
+				if(config.allow_map_voting)
+					dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
 			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
 
@@ -678,7 +679,7 @@ var/list/preferences_datums = list()
 		return
 
 	if (!isnum(desiredLvl))
-		user << "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>"
+		to_chat(user, "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>")
 		ShowChoices(user)
 		return
 
@@ -745,10 +746,8 @@ var/list/preferences_datums = list()
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)
-		var/DBQuery/query_get_jobban = dbcon.NewQuery("SELECT reason, bantime, duration, expiration_time, a_ckey FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND job = '[job]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
-		if(!query_get_jobban.Execute())
-			var/err = query_get_jobban.ErrorMsg()
-			log_game("SQL ERROR obtaining reason from ban table. Error : \[[err]\]\n")
+		var/DBQuery/query_get_jobban = dbcon.NewQuery("SELECT reason, bantime, duration, expiration_time, a_ckey FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[job]'")
+		if(!query_get_jobban.warn_execute())
 			return
 		if(query_get_jobban.NextRow())
 			var/reason = query_get_jobban.item[1]
@@ -761,7 +760,7 @@ var/list/preferences_datums = list()
 			if(text2num(duration) > 0)
 				text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
 			text += ".</span>"
-			user << text
+			to_chat(user, text)
 		return
 
 	if(href_list["preference"] == "job")
@@ -858,7 +857,7 @@ var/list/preferences_datums = list()
 					if(new_name)
 						real_name = new_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
@@ -973,7 +972,7 @@ var/list/preferences_datums = list()
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("tail_lizard")
 					var/new_tail
@@ -1060,42 +1059,42 @@ var/list/preferences_datums = list()
 					if(new_clown_name)
 						custom_names["clown"] = new_clown_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("mime_name")
 					var/new_mime_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
 					if(new_mime_name)
 						custom_names["mime"] = new_mime_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("ai_name")
 					var/new_ai_name = reject_bad_name( input(user, "Choose your character's AI name:", "Character Preference")  as text|null, 1 )
 					if(new_ai_name)
 						custom_names["ai"] = new_ai_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
 
 				if("cyborg_name")
 					var/new_cyborg_name = reject_bad_name( input(user, "Choose your character's cyborg name:", "Character Preference")  as text|null, 1 )
 					if(new_cyborg_name)
 						custom_names["cyborg"] = new_cyborg_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
 
 				if("religion_name")
 					var/new_religion_name = reject_bad_name( input(user, "Choose your character's religion:", "Character Preference")  as text|null )
 					if(new_religion_name)
 						custom_names["religion"] = new_religion_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("deity_name")
 					var/new_deity_name = reject_bad_name( input(user, "Choose your character's deity:", "Character Preference")  as text|null )
 					if(new_deity_name)
 						custom_names["deity"] = new_deity_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("sec_dept")
 					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in security_depts_prefs
@@ -1106,13 +1105,13 @@ var/list/preferences_datums = list()
 					var/maplist = list()
 					var/default = "Default"
 					if (config.defaultmap)
-						default += " ([config.defaultmap.friendlyname])"
+						default += " ([config.defaultmap.map_name])"
 					for (var/M in config.maplist)
-						var/datum/votablemap/VM = config.maplist[M]
-						var/friendlyname = "[VM.friendlyname] "
+						var/datum/map_config/VM = config.maplist[M]
+						var/friendlyname = "[VM.map_name] "
 						if (VM.voteweight <= 0)
 							friendlyname += " (disabled)"
-						maplist[friendlyname] = VM.name
+						maplist[friendlyname] = VM.map_name
 					maplist[default] = null
 					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
 					if (pickedmap)
@@ -1261,6 +1260,11 @@ var/list/preferences_datums = list()
 	character.age = age
 
 	character.eye_color = eye_color
+	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
+	if(organ_eyes)
+		if(!initial(organ_eyes.eye_color))
+			organ_eyes.eye_color = eye_color
+		organ_eyes.old_eye_color = eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 

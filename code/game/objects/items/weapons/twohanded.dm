@@ -43,9 +43,9 @@
 	update_icon()
 	if(show_message)
 		if(iscyborg(user))
-			user << "<span class='notice'>You free up your module.</span>"
+			to_chat(user, "<span class='notice'>You free up your module.</span>")
 		else
-			user << "<span class='notice'>You are now carrying [src] with one hand.</span>"
+			to_chat(user, "<span class='notice'>You are now carrying [src] with one hand.</span>")
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_held_item()
@@ -57,13 +57,13 @@
 	if(wielded)
 		return
 	if(ismonkey(user))
-		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
+		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 	if(user.get_inactive_held_item())
-		user << "<span class='warning'>You need your other hand to be empty!</span>"
+		to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 		return
 	if(user.get_num_arms() < 2)
-		user << "<span class='warning'>You don't have enough hands.</span>"
+		to_chat(user, "<span class='warning'>You don't have enough hands.</span>")
 		return
 	wielded = 1
 	if(force_wielded)
@@ -71,9 +71,9 @@
 	name = "[name] (Wielded)"
 	update_icon()
 	if(iscyborg(user))
-		user << "<span class='notice'>You dedicate your module to [src].</span>"
+		to_chat(user, "<span class='notice'>You dedicate your module to [src].</span>")
 	else
-		user << "<span class='notice'>You grab [src] with both hands.</span>"
+		to_chat(user, "<span class='notice'>You grab [src] with both hands.</span>")
 	if (wieldsound)
 		playsound(loc, wieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
@@ -150,7 +150,7 @@
 
 /obj/item/weapon/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(wielded && !slot_flags)
-		M << "<span class='warning'>[src] is too cumbersome to carry with anything but your hands!</span>"
+		to_chat(M, "<span class='warning'>[src] is too cumbersome to carry with anything but your hands!</span>")
 		return 0
 	return ..()
 
@@ -159,7 +159,7 @@
 	if(get_dist(src,user) > 1)
 		return
 	if(H != null)
-		user << "<span class='notice'>[src] is too cumbersome to carry in one hand!</span>"
+		to_chat(user, "<span class='notice'>[src] is too cumbersome to carry in one hand!</span>")
 		return
 	if(src.loc != user)
 		wield(user)
@@ -186,7 +186,7 @@
 
 /obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(show_message)
-		user << "<span class='notice'>You drop [src].</span>"
+		to_chat(user, "<span class='notice'>You drop [src].</span>")
 	..(user, FALSE)
 	user.dropItemToGround(src)
 
@@ -252,6 +252,7 @@
 	armour_penetration = 35
 	origin_tech = "magnets=4;syndicate=5"
 	item_color = "green"
+	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
 	obj_integrity = 200
@@ -259,10 +260,22 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 	var/hacked = 0
+	var/brightness_on = 6//TWICE AS BRIGHT AS A REGULAR ESWORD
+	var/list/possible_colors = list("red", "blue", "green", "purple")
 
-/obj/item/weapon/twohanded/dualsaber/New()
+/obj/item/weapon/twohanded/dualsaber/Initialize()
 	..()
-	item_color = pick("red", "blue", "green", "purple")
+	if(LAZYLEN(possible_colors))
+		item_color = pick(possible_colors)
+		switch(item_color)
+			if("red")
+				light_color = LIGHT_COLOR_RED
+			if("green")
+				light_color = LIGHT_COLOR_GREEN
+			if("blue")
+				light_color = LIGHT_COLOR_LIGHT_CYAN
+			if("purple")
+				light_color = LIGHT_COLOR_LAVENDER
 
 /obj/item/weapon/twohanded/dualsaber/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -278,7 +291,7 @@
 /obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
 		if(user.dna.check_mutation(HULK))
-			user << "<span class='warning'>You grip the blade too hard and accidentally close it!</span>"
+			to_chat(user, "<span class='warning'>You grip the blade too hard and accidentally close it!</span>")
 			unwield()
 			return
 	..()
@@ -289,14 +302,14 @@
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
-	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
 		user.setDir(i)
-		if(i == 8)
+		if(i == WEST)
 			user.emote("flip")
 		sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
-	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>"
+	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")
 	if (force_wielded)
 		user.take_bodypart_damage(20,25)
 	else
@@ -309,13 +322,13 @@
 
 /obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)
-		user << "<span class='warning'>You can't pick up such dangerous item with your meaty hands without losing fingers, better not to!</span>"
+		to_chat(user, "<span class='warning'>You can't pick up such dangerous item with your meaty hands without losing fingers, better not to!</span>")
 		return 1
 
 /obj/item/weapon/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
 	if(M.has_dna())
 		if(M.dna.check_mutation(HULK))
-			M << "<span class='warning'>You lack the grace to wield this!</span>"
+			to_chat(M, "<span class='warning'>You lack the grace to wield this!</span>")
 			return
 	..()
 	if(wielded)
@@ -323,6 +336,7 @@
 		w_class = w_class_on
 		hitsound = 'sound/weapons/blade1.ogg'
 		START_PROCESSING(SSobj, src)
+		set_light(brightness_on)
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
@@ -330,9 +344,12 @@
 	..()
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
+	set_light(0)
 
 /obj/item/weapon/twohanded/dualsaber/process()
 	if(wielded)
+		if(hacked)
+			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)
@@ -356,21 +373,27 @@
 	// Light your candles while spinning around the room
 	INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
-/obj/item/weapon/twohanded/dualsaber/green/New()
-	item_color = "green"
+/obj/item/weapon/twohanded/dualsaber/green
+	possible_colors = list("green")
 
-/obj/item/weapon/twohanded/dualsaber/red/New()
-	item_color = "red"
+/obj/item/weapon/twohanded/dualsaber/red
+	possible_colors = list("red")
+
+/obj/item/weapon/twohanded/dualsaber/blue
+	possible_colors = list("blue")
+
+/obj/item/weapon/twohanded/dualsaber/purple
+	possible_colors = list("purple")
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
-			user << "<span class='warning'>2XRNBW_ENGAGE</span>"
+			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
 			item_color = "rainbow"
 			update_icon()
 		else
-			user << "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>"
+			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
 	else
 		return ..()
 
@@ -434,10 +457,14 @@
 			src.war_cry = input
 
 /obj/item/weapon/twohanded/spear/CheckParts(list/parts_list)
+	var/obj/item/weapon/twohanded/spear/S = locate() in parts_list
+	if(S)
+		if(S.explosive)
+			S.explosive.forceMove(get_turf(src))
+			S.explosive = null
+		parts_list -= S
+		qdel(S)
 	..()
-	if(explosive)
-		explosive.loc = get_turf(src.loc)
-		explosive = null
 	var/obj/item/weapon/grenade/G = locate() in contents
 	if(G)
 		explosive = G
@@ -467,7 +494,7 @@
 
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
-	user << "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]"
+	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
@@ -551,6 +578,9 @@
 	force_unwielded = 19
 	force_wielded = 25
 
+/obj/item/weapon/twohanded/pitchfork/demonic/Initialize()
+	set_light(3,6,LIGHT_COLOR_RED)
+
 /obj/item/weapon/twohanded/pitchfork/demonic/greater
 	force = 24
 	throwforce = 50
@@ -584,8 +614,19 @@
 
 /obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(user.mind && !user.mind.devilinfo && (user.mind.soulOwner != user.mind))
-		user << "<span class ='warning'>[src] burns in your hands.</span>"
+		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+	..()
+
+/obj/item/weapon/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
+	if(!proximity || !wielded)
+		return
+	if(istype(target, /turf/closed/wall))
+		var/turf/closed/wall/W = target
+		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
+		playsound(target, 'sound/magic/Disintegrate.ogg', 100, 1)
+		W.break_wall()
+		return 1
 	..()
 
 //HF blade

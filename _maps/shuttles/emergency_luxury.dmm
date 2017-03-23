@@ -1,77 +1,800 @@
-"aa" = (/turf/open/space,/area/space)
-"ab" = (/turf/closed/indestructible/riveted/uranium,/area/shuttle/escape)
-"ac" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating{tag = "icon-wood-broken2";icon_state = "wood-broken2"},/area/shuttle/escape)
-"ad" = (/obj/machinery/door/airlock/gold,/obj/effect/forcefield/luxury_shuttle{name = "Ticket Booth"},/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"ae" = (/obj/docking_port/mobile/emergency{dir = 2;dwidth = 5;height = 14;name = "Luxury emergency shuttle";timid = 1;width = 25},/obj/machinery/door/airlock/gold,/obj/effect/forcefield/luxury_shuttle{name = "Ticket Booth"},/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"af" = (/turf/open/floor/plating{tag = "icon-wood-broken3";icon_state = "wood-broken3"},/area/shuttle/escape)
-"ag" = (/turf/open/floor/plating{tag = "icon-wood";icon_state = "wood"},/area/shuttle/escape)
-"ah" = (/turf/open/floor/plating{tag = "icon-wood-broken";icon_state = "wood-broken"},/area/shuttle/escape)
-"ai" = (/turf/open/floor/plating{tag = "icon-wood-broken5";icon_state = "wood-broken5"},/area/shuttle/escape)
-"aj" = (/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"ak" = (/obj/item/weapon/twohanded/required/kirbyplants{tag = "icon-plant-10";icon_state = "plant-10"},/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"al" = (/obj/structure/mirror{pixel_y = 32},/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"am" = (/turf/open/floor/plating{tag = "icon-wood-broken7";icon_state = "wood-broken7"},/area/shuttle/escape)
-"an" = (/turf/open/floor/plating{tag = "icon-wood-broken2";icon_state = "wood-broken2"},/area/shuttle/escape)
-"ao" = (/turf/open/floor/plating{tag = "icon-wood-broken6";icon_state = "wood-broken6"},/area/shuttle/escape)
-"ap" = (/obj/structure/toilet{dir = 4;icon_state = "toilet00";tag = "icon-toilet00 (NORTH)"},/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"aq" = (/obj/machinery/door/airlock/gold,/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"ar" = (/obj/structure/shuttle/engine/propulsion{dir = 4},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"as" = (/obj/structure/shuttle/engine/heater{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"at" = (/turf/open/floor/carpet,/area/shuttle/escape)
-"au" = (/obj/structure/chair/comfy,/turf/open/floor/carpet,/area/shuttle/escape)
-"av" = (/obj/structure/chair/comfy{tag = "icon-comfychair (EAST)";icon_state = "comfychair";dir = 4},/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"aw" = (/obj/machinery/computer/communications,/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"ax" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti,/turf/open/floor/carpet,/area/shuttle/escape)
-"ay" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/notasandwich,/turf/open/floor/carpet,/area/shuttle/escape)
-"az" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/pastatomato,/turf/open/floor/carpet,/area/shuttle/escape)
-"aA" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/kebab/tofu,/turf/open/floor/carpet,/area/shuttle/escape)
-"aB" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/honkdae,/turf/open/floor/carpet,/area/shuttle/escape)
-"aC" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/enchiladas,/turf/open/floor/carpet,/area/shuttle/escape)
-"aD" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/candiedapple,/turf/open/floor/carpet,/area/shuttle/escape)
-"aE" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/burger/baconburger,/turf/open/floor/carpet,/area/shuttle/escape)
-"aF" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/benedict,/turf/open/floor/carpet,/area/shuttle/escape)
-"aG" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/cakeslice/chocolate,/turf/open/floor/carpet,/area/shuttle/escape)
-"aH" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/chowmein,/turf/open/floor/carpet,/area/shuttle/escape)
-"aI" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/dulcedebatataslice,/turf/open/floor/carpet,/area/shuttle/escape)
-"aJ" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/salad/validsalad,/turf/open/floor/carpet,/area/shuttle/escape)
-"aK" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/carneburrito,/turf/open/floor/carpet,/area/shuttle/escape)
-"aL" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/chawanmushi,/turf/open/floor/carpet,/area/shuttle/escape)
-"aM" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"aN" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/melonfruitbowl,/turf/open/floor/carpet,/area/shuttle/escape)
-"aO" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/khachapuri,/turf/open/floor/carpet,/area/shuttle/escape)
-"aP" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/grilledcheese,/turf/open/floor/carpet,/area/shuttle/escape)
-"aQ" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry,/turf/open/floor/carpet,/area/shuttle/escape)
-"aR" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/honeybun,/turf/open/floor/carpet,/area/shuttle/escape)
-"aS" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/eggplantparm,/turf/open/floor/carpet,/area/shuttle/escape)
-"aT" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/copypasta,/turf/open/floor/carpet,/area/shuttle/escape)
-"aU" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/bearsteak,/turf/open/floor/carpet,/area/shuttle/escape)
-"aV" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti,/turf/open/floor/carpet,/area/shuttle/escape)
-"aW" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/cherrycupcake,/turf/open/floor/carpet,/area/shuttle/escape)
-"aX" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/customizable/pizza,/turf/open/floor/carpet,/area/shuttle/escape)
-"aY" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/hotdog,/turf/open/floor/carpet,/area/shuttle/escape)
-"aZ" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/pie/grapetart,/turf/open/floor/carpet,/area/shuttle/escape)
-"ba" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/burger/superbite,/turf/open/floor/carpet,/area/shuttle/escape)
-"bb" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/cakeslice/slimecake,/turf/open/floor/carpet,/area/shuttle/escape)
-"bc" = (/obj/machinery/computer/station_alert,/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"bd" = (/obj/structure/chair/comfy{tag = "icon-comfychair (NORTH)";icon_state = "comfychair";dir = 1},/turf/open/floor/carpet,/area/shuttle/escape)
-"be" = (/obj/machinery/computer/crew,/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"bf" = (/obj/machinery/sleeper{tag = "icon-sleeper-open (EAST)";icon_state = "sleeper-open";dir = 4},/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"bg" = (/obj/item/weapon/twohanded/required/kirbyplants{icon_state = "plant-21";layer = 4.1;pixel_x = -3;pixel_y = 3},/turf/open/floor/mineral/gold,/area/shuttle/escape)
-"bh" = (/turf/open/floor/plating/beach/coastline_b,/area/shuttle/escape)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/open/space,
+/area/space)
+"ab" = (
+/turf/closed/indestructible/riveted/uranium,
+/area/shuttle/escape)
+"ac" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating{
+	tag = "icon-wood-broken2";
+	icon_state = "wood-broken2"
+	},
+/area/shuttle/escape)
+"ad" = (
+/obj/machinery/door/airlock/gold,
+/obj/effect/forcefield/luxury_shuttle{
+	name = "Ticket Booth"
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"ae" = (
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	dwidth = 5;
+	height = 14;
+	name = "Luxury emergency shuttle";
+	timid = 1;
+	width = 25
+	},
+/obj/machinery/door/airlock/gold,
+/obj/effect/forcefield/luxury_shuttle{
+	name = "Ticket Booth"
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"af" = (
+/turf/open/floor/plating{
+	tag = "icon-wood-broken3";
+	icon_state = "wood-broken3"
+	},
+/area/shuttle/escape)
+"ag" = (
+/turf/open/floor/plating{
+	tag = "icon-wood";
+	icon_state = "wood"
+	},
+/area/shuttle/escape)
+"ah" = (
+/turf/open/floor/plating{
+	tag = "icon-wood-broken";
+	icon_state = "wood-broken"
+	},
+/area/shuttle/escape)
+"ai" = (
+/turf/open/floor/plating{
+	tag = "icon-wood-broken5";
+	icon_state = "wood-broken5"
+	},
+/area/shuttle/escape)
+"aj" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"ak" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	tag = "icon-plant-10";
+	icon_state = "plant-10"
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"al" = (
+/obj/structure/mirror{
+	pixel_y = 32
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"am" = (
+/turf/open/floor/plating{
+	tag = "icon-wood-broken7";
+	icon_state = "wood-broken7"
+	},
+/area/shuttle/escape)
+"an" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating{
+	tag = "icon-wood-broken2";
+	icon_state = "wood-broken2"
+	},
+/area/shuttle/escape)
+"ao" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating{
+	tag = "icon-wood-broken6";
+	icon_state = "wood-broken6"
+	},
+/area/shuttle/escape)
+"ap" = (
+/obj/structure/toilet{
+	dir = 4;
+	icon_state = "toilet00";
+	tag = "icon-toilet00 (NORTH)"
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"aq" = (
+/obj/machinery/door/airlock/gold,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"ar" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"as" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"at" = (
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"au" = (
+/obj/structure/chair/comfy,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"av" = (
+/obj/structure/chair/comfy{
+	tag = "icon-comfychair (EAST)";
+	icon_state = "comfychair";
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"aw" = (
+/obj/machinery/computer/communications,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"ax" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"ay" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/notasandwich,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"az" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/pastatomato,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aA" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/kebab/tofu,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aB" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/honkdae,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aC" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/enchiladas,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aD" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/candiedapple,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aE" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/burger/baconburger,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aF" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/benedict,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aG" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/cakeslice/chocolate,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aH" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/chowmein,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aI" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/dulcedebatataslice,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aJ" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/salad/validsalad,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aK" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/carneburrito,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aL" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/chawanmushi,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aM" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"aN" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/melonfruitbowl,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aO" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/khachapuri,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aP" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/grilledcheese,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aQ" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aR" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/honeybun,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aS" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/eggplantparm,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aT" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/copypasta,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aU" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/bearsteak,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aV" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aW" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/cherrycupcake,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aX" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/customizable/pizza,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aY" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/hotdog,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"aZ" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/pie/grapetart,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"ba" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/burger/superbite,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"bb" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/food/snacks/cakeslice/slimecake,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"bc" = (
+/obj/machinery/computer/station_alert,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bd" = (
+/obj/structure/chair/comfy{
+	tag = "icon-comfychair (NORTH)";
+	icon_state = "comfychair";
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"be" = (
+/obj/machinery/computer/crew,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bf" = (
+/obj/machinery/sleeper{
+	tag = "icon-sleeper-open (EAST)";
+	icon_state = "sleeper-open";
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bg" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bh" = (
+/turf/open/floor/plating/beach/coastline_b,
+/area/shuttle/escape)
+"bi" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bj" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bl" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	tag = "icon-plant-10";
+	icon_state = "plant-10"
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bm" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bn" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bo" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bp" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"bq" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
 
 (1,1,1) = {"
-aaababababababababababacabadabababababaeababababab
-ababafagagagahagagaiagagabajajajajajajajabakajalab
-abamaganagagagagagaoagafabajajajajajajajabapajajab
-abababababababababababababajajajajajajajabababaqab
-abababakajajajajajajajajajajajajajajajajajajajajab
-arasabajatauauauauauauauauauauauauauauauatajavawab
-arasabajataxayazaAaBaCaDaEaFaGaHaIaJaKaLatajavaMab
-arasabajataNaOaPaQaRaSaTaUaVaWaXaYaZbabbatajavbcab
-arasabajatbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdatajavbeab
-abababajajajajajajajajajajajajajajajajajajajajajab
-abbfajajajajajajajajajajajajajajajajajajajajajajab
-abbfajajajbgbhbhbhbhbhbhbhbhbhbhbhbhbhbgajajajajab
-abababakajbgbhbhbhbhbhbhbhbhbhbhbhbhbhbgajajajakab
-aaabababababababababababababababababababababababab
+aa
+ab
+ab
+ab
+ab
+ar
+ar
+ar
+ar
+ab
+ab
+ab
+ab
+aa
+"}
+(2,1,1) = {"
+ab
+ab
+am
+ab
+ab
+as
+as
+as
+as
+ab
+bf
+bf
+ab
+ab
+"}
+(3,1,1) = {"
+ab
+af
+ag
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+ab
+ab
+"}
+(4,1,1) = {"
+ab
+ag
+an
+ab
+bl
+aj
+aj
+aj
+aj
+bn
+aj
+aj
+ak
+ab
+"}
+(5,1,1) = {"
+ab
+ag
+ag
+ab
+aj
+at
+at
+at
+at
+aj
+aj
+aj
+aj
+ab
+"}
+(6,1,1) = {"
+ab
+ag
+ag
+ab
+aj
+au
+ax
+aN
+bd
+aj
+aj
+bg
+bp
+ab
+"}
+(7,1,1) = {"
+ab
+ah
+ag
+ab
+aj
+au
+ay
+aO
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(8,1,1) = {"
+ab
+ag
+ag
+ab
+aj
+au
+az
+aP
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(9,1,1) = {"
+ab
+ag
+ag
+ab
+aj
+au
+aA
+aQ
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(10,1,1) = {"
+ab
+ai
+ao
+ab
+aj
+au
+aB
+aR
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(11,1,1) = {"
+ab
+ag
+ag
+ab
+aj
+au
+aC
+aS
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(12,1,1) = {"
+ac
+ag
+af
+ab
+aj
+au
+aD
+aT
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(13,1,1) = {"
+ab
+ab
+ab
+ab
+aj
+au
+aE
+aU
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(14,1,1) = {"
+ad
+aj
+aj
+bj
+aj
+au
+aF
+aV
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(15,1,1) = {"
+ab
+aj
+aj
+aj
+aj
+au
+aG
+aW
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(16,1,1) = {"
+ab
+aj
+aj
+aj
+aj
+au
+aH
+aX
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(17,1,1) = {"
+ab
+aj
+aj
+aj
+aj
+au
+aI
+aY
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(18,1,1) = {"
+ab
+aj
+aj
+aj
+aj
+au
+aJ
+aZ
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(19,1,1) = {"
+ab
+aj
+aj
+aj
+aj
+au
+aK
+ba
+bd
+aj
+aj
+bh
+bh
+ab
+"}
+(20,1,1) = {"
+ae
+aj
+aj
+bk
+aj
+au
+aL
+bb
+bd
+aj
+aj
+bg
+bq
+ab
+"}
+(21,1,1) = {"
+ab
+ab
+ab
+ab
+aj
+at
+at
+at
+at
+aj
+aj
+aj
+aj
+ab
+"}
+(22,1,1) = {"
+ab
+ak
+ap
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+"}
+(23,1,1) = {"
+ab
+aj
+bi
+ab
+aj
+av
+av
+av
+av
+aj
+aj
+aj
+aj
+ab
+"}
+(24,1,1) = {"
+ab
+al
+aj
+aq
+bm
+aw
+aM
+bc
+be
+bo
+aj
+aj
+ak
+ab
+"}
+(25,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}

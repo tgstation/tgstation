@@ -10,7 +10,7 @@
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
 	obj_damage = 400
-	luminosity = 3
+	light_range = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 	movement_type = FLYING
@@ -115,12 +115,11 @@
 
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype,scoretype)
-
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
-		return
+		return FALSE
 
 	if(admin_spawned)
-		return
+		return FALSE
 
 	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 		for(var/mob/living/L in view(7,src))
@@ -133,6 +132,7 @@
 				UnlockMedal("[medaltype] [suffixm]",C)
 				SetScore(BOSS_SCORE,C,1)
 				SetScore(score_type,C,1)
+	return TRUE
 
 /proc/UnlockMedal(medal,client/player)
 
@@ -146,7 +146,7 @@
 				log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
 				message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
 			else if (result)
-				player << "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>"
+				to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
 
 
 /proc/SetScore(score,client/player,increment,force)
@@ -209,7 +209,7 @@
 			log_game("MEDAL ERROR: Could not contact hub to get medal:[medal] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to get [medal] medal for [player.ckey]!")
 		else if (result)
-			player << "[medal] is unlocked"
+			to_chat(player, "[medal] is unlocked")
 
 /proc/LockMedal(medal,client/player)
 

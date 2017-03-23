@@ -143,16 +143,6 @@
 #define STAGE_FIVE 9
 #define STAGE_SIX 11 //From supermatter shard
 
-//zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_STATION 1
-#define ZLEVEL_CENTCOM 2
-#define ZLEVEL_MINING 5
-#define ZLEVEL_LAVALAND 5
-#define ZLEVEL_EMPTY_SPACE 11
-
-#define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_SPACEMAX 11
-
 //ticker.current_state values
 #define GAME_STATE_STARTUP		0
 #define GAME_STATE_PREGAME		1
@@ -229,23 +219,15 @@ var/list/bloody_footprints_cache = list()
 //lighting area defines
 #define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
 #define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
-#define DYNAMIC_LIGHTING_IFSTARLIGHT 2 //dynamic lighting enabled only if starlight is.
-#define IS_DYNAMIC_LIGHTING(A) ( A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.lighting_use_dynamic )
+#define DYNAMIC_LIGHTING_FORCED 2 //dynamic lighting enabled even if the area doesn't require power
+#define DYNAMIC_LIGHTING_IFSTARLIGHT 3 //dynamic lighting enabled only if starlight is.
+#define IS_DYNAMIC_LIGHTING(A) ( A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.dynamic_lighting )
 
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
-
-//Fire and Acid stuff, for resistance_flags
-#define LAVA_PROOF 1
-#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
-#define FLAMMABLE 4
-#define ON_FIRE 8
-#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
-#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
-#define INDESTRUCTIBLE 64 //doesn't take damage
 
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
@@ -344,8 +326,8 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
 //debug printing macros
-#define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
-#define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
+#define debug_world(msg) if (Debug2) to_chat(world, "DEBUG: [msg]")
+#define debug_admins(msg) if (Debug2) to_chat(admins, "DEBUG: [msg]")
 #define debug_world_log(msg) if (Debug2) log_world("DEBUG: [msg]")
 
 #define COORD(A) "([A.x],[A.y],[A.z])"

@@ -5,19 +5,23 @@
 #define SECURITY_HAS_MAINT_ACCESS 2
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
-//Not accessible from usual debug controller verb
-/datum/protected_configuration
-	var/autoadmin = 0
-	var/autoadmin_rank = "Game Admin"
+/datum/configuration/vv_get_var(var_name)
+	var/static/list/banned_views = list("autoadmin", "autoadmin_rank")
+	if(var_name in banned_views)
+		return debug_variable(var_name, "SECRET", 0, src)
+	return ..()
 
-/datum/protected_configuration/vv_get_var(var_name)
-	return debug_variable(var_name, "SECRET", 0, src)
-
-/datum/protected_configuration/vv_edit_var(var_name, var_value)
-	return FALSE
+/datum/configuration/vv_edit_var(var_name, var_value)
+	var/static/list/banned_edits = list("cross_address", "cross_allowed", "autoadmin", "autoadmin_rank")
+	if(var_name in banned_edits)
+		return FALSE
+	return ..()
 
 /datum/configuration
 	var/name = "Configuration"			// datum name
+
+	var/autoadmin = 0
+	var/autoadmin_rank = "Game Admin"
 
 	var/server_name = null				// server name (the name of the game window)
 	var/server_sql_name = null			// short form server name used for the DB
@@ -215,10 +219,11 @@
 	var/announce_admin_logout = 0
 	var/announce_admin_login = 0
 
-	var/list/datum/votablemap/maplist = list()
-	var/datum/votablemap/defaultmap = null
+	var/list/datum/map_config/maplist = list()
+	var/datum/map_config/defaultmap = null
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
+	var/allow_map_voting = TRUE
 
 	// Enables random events mid-round when set to 1
 	var/allow_random_events = 0
@@ -236,6 +241,8 @@
 	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
 	var/cross_name = "Other server"
+	var/cross_address = "byond://"
+	var/cross_allowed = FALSE
 	var/showircname = 0
 
 	var/list/gamemode_cache = null
@@ -247,6 +254,9 @@
 	var/error_limit = 50 // How many occurrences before the next will silence them
 	var/error_silence_time = 6000 // How long a unique error will be silenced for
 	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
+
+	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
+	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
 
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
@@ -415,9 +425,9 @@
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						global.comms_allowed = 1
 				if("cross_server_address")
-					global.cross_address = value
+					cross_address = value
 					if(value != "byond:\\address:port")
-						global.cross_allowed = 1
+						cross_allowed = 1
 				if("cross_comms_name")
 					cross_name = value
 				if("panic_server_name")
@@ -485,12 +495,14 @@
 					config.announce_admin_login = 1
 				if("maprotation")
 					config.maprotation = 1
+				if("allow_map_voting")
+					config.allow_map_voting = text2num(value)
 				if("maprotationchancedelta")
 					config.maprotatechancedelta = text2num(value)
 				if("autoadmin")
-					protected_config.autoadmin = 1
+					config.autoadmin = 1
 					if(value)
-						protected_config.autoadmin_rank = ckeyEx(value)
+						config.autoadmin_rank = ckeyEx(value)
 				if("generate_minimaps")
 					config.generate_minimaps = 1
 				if("client_warn_version")
@@ -740,6 +752,10 @@
 					MAX_EX_LIGHT_RANGE = BombCap
 					MAX_EX_FLASH_RANGE = BombCap
 					MAX_EX_FLAME_RANGE = BombCap
+				if("arrivals_shuttle_dock_window")
+					config.arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
+				if("arrivals_shuttle_require_safe_latejoin")
+					config.arrivals_shuttle_require_safe_latejoin = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -751,7 +767,7 @@
 /datum/configuration/proc/loadmaplist(filename)
 	var/list/Lines = file2list(filename)
 
-	var/datum/votablemap/currentmap = null
+	var/datum/map_config/currentmap = null
 	for(var/t in Lines)
 		if(!t)
 			continue
@@ -780,21 +796,19 @@
 
 		switch (command)
 			if ("map")
-				currentmap = new (data)
-			if ("friendlyname")
-				currentmap.friendlyname = data
+				currentmap = new ("_maps/[data].json")
+				if(currentmap.defaulted)
+					log_world("Failed to load map config for [data]!")
 			if ("minplayers","minplayer")
-				currentmap.minusers = text2num(data)
+				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")
-				currentmap.maxusers = text2num(data)
-			if ("friendlyname")
-				currentmap.friendlyname = data
+				currentmap.config_max_users = text2num(data)
 			if ("weight","voteweight")
 				currentmap.voteweight = text2num(data)
 			if ("default","defaultmap")
 				config.defaultmap = currentmap
 			if ("endmap")
-				config.maplist[currentmap.name] = currentmap
+				config.maplist[currentmap.map_name] = currentmap
 				currentmap = null
 			else
 				diary << "Unknown command in map vote config: '[command]'"
@@ -857,7 +871,7 @@
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
+		//to_chat(world, "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue
@@ -870,7 +884,7 @@
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+			//to_chat(world, "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]")
 	return runnable_modes
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
@@ -895,6 +909,6 @@
 
 /datum/configuration/proc/stat_entry()
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Edit", src)
+		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 
 	stat("[name]:", statclick)

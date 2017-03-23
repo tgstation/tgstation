@@ -38,12 +38,6 @@ do
 		sed -i '1s/^/#define '$arg'\n/' $dmepath.mdme
 		continue
 	fi
-	if [[ $var == -M* ]]
-	then
-		sed -i '1s/^/#define MAP_OVERRIDE\n/' $dmepath.mdme
-		sed -i 's!// BEGIN_INCLUDE!// BEGIN_INCLUDE\n#include "_maps\\'$arg'.dm"!' $dmepath.mdme
-		continue
-	fi
 done
 
 #windows

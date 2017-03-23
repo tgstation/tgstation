@@ -82,6 +82,8 @@
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
+	light_color = LIGHT_COLOR_CYAN
+
 /obj/machinery/computer/atmos_control/Initialize()
 	..()
 	set_frequency(frequency)
@@ -156,7 +158,7 @@
 		var/list/text = splittext(U.id, "_")
 		IO |= text[1]
 	if(!IO.len)
-		user << "<span class='alert'>No machinery detected.</span>"
+		to_chat(user, "<span class='alert'>No machinery detected.</span>")
 	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in IO
 	if(src)
 		src.input_tag = "[S]_in"

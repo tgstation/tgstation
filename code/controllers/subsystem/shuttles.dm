@@ -1,8 +1,8 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
 
-var/datum/subsystem/shuttle/SSshuttle
+var/datum/controller/subsystem/shuttle/SSshuttle
 
-/datum/subsystem/shuttle
+/datum/controller/subsystem/shuttle
 	name = "Shuttles"
 	wait = 10
 	init_order = 3
@@ -18,6 +18,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
+	var/obj/docking_port/mobile/arrivals/arrivals
 	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
 	var/emergencyCallTime = 6000	//time taken for emergency shuttle to reach the station when called (in deciseconds)
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
@@ -46,10 +47,12 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-/datum/subsystem/shuttle/New()
+/datum/controller/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 
-/datum/subsystem/shuttle/Initialize(timeofday)
+/datum/controller/subsystem/shuttle/Initialize(timeofday)
+	if(!emergency)
+		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)
@@ -65,13 +68,14 @@ var/datum/subsystem/shuttle/SSshuttle
 			continue
 		supply_packs[P.type] = P
 
-	initial_move()
 	setup_transit_zone()
+	initial_move()
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
 #endif
+	..()
 
-/datum/subsystem/shuttle/proc/setup_transit_zone()
+/datum/controller/subsystem/shuttle/proc/setup_transit_zone()
 	if(transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
@@ -85,7 +89,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		T.flags |= UNUSED_TRANSIT_TURF
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
-/datum/subsystem/shuttle/proc/color_space()
+/datum/controller/subsystem/shuttle/proc/color_space()
 	if(transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
@@ -104,7 +108,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	//world.log << "[transit_turfs.len] transit turfs registered"
 
-/datum/subsystem/shuttle/fire()
+/datum/controller/subsystem/shuttle/fire()
 	for(var/thing in mobile)
 		if(!thing)
 			mobile.Remove(thing)
@@ -148,19 +152,19 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(MC_TICK_CHECK)
 			return
 
-/datum/subsystem/shuttle/proc/getShuttle(id)
+/datum/controller/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.id == id)
 			return M
 	WARNING("couldn't find shuttle with id: [id]")
 
-/datum/subsystem/shuttle/proc/getDock(id)
+/datum/controller/subsystem/shuttle/proc/getDock(id)
 	for(var/obj/docking_port/stationary/S in stationary)
 		if(S.id == id)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
-/datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
+/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
 		WARNING("requestEvac(): There is no emergency shuttle, but the \
 			shuttle was called. Using the backup shuttle instead.")
@@ -176,33 +180,33 @@ var/datum/subsystem/shuttle/SSshuttle
 		emergency = backup_shuttle
 
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
-		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
+		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
 		return
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			user << "The emergency shuttle may not be called while returning to Centcom."
+			to_chat(user, "The emergency shuttle may not be called while returning to Centcom.")
 			return
 		if(SHUTTLE_CALL)
-			user << "The emergency shuttle is already on its way."
+			to_chat(user, "The emergency shuttle is already on its way.")
 			return
 		if(SHUTTLE_DOCKED)
-			user << "The emergency shuttle is already here."
+			to_chat(user, "The emergency shuttle is already here.")
 			return
 		if(SHUTTLE_IGNITING)
-			user << "The emergency shuttle is firing its engines to leave."
+			to_chat(user, "The emergency shuttle is firing its engines to leave.")
 			return
 		if(SHUTTLE_ESCAPE)
-			user << "The emergency shuttle is moving away to a safe distance."
+			to_chat(user, "The emergency shuttle is moving away to a safe distance.")
 			return
 		if(SHUTTLE_STRANDED)
-			user << "The emergency shuttle has been disabled by Centcom."
+			to_chat(user, "The emergency shuttle has been disabled by Centcom.")
 			return
 
 	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && seclevel2num(get_security_level()) > SEC_LEVEL_GREEN)
-		user << "You must provide a reason."
+		to_chat(user, "You must provide a reason.")
 		return
 
 	var/area/signal_origin = get_area(user)
@@ -221,20 +225,20 @@ var/datum/subsystem/shuttle/SSshuttle
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
-/datum/subsystem/shuttle/proc/emergencyDeregister()
+/datum/controller/subsystem/shuttle/proc/emergencyDeregister()
 	// When a new emergency shuttle is created, it will override the
 	// backup shuttle.
 	src.emergency = src.backup_shuttle
 
-/datum/subsystem/shuttle/proc/cancelEvac(mob/user)
+/datum/controller/subsystem/shuttle/proc/cancelEvac(mob/user)
 	if(canRecall())
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.")
 		return 1
 
-/datum/subsystem/shuttle/proc/canRecall()
-	if(emergency.mode != SHUTTLE_CALL)
+/datum/controller/subsystem/shuttle/proc/canRecall()
+	if(!emergency || emergency.mode != SHUTTLE_CALL)
 		return
 	if(ticker.mode.name == "meteor")
 		return
@@ -251,7 +255,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				return
 	return 1
 
-/datum/subsystem/shuttle/proc/autoEvac()
+/datum/controller/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1
 
 	for(var/thing in shuttle_caller_list)
@@ -275,15 +279,15 @@ var/datum/subsystem/shuttle/SSshuttle
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 
-/datum/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
+/datum/controller/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
 	hostileEnvironments[bad] = TRUE
 	checkHostileEnvironment()
 
-/datum/subsystem/shuttle/proc/clearHostileEnvironment(datum/bad)
+/datum/controller/subsystem/shuttle/proc/clearHostileEnvironment(datum/bad)
 	hostileEnvironments -= bad
 	checkHostileEnvironment()
 
-/datum/subsystem/shuttle/proc/checkHostileEnvironment()
+/datum/controller/subsystem/shuttle/proc/checkHostileEnvironment()
 	for(var/datum/d in hostileEnvironments)
 		if(!istype(d) || QDELETED(d))
 			hostileEnvironments -= d
@@ -304,7 +308,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			null, 'sound/AI/shuttledock.ogg', "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
-/datum/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
+/datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	if(!M)
 		return 1
@@ -321,7 +325,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	return 0	//dock successful
 
 
-/datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
+/datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	var/obj/docking_port/stationary/D = getDock(dockId)
 
@@ -335,7 +339,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			return 2
 	return 0	//dock successful
 
-/datum/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
+/datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
 		throw EXCEPTION("[M] is not a mobile docking port")
 
@@ -345,7 +349,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(!(M in transit_requesters))
 			transit_requesters += M
 
-/datum/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
+/datum/controller/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
 	// First, determine the size of the needed zone
 	// Because of shuttle rotation, the "width" of the shuttle is not
 	// always x.
@@ -368,7 +372,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			transit_width += M.height
 			transit_height += M.width
 /*
-	world << "The attempted transit dock will be [transit_width] width, and \
+	to_chat(world, "The attempted transit dock will be [transit_width] width, and \)
 		[transit_height] in height. The travel dir is [travel_dir]."
 */
 
@@ -398,17 +402,17 @@ var/datum/subsystem/shuttle/SSshuttle
 					continue base
 				if(!(T.flags & UNUSED_TRANSIT_TURF))
 					continue base
-			//world << "[COORD(topleft)] and [COORD(bottomright)]"
+			//to_chat(world, "[COORD(topleft)] and [COORD(bottomright)]")
 			break base
 
 	if((!proposed_zone) || (!proposed_zone.len))
 		return FALSE
 
 	var/turf/topleft = proposed_zone[1]
-	//world << "[COORD(topleft)] is TOPLEFT"
+	//to_chat(world, "[COORD(topleft)] is TOPLEFT")
 	// Then create a transit docking port in the middle
 	var/coords = M.return_coords(0, 0, dock_dir)
-	//world << json_encode(coords)
+	//to_chat(world, json_encode(coords))
 	/*  0------2
         |      |
         |      |
@@ -429,7 +433,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	var/turf/low_point = locate(lowx, lowy, topleft.z)
 	new /obj/effect/landmark/stationary(low_point)
-	world << "Starting at the low point, we go [x2],[y2]"
+	to_chat(world, "Starting at the low point, we go [x2],[y2]")
 */
 	// Then invert the numbers
 	var/transit_x = topleft.x + SHUTTLE_TRANSIT_BORDER + abs(x2)
@@ -446,11 +450,11 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(WEST)
 			transit_path = /turf/open/space/transit/west
 
-	//world << "Docking port at [transit_x], [transit_y], [topleft.z]"
+	//to_chat(world, "Docking port at [transit_x], [transit_y], [topleft.z]")
 	var/turf/midpoint = locate(transit_x, transit_y, topleft.z)
 	if(!midpoint)
 		return FALSE
-	//world << "Making transit dock at [COORD(midpoint)]"
+	//to_chat(world, "Making transit dock at [COORD(midpoint)]")
 	var/area/shuttle/transit/A = new()
 	A.parallax_movedir = travel_dir
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
@@ -473,14 +477,14 @@ var/datum/subsystem/shuttle/SSshuttle
 	M.assigned_transit = new_transit_dock
 	return TRUE
 
-/datum/subsystem/shuttle/proc/initial_move()
+/datum/controller/subsystem/shuttle/proc/initial_move()
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(!M.roundstart_move)
 			continue
 		M.dockRoundstart()
 		CHECK_TICK
 
-/datum/subsystem/shuttle/Recover()
+/datum/controller/subsystem/shuttle/Recover()
 	if (istype(SSshuttle.mobile))
 		mobile = SSshuttle.mobile
 	if (istype(SSshuttle.stationary))
@@ -505,4 +509,3 @@ var/datum/subsystem/shuttle/SSshuttle
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
 	points = SSshuttle.points
-

@@ -46,11 +46,6 @@
 
 /datum/hud/ghost/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
-	var/mob/dead/observer/G = mymob
-	if(!G.client.prefs.ghost_hud)
-		mymob.client.screen = null
-		return
-
 	var/obj/screen/using
 
 	using = new /obj/screen/ghost/jumptomob()
@@ -73,16 +68,12 @@
 	using.screen_loc = ui_ghost_pai
 	static_inventory += using
 
-
-/datum/hud/ghost/show_hud()
-	var/mob/dead/observer/G = mymob
-	mymob.client.screen = list()
-	for(var/thing in plane_masters)
-		mymob.client.screen += plane_masters[thing]
-	create_parallax()
-	if(G.client.prefs.ghost_hud)
+/datum/hud/ghost/show_hud(version = 0, mob/viewmob)
+	..()
+	if(!mymob.client.prefs.ghost_hud)
+		mymob.client.screen -= static_inventory
+	else
 		mymob.client.screen += static_inventory
-
 
 /mob/dead/observer/create_mob_hud()
 	if(client && !hud_used)

@@ -34,17 +34,17 @@
 		size = "big"
 	if(ingredients.len>8)
 		size = "monster"
-	user << "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
+	to_chat(user, "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)].")
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable) && istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > WEIGHT_CLASS_SMALL)
-			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
+			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
-			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom))
-			user << "<span class='warning'>Adding [I.name] to [src] would make a mess.</span>"
+			to_chat(user, "<span class='warning'>Adding [I.name] to [src] would make a mess.</span>")
 		else
 			if(!user.transferItemToLoc(I, src))
 				return
@@ -54,7 +54,7 @@
 			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			update_overlays(S)
-			user << "<span class='notice'>You add the [I.name] to the [name].</span>"
+			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
 			update_name(S)
 	else . = ..()
 
@@ -117,7 +117,8 @@
 		if(INGREDIENTS_STACKPLUSTOP)
 			I.pixel_x = rand(-1,1)
 			I.pixel_y = 2 * ingredients.len - 1
-			overlays.Cut(ingredients.len)
+			if(our_overlays)
+				our_overlays.Cut(ingredients.len)	//???, add overlay calls later in this proc will queue the compile if necessary
 			var/image/TOP = new(icon, "[icon_state]_top")
 			TOP.pixel_y = 2 * ingredients.len + 3
 			add_overlay(I)
@@ -242,7 +243,7 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/breadslice/BS = I
 		if(finished)
 			return
-		user << "<span class='notice'>You finish the [src.name].</span>"
+		to_chat(user, "<span class='notice'>You finish the [src.name].</span>")
 		finished = 1
 		name = "[customname] sandwich"
 		BS.reagents.trans_to(src, BS.reagents.total_volume)
@@ -292,9 +293,9 @@
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > WEIGHT_CLASS_SMALL)
-			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
+			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else if(contents.len >= 20)
-			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
 			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
 				var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/soup(get_turf(src))

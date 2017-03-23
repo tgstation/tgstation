@@ -16,7 +16,7 @@
 
 	var/mob/living/carbon/human/H = pick(holder_canadates)
 	new /obj/item/weapon/greentext(H.loc)
-	H << "<font color='green'>The mythical greentext appear at your feet! Pick it up if you dare...</font>"
+	to_chat(H, "<font color='green'>The mythical greentext appear at your feet! Pick it up if you dare...</font>")
 
 
 /obj/item/weapon/greentext
@@ -36,9 +36,9 @@
 	poi_list |= src
 
 /obj/item/weapon/greentext/equipped(mob/living/user as mob)
-	user << "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>"
+	to_chat(user, "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>")
 	if(user.mind && user.mind.objectives.len > 0)
-		user << "<span class='warning'>... so long as you still perform your other objectives that is!</span>"
+		to_chat(user, "<span class='warning'>... so long as you still perform your other objectives that is!</span>")
 	new_holder = user
 	if(!last_holder)
 		last_holder = user
@@ -50,7 +50,7 @@
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
 	if(user in color_altered_mobs)
-		user << "<span class='warning'>A sudden wave of failure washes over you...</span>"
+		to_chat(user, "<span class='warning'>A sudden wave of failure washes over you...</span>")
 		user.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY) //ya blew it
 	last_holder 	= null
 	new_holder 		= null
@@ -59,7 +59,7 @@
 
 /obj/item/weapon/greentext/process()
 	if(new_holder && new_holder.z == ZLEVEL_CENTCOM)//you're winner!
-		new_holder << "<font color='green'>At last it feels like victory is assured!</font>"
+		to_chat(new_holder, "<font color='green'>At last it feels like victory is assured!</font>")
 		if(!(new_holder in ticker.mode.traitors))
 			ticker.mode.traitors += new_holder.mind
 		new_holder.mind.special_role = "winner"
@@ -67,13 +67,13 @@
 		O.completed = 1 //YES!
 		O.owner = new_holder.mind
 		new_holder.mind.objectives += O
-		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
+		new_holder.log_message("<font color='green'>Won with greentext!!!</font>", INDIVIDUAL_ATTACK_LOG)
 		color_altered_mobs -= new_holder
 		resistance_flags |= ON_FIRE
 		qdel(src)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
-		last_holder << "<span class='warning'>A sudden wave of failure washes over you...</span>"
+		to_chat(last_holder, "<span class='warning'>A sudden wave of failure washes over you...</span>")
 		last_holder.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 		last_holder = new_holder //long live the king
 
@@ -92,7 +92,7 @@
 		message += "...</span>"
 		// can't skip the mob check as it also does the decolouring
 		if(!quiet)
-			M << message
+			to_chat(M, message)
 
 /obj/item/weapon/greentext/quiet
 	quiet = TRUE

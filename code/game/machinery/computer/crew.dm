@@ -9,6 +9,8 @@
 	circuit = /obj/item/weapon/circuitboard/computer/crew
 	var/monitor = null	//For VV debugging purposes
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/crew/New()
 	monitor = crewmonitor
 	return ..()
@@ -242,11 +244,11 @@ var/global/datum/crewmonitor/crewmonitor = new
 					if (!C) C = locate(/obj/machinery/camera) in urange(15, tile)
 
 					if (C)
-						var/turf/current_loc = AI.eyeobj.loc
+						addtimer(CALLBACK(src, .proc/update_ai, AI, C, AI.eyeobj.loc), min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
 
-						spawn(min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
-							if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
-								AI.switchCamera(C)
+/datum/crewmonitor/proc/update_ai(mob/living/silicon/ai/AI, obj/machinery/camera/C, turf/current_loc)
+	if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
+		AI.switchCamera(C)
 
 /mob/living/carbon/human/Move()
 	if (src.w_uniform)
