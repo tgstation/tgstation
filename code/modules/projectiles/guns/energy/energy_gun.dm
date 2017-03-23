@@ -31,7 +31,7 @@
 	if(gun_light && gun_light.on)
 		add_overlay("mini-light")
 
-/obj/item/weapon/gun/energy/e_gun/l_musket
+/obj/item/weapon/gun/energy/l_musket
 	name = "laser musket"
 	desc = "A makeshift low-power disabling weapon. Named after an ancient weapon of similar reliability."
 	icon_state = "lasercannon"
