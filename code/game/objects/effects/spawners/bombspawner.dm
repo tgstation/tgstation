@@ -20,7 +20,7 @@
 	btype = 0
 
 
-/obj/effect/spawner/newbomb/New()
+/obj/effect/spawner/newbomb/Initialize()
 	..()
 
 	switch (src.btype)
