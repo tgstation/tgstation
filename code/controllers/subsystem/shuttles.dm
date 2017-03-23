@@ -244,11 +244,8 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 		return
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)
-		if(SEC_LEVEL_GREEN)
-			if(emergency.timeLeft(1) < emergencyCallTime)
-				return
-		if(SEC_LEVEL_BLUE)
-			if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+		if(SEC_LEVEL_GREEN, SEC_LEVEL_BLUE)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.5) //allows recalling for longer when at green alert
 				return
 		else
 			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
