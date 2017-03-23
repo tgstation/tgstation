@@ -162,7 +162,10 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		if(!populated_centcom)
 			return
 		CHECK_TICK
-		
+
+/datum/controller/subsystem/npcpool/Shutdown()
+	DepopulateCentcom()
+
 /datum/controller/subsystem/npcpool/proc/DepopulateCentcom()
 	populated_centcom = FALSE
 	NPCsToSpawn = 0
