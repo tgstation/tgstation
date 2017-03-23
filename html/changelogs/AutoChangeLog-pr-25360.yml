@@ -1,0 +1,11 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Destroying a lich's body does not destroy the lich permanently,
+provided the phylactery is intact."
+  - rscadd: "A lich will respawn three minutes after its death, provided the
+phylactery is intact."
+  - rscadd: "The Soul Bind spell is forgotten after cast, respawn is now
+automatic."
+  - rscdel: "Stationloving objects like the nuke disk are not valid objects for
+a phylactery."

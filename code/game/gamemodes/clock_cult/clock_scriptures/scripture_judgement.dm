@@ -22,13 +22,6 @@
 	tier = SCRIPTURE_JUDGEMENT
 	sort_priority = 1
 
-/datum/clockwork_scripture/create_object/ark_of_the_clockwork_justiciar/New()
-	if(SSticker && SSticker.mode && SSticker.mode.clockwork_objective != CLOCKCULT_GATEWAY)
-		invocations = list("ARMORER! FRIGHT! AMPERAGE! VANGUARD! I CALL UPON YOU!!", \
-		"THIS STATION WILL BE A BEACON OF HOPE IN THE DARKNESS OF SPACE!!", \
-		"HELP US MAKE THIS SHOW ENGINE'S GLORY!!")
-	..()
-
 /datum/clockwork_scripture/create_object/ark_of_the_clockwork_justiciar/check_special_requirements()
 	if(!slab.no_cost)
 		if(ratvar_awakens)
@@ -36,7 +29,7 @@
 			return FALSE
 		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
 			var/area/gate_area = get_area(G)
-			to_chat(invoker, "<span class='userdanger'>There is already a gateway at [gate_area.map_name]!</span>")
+			to_chat(invoker, "<span class='userdanger'>There is already an Ark at [gate_area.map_name]!</span>")
 			return FALSE
 		var/area/A = get_area(invoker)
 		var/turf/T = get_turf(invoker)
@@ -44,9 +37,6 @@
 			to_chat(invoker, "<span class='warning'>You must be on the station to activate the Ark!</span>")
 			return FALSE
 		if(clockwork_gateway_activated)
-			if(SSticker && SSticker.mode && SSticker.mode.clockwork_objective != CLOCKCULT_GATEWAY)
-				to_chat(invoker, "<span class='nezbere'>\"Look upon his works. Is it not glorious?\"</span>")
-			else
-				to_chat(invoker, "<span class='warning'>Ratvar's recent banishment renders him too weak to be wrung forth from Reebe!</span>")
+			to_chat(invoker, "<span class='warning'>Ratvar's recent banishment renders him too weak to be wrung forth from Reebe!</span>")
 			return FALSE
 	return ..()
