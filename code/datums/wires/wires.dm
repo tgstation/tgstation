@@ -1,23 +1,5 @@
 #define MAXIMUM_EMP_WIRES 3
 
-var/list/wire_colors = list(
-	"blue",
-	"brown",
-	"crimson",
-	"cyan",
-	"gold",
-	"grey",
-	"green",
-	"magenta",
-	"orange",
-	"pink",
-	"purple",
-	"red",
-	"silver",
-	"violet",
-	"white",
-	"yellow",
-)
 var/list/wire_color_directory = list()
 var/list/wire_name_directory = list()
 
@@ -77,10 +59,27 @@ var/list/wire_name_directory = list()
 		wires += dud
 
 /datum/wires/proc/randomize()
-	var/list/possible_colors = wire_colors.Copy()
+	var/static/list/possible_colors = list(
+	"blue",
+	"brown",
+	"crimson",
+	"cyan",
+	"gold",
+	"grey",
+	"green",
+	"magenta",
+	"orange",
+	"pink",
+	"purple",
+	"red",
+	"silver",
+	"violet",
+	"white",
+	"yellow"
+	)
 
 	for(var/wire in shuffle(wires))
-		colors[pick_n_take(possible_colors)] = wire
+		colors[pick_n_take(possible_colors.Copy()] = wire
 
 /datum/wires/proc/shuffle_wires()
 	colors.Cut()
