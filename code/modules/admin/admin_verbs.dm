@@ -610,7 +610,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in diseases
+	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in SSdisease.diseases
 	if(!D) return
 	T.ForceContractDisease(new D)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

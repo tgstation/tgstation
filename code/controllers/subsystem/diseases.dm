@@ -7,8 +7,17 @@ GLOBAL_REAL(SSdisease, /datum/controller/subsystem/diseases)
 	var/list/currentrun = list()
 	var/list/processing = list()
 
+	var/list/diseases
+
 /datum/controller/subsystem/diseases/New()
 	NEW_SS_GLOBAL(SSdisease)
+	if(!diseases)
+		diseases = subtypesof(/datum/disease)
+
+/datum/controller/subsystem/diseases/Recover()
+	currentrun = SSdisease.currentrun
+	processing = SSdisease.processing
+	diseases = SSdisease.diseases
 
 /datum/controller/subsystem/diseases/stat_entry(msg)
 	..("P:[processing.len]")

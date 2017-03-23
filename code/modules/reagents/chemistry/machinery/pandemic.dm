@@ -110,7 +110,7 @@
 				if(A)
 					D = new A.type(0, A)
 			else if(type)
-				if(type in diseases) // Make sure this is a disease
+				if(type in SSdisease.diseases) // Make sure this is a disease
 					D = new type(0, null)
 			if(!D)
 				return
