@@ -166,7 +166,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		CHECK_TICK
 	
 	if(!skip_roundend_check)
-		UNTIL(!populated_centcomm || ticker.current_state == GAME_STATE_FINISHED)
+		UNTIL(!populated_centcom || ticker.current_state == GAME_STATE_FINISHED)
 	
 	if(NPCsToSpawn)
 		for(var/I in spawn_locs)
