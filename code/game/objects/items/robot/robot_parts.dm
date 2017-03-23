@@ -70,20 +70,19 @@
 			if (M.use(1))
 				var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 				B.loc = get_turf(src)
-				user << "<span class='notice'>You arm the robot frame.</span>"
-				if (user.get_inactive_held_item()==src)
-					user.unEquip(src)
-					user.put_in_inactive_hand(B)
+				to_chat(user, "<span class='notice'>You arm the robot frame.</span>")
+				var/holding_this = user.get_inactive_held_item()==src
 				qdel(src)
+				if (holding_this)
+					user.put_in_inactive_hand(B)
 			else
-				user << "<span class='warning'>You need one sheet of metal to start building ED-209!</span>"
+				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
 				return
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(src.l_leg)
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
 		src.l_leg = W
@@ -92,9 +91,8 @@
 	else if(istype(W, /obj/item/bodypart/r_leg/robot))
 		if(src.r_leg)
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
 		src.r_leg = W
@@ -103,9 +101,8 @@
 	else if(istype(W, /obj/item/bodypart/l_arm/robot))
 		if(src.l_arm)
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
 		src.l_arm = W
@@ -114,9 +111,8 @@
 	else if(istype(W, /obj/item/bodypart/r_arm/robot))
 		if(src.r_arm)
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)//in case it is a dismembered robotic limb
 		W.cut_overlays()
 		src.r_arm = W
@@ -127,71 +123,69 @@
 		if(src.chest)
 			return
 		if(CH.wired && CH.cell)
-			if(!user.unEquip(CH))
+			if(!user.transferItemToLoc(CH, src))
 				return
-			CH.forceMove(src)
 			CH.icon_state = initial(CH.icon_state) //in case it is a dismembered robotic limb
 			CH.cut_overlays()
 			src.chest = CH
 			src.updateicon()
 		else if(!CH.wired)
-			user << "<span class='warning'>You need to attach wires to it first!</span>"
+			to_chat(user, "<span class='warning'>You need to attach wires to it first!</span>")
 		else
-			user << "<span class='warning'>You need to attach a cell to it first!</span>"
+			to_chat(user, "<span class='warning'>You need to attach a cell to it first!</span>")
 
 	else if(istype(W, /obj/item/bodypart/head/robot))
 		var/obj/item/bodypart/head/robot/HD = W
 		for(var/X in HD.contents)
 			if(istype(X, /obj/item/organ))
-				user << "<span class='warning'>There are organs inside [HD]!</span>"
+				to_chat(user, "<span class='warning'>There are organs inside [HD]!</span>")
 				return
 		if(src.head)
 			return
 		if(HD.flash2 && HD.flash1)
-			if(!user.unEquip(HD))
+			if(!user.transferItemToLoc(HD, src))
 				return
-			HD.loc = src
 			HD.icon_state = initial(HD.icon_state)//in case it is a dismembered robotic limb
 			HD.cut_overlays()
 			src.head = HD
 			src.updateicon()
 		else
-			user << "<span class='warning'>You need to attach a flash to it first!</span>"
+			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
 	else if (istype(W, /obj/item/device/multitool))
 		if(check_completion())
 			Interact(user)
 		else
-			user << "<span class='warning'>The endoskeleton must be assembled before debugging can begin!</span>"
+			to_chat(user, "<span class='warning'>The endoskeleton must be assembled before debugging can begin!</span>")
 
 	else if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!isturf(loc))
-				user << "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>"
+				to_chat(user, "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>")
 				return
 			if(!M.brainmob)
-				user << "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>"
+				to_chat(user, "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>")
 				return
 
 			var/mob/living/brain/BM = M.brainmob
 			if(!BM.key || !BM.mind)
-				user << "<span class='warning'>The MMI indicates that their mind is completely unresponsive; there's no point!</span>"
+				to_chat(user, "<span class='warning'>The MMI indicates that their mind is completely unresponsive; there's no point!</span>")
 				return
 
 			if(!BM.client) //braindead
-				user << "<span class='warning'>The MMI indicates that their mind is currently inactive; it might change!</span>"
+				to_chat(user, "<span class='warning'>The MMI indicates that their mind is currently inactive; it might change!</span>")
 				return
 
 			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))
-				user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
+				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
 				return
 
 			if(jobban_isbanned(BM, "Cyborg"))
-				user << "<span class='warning'>This [M.name] does not seem to fit!</span>"
+				to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 				return
 
-			if(!user.unEquip(W))
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
@@ -227,15 +221,15 @@
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
-				O << "<span class='userdanger'>You have been robotized!</span>"
-				O << "<span class='danger'>You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.</span>"
+				to_chat(O, "<span class='userdanger'>You have been robotized!</span>")
+				to_chat(O, "<span class='danger'>You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.</span>")
 
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
 			chest.cell.loc = O
 			chest.cell = null
-			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			if(O.mmi) //we delete the mmi created by robot/New()
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
@@ -243,19 +237,19 @@
 
 			feedback_inc("cyborg_birth",1)
 
-			src.loc = O
+			forceMove(O)
 			O.robot_suit = src
 
 			if(!locomotion)
 				O.lockcharge = 1
 				O.update_canmove()
-				O << "<span class='warning'>Error: Servo motors unresponsive.</span>"
+				to_chat(O, "<span class='warning'>Error: Servo motors unresponsive.</span>")
 
 		else
-			user << "<span class='warning'>The MMI must go in after everything else!</span>"
+			to_chat(user, "<span class='warning'>The MMI must go in after everything else!</span>")
 
 	else if(istype(W,/obj/item/weapon/pen))
-		user << "<span class='warning'>You need to use a multitool to name [src]!</span>"
+		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")
 	else
 		return ..()
 
@@ -278,7 +272,7 @@
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_held_item()
 	if(!istype(item_in_hand, /obj/item/device/multitool))
-		living_user << "<span class='warning'>You need a multitool!</span>"
+		to_chat(living_user, "<span class='warning'>You need a multitool!</span>")
 		return
 
 	if(href_list["Name"])
@@ -293,7 +287,7 @@
 	else if(href_list["Master"])
 		forced_ai = select_active_ai(usr)
 		if(!forced_ai)
-			usr << "<span class='error'>No active AIs detected.</span>"
+			to_chat(usr, "<span class='error'>No active AIs detected.</span>")
 
 	else if(href_list["Law"])
 		lawsync = !lawsync

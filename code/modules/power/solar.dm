@@ -207,7 +207,7 @@
 /obj/item/solar_assembly/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && isturf(loc))
 		if(isinspace())
-			user << "<span class='warning'>You can't secure [src] here.</span>"
+			to_chat(user, "<span class='warning'>You can't secure [src] here.</span>")
 			return
 		anchored = !anchored
 		if(anchored)
@@ -220,7 +220,7 @@
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
 		if(!anchored)
-			user << "<span class='warning'>You need to secure the assembly before you can add glass.</span>"
+			to_chat(user, "<span class='warning'>You need to secure the assembly before you can add glass.</span>")
 			return
 		var/obj/item/stack/sheet/S = W
 		if(S.use(2))
@@ -232,7 +232,7 @@
 			else
 				new /obj/machinery/power/solar(get_turf(src), src)
 		else
-			user << "<span class='warning'>You need two sheets of glass to put them into a solar panel!</span>"
+			to_chat(user, "<span class='warning'>You need two sheets of glass to put them into a solar panel!</span>")
 			return
 		return 1
 
@@ -281,11 +281,10 @@
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
-
-/obj/machinery/power/solar_control/New()
+/obj/machinery/power/solar_control/Initialize()
 	..()
-	if(ticker)
-		initialize()
+	if(powernet)
+		set_panels(currentdir)
 	connect_to_network()
 
 /obj/machinery/power/solar_control/Destroy()
@@ -334,12 +333,6 @@
 
 	set_panels(currentdir)
 	updateDialog()
-
-
-/obj/machinery/power/solar_control/initialize()
-	..()
-	if(!powernet) return
-	set_panels(currentdir)
 
 /obj/machinery/power/solar_control/update_icon()
 	cut_overlays()
@@ -419,7 +412,7 @@
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 20*I.toolspeed, target = src))
 			if (src.stat & BROKEN)
-				user << "<span class='notice'>The broken glass falls out.</span>"
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				new /obj/item/weapon/shard( src.loc )
 				var/obj/item/weapon/circuitboard/computer/solar_control/M = new /obj/item/weapon/circuitboard/computer/solar_control( A )
@@ -431,7 +424,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				user << "<span class='notice'>You disconnect the monitor.</span>"
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				var/obj/item/weapon/circuitboard/computer/solar_control/M = new /obj/item/weapon/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)

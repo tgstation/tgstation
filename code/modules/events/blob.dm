@@ -11,7 +11,7 @@
 
 /datum/round_event/ghost_role/blob
 	announceWhen	= 12
-	role_name = "blob_overmind"
+	role_name = "blob overmind"
 	var/new_rate = 2
 
 /datum/round_event/ghost_role/blob/New(my_processing = TRUE, set_point_rate)

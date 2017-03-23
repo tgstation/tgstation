@@ -10,13 +10,14 @@
 	construction_value = 20
 	max_integrity = 125
 	obj_integrity = 125
-	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards/small = 5, \
+	break_message = "<span class='warning'>The prism falls to the ground with a heavy thud!</span>"
+	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
 	/obj/item/clockwork/alloy_shards/medium = 1, \
 	/obj/item/clockwork/alloy_shards/large = 1, \
-	/obj/item/clockwork/component/vanguard_cogwheel = 1)
+	/obj/item/clockwork/component/vanguard_cogwheel/onyx_prism = 1)
 	var/heal_attempts = 4
 	var/heal_cost = MIN_CLOCKCULT_POWER*2
+	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 	var/static/list/heal_finish_messages = list("There, all mended!", "Try not to get too damaged.", "No more dents and scratches for you!", "Champions never die.", "All patched up.", \
 	"Ah, child, it's okay now.")
 	var/static/list/heal_failure_messages = list("Pain is temporary.", "What you do for the Justiciar is eternal.", "Bear this for me.", "Be strong, child.", "Please, be careful!", \
@@ -31,7 +32,7 @@
 /obj/structure/destructible/clockwork/powered/mending_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='inathneq_small'>It requires at least <b>[heal_cost]W</b> to attempt to repair clockwork mobs, structures, or converted silicons.</span>"
+		to_chat(user, "<span class='inathneq_small'>It requires at least <b>[heal_cost]W</b> to attempt to repair clockwork mobs, structures, or converted silicons.</span>")
 
 /obj/structure/destructible/clockwork/powered/mending_motor/forced_disable(bad_effects)
 	if(active)
@@ -42,9 +43,9 @@
 		return TRUE
 
 /obj/structure/destructible/clockwork/powered/mending_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))
+	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY) && is_servant_of_ratvar(user))
 		if(total_accessable_power() < MIN_CLOCKCULT_POWER)
-			user << "<span class='warning'>[src] needs more power to function!</span>"
+			to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
 			return 0
 		toggle(0, user)
 
@@ -61,12 +62,12 @@
 				if(S.health < S.maxHealth)
 					if(try_use_power(heal_cost))
 						S.adjustHealth(-(8 * efficiency))
-						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
+						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
 					else
-						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
+						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>")
 						break
 				else
-					S << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
+					to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 					break
 		else if(is_type_in_typecache(M, mending_motor_typecache))
 			T = get_turf(M)
@@ -80,7 +81,7 @@
 						if(C == src)
 							efficiency = get_efficiency_mod()
 						C.update_icon()
-						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
+						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
 					else
 						break
 				else
@@ -93,14 +94,13 @@
 			for(var/i in 1 to heal_attempts)
 				if(S.health < S.maxHealth)
 					if(try_use_power(heal_cost))
-						S.adjustBruteLoss(-(5 * efficiency))
-						S.adjustFireLoss(-(3 * efficiency))
-						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
+						S.heal_ordered_damage(8 * efficiency, damage_heal_order)
+						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
 					else
-						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
+						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>")
 						break
 				else
-					S << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
+					to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 					break
 	. = ..()
 	if(. < heal_cost)

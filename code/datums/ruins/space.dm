@@ -43,13 +43,6 @@
 	name = "Asteroid 5"
 	description = "Oh my god, another giant rock!"
 
-/datum/map_template/ruin/space/deep_storage
-	id = "deep-storage"
-	suffix = "deepstorage.dmm"
-	name = "Survivalist Bunker"
-	description = "Assume the best, prepare for the worst. Generally, you should do so by digging a three man heavily fortified bunker into a giant unused asteroid. \
-	Then make it self sufficient, mask any evidence of construction, hook it covertly into the telecommunications network and hope for the best."
-
 /datum/map_template/ruin/space/bigderelict1
 	id = "bigderelict1"
 	suffix = "bigderelict1.dmm"
@@ -142,13 +135,6 @@
 	name = "DK Excavator 453"
 	description = "Based on the trace elements we've detected on the gutted asteroids, we suspect that a mining ship using a restricted engine is somewhere in the area. \
 	We'd like to request a patrol vessel to investigate."
-
-/datum/map_template/ruin/space/spacebar
-	id = "spacebar"
-	suffix = "spacebar.dmm"
-	name = "The Rampant Golem and Yellow Hound"
-	description = "No questions asked. No shoes/foot protection, no service. No tabs. No violence in the inside areas. That's it. Welcome to the Rampant Golem and Yellow Hound. \
-	Can I take your order?"
 
 /datum/map_template/ruin/space/spacehotel
 	id = "spacehotel"

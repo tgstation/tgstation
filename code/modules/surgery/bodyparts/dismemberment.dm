@@ -35,6 +35,8 @@
 	var/turf/target_turf = get_turf(src)
 	for(var/i in 1 to t_range-1)
 		var/turf/new_turf = get_step(target_turf, direction)
+		if(!new_turf)
+			break
 		target_turf = new_turf
 		if(new_turf.density)
 			break
@@ -85,7 +87,7 @@
 	update_limb(1)
 	C.bodyparts -= src
 	if(held_index)
-		C.unEquip(owner.get_item_for_held_index(held_index), 1)
+		C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
 		C.hand_bodyparts[held_index] = null
 
 	owner = null
@@ -134,6 +136,7 @@
 	if(C.mind && C.mind.changeling)
 		LB.brain = new //changeling doesn't lose its real brain organ, we drop a decoy.
 		LB.brain.loc = LB
+		LB.brain.decoy_override = TRUE
 	else			//if not a changeling, we put the brain organ inside the dropped head
 		Remove(C)	//and put the player in control of the brainmob
 		loc = LB
@@ -144,6 +147,9 @@
 		LB.brainmob.container = LB
 		LB.brainmob.stat = DEAD
 
+/obj/item/organ/eyes/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
+	LB.eyes = src
+	..()
 
 /obj/item/bodypart/chest/drop_limb(special)
 	return
@@ -162,7 +168,7 @@
 			if(R)
 				R.update_icon()
 		if(C.gloves)
-			C.unEquip(C.gloves, 1)
+			C.dropItemToGround(C.gloves, TRUE)
 		C.update_inv_gloves() //to remove the bloody hands overlay
 
 
@@ -180,32 +186,30 @@
 			if(L)
 				L.update_icon()
 		if(C.gloves)
-			C.unEquip(C.gloves, 1)
+			C.dropItemToGround(C.gloves, TRUE)
 		C.update_inv_gloves() //to remove the bloody hands overlay
 
 
 /obj/item/bodypart/r_leg/drop_limb(special)
 	if(owner && !special)
-		owner.Weaken(2)
 		if(owner.legcuffed)
 			owner.legcuffed.loc = owner.loc
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
 		if(owner.shoes)
-			owner.unEquip(owner.shoes, 1)
+			owner.dropItemToGround(owner.shoes, TRUE)
 	..()
 
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
-		owner.Weaken(2)
 		if(owner.legcuffed)
 			owner.legcuffed.loc = owner.loc
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
 		if(owner.shoes)
-			owner.unEquip(owner.shoes, 1)
+			owner.dropItemToGround(owner.shoes, TRUE)
 	..()
 
 /obj/item/bodypart/head/drop_limb(special)
@@ -213,8 +217,8 @@
 		//Drop all worn head items
 		for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			var/obj/item/I = X
-			owner.unEquip(I, 1)
-	name = "[owner]'s head"
+			owner.dropItemToGround(I, TRUE)
+	name = "[owner.real_name]'s head"
 	..()
 
 
@@ -290,7 +294,6 @@
 		H.hair_style = hair_style
 		H.facial_hair_color = facial_hair_color
 		H.facial_hair_style = facial_hair_style
-		H.eye_color = eye_color
 		H.lip_style = lip_style
 		H.lip_color = lip_color
 	if(real_name)

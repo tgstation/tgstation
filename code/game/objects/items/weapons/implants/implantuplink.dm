@@ -4,10 +4,11 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
 	origin_tech = "materials=4;magnets=4;programming=4;biotech=4;syndicate=5;bluespace=5"
+	var/starting_tc = 0
 
 /obj/item/weapon/implant/uplink/New()
 	hidden_uplink = new(src)
-	hidden_uplink.telecrystals = 10
+	hidden_uplink.telecrystals = starting_tc
 	..()
 
 /obj/item/weapon/implant/uplink/implant(mob/living/target, mob/user, silent = 0)
@@ -29,18 +30,11 @@
 
 /obj/item/weapon/implanter/uplink
 	name = "implanter (uplink)"
-	persistence_replacement = /obj/item/weapon/implanter/weakuplink
+	imp_type = /obj/item/weapon/implant/uplink
 
-/obj/item/weapon/implanter/uplink/New()
-	imp = new /obj/item/weapon/implant/uplink(src)
-	..()
-/obj/item/weapon/implanter/weakuplink
-	name = "implanter (uplink)"
+/obj/item/weapon/implanter/uplink/precharged
+	name = "implanter (precharged uplink)"
+	imp_type = /obj/item/weapon/implant/uplink/precharged
 
-/obj/item/weapon/implanter/weakuplink/New()
-	imp = new /obj/item/weapon/implant/uplink/weak(src)
-	..()
-
-/obj/item/weapon/implant/uplink/weak/New()
-	..()
-	hidden_uplink.telecrystals = 5
+/obj/item/weapon/implant/uplink/precharged
+	starting_tc = 10

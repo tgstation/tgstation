@@ -24,13 +24,7 @@
 	var/distance = max(0,get_dist(get_turf(src),T))
 
 //Flash
-	if(M.weakeyes)
-		M.visible_message("<span class='disarm'><b>[M]</b> screams and collapses!</span>")
-		M << "<span class='userdanger'><font size=3>AAAAGH!</font></span>"
-		M.Weaken(15) //hella stunned
-		M.Stun(15)
-		M.adjust_eye_damage(8)
-	else if(M.flash_act(affect_silicon = 1))
+	if(M.flash_act(affect_silicon = 1))
 		M.Stun(max(10/max(1,distance), 3))
 		M.Weaken(max(10/max(1,distance), 3))
 //Bang

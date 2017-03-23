@@ -31,7 +31,7 @@
 
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
 	if(user)
-		user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
+		to_chat(user, "<span class='danger'>The crate's anti-tamper system activates!</span>")
 		var/message = "[ADMIN_LOOKUPFLW(user)] has detonated [src.name]."
 		bombers += message
 		message_admins(message)
@@ -65,3 +65,8 @@
 	desc = "A crate with a lock on it, painted in the scheme of the station's engineers."
 	name = "secure engineering crate"
 	icon_state = "engi_secure_crate"
+
+/obj/structure/closet/crate/secure/science
+	name = "secure science crate"
+	desc = "A crate with a lock on it, painted in the scheme of the station's scientists."
+	icon_state = "scisecurecrate"

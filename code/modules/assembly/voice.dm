@@ -51,7 +51,7 @@
 	. = 0
 	switch(mode)
 		if(1)
-			if(findtextEx(raw_message, recorded))
+			if(findtext(raw_message, recorded))
 				. = 1
 		if(2)
 			if(raw_message == recorded)
@@ -67,7 +67,7 @@
 	if(istype(W, /obj/item/device/multitool))
 		mode %= modes.len
 		mode++
-		user << "You set [src] into a [modes[mode]] mode."
+		to_chat(user, "You set [src] into a [modes[mode]] mode.")
 		listening = 0
 		recorded = ""
 	else

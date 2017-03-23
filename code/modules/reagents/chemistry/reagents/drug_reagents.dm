@@ -2,6 +2,7 @@
 	name = "Drug"
 	id = "drug"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "bitterness"
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
@@ -20,7 +21,7 @@
 	..()
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
-	M << "<span class='userdanger'>You start tripping hard!</span>"
+	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
 
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
@@ -35,11 +36,12 @@
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	addiction_threshold = 30
+	taste_description = "smoke"
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/M)
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
-		M << "<span class='notice'>[smoke_message]</span>"
+		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
 	M.AdjustWeakened(-1, 0)
@@ -59,7 +61,7 @@
 /datum/reagent/drug/crank/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 	if(prob(5))
-		M << "<span class='notice'>[high_message]</span>"
+		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
 	M.AdjustWeakened(-1, 0)
@@ -107,7 +109,7 @@
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
 	if(prob(5))
-		M << "<span class='notice'>[high_message]</span>"
+		to_chat(M, "<span class='notice'>[high_message]</span>")
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M)
@@ -124,12 +126,12 @@
 
 /datum/reagent/krokodil/addiction_act_stage2(mob/living/M)
 	if(prob(25))
-		M << "<span class='danger'>Your skin feels loose...</span>"
+		to_chat(M, "<span class='danger'>Your skin feels loose...</span>")
 	..()
 
 /datum/reagent/drug/krokodil/addiction_act_stage3(mob/living/M)
 	if(prob(25))
-		M << "<span class='danger'>Your skin starts to peel away...</span>"
+		to_chat(M, "<span class='danger'>Your skin starts to peel away...</span>")
 	M.adjustBruteLoss(3*REM, 0)
 	..()
 	. = 1
@@ -137,7 +139,7 @@
 /datum/reagent/drug/krokodil/addiction_act_stage4(mob/living/carbon/human/M)
 	CHECK_DNA_AND_SPECIES(M)
 	if(!istype(M.dna.species, /datum/species/krokodil_addict))
-		M << "<span class='userdanger'>Your skin falls off easily!</span>"
+		to_chat(M, "<span class='userdanger'>Your skin falls off easily!</span>")
 		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
 		M.set_species(/datum/species/krokodil_addict)
 	else
@@ -158,7 +160,7 @@
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(prob(5))
-		M << "<span class='notice'>[high_message]</span>"
+		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.AdjustParalysis(-2, 0)
 	M.AdjustStunned(-2, 0)
 	M.AdjustWeakened(-2, 0)
@@ -230,12 +232,13 @@
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	addiction_threshold = 10
+	taste_description = "salt" // because they're bathsalts?
 
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
-		M << "<span class='notice'>[high_message]</span>"
+		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
 	M.AdjustWeakened(-3, 0)
@@ -321,7 +324,7 @@
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
-		M << "<span class='notice'>[high_message]</span>"
+		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.adjustStaminaLoss(-18, 0)
 	M.adjustToxLoss(0.5, 0)
 	if(prob(50))

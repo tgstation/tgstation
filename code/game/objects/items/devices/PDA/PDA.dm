@@ -57,26 +57,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
-/obj/item/device/pda/pickup(mob/user)
-	..()
-	if(fon)
-		SetLuminosity(0)
-		user.AddLuminosity(f_lum)
-
-/obj/item/device/pda/dropped(mob/user)
-	..()
-	if(fon)
-		user.AddLuminosity(-f_lum)
-		SetLuminosity(f_lum)
-
 /obj/item/device/pda/New()
 	..()
 	if(fon)
-		if(!isturf(loc))
-			loc.AddLuminosity(f_lum)
-			SetLuminosity(0)
-		else
-			SetLuminosity(f_lum)
+		set_light(f_lum)
+
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
@@ -338,11 +323,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				id_check(U)
 			if("UpdateInfo")
 				ownjob = id.assignment
+				if(istype(id, /obj/item/weapon/card/id/syndicate))
+					owner = id.registered_name
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
 					U.put_in_hands(cartridge)
-					U << "<span class='notice'>You remove [cartridge] from [src].</span>"
+					to_chat(U, "<span class='notice'>You remove [cartridge] from [src].</span>")
 					scanmode = 0
 					if (cartridge.radio)
 						cartridge.radio.hostpda = null
@@ -370,16 +357,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Light")
 				if(fon)
 					fon = 0
-					if(src in U.contents)
-						U.AddLuminosity(-f_lum)
-					else
-						SetLuminosity(0)
+					set_light(0)
 				else
 					fon = 1
-					if(src in U.contents)
-						U.AddLuminosity(f_lum)
-					else
-						SetLuminosity(f_lum)
+					set_light(2.3)
 				update_icon()
 			if("Medical Scan")
 				if(scanmode == 1)
@@ -414,8 +395,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
 				if(A && alert_s)
 					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
-					_alert_drones(msg, 1)
-					U << msg
+					_alert_drones(msg, TRUE)
+					to_chat(U, msg)
 
 
 //NOTEKEEPER FUNCTIONS===================================
@@ -445,7 +426,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(t)
 						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
 							hidden_uplink.interact(U)
-							U << "The PDA softly beeps."
+							to_chat(U, "The PDA softly beeps.")
 							U << browse(null, "window=pda")
 							src.mode = 0
 						else
@@ -470,7 +451,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							U.show_message("<span class='notice'>Virus sent!</span>", 1)
 							P.honkamt = (rand(15,20))
 					else
-						U << "PDA not found."
+						to_chat(U, "PDA not found.")
 				else
 					U << browse(null, "window=pda")
 					return
@@ -484,7 +465,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							P.silent = 1
 							P.ttone = "silence"
 					else
-						U << "PDA not found."
+						to_chat(U, "PDA not found.")
 				else
 					U << browse(null, "window=pda")
 					return
@@ -526,7 +507,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								U.show_message("<span class='notice'>Success!</span>", 1)
 								P.explode()
 					else
-						U << "PDA not found."
+						to_chat(U, "PDA not found.")
 				else
 					U.unset_machine()
 					U << browse(null, "window=pda")
@@ -575,7 +556,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if (ismob(loc))
 			var/mob/M = loc
 			M.put_in_hands(id)
-			usr << "<span class='notice'>You remove the ID from the [name].</span>"
+			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		else
 			id.loc = get_turf(src)
 		id = null
@@ -622,7 +603,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				log_pda("[user] (PDA: [src.name]) sent \"[message]\" to [P.name]")
 		else
 			if(!multiple)
-				user << "<span class='notice'>ERROR: Server isn't responding.</span>"
+				to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
 				return
 	photo = null
 
@@ -649,7 +630,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
-		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
+		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	update_icon()
 	add_overlay(image(icon, icon_alert))
@@ -658,10 +639,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	for(var/mob/M in player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			var/link = FOLLOW_LINK(M, user)
-			M << "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>"
+			to_chat(M, "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
-	if(!P || qdeleted(P) || P.toff)
+	if(!P || QDELETED(P) || P.toff)
 		return null
 
 	var/obj/machinery/message_server/useMS = null
@@ -674,7 +655,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/datum/signal/signal = src.telecomms_process()
 
-	if(!P || qdeleted(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
+	if(!P || QDELETED(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
 		return null
 
 	var/useTC = 0
@@ -721,7 +702,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
+			to_chat(usr, "<span class='warning'>This PDA does not have an ID in it!</span>")
 
 /obj/item/device/pda/verb/verb_remove_pen()
 	set category = "Object"
@@ -741,11 +722,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			M.put_in_hands(inserted_item)
 		else
 			inserted_item.forceMove(loc)
-		usr << "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>"
+		to_chat(usr, "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>")
 		inserted_item = null
 		update_icon()
 	else
-		usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
+		to_chat(usr, "<span class='warning'>This PDA does not have a pen in it!</span>")
 
 //trying to insert or remove an id
 /obj/item/device/pda/proc/id_check(mob/user, obj/item/weapon/card/id/I)
@@ -759,10 +740,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				I = C
 
 	if(I && I.registered_name)
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return 0
 		var/obj/old_id = id
-		I.forceMove(src)
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
@@ -772,11 +752,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		if(!user.unEquip(C))
+		if(!user.transferItemToLoc(C, src))
 			return
 		cartridge = C
-		cartridge.loc = src
-		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
 		update_icon()
@@ -784,44 +763,42 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
 		if(!idcard.registered_name)
-			user << "<span class='warning'>\The [src] rejects the ID!</span>"
+			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
 			return
 		if(!owner)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			update_label()
-			user << "<span class='notice'>Card scanned.</span>"
+			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 			if(((src in user.contents) || (isturf(loc) && in_range(src, user))) && (C in user.contents))
 				if(!id_check(user, idcard))
 					return
-				user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
+				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 				updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
-		if(!user.unEquip(C))
+		if(!user.transferItemToLoc(C, src))
 			return
-		C.loc = src
 		pai = C
-		user << "<span class='notice'>You slot \the [C] into [src].</span>"
+		to_chat(user, "<span class='notice'>You slot \the [C] into [src].</span>")
 		update_icon()
 		updateUsrDialog()
 	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
 		if(inserted_item)
-			user << "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>"
+			to_chat(user, "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>")
 		else
-			if(!user.unEquip(C))
+			if(!user.transferItemToLoc(C, src))
 				return
-			C.forceMove(src)
-			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 			inserted_item = C
 			update_icon()
 	else if(istype(C, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = C
 		photo = P.img
-		user << "<span class='notice'>You scan \the [C].</span>"
+		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
 	else if(hidden_uplink && hidden_uplink.active)
 		hidden_uplink.attackby(C, user, params)
 	else
@@ -856,13 +833,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
-					user << "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>"
+					to_chat(user, "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
 					for (var/re in A.reagents.reagent_list)
-						user << "<span class='notice'>\t [re]</span>"
+						to_chat(user, "<span class='notice'>\t [re]</span>")
 				else
-					user << "<span class='notice'>No active chemical agents found in [A].</span>"
+					to_chat(user, "<span class='notice'>No active chemical agents found in [A].</span>")
 			else
-				user << "<span class='notice'>No significant chemical agents found in [A].</span>"
+				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
 
 		if(5)
 			if (istype(A, /obj/item/weapon/tank))
@@ -886,7 +863,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		var/obj/item/weapon/paper/PP = A
 		if (!PP.info)
-			user << "<span class='warning'>Unable to scan! Paper is blank.</span>"
+			to_chat(user, "<span class='warning'>Unable to scan! Paper is blank.</span>")
 			return
 		notehtml = PP.info
 		note = replacetext(notehtml, "<BR>", "\[br\]")
@@ -895,7 +872,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		note = replacetext(note, "</ul>", "\[/list\]")
 		note = html_encode(note)
 		notescanned = 1
-		user << "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" //concept of scanning paper copyright brainoblivion 2009
+		to_chat(user, "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" )
 
 
 /obj/item/device/pda/proc/explode() //This needs tuning.
@@ -943,7 +920,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return //won't work if dead
 
 	if(src.aiPDA.toff)
-		user << "Turn on your receiver in order to send messages."
+		to_chat(user, "Turn on your receiver in order to send messages.")
 		return
 
 	for (var/obj/item/device/pda/P in get_viewable_pdas())
@@ -976,9 +953,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		aiPDA.toff = !aiPDA.toff
-		usr << "<span class='notice'>PDA sender/receiver toggled [(aiPDA.toff ? "Off" : "On")]!</span>"
+		to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(aiPDA.toff ? "Off" : "On")]!</span>")
 	else
-		usr << "You do not have a PDA. You should make an issue report about this."
+		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
 
 /mob/living/silicon/ai/verb/cmd_toggle_pda_silent()
 	set category = "AI Commands"
@@ -988,9 +965,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(!isnull(aiPDA))
 		//0
 		aiPDA.silent = !aiPDA.silent
-		usr << "<span class='notice'>PDA ringer toggled [(aiPDA.silent ? "Off" : "On")]!</span>"
+		to_chat(usr, "<span class='notice'>PDA ringer toggled [(aiPDA.silent ? "Off" : "On")]!</span>")
 	else
-		usr << "You do not have a PDA. You should make an issue report about this."
+		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
 
 /mob/living/silicon/ai/proc/cmd_show_message_log(mob/user)
 	if(user.stat == 2)
@@ -999,14 +976,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
-		user << "You do not have a PDA. You should make an issue report about this."
-
-//Some spare PDAs in a box
-/obj/item/weapon/storage/box/PDAs
-	name = "spare PDAs"
-	desc = "A box of spare PDA microcomputers."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "pda"
+		to_chat(user, "You do not have a PDA. You should make an issue report about this.")
 
 /obj/item/weapon/storage/box/PDAs/New()
 	..()

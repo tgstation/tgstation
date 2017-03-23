@@ -118,7 +118,7 @@
 		D.target = null
 		D.error = "Connection to quantum relay severed"
 
-	..()
+	return ..()
 
 /obj/item/weapon/circuitboard/machine/ntnet_relay
 	name = "NTNet Relay (Machine Board)"

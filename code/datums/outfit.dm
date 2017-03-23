@@ -3,6 +3,7 @@
 
 	var/uniform = null
 	var/suit = null
+	var/toggle_helmet = TRUE
 	var/back = null
 	var/belt = null
 	var/gloves = null
@@ -76,7 +77,7 @@
 			for(var/i=0,i<number,i++)
 				H.equip_to_slot_or_del(new path(H),slot_in_backpack)
 
-	if(!H.head && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
+	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
 		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
 		HS.ToggleHelmet()
 
@@ -128,4 +129,6 @@
 		H.l_store.add_fingerprint(H,1)
 	if(H.r_store)
 		H.r_store.add_fingerprint(H,1)
+	for(var/obj/item/I in H.held_items)
+		I.add_fingerprint(H,1)
 	return 1

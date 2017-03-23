@@ -24,32 +24,32 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/emp_act(severity)
 	emped = TRUE
-	overlays -= "working"
+	cut_overlay("working")
 	add_overlay("emp")
 	addtimer(CALLBACK(src, .proc/reboot), 300)
 
 /obj/item/device/gps/proc/reboot()
 	emped = FALSE
-	overlays -= "emp"
+	cut_overlay("emp")
 	add_overlay("working")
 
 /obj/item/device/gps/AltClick(mob/user)
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return //user not valid to use gps
 	if(emped)
-		user << "It's busted!"
+		to_chat(user, "It's busted!")
 	if(tracking)
-		overlays -= "working"
-		user << "[src] is no longer tracking, or visible to other GPS devices."
+		cut_overlay("working")
+		to_chat(user, "[src] is no longer tracking, or visible to other GPS devices.")
 		tracking = FALSE
 	else
 		add_overlay("working")
-		user << "[src] is now tracking, and visible to other GPS devices."
+		to_chat(user, "[src] is now tracking, and visible to other GPS devices.")
 		tracking = TRUE
 
 /obj/item/device/gps/attack_self(mob/user)
 	if(!tracking)
-		user << "[src] is turned off. Use alt+click to toggle it back on."
+		to_chat(user, "[src] is turned off. Use alt+click to toggle it back on.")
 		return
 
 	var/obj/item/device/gps/t = ""

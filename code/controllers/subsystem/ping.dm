@@ -1,18 +1,18 @@
 #define PING_BUFFER_TIME 25
 
-var/datum/subsystem/ping/SSping
+var/datum/controller/subsystem/ping/SSping
 
-/datum/subsystem/ping
+/datum/controller/subsystem/ping
 	name = "Ping"
 	wait = 6
 	flags = SS_NO_INIT|SS_POST_FIRE_TIMING|SS_FIRE_IN_LOBBY
 	priority = 10
 	var/list/currentrun
 
-/datum/subsystem/ping/New()
+/datum/controller/subsystem/ping/New()
 	NEW_SS_GLOBAL(SSping)
 
-/datum/subsystem/ping/fire(resumed = FALSE)
+/datum/controller/subsystem/ping/fire(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = clients.Copy()
 
@@ -20,7 +20,7 @@ var/datum/subsystem/ping/SSping
 	while (length(currentrun))
 		var/client/C = currentrun[currentrun.len]
 		currentrun.len--
-		if (!C || world.time - C.connection_time < PING_BUFFER_TIME)
+		if (!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1))
 			if (MC_TICK_CHECK)
 				return
 			continue

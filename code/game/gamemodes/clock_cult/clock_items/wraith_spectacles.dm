@@ -7,9 +7,9 @@
 	item_state = "glasses"
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
-	invis_view = SEE_INVISIBLE_NOLIGHTING
-	darkness_view = 3
+	flags_cover = GLASSESCOVERSEYES
+	visor_flags_inv = HIDEEYES
+	visor_vars_to_toggle = NONE //we don't actually toggle anything we just set it
 	tint = 3 //this'll get reset, but it won't handle vision updates properly otherwise
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
@@ -33,23 +33,23 @@
 		var/mob/living/carbon/human/H = loc
 		if(src == H.glasses && !up)
 			if(H.disabilities & BLIND)
-				H << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>"
+				to_chat(H, "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>")
 				return
 			if(blind_cultist(H))
 				return
 			if(is_servant_of_ratvar(H))
-				H << "<span class='heavy_brass'>You push the spectacles down, and all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
+				to_chat(H, "<span class='heavy_brass'>You push the spectacles down, and all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>")
 				var/datum/status_effect/wraith_spectacles/WS = H.has_status_effect(STATUS_EFFECT_WRAITHSPECS)
 				if(WS)
 					WS.apply_eye_damage(H)
 				H.apply_status_effect(STATUS_EFFECT_WRAITHSPECS)
 			else
-				H << "<span class='heavy_brass'>You push the spectacles down, but you can't see through the glass.</span>"
+				to_chat(H, "<span class='heavy_brass'>You push the spectacles down, but you can't see through the glass.</span>")
 
 /obj/item/clothing/glasses/wraith_spectacles/proc/blind_cultist(mob/living/victim)
 	if(iscultist(victim))
-		victim << "<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>"
-		victim << "<span class='userdanger'>Your eyes explode with horrific pain!</span>"
+		to_chat(victim, "<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>")
+		to_chat(victim, "<span class='userdanger'>Your eyes explode with horrific pain!</span>")
 		victim.emote("scream")
 		victim.become_blind()
 		victim.adjust_blurriness(30)
@@ -59,13 +59,15 @@
 /obj/item/clothing/glasses/wraith_spectacles/proc/set_vision_vars(update_vision)
 	invis_view = SEE_INVISIBLE_LIVING
 	tint = 0
+	vision_flags = NONE
+	darkness_view = 2
 	if(!up)
 		if(is_servant_of_ratvar(loc))
 			invis_view = SEE_INVISIBLE_NOLIGHTING
 			vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
+			darkness_view = 3
 		else
 			tint = 3
-			vision_flags = NONE
 	if(update_vision && iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.head_update(src, forced = 1)
@@ -75,25 +77,25 @@
 	if(slot != slot_glasses || up)
 		return
 	if(user.disabilities & BLIND)
-		user << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>" //Ratvar with the sick burns yo
+		to_chat(user, "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>" )
 		return
 	if(blind_cultist(user)) //Cultists instantly go blind
 		return
 	set_vision_vars(TRUE)
 	if(is_servant_of_ratvar(user))
-		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
+		to_chat(user, "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>")
 		var/datum/status_effect/wraith_spectacles/WS = user.has_status_effect(STATUS_EFFECT_WRAITHSPECS)
 		if(WS)
 			WS.apply_eye_damage(user)
 		user.apply_status_effect(STATUS_EFFECT_WRAITHSPECS)
 	else
-		user << "<span class='heavy_brass'>You put on the spectacles, but you can't see through the glass.</span>"
+		to_chat(user, "<span class='heavy_brass'>You put on the spectacles, but you can't see through the glass.</span>")
 
 //The effect that causes/repairs the damage the spectacles cause.
 /datum/status_effect/wraith_spectacles
 	id = "wraith_spectacles"
 	duration = -1 //remains until eye damage done reaches 0 while the glasses are not worn
-	tick_interval = 2
+	tick_interval = 20
 	alert_type = /obj/screen/alert/status_effect/wraith_spectacles
 	var/eye_damage_done = 0
 	var/nearsight_breakpoint = 30
@@ -158,9 +160,9 @@
 		H.adjust_blurriness(2)
 	if(eye_damage_done >= nearsight_breakpoint)
 		if(H.become_nearsighted())
-			H << "<span class='nzcrentr'>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</span>"
+			to_chat(H, "<span class='nzcrentr'>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</span>")
 	if(eye_damage_done >= blind_breakpoint)
 		if(H.become_blind())
-			H << "<span class='nzcrentr_large'>A piercing white light floods your vision. Suddenly, all goes dark!</span>"
+			to_chat(H, "<span class='nzcrentr_large'>A piercing white light floods your vision. Suddenly, all goes dark!</span>")
 	if(prob(min(20, 5 + eye_damage_done)))
-		H << "<span class='nzcrentr_small'><i>Your eyes continue to burn.</i></span>"
+		to_chat(H, "<span class='nzcrentr_small'><i>Your eyes continue to burn.</i></span>")

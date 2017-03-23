@@ -124,7 +124,7 @@
 	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 5, "Gold Slime"), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimecritlesser
 	name = "Slime Crit Lesser"
@@ -140,7 +140,7 @@
 	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 3, "Lesser Gold Slime", "neutral"), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimecritfriendly
 	name = "Slime Crit Friendly"
@@ -156,7 +156,7 @@
 	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Friendly Gold Slime", "neutral"), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 //Silver
 /datum/chemical_reaction/slime/slimebork
@@ -292,7 +292,7 @@
 	addtimer(CALLBACK(src, .proc/freeze, holder), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimefreeze/proc/freeze(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -342,7 +342,7 @@
 	addtimer(CALLBACK(src, .proc/slime_burn, holder), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimefire/proc/slime_burn(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -554,7 +554,7 @@
 	addtimer(CALLBACK(src, .proc/boom, holder), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
-	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -785,5 +785,17 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/slimepotion/transference/P = new /obj/item/slimepotion/transference
 	P.loc = get_turf(holder.my_atom)
+	..()
+
+/datum/chemical_reaction/slime/flight_potion
+	name = "Flight Potion"
+	id = "flightpotion"
+	required_reagents = list("holywater" = 5, "uranium" = 5)
+	required_other = 1
+	required_container = /obj/item/slime_extract/rainbow
+
+/datum/chemical_reaction/slime/flight_potion/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	new/obj/item/weapon/reagent_containers/glass/bottle/potion/flight(get_turf(holder.my_atom))
 	..()
 

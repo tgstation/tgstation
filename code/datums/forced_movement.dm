@@ -35,7 +35,7 @@
 	return ..()
 
 /datum/forced_movement/process()
-	if(qdeleted(victim) || !victim.loc || qdeleted(target) || !target.loc)
+	if(QDELETED(victim) || !victim.loc || QDELETED(target) || !target.loc)
 		qdel(src)
 		return
 	var/steps_to_take = round(steps_per_tick * (world.time - last_processed))

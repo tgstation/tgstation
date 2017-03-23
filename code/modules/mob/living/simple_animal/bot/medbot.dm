@@ -6,7 +6,7 @@
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "medibot0"
 	density = 0
 	anchored = 0
@@ -85,13 +85,13 @@
 	else
 		icon_state = "medibot1"
 
-/mob/living/simple_animal/bot/medbot/New()
+/mob/living/simple_animal/bot/medbot/Initialize()
 	..()
 	update_icon()
 
 	spawn(4)
 		if(skin)
-			add_overlay(image('icons/obj/aibots.dmi', "medskin_[skin]"))
+			add_overlay(image('icons/mob/aibots.dmi', "medskin_[skin]"))
 
 		var/datum/job/doctor/J = new/datum/job/doctor
 		access_card.access += J.get_access()
@@ -209,17 +209,17 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/glass))
 		. = 1 //no afterattack
 		if(locked)
-			user << "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>"
+			to_chat(user, "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>")
 			return
 		if(!isnull(reagent_glass))
-			user << "<span class='warning'>There is already a beaker loaded!</span>"
+			to_chat(user, "<span class='warning'>There is already a beaker loaded!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		W.loc = src
 		reagent_glass = W
-		user << "<span class='notice'>You insert [W].</span>"
+		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		show_controls(user)
 
 	else
@@ -233,7 +233,7 @@
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)
-			user << "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>"
+			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		if(user)

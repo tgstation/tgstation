@@ -46,7 +46,7 @@
 	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>")
 	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time), target = src))
@@ -54,7 +54,7 @@
 			return
 
 		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 
 		open_machine()
 
@@ -63,31 +63,31 @@
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 	if(!config.mutant_races || H.dna.species.use_skintones)
-		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]_s")
+		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]")
 	else
-		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]_s")
+		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]")
 		photo.Blend("#[H.dna.features["mcolor"]]", ICON_MULTIPLY)
 
-	var/icon/eyes_s
+	var/icon/eyes
 	if(EYECOLOR in H.dna.species.species_traits)
-		eyes_s = icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[H.dna.species.eyes]_s")
-		eyes_s.Blend("#[H.eye_color]", ICON_MULTIPLY)
+		eyes = icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes")
+		eyes.Blend("#[H.eye_color]", ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/S
 	S = hair_styles_list[H.hair_style]
 	if(S && (HAIR in H.dna.species.species_traits))
-		var/icon/hair_s = icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
-		hair_s.Blend("#[H.hair_color]", ICON_MULTIPLY)
-		eyes_s.Blend(hair_s, ICON_OVERLAY)
+		var/icon/hair = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
+		hair.Blend("#[H.hair_color]", ICON_MULTIPLY)
+		eyes.Blend(hair, ICON_OVERLAY)
 
 	S = facial_hair_styles_list[H.facial_hair_style]
 	if(S && (FACEHAIR in H.dna.species.species_traits))
-		var/icon/facial_s = icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
-		facial_s.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
-		eyes_s.Blend(facial_s, ICON_OVERLAY)
+		var/icon/facial = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
+		facial.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
+		eyes.Blend(facial, ICON_OVERLAY)
 
-	if(eyes_s)
-		photo.Blend(eyes_s, ICON_OVERLAY)
+	if(eyes)
+		photo.Blend(eyes, ICON_OVERLAY)
 
 	var/icon/splat = icon("icon" = 'icons/mob/dam_mob.dmi',"icon_state" = "chest30")
 	photo.Blend(splat,ICON_OVERLAY)
@@ -160,7 +160,7 @@
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "<span class='bad'>Specimen deceased.</span>"
-	var/obj/item/organ/gland/GlandTest = locate() in H.internal_organs
+	var/obj/item/organ/heart/gland/GlandTest = locate() in H.internal_organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
@@ -171,13 +171,13 @@
 		sleep(5)
 		switch(text2num(type))
 			if(1)
-				H << "<span class='warning'>You feel violated.</span>"
+				to_chat(H, "<span class='warning'>You feel violated.</span>")
 			if(2)
-				H << "<span class='warning'>You feel yourself being sliced apart and put back together.</span>"
+				to_chat(H, "<span class='warning'>You feel yourself being sliced apart and put back together.</span>")
 			if(3)
-				H << "<span class='warning'>You feel intensely watched.</span>"
+				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
-		H << "<span class='warning'><b>Your mind snaps!</b></span>"
+		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		var/objtype = pick(subtypesof(/datum/objective/abductee/))
 		var/datum/objective/abductee/O = new objtype()
 		ticker.mode.abductees += H.mind
@@ -185,7 +185,7 @@
 		H.mind.announce_objectives()
 		ticker.mode.update_abductor_icons_added(H.mind)
 
-		for(var/obj/item/organ/gland/G in H.internal_organs)
+		for(var/obj/item/organ/heart/gland/G in H.internal_organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)

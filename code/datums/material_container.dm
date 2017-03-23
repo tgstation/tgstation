@@ -258,6 +258,11 @@
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	coin_type = /obj/item/weapon/coin/plasma
 
+/datum/material/bluespace
+	name = "Bluespace Mesh"
+	id = MAT_BLUESPACE
+	sheet_type = /obj/item/stack/sheet/bluespace_crystal
+
 /datum/material/bananium
 	name = "Bananium"
 	id = MAT_BANANIUM

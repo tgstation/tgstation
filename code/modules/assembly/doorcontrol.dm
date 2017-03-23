@@ -11,7 +11,7 @@
 /obj/item/device/assembly/control/examine(mob/user)
 	..()
 	if(id)
-		user << "<span class='notice'>Its channel ID is '[id]'.</span>"
+		to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
 
 
 /obj/item/device/assembly/control/activate()
@@ -72,7 +72,7 @@
 				D.safe = !D.safe
 
 	for(var/D in open_or_close)
-		addtimer(CALLBACK(D, doors_need_closing ? /obj/machinery/door/airlock.proc/close : /obj/machinery/door/airlock.proc/open), 0)
+		INVOKE_ASYNC(D, doors_need_closing ? /obj/machinery/door/airlock.proc/close : /obj/machinery/door/airlock.proc/open)
 
 	sleep(10)
 	cooldown = 0

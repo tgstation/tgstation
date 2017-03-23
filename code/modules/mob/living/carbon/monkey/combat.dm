@@ -141,7 +141,7 @@
 	if(!locate(/obj/item/weapon) in held_items)
 		best_force = 0
 
-	if(restrained() || blacklistItems[pickupTarget])
+	if(restrained() || blacklistItems[pickupTarget] || (pickupTarget && (pickupTarget.flags & NODROP)))
 		pickupTarget = null
 
 	if(!resisting && pickupTarget)
@@ -149,7 +149,7 @@
 
 		// next to target
 		if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc))
-			addtimer(CALLBACK(src, .proc/walk2derpless, pickupTarget.loc), 0)
+			INVOKE_ASYNC(src, .proc/walk2derpless, pickupTarget.loc)
 
 			// who cares about these items, i want that one!
 			drop_all_held_items()
@@ -166,7 +166,7 @@
 				if(!pickpocketing)
 					pickpocketing = TRUE
 					M.visible_message("[src] starts trying to take [pickupTarget] from [M]", "[src] tries to take [pickupTarget]!")
-					addtimer(CALLBACK(src, .proc/pickpocket, M), 0)
+					INVOKE_ASYNC(src, .proc/pickpocket, M)
 
 		else
 			if(pickupTimer >= 8)
@@ -174,7 +174,7 @@
 				pickupTarget = null
 				pickupTimer = 0
 			else
-				addtimer(CALLBACK(src, .proc/walk2derpless, pickupTarget.loc), 0)
+				INVOKE_ASYNC(src, .proc/walk2derpless, pickupTarget.loc)
 
 		return TRUE
 
@@ -229,7 +229,7 @@
 				return TRUE
 
 			if(target != null)
-				addtimer(CALLBACK(src, .proc/walk2derpless, target), 0)
+				INVOKE_ASYNC(src, .proc/walk2derpless, target)
 
 			// pickup any nearby weapon
 			if(!pickupTarget && prob(MONKEY_WEAPON_PROB))
@@ -308,7 +308,7 @@
 
 			if(target.pulledby != src && !istype(target.pulledby, /mob/living/carbon/monkey/))
 
-				addtimer(CALLBACK(src, .proc/walk2derpless, target.loc), 0)
+				INVOKE_ASYNC(src, .proc/walk2derpless, target.loc)
 
 				if(Adjacent(target) && isturf(target.loc))
 					a_intent = INTENT_GRAB
@@ -321,7 +321,7 @@
 						frustration = 0
 
 			else if(!disposing_body)
-				addtimer(CALLBACK(src, .proc/walk2derpless, bodyDisposal.loc), 0)
+				INVOKE_ASYNC(src, .proc/walk2derpless, bodyDisposal.loc)
 
 				if(Adjacent(bodyDisposal))
 					disposing_body = TRUE
@@ -345,9 +345,10 @@
 		for(var/obj/item/I in M.held_items)
 			if(I == pickupTarget)
 				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
-				M.unEquip(pickupTarget)
-				if(!qdeleted(pickupTarget))
+				if(M.temporarilyRemoveItemFromInventory(pickupTarget) && !QDELETED(pickupTarget))
 					equip_item(pickupTarget)
+				else
+					M.visible_message("<span class='danger'>[src] tried to snatch [pickupTarget] from [M], but failed!</span>", "<span class='userdanger'>[src] tried to grab [pickupTarget]!</span>")
 	pickpocketing = FALSE
 	pickupTarget = null
 	pickupTimer = 0
@@ -453,5 +454,5 @@
 
 /mob/living/carbon/monkey/proc/monkeyDrop(var/obj/item/A)
 	if(A)
-		unEquip(A, 1)
+		dropItemToGround(A, TRUE)
 		update_icons()

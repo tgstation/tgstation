@@ -34,7 +34,7 @@
 	var/target_area
 	target_area = input("Area to land", "Select a Landing Zone", target_area) in teleportlocs
 	var/area/picked_area = teleportlocs[target_area]
-	if(!src || qdeleted(src))
+	if(!src || QDELETED(src))
 		return
 
 	var/turf/T = safepick(get_area_turfs(picked_area))
@@ -53,6 +53,6 @@
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 
-	user << "Landing zone set."
+	to_chat(user, "Landing zone set.")
 
 	qdel(src)

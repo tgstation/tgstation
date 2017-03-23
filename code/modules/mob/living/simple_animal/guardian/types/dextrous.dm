@@ -22,7 +22,7 @@
 /mob/living/simple_animal/hostile/guardian/dextrous/death(gibbed)
 	..()
 	if(internal_storage)
-		unEquip(internal_storage)
+		dropItemToGround(internal_storage)
 
 /mob/living/simple_animal/hostile/guardian/dextrous/examine(mob/user)
 	if(dextrous)
@@ -42,7 +42,7 @@
 			else
 				msg += "It is holding \icon[internal_storage] \a [internal_storage] in its internal storage.\n"
 		msg += "*---------*</span>"
-		user << msg
+		to_chat(user, msg)
 	else
 		..()
 
@@ -58,8 +58,8 @@
 		..() //lose items, then return
 
 //SLOT HANDLING BULLSHIT FOR INTERNAL STORAGE
-/mob/living/simple_animal/hostile/guardian/dextrous/unEquip(obj/item/I, force)
-	if(..(I,force))
+/mob/living/simple_animal/hostile/guardian/dextrous/doUnEquip(obj/item/I, force)
+	if(..())
 		update_inv_hands()
 		if(I == internal_storage)
 			internal_storage = null
@@ -84,7 +84,7 @@
 			internal_storage = I
 			update_inv_internal_storage()
 		else
-			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 
 /mob/living/simple_animal/hostile/guardian/dextrous/getBackSlot()
 	return slot_generic_dextrous_storage

@@ -18,6 +18,15 @@
 #define SUPPORT_RODS 5
 #define SHEATH 6
 
+//window construction states
+#define WINDOW_OUT_OF_FRAME 0
+#define WINDOW_IN_FRAME 1
+#define WINDOW_SCREWED_TO_FRAME 2
+
+//plastic flaps construction states
+#define PLASTIC_FLAPS_NORMAL 0
+#define PLASTIC_FLAPS_DETACHED 1
+
 //default_unfasten_wrench() return defines
 #define CANT_UNFASTEN 0
 #define FAILED_UNFASTEN 1
@@ -47,6 +56,10 @@
 #define EM_SECURED 1
 #define EM_WELDED 2
 
+//Construction defines for the pinion airlock
+#define GEAR_SECURE 1
+#define GEAR_LOOSE 2
+
 //other construction-related things
 
 //windows affected by nar-sie turn this color.
@@ -63,6 +76,7 @@
 #define MAT_DIAMOND		"$diamond"
 #define MAT_URANIUM		"$uranium"
 #define MAT_PLASMA		"$plasma"
+#define MAT_BLUESPACE	"$bluespace"
 #define MAT_BANANIUM	"$bananium"
 #define MAT_TITANIUM	"$titanium"
 #define MAT_BIOMASS		"$biomass"
@@ -93,3 +107,8 @@
 #define CAT_SANDWICH	"Sandwiches"
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
+
+#define RCD_FLOORWALL 1
+#define RCD_AIRLOCK 2
+#define RCD_DECONSTRUCT 3
+#define RCD_WINDOWGRILLE 4

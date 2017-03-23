@@ -55,8 +55,8 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M, mob/user)
 	..()
-	user.unEquip(src)
-	Attach(M)
+	if(user.temporarilyRemoveItemFromInventory(src))
+		Attach(M)
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
@@ -64,11 +64,11 @@ var/const/MAX_ACTIVE_TIME = 400
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			user << "<span class='boldannounce'>[src] is not moving.</span>"
+			to_chat(user, "<span class='boldannounce'>[src] is not moving.</span>")
 		if(CONSCIOUS)
-			user << "<span class='boldannounce'>[src] seems to be active!</span>"
+			to_chat(user, "<span class='boldannounce'>[src] seems to be active!</span>")
 	if (sterile)
-		user << "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
+		to_chat(user, "<span class='boldannounce'>It looks like the proboscis has been removed.</span>")
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/O,mob/m, params)
 	if(O.force)
@@ -157,7 +157,7 @@ var/const/MAX_ACTIVE_TIME = 400
 			if(W.flags & NODROP)
 				return FALSE
 			if(!istype(W,/obj/item/clothing/mask/facehugger))
-				target.unEquip(W)
+				target.dropItemToGround(W)
 				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
 									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
 
@@ -168,7 +168,7 @@ var/const/MAX_ACTIVE_TIME = 400
 									"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
 				Die()
 				return FALSE
-		src.loc = target
+		forceMove(target)
 		target.equip_to_slot_if_possible(src, slot_wear_mask, 0, 1, 1)
 	// early returns and validity checks done: attach.
 	attached++

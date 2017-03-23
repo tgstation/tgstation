@@ -88,7 +88,7 @@
 
 	return not_handled
 
-/mob/living/carbon/unEquip(obj/item/I)
+/mob/living/carbon/doUnEquip(obj/item/I)
 	. = ..() //Sets the default return value to what the parent returns.
 	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
 		return
@@ -129,6 +129,7 @@
 		var/obj/item/clothing/C = I
 		if(C.tint || initial(C.tint))
 			update_tint()
+		update_sight()
 	if(I.flags_inv & HIDEMASK || forced)
 		update_inv_wear_mask()
 	update_inv_head()

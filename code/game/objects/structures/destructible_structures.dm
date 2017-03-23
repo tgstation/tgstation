@@ -12,7 +12,9 @@
 				for(var/I in debris)
 					for(var/i in 1 to debris[I])
 						new I (get_turf(src))
-		visible_message(break_message)
-		playsound(src, break_sound, 50, 1)
+		if(break_message)
+			visible_message(break_message)
+		if(break_sound)
+			playsound(src, break_sound, 50, 1)
 	qdel(src)
 	return 1

@@ -60,3 +60,6 @@
 	var/connection_time //world.time they connected
 	var/connection_realtime //world.realtime they connected
 	var/connection_timeofday //world.timeofday they connected
+
+	var/inprefs = FALSE
+	var/list/topiclimiter

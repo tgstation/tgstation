@@ -98,7 +98,7 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
 		return
-	if(qdeleted(focus))
+	if(QDELETED(focus))
 		qdel(src)
 		return
 	focus.attack_self_tk(user)
@@ -152,7 +152,7 @@ var/const/tk_maxrange = 15
 	if(focus)
 		d = max(d,get_dist(user,focus)) // whichever is further
 	if(d > tk_maxrange)
-		user << "<span class ='warning'>Your mind won't reach that far.</span>"
+		to_chat(user, "<span class ='warning'>Your mind won't reach that far.</span>")
 		return 0
 	return 1
 
@@ -175,7 +175,7 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)
 		return
-	PoolOrNew(/obj/effect/overlay/temp/telekinesis, get_turf(focus))
+	new /obj/effect/overlay/temp/telekinesis(get_turf(focus))
 
 
 /obj/item/tk_grab/update_icon()

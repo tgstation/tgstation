@@ -18,7 +18,6 @@
 #_maps/RandomRuins/SpaceRuins/derelict6.dmm
 #_maps/RandomRuins/SpaceRuins/spacebar.dmm
 #_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm
-#_maps/RandomRuins/SpaceRuins/deepstorage.dmm
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
 #_maps/RandomRuins/SpaceRuins/gasthelizards.dmm
 #_maps/RandomRuins/SpaceRuins/intactemptyship.dmm

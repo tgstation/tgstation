@@ -7,6 +7,50 @@
 	density = 0
 	anchored = 1
 	layer = ABOVE_MOB_LAYER
+	var/state = PLASTIC_FLAPS_NORMAL
+
+/obj/structure/plasticflaps/examine(mob/user)
+	. = ..()
+	switch(state)
+		if(PLASTIC_FLAPS_NORMAL)
+			to_chat(user, "<span class='notice'>[src] are <b>screwed</b> to the floor.</span>")
+		if(PLASTIC_FLAPS_DETACHED)
+			to_chat(user, "<span class='notice'>[src] are no longer <i>screwed</i> to the floor, and the flaps can be <b>cut</b> apart.</span>")
+
+/obj/structure/plasticflaps/attackby(obj/item/W, mob/user, params)
+	add_fingerprint(user)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(state == PLASTIC_FLAPS_NORMAL)
+			playsound(src.loc, W.usesound, 100, 1)
+			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
+			if(do_after(user, 100*W.toolspeed, target = src))
+				if(state != PLASTIC_FLAPS_NORMAL)
+					return
+				state = PLASTIC_FLAPS_DETACHED
+				anchored = FALSE
+				to_chat(user, "<span class='notice'>You unscrew [src] from the floor.</span>")
+		else if(state == PLASTIC_FLAPS_DETACHED)
+			playsound(src.loc, W.usesound, 100, 1)
+			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
+			if(do_after(user, 40*W.toolspeed, target = src))
+				if(state != PLASTIC_FLAPS_DETACHED)
+					return
+				state = PLASTIC_FLAPS_NORMAL
+				anchored = TRUE
+				to_chat(user, "<span class='notice'>You screw [src] from the floor.</span>")
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(state == PLASTIC_FLAPS_DETACHED)
+			playsound(src.loc, W.usesound, 100, 1)
+			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
+			if(do_after(user, 50*W.toolspeed, target = src))
+				if(state != PLASTIC_FLAPS_DETACHED)
+					return
+				to_chat(user, "<span class='notice'>You cut apart [src].</span>")
+				var/obj/item/stack/sheet/plastic/five/P = new(loc)
+				P.add_fingerprint(user)
+				qdel(src)
+	else
+		. = ..()
 
 /obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
 	if(isliving(caller))
@@ -45,6 +89,11 @@
 		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0
 	return ..()
+
+/obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/plastic/five(loc)
+	qdel(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
 	name = "airtight plastic flaps"

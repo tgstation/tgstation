@@ -60,12 +60,11 @@
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
 
 	if(!ID)
-		user << "<span class='warning'>You don't have an ID.</span>"
+		to_chat(user, "<span class='warning'>You don't have an ID.</span>")
 		return
 
 	if(!(access_heads in ID.access))
-		user << "<span class='warning'>The access level of \
-			your card is not high enough.</span>"
+		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
 	var/old_len = authorized.len
@@ -86,13 +85,12 @@
 
 	if((old_len != authorized.len) && !ENGINES_STARTED)
 		var/alert = (authorized.len > old_len)
+		var/repeal = (authorized.len < old_len)
 		var/remaining = auth_need - authorized.len
 		if(authorized.len && remaining)
-			minor_announce("[remaining] authorizations \
-				needed until shuttle is launched early", null, alert)
-		else
-			minor_announce("All authorizations to launch the shuttle \
-				early have been revoked.")
+			minor_announce("[remaining] authorizations needed until shuttle is launched early", null, alert)
+		if(repeal)
+			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
 
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
@@ -120,7 +118,7 @@
 	// Launch check is in process in case auth_need changes for some reason
 	// probably external.
 	. = FALSE
-	if(ENGINES_STARTED || (!IS_DOCKED))
+	if(!SSshuttle.emergency || ENGINES_STARTED || (!IS_DOCKED))
 		return .
 
 	// Check to see if we've reached criteria for early launch
@@ -138,7 +136,7 @@
 		return
 
 	if(emagged || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
-		user << "<span class='warning'>The shuttle is already about to launch!</span>"
+		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
 		return
 
 	var/time = TIME_LEFT
@@ -212,6 +210,8 @@
 			setTimer(call_time)
 		else
 			return
+
+	SSshuttle.emergencyCallAmount++
 
 	if(prob(70))
 		SSshuttle.emergencyLastCallLoc = signalOrigin
@@ -322,8 +322,10 @@
 
 			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
 				sound_played = 1 //Only rev them up once.
-				for(var/area/shuttle/escape/E in world)
-					E << 'sound/effects/hyperspace_begin.ogg'
+				var/list/areas = list()
+				for(var/area/shuttle/escape/E in sortedAreas)
+					areas += E
+				hyperspace_sound(HYPERSPACE_WARMUP, areas)
 
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
@@ -334,8 +336,10 @@
 						M.enterTransit()
 
 				//now move the actual emergency shuttle to its transit dock
-				for(var/area/shuttle/escape/E in world)
-					E << 'sound/effects/hyperspace_progress.ogg'
+				var/list/areas = list()
+				for(var/area/shuttle/escape/E in sortedAreas)
+					areas += E
+				hyperspace_sound(HYPERSPACE_LAUNCH, areas)
 				enterTransit()
 				mode = SHUTTLE_ESCAPE
 				launch_status = ENDGAME_LAUNCHED
@@ -346,10 +350,13 @@
 			SSshuttle.checkHostileEnvironment()
 
 		if(SHUTTLE_ESCAPE)
+			if(sound_played && time_left <= HYPERSPACE_END_TIME)
+				var/list/areas = list()
+				for(var/area/shuttle/escape/E in sortedAreas)
+					areas += E
+				hyperspace_sound(HYPERSPACE_END, areas)
 			if(areaInstance.parallax_movedir && time_left <= PARALLAX_LOOP_TIME)
 				parallax_slowdown()
-				for(var/area/shuttle/escape/E in world)
-					E << 'sound/effects/hyperspace_end.ogg'
 				for(var/A in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = A
 					if(M.launch_status == ENDGAME_LAUNCHED)
@@ -388,18 +395,20 @@
 	launch_status = UNLAUNCHED
 
 /obj/docking_port/mobile/pod/request()
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
+	var/obj/machinery/computer/shuttle/S = getControlConsole()
+
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA || (S && S.emagged))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
 	else
-		usr << "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>"
+		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
 		return 1
 
 /obj/docking_port/mobile/pod/New()
+	..()
 	if(id == "pod")
 		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
-	..()
 
 /obj/docking_port/mobile/pod/cancel()
 	return
@@ -411,11 +420,17 @@
 	possible_destinations = "pod_asteroid"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
+	light_color = LIGHT_COLOR_BLUE
 	density = 0
 	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/shuttle/pod/update_icon()
 	return
+
+/obj/machinery/computer/shuttle/pod/emag_act(mob/user)
+	if(!emagged)
+		emagged = TRUE
+		to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
@@ -427,8 +442,11 @@
 	var/edge_distance = 16
 	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
-/obj/docking_port/stationary/random/initialize()
+/obj/docking_port/stationary/random/Initialize(mapload)
 	..()
+	if(!mapload)
+		return
+
 	var/list/turfs = get_area_turfs(target_area)
 	var/turf/T = pick(turfs)
 
@@ -465,6 +483,7 @@
 	density = 0
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
+	var/unlocked = FALSE
 
 /obj/item/weapon/storage/pod/New()
 	..()
@@ -484,13 +503,18 @@
 	return
 
 /obj/item/weapon/storage/pod/MouseDrop(over_object, src_location, over_location)
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA || unlocked)
 		. = ..()
 	else
-		usr << "The storage unit will only unlock during a Red or Delta security alert."
+		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
 
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
-	return
+	return MouseDrop(user)
+
+/obj/item/weapon/storage/pod/onShuttleMove()
+	unlocked = TRUE
+	// If the pod was launched, the storage will always open.
+	return ..()
 
 
 /obj/docking_port/mobile/emergency/backup

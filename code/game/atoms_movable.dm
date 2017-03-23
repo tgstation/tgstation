@@ -2,7 +2,7 @@
 	layer = OBJ_LAYER
 	var/last_move = null
 	var/anchored = 0
-	var/throwing = 0
+	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
@@ -24,8 +24,16 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+	var/floating = FALSE
 
-
+/atom/movable/vv_edit_var(var_name, var_value)
+	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
+	var/static/list/careful_edits = list("bound_x", "bound_y", "bound_width", "bound_height")
+	if(var_name in banned_edits)
+		return FALSE	//PLEASE no.
+	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
+		return FALSE
+	return ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -83,16 +91,6 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-	//Objects with opacity will trigger nearby lights of the old location to update at next SSlighting fire
-	if(opacity)
-		if (isturf(OldLoc))
-			OldLoc.UpdateAffectingLights()
-		if (isturf(loc))
-			loc.UpdateAffectingLights()
-	else
-		if(light)
-			light.changed()
-
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -105,9 +103,60 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+
+	if(flags & CLEAN_ON_MOVE)
+		clean_on_move()
 	return 1
 
-/atom/movable/Destroy()
+/atom/movable/proc/clean_on_move()
+	var/turf/tile = loc
+	if(isturf(tile))
+		tile.clean_blood()
+		for(var/A in tile)
+			if(is_cleanable(A))
+				qdel(A)
+			else if(istype(A, /obj/item))
+				var/obj/item/cleaned_item = A
+				cleaned_item.clean_blood()
+			else if(ishuman(A))
+				var/mob/living/carbon/human/cleaned_human = A
+				if(cleaned_human.lying)
+					if(cleaned_human.head)
+						cleaned_human.head.clean_blood()
+						cleaned_human.update_inv_head()
+					if(cleaned_human.wear_suit)
+						cleaned_human.wear_suit.clean_blood()
+						cleaned_human.update_inv_wear_suit()
+					else if(cleaned_human.w_uniform)
+						cleaned_human.w_uniform.clean_blood()
+						cleaned_human.update_inv_w_uniform()
+					if(cleaned_human.shoes)
+						cleaned_human.shoes.clean_blood()
+						cleaned_human.update_inv_shoes()
+					cleaned_human.clean_blood()
+					cleaned_human.wash_cream()
+					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
+
+/atom/movable/Destroy(force)
+	var/inform_admins = HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+	var/stationloving = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+
+	if(inform_admins && force)
+		var/turf/T = get_turf(src)
+		message_admins("[src] has been !!force deleted!! in [ADMIN_COORDJMP(T)].")
+		log_game("[src] has been !!force deleted!! in [COORD(T)].")
+
+	if(stationloving && !force)
+		var/turf/currentturf = get_turf(src)
+		var/turf/targetturf = relocate()
+		log_game("[src] has been destroyed in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
+		if(inform_admins)
+			message_admins("[src] has been destroyed in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
+		return QDEL_HINT_LETMELIVE
+
+	if(stationloving && force)
+		STOP_PROCESSING(SSinbounds, src)
+
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
@@ -127,33 +176,38 @@
 /atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
 	if((A && yes))
 		if(throwing)
-			throwing = 0
-			throw_impact(A)
+			throwing.hit_atom(A)
 			. = 1
-			if(!A || qdeleted(A))
+			if(!A || QDELETED(A))
 				return
 		A.Bumped(src)
-
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
 		if(pulledby)
 			pulledby.stop_pulling()
 		var/atom/oldloc = loc
-		var/same_loc = oldloc == destination.loc
-		if(oldloc && !same_loc)
-			oldloc.Exited(src, destination)
-		loc = destination
-		if(oldloc && !same_loc)
-			destination.Entered(src, oldloc)
+		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
-		if(old_area != destarea)
-			destarea.Entered(src)
-		for(var/atom/movable/AM in destination)
-			if(AM == src)
-				continue
-			AM.Crossed(src)
+
+		if(oldloc && !same_loc)
+			oldloc.Exited(src, destination)
+			if(old_area)
+				old_area.Exited(src, destination)
+
+		loc = destination
+
+		if(!same_loc)
+			destination.Entered(src, oldloc)
+			if(destarea && old_area != destarea)
+				destarea.Entered(src, oldloc)
+
+			for(var/atom/movable/AM in destination)
+				if(AM == src)
+					continue
+				AM.Crossed(src)
+
 		Moved(oldloc, 0)
 		return 1
 	return 0
@@ -211,7 +265,7 @@
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
 
-/atom/movable/proc/throw_impact(atom/hit_atom)
+/atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
@@ -286,12 +340,12 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
-	throwing = 1
+	throwing = TT
 	if(spin)
 		SpinAnimation(5, 1)
 
 	SSthrowing.processing[src] = TT
-	if (SSthrowing.paused && length(SSthrowing.currentrun))
+	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
 
@@ -409,3 +463,90 @@
 		return FALSE
 	acted_explosions += ex_id
 	return TRUE
+
+/atom/movable/proc/float(on)
+	if(throwing)
+		return
+	if(on && !floating)
+		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
+		sleep(10)
+		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
+		floating = TRUE
+	else if (!on && floating)
+		animate(src, pixel_y = initial(pixel_y), time = 10)
+		floating = FALSE
+
+/* Stationloving
+*
+* A stationloving atom will always teleport back to the station
+* if it ever leaves the station z-levels or Centcom. It will also,
+* when Destroy() is called, will teleport to a random turf on the
+* station.
+*
+* The turf is guaranteed to be "safe" for normal humans, probably.
+* If the station is SUPER SMASHED UP, it might not work.
+*
+* Here are some important procs:
+* relocate()
+* moves the atom to a safe turf on the station
+*
+* check_in_bounds()
+* regularly called and checks if `in_bounds()` returns true. If false, it
+* triggers a `relocate()`.
+*
+* in_bounds()
+* By default, checks that the atom's z is the station z or centcom.
+*/
+
+/atom/movable/proc/set_stationloving(state, inform_admins=FALSE)
+	var/currently = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+
+	if(inform_admins)
+		SET_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+	else
+		CLEAR_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+
+	if(state == currently)
+		return
+	else if(!state)
+		STOP_PROCESSING(SSinbounds, src)
+		CLEAR_SECONDARY_FLAG(src, STATIONLOVING)
+	else
+		START_PROCESSING(SSinbounds, src)
+		SET_SECONDARY_FLAG(src, STATIONLOVING)
+
+/atom/movable/proc/relocate()
+	var/targetturf = find_safe_turf(ZLEVEL_STATION)
+	if(!targetturf)
+		if(blobstart.len > 0)
+			targetturf = get_turf(pick(blobstart))
+		else
+			throw EXCEPTION("Unable to find a blobstart landmark")
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
+	else if(istype(loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src, targetturf)
+	else
+		forceMove(targetturf)
+	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
+	return targetturf
+
+/atom/movable/proc/check_in_bounds()
+	if(in_bounds())
+		return
+	else
+		var/turf/currentturf = get_turf(src)
+		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		var/turf/targetturf = relocate()
+		log_game("[src] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
+		if(HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE))
+			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
+
+/atom/movable/proc/in_bounds()
+	. = FALSE
+	var/turf/currentturf = get_turf(src)
+	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
+		. = TRUE

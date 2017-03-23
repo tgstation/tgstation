@@ -70,14 +70,14 @@
 		if(T.Adjacent(user))
 			for(var/B in T)
 				var/atom/movable/AM = B
-				if(AM.flags & HOLOGRAM)
+				if(HAS_SECONDARY_FLAG(AM, HOLOGRAM))
 					continue
 				. += AM
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
 	for(var/obj/item/I in get_environment(user))
-		if(I.flags & HOLOGRAM)
+		if(HAS_SECONDARY_FLAG(I, HOLOGRAM))
 			continue
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
@@ -296,26 +296,26 @@
 			ui_interact(usr) //explicit call to show the busy display
 			var/fail_msg = construct_item(usr, TR)
 			if(!fail_msg)
-				usr << "<span class='notice'>[TR.name] constructed.</span>"
+				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")
 			else
-				usr << "<span class='warning'>Construction failed[fail_msg]</span>"
+				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
 			busy = 0
 			ui_interact(usr)
 		if("forwardCat") //Meow
 			viewing_category = next_cat()
-			usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+			to_chat(usr, "<span class='notice'>Category is now [categories[viewing_category]].</span>")
 			. = TRUE
 		if("backwardCat")
 			viewing_category = prev_cat()
-			usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+			to_chat(usr, "<span class='notice'>Category is now [categories[viewing_category]].</span>")
 			. = TRUE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
-			usr << "<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>"
+			to_chat(usr, "<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>")
 			. = TRUE
 		if("toggle_compact")
 			display_compact = !display_compact
-			usr << "<span class='notice'>Crafting menu is now [display_compact? "compact" : "full size"].</span>"
+			to_chat(usr, "<span class='notice'>Crafting menu is now [display_compact? "compact" : "full size"].</span>")
 			. = TRUE
 
 

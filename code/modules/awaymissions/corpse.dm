@@ -25,10 +25,10 @@
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
 	if(!uses)
-		user << "<span class='warning'>This spawner is out of charges!</span>"
+		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
 		return
 	if(jobban_isbanned(user, "lavaland"))
-		user << "<span class='warning'>You are jobanned!</span>"
+		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
@@ -36,25 +36,9 @@
 	log_game("[user.ckey] became [mob_name]")
 	create(ckey = user.ckey)
 
-/obj/effect/mob_spawn/spawn_atom_to_world()
-	//We no longer need to spawn mobs, deregister ourself
-	SSobj.atom_spawners -= src
-	if(roundstart)
-		create()
-	else
-		poi_list |= src
-
-/obj/effect/mob_spawn/New()
+/obj/effect/mob_spawn/Initialize(mapload)
 	..()
-	if(roundstart)
-		if(ticker && ticker.current_state > GAME_STATE_SETTING_UP)
-			// The game has already initialised, just spawn it.
-			create()
-		else
-			//Add to the atom spawners register for roundstart atom spawning
-			SSobj.atom_spawners += src
-
-	if(instant)
+	if(instant || (roundstart && (mapload || (ticker && ticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
 	else
 		poi_list |= src
@@ -87,7 +71,7 @@
 
 	if(ckey)
 		M.ckey = ckey
-		M << "[flavour_text]"
+		to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
 		if(objectives)
 			for(var/objective in objectives)
@@ -177,20 +161,15 @@
 		if(id_icon)
 			W.icon_state = id_icon
 		if(id_access)
-			var/datum/job/jobdatum
 			for(var/jobtype in typesof(/datum/job))
 				var/datum/job/J = new jobtype
 				if(J.title == id_access)
-					jobdatum = J
+					W.access = J.get_access()
 					break
-			if(jobdatum)
-				W.access = jobdatum.get_access()
-			else
+		if(id_access_list)
+			if(!islist(W.access))
 				W.access = list()
-			if(id_access_list)
-				if(!W.access)
-					W.access = list()
-				W.access |= id_access_list
+			W.access |= id_access_list
 		if(id_job)
 			W.assignment = id_job
 		W.registered_name = H.real_name
@@ -370,7 +349,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	has_id = 1
 	id_job = "Bartender"
-	id_access = "Bartender"
+	id_access_list = list(access_bar)
 
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
@@ -407,7 +386,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	has_id = 1
 	id_job = "Bridge Officer"
-	id_access = "Captain"
+	id_access_list = list(access_cent_captain)
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
@@ -422,7 +401,7 @@
 	pocket1 = /obj/item/weapon/lighter
 	has_id = 1
 	id_job = "Commander"
-	id_access = "Captain"
+	id_access_list = list(access_cent_captain)
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
@@ -435,7 +414,7 @@
 	back = /obj/item/weapon/storage/backpack/security
 	has_id = 1
 	id_job = "Private Security Force"
-	id_access = "Security Officer"
+	id_access_list = list(access_cent_specops)
 
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE

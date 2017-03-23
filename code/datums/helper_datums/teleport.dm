@@ -82,9 +82,9 @@
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			addtimer(CALLBACK(src, .proc/do_effect, location, effect), 0)
+			INVOKE_ASYNC(src, .proc/do_effect, location, effect)
 		if(sound)
-			addtimer(CALLBACK(src, .proc/do_sound, location, sound), 0)
+			INVOKE_ASYNC(src, .proc/do_sound, location, sound)
 
 /datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
 	src = null
@@ -169,7 +169,7 @@
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
-			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
+			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
 	return 1
 
 // Safe location finder

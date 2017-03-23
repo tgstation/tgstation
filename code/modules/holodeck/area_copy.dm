@@ -33,6 +33,9 @@
 		if(istype(O,/obj/machinery))
 			var/obj/machinery/M = O
 			M.power_change()
+
+	if(holoitem)
+		SET_SECONDARY_FLAG(O, HOLOGRAM)
 	return O
 
 
@@ -102,12 +105,12 @@
 			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()
 
-		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")
+		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "light_range", "light_power", "light_color", "light", "light_sources")
 		for(var/V in T.vars - forbidden_vars)
 			if(V == "air")
 				var/turf/open/O1 = B
 				var/turf/open/O2 = T
-				O1.air.copy_from(O2.air)
+				O1.air.copy_from(O2.return_air())
 				continue
 			B.vars[V] = T.vars[V]
 		toupdate += B
