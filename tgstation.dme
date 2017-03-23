@@ -1809,7 +1809,6 @@
 #include "code\modules\projectiles\guns\ballistic\revolver.dm"
 #include "code\modules\projectiles\guns\ballistic\shotgun.dm"
 #include "code\modules\projectiles\guns\ballistic\toy.dm"
-#include "code\modules\projectiles\guns\energy\charge.dm"
 #include "code\modules\projectiles\guns\energy\energy_gun.dm"
 #include "code\modules\projectiles\guns\energy\kinetic_accelerator.dm"
 #include "code\modules\projectiles\guns\energy\laser.dm"
