@@ -241,7 +241,7 @@
 				if(secHUD)
 					add_sec_hud()
 				else
-					var/datum/atom_hud/sec = huds[sec_hud]
+					var/datum/atom_hud/sec = GLOB.huds[sec_hud]
 					sec.remove_hud_from(src)
 		if("medicalhud")
 			if(href_list["toggle"])
@@ -249,7 +249,7 @@
 				if(medHUD)
 					add_med_hud()
 				else
-					var/datum/atom_hud/med = huds[med_hud]
+					var/datum/atom_hud/med = GLOB.huds[med_hud]
 					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])

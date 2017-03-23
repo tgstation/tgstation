@@ -48,7 +48,7 @@
 		newhud.join_hud(current)
 
 /datum/mind/proc/leave_all_antag_huds()
-	for(var/datum/atom_hud/antag/hud in huds)
+	for(var/datum/atom_hud/antag/hud in GLOB.huds)
 		if(current in hud.hudusers)
 			hud.leave_hud(current)
 

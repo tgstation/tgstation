@@ -53,9 +53,9 @@
 	set hidden = 1
 	if(config.githuburl)
 		var/message = "This will open the Github issue reporter in your browser. Are you sure?"
-		if(revdata.testmerge.len)
+		if(GLOB.revdata.testmerge.len)
 			message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
-			message += revdata.GetTestMergeInfo(FALSE)
+			message += GLOB.revdata.GetTestMergeInfo(FALSE)
 		if(tgalert(src, message, "Report Issue","Yes","No")=="No")
 			return
 		src << link("[config.githuburl]/issues/new")

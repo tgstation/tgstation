@@ -933,10 +933,10 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 	if(!holder) return
 
-	var/datum/atom_hud/A = huds[ANTAG_HUD_TRAITOR]
+	var/datum/atom_hud/A = GLOB.huds[ANTAG_HUD_TRAITOR]
 	var/adding_hud = (usr in A.hudusers) ? 0 : 1
 
-	for(var/datum/atom_hud/H in huds)
+	for(var/datum/atom_hud/H in GLOB.huds)
 		if(istype(H, /datum/atom_hud/antag))
 			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 

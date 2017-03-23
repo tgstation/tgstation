@@ -131,7 +131,7 @@
 
 	//Adds bot to the diagnostic HUD system
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
@@ -922,5 +922,5 @@ Pass a positive integer as an argument to override a bot's default speed.
 //If a bot has its own HUD (for player bots), provide it.
 	if(!data_hud_type)
 		return
-	var/datum/atom_hud/datahud = huds[data_hud_type]
+	var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
 	datahud.add_hud_to(src)

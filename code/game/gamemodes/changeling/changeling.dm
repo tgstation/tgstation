@@ -515,11 +515,11 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	newprofile.socks = socks
 
 /datum/game_mode/proc/update_changeling_icons_added(datum/mind/changling_mind)
-	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
 	hud.join_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, "changling")
 
 /datum/game_mode/proc/update_changeling_icons_removed(datum/mind/changling_mind)
-	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
 	hud.leave_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, null)

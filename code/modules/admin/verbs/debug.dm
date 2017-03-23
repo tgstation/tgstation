@@ -703,7 +703,7 @@ var/list/TYPES_SHORTCUTS = list(
 
 	if(!holder)
 		return
-	debug_variables(huds[i])
+	debug_variables(GLOB.huds[i])
 
 /client/proc/jump_to_ruin()
 	set category = "Debug"

@@ -55,7 +55,7 @@
 	//Emotes
 	for(var/path in subtypesof(/datum/emote))
 		var/datum/emote/E = new path()
-		emote_list[E.key] = E
+		E.emote_list[E.key] = E
 
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
 

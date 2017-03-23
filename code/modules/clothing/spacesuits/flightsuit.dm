@@ -1248,13 +1248,13 @@
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/equipped(mob/living/carbon/human/wearer, slot)
 	..()
 	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = huds[hudtype]
+		var/datum/atom_hud/H = GLOB.huds[hudtype]
 		H.add_hud_to(wearer)
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/dropped(mob/living/carbon/human/wearer)
 	..()
 	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = huds[hudtype]
+		var/datum/atom_hud/H = GLOB.huds[hudtype]
 		H.remove_hud_from(wearer)
 	if(zoom)
 		toggle_zoom(wearer, TRUE)

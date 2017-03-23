@@ -216,11 +216,11 @@ Contents:
 	return 1
 
 /datum/game_mode/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
-	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_NINJA]
+	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
 	ninjahud.join_hud(ninja)
 	set_antag_hud(ninja, "ninja")
 
 /datum/game_mode/proc/update_ninja_icons_removed(datum/mind/ninja_mind)
-	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_NINJA]
+	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
 	ninjahud.leave_hud(ninja_mind.current)
 	set_antag_hud(ninja_mind.current, null)
