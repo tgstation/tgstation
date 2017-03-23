@@ -195,7 +195,6 @@
 	return dat
 
 
-var/record_id_num = 1001
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
@@ -206,6 +205,7 @@ var/record_id_num = 1001
 		else
 			assignment = "Unassigned"
 
+		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++,6)
 		if(!C)
 			C = H.client
