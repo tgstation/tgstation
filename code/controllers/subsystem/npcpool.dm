@@ -49,7 +49,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 
 	cleanNull()
 
-	if(!populated_centcom && ticker.current_state >= GAME_STATE_FINISHED)
+	if(!populated_centcom && EMERGENCY_ESCAPED_OR_ENDGAMED)
 		PopulateCentcom(FALSE)		
 
 	//SNPC handling
@@ -155,7 +155,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		while(candidates.len)
 			var/turf/T = pick(candidates)
 			if(!is_blocked_turf(T) && !spawn_locs[T])
-				spawn_locs[T] = T
+				spawn_locs[T] = 
 				break
 			else
 				candidates -= T
@@ -168,7 +168,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	if(!skip_roundend_check)
 		UNTIL(populated_centcom && ticker.current_state == GAME_STATE_FINISHED)
 	
-	if(NPCsToSpawn)
+	if(NPCsToSpawn.len)
 		for(var/I in spawn_locs)
 			spawned_npcs += new /mob/living/carbon/human/interactive(I)
 
@@ -178,6 +178,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 /datum/controller/subsystem/npcpool/proc/DepopulateCentcom()
 	populated_centcom = FALSE
 	NPCsToSpawn = 0
+	sleep(1)	//wait for the loop to end
 	for(var/I in spawned_npcs)
 		qdel(I)
 	LAZYCLEARLIST(spawned_npcs)
