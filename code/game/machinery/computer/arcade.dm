@@ -34,7 +34,6 @@
 		/obj/item/toy/redbutton									= 2,
 		/obj/item/toy/talking/owl								= 2,
 		/obj/item/toy/talking/griffin							= 2,
-		/obj/item/toy/talking/skeleton							= 2,
 		/obj/item/weapon/coin/antagtoken						= 2,
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/stack/tile/fakepit/loaded						= 2,
