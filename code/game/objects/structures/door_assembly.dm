@@ -416,6 +416,8 @@
 			if(mineral && mineral != "glass")
 				mineral = null //I know this is stupid, but until we change glass to a boolean it's how this code works.
 			to_chat(user, "<span class='notice'>You change the paintjob on the airlock assembly.</span>")
+			return
+	return ..()
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/door_assembly, FALSE, TRUE)
 	. = newlist(

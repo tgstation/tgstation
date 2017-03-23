@@ -88,8 +88,7 @@
 				S.use(required_amount_to_construct)
 			else if(stash_construction_item)
 				user.transferItemToLoc(tool, parent)
-				LAZYINITLIST(parent.stored_construction_items)
-				parent.stored_construction_items["[id]"] = parent
+				parent.SetItemToLeaveConstructionState(parent, tool)
 			else
 				qdel(tool)
 	else
@@ -140,9 +139,7 @@
 
 	if(!constructed && required_amount_to_construct)	//spawn loot
 		if(stash_construction_item)	//The treasure was inside you all along!
-			var/id_str = "[id]"
-			. = parent.stored_construction_items[id_str]
-			LAZYREMOVE(parent.stored_construction_items, id_str)
+			. = parent.SetItemToLeaveConstructionState(id, null)
 		else
 			if(ispath(required_type_to_construct, /obj/item/stack))
 				. = new required_type_to_construct(null, required_amount_to_construct)
@@ -265,12 +262,13 @@
 			if(istype(L))
 				last_found = TRUE
 				var/TT = L.transformation_type
-				if(TT && TT != CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME && !ispath(/atom/movable, TT))
-					WARNING(error + "Transformation type is not of atom/movable: [TT]")
-					. = FALSE
-				else if(istype(L.prev_state, /datum/construction_state/first))
-					WARNING(error + "`transformation_type` set and only first and last steps exist.")
-					. = FALSE
+				if(TT)
+					if(TT != CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME && !ispath(/atom/movable, TT))
+						WARNING(error + "Transformation type is not of atom/movable: [TT]")
+						. = FALSE
+					if(istype(L.prev_state, /datum/construction_state/first))
+						WARNING(error + "`transformation_type` set and only first and last steps exist.")
+						. = FALSE
 			if(current_step.max_integrity && current_step.max_integrity < last_max_integrity)
 				WARNING(error + "Max integrity lowered after construction")
 				. = FALSE
@@ -317,7 +315,7 @@
 					. = FALSE
 			
 			if(current_step.required_type_to_deconstruct)
-				if(!ispath(current_step.required_type_to_deconstruct, /obj/item))
+				if(current_step.required_type_to_deconstruct != NO_DECONSTRUCT && !ispath(current_step.required_type_to_deconstruct, /obj/item))
 					WARNING("Invalid /obj/item type specified for deconstruction: '[current_step.required_type_to_deconstruct]'")
 					. = FALSE
 			else if(current_step.deconstruction_message && findtextEx(current_step.deconstruction_message, CONSTRUCTION_ITEM))
@@ -379,28 +377,26 @@
 	return stored_construction_items["[id]"]
 
 /obj/proc/GetItemUsedToReachConstructionState(id)
-	if(!isnum(id))
-		CRASH("Cannot use GetItemUsedToReachConstructionState with text ids!")
 	if(!stored_construction_items)
 		return
 	return stored_construction_items["[id - 1]"]
 
 /obj/proc/SetItemToLeaveConstructionState(id, obj/item/I)
-	if(!istype(I))
-		CRASH("Invalid type in SetConstructionItemToLeaveState: [I.type]")
-	if(I.loc != src)
-		CRASH("SetItemToLeaveConstructionState: Item not inside src: [I.loc]")
+	if(I)
+		if(!istype(I))
+			CRASH("Invalid type in SetItemToReachConstructionState: [I.type]")
+		if(I.loc != src)
+			CRASH("SetItemToReachConstructionState: Item not inside src: [I.loc]")
 	LAZYINITLIST(stored_construction_items)
 	. = stored_construction_items["[id]"]
 	stored_construction_items["[id]"] = I
 
 /obj/proc/SetItemToReachConstructionState(id, obj/item/I)
-	if(!isnum(id))
-		CRASH("Cannot use SetItemToReachConstructionState with text ids!")
-	if(!istype(I))
-		CRASH("Invalid type in SetItemToReachConstructionState: [I.type]")
-	if(I.loc != src)
-		CRASH("SetItemToReachConstructionState: Item not inside src: [I.loc]")
+	if(I)
+		if(!istype(I))
+			CRASH("Invalid type in SetItemToReachConstructionState: [I.type]")
+		if(I.loc != src)
+			CRASH("SetItemToReachConstructionState: Item not inside src: [I.loc]")
 	LAZYINITLIST(stored_construction_items)
 	. = stored_construction_items["[id - 1]"]
 	stored_construction_items["[id - 1]"] = I
@@ -447,13 +443,13 @@
 			return
 
 		if(wait)			
-			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
-									"<span class='notice'>[user] begins [message] \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] begins [message] \the [src].</span>", 
+									"<span class='notice'>You begin [message] \the [src].</span>")
 			if(!ConstructionDoAfterInternal(user, null, wait, action_type, TRUE))
 				return
 
-		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
-								"<span class='notice'>[user] [wait ? "finishes [message]" : "[message]\s"] \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] [wait ? "finishes [message]" : "[message]\s"] \the [src].</span>",\
+								"<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>")
 		ccs.OnLeft(src, user, null, action_type == CONSTRUCTING, FALSE)
 
 //construct by tool if possible
@@ -489,15 +485,15 @@
 		message = replacetextEx(message, CONSTRUCTION_ITEM, "\the [I]")
 
 		if(wait)
-			user.visible_message("<span class='notice'>You begin [message] \the [src].</span>",
-									"<span class='notice'>[user] begins [message] \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] begins [message] \the [src].</span>",\
+								"<span class='notice'>You begin [message] \the [src].</span>")
 			if(!ConstructionDoAfterInternal(user, I, wait * I.toolspeed, action_type, TRUE))
 				return
 		else if(I.usesound)
 			playsound(src, I.usesound, CONSTRUCTION_VOLUME, TRUE)	//This is also done in the DoAfter
 
-		user.visible_message("<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>",
-								"<span class='notice'>[user] [wait ? "finishes [message]" : "[message]\s"] \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] [wait ? "finishes [message]" : "[message]\s"] \the [src].</span>",\
+								"<span class='notice'>You [wait ? "finish [message]" : message] \the [src].</span>")
 		if(action_type != REPAIRING)
 			ccs.OnLeft(src, user, I, action_type == CONSTRUCTING, FALSE)
 		else
@@ -515,7 +511,7 @@
 	if(!first_checked && !ConstructionChecks(ccsid, action_type, I, user, TRUE))
 		return FALSE
 
-	if(I)
+	if(I && I.usesound)
 		playsound(src, I.usesound, CONSTRUCTION_VOLUME, TRUE)
 
 	LAZYADD(user.construction_tasks, src)	//prevent repeats
@@ -524,8 +520,8 @@
 	LAZYREMOVE(user.construction_tasks, src)
 
 /obj/proc/ConstructionChecks(state_started_id, action_type, obj/item/I, mob/user, first_check) 
-	if(src in user.construction_tasks)
-		testing("Cancelled [user]'s construction due to duplicate action")
+	if(first_check && (src in user.construction_tasks))
+		testing("Cancelled [user]'s construction on [src]([type]) due to duplicate action")
 		return FALSE	//fail silently
 
 	if(action_type == REPAIRING && obj_integrity >= max_integrity)
@@ -543,7 +539,7 @@
 
 	var/obj/item/stack/Mats = I
 	if(istype(Mats))
-		var/check_against = action_type == REPAIRING ? current_construction_state.required_amount_to_repair : current_construction_state.required_type_to_construct
+		var/check_against = action_type == REPAIRING ? current_construction_state.required_amount_to_repair : current_construction_state.required_amount_to_construct
 		if(Mats.amount < check_against)
 			if(first_check)
 				to_chat(user, "<span class='warning'>You need [check_against] or more of [Mats] first!</span>")
