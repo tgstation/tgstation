@@ -10,14 +10,12 @@
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	var/obj/item/stack/rods/stored
-	canSmoothWith = list(/obj/structure/lattice,
-	/turf/open/floor,
-	/turf/closed/wall,
-	/obj/structure/falsewall)
-	smooth = SMOOTH_MORE
+	canSmoothWith = null
+	smooth = SMOOTH_TRUE
 	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
+	canSmoothWith = typesof(/obj/structure/lattice) + typesof(/turf/open/floor) + typesof(/obj/structure/falsewall) + typesof(/turf/closed/wall) - typesof(/turf/closed/wall/shuttle) - typesof(/obj/structure/falsewall/titanium) - typesof(/turf/closed/mineral/titanium)
 	..()
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
