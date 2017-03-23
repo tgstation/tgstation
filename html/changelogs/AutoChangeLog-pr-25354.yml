@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "A dead AI no longer counts as an \"unconverted AI\" for clockcult."
