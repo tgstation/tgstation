@@ -49,8 +49,8 @@ var/datum/controller/subsystem/npcpool/SSnpc
 
 	cleanNull()
 
-	if(!populated_centcom && EMERGENCY_ESCAPED_OR_ENDGAMED)
-		PopulateCentcom()		
+	if(!populated_centcom && ticker.current_state >= GAME_STATE_FINISHED)
+		PopulateCentcom(FALSE)		
 
 	//SNPC handling
 	for(var/mob/living/carbon/human/interactive/check in botPool_l)
@@ -133,7 +133,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	if (istype(SSnpc.botPool_l_non))
 		botPool_l_non = SSnpc.botPool_l_non
 
-/datum/controller/subsystem/npcpool/proc/PopulateCentcom()
+/datum/controller/subsystem/npcpool/proc/PopulateCentcom(skip_roundend_check = TRUE)
 	set waitfor = FALSE
 	populated_centcom = TRUE
 
@@ -145,6 +145,8 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	if(!centcom_areas.len)
 		return
 
+	var/list/spawn_locs = list()
+
 	for(var/I in 1 to NPCsToSpawn)
 		var/list/candidates = get_area_turfs(pick(centcom_areas))
 		if(!LAZYLEN(candidates))
@@ -152,8 +154,8 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		
 		while(candidates.len)
 			var/turf/T = pick(candidates)
-			if(!is_blocked_turf(T))
-				spawned_npcs += new /mob/living/carbon/human/interactive(T)
+			if(!is_blocked_turf(T) && !spawn_locs[T])
+				spawn_locs[T] = 
 				break
 			else
 				candidates -= T
@@ -162,6 +164,13 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		if(!populated_centcom)
 			return
 		CHECK_TICK
+	
+	if(!skip_roundend_check)
+		UNTIL(populated_centcom && ticker.current_state == GAME_STATE_FINISHED)
+	
+	if(NPCsToSpawn.len)
+		for(var/I in spawn_locs)
+			spawned_npcs += new /mob/living/carbon/human/interactive(I)
 
 /datum/controller/subsystem/npcpool/Shutdown()
 	DepopulateCentcom()
