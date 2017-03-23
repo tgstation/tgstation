@@ -51,12 +51,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/obj/structure/alien/weeds{
-	desc = "A large mottled egg.";
-	obj_integrity = 100;
-	icon_state = "egg_hatched";
-	name = "egg"
-	},
+/obj/structure/alien/egg/burst,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaycontent/a5{
 	always_unpowered = 1;
@@ -139,12 +134,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/obj/structure/alien/weeds{
-	desc = "A large mottled egg.";
-	obj_integrity = 100;
-	icon_state = "egg_hatched";
-	name = "egg"
-	},
+/obj/structure/alien/egg/burst,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaycontent/a5{
 	always_unpowered = 1;
@@ -334,12 +324,7 @@
 	})
 "x" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/weeds{
-	desc = "A large mottled egg.";
-	obj_integrity = 100;
-	icon_state = "egg_hatched";
-	name = "egg"
-	},
+/obj/structure/alien/egg/burst,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaycontent/a5{
 	always_unpowered = 1;
@@ -405,12 +390,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/obj/structure/alien/weeds{
-	desc = "A large mottled egg.";
-	obj_integrity = 100;
-	icon_state = "egg_hatched";
-	name = "egg"
-	},
+/obj/structure/alien/egg/burst,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaycontent/a5{
@@ -424,12 +404,7 @@
 	})
 "C" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/weeds{
-	desc = "A large mottled egg.";
-	obj_integrity = 100;
-	icon_state = "egg_hatched";
-	name = "egg"
-	},
+/obj/structure/alien/egg/burst,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaycontent/a5{

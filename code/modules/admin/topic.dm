@@ -1579,7 +1579,7 @@
 		output_devil_info(M)
 
 	else if(href_list["adminmoreinfo"])
-		var/mob/M = locate(href_list["adminmoreinfo"])
+		var/mob/M = locate(href_list["adminmoreinfo"]) in mob_list
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
@@ -1631,7 +1631,7 @@
 		to_chat(src.owner, "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;")
 		to_chat(src.owner, "Location = [location_description];")
 		to_chat(src.owner, "[special_role_description]")
-		to_chat(src.owner, "(<a href='?priv_msg=[M.ckey]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</A>) (<A HREF='?src=\ref[src];secrets=check_antagonist'>CA</A>)")
+		to_chat(src.owner, ADMIN_FULLMONTY_NONAME(M))
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))
@@ -1716,33 +1716,10 @@
 
 		var/mob/living/carbon/human/H = locate(href_list["adminsmite"]) in mob_list
 		if(!H || !istype(H))
+			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
 			return
 
-		var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB)
-
-		var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
-
-		if(QDELETED(H) || !punishment)
-			return
-
-		switch(punishment)
-			if(ADMIN_PUNISHMENT_LIGHTNING)
-				var/turf/T = get_step(get_step(H, NORTH), NORTH)
-				T.Beam(H, icon_state="lightning[rand(1,12)]", time = 5)
-				H.adjustFireLoss(75)
-				H.electrocution_animation(40)
-				to_chat(H, "<span class='userdanger'>The gods have punished you for your sins!</span>")
-			if(ADMIN_PUNISHMENT_BRAINDAMAGE)
-				H.adjustBrainLoss(75)
-			if(ADMIN_PUNISHMENT_GIB)
-				H.gib(FALSE)
-
-		message_admins("[key_name_admin(usr)] punished [key_name_admin(H)] with [punishment].")
-		log_admin("[key_name(usr)] punished [key_name(H)] with [punishment].")
-
-	else if(href_list["BlueSpaceArtillery"])
-		var/mob/living/M = locate(href_list["BlueSpaceArtillery"]) in mob_list
-		usr.client.bluespace_artillery(M)
+		usr.client.smite(H)
 
 	else if(href_list["CentcommReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommReply"]) in mob_list

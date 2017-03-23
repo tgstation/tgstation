@@ -10,4 +10,7 @@
 	wet = TURF_WET_WATER
 
 /turf/open/water/HandleWet()
-	return //water does not dry off
+    if(wet == TURF_WET_WATER)
+        return
+    ..()
+    MakeSlippery(TURF_WET_WATER) //rewet after ..() clears out lube/ice etc.
