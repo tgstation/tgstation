@@ -81,8 +81,8 @@
 				var/vaccine_name = "Unknown"
 
 				if(!ispath(vaccine_type))
-					if(archive_diseases[path])
-						var/datum/disease/D = archive_diseases[path]
+					if(SSdiease.archive_diseases[path])
+						var/datum/disease/D = SSdiease.archive_diseases[path]
 						if(D)
 							vaccine_name = D.name
 							vaccine_type = path
@@ -106,7 +106,7 @@
 			var/datum/disease/D = null
 			if(!ispath(type))
 				D = GetVirusByIndex(text2num(href_list["create_virus_culture"]))
-				var/datum/disease/advance/A = archive_diseases[D.GetDiseaseID()]
+				var/datum/disease/advance/A = SSdiease.archive_diseases[D.GetDiseaseID()]
 				if(A)
 					D = new A.type(0, A)
 			else if(type)
@@ -159,8 +159,8 @@
 		if(..())
 			return
 		var/id = GetVirusTypeByIndex(text2num(href_list["name_disease"]))
-		if(archive_diseases[id])
-			var/datum/disease/advance/A = archive_diseases[id]
+		if(SSdiease.archive_diseases[id])
+			var/datum/disease/advance/A = SSdiease.archive_diseases[id]
 			A.AssignName(new_name)
 			for(var/datum/disease/advance/AD in SSdisease.processing)
 				AD.Refresh()
@@ -215,7 +215,7 @@
 							if(istype(D, /datum/disease/advance))
 
 								var/datum/disease/advance/A = D
-								D = archive_diseases[A.GetDiseaseID()]
+								D = SSdiease.archive_diseases[A.GetDiseaseID()]
 								if(D && D.name == "Unknown")
 									dat += "<b><a href='?src=\ref[src];name_disease=[i]'>Name Disease</a></b><BR>"
 
@@ -255,7 +255,7 @@
 						var/disease_name = "Unknown"
 
 						if(!ispath(type))
-							var/datum/disease/advance/A = archive_diseases[type]
+							var/datum/disease/advance/A = SSdiease.archive_diseases[type]
 							if(A)
 								disease_name = A.name
 						else

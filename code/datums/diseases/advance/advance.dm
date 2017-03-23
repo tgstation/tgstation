@@ -9,15 +9,7 @@
 
 #define SYMPTOM_LIMIT 8
 
-var/list/archive_diseases = list()
 
-// The order goes from easy to cure to hard to cure.
-var/list/advance_cures = 	list(
-									"sodiumchloride", "sugar", "orangejuice",
-									"spaceacillin", "salglu_solution", "ethanol",
-									"leporazine", "synaptizine", "lipolicide",
-									"silver", "gold"
-								)
 
 /*
 
@@ -40,6 +32,14 @@ var/list/advance_cures = 	list(
 	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
 	var/processing = 0
+	
+	// The order goes from easy to cure to hard to cure.
+	var/static/list/advance_cures = 	list(
+									"sodiumchloride", "sugar", "orangejuice",
+									"spaceacillin", "salglu_solution", "ethanol",
+									"leporazine", "synaptizine", "lipolicide",
+									"silver", "gold"
+								)
 
 /*
 
@@ -168,13 +168,13 @@ var/list/advance_cures = 	list(
 	AssignProperties()
 	id = null
 
-	if(!archive_diseases[GetDiseaseID()])
+	if(!SSdiease.archive_diseases[GetDiseaseID()])
 		if(new_name)
 			AssignName()
-		archive_diseases[GetDiseaseID()] = src // So we don't infinite loop
-		archive_diseases[GetDiseaseID()] = new /datum/disease/advance(0, src, 1)
+		SSdiease.archive_diseases[GetDiseaseID()] = src // So we don't infinite loop
+		SSdiease.archive_diseases[GetDiseaseID()] = new /datum/disease/advance(0, src, 1)
 
-	var/datum/disease/advance/A = archive_diseases[GetDiseaseID()]
+	var/datum/disease/advance/A = SSdiease.archive_diseases[GetDiseaseID()]
 	AssignName(A.name)
 
 //Generate disease properties based on the effects. Returns an associated list.
