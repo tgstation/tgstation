@@ -10,6 +10,8 @@ GLOBAL_REAL(SSdisease, /datum/controller/subsystem/diseases)
 	var/list/diseases
 	var/list/archive_diseases = list()
 
+	var/static/list/list_symptoms = subtypesof(/datum/symptom)
+
 /datum/controller/subsystem/diseases/New()
 	NEW_SS_GLOBAL(SSdisease)
 	if(!diseases)
@@ -19,7 +21,7 @@ GLOBAL_REAL(SSdisease, /datum/controller/subsystem/diseases)
 	currentrun = SSdisease.currentrun
 	processing = SSdisease.processing
 	diseases = SSdisease.diseases
-	archive_diseases = SSdiease.archive_diseases
+	archive_diseases = SSdisease.archive_diseases
 
 /datum/controller/subsystem/diseases/stat_entry(msg)
 	..("P:[processing.len]")

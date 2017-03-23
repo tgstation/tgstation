@@ -48,13 +48,6 @@
  */
 
 /datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D)
-
-	// Setup our dictionary if it hasn't already.
-	if(!dictionary_symptoms.len)
-		for(var/symp in list_symptoms)
-			var/datum/symptom/S = new symp
-			dictionary_symptoms[S.id] = symp
-
 	if(!istype(D))
 		D = null
 	// Generate symptoms if we weren't given any.
@@ -141,7 +134,7 @@
 
 	// Generate symptoms. By default, we only choose non-deadly symptoms.
 	var/list/possible_symptoms = list()
-	for(var/symp in list_symptoms)
+	for(var/symp in SSdisease.list_symptoms)
 		var/datum/symptom/S = new symp
 		if(S.level >= level_min && S.level <= level_max)
 			if(!HasSymptom(S))
@@ -168,13 +161,13 @@
 	AssignProperties()
 	id = null
 
-	if(!SSdiease.archive_diseases[GetDiseaseID()])
+	if(!SSdisease.archive_diseases[GetDiseaseID()])
 		if(new_name)
 			AssignName()
-		SSdiease.archive_diseases[GetDiseaseID()] = src // So we don't infinite loop
-		SSdiease.archive_diseases[GetDiseaseID()] = new /datum/disease/advance(0, src, 1)
+		SSdisease.archive_diseases[GetDiseaseID()] = src // So we don't infinite loop
+		SSdisease.archive_diseases[GetDiseaseID()] = new /datum/disease/advance(0, src, 1)
 
-	var/datum/disease/advance/A = SSdiease.archive_diseases[GetDiseaseID()]
+	var/datum/disease/advance/A = SSdisease.archive_diseases[GetDiseaseID()]
 	AssignName(A.name)
 
 //Generate disease properties based on the effects. Returns an associated list.
@@ -379,7 +372,7 @@
 
 	var/list/symptoms = list()
 	symptoms += "Done"
-	symptoms += list_symptoms.Copy()
+	symptoms += SSdisease.list_symptoms.Copy()
 	do
 		if(user)
 			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
