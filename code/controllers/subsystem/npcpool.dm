@@ -155,7 +155,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		while(candidates.len)
 			var/turf/T = pick(candidates)
 			if(!is_blocked_turf(T) && !spawn_locs[T])
-				spawn_locs[T] = 
+				spawn_locs[T] = T
 				break
 			else
 				candidates -= T
@@ -166,7 +166,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		CHECK_TICK
 	
 	if(!skip_roundend_check)
-		UNTIL(populated_centcom && ticker.current_state == GAME_STATE_FINISHED)
+		UNTIL(!populated_centcomm || ticker.current_state == GAME_STATE_FINISHED)
 	
 	if(NPCsToSpawn.len)
 		for(var/I in spawn_locs)
