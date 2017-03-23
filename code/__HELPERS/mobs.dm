@@ -214,7 +214,7 @@ Proc for attack log creation, because really why not
 		stoplag()
 		if (progress)
 			progbar.update(world.time - starttime)
-		if(!user || !target)
+		if(QDELETED(user) || QDELETED(target))
 			. = 0
 			break
 		if(uninterruptible)
@@ -266,11 +266,11 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			Uloc = user.loc
 
-		if(!user || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 
-		if(Tloc && (!target || Tloc != target.loc))
+		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
 				. = 0
 				break
@@ -316,7 +316,7 @@ Proc for attack log creation, because really why not
 			sleep(1)
 			if(progress)
 				progbar.update(world.time - starttime)
-			if(!user || !targets)
+			if(QDELETED(user) || !targets)
 				. = 0
 				break
 			if(uninterruptible)
@@ -327,7 +327,7 @@ Proc for attack log creation, because really why not
 				user_loc = user.loc
 
 			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 					. = 0
 					break mainloop
 	if(progbar)
