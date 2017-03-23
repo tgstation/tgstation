@@ -45402,6 +45402,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/miner/n2o/roundstart,
 /turf/open/floor/engine/n2o,
 /area/atmos)
 "bUX" = (
@@ -47227,6 +47228,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/miner/toxins/roundstart,
 /turf/open/floor/engine/plasma,
 /area/atmos)
 "bYX" = (
@@ -49081,6 +49083,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/miner/carbon_dioxide/roundstart,
 /turf/open/floor/engine/co2,
 /area/atmos)
 "ccE" = (
@@ -53812,10 +53815,12 @@
 /area/shuttle/syndicate)
 "cmU" = (
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/miner/nitrogen/roundstart,
 /turf/open/floor/engine/n2,
 /area/atmos)
 "cmV" = (
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/miner/oxygen/roundstart,
 /turf/open/floor/engine/o2,
 /area/atmos)
 "cmW" = (
@@ -65270,6 +65275,16 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"cMP" = (
+/obj/machinery/atmospherics/miner/oxygen/aux{
+	name = "\improper Gas Vent"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"cMQ" = (
+/obj/machinery/atmospherics/miner/nitrogen/aux,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
 
 (1,1,1) = {"
 aaa
@@ -75147,9 +75162,9 @@ awW
 awW
 aCS
 aEq
+cMP
 aEr
-aEr
-aEr
+cMQ
 cLL
 aCS
 awW

@@ -24174,6 +24174,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/atmospherics/miner/carbon_dioxide/roundstart,
 /turf/open/floor/engine/co2,
 /area/atmos)
 "aUi" = (
@@ -26286,6 +26287,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/miner/oxygen/roundstart,
 /turf/open/floor/engine/o2,
 /area/atmos)
 "aYd" = (
@@ -27613,6 +27615,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/atmospherics/miner/toxins/roundstart,
 /turf/open/floor/engine/plasma,
 /area/atmos)
 "baH" = (
@@ -29072,6 +29075,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/miner/nitrogen/roundstart,
 /turf/open/floor/engine/n2,
 /area/atmos)
 "bdG" = (
@@ -30847,6 +30851,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/atmospherics/miner/n2o/roundstart,
 /turf/open/floor/engine/n2o,
 /area/atmos)
 "bgR" = (
@@ -112887,6 +112892,18 @@
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
 	})
+"ehz" = (
+/obj/machinery/atmospherics/miner/nitrogen/aux{
+	name = "\improper Gas Vent"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/arrival)
+"ehA" = (
+/obj/machinery/atmospherics/miner/oxygen/aux{
+	name = "\improper Gas Vent"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/arrival)
 
 (1,1,1) = {"
 aaa
@@ -151233,7 +151250,7 @@ acn
 acn
 acn
 acn
-acn
+ehz
 acn
 acn
 acn
@@ -152261,7 +152278,7 @@ acn
 acn
 acn
 acn
-acn
+ehA
 acn
 acn
 acn
