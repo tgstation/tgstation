@@ -1,4 +1,35 @@
 
+/obj/structure/floodlight_frame
+	name = "floodlight frame"
+	desc = "A bare metal frame looking vaguely like a floodlight. Requires wiring.
+	max_integrity = 100
+	obj_integrity = 100
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "floodlight_c1"
+	var/state = FLOODLIGHT_NEEDS_WIRES
+
+/obj/structure/floodlight_frame/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/stack/cable_coil) && (state == FLOODLIGHT_NEEDS_WIRES))
+		if(O.use(5))
+			to_chat(user, "<span class='notice'>You wire the [src].</span>")
+			name = "wired [name]"
+			desc = "A bare metal frame looking vaguely like a floodlight. Requires securing with a screwdriver."
+			icon_state = "floodlight_c2"
+			state = FLOODLIGHT_NEEDS_SECURING
+	else if(istype(O, /obj/item/) && (state == FLOODLIGHT_NEEDS_LIGHTS))
+		if(user.dropItem(O))
+			to_chat(user, "<span class='notice'>You put lights in the [src].</span>")
+			new /obj/machinery/power/floodlight(src.loc)
+			qdel(src)
+	else if(istype(O, /obj/item/weapon/screwdriver) && (state == FLOODLIGHT_NEEDS_SECURING))
+		to_chat(user, "<span class='notice'>You secure the [src].</span>")
+			name = "attached [name]"
+			desc = "A bare metal frame that looks like a floodlight. Requires light tubes."
+			icon_state = "floodlight_c3"
+			state = FLOODLIGHT_NEEDS_LIGHTS
+	else
+		..()
+
 /obj/machinery/power/floodlight
 	name = "floodlight"
 	desc = "A pole with powerful mounted lights on it. Due to its high power draw, it must be powered by a direct connection to a wire node."
