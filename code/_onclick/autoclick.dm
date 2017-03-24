@@ -40,7 +40,7 @@
 /mob/proc/canMobMousedown(object, location, params)
 
 /mob/living/carbon/canMobMousedown(atom/object, location, params)
-	if(!object.IsAutoclickable())	//You shouldn't touch that.
+	if(object.IsAutoclickable())	//You shouldn't touch that.
 		return
 	var/obj/item/H = get_active_held_item()
 	if(H)
