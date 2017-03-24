@@ -6,10 +6,10 @@
 	var/show_alpha = 255
 	var/hide_alpha = 0
 	
-/obj/screen/plane_master/proc/show(override)
+/obj/screen/plane_master/proc/Show(override)
 	alpha = override || show_alpha
 	
-/obj/screen/plane_master/proc/hide(override)
+/obj/screen/plane_master/proc/Hide(override)
 	alpha = override || hide_alpha
 
 //Why do plane masters need a backdrop sometimes? Read http://www.byond.com/forum/?post=2141928
