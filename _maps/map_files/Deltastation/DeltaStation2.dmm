@@ -38444,10 +38444,13 @@
 /turf/closed/wall/r_wall,
 /area/engine/break_room)
 "bvt" = (
-/obj/machinery/computer/atmos_control,
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
+/obj/structure/cable/white{
+	icon_state = "0-4"
+	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -38467,6 +38470,9 @@
 	name = "Atmospheric Technician"
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/cable/white{
+	icon_state = "1-8"
+	},
 /turf/open/floor/plasteel,
 /area/atmos)
 "bvw" = (
@@ -57271,9 +57277,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cde" = (
-/obj/machinery/computer/monitor{
-	name = "Engineering Power Monitoring Console"
-	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24;
@@ -57290,6 +57293,7 @@
 	dir = 1;
 	name = "engineering camera"
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/vault,
 /area/engine/engineering)
 "cdf" = (
@@ -112887,6 +112891,15 @@
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
 	})
+"ehz" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/atmos)
 
 (1,1,1) = {"
 aaa
@@ -139730,7 +139743,7 @@ bqf
 brq
 bsD
 aZq
-bvu
+ehz
 bvu
 byX
 aIZ
