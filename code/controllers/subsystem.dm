@@ -30,8 +30,7 @@
 
 //Do not override
 /datum/controller/subsystem/New()
-	..()
-	PreInit()
+	return
 
 // Used to initialize the subsystem BEFORE the map has loaded
 // Called AFTER Recover if that is called
