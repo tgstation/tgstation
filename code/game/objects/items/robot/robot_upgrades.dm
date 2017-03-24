@@ -43,7 +43,7 @@
 	R.custom_name = heldname
 	R.updatename()
 	if(oldname == R.real_name)
-		R.notify_ai(3, oldname, R.real_name)
+		R.notify_ai(RENAME, oldname, R.real_name)
 
 	return 1
 
@@ -396,7 +396,7 @@
 		return
 	if(R.key) //You cannot replace a player unless the key is completely removed.
 		to_chat(usr, "<span class='warning'>Intelligence patterns detected in this [R.braintype]. Aborting.</span>")
-	else
-		R.make_shell(src)
-		return TRUE
+		return
 
+	R.make_shell(src)
+	return TRUE

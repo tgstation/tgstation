@@ -960,13 +960,13 @@
 		update_headlamp()
 		if(admin_revive)
 			locked = 1
-		notify_ai(1)
+		notify_ai(NEW_BORG)
 		. = 1
 
 /mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
 	..()
 	if(oldname != real_name)
-		notify_ai(3, oldname, newname)
+		notify_ai(RENAME, oldname, newname)
 	if(camera)
 		camera.c_tag = real_name
 	custom_name = newname
@@ -1030,7 +1030,7 @@
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
-	notify_ai(4)
+	notify_ai(AI_SHELL)
 
 /mob/living/silicon/robot/proc/revert_shell()
 	if(!shell)

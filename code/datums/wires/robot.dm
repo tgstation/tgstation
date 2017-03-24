@@ -36,7 +36,7 @@
 					R.connected_ai = new_ai
 					if(R.shell)
 						R.undeploy() //If this borg is an AI shell, disconnect the controlling AI and assign ti to a new AI
-						R.notify_ai(4)
+						R.notify_ai(AI_SHELL)
 					else
 						R.notify_ai(TRUE)
 		if(WIRE_CAMERA) // Pulse to disable the camera.

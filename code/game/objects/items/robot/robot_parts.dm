@@ -206,7 +206,7 @@
 				lawsync = 0
 				O.connected_ai = null
 			else
-				O.notify_ai(1)
+				O.notify_ai(NEW_BORG)
 				if(forced_ai)
 					O.connected_ai = forced_ai
 			if(!lawsync)
@@ -261,14 +261,14 @@
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src))
 
 			if(!aisync)
-				lawsync = 0
+				lawsync = FALSE
 				O.connected_ai = null
 			else
 				if(forced_ai)
 					O.connected_ai = forced_ai
-				O.notify_ai(4)
+				O.notify_ai(AI_SHELL)
 			if(!lawsync)
-				O.lawupdate = 0
+				O.lawupdate = FALSE
 				O.make_laws()
 
 
@@ -280,7 +280,7 @@
 			forceMove(O)
 			O.robot_suit = src
 			if(!locomotion)
-				O.lockcharge = 1
+				O.lockcharge = TRUE
 				O.update_canmove()
 
 	else if(istype(W,/obj/item/weapon/pen))
