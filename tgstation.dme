@@ -669,6 +669,7 @@
 #include "code\game\objects\effects\effect_system\effects_sparks.dm"
 #include "code\game\objects\effects\effect_system\effects_water.dm"
 #include "code\game\objects\effects\spawners\bombspawner.dm"
+#include "code\game\objects\effects\spawners\bundle.dm"
 #include "code\game\objects\effects\spawners\gibspawner.dm"
 #include "code\game\objects\effects\spawners\lootdrop.dm"
 #include "code\game\objects\effects\spawners\structure.dm"
