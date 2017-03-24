@@ -288,10 +288,3 @@
 
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring
-
-/mob/living/simple_animal/drone/can_speak_in_language(datum/language/dt)
-	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
-		. = TRUE
-	else
-		. = ispath(dt, /datum/language/drone)
-	world << "Drone CanSpeakInLanguage, [src], [usr]: datum [dt], return [.]"

@@ -137,6 +137,8 @@
 	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 
+	grant_language(/datum/language/ratvar)
+
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
@@ -189,11 +191,11 @@
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
 
-/mob/living/simple_animal/drone/can_speak_in_language(datum/language/dt)
+/mob/living/simple_animal/drone/cogscarab/can_speak_in_language(datum/language/dt)
 	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
 		. = TRUE
 	else
-		. = ispath(dt, /datum/language/ratvar)
+		. = ispath(dt, /datum/language/ratvar) && has_language(dt)
 
 /obj/item/drone_shell/dusty
 	name = "derelict drone shell"

@@ -594,7 +594,7 @@
 			continue
 
 		var/pri = initial(langtype.default_priority)
-		if(!highest_priority || (pri < highest_priority))
+		if(!highest_priority || (pri > highest_priority))
 			chosen_langtype = langtype
 			highest_priority = pri
 

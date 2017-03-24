@@ -172,6 +172,7 @@ var/const/VOX_DELAY = 600
 		. = TRUE
 	else if(is_servant_of_ratvar(src))
 		// The AI cannot speak common if converted.
-		. = !istype(dt, /datum/language/common)
+		. = !ispath(dt, /datum/language/common) && has_language(dt)
 	else
 		. = ..()
+	world << "AI CanSpeakInLanguage, [src], [usr]: datum [dt], return [.]"
