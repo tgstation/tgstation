@@ -9,7 +9,7 @@
 	obj_integrity = 50
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
-	var/obj/item/stack/rods/stored
+	var/number_of_rods = 1
 	canSmoothWith = list(/obj/structure/lattice,
 	/turf/open/floor,
 	/turf/closed/wall,
@@ -19,14 +19,9 @@
 
 /obj/structure/lattice/Initialize(mapload)
 	..()
-	for(var/obj/structure/lattice/LAT in src.loc)
+	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
 			qdel(LAT)
-	stored = new/obj/item/stack/rods(src)
-
-/obj/structure/lattice/Destroy()
-	QDEL_NULL(stored)
-	. = ..()
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
@@ -47,8 +42,7 @@
 
 /obj/structure/lattice/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
-		stored.forceMove(get_turf(src))
-		stored = null
+		new /obj/item/stack/rods(get_turf(src), amount=number_of_rods)
 	qdel(src)
 
 /obj/structure/lattice/singularity_pull(S, current_size)
@@ -60,7 +54,7 @@
 	desc = "A lightweight support lattice. These hold the Justicar's station together."
 	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
 
-/obj/structure/lattice/clockwork/Initialize()
+/obj/structure/lattice/clockwork/Initialize(mapload)
 	..()
 	ratvar_act()
 
@@ -68,7 +62,7 @@
 	if(IsOdd(x+y))
 		new /obj/structure/lattice/clockwork/large(loc) // deletes old one
 
-/obj/structure/lattice/clockwork/large/New()
+/obj/structure/lattice/clockwork/large/Initialize(mapload)
 	..()
 	icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
 	pixel_x = -9
@@ -86,10 +80,9 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 
-/obj/structure/lattice/catwalk/Initialize()
+/obj/structure/lattice/catwalk/Initialize(mapload)
 	..()
-	stored.amount++
-	stored.update_icon()
+	number_of_rods++
 
 /obj/structure/lattice/catwalk/ratvar_act()
 	new /obj/structure/lattice/catwalk/clockwork(loc)
