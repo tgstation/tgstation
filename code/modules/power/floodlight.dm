@@ -49,6 +49,7 @@
 	var/list/light_setting_list = list(0, 5, 10, 15)
 	var/light_power_coefficient = 300
 	var/setting = 1
+	light_power = 1.75
 
 /obj/machinery/power/floodlight/process()
 	if(avail(active_power_usage))
