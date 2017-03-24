@@ -1,0 +1,9 @@
+author: "Penguaro"
+delete-after: True
+changes: 
+  - rscadd: "[Meta] Replaced Power Monitoring Console in Engineering with Modular Engineering Console"
+  - rscadd: "[Pubby] Replaced Power Monitoring Console in Engineering with Modular Engineering Console"
+  - rscadd: "[Omega] Replaced Power Monitoring Console in Engineering with Modular Engineering Console"
+  - rscadd: "[Omega] Added RD and Command Modular Consoles to Bridge"
+  - rscadd: "[Delta] Replaced Power Monitoring Console in Engineering with Modular Engineering Console"
+  - rscadd: "[Delta] Replaced duplicate Atmospherics Monitoring Console in Atmo with Modular Engineering Console"

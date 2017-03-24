@@ -66,12 +66,12 @@
 
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()
-	
+
 	if(perma_docked)
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE
-		else		
+		else
 			SendToStation()
 		return
 
@@ -79,7 +79,7 @@
 		if(!CheckTurfsPressure())
 			damaged = FALSE
 			if(console)
-				console.say("Repairs complete, launching soon.") 
+				console.say("Repairs complete, launching soon.")
 		return
 
 //If this proc is high on the profiler add a cooldown to the stuff after this line
@@ -93,7 +93,7 @@
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE
-		else		
+		else
 			SendToStation()
 		return
 
@@ -130,7 +130,7 @@
 	var/dockTime = config.arrivals_shuttle_dock_window
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
 		if(console)
-			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [SSmapping.config.map_name].")
+			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [station_name()].")
 		hyperspace_sound(HYPERSPACE_LAUNCH, areas)	//for the new guy
 		setTimer(dockTime)
 
@@ -174,7 +174,7 @@
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(mode == SHUTTLE_CALL || damaged)
 		return
-	
+
 	Launch(TRUE)
 
 	user << "<span class='notice'>Calling your shuttle. One moment...</span>"
