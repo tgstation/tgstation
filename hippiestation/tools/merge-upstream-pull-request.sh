@@ -23,7 +23,7 @@ if [ $# -eq 0 ]; then
 fi
 
 # Make sure our temp file exists
-if [ ! -f $tmpfile ]; then
+if [ ! -f "$tmpfile" ]; then
     echo "Error: mktemp failed to create a temporarily file"
     exit 1
 fi
@@ -32,7 +32,7 @@ fi
 type wget >/dev/null 2>&1 || { echo >&2 "Error: This script requires wget, please ensure wget is installed and exists in the current PATH"; exit 1; }
 
 # Download the patchfile
-wget "$BASE_PATCH_URL$1.patch" -q -O $tmpfile
+wget "$BASE_PATCH_URL$1.patch" -q -O "$tmpfile"
 
 # We need to make sure we are always on a clean master when creating the new branch.
 # So we forcefully reset, clean and then checkout the master branch
@@ -47,7 +47,7 @@ git pull
 git checkout -b "$BASE_BRANCH_NAME$1"
 
 # Apply the patch on top of this new branch
-git apply --reject --whitespace=nowarn $tmpfile
+git apply --reject --whitespace=nowarn "$tmpfile"
 
 # Add all files onto this branch
 git add -A .
@@ -59,4 +59,4 @@ git commit -m "$BASE_COMMIT_MESSAGE$1"
 git push -u origin "$BASE_BRANCH_NAME$1"
 
 # Remove the temp file
-rm tmpfile
+rm "$tmpfile"
