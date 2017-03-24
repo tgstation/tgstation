@@ -164,7 +164,7 @@
 		M.emote("scream")
 
 /datum/reagent/blob/blazing_oil/extinguish_reaction(obj/structure/blob/B)
-	B.take_damage(rand(1, 3), BURN, "energy")
+	B.take_damage(1.5, BURN, "energy")
 
 /datum/reagent/blob/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BURN && damage_flag != "energy")

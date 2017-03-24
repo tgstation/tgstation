@@ -1592,7 +1592,6 @@
 	                /obj/item/toy/talking/AI,
 	                /obj/item/toy/talking/owl,
 	                /obj/item/toy/talking/griffin,
-	                /obj/item/toy/talking/skeleton,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
 	                /obj/item/toy/carpplushie,
