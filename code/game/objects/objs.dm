@@ -33,7 +33,7 @@
 		if("dangerous_possession")
 			return FALSE
 		if("control_object")
-			var/obj/O = vval)
+			var/obj/O = vval
 			if(istype(O) && O.dangerous_possession)
 				return FALSE
 	..()
