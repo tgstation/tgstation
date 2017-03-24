@@ -629,7 +629,7 @@
 		return
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
+		var/new_role = input("Select new role", "Assigned role", assigned_role, nullable = TRUE, choices = get_all_jobs())
 		if (!new_role)
 			return
 		assigned_role = new_role

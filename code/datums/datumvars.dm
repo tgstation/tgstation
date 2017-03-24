@@ -864,7 +864,7 @@
 							if(!valid_id)
 								to_chat(usr, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
 					if("Choose ID")
-						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in reagent_options
+						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.", nullabled = TRUE, choices = reagent_options)
 				if(chosen_id)
 					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
 					if(amount)
@@ -1031,7 +1031,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 				return
 
-			var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
+			var/result = input(usr, "Please choose a new species","Species", nullable = TRUE, choices = species_list)
 
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")
@@ -1056,7 +1056,7 @@
 			var/list/limb_list = list("head", "l_arm", "r_arm", "l_leg", "r_leg")
 			if(edit_action == "augment")
 				limb_list += "chest"
-			var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in limb_list
+			var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part", nullable = TRUE, choices = limb_list)
 
 			if(!C)
 				to_chat(usr, "Mob doesn't exist anymore")
