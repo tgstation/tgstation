@@ -39,7 +39,7 @@
 
 /obj/machinery/computer/apc_control/attack_ai(mob/living/AI)
 	if(!IsAdminGhost(src))
-		AI << "<span class='warning'>[src] does not support AI control.</span>" //You already have APC access, cheater!
+		to_chat(AI,"<span class='warning'>[src] does not support AI control.</span>") //You already have APC access, cheater!
 		return
 	..(AI)
 
