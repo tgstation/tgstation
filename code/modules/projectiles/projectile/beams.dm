@@ -65,7 +65,7 @@
 /obj/item/projectile/beam/m_disabler
 	name = "musket beam"
 	icon_state = "ice_2"
-	damage = 48 //three shots to down someone
+	damage = 40
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
