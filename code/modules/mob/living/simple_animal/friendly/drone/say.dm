@@ -47,4 +47,3 @@
 		. = TRUE
 	else
 		. = ispath(dt, /datum/language/drone) && has_language(dt)
-	world << "Drone CanSpeakInLanguage, [src], [usr]: datum [dt], return [.]"

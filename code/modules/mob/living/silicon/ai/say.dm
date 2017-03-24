@@ -175,4 +175,3 @@ var/const/VOX_DELAY = 600
 		. = !ispath(dt, /datum/language/common) && has_language(dt)
 	else
 		. = ..()
-	world << "AI CanSpeakInLanguage, [src], [usr]: datum [dt], return [.]"

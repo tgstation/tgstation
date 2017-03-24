@@ -580,7 +580,6 @@
 		. = TRUE
 	else
 		. = has_language(dt)
-	world << "AM CanSpeakInLanguage, [src], [usr]: datum [dt], return [.]"
 
 /atom/movable/proc/get_default_language()
 	// if no language is specified, and we want to say() something, which
@@ -599,4 +598,3 @@
 			highest_priority = pri
 
 	. = chosen_langtype
-	world << "AM GetDefaultLanguage, [src], [usr] returning [.]"
