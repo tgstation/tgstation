@@ -64,6 +64,7 @@
 #define FLOODLIGHT_NEEDS_WIRES 0
 #define FLOODLIGHT_NEEDS_LIGHTS 1
 #define FLOODLIGHT_NEEDS_SECURING 2
+#define FLOODLIGHT_NEEDS_WRENCHING 3
 
 //other construction-related things
 
