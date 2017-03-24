@@ -7,7 +7,8 @@
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb0"
 	density = TRUE
-
+	use_power = 0
+	
 	var/timer_set = 90
 	var/ui_style = "nanotrasen"
 	var/range = 160
@@ -16,7 +17,6 @@
 	var/detonation_timer = null
 	var/cooldown = 0
 	var/safety = TRUE
-	use_power = 0
 
 	var/bomb_set = FALSE
 	var/exploding = FALSE
@@ -26,11 +26,15 @@
 	var/payload_floor = /turf/open/floor/engine
 	var/static/list/possible_payloads = list("wood","sand","ice","mining","silver","gold","bananium","abductor","desolation", "plasma","uranium","bluespace","diamond","plasteel","safety","titanium","plastitanium", )
 
-/obj/machinery/nuclearbomb/Initialize()
+/obj/machinery/construction_nuke/Initialize()
 	..()
-	poi_list |= src
+	poi_list -= src
+	
+/obj/machinery/construction_nuke/Destroy()
+	poi_list -= src
+	..()
 
-/obj/machinery/nuclearbomb/examine(mob/user)
+/obj/machinery/construction_nuke/examine(mob/user)
 	. = ..()
 	if(timing)
 		to_chat(user, "There are [get_time_left()] seconds until detonation.")
@@ -77,30 +81,27 @@
 	switch(href_list["action"])
 		if ("payload")
 			set_payload()
-			updateUsrDialog()
 		if ("set")
 			set_timer()
-			updateUsrDialog()
 		if ("anchor")
 			set_anchor()
-			updateUsrDialog()
 		if ("safety")
 			set_safety()
-			updateUsrDialog()
 		if ("activate")
 			set_active()
-			updateUsrDialog()
+	updateUsrDialog()
+			
 
 /obj/machinery/construction_nuke/proc/set_payload()
 	playsound(loc, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	if(timing || bomb_set)
 		to_chat(usr, "<span class='danger'>Error: Payload cannot be altered while the device is armed.</span>")
-		playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
+		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	payload = input(usr, "Choose your Payload", "Payload:") as null|anything in possible_payloads
 	if (!src || QDELETED(src))
 		return
-	playsound(loc, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
 	switch(payload)
 		if("plasteel")
 			payload_wall = /turf/closed/wall/r_wall
@@ -135,11 +136,11 @@
 
 
 /obj/machinery/construction_nuke/proc/set_timer()
-	playsound(loc, 'sound/machines/terminal_prompt.ogg', 75, 1)
+	playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	timer_set = input("Set timer in seconds:", name, timer_set)
 	if (!src || QDELETED(src))
 		return
-	playsound(loc, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
 	if(timer_set < 90)
 		timer_set = 90
 	if(timer_set > 300)
@@ -151,14 +152,14 @@
 		return
 	if(!isinspace())
 		anchored = !anchored
-		playsound(loc, 'sound/items/Deconstruct.ogg', 75, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 75, 1)
 		icon_state = "nuclearbomb2"
 	else
 		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
 /obj/machinery/construction_nuke/proc/set_safety()
 	if(!anchored)
 		to_chat(usr, "<span class='danger'>Error: Safety cannot be altered on an unanchored device.</span>")
-		playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
+		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	safety = !safety
 	if(safety)
@@ -168,9 +169,9 @@
 		bomb_set = FALSE
 		detonation_timer = null
 		icon_state = "nuclearbomb2"
-		playsound(loc, 'sound/machines/terminal_prompt.ogg', 75, 1)
+		playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	else
-		playsound(loc, 'sound/machines/engine_alert1.ogg', 50, 1)
+		playsound(src, 'sound/machines/engine_alert1.ogg', 50, 1)
 		icon_state = "nuclearbomb1"
 	update_icon()
 
@@ -178,7 +179,7 @@
 	var/area/A = get_area(src)
 	if(safety && !bomb_set)
 		to_chat(usr, "<span class='danger'>Error: The safety is still on.</span>")
-		playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
+		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	if(!A.blob_allowed)
 		to_chat(usr, "<span class='danger'>Error: The device's safety countermeasures flash red: you cannot arm this device outside of the station.</span>")
@@ -201,7 +202,7 @@
 		priority_announce("Radioactive energy levels are normalizing, please submit an incident report as soon as possible.","Central Command Nuclear Safety Division", 'sound/AI/attention.ogg')
 		detonation_timer = null
 		icon_state = "nuclearbomb1"
-		playsound(loc, 'sound/machines/terminal_off.ogg', 75, 1)
+		playsound(src, 'sound/machines/terminal_off.ogg', 75, 1)
 	update_icon()
 
 /obj/machinery/construction_nuke/proc/get_time_left()
@@ -217,23 +218,24 @@
 	exploding = TRUE
 	update_icon()
 	for(var/mob/M in player_list)
-		M << 'sound/machines/Alarm.ogg'
+		send_to_playing_players('sound/machines/Alarm.ogg')
 	var/turf/startpoint = get_turf(src)
 	sleep(100)
 	for(var/mob/M in player_list)
-		M << 'sound/effects/explosionfar.ogg'
+		send_to_playing_players('sound/effects/explosionfar.ogg')
 	spawn_atom_to_turf(/obj/effect/overlay/temp/explosion, startpoint, 1, FALSE)
 	qdel(src)
 	for(var/I in spiral_range_turfs(range, startpoint))
 		var/turf/T = I
 		if(!T)
 			continue
-		if(istype(T, /turf/open/floor/))
+		if(istype(T, /turf/open/floor))
 			T.ChangeTurf(payload_floor)
 			spawn_atom_to_turf(/obj/effect/overlay/temp/fire, T, 1, FALSE)
-		else if(istype(T, /turf/closed/wall/))
+		else if(istype(T, /turf/closed/wall))
 			T.ChangeTurf(payload_wall)
 			spawn_atom_to_turf(/obj/effect/overlay/temp/fire, T, 1, FALSE)
+		QDEL_NULL 
 		CHECK_TICK
 
 
@@ -247,7 +249,6 @@
 	desc = "The first three prototypes were discontinued after mass casualty incidents."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "disco0"
-	density = TRUE
 	anchored = FALSE
 	verb_say = "states"
 	density = TRUE
@@ -259,7 +260,6 @@
 	var/stop = 0
 	var/list/available = list()
 	var/list/select_name = list()
-	req_access = list(access_engine)
 	var/list/spotlights = list()
 	var/list/sparkles = list()
 	var/static/list/songs = list(
@@ -283,6 +283,7 @@
 	song_beat = beat
 
 /obj/machinery/disco/Initialize()
+	..()
 	selection = songs[1]
 
 
@@ -299,7 +300,7 @@
 			else if(anchored)
 				user << "<span class='notice'>You unsecure and disconnect the [src].</span>"
 				anchored = FALSE
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 			return
 	return ..()
 
@@ -312,9 +313,8 @@
 		user << "<span class='warning'>You are overwhelmed by the raw amount of data being displayed, only an engineer could operate such a sophisticated device.</span>"
 		playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 		return
-	if(!Adjacent(user))
-		if(!isAI(user))
-			return
+	if(!Adjacent(user) && !isAI(user))
+		return
 	user.set_machine(src)
 	var/list/dat = list()
 	dat +="<div class='statusDisplay' style='text-align:center'>"
@@ -364,20 +364,20 @@
 				icon_state = "disco0"
 				dance_over()
 				stop = world.time + 300
-				src.updateUsrDialog()
+				updateUsrDialog()
 		if("select")
 			if(active)
 				to_chat(usr, "<span class='warning'>Error: You cannot change the song until the current one is over.</span>")
 				return
 			check_GBP()
 			select_name = input(usr, "Choose your song", "Track:") as null|anything in available
-			if (!src || QDELETED(src))
+			if (QDELETED(src))
 				return
 			for(var/datum/track/S in songs)
 				if(select_name == S.song_name)
 					selection = S
 					break
-			src.updateUsrDialog()
+			updateUsrDialog()
 		if("horn")
 			deejay('sound/items/AirHorn2.ogg')
 		if("alert")
@@ -396,7 +396,7 @@
 			deejay('sound/AI/harmalarm.ogg')
 
 /obj/machinery/disco/proc/deejay(var/S)
-	if (!src || QDELETED(src) || !active || charge < 5)
+	if (!QDELETED(src) || !active || charge < 5)
 		to_chat(usr, "<span class='warning'>The device is not able to play more DJ sounds at this time.</span>")
 		return
 	charge -= 5
@@ -483,7 +483,7 @@
 
 /obj/machinery/disco/proc/lights_spin()
 	for(var/i in 1 to 25)
-		if(!src || QDELETED(src) || !active)
+		if(QDELETED(src) || !active)
 			return
 		var/obj/effect/overlay/sparkles/S = new /obj/effect/overlay/sparkles(src)
 		S.alpha = 0
@@ -497,13 +497,13 @@
 				S.orbit(src, 95, TRUE, 60, 36, TRUE, FALSE)
 			if(25)
 				S.pixel_y = 7
-				S.loc = get_turf(src)
+				S.forceMove(get_turf(src))
 		sleep(7)
 	for(var/obj/reveal in sparkles)
 		reveal.alpha = 255
 	while(active)
 		for(var/obj/item/device/flashlight/spotlight/glow in spotlights) // The multiples reflects custom adjustments to each colors after dozens of tests
-			if(!src || QDELETED(src) || !active || !glow || QDELETED(glow))
+			if(QDELETED(src) || !active || QDELETED(glow))
 				return
 			if(glow.light_color == "red")
 				glow.light_color = "nw"
@@ -559,78 +559,86 @@
 /obj/machinery/disco/proc/dance(var/mob/living/carbon/M) //Show your moves
 	switch(rand(0,9))
 		if(0 to 1)
-			set waitfor = 0
-			for(var/i = 1, i < 8, i++)
-				M.SpinAnimation(7,1)
-				M.setDir(pick(cardinal))
-				sleep(10)
+			dance2(M)
 		if(2 to 3)
-			set waitfor = 0
-			for(var/i in 1 to 6)
-				if (!M)
-					return
-				M.SpinAnimation(7,1)
-				M.setDir(pick(cardinal))
-				for (var/x in 1 to 12)
-					sleep(1)
-					if (!M)
-						return
-					if (i<5)
-						M.pixel_y += 1
-					if (i>4)
-						M.pixel_y -= 2
-					M.setDir(turn(M.dir, 90))
-					switch (M.dir)
-						if (NORTH)
-							M.pixel_y += 3
-						if (SOUTH)
-							M.pixel_y -= 3
-						if (EAST)
-							M.pixel_x -= 3
-						if (WEST)
-							M.pixel_x += 3
-				sleep(12)
-			M.pixel_x = 0
-			M.pixel_y = 0
+			dance3(M)
 		if(4 to 6)
-			var/speed = rand(1,3)
-			set waitfor = 0
-			var/time = 30
-			while(time)
-				sleep(speed)
-				for(var/i in 1 to speed)
-					M.setDir(pick(cardinal))
-					M.lay_down(TRUE)
-				 time--
-
+			dance4(M)
 		if(7 to 9)
-			M.setDir(get_dir(M, src))
-			spawn (0)
-				if (M)
-					animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-				sleep (70)
-				if (M)
-					animate(M, transform = null, time = 1, loop = 0)
-			for (var/i = 0, i < 60, i++)
-				if (!M)
-					return
-				if (i<31)
-					M.pixel_y += 1
-				if (i>30)
-					M.pixel_y -= 1
-				M.setDir(turn(M.dir, 90))
-				switch (M.dir)
-					if (NORTH)
-						M.pixel_y += 3
-					if (SOUTH)
-						M.pixel_y -= 3
-					if (EAST)
-						M.pixel_x -= 3
-					if (WEST)
-						M.pixel_x += 3
-				sleep (1)
-			M.pixel_x = 0
-			M.pixel_y = 0
+			dance5(M)
+			
+/obj/machinery/disco/proc/dance2(var/mob/living/carbon/M)
+	set waitfor = 0
+	for(var/i = 1, i < 8, i++)
+		M.SpinAnimation(7,1)
+		M.setDir(pick(cardinal))
+		sleep(10)
+/obj/machinery/disco/proc/dance3(var/mob/living/carbon/M)
+	set waitfor = 0
+	for(var/i in 1 to 6)
+		if (!M)
+			return
+		M.SpinAnimation(7,1)
+		M.setDir(pick(cardinal))
+		for (var/x in 1 to 12)
+			sleep(1)
+			if (!M)
+				return
+			if (i<5)
+				M.pixel_y += 1
+			if (i>4)
+				M.pixel_y -= 2
+			M.setDir(turn(M.dir, 90))
+			switch (M.dir)
+				if (NORTH)
+					M.pixel_y += 3
+				if (SOUTH)
+					M.pixel_y -= 3
+				if (EAST)
+					M.pixel_x -= 3
+				if (WEST)
+					M.pixel_x += 3
+		sleep(12)
+	M.pixel_x = 0
+	M.pixel_y = 0
+/obj/machinery/disco/proc/dance4(var/mob/living/carbon/M)
+	var/speed = rand(1,3)
+	set waitfor = 0
+	var/time = 30
+	while(time)
+		sleep(speed)
+		for(var/i in 1 to speed)
+			M.setDir(pick(cardinal))
+			M.lay_down(TRUE)
+		 time--
+/obj/machinery/disco/proc/dance5(var/mob/living/carbon/M)
+	M.setDir(get_dir(M, src))
+	spawn (0)
+		if (M)
+			animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
+		sleep (70)
+		if (M)
+			animate(M, transform = null, time = 1, loop = 0)
+	for (var/i = 0, i < 60, i++)
+		if (!M)
+			return
+		if (i<31)
+			M.pixel_y += 1
+		if (i>30)
+			M.pixel_y -= 1
+		M.setDir(turn(M.dir, 90))
+		switch (M.dir)
+			if (NORTH)
+				M.pixel_y += 3
+			if (SOUTH)
+				M.pixel_y -= 3
+			if (EAST)
+				M.pixel_x -= 3
+			if (WEST)
+				M.pixel_x += 3
+		sleep (1)
+	M.pixel_x = 0
+	M.pixel_y = 0
 
 /obj/machinery/disco/proc/dance_over()
 	for(var/obj/item/device/flashlight/spotlight/SL in spotlights)
