@@ -146,7 +146,7 @@
 	..()
 
 
-/client/proc/resetSNPC(var/mob/A in SSnpc.botPool_l)
+/client/proc/resetSNPC(var/mob/A in SSnpc.processing)
 	set name = "Reset SNPC"
 	set desc = "Reset the SNPC"
 	set category = "Debug"
@@ -163,7 +163,7 @@
 			T.retal = 0
 			T.doing = 0
 
-/client/proc/customiseSNPC(var/mob/A in SSnpc.botPool_l)
+/client/proc/customiseSNPC(var/mob/A in SSnpc.processing)
 	set name = "Customize SNPC"
 	set desc = "Customise the SNPC"
 	set category = "Debug"
@@ -609,7 +609,7 @@
 	//proc functions
 	for(var/Proc in functions)
 		if(!IsDeadOrIncap())
-			callfunction(Proc)
+			INVOKE_ASYNC(src, Proc)
 
 
 	//target interaction stays hardcoded
@@ -648,9 +648,8 @@
 						insert_into_backpack()
 			//---------FASHION
 			if(istype(TARGET,/obj/item/clothing))
-				var/obj/item/clothing/C = TARGET
 				drop_item()
-				dressup()
+				dressup(TARGET)
 				update_hands = 1
 				if(MYPDA in src.loc || MYID in src.loc)
 					if(MYPDA in src.loc)
@@ -709,7 +708,7 @@
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 
-/mob/living/carbon/human/proc/dressup(obj/item/C)
+/mob/living/carbon/human/interactive/proc/dressup(obj/item/clothing/C)
 	set waitfor = FALSE
 	inactivity_period = 12
 	sleep(5)
@@ -1341,7 +1340,7 @@
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
-				inactivity_period = get_dist(src,D))
+				inactivity_period = get_dist(src,D)
 				FD.attackby(KK,src)
 			else
 				cookingwithmagic(FD)
@@ -1351,7 +1350,7 @@
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
-				inactivity_period = get_dist(src,D))
+				inactivity_period = get_dist(src,D)
 				CB.attackby(RP,src)
 			else
 				cookingwithmagic(CB)
@@ -1361,7 +1360,7 @@
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
-				inactivity_period = get_dist(src,D))
+				inactivity_period = get_dist(src,D)
 				PD.attackby(KK,src)
 			else
 				cookingwithmagic(PD)

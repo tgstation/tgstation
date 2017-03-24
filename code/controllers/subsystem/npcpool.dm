@@ -10,10 +10,8 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	priority = 20
 
 	var/list/canBeUsed = list()
-	var/list/canBeUsed_non = list()
 	var/list/needsDelegate = list()
 	var/list/needsAssistant = list()
-	var/list/needsHelp_non = list()
 	
 	var/list/processing = list()
 	var/list/currentrun = list()
@@ -23,7 +21,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	NEW_SS_GLOBAL(SSnpc)
 
 /datum/controller/subsystem/npcpool/stat_entry()
-	..("T:[botPool_l.len + botPool_l_non.len]|D:[needsDelegate.len]|A:[needsAssistant.len + needsHelp_non.len]|U:[canBeUsed.len + canBeUsed_non.len]")
+	..("NPCS:[processing.len]|D:[needsDelegate.len]|A:[needsAssistant.len]|U:[canBeUsed.len]")
 
 /datum/controller/subsystem/npcpool/proc/stop_processing(mob/living/carbon/human/interactive/I)
 	processing -= I
@@ -55,13 +53,13 @@ var/datum/controller/subsystem/npcpool/SSnpc
 
 			thing.InteractiveProcess()
 
-			var/checkInRange = view(MAX_RANGE_FIND,check)
+			var/checkInRange = view(MAX_RANGE_FIND,thing)
 			if(thing.IsDeadOrIncap(FALSE) || !(locate(thing.TARGET) in checkInRange))
-				needsDelegate |= check
-			else if(check.doing & FIGHTING)
-				needsAssistant |= check
+				needsDelegate += thing
+			else if(thing.doing & FIGHTING)
+				needsAssistant += thing
 			else
-				canBeUsed |= check
+				canBeUsed += thing
 
 			if (MC_TICK_CHECK)
 				return
@@ -130,7 +128,4 @@ var/datum/controller/subsystem/npcpool/SSnpc
 			return
 
 /datum/controller/subsystem/npcpool/Recover()
-	if (istype(SSnpc.botPool_l))
-		botPool_l = SSnpc.botPool_l
-	if (istype(SSnpc.botPool_l_non))
-		botPool_l_non = SSnpc.botPool_l_non
+	processing = SSnpc.processing
