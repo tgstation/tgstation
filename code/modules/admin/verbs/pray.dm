@@ -48,34 +48,21 @@
 
 /proc/Centcomm_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
-	msg = "<span class='adminnotice'>\
-		<b><font color=orange>CENTCOM:</font>\
-		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
-		[ADMIN_CENTCOM_REPLY(Sender)]:</b> \
-		[msg]</span>"
+	msg = "<span class='adminnotice'><b><font color=orange>CENTCOM:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_SMITE(Sender)] [ADMIN_CENTCOM_REPLY(Sender)]:</b> [msg]</span>"
 	to_chat(admins, msg)
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()
 
 /proc/Syndicate_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
-	msg = "<span class='adminnotice'><b>\
-		<font color=crimson>SYNDICATE:</font>\
-		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
-		[ADMIN_SYNDICATE_REPLY(Sender)]:</b> \
-		[msg]</span>"
+	msg = "<span class='adminnotice'><b><font color=crimson>SYNDICATE:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_SMITE(Sender)] [ADMIN_SYNDICATE_REPLY(Sender)]:</b> [msg]</span>"
 	to_chat(admins, msg)
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()
 
 /proc/Nuke_request(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
-	msg = "<span class='adminnotice'>\
-		<b><font color=orange>NUKE CODE REQUEST:</font>\
-		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
-		[ADMIN_CENTCOM_REPLY(Sender)] \
-		[ADMIN_SET_SD_CODE]:</b> \
-		[msg]</span>"
+	msg = "<span class='adminnotice'><b><font color=orange>NUKE CODE REQUEST:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_SMITE(Sender)] [ADMIN_CENTCOM_REPLY(Sender)] [ADMIN_SET_SD_CODE]:</b> [msg]</span>"
 	to_chat(admins, msg)
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()

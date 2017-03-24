@@ -5,6 +5,7 @@
 		sustain the zombie, smashing open airlock doors and opening \
 		child-safe caps on bottles."
 	flags = NODROP|ABSTRACT|DROPDEL
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	var/icon_left = "bloodhand_left"

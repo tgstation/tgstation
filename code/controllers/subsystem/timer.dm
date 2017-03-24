@@ -222,7 +222,7 @@ var/datum/controller/subsystem/timer/SStimer
 						ctts.Insert(src, I)
 						break
 		else
-			ctts += src	
+			ctts += src
 		return
 
 	//get the list of buckets
@@ -300,7 +300,7 @@ var/datum/controller/subsystem/timer/SStimer
 	prev = null
 	return QDEL_HINT_IWILLGC
 
-proc/addtimer(datum/callback/callback, wait, flags)
+/proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
 

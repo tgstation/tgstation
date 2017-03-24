@@ -958,7 +958,7 @@
 	if(module.clean_on_move)
 		flags |= CLEAN_ON_MOVE
 	else
-		flags &= CLEAN_ON_MOVE
+		flags &= ~CLEAN_ON_MOVE
 
 	hat_offset = module.hat_offset
 
