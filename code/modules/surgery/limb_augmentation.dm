@@ -54,7 +54,7 @@
 		L.max_damage = tool.max_damage
 		user.drop_item()
 		qdel(tool)
-		target.regenerate_icons()
+		target.update_body_parts()
 		target.updatehealth()
 		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
