@@ -28,11 +28,11 @@
 
 /obj/machinery/construction_nuke/Initialize()
 	..()
-	poi_list -= src
+	poi_list += src
 
 /obj/machinery/construction_nuke/Destroy()
 	poi_list -= src
-	return..()
+	return ..()
 
 /obj/machinery/construction_nuke/examine(mob/user)
 	. = ..()
@@ -264,7 +264,7 @@
 	var/static/list/songs = list(
 		new /datum/track("Engineering's Basic Beat", 					'sound/misc/disco.ogg', 	600, 	5),
 		new /datum/track("Engineering's Domination Dance", 				'sound/misc/e1m1.ogg', 		950, 	6),
-		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/Paradox.ogg', 	2400, 	3),
+		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/Paradox.ogg', 	2400, 	4),
 		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/boogie2.ogg',	1770, 	5),
 		)
 	var/datum/track/selection = null
@@ -501,6 +501,8 @@
 				S.pixel_y = 7
 				S.forceMove(get_turf(src))
 		sleep(7)
+	if(selection.song_name = "Engineering's Ultimate High-Energy Hustle")
+		sleep(280) 
 	for(var/obj/reveal in sparkles)
 		reveal.alpha = 255
 	while(active)
