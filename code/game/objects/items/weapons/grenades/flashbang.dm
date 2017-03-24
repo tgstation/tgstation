@@ -19,7 +19,7 @@
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
-	if(M.stat)	//They're unconscious!
+	if(M.stat != CONSCIOUS)	//They're unconscious!
 		return
 	M.show_message("<span class='warning'>BANG</span>", 2)
 	playsound(loc, 'sound/weapons/flashbang.ogg', 100, 1)
