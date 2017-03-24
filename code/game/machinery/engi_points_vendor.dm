@@ -501,7 +501,7 @@
 				S.pixel_y = 7
 				S.forceMove(get_turf(src))
 		sleep(7)
-	if(selection.song_name = "Engineering's Ultimate High-Energy Hustle")
+	if(selection.song_name == "Engineering's Ultimate High-Energy Hustle")
 		sleep(280) 
 	for(var/obj/reveal in sparkles)
 		reveal.alpha = 255
