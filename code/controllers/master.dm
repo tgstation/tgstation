@@ -52,6 +52,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 	var/map_loading = FALSE	//Are we loading in a new map?
 
+	var/static/sleeping_threads = 0
+
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	subsystems = list()
@@ -500,7 +502,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
-	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%))")
+	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Threads:[sleeping_threads])")
 	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration])"))
 
 /datum/controller/master/StartLoadingMap()
@@ -517,3 +519,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	for(var/S in subsystems)
 		var/datum/controller/subsystem/SS = S
 		SS.StopLoadingMap()
+
+/datum/controller/master/proc/SleepBegin()
+	++sleeping_threads
+
+/datum/controller/master/proc/SleepEnd()
+	--sleeping_threads
