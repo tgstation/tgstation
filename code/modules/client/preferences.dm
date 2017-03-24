@@ -1181,8 +1181,8 @@ var/list/preferences_datums = list()
 
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
-					if(toggles & SOUND_LOBBY && client)
-						client.playtitlemusic()
+					if((toggles & SOUND_LOBBY) && user.client)
+						user.client.playtitlemusic()
 					else
 						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
