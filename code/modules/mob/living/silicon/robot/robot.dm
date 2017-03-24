@@ -256,8 +256,8 @@
 		dat += "<BR>\n"
 
 	var/datum/browser/custom_alerts = new(usr, "robotalerts", "Current Station Alerts", 400, 410)
-	alerts.set_content(dat)
-	alerts.open()
+	custom_alerts.set_content(dat)
+	custom_alerts.open()
 
 /mob/living/silicon/robot/proc/ionpulse()
 	if(!ionpulse_on)
