@@ -180,15 +180,21 @@ var/list/gaslist_cache = null
 				//to_chat(world, "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]])
 			*/
 	if(holder)
-		if(cached_gases["freon"])
-			if(cached_gases["freon"][MOLES] >= MOLES_PLASMA_VISIBLE)
-				if(holder.freon_gas_act())
-					cached_gases["freon"][MOLES] -= MOLES_PLASMA_VISIBLE
+		var/list/freon_cache = cached_gases["freon"]
+		var/has_noticible_freon
+		if(freon_cache)
+			has_noticible_freon = freon_cache[MOLES] >= MOLES_PLASMA_VISIBLE
+			if(has_noticible_freon)
+				freon_cache[MOLES] -= MOLES_PLASMA_VISIBLE
 
-		if(cached_gases["water_vapor"])
-			if(cached_gases["water_vapor"][MOLES] >= MOLES_PLASMA_VISIBLE)
+		if(temperature < FREEZE_TEMPERATURE)
+			holder.freon_gas_act(has_noticible_freon)
+
+		var/list/wv_cache = cached_gases["water_vapor"]
+		if(wv_cache)
+			if(wv_cache[MOLES] >= MOLES_PLASMA_VISIBLE)
 				if(holder.water_vapor_gas_act())
-					cached_gases["water_vapor"][MOLES] -= MOLES_PLASMA_VISIBLE
+					wv_cache[MOLES] -= MOLES_PLASMA_VISIBLE
 
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)

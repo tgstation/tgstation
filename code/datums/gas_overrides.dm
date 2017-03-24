@@ -1,4 +1,4 @@
-/datum/proc/freon_gas_act()
+/datum/proc/freon_gas_act(real_freon)
 	return 0
 
 /datum/proc/water_vapor_gas_act() // We get it
