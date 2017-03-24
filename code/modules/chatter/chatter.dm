@@ -46,11 +46,7 @@
 	// These values are tenths of seconds, so 0.5 == 0.05seconds
 	. = 1
 	switch(phomeme)
-		if("papyrus")
-			. = 0.5
 		if("griffin")
 			. = 0.5
-		if("sans")
-			. = 0.7
 		if("owl")
 			. = 0.7
