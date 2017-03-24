@@ -264,9 +264,9 @@
 	var/list/sparkles = list()
 	var/static/list/songs = list(
 		new /datum/track("Engineering's Basic Beat", 					'sound/misc/disco.ogg', 	600, 	5),
-		new /datum/track("Engineering's Domination Dance", 				'sound/misc/e1m1.ogg', 		950, 	5),
-		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/e1m1.ogg', 	1810, 	5),
-		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/e1m1.ogg',	2260, 	7),
+		new /datum/track("Engineering's Domination Dance", 				'sound/misc/e1m1.ogg', 		950, 	6),
+		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/Paradox.ogg', 	2400, 	3),
+		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/boogie2.ogg',	1770, 	5),
 		)
 	var/datum/track/selection = null
 
@@ -404,6 +404,9 @@
 
 /obj/machinery/disco/proc/check_GBP()
 	available |= "Engineering's Basic Beat"
+	available |= "Engineering's Domination Dance"
+	available |= "Engineering's Superiority Shimmy"
+	available |= "Engineering's Ultimate High-Energy Hustle"
 /*	var/point_total = 0
 	available.Cut()
 	for(var/obj/machinery/engi_points_manager/EPM in machines)
