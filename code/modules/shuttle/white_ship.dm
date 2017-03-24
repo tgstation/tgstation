@@ -208,6 +208,7 @@
 	var/datum/action/innate/engi_ship/build/build_action = new //Action for using the RCD
 	var/datum/action/innate/engi_ship/airlock_type/airlock_mode_action = new //Action for setting the airlock type
 	var/datum/action/innate/engi_ship/forcefield/shield = new // Action for placing forcefields
+	var/datum/action/innate/engi_ship/machiner/APC = new
 	var/datum/action/innate/engi_ship/recaller/rec = new // BRING HIM HOME
 	var/mob/camera/aiEye/construction/eyeobj
 
@@ -238,6 +239,7 @@
 	build_action.Grant(user, src)
 	airlock_mode_action.Grant(user, src)
 	shield.Grant(user, src)
+	APC.Gramt(user, src)
 	rec.Grant(user, src)
 
 /obj/machinery/computer/ship_construction/attackby(obj/item/W, mob/user, params)
@@ -319,7 +321,7 @@
 			two = wew
 			break
 	var/turf/choice = get_turf(pick(one,two))
-	choice.Beam(get_turf(B.eyeobj),icon_state="rped_upgrade",time=20,maxdistance=20)
+	choice.Beam(get_turf(B.eyeobj),icon_state="ship_beam",time=20,maxdistance=75)
 
 
 /datum/action/innate/engi_ship/camera_off
@@ -334,6 +336,7 @@
 	N.origin.build_action.Remove(C)
 	N.origin.airlock_mode_action.Remove(C)
 	N.origin.shield.Remove(C)
+	N.origin.APC.Remove(C)
 	N.origin.rec.Remove(C)
 	N.eye_user = null
 	if(C.client)
@@ -406,6 +409,18 @@
 	var/mob/camera/aiEye/construction/remote_eye = C.remote_control
 	var/turf/T = get_turf(remote_eye)
 	B.FF.place(T,C)
+
+/datum/action/innate/engi_ship/machiner
+	name = "Wew"
+	button_icon_state = "mech_overload_on"
+
+/datum/action/innate/engi_ship/machiner/Activate()
+	var/turf/remote = get_turf(C.remote_control)
+	if(remote.density)
+		spawn_atom_to_turf(/obj/machinery/computer/apc_control, remote, 1)
+	else
+		to_chat(C, "Error - Nonsuitable destination detected.")
+
 
 /datum/action/innate/engi_ship/recaller
 	name = "Recall the Holo-drone"
