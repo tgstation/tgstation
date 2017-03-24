@@ -86,6 +86,9 @@
 	landing_zone.width = width
 	landing_zone.height = height
 	landing_zone.setDir(lz_dir)
+	var/list/dock_zone = landing_zone.return_ordered_turfs(landing_zone.x, landing_zone.y, landing_zone.z, landing_zone.dir)
+	for(var/turf/checked in dock_zone)
+		spawn_atom_to_turf(/obj/effect/overlay/temp/emp/pulse, checked, 1)
 
 	for(var/obj/machinery/computer/shuttle/S in machines)
 		if(S.shuttleId == shuttle_id)
@@ -199,10 +202,12 @@
 	name = "ship contruction console"
 	desc = "An engineering computer integrated with a camera-assisted rapid construction drone."
 	var/obj/item/weapon/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
-	var/datum/action/innate/camera_off/engi_ship = new
+	var/obj/item/device/forcefield/mounted/FF // Internal Forcefield Generator
+	var/datum/action/innate/engi_ship/camera_off/off = new
 	var/datum/action/innate/engi_ship/switch_mode/switch_mode_action = new //Action for switching the RCD's build modes
 	var/datum/action/innate/engi_ship/build/build_action = new //Action for using the RCD
 	var/datum/action/innate/engi_ship/airlock_type/airlock_mode_action = new //Action for setting the airlock type
+	var/datum/action/innate/engi_ship/forcefield/shield = new // Action for placing forcefields
 	var/datum/action/innate/engi_ship/recaller/rec = new // BRING HIM HOME
 	var/mob/camera/aiEye/construction/eyeobj
 
@@ -212,30 +217,28 @@
 		eyeobj.origin = src
 	GrantActions(user)
 	user.remote_control = eyeobj
+	eyeobj.eye_user = user
 	user.reset_perspective(eyeobj)
 	user.sight |= SEE_TURFS
 	user.update_sight()
 
-
 /obj/machinery/computer/ship_construction/New()
 	..()
 	RCD = new /obj/item/weapon/rcd/internal(src)
+	FF = new /obj/item/device/forcefield/mounted(src)
 
 /obj/machinery/computer/ship_construction/Destroy()
 	qdel(RCD)
+	qdel(FF)
 	return ..()
 
 /obj/machinery/computer/ship_construction/proc/GrantActions(mob/living/user)
-	engi_ship.target = user
-	engi_ship.Grant(user)
-	switch_mode_action.target = src
-	switch_mode_action.Grant(user)
-	build_action.target = src
-	build_action.Grant(user)
-	airlock_mode_action.target = src
-	airlock_mode_action.Grant(user)
-	rec.target = src
-	rec.Grant(user)
+	off.Grant(user, src)
+	switch_mode_action.Grant(user, src)
+	build_action.Grant(user, src)
+	airlock_mode_action.Grant(user, src)
+	shield.Grant(user, src)
+	rec.Grant(user, src)
 
 /obj/machinery/computer/ship_construction/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/rcd_ammo) || istype(W, /obj/item/stack/sheet))
@@ -243,60 +246,103 @@
 	else
 		return ..()
 
+
+
 /mob/camera/aiEye/construction
 	name = "nss dauntless holo-drone"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "construction_drone"
+	var/sprint = 10
+	var/cooldown = 0
+	var/acceleration = 1
 	invisibility = INVISIBILITY_MAXIMUM
 	var/obj/machinery/computer/ship_construction/origin
+	var/mob/living/eye_user
 
+/mob/camera/aiEye/construction/Destroy()
+	eye_user = null
+	origin = null
+	return ..()
 
-/mob/camera/aiEye/construction/setLoc(var/t)
-	if(get_dist(origin, t) < 75)
-		t = get_turf(t)
-		loc = t
+/mob/camera/aiEye/construction/GetViewerClient()
+	if(eye_user)
+		return eye_user.client
+	return null
+
+/mob/camera/aiEye/construction/setLoc(T)
+	if(eye_user)
+		if(!isturf(eye_user.loc))
+			return
+		T = get_turf(T)
+		loc = T
+
+/mob/camera/aiEye/construction/relaymove(mob/user,direct)
+	var/initial = initial(sprint)
+	var/max_sprint = 50
+
+	if(cooldown && cooldown < world.timeofday) // 3 seconds
+		sprint = initial
+
+	for(var/i = 0; i < max(sprint, initial); i += 20)
+		var/turf/step = get_turf(get_step(src, direct))
+		if(step && (get_dist(origin, step) < 75))
+			src.setLoc(step)
+		else
+			playsound(origin, 'sound/machines/buzz-sigh.ogg', 60, 1)
+
+	cooldown = world.timeofday + 5
+	if(acceleration)
+		sprint = min(sprint + 0.5, max_sprint)
 	else
-		playsound(origin, 'sound/machines/buzz-sigh.ogg', 60, 1)
+		sprint = initial
 
-/mob/camera/aiEye/construction/relaymove(mob/user, direct)
-	dir = direct //This camera eye is visible as a drone, and needs to keep the dir updated
-	..()
+
+
 
 /datum/action/innate/engi_ship //Parent aux base action
 	var/mob/living/C //Mob using the action
-	var/mob/camera/aiEye/construction/remote_eye //Console's eye mob
 	var/obj/machinery/computer/ship_construction/B //Console itself
 
+/datum/action/innate/engi_ship/Grant(mob/living/H, obj/machinery/computer/ship_construction/SC)
+	C = H
+	B = SC
+	..()
+
 /datum/action/innate/engi_ship/Activate()
-	if(!target)
-		return TRUE
-	C = owner
-	remote_eye = C.remote_control
-	B = target
-	if(!B.RCD) //The console must always have an RCD.
-		B.RCD = new /obj/item/weapon/rcd/internal(src) //If the RCD is lost somehow, make a new (empty) one!
+	var/one
+	var/two
+	for(var/obj/machinery/speshul/wew in range(75,B))
+		if(!one)
+			one = wew
+			continue
+		if(!two)
+			two = wew
+			break
+	var/turf/choice = get_turf(pick(one,two))
+	choice.Beam(get_turf(B.eyeobj),icon_state="rped_upgrade",time=20,maxdistance=20)
 
-/datum/action/innate/engi_ship/proc/check_spot()
-	var/turf/build_target = get_turf(remote_eye)
-	if(get_dist(remote_eye.origin, build_target) > 75 || build_target.z != ZLEVEL_STATION)
-		to_chat(owner, "<span class='warning'>The ship is out of range, recall to its position and try again.</span>")
-		return FALSE
-	return TRUE
 
-/datum/action/innate/camera_off/engi_ship
+/datum/action/innate/engi_ship/camera_off
 	name = "Log out"
+	button_icon_state = "camera_off"
 
-/datum/action/innate/camera_off/engi_ship/Activate()
+/datum/action/innate/engi_ship/camera_off/Activate()
 	if(!owner || !owner.remote_control)
 		return
-
-	var/mob/camera/aiEye/construction/remote_eye = owner.remote_control
-
-	var/obj/machinery/computer/ship_construction/origin = remote_eye.origin
-	origin.switch_mode_action.Remove(target)
-	origin.build_action.Remove(target)
-	origin.airlock_mode_action.Remove(target)
-	origin.rec.Remove(target)
+	var/mob/camera/aiEye/construction/N = C.remote_control
+	N.origin.switch_mode_action.Remove(C)
+	N.origin.build_action.Remove(C)
+	N.origin.airlock_mode_action.Remove(C)
+	N.origin.shield.Remove(C)
+	N.origin.rec.Remove(C)
+	N.eye_user = null
+	if(C.client)
+		C.reset_perspective(null)
+		C.client.change_view(7)
+	C.remote_control = null
+	C.unset_machine()
+	src.Remove(C)
+	playsound(C, 'sound/machines/terminal_off.ogg', 25, 0)
 	..()
 
 //*******************FUNCTIONS*******************
@@ -308,10 +354,7 @@
 /datum/action/innate/engi_ship/build/Activate()
 	if(..())
 		return
-
-	if(!check_spot())
-		return
-
+	var/mob/camera/aiEye/construction/remote_eye = C.remote_control
 	var/atom/movable/rcd_target
 	var/turf/target_turf = get_turf(remote_eye)
 
@@ -328,6 +371,7 @@
 	B.RCD.afterattack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
 	playsound(target_turf, 'sound/items/Deconstruct.ogg', 60, 1)
 
+
 /datum/action/innate/engi_ship/switch_mode
 	name = "Switch Mode"
 	button_icon_state = "builder_mode"
@@ -340,6 +384,9 @@
 	B.RCD.mode = buildlist[buildmode]
 	to_chat(owner, "Build mode is now [buildmode].")
 
+
+
+
 /datum/action/innate/engi_ship/airlock_type
 	name = "Select Airlock Type"
 	button_icon_state = "airlock_select"
@@ -349,9 +396,36 @@
 		return
 	B.RCD.change_airlock_setting()
 
-/datum/action/innate/engi_ship/recaller/recall
+
+
+/datum/action/innate/engi_ship/forcefield
+	name = "Place Forcefield"
+	button_icon_state = "shield"
+
+/datum/action/innate/engi_ship/forcefield/Activate()
+	var/mob/camera/aiEye/construction/remote_eye = C.remote_control
+	var/turf/T = get_turf(remote_eye)
+	B.FF.place(T,C)
+
+/datum/action/innate/engi_ship/recaller
 	name = "Recall the Holo-drone"
 	button_icon_state = "mech_overload_off"
 
-/datum/action/innate/engi_ship/recaller/recall/Activate()
+/datum/action/innate/engi_ship/recaller/Activate()
+	var/mob/camera/aiEye/construction/remote_eye = C.remote_control
 	remote_eye.setLoc(get_turf(B))
+
+var/obj/machinery/speshul
+	anchored = 1
+	density = 1
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "construction_drone"
+
+/obj/machinery/speshul/process()
+	for(var/obj/effect/meteor/M in meteor_list)
+		if(M.z != z)
+			continue
+		if(get_dist(M,src) > 20)
+			continue
+		Beam(get_turf(M),icon_state="sat_beam",time=5,maxdistance=20)
+		qdel(M)
