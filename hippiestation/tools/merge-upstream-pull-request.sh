@@ -34,6 +34,15 @@ type wget >/dev/null 2>&1 || { echo >&2 "Error: This script requires wget, pleas
 # Download the patchfile
 wget "$BASE_PATCH_URL$1.patch" -q -O $tmpfile
 
+# We need to make sure we are always on a clean master when creating the new branch.
+# So we forcefully reset, clean and then checkout the master branch
+git reset --hard
+git clean -f
+git checkout -f master
+
+# pull the last changes
+git pull
+
 # Create a new branch
 git checkout -b "$BASE_BRANCH_NAME$1"
 
@@ -48,3 +57,6 @@ git commit -m "$BASE_COMMIT_MESSAGE$1"
 
 # Push them onto the branch
 git push -u origin "$BASE_BRANCH_NAME$1"
+
+# Remove the temp file
+rm tmpfile
