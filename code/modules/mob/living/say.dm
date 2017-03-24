@@ -122,7 +122,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	log_message(message, INDIVIDUAL_SAY_LOG)
 
 	var/message_range = 7
-	var/radio_return = radio(message, message_mode, spans)
+	var/radio_return = radio(message, message_mode, spans, language)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
 	if(radio_return & ITALICS)
@@ -146,6 +146,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	return 1
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans)
+	//world << "[src] Hear(message=[message], speaker=[speaker], message_language=[message_language], raw_message=[raw_message], radio_freq=[radio_freq], spans=[json_encode(spans)])"
 	if(!client)
 		return
 	var/deaf_message
@@ -289,22 +290,22 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	return message
 
-/mob/living/proc/radio(message, message_mode, list/spans)
+/mob/living/proc/radio(message, message_mode, list/spans, language)
 	switch(message_mode)
 		if(MODE_R_HAND)
 			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
 				if (r_hand)
-					return r_hand.talk_into(src, message, , spans)
+					return r_hand.talk_into(src, message, , spans, language)
 				return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
 			for(var/obj/item/l_hand in get_held_items_for_side("l", all = TRUE))
 				if (l_hand)
-					return l_hand.talk_into(src, message, , spans)
+					return l_hand.talk_into(src, message, , spans, language)
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message, , spans)
+				I.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_BINARY)

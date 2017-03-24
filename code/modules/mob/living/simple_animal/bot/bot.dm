@@ -334,22 +334,22 @@
 /mob/living/simple_animal/bot/get_spans()
 	return ..() | SPAN_ROBOT
 
-/mob/living/simple_animal/bot/radio(message, message_mode, list/spans)
+/mob/living/simple_animal/bot/radio(message, message_mode, list/spans, language)
 	. = ..()
 	if(. != 0)
 		return .
 
 	switch(message_mode)
 		if(MODE_HEADSET)
-			Radio.talk_into(src, message, , spans)
+			Radio.talk_into(src, message, , spans, language)
 			return REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
-			Radio.talk_into(src, message, message_mode, spans)
+			Radio.talk_into(src, message, message_mode, spans, language)
 			return REDUCE_RANGE
 
 	if(message_mode in radiochannels)
-		Radio.talk_into(src, message, message_mode, spans)
+		Radio.talk_into(src, message, message_mode, spans, language)
 		return REDUCE_RANGE
 	return 0
 

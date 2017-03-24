@@ -188,14 +188,16 @@
 					recalculateChannels()
 				. = TRUE
 
-/obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
-	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans)
+/obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
+	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans, language)
 	return ITALICS | REDUCE_RANGE
 
-/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
+/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
+
+	//world << "radio [src], [loc] talk_into_imp(M=[M], message=[message], channel=[channel], spans=[spans], language=[language])"
 
 	if(wires.is_cut(WIRE_TX))
 		return
@@ -320,19 +322,18 @@
 			"server" = null,
 			"reject" = 0,
 			"level" = 0,
-			"language" = null,
+			"language" = language,
 			"spans" = spans,
 			"verb_say" = M.verb_say,
 			"verb_ask" = M.verb_ask,
 			"verb_exclaim" = M.verb_exclaim,
-			"verb_yell" = M.verb_yell
+			"verb_yell" = M.verb_yell,
 			)
-		// TODO LANGUAGES RADIO CODE
 		signal.frequency = freqnum // Quick frequency set
 		Broadcast_Message(M, voicemask,
 				  src, message, voice, jobname, real_name,
 				  5, signal.data["compression"], list(position.z, 0), freq, spans,
-				  verb_say, verb_ask, verb_exclaim, verb_yell)
+				  verb_say, verb_ask, verb_exclaim, verb_yell, language)
 		return
 
 	/* ###### Radio headsets can only broadcast through subspace ###### */
@@ -366,7 +367,7 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"language" = null, // TODO LANGUAGES RADIO CODE
+			"language" = language,
 			"spans" = spans, //the span classes of this message.
 			"verb_say" = M.verb_say, //the verb used when talking normally
 			"verb_ask" = M.verb_ask, //the verb used when asking
@@ -416,7 +417,7 @@
 		"server" = null,
 		"reject" = 0,
 		"level" = position.z,
-		"language" = null, // TODO LANGUAGES RADIO SHIT
+		"language" = language,
 		"spans" = spans,
 		"verb_say" = M.verb_say,
 		"verb_ask" = M.verb_ask,
@@ -439,14 +440,14 @@
 		Broadcast_Message(M, voicemask,
 						  src, message, voice, jobname, real_name,
 						  filter_type, signal.data["compression"], list(position.z), freq, spans,
-						  verb_say, verb_ask, verb_exclaim, verb_yell)
+						  verb_say, verb_ask, verb_exclaim, verb_yell, language)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans)
 	if(radio_freq)
 		return
 	if(broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
-			talk_into(speaker, raw_message, , spans)
+			talk_into(speaker, raw_message, , spans, language=message_language)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 

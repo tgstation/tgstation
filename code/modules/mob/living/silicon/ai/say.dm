@@ -1,6 +1,6 @@
-/mob/living/silicon/ai/say(message)
+/mob/living/silicon/ai/say(message, language)
 	if(parent && istype(parent) && parent.stat != 2) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
-		parent.say(message)
+		parent.say(message, language)
 		return
 	..(message)
 
@@ -17,7 +17,7 @@
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai
 
-/mob/living/silicon/ai/radio(message, message_mode, list/spans)
+/mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
 	if(!radio_enabled || aiRestorePowerRoutine || stat) //AI cannot speak if radio is disabled (via intellicard) or depowered.
 		to_chat(src, "<span class='danger'>Your radio transmitter is offline!</span>")
 		return 0
