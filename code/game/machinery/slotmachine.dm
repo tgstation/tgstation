@@ -33,7 +33,7 @@
 
 	light_color = LIGHT_COLOR_BROWN
 
-/obj/machinery/computer/slot_machine/New()
+/obj/machinery/computer/slot_machine/Initialize()
 	..()
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
@@ -47,9 +47,8 @@
 	toggle_reel_spin(0)
 
 	for(var/cointype in typesof(/obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C = new cointype(src)
-		coinvalues["[cointype]"] = C.value
-		qdel(C)
+		var/obj/item/weapon/coin/C = cointype
+		coinvalues["[cointype]"] = initial(C.value)
 
 /obj/machinery/computer/slot_machine/Destroy()
 	if(balance)
