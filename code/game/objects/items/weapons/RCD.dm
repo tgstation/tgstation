@@ -409,8 +409,6 @@ RCD
 	if(isturf(A) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window) || istype(A, /obj/structure/girder))
 		user.Beam(A,icon_state="rped_upgrade",time=20)
 		..()
-	else
-		return
 
 
 
@@ -421,15 +419,11 @@ RCD
 
 
 
-
 /obj/item/weapon/rld
 	name = "rapid-light-device (RLD)"
 	desc = "A device used to rapidly provide lighting sources to an area."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
-	opacity = FALSE
-	density = FALSE
-	anchored = FALSE
 	flags = CONDUCT | NOBLUDGEON
 	force = 0
 	throwforce = 10
@@ -466,21 +460,16 @@ RCD
 
 /obj/item/weapon/rld/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
-		choose_color()
+		color_choice = input(usr,"Choose Color") as color
 	else
 		..()
-
-/obj/item/weapon/rld/proc/choose_color()
-	set name = "Choose Light Color"
-	set category = "Object"
-	color_choice = input(usr,"Choose Color") as color
 
 
 /obj/item/weapon/rld/New()
 	..()
 
 	desc = "An RLD. It currently holds [matter]/[max_matter] matter-units."
-	src.spark_system = new /datum/effect_system/spark_spread
+	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
@@ -521,9 +510,9 @@ RCD
 		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the RLD. </span>")
 		icon_state = "rld-[round(matter/35)]"
 		update_icon()
-		return 1
+		return TRUE
 	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the RLD!")
-	return 0
+	return FALSE
 
 /obj/item/weapon/rld/attack_self(mob/user)
 	//Change the mode
@@ -539,7 +528,7 @@ RCD
 			mode = 1
 			to_chat(user, "<span class='notice'>You change RLD's mode to 'Deconstruct'.</span>")
 	if(prob(20))
-		src.spark_system.start()
+		spark_system.start()
 
 /obj/item/weapon/rld/proc/activate(atom/A)
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
