@@ -136,25 +136,65 @@
 	overlay_color = "#FFCCCC"
 	spawn_id = "n2o"
 
+/obj/machinery/atmospherics/miner/n2o/roundstart
+	spawn_mol = MOLES_CELLSTANDARD * 3
+	max_ext_kpa = 7500
+	power_draw = GASMINER_POWER_STATIC
+	power_draw_static = 150
+
 /obj/machinery/atmospherics/miner/nitrogen
 	name = "\improper N2 Gas Miner"
 	overlay_color = "#CCFFCC"
 	spawn_id = "n2"
+
+/obj/machinery/atmospherics/miner/nitrogen/aux
+	spawn_mol = MOLES_CELLSTANDARD * 2
+	max_ext_kpa = 130
+	power_draw_static = 100
+
+/obj/machinery/atmospherics/miner/nitrogen/roundstart
+	spawn_mol = MOLES_CELLSTANDARD * 12
+	max_ext_kpa = 20000
+	power_draw = GASMINER_POWER_STATIC
+	power_draw_static = 150
 
 /obj/machinery/atmospherics/miner/oxygen
 	name = "\improper O2 Gas Miner"
 	overlay_color = "#007FFF"
 	spawn_id = "o2"
 
+/obj/machinery/atmospherics/miner/oxygen/aux
+	spawn_mol = MOLES_CELLSTANDARD * 0.5
+	max_ext_kpa = 130
+	power_draw_static = 30
+
+/obj/machinery/atmospherics/miner/oxygen/roundstart
+	spawn_mol = MOLES_CELLSTANDARD * 3
+	max_ext_kpa = 20000
+	power_draw = GASMINER_POWER_STATIC
+	power_draw_static = 100
+
 /obj/machinery/atmospherics/miner/toxins
 	name = "\improper Plasma Gas Miner"
 	overlay_color = "#FF0000"
 	spawn_id = "plasma"
 
+/obj/machinery/atmospherics/miner/toxins/roundstart
+	spawn_mol = MOLES_CELLSTANDARD * 2
+	max_ext_kpa = 15000
+	power_draw = GASMINER_POWER_STATIC
+	power_draw_static = 300
+
 /obj/machinery/atmospherics/miner/carbon_dioxide
 	name = "\improper CO2 Gas Miner"
 	overlay_color = "#CDCDCD"
 	spawn_id = "co2"
+
+/obj/machinery/atmospherics/miner/carbon_dioxide/roundstart
+	spawn_mol = MOLES_CELLSTANDARD * 2
+	max_ext_kpa = 10000
+	power_draw = GASMINER_POWER_STATIC
+	power_draw_static = 50
 
 /obj/machinery/atmospherics/miner/bz
 	name = "\improper BZ Gas Miner"

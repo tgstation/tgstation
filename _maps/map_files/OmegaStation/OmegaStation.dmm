@@ -41983,6 +41983,24 @@
 	},
 /turf/open/floor/circuit/green,
 /area/engine/engineering)
+"buW" = (
+/obj/machinery/atmospherics/miner/nitrogen/roundstart,
+/turf/open/floor/engine/n2,
+/area/atmos)
+"buX" = (
+/obj/machinery/atmospherics/miner/oxygen/roundstart,
+/turf/open/floor/engine/o2,
+/area/atmos)
+"buY" = (
+/obj/machinery/atmospherics/miner/nitrogen/aux,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/arrival)
+"buZ" = (
+/obj/machinery/atmospherics/miner/oxygen/aux{
+	name = "\improper Gas Vent"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/arrival)
 
 (1,1,1) = {"
 aaa
@@ -71124,11 +71142,11 @@ aad
 aad
 aad
 anx
-asv
+buW
 atw
 asv
 anx
-awA
+buX
 axh
 awA
 anx
@@ -83260,7 +83278,7 @@ bkd
 bko
 bko
 bko
-bko
+buY
 bko
 bko
 bko
@@ -84288,7 +84306,7 @@ bkd
 bko
 bko
 bko
-bko
+buZ
 bko
 bko
 bko

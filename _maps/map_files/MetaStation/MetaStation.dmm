@@ -50985,6 +50985,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/miner/n2o/roundstart,
 /turf/open/floor/engine/n2o,
 /area/atmos)
 "bKK" = (
@@ -54592,6 +54593,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/miner/toxins/roundstart,
 /turf/open/floor/engine/plasma,
 /area/atmos)
 "bRa" = (
@@ -57466,6 +57468,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/miner/carbon_dioxide/roundstart,
 /turf/open/floor/engine/co2,
 /area/atmos)
 "bVQ" = (
@@ -66257,10 +66260,12 @@
 /area/maintenance/incinerator)
 "ckG" = (
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/miner/nitrogen/roundstart,
 /turf/open/floor/engine/n2,
 /area/atmos)
 "ckH" = (
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/miner/oxygen/roundstart,
 /turf/open/floor/engine/o2,
 /area/atmos)
 "ckI" = (
@@ -95609,6 +95614,18 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"dlJ" = (
+/obj/machinery/atmospherics/miner/nitrogen/aux{
+	name = "\improper Gas Vent"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"dlK" = (
+/obj/machinery/atmospherics/miner/oxygen/aux{
+	name = "\improper Gas Vent"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
 
 (1,1,1) = {"
 aaa
@@ -106521,9 +106538,9 @@ aWS
 aWS
 bcS
 beD
+dlJ
 beC
-beC
-beC
+dlK
 blO
 bcS
 aWS
