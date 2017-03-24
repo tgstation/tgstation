@@ -294,3 +294,4 @@
 		. = TRUE
 	else
 		. = ispath(dt, /datum/language/drone)
+	world << "Drone CanSpeakInLanguage, [src], [usr]: datum [dt], return [.]"

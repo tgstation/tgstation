@@ -39,6 +39,8 @@
 
 	create_internal_organs()
 
+	grant_language(/datum/language/xenocommon)
+
 	..()
 
 /mob/living/carbon/alien/create_internal_organs()
