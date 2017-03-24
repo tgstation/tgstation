@@ -1,5 +1,5 @@
 /world
-	mob = /mob/new_player
+	mob = /mob/living/simple_animal/hostile/poison/giant_spider
 	turf = /turf/basic
 	area = /area/space
 	view = "15x15"
