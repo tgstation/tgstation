@@ -556,14 +556,11 @@
 
 /obj/item/toy/talking/skeleton
 	name = "skeleton action figure"
-	desc = "An action figure modeled after 'Oh-cee', the original content \
-		skeleton.\nNot suitable for infants or assistants under 36 months \
-		of age."
+	desc = "User, beware: Now that you've looked at this toy, a skeleton is inside you!"
 	icon_state = "skeletonprize"
-	attack_verb = list("boned", "dunked on", "worked down to the bone")
-	chattering = TRUE
+	attack_verb = list("boned", "worked down to the bone")
 
-	var/list/regular_messages = list(
+	messages = list(
 		"Why was the skeleton such a bad liar? \
 			Because you can see right through him!",
 		"When does a skeleton laugh? When something tickles his funny bone!",
@@ -619,15 +616,6 @@
 	user.Stun(5)
 	sleep(20)
 	return OXYLOSS
-
-/obj/item/toy/talking/skeleton/generate_messages()
-	return list(pick(regular_messages))
-
-/obj/item/toy/talking/skeleton/toy_talk(user, message)
-	phomeme = pick("sans", "papyrus")
-
-	span = "danger [phomeme]"
-	..()
 
 /*
 || A Deck of Cards for playing various games of chance ||
