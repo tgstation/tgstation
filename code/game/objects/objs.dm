@@ -29,8 +29,13 @@
 	var/dangerous_possession = FALSE	//Admin possession yes/no
 
 /obj/vv_edit_var(vname, vval)
-	if((vname == "control_object") || (vname == "dangerous_possession))
-		return FALSE
+	switch(vname)
+		if("dangerous_possession")
+			return FALSE
+		if("control_object")
+			var/obj/O = vval)
+			if(istype(O) && O.dangerous_possession)
+				return FALSE
 	..()
 
 /obj/Initialize()
