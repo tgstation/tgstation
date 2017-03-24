@@ -1,0 +1,4 @@
+author: "BeeSting12"
+delete-after: True
+changes: 
+  - bugfix: "Auxiliary base maintenance airlock now requires the proper access. Sorry greyshirts, no loot for you!"
