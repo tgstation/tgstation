@@ -3,7 +3,7 @@
 	icon_state = "x2"
 	color = "#00FF00"
 	var/lootcount = 1		//how many items will be spawned
-	var/lootdoubles = 1		//if the same item can be spawned twice
+	var/lootdoubles = TRUE	//if the same item can be spawned twice
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
@@ -11,19 +11,19 @@
 
 	if(loot && loot.len)
 		var/turf/T = get_turf(src)
-		for(var/i = lootcount, i > 0, i--)
-			if(!loot.len) break
+		while(lootcount && loot.len)
 			var/lootspawn = pickweight(loot)
 			if(!lootdoubles)
 				loot.Remove(lootspawn)
 
 			if(lootspawn)
 				new lootspawn(T)
+			lootcount--
 	qdel(src)
 
 /obj/effect/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"
-	lootdoubles = 0
+	lootdoubles = FALSE
 
 	loot = list(
 				/obj/item/weapon/gun/ballistic/automatic/pistol = 8,
@@ -168,7 +168,7 @@
 
 /obj/effect/spawner/lootdrop/crate_spawner
 	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
-	lootdoubles = 0
+	lootdoubles = FALSE
 
 	loot = list(
 				/obj/structure/closet/crate/secure/loot = 20,
@@ -204,7 +204,7 @@
 /obj/effect/spawner/lootdrop/costume/Initialize()
 	loot = list()
 	for(var/path in subtypesof(/obj/effect/spawner/bundle/costume))
-		loot[path] = 1
+		loot[path] = TRUE
 	..()
 
 // Minor lootdrops follow
