@@ -224,7 +224,6 @@
 	for(var/mob/M in player_list)
 		send_to_playing_players('sound/effects/explosionfar.ogg')
 	spawn_atom_to_turf(/obj/effect/overlay/temp/explosion, startpoint, 1, FALSE)
-	QDEL_NULL(src)
 	for(var/I in spiral_range_turfs(range, startpoint))
 		var/turf/T = I
 		if(!T)
@@ -236,8 +235,7 @@
 			T.ChangeTurf(payload_wall)
 			spawn_atom_to_turf(/obj/effect/overlay/temp/fire, T, 1, FALSE)
 		CHECK_TICK
-
-
+	QDEL_NULL(src)
 
 // DISCO BALL
 
