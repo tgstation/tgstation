@@ -688,7 +688,7 @@
 	if(handcuffed)
 		drop_all_held_items()
 		stop_pulling()
-		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
+		throw_alert("handcuffed", /obj/screen/alert_icon/restrained/handcuffed, new_master = src.handcuffed)
 	else
 		clear_alert("handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.

@@ -109,9 +109,9 @@
 		hierophant_network.title = "Construct"
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
-	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
+	owner.throw_alert("clockinfo", /obj/screen/alert_icon/clockwork/infodump)
 	if(!clockwork_gateway_activated)
-		owner.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
+		owner.throw_alert("scripturereq", /obj/screen/alert_icon/clockwork/scripture_reqs)
 	..()
 
 /datum/antagonist/clockcultist/remove_innate_effects()

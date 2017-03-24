@@ -113,13 +113,13 @@
 /datum/browser/proc/close()
 	user << browse(null, "window=[window_id]")
 
-/datum/browser/alert
+/datum/browser/custom_alert
 	var/selectedbutton = 0
 	var/opentime = 0
 	var/timeout
 	var/stealfocus
 
-/datum/browser/alert/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1,Timeout=6000)
+/datum/browser/custom_alert/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1,Timeout=6000)
 	if (!User)
 		return
 
@@ -142,7 +142,7 @@
 		window_options += "focus=false;"
 	timeout = Timeout
 
-/datum/browser/alert/open()
+/datum/browser/custom_alert/open()
 	set waitfor = 0
 	opentime = world.time
 
@@ -164,15 +164,15 @@
 	if (timeout)
 		addtimer(CALLBACK(src, .proc/close), timeout)
 
-/datum/browser/alert/close()
+/datum/browser/custom_alert/close()
 	.=..()
 	opentime = 0
 
-/datum/browser/alert/proc/wait()
+/datum/browser/custom_alert/proc/wait()
 	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout >= world.time))
 		stoplag()
 
-/datum/browser/alert/Topic(href,href_list)
+/datum/browser/custom_alert/Topic(href,href_list)
 	if (href_list["close"] || !user || !user.client)
 		opentime = 0
 		return
@@ -203,7 +203,7 @@
 			User = C.mob
 		else
 			return
-	var/datum/browser/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
+	var/datum/browser/custom_alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
 	A.open()
 	A.wait()
 	if (A.selectedbutton)

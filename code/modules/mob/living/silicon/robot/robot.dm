@@ -255,7 +255,7 @@
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
 
-	var/datum/browser/alerts = new(usr, "robotalerts", "Current Station Alerts", 400, 410)
+	var/datum/browser/custom_alerts = new(usr, "robotalerts", "Current Station Alerts", 400, 410)
 	alerts.set_content(dat)
 	alerts.open()
 
@@ -668,7 +668,7 @@
 	if(wires.is_cut(WIRE_LOCKDOWN))
 		state = 1
 	if(state)
-		throw_alert("locked", /obj/screen/alert/locked)
+		throw_alert("locked", /obj/screen/alert_icon/locked)
 	else
 		clear_alert("locked")
 	lockcharge = state
@@ -679,7 +679,7 @@
 	module.rebuild_modules()
 	update_icons()
 	if(emagged)
-		throw_alert("hacked", /obj/screen/alert/hacked)
+		throw_alert("hacked", /obj/screen/alert_icon/hacked)
 	else
 		clear_alert("hacked")
 

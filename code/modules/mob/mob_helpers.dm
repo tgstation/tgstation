@@ -389,7 +389,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 			if(flashwindow)
 				window_flash(O.client)
 			if(source)
-				var/obj/screen/alert/notify_action/A = O.throw_alert("\ref[source]_notify_action", /obj/screen/alert/notify_action)
+				var/obj/screen/alert_icon/notify_action/A = O.throw_alert("\ref[source]_notify_action", /obj/screen/alert_icon/notify_action)
 				if(A)
 					if(O.client.prefs && O.client.prefs.UI_style)
 						A.icon = ui_style2icon(O.client.prefs.UI_style)

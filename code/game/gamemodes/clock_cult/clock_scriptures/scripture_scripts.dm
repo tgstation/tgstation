@@ -37,7 +37,7 @@
 	invocations = list("Call forth...", "...the workers of Armorer.")
 	channel_time = 60
 	consumed_components = list(BELLIGERENT_EYE = 1, HIEROPHANT_ANSIBLE = 1)
-	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
+	object_path = /obj/structure/destructible/clockwork/chassis/cogscarab
 	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptacle.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."

@@ -85,7 +85,7 @@
 	sleeping = max(max(sleeping,amount),0)
 	if(!old_sleeping && sleeping)
 		if(!no_alert)
-			throw_alert("asleep", /obj/screen/alert/asleep)
+			throw_alert("asleep", /obj/screen/alert_icon/asleep)
 		if(updating)
 			update_stat()
 	else if(old_sleeping && !sleeping)
@@ -98,7 +98,7 @@
 	sleeping = max(amount,0)
 	if(!old_sleeping && sleeping)
 		if(!no_alert)
-			throw_alert("asleep", /obj/screen/alert/asleep)
+			throw_alert("asleep", /obj/screen/alert_icon/asleep)
 		if(updating)
 			update_stat()
 	else if(old_sleeping && !sleeping)
@@ -111,7 +111,7 @@
 	sleeping = max(sleeping + amount,0)
 	if(!old_sleeping && sleeping)
 		if(!no_alert)
-			throw_alert("asleep", /obj/screen/alert/asleep)
+			throw_alert("asleep", /obj/screen/alert_icon/asleep)
 		if(updating)
 			update_stat()
 	else if(old_sleeping && !sleeping)
@@ -170,7 +170,7 @@
 		eye_blind = max(eye_blind, amount)
 		if(!old_eye_blind)
 			if(stat == CONSCIOUS)
-				throw_alert("blind", /obj/screen/alert/blind)
+				throw_alert("blind", /obj/screen/alert_icon/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 
 /mob/proc/adjust_blindness(amount)
@@ -179,7 +179,7 @@
 		eye_blind += amount
 		if(!old_eye_blind)
 			if(stat == CONSCIOUS)
-				throw_alert("blind", /obj/screen/alert/blind)
+				throw_alert("blind", /obj/screen/alert_icon/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 	else if(eye_blind)
 		var/blind_minimum = 0
@@ -196,7 +196,7 @@
 		eye_blind = amount
 		if(client && !old_eye_blind)
 			if(stat == CONSCIOUS)
-				throw_alert("blind", /obj/screen/alert/blind)
+				throw_alert("blind", /obj/screen/alert_icon/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 	else if(eye_blind)
 		var/blind_minimum = 0

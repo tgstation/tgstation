@@ -841,13 +841,13 @@
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			H.throw_alert("nutrition", /obj/screen/alert/fat)
+			H.throw_alert("nutrition", /obj/screen/alert_icon/fat)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			H.throw_alert("nutrition", /obj/screen/alert/hungry)
+			H.throw_alert("nutrition", /obj/screen/alert_icon/hungry)
 		else
-			H.throw_alert("nutrition", /obj/screen/alert/starving)
+			H.throw_alert("nutrition", /obj/screen/alert_icon/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return 0
@@ -1319,13 +1319,13 @@
 		//Body temperature is too hot.
 		switch(H.bodytemperature)
 			if(360 to 400)
-				H.throw_alert("temp", /obj/screen/alert/hot, 1)
+				H.throw_alert("temp", /obj/screen/alert_icon/hot, 1)
 				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
 			if(400 to 460)
-				H.throw_alert("temp", /obj/screen/alert/hot, 2)
+				H.throw_alert("temp", /obj/screen/alert_icon/hot, 2)
 				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
 			if(460 to INFINITY)
-				H.throw_alert("temp", /obj/screen/alert/hot, 3)
+				H.throw_alert("temp", /obj/screen/alert_icon/hot, 3)
 				if(H.on_fire)
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
 				else
@@ -1333,13 +1333,13 @@
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
 		switch(H.bodytemperature)
 			if(200 to 260)
-				H.throw_alert("temp", /obj/screen/alert/cold, 1)
+				H.throw_alert("temp", /obj/screen/alert_icon/cold, 1)
 				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
 			if(120 to 200)
-				H.throw_alert("temp", /obj/screen/alert/cold, 2)
+				H.throw_alert("temp", /obj/screen/alert_icon/cold, 2)
 				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
 			if(-INFINITY to 120)
-				H.throw_alert("temp", /obj/screen/alert/cold, 3)
+				H.throw_alert("temp", /obj/screen/alert_icon/cold, 3)
 				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
 			else
 				H.clear_alert("temp")
@@ -1356,21 +1356,21 @@
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!(RESISTPRESSURE in species_traits))
 				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+				H.throw_alert("pressure", /obj/screen/alert_icon/highpressure, 2)
 			else
 				H.clear_alert("pressure")
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+			H.throw_alert("pressure", /obj/screen/alert_icon/highpressure, 1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
 			H.clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+			H.throw_alert("pressure", /obj/screen/alert_icon/lowpressure, 1)
 		else
 			if(H.dna.check_mutation(COLDRES) || (RESISTPRESSURE in species_traits))
 				H.clear_alert("pressure")
 			else
 				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+				H.throw_alert("pressure", /obj/screen/alert_icon/lowpressure, 2)
 
 //////////
 // FIRE //

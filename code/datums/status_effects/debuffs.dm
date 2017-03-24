@@ -14,9 +14,9 @@
 	id = "his_wrath"
 	duration = -1
 	tick_interval = 4
-	alert_type = /obj/screen/alert/status_effect/his_wrath
+	alert_type = /obj/screen/alert_icon/status_effect/his_wrath
 
-/obj/screen/alert/status_effect/his_wrath
+/obj/screen/alert_icon/status_effect/his_wrath
 	name = "His Wrath"
 	desc = "You fled from His Grace instead of feeding Him, and now you suffer."
 	icon_state = "his_grace"

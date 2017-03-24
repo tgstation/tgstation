@@ -139,7 +139,7 @@
 	owner.stuttering += 30
 
 	recent_queen_death = 1
-	owner.throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
+	owner.throw_alert("alien_noqueen", /obj/screen/alert_icon/alien_vulnerable)
 	spawn(2400) //four minutes
 		if(QDELETED(src)) //In case the node is deleted
 			return

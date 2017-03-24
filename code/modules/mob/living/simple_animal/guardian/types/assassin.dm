@@ -13,8 +13,8 @@
 	toggle_button_type = /obj/screen/guardian/ToggleMode/Assassin
 	var/toggle = FALSE
 	var/stealthcooldown = 160
-	var/obj/screen/alert/canstealthalert
-	var/obj/screen/alert/instealthalert
+	var/obj/screen/alert_icon/canstealthalert
+	var/obj/screen/alert_icon/instealthalert
 
 /mob/living/simple_animal/hostile/guardian/assassin/Initialize()
 	..()
@@ -84,12 +84,12 @@
 	if(stealthcooldown <= world.time)
 		if(toggle)
 			if(!instealthalert)
-				instealthalert = throw_alert("instealth", /obj/screen/alert/instealth)
+				instealthalert = throw_alert("instealth", /obj/screen/alert_icon/instealth)
 				clear_alert("canstealth")
 				canstealthalert = null
 		else
 			if(!canstealthalert)
-				canstealthalert = throw_alert("canstealth", /obj/screen/alert/canstealth)
+				canstealthalert = throw_alert("canstealth", /obj/screen/alert_icon/canstealth)
 				clear_alert("instealth")
 				instealthalert = null
 	else

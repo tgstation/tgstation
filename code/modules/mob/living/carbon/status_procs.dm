@@ -37,7 +37,7 @@
 		druggy += amount
 		if(!old_druggy)
 			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
+			throw_alert("high", /obj/screen/alert_icon/high)
 	else if(old_druggy)
 		druggy = max(druggy+amount, 0)
 		if(!druggy)
@@ -49,7 +49,7 @@
 	if(amount>0)
 		if(!old_druggy)
 			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
+			throw_alert("high", /obj/screen/alert_icon/high)
 	else if(old_druggy)
 		clear_fullscreen("high")
 		clear_alert("high")

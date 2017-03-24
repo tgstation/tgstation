@@ -6,7 +6,7 @@
 		make_laws()
 
 /mob/living/silicon/proc/post_lawchange(announce = TRUE)
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /obj/screen/alert_icon/newlaw)
 	if(announce && last_lawchange_announce != world.time)
 		to_chat(src, "<b>Your laws have been changed.</b>")
 		addtimer(CALLBACK(src, .proc/show_laws), 0)

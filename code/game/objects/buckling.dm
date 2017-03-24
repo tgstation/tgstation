@@ -67,7 +67,7 @@
 	M.setDir(dir)
 	buckled_mobs |= M
 	M.update_canmove()
-	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled, new_master = src)
+	M.throw_alert("buckled", /obj/screen/alert_icon/restrained/buckled, new_master = src)
 	post_buckle_mob(M)
 
 	return 1
