@@ -2,7 +2,7 @@
 
 /proc/wrap_sleep(delay)
     Master.SleepBegin()
-    . = sleep(delay)
+    sleep(delay)
     Master.SleepEnd()
 
 /proc/wrap_alert(Usr=usr,Message,Title,Button1="Ok",Button2,Button3)
