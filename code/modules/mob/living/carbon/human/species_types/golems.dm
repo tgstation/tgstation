@@ -105,7 +105,7 @@
 	punchstunthreshold = 9 //60% chance, from 40%
 	meat = /obj/item/weapon/ore/silver
 	info_text = "As a <span class='danger'>Silver Golem</span>, your attacks are heavier and have a higher chance of stunning."
-	prefix = "Golden"
+	prefix = "Silver"
 	special_names = list("Surfer", "Chariot", "Lining")
 
 //Harder to stun, deals more damage, but it's even slower
