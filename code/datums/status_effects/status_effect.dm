@@ -32,10 +32,9 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 /datum/status_effect/proc/start_ticking()
 	if(!src)
 		return
-	if(!owner)
+	if(!owner || !on_apply())
 		qdel(src)
 		return
-	on_apply()
 	if(duration != -1)
 		duration = world.time + initial(duration)
 	tick_interval = world.time + initial(tick_interval)
@@ -54,7 +53,8 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 	if(duration != -1 && duration < world.time)
 		qdel(src)
 
-/datum/status_effect/proc/on_apply() //Called whenever the buff is applied.
+/datum/status_effect/proc/on_apply() //Called whenever the buff is applied; returning FALSE will cause it to autoremove itself.
+	return TRUE
 /datum/status_effect/proc/tick() //Called every tick.
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed.
 /datum/status_effect/proc/be_replaced() //Called instead of on_remove when a status effect is replaced by itself

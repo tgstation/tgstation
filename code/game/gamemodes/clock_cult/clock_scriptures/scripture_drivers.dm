@@ -17,23 +17,10 @@
 	sort_priority = 1
 	quickbind = TRUE
 	quickbind_desc = "Forces nearby non-Servants to walk, doing minor damage with each chant.<br><b>Maximum 15 chants.</b>"
-	var/noncultist_damage = 2 //damage per chant to noncultists
-	var/cultist_damage = 8 //damage per chant to non-walking cultists
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
 	for(var/mob/living/carbon/C in hearers(7, invoker))
-		var/number_legs = C.get_num_legs()
-		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && number_legs) //you have legs right
-			C.apply_damage(noncultist_damage * 0.5, BURN, "l_leg")
-			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
-			if(C.m_intent != MOVE_INTENT_WALK)
-				if(!iscultist(C))
-					to_chat(C, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
-				else //Cultists take extra burn damage
-					to_chat(C, "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>")
-					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
-					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
-				C.toggle_move_intent()
+		C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 	return TRUE
 
 
