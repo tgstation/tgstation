@@ -15,7 +15,7 @@
     if(nullable)
         . = input(Usr,Message,Title,Default) as null|anything in choices
     else
-        . = input(Usr,message,Title,Default) in choices
+        . = input(Usr,Message,Title,Default) in choices
     Master.SleepEnd()
 
 //world proc because fuck off
@@ -45,10 +45,10 @@
     Master.SleepEnd()
 
 #define sleep wrap_sleep
-#define alert wrap_alert
-#define input wrap_input
-#define shell world.wrap_shell
-#define winexists wrap_winexists
-#define winget wrap_winget
-#define Export wrap_Export
-#define Import wrap_Import
+//#define alert wrap_alert
+//#define input wrap_input
+//#define shell world.wrap_shell
+//#define winexists wrap_winexists
+//#define winget wrap_winget
+//#define Export wrap_Export
+//#define Import wrap_Import
