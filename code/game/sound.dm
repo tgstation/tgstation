@@ -82,9 +82,6 @@
 /mob/proc/stop_sound_channel(chan)
 	src << sound(null, repeat = 0, wait = 0, channel = chan)
 
-/mob/proc/stopLobbySound()
-	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = CHANNEL_LOBBYMUSIC)
-
 /client/proc/playtitlemusic()
 	UNTIL(ticker.login_music) //wait for ticker init to set the login music
 
