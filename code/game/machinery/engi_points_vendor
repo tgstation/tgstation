@@ -27,7 +27,6 @@
 		new /datum/GBP_equipment("Ranged RCD x4",			/obj/item/weapon/rcd/arcd,																		8000,	4),
 		new /datum/GBP_equipment("Prototype Atmos Vehicle x2",			/obj/vehicle/space/speedbike/atmos,							10000,	2),
 		new /datum/GBP_equipment("Prototype Repair Vehicle x3",		/obj/vehicle/space/speedbike/repair,							15000,	3),
-		new /datum/GBP_equipment("Reactive Decoy Armor x5",		/obj/item/clothing/suit/armor/reactive/stealth,				16000,	5),
 		new /datum/GBP_equipment("Chrono Suit x5",			/obj/item/clothing/suit/space/chronos,											20000,	5),
 		new /datum/GBP_equipment("Nuclear Construction Device",			/obj/machinery/construction_nuke,								22500,	1),
 		new /datum/GBP_equipment("Engineering's Pinnacle x1",		/obj/vehicle/space/speedbike/engiwagon,							30000,	4),
