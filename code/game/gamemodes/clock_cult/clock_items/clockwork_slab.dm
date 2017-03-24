@@ -207,11 +207,15 @@
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab) && ratvarian)
 		var/obj/item/clockwork/slab/S = I
+		var/needs_update = FALSE
 		for(var/i in stored_components)
 			stored_components[i] += S.stored_components[i]
 			S.stored_components[i] = 0
-		update_slab_info(src)
-		update_slab_info(S)
+			if(S.stored_components[i])
+				needs_update = TRUE
+		if(needs_update)
+			update_slab_info(src)
+			update_slab_info(S)
 		user.visible_message("<span class='notice'>[user] empties [src] into [S].</span>", "<span class='notice'>You transfer your slab's components into [S].</span>")
 	else
 		return ..()

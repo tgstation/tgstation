@@ -141,7 +141,8 @@
 
 turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
+	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
 
