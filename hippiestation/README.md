@@ -8,20 +8,19 @@ Recently, HippieStation has tried to keep /tg/station as an upstream and to stay
 
 Something is modular when it exists independent from the rest of the code. This means that by simply adding something modular to the DME file, it will exist in-game. It is not always possible to completely modularize something, but if standards are followed correctly, then there should be few to none conflicts with /tg/station in the future.
 
-## tgstation.dme versus hippiestation.dme
+### tgstation.dme versus hippiestation.dme
 
 Do not alter the tgstation.dme file. All additions and removals should be to the hippiestation.dme file. Do not manually add files to the dme! Check the file's box in the Dream Maker program. The Dream Maker does not always use alphabetical order, and manually adding a file can cause it to reorder. This means that down the line, many PRs will contain this reorder when it could have been avoided in the first place.
 
-## Icons, code, and sounds
+### Icons, code, and sounds
 
 Icons are notorious for conflicts. Because of this, **ALL NEW ICONS** must go in the "hippiestation/icons" folder. There are to be no exceptions to this rule. Sounds don't cause conflicts, but for the sake of organization they are to go in the "hippiestation/sounds" folder. No exceptions, either. Unless absolutely necessary, code should go in the "hippiestation/code" folder. Small changes outside of the folder should be done with hook-procs. Larger changes should simply mirror the file in the "hippiestation/code" folder.
 
-## Using a hook-proc versus mirroring a file
+
 
 If a small addition needs to be made outside of the "hippiestation" folder, then it should be done by adding a proc. This proc will be defined inside of the "hippiestation" folder. By doing this, a large number of things can be done by adding just one line of code outside of the folder! If a file must be changed a lot, re-create it with the changes inside of the "hippiestation/code" folder. **Make sure to follow the file's path correctly** (i.e. code/modules/clothing/clothing.dm.) Then, remove the original file from the hippiestation.dme and add the new one.
 
 ## Specific cases and examples
-There are some additions that should follow specific standards to maintain this repository's organization.
 
 ### Clothing
 
