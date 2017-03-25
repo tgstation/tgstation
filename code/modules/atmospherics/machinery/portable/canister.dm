@@ -346,7 +346,7 @@
 			if(holding)
 				if(valve_open)
 					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
-				holding.loc = get_turf(src)
+				holding.forceMove(get_turf(src))
 				holding = null
 				. = TRUE
 	update_icon()
