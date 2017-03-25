@@ -147,6 +147,7 @@ FLOOR SAFES
 		if(open)
 			if(P && in_range(src, user))
 				user.put_in_hands(P)
+				space -= P.w_class
 				updateUsrDialog()
 
 
