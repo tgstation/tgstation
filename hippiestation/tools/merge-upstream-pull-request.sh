@@ -35,12 +35,9 @@ wget "$BASE_PATCH_URL$1.patch" -q -O "$tmpfile"
 
 # We need to make sure we are always on a clean master when creating the new branch.
 # So we forcefully reset, clean and then checkout the master branch
-git reset --hard
+git fetch
+git reset --hard origin/master
 git clean -f
-git checkout -f master
-
-# pull the last changes
-git pull
 
 # Create a new branch
 git checkout -b "$BASE_BRANCH_NAME$1"
