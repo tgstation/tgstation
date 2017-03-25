@@ -39,7 +39,7 @@ var/list/datum/dna/hivemind_bank = list()
 		to_chat(user, "<span class='notice'>The airwaves already have all of our DNA.</span>")
 		return
 
-	var/chosen_name = input("Select a DNA to channel: ", "Channel DNA", null) as null|anything in names
+	var/chosen_name = input("Select a DNA to channel: ", "Channel DNA", null, nullable = TRUE, choices = names)
 	if(!chosen_name)
 		return
 
@@ -81,7 +81,7 @@ var/list/datum/dna/hivemind_bank = list()
 		to_chat(user, "<span class='notice'>There's no new DNA to absorb from the air.</span>")
 		return
 
-	var/S = input("Select a DNA absorb from the air: ", "Absorb DNA", null) as null|anything in names
+	var/S = input("Select a DNA absorb from the air: ", "Absorb DNA", null, nullable = TRUE, choices = names)
 	if(!S)
 		return
 	var/datum/changelingprofile/chosen_prof = names[S]

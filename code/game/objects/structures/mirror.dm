@@ -139,7 +139,7 @@
 
 		if("race")
 			var/newrace
-			var/racechoice = input(H, "What are we again?", "Race change") as null|anything in choosable_races
+			var/racechoice = input(H, "What are we again?", "Race change", nullable = TRUE, choices = choosable_races)
 			newrace = species_list[racechoice]
 
 			if(!newrace)
@@ -149,7 +149,7 @@
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in skin_tones
+				var/new_s_tone = input(user, "Choose your skin tone:", "Race change", nullable = TRUE, choices = skin_tones)
 
 				if(new_s_tone)
 					H.skin_tone = new_s_tone

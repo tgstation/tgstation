@@ -33,7 +33,7 @@
 			var/atom/A = V
 			display_names += initial(A.name)
 
-		var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+		var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme", nullable = TRUE, choices = display_names)
 		if(!src || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
 			return
 

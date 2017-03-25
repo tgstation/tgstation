@@ -303,13 +303,13 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			for(R in admin_ranks)
 				rank_names[R.name] = R
 
-			var/new_rank = input("Please select a rank", "New rank", null, null) as null|anything in rank_names
+			var/new_rank = input("Please select a rank", "New rank", null, null, nullable = TRUE, choices = rank_names)
 
 			switch(new_rank)
 				if(null)
 					return
 				if("*New Rank*")
-					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null) as null|text)
+					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null, nullable = TRUE, text = TRUE) as null|text)
 					if(!new_rank)
 						return
 

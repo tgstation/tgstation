@@ -465,7 +465,7 @@
 				if(clockwork_caches)
 					cache_components = clockwork_component_cache[i]
 				components["[get_component_name(i)] [(cache_components + stored_components[i])]"] = i
-			var/input_component = input("Choose a component type.", "Target Component") as null|anything in components
+			var/input_component = input("Choose a component type.", "Target Component", nullable = TRUE, choices = components)
 			if(input_component && !..())
 				target_component_id = components[input_component]
 		if("bind")

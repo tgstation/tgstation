@@ -675,7 +675,7 @@
 				if (objective&&(objective.type in objective_list) && objective:target)
 					def_target = objective:target.current
 
-				var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
+				var/new_target = input("Select target:", "Objective target", def_target, nullable = TRUE, choices = possible_targets)
 				if (!new_target)
 					return
 
@@ -695,7 +695,7 @@
 			if ("destroy")
 				var/list/possible_targets = active_ais(1)
 				if(possible_targets.len)
-					var/mob/new_target = input("Select target:", "Objective target") as null|anything in possible_targets
+					var/mob/new_target = input("Select target:", "Objective target", nullable = TRUE, choices = possible_targets)
 					new_objective = new /datum/objective/destroy
 					new_objective.target = new_target.mind
 					new_objective.owner = src
@@ -900,7 +900,7 @@
 			if("new")
 				if(gang_colors_pool.len)
 					var/list/names = list("Random") + gang_name_pool
-					var/gangname = input("Pick a gang name.","Select Name") as null|anything in names
+					var/gangname = input("Pick a gang name.","Select Name", nullable = TRUE, choices = names)
 					if(gangname && gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
 						if(!(gangname in gang_name_pool))
 							gangname = null

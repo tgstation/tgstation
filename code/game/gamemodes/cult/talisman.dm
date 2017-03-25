@@ -139,7 +139,7 @@
 		log_game("Teleport talisman failed - user in away mission")
 		return ..(user, 0)
 
-	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
+	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to", nullable = TRUE, choices = potential_runes) //we know what key they picked
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune)
 		return ..(user, 0)

@@ -10,9 +10,14 @@
     . = alert(Usr,Message,Title,Button1,Button2,Button3) 
     Master.SleepEnd()
 
-/proc/wrap_input(Usr=usr,Message,Title,Default,nullable,choices)
+/proc/wrap_input(Usr=usr,Message,Title,Default,nullable,choices,text)
     Master.SleepBegin()
-    if(nullable)
+    if(text)
+        if(nullable)
+            . = input(Usr,Message,Title,Default) as null|text
+        else
+            . = input(Usr,Message,Title,Default) as text
+    else if(nullable)
         . = input(Usr,Message,Title,Default) as null|anything in choices
     else
         . = input(Usr,Message,Title,Default) in choices

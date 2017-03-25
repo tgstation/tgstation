@@ -138,7 +138,7 @@
 
 
 /obj/structure/sign/barsign/proc/pick_sign()
-	var/picked_name = input("Available Signage", "Bar Sign") as null|anything in barsigns
+	var/picked_name = input("Available Signage", "Bar Sign", nullable = TRUE, choices = barsigns)
 	if(!picked_name)
 		return
 	set_sign(picked_name)
