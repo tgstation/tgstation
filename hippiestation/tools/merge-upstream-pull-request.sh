@@ -36,6 +36,7 @@ wget "$BASE_PATCH_URL$1.patch" -q -O "$tmpfile"
 # We need to make sure we are always on a clean master when creating the new branch.
 # So we forcefully reset, clean and then checkout the master branch
 git fetch
+git checkout master
 git reset --hard origin/master
 git clean -f
 
@@ -46,7 +47,7 @@ git branch | grep -v "master" | xargs git branch -D
 git checkout -b "$BASE_BRANCH_NAME$1"
 
 # Apply the patch on top of this new branch
-git am --reject --ignore-space-change --ignore-whitespace "$tmpfile"
+git apply --reject --ignore-space-change --ignore-whitespace "$tmpfile"
 
 # Add all files onto this branch
 git add -A .
