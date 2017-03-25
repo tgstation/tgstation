@@ -109,7 +109,7 @@
 /obj/effect/mob_spawn/human/golem/New(loc, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
 	..()
 	if(species)
-		name += " ([initial(species.id)])"
+		name += " ([initial(species.prefix)])"
 		mob_species = species
 	var/area/A = get_area(src)
 	if(A)
