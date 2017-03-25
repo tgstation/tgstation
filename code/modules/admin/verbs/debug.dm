@@ -241,7 +241,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/mob/C in mob_list)
 		if(C.key)
 			available.Add(C)
-	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
+	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI", choices = available)
 	if(!choice)
 		return 0
 	if(!isobserver(choice))
@@ -575,7 +575,7 @@ var/list/TYPES_SHORTCUTS = list(
 		var/list/custom_names = list()
 		for(var/datum/outfit/D in custom_outfits)
 			custom_names[D.name] = D
-		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in custom_names
+		var/selected_name = input("Select outfit", "Robust quick dress shop", nullable = TRUE, choices = custom_names)
 		custom = custom_names[selected_name]
 		if(isnull(custom))
 			return
@@ -726,7 +726,7 @@ var/list/TYPES_SHORTCUTS = list(
 
 		names[name] = ruin_landmark
 
-	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in names
+	var/ruinname = input("Select ruin", "Jump to Ruin", nullable = TRUE, choices = names)
 
 
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]

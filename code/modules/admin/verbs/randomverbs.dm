@@ -1140,7 +1140,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA)
 
-	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
+	var/punishment = input("Choose a punishment", "DIVINE SMITING", nullable = TRUE, choices = punishment_list)
 
 	if(QDELETED(target) || !punishment)
 		return

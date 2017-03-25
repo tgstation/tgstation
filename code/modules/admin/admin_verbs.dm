@@ -578,7 +578,7 @@ var/list/admin_verbs_hideable = list(
 	var/type_length = length("/obj/effect/proc_holder/spell") + 2
 	for(var/A in spells)
 		spell_list[copytext("[A]", type_length)] = A
-	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_list
+	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA", nullable = TRUE, choices = spell_list)
 	if(!S)
 		return
 

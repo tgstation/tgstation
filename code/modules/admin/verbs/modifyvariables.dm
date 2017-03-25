@@ -365,7 +365,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			value = "null"
 		names["#[i] [key] = [value]"] = i
 	if (!index)
-		var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)" + "(CLEAR NULLS)" + "(CLEAR DUPES)" + "(SHUFFLE)"
+		var/variable = input("Which var?","Var", nullable = TRUE, choices = (names + "(ADD VAR)" + "(CLEAR NULLS)" + "(CLEAR DUPES)" + "(SHUFFLE)"))
 
 		if(variable == null)
 			return
