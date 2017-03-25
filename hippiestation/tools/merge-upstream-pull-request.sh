@@ -46,7 +46,7 @@ git branch | grep -v "master" | xargs git branch -D
 git checkout -b "$BASE_BRANCH_NAME$1"
 
 # Apply the patch on top of this new branch
-git am --continue --reject --ignore-space-change --ignore-whitespace "$tmpfile"
+git am --3way --reject --ignore-space-change --ignore-whitespace "$tmpfile"
 
 # Add all files onto this branch
 git add -A .
