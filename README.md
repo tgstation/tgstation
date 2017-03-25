@@ -1,4 +1,4 @@
-## HippieStation 13 [![Build Status](https://jenkins.hippiestation.com/job/HippieStation/badge/icon?style=plastic)](https://jenkins.hippiestation.com/job/HippieStation) [![star this repo](http://githubbadges.com/star.svg?user=HippieStation&repo=HippieStation)](https://github.com/HippieStation/HippieStation) [![fork this repo](http://githubbadges.com/fork.svg?user=HippieStation&repo=HippieStation)](https://github.com/HippieStation/HippieStation/fork)
+## HippieStation 13 [![Build Status](https://jenkins.hippiestation.com/job/HippieStation/badge/icon?style=plastic)](https://jenkins.hippiestation.com/job/HippieStation)
 
 **Website:** http://www.hippiestation.com <BR>
 **Code:** https://github.com/hippiestation/hippiestation <BR>
@@ -13,8 +13,6 @@ For a full guide on how to set up your own Space Station 13 server, please see t
 If you would like to contribute to this codebase, first take a look at the [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 ## LICENSE
-
-HippieStation's codebase is built off the work of many servers, including that of /tg/station. Because of this, the repository inherits /tg/station's licensing.
 
 All code after [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST](https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU AGPL v3](http://www.gnu.org/licenses/agpl-3.0.html).
 
