@@ -353,7 +353,7 @@
 		return
 	switch(action)
 		if("relabel")
-			var/label = input("New canister label:", name) as null|anything in label2types
+			var/label = input("New canister label:", name, nullable = TRUE, choices = label2types)
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)
@@ -380,7 +380,7 @@
 				pressure = can_max_release_pressure
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New release pressure ([can_min_release_pressure]-[can_max_release_pressure] kPa):", name, release_pressure) as num|null
+				pressure = input("New release pressure ([can_min_release_pressure]-[can_max_release_pressure] kPa):", name, release_pressure, nullable = TRUE, isnum = TRUE)
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)

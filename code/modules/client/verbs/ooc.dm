@@ -169,7 +169,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in sortKey(clients)
+	var/selection = input("Please, select a player!", "Ignore", null, null, nullable = TRUE, choices = sortKey(clients))
 	if(!selection)
 		return
 	if(selection == src)
