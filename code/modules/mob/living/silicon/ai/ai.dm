@@ -252,7 +252,7 @@ var/list/ai_list = list()
 			for(var/mob/living/silicon/robot/R in connected_robots)
 				borg_area = get_area(R)
 				var/robot_status = "Nominal"
-				if(R.shell)
+				if(R.ai_shell)
 					robot_status = "AI SHELL"
 				else if(R.stat || !R.client)
 					robot_status = "OFFLINE"

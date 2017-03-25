@@ -76,7 +76,7 @@
 #define alert wrap_alert
 //#define input wrap_input
 #define shell world.wrap_shell
-//#define winexists wrap_winexists
-//#define winget wrap_winget
-//#define Export wrap_Export
-//#define Import wrap_Import
+#define winexists wrap_winexists
+#define winget wrap_winget
+#define Export wrap_Export
+#define Import wrap_Import
