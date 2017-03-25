@@ -27,6 +27,7 @@ var/global/power_transmitted = 0
 	var/ptl_overdraw_apc_multi = 50000
 
 	var/internal_buffer = 5e12
+	var/internal_charge = 0
 	var/output_primary_max = 1e12
 	var/output_primary_min = 1e7
 	var/output_pulse_max = 2e7
@@ -48,6 +49,7 @@ var/global/power_transmitted = 0
 	..()
 	//var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/PTL(null) No idea how circuit board construction works for now.
 	//B.apply_default_parts(src)
+	resistence_flags = INDESTRUCTIBLE|FIRE_PROOF|ACID_PROOF	//Irreplacable mapping object until construction is in.
 
 /obj/machinery/power/PTL/proc/transmit_power(power)	//PUT WHATEVER YOU WANT TO HAPPEN WHEN IT REACHES ZLEVEL EDGE/CENTRAL COMMAND HERE!
 	global.power_transmitted += power
@@ -99,6 +101,19 @@ var/global/power_transmitted = 0
 /obj/machinery/power/PTL/proc/overdraw_alert()
 	var/area/A = get_area(src)
 	priority_announce("Extreme overdraw detected at [A.name]. Powernet and attached machinery will be drained at a rapid rate.", title = "Powernet Overdraw Detected", sound = 'sound/misc/interference.ogg', "Priority")
+/obj/machinery/power/PTL/process()
+	if(charging)
+		if(internal_charge < internal_buffer)
+			var/charged = internal_charge
+			if((internal_buffer - internal_charge) <= charge_rate)
+				internal_charge += try_use_linked_power(internal_buffer - internal_charge)
+			else
+				internal_charge += try_use_linked_power(charge_rate)
+			charged = (internal_charge - charged)
+			if((charged < charge_rate) && charge_overdraw)
+				var/needed = (charge_rate - charged)
+				internal_charge += try_use_linked_power(charge_rate, overdraw_allowed = TRUE)
+
 
 ////GOOONSTATION COPY, ONLY HERE FOR REFERENCE BELOW, ERASING AFTER ITS NOT NEEDED FOR ME.
 
