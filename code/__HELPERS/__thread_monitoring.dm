@@ -74,7 +74,7 @@
 
 #define sleep wrap_sleep
 #define alert wrap_alert
-//#define input wrap_input
+#define input wrap_input
 #define shell world.wrap_shell
 #define winexists wrap_winexists
 #define winget wrap_winget

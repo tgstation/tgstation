@@ -1361,7 +1361,7 @@
 	},
 /area/awaymission/wwgov)
 "ez" = (
-/obj/machinery/mineral/input,
+/obj/machinery/mineral/minput,
 /turf/open/floor/plasteel,
 /area/awaymission/wwrefine)
 "eA" = (

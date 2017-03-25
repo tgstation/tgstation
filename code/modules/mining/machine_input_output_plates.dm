@@ -1,13 +1,13 @@
 /**********************Input and output plates**************************/
 
-/obj/machinery/mineral/input
+/obj/machinery/mineral/minput
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
 	name = "Input area"
 	density = 0
 	anchored = 1
 
-/obj/machinery/mineral/input/New()
+/obj/machinery/mineral/minput/New()
 	icon_state = "blank"
 
 /obj/machinery/mineral/output
