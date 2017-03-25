@@ -1,0 +1,4 @@
+author: "TrustyGun"
+delete-after: True
+changes: 
+  - bugfix: "Deconstructing display cases and coffins now drop the correct amount of wood."
