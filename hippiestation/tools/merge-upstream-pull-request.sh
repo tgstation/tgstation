@@ -33,6 +33,9 @@ type wget >/dev/null 2>&1 || { echo >&2 "Error: This script requires wget, pleas
 # Download the patchfile
 wget "$BASE_PATCH_URL$1.patch" -q -O "$tmpfile"
 
+# Remove the other branches
+git branch | grep -v "master" | xargs git branch -D
+
 # We need to make sure we are always on a clean master when creating the new branch.
 # So we forcefully reset, clean and then checkout the master branch
 git fetch
