@@ -423,31 +423,32 @@
 			. = TRUE
 		if("timer")
 			var/change = params["change"]
-			if(change == "reset")
-				timer_set = default_timer_set
-			else if(change == "decrease")
-				timer_set = max(minimum_timer_set, timer_set - 10)
-			else if(change == "increase")
-				timer_set = min(maximum_timer_set, timer_set + 10)
-			else if(change == "input")
-				var/user_input = input(usr, "Set time to valve toggle.", name) as null|num
-				if(!user_input)
-					return
-				var/N = text2num(user_input)
-				if(!N)
-					return
-				timer_set = Clamp(N,minimum_timer_set,maximum_timer_set)
-				log_admin("[key_name(usr)] has activated a prototype valve timer")
-			. = TRUE
-		if("toggle_timer")
-			set_active()
-		if("eject")
-			if(holding)
-				if(valve_open)
-					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
-				holding.loc = get_turf(src)
-				holding = null
-				. = TRUE
+			switch(change)
+				if("reset")
+					timer_set = default_timer_set
+				if("decrease")
+					timer_set = max(minimum_timer_set, timer_set - 10)
+				if("increase")
+					timer_set = min(maximum_timer_set, timer_set + 10)
+				if("input")
+					var/user_input = input(usr, "Set time to valve toggle.", name) as null|num
+					if(!user_input)
+						return
+					var/N = text2num(user_input)
+					if(!N)
+						return
+					timer_set = Clamp(N,minimum_timer_set,maximum_timer_set)
+					log_admin("[key_name(usr)] has activated a prototype valve timer")
+					. = TRUE
+				if("toggle_timer")
+					set_active()
+				if("eject")
+					if(holding)
+						if(valve_open)
+							investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
+						holding.loc = get_turf(src)
+						holding = null
+						. = TRUE
 	update_icon()
 
 
