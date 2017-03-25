@@ -361,13 +361,13 @@
 					name = initial(replacement.name)
 					desc = initial(replacement.name)
 					icon_state = initial(replacement.icon_state)
-    if("restricted")
-      restricted = !restricted
-      if(restricted)
-      req_access = list(access_engine)
-     else
-      req_access = list()
-      . = TRUE
+		if("restricted")
+			restricted = !restricted
+			if(restricted)
+				req_access = list(access_engine)
+			else
+				req_access = list()
+				. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")
