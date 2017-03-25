@@ -126,7 +126,6 @@
 		var/area/N = V
 		N.layer = overlay_layer
 		N.icon = 'icons/effects/weather_effects.dmi'
-		N.invisibility = 0
 		N.color = weather_color
 		switch(stage)
 			if(STARTUP_STAGE)
@@ -137,8 +136,7 @@
 				N.icon_state = end_overlay
 			if(END_STAGE)
 				N.color = null
-				N.icon_state = initial(N.icon_state)
+				N.icon_state = ""
 				N.icon = 'icons/turf/areas.dmi'
 				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
-				N.invisibility = INVISIBILITY_MAXIMUM
 				N.set_opacity(FALSE)
