@@ -78,7 +78,7 @@ The previous code made compliant:
 
 ### Use the "hippiestation" folder.
 
-See [the README.md](/hippiestation/readme.md) in the folder for further details.
+See [the README.md](/hippiestation/README.md) in the folder for further details.
 
 ### No overriding type safety checks.
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
