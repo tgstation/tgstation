@@ -250,7 +250,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return 0
 	var/obj/item/device/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
+	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI", istext = TRUE) as text
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)
@@ -366,7 +366,7 @@ var/list/TYPES_SHORTCUTS = list(
 
 	if(matches.len==0)
 		return
-	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in matches
+	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:", nullable = TRUE, choices = matches)
 	if(hsbitem)
 		hsbitem = matches[hsbitem]
 		var/counter = 0

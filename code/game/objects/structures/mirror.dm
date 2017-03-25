@@ -25,7 +25,7 @@
 
 		//handle facial hair (if necessary)
 		if(H.gender == MALE)
-			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
+			var/new_style = input(user, "Select a facial hair style", "Grooming", nullable = TRUE, choices = facial_hair_styles_list)
 			if(userloc != H.loc)
 				return	//no tele-grooming
 			if(new_style)
@@ -34,7 +34,7 @@
 			H.facial_hair_style = "Shaved"
 
 		//handle normal hair
-		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
+		var/new_style = input(user, "Select a hair style", "Grooming", nullable = TRUE, hair_styles_list)
 		if(userloc != H.loc)
 			return	//no tele-grooming
 		if(new_style)
