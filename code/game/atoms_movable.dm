@@ -566,7 +566,7 @@
 
 /atom/movable/proc/remove_language(datum/language/dt)
 	if(languages && languages.len)
-		languages[dt] = null
+		languages -= dt
 
 /atom/movable/proc/remove_all_languages()
 	languages.Cut()

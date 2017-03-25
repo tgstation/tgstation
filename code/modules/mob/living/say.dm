@@ -367,6 +367,12 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 /mob/living/get_default_language()
 	if(selected_default_language)
-		. = selected_default_language
-	else
-		. = ..()
+		if(has_language(selected_default_language))
+			return selected_default_language
+		else
+			selected_default_language = null
+
+	. = ..()
+
+/mob/living/proc/open_language_menu(mob/user)
+	language_menu.ui_interact(user)
