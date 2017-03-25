@@ -1,17 +1,16 @@
-## HippieStation 13 [![Build Status](https://jenkins.hippiestation.com/job/HippieStation/badge/icon)](https://jenkins.hippiestation.com/job/HippieStation) [![star this repo](http://githubbadges.com/star.svg?user=HippieStation&repo=HippieStation&style=flat)](https://github.com/HippieStation/HippieStation) [![fork this repo](http://githubbadges.com/fork.svg?user=HippieStation&repo=HippieStation&style=flat)](https://github.com/HippieStation/HippieStation/fork)
+## HippieStation 13 [![Build Status](https://jenkins.hippiestation.com/job/HippieStation/badge/icon?style=plastic)](https://jenkins.hippiestation.com/job/HippieStation) [![star this repo](http://githubbadges.com/star.svg?user=HippieStation&repo=HippieStation)](https://github.com/HippieStation/HippieStation) [![fork this repo](http://githubbadges.com/fork.svg?user=HippieStation&repo=HippieStation)](https://github.com/HippieStation/HippieStation/fork)
 
 **Website:** http://www.hippiestation.com <BR>
 **Code:** https://github.com/hippiestation/hippiestation <BR>
 **Wiki** https://wiki.hippiestation.com/index.php?title=Main_Page <BR>
 **Discord:** https://discordapp.com/invite/RBm2HJt <BR>
 
-## DOWNLOAD AND INSTALLATION
+## ABOUT
 
+This is the Github page for the HippieStation codebase, used on the Space Station 13 server. This codebase is built off the work of many different servers, primarily that of /tg/station 13.
+Because of this, the repository inherits /tg/station's licensing, among other things.
 For a full guide on how to set up your own Space Station 13 server, please see the [/tg/station README.md](https://github.com/tgstation/tgstation/blob/master/README.md).
-
-## CONTRIBUTING
-
-For information on contributing to this repository, please see [CONTRIBUTING.md](.github/CONTRIBUTING.md).
+If you would like to contribute to this codebase, first take a look at the [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 ## LICENSE
 
