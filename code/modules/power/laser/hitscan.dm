@@ -15,10 +15,10 @@
 	var/list/affected = list()
 	var/hit = FALSE
 	var/iterations_left = 1000
-	affected += "[NORTH]"
-	affected += "[SOUTH]"
-	affected += "[EAST]"
-	affected += "[WEST]"
+	affected["[NORTH]"] = list()
+	affected["[SOUTH]"] = list()
+	affected["[EAST]"] = list()
+	affected["[WEST]"] = list()
 	affected["RESULT"] = PTL_HITSCAN_RETURN_ERROR
 	affected["HIT_ATOM"] = null
 	affected["BEAM_EFFECT_LIST"] = list()
@@ -36,7 +36,7 @@
 				if(V == PTL_HITSCAN_PASS)
 					continue
 				else if(V == PTL_HITSCAN_PIERCE)
-					affected[beam_dir] += A
+					affected["[beam_dir]"] += A
 					continue
 				else if(V == PTL_HITSCAN_HIT)
 					hit = TRUE
@@ -47,7 +47,7 @@
 					reflector_hit = TRUE
 			else if(full_pierce = PTL_FULLPIERCE_NORMAL)	//Full pierce - Add everything but space to affected
 				if(!isspaceturf(A))
-					affected[beam_dir] += A
+					affected["[beam_dir]"] += A
 		if(((scanning.x < 5) || (scanning.x > (world.maxx - 5))) || ((scanning.y < 5) || (scanning.y > (world.maxy - 5))))	//ZLEVEL EDGE CHECK
 			hit = TRUE
 			affected["RESULT"] = PTL_HITSCAN_RETURN_ZEDGE

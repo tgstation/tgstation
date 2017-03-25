@@ -6,7 +6,7 @@
 	name = "laser tracer"
 	desc = "Why are you staring at this? RUN!"
 	icon_state = "ptl_tracer"
-	duration = 20
+	duration = 30
 
 /obj/effect/overlay/temp/PTL/pulse
 	name = "pulse laser"

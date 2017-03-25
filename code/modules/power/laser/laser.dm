@@ -54,6 +54,11 @@
 		on_zlevel_edge_hit(power)
 
 /obj/machinery/power/PTL/proc/tracer_hit(power, atom/A, direct_hit = FALSE)
+	if(isliving(A))
+		var/mob/living/L = A
+		L.adjustFireLoss(power/1000000)
+		to_chat(L, "<span class='warning'>You are seared by the laser!</span>")
+
 
 /obj/machinery/power/PTL/proc/pulse_hit(power, atom/A, direct_hit = FALSE)
 
@@ -61,3 +66,18 @@
 
 /obj/machinery/power/PTL/proc/on_zlevel_edge_hit(power)
 	transmit_power(power)
+
+/obj/machinery/power/PTL/proc/check_station_impact(area_threshold = 2, turf_threshold = 75)
+	var/list/affected = hitscan_beamline(starting = find_starting_turf(), beam_dir = dir, generate_effects = FALSE, full_pierce = PTL_FULLPIERCE_NOHIT)
+	var/turf_matches = list()
+	var/area_matches = list()
+	for(var/V in affected)
+		if(V == "RESULT")
+			continue
+		if(V == "HIT_ATOM")
+			continue
+		for(var/v in affected[V])
+			//if(isturf(v))
+			//	var/turf/T = v
+			//	if(!is_type_in_typecache(T.area, /area/space))
+			//		area_matches += T.area

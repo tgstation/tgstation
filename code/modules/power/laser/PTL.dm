@@ -14,6 +14,8 @@ var/global/power_transmitted = 0
 	icon_state = "ptl"
 	desc = "A gigawatt laser that transmits power across vast distances. Don't look into the beam."
 	idle_power_usage = 5000
+	pixel_x = -32
+	pixel_y = -32
 
 	var/static/list/laser_tile_x_offset = list("[NORTH]" = 0, "[SOUTH]" = 0, "[EAST]" = 2, "[WEST]" = -2)	//Depends on the sprite, right now it's goon's, so 3x3.
 	var/static/list/laser_tile_y_offset = list("[NORTH]" = 0, "[SOUTH]" = 0, "[EAST]" = -2, "[WEST]" = 2)
@@ -43,8 +45,10 @@ var/global/power_transmitted = 0
 
 	var/target = PTL_TARGET_TRANSMIT_CENTCOM
 	var/obj/machinery/power/terminal/terminal = null
+//	var/list/station_area_typecache
 
 	resistance_flags = INDESTRUCTIBLE|FIRE_PROOF|ACID_PROOF	//Irreplacable mapping object until construction is in.
+	var/obj/item/device/radio/radio
 
 /obj/machinery/power/PTL/proc/transmit_power(power)	//PUT WHATEVER YOU WANT TO HAPPEN WHEN IT REACHES ZLEVEL EDGE/CENTRAL COMMAND HERE!
 	global.power_transmitted += power
@@ -56,6 +60,10 @@ var/global/power_transmitted = 0
 		setDir(WEST)
 	..()
 	make_terminal()
+
+/obj/machinery/power/PTL/Initialize()
+	..()
+	radio = new()
 
 /obj/machinery/power/PTL/proc/make_terminal()
 	if(terminal)
