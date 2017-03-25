@@ -92,7 +92,7 @@
 		"playing obscure games about living on a space station",  //me irl
 		"playing poker in maintenance",
 		"wasting their life",
-		"pondering the existence of a caring god,
+		"pondering the existence of a caring god",
 		"walking up and down the hallway",
 		"chilling, relaxing all cool, shooting some b-ball right outside the school",
 		"roleplaying",
