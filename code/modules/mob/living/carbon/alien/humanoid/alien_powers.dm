@@ -108,7 +108,7 @@ Doesn't work on other aliens/AI.*/
 	for(var/mob/living/carbon/A  in oview(user))
 		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
 			aliens_around.Add(A)
-	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
+	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null, choices = aliens_around)
 	if(!M)
 		return 0
 	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
@@ -151,7 +151,14 @@ Doesn't work on other aliens/AI.*/
 
 
 /obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/alien/user)
-	var/O = input("Select what to dissolve:","Dissolve",null) as obj|turf in oview(1,user)
+	var/list/temp = oview(1,user)
+	var/list/checks = list()
+	for(var/obj/O in temp)
+		checks += O
+	for(var/turf/T in temp)
+		checks += T
+	temp.Cut()
+	var/O = input("Select what to dissolve:","Dissolve",null, choices = checks)
 	if(!O || user.incapacitated())
 		return 0
 	else

@@ -244,7 +244,7 @@
 						for(var/mob/living/carbon/human/M in mob_list)
 							validchoices += M
 
-						var/mob/living/carbon/human/chosen = input("Which crewmember?") as null|anything in validchoices
+						var/mob/living/carbon/human/chosen = input("Which crewmember?", nullable = TRUE, choices = validchoices)
 
 						if(chosen)
 							var/datum/dna/toDoppel = chosen.dna
@@ -257,7 +257,7 @@
 				if(doTrait)
 					if(doTrait == "Yes")
 						var/list/tType = list("Brute" = SNPC_BRUTE, "Stealth" = SNPC_STEALTH, "Martyr" = SNPC_MARTYR, "Psycho" = SNPC_PSYCHO)
-						var/cType = input("Choose the traitor personality.") as null|anything in tType
+						var/cType = input("Choose the traitor personality.", nullable = TRUE, choices = tType)
 						if(cType)
 							var/value = tType[cType]
 							T.makeTraitor(value)

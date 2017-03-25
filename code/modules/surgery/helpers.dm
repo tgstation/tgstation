@@ -40,7 +40,7 @@
 					available_surgeries[S.name] = S
 					break
 
-		var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
+		var/P = input("Begin which procedure?", "Surgery", null, null, nullable = TRUE, choices = available_surgeries)
 		if(P && user && user.Adjacent(M) && (I in user))
 			var/datum/surgery/S = available_surgeries[P]
 

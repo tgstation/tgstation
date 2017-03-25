@@ -180,7 +180,7 @@ This file contains the arcane tome files.
 
 	if(!check_rune_turf(Turf, user))
 		return
-	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in rune_types
+	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power", nullable = TRUE, choices = rune_types)
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	rune_to_scribe = rune_types[entered_rune_name]

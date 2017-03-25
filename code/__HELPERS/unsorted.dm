@@ -1217,7 +1217,7 @@ B --><-- A
 
 proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	if (value == FALSE) //nothing should be calling us with a number, so this is safe
-		value = input("Enter type to find (blank for all, cancel to cancel)", "Search for type") as null|text
+		value = input("Enter type to find (blank for all, cancel to cancel)", "Search for type", nullable = TRUE, istext = TRUE)
 		if (isnull(value))
 			return
 	value = trim(value)
@@ -1231,7 +1231,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	if(matches.len==1)
 		chosen = matches[1]
 	else
-		chosen = input("Select a type", "Pick Type", matches[1]) as null|anything in matches
+		chosen = input("Select a type", "Pick Type", matches[1], nullable = TRUE, choices = matches)
 		if(!chosen)
 			return
 	chosen = matches[chosen]

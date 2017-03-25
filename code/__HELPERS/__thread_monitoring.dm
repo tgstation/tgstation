@@ -12,7 +12,7 @@
     Master.SleepEnd()
 
 //this is the only one that changes syntax because byond
-/proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, isnum, isfile, type_obj, type_turf)
+/proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, ismessage, isnum, isfile, type_obj, type_turf)
     Master.SleepBegin()
     if(type_obj)
         if(nullable)
@@ -34,6 +34,11 @@
             . = input(Usr, Message, Title, Default) as null|text
         else
             . = input(Usr, Message, Title, Default) as text
+    else if(ismessage)
+        if(nullable)
+            . = input(Usr, Message, Title, Default) as null|message
+        else
+            . = input(Usr, Message, Title, Default) as message
     else if(isfile)
         if(nullable)
             . = input(Usr, Message, Title, Default) as null|file
