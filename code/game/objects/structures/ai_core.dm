@@ -20,9 +20,9 @@
 	return ..()
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore, TRUE, TRUE)
-	. = newlist(
+	return newlist(
 		/datum/construction_state/first{
-		//	required_type_to_construct = /obj/item/stack/sheet/plasteel
+			required_type_to_construct = /obj/item/stack/sheet/plasteel
 			required_amount_to_construct = 4
 			construction_delay = 50
 			one_per_turf = 1
@@ -92,13 +92,6 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore, TRUE, TRUE)
 			deconstruction_message = "disconnect the monitor from"
 		}
 	)
-	
-	//This is here to work around a byond bug
-	//http://www.byond.com/forum/?post=2220240
-	//When its fixed clean up this copypasta across the codebase OBJ_CONS_BAD_CONST
-
-	var/datum/construction_state/first/X = .[1]
-	X.required_type_to_construct = /obj/item/stack/sheet/plasteel
 
 /obj/structure/AIcore/ConstructionChecks(state_started_id, action_type, obj/item/I, mob/user, first_check)
 	. = ..()

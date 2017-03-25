@@ -10,9 +10,9 @@
 	opacity = 0
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/fluff, FALSE, FALSE)
-	. = newlist(
+	return newlist(
 		/datum/construction_state/first{
-			//required_type_to_construct = /obj/stack/sheet/metal
+			required_type_to_construct = /obj/item/stack/sheet/metal
 			required_amount_to_construct = 1
 			buildable = 0
 		},
@@ -23,13 +23,6 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/fluff, FALSE, FALSE)
 			deconstruction_message = "disassembling"
 		}
 	)
-	
-	//This is here to work around a byond bug
-	//http://www.byond.com/forum/?post=2220240
-	//When its fixed clean up this copypasta across the codebase OBJ_CONS_BAD_CONST
-
-	var/datum/construction_state/first/X = .[1]
-	X.required_type_to_construct = /obj/item/stack/sheet/metal
 
 /obj/structure/fluff/empty_terrarium //Empty terrariums are created when a preserved terrarium in a lavaland seed vault is activated.
 	name = "empty terrarium"

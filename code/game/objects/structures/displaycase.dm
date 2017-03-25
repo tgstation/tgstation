@@ -53,9 +53,9 @@
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase, FALSE, TRUE)
-	. = newlist(
+	return newlist(
 		/datum/construction_state/first{
-			//required_type_to_construct = /obj/item/stack/sheet/mineral/wood
+			required_type_to_construct = /obj/item/stack/sheet/mineral/wood
 			required_amount_to_construct = 5
 			construction_delay = 5
 			one_per_turf = 1
@@ -86,12 +86,6 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/displaycase, FALSE, TRUE)
 			repair_delay = 40
 		}
 	)
-	//This is here to work around a byond bug
-	//http://www.byond.com/forum/?post=2220240
-	//When its fixed clean up this copypasta across the codebase OBJ_CONS_BAD_CONST
-
-	var/datum/construction_state/first/X = .[1]
-	X.required_type_to_construct = /obj/item/stack/sheet/mineral/wood
 
 /obj/structure/displaycase/OnConstruction(state_id, mob/user, obj/item/used)
 	switch(state_id)
