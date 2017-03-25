@@ -219,7 +219,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/talisman_cult_name = initial(J.cultist_name)
 		if(talisman_cult_name)
 			possible_talismans[talisman_cult_name] = J //This is to allow the menu to let cultists select talismans by name
-	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
+	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices", nullable = TRUE, choices = possible_talismans)
 	talisman_type = possible_talismans[entered_talisman_name]
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated() || rune_in_use || !talisman_type)
 		return
@@ -555,7 +555,7 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		return
 	if(potential_revive_mobs.len > 1)
-		mob_to_revive = input(user, "Choose a cultist to revive.", "Cultist to Revive") as null|anything in potential_revive_mobs
+		mob_to_revive = input(user, "Choose a cultist to revive.", "Cultist to Revive", nullable = TRUE, choices = potential_revive_mobs)
 	else
 		mob_to_revive = potential_revive_mobs[1]
 	if(!src || QDELETED(src) || rune_in_use || !validness_checks(mob_to_revive, user))
@@ -809,7 +809,7 @@ var/list/wall_runes = list()
 	for(var/datum/mind/M in ticker.mode.cult)
 		if(!(M.current in invokers) && M.current && M.current.stat != DEAD)
 			cultists |= M.current
-	var/mob/living/cultist_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
+	var/mob/living/cultist_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer", nullable = TRUE, choices = cultists)
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 		return
 	if(!cultist_to_summon)

@@ -181,19 +181,19 @@
 			if(!thetype) return 1
 			switch(thetype)
 				if("text")
-					valueholder = input(user,"Enter variable value:" ,"Value", "value") as text
+					valueholder = input(user,"Enter variable value:" ,"Value", "value", istext = TRUE)
 				if("number")
-					valueholder = input(user,"Enter variable value:" ,"Value", 123) as num
+					valueholder = input(user,"Enter variable value:" ,"Value", 123, isnum = TRUE)
 				if("mob-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value") as mob in mob_list
+					valueholder = input(user,"Enter variable value:" ,"Value", choices = mob_list)
 				if("obj-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value") as obj in world
+					valueholder = input(user,"Enter variable value:" ,"Value", world_obj = TRUE)
 				if("turf-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value") as turf in world
+					valueholder = input(user,"Enter variable value:" ,"Value", world_turf = TRUE) 
 		if(AREA_BUILDMODE)
 			var/list/gen_paths = subtypesof(/datum/mapGenerator)
 
-			var/type = input(user,"Select Generator Type","Type") as null|anything in gen_paths
+			var/type = input(user,"Select Generator Type","Type", nullable = TRUE, choices = gen_paths)
 			if(!type) return
 
 			generator_path = type

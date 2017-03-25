@@ -31,7 +31,7 @@
 				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
 		else
 			targets["(No Mob) - [T]"] = T
-	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
+	var/target = input(src,"To whom shall we send a message?","Admin PM",null, nullable = TRUE, choices = sortList(targets))
 	cmd_admin_pm(targets[target],null)
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -79,7 +79,7 @@
 		if(!ircreplyamount)	//to prevent people from spamming irc
 			return
 		if(!msg)
-			msg = input(src,"Message:", "Private message to Administrator") as text|null
+			msg = input(src,"Message:", "Private message to Administrator", nullable = TRUE, istext = TRUE)
 
 		if(!msg)
 			return
@@ -98,7 +98,7 @@
 
 		//get message text, limit it's length.and clean/escape html
 		if(!msg)
-			msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
+			msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]", nullable = TRUE, istext = TRUE)
 
 			if(!msg)
 				return

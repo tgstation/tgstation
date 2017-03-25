@@ -28,7 +28,7 @@
 				return
 
 /client/proc/create_poll_function()
-	var/polltype = input("Choose poll type.","Poll Type") in list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting")|null
+	var/polltype = input("Choose poll type.","Poll Type", nullable = TRUE, choices = list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting"))
 	var/choice_amount = 0
 	switch(polltype)
 		if("Single Option")

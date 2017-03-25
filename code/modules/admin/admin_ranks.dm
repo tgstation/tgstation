@@ -263,7 +263,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/task = href_list["editrights"]
 	switch(task)
 		if("add")
-			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null) as text|null)
+			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null, istext = TRUE))
 			if(!new_ckey)
 				return
 			if(new_ckey in admin_datums)
@@ -309,7 +309,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				if(null)
 					return
 				if("*New Rank*")
-					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null, nullable = TRUE, text = TRUE) as null|text)
+					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null, nullable = TRUE, istext = TRUE))
 					if(!new_rank)
 						return
 

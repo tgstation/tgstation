@@ -931,7 +931,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
 
-	var/c = input(user, "Please select a PDA") as null|anything in sortList(plist)
+	var/c = input(user, "Please select a PDA", nullable = TRUE, choices = sortList(plist))
 
 	if (!c)
 		return

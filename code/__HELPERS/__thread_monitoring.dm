@@ -1,26 +1,44 @@
 //We wrap all procs that sleep so we can monitor how many threads are active
+//sadly we can't catch the entry point of input verbs but we should be working to clear those oout where possible
 
 /proc/wrap_sleep(delay)
     Master.SleepBegin()
     sleep(delay)
     Master.SleepEnd()
 
-/proc/wrap_alert(Usr=usr,Message,Title,Button1="Ok",Button2,Button3)
+/proc/wrap_alert(Usr = usr, Message, Title, Button1 = "Ok", Button2, Button3)
     Master.SleepBegin()
     . = alert(Usr,Message,Title,Button1,Button2,Button3) 
     Master.SleepEnd()
 
-/proc/wrap_input(Usr=usr,Message,Title,Default,nullable,choices,text)
+//this is the only one that changes syntax because byond
+/proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, isnum, world_obj, world_turf)
     Master.SleepBegin()
-    if(text)
+    if(world_obj)
         if(nullable)
-            . = input(Usr,Message,Title,Default) as null|text
+            . = input(Usr, Message, Title, Default) as null|obj in world
         else
-            . = input(Usr,Message,Title,Default) as text
-    else if(nullable)
-        . = input(Usr,Message,Title,Default) as null|anything in choices
-    else
-        . = input(Usr,Message,Title,Default) in choices
+            . = input(Usr, Message, Title, Default) as obj in world
+    if(world_turf)
+        if(nullable)
+            . = input(Usr, Message, Title, Default) as null|turf in world
+        else
+            . = input(Usr, Message, Title, Default) as turf in world
+    else if(isnum)
+        if(nullable)
+            . = input(Usr, Message, Title, Default) as null|num
+        else
+            . = input(Usr, Message, Title, Default) as num
+    else if(text)
+        if(nullable)
+            . = input(Usr, Message, Title, Default) as null|text
+        else
+            . = input(Usr, Message, Title, Default) as text
+    else 
+        if(nullable)
+            . = input(Usr, Message, Title, Default) as null|anything in choices
+        else
+            . = input(Usr, Message, Title, Default) in choices
     Master.SleepEnd()
 
 //world proc because fuck off

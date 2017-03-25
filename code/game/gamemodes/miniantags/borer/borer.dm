@@ -331,12 +331,12 @@ var/total_borer_hosts_needed = 10
 	if(stat == DEAD)
 		return
 
-	var/list/choices = list()
+	var/list/tchoices = list()
 	for(var/mob/living/carbon/H in view(1,src))
 		if(H!=src && Adjacent(H))
-			choices += H
+			tchoices += H
 
-	var/mob/living/carbon/H = input(src,"Who do you wish to infest?") in null|choices
+	var/mob/living/carbon/H = input(src,"Who do you wish to infest?", nullable = TRUE, choices = tchoices)
 	if(!H || !src)
 		return
 
@@ -460,12 +460,12 @@ var/total_borer_hosts_needed = 10
 		to_chat(src, "<span class='warning'>You cannot do that in your current state.</span>")
 		return
 
-	var/list/choices = list()
+	var/list/tchoices = list()
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
-			choices += C
+			tchoices += C
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
+	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?", nullable = TRUE, choices = tchoices)
 
 
 	if(!M || !src)
