@@ -180,7 +180,7 @@
 	O.SetLanding(N)
 
 /datum/action/innate/z_switch
-	name = "Switch Z Level"
+	name = "Warp to New Sector"
 	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/innate/z_switch/Activate()
@@ -188,7 +188,7 @@
 		return
 	var/mob/living/C = target
 	var/mob/camera/aiEye/nav/N = C.remote_control
-	var/list/zees = list(1,7,8,9,10,11,12)
+	var/list/zees = list(1,5,7,8,9,10,11,12)
 	var/selection = input(C,"Select Local Quadrant Number", "Quadrant Number") as null|anything in zees
 	N.setLoc(locate(125,125,selection))
 
@@ -220,7 +220,7 @@
 	user.remote_control = eyeobj
 	eyeobj.eye_user = user
 	user.reset_perspective(eyeobj)
-	user.sight |= SEE_TURFS
+	user.see_invisible = 50
 	user.update_sight()
 
 /obj/machinery/computer/ship_construction/New()
@@ -239,7 +239,7 @@
 	build_action.Grant(user, src)
 	airlock_mode_action.Grant(user, src)
 	shield.Grant(user, src)
-	APC.Gramt(user, src)
+	APC.Grant(user, src)
 	rec.Grant(user, src)
 
 /obj/machinery/computer/ship_construction/attackby(obj/item/W, mob/user, params)
@@ -257,7 +257,7 @@
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
-	invisibility = INVISIBILITY_MAXIMUM
+	invisibility = 50
 	var/obj/machinery/computer/ship_construction/origin
 	var/mob/living/eye_user
 
@@ -341,6 +341,7 @@
 	N.eye_user = null
 	if(C.client)
 		C.reset_perspective(null)
+		C.see_invisible = 25
 		C.client.change_view(7)
 	C.remote_control = null
 	C.unset_machine()
@@ -417,7 +418,7 @@
 /datum/action/innate/engi_ship/machiner/Activate()
 	var/turf/remote = get_turf(C.remote_control)
 	if(remote.density)
-		spawn_atom_to_turf(/obj/machinery/computer/apc_control, remote, 1)
+		spawn_atom_to_turf(/obj/machinery/power/apc/powered, remote, 1)
 	else
 		to_chat(C, "Error - Nonsuitable destination detected.")
 

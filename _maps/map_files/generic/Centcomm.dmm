@@ -13964,9 +13964,7 @@
 	},
 /area/shuttle/engi_ship)
 "JW" = (
-/obj/machinery/satellite/meteor_shield{
-	active = 1
-	},
+/obj/machinery/speshul,
 /turf/open/floor/fakespace,
 /area/shuttle/engi_ship)
 "JX" = (
@@ -14111,13 +14109,13 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "KE" = (
 /obj/structure/sink{
 	dir = 1
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "KF" = (
 /obj/structure/bed/pod,
@@ -14158,11 +14156,11 @@
 	step_y = -4
 	},
 /obj/item/device/forcefield,
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "KM" = (
 /obj/machinery/suit_storage_unit/ert/engineer,
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "KN" = (
 /obj/machinery/suit_storage_unit/ert/engineer,
@@ -14325,7 +14323,7 @@
 /obj/item/weapon/storage/belt/utility/chief/full,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "LC" = (
 /turf/open/floor/plating,
@@ -14394,7 +14392,7 @@
 "LO" = (
 /obj/machinery/light,
 /obj/machinery/washing_machine,
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "LP" = (
 /obj/machinery/newscaster,
@@ -14426,15 +14424,17 @@
 /area/shuttle/engi_ship)
 "LV" = (
 /obj/machinery/light,
-/obj/machinery/power/tesla_coil,
-/turf/open/floor/carpet,
+/obj/structure/rack,
+/obj/item/weapon/hand_tele,
+/obj/item/weapon/melee/classic_baton/telescopic,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "LW" = (
 /turf/open/floor/carpet,
 /area/shuttle/engi_ship)
 "LX" = (
 /obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "LY" = (
 /turf/open/floor/plating,
@@ -14491,7 +14491,7 @@
 /obj/structure/table/wood/fancy,
 /obj/item/weapon/canvas/nineteenXnineteen,
 /obj/item/weapon/canvas/nineteenXnineteen,
-/obj/item/weapon/storage/toolbox/artistic,
+/obj/item/weapon/storage/crayons,
 /turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "Mk" = (
@@ -14527,18 +14527,9 @@
 /area/shuttle/engi_ship)
 "Ms" = (
 /obj/machinery/button/door{
-	name = "Main Blast Doors Control";
-	desc = "A blast door remote control switch.";
-	step_x = 6;
-	step_y = -7;
-	pixel_y = 0;
-	req_access = 0;
-	req_one_access = 0;
-	req_access_txt = null;
-	req_one_access_txt = null;
 	id = 29
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/shuttle/smooth,
 /area/shuttle/engi_ship)
 "Mt" = (
 /obj/machinery/light{
@@ -14582,7 +14573,7 @@
 /obj/machinery/door/poddoor/preopen{
 	id = 29
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plating,
 /area/shuttle/engi_ship)
 "Mx" = (
 /obj/machinery/door/airlock/engineering,
@@ -14608,14 +14599,16 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "MC" = (
-/obj/structure/chair/wood/wings{
-	dir = 4
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 4;
+	icon_state = "comfychair"
 	},
 /turf/open/floor/carpet,
 /area/shuttle/engi_ship)
 "MD" = (
 /obj/structure/table/wood/fancy,
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "ME" = (
 /obj/structure/table/wood/fancy,
@@ -14623,8 +14616,10 @@
 /turf/open/floor/carpet,
 /area/shuttle/engi_ship)
 "MF" = (
-/obj/structure/chair/wood/wings{
-	dir = 8
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 8;
+	icon_state = "comfychair"
 	},
 /turf/open/floor/carpet,
 /area/shuttle/engi_ship)
@@ -14642,7 +14637,7 @@
 /area/shuttle/engi_ship)
 "MK" = (
 /obj/machinery/door/airlock/glass_engineering,
-/turf/open/floor/mineral/gold,
+/turf/open/floor/carpet,
 /area/shuttle/engi_ship)
 "ML" = (
 /turf/open/floor/mineral/gold,
@@ -14651,7 +14646,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
-/turf/open/floor/mineral/gold,
+/turf/open/floor/carpet,
 /area/shuttle/engi_ship)
 "MN" = (
 /obj/machinery/computer/apc_control,
@@ -14710,13 +14705,13 @@
 /turf/open/floor/carpet,
 /area/shuttle/engi_ship)
 "MV" = (
-/obj/docking_port/mobile/engi_ship,
 /obj/structure/table/wood/fancy,
 /obj/item/weapon/storage/pill_bottle/dice,
 /obj/effect/holodeck_effect/cards{
 	step_x = -3;
 	step_y = 10
 	},
+/obj/docking_port/mobile/engi_ship,
 /turf/open/floor/carpet,
 /area/shuttle/engi_ship)
 "MW" = (
@@ -14776,7 +14771,7 @@
 /obj/machinery/door/poddoor/preopen{
 	id = 29
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plating,
 /area/shuttle/engi_ship)
 "Nh" = (
 /turf/open/space,
@@ -14945,7 +14940,7 @@
 /area/shuttle/engi_ship)
 "NR" = (
 /obj/machinery/computer/arcade,
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "NS" = (
 /turf/open/floor/plating,
@@ -15195,7 +15190,7 @@
 "OY" = (
 /obj/structure/table/wood/fancy,
 /obj/item/weapon/reagent_containers/spray/cleaner,
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "OZ" = (
 /obj/structure/table/wood,
@@ -15204,7 +15199,7 @@
 /area/shuttle/engi_ship)
 "Pa" = (
 /obj/machinery/door/window/northright,
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "Pb" = (
 /turf/closed/wall/mineral/titanium,
@@ -15479,6 +15474,10 @@
 /turf/open/space,
 /area/shuttle/engi_ship)
 "Qe" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
 /turf/open/space,
 /area/shuttle/engi_ship)
 "Qf" = (
@@ -15493,7 +15492,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "Qh" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -15517,15 +15516,9 @@
 /obj/item/weapon/rcd,
 /obj/item/weapon/rcd_ammo/large,
 /obj/item/weapon/rcd_ammo/large,
-/obj/item/device/assembly/flash{
-	step_x = 6;
-	step_y = -3
-	},
+/obj/item/device/assembly/flash,
 /obj/item/clothing/glasses/welding,
-/obj/item/device/modular_computer/tablet{
-	step_x = -4;
-	step_y = -2
-	},
+/obj/item/device/modular_computer/tablet,
 /obj/item/device/paicard,
 /turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
@@ -15553,7 +15546,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/fakespace,
 /area/shuttle/engi_ship)
 "Qo" = (
 /obj/structure/table/wood/fancy,
@@ -15565,7 +15558,7 @@
 /area/shuttle/engi_ship)
 "Qp" = (
 /obj/machinery/light,
-/turf/open/space,
+/turf/open/floor/fakespace,
 /area/shuttle/engi_ship)
 "Qq" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -15635,6 +15628,28 @@
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"QB" = (
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QC" = (
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QD" = (
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QE" = (
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/carpet,
 /area/shuttle/engi_ship)
 
 (1,1,1) = {"
@@ -26128,12 +26143,12 @@ aa
 aa
 aa
 aa
-Ql
+Qh
 aa
 aa
 aa
 aa
-Qq
+Qh
 aa
 aa
 aa
@@ -26392,7 +26407,7 @@ aa
 aa
 KT
 JH
-Os
+Qh
 aa
 aa
 aa
@@ -27663,7 +27678,7 @@ aa
 aa
 aa
 aa
-Qc
+Qa
 JI
 JH
 Kn
@@ -27924,7 +27939,7 @@ JH
 JH
 JH
 Kl
-KW
+KG
 KW
 KW
 LO
@@ -28699,16 +28714,16 @@ KI
 KW
 Lv
 LR
-KW
+QB
 Qo
 MV
-KW
+QD
 Lp
 Lv
 KW
 KI
 Kr
-Qy
+Qd
 aa
 aa
 aa
@@ -28956,16 +28971,16 @@ KI
 KW
 Lv
 Lp
-KW
+QC
 ME
 MW
-KW
+QE
 Lp
 Lv
 KW
 KI
 Kr
-Qz
+Qe
 aa
 aa
 aa
@@ -29207,7 +29222,7 @@ aa
 aa
 aa
 JM
-Qf
+JH
 Kt
 KK
 La
@@ -29222,7 +29237,7 @@ Lx
 La
 OW
 LC
-QA
+JH
 Md
 aa
 aa
@@ -29461,7 +29476,7 @@ aa
 aa
 aa
 aa
-Qb
+Qa
 JI
 JH
 JH
@@ -29471,11 +29486,11 @@ KW
 Qj
 LU
 Mo
-Lp
-Lp
+KW
+KW
 Ns
 Lx
-Qw
+Qs
 KW
 MD
 Po
@@ -29728,8 +29743,8 @@ KW
 KW
 LV
 Mp
-Lp
-Lp
+KW
+KW
 Lx
 Qt
 KW
@@ -30238,16 +30253,16 @@ JQ
 JH
 Ku
 KM
-KW
+Lp
 LB
 LX
 Mr
-Lp
-Lp
+KW
+KW
 Nv
 NR
-KW
-KW
+Lp
+Lp
 Pa
 Lp
 Ku
@@ -30756,8 +30771,8 @@ JH
 JH
 LZ
 Mt
-Lp
-Lp
+KW
+KW
 Nx
 JH
 JH
@@ -31016,7 +31031,7 @@ Mu
 MM
 MM
 Ny
-Qu
+Qm
 JH
 Lk
 NW
@@ -31524,7 +31539,7 @@ aa
 aa
 aa
 aa
-Qk
+Qi
 JQ
 Mw
 Mw
