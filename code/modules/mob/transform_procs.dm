@@ -385,7 +385,7 @@
 
 	R.loc = loc
 	R.job = "Cyborg"
-	R.notify_ai(1)
+	R.notify_ai(NEW_BORG)
 
 	. = R
 	qdel(src)

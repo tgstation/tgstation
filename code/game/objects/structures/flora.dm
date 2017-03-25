@@ -339,7 +339,7 @@
 /obj/structure/flora/rock/jungle
 	icon_state = "pile of rocks"
 	desc = "A pile of rocks."
-	icon_state = "rocks"
+	icon_state = "rock"
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
 
@@ -380,6 +380,6 @@
 	pixel_x = -16
 	pixel_y = -16
 
-/obj/structure/flora/rock/jungle/Initialize()
+/obj/structure/flora/rock/pile/largejungle/Initialize()
 	..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"

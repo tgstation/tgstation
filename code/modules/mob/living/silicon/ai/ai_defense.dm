@@ -22,6 +22,7 @@
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)
+	disconnect_shell()
 	if (prob(30))
 		switch(pick(1,2))
 			if(1)

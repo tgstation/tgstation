@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - tweak: "The recycler's base reclaim rate has been buffed from 1% to 50%. Manipulator upgrades now give +12.5% per level instead of +25%"
