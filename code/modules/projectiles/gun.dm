@@ -362,7 +362,7 @@
 
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
-	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
+	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun", choices = options)
 
 	if(src && choice && !current_skin && !M.incapacitated() && in_range(M,src))
 		if(options[choice] == null)

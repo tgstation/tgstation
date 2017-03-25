@@ -46,7 +46,7 @@
 		to_chat(src, "<span class='warning'>You have no vision filter to change!</span>")
 		return
 
-	var/selectedStatic = input("Select a vision filter", "Vision Filter") as null|anything in staticChoices
+	var/selectedStatic = input("Select a vision filter", "Vision Filter", nullable = TRUE, choices = staticChoices)
 	if(selectedStatic in staticChoices)
 		staticChoice = selectedStatic
 

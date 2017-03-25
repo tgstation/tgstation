@@ -34,7 +34,7 @@
 				var/new_ai = select_active_ai(R)
 				if(new_ai && (new_ai != R.connected_ai))
 					R.connected_ai = new_ai
-					if(R.shell)
+					if(R.ai_shell)
 						R.undeploy() //If this borg is an AI shell, disconnect the controlling AI and assign ti to a new AI
 						R.notify_ai(AI_SHELL)
 					else

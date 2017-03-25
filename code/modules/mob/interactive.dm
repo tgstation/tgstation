@@ -229,7 +229,7 @@
 					T.makeTraitor(cType)
 				T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
 			if(choice == "Custom")
-				var/cjob = input("Choose Job") as null|anything in SSjob.occupations
+				var/cjob = input("Choose Job", nullable = TRUE, choices = SSjob.occupations)
 				if(cjob)
 					T.myjob = cjob
 					T.job = T.myjob.title

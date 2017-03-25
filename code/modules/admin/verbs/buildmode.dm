@@ -187,9 +187,9 @@
 				if("mob-reference")
 					valueholder = input(user,"Enter variable value:" ,"Value", choices = mob_list)
 				if("obj-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value", world_obj = TRUE)
+					valueholder = input(user,"Enter variable value:" ,"Value", type_obj = TRUE)
 				if("turf-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value", world_turf = TRUE) 
+					valueholder = input(user,"Enter variable value:" ,"Value", type_turf = TRUE) 
 		if(AREA_BUILDMODE)
 			var/list/gen_paths = subtypesof(/datum/mapGenerator)
 

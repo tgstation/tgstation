@@ -68,7 +68,7 @@
 		lay_down()
 
 /mob/living/silicon/pai/proc/choose_chassis()
-	var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in possible_chassis
+	var/choice = input(src, "What would you like to use for your holochassis composite?", nullable = TRUE, choices = possible_chassis)
 	if(!choice)
 		return 0
 	chassis = choice

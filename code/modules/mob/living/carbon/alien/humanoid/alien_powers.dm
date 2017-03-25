@@ -79,10 +79,10 @@ Doesn't work on other aliens/AI.*/
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(user))
 		options += Ms
-	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
+	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null, nullable = TRUE, choices = options)
 	if(!M)
 		return 0
-	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
+	var/msg = sanitize(input("Message:", "Alien Whisper", nullable = TRUE, istext = TRUE)
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
@@ -252,7 +252,7 @@ Doesn't work on other aliens/AI.*/
 	if(locate(/obj/structure/alien/resin) in user.loc)
 		to_chat(user, "<span class='danger'>There is already a resin structure there.</span>")
 		return 0
-	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
+	var/choice = input("Choose what you wish to shape.","Resin building", nullable = TRUE, choices = structures)
 	if(!choice)
 		return 0
 	if (!cost_check(check_turf,user))

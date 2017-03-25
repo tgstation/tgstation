@@ -99,7 +99,7 @@
 
 /obj/item/weapon/stamp/chameleon/attack_self(mob/user)
 	var/input_stamp = input(user, "Choose a stamp to disguise as.",
-		"Choose a stamp.") as null|anything in stamp_names
+		"Choose a stamp.", nullable = TRUE, choices = stamp_names)
 
 	if(user && (src in user.contents) && input_stamp)
 		var/obj/item/weapon/stamp/stamp_type

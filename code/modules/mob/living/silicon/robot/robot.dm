@@ -206,7 +206,7 @@
 	if(!config.forbid_secborg)
 		modulelist["Security"] = /obj/item/weapon/robot_module/security
 
-	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
+	var/input_module = input("Please, select a module!", "Robot", null, null, nullable = TRUE, choices = modulelist)
 	if(!input_module || module.type != /obj/item/weapon/robot_module)
 		return
 

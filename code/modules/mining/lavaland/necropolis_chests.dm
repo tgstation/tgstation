@@ -722,7 +722,7 @@
 	if(used)
 		return
 	used = TRUE
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in player_list
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim", nullable = TRUE, choices = player_list)
 
 	if(!(isliving(choice)))
 		to_chat(user, "[choice] is already dead!")
