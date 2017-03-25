@@ -55,43 +55,39 @@
 			if(traffic > 0)
 				totaltraffic += traffic // add current traffic to total traffic
 
-			//Is this a test signal? Bypass logging
-			if(signal.data["type"] != 4)
+			// If signal has a message and appropriate frequency
+			update_logs()
 
-				// If signal has a message and appropriate frequency
+			var/datum/comm_log_entry/log = new
 
-				update_logs()
+			// Copy the signal.data entries we want
+			log.parameters["mobtype"] = signal.data["mobtype"]
+			log.parameters["job"] = signal.data["job"]
+			log.parameters["key"] = signal.data["key"]
+			log.parameters["message"] = signal.data["message"]
+			log.parameters["name"] = signal.data["name"]
+			log.parameters["realname"] = signal.data["realname"]
 
-				var/datum/comm_log_entry/log = new
+			log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
 
-				// Copy the signal.data entries we want
-				log.parameters["mobtype"] = signal.data["mobtype"]
-				log.parameters["job"] = signal.data["job"]
-				log.parameters["key"] = signal.data["key"]
-				log.parameters["message"] = signal.data["message"]
-				log.parameters["name"] = signal.data["name"]
-				log.parameters["realname"] = signal.data["realname"]
+			// If the signal is still compressed, make the log entry gibberish
+			if(signal.data["compression"] > 0)
+				log.parameters["message"] = Gibberish(signal.data["message"], signal.data["compression"] + 50)
+				log.parameters["job"] = Gibberish(signal.data["job"], signal.data["compression"] + 50)
+				log.parameters["name"] = Gibberish(signal.data["name"], signal.data["compression"] + 50)
+				log.parameters["realname"] = Gibberish(signal.data["realname"], signal.data["compression"] + 50)
+				log.input_type = "Corrupt File"
 
-				log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+			// Log and store everything that needs to be logged
+			log_entries.Add(log)
+			if(!(signal.data["name"] in stored_names))
+				stored_names.Add(signal.data["name"])
+			logs++
+			signal.data["server"] = src
 
-				// If the signal is still compressed, make the log entry gibberish
-				if(signal.data["compression"] > 0)
-					log.parameters["message"] = Gibberish(signal.data["message"], signal.data["compression"] + 50)
-					log.parameters["job"] = Gibberish(signal.data["job"], signal.data["compression"] + 50)
-					log.parameters["name"] = Gibberish(signal.data["name"], signal.data["compression"] + 50)
-					log.parameters["realname"] = Gibberish(signal.data["realname"], signal.data["compression"] + 50)
-					log.input_type = "Corrupt File"
-
-				// Log and store everything that needs to be logged
-				log_entries.Add(log)
-				if(!(signal.data["name"] in stored_names))
-					stored_names.Add(signal.data["name"])
-				logs++
-				signal.data["server"] = src
-
-				// Give the log a name
-				var/identifier = num2text( rand(-1000,1000) + world.time )
-				log.name = "data packet ([md5(identifier)])"
+			// Give the log a name
+			var/identifier = num2text( rand(-1000,1000) + world.time )
+			log.name = "data packet ([md5(identifier)])"
 
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub")
 			if(!can_send)

@@ -78,7 +78,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"radio" = signal.data["radio"],
 			"slow" = signal.data["slow"],
 			"traffic" = signal.data["traffic"],
-			"type" = signal.data["type"],
 			"server" = signal.data["server"],
 			"reject" = signal.data["reject"],
 			"level" = signal.data["level"],
