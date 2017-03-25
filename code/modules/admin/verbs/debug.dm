@@ -550,7 +550,7 @@ var/list/TYPES_SHORTCUTS = list(
 		outfits[initial(O.name)] = path
 
 
-	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in outfits
+	var/dresscode = input("Select dress for [M]", "Robust quick dress shop", nullable = TRUE, choices = outfits)
 	if (isnull(dresscode))
 		return
 
@@ -564,7 +564,7 @@ var/list/TYPES_SHORTCUTS = list(
 			var/datum/outfit/O = path
 			job_outfits[initial(O.name)] = path
 
-		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in job_outfits
+		dresscode = input("Select job equipment", "Robust quick dress shop", nullable = TRUE, choices = job_outfits)
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
