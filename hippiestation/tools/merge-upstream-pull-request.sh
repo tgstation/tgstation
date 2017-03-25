@@ -6,7 +6,6 @@ set -C # noclobber
 
 BASE_PATCH_URL="https://patch-diff.githubusercontent.com/raw/tgstation/tgstation/pull/"
 BASE_BRANCH_NAME="upstream-merge-"
-BASE_COMMIT_MESSAGE="Automatic merge of upstream pull request: "
 
 tmpfile=$(mktemp /tmp/git-patch-script.XXXXXX)
 
@@ -18,7 +17,7 @@ fi
 
 # Ensure all given parameters exist
 if [ $# -eq 0 ]; then
-    echo "Error: No arguments have been given, the first argument needs to be a pull ID"
+    echo "Error: No arguments have been given, the first argument needs to be a pull ID, the second argument needs to be the commit message"
     exit 1
 fi
 
@@ -53,7 +52,7 @@ git apply --reject --whitespace=nowarn "$tmpfile"
 git add -A .
 
 # Commit these changes
-git commit -m "$BASE_COMMIT_MESSAGE$1"
+git commit -m "$2"
 
 # Push them onto the branch
 git push -u origin "$BASE_BRANCH_NAME$1"
