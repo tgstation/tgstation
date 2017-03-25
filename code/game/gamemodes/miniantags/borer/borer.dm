@@ -336,6 +336,8 @@ var/total_borer_hosts_needed = 10
 		if(H!=src && Adjacent(H))
 			choices += H
 
+	if(!choices.len)
+		return
 	var/mob/living/carbon/H = choices.len > 1 ? input(src,"Who do you wish to infest?") in null|choices : choices[1]
 	if(!H || !src)
 		return
