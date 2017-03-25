@@ -776,9 +776,10 @@
 	tag = "icon-0-2";
 	icon_state = "0-2"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
+/obj/machinery/modular_computer/console/preset/command,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
 /area/bridge)
 "abo" = (
 /turf/open/floor/plasteel/vault{
@@ -21889,12 +21890,12 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIx" = (
-/obj/machinery/computer/monitor{
-	name = "Engineering Power Monitoring Console"
-	},
 /obj/machinery/light_switch{
 	pixel_x = 38;
 	pixel_y = 24
@@ -21907,6 +21908,7 @@
 	req_access_txt = "10"
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIy" = (
@@ -41983,6 +41985,16 @@
 	},
 /turf/open/floor/circuit/green,
 /area/engine/engineering)
+"buW" = (
+/obj/structure/cable/white{
+	tag = "icon-0-2";
+	icon_state = "0-2"
+	},
+/obj/machinery/modular_computer/console/preset/research,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/bridge)
 
 (1,1,1) = {"
 aaa
@@ -84210,7 +84222,7 @@ aav
 aaH
 aaQ
 abb
-abn
+buW
 abF
 ack
 adc

@@ -12,7 +12,7 @@ var/const/SAFETY_COOLDOWN = 100
 	var/icon_name = "grinder-o"
 	var/blood = 0
 	var/eat_dir = WEST
-	var/amount_produced = 1
+	var/amount_produced = 50
 	var/datum/material_container/materials
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
@@ -40,9 +40,9 @@ var/const/SAFETY_COOLDOWN = 100
 		mat_mod = 2 * B.rating
 	mat_mod *= 50000
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		amt_made = 25 * M.rating //% of materials salvaged
+		amt_made = 12.5 * M.rating //% of materials salvaged
 	materials.max_amount = mat_mod
-	amount_produced = min(100, amt_made)
+	amount_produced = min(50, amt_made) + 50
 
 /obj/machinery/recycler/examine(mob/user)
 	..()

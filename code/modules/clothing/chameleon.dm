@@ -440,6 +440,7 @@
 	chameleon_gun_vars = list()
 	ammo_copy_vars = list("firing_effect_type")
 	chameleon_ammo_vars = list()
+	recharge_newshot()
 	get_chameleon_projectile(/obj/item/weapon/gun/energy/laser)
 
 /obj/item/weapon/gun/energy/laser/chameleon/emp_act(severity)

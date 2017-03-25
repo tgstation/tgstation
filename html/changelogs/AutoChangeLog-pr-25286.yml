@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "Added the prototype canister with expanded volume, valve pressure, and access/timer features"

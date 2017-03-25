@@ -721,7 +721,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			var/mob/M = loc
 			M.put_in_hands(inserted_item)
 		else
-			inserted_item.forceMove(loc)
+			inserted_item.forceMove(get_turf(src))
 		to_chat(usr, "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>")
 		inserted_item = null
 		update_icon()
