@@ -36,7 +36,7 @@
 #define MED_BOT				16	// Medibots
 
 //AI notification defines
-#define		NEW_BORG		1
-#define		NEW_MODULE	2
-#define		RENAME		3
-#define		AI_SHELL		4
+#define		NEW_BORG     1
+#define		NEW_MODULE   2
+#define		RENAME       3
+#define		AI_SHELL     4
