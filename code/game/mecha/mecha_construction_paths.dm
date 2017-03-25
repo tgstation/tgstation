@@ -562,7 +562,7 @@
 
 /datum/construction/reversible/mecha/gygax/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
 	feedback_inc("mecha_gygax_created",1)
 	return
@@ -1147,7 +1147,7 @@
 
 /datum/construction/reversible/mecha/durand/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
 	feedback_inc("mecha_durand_created",1)
 	return
@@ -1479,7 +1479,7 @@
 
 /datum/construction/reversible/mecha/phazon/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
 	feedback_inc("mecha_phazon_created",1)
 	return

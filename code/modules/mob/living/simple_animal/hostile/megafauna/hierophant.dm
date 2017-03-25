@@ -116,9 +116,8 @@ Difficulty: Hard
 	for(var/obj/item/W in L)
 		if(!L.dropItemToGround(W))
 			qdel(W)
-	visible_message(
-		"<span class='hierophant_warning'>\"[pick(kill_phrases)]\"\n[src] annihilates [L]!</span>",
-		"<span class='userdanger'>You annihilate [L], restoring your health!</span>")
+	visible_message("<span class='hierophant_warning'>\"[pick(kill_phrases)]\"</span>")
+	visible_message("<span class='hierophant_warning'>[src] annihilates [L]!</span>","<span class='userdanger'>You annihilate [L], restoring your health!</span>")
 	adjustHealth(-L.maxHealth*0.5)
 	L.dust()
 

@@ -21,7 +21,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
 
-/obj/item/stack/rods/New(var/loc, var/amount=null)
+/obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	..()
 
 	recipes = rod_recipes
