@@ -8,7 +8,7 @@
 
 	. = src.say_dead(message)
 
-/mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/mob/dead/observer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans)
 	if(radio_freq)
 		var/atom/movable/virtualspeaker/V = speaker
 
@@ -18,5 +18,7 @@
 		else
 			speaker = V.source
 	var/link = FOLLOW_LINK(src, speaker)
+	// Recompose the message, because it's scrambled by default
+	message = compose_message(speaker, message_language, raw_message, radio_freq, spans)
 	to_chat(src, "[link] [message]")
 

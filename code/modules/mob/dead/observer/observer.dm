@@ -121,6 +121,8 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 		verbs -= /mob/dead/observer/verb/possess
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
+
+	grant_all_languages()
 	..()
 
 /mob/dead/observer/narsie_act()
