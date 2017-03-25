@@ -20,14 +20,17 @@ Icons are notorious for conflicts. Because of this, **ALL NEW ICONS** must go in
 
 If a small addition needs to be made outside of the "hippiestation" folder, then it should be done by adding a proc. This proc will be defined inside of the "hippiestation" folder. By doing this, a large number of things can be done by adding just one line of code outside of the folder! If a file must be changed a lot, re-create it with the changes inside of the "hippiestation/code" folder. **Make sure to follow the file's path correctly** (i.e. code/modules/clothing/clothing.dm.) Then, remove the original file from the hippiestation.dme and add the new one.
 
-## Clothing
+## Specific cases and examples
+There are some additions that should follow specific standards to maintain this repository's organization.
+
+### Clothing
 
 New clothing items should be a subtype of "/obj/item/clothing/CLOTHINGTYPE/hippie" inside of the respective clothing file. For example, replace CLOTHINGTYPE with ears to get "/obj/item/clothing/ears/hippie" inside of "ears.dm" in "code/modules/clothing." If the file does not exist, create it and follow this format.
 
-## Actions and spells
+### Actions and spells
 
 New actions and spells should use the "hippiestation/icons/mob/actions.dmi" file. If it is a spell, put the code for the spell in "hippiestation/code/modules/spells." To make sure that the spell uses the Hippie icon, please add "action_icon = 'hippiestation/icons/mob/actions.dmi'" and the "action_icon_state" var.
 
-## Reagents
+### Reagents
 
 New reagents should go inside "hippiestation/code/modules/reagents/drug_reagents.dm." In this case, "drug_reagents" is an example, so please use or create a "toxins.dm" if you are adding a new toxin. Recipes should go inside "hippiestation/code/modules/reagents/recipes/drug_reagents.dm." Once again, "drug_reagents" has been used as an example.
