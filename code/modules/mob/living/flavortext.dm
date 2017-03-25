@@ -46,11 +46,11 @@
 		"savagely",
 		"creepily",
 		"bombaciously",
-		"ackwardly",
+		"awkwardly",
 		"mathametically",
 		"sloppily",
 		"silently",
-		"robustily",
+		"robustly",
 		"amazingly",
 		"simply",
 		"greatly",
@@ -82,7 +82,7 @@
 		"pissing off people",
 		"making food",
 		"writhing around in their own vomit and filth",
-		"unsuccesfully seducing people",
+		"unsuccessfully seducing people",
 		"succesfully seducing people",
 		"shitposting",
 		"bursting into song",
@@ -108,3 +108,4 @@
 /mob/living/proc/GenerateFlavorText()
 	flavor_text = "They are very [pick(adjectives)]. They enjoy [pick(hobbies)]. They also [pick(adverbs)] [pick(_verbs)]."
 	desc = "[desc] \n [flavor_text]"
+
