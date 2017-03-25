@@ -1,11 +1,6 @@
 
 var/global/power_transmitted = 0
 
-#define PTL_POWER_NONE "none"
-#define PTL_POWER_ENOUGH "enough"
-#define PTL_POWER_INSUFFICIENT "insufficient"
-#define PTL_POWER_OVERDRAW "overdraw"
-
 #define PTL_TARGET_TRANSMIT_STATION "station"
 #define PTL_TARGET_TRANSMIT_CENTCOM "centcom"
 #define PTL_TARGET_TRANSMIT_LAVALAND "lavaland"
@@ -42,78 +37,80 @@ var/global/power_transmitted = 0
 	var/firing = FALSE
 	var/firing_output = 1e6
 	var/firing_mode = PTL_PULSE
+	var/firing_time_tracer = 2	//Processes
+	var/firing_time_pulse = 5
+	var/firing_time_left = 0
 
 	var/target = PTL_TARGET_TRANSMIT_CENTCOM
+	var/obj/machinery/power/terminal/terminal = null
 
-/obj/machinery/power/PTL/New()
-	..()
-	//var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/PTL(null) No idea how circuit board construction works for now.
-	//B.apply_default_parts(src)
-	resistence_flags = INDESTRUCTIBLE|FIRE_PROOF|ACID_PROOF	//Irreplacable mapping object until construction is in.
+	resistance_flags = INDESTRUCTIBLE|FIRE_PROOF|ACID_PROOF	//Irreplacable mapping object until construction is in.
 
 /obj/machinery/power/PTL/proc/transmit_power(power)	//PUT WHATEVER YOU WANT TO HAPPEN WHEN IT REACHES ZLEVEL EDGE/CENTRAL COMMAND HERE!
 	global.power_transmitted += power
 
-/obj/machinery/power/PTL/connect_to_network()	//Intended to directly draw from linked storage in the future but for now it uses wires.
-	var/list/turf/try_to_use = list()
-	for(var/iter1 = -1, iter1 < 2, iter1++)
-		for(var/iter2 = -1, iter2 < 2, iter2++)
-			try_to_use += locate((x + iter1), (y + iter2), z)
-	for(var/turf/T in try_to_use)
-		if(..(T))
-			return TRUE
-	return FALSE
+/obj/machinery/power/PTL/New()
+	if(dir == NORTH)	//NO NORTH/SOUTH SPRITES!!
+		setDir(EAST)
+	if(dir == SOUTH)
+		setDir(WEST)
+	..()
+	make_terminal()
 
-/obj/machinery/power/PTL/proc/check_powernet_for_amount(amount, overdraw_allowed = FALSE)
-	if(!powernet)
-		return PTL_POWER_NONE
-	var/avail = surplus()
-	if(avail >= amount)
-		return PTL_POWER_ENOUGH
-	else if(overdraw_allowed)
-		return PTL_POWER_OVERDRAW
-	else
-		return PTL_POWER_INSUFFICIENT
+/obj/machinery/power/PTL/proc/make_terminal()
+	if(terminal)
+		return FALSE
+	var/turf/T = get_turf(src)
+	T = get_step(T, dir)		//3x3 sprite, place just outside.
+	T = get_step(T, dir)
+	terminal = new /obj/machinery/power/terminal(T)
+	terminal.master = src
+	return terminal
 
-/obj/machinery/power/PTL/proc/draw_from_powernet(amount, overdraw_allowed = FALSE)	//Returns amount taken from powernet. If overdrawing is allowed, powersink APCs for energy.
-	if(!powernet)
-		return 0
-	var/surplus = surplus()
-	if(surplus >= amount)
-		add_load(amount)
-		return amount
-	else if(!overdraw_allowed)
-		add_load(surplus)
-		return surplus
-	else
-		var/total_drawn = surplus
-		add_load(amount)
-		overdraw_alert()
-		for(var/obj/machinery/power/terminal/T in powernet.nodes)
-			if(istype(T.master, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/A = T.master
-				if(A.operating && A.cell)
-					A.cell.charge = max(0, A.cell.charge - ptl_overdraw_apc_max)
-					total_drawn += (ptl_overdraw_apc_max * ptl_overdraw_apc_multi)
-					if(A.charging == 2)
-						A.charging = 1
+/obj/machinery/power/PTL/Destroy()
+	destroy_terminal()
+	..()
 
-/obj/machinery/power/PTL/proc/overdraw_alert()
-	var/area/A = get_area(src)
-	priority_announce("Extreme overdraw detected at [A.name]. Powernet and attached machinery will be drained at a rapid rate.", title = "Powernet Overdraw Detected", sound = 'sound/misc/interference.ogg', "Priority")
-/obj/machinery/power/PTL/process()
+/obj/machinery/power/PTL/proc/destroy_terminal()
+	var/V = terminal
+	terminal.master = null
+	terminal = null
+	qdel(V)
+
+/obj/machinery/power/PTL/proc/handle_charging()
 	if(charging)
 		if(internal_charge < internal_buffer)
 			var/charged = internal_charge
 			if((internal_buffer - internal_charge) <= charge_rate)
-				internal_charge += try_use_linked_power(internal_buffer - internal_charge)
+				internal_charge += draw_from_powernet(internal_buffer - internal_charge)
 			else
-				internal_charge += try_use_linked_power(charge_rate)
+				internal_charge += draw_from_powernet(charge_rate)
 			charged = (internal_charge - charged)
 			if((charged < charge_rate) && charge_overdraw)
 				var/needed = (charge_rate - charged)
-				internal_charge += try_use_linked_power(charge_rate, overdraw_allowed = TRUE)
+				internal_charge += draw_from_powernet(needed, overdraw_allowed = TRUE)
 
+/obj/machinery/power/PTL/process()
+	handle_charging()
+	handle_firing()
+
+/obj/machinery/power/PTL/proc/handle_firing()
+	if(firing)
+		if(firing_mode != PTL_PRIMARY)
+			if(--firing_time_left <= 0)
+				stop_firing()
+		internal_charge -= firing_output
+		if(internal_charge <= firing_output)
+			stop_firing()
+		if(firing_mode == PTL_TRACER)
+			fire_beam(dir, firing_mode, firing_output, fullpierce = PTL_FULLPIERCE_NOHIT)
+		fire_beam(dir, firing_mode, firing_output)
+
+/obj/machinery/power/PTL/proc/start_firing()
+	firing = TRUE
+
+/obj/machinery/power/PTL/proc/stop_firing()
+	firing = FALSE
 
 ////GOOONSTATION COPY, ONLY HERE FOR REFERENCE BELOW, ERASING AFTER ITS NOT NEEDED FOR ME.
 

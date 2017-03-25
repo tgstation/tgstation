@@ -1785,6 +1785,7 @@
 #include "code\modules\power\laser\hitscan.dm"
 #include "code\modules\power\laser\interaction.dm"
 #include "code\modules\power\laser\laser.dm"
+#include "code\modules\power\laser\power.dm"
 #include "code\modules\power\laser\PTL.dm"
 #include "code\modules\power\singularity\collector.dm"
 #include "code\modules\power\singularity\containment_field.dm"

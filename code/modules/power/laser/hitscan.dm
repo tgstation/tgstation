@@ -4,11 +4,14 @@
 #define PTL_HITSCAN_HIT 2
 #define PTL_HITSCAN_TURN 3
 
+#define PTL_FULLPIERCE_NORMAL 1
+#define PTL_FULLPIERCE_NOHIT 2
+
 #define PTL_HITSCAN_RETURN_ERROR 0
 #define PTL_HITSCAN_RETURN_HIT 1
 #define PTL_HITSCAN_RETURN_ZEDGE 2
 
-/obj/machinery/power/PTL/proc/hitscan_beamline(var/turf/starting, beam_dir, generate_effects = TRUE, effect_type = null, effect_duration = null)
+/obj/machinery/power/PTL/proc/hitscan_beamline(var/turf/starting, beam_dir, generate_effects = TRUE, effect_type = null, effect_duration = null, full_pierce = FALSE)
 	var/list/affected = list()
 	var/hit = FALSE
 	var/iterations_left = 1000
@@ -28,19 +31,23 @@
 		if(iterations_left <= 0)
 			break
 		for(var/atom/A in scanning)
-			var/V = hitscan_check(A)
-			if(V == PTL_HITSCAN_PASS)
-				continue
-			else if(V == PTL_HITSCAN_PIERCE)
-				affected[beam_dir] += A
-				continue
-			else if(V == PTL_HITSCAN_HIT)
-				hit = TRUE
-				affected["HIT_ATOM"] = A
-				affected["RESULT"] = PTL_HITSCAN_RETURN_HIT
-				continue
-			else if(V == PTL_HITSCAN_TURN)
-				reflector_hit = TRUE
+			if(!full_pierce)
+				var/V = hitscan_check(A)
+				if(V == PTL_HITSCAN_PASS)
+					continue
+				else if(V == PTL_HITSCAN_PIERCE)
+					affected[beam_dir] += A
+					continue
+				else if(V == PTL_HITSCAN_HIT)
+					hit = TRUE
+					affected["HIT_ATOM"] = A
+					affected["RESULT"] = PTL_HITSCAN_RETURN_HIT
+					continue
+				else if(V == PTL_HITSCAN_TURN)
+					reflector_hit = TRUE
+			else if(full_pierce = PTL_FULLPIERCE_NORMAL)	//Full pierce - Add everything but space to affected
+				if(!isspaceturf(A))
+					affected[beam_dir] += A
 		if(((scanning.x < 5) || (scanning.x > (world.maxx - 5))) || ((scanning.y < 5) || (scanning.y > (world.maxy - 5))))	//ZLEVEL EDGE CHECK
 			hit = TRUE
 			affected["RESULT"] = PTL_HITSCAN_RETURN_ZEDGE

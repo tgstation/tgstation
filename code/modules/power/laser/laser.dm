@@ -1,5 +1,5 @@
 
-#define PTL_TRACER 1	//Tracer beam, minimal damage
+#define PTL_TRACER 1	//Tracer beam, pierces through everything and shows trajectory.
 #define PTL_PULSE 2		//Burst of damage
 #define PTL_PRIMARY 3	//Primary firing, continuous effect application
 
@@ -10,7 +10,7 @@
 	var/turf/starting = locate((T.x + x_offset), (T.y + y_offset), T.z)
 	return starting
 
-/obj/machinery/power/PTL/proc/fire_beam(direction, type = PTL_PRIMARY, effect_duration_override = null, power)
+/obj/machinery/power/PTL/proc/fire_beam(direction, type = PTL_PRIMARY, power, effect_duration_override = null)
 	var/turf/T = find_starting_turf()
 	var/effect_type = null
 	switch(type)
