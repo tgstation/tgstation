@@ -9905,7 +9905,7 @@
 /area/maintenance/starboard)
 "arI" = (
 /obj/structure/rack,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -23791,9 +23791,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/monitor{
-	name = "Engineering Power Monitoring Console"
-	},
 /obj/machinery/status_display{
 	density = 0;
 	layer = 4;
@@ -23805,6 +23802,7 @@
 	dir = 2;
 	network = list("SS13")
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/vault,
 /area/engine/engineering)
 "aPX" = (
@@ -24416,8 +24414,8 @@
 /area/crew_quarters/locker)
 "aRa" = (
 /obj/structure/rack,
-/obj/effect/landmark/costume,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/item/clothing/mask/balaclava,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -51223,8 +51221,8 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/effect/landmark/costume,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -51235,8 +51233,8 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/effect/landmark/costume,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -81754,7 +81752,7 @@
 	})
 "cJY" = (
 /obj/structure/rack,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"

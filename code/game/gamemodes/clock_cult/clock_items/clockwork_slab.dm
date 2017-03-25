@@ -21,6 +21,7 @@
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
 	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep, /datum/clockwork_scripture/create_object/replicant, \
 	/datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
+	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 	actions_types = list(/datum/action/item_action/clock/hierophant)
 
 /obj/item/clockwork/slab/starter
@@ -51,6 +52,7 @@
 	nonhuman_usable = TRUE
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
 	/datum/clockwork_scripture/create_object/tinkerers_cache)
+	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
 /obj/item/clockwork/slab/cyborg/engineer //five scriptures, plus a proselytizer
@@ -81,7 +83,15 @@
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_void/cyborg)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
-	to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
+	if(!ratvar_awakens)
+		to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
+	else
+		..()
+
+/obj/item/clockwork/slab/cyborg/ratvar_act()
+	..()
+	if(!ratvar_awakens)
+		SStgui.close_uis(src)
 
 /obj/item/clockwork/slab/New()
 	..()
@@ -362,11 +372,12 @@
 		The remaining functions are several buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
 		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>")
 		if(LAZYLEN(quickbound))
-			for(var/i in 1 to quickbound.len)
-				if(!quickbound[i])
-					continue
-				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-				textlist += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_bright(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
+			for(var/i in 1 to maximum_quickbound)
+				if(LAZYLEN(quickbound) < i || !quickbound[i])
+					textlist += "A <b>Quickbind</b> slot, currently set to <b><font color=#BE8700>Nothing</font></b>.<br>"
+				else
+					var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+					textlist += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_bright(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
 		textlist += "<br>\
 		Examine the slab or swap to Recital to check the number of components it has available.<br><br>\
 		\
@@ -478,8 +489,8 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
-				var/target_index = input("Position of [initial(path.name)], 1 to 5?", "Input")  as num|null
-				if(isnum(target_index) && target_index > 0 && target_index < 6 && !..())
+				var/target_index = input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
+				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
 					var/datum/clockwork_scripture/S
 					if(LAZYLEN(quickbound) >= target_index)
 						S = quickbound[target_index]
@@ -492,6 +503,9 @@
 		return
 	while(LAZYLEN(quickbound) < index)
 		quickbound += null
+	var/datum/clockwork_scripture/quickbind_slot = all_scripture[quickbound[index]]
+	if(quickbind_slot && !quickbind_slot.quickbind)
+		return //we can't unbind things we can't normally bind
 	quickbound[index] = scripture
 	update_quickbind()
 
