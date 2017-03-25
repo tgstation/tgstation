@@ -232,7 +232,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/active_free_borgs()
 	. = list()
 	for(var/mob/living/silicon/robot/R in living_mob_list)
-		if(R.connected_ai)
+		if(R.connected_ai || R.shell)
 			continue
 		if(R.stat == DEAD)
 			continue
