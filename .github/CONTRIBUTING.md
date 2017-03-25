@@ -1,41 +1,19 @@
 #CONTRIBUTING
 
-## Reporting Issues
-
-See [this page](http://tgstation13.org/wiki/Reporting_Issues) for a guide and format to issue reports.
-
 ## Introduction
 
-Hello and welcome to /tg/station's contributing page. You are here because you are curious or interested in contributing. Thanks for being interested. Everyone is free to contribute to this project as long as they follow the simple guidelines and specifications below, because at /tg/station, we have a goal to increase code maintainability and to do that we are going to need all pull requests to hold up to those specifications. This is in order for all of us to benefit, instead of having to fix the same bug more than once because of duplicated code.
-
-But first we want to make it clear how you can contribute, if contributing is a new experience for you, and what powers the team has over your pull request so you do not get any surprises when submitting pull requests, and it is closed for a reason you did not anticipate.
+This is the HippieStation contributions page. Everyone is free to contribute, but there must be some minimum standards in mind when doing so.
 
 ## Getting Started
-At /tg/station we do not have a list of goals and features to add, we instead allow freedom for contributors to suggest and create their ideas for the game. That does not mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful getting started guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
+We do not have a list of goals and features to add. Instead, there is freedom for contributors to suggest and create their ideas for the game. That does not mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful getting started guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
-If you want to contribute the first thing you'll need to do is [set up Git](http://tgstation13.org/wiki/Setting_up_git) so you can download the source code.
+If you want to contribute the first thing you'll need to do is [set up Git](https://wiki.hippiestation.com/index.php?title=Setting_up_git) so you can download the source code.
 
-We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php/Guides#Development_and_Contribution_Guides) which will help you get started contributing to /tg/station with git and Dream Maker. For beginners, it is recommended you work on small projects, at first. If you need help learning to program in BYOND check out this [repository of resources](http://www.byond.com/developer/articles/resources).
+We have a [list of guides on the wiki](https://wiki.hippiestation.com/index.php?title=Guides#Development_and_Contribution_Guides) to get started. We recommend beginners start with small projects. For information on BYOND programming, take a look at BYOND's [repository of resources](http://www.byond.com/developer/articles/resources).
 
-There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/-tg-station/issues?q=is%3Aopen+is%3Aissue+label%3A%22Easy+Task%22).
+There is an open list of approachable issues for [your inspiration here](https://www.github.com/HippieStation/HippieStation/issues?&q=is%3Aissue%20is%3Aopen%20label%3A"Easy%20Fix"%20).
 
-You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/coderbus) on irc.rizon.net. We are just here to have fun and help so do not expect professional support please.
-
-## Meet the Team
-
-**Project Leads**
-
-Project Leads, which are elected by the maintainers and members of the project, have complete control over what goes through and what is reverted. They are encouraged to take control in what features are added to the game. Project Leads can also act as Project Managers when needed.
-
-**Project Managers**
-
-Project Managers are responsible for recruiting and firing maintainers, enforcing coding standards, and reverting changes that should have not been committed. Project Managers are assigned by Project Leads. On things that Project Managers disagree on they are to refer to the Project Leads for advice. It is encouraged that if you do not want to waste time working on a feature, that might be denied, that you ask a Project Manager first.
-
-**Maintainers**
-
-Maintainers are quality control. If a proposed pull request does not meet the mentioned quality specifications then it can be closed if you fail to satisfy them. Maintainers are required to give a reason for closing the pull request.
-
-Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
+You can of course, as always, ask for help on the discord. We are just here to have fun and help so do not expect professional support please.
 
 ## Specification
 
@@ -98,6 +76,10 @@ The previous code made compliant:
 	code
 ```
 
+### Use the "hippiestation" folder.
+
+See [the README.md](hippiestation/readme.md) in the folder for further details.
+
 ### No overriding type safety checks.
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
@@ -129,7 +111,7 @@ Hacky code, such as adding specific checks, is highly discouraged and only allow
 You can avoid hacky code by using object oriented methodologies, such as overriding a function (called procs in DM) or sectioning code into functions and then overriding them as required.
 
 ### No duplicated code.
-Copying code from one place to another maybe suitable for small short time projects but /tg/station focuses on the long term and thus discourages this.
+Copying code from one place to another maybe suitable for small short time projects, but there is a focus on the long term and thus discourages this.
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
@@ -145,7 +127,7 @@ There are two key points here:
 Remember, this tradeoff makes sense in many cases but not all, you should think carefully about your implementation before deciding if this is an appropriate thing to do
 
 ### Prefer `Initialize` over `New` for atoms
-Our game controller is pretty good at handling long operations and lag. But, it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/master/code/game/atoms.dm#L49
+Our game controller is pretty good at handling long operations and lag. But, it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/HippieStation/HippieStation/blob/master/code/game/atoms.dm#L45
 
 ### No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.
@@ -280,22 +262,17 @@ With ```.``` being everpresent in every proc can we use it as a temporary variab
 
 There is no strict process when it comes to merging pull requests, pull requests will sometimes take a while before they are looked at by a maintainer, the bigger the change the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be nice. Here are some helpful ways to make it easier for you and for the maintainer when making a pull request.
 
-* Make sure your pull request complies to the requirements outlined in [this guide](http://tgstation13.org/wiki/Getting_Your_Pull_Accepted)
+* Make sure your pull request complies to the requirements outlined in [this guide](https://wiki.hippiestation.com/index.php?title=Getting_Your_Pull_Accepted)
 
 * You are going to be expected to document all your changes in the pull request, failing to do so will mean delaying it as we will have to question why you made the change. On the other hand you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
 
-* We ask that you use the changelog system to document your change, this prevents our players from being caught unaware by changes - you can find more information about this here http://tgstation13.org/wiki/Guide_to_Changelogs
+* We ask that you use the changelog system to document your change, this prevents our players from being caught unaware by changes - you can find more information about this here https://wiki.hippiestation.com/index.php?title=Guide_to_Changelogs
 
 * If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
 * If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
 
 * Please explain why you are submitting the pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting the PR.
-
-## Banned content
-Do not add any of the following in a Pull Request or risk getting the PR closed:
-* National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
-* Code where one line of code is split across mutiple lines (except for multiple, separate strings and comments and in those cases existing longer lines must not be split up)
 
 ## A word on git
 Yes we know that the files have a tonne of mixed windows and linux line endings, attempts to fix this have been met with less than stellar success and as such we have decided to give up caring until such a time as it matters.
