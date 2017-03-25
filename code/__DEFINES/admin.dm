@@ -43,7 +43,6 @@
 #define ADMIN_VV(atom) "(<a href='?_src_=vars;Vars=\ref[atom]'>VV</a>)"
 #define ADMIN_SM(user) "(<a href='?_src_=holder;subtlemessage=\ref[user]'>SM</a>)"
 #define ADMIN_TP(user) "(<a href='?_src_=holder;traitor=\ref[user]'>TP</a>)"
-#define ADMIN_BSA(user) "(<a href='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</a>)"
 #define ADMIN_KICK(user) "(<a href='?_src_=holder;boot2=\ref[user]'>KICK</a>)"
 #define ADMIN_CENTCOM_REPLY(user) "(<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)"
 #define ADMIN_SYNDICATE_REPLY(user) "(<a href='?_src_=holder;SyndicateReply=\ref[user]'>RPLY</a>)"
@@ -62,3 +61,4 @@
 #define ADMIN_PUNISHMENT_LIGHTNING "Lightning bolt"
 #define ADMIN_PUNISHMENT_BRAINDAMAGE "Brain damage"
 #define ADMIN_PUNISHMENT_GIB "Gib"
+#define ADMIN_PUNISHMENT_BSA "Bluespace Artillery Device"

@@ -86,12 +86,25 @@ var/datum/controller/subsystem/persistence/SSpersistence
 	var/saved_messages = json_decode(saved_json)
 
 	for(var/item in saved_messages)
-		var/turf/T = locate(item["x"], item["y"], ZLEVEL_STATION)
+		if(!islist(item))
+			continue
+
+		var/xvar = item["x"]
+		var/yvar = item["y"]
+		var/zvar = item["z"]
+
+		if(!xvar || !yvar || !zvar)
+			continue
+
+		var/turf/T = locate(xvar, yvar, zvar)
 		if(!isturf(T))
 			continue
+
 		if(locate(/obj/structure/chisel_message) in T)
 			continue
+
 		var/obj/structure/chisel_message/M = new(T)
+
 		M.unpack(item)
 		if(!M.loc)
 			M.persists = FALSE

@@ -14446,7 +14446,7 @@
 /area/wizard_station)
 "KN" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
@@ -62947,7 +62947,7 @@ tH
 qk
 Ks
 ql
-Ma
+LY
 Mb
 yS
 Lc

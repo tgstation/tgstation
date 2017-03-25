@@ -330,7 +330,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		_preloader.load(.)
 
 	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
-	if(world.tick_usage > CURRENT_TICKLIMIT)
+	if(TICK_CHECK)
 		SSatoms.map_loader_stop()
 		stoplag()
 		SSatoms.map_loader_begin()
