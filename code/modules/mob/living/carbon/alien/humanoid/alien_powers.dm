@@ -82,7 +82,7 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null, nullable = TRUE, choices = options)
 	if(!M)
 		return 0
-	var/msg = sanitize(input("Message:", "Alien Whisper", nullable = TRUE, istext = TRUE)
+	var/msg = sanitize(input("Message:", "Alien Whisper", nullable = TRUE, istext = TRUE))
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
