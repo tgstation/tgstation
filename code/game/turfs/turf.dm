@@ -219,10 +219,13 @@
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
-
+	
+	var/old_baseturf = baseturf
 	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
+
+	W.baseturf = old_baseturf
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
