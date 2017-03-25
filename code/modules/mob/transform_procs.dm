@@ -308,7 +308,7 @@
 
 /mob/proc/AIize(transfer_after = TRUE)
 	if(client)
-		stopLobbySound()
+		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 	var/turf/loc_landmark
 	for(var/obj/effect/landmark/start/sloc in landmarks_list)
