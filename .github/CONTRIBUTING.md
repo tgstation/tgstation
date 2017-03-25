@@ -1,4 +1,4 @@
-#CONTRIBUTING
+# CONTRIBUTING
 
 ## Introduction
 
@@ -78,7 +78,7 @@ The previous code made compliant:
 
 ### Use the "hippiestation" folder.
 
-See [the README.md](hippiestation/readme.md) in the folder for further details.
+See [the README.md](/hippiestation/readme.md) in the folder for further details.
 
 ### No overriding type safety checks.
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
@@ -266,7 +266,7 @@ There is no strict process when it comes to merging pull requests, pull requests
 
 * You are going to be expected to document all your changes in the pull request, failing to do so will mean delaying it as we will have to question why you made the change. On the other hand you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
 
-* We ask that you use the changelog system to document your change, this prevents our players from being caught unaware by changes - you can find more information about this here https://wiki.hippiestation.com/index.php?title=Guide_to_Changelogs
+* We ask that you use the changelog system to document your change, this prevents our players from being caught unaware by changes. You can find more information about this here: https://wiki.hippiestation.com/index.php?title=Guide_to_Changelogs.
 
 * If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
