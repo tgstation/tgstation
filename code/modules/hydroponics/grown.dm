@@ -138,7 +138,7 @@
 	return ..()
 
 // For item-containing growns such as eggy or gatfruit
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/grown/with_shell/attack_self(mob/user)
 	var/obj/item/T
 	if(trash)
 		T = generate_trash()

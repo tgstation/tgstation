@@ -251,7 +251,7 @@
 	name = "incendiary slug"
 	desc = "An incendiary-coated shotgun slug."
 	icon_state = "ishell"
-	projectile_type = /obj/item/projectile/bullet/incendiary/shell
+	projectile_type = /obj/item/projectile/bullet/incendiary/slug
 
 /obj/item/ammo_casing/shotgun/frag12
 	name = "FRAG-12 slug"
@@ -263,7 +263,7 @@
 	name = "dragonsbreath shell"
 	desc = "A shotgun shell which fires a spread of incendiary pellets."
 	icon_state = "ishell2"
-	projectile_type = /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
+	projectile_type = /obj/item/projectile/bullet/incendiary/slug/dragonsbreath
 	pellets = 4
 	variance = 35
 

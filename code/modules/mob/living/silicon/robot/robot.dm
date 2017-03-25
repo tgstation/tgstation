@@ -16,7 +16,7 @@
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/mmi/mmi = null
 
-	var/shell = FALSE
+	var/ai_shell = FALSE
 	var/deployed = FALSE
 	var/mob/living/silicon/ai/mainframe = null
 	var/datum/action/innate/undeployment/undeployment_action = new
@@ -134,7 +134,7 @@
 	..()
 
 	//If this body is meant to be a borg controlled by the AI player
-	if(shell)
+	if(ai_shell)
 		make_shell()
 
 	//MMI stuff. Held togheter by magic. ~Miauw
@@ -178,7 +178,7 @@
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
-	if(shell)
+	if(ai_shell)
 		available_ai_shells -= src
 	qdel(wires)
 	qdel(module)
@@ -214,7 +214,7 @@
 
 
 /mob/living/silicon/robot/proc/updatename()
-	if(shell)
+	if(ai_shell)
 		return
 	var/changed_name = ""
 	if(custom_name)
@@ -436,7 +436,7 @@
 		update_icons()
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
-		if(shell)
+		if(ai_shell)
 			to_chat(user, "You cannot seem to open the radio compartment")	//Prevent AI radio key theft
 		else if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
@@ -467,7 +467,7 @@
 		if(!cell)
 			to_chat(user, "<span class='warning'>You need to install a power cell to do that!</span>")
 			return
-		if(shell) //AI shells always have the laws of the AI
+		if(ai_shell) //AI shells always have the laws of the AI
 			to_chat(user, "<span class='warning'>[src] is controlled remotely! You cannot upload new laws this way!</span>")
 			return
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
@@ -997,7 +997,7 @@
 /mob/living/silicon/robot/proc/make_shell(var/obj/item/borg/upgrade/ai/board)
 	if(!board)
 		upgrades |= new /obj/item/borg/upgrade/ai(src)
-	shell = TRUE
+	ai_shell = TRUE
 	braintype = "AI Shell"
 	name = "[designation] AI Shell [rand(100,999)]"
 	real_name = name
@@ -1008,13 +1008,13 @@
 	notify_ai(AI_SHELL)
 
 /mob/living/silicon/robot/proc/revert_shell()
-	if(!shell)
+	if(!ai_shell)
 		return
 	undeploy()
 	for(var/obj/item/borg/upgrade/ai/boris in src)
 	//A player forced reset of a borg would drop the module before this is called, so this is for catching edge cases
 		qdel(boris)
-	shell = FALSE
+	ai_shell = FALSE
 	available_ai_shells -= src
 	name = "Unformatted Cyborg [rand(100,999)]"
 	real_name = name
@@ -1078,12 +1078,12 @@
 	mainframe = null
 
 /mob/living/silicon/robot/attack_ai(mob/user)
-	if(shell && (!connected_ai || connected_ai == user))
+	if(ai_shell && (!connected_ai || connected_ai == user))
 		var/mob/living/silicon/ai/AI = user
 		AI.deploy_to_shell(src)
 
-/mob/living/silicon/robot/shell
-	shell = TRUE
+/mob/living/silicon/robot/ai_shell
+	ai_shell = TRUE
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()

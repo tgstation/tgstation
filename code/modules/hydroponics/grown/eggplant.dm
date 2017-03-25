@@ -28,13 +28,13 @@
 	desc = "These seeds grow to produce berries that look a lot like eggs."
 	icon_state = "seed-eggy"
 	species = "eggy"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/with_shell/eggy
 	lifespan = 75
 	production = 12
 	mutatelist = list()
 	reagents_add = list("nutriment" = 0.1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
+/obj/item/weapon/reagent_containers/food/snacks/grown/with_shell/eggy
 	seed = /obj/item/seeds/eggplant/eggy
 	name = "Egg-plant"
 	desc = "There MUST be a chicken inside."

@@ -123,18 +123,18 @@
 		M.IgniteMob()
 
 
-/obj/item/projectile/bullet/incendiary/shell
+/obj/item/projectile/bullet/incendiary/slug
 	name = "incendiary slug"
 	damage = 20
 
-/obj/item/projectile/bullet/incendiary/shell/Move()
+/obj/item/projectile/bullet/incendiary/slug/Move()
 	..()
 	var/turf/location = get_turf(src)
 	if(location)
 		new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
 
-/obj/item/projectile/bullet/incendiary/shell/dragonsbreath
+/obj/item/projectile/bullet/incendiary/slug/dragonsbreath
 	name = "dragonsbreath round"
 	damage = 5
 
