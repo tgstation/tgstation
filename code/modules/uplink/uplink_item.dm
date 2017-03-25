@@ -1239,6 +1239,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 2
 	restricted_roles = list("Librarian")
 	limited_stock = 1 // please don't spam deadchat
+	
+/datum/uplink_item/role_restricted/nanomachines
+	name = "Nanomachines bottle"
+	desc = "
+	item = /obj/item/weapon/reagent_containers/glass/bottle/nanites
+	cost = 10
+	restricted_roles =list("Roboticist")
 
 // Pointless
 /datum/uplink_item/badass
