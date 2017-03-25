@@ -314,6 +314,11 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/sign/barsign, TRUE, TRUE)
 	icon = "thenet"
 	desc = "You just seem to get caught up in it for hours."
 
+/datum/barsign/maidcafe
+	name = "Maid Cafe"
+	icon = "maidcafe"
+	desc = "Welcome back, master!"
+
 
 /datum/barsign/hiddensigns
 	hidden = 1
