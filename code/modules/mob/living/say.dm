@@ -110,13 +110,31 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
 
+	// language comma detection.
+	var/datum/language/message_language = get_message_language(message)
+	if(message_language)
+		// No, you cannot speak in xenocommon just because you know the key
+		if(can_speak_in_language(message_language))
+			language = message_language
+		message = copytext(message, 3)
+
+		// Trim the space if they said ",0 I LOVE LANGUAGES"
+		if(findtext(message, " ", 1, 2))
+			message = copytext(message, 2)
+
 	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
 		message = treat_message(message)
 
-	spans += get_spans()
-
 	if(!language)
 		language = get_default_language()
+
+	spans += get_spans()
+
+	if(language)
+		// TODO use preinstanced datums for the span lists
+		var/datum/language/L = new language
+		spans |= L.spans
+		qdel(L)
 
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
 	log_message(message, INDIVIDUAL_SAY_LOG)
@@ -224,6 +242,15 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		return MODE_HEADSET
 	else if(length(message) > 2)
 		return department_radio_keys[copytext(message, 1, 3)]
+
+/mob/living/proc/get_message_language(message)
+	if(copytext(message, 1, 2) == ",")
+		var/key = copytext(message, 2, 3)
+		for(var/ld in subtypesof(/datum/language))
+			var/datum/language/LD = ld
+			if(initial(LD.key) == key)
+				return LD
+	return null
 
 /mob/living/proc/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_CHANGELING)

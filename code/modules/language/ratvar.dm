@@ -4,9 +4,9 @@
 	speech_verb = "clinks"
 	ask_verb = "clunks"
 	exclaim_verb = "clanks"
-	colour = "changeling"
 	key = "r"
 	default_priority = 10
+	spans = list(SPAN_ROBOT, "brass")
 
 /datum/language/ratvar/scramble(var/input)
 	. = text2ratvar(input)

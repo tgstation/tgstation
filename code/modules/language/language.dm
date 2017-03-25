@@ -12,12 +12,12 @@
 	var/exclaim_verb = "exclaims"     // Used when sentence ends in a !
 	var/whisper_verb = "whispers"     // Optional. When not specified speech_verb + quietly/softly is used instead.
 	var/list/signlang_verb = list("signs", "gestures") // list of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
-	var/colour = "body"               // CSS style to use for strings in this language.
 	var/key = "x"                     // Character used to speak in language
 	var/flags                         // Various language flags.
 	var/list/syllables                // Used when scrambling text for a non-speaker.
 	var/list/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
 	var/list/space_chance = 55        // Likelihood of getting a space in the random scramble string
+	var/list/spans = list()
 	var/static/list/scramble_cache = list()
 	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
 
@@ -84,18 +84,6 @@
 
 	return scrambled_text
 
-/datum/language/proc/format_message(message, verb)
-	return "[verb], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
-
-/datum/language/proc/format_message_plain(message, verb)
-	return "[verb], \"[capitalize(message)]\""
-
-/datum/language/proc/format_message_radio(message, verb)
-	return "[verb], <span class='[colour]'>\"[capitalize(message)]\"</span>"
-
-/datum/language/proc/check_special_condition(var/mob/other)
-	return 1
-
 /datum/language/proc/get_spoken_verb(var/msg_end)
 	switch(msg_end)
 		if("!")
@@ -103,8 +91,5 @@
 		if("?")
 			return ask_verb
 	return speech_verb
-
-/datum/language/proc/can_speak_special(var/mob/speaker)
-	return 1
 
 #undef SCRAMBLE_CACHE_LEN
