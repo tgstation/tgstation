@@ -651,10 +651,6 @@
 		if("papyrus")
 			. |= SPAN_PAPYRUS
 
-/obj/item/organ/tongue/bone/chatter
-	name = "chattering bone \"tongue\""
-	chattering = TRUE
-
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
@@ -749,18 +745,21 @@
 	var/sight_flags = 0
 	var/see_in_dark = 2
 	var/tint = 0
-	var/eye_color = "fff"
+	var/eye_color = "" //set to a hex code to override a mob's eye color
 	var/old_eye_color = "fff"
 	var/flash_protect = 0
 	var/see_invisible = SEE_INVISIBLE_LIVING
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0)
 	..()
-	if(ishuman(owner) && eye_color)
+	if(ishuman(owner))
 		var/mob/living/carbon/human/HMN = owner
 		old_eye_color = HMN.eye_color
-		HMN.eye_color = eye_color
-		HMN.regenerate_icons()
+		if(eye_color)
+			HMN.eye_color = eye_color
+			HMN.regenerate_icons()
+		else
+			eye_color = HMN.eye_color
 	M.update_tint()
 	owner.update_sight()
 

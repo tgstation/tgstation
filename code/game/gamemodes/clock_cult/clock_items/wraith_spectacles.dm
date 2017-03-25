@@ -95,7 +95,7 @@
 /datum/status_effect/wraith_spectacles
 	id = "wraith_spectacles"
 	duration = -1 //remains until eye damage done reaches 0 while the glasses are not worn
-	tick_interval = 2
+	tick_interval = 20
 	alert_type = /obj/screen/alert/status_effect/wraith_spectacles
 	var/eye_damage_done = 0
 	var/nearsight_breakpoint = 30

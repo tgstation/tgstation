@@ -293,7 +293,7 @@
 /datum/design/board/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
 	desc = "The circuit board for a monkey recycler."
-	id = "smartfridge"
+	id = "monkey_recycler"
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/weapon/circuitboard/machine/monkey_recycler
 	category = list ("Misc. Machinery")

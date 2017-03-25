@@ -249,9 +249,6 @@
 	payload = /obj/item/weapon/bombcore/badmin/summon/clown
 	beepsound = 'sound/items/bikehorn.ogg'
 
-/obj/machinery/syndicatebomb/badmin/varplosion
-	payload = /obj/item/weapon/bombcore/badmin/explosion
-
 /obj/machinery/syndicatebomb/empty
 	name = "bomb"
 	icon_state = "base-bomb"
@@ -263,6 +260,12 @@
 /obj/machinery/syndicatebomb/empty/New()
 	..()
 	wires.cut_all()
+
+/obj/machinery/syndicatebomb/self_destruct
+	name = "self destruct device"
+	desc = "Do not taunt. Warranty invalid if exposed to high temperature. Not suitable for agents under 3 years of age."
+	payload = /obj/item/weapon/bombcore/large
+	can_unanchor = FALSE
 
 ///Bomb Cores///
 
@@ -276,6 +279,10 @@
 	origin_tech = "syndicate=5;combat=6"
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
+	var/range_heavy = 3
+	var/range_medium = 9
+	var/range_light = 17
+	var/range_flame = 17
 
 /obj/item/weapon/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
 	detonate()
@@ -289,7 +296,7 @@
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
-	explosion(get_turf(src), 3, 9, 17, flame_range = 17)
+	explosion(get_turf(src), range_heavy, range_medium, range_light, flame_range = range_flame)
 	if(loc && istype(loc,/obj/machinery/syndicatebomb/))
 		qdel(loc)
 	qdel(src)
@@ -367,26 +374,23 @@
 	playsound(src.loc, 'sound/misc/sadtrombone.ogg', 50)
 	..()
 
-/obj/item/weapon/bombcore/badmin/explosion
-	var/HeavyExplosion = 5
-	var/MediumExplosion = 10
-	var/LightExplosion = 20
-	var/Flames = 20
+/obj/item/weapon/bombcore/large
+	name = "large bomb payload"
+	range_heavy = 5
+	range_medium = 10
+	range_light = 20
+	range_flame = 20
 
-/obj/item/weapon/bombcore/badmin/explosion/detonate()
-	explosion(get_turf(src), HeavyExplosion, MediumExplosion, LightExplosion, flame_range = Flames)
-	qdel(src)
+/obj/item/weapon/bombcore/large/underwall
+	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/item/weapon/bombcore/miniature
 	name = "small bomb core"
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/weapon/bombcore/miniature/detonate()
-	if(adminlog)
-		message_admins(adminlog)
-		log_game(adminlog)
-	explosion(src.loc, 1, 2, 4, flame_range = 2) //Identical to a minibomb
-	qdel(src)
+	range_heavy = 1
+	range_medium = 2
+	range_light = 4
+	range_flame = 2
 
 /obj/item/weapon/bombcore/chemical
 	name = "chemical payload"

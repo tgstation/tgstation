@@ -218,16 +218,16 @@
 
 	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/new_thing_type = proselytize_values["new_obj_type"]
-	if(isturf(target))
+	if(isturf(target)) //if our target is a turf, we're just going to ChangeTurf it and assume it'll work out.
 		var/turf/T = target
 		T.ChangeTurf(new_thing_type)
 	else
 		if(proselytize_values["dir_in_new"])
-			new new_thing_type(get_turf(target), proselytize_values["spawn_dir"])
+			new new_thing_type(get_turf(target), proselytize_values["spawn_dir"]) //please verify that your new object actually wants to get a dir in New()
 		else
 			var/atom/A = new new_thing_type(get_turf(target))
 			A.setDir(proselytize_values["spawn_dir"])
-		if(!proselytize_values["no_target_deletion"])
+		if(!proselytize_values["no_target_deletion"]) //for some cases where proselytize_vals() modifies the object but doesn't want it deleted
 			qdel(target)
 	modify_stored_power(-proselytize_values["power_cost"])
 	if(no_table_check)
@@ -255,10 +255,12 @@
 
 //The repair check proc.
 //Is dark magic. Can probably kill you.
+//What this proc does is it takes an existing list of values, which it modifies.
+//This(modifying an existing object) is the only way to get information OUT of a do_after callback, which this is used as.
 /obj/item/clockwork/clockwork_proselytizer/proc/proselytizer_repair_checks(list/repair_values, atom/target, mob/user, silent) //Exists entirely to avoid an otherwise unreadable series of checks.
 	if(!islist(repair_values) || !target || QDELETED(target) || !user)
 		return FALSE
-	if(isliving(target))
+	if(isliving(target)) //standard checks for if we can affect the target
 		var/mob/living/L = target
 		if(!is_servant_of_ratvar(L))
 			if(!silent)
@@ -284,10 +286,10 @@
 		repair_values["amount_to_heal"] = O.max_integrity - O.obj_integrity
 	else
 		return FALSE
-	if(repair_values["amount_to_heal"] <= 0)
+	if(repair_values["amount_to_heal"] <= 0) //nothing to heal!
 		return FALSE
-	repair_values["healing_for_cycle"] = min(repair_values["amount_to_heal"], PROSELYTIZER_REPAIR_PER_TICK)
-	repair_values["power_required"] = round(repair_values["healing_for_cycle"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)
+	repair_values["healing_for_cycle"] = min(repair_values["amount_to_heal"], PROSELYTIZER_REPAIR_PER_TICK) //modify the healing for this cycle
+	repair_values["power_required"] = round(repair_values["healing_for_cycle"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER) //and get the power cost from that
 	if(!can_use_power(RATVAR_POWER_CHECK) && !can_use_power(repair_values["power_required"]))
 		if(!silent)
 			to_chat(user, "<span class='warning'>You need at least <b>[repair_values["power_required"]]W</b> power to start repairin[target == user ? "g yourself" : "g [target]"], and at least \

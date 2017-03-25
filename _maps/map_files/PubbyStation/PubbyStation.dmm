@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "aab" = (
 /obj/effect/landmark{
@@ -30703,7 +30703,7 @@
 /area/toxins/xenobiology)
 "bjI" = (
 /obj/machinery/shieldwallgen{
-	req_access = list(55)
+	req_access_txt = "55"
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -30800,7 +30800,7 @@
 /area/toxins/xenobiology)
 "bjO" = (
 /obj/machinery/shieldwallgen{
-	req_access = list(55)
+	req_access_txt = "55"
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -45173,7 +45173,7 @@
 	desc = "Used for watching the engine containment area.";
 	dir = 4;
 	name = "Engine Monitor";
-	network = list("Singularity");
+	network = list("Engine");
 	pixel_x = -32;
 	pixel_y = 0
 	},
@@ -45252,6 +45252,14 @@
 /area/engine/engine_smes)
 "bLA" = (
 /obj/structure/filingcabinet,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the engine containment area.";
+	dir = 4;
+	name = "Engine Monitor";
+	network = list("Engine");
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -45705,13 +45713,11 @@
 	},
 /area/engine/engineering)
 "bME" = (
-/obj/machinery/computer/monitor{
-	name = "Engineering Power Monitoring Console"
-	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -46909,6 +46915,7 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Center";
 	dir = 2;
+	network = list("SS13","Engine");
 	pixel_x = 23
 	},
 /obj/machinery/light{
@@ -47779,7 +47786,7 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engine Containment Port Fore";
 	dir = 2;
-	network = list("Singularity")
+	network = list("Engine")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -47804,7 +47811,7 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engine Containment Starboard Fore";
 	dir = 2;
-	network = list("Singularity")
+	network = list("Engine")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -48275,7 +48282,7 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engine Containment Port Aft";
 	dir = 1;
-	network = list("Singularity")
+	network = list("Engine")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -48332,7 +48339,7 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engine Containment Starboard Aft";
 	dir = 1;
-	network = list("Singularity")
+	network = list("Engine")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)

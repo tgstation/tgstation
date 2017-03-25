@@ -489,3 +489,93 @@
 		H.adjustFireLoss(-4)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
+/datum/species/golem/cloth
+	name = "Cloth Golem"
+	id = "cloth"
+	limbs_id = "clothgolem"
+	sexes = FALSE
+	info_text = "As a <span class='danger'>Cloth Golem</span>, you are able to reform yourself after death, provided your remains aren't burned or destroyed. You are, of course, very flammable."
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER) //no mutcolors, and can burn
+	armor = 15 //feels no pain, but not too resistant
+	burnmod = 2 // don't get burned
+	speedmod = 1 // not as heavy as stone
+	punchdamagelow = 4
+	punchstunthreshold = 7
+	punchdamagehigh = 8 // not as heavy as stone
+
+/datum/species/golem/cloth/spec_life(mob/living/carbon/human/H)
+	if(H.fire_stacks < 1)
+		H.adjust_fire_stacks(1) //always prone to burning
+	..()
+
+/datum/species/golem/cloth/spec_death(gibbed, mob/living/carbon/human/H)
+	if(gibbed)
+		return
+	if(H.on_fire)
+		H.visible_message("<span class='danger'>[H] burns into ash!</span>")
+		H.dust(just_ash = TRUE)
+		return
+
+	H.visible_message("<span class='danger'>[H] falls apart into a pile of bandages!</span>")
+	new /obj/structure/cloth_pile(get_turf(H), H)
+	..()
+
+/obj/structure/cloth_pile
+	name = "pile of bandages"
+	desc = "It emits a strange aura, as if there was still life within it..."
+	obj_integrity = 50
+	max_integrity = 50
+	armor = list(melee = 90, bullet = 90, laser = 25, energy = 80, bomb = 50, bio = 100, fire = -50, acid = -50)
+	icon = 'icons/obj/items.dmi'
+	icon_state = "pile_bandages"
+	resistance_flags = FLAMMABLE
+
+	var/revive_time = 900
+	var/mob/living/carbon/human/cloth_golem
+
+/obj/structure/cloth_pile/Initialize(mapload, mob/living/carbon/human/H)
+	if(!QDELETED(H) && is_species(H, /datum/species/golem/cloth))
+		H.unequip_everything()
+		H.forceMove(src)
+		cloth_golem = H
+		to_chat(cloth_golem, "<span class='notice'>You start gathering your life energy, preparing to rise again...</span>")
+		addtimer(CALLBACK(src, .proc/revive), revive_time)
+	else
+		qdel(src)
+
+/obj/structure/cloth_pile/Destroy()
+	if(cloth_golem)
+		QDEL_NULL(cloth_golem)
+	return ..()
+
+/obj/structure/cloth_pile/burn()
+	visible_message("<span class='danger'>[src] burns into ash!</span>")
+	new /obj/effect/decal/cleanable/ash(get_turf(src))
+	..()
+
+/obj/structure/cloth_pile/proc/revive()
+	if(QDELETED(src) || QDELETED(cloth_golem)) //QDELETED also checks for null, so if no cloth golem is set this won't runtime
+		return
+	if(cloth_golem.suiciding || cloth_golem.disabilities & NOCLONE)
+		QDEL_NULL(cloth_golem)
+		return
+
+	invisibility = INVISIBILITY_MAXIMUM //disappear before the animation
+	new /obj/effect/overlay/temp/mummy_animation(get_turf(src))
+	if(cloth_golem.revive(full_heal = TRUE, admin_revive = TRUE))
+		cloth_golem.grab_ghost() //won't pull if it's a suicide
+	sleep(20)
+	cloth_golem.forceMove(get_turf(src))
+	cloth_golem.visible_message("<span class='danger'>[src] rises and reforms into [cloth_golem]!</span>","<span class='userdanger'>You reform into yourself!</span>")
+	cloth_golem = null
+	qdel(src)
+
+/obj/structure/cloth_pile/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
+	. = ..()
+
+	if(resistance_flags & ON_FIRE)
+		return
+
+	if(P.is_hot())
+		visible_message("<span class='danger'>[src] bursts into flames!</span>")
+		fire_act()

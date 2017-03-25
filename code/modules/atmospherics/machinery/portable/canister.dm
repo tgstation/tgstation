@@ -357,19 +357,17 @@
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)
-					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents)
-					if(connected_port)
-						replacement.connected_port = connected_port
-						replacement.connected_port.connected_device = replacement
-					replacement.interact(usr)
-					qdel(src)
+					var/obj/machinery/portable_atmospherics/canister/replacement = newtype
+					name = initial(replacement.name)
+					desc = initial(replacement.name)
+					icon_state = initial(replacement.icon_state)
 		if("restricted")
 			restricted = !restricted
 			if(restricted)
 				req_access = list(access_engine)
 			else
 				req_access = list()
-			. = TRUE
+				. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")

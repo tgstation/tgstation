@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "aab" = (
 /obj/docking_port/stationary{
@@ -9905,7 +9905,7 @@
 /area/maintenance/starboard)
 "arI" = (
 /obj/structure/rack,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -21110,7 +21110,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
@@ -21797,7 +21797,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -23791,9 +23791,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/monitor{
-	name = "Engineering Power Monitoring Console"
-	},
 /obj/machinery/status_display{
 	density = 0;
 	layer = 4;
@@ -23805,6 +23802,7 @@
 	dir = 2;
 	network = list("SS13")
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/vault,
 /area/engine/engineering)
 "aPX" = (
@@ -23845,6 +23843,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/storage/belt/utility,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQd" = (
@@ -24414,8 +24414,8 @@
 /area/crew_quarters/locker)
 "aRa" = (
 /obj/structure/rack,
-/obj/effect/landmark/costume,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/item/clothing/mask/balaclava,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -30468,14 +30468,6 @@
 	},
 /area/engine/chiefs_office)
 "bbx" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for monitoring the singularity engine safely.";
-	dir = 8;
-	name = "Singularity Monitor";
-	network = list("Singulo");
-	pixel_x = 29;
-	pixel_y = 0
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -30486,6 +30478,14 @@
 	icon_state = "tube1"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for monitoring the engine.";
+	dir = 8;
+	name = "Engine Monitor";
+	network = list("Engine");
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -30726,7 +30726,7 @@
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
@@ -31204,10 +31204,10 @@
 "bcN" = (
 /obj/machinery/computer/secure_data,
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for monitoring the singularity engine safely.";
+	desc = "Used for monitoring the engine.";
 	dir = 8;
-	name = "Singularity Monitor";
-	network = list("Singulo");
+	name = "Engine Monitor";
+	network = list("Engine");
 	pixel_x = 32;
 	pixel_y = 0
 	},
@@ -37297,6 +37297,7 @@
 /obj/item/device/lightreplacer{
 	pixel_y = 7
 	},
+/obj/item/weapon/storage/belt/utility,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bne" = (
@@ -37536,7 +37537,7 @@
 	name = "Antechamber Turret Control";
 	pixel_x = 30;
 	pixel_y = 0;
-	req_access = list(65)
+	req_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -51220,8 +51221,8 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/effect/landmark/costume,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -51232,8 +51233,8 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/effect/landmark/costume,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -69303,9 +69304,9 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering - Supermatter West";
+	c_tag = "Engineering Supermatter Port";
 	dir = 8;
-	network = list("SS13")
+	network = list("SS13","Engine")
 	},
 /obj/machinery/airalarm{
 	dir = 8;
@@ -81751,7 +81752,7 @@
 	})
 "cJY" = (
 /obj/structure/rack,
-/obj/effect/landmark/costume,
+/obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
@@ -83780,7 +83781,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboardsolar)
@@ -87165,7 +87166,7 @@
 /area/toxins/xenobiology)
 "cTD" = (
 /obj/machinery/shieldwallgen{
-	req_access = list(55)
+	req_access_txt = "55"
 	},
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
@@ -89150,9 +89151,9 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera{
-	c_tag = "Engineering - Supermatter South";
+	c_tag = "Engineering Supermatter Aft";
 	dir = 1;
-	network = list("SS13")
+	network = list("SS13","Engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -91202,7 +91203,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /turf/open/space,
 /area/solar/starboard)
@@ -91227,7 +91228,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -91304,7 +91305,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -91323,7 +91324,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -91526,7 +91527,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -92440,9 +92441,9 @@
 	dir = 6
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering - Supermatter North";
+	c_tag = "Engineering Supermatter Fore";
 	dir = 4;
-	network = list("SS13")
+	network = list("SS13","Engine")
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -92662,7 +92663,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
@@ -92681,7 +92682,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
+	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
@@ -92868,9 +92869,9 @@
 	dir = 10
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering - Supermatter Central";
+	c_tag = "Engineering Supermatter Starboard";
 	dir = 4;
-	network = list("SS13")
+	network = list("SS13","Engine")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -92885,7 +92886,7 @@
 /obj/structure/reflector/single{
 	anchored = 1;
 	dir = 1;
-	icon_state = "reflector";
+	icon_state = "reflector"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -92935,7 +92936,7 @@
 /obj/structure/reflector/double{
 	anchored = 1;
 	dir = 1;
-	icon_state = "reflector_double";
+	icon_state = "reflector_double"
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
@@ -92943,7 +92944,7 @@
 /obj/structure/reflector/single{
 	anchored = 1;
 	dir = 8;
-	icon_state = "reflector";
+	icon_state = "reflector"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -95591,6 +95592,21 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"dlI" = (
+/obj/machinery/power/rad_collector{
+	anchored = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/camera{
+	c_tag = "Supermatter Chamber";
+	dir = 4;
+	network = list("Engine")
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -119818,7 +119834,7 @@ aax
 aax
 abr
 abJ
-acd
+abE
 abE
 abE
 ade
@@ -138616,7 +138632,7 @@ dbb
 aMk
 aNv
 dfk
-dfq
+dlI
 djt
 dfG
 dfQ
