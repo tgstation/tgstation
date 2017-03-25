@@ -67,6 +67,7 @@
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
 	var/can_be_held = TRUE //if assholes can pick us up
+	var/flavortext = \
 
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
@@ -120,6 +121,9 @@
 /mob/living/simple_animal/drone/Login()
 	..()
 	check_laws()
+
+	if(flavortext)
+		to_chat(src, "[flavortext]")
 
 	updateSeeStaticMobs()
 
