@@ -12,7 +12,7 @@
     Master.SleepEnd()
 
 //this is the only one that changes syntax because byond
-/proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, isnum, world_obj, world_turf)
+/proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, isnum, isfile, world_obj, world_turf)
     Master.SleepBegin()
     if(world_obj)
         if(nullable)
@@ -29,11 +29,16 @@
             . = input(Usr, Message, Title, Default) as null|num
         else
             . = input(Usr, Message, Title, Default) as num
-    else if(text)
+    else if(istext)
         if(nullable)
             . = input(Usr, Message, Title, Default) as null|text
         else
             . = input(Usr, Message, Title, Default) as text
+    else if(isfile)
+        if(nullable)
+            . = input(Usr, Message, Title, Default) as null|file
+        else
+            . = input(Usr, Message, Title, Default) as file
     else 
         if(nullable)
             . = input(Usr, Message, Title, Default) as null|anything in choices

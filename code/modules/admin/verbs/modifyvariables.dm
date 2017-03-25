@@ -141,7 +141,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			var/value = input("Select reference:", "Reference", current_value, nullable = TRUE, choices = things)
 			if (!value)
 				.["class"] = null
 				return
@@ -154,7 +154,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			var/value = input("Select reference:", "Reference", current_value, nullable = TRUE, choices = things)
 			if (!value)
 				.["class"] = null
 				return
@@ -167,7 +167,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			var/value = input("Select reference:", "Reference", current_value, nullable = TRUE, choices = things)
 			if (!value)
 				.["class"] = null
 				return
@@ -176,14 +176,14 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 
 		if (VV_CLIENT)
-			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in clients
+			.["value"] = input("Select reference:", "Reference", current_value, nullable = TRUE, choices = clients)
 			if (.["value"] == null)
 				.["class"] = null
 				return
 
 
 		if (VV_FILE)
-			.["value"] = input("Pick file:", "File") as null|file
+			.["value"] = input("Pick file:", "File", isfile = TRUE)
 			if (.["value"] == null)
 				.["class"] = null
 				return

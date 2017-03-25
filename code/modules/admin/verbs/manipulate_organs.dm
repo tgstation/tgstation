@@ -10,7 +10,7 @@
 				var/dat = replacetext("[path]", "/obj/item/organ/", ":")
 				organs[dat] = path
 
-			var/obj/item/organ/organ = input("Select organ type:", "Organ Manipulation", null) in organs
+			var/obj/item/organ/organ = input("Select organ type:", "Organ Manipulation", null, choices = organs)
 			organ = organs[organ]
 			organ = new organ
 			organ.Insert(C)
@@ -20,7 +20,7 @@
 				var/dat = replacetext("[path]", "/obj/item/weapon/implant/", ":")
 				organs[dat] = path
 
-			var/obj/item/weapon/implant/organ = input("Select implant type:", "Organ Manipulation", null) in organs
+			var/obj/item/weapon/implant/organ = input("Select implant type:", "Organ Manipulation", null, choices = organs)
 			organ = organs[organ]
 			organ = new organ
 			organ.implant(C)
@@ -34,7 +34,7 @@
 				var/obj/item/weapon/implant/I = X
 				organs["[I.name] ([I.type])"] = I
 
-			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
+			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null, choices = organs)
 			organ = organs[organ]
 			if(!organ) return
 			var/obj/item/organ/O
