@@ -468,7 +468,7 @@ var/list/admin_verbs_hideable = list(
 				mob.name = initial(mob.name)
 				mob.mouse_opacity = initial(mob.mouse_opacity)
 		else
-			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
+			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key, nullable = TRUE, istext = TRUE))
 			if(!new_key)
 				return
 			if(length(new_key) >= 26)

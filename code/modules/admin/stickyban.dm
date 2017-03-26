@@ -14,7 +14,7 @@
 			if (data["ckey"])
 				ckey = ckey(data["ckey"])
 			else
-				ckey = input(usr,"Ckey","Ckey","") as text|null
+				ckey = input(usr,"Ckey","Ckey","", nullable = TRUE, istext = TRUE)
 				if (!ckey)
 					return
 				ckey = ckey(ckey)
@@ -26,7 +26,7 @@
 			if (data["reason"])
 				ban["message"] = data["reason"]
 			else
-				var/reason = input(usr,"Reason","Reason","Ban Evasion") as text|null
+				var/reason = input(usr,"Reason","Reason","Ban Evasion", nullable = TRUE, istext = TRUE)
 				if (!reason)
 					return
 				ban["message"] = "[reason]"
@@ -112,7 +112,7 @@
 				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!")
 				return
 			var/oldreason = ban["message"]
-			var/reason = input(usr,"Reason","Reason","[ban["message"]]") as text|null
+			var/reason = input(usr,"Reason","Reason","[ban["message"]]", nullable = TRUE, istext = TRUE)
 			if (!reason || reason == oldreason)
 				return
 			//we have to do this again incase something changed while we waited for input

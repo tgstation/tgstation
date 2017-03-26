@@ -257,7 +257,7 @@
 					auth = 0
 					screen = 0
 				else
-					var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+					var/dkey = trim(input(usr, "Please enter the decryption key.", nullable = TRUE, istext = TRUE))
 					if(dkey && dkey != "")
 						if(src.linkedServer.decryptkey == dkey)
 							auth = 1
@@ -308,7 +308,7 @@
 				message = noserver
 			else
 				if(auth)
-					var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+					var/dkey = trim(input(usr, "Please enter the decryption key.", nullable = TRUE, istext = TRUE))
 					if(dkey && dkey != "")
 						if(src.linkedServer.decryptkey == dkey)
 							var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))

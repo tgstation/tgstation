@@ -253,7 +253,7 @@
 			playsong(usr)
 
 	else if(href_list["newline"])
-		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
+		var/newline = html_encode(input("Enter your line: ", instrumentObj.name, nullable = TRUE, istext = TRUE))
 		if(!newline || !in_range(instrumentObj, usr))
 			return
 		if(lines.len > 50)
@@ -270,7 +270,7 @@
 
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
-		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
+		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num], nullable = TRUE, istext = TRUE))
 		if(!content || !in_range(instrumentObj, usr))
 			return
 		if(lentext(content) > 50)

@@ -2230,7 +2230,7 @@
 			return
 		var/datum/station_goal/G = new picked()
 		if(picked == /datum/station_goal)
-			var/newname = input("Enter goal name:") as text|null
+			var/newname = input("Enter goal name:", nullable = TRUE, istext = TRUE)
 			if(!newname)
 				return
 			G.name = newname

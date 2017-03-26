@@ -339,7 +339,7 @@
 				if(speed <= 0)
 					speed = 1
 			if("setpath")
-				var/newpath = copytext(sanitize(input(usr, "Please define a new path!",,path) as text|null),1,MAX_MESSAGE_LEN)
+				var/newpath = copytext(sanitize(input(usr, "Please define a new path!",,path, nullable = TRUE, istext = TRUE)),1,MAX_MESSAGE_LEN)
 				if(newpath && newpath != "")
 					moving = 0 // stop moving
 					path = newpath

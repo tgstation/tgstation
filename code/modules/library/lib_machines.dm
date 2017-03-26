@@ -75,7 +75,7 @@
 		return
 
 	if(href_list["settitle"])
-		var/newtitle = input("Enter a title to search for:") as text|null
+		var/newtitle = input("Enter a title to search for:", nullable = TRUE, istext = TRUE)
 		if(newtitle)
 			title = sanitize(newtitle)
 		else
@@ -89,7 +89,7 @@
 			category = "Any"
 		category = sanitizeSQL(category)
 	if(href_list["setauthor"])
-		var/newauthor = input("Enter an author to search for:") as text|null
+		var/newauthor = input("Enter an author to search for:", nullable = TRUE, istext = TRUE)
 		if(newauthor)
 			author = sanitize(newauthor)
 		else
@@ -380,9 +380,9 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = copytext(sanitize(input("Enter the book's title:") as text|null),1,MAX_MESSAGE_LEN)
+		buffer_book = copytext(sanitize(input("Enter the book's title:", nullable = TRUE, istext = TRUE)),1,MAX_MESSAGE_LEN)
 	if(href_list["editmob"])
-		buffer_mob = copytext(sanitize(input("Enter the recipient's name:") as text|null),1,MAX_NAME_LEN)
+		buffer_mob = copytext(sanitize(input("Enter the recipient's name:", nullable = TRUE, istext = TRUE)),1,MAX_NAME_LEN)
 	if(href_list["checkout"])
 		var/datum/borrowbook/b = new /datum/borrowbook
 		b.bookname = sanitize(buffer_book)
@@ -399,7 +399,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(b && istype(b))
 			inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = copytext(sanitize(input("Enter the author's name: ") as text|null),1,MAX_MESSAGE_LEN)
+		var/newauthor = copytext(sanitize(input("Enter the author's name: ", nullable = TRUE, istext = TRUE)),1,MAX_MESSAGE_LEN)
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])

@@ -153,7 +153,7 @@
 		if("set_name")
 			if(!check_rights(R_ADMIN))
 				return
-			var/new_name = input(usr, "Please input a new name for the station.", "What?", "") as text|null
+			var/new_name = input(usr, "Please input a new name for the station.", "What?", "", nullable = TRUE, istext = TRUE)
 			if(!new_name)
 				return
 			change_station_name(new_name)

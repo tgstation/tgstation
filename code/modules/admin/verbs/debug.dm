@@ -48,7 +48,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			target = null
 			targetselected = 0
 
-	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
+	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null, nullable = TRUE, istext = TRUE)
 	if(!procname)
 		return
 
@@ -89,7 +89,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/procname = input("Proc name, eg: fake_blood","Proc:", null) as text|null
+	var/procname = input("Proc name, eg: fake_blood","Proc:", null, nullable = TRUE, istext = TRUE)
 	if(!procname)
 		return
 	if(!hascall(A,procname))
@@ -121,7 +121,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	. = list()
 	var/list/named_args = list()
 	while(argnum--)
-		var/named_arg = input("Leave blank for positional argument. Positional arguments will be considered as if they were added first.", "Named argument") as text|null
+		var/named_arg = input("Leave blank for positional argument. Positional arguments will be considered as if they were added first.", "Named argument", nullable = TRUE, istext = TRUE)
 		var/value = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 		if (!value["class"])
 			return

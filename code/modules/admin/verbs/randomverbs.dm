@@ -410,7 +410,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
+	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "", nullable = TRUE, istext = TRUE)
 	if(!input)
 		return
 
@@ -474,7 +474,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
+	var/input = input(usr, "Please input a new name for Central Command.", "What?", "", nullable = TRUE, istext = TRUE)
 	if(!input)
 		return
 	change_command_name(input)
