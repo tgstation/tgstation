@@ -218,7 +218,7 @@
 		R.SetLockdown(0)
 	R.anchored = FALSE
 	R.notransform = FALSE
-	R.notify_ai(2)
+	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 	if(feedback_key && !did_feedback)
