@@ -451,10 +451,11 @@
 	chameleon_ammo_vars = list()
 	chameleon_gun_vars = list()
 	chameleon_projectile_vars = list()
-	for(var/v in ammo_copy_vars)
-		if(v in blacklisted_vars)	//Just in case admins go crazy.
-			continue
-		chambered.vars[v] = initial(chambered.vars[v])
+	if(chambered)
+		for(var/v in ammo_copy_vars)
+			if(v in blacklisted_vars)	//Just in case admins go crazy.
+				continue
+			chambered.vars[v] = initial(chambered.vars[v])
 	for(var/v in gun_copy_vars)
 		if(v in blacklisted_vars)
 			continue
@@ -469,7 +470,7 @@
 	for(var/V in ammo_copy_vars)
 		if(AC.vars[V])
 			chameleon_ammo_vars[V] = AC.vars[V]
-			if(chambered.vars[V])
+			if(chambered && chambered.vars[V])
 				chambered.vars[V] = AC.vars[V]
 	if(passthrough)
 		var/obj/item/projectile/P = AC.BB
