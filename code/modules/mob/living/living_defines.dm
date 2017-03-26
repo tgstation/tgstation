@@ -75,3 +75,4 @@
 	var/tesla_ignore = FALSE
 
 	var/datum/riding/riding_datum
+	var/times_eaten_from = 0

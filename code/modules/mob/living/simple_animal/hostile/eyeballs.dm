@@ -10,8 +10,6 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"
-	emote_taunt = list("glares")
-	taunt_chance = 25
 	maxHealth = 45
 	health = 45
 	speak_emote = list("telepathically cries")

@@ -309,3 +309,26 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 /obj/item/weapon/circuitboard/machine/clockwork
 	name = "clockwork board (Report This)"
 	icon_state = "clock_mod"
+/obj/item/weapon/circuitboard/incubator
+	name = "circuit board (Incubator)"
+	build_path = /obj/machinery/incubator
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/nest
+	name = "circuit board (Nest)"
+	build_path = /obj/machinery/nest
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/trough
+	name = "circuit board (Trough)"
+	build_path = /obj/machinery/trough
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1)
