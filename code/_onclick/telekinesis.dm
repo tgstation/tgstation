@@ -71,6 +71,17 @@ var/const/tk_maxrange = 15
 	var/atom/movable/focus = null
 	var/mob/living/carbon/tk_user = null
 
+/obj/item/tk_grab/Initialize()
+	..()
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/tk_grab/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/item/tk_grab/process()
+	if(check_if_focusable(focus)) //if somebody grabs your thing, no waiting for them to put it down and hitting them again.
+		update_icon()
 
 /obj/item/tk_grab/dropped(mob/user)
 	if(focus && user && loc != user && loc != user.loc) // drop_item() gets called when you tk-attack a table/closet with an item
@@ -109,17 +120,19 @@ var/const/tk_maxrange = 15
 
 	if(target == focus)
 		target.attack_self_tk(user)
+		update_icon()
 		return
 
 
 	if(!isturf(target) && istype(focus,/obj/item) && target.Adjacent(focus))
 		apply_focus_overlay()
 		melee_item_attack_chain(tk_user, focus, target) //isn't copying the attack chain fun. we should do it more often.
-		focus.do_attack_animation(target, null, focus)
+		if(check_if_focusable(focus))
+			focus.do_attack_animation(target, null, focus)
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
-		user.changeNext_move(CLICK_CD_MELEE)
+	user.changeNext_move(CLICK_CD_MELEE)
 	update_icon()
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)
@@ -141,14 +154,10 @@ var/const/tk_maxrange = 15
 	return TRUE
 
 /obj/item/tk_grab/proc/check_if_focusable(obj/target)
-	if(!tk_user || !istype(tk_user) || !tk_user.dna.check_mutation(TK))
+	if(!tk_user || !istype(tk_user) || QDELETED(target) || !istype(target) || !tk_user.dna.check_mutation(TK))
 		qdel(src)
 		return
-	if(!istype(target))
-		return
-	if(!tkMaxRangeCheck(tk_user, target))
-		return
-	if(target.anchored || !isturf(target.loc))
+	if(!tkMaxRangeCheck(tk_user, target) || target.anchored || !isturf(target.loc))
 		qdel(src)
 		return
 	return TRUE
@@ -163,8 +172,8 @@ var/const/tk_maxrange = 15
 	if(focus)
 		var/old_layer = focus.layer
 		var/old_plane = focus.plane
-		focus.layer = layer
-		focus.plane = FLOAT_PLANE
+		focus.layer = layer+0.01
+		focus.plane = ABOVE_HUD_PLANE
 		add_overlay(focus) //this is kind of ick, but it's better than using icon()
 		focus.layer = old_layer
 		focus.plane = old_plane
