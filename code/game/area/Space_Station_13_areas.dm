@@ -300,23 +300,23 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Dormitory Toilets"
 	icon_state = "toilet"
 
-/area/crew_quarters/sleep
+/area/crew_quarters/sleeping
 	name = "Dormitories"
 	icon_state = "Sleep"
 
-/area/crew_quarters/sleep_male
+/area/crew_quarters/sleeping_male
 	name = "Male Dorm"
 	icon_state = "Sleep"
 
-/area/crew_quarters/sleep_male/toilet_male
+/area/crew_quarters/sleeping_male/toilet_male
 	name = "Male Toilets"
 	icon_state = "toilet"
 
-/area/crew_quarters/sleep_female
+/area/crew_quarters/sleeping_female
 	name = "Female Dorm"
 	icon_state = "Sleep"
 
-/area/crew_quarters/sleep_female/toilet_female
+/area/crew_quarters/sleeping_female/toilet_female
 	name = "Female Toilets"
 	icon_state = "toilet"
 
