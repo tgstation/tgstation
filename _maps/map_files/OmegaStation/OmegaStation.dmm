@@ -22458,11 +22458,11 @@
 "aJt" = (
 /obj/structure/sign/radiation,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aJu" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aJv" = (
 /obj/machinery/door/airlock/glass_atmos{
 	name = "Supermatter Chamber";
@@ -22470,7 +22470,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aJw" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -23178,12 +23178,12 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aKB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aKC" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
@@ -23192,11 +23192,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aKD" = (
 /obj/structure/sign/fire,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aKE" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -23883,45 +23883,45 @@
 "aLO" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aLP" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	icon_state = "intact";
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aLQ" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aLR" = (
 /obj/machinery/door/airlock/glass_atmos{
 	name = "Supermatter Chamber";
 	req_access_txt = "24"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aLS" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aLT" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aLU" = (
 /obj/machinery/status_display,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aLV" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable{
@@ -24450,7 +24450,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMR" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -24460,7 +24460,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/circuit/green,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -24468,7 +24468,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -24476,17 +24476,17 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMU" = (
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMW" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -24495,7 +24495,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMX" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -24505,7 +24505,7 @@
 	d2 = 4
 	},
 /turf/open/floor/circuit/green,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMY" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -24522,7 +24522,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMZ" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable{
@@ -25191,7 +25191,7 @@
 	name = "supermatter crystal"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aOb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -25209,7 +25209,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aOc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable{
@@ -25502,7 +25502,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aOC" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -25510,7 +25510,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aOD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -25518,7 +25518,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aOE" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -25534,7 +25534,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aOF" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable{
@@ -26390,7 +26390,7 @@
 "aPK" = (
 /obj/structure/sign/electricshock,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aPL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -41984,7 +41984,7 @@
 	pixel_x = 23
 	},
 /turf/open/floor/circuit/green,
-/area/engine/engineering)
+/area/engine/supermatter)
 "buW" = (
 /obj/structure/cable/white{
 	tag = "icon-0-2";
@@ -41995,6 +41995,32 @@
 	dir = 5
 	},
 /area/bridge)
+"buX" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"buY" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"buZ" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"bva" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"bvb" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"bvc" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/engine/supermatter)
+"bvd" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"bve" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
 
 (1,1,1) = {"
 aaa
@@ -72697,11 +72723,11 @@ aHl
 aIi
 aJs
 aKz
-aEt
+buY
 buV
 aMR
 aMR
-aEt
+bva
 aQL
 aRI
 aSS
@@ -72953,12 +72979,12 @@ aGj
 aHm
 aIj
 aJt
-aEt
+buX
 aLP
 aMS
 aMS
 aOC
-aEt
+bvb
 aQM
 aRJ
 aST
@@ -73472,7 +73498,7 @@ aLR
 aMU
 aOa
 aMU
-aPL
+bvc
 aQO
 aRL
 aSV
@@ -73986,7 +74012,7 @@ aLT
 aMW
 aMW
 aOD
-aEt
+bvd
 aQQ
 aRN
 aSX
@@ -74239,11 +74265,11 @@ aHr
 aIo
 aJw
 aKE
-aEt
+buZ
 aMX
 aMX
 aMX
-aEt
+bve
 aQR
 aRO
 aSY

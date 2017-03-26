@@ -20535,7 +20535,7 @@
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aJB" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -21087,21 +21087,21 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aKH" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "Gas to Chamber"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aKI" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
 /obj/machinery/meter,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aKL" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	icon_state = "intact";
@@ -21823,10 +21823,10 @@
 	req_access_txt = "10"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMk" = (
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aMm" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/effect/turf_decal/delivery,
@@ -22357,14 +22357,14 @@
 	name = "Gas to Filter"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aNv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "aNw" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -69317,7 +69317,7 @@
 	req_one_access_txt = "24;10"
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "cpS" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -90891,7 +90891,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "daZ" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -90899,7 +90899,7 @@
 	},
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "dbb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -90908,7 +90908,7 @@
 	pressure_checks = 1
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "dbd" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 28
@@ -92768,7 +92768,7 @@
 "deD" = (
 /obj/machinery/status_display,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "deI" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
@@ -92833,7 +92833,7 @@
 	},
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "deT" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
@@ -92862,7 +92862,7 @@
 "deV" = (
 /obj/structure/sign/fire,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "deW" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -92897,7 +92897,7 @@
 "dfa" = (
 /obj/machinery/power/supermatter_shard/crystal,
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "dfb" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10;
@@ -92906,11 +92906,11 @@
 	},
 /obj/machinery/meter,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "dfc" = (
 /obj/structure/sign/electricshock,
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "dfd" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
@@ -92969,13 +92969,13 @@
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/supermatter)
 "dfk" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "dfm" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -92983,7 +92983,7 @@
 	},
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "dfp" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -93004,7 +93004,7 @@
 	d2 = 2
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "dft" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
@@ -94749,7 +94749,7 @@
 	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "dju" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -94768,7 +94768,7 @@
 	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "djw" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -94793,7 +94793,7 @@
 	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/supermatter)
 "djy" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -95606,7 +95606,42 @@
 	network = list("Engine")
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
+"dlJ" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"dlK" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"dlL" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"dlM" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"dlN" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"dlO" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/supermatter)
+"dlP" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"dlQ" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"dlR" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"dlS" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"dlT" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
 
 (1,1,1) = {"
 aaa
@@ -137856,11 +137891,11 @@ aEr
 aFC
 aGZ
 aGZ
-axY
+dlL
 aKG
 aMj
 aKG
-axY
+dlP
 aQe
 aRv
 dfD
@@ -138113,11 +138148,11 @@ dej
 aFC
 deC
 deC
-axY
+dlM
 aKH
 aMk
 aNu
-axY
+dlQ
 dfp
 dfp
 dfE
@@ -138369,13 +138404,13 @@ aCY
 dek
 der
 deD
-axY
+dlJ
 aJv
 aKI
 aMj
 dfb
 dfj
-axY
+dlS
 deD
 dfF
 aTN
@@ -139397,13 +139432,13 @@ aCY
 dem
 aFD
 deD
-axY
-axY
+dlK
+dlN
 deV
-aCZ
+dlO
 dfc
-axY
-axY
+dlR
+dlT
 deD
 dfI
 dfS
