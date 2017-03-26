@@ -27,7 +27,7 @@
 			for(var/path in possible_shapes)
 				var/mob/living/simple_animal/A = path
 				animal_list[initial(A.name)] = path
-			shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as anything in animal_list
+			shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null, choices = animal_list)
 			if(!shapeshift_type) //If you aren't gonna decide I am!
 				shapeshift_type = pick(animal_list)
 			shapeshift_type = animal_list[shapeshift_type]
