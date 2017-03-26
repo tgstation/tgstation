@@ -423,6 +423,7 @@
 	var/list/ammo_copy_vars
 	var/list/gun_copy_vars
 	var/badmin_mode = FALSE
+	var/static/list/blacklisted_vars = list("locs", "loc", "contents", "x", "y", "z")
 
 /obj/item/weapon/gun/energy/laser/chameleon/New()
 	..()
@@ -450,13 +451,16 @@
 	chameleon_ammo_vars = list()
 	chameleon_gun_vars = list()
 	chameleon_projectile_vars = list()
-	for(var/V in chambered.vars)
-		chambered.vars[V] = initial(chambered.vars[V])
+	for(var/v in ammo_copy_vars)
+		if(v in blacklisted_vars)	//Just in case admins go crazy.
+			continue
+		chambered.vars[v] = initial(chambered.vars[v])
+	for(var/v in gun_copy_vars)
+		if(v in blacklisted_vars)
+			continue
+		vars[v] = initial(vars[v])
 	qdel(chambered.BB)
 	chambered.newshot()
-	for(var/V in vars)
-		vars[V] = initial(vars[V])
-
 
 /obj/item/weapon/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/AC, passthrough = TRUE, reset = FALSE)
 	if(!istype(AC))
