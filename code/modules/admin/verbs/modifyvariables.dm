@@ -100,7 +100,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 
 		if (VV_NUM)
-			.["value"] = input("Enter new number:", "Num", current_value) as null|num
+			.["value"] = input("Enter new number:", "Num", current_value, nullable = TRUE, isnum = TRUE)
 			if (.["value"] == null)
 				.["class"] = null
 				return

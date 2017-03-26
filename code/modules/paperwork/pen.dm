@@ -66,7 +66,7 @@
 
 
 /obj/item/weapon/pen/attack_self(mob/living/carbon/user)
-	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
+	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head", nullable = TRUE, isnum = TRUE)
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
 		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")

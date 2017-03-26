@@ -191,7 +191,7 @@
 
 	if(href_list["change_freq"])
 
-		var/newfreq = input(usr, "Specify a new frequency for new signals to change to. Enter null to turn off frequency changing. Decimals assigned automatically.", src, network) as null|num
+		var/newfreq = input(usr, "Specify a new frequency for new signals to change to. Enter null to turn off frequency changing. Decimals assigned automatically.", src, network, nullable = TRUE, isnum = TRUE)
 		if(canAccess(usr))
 			if(newfreq)
 				if(findtext(num2text(newfreq), "."))
@@ -252,7 +252,7 @@
 
 
 			if("freq")
-				var/newfreq = input(usr, "Specify a new frequency to filter (GHz). Decimals assigned automatically.", src, network) as null|num
+				var/newfreq = input(usr, "Specify a new frequency to filter (GHz). Decimals assigned automatically.", src, network, nullable = TRUE, isnum = TRUE)
 				if(newfreq && canAccess(usr))
 					if(findtext(num2text(newfreq), "."))
 						newfreq *= 10 // shift the decimal one place

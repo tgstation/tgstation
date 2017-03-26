@@ -1280,7 +1280,7 @@
 				if(check_rights(R_FUN, 0))
 					var/obj/item/device/uplink/U = find_syndicate_uplink()
 					if(U)
-						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals) as null|num
+						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals, nullable = TRUE, isnum = TRUE)
 						if(!isnull(crystals))
 							U.telecrystals = crystals
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")

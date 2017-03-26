@@ -260,7 +260,7 @@
 			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [reason] to [value]",1)
 		if("duration")
 			if(!value)
-				value = input("Insert the new duration (in minutes) for [pckey]'s ban", "New Duration", "[duration]", null) as null|num
+				value = input("Insert the new duration (in minutes) for [pckey]'s ban", "New Duration", "[duration]", null, nullable = TRUE, isnum = TRUE)
 				if(!isnum(value) || !value)
 					to_chat(usr, "Cancelled")
 					return

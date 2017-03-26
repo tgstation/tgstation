@@ -429,7 +429,7 @@
 				if("increase")
 					timer_set = min(maximum_timer_set, timer_set + 10)
 				if("input")
-					var/user_input = input(usr, "Set time to valve toggle.", name) as null|num
+					var/user_input = input(usr, "Set time to valve toggle.", name, nullable = TRUE, isnum = TRUE)
 					if(!user_input)
 						return
 					var/N = text2num(user_input)

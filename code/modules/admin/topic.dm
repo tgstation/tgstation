@@ -1533,7 +1533,7 @@
 	else if(href_list["gangpoints"])
 		var/datum/gang/G = locate(href_list["gangpoints"]) in ticker.mode.gangs
 		if(G)
-			var/newpoints = input("Set [G.name ] Gang's influence.","Set Influence",G.points) as null|num
+			var/newpoints = input("Set [G.name ] Gang's influence.","Set Influence",G.points, nullable = TRUE, isnum = TRUE)
 			if(!newpoints)
 				return
 			message_admins("[key_name_admin(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
