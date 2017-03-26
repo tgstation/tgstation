@@ -14,7 +14,7 @@
 	resistance_flags = FIRE_PROOF
 	interact_open = TRUE
 	var/datum/gas_mixture/air_contents	// internal reservoir
-	var/full_pressure = TRUE
+	var/full_pressure = FALSE
 	var/pressure_charging = TRUE
 	var/flush = 0	// true if flush handle is pulled
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
