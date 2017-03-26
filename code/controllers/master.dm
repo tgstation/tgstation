@@ -530,4 +530,5 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 /world/proc/SleepEnd(sleep_start_tick)
 	--Master.sleeping_threads
 	if(Master.stack_trace_sleeps_before > sleep_start_tick)
-		stack_trace("Thread Check Tick: [sleep_start_tick]")
+		var/static/crash_message = "Thread Check. Tick: "
+		CRASH(crash_message + "[sleep_start_tick]")
