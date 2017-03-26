@@ -11,7 +11,17 @@ var/datum/controller/subsystem/processing/flightpacks/SSflightpacks
 /datum/controller/subsystem/processing/flightpacks/New()
 	NEW_SS_GLOBAL(SSflightpacks)
 
+/datum/controller/subsystem/processing/flightpacks/Initialize()
+	sync_flightsuit_processing()
+
 /datum/controller/subsystem/processing/flightpacks/vv_edit_var()
 	..()
+	sync_flightsuit_processing()
+
+/datum/controller/subsystem/processing/flightpacks/proc/sync_flightsuit_processing()
 	for(var/obj/item/device/flightpack/FP in processing)
 		FP.sync_processing(src)
+	if(flightsuit_processing == FLIGHTSUIT_PROCESSING_NONE)	//Don't even bother firing.
+		can_fire = FALSE
+	else
+		can_fire = TRUE
