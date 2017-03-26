@@ -505,13 +505,13 @@
 					return
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason.","Reason",reason2) as message|null
+				reason = input(usr,"Please State Reason.","Reason",reason2, nullable = TRUE, ismessage = TRUE)
 				if(!reason)
 					return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Please State Reason.","Reason",reason2) as message|null
+				reason = input(usr,"Please State Reason.","Reason",reason2, nullable = TRUE, ismessage = TRUE)
 				if(!reason)
 					return
 
@@ -555,7 +555,7 @@
 
 		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
-				var/reason = input(usr,"Please State Reason.","Reason") as message|null
+				var/reason = input(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, "appearance"))
@@ -937,7 +937,7 @@
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440, nullable = TRUE, isnum = TRUE)
 					if(!mins)
 						return
-					var/reason = input(usr,"Please State Reason.","Reason") as message|null
+					var/reason = input(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
 					if(!reason)
 						return
 
@@ -964,7 +964,7 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = input(usr,"Please State Reason","Reason") as message|null
+					var/reason = input(usr,"Please State Reason","Reason", nullable = TRUE, ismessage = TRUE)
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1132,7 +1132,7 @@
 				var/mins = input(usr,"How long (in minutes)?","Ban time",1440, nullable = TRUE, isnum = TRUE)
 				if(!mins)
 					return
-				var/reason = input(usr,"Please State Reason.","Reason") as message|null
+				var/reason = input(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_TEMP, M, mins, reason))
@@ -1153,7 +1153,7 @@
 
 				qdel(M.client)
 			if("No")
-				var/reason = input(usr,"Please State Reason.","Reason") as message|null
+				var/reason = input(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
 				if(!reason)
 					return
 				switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
@@ -2234,7 +2234,7 @@
 			if(!newname)
 				return
 			G.name = newname
-			var/description = input("Enter centcom message contents:") as message|null
+			var/description = input("Enter centcom message contents:", nullable = TRUE, ismessage = TRUE)
 			if(!description)
 				return
 			G.report_message = description

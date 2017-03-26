@@ -84,7 +84,7 @@
 		else
 			return
 	var/sql_ckey = sanitizeSQL(ckey)
-	var/question = input("Write your question","Question") as message|null
+	var/question = input("Write your question","Question", nullable = TRUE, ismessage = TRUE)
 	if(!question)
 		return
 	question = sanitizeSQL(question)
@@ -103,7 +103,7 @@
 		pollid = query_get_id.item[1]
 	var/add_option = 1
 	while(add_option)
-		var/option = input("Write your option","Option") as message|null
+		var/option = input("Write your option","Option", nullable = TRUE, ismessage = TRUE)
 		if(!option)
 			return pollid
 		option = sanitizeSQL(option)
@@ -131,17 +131,17 @@
 			if(minval >= maxval)
 				to_chat(src, "Minimum rating value can't be more than maximum rating value")
 				return pollid
-			descmin = input("Optional: Set description for minimum rating","Minimum rating description") as message|null
+			descmin = input("Optional: Set description for minimum rating","Minimum rating description", nullable = TRUE, ismessage = TRUE)
 			if(descmin)
 				descmin = sanitizeSQL(descmin)
 			else if(descmin == null)
 				return pollid
-			descmid = input("Optional: Set description for median rating","Median rating description") as message|null
+			descmid = input("Optional: Set description for median rating","Median rating description", nullable = TRUE, ismessage = TRUE)
 			if(descmid)
 				descmid = sanitizeSQL(descmid)
 			else if(descmid == null)
 				return pollid
-			descmax = input("Optional: Set description for maximum rating","Maximum rating description") as message|null
+			descmax = input("Optional: Set description for maximum rating","Maximum rating description", nullable = TRUE, ismessage = TRUE)
 			if(descmax)
 				descmax = sanitizeSQL(descmax)
 			else if(descmax == null)

@@ -449,7 +449,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
+	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "", nullable = TRUE, ismessage = TRUE)
 	if(!input)
 		return
 
@@ -1037,7 +1037,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(!holder)
 		return
 
-	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
+	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "", nullable = TRUE, ismessage = TRUE)
 	if(!input)
 		return
 
