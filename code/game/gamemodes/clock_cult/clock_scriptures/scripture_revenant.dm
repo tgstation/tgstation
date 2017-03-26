@@ -136,10 +136,10 @@
 	nezbere_invoked++
 	for(var/obj/O in all_clockwork_objects)
 		O.ratvar_act()
-	addtimer(CALLBACK(src, .proc/reset_invocation), 600)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_nezbere_invocation), 600)
 	return TRUE
 
-/datum/clockwork_scripture/invoke_nezbere/proc/reset_invocation()
+/proc/reset_invocation()
 	nezbere_invoked--
 	for(var/obj/O in all_clockwork_objects)
 		O.ratvar_act()
