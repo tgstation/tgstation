@@ -67,3 +67,7 @@
 //To be used with TIMER_UNIQUE
 //prevents distinguishing identical timers with the wait variable
 #define TIMER_NO_HASH_WAIT  0x10
+
+//For servers that can't do with any additional lag, set this to none in flightpacks.dm in subsystem/processing.
+#define FLIGHTSUIT_PROCESSING_NONE 0
+#define FLIGHTSUIT_PROCESSING_FULL 1
