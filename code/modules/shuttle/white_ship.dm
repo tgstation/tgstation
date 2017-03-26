@@ -56,12 +56,13 @@
 	GrantActions(user)
 	eyeobj.eye_user = user
 	user.client.change_view(20)
+	user.update_sight()
 	user.see_invisible = SEE_INVISIBLE_MINIMUM
 	eyeobj.name = "Navigation Probe([user.name])"
 	user.remote_control = eyeobj
 	user.reset_perspective(eyeobj)
 	user.sight |= SEE_TURFS
-	user.update_sight()
+
 
 /obj/machinery/computer/engi_nav/proc/clear()
 	qdel(landing_zone, force=TRUE)
@@ -130,6 +131,7 @@
 		loc = T
 
 /mob/camera/aiEye/nav/relaymove(mob/user,direct)
+	dir = direct
 	var/initial = initial(sprint)
 	var/max_sprint = 50
 
@@ -220,8 +222,9 @@
 	user.remote_control = eyeobj
 	eyeobj.eye_user = user
 	user.reset_perspective(eyeobj)
-	user.see_invisible = 50
 	user.update_sight()
+	user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	user.sight |= SEE_TURFS
 
 /obj/machinery/computer/ship_construction/New()
 	..()
@@ -251,13 +254,14 @@
 
 
 /mob/camera/aiEye/construction
-	name = "nss dauntless holo-drone"
+	name = "construction holo-drone"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "construction_drone"
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
-	invisibility = 50
+	invisibility = 45
+	alpha = 100
 	var/obj/machinery/computer/ship_construction/origin
 	var/mob/living/eye_user
 
@@ -279,6 +283,7 @@
 		loc = T
 
 /mob/camera/aiEye/construction/relaymove(mob/user,direct)
+	dir = direct
 	var/initial = initial(sprint)
 	var/max_sprint = 50
 
@@ -341,7 +346,7 @@
 	N.eye_user = null
 	if(C.client)
 		C.reset_perspective(null)
-		C.see_invisible = 25
+		C.see_invisible = SEE_INVISIBLE_LIVING
 		C.client.change_view(7)
 	C.remote_control = null
 	C.unset_machine()
@@ -412,13 +417,41 @@
 	B.FF.place(T,C)
 
 /datum/action/innate/engi_ship/machiner
-	name = "Wew"
-	button_icon_state = "mech_overload_on"
+	name = "Build APC"
+	button_icon_state = "add_APC"
 
 /datum/action/innate/engi_ship/machiner/Activate()
 	var/turf/remote = get_turf(C.remote_control)
 	if(remote.density)
-		spawn_atom_to_turf(/obj/machinery/power/apc/powered, remote, 1)
+		var/direct = input("Select the Terminal Direction", "Terminal Direction") in list("NORTH","SOUTH","EAST","WEST")
+		switch(direct)
+			if("NORTH")
+				var/turf/terminal = get_step(remote, 1)
+				var/obj/machinery/power/apc/powered/placed = new(terminal)
+				var/obj/machinery/power/terminal/term = placed.terminal
+				term.dir = 2
+				placed.pixel_y = -24
+			if("SOUTH")
+				var/turf/terminal = get_step(remote, 2)
+				var/obj/machinery/power/apc/powered/placed = new(terminal)
+				var/obj/machinery/power/terminal/term = placed.terminal
+				term.dir = 1
+				placed.pixel_y = 24
+			if("EAST")
+				var/turf/terminal = get_step(remote, 4)
+				var/obj/machinery/power/apc/powered/placed = new(terminal)
+				var/obj/machinery/power/terminal/term = placed.terminal
+				term.dir = 8
+				placed.pixel_x = -24
+			if("WEST")
+				var/turf/terminal = get_step(remote, 8)
+				var/obj/machinery/power/apc/powered/placed = new(terminal)
+				var/obj/machinery/power/terminal/term = placed.terminal
+				term.dir = 4
+				placed.pixel_x = 24
+
+
+
 	else
 		to_chat(C, "Error - Nonsuitable destination detected.")
 
