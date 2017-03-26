@@ -1181,10 +1181,10 @@ var/list/preferences_datums = list()
 
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
-					if(toggles & SOUND_LOBBY)
-						user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
+					if((toggles & SOUND_LOBBY) && user.client)
+						user.client.playtitlemusic()
 					else
-						user.stopLobbySound()
+						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 				if("ghost_ears")
 					chat_toggles ^= CHAT_GHOSTEARS
@@ -1260,6 +1260,11 @@ var/list/preferences_datums = list()
 	character.age = age
 
 	character.eye_color = eye_color
+	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
+	if(organ_eyes)
+		if(!initial(organ_eyes.eye_color))
+			organ_eyes.eye_color = eye_color
+		organ_eyes.old_eye_color = eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 

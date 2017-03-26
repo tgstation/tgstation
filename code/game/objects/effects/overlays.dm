@@ -512,6 +512,11 @@
 	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
 	..()
 
+/obj/effect/overlay/temp/mummy_animation
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "mummy_revive"
+	duration = 20
+
 /obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
 	name = "healing glow"
 	icon_state = "heal"

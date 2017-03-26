@@ -92,13 +92,13 @@ var/list/admin_verbs_fun = list(
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
 	/client/proc/forceEvent,
-	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all,
-	/client/proc/show_tip
+	/client/proc/show_tip,
+	/client/proc/smite
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -153,7 +153,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/jump_to_ruin,
 	/client/proc/clear_dynamic_transit,
 	/client/proc/toggle_medal_disable,
-	/client/proc/view_runtimes
+	/client/proc/view_runtimes,
+	/client/proc/pump_random_event
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

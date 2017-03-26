@@ -146,7 +146,6 @@
 		ticker.login_music = 'sound/ambience/clown.ogg'
 		for(var/mob/dead/new_player/P in mob_list)
 			if(P.client)
-				P.stopLobbySound()
 				P.client.playtitlemusic()
 
 /datum/holiday/fourtwenty

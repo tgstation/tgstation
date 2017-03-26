@@ -321,10 +321,6 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "aS" = (
-/obj/machinery/syndicatebomb/badmin/varplosion{
-	can_unanchor = 0;
-	name = "self destruct device"
-	},
 /turf/open/floor/plasteel/black,
 /area/ruin/powered/syndicate_lava_base)
 "aT" = (
@@ -406,10 +402,6 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bb" = (
-/obj/machinery/syndicatebomb/badmin/varplosion{
-	can_unanchor = 0;
-	name = "self destruct device"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -933,10 +925,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cj" = (
-/obj/machinery/syndicatebomb/badmin/varplosion{
-	can_unanchor = 0;
-	name = "self destruct device"
-	},
 /turf/open/floor/plasteel/podhatch{
 	dir = 8
 	},
@@ -1054,10 +1042,6 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "cx" = (
-/obj/machinery/syndicatebomb/badmin/varplosion{
-	can_unanchor = 0;
-	name = "self destruct device"
-	},
 /turf/open/floor/plasteel/podhatch,
 /area/ruin/powered/syndicate_lava_base)
 "cy" = (
@@ -1463,6 +1447,79 @@
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"du" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dv" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dw" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dx" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dy" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dz" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dA" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dB" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dC" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dD" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dE" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dF" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Self Destruct Control";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/ruin/powered/syndicate_lava_base)
+"dG" = (
+/turf/open/floor/circuit/red,
+/area/ruin/powered/syndicate_lava_base)
+"dH" = (
+/obj/item/weapon/bombcore/large/underwall,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"dI" = (
+/turf/open/floor/circuit/red,
+/area/ruin/powered/syndicate_lava_base)
+"dJ" = (
+/obj/machinery/syndicatebomb/self_destruct,
+/turf/open/floor/circuit/red,
+/area/ruin/powered/syndicate_lava_base)
+"dK" = (
+/turf/open/floor/circuit/red,
+/area/ruin/powered/syndicate_lava_base)
+"dL" = (
+/turf/open/floor/circuit/red,
+/area/ruin/powered/syndicate_lava_base)
 
 (1,1,1) = {"
 aa
@@ -1774,7 +1831,7 @@ ad
 ad
 ad
 ad
-ad
+dD
 ad
 ad
 ac
@@ -1799,14 +1856,14 @@ ad
 ad
 ad
 ad
+dw
 ad
 ad
 ad
 ad
 ad
 ad
-ad
-ad
+dA
 ad
 ad
 cI
@@ -2038,7 +2095,7 @@ ao
 ap
 ap
 ao
-bb
+ap
 ad
 bj
 bD
@@ -2047,7 +2104,7 @@ ao
 ap
 ch
 co
-cx
+cz
 ad
 cI
 cI
@@ -2096,7 +2153,7 @@ cF
 ad
 dl
 ad
-ad
+dH
 ad
 ad
 ab
@@ -2128,7 +2185,7 @@ bX
 ad
 co
 cz
-ad
+dB
 aR
 cN
 bG
@@ -2159,7 +2216,7 @@ ad
 ad
 aV
 ad
-ad
+dx
 bm
 bF
 ap
@@ -2285,7 +2342,7 @@ aY
 aY
 aY
 aY
-cj
+aY
 cp
 cA
 aY
@@ -2310,7 +2367,7 @@ ab
 ab
 ab
 ab
-ad
+du
 ad
 ar
 ar
@@ -2396,7 +2453,7 @@ ar
 ar
 aG
 ap
-aS
+ao
 ap
 bf
 ad
@@ -2408,13 +2465,13 @@ ca
 ck
 co
 cz
-ad
+dC
 aR
 ap
 cW
 db
 dj
-ad
+dE
 ac
 ac
 ac
@@ -2495,10 +2552,10 @@ cX
 dc
 ap
 ad
-ac
-ac
-ab
-ac
+ad
+ad
+ad
+ad
 ab
 ab
 ab
@@ -2523,7 +2580,7 @@ ad
 bt
 ap
 ao
-bb
+ap
 cc
 bv
 co
@@ -2535,10 +2592,10 @@ bI
 dd
 ap
 ad
-ac
-ab
-ab
-ac
+ap
+dI
+ap
+ad
 ab
 ab
 ab
@@ -2553,7 +2610,7 @@ ab
 ad
 ad
 ad
-ad
+dv
 ad
 ad
 ad
@@ -2569,16 +2626,16 @@ bv
 co
 cz
 ad
-bb
+ap
 cQ
 ap
 ap
 ap
+dF
+dG
+dJ
+dL
 ad
-ac
-ab
-ab
-ab
 ab
 ab
 ab
@@ -2599,13 +2656,13 @@ aN
 aT
 ap
 ap
-ad
+dy
 bv
 bv
 ao
 by
 by
-ad
+dz
 cr
 cC
 ad
@@ -2615,10 +2672,10 @@ aN
 aN
 bL
 ad
-ab
-ab
-ac
-ab
+ap
+dK
+ap
+ad
 ab
 ab
 ab
@@ -2656,9 +2713,9 @@ cH
 ad
 ad
 ad
-ab
-ab
-ab
+ad
+ad
+ad
 ab
 ab
 ab

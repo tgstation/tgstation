@@ -1,5 +1,5 @@
 /proc/create_message(type, target_ckey, admin_ckey, text, timestamp, server, secret, logged = 1, browse)
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!type)
@@ -56,7 +56,7 @@
 			browse_messages(target_ckey = target_ckey)
 
 /proc/delete_message(message_id, logged = 1, browse)
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	message_id = text2num(message_id)
@@ -84,7 +84,7 @@
 			browse_messages(target_ckey = target_ckey)
 
 /proc/edit_message(message_id, browse)
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	message_id = text2num(message_id)
@@ -115,7 +115,7 @@
 			browse_messages(target_ckey = target_ckey)
 
 /proc/toggle_message_secrecy(message_id)
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	message_id = text2num(message_id)
@@ -139,7 +139,7 @@
 		browse_messages(target_ckey = target_ckey)
 
 /proc/browse_messages(type, target_ckey, index, linkless = 0, filter)
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/output
@@ -277,7 +277,7 @@
 	usr << browse(output, "window=browse_messages;size=900x500")
 
 proc/get_message_output(type, target_ckey)
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!type)

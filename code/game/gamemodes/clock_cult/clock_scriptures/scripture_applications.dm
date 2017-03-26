@@ -135,7 +135,7 @@
 	if(!check_special_requirements())
 		return FALSE
 	to_chat(invoker, "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>")
-	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50)
+	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50, POLL_IGNORE_CLOCKWORK_MARAUDER)
 	if(!check_special_requirements())
 		return FALSE
 	if(!marauder_candidates.len)
@@ -214,7 +214,7 @@
 	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
 
 
-//Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures and consume power or replicant alloy.
+//Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures at a power cost
 /datum/clockwork_scripture/create_object/mending_motor
 	descname = "Powered Structure, Repairs Other Structures"
 	name = "Mending Motor"

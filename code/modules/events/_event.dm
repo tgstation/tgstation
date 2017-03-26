@@ -57,7 +57,7 @@
 
 /datum/round_event_control/proc/preRunEvent()
 	if(!ispath(typepath,/datum/round_event))
-		return FALSE
+		return EVENT_CANT_RUN
 
 	triggering = TRUE
 	if (alertadmins)
@@ -65,9 +65,9 @@
 		sleep(100)
 
 	if(!triggering)
-		return TRUE	//admin cancelled
+		return EVENT_CANCELLED	//admin cancelled
 	triggering = FALSE
-	return TRUE
+	return EVENT_READY
 
 /datum/round_event_control/Topic(href, href_list)
 	..()
