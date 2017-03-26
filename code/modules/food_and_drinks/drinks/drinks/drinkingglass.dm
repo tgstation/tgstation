@@ -533,7 +533,7 @@
 				name = "Eggnog"
 				desc = "For enjoying the most wonderful time of the year."
 			else
-				icon_state ="glass_brown"
+				icon_state ="glass_clear"
 				var/image/I = image(icon, "glassoverlay")
 				I.color = mix_color_from_reagents(reagents.reagent_list)
 				add_overlay(I)
