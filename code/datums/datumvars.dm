@@ -844,7 +844,7 @@
 			var/atom/A = locate(href_list["addreagent"])
 
 			if(!A.reagents)
-				var/amount = tginput(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num
+				var/amount = tginput(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50, isnum = TRUE)
 				if(amount)
 					A.create_reagents(amount)
 
@@ -866,7 +866,7 @@
 					if("Choose ID")
 						chosen_id = tginput(usr, "Choose a reagent to add.", "Choose a reagent.", nullabled = TRUE, choices = reagent_options)
 				if(chosen_id)
-					var/amount = tginput(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
+					var/amount = tginput(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume, isnum = TRUE)
 					if(amount)
 						A.reagents.add_reagent(chosen_id, amount)
 						log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]")
@@ -1124,7 +1124,7 @@
 
 			var/Text = href_list["adjustDamage"]
 
-			var/amount =  tginput("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
+			var/amount =  tginput("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0, isnum = TRUE)
 
 			if(!L)
 				to_chat(usr, "Mob doesn't exist anymore")

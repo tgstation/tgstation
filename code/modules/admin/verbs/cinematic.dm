@@ -7,7 +7,7 @@
 		return
 	switch(cinematic)
 		if("explosion")
-			var/parameter = tginput(src,"station_missed = ?","Enter Parameter",0) as num
+			var/parameter = tginput(src,"station_missed = ?","Enter Parameter",0, isnum = TRUE)
 			var/override
 			switch(parameter)
 				if(1)

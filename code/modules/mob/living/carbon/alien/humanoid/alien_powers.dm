@@ -111,7 +111,7 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/carbon/M = tginput("Select who to transfer to:","Transfer plasma to?",null, choices = aliens_around)
 	if(!M)
 		return 0
-	var/amount = tginput("Amount:", "Transfer Plasma to [M]") as num
+	var/amount = tginput("Amount:", "Transfer Plasma to [M]", isnum = TRUE)
 	if (amount)
 		amount = min(abs(round(amount)), user.getPlasma())
 		if (get_dist(user,M) <= 1)

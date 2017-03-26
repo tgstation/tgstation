@@ -587,7 +587,7 @@ What a mess.*/
 								active1.fields["sex"] = "Male"
 					if("age")
 						if(istype(active1, /datum/data/record))
-							var/t1 = tginput("Please input age:", "Secure. records", active1.fields["age"], null) as num
+							var/t1 = tginput("Please input age:", "Secure. records", active1.fields["age"], null, isnum = TRUE)
 							if(!canUseSecurityRecordsConsole(usr, "age", a1))
 								return
 							active1.fields["age"] = t1

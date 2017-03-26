@@ -347,7 +347,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/ratio = tginput("Enter new life ratio",, config.midround_antag_life_check*100) as num
+		var/ratio = tginput("Enter new life ratio",, config.midround_antag_life_check*100, isnum = TRUE)
 		if(ratio)
 			config.midround_antag_life_check = ratio/100
 

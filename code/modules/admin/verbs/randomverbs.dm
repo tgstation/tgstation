@@ -94,7 +94,7 @@
 		return
 	if(!A)
 		return
-	var/range = tginput("Range:", "Narrate to mobs within how many tiles:", 7) as num
+	var/range = tginput("Range:", "Narrate to mobs within how many tiles:", 7, isnum = TRUE)
 	if(!range)
 		return
 	var/msg = tginput("Message:", text("Enter the text you wish to appear to everyone within view:"), istext = TRUE)
@@ -508,7 +508,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	holder.manage_free_slots()
 	feedback_add_details("admin_verb","MFS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+	
 /client/proc/cmd_admin_explosion(atom/O as obj|mob|turf in world)
 	set category = "Special Verbs"
 	set name = "Explosion"
@@ -517,15 +517,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/devastation = tginput("Range of total devastation. -1 to none", text("Input"))  as num|null
+	var/devastation = tginput("Range of total devastation. -1 to none", text("Input"), nullable = TRUE, isnum = TRUE)
 	if(devastation == null) return
-	var/heavy = tginput("Range of heavy impact. -1 to none", text("Input"))  as num|null
+	var/heavy = tginput("Range of heavy impact. -1 to none", text("Input"), nullable = TRUE, isnum = TRUE)
 	if(heavy == null) return
-	var/light = tginput("Range of light impact. -1 to none", text("Input"))  as num|null
+	var/light = tginput("Range of light impact. -1 to none", text("Input"), nullable = TRUE, isnum = TRUE)
 	if(light == null) return
-	var/flash = tginput("Range of flash. -1 to none", text("Input"))  as num|null
+	var/flash = tginput("Range of flash. -1 to none", text("Input"), nullable = TRUE, isnum = TRUE)
 	if(flash == null) return
-	var/flames = tginput("Range of flames. -1 to none", text("Input"))  as num|null
+	var/flames = tginput("Range of flames. -1 to none", text("Input"), nullable = TRUE, isnum = TRUE)
 	if(flames == null) return
 
 	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1) || (flames != -1))
@@ -549,9 +549,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/heavy = tginput("Range of heavy pulse.", text("Input"))  as num|null
+	var/heavy = tginput("Range of heavy pulse.", text("Input"), nullable = TRUE, isnum = TRUE)
 	if(heavy == null) return
-	var/light = tginput("Range of light pulse.", text("Input"))  as num|null
+	var/light = tginput("Range of light pulse.", text("Input"), nullable = TRUE, isnum = TRUE)
 	if(light == null) return
 
 	if (heavy || light)
@@ -739,7 +739,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(!N.timing)
-		var/newtime = tginput(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]") as num
+		var/newtime = tginput(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]", isnum = TRUE)
 		if(!newtime)
 			return
 		N.timer_set = newtime
