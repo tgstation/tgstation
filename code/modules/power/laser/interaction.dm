@@ -9,6 +9,7 @@
 	dat += "<b><font size='3'><span class='linkOn'>[charging? "Charging":"Not Charging"]</span></font></b><BR>"
 	dat += "<b><a href='?src=\ref[src];toggle_charging=1'>Toggle</a><BR>"
 	dat += "<b>Capacitor charge: [(internal_charge/internal_buffer)*100]%</b>"
+	dat += "<b><a href='?src=\ref[src];change_charging_rate=1'>Change charging rate</a><BR>"
 	dat += "</div>"
 
 	var/datum/browser/popup = new(user, "ptl", name)

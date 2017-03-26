@@ -45,7 +45,6 @@ var/global/power_transmitted = 0
 
 	var/target = PTL_TARGET_TRANSMIT_CENTCOM
 	var/obj/machinery/power/terminal/terminal = null
-//	var/list/station_area_typecache
 
 	resistance_flags = INDESTRUCTIBLE|FIRE_PROOF|ACID_PROOF	//Irreplacable mapping object until construction is in.
 	var/obj/item/device/radio/radio

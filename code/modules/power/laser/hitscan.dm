@@ -4,6 +4,7 @@
 #define PTL_HITSCAN_HIT 2
 #define PTL_HITSCAN_TURN 3
 
+#define PTL_FULLPIERCE_NONE 0
 #define PTL_FULLPIERCE_NORMAL 1
 #define PTL_FULLPIERCE_NOHIT 2
 
@@ -22,7 +23,7 @@
 	affected["RESULT"] = PTL_HITSCAN_RETURN_ERROR
 	affected["HIT_ATOM"] = null
 	affected["BEAM_EFFECT_LIST"] = list()
-	affected[beam_dir] += starting
+	affected["[beam_dir]"] += starting
 	var/turf/scanning
 	scanning = starting
 	while(!hit)

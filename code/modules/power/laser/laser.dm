@@ -10,7 +10,7 @@
 	var/turf/starting = locate((T.x + x_offset), (T.y + y_offset), T.z)
 	return starting
 
-/obj/machinery/power/PTL/proc/fire_beam(direction, type = PTL_PRIMARY, power, effect_duration_override = null)
+/obj/machinery/power/PTL/proc/fire_beam(direction, type = PTL_PRIMARY, power, effect_duration_override = null, fullpierce = PTL_FULLPIERCE_NONE)
 	var/turf/T = find_starting_turf()
 	var/effect_type = null
 	switch(type)
@@ -20,7 +20,7 @@
 			effect_type = /obj/effect/overlay/temp/PTL/pulse
 		if(PTL_TRACER)
 			effect_type = /obj/effect/overlay/temp/PTL/tracer
-	var/list/impacted = hitscan_beamline(T, direction, TRUE, effect_type, effect_duration_override)
+	var/list/impacted = hitscan_beamline(T, direction, TRUE, effect_type, effect_duration_override, fullpierce)
 	var/result = null
 	var/atom/direct_hit = null
 	var/list/hit = list()
@@ -69,15 +69,19 @@
 
 /obj/machinery/power/PTL/proc/check_station_impact(area_threshold = 2, turf_threshold = 75)
 	var/list/affected = hitscan_beamline(starting = find_starting_turf(), beam_dir = dir, generate_effects = FALSE, full_pierce = PTL_FULLPIERCE_NOHIT)
-	var/turf_matches = list()
-	var/area_matches = list()
+	var/list/turf_matches = list()
+	var/list/area_matches = list()
 	for(var/V in affected)
 		if(V == "RESULT")
 			continue
 		if(V == "HIT_ATOM")
 			continue
 		for(var/v in affected[V])
-			//if(isturf(v))
-			//	var/turf/T = v
-			//	if(!is_type_in_typecache(T.area, /area/space))
-			//		area_matches += T.area
+			if(isturf(v))
+				var/turf/T = v
+				if(!is_type_in_list(T.loc, the_station_areas))
+					area_matches[T.loc] = TRUE
+					turf_matches += T
+	if((area_matches.len > area_threshold) || (turf_matches > turf_threshold))
+		return TRUE
+	return FALSE
