@@ -865,12 +865,12 @@ var/list/preferences_datums = list()
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("metadata")
-					var/new_metadata = tginput(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
+					var/new_metadata = tginput(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata, nullable = TRUE, ismessage = TRUE)
 					if(new_metadata)
 						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
 				if("hair")
-					var/new_hair = tginput(user, "Choose your character's hair colour:", "Character Preference") as null|color
+					var/new_hair = tginput(user, "Choose your character's hair colour:", "Character Preference", nullable = TRUE, iscolor = TRUE)
 					if(new_hair)
 						hair_color = sanitize_hexcolor(new_hair)
 
@@ -947,7 +947,7 @@ var/list/preferences_datums = list()
 						socks = new_socks
 
 				if("eyes")
-					var/new_eyes = tginput(user, "Choose your character's eye colour:", "Character Preference") as color|null
+					var/new_eyes = tginput(user, "Choose your character's eye colour:", "Character Preference", nullable = TRUE, iscolor = TRUE)
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
 
@@ -964,7 +964,7 @@ var/list/preferences_datums = list()
 							features["mcolor"] = pref_species.default_color
 
 				if("mutant_color")
-					var/new_mutantcolor = tginput(user, "Choose your character's alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = tginput(user, "Choose your character's alien/mutant color:", "Character Preference", nullable = TRUE, iscolor = TRUE)
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
@@ -1123,7 +1123,7 @@ var/list/preferences_datums = list()
 						version_message = "\nYou need to be using byond version 511 or later to take advantage of this feature, your version of [user.client.byond_version] is too low"
 					if (world.byond_version < 511)
 						version_message += "\nThis server does not currently support client side fps. You can set now for when it does."
-					var/desiredfps = tginput(user, "Choose your desired fps.[version_message]\n(0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
+					var/desiredfps = tginput(user, "Choose your desired fps.[version_message]\n(0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps, nullable = TRUE, isnum = TRUE)
 					if (!isnull(desiredfps))
 						clientfps = desiredfps
 						if (world.byond_version >= 511 && user.client && user.client.byond_version >= 511)

@@ -445,7 +445,7 @@ var/global/BSACooldown = 0
 	if(!check_rights(0))
 		return
 
-	var/message = tginput("Global message to send:", "Admin Announce", null, null)  as message
+	var/message = tginput("Global message to send:", "Admin Announce", null, null, ismessage = TRUE)
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)

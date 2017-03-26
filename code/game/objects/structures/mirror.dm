@@ -156,7 +156,7 @@
 					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
 			if(MUTCOLORS in H.dna.species.species_traits)
-				var/new_mutantcolor = tginput(user, "Choose your skin color:", "Race change") as color|null
+				var/new_mutantcolor = tginput(user, "Choose your skin color:", "Race change", nullable = TRUE, iscolor = TRUE)
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
@@ -200,19 +200,19 @@
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				..()
 			else
-				var/new_hair_color = tginput(H, "Choose your hair color", "Hair Color") as null|color
+				var/new_hair_color = tginput(H, "Choose your hair color", "Hair Color", nullable = TRUE, iscolor = TRUE)
 				if(new_hair_color)
 					H.hair_color = sanitize_hexcolor(new_hair_color)
 					H.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 				if(H.gender == "male")
-					var/new_face_color = tginput(H, "Choose your facial hair color", "Hair Color") as null|color
+					var/new_face_color = tginput(H, "Choose your facial hair color", "Hair Color", nullable = TRUE, iscolor = TRUE)
 					if(new_face_color)
 						H.facial_hair_color = sanitize_hexcolor(new_face_color)
 						H.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 				H.update_hair()
 
 		if("eyes")
-			var/new_eye_color = tginput(H, "Choose your eye color", "Eye Color") as null|color
+			var/new_eye_color = tginput(H, "Choose your eye color", "Eye Color", nullable = TRUE, iscolor = TRUE)
 			if(!Adjacent(user))
 				return
 			if(new_eye_color)
