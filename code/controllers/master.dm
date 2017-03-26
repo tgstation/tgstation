@@ -523,6 +523,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 /datum/controller/master/proc/StackTraceAllSleepingThreads()
 	stack_trace_sleeps_before = world.time + 1
+	log_world("Thread checking for tick [stack_trace_sleeps_before].")
 
 /world/proc/SleepEnd(sleep_start_tick)
 	if(Master.stack_trace_sleeps_before > sleep_start_tick)
