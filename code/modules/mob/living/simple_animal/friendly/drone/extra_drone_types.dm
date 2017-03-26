@@ -16,7 +16,7 @@
 	icon_living = "drone_synd"
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
 	health = 30
-	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	maxHealth = 30
 	faction = list("syndicate")
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
@@ -25,29 +25,32 @@
 	"1. Interfere.\n"+\
 	"2. Kill.\n"+\
 	"3. Destroy."
-	default_storage = /obj/item/device/radio/uplink
+	default_storage = /obj/item/device/radio/uplink/nuclear
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	seeStatic = 0 //Our programming is superior.
 	hacked = TRUE
+	var/starting_tc = 10
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
 	..()
-	internal_storage.hidden_uplink.telecrystals = 10
-
-/mob/living/simple_animal/drone/syndrone/Login()
-	..()
-	to_chat(src, "<span class='notice'>You can kill and eat other drones to increase your health!</span>" )
+	internal_storage.hidden_uplink.telecrystals = starting_tc
+	head.flags |= NODROP
+	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
+	W.implant(src)
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
 	default_storage = /obj/item/device/radio/uplink/nuclear
+	starting_tc = 30
 
-/mob/living/simple_animal/drone/syndrone/badass/Initialize()
+/mob/living/simple_animal/drone/syndrone/nuke_op/Initialize()
 	..()
-	internal_storage.hidden_uplink.telecrystals = 30
-	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
-	W.implant(src)
+	var/datum/ai_laws/syndicate_override/L = new
+	laws = L.inherent.Join("\n")
+	qdel(L)
+
+	qdel(internal_storage)
 
 /mob/living/simple_animal/drone/snowflake
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
@@ -65,6 +68,9 @@
 /obj/item/drone_shell/syndrone/badass
 	name = "badass syndrone shell"
 	drone_type = /mob/living/simple_animal/drone/syndrone/badass
+
+/obj/item/drone_shell/syndrone/nuke_op
+	drone_type = /mob/living/simple_animal/drone/syndrone/nuke_op
 
 /obj/item/drone_shell/snowflake
 	name = "snowflake drone shell"

@@ -558,6 +558,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	refundable = TRUE
 	cost = 35
 
+/datum/uplink_item/support/reinforcement/syndrone
+	name = "Syndrone Shell"
+	desc = "A highly experimental weaponised drone, with hacked laws, but no additional equipment. Hard to hit, can crawl through vents, open all doors, but is extremely fragile, and vulnerable to flashbangs and EMPs."
+	cost = 75 // no builtin TC, better give the litte guy a gun or sword
+	refundable = TRUE
+	item = /obj/item/drone_shell/syndrone/nuke_op
+
 /datum/uplink_item/support/gygax
 	name = "Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
