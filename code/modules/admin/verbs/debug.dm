@@ -795,3 +795,6 @@ var/list/TYPES_SHORTCUTS = list(
 		return
 
 	Master.StackTraceAllSleepingThreads()
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] runtimed all threads.</span>")
+	feedback_add_details("admin_verb","RunTAlT")
+	log_admin("[key_name(src)] runtimed all threads.")
