@@ -1,0 +1,7 @@
+author: "Gun Hog and Shadowlight213"
+delete-after: True
+changes: 
+  - rscadd: "The AI may now deploy to cyborgs prepared as AI shells. The module to do this may be research in the exosuit fabricator. Simply slot the module into a completed cyborg frame as with an MMI, or into a playerless (with no ckey) cyborg."
+  - rscadd: "AI shells and AIs controlling a shell can be determined through the Diagnostic HUD."
+  - rscadd: "AIs can deploy to a shell using the new action buttons or by simply clicking on it."
+  - experiment: "An AI shell will always have the laws of its controlling AI."
