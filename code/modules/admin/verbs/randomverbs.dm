@@ -70,7 +70,7 @@
 		return
 
 	if(!M)
-		M = input("Direct narrate to whom?", "Active Players") as null|anything in player_list
+		M = input("Direct narrate to whom?", "Active Players", nullable = TRUE, choices = player_list)
 
 	if(!M)
 		return
@@ -205,13 +205,13 @@
 				continue	//we have a live body we are tied to
 			candidates += M.ckey
 		if(candidates.len)
-			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in candidates
+			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates", nullable = TRUE, choices = candidates)
 		else
 			to_chat(usr, "<font color='red'>Error: create_xeno(): no suitable candidates.</font>")
 	if(!istext(ckey))
 		return 0
 
-	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
+	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null, nullable = TRUE, choices = list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva"))
 	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
@@ -723,7 +723,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/level = input("Select security level to change to","Set Security Level") as null|anything in list("green","blue","red","delta")
+	var/level = input("Select security level to change to","Set Security Level", nullable = TRUE, choices = list("green","blue","red","delta"))
 	if(level)
 		set_security_level(level)
 

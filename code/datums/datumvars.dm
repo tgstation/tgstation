@@ -1050,7 +1050,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return
 
-			var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
+			var/edit_action = input(usr, "What would you like to do?","Modify Body Part", nullable = TRUE, choices = list("add","remove", "augment"))
 			if(!edit_action)
 				return
 			var/list/limb_list = list("head", "l_arm", "r_arm", "l_leg", "r_leg")

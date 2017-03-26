@@ -103,7 +103,7 @@
 	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
 	if(isobj(O) && proximity)
 		if(O.unique_rename)
-			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?", nullable = TRUE, choices = list("Rename","Change description"))
 			if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
 
 				if(penchoice == "Rename")

@@ -28,7 +28,7 @@
 	set category = "Drone"
 	set name = "Drone ping"
 
-	var/alert_s = input(src,"Alert severity level","Drone ping",null) as null|anything in list("Low","Medium","High","Critical")
+	var/alert_s = input(src,"Alert severity level","Drone ping",null, nullable = TRUE, choices = list("Low","Medium","High","Critical"))
 
 	var/area/A = get_area(loc)
 

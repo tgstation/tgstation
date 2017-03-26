@@ -193,7 +193,7 @@
 			return
 		var/mob/living/carbon/human/interactive/T = A
 
-		var/choice = input("Customization Choices") as null|anything in list("Service NPC","Security NPC","Random","Custom")
+		var/choice = input("Customization Choices", nullable = TRUE, choices = list("Service NPC","Security NPC","Random","Custom"))
 		if(choice)
 			if(choice == "Service NPC" || choice == "Security NPC")
 				var/job = choice == "Service NPC" ? pick("Bartender","Cook","Botanist","Janitor") : pick("Warden","Detective","Security Officer")
@@ -237,7 +237,7 @@
 						qdel(W)
 					T.myjob.equip(T)
 					T.doSetup()
-				var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?") as null|anything in list("Yes","No")
+				var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?", nullable = TRUE, choices = list("Yes","No"))
 				if(shouldDoppel)
 					if(shouldDoppel == "Yes")
 						var/list/validchoices = list()
@@ -253,7 +253,7 @@
 							toDoppel.transfer_identity(T, transfer_SE=1)
 							T.updateappearance(mutcolor_update=1)
 							T.domutcheck()
-				var/doTrait = input("Do you want the SNPC to be a traitor?") as null|anything in list("Yes","No")
+				var/doTrait = input("Do you want the SNPC to be a traitor?", nullable = TRUE, choices = list("Yes","No"))
 				if(doTrait)
 					if(doTrait == "Yes")
 						var/list/tType = list("Brute" = SNPC_BRUTE, "Stealth" = SNPC_STEALTH, "Martyr" = SNPC_MARTYR, "Psycho" = SNPC_PSYCHO)
@@ -261,7 +261,7 @@
 						if(cType)
 							var/value = tType[cType]
 							T.makeTraitor(value)
-				var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
+				var/doTele = input("Place the SNPC in their department?", nullable = TRUE, choices = list("Yes","No"))
 				if(doTele)
 					if(doTele == "Yes")
 						T.loc = pick(get_area_turfs(T.job2area(T.myjob)))

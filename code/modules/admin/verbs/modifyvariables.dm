@@ -81,7 +81,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 		if (extra_classes)
 			classes += extra_classes
 
-		.["class"] = input(src, "What kind of data?", "Variable Type", default_class) as null|anything in classes
+		.["class"] = input(src, "What kind of data?", "Variable Type", default_class, nullable = TRUE, choices = classes)
 		if (holder && holder.marked_datum && .["class"] == "[VV_MARKED_DATUM] ([holder.marked_datum.type])")
 			.["class"] = VV_MARKED_DATUM
 
@@ -521,7 +521,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 		names = sortList(names)
 
-		variable = input("Which var?","Var") as null|anything in names
+		variable = input("Which var?","Var", nullable = TRUE, choices = names)
 		if(!variable)
 			return
 

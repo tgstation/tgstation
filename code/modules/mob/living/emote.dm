@@ -400,7 +400,7 @@
 	else if(!params)
 		var/custom_emote = copytext(sanitize(input("Choose an emote to display.", nullable = TRUE, istext = TRUE)), 1, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
-			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
+			var/type = input("Is this a visible or hearable emote?", nullable = TRUE, choices = list("Visible", "Hearable"))
 			switch(type)
 				if("Visible")
 					emote_type = EMOTE_VISIBLE

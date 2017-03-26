@@ -823,12 +823,12 @@ var/list/preferences_datums = list()
 			switch(href_list["preference"])
 				if("ghostform")
 					if(unlock_content)
-						var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
+						var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null, nullable = TRUE, choices = ghost_forms)
 						if(new_form)
 							ghost_form = new_form
 				if("ghostorbit")
 					if(unlock_content)
-						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in ghost_orbits
+						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null, nullable = TRUE, choices = ghost_orbits)
 						if(new_orbit)
 							ghost_orbit = new_orbit
 
@@ -934,15 +934,15 @@ var/list/preferences_datums = list()
 				if("undershirt")
 					var/new_undershirt
 					if(gender == MALE)
-						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_m
+						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", nullable = TRUE, choices = undershirt_m)
 					else
-						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_f
+						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", nullable = TRUE, choices = undershirt_f)
 					if(new_undershirt)
 						undershirt = new_undershirt
 
 				if("socks")
 					var/new_socks
-					new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_list
+					new_socks = input(user, "Choose your character's socks:", "Character Preference", nullable = TRUE, choices = socks_list)
 					if(new_socks)
 						socks = new_socks
 
@@ -953,7 +953,7 @@ var/list/preferences_datums = list()
 
 				if("species")
 
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
+					var/result = input(user, "Select a species", "Species Selection", nullable = TRUE, choices = roundstart_species)
 
 					if(result)
 						var/newtype = roundstart_species[result]
@@ -976,61 +976,61 @@ var/list/preferences_datums = list()
 
 				if("tail_lizard")
 					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_lizard
+					new_tail = input(user, "Choose your character's tail:", "Character Preference", nullable = TRUE, choices = tails_list_lizard)
 					if(new_tail)
 						features["tail_lizard"] = new_tail
 
 				if("tail_human")
 					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_human
+					new_tail = input(user, "Choose your character's tail:", "Character Preference", nullable = TRUE, choices = tails_list_human)
 					if(new_tail)
 						features["tail_human"] = new_tail
 
 				if("snout")
 					var/new_snout
-					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snouts_list
+					new_snout = input(user, "Choose your character's snout:", "Character Preference", nullable = TRUE, choices = snouts_list)
 					if(new_snout)
 						features["snout"] = new_snout
 
 				if("horns")
 					var/new_horns
-					new_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in horns_list
+					new_horns = input(user, "Choose your character's horns:", "Character Preference", nullable = TRUE, choices = horns_list)
 					if(new_horns)
 						features["horns"] = new_horns
 
 				if("ears")
 					var/new_ears
-					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in ears_list
+					new_ears = input(user, "Choose your character's ears:", "Character Preference", nullable = TRUE, choices = ears_list)
 					if(new_ears)
 						features["ears"] = new_ears
 
 				if("wings")
 					var/new_wings
-					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in r_wings_list
+					new_wings = input(user, "Choose your character's wings:", "Character Preference", nullable = TRUE, choices = r_wings_list)
 					if(new_wings)
 						features["wings"] = new_wings
 
 				if("frills")
 					var/new_frills
-					new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in frills_list
+					new_frills = input(user, "Choose your character's frills:", "Character Preference", nullable = TRUE, choices = frills_list)
 					if(new_frills)
 						features["frills"] = new_frills
 
 				if("spines")
 					var/new_spines
-					new_spines = input(user, "Choose your character's spines:", "Character Preference") as null|anything in spines_list
+					new_spines = input(user, "Choose your character's spines:", "Character Preference", nullable = TRUE, choices = spines_list)
 					if(new_spines)
 						features["spines"] = new_spines
 
 				if("body_markings")
 					var/new_body_markings
-					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in body_markings_list
+					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference", nullable = TRUE, choices = body_markings_list)
 					if(new_body_markings)
 						features["body_markings"] = new_body_markings
 
 				if("legs")
 					var/new_legs
-					new_legs = input(user, "Choose your character's legs:", "Character Preference") as null|anything in legs_list
+					new_legs = input(user, "Choose your character's legs:", "Character Preference", nullable = TRUE, choices = legs_list)
 					if(new_legs)
 						features["legs"] = new_legs
 
@@ -1050,7 +1050,7 @@ var/list/preferences_datums = list()
 						backbag = new_backbag
 
 				if("uplink_loc")
-					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in uplink_spawn_loc_list
+					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference", nullable = TRUE, choices = uplink_spawn_loc_list)
 					if(new_loc)
 						uplink_spawn_loc = new_loc
 
@@ -1097,7 +1097,7 @@ var/list/preferences_datums = list()
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("sec_dept")
-					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in security_depts_prefs
+					var/department = input(user, "Choose your prefered security department:", "Security Departments", nullable = TRUE, choices = security_depts_prefs)
 					if(department)
 						prefered_security_department = department
 

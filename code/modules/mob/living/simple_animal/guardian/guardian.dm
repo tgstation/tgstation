@@ -511,7 +511,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(random)
 		guardiantype = pick(possible_guardians)
 	else
-		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in possible_guardians
+		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation", nullable = TRUE, choices = possible_guardians)
 		if(!guardiantype)
 			to_chat(user, "[failure_message]" )
 			used = FALSE

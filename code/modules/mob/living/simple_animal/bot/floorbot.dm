@@ -149,7 +149,7 @@
 				empty_tiles()
 
 		if("linemode")
-			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
+			var/setdir = input("Select construction direction:", nullable = TRUE, choices = list("north","east","south","west","disable"))
 			switch(setdir)
 				if("north")
 					targetdirection = 1

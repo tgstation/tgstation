@@ -657,7 +657,7 @@
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value, nullable = TRUE, choices = list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom"))
 		if (!new_obj_type)
 			return
 

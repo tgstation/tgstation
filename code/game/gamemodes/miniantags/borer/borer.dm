@@ -725,7 +725,7 @@ var/total_borer_hosts_needed = 10
 		to_chat(src, "<span class='warning'>You need 75 chems to punish your host.</span>")
 		return
 
-	var/punishment = input("Select a punishment:.", "Punish") as null|anything in list("Blindness","Deafness","Stun")
+	var/punishment = input("Select a punishment:.", "Punish", nullable = TRUE, choices = list("Blindness","Deafness","Stun"))
 
 	if(!punishment)
 		return

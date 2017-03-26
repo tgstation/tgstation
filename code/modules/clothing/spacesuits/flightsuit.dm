@@ -1182,7 +1182,7 @@
 		if(!inputlist.len)
 			usermessage("There is nothing inside the flightsuit to remove!", 1)
 			return FALSE
-		var/input = input(user, "What to remove?", "Removing module") as null|anything in list("Pack", "Shoes")
+		var/input = input(user, "What to remove?", "Removing module", nullable = TRUE, choices = list("Pack", "Shoes"))
 		if(pack && input == "Pack")
 			if(pack.flight)
 				usermessage("You can not pry off an active flightpack!", 1)

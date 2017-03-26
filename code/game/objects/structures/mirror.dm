@@ -117,7 +117,7 @@
 
 	var/mob/living/carbon/human/H = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "race", "gender", "hair", "eyes")
+	var/choice = input(user, "Something to change?", "Magical Grooming", nullable = TRUE, choices = list("name", "race", "gender", "hair", "eyes"))
 
 	if(!Adjacent(user))
 		return

@@ -368,7 +368,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "Not when you're not dead!")
 		return
 	var/A
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in sortedAreas
+	A = input("Area to jump to", "BOOYEA", A, nullable = TRUE, choices = sortedAreas)
 	var/area/thearea = A
 	if(!thearea)
 		return
@@ -389,7 +389,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Follow and orbit a mob."
 
 	var/list/mobs = getpois(skip_mindless=1)
-	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
+	var/input = input("Please, select a mob!", "Haunt", null, null, nullable = TRUE, choices = mobs)
 	var/mob/target = mobs[input]
 	ManualFollow(target)
 
@@ -444,7 +444,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/target = null	   //Chosen target.
 
 		dest += getpois(mobs_only=1) //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
+		target = input("Please, select a player!", "Jump to Mob", null, null, nullable = TRUE, choices = dest)
 
 		if (!target)//Make sure we actually have a target
 			return
@@ -469,7 +469,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/list/views = list()
 		for(var/i in 1 to max_view)
 			views |= i
-		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
+		var/new_view = input("Choose your new view", "Modify view range", 7, nullable = TRUE, choices = views)
 		if(new_view)
 			client.view = Clamp(new_view, 1, max_view)
 	else
@@ -586,7 +586,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(!(L in player_list) && !L.mind)
 			possessible += L
 
-	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in possessible
+	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null, nullable = TRUE, choices = possessible)
 
 	if(!target)
 		return 0
@@ -792,7 +792,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/eye_name = null
 
-	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+	eye_name = input("Please, select a player!", "Observe", null, null, nullable = TRUE, choices = creatures)
 
 	if (!eye_name)
 		return

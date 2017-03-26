@@ -491,7 +491,7 @@ var/global/list/multiverse = list()
 
 /obj/item/voodoo/attack_self(mob/user)
 	if(!target && possible.len)
-		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
+		target = input(user, "Select your victim!", "Voodoo", nullable = TRUE, choices = possible)
 		return
 
 	if(user.zone_selected == "chest")
