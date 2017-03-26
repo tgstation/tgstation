@@ -2,13 +2,10 @@
 //sadly we can't catch the entry point of input verbs but we should be working to clear those oout where possible
 
 #define SLEEP(X)\
-if(TRUE) {\
-    var/sleep_start_tick = world.time;\
     ++Master.sleeping_threads;\
     sleep(X);\
     --Master.sleeping_threads;\
-    world.SleepEnd(sleep_start_tick);\
-}
+    world.SleepEnd(world.time - X);
 
 /proc/wrap_alert(Usr = usr, Message, Title, Button1 = "Ok", Button2, Button3)
     var/sleep_start_tick = world.time
