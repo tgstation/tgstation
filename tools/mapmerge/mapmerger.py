@@ -20,7 +20,7 @@ def main(map_folder, tgm=0):
         print("[{}]: {}".format(i, str(list_of_files[i])[len(map_folder):]))
 
     print("--------------------------------")
-    in_list = tginput("List the maps you want to merge (example: 1,3-5,12):\n")
+    in_list = input("List the maps you want to merge (example: 1,3-5,12):\n")
     in_list = in_list.replace(" ", "")
     in_list = in_list.split(",")
 
@@ -47,7 +47,7 @@ def main(map_folder, tgm=0):
     print("\nMerging these maps:")
     for i in valid_indices:
         print(str(list_of_files[i])[len(map_folder):])
-    merge = tginput("\nPress Enter to merge...\n")
+    merge = input("\nPress Enter to merge...\n")
     if merge == "abort":
         print("\nAborted map merge.")
         sys.exit()
