@@ -250,7 +250,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return 0
 	var/obj/item/device/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI", istext = TRUE) as text
+	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI", istext = TRUE, istext = TRUE)
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)

@@ -12,18 +12,29 @@
     Master.SleepEnd()
 
 //this is the only one that changes syntax because byond
-/proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, ismessage, isnum, isfile, type_obj, type_turf)
+//its such a pain in the fucking ass
+/proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, ismessage, isnum, isicon, iscolor, isfile, type_obj, type_turf)
     Master.SleepBegin()
     if(type_obj)
         if(nullable)
             . = input(Usr, Message, Title, Default) as null|obj in choices
         else
             . = input(Usr, Message, Title, Default) as obj in choices
-    if(type_turf)
+    else if(type_turf)
         if(nullable)
             . = input(Usr, Message, Title, Default) as null|turf in choices
         else
             . = input(Usr, Message, Title, Default) as turf in choices
+    else if(iscolor)
+        if(nullable)
+            . = input(Usr, Message, Title, Default) as null|color
+        else
+            . = input(Usr, Message, Title, Default) as color
+    else if(isicon)
+        if(nullable)
+            . = input(Usr, Message, Title, Default) as null|icon
+        else
+            . = input(Usr, Message, Title, Default) as icon
     else if(isnum)
         if(nullable)
             . = input(Usr, Message, Title, Default) as null|num

@@ -190,7 +190,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 
 		if (VV_ICON)
-			.["value"] = input("Pick icon:", "Icon") as null|icon
+			.["value"] = input("Pick icon:", "Icon", isicon = TRUE)
 			if (.["value"] == null)
 				.["class"] = null
 				return
