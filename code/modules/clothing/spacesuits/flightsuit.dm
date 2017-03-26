@@ -125,7 +125,7 @@
 
 /obj/item/device/flightpack/proc/sync_processing(datum/controller/subsystem/processing/flightpacks/FPS)
 	processing_mode = FPS.flightsuit_processing
-	if(processing_mode = FLIGHTSUIT_PROCESSING_NONE)
+	if(processing_mode == FLIGHTSUIT_PROCESSING_NONE)
 		momentum_x = 0
 		momentum_y = 0
 		momentum_speed_x = 0
@@ -354,7 +354,7 @@
 		suit.slowdown = slowdown_air
 
 /obj/item/device/flightpack/process()
-	if(!suit || (processing_mode = FLIGHTSUIT_PROCESSING_NONE))
+	if(!suit || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
 		return FALSE
 	update_slowdown()
 	update_icon()
@@ -466,7 +466,7 @@
 	wearer.visible_message("[wearer] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim, crashdir)	//Yes, victim.
-	if((unmovablevictim == wearer) || crashing || (processing_mode = FLIGHTSUIT_PROCESSING_NONE))
+	if((unmovablevictim == wearer) || crashing || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
 		return FALSE
 	crashing = TRUE
 	var/crashpower = 0
