@@ -145,7 +145,7 @@
 
 		if("clear_virus")
 
-			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
+			var/choice = input("Are you sure you want to cure all disease?", choices = list("Yes", "Cancel"))
 			if(choice == "Yes")
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
 				for(var/datum/disease/D in SSdisease.processing)

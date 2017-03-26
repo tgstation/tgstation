@@ -40,7 +40,7 @@
 	if(..())
 		return
 	var/A
-	A = input("Area to bombard", "Open Fire", A) in teleportlocs
+	A = input("Area to bombard", "Open Fire", A, choices = teleportlocs)
 	var/area/thearea = teleportlocs[A]
 	if(usr.stat || usr.restrained())
 		return

@@ -394,7 +394,7 @@
 		return
 	for(var/datum/picture/t in targetloc.aipictures)
 		nametemp += t.fields["name"]
-	find = input("Select image (numbered in order taken)") in nametemp
+	find = input("Select image (numbered in order taken)", choices = nametemp)
 	for(var/datum/picture/q in targetloc.aipictures)
 		if(q.fields["name"] == find)
 			return q
@@ -473,7 +473,7 @@
 		return
 	for(var/datum/picture/t in targetcam.aipictures)
 		nametemp += t.fields["name"]
-	find = input("Select image (numbered in order taken)") in nametemp
+	find = input("Select image (numbered in order taken)", choices = nametemp)
 	for(var/datum/picture/q in targetcam.aipictures)
 		if(q.fields["name"] == find)
 			selection = q

@@ -468,7 +468,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	cost = 1
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
-	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
+	var/cable_color = input(user,"Pick a cable color.","Cable Color", choices = list("red","yellow","green","blue","pink","orange","cyan","white"))
 	item_color = cable_color
 	update_icon()
 

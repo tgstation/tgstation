@@ -348,7 +348,7 @@
 /mob/living/silicon/proc/sensor_mode()
 	if(incapacitated())
 		return
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null, choices = list("Security", "Medical","Diagnostic","Disable"))
 	remove_med_sec_hud()
 	switch(sensor_type)
 		if ("Security")

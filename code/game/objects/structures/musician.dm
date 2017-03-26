@@ -204,7 +204,7 @@
 				return
 
 			if(lentext(t) >= 3072)
-				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes", choices = list("yes", "no"))
 				if(cont == "no")
 					break
 		while(lentext(t) > 3072)

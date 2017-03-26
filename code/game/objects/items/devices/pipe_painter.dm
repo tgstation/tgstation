@@ -33,7 +33,7 @@
 	P.update_node_icon() //updates the neighbors
 
 /obj/item/device/pipe_painter/attack_self(mob/user)
-	mode = input("Which colour do you want to use?","Pipe painter") in modes
+	mode = input("Which colour do you want to use?","Pipe painter", choices = modes)
 
 /obj/item/device/pipe_painter/examine()
 	..()

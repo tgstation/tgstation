@@ -177,7 +177,7 @@
 			varholder = input(user,"Enter variable name:" ,"Name", "name")
 			if(varholder in locked && !check_rights(R_DEBUG,0))
 				return 1
-			var/thetype = input(user,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
+			var/thetype = input(user,"Select variable type:" ,"Type", choices = list("text","number","mob-reference","obj-reference","turf-reference"))
 			if(!thetype) return 1
 			switch(thetype)
 				if("text")

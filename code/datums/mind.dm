@@ -1449,7 +1449,7 @@
 
 /datum/mind/proc/make_Abductor()
 	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
-	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
+	var/team = input("Abductor Team ?","Team ?", choices = list(1,2,3,4))
 	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
 
 	if(!role || !team || !teleport)

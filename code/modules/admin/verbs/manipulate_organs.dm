@@ -1,7 +1,7 @@
 /client/proc/manipulate_organs(mob/living/carbon/C in world)
 	set name = "Manipulate Organs"
 	set category = "Debug"
-	var/operation = input("Select organ operation.", "Organ Manipulation", "cancel") in list("add organ", "add implant", "drop organ/implant", "remove organ/implant", "cancel")
+	var/operation = input("Select organ operation.", "Organ Manipulation", "cancel", choices = list("add organ", "add implant", "drop organ/implant", "remove organ/implant", "cancel"))
 
 	var/list/organs = list()
 	switch(operation)

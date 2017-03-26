@@ -52,7 +52,7 @@
 					user.put_in_hands(contract)
 			else
 				var/obj/item/weapon/paper/contract/infernal/contract  // = new(user.loc, C.mind, contractType, user.mind)
-				var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Knowledge")
+				var/contractTypeName = input(user, "What type of contract?", choices = list ("Power", "Wealth", "Prestige", "Magic", "Knowledge"))
 				switch(contractTypeName)
 					if("Power")
 						contract = new /obj/item/weapon/paper/contract/infernal/power(C.loc, C.mind, user.mind)

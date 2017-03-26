@@ -543,7 +543,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			for(var/datum/newscaster/feed_channel/F in news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
-			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
+			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler", choices = available_channels)
 			updateUsrDialog()
 		else if(href_list["set_new_message"])
 			var/temp_message = trim(stripped_multiline_input(usr, "Write your Feed story", "Network Channel Handler", msg))
@@ -814,7 +814,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			return
 		for(var/datum/picture/t in targetcam.aipictures)
 			nametemp += t.fields["name"]
-		find = input("Select image (numbered in order taken)") in nametemp
+		find = input("Select image (numbered in order taken)", choices = nametemp)
 		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 		for(var/datum/picture/q in targetcam.aipictures)
 			if(q.fields["name"] == find)

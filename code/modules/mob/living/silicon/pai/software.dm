@@ -33,7 +33,7 @@
 	if(temp)
 		left_part = temp
 	else if(src.stat == 2)						// Show some flavor text if the pAI is dead
-		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
+		left_part = "<b><font color=red>ï¿½Rrï¿½R ï¿½aï¿½ï¿½ ï¿½ï¿½Rrï¿½ï¿½ï¿½ï¿½oï¿½</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
@@ -142,7 +142,7 @@
 			radio.attack_self(src)
 
 		if("image")
-			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+			var/newImage = input("Select your new display image.", "Display Image", "Happy", choices = list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What"))
 			var/pID = 1
 
 			switch(newImage)
@@ -370,7 +370,7 @@
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
-	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
+	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No", choices = list("Yes", "No"))
 	if(answer == "Yes")
 		M.visible_message("<span class='notice'>[M] presses [M.p_their()] thumb against [P].</span>",\
 						"<span class='notice'>You press your thumb against [P].</span>",\

@@ -245,7 +245,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!choice)
 		return 0
 	if(!isobserver(choice))
-		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
+		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No", choices = list("Yes", "No"))
 		if(confirm != "Yes")
 			return 0
 	var/obj/item/device/paicard/card = new(T)
@@ -661,7 +661,7 @@ var/list/TYPES_SHORTCUTS = list(
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+	switch(input("Which list?", choices = list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients")))
 		if("Players")
 			to_chat(usr, jointext(player_list,","))
 		if("Admins")

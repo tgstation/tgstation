@@ -2005,7 +2005,7 @@
 		var/list/available_channels = list()
 		for(var/datum/newscaster/feed_channel/F in news_network.network_channels)
 			available_channels += F.channel_name
-		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in available_channels )
+		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler", choices = available_channels ))
 		src.access_news_network()
 
 	else if(href_list["ac_set_new_message"])

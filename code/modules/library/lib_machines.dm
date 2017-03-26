@@ -82,7 +82,7 @@
 			title = null
 		title = sanitizeSQL(title)
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = input("Choose a category to search for:", choices = list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
 		if(newcategory)
 			category = sanitize(newcategory)
 		else
@@ -403,13 +403,13 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = input("Choose a category: ", choices = list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
 		if(newcategory)
 			upload_category = newcategory
 	if(href_list["upload"])
 		if(scanner)
 			if(scanner.cache)
-				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
+				var/choice = input("Are you certain you wish to upload this title to the Archive?", choices = list("Confirm", "Abort"))
 				if(choice == "Confirm")
 					if (!dbcon.Connect())
 						alert("Connection to Archive has been severed. Aborting.")

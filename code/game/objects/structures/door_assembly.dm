@@ -392,7 +392,7 @@
 				optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Science", "Mining", "Maintenance", "External", "High Security")
 
 
-			icontype = input(user, "Please select a paintjob for this airlock.") in optionlist
+			icontype = input(user, "Please select a paintjob for this airlock.", choices = optionlist)
 			if((!in_range(src, usr) && src.loc != usr) || !WT.use(user))
 				return
 			var/has_solid = 0
