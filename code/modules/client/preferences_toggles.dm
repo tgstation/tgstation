@@ -147,8 +147,7 @@
 			playtitlemusic()
 	else
 		to_chat(src, "You will no longer hear music in the game lobby.")
-		if(isnewplayer(mob))
-			mob.stopLobbySound()
+		mob.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/togglemidis()
