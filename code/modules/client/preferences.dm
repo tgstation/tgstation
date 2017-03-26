@@ -1129,7 +1129,7 @@ var/list/preferences_datums = list()
 						if (world.byond_version >= 511 && user.client && user.client.byond_version >= 511)
 							user.client.vars["fps"] = clientfps
 				if("ui")
-					var/pickedui = tginput(user, "Choose your UI style.", "Character Preference")  as null|anything in list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork")
+					var/pickedui = tginput(user, "Choose your UI style.", "Character Preference", nullable = TRUE, choices = list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork"))
 					if(pickedui)
 						UI_style = pickedui
 

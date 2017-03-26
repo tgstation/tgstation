@@ -489,7 +489,7 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
-				var/target_index = tginput("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
+				var/target_index = tginput("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input", nullable = TRUE, isnum = TRUE)
 				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
 					var/datum/clockwork_scripture/S
 					if(LAZYLEN(quickbound) >= target_index)
