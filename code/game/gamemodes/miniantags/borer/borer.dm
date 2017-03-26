@@ -336,7 +336,9 @@ var/total_borer_hosts_needed = 10
 		if(H!=src && Adjacent(H))
 			tchoices += H
 
-	var/mob/living/carbon/H = tginput(src,"Who do you wish to infest?", nullable = TRUE, choices = tchoices)
+	if(!tchoices.len)
+		return
+	var/mob/living/carbon/H = tchoices.len > 1 ? tginput(src,"Who do you wish to infest?", nullable = TRUE, choices = tchoices) : tchoices[1]
 	if(!H || !src)
 		return
 
@@ -464,8 +466,10 @@ var/total_borer_hosts_needed = 10
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
 			tchoices += C
-
-	var/mob/living/carbon/M = tginput(src,"Who do you wish to dominate?", nullable = TRUE, choices = tchoices)
+			
+	if(!tchoices.len)
+		return
+	var/mob/living/carbon/M = tchoices.len > 1 ? tginput(src,"Who do you wish to dominate?", nullable = TRUE, choices = tchoices) : tchoices[1]
 
 
 	if(!M || !src || stat != CONSCIOUS || victim || (world.time - used_dominate < 150))
