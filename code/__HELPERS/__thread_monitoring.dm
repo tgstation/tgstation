@@ -2,19 +2,19 @@
 //sadly we can't catch the entry point of input verbs but we should be working to clear those oout where possible
 
 /proc/wrap_sleep(delay)
-    Master.SleepBegin()
+    world.SleepBegin()
     sleep(delay)
-    Master.SleepEnd()
+    world.SleepEnd()
 
 /proc/wrap_alert(Usr = usr, Message, Title, Button1 = "Ok", Button2, Button3)
-    Master.SleepBegin()
+    world.SleepBegin()
     . = alert(Usr,Message,Title,Button1,Button2,Button3) 
-    Master.SleepEnd()
+    world.SleepEnd()
 
 //this is the only one that changes syntax because byond
 //its such a pain in the fucking ass
 /proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, ismessage, isnum, isicon, iscolor, isfile, type_obj, type_turf, type_mob)
-    Master.SleepBegin()
+    world.SleepBegin()
     if(type_obj)
         if(nullable)
             . = input(Usr, Message, Title, Default) as null|obj in choices
@@ -65,33 +65,33 @@
             . = input(Usr, Message, Title, Default) as null|anything in choices
         else
             . = input(Usr, Message, Title, Default) in choices
-    Master.SleepEnd()
+    world.SleepEnd()
 
 //world proc because fuck off
 /world/proc/wrap_shell(command)
-    Master.SleepBegin()
+    world.SleepBegin()
     . = shell(command)
-    Master.SleepEnd()
+    world.SleepEnd()
 
 /proc/wrap_winexists(player, control_id) 
-    Master.SleepBegin()
+    world.SleepBegin()
     . = winexists(player, control_id)
-    Master.SleepEnd()
+    world.SleepEnd()
 
 /proc/wrap_winget(player, control_id, params)
-    Master.SleepBegin()
+    world.SleepBegin()
     . = winget(player, control_id, params)
-    Master.SleepEnd()
+    world.SleepEnd()
 
 /world/proc/wrap_Export(Addr,File,Persist,Clients)
-    Master.SleepBegin()
+    world.SleepBegin()
     . = Export(Addr,File,Persist,Clients)
-    Master.SleepEnd()
+    world.SleepEnd()
 
 /world/proc/wrap_Import()
-    Master.SleepBegin()
+    world.SleepBegin()
     . = Import()
-    Master.SleepEnd()
+    world.SleepEnd()
 
 #define sleep wrap_sleep
 #define alert wrap_alert

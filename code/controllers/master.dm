@@ -520,8 +520,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		var/datum/controller/subsystem/SS = S
 		SS.StopLoadingMap()
 
-/datum/controller/master/proc/SleepBegin()
-	++sleeping_threads
+/world/proc/SleepBegin()
+	++Master.sleeping_threads
 
-/datum/controller/master/proc/SleepEnd()
-	--sleeping_threads
+/world/proc/SleepEnd()
+	--Master.sleeping_threads
