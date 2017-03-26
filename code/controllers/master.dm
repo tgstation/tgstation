@@ -53,6 +53,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/map_loading = FALSE	//Are we loading in a new map?
 
 	var/static/sleeping_threads = 0
+	var/static/stack_trace_sleeps_before
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -520,8 +521,13 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		var/datum/controller/subsystem/SS = S
 		SS.StopLoadingMap()
 
+/datum/controller/master/proc/StackTraceAllSleepingThreads()
+	stack_trace_sleeps_before = world.time + 1
+
 /world/proc/SleepBegin()
 	++Master.sleeping_threads
 
 /world/proc/SleepEnd(sleep_start_tick)
 	--Master.sleeping_threads
+	if(Master.stack_trace_sleeps_before > sleep_start_tick)
+		stack_trace("Thread Check Tick: [sleep_start_tick]")
