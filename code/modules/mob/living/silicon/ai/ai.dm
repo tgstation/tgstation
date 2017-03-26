@@ -316,7 +316,7 @@ var/list/ai_list = list()
 			to_chat(usr, "Wireless control is disabled!")
 			return
 
-	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
+	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call", nullable = TRUE, istext = TRUE)
 
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)

@@ -88,7 +88,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 	switch(.["class"])
 		if (VV_TEXT)
-			.["value"] = input("Enter new text:", "Text", current_value) as null|text
+			.["value"] = input("Enter new text:", "Text", current_value, nullable = TRUE, istext = TRUE)
 			if (.["value"] == null)
 				.["class"] = null
 				return
@@ -122,7 +122,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			var/type = current_value
 			var/error = ""
 			do
-				type = input("Enter type:[error]", "Type", type) as null|text
+				type = input("Enter type:[error]", "Type", type, nullable = TRUE, istext = TRUE)
 				if (!type)
 					break
 				type = text2path(type)
@@ -223,7 +223,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			var/type = current_value
 			var/error = ""
 			do
-				type = input("Enter type:[error]", "Type", type) as null|text
+				type = input("Enter type:[error]", "Type", type, nullable = TRUE, istext = TRUE)
 				if (!type)
 					break
 				type = text2path(type)

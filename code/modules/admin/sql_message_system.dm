@@ -5,7 +5,7 @@
 	if(!type)
 		return
 	if(!target_ckey && (type == "note" || type == "message" || type == "watchlist entry"))
-		var/new_ckey = ckey(input(usr,"Who would you like to create a [type] for?","Enter a ckey",null) as null|text)
+		var/new_ckey = ckey(input(usr,"Who would you like to create a [type] for?","Enter a ckey",null, nullable = TRUE, istext = TRUE))
 		if(!new_ckey)
 			return
 		new_ckey = sanitizeSQL(new_ckey)

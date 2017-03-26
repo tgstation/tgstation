@@ -230,7 +230,7 @@
 			*/
 
 			if("id")
-				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID for this machine", src, id, nullable = TRUE, istext = TRUE)),1,MAX_MESSAGE_LEN)
 				if(newid && canAccess(usr))
 					id = newid
 					temp = "<font color = #666633>-% New ID assigned: \"[id]\" %-</font color>"

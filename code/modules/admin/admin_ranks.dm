@@ -345,7 +345,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			if(!D)
 				return	//they're not an admin!
 
-			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null) as null|text
+			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null, nullable = TRUE, istext = TRUE)
 			if(!keyword)
 				return
 
