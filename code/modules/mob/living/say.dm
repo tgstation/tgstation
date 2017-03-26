@@ -142,6 +142,15 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	log_say("[name]/[key] : [message]")
 	return 1
 
+/mob/living/carbon/human/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE)
+	if(..())
+		spawn(0)
+			var/loops = min(length(message)/5,20)
+			for(var/i = 0 ; i<loops;i++)
+				var/voice = pick('sound/voice/meep.ogg', 'sound/voice/bleep.ogg', 'sound/voice/badhonk.ogg')
+				playsound(loc,voice, 100, 1)
+				sleep(1)
+
 /mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(!client)
 		return
