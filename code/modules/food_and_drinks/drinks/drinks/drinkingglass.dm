@@ -65,6 +65,13 @@
 				icon_state  = "glass_brown"
 				name = "glass of space Cola"
 				desc = "A glass of refreshing Space Cola."
+			if("grapesoda")
+				icon_state = "glass_clear"
+				var/image/I = image(icon, "glassoverlay")
+				I.color = "#E6CDFF"
+				add_overlay(I)
+				name = "glass of grape soda"
+				desc = "A glass of grape soda."
 			if("nuka_cola")
 				icon_state = "nuka_colaglass"
 				name = "Nuka Cola"
