@@ -395,7 +395,7 @@
 			deejay('sound/AI/harmalarm.ogg')
 
 /obj/machinery/disco/proc/deejay(var/S)
-	if (!QDELETED(src) || !active || charge < 5)
+	if (QDELETED(src) || !active || charge < 5)
 		to_chat(usr, "<span class='warning'>The device is not able to play more DJ sounds at this time.</span>")
 		return
 	charge -= 5
@@ -502,7 +502,7 @@
 				S.forceMove(get_turf(src))
 		sleep(7)
 	if(selection.song_name == "Engineering's Ultimate High-Energy Hustle")
-		sleep(280) 
+		sleep(280)
 	for(var/obj/reveal in sparkles)
 		reveal.alpha = 255
 	while(active)
@@ -570,6 +570,7 @@
 			dance4(M)
 		if(7 to 9)
 			dance5(M)
+	animate(M, transform = null, time = 1, loop = 0)
 
 /obj/machinery/disco/proc/dance2(var/mob/living/carbon/M)
 	set waitfor = 0
@@ -577,6 +578,7 @@
 		M.SpinAnimation(7,1)
 		M.setDir(pick(cardinal))
 		sleep(10)
+
 /obj/machinery/disco/proc/dance3(var/mob/living/carbon/M)
 	set waitfor = 0
 	for(var/i in 1 to 6)
@@ -605,6 +607,7 @@
 		sleep(12)
 	M.pixel_x = 0
 	M.pixel_y = 0
+
 /obj/machinery/disco/proc/dance4(var/mob/living/carbon/M)
 	var/speed = rand(1,3)
 	set waitfor = 0
@@ -615,6 +618,7 @@
 			M.setDir(pick(cardinal))
 			M.lay_down(TRUE)
 		 time--
+
 /obj/machinery/disco/proc/dance5(var/mob/living/carbon/M)
 	M.setDir(get_dir(M, src))
 	spawn (0)
@@ -669,7 +673,7 @@
 			if(!(M in listeners))
 				M << selection.song_path
 				listeners += M
-			if(prob(4+(allowed(M)*4)))
+			if(prob(5+(allowed(M)*3)))
 				dance(M)
 		for(var/mob/living/L in listeners)
 			if(!(L in rangers))
@@ -677,7 +681,6 @@
 				if(!L || !L.client)
 					continue
 				L.client.stop_client_sounds()
-
 	else if(active)
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
