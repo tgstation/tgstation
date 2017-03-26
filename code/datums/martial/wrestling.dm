@@ -186,6 +186,14 @@
 	add_logs(A, D, "has thrown with wrestling")
 	return 0
 
+/datum/martial_art/wrestling/proc/FlipAnimation(mob/living/carbon/human/D)
+	set waitfor = FALSE
+	if (D)
+		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
+	sleep (15)
+	if (D)
+		animate(D, transform = null, time = 1, loop = 0))
+
 /datum/martial_art/wrestling/proc/slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
 		return
@@ -198,12 +206,7 @@
 
 	A.visible_message("<span class = 'danger'><B>[A] lifts [D] up!</B></span>")
 
-	spawn (0)
-		if (D)
-			animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-		sleep (15)
-		if (D)
-			animate(D, transform = null, time = 1, loop = 0)
+	FlipAnimation()
 
 	for (var/i = 0, i < 3, i++)
 		if (A && D)
