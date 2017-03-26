@@ -26,7 +26,7 @@
 	if(!target_ckey)
 		target_ckey = admin_ckey
 	if(!text)
-		text = input(usr,"Write your [type]","Create [type]") as null|message
+		text = input(usr,"Write your [type]","Create [type]", nullable = TRUE, ismessage = TRUE)
 		if(!text)
 			return
 	text = sanitizeSQL(text)
@@ -99,7 +99,7 @@
 		var/admin_ckey = query_find_edit_message.item[3]
 		var/old_text = query_find_edit_message.item[4]
 		var/editor_ckey = sanitizeSQL(usr.ckey)
-		var/new_text = input("Input new [type]", "New [type]", "[old_text]") as null|message
+		var/new_text = input("Input new [type]", "New [type]", "[old_text]", nullable = TRUE, ismessage = TRUE)
 		if(!new_text)
 			return
 		new_text = sanitizeSQL(new_text)
