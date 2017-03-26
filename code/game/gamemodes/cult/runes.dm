@@ -143,10 +143,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	do_invoke_glow()
 
 /obj/effect/rune/proc/do_invoke_glow()
+	set waitfor = FALSE
 	var/oldtransform = transform
-	spawn(0) //animate is a delay, we want to avoid being delayed
-		animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
-		animate(transform = oldtransform, alpha = 255, time = 0)
+	animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
+	sleep(5)
+	animate(transform = oldtransform, alpha = 255, time = 0)
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
