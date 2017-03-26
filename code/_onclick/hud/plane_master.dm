@@ -3,6 +3,7 @@
 	icon_state = "blank"
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	blend_mode = BLEND_OVERLAY
+	var/auto_add_to_players = TRUE
 
 //Why do plane masters need a backdrop sometimes? Read http://www.byond.com/forum/?post=2141928
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.

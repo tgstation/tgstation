@@ -64,7 +64,10 @@
 	hand_slots = list()
 
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/plane_master/instance = new mytype()
+		var/obj/screen/plane_master/instance = mytype
+		if(!initial(instance.auto_add_to_players))
+			continue
+		instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
