@@ -129,7 +129,7 @@
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		if(Adjacent(A) || (W && CheckReach(src, A, W.reach))) //Adjacent or reaching attacks
+		if(A.Adjacent(src) || (W && CheckReach(src, A, W.reach))) //Adjacent or reaching attacks
 			if(W)
 				if(W.pre_attackby(A,src,params))
 					// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
@@ -163,7 +163,7 @@
 				if(dummy.loc == there.loc)
 					qdel(dummy)
 					return 1
-				if(there.density && dummy in range(1, there)) //For windows and 
+				if(there.density && dummy in range(1, there)) //For windows and
 					qdel(dummy)
 					return 1
 				if(!dummy.Move(T)) //we're blocked!
