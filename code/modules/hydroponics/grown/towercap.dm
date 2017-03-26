@@ -187,7 +187,7 @@
 		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 
-/obj/structure/bonfire/buckle_mob(mob/living/M, force = 0)
+/obj/structure/bonfire/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	if(..())
 		M.pixel_y += 13
 
