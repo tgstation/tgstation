@@ -303,6 +303,10 @@
 	add_logs(A, D, "body-slammed")
 	return 0
 
+/datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if (A && (T && isturf(T) && get_dist(A, T) <= 1))
+		A.forceMove(T)
+
 /datum/martial_art/wrestling/proc/strike(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
 		return
@@ -312,9 +316,7 @@
 			A.setDir(turn(A.dir, 90))
 
 		A.forceMove(D.loc)
-		spawn (4)
-			if (A && (T && isturf(T) && get_dist(A, T) <= 1))
-				A.forceMove(T)
+		addtimer(CALLBACK(src, .proc/CheckStrikeTurf, A, T), 4)
 
 		A.visible_message("<span class = 'danger'><b>[A] headbutts [D]!</b></span>")
 		D.adjustBruteLoss(rand(10,20))
