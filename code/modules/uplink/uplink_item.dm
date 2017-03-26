@@ -1,6 +1,8 @@
 var/list/uplink_items = list() // Global list so we only initialize this once.
 
-/proc/get_uplink_items(var/datum/game_mode/gamemode = null)
+/proc/get_uplink_items(var/datum/game_mode/gamemode = null, reset_globals = FALSE)
+	if(reset_globals)
+		uplink_items = list()
 	if(!uplink_items.len)
 		for(var/item in subtypesof(/datum/uplink_item))
 			var/datum/uplink_item/I = new item()
