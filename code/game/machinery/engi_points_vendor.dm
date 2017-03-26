@@ -344,7 +344,7 @@
 	add_fingerprint(usr)
 	switch(href_list["action"])
 		if("toggle")
-			if (!src || QDELETED(src))
+			if (QDELETED(src))
 				return
 			if(!active)
 				if(stop > world.time)
@@ -356,7 +356,7 @@
 				dance_setup()
 				START_PROCESSING(SSobj, src)
 				lights_spin()
-				src.updateUsrDialog()
+				updateUsrDialog()
 			else if(active)
 				active = FALSE
 				STOP_PROCESSING(SSobj, src)
@@ -419,7 +419,7 @@
 /obj/machinery/disco/proc/dance_setup()
 	stop = world.time + selection.song_length
 	var/turf/cen = get_turf(src)
-	for(var/turf/t in view(src,3))
+	FOR_DVIEW(var/turf/t, 3, get_turf(src))
 		if(t.x == cen.x && t.y > cen.y)
 			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
 			L.light_color = "red"
