@@ -336,7 +336,7 @@
 
 
 /mob/living/simple_animal/hostile/proc/Shoot(atom/targeted_atom)
-	if(targeted_atom == targets_from.loc || targeted_atom == targets_from)
+	if(targeted_atom == targets_from.loc || targeted_atom == targets_from || targeted_atom == null)
 		return
 	var/turf/startloc = get_turf(targets_from)
 	if(casingtype)
