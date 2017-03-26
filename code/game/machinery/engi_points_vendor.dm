@@ -48,16 +48,16 @@
 		else
 			switch(get_time_left())
 				if (30 to 3600)
-					playsound(loc, 'sound/items/timer.ogg', 5, 0)
+					playsound(src, 'sound/items/timer.ogg', 5, 0)
 				if (15 to 29)
-					playsound(loc, 'sound/items/timer.ogg', 30, 0)
+					playsound(src, 'sound/items/timer.ogg', 30, 0)
 				if (0 to 14)
 					icon_state = "nuclearbomb3"
 					quiet  = !quiet
 					if(!quiet)
 						return
 					else
-						playsound(loc, 'sound/machines/engine_alert2.ogg', 100, 0)
+						playsound(src, 'sound/machines/engine_alert2.ogg', 100, 0)
 
 /obj/machinery/construction_nuke/interact(mob/user)
 	user.set_machine(src)
@@ -93,7 +93,7 @@
 
 
 /obj/machinery/construction_nuke/proc/set_payload()
-	playsound(loc, 'sound/machines/terminal_prompt.ogg', 75, 1)
+	playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	if(timing || bomb_set)
 		to_chat(usr, "<span class='danger'>Error: Payload cannot be altered while the device is armed.</span>")
 		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
@@ -183,13 +183,13 @@
 		return
 	if(!A.blob_allowed)
 		to_chat(usr, "<span class='danger'>Error: The device's safety countermeasures flash red: you cannot arm this device outside of the station.</span>")
-		playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
+		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	timing = !timing
 	if(timing)
 		if(cooldown > world.time)
 			to_chat(usr, "<span class='danger'>Error: The device is still resetting from the last activation, it will be ready again in [round((cooldown-world.time)/10)] seconds.</span>")
-			playsound(loc, 'sound/machines/defib_failed.ogg', 75, 1)
+			playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 			timing = FALSE
 			return
 		bomb_set = TRUE
