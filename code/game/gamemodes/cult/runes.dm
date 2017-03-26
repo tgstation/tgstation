@@ -153,11 +153,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
 	visible_message("<span class='warning'>The markings pulse with a \
 		small flash of red light, then fall dark.</span>")
-	spawn(0) //animate is a delay, we want to avoid being delayed
-		var/oldcolor = color
-		color = rgb(255, 0, 0)
-		animate(src, color = oldcolor, time = 5)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
+	var/oldcolor = color
+	color = rgb(255, 0, 0)
+	animate(src, color = oldcolor, time = 5)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 
 //Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
 /obj/effect/rune/malformed
