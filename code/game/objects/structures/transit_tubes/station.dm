@@ -126,7 +126,7 @@
 		if(!pod.moving)
 			pod_moving = 1
 			close_animation()
-			sleep(CLOSE_DURATION + 2)
+			SLEEP(CLOSE_DURATION + 2)
 			if(open_status == STATION_TUBE_CLOSED && pod && pod.loc == loc)
 				pod.follow_tube()
 			pod_moving = 0
@@ -144,7 +144,7 @@
 			pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
 		launch_cooldown = world.time + cooldown_delay
 		open_animation()
-		sleep(OPEN_DURATION + 2)
+		SLEEP(OPEN_DURATION + 2)
 		pod_moving = 0
 		if(!QDELETED(pod))
 			pod.air_contents.share(loc.return_air()) //mix the pod's gas mixture with the tile it's on

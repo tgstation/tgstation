@@ -337,7 +337,7 @@ Proc for attack log creation, because really why not
 	. = 1
 	mainloop:
 		while(world.time < endtime)
-			sleep(1)
+			SLEEP(1)
 			if(progress)
 				progbar.update(world.time - starttime)
 			if(QDELETED(user) || !targets)

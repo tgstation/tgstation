@@ -1362,7 +1362,7 @@
 			M.dropItemToGround(I, TRUE)
 
 		M.Paralyse(5)
-		sleep(5)
+		SLEEP(5)
 		M.loc = pick(tdome1)
 		spawn(50)
 			to_chat(M, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
@@ -1388,7 +1388,7 @@
 			M.dropItemToGround(I, TRUE)
 
 		M.Paralyse(5)
-		sleep(5)
+		SLEEP(5)
 		M.loc = pick(tdome2)
 		spawn(50)
 			to_chat(M, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
@@ -1411,7 +1411,7 @@
 			return
 
 		M.Paralyse(5)
-		sleep(5)
+		SLEEP(5)
 		M.loc = pick(tdomeadmin)
 		spawn(50)
 			to_chat(M, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
@@ -1441,7 +1441,7 @@
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), slot_shoes)
 		M.Paralyse(5)
-		sleep(5)
+		SLEEP(5)
 		M.loc = pick(tdomeobserve)
 		spawn(50)
 			to_chat(M, "<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
@@ -1568,7 +1568,7 @@
 		var/client/C = usr.client
 		if(!isobserver(usr))
 			C.admin_ghost()
-		sleep(2)
+		SLEEP(2)
 		C.jumptocoord(x,y,z)
 
 	else if(href_list["adminchecklaws"])

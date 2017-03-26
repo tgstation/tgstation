@@ -558,7 +558,7 @@
 							AL.panel_open = 1
 							AL.update_icon()
 							AL.shock(src,(100 - smartness)/2)
-							sleep(5)
+							SLEEP(5)
 							if(QDELETED(AL))
 								return
 							AL.unbolt()
@@ -568,7 +568,7 @@
 								AL.wires.cut(WIRE_POWER1)
 							if(!AL.wires.is_cut(WIRE_POWER2))
 								AL.wires.cut(WIRE_POWER2)
-							sleep(5)
+							SLEEP(5)
 							if(QDELETED(AL))
 								return
 							AL.panel_open = 0
@@ -711,13 +711,13 @@
 /mob/living/carbon/human/interactive/proc/dressup(obj/item/clothing/C)
 	set waitfor = FALSE
 	inactivity_period = 12
-	sleep(5)
+	SLEEP(5)
 	if(!QDELETED(C) && !QDELETED(src))
 		take_to_slot(C,1)
 		if(!equip_to_appropriate_slot(C))
 			var/obj/item/I = get_item_by_slot(C)
 			dropItemToGround(I)
-			sleep(5)
+			SLEEP(5)
 			if(!QDELETED(src) && !QDELETED(C))
 				equip_to_appropriate_slot(C)
 
@@ -1510,7 +1510,7 @@
 							if(prob(smartness))
 								npcDrop(G,1)
 								inactivity_period = 15
-								sleep(15)
+								SLEEP(15)
 								throw_item(TARGET)
 
 				if(!main_hand && other_hand)

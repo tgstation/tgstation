@@ -199,7 +199,12 @@
 			if (!C)
 				continue
 			C.Export("##action=load_rsc", ticker.round_end_sound)
+
+	var/sleep_start_tick = time
+	SleepBegin()
 	sleep(delay)
+	SleepEnd(sleep_start_tick)
+
 	if(ticker.delay_end)
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return

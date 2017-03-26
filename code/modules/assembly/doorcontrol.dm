@@ -28,7 +28,7 @@
 					else
 						M.close()
 				return
-	sleep(10)
+	SLEEP(10)
 	cooldown = 0
 
 
@@ -74,7 +74,7 @@
 	for(var/D in open_or_close)
 		INVOKE_ASYNC(D, doors_need_closing ? /obj/machinery/door/airlock.proc/close : /obj/machinery/door/airlock.proc/open)
 
-	sleep(10)
+	SLEEP(10)
 	cooldown = 0
 
 
@@ -89,20 +89,20 @@
 			spawn( 0 )
 				M.open()
 
-	sleep(10)
+	SLEEP(10)
 
 	for(var/obj/machinery/mass_driver/M in machines)
 		if(M.id == src.id)
 			M.drive()
 
-	sleep(60)
+	SLEEP(60)
 
 	for(var/obj/machinery/door/poddoor/M in machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.close()
 
-	sleep(10)
+	SLEEP(10)
 	cooldown = 0
 
 
@@ -123,7 +123,7 @@
 			M.on = !M.on
 			M.icon_state = "igniter[M.on]"
 
-	sleep(30)
+	SLEEP(30)
 	cooldown = 0
 
 
@@ -138,7 +138,7 @@
 			spawn(0)
 				M.flash()
 
-	sleep(50)
+	SLEEP(50)
 	cooldown = 0
 
 
@@ -152,5 +152,5 @@
 		if (C.id == id)
 			C.cremate(usr)
 
-	sleep(50)
+	SLEEP(50)
 	cooldown = 0

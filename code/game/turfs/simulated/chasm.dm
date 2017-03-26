@@ -128,7 +128,7 @@
 		if(!AM || QDELETED(AM))
 			return
 		AM.pixel_y--
-		sleep(2)
+		SLEEP(2)
 
 	//Make sure the item is still there after our sleep
 	if(!AM || QDELETED(AM))

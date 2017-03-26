@@ -240,10 +240,10 @@
 
 /obj/item/organ/heart/gland/plasma/activate()
 	to_chat(owner, "<span class='warning'>You feel bloated.</span>")
-	sleep(150)
+	SLEEP(150)
 	if(!owner) return
 	to_chat(owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
-	sleep(50)
+	SLEEP(50)
 	if(!owner) return
 	owner.visible_message("<span class='danger'>[owner] vomits a cloud of plasma!</span>")
 	var/turf/open/T = get_turf(owner)

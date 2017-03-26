@@ -69,7 +69,7 @@
 
 		curtiles++
 
-		sleep(speed)
+		SLEEP(speed)
 
 		// Calculate if we should stop the process
 		if(!nostop)

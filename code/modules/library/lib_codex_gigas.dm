@@ -50,7 +50,7 @@
 			var/datum/devilinfo/devil = devilInfo(usedName, 0)
 			user << browse("Information on [devilName]<br><br><br>[lawlorify[LORE][devil.ban]]<br>[lawlorify[LORE][devil.bane]]<br>[lawlorify[LORE][devil.obligation]]<br>[lawlorify[LORE][devil.banish]]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		inUse = 0
-		sleep(10)
+		SLEEP(10)
 		if(!prob(willpower))
 			U.influenceSin()
 		onclose(user, "book")

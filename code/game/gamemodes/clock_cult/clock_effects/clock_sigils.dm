@@ -110,7 +110,7 @@
 	var/I = 0
 	while(I < convert_time && get_turf(L) == get_turf(src))
 		I++
-		sleep(1)
+		SLEEP(1)
 	if(get_turf(L) != get_turf(src))
 		if(glow)
 			qdel(glow)
@@ -301,7 +301,7 @@
 	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
 	animate(src, alpha = 255, time = 10)
 	addtimer(CALLBACK(src, .proc/update_alpha), 10)
-	sleep(10)
+	SLEEP(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
 	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (ratvar_awakens || vitality))) && get_turf(L) == get_turf(src))
 		sigil_active = TRUE
@@ -363,7 +363,7 @@
 			if(!ratvar_awakens)
 				vitality -= vitality_used
 
-		sleep(2)
+		SLEEP(2)
 
 	if(sigil_active)
 		animation_number = initial(animation_number)

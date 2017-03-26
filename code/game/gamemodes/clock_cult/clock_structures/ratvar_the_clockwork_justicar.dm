@@ -112,7 +112,7 @@
 	var/base_victory_chance = 1
 	while(src && narsie)
 		send_to_playing_players('sound/magic/clockwork/ratvar_attack.ogg')
-		sleep(5.2)
+		SLEEP(5.2)
 		for(var/mob/M in mob_list)
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#966400", flash_time=1)
@@ -126,9 +126,9 @@
 		if(ratvar_chance > narsie_chance)
 			winner = "Ratvar"
 			break
-		sleep(rand(2,5))
+		SLEEP(rand(2,5))
 		send_to_playing_players('sound/magic/clockwork/narsie_attack.ogg')
-		sleep(7.4)
+		SLEEP(7.4)
 		for(var/mob/M in mob_list)
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#C80000", flash_time=1)

@@ -357,7 +357,7 @@ What a mess.*/
 					printing = 1
 					data_core.securityPrintCount++
 					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
-					sleep(30)
+					SLEEP(30)
 					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 					P.info = "<CENTER><B>Security Record - (SR-[data_core.securityPrintCount])</B></CENTER><BR>"
 					if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
@@ -438,7 +438,7 @@ What a mess.*/
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 							printing = 1
-							sleep(30)
+							SLEEP(30)
 							if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
 								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, info)

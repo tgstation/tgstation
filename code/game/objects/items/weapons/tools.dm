@@ -100,7 +100,7 @@
 	playsound(loc, 'sound/effects/pray.ogg', 50, 1, -1)
 
 	// Let the sound effect finish playing
-	sleep(20)
+	SLEEP(20)
 
 	if(!user)
 		return

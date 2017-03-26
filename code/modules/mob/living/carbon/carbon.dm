@@ -262,7 +262,7 @@
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put themselves out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
-	sleep(30)
+	SLEEP(30)
 	if(fire_stacks <= 0)
 		visible_message("<span class='danger'>[src] has successfully extinguished themselves!</span>", \
 			"<span class='notice'>You extinguish yourself.</span>")

@@ -129,7 +129,7 @@
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
-	sleep(100) //10 seconds
+	SLEEP(100) //10 seconds
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	emagged = 1
 	req_access = list(access_syndicate)

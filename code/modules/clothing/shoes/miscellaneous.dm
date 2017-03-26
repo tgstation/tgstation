@@ -3,7 +3,7 @@
 /obj/item/clothing/shoes/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?</span>")
 	for(var/i = 0, i < 3, i++)
-		sleep(3)
+		SLEEP(3)
 		playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
 	return(BRUTELOSS)
 

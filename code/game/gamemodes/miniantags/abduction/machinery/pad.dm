@@ -27,14 +27,14 @@
 
 /obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
 	new /obj/effect/overlay/temp/teleport_abductor(place)
-	sleep(80)
+	SLEEP(80)
 	flick("alien-pad", src)
 	target.forceMove(place)
 	new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(target), target.dir)
 
 /obj/machinery/abductor/pad/proc/PadToLoc(place)
 	new /obj/effect/overlay/temp/teleport_abductor(place)
-	sleep(80)
+	SLEEP(80)
 	flick("alien-pad", src)
 	for(var/mob/living/target in get_turf(src))
 		target.forceMove(place)

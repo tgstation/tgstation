@@ -471,7 +471,7 @@
 				current_screen = "working"
 				ShowInterface(usr)
 
-				sleep(radduration*10)
+				SLEEP(radduration*10)
 				current_screen = "mainmenu"
 
 				if(viable_occupant && connected && connected.occupant==viable_occupant)

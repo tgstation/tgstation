@@ -334,7 +334,7 @@
 					temp = amplitude * cos(0.008 * saved_dizz * world.time)
 					pixel_y_diff += temp
 					C.pixel_y += temp
-					sleep(3)
+					SLEEP(3)
 					if(C)
 						temp = amplitude * sin(0.008 * saved_dizz * world.time)
 						pixel_x_diff += temp
@@ -342,7 +342,7 @@
 						temp = amplitude * cos(0.008 * saved_dizz * world.time)
 						pixel_y_diff += temp
 						C.pixel_y += temp
-					sleep(3)
+					SLEEP(3)
 					if(C)
 						C.pixel_x -= pixel_x_diff
 						C.pixel_y -= pixel_y_diff

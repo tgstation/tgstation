@@ -200,19 +200,19 @@
 	//src.laws_sanity_check()
 	//src.laws.show_laws(world)
 	var/number = 1
-	sleep(10)
+	SLEEP(10)
 
 	if (src.laws.devillaws && src.laws.devillaws.len)
 		for(var/index = 1, index <= src.laws.devillaws.len, index++)
 			if (force || src.devillawcheck[index] == "Yes")
 				src.say("[radiomod] 666. [src.laws.devillaws[index]]")
-				sleep(10)
+				SLEEP(10)
 
 
 	if (src.laws.zeroth)
 		if (force || src.lawcheck[1] == "Yes")
 			src.say("[radiomod] 0. [src.laws.zeroth]")
-			sleep(10)
+			SLEEP(10)
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
 		var/law = src.laws.ion[index]
@@ -220,7 +220,7 @@
 		if (length(law) > 0)
 			if (force || src.ioncheck[index] == "Yes")
 				src.say("[radiomod] [num]. [law]")
-				sleep(10)
+				SLEEP(10)
 
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
 		var/law = src.laws.inherent[index]
@@ -229,7 +229,7 @@
 			if (force || src.lawcheck[index+1] == "Yes")
 				src.say("[radiomod] [number]. [law]")
 				number++
-				sleep(10)
+				SLEEP(10)
 
 	for (var/index = 1, index <= src.laws.supplied.len, index++)
 		var/law = src.laws.supplied[index]
@@ -239,7 +239,7 @@
 				if (force || src.lawcheck[number+1] == "Yes")
 					src.say("[radiomod] [number]. [law]")
 					number++
-					sleep(10)
+					SLEEP(10)
 
 
 /mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite

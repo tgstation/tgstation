@@ -578,7 +578,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 	audible_message("[src] begins to hum as it warms up its printing drums.")
 	busy = 1
-	sleep(rand(200,400))
+	SLEEP(rand(200,400))
 	busy = 0
 	if(P)
 		if(!stat)

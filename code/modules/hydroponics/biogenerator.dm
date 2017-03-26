@@ -242,7 +242,7 @@
 		updateUsrDialog()
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 		use_power(S*30)
-		sleep(S+15/productivity)
+		SLEEP(S+15/productivity)
 		processing = 0
 		update_icon()
 	else

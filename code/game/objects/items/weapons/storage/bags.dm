@@ -325,7 +325,7 @@
 			for(var/i = 1, i <= rand(1,2), i++)
 				if(I)
 					step(I, pick(NORTH,SOUTH,EAST,WEST))
-					sleep(rand(2,4))
+					SLEEP(rand(2,4))
 
 	if(prob(50))
 		playsound(M, 'sound/items/trayhit1.ogg', 50, 1)

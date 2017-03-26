@@ -242,7 +242,7 @@
 				break
 			process_chamber()
 			update_icon()
-			sleep(fire_delay)
+			SLEEP(fire_delay)
 		firing_burst = 0
 	else
 		if(chambered)

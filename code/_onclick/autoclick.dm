@@ -8,7 +8,7 @@
 		selected_target[2] = params
 		while(selected_target[1])
 			Click(selected_target[1], location, control, selected_target[2])
-			sleep(delay)
+			SLEEP(delay)
 
 /client/MouseUp(object, location, control, params)
 	selected_target[1] = null

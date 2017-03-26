@@ -22,16 +22,16 @@
 				// simulate pausing in talking
 				// ignore semi-colons because of their use in HTML escaping
 				if (item in list(",", ":"))
-					sleep(3)
+					SLEEP(3)
 				if (item in list("!", "?", "."))
-					sleep(6)
+					SLEEP(6)
 				continue
 
 			if(isnum(item))
 				var/length = min(item, 10)
 				if (length == 0)
 					// "verbalise" long spaces
-					sleep(1)
+					SLEEP(1)
 				chatter_speak_word(A.loc, phomeme, length)
 
 /proc/chatter_speak_word(loc, phomeme, length)
@@ -40,7 +40,7 @@
 	playsound(loc, path,
 		vol = 40, vary = 0, extrarange = 3, falloff = FALSE, surround = 1)
 
-	sleep((length + 1) * chatter_get_sleep_multiplier(phomeme))
+	SLEEP((length + 1) * chatter_get_sleep_multiplier(phomeme))
 
 /proc/chatter_get_sleep_multiplier(phomeme)
 	// These values are tenths of seconds, so 0.5 == 0.05seconds

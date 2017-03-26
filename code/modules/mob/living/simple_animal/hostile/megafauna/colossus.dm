@@ -128,17 +128,17 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	dir_shots(diagonals)
-	sleep(10)
+	SLEEP(10)
 	dir_shots(cardinal)
-	sleep(10)
+	SLEEP(10)
 	dir_shots(diagonals)
-	sleep(10)
+	SLEEP(10)
 	dir_shots(cardinal)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
-	sleep(10)
+	SLEEP(10)
 	INVOKE_ASYNC(src, .proc/spiral_shoot)
 	INVOKE_ASYNC(src, .proc/spiral_shoot, 1)
 
@@ -190,7 +190,7 @@ Difficulty: Very Hard
 			counter = 16
 		shoot_projectile(marker)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
-		sleep(1)
+		SLEEP(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
 	if(!marker || marker == loc)

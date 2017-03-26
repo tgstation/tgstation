@@ -407,7 +407,7 @@ var/next_external_rsc = 0
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			SLEEP(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
 			qdel(src)
 			return TRUE
 
@@ -449,7 +449,7 @@ var/next_external_rsc = 0
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			SLEEP(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
 			qdel(src)
 			return TRUE
 
@@ -513,9 +513,9 @@ var/next_external_rsc = 0
 /client/Stat()
 	. = ..()
 	if (holder)
-		sleep(1)
+		SLEEP(1)
 	else
-		sleep(5)
+		SLEEP(5)
 		stoplag()
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be

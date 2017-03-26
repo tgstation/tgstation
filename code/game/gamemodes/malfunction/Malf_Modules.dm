@@ -110,7 +110,7 @@
 /obj/machinery/doomsday_device/proc/detonate(z_level = 1)
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	sleep(100)
+	SLEEP(100)
 	for(var/mob/living/L in mob_list)
 		var/turf/T = get_turf(L)
 		if(!T || T.z != z_level)

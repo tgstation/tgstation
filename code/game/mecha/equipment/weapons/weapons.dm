@@ -51,7 +51,7 @@
 		A.fire()
 		playsound(chassis, fire_sound, 50, 1)
 
-		sleep(max(0, projectile_delay))
+		SLEEP(max(0, projectile_delay))
 
 	chassis.log_message("Fired from [src.name], targeting [target].")
 	return 1

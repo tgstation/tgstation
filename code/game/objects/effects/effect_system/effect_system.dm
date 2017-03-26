@@ -65,7 +65,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		direction = pick(alldirs)
 	var/steps_amt = pick(1,2,3)
 	for(var/j in 1 to steps_amt)
-		sleep(5)
+		SLEEP(5)
 		step(E,direction)
 	addtimer(CALLBACK(src, .proc/decrement_total_effect), 20)
 

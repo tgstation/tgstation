@@ -550,7 +550,7 @@
 					flick(phase_state, src)
 				forceMove(get_step(src,dir))
 				use_power(phasing_energy_drain)
-				sleep(step_in*3)
+				SLEEP(step_in*3)
 				can_move = 1
 	else
 		if(yes)

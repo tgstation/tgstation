@@ -124,7 +124,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	set waitfor = 0
 
 	if(delay)
-		sleep(delay)
+		SLEEP(delay)
 
 	if(init_sss)
 		init_subtypes(/datum/controller/subsystem, subsystems)
@@ -155,7 +155,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	world.sleep_offline = 1
 	world.fps = config.fps
 	var/initialized_tod = REALTIMEOFDAY
-	sleep(1)
+	SLEEP(1)
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
 	// Loop.
 	Master.StartProcessing(0)
@@ -175,7 +175,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 /datum/controller/master/proc/StartProcessing(delay)
 	set waitfor = 0
 	if(delay)
-		sleep(delay)
+		SLEEP(delay)
 	var/rtn = Loop()
 	if (rtn > 0 || processing < 0)
 		return //this was suppose to happen.
@@ -246,7 +246,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
 			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
-			sleep(10)
+			SLEEP(10)
 			continue
 
 		//if there are mutiple sleeping procs running before us hogging the cpu, we have to run later
@@ -254,7 +254,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		if (world.tick_usage > TICK_LIMIT_MC)
 			sleep_delta += 2
 			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.5)
-			sleep(world.tick_lag * (processing + sleep_delta))
+			SLEEP(world.tick_lag * (processing + sleep_delta))
 			continue
 
 		sleep_delta = MC_AVERAGE_FAST(sleep_delta, 0)
@@ -283,7 +283,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				iteration++
 			error_level++
 			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
-			sleep(10)
+			SLEEP(10)
 			continue
 
 		if (queue_head)
@@ -295,7 +295,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 					iteration++
 				error_level++
 				CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
-				sleep(10)
+				SLEEP(10)
 				continue
 		error_level--
 		if (!queue_head) //reset the counts if the queue is empty, in the off chance they get out of sync
@@ -306,7 +306,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		last_run = world.time
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
 		CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc.
-		sleep(world.tick_lag * (processing + sleep_delta))
+		SLEEP(world.tick_lag * (processing + sleep_delta))
 
 
 

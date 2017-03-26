@@ -43,7 +43,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 
 	new /obj/effect/overlay/temp/monkeyify(get_turf(src))
-	sleep(22)
+	SLEEP(22)
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 
 	// hash the original name?
@@ -188,7 +188,7 @@
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 	new /obj/effect/overlay/temp/monkeyify/humanify(get_turf(src))
-	sleep(22)
+	SLEEP(22)
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
 		O.equip_to_appropriate_slot(C)

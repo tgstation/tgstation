@@ -212,7 +212,7 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/increase_blood_lizard()
 	to_chat(owner.current, "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard.")
-	sleep(50)
+	SLEEP(50)
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(/datum/species/lizard, 1)
@@ -230,7 +230,7 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/increase_true_devil()
 	to_chat(owner.current, "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true devil.")
-	sleep(50)
+	SLEEP(50)
 	var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(owner.current.loc)
 	A.faction |= "hell"
 	owner.current.loc = A
@@ -247,34 +247,34 @@ var/global/list/lawlorify = list (
 		return
 	var/mob/living/carbon/true_devil/D = owner.current
 	to_chat(D, "<span class='warning'>You feel as though your form is about to ascend.")
-	sleep(50)
+	SLEEP(50)
 	if(!D)
 		return
 	D.visible_message("<span class='warning'>[D]'s skin begins to erupt with spikes.</span>", \
 		"<span class='warning'>Your flesh begins creating a shield around yourself.</span>")
-	sleep(100)
+	SLEEP(100)
 	if(!D)
 		return
 	D.visible_message("<span class='warning'>The horns on [D]'s head slowly grow and elongate.</span>", \
 		"<span class='warning'>Your body continues to mutate. Your telepathic abilities grow.</span>")
-	sleep(90)
+	SLEEP(90)
 	if(!D)
 		return
 	D.visible_message("<span class='warning'>[D]'s body begins to violently stretch and contort.</span>", \
 		"<span class='warning'>You begin to rend apart the final barriers to ultimate power.</span>")
-	sleep(40)
+	SLEEP(40)
 	if(!D)
 		return
 	to_chat(D, "<i><b>Yes!</b></i>")
-	sleep(10)
+	SLEEP(10)
 	if(!D)
 		return
 	to_chat(D, "<i><b><span class='big'>YES!!</span></b></i>")
-	sleep(10)
+	SLEEP(10)
 	if(!D)
 		return
 	to_chat(D, "<i><b><span class='reallybig'>YE--</span></b></i>")
-	sleep(1)
+	SLEEP(1)
 	if(!D)
 		return
 	to_chat(world, "<font size=5><span class='danger'><b>\"SLOTH, WRATH, GLUTTONY, ACEDIA, ENVY, GREED, PRIDE! FIRES OF HELL AWAKEN!!\"</font></span>")
@@ -286,7 +286,7 @@ var/global/list/lawlorify = list (
 	var/area/A = get_area(owner.current)
 	if(A)
 		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner.current, action=NOTIFY_ATTACK)
-	sleep(50)
+	SLEEP(50)
 	if(!ticker.mode.devil_ascended)
 		SSshuttle.emergency.request(null, 0.3)
 	ticker.mode.devil_ascended++
@@ -334,7 +334,7 @@ var/global/list/lawlorify = list (
 /datum/devilinfo/proc/beginResurrectionCheck(mob/living/body)
 	if(SOULVALUE>0)
 		to_chat(owner.current, "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>")
-		sleep(DEVILRESURRECTTIME)
+		SLEEP(DEVILRESURRECTTIME)
 		if (!body ||  body.stat == DEAD)
 			if(SOULVALUE>0)
 				if(check_banishment(body))

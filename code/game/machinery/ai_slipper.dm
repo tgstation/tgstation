@@ -109,7 +109,7 @@
 
 
 		cooldown_timeleft = (ticksleft / 10)
-		sleep(5)
+		SLEEP(5)
 	if (uses <= 0)
 		return
 	if (uses >= 0)

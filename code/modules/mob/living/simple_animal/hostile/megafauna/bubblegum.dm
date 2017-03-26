@@ -157,7 +157,7 @@ Difficulty: Hard
 	setDir(get_dir(src, T))
 	var/obj/effect/overlay/temp/decoy/D = new /obj/effect/overlay/temp/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
-	sleep(3)
+	SLEEP(3)
 	throw_at(T, get_dist(src, T), 1, src, 0, callback = CALLBACK(src, .charge_end, bonus_charges))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge_end(bonus_charges, list/effects_to_destroy)
@@ -248,14 +248,14 @@ Difficulty: Hard
 		new /obj/effect/overlay/temp/bubblegum_hands/rightsmack(T)
 	else
 		new /obj/effect/overlay/temp/bubblegum_hands/leftsmack(T)
-	sleep(2.5)
+	SLEEP(2.5)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
 			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, 1, -1)
 			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
-	sleep(3)
+	SLEEP(3)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodgrab(turf/T, handedness)
 	if(handedness)
@@ -264,7 +264,7 @@ Difficulty: Hard
 	else
 		new /obj/effect/overlay/temp/bubblegum_hands/leftpaw(T)
 		new /obj/effect/overlay/temp/bubblegum_hands/leftthumb(T)
-	sleep(6)
+	SLEEP(6)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
 			to_chat(L, "<span class='userdanger'>[src] drags you through the blood!</span>")
@@ -274,7 +274,7 @@ Difficulty: Hard
 			playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, 1, -1)
 			if(L.stat != CONSCIOUS)
 				addtimer(CALLBACK(src, .proc/devour, L), 2)
-	sleep(1)
+	SLEEP(1)
 
 /obj/effect/overlay/temp/bubblegum_hands
 	icon = 'icons/effects/bubblegum.dmi'
@@ -318,7 +318,7 @@ Difficulty: Hard
 	var/oldtransform = DA.transform
 	DA.transform = matrix()*2
 	animate(DA, alpha = 255, color = initial(DA.color), transform = oldtransform, time = 3)
-	sleep(3)
+	SLEEP(3)
 	qdel(DA)
 
 	var/obj/effect/decal/cleanable/blood/found_bloodpool
@@ -361,7 +361,7 @@ Difficulty: Hard
 			break
 		new /obj/effect/decal/cleanable/blood/bubblegum(J)
 		previousturf = J
-		sleep(1)
+		SLEEP(1)
 
 /obj/effect/decal/cleanable/blood/bubblegum
 	bloodiness = 0

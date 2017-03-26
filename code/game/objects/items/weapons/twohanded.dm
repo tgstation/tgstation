@@ -306,7 +306,7 @@
 		user.setDir(i)
 		if(i == WEST)
 			user.emote("flip")
-		sleep(1)
+		SLEEP(1)
 
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")

@@ -1182,7 +1182,7 @@ B --><-- A
 	if(!A || !I)
 		return
 	A.add_overlay(I)
-	sleep(duration)
+	SLEEP(duration)
 	A.cut_overlay(I)
 
 /proc/get_areas_in_z(zlevel)
@@ -1252,7 +1252,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	var/i = 1
 	do
 		. += round(i*DELTA_CALC)
-		sleep(i*world.tick_lag*DELTA_CALC)
+		SLEEP(i*world.tick_lag*DELTA_CALC)
 		i *= 2
 	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
 

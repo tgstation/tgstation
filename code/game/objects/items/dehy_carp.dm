@@ -26,7 +26,7 @@
 	icon = 'icons/mob/animal.dmi'
 	flick("carp_swell", src)
 	//Wait for animation to end
-	sleep(6)
+	SLEEP(6)
 	if(!src || QDELETED(src))//we got toasted while animating
 		return
 	//Make space carp

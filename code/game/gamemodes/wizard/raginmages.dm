@@ -110,7 +110,7 @@
 								if("No")
 									continue
 
-			sleep(300)
+			SLEEP(300)
 		if(!candidates.len)
 			message_admins("This is awkward, sleeping until another mage check...")
 			making_mage = 0

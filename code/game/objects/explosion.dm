@@ -27,7 +27,7 @@ var/explosionid = 1
 	//I would make this not ex_act the thing that triggered the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
-	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
+	SLEEP(1) //tldr, let the calling proc call qdel(src) before we explode
 
 	var/id = explosionid++
 	var/start = world.timeofday
@@ -267,7 +267,7 @@ var/explosionid = 1
 		else
 			continue
 
-	sleep(100)
+	SLEEP(100)
 	for(var/turf/T in wipe_colours)
 		T.color = null
 		T.maptext = ""

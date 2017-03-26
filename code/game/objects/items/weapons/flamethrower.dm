@@ -198,7 +198,7 @@
 		if(!T.atmos_adjacent_turfs || !T.atmos_adjacent_turfs[previousturf])
 			break
 		ignite_turf(T)
-		sleep(1)
+		SLEEP(1)
 		previousturf = T
 	operating = 0
 	for(var/mob/M in viewers(1, loc))

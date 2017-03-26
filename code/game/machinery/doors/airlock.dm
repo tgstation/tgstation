@@ -298,7 +298,7 @@ var/list/airlock_overlays = list()
 		spawn(0)
 			var/cont = 1
 			while (cont)
-				sleep(10)
+				SLEEP(10)
 				if(QDELETED(src))
 					return
 				cont = 0
@@ -503,7 +503,7 @@ var/list/airlock_overlays = list()
 			if(!stat)
 				update_icon(AIRLOCK_DENY)
 				playsound(src,doorDeni,50,0,3)
-				sleep(6)
+				SLEEP(6)
 				update_icon(AIRLOCK_CLOSED)
 
 /obj/machinery/door/airlock/examine(mob/user)
@@ -659,7 +659,7 @@ var/list/airlock_overlays = list()
 	if(src.aiHacking == 0)
 		src.aiHacking = 1
 		to_chat(user, "Airlock AI control has been blocked. Beginning fault-detection.")
-		sleep(50)
+		SLEEP(50)
 		if(src.canAIControl(user))
 			to_chat(user, "Alert cancelled. Airlock control has been restored without our assistance.")
 			src.aiHacking=0
@@ -669,9 +669,9 @@ var/list/airlock_overlays = list()
 			src.aiHacking=0
 			return
 		to_chat(user, "Fault confirmed: airlock control wire disabled or cut.")
-		sleep(20)
+		SLEEP(20)
 		to_chat(user, "Attempting to hack into airlock. This may take some time.")
-		sleep(200)
+		SLEEP(200)
 		if(src.canAIControl(user))
 			to_chat(user, "Alert cancelled. Airlock control has been restored without our assistance.")
 			src.aiHacking=0
@@ -681,7 +681,7 @@ var/list/airlock_overlays = list()
 			src.aiHacking=0
 			return
 		to_chat(user, "Upload access confirmed. Loading control program into airlock software.")
-		sleep(170)
+		SLEEP(170)
 		if(src.canAIControl(user))
 			to_chat(user, "Alert cancelled. Airlock control has been restored without our assistance.")
 			src.aiHacking=0
@@ -691,11 +691,11 @@ var/list/airlock_overlays = list()
 			src.aiHacking=0
 			return
 		to_chat(user, "Transfer complete. Forcing airlock to execute program.")
-		sleep(50)
+		SLEEP(50)
 		//disable blocked control
 		src.aiControlDisabled = 2
 		to_chat(user, "Receiving control information from airlock.")
-		sleep(10)
+		SLEEP(10)
 		//bring up airlock dialog
 		src.aiHacking = 0
 		if(user)
@@ -885,7 +885,7 @@ var/list/airlock_overlays = list()
 								if(src.secondsElectrified<0)
 									set_electrified(0)
 								src.updateUsrDialog()
-								sleep(10)
+								SLEEP(10)
 				if(6)
 					//electrify door indefinitely
 					if(wires.is_cut(WIRE_SHOCK))
@@ -1279,9 +1279,9 @@ var/list/airlock_overlays = list()
 	operating = 1
 	update_icon(AIRLOCK_OPENING, 1)
 	src.set_opacity(0)
-	sleep(5)
+	SLEEP(5)
 	src.density = 0
-	sleep(9)
+	SLEEP(9)
 	src.layer = OPEN_DOOR_LAYER
 	update_icon(AIRLOCK_OPEN, 1)
 	set_opacity(0)
@@ -1325,11 +1325,11 @@ var/list/airlock_overlays = list()
 	src.layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		density = TRUE
-	sleep(5)
+	SLEEP(5)
 	density = TRUE
 	if(!safe)
 		crush()
-	sleep(9)
+	SLEEP(9)
 	update_icon(AIRLOCK_CLOSED, 1)
 	if(visible && !glass)
 		set_opacity(1)
@@ -1422,7 +1422,7 @@ var/list/airlock_overlays = list()
 	if(!operating && density && hasPower() && !emagged)
 		operating = 1
 		update_icon(AIRLOCK_EMAG, 1)
-		sleep(6)
+		SLEEP(6)
 		if(QDELETED(src))
 			return
 		operating = 0

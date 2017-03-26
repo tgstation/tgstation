@@ -85,12 +85,12 @@ var/datum/controller/failsafe/Failsafe
 					defcon = min(defcon + 1,5)
 					master_iteration = Master.iteration
 			if (defcon <= 1)
-				sleep(processing_interval*2)
+				SLEEP(processing_interval*2)
 			else
-				sleep(processing_interval)
+				SLEEP(processing_interval)
 		else
 			defcon = 5
-			sleep(initial(processing_interval))
+			SLEEP(initial(processing_interval))
 
 /datum/controller/failsafe/proc/defcon_pretty()
 	return defcon

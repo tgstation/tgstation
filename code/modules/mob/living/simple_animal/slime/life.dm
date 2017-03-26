@@ -104,7 +104,7 @@
 		if(sleeptime <= 0)
 			sleeptime = 1
 
-		sleep(sleeptime + 2) // this is about as fast as a player slime can go
+		SLEEP(sleeptime + 2) // this is about as fast as a player slime can go
 
 	AIproc = 0
 

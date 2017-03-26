@@ -79,7 +79,7 @@
 					controller.cycleClose(door)
 		else
 			controller.onlyClose(door)
-		sleep(20)
+		SLEEP(20)
 		busy = 0
 		update_icon()
 

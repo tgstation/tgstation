@@ -622,7 +622,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Sending you to [config.cross_address].</span>")
 		new /obj/screen/splash(client)
 		notransform = TRUE
-		sleep(29)	//let the animation play
+		SLEEP(29)	//let the animation play
 		notransform = FALSE
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 		client << link(config.cross_address + "?server_hop=[key]")

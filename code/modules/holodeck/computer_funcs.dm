@@ -47,7 +47,7 @@
 		return
 	if(world.time < (last_change + 25 + (damaged?500:0)) && !force)
 		if(delay)
-			sleep(25)
+			SLEEP(25)
 		else
 			if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
 				return

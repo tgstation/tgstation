@@ -61,7 +61,7 @@
 	set waitfor = 0
 	var/direction = pick(directions)
 	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
-		sleep(2)
+		SLEEP(2)
 		if (i > 0)
 			var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 			for(var/datum/disease/D in src.viruses)

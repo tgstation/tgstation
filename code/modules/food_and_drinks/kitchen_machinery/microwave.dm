@@ -266,7 +266,7 @@
 		if (stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
-		sleep(max(12-2*efficiency,2)) // standard microwave means sleep(10). The better the efficiency, the faster the cooking
+		SLEEP(max(12-2*efficiency,2)) // standard microwave means sleep(10). The better the efficiency, the faster the cooking
 	return 1
 
 /obj/machinery/microwave/proc/has_extra_item()

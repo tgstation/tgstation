@@ -172,7 +172,7 @@
 	recalling = 1
 	to_chat(loc, "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>")
 
-	sleep(rand(100,300))
+	SLEEP(rand(100,300))
 
 	if(SSshuttle.emergency.mode != SHUTTLE_CALL) //Shuttle can only be recalled when it's moving to the station
 		to_chat(user, "<span class='warning'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>")
@@ -180,7 +180,7 @@
 		return 0
 	to_chat(loc, "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>")
 
-	sleep(rand(100,300))
+	SLEEP(rand(100,300))
 
 	if(!gang.dom_attempts)
 		to_chat(user, "<span class='warning'>\icon[src]Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
@@ -200,7 +200,7 @@
 		return 0
 	to_chat(loc, "<span class='info'>\icon[src]Comm arrays accessed. Broadcasting recall signal...</span>")
 
-	sleep(rand(100,300))
+	SLEEP(rand(100,300))
 
 	recalling = 0
 	log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")

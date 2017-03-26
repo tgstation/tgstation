@@ -39,12 +39,12 @@
 		if(stacks == 11) //Warning message that the stacks are getting too high
 			to_chat(user, "<span class='warning'>Our legs are really starting to hurt...</span>")
 
-		sleep(40)
+		SLEEP(40)
 
 	while(!active) //Damage stacks decrease fairly rapidly while not in sanic mode
 		if(stacks >= 1)
 			stacks--
-		sleep(20)
+		SLEEP(20)
 
 	feedback_add_details("changeling_powers","SANIC")
 	return 1

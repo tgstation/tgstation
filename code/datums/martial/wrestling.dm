@@ -161,7 +161,7 @@
 		else
 			return 0
 
-		sleep(delay)
+		SLEEP(delay)
 
 	if (A && D)
 		// These are necessary because of the sleep call.
@@ -358,7 +358,7 @@
 		A.visible_message("<span class = 'danger'><B>[A] climbs onto [surface]!</b></span>")
 		A.pixel_y = 10
 		falling = 1
-		sleep(10)
+		SLEEP(10)
 
 	if (A && D)
 		// These are necessary because of the sleep call.
@@ -379,7 +379,7 @@
 
 		if(A)
 			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
-		sleep(10)
+		SLEEP(10)
 		if(A)
 			animate(A, transform = null, time = 1, loop = 0)
 

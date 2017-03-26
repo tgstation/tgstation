@@ -310,7 +310,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 					var/datum/progressbar/progress = new(user, len, loc)
 
 					while (do_after(user, 10, TRUE, S, FALSE, CALLBACK(src, .proc/handle_mass_pickup, S, things, loc, rejections, progress)))
-						sleep(1)
+						SLEEP(1)
 
 					qdel(progress)
 

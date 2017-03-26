@@ -288,7 +288,7 @@
 		return
 	cooldown = 1
 	update_icon()
-	sleep(time)
+	SLEEP(time)
 	var/turf/T = get_turf(src)
 	T.audible_message("<span class='notice'>[src] beeps: Unit is recharged.</span>")
 	playsound(T, 'sound/machines/defib_ready.ogg', 50, 0)

@@ -165,11 +165,11 @@
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
 	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)
-	sleep(16)
+	SLEEP(16)
 	layer = ABOVE_ALL_MOB_LAYER
 	flick("judicial_explosion", src)
 	set_light(1.4, 2, "#B451A1")
-	sleep(13)
+	SLEEP(13)
 	var/targetsjudged = 0
 	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
 	set_light(0)
@@ -198,7 +198,7 @@
 		L.adjustBruteLoss(10) //do a small amount of damage
 		add_logs(user, L, "struck with a judicial blast")
 	to_chat(user, "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[targetsjudged == 1 ? "":"s"].</b></span>")
-	sleep(3) //so the animation completes properly
+	SLEEP(3) //so the animation completes properly
 	qdel(src)
 
 /obj/effect/clockwork/judicial_marker/ex_act(severity)

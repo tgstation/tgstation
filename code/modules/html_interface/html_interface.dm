@@ -234,7 +234,7 @@ You have to use modules/client/asset_cache to ensure they get sent BEFORE the in
 
 		winshow(hclient.client, "browser_\ref[src]", TRUE)
 
-		while (hclient.client && hclient.active && !hclient.is_loaded) sleep(2)
+		while (hclient.client && hclient.active && !hclient.is_loaded) SLEEP(2)
 
 /datum/html_interface/proc/hide(datum/html_interface_client/hclient)
 	hclient = getClient(hclient)

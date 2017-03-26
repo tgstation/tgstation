@@ -162,7 +162,7 @@
 				//do not convert to timer.
 				spawn (5)
 					world.SetConfig("ban", bannedckey, null)
-					sleep(1)
+					SLEEP(1)
 					world.SetConfig("ban", bannedckey, null)
 					cachedban["matches_this_round"] = list()
 					cachedban["existing_user_matches_this_round"] = list()

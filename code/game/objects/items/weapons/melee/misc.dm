@@ -143,7 +143,7 @@
 	else
 		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 		add_fingerprint(user)
-	sleep(3)
+	SLEEP(3)
 	if (H && !QDELETED(H))
 		if (B && !QDELETED(B))
 			H.internal_organs -= B

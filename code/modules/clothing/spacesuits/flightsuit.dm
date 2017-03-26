@@ -277,7 +277,7 @@
 				if(dragging_through && oldturf)
 					dragging_through.forceMove(oldturf)
 					wearer.pulling = dragging_through
-				sleep(1)
+				SLEEP(1)
 
 //Make the wearer lose some momentum.
 /obj/item/device/flightpack/proc/momentum_decay()
@@ -616,7 +616,7 @@
 	if(wearer)
 		if(move)
 			while(momentum_x != 0 || momentum_y != 0)
-				sleep(2)
+				SLEEP(2)
 				step(wearer, pick(cardinal))
 				momentum_decay()
 				adjust_momentum(0, 0, 10)

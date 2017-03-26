@@ -117,21 +117,21 @@
 				var/obj/B = user.buckled
 				var/movementdirection = turn(direction,180)
 				step(B, movementdirection)
-				sleep(1)
+				SLEEP(1)
 				step(B, movementdirection)
-				sleep(1)
+				SLEEP(1)
 				step(B, movementdirection)
-				sleep(1)
+				SLEEP(1)
 				step(B, movementdirection)
-				sleep(2)
+				SLEEP(2)
 				step(B, movementdirection)
-				sleep(2)
+				SLEEP(2)
 				step(B, movementdirection)
-				sleep(3)
+				SLEEP(3)
 				step(B, movementdirection)
-				sleep(3)
+				SLEEP(3)
 				step(B, movementdirection)
-				sleep(3)
+				SLEEP(3)
 				step(B, movementdirection)
 
 		else user.newtonian_move(turn(direction, 180))
@@ -165,7 +165,7 @@
 						if(!W) return
 						W.reagents.reaction(A)
 					if(W.loc == my_target) break
-					sleep(2)
+					SLEEP(2)
 
 	else
 		return ..()

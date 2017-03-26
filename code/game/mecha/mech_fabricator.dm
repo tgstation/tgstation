@@ -89,11 +89,11 @@
 
 	emagged = 0.5
 	say("DB error \[Code 0x00F1\]")
-	sleep(10)
+	SLEEP(10)
 	say("Attempting auto-repair...")
-	sleep(15)
+	SLEEP(15)
 	say("User DB corrupted \[Code 0x00FA\]. Truncating data structure...")
-	sleep(30)
+	SLEEP(30)
 	say("User DB truncated. Please contact your Nanotrasen system operator for future assistance.")
 	req_access = null
 	emagged = 1
@@ -158,7 +158,7 @@
 	add_overlay("fab-active")
 	use_power = 2
 	updateUsrDialog()
-	sleep(get_construction_time_w_coeff(D))
+	SLEEP(get_construction_time_w_coeff(D))
 	use_power = 1
 	cut_overlay("fab-active")
 	desc = initial(desc)
@@ -242,7 +242,7 @@
 /obj/machinery/mecha_part_fabricator/proc/sync()
 	temp = "Updating local R&D database..."
 	updateUsrDialog()
-	sleep(30) //only sleep if called by user
+	SLEEP(30) //only sleep if called by user
 
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		if(!RDC.sync)
@@ -456,7 +456,7 @@
 					user.put_in_active_hand(W)
 				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
 				add_overlay(mat_overlay)
-				sleep(10)
+				SLEEP(10)
 				cut_overlay(mat_overlay) //No matter what the overlay shall still be deleted
 
 		updateUsrDialog()

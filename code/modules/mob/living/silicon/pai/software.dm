@@ -619,7 +619,7 @@
 		if(hackprogress >= 100)
 			src.hackprogress = 0
 			src.cable.machine:open()
-		sleep(50)			// Update every 5 seconds
+		SLEEP(50)			// Update every 5 seconds
 
 // Digital Messenger
 /mob/living/silicon/pai/proc/pdamessage()

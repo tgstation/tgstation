@@ -285,7 +285,7 @@
 		controllock = 1
 		on = 0 //turns off the turret temporarily
 		update_icon()
-		sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+		SLEEP(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 		on = 1 //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
 
@@ -416,7 +416,7 @@
 	raising = 1
 	if(cover)
 		flick("popup", cover)
-	sleep(10)
+	SLEEP(10)
 	raising = 0
 	if(cover)
 		cover.icon_state = "openTurretCover"
@@ -432,7 +432,7 @@
 	raising = 1
 	if(cover)
 		flick("popdown", cover)
-	sleep(10)
+	SLEEP(10)
 	raising = 0
 	if(cover)
 		cover.icon_state = "turretCover"

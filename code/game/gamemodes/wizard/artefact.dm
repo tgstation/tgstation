@@ -585,12 +585,12 @@ var/global/list/multiverse = list()
 	playsound(T,'sound/magic/WarpWhistle.ogg', 200, 1)
 	user.canmove = 0
 	new /obj/effect/overlay/temp/tornado(T)
-	sleep(20)
+	SLEEP(20)
 	if(interrupted(user))
 		return
 	user.invisibility = INVISIBILITY_MAXIMUM
 	user.status_flags |= GODMODE
-	sleep(20)
+	SLEEP(20)
 	if(interrupted(user))
 		return
 	var/breakout = 0
@@ -603,14 +603,14 @@ var/global/list/multiverse = list()
 			break
 		breakout += 1
 	new /obj/effect/overlay/temp/tornado(T)
-	sleep(20)
+	SLEEP(20)
 	if(interrupted(user))
 		return
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
 	user.canmove = 1
 	on_cooldown = 2
-	sleep(40)
+	SLEEP(40)
 	on_cooldown = 0
 
 /obj/item/warpwhistle/Destroy()

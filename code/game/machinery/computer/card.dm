@@ -538,7 +538,7 @@ var/time_last_changed_position = 0
 		if ("print")
 			if (!( printing ))
 				printing = 1
-				sleep(50)
+				SLEEP(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 				var/t1 = "<B>Crew Manifest:</B><BR>"
 				for(var/datum/data/record/t in sortRecord(data_core.general))

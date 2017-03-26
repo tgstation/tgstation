@@ -288,7 +288,7 @@
 		to_chat(user, "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
 		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 50, 1)
 		qdel(src)
-		sleep(20)
+		SLEEP(20)
 		var/global/list/curses
 		if(!curses)
 			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",

@@ -249,7 +249,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(action)
 		action.UpdateButtonIcon()
 	while(charge_counter < charge_max && !QDELETED(src))
-		sleep(1)
+		SLEEP(1)
 		charge_counter++
 	if(action)
 		action.UpdateButtonIcon()

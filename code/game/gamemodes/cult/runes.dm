@@ -496,7 +496,7 @@ var/list/teleport_runes = list()
 	..()
 	send_to_playing_players('sound/effects/dimensional_rend.ogg') //There used to be a message for this but every time it was changed it got edgier so I removed it
 	var/turf/T = get_turf(src)
-	sleep(40)
+	SLEEP(40)
 	if(src)
 		color = "#FF0000"
 	if(cult_mode)
@@ -707,7 +707,7 @@ var/list/teleport_runes = list()
 			var/mob/dead/observer/G = user.get_ghost()
 			to_chat(G, "<span class='cultitalic'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>")
 			return
-		sleep(1)
+		SLEEP(1)
 	rune_in_use = 0
 
 
@@ -879,17 +879,17 @@ var/list/wall_runes = list()
 			if(is_servant_of_ratvar(L))
 				to_chat(L, "<span class='userdanger'>You feel an unholy darkness dimming the Justiciar's light!</span>")
 	animate(src, color = "#FCB56D", time = 4)
-	sleep(4)
+	SLEEP(4)
 	if(!src)
 		return
 	do_area_burn(T, 0.5)
 	animate(src, color = "#FFDF80", time = 5)
-	sleep(5)
+	SLEEP(5)
 	if(!src)
 		return
 	do_area_burn(T, 1)
 	animate(src, color = "#FFFDF4", time = 6)
-	sleep(6)
+	SLEEP(6)
 	if(!src)
 		return
 	do_area_burn(T, 1.5)
@@ -999,7 +999,7 @@ var/list/wall_runes = list()
 		if(user.stat)
 			break
 		user.apply_damage(0.1, BRUTE)
-		sleep(3)
+		SLEEP(3)
 
 	qdel(N)
 	if(new_human)

@@ -50,7 +50,7 @@
 					grant_ninja_verbs()
 					grant_equip_verbs()
 					ntick()
-			sleep(delay)
+			SLEEP(delay)
 		s_busy = 0
 	else
 		if(!U.mind||U.mind.assigned_role!=U.mind.special_role)//Your run of the mill persons shouldn't know what it is. Or how to turn it on.
@@ -97,6 +97,6 @@
 					remove_equip_verbs()
 					unlock_suit()
 					U.regenerate_icons()
-			sleep(delay)
+			SLEEP(delay)
 		s_busy = 0
 	return

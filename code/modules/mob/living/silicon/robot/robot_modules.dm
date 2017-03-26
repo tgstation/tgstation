@@ -210,10 +210,10 @@
 	var/prev_lockcharge = R.lockcharge
 	R.SetLockdown(1)
 	R.anchored = TRUE
-	sleep(2)
+	SLEEP(2)
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/Welder.ogg', 'sound/items/Ratchet.ogg'), 80, 1, -1)
-		sleep(12)
+		SLEEP(12)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
 	R.anchored = FALSE

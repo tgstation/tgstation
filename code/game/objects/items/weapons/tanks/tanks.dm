@@ -124,7 +124,7 @@
 		H.status_flags |= DISFIGURED
 		H.bleed_rate = 5
 		H.gib_animation()
-		sleep(3)
+		SLEEP(3)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
 		H.spawn_gibs()
 		H.spill_organs()

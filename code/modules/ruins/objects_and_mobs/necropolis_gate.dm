@@ -26,7 +26,7 @@
 	user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
 	playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
 	is_anyone_home = TRUE
-	sleep(50)
+	SLEEP(50)
 	if(boss)
 		to_chat(user, "<span class='notice'>There's no response.</span>")
 		is_anyone_home = FALSE
@@ -37,8 +37,8 @@
 	for(var/i in 1 to 3)
 		playsound(src, 'sound/items/Deconstruct.ogg', volume, 0)
 		volume += 20
-		sleep(10)
-	sleep(10)
+		SLEEP(10)
+	SLEEP(10)
 	visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
 	message_admins("[key_name_admin(user)] has summoned Legion!")
 	log_game("[key_name(user)] summoned Legion.")

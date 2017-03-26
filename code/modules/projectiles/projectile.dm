@@ -185,7 +185,7 @@
 		while(loc)
 			if(paused)
 				next_run = world.time
-				sleep(1)
+				SLEEP(1)
 				continue
 
 			if((!( current ) || loc == current))
@@ -239,7 +239,7 @@
 						Bump(original, 1)
 			Range()
 			if (delay > 0)
-				sleep(delay)
+				SLEEP(delay)
 
 	else //old projectile system
 		set waitfor = 0
@@ -253,7 +253,7 @@
 						if(!(original in permutated))
 							Bump(original, 1)
 				Range()
-			sleep(config.run_speed * 0.9)
+			SLEEP(config.run_speed * 0.9)
 
 
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)

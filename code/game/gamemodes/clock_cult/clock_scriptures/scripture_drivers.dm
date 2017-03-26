@@ -217,12 +217,12 @@
 	progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 	animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
 	while(world.time < endtime && can_recite())
-		sleep(1)
+		SLEEP(1)
 		new/obj/structure/destructible/clockwork/taunting_trail(invoker.loc)
 		progbar.update(endtime - world.time)
 	qdel(progbar)
 	if(can_recite() && chant_number != chant_amount)
-		sleep(grace_period)
+		SLEEP(grace_period)
 	else
 		return FALSE
 	return TRUE

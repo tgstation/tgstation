@@ -33,7 +33,7 @@
 			R.disabled = !R.disabled
 		if(WIRE_SHOCK)
 			R.shocked = TRUE
-			sleep(100)
+			SLEEP(100)
 			if(R)
 				R.shocked = FALSE
 

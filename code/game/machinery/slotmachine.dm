@@ -194,7 +194,7 @@
 		while(working)
 			randomize_reels()
 			updateDialog()
-			sleep(2)
+			SLEEP(2)
 
 	spawn(SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len)) //WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
 		toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)
@@ -219,7 +219,7 @@
 /obj/machinery/computer/slot_machine/proc/toggle_reel_spin(value, delay = 0) //value is 1 or 0 aka on or off
 	for(var/list/reel in reels)
 		reels[reel] = value
-		sleep(delay)
+		SLEEP(delay)
 
 /obj/machinery/computer/slot_machine/proc/randomize_reels()
 

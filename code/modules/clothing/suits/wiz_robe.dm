@@ -174,7 +174,7 @@
 	var/list/factions = usr.faction
 	M.faction = factions
 	src.robe_charge = FALSE
-	sleep(30)
+	SLEEP(30)
 	src.robe_charge = TRUE
 	to_chat(usr, "<span class='notice'>\The robe hums, its internal magic supply restored.</span>")
 

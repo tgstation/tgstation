@@ -1,11 +1,13 @@
 //We wrap all procs that sleep so we can monitor how many threads are active
 //sadly we can't catch the entry point of input verbs but we should be working to clear those oout where possible
 
-/proc/wrap_sleep(delay)
-    var/sleep_start_tick = world.time
-    world.SleepBegin()
-    sleep(delay)
-    world.SleepEnd(sleep_start_tick)
+#define SLEEP(X)\
+if(TRUE) {\
+    var/sleep_start_tick = world.time;\
+    world.SleepBegin();\
+    sleep(X);\
+    world.SleepEnd(sleep_start_tick);\
+}
 
 /proc/wrap_alert(Usr = usr, Message, Title, Button1 = "Ok", Button2, Button3)
     var/sleep_start_tick = world.time
@@ -101,7 +103,6 @@
     . = Import()
     world.SleepEnd(sleep_start_tick)
 
-#define sleep wrap_sleep
 #define alert wrap_alert
 #define input PLEASE_USE_TGINPUT_FUNCTION_OR_RENAME_THIS_VAR_PROC_OR_PATH
 #define shell world.wrap_shell

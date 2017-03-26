@@ -171,7 +171,7 @@ field_generator power level display
 	spawn(1)
 		cleanup()
 		while (warming_up>0 && !active)
-			sleep(50)
+			SLEEP(50)
 			warming_up--
 			update_icon()
 
@@ -179,7 +179,7 @@ field_generator power level display
 	active = FG_CHARGING
 	spawn(1)
 		while (warming_up<3 && active)
-			sleep(50)
+			SLEEP(50)
 			warming_up++
 			update_icon()
 			if(warming_up >= 3)

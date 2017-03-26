@@ -58,5 +58,5 @@
 	if(movement_range == 0)
 		qdel(src)
 	else
-		sleep(speed)
+		SLEEP(speed)
 		move()

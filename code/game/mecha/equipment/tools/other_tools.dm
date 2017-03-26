@@ -121,7 +121,7 @@
 					var/iter = 5-get_dist(A,target)
 					for(var/i=0 to iter)
 						step_away(A,target)
-						sleep(2)
+						SLEEP(2)
 			var/turf/T = get_turf(target)
 			log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Gravitational Catapult in ([T.x],[T.y],[T.z])")
 			return 1

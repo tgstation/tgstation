@@ -30,7 +30,7 @@
 			original.data["done"] = 1
 
 		if(signal.data["slow"] > 0)
-			sleep(signal.data["slow"]) // simulate the network lag if necessary
+			SLEEP(signal.data["slow"]) // simulate the network lag if necessary
 
 		/* ###### Broadcast a message using signal.data ###### */
 		if(signal.frequency == SYND_FREQ) // if syndicate broadcast, just

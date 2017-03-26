@@ -420,7 +420,7 @@
 
 	// --- Finally, tag the actual signal with the appropriate values ---
 	signal.data = list(
-		"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
+		"slow" = 0, // how much to SLEEP() before broadcasting - simulates net lag
 		"message" = "TEST",
 		"compression" = rand(45, 50), // If the signal is compressed, compress our message too.
 		"traffic" = 0, // dictates the total traffic sum that the signal went through
@@ -435,7 +435,7 @@
 	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
 		R.receive_signal(signal)
 
-	sleep(rand(10,25))
+	SLEEP(rand(10,25))
 
 	return signal
 

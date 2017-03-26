@@ -40,7 +40,7 @@
 
 	// failed to path correctly so just try to head straight for a bit
 	walk_to(src,get_turf(target),0,5)
-	sleep(1)
+	SLEEP(1)
 	walk_to(src,0)
 
 	return 0
@@ -95,7 +95,7 @@
 /mob/living/carbon/monkey/proc/pickup_and_wear(var/obj/item/clothing/C)
 	if(!equip_to_appropriate_slot(C))
 		monkeyDrop(get_item_by_slot(C)) // remove the existing item if worn
-		sleep(5)
+		SLEEP(5)
 		equip_to_appropriate_slot(C)
 
 /mob/living/carbon/monkey/resist_restraints()

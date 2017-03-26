@@ -118,9 +118,9 @@
 							cur_acc[cur_note] = "n"
 					playnote(cur_note, cur_acc[cur_note], cur_oct[cur_note])
 				if(notes.len >= 2 && text2num(notes[2]))
-					sleep(sanitize_tempo(tempo / text2num(notes[2])))
+					SLEEP(sanitize_tempo(tempo / text2num(notes[2])))
 				else
-					sleep(tempo)
+					SLEEP(tempo)
 		repeat--
 	playing = 0
 	repeat = 0

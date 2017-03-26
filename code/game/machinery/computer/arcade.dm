@@ -164,7 +164,7 @@
 			if(turtle > 0)
 				turtle--
 
-			sleep(10)
+			SLEEP(10)
 			src.enemy_hp -= attackamt
 			src.arcade_action()
 
@@ -177,7 +177,7 @@
 			src.updateUsrDialog()
 			turtle++
 
-			sleep(10)
+			SLEEP(10)
 			src.player_mp -= pointamt
 			src.player_hp += healamt
 			src.blocked = 1
@@ -194,7 +194,7 @@
 				turtle--
 
 			src.updateUsrDialog()
-			sleep(10)
+			SLEEP(10)
 			src.arcade_action()
 
 	if (href_list["close"])
@@ -252,7 +252,7 @@
 
 		if (src.player_mp <= 0)
 			src.gameover = 1
-			sleep(10)
+			SLEEP(10)
 			src.temp = "You have been drained! GAME OVER"
 			playsound(src.loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 			if(emagged)
@@ -514,7 +514,7 @@
 						if(severity >= 3) //you didn't pray hard enough
 							to_chat(M, "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>")
 							M.Stun(5)
-							sleep(30)
+							SLEEP(30)
 							M.vomit(50)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75))
@@ -532,7 +532,7 @@
 								F.ChangeTurf(F.baseturf)
 							say("Something slams into the floor around [src], exposing it to space!")
 							if(hull)
-								sleep(10)
+								SLEEP(10)
 								say("A new floor suddenly appears around [src]. What the hell?")
 								playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
 								var/turf/open/space/T
@@ -549,7 +549,7 @@
 						food = rand(10,80) / rand(1,2)
 						fuel = rand(10,60) / rand(1,2)
 						if(electronics)
-							sleep(10)
+							SLEEP(10)
 							if(oldfuel > fuel && oldfood > food)
 								src.audible_message("<span class='danger'>[src] lets out a somehow reassuring chime.</span>")
 							else if(oldfuel < fuel || oldfood < food)
@@ -613,7 +613,7 @@
 					usr.Stun(10) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
 					emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
-					sleep(50)
+					SLEEP(50)
 					say("[S] winks out, just as suddenly as it appeared.")
 					qdel(S)
 			else
@@ -1089,13 +1089,13 @@
 	src.visible_message("<span class='notice'>[src] softly beeps and whirs to life!</span>")
 	playsound(src.loc, 'sound/machines/defib_SaftyOn.ogg', 25, 1)
 	say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
-	sleep(20)
+	SLEEP(20)
 	src.visible_message("<span class='warning'>[src] begins to vibrate...</span>")
 	say("Uh, Port? Having some issues with our reactor, could you check it out? Over.")
-	sleep(30)
+	SLEEP(30)
 	say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
 	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 25, 1)
-	sleep(3.6)
+	SLEEP(3.6)
 	src.visible_message("<span class='userdanger'>[src] explodes!</span>")
 	explosion(src.loc, 2,4,8, flame_range = 16)
 	qdel(src)

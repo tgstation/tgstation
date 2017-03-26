@@ -36,7 +36,7 @@
 
 	busy = 1
 	update_icon()
-	sleep(200)
+	SLEEP(200)
 	wash_cycle()
 
 /obj/machinery/washing_machine/clean_blood()

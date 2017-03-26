@@ -452,7 +452,7 @@ var/global/mulebot_count = 0
 			if(mode != BOT_IDLE)
 				spawn(0)
 					for(var/i=num_steps,i>0,i--)
-						sleep(2)
+						SLEEP(2)
 						process_bot()
 
 /mob/living/simple_animal/bot/mulebot/proc/process_bot()

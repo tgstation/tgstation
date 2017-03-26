@@ -212,10 +212,10 @@ Difficulty: Hard
 							blinking = FALSE
 							blink(target)
 							blinking = TRUE
-							sleep(5)
+							SLEEP(5)
 						animate(src, color = oldcolor, time = 8)
 						addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-						sleep(8)
+						SLEEP(8)
 						blinking = FALSE
 					else
 						blink(target)
@@ -232,10 +232,10 @@ Difficulty: Hard
 						else
 							INVOKE_ASYNC(src, .proc/diagonal_blasts, target)
 							delay = 5 //this one isn't so mean, so do the next one faster(if there is one)
-						sleep(delay)
+						SLEEP(delay)
 					animate(src, color = oldcolor, time = 8)
 					addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-					sleep(8)
+					SLEEP(8)
 					blinking = FALSE
 				if("chaser_swarm") //fire four fucking chasers at a target and their friends.
 					visible_message("<span class='hierophant'>\"Mx gerrsx lmhi.\"</span>")
@@ -253,11 +253,11 @@ Difficulty: Hard
 						var/obj/effect/overlay/temp/hierophant/chaser/C = new /obj/effect/overlay/temp/hierophant/chaser(loc, src, pickedtarget, chaser_speed, FALSE)
 						C.moving = 3
 						C.moving_dir = pick_n_take(cardinal_copy)
-						sleep(10)
+						SLEEP(10)
 					chaser_cooldown = world.time + initial(chaser_cooldown)
 					animate(src, color = oldcolor, time = 8)
 					addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-					sleep(8)
+					SLEEP(8)
 					blinking = FALSE
 			return
 
@@ -295,7 +295,7 @@ Difficulty: Hard
 		return
 	new /obj/effect/overlay/temp/hierophant/telegraph/diagonal(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
-	sleep(2)
+	SLEEP(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, src, FALSE)
 	for(var/d in diagonals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
@@ -306,7 +306,7 @@ Difficulty: Hard
 		return
 	new /obj/effect/overlay/temp/hierophant/telegraph/cardinal(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
-	sleep(2)
+	SLEEP(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, src, FALSE)
 	for(var/d in cardinal)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
@@ -317,7 +317,7 @@ Difficulty: Hard
 		return
 	new /obj/effect/overlay/temp/hierophant/telegraph(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
-	sleep(2)
+	SLEEP(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, src, FALSE)
 	for(var/d in alldirs)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
@@ -355,7 +355,7 @@ Difficulty: Hard
 		HS.dir = set_dir
 		previousturf = J
 		J = get_step(previousturf, set_dir)
-		sleep(0.5)
+		SLEEP(0.5)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blink(mob/victim) //blink to a target
 	if(blinking || !victim)
@@ -367,7 +367,7 @@ Difficulty: Hard
 	playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
 	playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
 	blinking = TRUE
-	sleep(2) //short delay before we start...
+	SLEEP(2) //short delay before we start...
 	new /obj/effect/overlay/temp/hierophant/telegraph/teleport(T, src)
 	new /obj/effect/overlay/temp/hierophant/telegraph/teleport(source, src)
 	for(var/t in RANGE_TURFS(1, T))
@@ -377,17 +377,17 @@ Difficulty: Hard
 		var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, src, FALSE)
 		B.damage = 30
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
-	sleep(1)
+	SLEEP(1)
 	visible_message("<span class='hierophant_warning'>[src] fades out!</span>")
 	density = FALSE
-	sleep(2)
+	SLEEP(2)
 	forceMove(T)
-	sleep(1)
+	SLEEP(1)
 	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
-	sleep(1)
+	SLEEP(1)
 	density = TRUE
 	visible_message("<span class='hierophant_warning'>[src] fades in!</span>")
-	sleep(1) //at this point the blasts we made detonate
+	SLEEP(1) //at this point the blasts we made detonate
 	blinking = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/melee_blast(mob/victim) //make a 3x3 blast around a target
@@ -398,7 +398,7 @@ Difficulty: Hard
 		return
 	new /obj/effect/overlay/temp/hierophant/telegraph(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
-	sleep(2)
+	SLEEP(2)
 	for(var/t in RANGE_TURFS(1, T))
 		new /obj/effect/overlay/temp/hierophant/blast(t, src, FALSE)
 
@@ -412,7 +412,7 @@ Difficulty: Hard
 		var/dist = get_dist(original, T)
 		if(dist > last_dist)
 			last_dist = dist
-			sleep(1 + min(burst_range - last_dist, 12) * 0.5) //gets faster as it gets further out
+			SLEEP(1 + min(burst_range - last_dist, 12) * 0.5) //gets faster as it gets further out
 		new /obj/effect/overlay/temp/hierophant/blast(T, src, FALSE)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
@@ -520,7 +520,7 @@ Difficulty: Hard
 				forceMove(T)
 				make_blast() //make a blast, too
 				moving--
-				sleep(speed)
+				SLEEP(speed)
 			targetturf = get_turf(target)
 
 /obj/effect/overlay/temp/hierophant/chaser/proc/make_blast()
@@ -573,10 +573,10 @@ Difficulty: Hard
 	if(!T)
 		return
 	playsound(T,'sound/magic/Blind.ogg', 125, 1, -5) //make a sound
-	sleep(6) //wait a little
+	SLEEP(6) //wait a little
 	bursting = TRUE
 	do_damage(T) //do damage and mark us as bursting
-	sleep(1.3) //slightly forgiving; the burst animation is 1.5 deciseconds
+	SLEEP(1.3) //slightly forgiving; the burst animation is 1.5 deciseconds
 	bursting = FALSE //we no longer damage crossers
 
 /obj/effect/overlay/temp/hierophant/blast/Crossed(atom/movable/AM)

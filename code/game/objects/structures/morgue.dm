@@ -217,7 +217,7 @@ var/global/list/crematoriums = new/list()
 				qdel(O)
 
 		new /obj/effect/decal/cleanable/ash(src)
-		sleep(30)
+		SLEEP(30)
 		if(!QDELETED(src))
 			locked = 0
 			update_icon()

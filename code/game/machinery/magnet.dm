@@ -197,7 +197,7 @@
 				step_towards(S, center)
 
 		use_power(electricity_level * 5)
-		sleep(13 - electricity_level)
+		SLEEP(13 - electricity_level)
 
 	pulling = 0
 
@@ -393,9 +393,9 @@
 			radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
 		if(speed == 10)
-			sleep(1)
+			SLEEP(1)
 		else
-			sleep(12-speed)
+			SLEEP(12-speed)
 
 	looping = 0
 

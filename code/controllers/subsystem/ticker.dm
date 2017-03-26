@@ -272,7 +272,7 @@ var/datum/controller/subsystem/ticker/ticker
 			switch( override )
 				if("nuclear emergency") //Nuke wasn't on station when it blew up
 					flick("intro_nuke",cinematic)
-					sleep(35)
+					SLEEP(35)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)
 					flick("station_intact_fade_red",cinematic)
@@ -281,22 +281,22 @@ var/datum/controller/subsystem/ticker/ticker
 					cinematic.icon_state = "intro_malf_still"
 					flick("intro_malf",cinematic)
 					actually_blew_up = FALSE
-					sleep(70)
+					SLEEP(70)
 				if("fake") //The round isn't over, we're just freaking people out for fun
 					flick("intro_nuke",cinematic)
-					sleep(35)
+					SLEEP(35)
 					world << sound('sound/items/bikehorn.ogg')
 					flick("summary_selfdes",cinematic)
 					actually_blew_up = FALSE
 				else
 					flick("intro_nuke",cinematic)
-					sleep(35)
+					SLEEP(35)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)
 
 
 		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
-			sleep(50)
+			SLEEP(50)
 			world << sound('sound/effects/explosionfar.ogg')
 			station_explosion_detonation(bomb)
 			actually_blew_up = station_missed == NUKE_SYNDICATE_BASE	//don't kill everyone on station if it detonated off station
@@ -306,35 +306,35 @@ var/datum/controller/subsystem/ticker/ticker
 			switch( override )
 				if("nuclear emergency") //Nuke Ops successfully bombed the station
 					flick("intro_nuke",cinematic)
-					sleep(35)
+					SLEEP(35)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)
 					cinematic.icon_state = "summary_nukewin"
 				if("AI malfunction") //Malf (screen,explosion,summary)
 					flick("intro_malf",cinematic)
-					sleep(76)
+					SLEEP(76)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)	//TODO: If we ever decide to actually detonate the vault bomb
 					cinematic.icon_state = "summary_malf"
 				if("blob") //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
-					sleep(35)
+					SLEEP(35)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_selfdes"
 				if("no_core") //Nuke failed to detonate as it had no core
 					flick("intro_nuke",cinematic)
-					sleep(35)
+					SLEEP(35)
 					flick("station_intact",cinematic)
 					world << sound('sound/ambience/signal.ogg')
 					addtimer(CALLBACK(src, .proc/finish_cinematic, null, FALSE), 100)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
-					sleep(35)
+					SLEEP(35)
 					flick("station_explode_fade_red", cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)
@@ -600,7 +600,7 @@ var/datum/controller/subsystem/ticker/ticker
 	//Collects persistence features
 	SSpersistence.CollectData()
 
-	sleep(50)
+	SLEEP(50)
 	if(mode.station_was_nuked)
 		world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 	else
