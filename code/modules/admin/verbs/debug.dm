@@ -785,3 +785,13 @@ var/list/TYPES_SHORTCUTS = list(
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] pumped a random event.</span>")
 	feedback_add_details("admin_verb","PRE")
 	log_admin("[key_name(src)] pumped a random event.")
+
+/client/proc/debug_threads()
+	set category = "Debug"
+	set name = "Runtime All Threads"
+	set desc = "Calls stack_trace the next time every sleeping thread wakes up"
+
+	if(!holder)
+		return
+
+	Master.StackTraceAllSleepingThreads()

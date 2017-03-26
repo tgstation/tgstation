@@ -154,7 +154,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/clear_dynamic_transit,
 	/client/proc/toggle_medal_disable,
 	/client/proc/view_runtimes,
-	/client/proc/pump_random_event
+	/client/proc/pump_random_event,
+	/client/proc/debug_threads
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
