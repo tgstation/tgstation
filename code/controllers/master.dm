@@ -523,5 +523,5 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 /world/proc/SleepBegin()
 	++Master.sleeping_threads
 
-/world/proc/SleepEnd()
+/world/proc/SleepEnd(sleep_start_tick)
 	--Master.sleeping_threads

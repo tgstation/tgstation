@@ -2,18 +2,21 @@
 //sadly we can't catch the entry point of input verbs but we should be working to clear those oout where possible
 
 /proc/wrap_sleep(delay)
+    var/sleep_start_tick = world.time
     world.SleepBegin()
     sleep(delay)
-    world.SleepEnd()
+    world.SleepEnd(sleep_start_tick)
 
 /proc/wrap_alert(Usr = usr, Message, Title, Button1 = "Ok", Button2, Button3)
+    var/sleep_start_tick = world.time
     world.SleepBegin()
     . = alert(Usr,Message,Title,Button1,Button2,Button3) 
-    world.SleepEnd()
+    world.SleepEnd(sleep_start_tick)
 
 //this is the only one that changes syntax because byond
 //its such a pain in the fucking ass
 /proc/tginput(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, ismessage, isnum, isicon, iscolor, isfile, type_obj, type_turf, type_mob)
+    var/sleep_start_tick = world.time
     world.SleepBegin()
     if(type_obj)
         if(nullable)
@@ -65,33 +68,38 @@
             . = input(Usr, Message, Title, Default) as null|anything in choices
         else
             . = input(Usr, Message, Title, Default) in choices
-    world.SleepEnd()
+    world.SleepEnd(sleep_start_tick)
 
 //world proc because fuck off
 /world/proc/wrap_shell(command)
+    var/sleep_start_tick = world.time
     world.SleepBegin()
     . = shell(command)
-    world.SleepEnd()
+    world.SleepEnd(sleep_start_tick)
 
 /proc/wrap_winexists(player, control_id) 
+    var/sleep_start_tick = world.time
     world.SleepBegin()
     . = winexists(player, control_id)
-    world.SleepEnd()
+    world.SleepEnd(sleep_start_tick)
 
 /proc/wrap_winget(player, control_id, params)
+    var/sleep_start_tick = world.time
     world.SleepBegin()
     . = winget(player, control_id, params)
-    world.SleepEnd()
+    world.SleepEnd(sleep_start_tick)
 
 /world/proc/wrap_Export(Addr,File,Persist,Clients)
+    var/sleep_start_tick = world.time
     world.SleepBegin()
     . = Export(Addr,File,Persist,Clients)
-    world.SleepEnd()
+    world.SleepEnd(sleep_start_tick)
 
 /world/proc/wrap_Import()
+    var/sleep_start_tick = world.time
     world.SleepBegin()
     . = Import()
-    world.SleepEnd()
+    world.SleepEnd(sleep_start_tick)
 
 #define sleep wrap_sleep
 #define alert wrap_alert
