@@ -303,7 +303,7 @@
 	add_logs(A, D, "body-slammed")
 	return 0
 
-/datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/carbon/human/A, turf/T)
 	if (A && (T && isturf(T) && get_dist(A, T) <= 1))
 		A.forceMove(T)
 
