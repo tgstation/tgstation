@@ -9,6 +9,6 @@
 	if(check_rights_for(user.client, R_ADMIN))
 		. = UI_INTERACTIVE
 	else if(istype(src_object, /datum/language_menu))
-		var/datum/language_menu/LM
+		var/datum/language_menu/LM = src_object
 		if(LM.owner == user)
 			. = UI_INTERACTIVE
