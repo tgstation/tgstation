@@ -928,7 +928,7 @@ var/list/ai_list = list()
 
 	for(var/borgie in available_ai_shells)
 		var/mob/living/silicon/robot/R = borgie
-		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai ||(R.connected_ai == src)))
+		if(R.ai_shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai ||(R.connected_ai == src)))
 			possible += R
 
 	if(!LAZYLEN(possible))

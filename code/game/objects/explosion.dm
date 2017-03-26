@@ -225,9 +225,9 @@ var/explosionid = 1
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input("Devestation range (Tiles):") as num
-			heavy = input("Heavy impact range (Tiles):") as num
-			light = input("Light impact range (Tiles):") as num
+			dev = input("Devestation range (Tiles):", isnum = TRUE)
+			heavy = input("Heavy impact range (Tiles):", isnum = TRUE)
+			light = input("Light impact range (Tiles):", isnum = TRUE)
 
 	var/max_range = max(dev, heavy, light)
 	var/x0 = epicenter.x

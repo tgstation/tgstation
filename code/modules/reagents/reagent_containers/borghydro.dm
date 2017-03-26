@@ -105,7 +105,7 @@ Borg Hypospray
 	add_logs(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
-	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?", nullable = TRUE, choices = reagent_ids])
+	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?", nullable = TRUE, choices = reagent_ids)]
 	if(!chosen_reagent)
 		return
 	mode = chosen_reagent
