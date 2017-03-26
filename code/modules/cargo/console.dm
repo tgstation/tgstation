@@ -144,7 +144,7 @@
 
 			var/reason = ""
 			if(requestonly)
-				reason = input("Reason:", name, "", nullable = TRUE, istext = TRUE)
+				reason = tginput("Reason:", name, "", nullable = TRUE, istext = TRUE)
 				if(isnull(reason) || ..())
 					return
 

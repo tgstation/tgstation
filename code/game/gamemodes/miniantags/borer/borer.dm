@@ -336,7 +336,7 @@ var/total_borer_hosts_needed = 10
 		if(H!=src && Adjacent(H))
 			tchoices += H
 
-	var/mob/living/carbon/H = input(src,"Who do you wish to infest?", nullable = TRUE, choices = tchoices)
+	var/mob/living/carbon/H = tginput(src,"Who do you wish to infest?", nullable = TRUE, choices = tchoices)
 	if(!H || !src)
 		return
 
@@ -465,7 +465,7 @@ var/total_borer_hosts_needed = 10
 		if(C.stat == CONSCIOUS)
 			tchoices += C
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?", nullable = TRUE, choices = tchoices)
+	var/mob/living/carbon/M = tginput(src,"Who do you wish to dominate?", nullable = TRUE, choices = tchoices)
 
 
 	if(!M || !src)
@@ -725,7 +725,7 @@ var/total_borer_hosts_needed = 10
 		to_chat(src, "<span class='warning'>You need 75 chems to punish your host.</span>")
 		return
 
-	var/punishment = input("Select a punishment:.", "Punish", nullable = TRUE, choices = list("Blindness","Deafness","Stun"))
+	var/punishment = tginput("Select a punishment:.", "Punish", nullable = TRUE, choices = list("Blindness","Deafness","Stun"))
 
 	if(!punishment)
 		return

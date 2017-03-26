@@ -147,7 +147,7 @@
 		if(!blank)
 			to_chat(user, "You cannot write on that card.")
 			return
-		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Writing", nullable = TRUE, istext = TRUE), 50)
+		var/cardtext = sanitize(tginput(user, "What do you wish to write on the card?", "Card Writing", nullable = TRUE, istext = TRUE), 50)
 		if(!cardtext)
 			return
 		P.name = cardtext

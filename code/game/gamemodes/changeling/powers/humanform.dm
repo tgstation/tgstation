@@ -14,7 +14,7 @@
 	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
 		names += "[prof.name]"
 
-	var/chosen_name = input("Select the target DNA: ", "Target DNA", null, nullable = TRUE, choices = names)
+	var/chosen_name = tginput("Select the target DNA: ", "Target DNA", null, nullable = TRUE, choices = names)
 	if(!chosen_name)
 		return
 

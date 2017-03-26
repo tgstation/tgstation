@@ -81,26 +81,26 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 		if (extra_classes)
 			classes += extra_classes
 
-		.["class"] = input(src, "What kind of data?", "Variable Type", default_class, nullable = TRUE, choices = classes)
+		.["class"] = tginput(src, "What kind of data?", "Variable Type", default_class, nullable = TRUE, choices = classes)
 		if (holder && holder.marked_datum && .["class"] == "[VV_MARKED_DATUM] ([holder.marked_datum.type])")
 			.["class"] = VV_MARKED_DATUM
 
 
 	switch(.["class"])
 		if (VV_TEXT)
-			.["value"] = input("Enter new text:", "Text", current_value, nullable = TRUE, istext = TRUE)
+			.["value"] = tginput("Enter new text:", "Text", current_value, nullable = TRUE, istext = TRUE)
 			if (.["value"] == null)
 				.["class"] = null
 				return
 		if (VV_MESSAGE)
-			.["value"] = input("Enter new text:", "Text", current_value, nullable = TRUE, ismessage = TRUE)
+			.["value"] = tginput("Enter new text:", "Text", current_value, nullable = TRUE, ismessage = TRUE)
 			if (.["value"] == null)
 				.["class"] = null
 				return
 
 
 		if (VV_NUM)
-			.["value"] = input("Enter new number:", "Num", current_value, nullable = TRUE, isnum = TRUE)
+			.["value"] = tginput("Enter new number:", "Num", current_value, nullable = TRUE, isnum = TRUE)
 			if (.["value"] == null)
 				.["class"] = null
 				return
@@ -122,7 +122,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			var/type = current_value
 			var/error = ""
 			do
-				type = input("Enter type:[error]", "Type", type, nullable = TRUE, istext = TRUE)
+				type = tginput("Enter type:[error]", "Type", type, nullable = TRUE, istext = TRUE)
 				if (!type)
 					break
 				type = text2path(type)
@@ -141,7 +141,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value, nullable = TRUE, choices = things)
+			var/value = tginput("Select reference:", "Reference", current_value, nullable = TRUE, choices = things)
 			if (!value)
 				.["class"] = null
 				return
@@ -154,7 +154,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value, nullable = TRUE, choices = things)
+			var/value = tginput("Select reference:", "Reference", current_value, nullable = TRUE, choices = things)
 			if (!value)
 				.["class"] = null
 				return
@@ -167,7 +167,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value, nullable = TRUE, choices = things)
+			var/value = tginput("Select reference:", "Reference", current_value, nullable = TRUE, choices = things)
 			if (!value)
 				.["class"] = null
 				return
@@ -176,21 +176,21 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 
 		if (VV_CLIENT)
-			.["value"] = input("Select reference:", "Reference", current_value, nullable = TRUE, choices = clients)
+			.["value"] = tginput("Select reference:", "Reference", current_value, nullable = TRUE, choices = clients)
 			if (.["value"] == null)
 				.["class"] = null
 				return
 
 
 		if (VV_FILE)
-			.["value"] = input("Pick file:", "File", isfile = TRUE)
+			.["value"] = tginput("Pick file:", "File", isfile = TRUE)
 			if (.["value"] == null)
 				.["class"] = null
 				return
 
 
 		if (VV_ICON)
-			.["value"] = input("Pick icon:", "Icon", isicon = TRUE)
+			.["value"] = tginput("Pick icon:", "Icon", isicon = TRUE)
 			if (.["value"] == null)
 				.["class"] = null
 				return
@@ -223,7 +223,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			var/type = current_value
 			var/error = ""
 			do
-				type = input("Enter type:[error]", "Type", type, nullable = TRUE, istext = TRUE)
+				type = tginput("Enter type:[error]", "Type", type, nullable = TRUE, istext = TRUE)
 				if (!type)
 					break
 				type = text2path(type)
@@ -365,7 +365,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			value = "null"
 		names["#[i] [key] = [value]"] = i
 	if (!index)
-		var/variable = input("Which var?","Var", nullable = TRUE, choices = (names + "(ADD VAR)" + "(CLEAR NULLS)" + "(CLEAR DUPES)" + "(SHUFFLE)"))
+		var/variable = tginput("Which var?","Var", nullable = TRUE, choices = (names + "(ADD VAR)" + "(CLEAR NULLS)" + "(CLEAR DUPES)" + "(SHUFFLE)"))
 
 		if(variable == null)
 			return
@@ -521,7 +521,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 		names = sortList(names)
 
-		variable = input("Which var?","Var", nullable = TRUE, choices = names)
+		variable = tginput("Which var?","Var", nullable = TRUE, choices = names)
 		if(!variable)
 			return
 

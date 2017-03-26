@@ -355,7 +355,7 @@
 		return
 	if(href_list["cut"])
 		if(cable && cable.amount)
-			var/m = round(input(chassis.occupant,"Please specify the length of cable to cut","Cut cable",min(cable.amount,30), isnum = TRUE), 1)
+			var/m = round(tginput(chassis.occupant,"Please specify the length of cable to cut","Cut cable",min(cable.amount,30), isnum = TRUE), 1)
 			m = min(m, cable.amount)
 			if(m)
 				use_cable(m)

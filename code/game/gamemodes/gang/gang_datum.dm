@@ -114,7 +114,7 @@
 
 	var/gang_style_list = list("Gang Colors","Black Suits","White Suits","Leather Jackets","Leather Overcoats","Puffer Jackets","Military Jackets","Tactical Turtlenecks","Soviet Uniforms")
 	if(!style && (user.mind in ticker.mode.get_gang_bosses()))	//Only the boss gets to pick a style
-		style = input("Pick an outfit style.", "Pick Style", nullable = TRUE, choices = gang_style_list)
+		style = tginput("Pick an outfit style.", "Pick Style", nullable = TRUE, choices = gang_style_list)
 
 	if(gangtool.can_use(user) && (gangtool.outfits >= 1))
 		var/outfit_path

@@ -31,7 +31,7 @@
 		if(C!=src && Adjacent(C))
 			tchoices += C
 
-	var/mob/living/M = input(src,"Who do you wish to feed on?", nullable = TRUE, choices = tchoices)
+	var/mob/living/M = tginput(src,"Who do you wish to feed on?", nullable = TRUE, choices = tchoices)
 	if(!M)
 		return 0
 	if(CanFeedon(M))

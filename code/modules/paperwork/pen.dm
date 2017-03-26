@@ -66,7 +66,7 @@
 
 
 /obj/item/weapon/pen/attack_self(mob/living/carbon/user)
-	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head", nullable = TRUE, isnum = TRUE)
+	var/deg = tginput(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head", nullable = TRUE, isnum = TRUE)
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
 		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
@@ -103,7 +103,7 @@
 	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
 	if(isobj(O) && proximity)
 		if(O.unique_rename)
-			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?", nullable = TRUE, choices = list("Rename","Change description"))
+			var/penchoice = tginput(user, "What would you like to edit?", "Rename or change description?", nullable = TRUE, choices = list("Rename","Change description"))
 			if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
 
 				if(penchoice == "Rename")

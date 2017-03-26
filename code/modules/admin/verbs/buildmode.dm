@@ -161,7 +161,7 @@
 		if(BASIC_BUILDMODE)
 			return 1
 		if(ADV_BUILDMODE)
-			var/target_path = input(user,"Enter typepath:" ,"Typepath","/obj/structure/closet")
+			var/target_path = tginput(user,"Enter typepath:" ,"Typepath","/obj/structure/closet")
 			objholder = text2path(target_path)
 			if(!ispath(objholder))
 				objholder = pick_closest_path(target_path)
@@ -174,26 +174,26 @@
 		if(VAR_BUILDMODE)
 			var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
 
-			varholder = input(user,"Enter variable name:" ,"Name", "name")
+			varholder = tginput(user,"Enter variable name:" ,"Name", "name")
 			if(varholder in locked && !check_rights(R_DEBUG,0))
 				return 1
-			var/thetype = input(user,"Select variable type:" ,"Type", choices = list("text","number","mob-reference","obj-reference","turf-reference"))
+			var/thetype = tginput(user,"Select variable type:" ,"Type", choices = list("text","number","mob-reference","obj-reference","turf-reference"))
 			if(!thetype) return 1
 			switch(thetype)
 				if("text")
-					valueholder = input(user,"Enter variable value:" ,"Value", "value", istext = TRUE)
+					valueholder = tginput(user,"Enter variable value:" ,"Value", "value", istext = TRUE)
 				if("number")
-					valueholder = input(user,"Enter variable value:" ,"Value", 123, isnum = TRUE)
+					valueholder = tginput(user,"Enter variable value:" ,"Value", 123, isnum = TRUE)
 				if("mob-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value", choices = mob_list)
+					valueholder = tginput(user,"Enter variable value:" ,"Value", choices = mob_list)
 				if("obj-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value", type_obj = TRUE)
+					valueholder = tginput(user,"Enter variable value:" ,"Value", type_obj = TRUE)
 				if("turf-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value", type_turf = TRUE) 
+					valueholder = tginput(user,"Enter variable value:" ,"Value", type_turf = TRUE) 
 		if(AREA_BUILDMODE)
 			var/list/gen_paths = subtypesof(/datum/mapGenerator)
 
-			var/type = input(user,"Select Generator Type","Type", nullable = TRUE, choices = gen_paths)
+			var/type = tginput(user,"Select Generator Type","Type", nullable = TRUE, choices = gen_paths)
 			if(!type) return
 
 			generator_path = type

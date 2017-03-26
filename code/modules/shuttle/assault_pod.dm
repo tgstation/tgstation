@@ -32,7 +32,7 @@
 
 /obj/item/device/assault_pod/attack_self(mob/living/user)
 	var/target_area
-	target_area = input("Area to land", "Select a Landing Zone", target_area, choices = teleportlocs)
+	target_area = tginput("Area to land", "Select a Landing Zone", target_area, choices = teleportlocs)
 	var/area/picked_area = teleportlocs[target_area]
 	if(!src || QDELETED(src))
 		return

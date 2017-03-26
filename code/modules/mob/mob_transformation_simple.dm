@@ -9,7 +9,7 @@
 		return
 
 	if(!new_type)
-		new_type = input("Mob type path:", "Mob type", nullable = TRUE, istext = TRUE)
+		new_type = tginput("Mob type path:", "Mob type", nullable = TRUE, istext = TRUE)
 
 	if(istext(new_type))
 		new_type = text2path(new_type)

@@ -13,7 +13,7 @@
 
 //this is the only one that changes syntax because byond
 //its such a pain in the fucking ass
-/proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, ismessage, isnum, isicon, iscolor, isfile, type_obj, type_turf, type_mob)
+/proc/tginput(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, ismessage, isnum, isicon, iscolor, isfile, type_obj, type_turf, type_mob)
     world.SleepBegin()
     if(type_obj)
         if(nullable)
@@ -95,7 +95,7 @@
 
 #define sleep wrap_sleep
 #define alert wrap_alert
-#define input wrap_input
+#define input PLEASE_USE_TGINPUT_FUNCTION_OR_RENAME_THIS_VAR_PROC_OR_PATH
 #define shell world.wrap_shell
 #define winexists wrap_winexists
 #define winget wrap_winget

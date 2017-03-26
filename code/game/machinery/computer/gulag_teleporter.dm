@@ -107,7 +107,7 @@
 					I.forceMove(src)
 					id = I
 		if("set_goal")
-			var/new_goal = input("Set the amount of points:", "Points", id.goal, nullable = TRUE, isnum = TRUE)
+			var/new_goal = tginput("Set the amount of points:", "Points", id.goal, nullable = TRUE, isnum = TRUE)
 			if(!isnum(new_goal))
 				return
 			if(!new_goal)

@@ -314,7 +314,7 @@
 								src.active1.fields["sex"] = "Male"
 					if("age")
 						if(active1)
-							var/t1 = input("Please input age:", "Med. records", src.active1.fields["age"], null)  as num
+							var/t1 = tginput("Please input age:", "Med. records", src.active1.fields["age"], null)  as num
 							if(!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							src.active1.fields["age"] = t1

@@ -28,7 +28,7 @@
 			to_chat(user, "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>")
 			return
 		inUse = 1
-		var/devilName = copytext(sanitize(input(user, "What infernal being do you wish to research?", "Codex Gigas", null, istext = TRUE)),1,MAX_MESSAGE_LEN)
+		var/devilName = copytext(sanitize(tginput(user, "What infernal being do you wish to research?", "Codex Gigas", null, istext = TRUE)),1,MAX_MESSAGE_LEN)
 		var/speed = 300
 		var/correctness = 85
 		var/willpower = 98

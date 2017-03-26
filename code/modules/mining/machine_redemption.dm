@@ -233,7 +233,7 @@
 				return
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/out = new inp.type(src, 0, FALSE)
-			var/desired = input("How many sheets?", "How many sheets to eject?", 1, nullable = TRUE, isnum = TRUE)
+			var/desired = tginput("How many sheets?", "How many sheets to eject?", 1, nullable = TRUE, isnum = TRUE)
 			out.amount = round(min(desired,50,inp.amount))
 			if(out.amount)
 				inp.amount -= out.amount
@@ -254,7 +254,7 @@
 				return
 			var/obj/item/stack/sheet/stack1 = stack_list[alloytype1]
 			var/obj/item/stack/sheet/stack2 = stack_list[alloytype2]
-			var/desired = input("How many sheets?", "How many sheets would you like to smelt?", 1, nullable = TRUE, isnum = TRUE)
+			var/desired = tginput("How many sheets?", "How many sheets would you like to smelt?", 1, nullable = TRUE, isnum = TRUE)
 			var/obj/item/stack/sheet/alloyout = new alloytypeout
 			alloyout.amount = round(min(desired,50,stack1.amount,stack2.amount))
 			if(alloyout.amount >= 1)

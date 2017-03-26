@@ -629,13 +629,13 @@
 		return
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role, nullable = TRUE, choices = get_all_jobs())
+		var/new_role = tginput("Select new role", "Assigned role", assigned_role, nullable = TRUE, choices = get_all_jobs())
 		if (!new_role)
 			return
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory, nullable = TRUE, ismessage = TRUE)),1,MAX_MESSAGE_LEN)
+		var/new_memo = copytext(sanitize(tginput("Write new memory", "Memory", memory, nullable = TRUE, ismessage = TRUE)),1,MAX_MESSAGE_LEN)
 		if (isnull(new_memo))
 			return
 		memory = new_memo
@@ -657,7 +657,7 @@
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value, nullable = TRUE, choices = list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom"))
+		var/new_obj_type = tginput("Select objective type:", "Objective type", def_value, nullable = TRUE, choices = list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom"))
 		if (!new_obj_type)
 			return
 
@@ -675,7 +675,7 @@
 				if (objective&&(objective.type in objective_list) && objective:target)
 					def_target = objective:target.current
 
-				var/new_target = input("Select target:", "Objective target", def_target, nullable = TRUE, choices = possible_targets)
+				var/new_target = tginput("Select target:", "Objective target", def_target, nullable = TRUE, choices = possible_targets)
 				if (!new_target)
 					return
 
@@ -695,7 +695,7 @@
 			if ("destroy")
 				var/list/possible_targets = active_ais(1)
 				if(possible_targets.len)
-					var/mob/new_target = input("Select target:", "Objective target", nullable = TRUE, choices = possible_targets)
+					var/mob/new_target = tginput("Select target:", "Objective target", nullable = TRUE, choices = possible_targets)
 					new_objective = new /datum/objective/destroy
 					new_objective.target = new_target.mind
 					new_objective.owner = src
@@ -742,7 +742,7 @@
 				if(objective&&objective.type==text2path("/datum/objective/[new_obj_type]"))
 					def_num = objective.target_amount
 
-				var/target_number = input("Input target number:", "Objective", def_num, nullable = TRUE, isnum = TRUE)
+				var/target_number = tginput("Input target number:", "Objective", def_num, nullable = TRUE, isnum = TRUE)
 				if (isnull(target_number))//Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
 					return
 
@@ -900,7 +900,7 @@
 			if("new")
 				if(gang_colors_pool.len)
 					var/list/names = list("Random") + gang_name_pool
-					var/gangname = input("Pick a gang name.","Select Name", nullable = TRUE, choices = names)
+					var/gangname = tginput("Pick a gang name.","Select Name", nullable = TRUE, choices = names)
 					if(gangname && gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
 						if(!(gangname in gang_name_pool))
 							gangname = null
@@ -1280,7 +1280,7 @@
 				if(check_rights(R_FUN, 0))
 					var/obj/item/device/uplink/U = find_syndicate_uplink()
 					if(U)
-						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals, nullable = TRUE, isnum = TRUE)
+						var/crystals = tginput("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals, nullable = TRUE, isnum = TRUE)
 						if(!isnull(crystals))
 							U.telecrystals = crystals
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
@@ -1449,7 +1449,7 @@
 
 /datum/mind/proc/make_Abductor()
 	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
-	var/team = input("Abductor Team ?","Team ?", choices = list(1,2,3,4))
+	var/team = tginput("Abductor Team ?","Team ?", choices = list(1,2,3,4))
 	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
 
 	if(!role || !team || !teleport)

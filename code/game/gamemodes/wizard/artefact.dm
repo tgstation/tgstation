@@ -491,7 +491,7 @@ var/global/list/multiverse = list()
 
 /obj/item/voodoo/attack_self(mob/user)
 	if(!target && possible.len)
-		target = input(user, "Select your victim!", "Voodoo", nullable = TRUE, choices = possible)
+		target = tginput(user, "Select your victim!", "Voodoo", nullable = TRUE, choices = possible)
 		return
 
 	if(user.zone_selected == "chest")
@@ -506,7 +506,7 @@ var/global/list/multiverse = list()
 	if(target && cooldown < world.time)
 		switch(user.zone_selected)
 			if("mouth")
-				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null, istext = TRUE))
+				var/wgw =  sanitize(tginput(user, "What would you like the victim to say", "Voodoo", null, istext = TRUE))
 				target.say(wgw)
 				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
 			if("eyes")

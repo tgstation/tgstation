@@ -113,7 +113,7 @@
 
 		if(storedpda)
 			var/obj/item/device/pda/P
-			P = input(user, "Select your color!", "PDA Painting", nullable = TRUE, choices = colorlist)
+			P = tginput(user, "Select your color!", "PDA Painting", nullable = TRUE, choices = colorlist)
 			if(!P)
 				return
 			if(!in_range(src, user))

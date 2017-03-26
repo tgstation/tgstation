@@ -79,10 +79,10 @@ Doesn't work on other aliens/AI.*/
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(user))
 		options += Ms
-	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null, nullable = TRUE, choices = options)
+	var/mob/living/M = tginput("Select who to whisper to:","Whisper to?",null, nullable = TRUE, choices = options)
 	if(!M)
 		return 0
-	var/msg = sanitize(input("Message:", "Alien Whisper", nullable = TRUE, istext = TRUE))
+	var/msg = sanitize(tginput("Message:", "Alien Whisper", nullable = TRUE, istext = TRUE))
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
@@ -108,10 +108,10 @@ Doesn't work on other aliens/AI.*/
 	for(var/mob/living/carbon/A  in oview(user))
 		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
 			aliens_around.Add(A)
-	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null, choices = aliens_around)
+	var/mob/living/carbon/M = tginput("Select who to transfer to:","Transfer plasma to?",null, choices = aliens_around)
 	if(!M)
 		return 0
-	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
+	var/amount = tginput("Amount:", "Transfer Plasma to [M]") as num
 	if (amount)
 		amount = min(abs(round(amount)), user.getPlasma())
 		if (get_dist(user,M) <= 1)
@@ -158,7 +158,7 @@ Doesn't work on other aliens/AI.*/
 	for(var/turf/T in temp)
 		checks += T
 	temp.Cut()
-	var/O = input("Select what to dissolve:","Dissolve",null, choices = checks)
+	var/O = tginput("Select what to dissolve:","Dissolve",null, choices = checks)
 	if(!O || user.incapacitated())
 		return 0
 	else
@@ -259,7 +259,7 @@ Doesn't work on other aliens/AI.*/
 	if(locate(/obj/structure/alien/resin) in user.loc)
 		to_chat(user, "<span class='danger'>There is already a resin structure there.</span>")
 		return 0
-	var/choice = input("Choose what you wish to shape.","Resin building", nullable = TRUE, choices = structures)
+	var/choice = tginput("Choose what you wish to shape.","Resin building", nullable = TRUE, choices = structures)
 	if(!choice)
 		return 0
 	if (!cost_check(check_turf,user))

@@ -70,7 +70,7 @@
 	options["The Madman"] = "joker"
 	options["The Rainbow Color"] ="rainbow"
 
-	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask", choices = options)
+	var/choice = tginput(user,"To what form do you wish to Morph this mask?","Morph Mask", choices = options)
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -111,7 +111,7 @@
 	options["Effrayé"] = "scaredmime"
 	options["Excité"] ="sexymime"
 
-	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask", choices = options)
+	var/choice = tginput(user,"To what form do you wish to Morph this mask?","Morph Mask", choices = options)
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -185,7 +185,7 @@ obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
 	options["Confused Tiki"] = "tiki_confused"
 	options["Angry Tiki"] ="tiki_angry"
 
-	var/choice = input(M,"To what form do you wish to change this mask?","Morph Mask", choices = options)
+	var/choice = tginput(M,"To what form do you wish to change this mask?","Morph Mask", choices = options)
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]

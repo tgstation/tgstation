@@ -468,7 +468,7 @@ var/list/admin_verbs_hideable = list(
 				mob.name = initial(mob.name)
 				mob.mouse_opacity = initial(mob.mouse_opacity)
 		else
-			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key, nullable = TRUE, istext = TRUE))
+			var/new_key = ckeyEx(tginput("Enter your desired display name.", "Fake Key", key, nullable = TRUE, istext = TRUE))
 			if(!new_key)
 				return
 			if(length(new_key) >= 26)
@@ -490,7 +490,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Cause an explosion of varying strength at your location."
 
 	var/list/tchoices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
-	var/choice = input("What size explosion would you like to produce? WARNING: These ignore the maxcap", nullable = TRUE, choices = tchoices)
+	var/choice = tginput("What size explosion would you like to produce? WARNING: These ignore the maxcap", nullable = TRUE, choices = tchoices)
 	var/turf/epicenter = mob.loc
 
 	switch(choice)
@@ -505,16 +505,16 @@ var/list/admin_verbs_hideable = list(
 		if("Maxcap")
 			explosion(epicenter, MAX_EX_DEVESTATION_RANGE, MAX_EX_HEAVY_RANGE, MAX_EX_LIGHT_RANGE, MAX_EX_FLASH_RANGE)
 		if("Custom Bomb")
-			var/devastation_range = input("Devastation range (in tiles):", nullable = TRUE, isnum = TRUE)
+			var/devastation_range = tginput("Devastation range (in tiles):", nullable = TRUE, isnum = TRUE)
 			if(devastation_range == null)
 				return
-			var/heavy_impact_range = input("Heavy impact range (in tiles):", nullable = TRUE, isnum = TRUE)
+			var/heavy_impact_range = tginput("Heavy impact range (in tiles):", nullable = TRUE, isnum = TRUE)
 			if(heavy_impact_range == null)
 				return
-			var/light_impact_range = input("Light impact range (in tiles):", nullable = TRUE, isnum = TRUE)
+			var/light_impact_range = tginput("Light impact range (in tiles):", nullable = TRUE, isnum = TRUE)
 			if(light_impact_range == null)
 				return
-			var/flash_range = input("Flash range (in tiles):", nullable = TRUE, isnum = TRUE)
+			var/flash_range = tginput("Flash range (in tiles):", nullable = TRUE, isnum = TRUE)
 			if(flash_range == null)
 				return
 			if(devastation_range > MAX_EX_DEVESTATION_RANGE || heavy_impact_range > MAX_EX_HEAVY_RANGE || light_impact_range > MAX_EX_LIGHT_RANGE || flash_range > MAX_EX_FLASH_RANGE)
@@ -531,7 +531,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Drop DynEx Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
 
-	var/ex_power = input("Explosive Power:", nullable = TRUE, isnum = TRUE)
+	var/ex_power = tginput("Explosive Power:", nullable = TRUE, isnum = TRUE)
 	var/turf/epicenter = mob.loc
 	if(ex_power && epicenter)
 		dyn_explosion(epicenter, ex_power)
@@ -544,7 +544,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Get DynEx Range"
 	set desc = "Get the estimated range of a bomb, using explosive power."
 
-	var/ex_power = input("Explosive Power:", nullable = TRUE, isnum = TRUE)
+	var/ex_power = tginput("Explosive Power:", nullable = TRUE, isnum = TRUE)
 	var/range = round((2 * ex_power)**DYN_EX_SCALE)
 	to_chat(usr, "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
 
@@ -553,7 +553,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Get DynEx Power"
 	set desc = "Get the estimated required power of a bomb, to reach a specific range."
 
-	var/ex_range = input("Light Explosion Range:", nullable = TRUE, isnum = TRUE)
+	var/ex_range = tginput("Light Explosion Range:", nullable = TRUE, isnum = TRUE)
 	var/power = (0.5 * ex_range)**(1/DYN_EX_SCALE)
 	to_chat(usr, "Estimated Explosive Power: [power]")
 
@@ -562,7 +562,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Set DynEx Scale"
 	set desc = "Set the scale multiplier of dynex explosions. The default is 0.5."
 
-	var/ex_scale = input("New DynEx Scale:", nullable = TRUE, isnum = TRUE)
+	var/ex_scale = tginput("New DynEx Scale:", nullable = TRUE, isnum = TRUE)
 	if(!ex_scale)
 		return
 	DYN_EX_SCALE = ex_scale
@@ -578,7 +578,7 @@ var/list/admin_verbs_hideable = list(
 	var/type_length = length("/obj/effect/proc_holder/spell") + 2
 	for(var/A in spells)
 		spell_list[copytext("[A]", type_length)] = A
-	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA", nullable = TRUE, choices = spell_list)
+	var/obj/effect/proc_holder/spell/S = tginput("Choose the spell to give to that guy", "ABRAKADABRA", nullable = TRUE, choices = spell_list)
 	if(!S)
 		return
 
@@ -599,7 +599,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Remove a spell from the selected mob."
 
 	if(T && T.mind)
-		var/obj/effect/proc_holder/spell/S = input("Choose the spell to remove", "NO ABRAKADABRA", nullable = TRUE, choices = T.mind.spell_list)
+		var/obj/effect/proc_holder/spell/S = tginput("Choose the spell to remove", "NO ABRAKADABRA", nullable = TRUE, choices = T.mind.spell_list)
 		if(S)
 			T.mind.RemoveSpell(S)
 			log_admin("[key_name(usr)] removed the spell [S] from [key_name(T)].")
@@ -610,7 +610,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO", nullable = TRUE, choices = diseases)
+	var/datum/disease/D = tginput("Choose the disease to give to that guy", "ACHOO", nullable = TRUE, choices = diseases)
 	if(!D) return
 	T.ForceContractDisease(new D)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -621,7 +621,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Special Verbs"
 	set name = "OSay"
 	set desc = "Makes an object say something."
-	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
+	var/message = tginput(usr, "What do you want the message to be?", "Make Sound") as text | null
 	if(!message)
 		return
 	var/templanguages = O.languages_spoken

@@ -24,7 +24,7 @@
 	var/A = null
 
 	if(!randomise_selection)
-		A = input("Area to teleport to", "Teleport", A, nullable = TRUE, choices = teleportlocs)
+		A = tginput("Area to teleport to", "Teleport", A, nullable = TRUE, choices = teleportlocs)
 	else
 		A = pick(teleportlocs)
 	if(!A)

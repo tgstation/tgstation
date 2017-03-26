@@ -114,7 +114,7 @@
 					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create a death squad.")
 			if("blob")
-				var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1, nullable = TRUE, isnum = TRUE)
+				var/strength = tginput("Set Blob Resource Gain Rate","Set Resource Rate",1, nullable = TRUE, isnum = TRUE)
 				if(!strength)
 					return
 				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
@@ -299,7 +299,7 @@
 		if(!check_rights(R_SERVER))
 			return
 
-		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() , nullable = TRUE, isnum = TRUE)
+		var/timer = tginput("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() , nullable = TRUE, isnum = TRUE)
 		if(!timer)
 			return
 		SSshuttle.emergency.setTimer(timer*10)
@@ -336,7 +336,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/timer = input("Enter new maximum time",, config.midround_antag_time_check , nullable = TRUE, isnum = TRUE)
+		var/timer = tginput("Enter new maximum time",, config.midround_antag_time_check , nullable = TRUE, isnum = TRUE)
 		if(!timer)
 			return
 		config.midround_antag_time_check = timer
@@ -347,7 +347,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/ratio = input("Enter new life ratio",, config.midround_antag_life_check*100) as num
+		var/ratio = tginput("Enter new life ratio",, config.midround_antag_life_check*100) as num
 		if(ratio)
 			config.midround_antag_life_check = ratio/100
 
@@ -500,18 +500,18 @@
 				var/mins = 0
 				if(minutes > CMinutes)
 					mins = minutes - CMinutes
-				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440, nullable = TRUE, isnum = TRUE)
+				mins = tginput(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440, nullable = TRUE, isnum = TRUE)
 				if(!mins)
 					return
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason.","Reason",reason2, nullable = TRUE, ismessage = TRUE)
+				reason = tginput(usr,"Please State Reason.","Reason",reason2, nullable = TRUE, ismessage = TRUE)
 				if(!reason)
 					return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Please State Reason.","Reason",reason2, nullable = TRUE, ismessage = TRUE)
+				reason = tginput(usr,"Please State Reason.","Reason",reason2, nullable = TRUE, ismessage = TRUE)
 				if(!reason)
 					return
 
@@ -555,7 +555,7 @@
 
 		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
-				var/reason = input(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
+				var/reason = tginput(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, "appearance"))
@@ -934,10 +934,10 @@
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
 			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 				if("Yes")
-					var/mins = input(usr,"How long (in minutes)?","Ban time",1440, nullable = TRUE, isnum = TRUE)
+					var/mins = tginput(usr,"How long (in minutes)?","Ban time",1440, nullable = TRUE, isnum = TRUE)
 					if(!mins)
 						return
-					var/reason = input(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
+					var/reason = tginput(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
 					if(!reason)
 						return
 
@@ -964,7 +964,7 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = input(usr,"Please State Reason","Reason", nullable = TRUE, ismessage = TRUE)
+					var/reason = tginput(usr,"Please State Reason","Reason", nullable = TRUE, ismessage = TRUE)
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1129,10 +1129,10 @@
 
 		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 			if("Yes")
-				var/mins = input(usr,"How long (in minutes)?","Ban time",1440, nullable = TRUE, isnum = TRUE)
+				var/mins = tginput(usr,"How long (in minutes)?","Ban time",1440, nullable = TRUE, isnum = TRUE)
 				if(!mins)
 					return
-				var/reason = input(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
+				var/reason = tginput(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_TEMP, M, mins, reason))
@@ -1153,7 +1153,7 @@
 
 				qdel(M.client)
 			if("No")
-				var/reason = input(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
+				var/reason = tginput(usr,"Please State Reason.","Reason", nullable = TRUE, ismessage = TRUE)
 				if(!reason)
 					return
 				switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
@@ -1290,7 +1290,7 @@
 		if(!ismob(M))
 			to_chat(usr, "this can only be used on instances of type /mob.")
 
-		var/speech = input("What will [key_name(M)] say?.", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
+		var/speech = tginput("What will [key_name(M)] say?.", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)
 			return
 		M.say(speech)
@@ -1533,7 +1533,7 @@
 	else if(href_list["gangpoints"])
 		var/datum/gang/G = locate(href_list["gangpoints"]) in ticker.mode.gangs
 		if(G)
-			var/newpoints = input("Set [G.name ] Gang's influence.","Set Influence",G.points, nullable = TRUE, isnum = TRUE)
+			var/newpoints = tginput("Set [G.name ] Gang's influence.","Set Influence",G.points, nullable = TRUE, isnum = TRUE)
 			if(!newpoints)
 				return
 			message_admins("[key_name_admin(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
@@ -1731,7 +1731,7 @@
 			return
 
 		message_admins("[src.owner] has started answering [key_name(H)]'s Centcomm request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
+		var/input = tginput(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
 		if(!input)
 			message_admins("[src.owner] decided not to answer [key_name(H)]'s Centcomm request.")
 			return
@@ -1751,7 +1751,7 @@
 			return
 
 		message_admins("[src.owner] has started answering [key_name(H)]'s syndicate request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
+		var/input = tginput(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
 		if(!input)
 			message_admins("[src.owner] decided not to answer [key_name(H)]'s syndicate request.")
 			return
@@ -2005,11 +2005,11 @@
 		var/list/available_channels = list()
 		for(var/datum/newscaster/feed_channel/F in news_network.network_channels)
 			available_channels += F.channel_name
-		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler", choices = available_channels ))
+		src.admincaster_feed_channel.channel_name = adminscrub(tginput(usr, "Choose receiving Feed Channel.", "Network Channel Handler", choices = available_channels ))
 		src.access_news_network()
 
 	else if(href_list["ac_set_new_message"])
-		src.admincaster_feed_message.body = adminscrub(input(usr, "Write your Feed story.", "Network Channel Handler", ""))
+		src.admincaster_feed_message.body = adminscrub(tginput(usr, "Write your Feed story.", "Network Channel Handler", ""))
 		while (findtext(src.admincaster_feed_message.returnBody(-1)," ") == 1)
 			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.returnBody(-1),2,lentext(src.admincaster_feed_message.returnBody(-1))+1)
 		src.access_news_network()
@@ -2056,13 +2056,13 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_name"])
-		src.admincaster_wanted_message.criminal = adminscrub(input(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
+		src.admincaster_wanted_message.criminal = adminscrub(tginput(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
 		while(findtext(src.admincaster_wanted_message.criminal," ") == 1)
 			src.admincaster_wanted_message.criminal = copytext(admincaster_wanted_message.criminal,2,lentext(admincaster_wanted_message.criminal)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
-		src.admincaster_wanted_message.body = adminscrub(input(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
+		src.admincaster_wanted_message.body = adminscrub(tginput(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
 		while (findtext(src.admincaster_wanted_message.body," ") == 1)
 			src.admincaster_wanted_message.body = copytext(src.admincaster_wanted_message.body,2,lentext(src.admincaster_wanted_message.body)+1)
 		src.access_news_network()
@@ -2147,7 +2147,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_signature"])
-		src.admin_signature = adminscrub(input(usr, "Provide your desired signature.", "Network Identity Handler", ""))
+		src.admin_signature = adminscrub(tginput(usr, "Provide your desired signature.", "Network Identity Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_del_comment"])
@@ -2225,16 +2225,16 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/list/type_choices = typesof(/datum/station_goal)
-		var/picked = input("Choose goal type", nullable = TRUE, choices = type_choices)
+		var/picked = tginput("Choose goal type", nullable = TRUE, choices = type_choices)
 		if(!picked)
 			return
 		var/datum/station_goal/G = new picked()
 		if(picked == /datum/station_goal)
-			var/newname = input("Enter goal name:", nullable = TRUE, istext = TRUE)
+			var/newname = tginput("Enter goal name:", nullable = TRUE, istext = TRUE)
 			if(!newname)
 				return
 			G.name = newname
-			var/description = input("Enter centcom message contents:", nullable = TRUE, ismessage = TRUE)
+			var/description = tginput("Enter centcom message contents:", nullable = TRUE, ismessage = TRUE)
 			if(!description)
 				return
 			G.report_message = description

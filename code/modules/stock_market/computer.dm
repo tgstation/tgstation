@@ -186,7 +186,7 @@ a.updated {
 		to_chat(user, "<span class='danger'>This account does not own any shares of [S.name]!</span>")
 		return
 	var/price = S.current_value
-	var/amt = round(input(user, "How many shares? \n(Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0, nullable = TRUE, isnum = TRUE))
+	var/amt = round(tginput(user, "How many shares? \n(Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0, nullable = TRUE, isnum = TRUE))
 	amt = min(amt, S.shareholders[logged_in])
 
 	if (!user || (!(user in range(1, src)) && iscarbon(user)))
@@ -221,7 +221,7 @@ a.updated {
 	var/avail = S.available_shares
 	var/price = S.current_value
 	var/canbuy = round(b / price)
-	var/amt = round(input(user, "How many shares? \n(Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 0, nullable = TRUE, isnum = TRUE))
+	var/amt = round(tginput(user, "How many shares? \n(Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 0, nullable = TRUE, isnum = TRUE))
 	if (!user || (!(user in range(1, src)) && iscarbon(user)))
 		return
 	if (li != logged_in)

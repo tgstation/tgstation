@@ -193,7 +193,7 @@
 			return
 		var/mob/living/carbon/human/interactive/T = A
 
-		var/choice = input("Customization Choices", nullable = TRUE, choices = list("Service NPC","Security NPC","Random","Custom"))
+		var/choice = tginput("Customization Choices", nullable = TRUE, choices = list("Service NPC","Security NPC","Random","Custom"))
 		if(choice)
 			if(choice == "Service NPC" || choice == "Security NPC")
 				var/job = choice == "Service NPC" ? pick("Bartender","Cook","Botanist","Janitor") : pick("Warden","Detective","Security Officer")
@@ -229,7 +229,7 @@
 					T.makeTraitor(cType)
 				T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
 			if(choice == "Custom")
-				var/cjob = input("Choose Job", nullable = TRUE, choices = SSjob.occupations)
+				var/cjob = tginput("Choose Job", nullable = TRUE, choices = SSjob.occupations)
 				if(cjob)
 					T.myjob = cjob
 					T.job = T.myjob.title
@@ -237,14 +237,14 @@
 						qdel(W)
 					T.myjob.equip(T)
 					T.doSetup()
-				var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?", nullable = TRUE, choices = list("Yes","No"))
+				var/shouldDoppel = tginput("Do you want the SNPC to disguise themself as a crewmember?", nullable = TRUE, choices = list("Yes","No"))
 				if(shouldDoppel)
 					if(shouldDoppel == "Yes")
 						var/list/validchoices = list()
 						for(var/mob/living/carbon/human/M in mob_list)
 							validchoices += M
 
-						var/mob/living/carbon/human/chosen = input("Which crewmember?", nullable = TRUE, choices = validchoices)
+						var/mob/living/carbon/human/chosen = tginput("Which crewmember?", nullable = TRUE, choices = validchoices)
 
 						if(chosen)
 							var/datum/dna/toDoppel = chosen.dna
@@ -253,15 +253,15 @@
 							toDoppel.transfer_identity(T, transfer_SE=1)
 							T.updateappearance(mutcolor_update=1)
 							T.domutcheck()
-				var/doTrait = input("Do you want the SNPC to be a traitor?", nullable = TRUE, choices = list("Yes","No"))
+				var/doTrait = tginput("Do you want the SNPC to be a traitor?", nullable = TRUE, choices = list("Yes","No"))
 				if(doTrait)
 					if(doTrait == "Yes")
 						var/list/tType = list("Brute" = SNPC_BRUTE, "Stealth" = SNPC_STEALTH, "Martyr" = SNPC_MARTYR, "Psycho" = SNPC_PSYCHO)
-						var/cType = input("Choose the traitor personality.", nullable = TRUE, choices = tType)
+						var/cType = tginput("Choose the traitor personality.", nullable = TRUE, choices = tType)
 						if(cType)
 							var/value = tType[cType]
 							T.makeTraitor(value)
-				var/doTele = input("Place the SNPC in their department?", nullable = TRUE, choices = list("Yes","No"))
+				var/doTele = tginput("Place the SNPC in their department?", nullable = TRUE, choices = list("Yes","No"))
 				if(doTele)
 					if(doTele == "Yes")
 						T.loc = pick(get_area_turfs(T.job2area(T.myjob)))

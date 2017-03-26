@@ -452,7 +452,7 @@
 
 /obj/item/weapon/robot_module/butler/be_transformed_to(obj/item/weapon/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null, nullable = TRUE, choices = list("Waitress", "Butler", "Tophat", "Kent", "Bro"))
+	var/borg_icon = tginput(R, "Select an icon!", "Robot Icon", null, nullable = TRUE, choices = list("Waitress", "Butler", "Tophat", "Kent", "Bro"))
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)

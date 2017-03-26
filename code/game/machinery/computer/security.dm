@@ -557,7 +557,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null, istext = TRUE)),1,MAX_MESSAGE_LEN)
+							var/t1 = copytext(sanitize(tginput("Please input name:", "Secure. records", active1.fields["name"], null, istext = TRUE)),1,MAX_MESSAGE_LEN)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -587,13 +587,13 @@ What a mess.*/
 								active1.fields["sex"] = "Male"
 					if("age")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num
+							var/t1 = tginput("Please input age:", "Secure. records", active1.fields["age"], null) as num
 							if(!canUseSecurityRecordsConsole(usr, "age", a1))
 								return
 							active1.fields["age"] = t1
 					if("species")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Select a species", "Species Selection", nullable = TRUE, choices = roundstart_species)
+							var/t1 = tginput("Select a species", "Species Selection", nullable = TRUE, choices = roundstart_species)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1

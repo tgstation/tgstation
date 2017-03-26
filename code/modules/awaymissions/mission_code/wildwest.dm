@@ -42,7 +42,7 @@
 	else
 		chargesa--
 		insistinga = 0
-		var/wish = input("You want...","Wish", nullable = TRUE, choices = list("Power","Wealth","Immortality","To Kill","Peace"))
+		var/wish = tginput("You want...","Wish", nullable = TRUE, choices = list("Power","Wealth","Immortality","To Kill","Peace"))
 		switch(wish)
 			if("Power")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")

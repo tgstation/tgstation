@@ -31,7 +31,7 @@
 				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
 		else
 			targets["(No Mob) - [T]"] = T
-	var/target = input(src,"To whom shall we send a message?","Admin PM",null, nullable = TRUE, choices = sortList(targets))
+	var/target = tginput(src,"To whom shall we send a message?","Admin PM",null, nullable = TRUE, choices = sortList(targets))
 	cmd_admin_pm(targets[target],null)
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -51,7 +51,7 @@
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
-	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]", nullable = TRUE, istext = TRUE)
+	var/msg = tginput(src,"Message:", "Private message to [key_name(C, 0, 0)]", nullable = TRUE, istext = TRUE)
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s admin help.")
 		return
@@ -79,7 +79,7 @@
 		if(!ircreplyamount)	//to prevent people from spamming irc
 			return
 		if(!msg)
-			msg = input(src,"Message:", "Private message to Administrator", nullable = TRUE, istext = TRUE)
+			msg = tginput(src,"Message:", "Private message to Administrator", nullable = TRUE, istext = TRUE)
 
 		if(!msg)
 			return
@@ -98,7 +98,7 @@
 
 		//get message text, limit it's length.and clean/escape html
 		if(!msg)
-			msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]", nullable = TRUE, istext = TRUE)
+			msg = tginput(src,"Message:", "Private message to [key_name(C, 0, 0)]", nullable = TRUE, istext = TRUE)
 
 			if(!msg)
 				return
@@ -163,7 +163,7 @@
 					spawn()	//so we don't hold the caller proc up
 						var/sender = src
 						var/sendername = key
-						var/reply = input(C, msg,"Admin PM from-[sendername]", "", nullable = TRUE, istext = TRUE)		//show message and await a reply
+						var/reply = tginput(C, msg,"Admin PM from-[sendername]", "", nullable = TRUE, istext = TRUE)		//show message and await a reply
 						if(C && reply)
 							if(sender)
 								C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them

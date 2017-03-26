@@ -380,11 +380,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 						continue
 					possible_targets += M
 
-				//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				//targets += tginput("Choose the target for the spell.", "Targeting") as mob in possible_targets
 				//Adds a safety check post-input to make sure those targets are actually in range.
 				var/mob/M
 				if(!random_target)
-					M = input("Choose the target for the spell.", "Targeting", type_mob = TRUE, choices = possible_targets)
+					M = tginput("Choose the target for the spell.", "Targeting", type_mob = TRUE, choices = possible_targets)
 				else
 					switch(random_target_priority)
 						if(TARGET_RANDOM)

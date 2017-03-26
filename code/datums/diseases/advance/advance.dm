@@ -382,7 +382,7 @@ var/list/advance_cures = 	list(
 	symptoms += list_symptoms.Copy()
 	do
 		if(user)
-			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom", choices = symptoms)
+			var/symptom = tginput(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom", choices = symptoms)
 			if(isnull(symptom))
 				return
 			else if(istext(symptom))

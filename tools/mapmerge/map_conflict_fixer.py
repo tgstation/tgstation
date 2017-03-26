@@ -11,14 +11,14 @@ def main(relative_root):
 
     print("--- DISCLAIMER ---")
     print("This script is in a testing phase. Verify all the results yourself to make sure you got what you expected. Make sure to read the readme to learn how to use this.")
-    input("Press Enter to GO\n")
+    tginput("Press Enter to GO\n")
     
     file_conflicts = map_helpers.run_shell_command("git diff --name-only --diff-filter=U").split("\n")
     map_conflicts = [path for path in file_conflicts if path[len(path)-3::] == "dmm"]
 
     for i in range(0, len(map_conflicts)):
         print("[{}]: {}".format(i, map_conflicts[i]))
-    selection = input("Choose maps you want to fix (example: 1,3-5,12):\n")
+    selection = tginput("Choose maps you want to fix (example: 1,3-5,12):\n")
     selection = selection.replace(" ", "")
     selection = selection.split(",")
 
@@ -50,12 +50,12 @@ def main(relative_root):
     print("\nFixing modes:")
     print("[{}]: Dictionary conflict fixing mode".format(map_helpers.MAP_FIX_DICTIONARY))
     print("[{}]: Full map conflict fixing mode".format(map_helpers.MAP_FIX_FULL))
-    mode = map_helpers.string_to_num(input("Select fixing mode [Dictionary]: "))
+    mode = map_helpers.string_to_num(tginput("Select fixing mode [Dictionary]: "))
     if mode != map_helpers.MAP_FIX_FULL:
         mode = map_helpers.MAP_FIX_DICTIONARY
         print("DICTIONARY mode selected.")
     else:
-        marker = input("FULL mode selected. Input a marker [/obj/effect/debugging/marker]: ")
+        marker = tginput("FULL mode selected. Input a marker [/obj/effect/debugging/marker]: ")
         if not marker:
             marker = "/obj/effect/debugging/marker"
         print("Marker selected: {}".format(marker))
@@ -63,7 +63,7 @@ def main(relative_root):
         print("\nVersion priorities:")
         print("[{}]: Your version".format(map_helpers.MAP_FIX_PRIORITY_OURS))
         print("[{}]: Their version".format(map_helpers.MAP_FIX_PRIORITY_THEIRS))
-        priority = map_helpers.string_to_num(input("Select priority [Yours]: "))
+        priority = map_helpers.string_to_num(tginput("Select priority [Yours]: "))
         if priority != map_helpers.MAP_FIX_PRIORITY_THEIRS:
             priority = map_helpers.MAP_FIX_PRIORITY_OURS
             print("Your version will be prioritized.")
@@ -77,7 +77,7 @@ def main(relative_root):
     print("Writing maps to 'file_path/file_name.fixed.dmm'. Please verify the results before commiting.")
     if mode == map_helpers.MAP_FIX_FULL:
         print("After editing the marked maps, run them through the map merger!")
-    input("Press Enter to start.")
+    tginput("Press Enter to start.")
     
     print(".")
     time.sleep(0.3)

@@ -296,7 +296,7 @@
 		return
 
 	//Ask the user to pick a channel from what it has available.
-	var/Autochan = input("Select a channel:", nullable = TRUE, choices = (list("Default","None") + radio.channels))
+	var/Autochan = tginput("Select a channel:", nullable = TRUE, choices = (list("Default","None") + radio.channels))
 
 	if(!Autochan)
 		return
@@ -348,7 +348,7 @@
 /mob/living/silicon/proc/sensor_mode()
 	if(incapacitated())
 		return
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null, choices = list("Security", "Medical","Diagnostic","Disable"))
+	var/sensor_type = tginput("Please select sensor type.", "Sensor Integration", null, choices = list("Security", "Medical","Diagnostic","Disable"))
 	remove_med_sec_hud()
 	switch(sensor_type)
 		if ("Security")

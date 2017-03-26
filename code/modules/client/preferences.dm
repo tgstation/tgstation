@@ -823,12 +823,12 @@ var/list/preferences_datums = list()
 			switch(href_list["preference"])
 				if("ghostform")
 					if(unlock_content)
-						var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null, nullable = TRUE, choices = ghost_forms)
+						var/new_form = tginput(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null, nullable = TRUE, choices = ghost_forms)
 						if(new_form)
 							ghost_form = new_form
 				if("ghostorbit")
 					if(unlock_content)
-						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null, nullable = TRUE, choices = ghost_orbits)
+						var/new_orbit = tginput(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null, nullable = TRUE, choices = ghost_orbits)
 						if(new_orbit)
 							ghost_orbit = new_orbit
 
@@ -853,24 +853,24 @@ var/list/preferences_datums = list()
 							ghost_others = GHOST_OTHERS_SIMPLE
 
 				if("name")
-					var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference", nullable = TRUE, istext = TRUE))
+					var/new_name = reject_bad_name( tginput(user, "Choose your character's name:", "Character Preference", nullable = TRUE, istext = TRUE))
 					if(new_name)
 						real_name = new_name
 					else
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("age")
-					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference", nullable = TRUE, isnum = TRUE)
+					var/new_age = tginput(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference", nullable = TRUE, isnum = TRUE)
 					if(new_age)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("metadata")
-					var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
+					var/new_metadata = tginput(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
 					if(new_metadata)
 						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
 				if("hair")
-					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
+					var/new_hair = tginput(user, "Choose your character's hair colour:", "Character Preference") as null|color
 					if(new_hair)
 						hair_color = sanitize_hexcolor(new_hair)
 
@@ -878,9 +878,9 @@ var/list/preferences_datums = list()
 				if("hair_style")
 					var/new_hair_style
 					if(gender == MALE)
-						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference", nullable = TRUE, choices = hair_styles_male_list)
+						new_hair_style = tginput(user, "Choose your character's hair style:", "Character Preference", nullable = TRUE, choices = hair_styles_male_list)
 					else
-						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference", nullable = TRUE, choices = hair_styles_female_list)
+						new_hair_style = tginput(user, "Choose your character's hair style:", "Character Preference", nullable = TRUE, choices = hair_styles_female_list)
 					if(new_hair_style)
 						hair_style = new_hair_style
 
@@ -897,16 +897,16 @@ var/list/preferences_datums = list()
 						hair_style = previous_list_item(hair_style, hair_styles_female_list)
 
 				if("facial")
-					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference", nullable = TRUE, iscolor = TRUE)
+					var/new_facial = tginput(user, "Choose your character's facial-hair colour:", "Character Preference", nullable = TRUE, iscolor = TRUE)
 					if(new_facial)
 						facial_hair_color = sanitize_hexcolor(new_facial)
 
 				if("facial_hair_style")
 					var/new_facial_hair_style
 					if(gender == MALE)
-						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference", nullable = TRUE, facial_hair_styles_male_list)
+						new_facial_hair_style = tginput(user, "Choose your character's facial-hair style:", "Character Preference", nullable = TRUE, facial_hair_styles_male_list)
 					else
-						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference", nullable = TRUE, facial_hair_styles_female_list)
+						new_facial_hair_style = tginput(user, "Choose your character's facial-hair style:", "Character Preference", nullable = TRUE, facial_hair_styles_female_list)
 					if(new_facial_hair_style)
 						facial_hair_style = new_facial_hair_style
 
@@ -925,35 +925,35 @@ var/list/preferences_datums = list()
 				if("underwear")
 					var/new_underwear
 					if(gender == MALE)
-						new_underwear = input(user, "Choose your character's underwear:", "Character Preference", nullable = TRUE, choices = underwear_m)
+						new_underwear = tginput(user, "Choose your character's underwear:", "Character Preference", nullable = TRUE, choices = underwear_m)
 					else
-						new_underwear = input(user, "Choose your character's underwear:", "Character Preference", nullable = TRUE, choices = underwear_m)
+						new_underwear = tginput(user, "Choose your character's underwear:", "Character Preference", nullable = TRUE, choices = underwear_m)
 					if(new_underwear)
 						underwear = new_underwear
 
 				if("undershirt")
 					var/new_undershirt
 					if(gender == MALE)
-						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", nullable = TRUE, choices = undershirt_m)
+						new_undershirt = tginput(user, "Choose your character's undershirt:", "Character Preference", nullable = TRUE, choices = undershirt_m)
 					else
-						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", nullable = TRUE, choices = undershirt_f)
+						new_undershirt = tginput(user, "Choose your character's undershirt:", "Character Preference", nullable = TRUE, choices = undershirt_f)
 					if(new_undershirt)
 						undershirt = new_undershirt
 
 				if("socks")
 					var/new_socks
-					new_socks = input(user, "Choose your character's socks:", "Character Preference", nullable = TRUE, choices = socks_list)
+					new_socks = tginput(user, "Choose your character's socks:", "Character Preference", nullable = TRUE, choices = socks_list)
 					if(new_socks)
 						socks = new_socks
 
 				if("eyes")
-					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
+					var/new_eyes = tginput(user, "Choose your character's eye colour:", "Character Preference") as color|null
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
 
 				if("species")
 
-					var/result = input(user, "Select a species", "Species Selection", nullable = TRUE, choices = roundstart_species)
+					var/result = tginput(user, "Select a species", "Species Selection", nullable = TRUE, choices = roundstart_species)
 
 					if(result)
 						var/newtype = roundstart_species[result]
@@ -964,7 +964,7 @@ var/list/preferences_datums = list()
 							features["mcolor"] = pref_species.default_color
 
 				if("mutant_color")
-					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = tginput(user, "Choose your character's alien/mutant color:", "Character Preference") as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
@@ -976,128 +976,128 @@ var/list/preferences_datums = list()
 
 				if("tail_lizard")
 					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference", nullable = TRUE, choices = tails_list_lizard)
+					new_tail = tginput(user, "Choose your character's tail:", "Character Preference", nullable = TRUE, choices = tails_list_lizard)
 					if(new_tail)
 						features["tail_lizard"] = new_tail
 
 				if("tail_human")
 					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference", nullable = TRUE, choices = tails_list_human)
+					new_tail = tginput(user, "Choose your character's tail:", "Character Preference", nullable = TRUE, choices = tails_list_human)
 					if(new_tail)
 						features["tail_human"] = new_tail
 
 				if("snout")
 					var/new_snout
-					new_snout = input(user, "Choose your character's snout:", "Character Preference", nullable = TRUE, choices = snouts_list)
+					new_snout = tginput(user, "Choose your character's snout:", "Character Preference", nullable = TRUE, choices = snouts_list)
 					if(new_snout)
 						features["snout"] = new_snout
 
 				if("horns")
 					var/new_horns
-					new_horns = input(user, "Choose your character's horns:", "Character Preference", nullable = TRUE, choices = horns_list)
+					new_horns = tginput(user, "Choose your character's horns:", "Character Preference", nullable = TRUE, choices = horns_list)
 					if(new_horns)
 						features["horns"] = new_horns
 
 				if("ears")
 					var/new_ears
-					new_ears = input(user, "Choose your character's ears:", "Character Preference", nullable = TRUE, choices = ears_list)
+					new_ears = tginput(user, "Choose your character's ears:", "Character Preference", nullable = TRUE, choices = ears_list)
 					if(new_ears)
 						features["ears"] = new_ears
 
 				if("wings")
 					var/new_wings
-					new_wings = input(user, "Choose your character's wings:", "Character Preference", nullable = TRUE, choices = r_wings_list)
+					new_wings = tginput(user, "Choose your character's wings:", "Character Preference", nullable = TRUE, choices = r_wings_list)
 					if(new_wings)
 						features["wings"] = new_wings
 
 				if("frills")
 					var/new_frills
-					new_frills = input(user, "Choose your character's frills:", "Character Preference", nullable = TRUE, choices = frills_list)
+					new_frills = tginput(user, "Choose your character's frills:", "Character Preference", nullable = TRUE, choices = frills_list)
 					if(new_frills)
 						features["frills"] = new_frills
 
 				if("spines")
 					var/new_spines
-					new_spines = input(user, "Choose your character's spines:", "Character Preference", nullable = TRUE, choices = spines_list)
+					new_spines = tginput(user, "Choose your character's spines:", "Character Preference", nullable = TRUE, choices = spines_list)
 					if(new_spines)
 						features["spines"] = new_spines
 
 				if("body_markings")
 					var/new_body_markings
-					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference", nullable = TRUE, choices = body_markings_list)
+					new_body_markings = tginput(user, "Choose your character's body markings:", "Character Preference", nullable = TRUE, choices = body_markings_list)
 					if(new_body_markings)
 						features["body_markings"] = new_body_markings
 
 				if("legs")
 					var/new_legs
-					new_legs = input(user, "Choose your character's legs:", "Character Preference", nullable = TRUE, choices = legs_list)
+					new_legs = tginput(user, "Choose your character's legs:", "Character Preference", nullable = TRUE, choices = legs_list)
 					if(new_legs)
 						features["legs"] = new_legs
 
 				if("s_tone")
-					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference", nullable = TRUE, choices = skin_tones)
+					var/new_s_tone = tginput(user, "Choose your character's skin-tone:", "Character Preference", nullable = TRUE, choices = skin_tones)
 					if(new_s_tone)
 						skin_tone = new_s_tone
 
 				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference", nullable = TRUE, iscolor = TRUE)
+					var/new_ooccolor = tginput(user, "Choose your OOC colour:", "Game Preference", nullable = TRUE, iscolor = TRUE)
 					if(new_ooccolor)
 						ooccolor = sanitize_ooccolor(new_ooccolor)
 
 				if("bag")
-					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", nullable = TRUE, choices = backbaglist)
+					var/new_backbag = tginput(user, "Choose your character's style of bag:", "Character Preference", nullable = TRUE, choices = backbaglist)
 					if(new_backbag)
 						backbag = new_backbag
 
 				if("uplink_loc")
-					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference", nullable = TRUE, choices = uplink_spawn_loc_list)
+					var/new_loc = tginput(user, "Choose your character's traitor uplink spawn location:", "Character Preference", nullable = TRUE, choices = uplink_spawn_loc_list)
 					if(new_loc)
 						uplink_spawn_loc = new_loc
 
 				if("clown_name")
-					var/new_clown_name = reject_bad_name( input(user, "Choose your character's clown name:", "Character Preference", nullable = TRUE, istext = TRUE))
+					var/new_clown_name = reject_bad_name( tginput(user, "Choose your character's clown name:", "Character Preference", nullable = TRUE, istext = TRUE))
 					if(new_clown_name)
 						custom_names["clown"] = new_clown_name
 					else
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("mime_name")
-					var/new_mime_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference", nullable = TRUE, istext = TRUE))
+					var/new_mime_name = reject_bad_name( tginput(user, "Choose your character's mime name:", "Character Preference", nullable = TRUE, istext = TRUE))
 					if(new_mime_name)
 						custom_names["mime"] = new_mime_name
 					else
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("ai_name")
-					var/new_ai_name = reject_bad_name( input(user, "Choose your character's AI name:", "Character Preference", nullable = TRUE, istext = TRUE), 1)
+					var/new_ai_name = reject_bad_name( tginput(user, "Choose your character's AI name:", "Character Preference", nullable = TRUE, istext = TRUE), 1)
 					if(new_ai_name)
 						custom_names["ai"] = new_ai_name
 					else
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
 
 				if("cyborg_name")
-					var/new_cyborg_name = reject_bad_name( input(user, "Choose your character's cyborg name:", "Character Preference", nullable = TRUE, istext = TRUE), 1)
+					var/new_cyborg_name = reject_bad_name( tginput(user, "Choose your character's cyborg name:", "Character Preference", nullable = TRUE, istext = TRUE), 1)
 					if(new_cyborg_name)
 						custom_names["cyborg"] = new_cyborg_name
 					else
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
 
 				if("religion_name")
-					var/new_religion_name = reject_bad_name( input(user, "Choose your character's religion:", "Character Preference", nullable = TRUE, istext = TRUE))
+					var/new_religion_name = reject_bad_name( tginput(user, "Choose your character's religion:", "Character Preference", nullable = TRUE, istext = TRUE))
 					if(new_religion_name)
 						custom_names["religion"] = new_religion_name
 					else
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("deity_name")
-					var/new_deity_name = reject_bad_name( input(user, "Choose your character's deity:", "Character Preference", nullable = TRUE, istext = TRUE))
+					var/new_deity_name = reject_bad_name( tginput(user, "Choose your character's deity:", "Character Preference", nullable = TRUE, istext = TRUE))
 					if(new_deity_name)
 						custom_names["deity"] = new_deity_name
 					else
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("sec_dept")
-					var/department = input(user, "Choose your prefered security department:", "Security Departments", nullable = TRUE, choices = security_depts_prefs)
+					var/department = tginput(user, "Choose your prefered security department:", "Security Departments", nullable = TRUE, choices = security_depts_prefs)
 					if(department)
 						prefered_security_department = department
 
@@ -1113,7 +1113,7 @@ var/list/preferences_datums = list()
 							friendlyname += " (disabled)"
 						maplist[friendlyname] = VM.map_name
 					maplist[default] = null
-					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference", nullable = TRUE, choices = maplist)
+					var/pickedmap = tginput(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference", nullable = TRUE, choices = maplist)
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
 
@@ -1123,13 +1123,13 @@ var/list/preferences_datums = list()
 						version_message = "\nYou need to be using byond version 511 or later to take advantage of this feature, your version of [user.client.byond_version] is too low"
 					if (world.byond_version < 511)
 						version_message += "\nThis server does not currently support client side fps. You can set now for when it does."
-					var/desiredfps = input(user, "Choose your desired fps.[version_message]\n(0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
+					var/desiredfps = tginput(user, "Choose your desired fps.[version_message]\n(0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
 					if (!isnull(desiredfps))
 						clientfps = desiredfps
 						if (world.byond_version >= 511 && user.client && user.client.byond_version >= 511)
 							user.client.vars["fps"] = clientfps
 				if("ui")
-					var/pickedui = input(user, "Choose your UI style.", "Character Preference")  as null|anything in list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork")
+					var/pickedui = tginput(user, "Choose your UI style.", "Character Preference")  as null|anything in list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork")
 					if(pickedui)
 						UI_style = pickedui
 

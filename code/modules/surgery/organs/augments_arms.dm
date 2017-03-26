@@ -128,9 +128,9 @@
 		if(contents.len == 1)
 			Extend(contents[1])
 		else // TODO: make it similar to borg's storage-like module selection
-			var/obj/item/choise = input("Activate which item?", "Arm Implant", null, null, nullable = TRUE, choices = items_list)
+			var/obj/item/choise = tginput("Activate which item?", "Arm Implant", null, null, nullable = TRUE, choices = items_list)
 			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && istype(choise) && (choise in contents))
-				// This monster sanity check is a nice example of how bad input() is.
+				// This monster sanity check is a nice example of how bad tginput() is.
 				Extend(choise)
 	else
 		Retract()

@@ -30,7 +30,7 @@
 		return
 
 	message_admins("[key_name_admin(src)] has started answering [key_name(M.key, 0, 0)]'s prayer.")
-	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
+	var/msg = tginput("Message:", text("Subtle PM to [M.key]")) as text
 
 	if (!msg)
 		message_admins("[key_name_admin(src)] decided not to answer [key_name(M.key, 0, 0)]'s prayer")
@@ -52,7 +52,7 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text
+	var/msg = tginput("Message:", text("Enter the text you wish to appear to everyone:")) as text
 
 	if (!msg)
 		return
@@ -70,12 +70,12 @@
 		return
 
 	if(!M)
-		M = input("Direct narrate to whom?", "Active Players", nullable = TRUE, choices = player_list)
+		M = tginput("Direct narrate to whom?", "Active Players", nullable = TRUE, choices = player_list)
 
 	if(!M)
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
+	var/msg = tginput("Message:", text("Enter the text you wish to appear to your target:")) as text
 
 	if( !msg )
 		return
@@ -94,10 +94,10 @@
 		return
 	if(!A)
 		return
-	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num
+	var/range = tginput("Range:", "Narrate to mobs within how many tiles:", 7) as num
 	if(!range)
 		return
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
+	var/msg = tginput("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
 	if (!msg)
 		return
 	for(var/mob/M in view(range,A))
@@ -205,13 +205,13 @@
 				continue	//we have a live body we are tied to
 			candidates += M.ckey
 		if(candidates.len)
-			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates", nullable = TRUE, choices = candidates)
+			ckey = tginput("Pick the player you want to respawn as a xeno.", "Suitable Candidates", nullable = TRUE, choices = candidates)
 		else
 			to_chat(usr, "<font color='red'>Error: create_xeno(): no suitable candidates.</font>")
 	if(!istext(ckey))
 		return 0
 
-	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null, nullable = TRUE, choices = list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva"))
+	var/alien_caste = tginput(usr, "Please choose which caste to spawn.","Pick a caste",null, nullable = TRUE, choices = list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva"))
 	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
@@ -246,7 +246,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = ckey(input(src, "Please specify which key will be respawned.", "Key", ""))
+	var/input = ckey(tginput(src, "Please specify which key will be respawned.", "Key", ""))
 	if(!input)
 		return
 
@@ -410,7 +410,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "", nullable = TRUE, istext = TRUE)
+	var/input = tginput(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "", nullable = TRUE, istext = TRUE)
 	if(!input)
 		return
 
@@ -449,7 +449,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "", nullable = TRUE, ismessage = TRUE)
+	var/input = tginput(usr, "Please enter anything you want. Anything. Serious.", "What?", "", nullable = TRUE, ismessage = TRUE)
 	if(!input)
 		return
 
@@ -474,7 +474,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(usr, "Please input a new name for Central Command.", "What?", "", nullable = TRUE, istext = TRUE)
+	var/input = tginput(usr, "Please input a new name for Central Command.", "What?", "", nullable = TRUE, istext = TRUE)
 	if(!input)
 		return
 	change_command_name(input)
@@ -517,15 +517,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
+	var/devastation = tginput("Range of total devastation. -1 to none", text("Input"))  as num|null
 	if(devastation == null) return
-	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
+	var/heavy = tginput("Range of heavy impact. -1 to none", text("Input"))  as num|null
 	if(heavy == null) return
-	var/light = input("Range of light impact. -1 to none", text("Input"))  as num|null
+	var/light = tginput("Range of light impact. -1 to none", text("Input"))  as num|null
 	if(light == null) return
-	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
+	var/flash = tginput("Range of flash. -1 to none", text("Input"))  as num|null
 	if(flash == null) return
-	var/flames = input("Range of flames. -1 to none", text("Input"))  as num|null
+	var/flames = tginput("Range of flames. -1 to none", text("Input"))  as num|null
 	if(flames == null) return
 
 	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1) || (flames != -1))
@@ -549,9 +549,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
+	var/heavy = tginput("Range of heavy pulse.", text("Input"))  as num|null
 	if(heavy == null) return
-	var/light = input("Range of light pulse.", text("Input"))  as num|null
+	var/light = tginput("Range of light pulse.", text("Input"))  as num|null
 	if(light == null) return
 
 	if (heavy || light)
@@ -618,7 +618,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set desc = "switches between 1x and custom views"
 
 	if(view == world.view)
-		view = input("Select view range:", "FUCK YE", 7, choices = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
+		view = tginput("Select view range:", "FUCK YE", 7, choices = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
 	else
 		view = world.view
 
@@ -723,7 +723,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/level = input("Select security level to change to","Set Security Level", nullable = TRUE, choices = list("green","blue","red","delta"))
+	var/level = tginput("Select security level to change to","Set Security Level", nullable = TRUE, choices = list("green","blue","red","delta"))
 	if(level)
 		set_security_level(level)
 
@@ -739,7 +739,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(!N.timing)
-		var/newtime = input(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]") as num
+		var/newtime = tginput(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]") as num
 		if(!newtime)
 			return
 		N.timer_set = newtime
@@ -1037,7 +1037,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(!holder)
 		return
 
-	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "", nullable = TRUE, ismessage = TRUE)
+	var/input = tginput(usr, "Please specify your tip that you want to send to the players.", "Tip", "", nullable = TRUE, ismessage = TRUE)
 	if(!input)
 		return
 
@@ -1140,7 +1140,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA)
 
-	var/punishment = input("Choose a punishment", "DIVINE SMITING", nullable = TRUE, choices = punishment_list)
+	var/punishment = tginput("Choose a punishment", "DIVINE SMITING", nullable = TRUE, choices = punishment_list)
 
 	if(QDELETED(target) || !punishment)
 		return

@@ -50,7 +50,7 @@
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A, nullable = TRUE, choices = teleportlocs)
+	A = tginput(user, "Area to jump to", "BOOYEA", A, nullable = TRUE, choices = teleportlocs)
 	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
 		return
 	var/area/thearea = teleportlocs[A]

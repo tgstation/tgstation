@@ -119,7 +119,7 @@
 		src.last_message_count = 0
 		return 0
 
-//This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
+//This stops files larger than UPLOAD_LIMIT being sent from client to server via tginput(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	if(filelength > UPLOAD_LIMIT)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")

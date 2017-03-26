@@ -104,7 +104,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 		if(!is_content_unlocked())
 			return
 
-	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
+	var/new_ooccolor = tginput(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
 		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)
 		prefs.save_preferences()
@@ -169,7 +169,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	var/selection = input("Please, select a player!", "Ignore", null, null, nullable = TRUE, choices = sortKey(clients))
+	var/selection = tginput("Please, select a player!", "Ignore", null, null, nullable = TRUE, choices = sortKey(clients))
 	if(!selection)
 		return
 	if(selection == src)

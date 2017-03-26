@@ -390,7 +390,7 @@
 
 /obj/item/weapon/circuitboard/computer/shuttle/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool))
-		var/chosen_id = round(input(usr, "Choose an ID number (-1 for reset):", "Input an Integer", null, nullable = TRUE, isnum = TRUE))
+		var/chosen_id = round(tginput(usr, "Choose an ID number (-1 for reset):", "Input an Integer", null, nullable = TRUE, isnum = TRUE))
 		if(chosen_id >= 0)
 			shuttleId = chosen_id
 		else

@@ -75,7 +75,7 @@
 
 /obj/machinery/computer/security/proc/use_camera_console(mob/user)
 	var/list/camera_list = get_available_cameras()
-	var/t = input(user, "Which camera should you change to?", nullable = TRUE, choices = camera_list)
+	var/t = tginput(user, "Which camera should you change to?", nullable = TRUE, choices = camera_list)
 	if(user.machine != src) //while we were choosing we got disconnected from our computer or are using another machine.
 		return
 	if(!t)

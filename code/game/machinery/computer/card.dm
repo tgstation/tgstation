@@ -438,7 +438,7 @@ var/time_last_changed_position = 0
 			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"), MAX_NAME_LEN)
+					var/newJob = reject_bad_text(tginput("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"), MAX_NAME_LEN)
 					if(newJob)
 						t1 = newJob
 
@@ -469,7 +469,7 @@ var/time_last_changed_position = 0
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
-				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
+				//var/t1 = tginput(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || issilicon(usr)) && isturf(loc)))
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)

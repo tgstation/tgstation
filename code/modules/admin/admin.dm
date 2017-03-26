@@ -445,7 +445,7 @@ var/global/BSACooldown = 0
 	if(!check_rights(0))
 		return
 
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
+	var/message = tginput("Global message to send:", "Admin Announce", null, null)  as message
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
@@ -460,7 +460,7 @@ var/global/BSACooldown = 0
 	if(!check_rights(0))
 		return
 
-	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice, nullable = TRUE, ismessage = TRUE)
+	var/new_admin_notice = tginput(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice, nullable = TRUE, ismessage = TRUE)
 	if(new_admin_notice == null)
 		return
 	if(new_admin_notice == admin_notice)
@@ -570,7 +570,7 @@ var/global/BSACooldown = 0
 	set desc="Delay the game start"
 	set name="Delay pre-game"
 
-	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(ticker.GetTimeLeft()/10), nullable = TRUE, isnum = TRUE)
+	var/newtime = tginput("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(ticker.GetTimeLeft()/10), nullable = TRUE, isnum = TRUE)
 	if(ticker.current_state > GAME_STATE_PREGAME)
 		return alert("Too late... The game has already started!")
 	if(newtime)

@@ -7,12 +7,12 @@
 		return
 	switch(cinematic)
 		if("explosion")
-			var/parameter = input(src,"station_missed = ?","Enter Parameter",0) as num
+			var/parameter = tginput(src,"station_missed = ?","Enter Parameter",0) as num
 			var/override
 			switch(parameter)
 				if(1)
-					override = input(src,"mode = ?","Enter Parameter",null, choices = list("nuclear emergency","gang war","fake","no override"))
+					override = tginput(src,"mode = ?","Enter Parameter",null, choices = list("nuclear emergency","gang war","fake","no override"))
 				if(0)
-					override = input(src,"mode = ?","Enter Parameter",null, choices = list("blob","nuclear emergency","AI malfunction","no override"))
+					override = tginput(src,"mode = ?","Enter Parameter",null, choices = list("blob","nuclear emergency","AI malfunction","no override"))
 			ticker.station_explosion_cinematic(parameter,override)
 	return

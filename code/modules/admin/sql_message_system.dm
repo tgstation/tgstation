@@ -5,7 +5,7 @@
 	if(!type)
 		return
 	if(!target_ckey && (type == "note" || type == "message" || type == "watchlist entry"))
-		var/new_ckey = ckey(input(usr,"Who would you like to create a [type] for?","Enter a ckey",null, nullable = TRUE, istext = TRUE))
+		var/new_ckey = ckey(tginput(usr,"Who would you like to create a [type] for?","Enter a ckey",null, nullable = TRUE, istext = TRUE))
 		if(!new_ckey)
 			return
 		new_ckey = sanitizeSQL(new_ckey)
@@ -26,7 +26,7 @@
 	if(!target_ckey)
 		target_ckey = admin_ckey
 	if(!text)
-		text = input(usr,"Write your [type]","Create [type]", nullable = TRUE, ismessage = TRUE)
+		text = tginput(usr,"Write your [type]","Create [type]", nullable = TRUE, ismessage = TRUE)
 		if(!text)
 			return
 	text = sanitizeSQL(text)
@@ -99,7 +99,7 @@
 		var/admin_ckey = query_find_edit_message.item[3]
 		var/old_text = query_find_edit_message.item[4]
 		var/editor_ckey = sanitizeSQL(usr.ckey)
-		var/new_text = input("Input new [type]", "New [type]", "[old_text]", nullable = TRUE, ismessage = TRUE)
+		var/new_text = tginput("Input new [type]", "New [type]", "[old_text]", nullable = TRUE, ismessage = TRUE)
 		if(!new_text)
 			return
 		new_text = sanitizeSQL(new_text)

@@ -315,7 +315,7 @@
 				if(href_list["hud"] == "m")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/medical))
 						if(href_list["p_stat"])
-							var/health_status = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"], choices = list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel"))
+							var/health_status = tginput(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"], choices = list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel"))
 							if(R)
 								if(!H.canUseHUD())
 									return
@@ -325,7 +325,7 @@
 									R.fields["p_stat"] = health_status
 							return
 						if(href_list["m_stat"])
-							var/health_status = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"], choices = list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel"))
+							var/health_status = tginput(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"], choices = list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel"))
 							if(R)
 								if(!H.canUseHUD())
 									return
@@ -401,7 +401,7 @@
 							R = find_record("name", perpname, data_core.security)
 							if(R)
 								if(href_list["status"])
-									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"], choices = list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel"))
+									var/setcriminal = tginput(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"], choices = list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel"))
 									if(setcriminal != "Cancel")
 										if(R)
 											if(H.canUseHUD())

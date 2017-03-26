@@ -208,7 +208,7 @@ var/explosionid = 1
 	var/dev = 0
 	var/heavy = 0
 	var/light = 0
-	var/choice = input("Bomb Size?", choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb"))
+	var/choice = tginput("Bomb Size?", choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb"))
 	switch(choice)
 		if(null)
 			return 0
@@ -225,9 +225,9 @@ var/explosionid = 1
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input("Devestation range (Tiles):", isnum = TRUE)
-			heavy = input("Heavy impact range (Tiles):", isnum = TRUE)
-			light = input("Light impact range (Tiles):", isnum = TRUE)
+			dev = tginput("Devestation range (Tiles):", isnum = TRUE)
+			heavy = tginput("Heavy impact range (Tiles):", isnum = TRUE)
+			light = tginput("Light impact range (Tiles):", isnum = TRUE)
 
 	var/max_range = max(dev, heavy, light)
 	var/x0 = epicenter.x

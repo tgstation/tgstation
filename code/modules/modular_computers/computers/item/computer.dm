@@ -418,7 +418,7 @@
 			var/obj/item/weapon/computer_hardware/H = all_components[h]
 			component_names.Add(H.name)
 
-		var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null, nullable = TRUE, choices = component_names)
+		var/choice = tginput(user, "Which component do you want to uninstall?", "Computer maintenance", null, nullable = TRUE, choices = component_names)
 
 		if(!choice)
 			return

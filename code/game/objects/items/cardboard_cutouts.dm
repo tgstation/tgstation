@@ -83,7 +83,7 @@
 	if(crayon.is_capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
-	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception", nullable = TRUE, choices = possible_appearances)
+	var/new_appearance = tginput(user, "Choose a new appearance for [src].", "26th Century Deception", nullable = TRUE, choices = possible_appearances)
 	if(!new_appearance || !crayon || !user.canUseTopic(src))
 		return
 	if(!do_after(user, 10, FALSE, src, TRUE))

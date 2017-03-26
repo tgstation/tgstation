@@ -79,7 +79,7 @@
 				to_chat(pai, "<span class='notice'>You have been bound to a new master.</span>")
 				pai.emittersemicd = FALSE
 		if(href_list["wipe"])
-			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", choices = list("Yes", "No"))
+			var/confirm = tginput("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", choices = list("Yes", "No"))
 			if(confirm == "Yes")
 				if(pai)
 					to_chat(pai, "<span class='warning'>You feel yourself slipping away from reality.</span>")
@@ -92,7 +92,7 @@
 			if(pai.radio)
 				pai.radio.wires.cut(wire)
 		if(href_list["setlaws"])
-			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], ismessage = TRUE)),1,MAX_MESSAGE_LEN)
+			var/newlaws = copytext(sanitize(tginput("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], ismessage = TRUE)),1,MAX_MESSAGE_LEN)
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
 		if(href_list["toggle_holo"])

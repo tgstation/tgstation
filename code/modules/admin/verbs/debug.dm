@@ -48,7 +48,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			target = null
 			targetselected = 0
 
-	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null, nullable = TRUE, istext = TRUE)
+	var/procname = tginput("Proc path, eg: /proc/fake_blood","Path:", null, nullable = TRUE, istext = TRUE)
 	if(!procname)
 		return
 
@@ -89,7 +89,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/procname = input("Proc name, eg: fake_blood","Proc:", null, nullable = TRUE, istext = TRUE)
+	var/procname = tginput("Proc name, eg: fake_blood","Proc:", null, nullable = TRUE, istext = TRUE)
 	if(!procname)
 		return
 	if(!hascall(A,procname))
@@ -114,14 +114,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 
 /client/proc/get_callproc_args()
-	var/argnum = input("Number of arguments","Number:",0, nullable = TRUE, isnum = TRUE)
+	var/argnum = tginput("Number of arguments","Number:",0, nullable = TRUE, isnum = TRUE)
 	if(isnull(argnum))
 		return
 
 	. = list()
 	var/list/named_args = list()
 	while(argnum--)
-		var/named_arg = input("Leave blank for positional argument. Positional arguments will be considered as if they were added first.", "Named argument", nullable = TRUE, istext = TRUE)
+		var/named_arg = tginput("Leave blank for positional argument. Positional arguments will be considered as if they were added first.", "Named argument", nullable = TRUE, istext = TRUE)
 		var/value = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 		if (!value["class"])
 			return
@@ -241,16 +241,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/mob/C in mob_list)
 		if(C.key)
 			available.Add(C)
-	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI", choices = available)
+	var/mob/choice = tginput("Choose a player to play the pAI", "Spawn pAI", choices = available)
 	if(!choice)
 		return 0
 	if(!isobserver(choice))
-		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No", choices = list("Yes", "No"))
+		var/confirm = tginput("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No", choices = list("Yes", "No"))
 		if(confirm != "Yes")
 			return 0
 	var/obj/item/device/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI", istext = TRUE, istext = TRUE)
+	pai.name = tginput(choice, "Enter your pAI name:", "pAI Name", "Personal AI", istext = TRUE, istext = TRUE)
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)
@@ -366,7 +366,7 @@ var/list/TYPES_SHORTCUTS = list(
 
 	if(matches.len==0)
 		return
-	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:", nullable = TRUE, choices = matches)
+	var/hsbitem = tginput(usr, "Choose an object to delete.", "Delete:", nullable = TRUE, choices = matches)
 	if(hsbitem)
 		hsbitem = matches[hsbitem]
 		var/counter = 0
@@ -550,7 +550,7 @@ var/list/TYPES_SHORTCUTS = list(
 		outfits[initial(O.name)] = path
 
 
-	var/dresscode = input("Select dress for [M]", "Robust quick dress shop", nullable = TRUE, choices = outfits)
+	var/dresscode = tginput("Select dress for [M]", "Robust quick dress shop", nullable = TRUE, choices = outfits)
 	if (isnull(dresscode))
 		return
 
@@ -564,7 +564,7 @@ var/list/TYPES_SHORTCUTS = list(
 			var/datum/outfit/O = path
 			job_outfits[initial(O.name)] = path
 
-		dresscode = input("Select job equipment", "Robust quick dress shop", nullable = TRUE, choices = job_outfits)
+		dresscode = tginput("Select job equipment", "Robust quick dress shop", nullable = TRUE, choices = job_outfits)
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -575,7 +575,7 @@ var/list/TYPES_SHORTCUTS = list(
 		var/list/custom_names = list()
 		for(var/datum/outfit/D in custom_outfits)
 			custom_names[D.name] = D
-		var/selected_name = input("Select outfit", "Robust quick dress shop", nullable = TRUE, choices = custom_names)
+		var/selected_name = tginput("Select outfit", "Robust quick dress shop", nullable = TRUE, choices = custom_names)
 		custom = custom_names[selected_name]
 		if(isnull(custom))
 			return
@@ -661,7 +661,7 @@ var/list/TYPES_SHORTCUTS = list(
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?", choices = list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients")))
+	switch(tginput("Which list?", choices = list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients")))
 		if("Players")
 			to_chat(usr, jointext(player_list,","))
 		if("Admins")
@@ -726,7 +726,7 @@ var/list/TYPES_SHORTCUTS = list(
 
 		names[name] = ruin_landmark
 
-	var/ruinname = input("Select ruin", "Jump to Ruin", nullable = TRUE, choices = names)
+	var/ruinname = tginput("Select ruin", "Jump to Ruin", nullable = TRUE, choices = names)
 
 
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]

@@ -237,7 +237,7 @@
 		if(href_list["set_internal_tank_valve"] && state >=1)
 			var/mob/user = filter.getMob("user")
 			if(user)
-				var/new_pressure = input(user,"Input new output pressure","Pressure setting",internal_tank_valve) as num
+				var/new_pressure = tginput(user,"Input new output pressure","Pressure setting",internal_tank_valve) as num
 				if(new_pressure)
 					internal_tank_valve = new_pressure
 					to_chat(user, "The internal pressure valve has been set to [internal_tank_valve]kPa.")

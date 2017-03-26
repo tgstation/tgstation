@@ -25,7 +25,7 @@
 
 		//handle facial hair (if necessary)
 		if(H.gender == MALE)
-			var/new_style = input(user, "Select a facial hair style", "Grooming", nullable = TRUE, choices = facial_hair_styles_list)
+			var/new_style = tginput(user, "Select a facial hair style", "Grooming", nullable = TRUE, choices = facial_hair_styles_list)
 			if(userloc != H.loc)
 				return	//no tele-grooming
 			if(new_style)
@@ -34,7 +34,7 @@
 			H.facial_hair_style = "Shaved"
 
 		//handle normal hair
-		var/new_style = input(user, "Select a hair style", "Grooming", nullable = TRUE, hair_styles_list)
+		var/new_style = tginput(user, "Select a hair style", "Grooming", nullable = TRUE, hair_styles_list)
 		if(userloc != H.loc)
 			return	//no tele-grooming
 		if(new_style)
@@ -117,14 +117,14 @@
 
 	var/mob/living/carbon/human/H = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming", nullable = TRUE, choices = list("name", "race", "gender", "hair", "eyes"))
+	var/choice = tginput(user, "Something to change?", "Magical Grooming", nullable = TRUE, choices = list("name", "race", "gender", "hair", "eyes"))
 
 	if(!Adjacent(user))
 		return
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name, nullable = TRUE, text = TRUE)),1,MAX_NAME_LEN)
+			var/newname = copytext(sanitize(tginput(H, "Who are we again?", "Name change", H.name, nullable = TRUE, text = TRUE)),1,MAX_NAME_LEN)
 
 			if(!newname)
 				return
@@ -139,7 +139,7 @@
 
 		if("race")
 			var/newrace
-			var/racechoice = input(H, "What are we again?", "Race change", nullable = TRUE, choices = choosable_races)
+			var/racechoice = tginput(H, "What are we again?", "Race change", nullable = TRUE, choices = choosable_races)
 			newrace = species_list[racechoice]
 
 			if(!newrace)
@@ -149,14 +149,14 @@
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change", nullable = TRUE, choices = skin_tones)
+				var/new_s_tone = tginput(user, "Choose your skin tone:", "Race change", nullable = TRUE, choices = skin_tones)
 
 				if(new_s_tone)
 					H.skin_tone = new_s_tone
 					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
 			if(MUTCOLORS in H.dna.species.species_traits)
-				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change") as color|null
+				var/new_mutantcolor = tginput(user, "Choose your skin color:", "Race change") as color|null
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
@@ -200,19 +200,19 @@
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				..()
 			else
-				var/new_hair_color = input(H, "Choose your hair color", "Hair Color") as null|color
+				var/new_hair_color = tginput(H, "Choose your hair color", "Hair Color") as null|color
 				if(new_hair_color)
 					H.hair_color = sanitize_hexcolor(new_hair_color)
 					H.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 				if(H.gender == "male")
-					var/new_face_color = input(H, "Choose your facial hair color", "Hair Color") as null|color
+					var/new_face_color = tginput(H, "Choose your facial hair color", "Hair Color") as null|color
 					if(new_face_color)
 						H.facial_hair_color = sanitize_hexcolor(new_face_color)
 						H.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 				H.update_hair()
 
 		if("eyes")
-			var/new_eye_color = input(H, "Choose your eye color", "Eye Color") as null|color
+			var/new_eye_color = tginput(H, "Choose your eye color", "Eye Color") as null|color
 			if(!Adjacent(user))
 				return
 			if(new_eye_color)

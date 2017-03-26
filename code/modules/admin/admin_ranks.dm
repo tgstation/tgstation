@@ -263,7 +263,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/task = href_list["editrights"]
 	switch(task)
 		if("add")
-			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null, istext = TRUE))
+			var/new_ckey = ckey(tginput(usr,"New admin's ckey","Admin ckey", null, istext = TRUE))
 			if(!new_ckey)
 				return
 			if(new_ckey in admin_datums)
@@ -303,13 +303,13 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			for(R in admin_ranks)
 				rank_names[R.name] = R
 
-			var/new_rank = input("Please select a rank", "New rank", null, null, nullable = TRUE, choices = rank_names)
+			var/new_rank = tginput("Please select a rank", "New rank", null, null, nullable = TRUE, choices = rank_names)
 
 			switch(new_rank)
 				if(null)
 					return
 				if("*New Rank*")
-					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null, nullable = TRUE, istext = TRUE))
+					new_rank = ckeyEx(tginput("Please input a new rank", "New custom rank", null, null, nullable = TRUE, istext = TRUE))
 					if(!new_rank)
 						return
 
@@ -345,7 +345,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			if(!D)
 				return	//they're not an admin!
 
-			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null, nullable = TRUE, istext = TRUE)
+			var/keyword = tginput("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null, nullable = TRUE, istext = TRUE)
 			if(!keyword)
 				return
 

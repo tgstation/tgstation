@@ -127,7 +127,7 @@ Thus, the two variables affect pump operation are set in New():
 				rate = MAX_TRANSFER_RATE
 				. = TRUE
 			else if(rate == "input")
-				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, transfer_rate, nullable = TRUE, isnum = TRUE)
+				rate = tginput("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, transfer_rate, nullable = TRUE, isnum = TRUE)
 				if(!isnull(rate) && !..())
 					. = TRUE
 			else if(text2num(rate) != null)

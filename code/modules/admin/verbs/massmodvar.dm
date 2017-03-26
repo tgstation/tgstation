@@ -28,7 +28,7 @@
 
 		names = sortList(names)
 
-		variable = input("Which var?", "Var", nullable = TRUE, choices = names)
+		variable = tginput("Which var?", "Var", nullable = TRUE, choices = names)
 	else
 		variable = var_name
 

@@ -651,7 +651,7 @@ BLIND     // can't see anything
 		return 0
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
-	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1], choices = modes)
+	var/switchMode = tginput("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1], choices = modes)
 	if(get_dist(usr, src) > 1)
 		to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 		return

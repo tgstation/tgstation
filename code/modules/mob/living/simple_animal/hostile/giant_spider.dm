@@ -207,7 +207,7 @@
 				continue
 			if(Adjacent(O))
 				choices += O
-		cocoon_target = input(src,"What do you wish to cocoon?") in null|choices
+		cocoon_target = tginput(src,"What do you wish to cocoon?") in null|choices
 
 	if(stat != DEAD && cocoon_target && busy != SPINNING_COCOON)
 		if(cocoon_target.anchored)

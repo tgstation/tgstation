@@ -293,7 +293,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				cancontinue = TRUE
 				break
 		if(!cancontinue)
-			var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?", choices = list("Proceed", "Cancel"))
+			var/choice = tginput("This item does not raise tech levels. Proceed destroying loaded item anyway?", choices = list("Proceed", "Cancel"))
 			if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item) return
 		linked_destroy.busy = 1
 		screen = 0.1

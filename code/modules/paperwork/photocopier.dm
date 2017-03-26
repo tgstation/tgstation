@@ -210,7 +210,7 @@
 				return
 			for(var/datum/picture/t in tempAI.aicamera.aipictures)
 				nametemp += t.fields["name"]
-			find = input("Select image (numbered in order taken)", choices = nametemp)
+			find = tginput("Select image (numbered in order taken)", choices = nametemp)
 			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 			for(var/datum/picture/q in tempAI.aicamera.aipictures)
 				if(q.fields["name"] == find)

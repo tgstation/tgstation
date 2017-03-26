@@ -844,7 +844,7 @@
 			var/atom/A = locate(href_list["addreagent"])
 
 			if(!A.reagents)
-				var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num
+				var/amount = tginput(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num
 				if(amount)
 					A.create_reagents(amount)
 
@@ -864,9 +864,9 @@
 							if(!valid_id)
 								to_chat(usr, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
 					if("Choose ID")
-						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.", nullabled = TRUE, choices = reagent_options)
+						chosen_id = tginput(usr, "Choose a reagent to add.", "Choose a reagent.", nullabled = TRUE, choices = reagent_options)
 				if(chosen_id)
-					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
+					var/amount = tginput(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
 					if(amount)
 						A.reagents.add_reagent(chosen_id, amount)
 						log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]")
@@ -1031,7 +1031,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 				return
 
-			var/result = input(usr, "Please choose a new species","Species", nullable = TRUE, choices = species_list)
+			var/result = tginput(usr, "Please choose a new species","Species", nullable = TRUE, choices = species_list)
 
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")
@@ -1050,13 +1050,13 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return
 
-			var/edit_action = input(usr, "What would you like to do?","Modify Body Part", nullable = TRUE, choices = list("add","remove", "augment"))
+			var/edit_action = tginput(usr, "What would you like to do?","Modify Body Part", nullable = TRUE, choices = list("add","remove", "augment"))
 			if(!edit_action)
 				return
 			var/list/limb_list = list("head", "l_arm", "r_arm", "l_leg", "r_leg")
 			if(edit_action == "augment")
 				limb_list += "chest"
-			var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part", nullable = TRUE, choices = limb_list)
+			var/result = tginput(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part", nullable = TRUE, choices = limb_list)
 
 			if(!C)
 				to_chat(usr, "Mob doesn't exist anymore")
@@ -1124,7 +1124,7 @@
 
 			var/Text = href_list["adjustDamage"]
 
-			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
+			var/amount =  tginput("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
 
 			if(!L)
 				to_chat(usr, "Mob doesn't exist anymore")

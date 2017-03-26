@@ -257,7 +257,7 @@
 					auth = 0
 					screen = 0
 				else
-					var/dkey = trim(input(usr, "Please enter the decryption key.", nullable = TRUE, istext = TRUE))
+					var/dkey = trim(tginput(usr, "Please enter the decryption key.", nullable = TRUE, istext = TRUE))
 					if(dkey && dkey != "")
 						if(src.linkedServer.decryptkey == dkey)
 							auth = 1
@@ -270,7 +270,7 @@
 		//Find a server
 		if (href_list["find"])
 			if(message_servers && message_servers.len > 1)
-				src.linkedServer = input(usr,"Please select a server.", "Select a server.", null, nullable = TRUE, choices = message_servers)
+				src.linkedServer = tginput(usr,"Please select a server.", "Select a server.", null, nullable = TRUE, choices = message_servers)
 				message = "<span class='alert'>NOTICE: Server selected.</span>"
 			else if(message_servers && message_servers.len > 0)
 				linkedServer = message_servers[1]
@@ -308,10 +308,10 @@
 				message = noserver
 			else
 				if(auth)
-					var/dkey = trim(input(usr, "Please enter the decryption key.", nullable = TRUE, istext = TRUE))
+					var/dkey = trim(tginput(usr, "Please enter the decryption key.", nullable = TRUE, istext = TRUE))
 					if(dkey && dkey != "")
 						if(src.linkedServer.decryptkey == dkey)
-							var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
+							var/newkey = trim(tginput(usr,"Please enter the new key (3 - 16 characters max):"))
 							if(length(newkey) <= 3)
 								message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
 							else if(length(newkey) > 16)
@@ -377,7 +377,7 @@
 						//Get out list of viable PDAs
 						var/list/obj/item/device/pda/sendPDAs = get_viewable_pdas()
 						if(PDAs && PDAs.len > 0)
-							customrecepient = input(usr, "Select a PDA from the list.", nullable = TRUE, choices = sortNames(sendPDAs))
+							customrecepient = tginput(usr, "Select a PDA from the list.", nullable = TRUE, choices = sortNames(sendPDAs))
 						else
 							customrecepient = null
 
