@@ -30,7 +30,7 @@
 		return
 
 	message_admins("[key_name_admin(src)] has started answering [key_name(M.key, 0, 0)]'s prayer.")
-	var/msg = tginput("Message:", text("Subtle PM to [M.key]")) as text
+	var/msg = tginput("Message:", text("Subtle PM to [M.key]"), istext = TRUE)
 
 	if (!msg)
 		message_admins("[key_name_admin(src)] decided not to answer [key_name(M.key, 0, 0)]'s prayer")
@@ -52,7 +52,7 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/msg = tginput("Message:", text("Enter the text you wish to appear to everyone:")) as text
+	var/msg = tginput("Message:", text("Enter the text you wish to appear to everyone:"), istext = TRUE)
 
 	if (!msg)
 		return
@@ -75,7 +75,7 @@
 	if(!M)
 		return
 
-	var/msg = tginput("Message:", text("Enter the text you wish to appear to your target:")) as text
+	var/msg = tginput("Message:", text("Enter the text you wish to appear to your target:"), istext = TRUE)
 
 	if( !msg )
 		return
@@ -97,7 +97,7 @@
 	var/range = tginput("Range:", "Narrate to mobs within how many tiles:", 7) as num
 	if(!range)
 		return
-	var/msg = tginput("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
+	var/msg = tginput("Message:", text("Enter the text you wish to appear to everyone within view:"), istext = TRUE)
 	if (!msg)
 		return
 	for(var/mob/M in view(range,A))

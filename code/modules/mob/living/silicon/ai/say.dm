@@ -95,7 +95,7 @@ var/const/VOX_DELAY = 600
 		to_chat(src, "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>")
 		return
 
-	var/message = tginput(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
+	var/message = tginput(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement, istext = TRUE)
 
 	last_announcement = message
 

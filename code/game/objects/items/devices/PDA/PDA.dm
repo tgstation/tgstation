@@ -421,7 +421,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = tginput(U, "Please enter new ringtone", name, ttone) as text
+				var/t = tginput(U, "Please enter new ringtone", name, ttone, istext = TRUE)
 				if(in_range(src, U) && loc == U)
 					if(t)
 						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))

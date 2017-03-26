@@ -469,7 +469,7 @@ var/time_last_changed_position = 0
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
-				//var/t1 = tginput(usr, "What name?", "ID computer", null)  as text
+				//var/t1 = tginput(usr, "What name?", "ID computer", null, istext = TRUE)
 				if ((authenticated && modify == t2 && (in_range(src, usr) || issilicon(usr)) && isturf(loc)))
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)

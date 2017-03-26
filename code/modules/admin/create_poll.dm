@@ -47,7 +47,7 @@
 		else
 			return 0
 	var/starttime = SQLtime()
-	var/endtime = tginput("Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime()) as text
+	var/endtime = tginput("Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime(), istext = TRUE)
 	if(!endtime)
 		return
 	endtime = sanitizeSQL(endtime)

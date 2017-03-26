@@ -148,8 +148,8 @@
 	set category = "Debug"
 
 	var/datum/mapGenerator/nature/N = new()
-	var/startInput = tginput(usr,"Start turf of Map, (X;Y;Z)", "Map Gen Settings", "1;1;1") as text
-	var/endInput = tginput(usr,"End turf of Map (X;Y;Z)", "Map Gen Settings", "[world.maxx];[world.maxy];[mob ? mob.z : 1]") as text
+	var/startInput = tginput(usr,"Start turf of Map, (X;Y;Z)", "Map Gen Settings", "1;1;1", istext = TRUE)
+	var/endInput = tginput(usr,"End turf of Map (X;Y;Z)", "Map Gen Settings", "[world.maxx];[world.maxy];[mob ? mob.z : 1]", istext = TRUE)
 	//maxx maxy and current z so that if you fuck up, you only fuck up one entire z level instead of the entire universe
 	if(!startInput || !endInput)
 		to_chat(src, "Missing Input")

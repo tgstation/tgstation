@@ -155,7 +155,7 @@
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
-		var/input = tginput(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text
+		var/input = tginput(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "", istext = TRUE)
 		if(user.canUseTopic(src, 1))
 			var/list/sanitised = list()
 			var/sanitycheck = 1
