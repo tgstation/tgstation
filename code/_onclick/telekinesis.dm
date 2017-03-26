@@ -109,22 +109,18 @@ var/const/tk_maxrange = 15
 
 	if(target == focus)
 		target.attack_self_tk(user)
-		return // todo: something like attack_self not laden with assumptions inherent to attack_self
+		return
 
 
 	if(!isturf(target) && istype(focus,/obj/item) && target.Adjacent(focus))
 		apply_focus_overlay()
-		var/obj/item/I = focus
-		var/resolved = target.attackby(I, user, params)
-		if(!resolved && target && I)
-			I.afterattack(target,user,1) // for splashing with beakers
-			update_icon()
+		melee_item_attack_chain(tk_user, focus, target) //isn't copying the attack chain fun. we should do it more often.
 		focus.do_attack_animation(target, null, focus)
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
 		user.changeNext_move(CLICK_CD_MELEE)
-		update_icon()
+	update_icon()
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)
 	var/d = get_dist(user, target)
@@ -165,7 +161,13 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/update_icon()
 	cut_overlays()
 	if(focus)
-		add_overlay(focus)
+		var/old_layer = focus.layer
+		var/old_plane = focus.plane
+		focus.layer = layer
+		focus.plane = FLOAT_PLANE
+		add_overlay(focus) //this is kind of ick, but it's better than using icon()
+		focus.layer = old_layer
+		focus.plane = old_plane
 	return
 
 /obj/item/tk_grab/suicide_act(mob/user)
