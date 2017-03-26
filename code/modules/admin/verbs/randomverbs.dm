@@ -1161,3 +1161,16 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 	message_admins("[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment].")
 	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")
+	
+
+/client/proc/clear_centcom()
+	set name = "Depopulate Centcom"
+	set category = "Fun"
+	if(!SSnpc.NPCsToSpawn)
+		to_chat(usr, "<span class='admin'>Centcom is already empty.</span>")
+		return
+
+	SSnpc.DepopulateCentcom()
+	log_admin("[key_name(usr)] has depopulated Centcom.")
+	message_admins("[key_name_admin(usr)] has depopulated Centcom.")
+	feedback_add_details("admin_verb","DepCent") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

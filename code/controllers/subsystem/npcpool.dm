@@ -14,6 +14,10 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	var/list/botPool_l = list() //list of all npcs using the pool
 	var/list/botPool_l_non = list() //list of all non SNPC mobs using the pool
 
+	var/NPCsToSpawn = 15
+	var/populated_centcom = FALSE
+	var/list/spawned_npcs = list()
+
 /datum/controller/subsystem/npcpool/proc/insertBot(toInsert)
 	if(istype(toInsert,/mob/living/carbon/human/interactive))
 		botPool_l |= toInsert
@@ -44,6 +48,9 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	var/npcCount = 1
 
 	cleanNull()
+
+	if(!populated_centcom && EMERGENCY_ESCAPED_OR_ENDGAMED)
+		PopulateCentcom(FALSE)		
 
 	//SNPC handling
 	for(var/mob/living/carbon/human/interactive/check in botPool_l)
@@ -125,3 +132,53 @@ var/datum/controller/subsystem/npcpool/SSnpc
 		botPool_l = SSnpc.botPool_l
 	if (istype(SSnpc.botPool_l_non))
 		botPool_l_non = SSnpc.botPool_l_non
+
+/datum/controller/subsystem/npcpool/proc/PopulateCentcom(skip_roundend_check = TRUE)
+	set waitfor = FALSE
+	populated_centcom = TRUE
+
+	var/list/centcom_areas = list()
+	for(var/area/centcom/evac/D in sortedAreas)
+		centcom_areas += D
+		CHECK_TICK
+	
+	if(!centcom_areas.len)
+		return
+
+	var/list/spawn_locs = list()
+
+	for(var/I in 1 to NPCsToSpawn)
+		var/list/candidates = get_area_turfs(pick(centcom_areas))
+		if(!LAZYLEN(candidates))
+			break
+		
+		while(candidates.len)
+			var/turf/T = pick(candidates)
+			if(!is_blocked_turf(T) && !spawn_locs[T])
+				spawn_locs[T] = T
+				break
+			else
+				candidates -= T
+		if(!candidates.len)
+			break
+		if(!populated_centcom)
+			return
+		CHECK_TICK
+	
+	if(!skip_roundend_check)
+		UNTIL(!populated_centcom || ticker.current_state == GAME_STATE_FINISHED)
+	
+	if(NPCsToSpawn)
+		for(var/I in spawn_locs)
+			spawned_npcs += new /mob/living/carbon/human/interactive(I)
+
+/datum/controller/subsystem/npcpool/Shutdown()
+	DepopulateCentcom()
+
+/datum/controller/subsystem/npcpool/proc/DepopulateCentcom()
+	populated_centcom = FALSE
+	NPCsToSpawn = 0
+	sleep(1)	//wait for the loop to end
+	for(var/I in spawned_npcs)
+		qdel(I)
+	LAZYCLEARLIST(spawned_npcs)
