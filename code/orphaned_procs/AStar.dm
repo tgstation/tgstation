@@ -67,8 +67,106 @@ Actual Adjacent procs :
 		path = list()
 	return path
 
-//the actual algorithm
 /proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+	var/static/const/num = 2
+	var/static/cur = rand(0, num-1)
+	if (prob(33))
+		cur = ((cur + 1) % num)
+
+	switch(cur)
+		if(0)
+			return AStar_old(arglist(args))
+		if(1)
+			return AStar_new(arglist(args))
+		else
+			throw EXCEPTION("invalid chain state")
+
+
+
+//the actual algorithm
+/proc/AStar_old(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+	var/list/pnodelist = list()
+	//sanitation
+	var/start = get_turf(caller)
+	if(!start)
+		return 0
+
+	if(maxnodes)
+		//if start turf is farther than maxnodes from end turf, no need to do anything
+		if(call(start, dist)(end) > maxnodes)
+			return 0
+		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
+
+	var/Heap/open = new /Heap(/proc/HeapPathWeightCompare) //the open list
+	var/list/closed = new() //the closed list
+	var/list/path = null //the returned path, if any
+	var/PathNode/cur //current processed turf
+
+	//initialization
+	open.Insert(new /PathNode(start,null,0,call(start,dist)(end),0))
+
+	//then run the main loop
+	while(!open.IsEmpty() && !path)
+		//get the lower f node on the open list
+		cur = open.Pop() //get the lower f turf in the open list
+		closed.Add(cur.source) //and tell we've processed it
+
+		//if we only want to get near the target, check if we're close enough
+		var/closeenough
+		if(mintargetdist)
+			closeenough = call(cur.source,dist)(end) <= mintargetdist
+
+		//if too many steps, abandon that path
+		if(maxnodedepth && (cur.nt > maxnodedepth))
+			continue
+
+		//found the target turf (or close enough), let's create the path to it
+		if(cur.source == end || closeenough)
+			path = new()
+			path.Add(cur.source)
+
+			while(cur.prevNode)
+				cur = cur.prevNode
+				path.Add(cur.source)
+
+			break
+
+		//get adjacents turfs using the adjacent proc, checking for access with id
+		var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
+		for(var/turf/T in L)
+			if(T == exclude || (T in closed))
+				continue
+
+			var/newg = cur.g + call(cur.source,dist)(T)
+
+			var/PathNode/P = pnodelist[T]
+			if(!P)
+			 //is not already in open list, so add it
+				var/PathNode/newnode = new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1)
+				open.Insert(newnode)
+				pnodelist[T] = newnode
+			else //is already in open list, check if it's a better way from the current turf
+				if(newg < P.g)
+					P.prevNode = cur
+					P.g = newg
+					P.calc_f()
+					P.nt = cur.nt + 1
+					open.ReSort(P)//reorder the changed element in the list
+		CHECK_TICK
+
+
+	//cleaning after us
+	pnodelist = null
+
+	//reverse the path to get it from start to finish
+	if(path)
+		for(var/i = 1; i <= path.len/2; i++)
+			path.Swap(i,path.len-i+1)
+
+	return path
+
+//the actual algorithm
+/proc/AStar_new(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
 	var/list/pnodelist = list()
 	//sanitation
 	var/start = get_turf(caller)
