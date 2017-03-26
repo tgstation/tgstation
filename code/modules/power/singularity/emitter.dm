@@ -275,11 +275,8 @@
 			to_chat(user, "<span class='warning'>The lock seems to be broken!</span>")
 			return
 		if(allowed(user))
-			if(active)
-				locked = !locked
-				to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
-			else
-				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is online!</span>")
+			locked = !locked
+			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
