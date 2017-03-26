@@ -67,10 +67,7 @@
 	//modules
 	var/list/functions = list("nearbyscan","combat","shitcurity","chatter")
 	var/restrictedJob = 0
-	var/shouldUseDynamicProc = 0 // switch to make the AI control it's own proccessing
-	var/alternateProcessing = 1
 	var/forceProcess = 0
-	var/processTime = 8
 	var/lastProc = 0
 	var/walkdebug = 0	//causes sparks in our path target. used for debugging
 	var/debugexamine = 0 //If we show debug info in our examine
@@ -85,6 +82,7 @@
 	var/traitorScale = 0 // our ability as a traitor
 	var/traitorType = 0
 
+	var/voice_saved = FALSE
 
 /// SNPC voice handling
 
@@ -96,6 +94,8 @@
 		knownStrings = list()
 
 /mob/living/carbon/human/interactive/proc/saveVoice()
+	if(voice_saved)
+		return
 	var/savefile/S = new /savefile("data/npc_saves/snpc.sav")
 	S["knownStrings"] << knownStrings
 
@@ -146,7 +146,7 @@
 	..()
 
 
-/client/proc/resetSNPC(var/mob/A in SSnpc.botPool_l)
+/client/proc/resetSNPC(var/mob/A in SSnpc.processing)
 	set name = "Reset SNPC"
 	set desc = "Reset the SNPC"
 	set category = "Debug"
@@ -163,24 +163,7 @@
 			T.retal = 0
 			T.doing = 0
 
-/client/proc/toggleSNPC(var/mob/A in SSnpc.botPool_l)
-	set name = "Toggle SNPC Proccessing Mode"
-	set desc = "Toggle SNPC Proccessing Mode"
-	set category = "Debug"
-
-	if(!holder)
-		return
-
-	if(A)
-		if(!istype(A,/mob/living/carbon/human/interactive))
-			return
-		var/mob/living/carbon/human/interactive/T = A
-		if(T)
-			T.alternateProcessing = !T.alternateProcessing
-			T.forceProcess = 1
-			to_chat(usr, "[T]'s processing has been switched to [T.alternateProcessing ? "High Profile" : "Low Profile"]")
-
-/client/proc/customiseSNPC(var/mob/A in SSnpc.botPool_l)
+/client/proc/customiseSNPC(var/mob/A in SSnpc.processing)
 	set name = "Customize SNPC"
 	set desc = "Customise the SNPC"
 	set category = "Debug"
@@ -390,7 +373,7 @@
 
 	doSetup()
 
-	SSnpc.insertBot(src)
+	START_PROCESSING(SSnpc, src)
 
 	loadVoice()
 
@@ -400,8 +383,9 @@
 	attitude += rand(-10,10)
 	slyness += rand(-10,10)
 
-	doProcess()
-
+/mob/living/carbon/human/interactive/Destroy()
+	SSnpc.stop_processing(src)
+	return ..()
 
 /mob/living/carbon/human/interactive/proc/retalTarget(var/target)
 	var/mob/living/carbon/human/M = target
@@ -533,12 +517,10 @@
 /mob/living/carbon/human/interactive/proc/targetRange(towhere)
 	return get_dist(get_turf(towhere), get_turf(src))
 
-/mob/living/carbon/human/interactive/Life()
-	..()
+/mob/living/carbon/human/interactive/proc/InteractiveProcess()
 	if(ticker.current_state == GAME_STATE_FINISHED)
 		saveVoice()
-	if(!alternateProcessing || forceProcess || world.time > lastProc + processTime)
-		doProcess()
+	doProcess()
 
 /mob/living/carbon/human/interactive/death()
 	saveVoice()
@@ -550,22 +532,7 @@
 	..()
 
 /mob/living/carbon/human/interactive/proc/doProcess()
-	set waitfor = 0
-	forceProcess = 0
-	lastProc = world.time
-
-	if(shouldUseDynamicProc)
-		var/isSeen = 0
-		for(var/mob/living/carbon/human/A in orange(12,src))
-			if(A.client)
-				isSeen = 1
-		alternateProcessing = isSeen
-		if(alternateProcessing)
-			forceProcess = 1
-
-	if(IsDeadOrIncap())
-		walk(src,0)
-		return
+	set waitfor = FALSE
 	//---------------------------
 	//---- interest flow control
 	if(interest < 0 || inactivity_period < 0)
@@ -587,10 +554,13 @@
 					if(istype(D,/obj/machinery/door/airlock))
 						var/obj/machinery/door/airlock/AL = D
 						if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
+							inactivity_period = 20
 							AL.panel_open = 1
 							AL.update_icon()
 							AL.shock(src,(100 - smartness)/2)
 							sleep(5)
+							if(QDELETED(AL))
+								return
 							AL.unbolt()
 							if(!AL.wires.is_cut(WIRE_BOLTS))
 								AL.wires.cut(WIRE_BOLTS)
@@ -599,9 +569,15 @@
 							if(!AL.wires.is_cut(WIRE_POWER2))
 								AL.wires.cut(WIRE_POWER2)
 							sleep(5)
+							if(QDELETED(AL))
+								return
 							AL.panel_open = 0
 							AL.update_icon()
-					D.open()
+							D.open(2)	//crowbar force
+						else
+							D.open()
+					else
+						D.open()
 
 	if(update_hands)
 		var/obj/item/l_hand = get_item_for_held_index(1)
@@ -633,7 +609,7 @@
 	//proc functions
 	for(var/Proc in functions)
 		if(!IsDeadOrIncap())
-			callfunction(Proc)
+			INVOKE_ASYNC(src, Proc)
 
 
 	//target interaction stays hardcoded
@@ -649,8 +625,8 @@
 		if(istype(TARGET, /obj/machinery/door))
 			var/obj/machinery/door/D = TARGET
 			if(D.check_access(MYID) && !istype(D,/obj/machinery/door/poddoor))
+				inactivity_period = 10
 				D.open()
-				//sleep(15)
 				var/turf/T = get_step(get_step(D.loc,dir),dir) //recursion yo
 				tryWalk(T)
 		//THIEVING SKILLS
@@ -672,15 +648,8 @@
 						insert_into_backpack()
 			//---------FASHION
 			if(istype(TARGET,/obj/item/clothing))
-				var/obj/item/clothing/C = TARGET
 				drop_item()
-				spawn(5)
-					take_to_slot(C,1)
-					if(!equip_to_appropriate_slot(C))
-						var/obj/item/I = get_item_by_slot(C)
-						dropItemToGround(I)
-						spawn(5)
-							equip_to_appropriate_slot(C)
+				dressup(TARGET)
 				update_hands = 1
 				if(MYPDA in src.loc || MYID in src.loc)
 					if(MYPDA in src.loc)
@@ -738,8 +707,19 @@
 			TARGET = traitorTarget
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
-	if(alternateProcessing)
-		addtimer(CALLBACK(src, .proc/doProcess), processTime)
+
+/mob/living/carbon/human/interactive/proc/dressup(obj/item/clothing/C)
+	set waitfor = FALSE
+	inactivity_period = 12
+	sleep(5)
+	if(!QDELETED(C) && !QDELETED(src))
+		take_to_slot(C,1)
+		if(!equip_to_appropriate_slot(C))
+			var/obj/item/I = get_item_by_slot(C)
+			dropItemToGround(I)
+			sleep(5)
+			if(!QDELETED(src) && !QDELETED(C))
+				equip_to_appropriate_slot(C)
 
 /mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
 	var/list/outList = list()
@@ -750,11 +730,6 @@
 	if(outList.len <= 0)
 		outList = inList
 	return outList
-
-/mob/living/carbon/human/interactive/proc/callfunction(Proc)
-	set waitfor = 0
-	spawn(0)
-		call(src,Proc)(src)
 
 /mob/living/carbon/human/interactive/proc/tryWalk(turf/inTarget, override = 0)
 	if(restrictedJob && !override) // we're a job that has to stay in our home
@@ -1143,7 +1118,8 @@
 		for(var/obj/item/I in allContents)
 			if(istype(I,/obj/item/weapon/restraints))
 				I.attack(TARGET,src) // go go bluespace restraint launcher!
-				sleep(25)
+				inactivity_period = 25
+				break
 
 /mob/living/carbon/human/interactive/proc/clowning(obj)
 	if(shouldModulePass())
@@ -1225,7 +1201,7 @@
 				if(get_dist(src,C) <= 2)
 					src.say("Wait, [C], let me heal you!")
 					M.attack(C,src)
-					sleep(25)
+					inactivity_period = 25
 				else
 					tryWalk(get_turf(C))
 	else if(shouldTryHeal == 2)
@@ -1237,7 +1213,7 @@
 					if(get_dist(src,C) <= 2)
 						src.say("Wait, [C], let me heal you!")
 						HPS.attack(C,src)
-						sleep(25)
+						inactivity_period = 25
 					else
 						tryWalk(get_turf(C))
 
@@ -1265,7 +1241,7 @@
 				tryWalk(TC)
 			else
 				S.afterattack(TC,src)
-				sleep(25)
+				inactivity_period = 25
 
 /mob/living/carbon/human/interactive/proc/customEmote(var/text)
 	visible_message("<span class='notice'>[text]</span>")
@@ -1354,7 +1330,7 @@
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
-				sleep(get_dist(src,D))
+				inactivity_period = get_dist(src,D)
 				D.attackby(RP,src)
 			else
 				cookingwithmagic(D)
@@ -1364,7 +1340,7 @@
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
-				sleep(get_dist(src,D))
+				inactivity_period = get_dist(src,D)
 				FD.attackby(KK,src)
 			else
 				cookingwithmagic(FD)
@@ -1374,7 +1350,7 @@
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
-				sleep(get_dist(src,D))
+				inactivity_period = get_dist(src,D)
 				CB.attackby(RP,src)
 			else
 				cookingwithmagic(CB)
@@ -1384,7 +1360,7 @@
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
-				sleep(get_dist(src,D))
+				inactivity_period = get_dist(src,D)
 				PD.attackby(KK,src)
 			else
 				cookingwithmagic(PD)
@@ -1533,6 +1509,7 @@
 							G.attack_self(src)
 							if(prob(smartness))
 								npcDrop(G,1)
+								inactivity_period = 15
 								sleep(15)
 								throw_item(TARGET)
 

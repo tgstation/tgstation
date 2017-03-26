@@ -25,7 +25,18 @@
 
 	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/unique_rename = 0 // can you customize the description/name of the thing?
+	
+	var/dangerous_possession = FALSE	//Admin possession yes/no
 
+/obj/vv_edit_var(vname, vval)
+	switch(vname)
+		if("dangerous_possession")
+			return FALSE
+		if("control_object")
+			var/obj/O = vval
+			if(istype(O) && O.dangerous_possession)
+				return FALSE
+	..()
 
 /obj/Initialize()
 	..()

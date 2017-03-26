@@ -15,6 +15,7 @@
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
+	dangerous_possession = TRUE
 
 /obj/structure/destructible/clockwork/massive/ratvar/New()
 	..()
