@@ -468,7 +468,7 @@ var/total_borer_hosts_needed = 10
 	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
 
 
-	if(!M || !src)
+	if(!M || !src || stat != CONSCIOUS || victim || (world.time - used_dominate < 150))
 		return
 	if(!Adjacent(M))
 		return
