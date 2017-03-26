@@ -28,7 +28,7 @@
 	set category = "Debug"
 	set name = "Map Template - Upload"
 
-	var/map = input(usr, "Choose a Map Template to upload to template storage","Upload Map Template") as null|file
+	var/map = input(usr, "Choose a Map Template to upload to template storage","Upload Map Template", nullable = TRUE, isfile = TRUE)
 	if(!map)
 		return
 	if(copytext("[map]",-4) != ".dmm")
