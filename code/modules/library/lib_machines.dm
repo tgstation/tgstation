@@ -442,7 +442,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			var/orderid = input("Enter your order:") as num|null
+			var/orderid = input("Enter your order:", nullable = TRUE, isnum = TRUE)
 			if(orderid)
 				if(isnum(orderid) && IsInteger(orderid))
 					href_list["targetid"] = num2text(orderid)

@@ -39,7 +39,7 @@
 			polltype = POLLTYPE_RATING
 		if("Multiple Choice")
 			polltype = POLLTYPE_MULTI
-			choice_amount = input("How many choices should be allowed?","Select choice amount") as num|null
+			choice_amount = input("How many choices should be allowed?","Select choice amount", nullable = TRUE, isnum = TRUE)
 			if(!choice_amount)
 				return
 		if ("Instant Runoff Voting")
@@ -122,10 +122,10 @@
 		var/descmid = ""
 		var/descmax = ""
 		if(polltype == POLLTYPE_RATING)
-			minval = input("Set minimum rating value.","Minimum rating") as num|null
+			minval = input("Set minimum rating value.","Minimum rating", nullable = TRUE, isnum = TRUE)
 			if(!minval)
 				return pollid
-			maxval = input("Set maximum rating value.","Maximum rating") as num|null
+			maxval = input("Set maximum rating value.","Maximum rating", nullable = TRUE, isnum = TRUE)
 			if(!maxval)
 				return pollid
 			if(minval >= maxval)

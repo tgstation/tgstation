@@ -201,7 +201,7 @@
 					beaker.reagents.trans_id_to(src, id, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
-					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
+					useramount = input("Enter the Amount you want to transfer:", name, useramount, nullable = TRUE, isnum = TRUE)
 					if (useramount > 0)
 						beaker.reagents.trans_id_to(src, id, useramount)
 						. = TRUE
@@ -229,7 +229,7 @@
 				var/amount = 1
 				var/vol_each = min(reagents.total_volume, 50)
 				if(text2num(many))
-					amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 10)
+					amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount, nullable = TRUE, isnum = TRUE)), 0, 10)
 					if(!amount)
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
@@ -266,7 +266,7 @@
 			var/amount = 1
 			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(many))
-				amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 10)
+				amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount, nullable = TRUE, isnum = TRUE)), 0, 10)
 				if(!amount)
 					return
 				vol_each = min(reagents.total_volume / amount, 40)

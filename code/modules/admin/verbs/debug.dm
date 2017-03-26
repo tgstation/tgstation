@@ -114,7 +114,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 
 /client/proc/get_callproc_args()
-	var/argnum = input("Number of arguments","Number:",0) as num|null
+	var/argnum = input("Number of arguments","Number:",0, nullable = TRUE, isnum = TRUE)
 	if(isnull(argnum))
 		return
 

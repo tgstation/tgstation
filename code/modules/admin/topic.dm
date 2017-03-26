@@ -114,7 +114,7 @@
 					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create a death squad.")
 			if("blob")
-				var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1) as num|null
+				var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1, nullable = TRUE, isnum = TRUE)
 				if(!strength)
 					return
 				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
@@ -299,7 +299,7 @@
 		if(!check_rights(R_SERVER))
 			return
 
-		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num|null
+		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() , nullable = TRUE, isnum = TRUE)
 		if(!timer)
 			return
 		SSshuttle.emergency.setTimer(timer*10)
@@ -336,7 +336,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/timer = input("Enter new maximum time",, config.midround_antag_time_check ) as num|null
+		var/timer = input("Enter new maximum time",, config.midround_antag_time_check , nullable = TRUE, isnum = TRUE)
 		if(!timer)
 			return
 		config.midround_antag_time_check = timer
@@ -500,7 +500,7 @@
 				var/mins = 0
 				if(minutes > CMinutes)
 					mins = minutes - CMinutes
-				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
+				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440, nullable = TRUE, isnum = TRUE)
 				if(!mins)
 					return
 				minutes = CMinutes + mins
@@ -934,7 +934,7 @@
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
 			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 				if("Yes")
-					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
+					var/mins = input(usr,"How long (in minutes)?","Ban time",1440, nullable = TRUE, isnum = TRUE)
 					if(!mins)
 						return
 					var/reason = input(usr,"Please State Reason.","Reason") as message|null
@@ -1129,7 +1129,7 @@
 
 		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 			if("Yes")
-				var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
+				var/mins = input(usr,"How long (in minutes)?","Ban time",1440, nullable = TRUE, isnum = TRUE)
 				if(!mins)
 					return
 				var/reason = input(usr,"Please State Reason.","Reason") as message|null

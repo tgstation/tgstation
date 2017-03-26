@@ -106,7 +106,7 @@
 					if("reset")
 						inserted_id.points = 0
 					if("setgoal")
-						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
+						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null, nullable = TRUE, isnum = TRUE))
 						if(num >= 0)
 							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
 							inserted_id.goal = num

@@ -312,7 +312,7 @@
 			. = TRUE
 		if("set_external_pressure")
 			var/area/A = get_area(src)
-			var/target = input("New target pressure:", name, A.air_vent_info[device_id]["external"]) as num|null
+			var/target = input("New target pressure:", name, A.air_vent_info[device_id]["external"], nullable = TRUE, isnum = TRUE)
 			if(!isnull(target) && !..())
 				send_signal(device_id, list("set_external_pressure" = target))
 				. = TRUE
@@ -325,7 +325,7 @@
 			var/datum/tlv/tlv = TLV[env]
 			if(isnull(tlv))
 				return
-			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
+			var/value = input("New [name] for [env]:", name, tlv.vars[name], nullable = TRUE, isnum = TRUE)
 			if(!isnull(value) && !..())
 				if(value < 0)
 					tlv.vars[name] = -1
