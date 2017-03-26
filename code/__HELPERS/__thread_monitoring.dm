@@ -13,7 +13,7 @@
 
 //this is the only one that changes syntax because byond
 //its such a pain in the fucking ass
-/proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, ismessage, isnum, isicon, iscolor, isfile, type_obj, type_turf)
+/proc/wrap_input(Usr = usr, Message, Title, Default, nullable, choices, restrict_type, istext, ismessage, isnum, isicon, iscolor, isfile, type_obj, type_turf, type_mob)
     Master.SleepBegin()
     if(type_obj)
         if(nullable)
@@ -25,6 +25,11 @@
             . = input(Usr, Message, Title, Default) as null|turf in choices
         else
             . = input(Usr, Message, Title, Default) as turf in choices
+    else if(type_mob)
+        if(nullable)
+            . = input(Usr, Message, Title, Default) as null|mob in choices
+        else
+            . = input(Usr, Message, Title, Default) as mob in choices
     else if(iscolor)
         if(nullable)
             . = input(Usr, Message, Title, Default) as null|color

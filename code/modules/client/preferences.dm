@@ -897,16 +897,16 @@ var/list/preferences_datums = list()
 						hair_style = previous_list_item(hair_style, hair_styles_female_list)
 
 				if("facial")
-					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
+					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference", nullable = TRUE, iscolor = TRUE)
 					if(new_facial)
 						facial_hair_color = sanitize_hexcolor(new_facial)
 
 				if("facial_hair_style")
 					var/new_facial_hair_style
 					if(gender == MALE)
-						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_male_list
+						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference", nullable = TRUE, facial_hair_styles_male_list)
 					else
-						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_female_list
+						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference", nullable = TRUE, facial_hair_styles_female_list)
 					if(new_facial_hair_style)
 						facial_hair_style = new_facial_hair_style
 
@@ -925,9 +925,9 @@ var/list/preferences_datums = list()
 				if("underwear")
 					var/new_underwear
 					if(gender == MALE)
-						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_m
+						new_underwear = input(user, "Choose your character's underwear:", "Character Preference", nullable = TRUE, choices = underwear_m)
 					else
-						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_f
+						new_underwear = input(user, "Choose your character's underwear:", "Character Preference", nullable = TRUE, choices = underwear_m)
 					if(new_underwear)
 						underwear = new_underwear
 
@@ -1035,17 +1035,17 @@ var/list/preferences_datums = list()
 						features["legs"] = new_legs
 
 				if("s_tone")
-					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
+					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference", nullable = TRUE, choices = skin_tones)
 					if(new_s_tone)
 						skin_tone = new_s_tone
 
 				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference", nullable = TRUE, iscolor = TRUE)
 					if(new_ooccolor)
 						ooccolor = sanitize_ooccolor(new_ooccolor)
 
 				if("bag")
-					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
+					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", nullable = TRUE, choices = backbaglist)
 					if(new_backbag)
 						backbag = new_backbag
 
@@ -1113,7 +1113,7 @@ var/list/preferences_datums = list()
 							friendlyname += " (disabled)"
 						maplist[friendlyname] = VM.map_name
 					maplist[default] = null
-					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
+					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference", nullable = TRUE, choices = maplist)
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
 
