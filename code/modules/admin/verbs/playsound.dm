@@ -1,4 +1,4 @@
-#define SOUND_CHANNEL_ADMIN 777
+
 var/sound/admin_sound
 
 /client/proc/play_sound(S as sound)
