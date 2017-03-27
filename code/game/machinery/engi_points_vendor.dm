@@ -419,7 +419,7 @@
 /obj/machinery/disco/proc/dance_setup()
 	stop = world.time + selection.song_length
 	var/turf/cen = get_turf(src)
-	FOR_DVIEW(var/turf/t, 3, get_turf(src))
+	FOR_DVIEW(var/turf/t, 3, get_turf(src),INVISIBILITY_LIGHTING)
 		if(t.x == cen.x && t.y > cen.y)
 			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
 			L.light_color = "red"
