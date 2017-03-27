@@ -40,30 +40,18 @@
 	var/invis = invisibility ? "-f" : ""
 	icon_state = "[initial(icon_state)][invis]"
 	overlays.Cut()
-	for(var/pipelayer = PIPING_LAYER_MIN; pipelayer <= PIPING_LAYER_MAX; pipelayer += 1)
-		if(front_nodes[pipelayer]) //we are connected at this layer
-			var/layer_diff = pipelayer - PIPING_LAYER_DEFAULT
-			var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src, front_nodes[pipelayer]))
-			I.pixel_x = layer_diff * PIPING_LAYER_P_X
-			I.pixel_y = layer_diff * PIPING_LAYER_P_Y
-			add_overlay(I)
-		if(back_nodes[pipelayer])
-			var/layer_diff = pipelayer - PIPING_LAYER_DEFAULT
-			var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src, back_nodes[pipelayer]))
-			switch(dir)
-				if(NORTH)
-					I.pixel_x = layer_diff * PIPING_LAYER_P_X
-					I.pixel_y = -4
-				if(SOUTH)
-					I.pixel_x = layer_diff * PIPING_LAYER_P_X
-					I.pixel_y = 4
-				if(EAST)
-					I.pixel_y = layer_diff * PIPING_LAYER_P_Y
-					I.pixel_x = -4
-				if(WEST)
-					I.pixel_y = layer_diff * PIPING_LAYER_P_Y
-					I.pixel_x = 4
-			add_overlay(I)
+	for(var/obj/machinery/atmospherics/A in front_nodes)
+		var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]")
+		I.dir = A.dir
+		I.pixel_x = A.pixel_x
+		I.pixel_y = A.pixel_y
+		add_overlay(I)
+	for(var/obj/machinery/atmospherics/A in front_nodes)
+		var/image/I = image('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]")
+		I.dir = A.dir
+		I.pixel_x = A.pixel_x
+		I.pixel_y = A.pixel_y
+		add_overlay(I)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
 	switch(dir)
