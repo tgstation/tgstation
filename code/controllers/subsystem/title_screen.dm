@@ -6,6 +6,7 @@ var/datum/controller/subsystem/title/SStitle
 
 	var/file_path
 	var/icon/icon
+	var/icon/previous_icon
 	var/turf/closed/indestructible/splashscreen/splash_turf
 
 /datum/controller/subsystem/title/New()
@@ -13,6 +14,10 @@ var/datum/controller/subsystem/title/SStitle
 
 	if(file_path && icon)
 		return
+
+	if(fexists("data/previous_title.dat"))
+		previous_icon = new("data/previous_title.dat")
+		fdel("data/previous_title.dat")	//linger not
 
 	var/list/provisional_title_screens = flist("config/title_screens/images/")
 	var/list/title_screens = list()
@@ -38,7 +43,12 @@ var/datum/controller/subsystem/title/SStitle
 		if(splash_turf)
 			splash_turf.icon = icon
 
+/datum/controller/subsystem/title/Shutdown()
+	if(file_path)
+		fcopy(file_path, "data/previous_title.dat")
+
 /datum/controller/subsystem/title/Recover()
 	icon = SStitle.icon
 	splash_turf = SStitle.splash_turf
 	file_path = SStitle.file_path
+	previous_icon = SStitle.previous_icon

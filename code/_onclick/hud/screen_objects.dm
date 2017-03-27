@@ -680,12 +680,14 @@
 	if(!visible)
 		alpha = 0
 
-	if(SStitle.icon)
-		icon = SStitle.icon
+	if(!use_previous_title)
+		if(SStitle.icon)
+			icon = SStitle.icon
+	else
+		if(SStitle.previous_icon)
+			icon = SStitle.previous_icon
 
 	holder.screen += src
-	if(use_previous_title && !SSmapping.previous_map_config.defaulted)
-		holder.screen -= src	//Yell at Cyberboss to finish this
 
 	..()
 
