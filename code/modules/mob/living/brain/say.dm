@@ -16,7 +16,7 @@
 	if(message_mode && istype(container, /obj/item/device/mmi))
 		var/obj/item/device/mmi/R = container
 		if(R.radio)
-			R.radio.talk_into(src, message, , spans, language)
+			R.radio.talk_into(src, message, , get_spans(), language)
 			return ITALICS | REDUCE_RANGE
 
 /mob/living/brain/lingcheck()
