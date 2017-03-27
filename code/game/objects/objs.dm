@@ -25,11 +25,23 @@
 
 	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/unique_rename = 0 // can you customize the description/name of the thing?
+	
+	var/dangerous_possession = FALSE	//Admin possession yes/no
 
 	var/bp_name	//the name as it appears in stack recipes, null uses name
 	var/construction_blueprint	//The type of the construction blueprint datum this object uses, set by the CONSTRUCTION_BLUEPRINT macro
 	var/datum/construction_state/current_construction_state	//The current construction_state of the object, null means fully constructed
 	var/list/stored_construction_items	//Items cached inside this object during construction
+
+/obj/vv_edit_var(vname, vval)
+	switch(vname)
+		if("dangerous_possession")
+			return FALSE
+		if("control_object")
+			var/obj/O = vval
+			if(istype(O) && O.dangerous_possession)
+				return FALSE
+	..()
 
 /obj/Initialize()
 	..()

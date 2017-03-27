@@ -109,7 +109,7 @@
 /obj/effect/mob_spawn/human/golem/New(loc, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
 	..()
 	if(species)
-		name += " ([initial(species.id)])"
+		name += " ([initial(species.prefix)])"
 		mob_species = species
 	var/area/A = get_area(src)
 	if(A)
@@ -120,26 +120,7 @@
 		owner = creator
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
-	var/golem_surname = pick(golem_names)
-	// 3% chance that our golem has a human surname, because
-	// cultural contamination
-	if(prob(3))
-		golem_surname = pick(last_names)
-
 	var/datum/species/golem/X = mob_species
-	var/golem_forename = initial(X.id)
-
-	// The id of golem species is either their material "diamond","gold",
-	// or just "golem" for the plain ones. So we're using it for naming.
-
-	if(golem_forename == "golem")
-		golem_forename = "iron"
-
-	new_spawn.real_name = "[capitalize(golem_forename)] [golem_surname]"
-	// This means golems have names like Iron Forge, or Diamond Quarry
-	// also a tiny chance of being called "Plasma Meme"
-	// which is clearly a feature
-
 	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)
 		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
@@ -151,6 +132,7 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
+		H.real_name = H.dna.species.random_name()
 
 /obj/effect/mob_spawn/human/golem/adamantine
 	name = "dust-caked golem shell"
