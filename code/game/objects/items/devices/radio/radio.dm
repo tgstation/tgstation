@@ -189,6 +189,10 @@
 				. = TRUE
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
+	if(!spans)
+		spans = M.get_spans()
+	if(!language)
+		language = M.get_default_language()
 	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans, language)
 	return ITALICS | REDUCE_RANGE
 
