@@ -196,6 +196,11 @@ var/next_external_rsc = 0
 
 	. = ..()	//calls mob.Login()
 
+	if("server_hop" in tdata)
+		var/obj/screen/splash/S = new(src, TRUE)
+		S.icon = new /icon(tdata["server_hop"])
+		S.Fade(TRUE)
+
 	connection_time = world.time
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
