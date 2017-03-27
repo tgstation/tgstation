@@ -507,14 +507,14 @@
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(REDTEAM_FREQ)
+	R.set_frequency(GLOB.REDTEAM_FREQ)
 	R.freqlock = TRUE
 	R.independent = TRUE
 
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(BLUETEAM_FREQ)
+	R.set_frequency(GLOB.BLUETEAM_FREQ)
 	R.freqlock = TRUE
 	R.independent = TRUE
 

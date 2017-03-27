@@ -389,7 +389,7 @@
 /obj/machinery/airalarm/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_TO_AIRALARM)
 
 /obj/machinery/airalarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
@@ -403,7 +403,7 @@
 	signal.data["tag"] = target
 	signal.data["sigtype"] = "command"
 
-	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
+	radio_connection.post_signal(src, signal, GLOB.RADIO_FROM_AIRALARM)
 //			to_chat(world, text("Signal [] Broadcasted to []", command, target))
 
 	return 1

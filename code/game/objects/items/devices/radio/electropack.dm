@@ -19,7 +19,7 @@
 
 /obj/item/device/electropack/Initialize()
 	..()
-	SSradio.add_object(src, frequency, RADIO_CHAT)
+	SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 
 /obj/item/device/electropack/Destroy()
 	if(SSradio)
@@ -66,7 +66,7 @@
 		if(href_list["freq"])
 			SSradio.remove_object(src, frequency)
 			frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
-			SSradio.add_object(src, frequency, RADIO_CHAT)
+			SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 		else
 			if(href_list["code"])
 				code += text2num(href_list["code"])

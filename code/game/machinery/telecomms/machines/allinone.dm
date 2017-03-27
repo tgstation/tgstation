@@ -33,7 +33,7 @@
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
 		/* ###### Broadcast a message using signal.data ###### */
-		if(signal.frequency == SYND_FREQ) // if syndicate broadcast, just
+		if(signal.frequency == GLOB.SYND_FREQ) // if syndicate broadcast, just
 			Broadcast_Message(signal.data["mob"],
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],

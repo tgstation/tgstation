@@ -58,7 +58,7 @@
 /obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, receive_frequency)
 	receive_frequency = new_frequency
-	radio_connection = SSradio.add_object(src, receive_frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, receive_frequency, GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return

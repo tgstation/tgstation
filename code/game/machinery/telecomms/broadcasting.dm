@@ -121,8 +121,8 @@
 				radios += R
 
 		var/freqtext = num2text(freq)
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[SYND_FREQ]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
-			if(R.receive_range(SYND_FREQ, list(R.z)) > -1 && freqtext in GLOB.reverseradiochannels)
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[GLOB.SYND_FREQ]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
+			if(R.receive_range(GLOB.SYND_FREQ, list(R.z)) > -1 && freqtext in GLOB.reverseradiochannels)
 				radios |= R
 
 	// Get a list of mobs who can hear from the radios we collected.
@@ -190,7 +190,7 @@
 	// --- Broadcast only to intercom devices ---
 
 	if(data == 1)
-		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/intercom/R in connection.devices["[GLOB.RADIO_CHAT]"])
 			var/turf/position = get_turf(R)
 			if(position && position.z == level)
 				receive |= R.send_hear(display_freq, level)
@@ -199,7 +199,7 @@
 	// --- Broadcast only to intercoms and station-bounced radios ---
 
 	else if(data == 2)
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/R in connection.devices["[GLOB.RADIO_CHAT]"])
 			if(R.subspace_transmission)
 				continue
 			var/turf/position = get_turf(R)
@@ -210,25 +210,25 @@
 	// --- Broadcast to syndicate radio! ---
 
 	else if(data == 3)
-		var/datum/radio_frequency/syndicateconnection = SSradio.return_frequency(SYND_FREQ)
+		var/datum/radio_frequency/syndicateconnection = SSradio.return_frequency(GLOB.SYND_FREQ)
 
-		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/R in syndicateconnection.devices["[GLOB.RADIO_CHAT]"])
 			var/turf/position = get_turf(R)
 			if(position && position.z == level)
-				receive |= R.send_hear(SYND_FREQ)
+				receive |= R.send_hear(GLOB.SYND_FREQ)
 
 	// --- Centcom radio, yo. ---
 
 	else if(data == 5)
 
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[RADIO_CHAT]"])
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[GLOB.RADIO_CHAT]"])
 			if(R.independent)
 				receive |= R.send_hear(display_freq)
 
 	// --- Broadcast to ALL radio devices ---
 
 	else
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/R in connection.devices["[GLOB.RADIO_CHAT]"])
 			var/turf/position = get_turf(R)
 			if(position && position.z == level)
 				receive |= R.send_hear(display_freq)
@@ -281,23 +281,23 @@
 		// --- Set the name of the channel ---
 		switch(display_freq)
 
-			if(SYND_FREQ)
+			if(GLOB.SYND_FREQ)
 				freq_text = "#unkn"
-			if(COMM_FREQ)
+			if(GLOB.COMM_FREQ)
 				freq_text = "Command"
-			if(SCI_FREQ)
+			if(GLOB.SCI_FREQ)
 				freq_text = "Science"
-			if(MED_FREQ)
+			if(GLOB.MED_FREQ)
 				freq_text = "Medical"
-			if(ENG_FREQ)
+			if(GLOB.ENG_FREQ)
 				freq_text = "Engineering"
-			if(SEC_FREQ)
+			if(GLOB.SEC_FREQ)
 				freq_text = "Security"
-			if(SERV_FREQ)
+			if(GLOB.SERV_FREQ)
 				freq_text = "Service"
-			if(SUPP_FREQ)
+			if(GLOB.SUPP_FREQ)
 				freq_text = "Supply"
-			if(AIPRIV_FREQ)
+			if(GLOB.AIPRIV_FREQ)
 				freq_text = "AI Private"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
@@ -319,25 +319,25 @@
 		var/part_b = "</span><b> \icon[radio]\[[freq_text]\][part_b_extra]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 
-		if (display_freq==SYND_FREQ)
+		if (display_freq==GLOB.SYND_FREQ)
 			part_a = "<span class='syndradio'><span class='name'>"
-		else if (display_freq==COMM_FREQ)
+		else if (display_freq==GLOB.COMM_FREQ)
 			part_a = "<span class='comradio'><span class='name'>"
-		else if (display_freq==SCI_FREQ)
+		else if (display_freq==GLOB.SCI_FREQ)
 			part_a = "<span class='sciradio'><span class='name'>"
-		else if (display_freq==MED_FREQ)
+		else if (display_freq==GLOB.MED_FREQ)
 			part_a = "<span class='medradio'><span class='name'>"
-		else if (display_freq==ENG_FREQ)
+		else if (display_freq==GLOB.ENG_FREQ)
 			part_a = "<span class='engradio'><span class='name'>"
-		else if (display_freq==SEC_FREQ)
+		else if (display_freq==GLOB.SEC_FREQ)
 			part_a = "<span class='secradio'><span class='name'>"
-		else if (display_freq==SERV_FREQ)
+		else if (display_freq==GLOB.SERV_FREQ)
 			part_a = "<span class='servradio'><span class='name'>"
-		else if (display_freq==SUPP_FREQ)
+		else if (display_freq==GLOB.SUPP_FREQ)
 			part_a = "<span class='suppradio'><span class='name'>"
-		else if (display_freq==CENTCOM_FREQ)
+		else if (display_freq==GLOB.CENTCOM_FREQ)
 			part_a = "<span class='centcomradio'><span class='name'>"
-		else if (display_freq==AIPRIV_FREQ)
+		else if (display_freq==GLOB.AIPRIV_FREQ)
 			part_a = "<span class='aiprivradio'><span class='name'>"
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---

@@ -201,7 +201,7 @@
 	abductor.announce_objectives()
 
 /datum/game_mode/abduction/proc/equip_common(mob/living/carbon/human/agent,team_number)
-	var/radio_freq = SYND_FREQ
+	var/radio_freq = GLOB.SYND_FREQ
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(agent)
 	R.set_frequency(radio_freq)

@@ -334,7 +334,7 @@
 
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(SYND_FREQ)
+	R.set_frequency(GLOB.SYND_FREQ)
 	R.freqlock = 1
 
 	if(tc)

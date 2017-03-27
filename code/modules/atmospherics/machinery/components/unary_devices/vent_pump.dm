@@ -178,8 +178,8 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
 	//some vents work his own spesial way
-	radio_filter_in = frequency==1439?(RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==1439?(RADIO_TO_AIRALARM):null
+	radio_filter_in = frequency==1439?(GLOB.RADIO_FROM_AIRALARM):null
+	radio_filter_out = frequency==1439?(GLOB.RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
 	broadcast_status()

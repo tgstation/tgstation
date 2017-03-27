@@ -316,13 +316,13 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			var/radio_freq
 			switch(text2num(href_list["emergency"]))
 				if(1) //Security
-					radio_freq = SEC_FREQ
+					radio_freq = GLOB.SEC_FREQ
 					emergency = "Security"
 				if(2) //Engineering
-					radio_freq = ENG_FREQ
+					radio_freq = GLOB.ENG_FREQ
 					emergency = "Engineering"
 				if(3) //Medical
-					radio_freq = MED_FREQ
+					radio_freq = GLOB.MED_FREQ
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
@@ -354,17 +354,17 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				var/radio_freq = 0
 				switch(href_list["department"])
 					if("bridge")
-						radio_freq = COMM_FREQ
+						radio_freq = GLOB.COMM_FREQ
 					if("medbay")
-						radio_freq = MED_FREQ
+						radio_freq = GLOB.MED_FREQ
 					if("science")
-						radio_freq = SCI_FREQ
+						radio_freq = GLOB.SCI_FREQ
 					if("engineering")
-						radio_freq = ENG_FREQ
+						radio_freq = GLOB.ENG_FREQ
 					if("security")
-						radio_freq = SEC_FREQ
+						radio_freq = GLOB.SEC_FREQ
 					if("cargobay" || "mining")
-						radio_freq = SUPP_FREQ
+						radio_freq = GLOB.SUPP_FREQ
 				Radio.set_frequency(radio_freq)
 				var/authentic
 				if(msgVerified || msgStamped)

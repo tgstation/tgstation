@@ -54,12 +54,12 @@
 	set name = "Radio report"
 
 	var/filters = list(
-		"1" = "RADIO_TO_AIRALARM",
-		"2" = "RADIO_FROM_AIRALARM",
-		"3" = "RADIO_CHAT",
-		"4" = "RADIO_ATMOSIA",
-		"5" = "RADIO_NAVBEACONS",
-		"6" = "RADIO_AIRLOCK",
+		"1" = "GLOB.RADIO_TO_AIRALARM",
+		"2" = "GLOB.RADIO_FROM_AIRALARM",
+		"3" = "GLOB.RADIO_CHAT",
+		"4" = "GLOB.RADIO_ATMOSIA",
+		"5" = "GLOB.RADIO_NAVBEACONS",
+		"6" = "GLOB.RADIO_AIRLOCK",
 		"7" = "RADIO_SECBOT",
 		"8" = "RADIO_MULEBOT",
 		"_default" = "NO_FILTER"

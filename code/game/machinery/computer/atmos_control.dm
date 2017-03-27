@@ -37,13 +37,13 @@
 				var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
 				signal.data["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
-		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+		radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
 
 /obj/machinery/air_sensor/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/air_sensor/Initialize()
 	..()
@@ -131,7 +131,7 @@
 /obj/machinery/computer/atmos_control/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL
@@ -216,7 +216,7 @@
 				target =  Clamp(target, 0, 50 * ONE_ATMOSPHERE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_control/tank/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption)
