@@ -37,6 +37,9 @@
 #define AIRLOCK_DAMAGE_DEFLECTION_N  20  // Normal airlock damage deflection
 #define AIRLOCK_DAMAGE_DEFLECTION_R  30  // Reinforced airlock damage deflection
 
+#define NOT_ELECTRIFIED 0
+#define ELECTRIFIED_PERMANENT -1
+
 
 var/list/airlock_overlays = list()
 
@@ -264,7 +267,7 @@ var/list/airlock_overlays = list()
 	user.Weaken(3)
 
 /obj/machinery/door/airlock/proc/isElectrified()
-	if(src.secondsElectrified != 0)
+	if(src.secondsElectrified != NOT_ELECTRIFIED)
 		return 1
 	return 0
 
@@ -617,10 +620,10 @@ var/list/airlock_overlays = list()
 
 	if(wires.is_cut(WIRE_SHOCK))
 		t1 += text("Electrification wire is cut.<br>\n")
-	if(src.secondsElectrified==-1)
+	if(secondsElectrified==ELECTRIFIED_PERMANENT)
 		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src)
-	else if(src.secondsElectrified>0)
-		t1 += text("Door is electrified temporarily ([] seconds). <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src.secondsElectrified, src)
+	else if(secondsElectrified>NOT_ELECTRIFIED)
+		t1 += text("Door is electrified temporarily ([] seconds). <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", secondsElectrified, src)
 	else
 		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify it for 30 seconds?</a> Or, <A href='?src=\ref[];aiEnable=6'>Electrify it indefinitely until someone cancels the electrification?</a><br>\n", src, src)
 
@@ -792,9 +795,7 @@ var/list/airlock_overlays = list()
 					//un-electrify door
 					if(wires.is_cut(WIRE_SHOCK))
 						to_chat(usr, text("Can't un-electrify the airlock - The electrification wire is cut."))
-					else if(secondsElectrified==-1)
-						set_electrified(0)
-					else if(secondsElectrified>0)
+					else if(isElectrified())
 						set_electrified(0)
 
 				if(8)
@@ -871,33 +872,33 @@ var/list/airlock_overlays = list()
 					//electrify door for 30 seconds
 					if(wires.is_cut(WIRE_SHOCK))
 						to_chat(usr, text("The electrification wire has been cut.<br>\n"))
-					else if(src.secondsElectrified==-1)
+					else if(secondsElectrified==ELECTRIFIED_PERMANENT)
 						to_chat(usr, text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br>\n"))
-					else if(src.secondsElectrified!=0)
+					else if(isElectrified())
 						to_chat(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n"))
 					else
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						add_logs(usr, src, "electrified")
 						set_electrified(30)
 						spawn(10)
-							while (src.secondsElectrified>0)
-								src.secondsElectrified-=1
-								if(src.secondsElectrified<0)
-									set_electrified(0)
-								src.updateUsrDialog()
+							while (secondsElectrified > 0)
+								secondsElectrified--
+								if(secondsElectrified <= 0)
+									set_electrified(NOT_ELECTRIFIED)
+								updateUsrDialog()
 								sleep(10)
 				if(6)
 					//electrify door indefinitely
 					if(wires.is_cut(WIRE_SHOCK))
 						to_chat(usr, text("The electrification wire has been cut.<br>\n"))
-					else if(src.secondsElectrified==-1)
+					else if(secondsElectrified==ELECTRIFIED_PERMANENT)
 						to_chat(usr, text("The door is already indefinitely electrified.<br>\n"))
-					else if(src.secondsElectrified!=0)
+					else if(isElectrified())
 						to_chat(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n"))
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						add_logs(usr, src, "electrified")
-						set_electrified(-1)
+						set_electrified(ELECTRIFIED_PERMANENT)
 
 				if (8) // Not in order >.>
 					// Safeties!  Maybe we do need some stinking safeties!
@@ -1465,7 +1466,7 @@ var/list/airlock_overlays = list()
 		safe = FALSE //DOOR CRUSH
 		close()
 		bolt() //Bolt it!
-		set_electrified(-1)  //Shock it!
+		set_electrified(ELECTRIFIED_PERMANENT)  //Shock it!
 		if(origin)
 			shockedby += "\[[time_stamp()]\][origin](ckey:[origin.ckey])"
 
@@ -1474,7 +1475,7 @@ var/list/airlock_overlays = list()
 	// Must be powered and have working AI wire.
 	if(canAIControl(src) && !stat)
 		unbolt()
-		set_electrified(0)
+		set_electrified(NOT_ELECTRIFIED)
 		open()
 		safe = TRUE
 
@@ -1546,3 +1547,26 @@ var/list/airlock_overlays = list()
 			qdel(src)
 			return TRUE
 	return FALSE
+
+#undef AIRLOCK_CLOSED
+#undef AIRLOCK_CLOSING
+#undef AIRLOCK_OPEN
+#undef AIRLOCK_OPENING
+#undef AIRLOCK_DENY
+#undef AIRLOCK_EMAG
+
+#undef AIRLOCK_SECURITY_NONE
+#undef AIRLOCK_SECURITY_METAL
+#undef AIRLOCK_SECURITY_PLASTEEL_I_S
+#undef AIRLOCK_SECURITY_PLASTEEL_I
+#undef AIRLOCK_SECURITY_PLASTEEL_O_S
+#undef AIRLOCK_SECURITY_PLASTEEL_O
+#undef AIRLOCK_SECURITY_PLASTEEL
+
+#undef AIRLOCK_INTEGRITY_N
+#undef AIRLOCK_INTEGRITY_MULTIPLIER
+#undef AIRLOCK_DAMAGE_DEFLECTION_N
+#undef AIRLOCK_DAMAGE_DEFLECTION_R
+
+#undef NOT_ELECTRIFIED
+#undef ELECTRIFIED_PERMANENT

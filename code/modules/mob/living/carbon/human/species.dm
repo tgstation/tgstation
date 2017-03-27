@@ -1073,7 +1073,6 @@
 		return 1
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-		add_logs(user, target, "disarmed")
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
@@ -1085,23 +1084,23 @@
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(2, WEAKEN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(hit_appends)
+			add_logs(user, target, "disarmed", " pushing them to the ground")
 			return
 
-		var/talked = 0	// BubbleWrap
-
 		if(randn <= 60)
-			//BubbleWrap: Disarming breaks a pull
+			var/obj/item/I = null
 			if(target.pulling)
 				to_chat(target, "<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
-				talked = 1
 				target.stop_pulling()
-			//End BubbleWrap
-
-			if(!talked)	//BubbleWrap
+			else
+				I = target.get_active_held_item()
 				if(target.drop_item())
 					target.visible_message("<span class='danger'>[user] has disarmed [target]!</span>", \
 						"<span class='userdanger'>[user] has disarmed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+				else
+					I = null
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			add_logs(user, target, "disarmed", "[I ? " removing \the [I]" : ""]")
 			return
 
 

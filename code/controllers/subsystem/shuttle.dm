@@ -452,6 +452,7 @@ SUBSYSTEM_DEF(shuttle)
 	//to_chat(world, "Making transit dock at [COORD(midpoint)]")
 	var/area/shuttle/transit/A = new()
 	A.parallax_movedir = travel_dir
+	A.contents = proposed_zone
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
@@ -467,7 +468,6 @@ SUBSYSTEM_DEF(shuttle)
 		var/turf/T = i
 		T.ChangeTurf(transit_path)
 		T.flags &= ~(UNUSED_TRANSIT_TURF)
-		A.contents += T
 
 	M.assigned_transit = new_transit_dock
 	return TRUE

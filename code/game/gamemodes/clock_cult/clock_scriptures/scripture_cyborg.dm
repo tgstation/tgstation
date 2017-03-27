@@ -49,3 +49,4 @@
 /datum/clockwork_scripture/channeled/volt_void/cyborg
 	quickbind_desc = "Allows you to fire energy rays at target locations using your own power. Failing to fire causes backlash.<br><b>Maximum 4 chants.</b>"
 	tier = SCRIPTURE_PERIPHERAL
+	quickbind = FALSE

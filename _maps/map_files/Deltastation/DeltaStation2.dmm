@@ -9588,15 +9588,11 @@
 "atl" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall/r_wall,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "atm" = (
 /obj/machinery/status_display,
 /turf/closed/wall/r_wall,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "atn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -10244,9 +10240,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "auC" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -10256,9 +10250,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/circuit/green,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "auD" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -10267,9 +10259,7 @@
 	},
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "auE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -10277,18 +10267,14 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/engine,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "auF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
 	},
 /turf/open/floor/engine,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "auG" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -10296,9 +10282,7 @@
 	},
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "auH" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -10308,9 +10292,7 @@
 	d2 = 4
 	},
 /turf/open/floor/circuit/green,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "auI" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -10326,9 +10308,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "auJ" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -10878,15 +10858,11 @@
 	},
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "avQ" = (
 /obj/machinery/power/supermatter_shard/crystal,
 /turf/open/floor/engine,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "avR" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -10895,9 +10871,7 @@
 	},
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "avS" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -10914,9 +10888,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "avT" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -11410,9 +11382,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "awV" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -11885,18 +11855,14 @@
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "axQ" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
 /obj/machinery/meter,
 /turf/closed/wall/r_wall,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "axR" = (
 /obj/machinery/door/airlock/glass_atmos{
 	heat_proof = 1;
@@ -11905,9 +11871,7 @@
 	req_one_access_txt = "24;10"
 	},
 /turf/open/floor/engine,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "axS" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	icon_state = "intact";
@@ -11915,17 +11879,13 @@
 	},
 /obj/machinery/meter,
 /turf/closed/wall/r_wall,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "axT" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "axU" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -12556,9 +12516,7 @@
 	name = "Gas to Filter"
 	},
 /turf/open/floor/engine,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "azf" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -12566,9 +12524,7 @@
 	name = "Gas to Chamber"
 	},
 /turf/open/floor/engine,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "azg" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/structure/extinguisher_cabinet{
@@ -13108,9 +13064,7 @@
 "aAd" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "aAe" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/effect/turf_decal/bot,
@@ -13669,9 +13623,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "aBe" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/machinery/meter,
@@ -110595,9 +110547,7 @@
 	})
 "ebG" = (
 /turf/open/floor/engine,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "ebJ" = (
 /obj/machinery/door/window/brigdoor/northleft{
 	name = "Captain's Desk";
@@ -112888,9 +112838,7 @@
 	network = list("Engine")
 	},
 /turf/open/floor/circuit/green,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
+/area/engine/supermatter)
 "ehz" = (
 /obj/structure/chair/office/dark{
 	dir = 8
@@ -112900,6 +112848,49 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/atmos)
+"ehA" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehB" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehC" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/supermatter)
+"ehE" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehF" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehG" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehH" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehI" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehJ" = (
+/obj/structure/sign/radiation,
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehK" = (
+/obj/structure/sign/radiation,
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehL" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehM" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
 
 (1,1,1) = {"
 aaa
@@ -137907,11 +137898,11 @@ aoI
 apK
 ard
 asi
-aiW
+ehA
 auC
 auC
 auC
-aiW
+ehH
 azc
 aAc
 aAZ
@@ -138164,13 +138155,13 @@ aoJ
 apL
 are
 asj
-aiW
+ehB
 auD
 avP
 avP
 axP
-azd
-aiW
+ehJ
+ehL
 aAY
 ark
 aDH
@@ -138421,7 +138412,7 @@ aoK
 apM
 arf
 ask
-aiW
+ehC
 auE
 auE
 auE
@@ -138678,7 +138669,7 @@ aoK
 apN
 arg
 asl
-aoK
+ehD
 ebG
 avQ
 ebG
@@ -138935,7 +138926,7 @@ aoK
 apO
 arh
 asm
-aiW
+ehE
 auF
 auF
 auF
@@ -139192,13 +139183,13 @@ aoL
 apP
 ari
 asn
-aiW
+ehF
 auG
 avR
 avR
 axT
-azd
-aiW
+ehK
+ehM
 aBd
 ark
 aDL
@@ -139449,11 +139440,11 @@ aoI
 apK
 ebP
 aso
-aiW
+ehG
 ehy
 auH
 auH
-aiW
+ehI
 azg
 aAe
 aBe

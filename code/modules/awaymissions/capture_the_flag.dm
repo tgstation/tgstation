@@ -145,11 +145,10 @@
 	var/ctf_gear = /datum/outfit/ctf
 	var/instagib_gear = /datum/outfit/ctf/instagib
 
-	var/list/obj/effect/ctf/dead_barricade/dead_barricades = list()
-	var/list/obj/structure/barricade/security/ctf/living_barricades = list()
+	var/list/dead_barricades = list()
 
 	var/static/ctf_object_typecache
-	var/static/arena_cleared = FALSE
+	var/static/arena_reset = FALSE
 
 /obj/machinery/capture_the_flag/Initialize()
 	..()
@@ -289,7 +288,7 @@
 			CTF.control_points = 0
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
-			CTF.arena_cleared = FALSE
+			CTF.arena_reset = FALSE
 			addtimer(CALLBACK(CTF, .proc/start_ctf), 300)
 
 /obj/machinery/capture_the_flag/proc/toggle_ctf()
@@ -308,25 +307,24 @@
 
 	dead_barricades.Cut()
 
-	for(var/b in living_barricades)
-		var/obj/structure/barricade/security/ctf/B = b
-		B.obj_integrity = B.max_integrity
-
 	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=\ref[src];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
 
-	if(!arena_cleared)
-		clear_the_arena()
-		arena_cleared = TRUE
+	if(!arena_reset)
+		reset_the_arena()
+		arena_reset = TRUE
 
-/obj/machinery/capture_the_flag/proc/clear_the_arena()
+/obj/machinery/capture_the_flag/proc/reset_the_arena()
 	var/area/A = get_area(src)
 	for(var/atm in A)
 		if(!is_type_in_typecache(atm, ctf_object_typecache))
 			qdel(atm)
+		if(istype(atm, /obj/structure))
+			var/obj/structure/S = atm
+			S.obj_integrity = S.max_integrity
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
 	ctf_enabled = FALSE
-	arena_cleared = FALSE
+	arena_reset = FALSE
 	var/area/A = get_area(src)
 	for(var/i in mob_list)
 		var/mob/M = i
@@ -433,6 +431,7 @@
 
 /obj/item/projectile/beam/ctf/red
 	icon_state = "laser"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/red_laser
 
 // BLUE TEAM GUNS
 
@@ -447,6 +446,7 @@
 
 /obj/item/projectile/beam/ctf/blue
 	icon_state = "bluelaser"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
 
 /datum/outfit/ctf
 	name = "CTF"
@@ -485,7 +485,6 @@
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/red
-	ears = /obj/item/device/radio/headset/syndicate/alt
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
@@ -496,7 +495,6 @@
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/blue
-	ears = /obj/item/device/radio/headset/headset_cent/commander
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
@@ -509,14 +507,16 @@
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(SYND_FREQ)
-	R.freqlock = 1
+	R.set_frequency(REDTEAM_FREQ)
+	R.freqlock = TRUE
+	R.independent = TRUE
 
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(CENTCOM_FREQ)
-	R.freqlock = 1
+	R.set_frequency(BLUETEAM_FREQ)
+	R.freqlock = TRUE
+	R.independent = TRUE
 
 
 
@@ -551,16 +551,6 @@
 	desc = "A barrier. Provides cover in fire fights."
 	deploy_time = 0
 	deploy_message = 0
-
-/obj/structure/barricade/security/ctf/Initialize(mapload)
-	..()
-	for(var/obj/machinery/capture_the_flag/CTF in machines)
-		CTF.living_barricades += src
-
-/obj/structure/barricade/security/ctf/Destroy()
-	for(var/obj/machinery/capture_the_flag/CTF in machines)
-		CTF.living_barricades -= src
-	. = ..()
 
 /obj/structure/barricade/security/ctf/make_debris()
 	new /obj/effect/ctf/dead_barricade(get_turf(src))

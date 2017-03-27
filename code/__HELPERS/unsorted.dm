@@ -232,7 +232,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/active_free_borgs()
 	. = list()
 	for(var/mob/living/silicon/robot/R in living_mob_list)
-		if(R.connected_ai)
+		if(R.connected_ai || R.shell)
 			continue
 		if(R.stat == DEAD)
 			continue
@@ -1313,7 +1313,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		else
 			. = ""
 
-/var/mob/dview/dview_mob = new
+var/mob/dead/dview/dview_mob = new
 
 //Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
 /proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
@@ -1327,21 +1327,24 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	. = view(range, dview_mob)
 	dview_mob.loc = null
 
-/mob/dview
+/mob/dead/dview
+	name = "INTERNAL DVIEW MOB"
 	invisibility = 101
-	density = 0
+	density = FALSE
 	see_in_dark = 1e6
-	anchored = 1
+	anchored = TRUE
+	var/ready_to_die = FALSE
 
-/mob/dview/Destroy(force=0)
-	stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
+/mob/dead/dview/Destroy(force = FALSE)
+	if(!ready_to_die)
+		stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
 
-	if (!force)
-		return QDEL_HINT_LETMELIVE
+		if (!force)
+			return QDEL_HINT_LETMELIVE
 
-	world.log << "EVACUATE THE SHITCODE IS TRYING TO STEAL MUH JOBS"
-	global.dview_mob = new
-	return QDEL_HINT_QUEUE
+		log_world("EVACUATE THE SHITCODE IS TRYING TO STEAL MUH JOBS")
+		dview_mob = new
+	return ..()
 
 
 #define FOR_DVIEW(type, range, center, invis_flags) \
