@@ -139,7 +139,7 @@
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/reset_nezbere_invocation), 600)
 	return TRUE
 
-/proc/reset_invocation()
+/proc/reset_nezbere_invocation()
 	nezbere_invoked--
 	for(var/obj/O in all_clockwork_objects)
 		O.ratvar_act()
