@@ -294,10 +294,10 @@
 	if(!active)
 		if(istype(O, /obj/item/weapon/wrench))
 			if(!anchored && !isinspace())
-				user << "<span class='notice'>You secure the [src] to the floor.</span>"
+				to_chat(user,"<span class='notice'>You secure the [src] to the floor.</span>")
 				anchored = TRUE
 			else if(anchored)
-				user << "<span class='notice'>You unsecure and disconnect the [src].</span>"
+				to_chat(user,"<span class='notice'>You unsecure and disconnect the [src].</span>")
 				anchored = FALSE
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 			return
@@ -306,10 +306,10 @@
 
 /obj/machinery/disco/interact(mob/user)
 	if (!anchored)
-		user << "<span class='warning'>This device must be anchored by a wrench!</span>"
+		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
 		return
 	if(!allowed(user))
-		user << "<span class='warning'>You are overwhelmed by the raw amount of data being displayed, only an engineer could operate such a sophisticated device.</span>"
+		to_chat(user,"<span class='warning'>You are overwhelmed by the raw amount of data being displayed, only an engineer could operate such a sophisticated device.</span>")
 		playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 		return
 	if(!Adjacent(user) && !isAI(user))
