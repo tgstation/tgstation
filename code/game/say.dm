@@ -118,7 +118,7 @@ var/list/freqtospan = list(
 	return "radio"
 
 /proc/get_radio_name(freq)
-	var/returntext = radiochannelsreverse["[freq]"]
+	var/returntext = GLOB.reverseradiochannels["[freq]"]
 	if(returntext)
 		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"

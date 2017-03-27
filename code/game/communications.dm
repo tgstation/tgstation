@@ -63,28 +63,28 @@
 /*	the radio controller is a confusing piece of shit and didnt work
 	so i made radios not use the radio controller.
 */
-var/list/all_radios = list()
+GLOBAL_LIST_INIT(all_radios, list())
 /proc/add_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
-	if(!all_radios["[freq]"])
-		all_radios["[freq]"] = list(radio)
+	if(!GLOB.all_radios["[freq]"])
+		GLOB.all_radios["[freq]"] = list(radio)
 		return freq
 
-	all_radios["[freq]"] |= radio
+	GLOB.all_radios["[freq]"] |= radio
 	return freq
 
 /proc/remove_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
-	if(!all_radios["[freq]"])
+	if(!GLOB.all_radios["[freq]"])
 		return
 
-	all_radios["[freq]"] -= radio
+	GLOB.all_radios["[freq]"] -= radio
 
 /proc/remove_radio_all(obj/item/radio)
-	for(var/freq in all_radios)
-		all_radios["[freq]"] -= radio
+	for(var/freq in GLOB.all_radios)
+		GLOB.all_radios["[freq]"] -= radio
 
 /*
 Frequency range: 1200 to 1600
@@ -139,7 +139,7 @@ var/list/radiochannels = list(
 	"Blue Team" = 1217
 )
 
-var/list/radiochannelsreverse = list(
+GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"1459" = "Common",
 	"1351" = "Science",
 	"1353" = "Command",
@@ -153,7 +153,7 @@ var/list/radiochannelsreverse = list(
 	"1447" = "AI Private",
 	"1215" = "Red Team",
 	"1217" = "Blue Team"
-)
+))
 
 //depenging helpers
 var/const/SYND_FREQ = 1213 //nuke op frequency, coloured dark brown in chat window

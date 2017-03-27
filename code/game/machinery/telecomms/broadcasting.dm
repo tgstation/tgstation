@@ -85,7 +85,7 @@
 	// --- Broadcast only to intercom devices ---
 
 	if(data == 1)
-		for(var/obj/item/device/radio/intercom/R in all_radios["[freq]"])
+		for(var/obj/item/device/radio/intercom/R in GLOB.all_radios["[freq]"])
 			if(R.receive_range(freq, level) > -1)
 				radios += R
 
@@ -93,7 +93,7 @@
 
 	else if(data == 2)
 
-		for(var/obj/item/device/radio/R in all_radios["[freq]"])
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
 			if(R.subspace_transmission)
 				continue
 
@@ -106,7 +106,7 @@
 
 	else if(data == 5)
 
-		for(var/obj/item/device/radio/R in all_radios["[freq]"])
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
 			if(!R.independent)
 				continue
 
@@ -116,13 +116,13 @@
 	// --- Broadcast to ALL radio devices ---
 
 	else
-		for(var/obj/item/device/radio/R in all_radios["[freq]"])
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
 			if(R.receive_range(freq, level) > -1)
 				radios += R
 
 		var/freqtext = num2text(freq)
-		for(var/obj/item/device/radio/R in all_radios["[SYND_FREQ]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
-			if(R.receive_range(SYND_FREQ, list(R.z)) > -1 && freqtext in radiochannelsreverse)
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[SYND_FREQ]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
+			if(R.receive_range(SYND_FREQ, list(R.z)) > -1 && freqtext in GLOB.reverseradiochannels)
 				radios |= R
 
 	// Get a list of mobs who can hear from the radios we collected.
@@ -221,7 +221,7 @@
 
 	else if(data == 5)
 
-		for(var/obj/item/device/radio/R in all_radios["[RADIO_CHAT]"])
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[RADIO_CHAT]"])
 			if(R.independent)
 				receive |= R.send_hear(display_freq)
 
