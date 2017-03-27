@@ -326,10 +326,9 @@
 	if((!on) || (!message))
 		return
 	if(channel && Radio.channels[channel])// Use radio if we have channel key
-		Radio.talk_into(src, message, channel, get_spans())
+		Radio.talk_into(src, message, channel, get_spans(), get_default_language())
 	else
 		say(message)
-	return
 
 /mob/living/simple_animal/bot/get_spans()
 	return ..() | SPAN_ROBOT
