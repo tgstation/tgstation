@@ -1181,10 +1181,10 @@ var/list/preferences_datums = list()
 
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
-					if(toggles & SOUND_LOBBY)
-						user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
+					if((toggles & SOUND_LOBBY) && user.client)
+						user.client.playtitlemusic()
 					else
-						user.stopLobbySound()
+						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 				if("ghost_ears")
 					chat_toggles ^= CHAT_GHOSTEARS

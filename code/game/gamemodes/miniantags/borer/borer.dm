@@ -336,7 +336,9 @@ var/total_borer_hosts_needed = 10
 		if(H!=src && Adjacent(H))
 			choices += H
 
-	var/mob/living/carbon/H = input(src,"Who do you wish to infest?") in null|choices
+	if(!choices.len)
+		return
+	var/mob/living/carbon/H = choices.len > 1 ? input(src,"Who do you wish to infest?") in null|choices : choices[1]
 	if(!H || !src)
 		return
 
@@ -464,11 +466,13 @@ var/total_borer_hosts_needed = 10
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
 			choices += C
+			
+	if(!choices.len)
+		return
+	var/mob/living/carbon/M = choices.len > 1 ? input(src,"Who do you wish to dominate?") in null|choices : choices[1]
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
 
-
-	if(!M || !src)
+	if(!M || !src || stat != CONSCIOUS || victim || (world.time - used_dominate < 150))
 		return
 	if(!Adjacent(M))
 		return

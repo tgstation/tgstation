@@ -131,6 +131,8 @@
 	max_integrity = 70
 	horizontal = TRUE
 	delivery_icon = "deliverycrate"
+	material_drop = /obj/item/stack/sheet/mineral/wood
+	material_drop_amount = 5
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"

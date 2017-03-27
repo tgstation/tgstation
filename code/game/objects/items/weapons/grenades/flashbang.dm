@@ -19,6 +19,8 @@
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
+	if(M.stat == DEAD)	//They're dead!
+		return
 	M.show_message("<span class='warning'>BANG</span>", 2)
 	playsound(loc, 'sound/weapons/flashbang.ogg', 100, 1)
 	var/distance = max(0,get_dist(get_turf(src),T))

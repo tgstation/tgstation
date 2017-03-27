@@ -23,7 +23,7 @@
 	var/subspace_switchable = 0
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
-	var/centcom = 0//Bleh, more dirty booleans
+	var/independent = FALSE // If true, bypasses any tcomms machinery.
 	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
@@ -58,7 +58,7 @@
 	channels = list()
 	translate_binary = 0
 	syndie = 0
-	centcom = 0
+	independent = FALSE
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
@@ -73,8 +73,8 @@
 		if(keyslot.syndie)
 			syndie = 1
 
-		if(keyslot.centcom)
-			centcom = 1
+		if(keyslot.independent)
+			independent = TRUE
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
@@ -299,9 +299,9 @@
 	else
 		jobname = "Unknown"
 
-	/* ###### Centcom channel bypasses all comms relays. ###### */
+	/* ###### `independent` radios bypass all comms relays. ###### */
 
-	if (freqnum == CENTCOM_FREQ && centcom)
+	if(independent)
 		var/datum/signal/signal = new
 		signal.transmission_method = 2
 		signal.data = list(
@@ -478,7 +478,7 @@
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
 	if(freq == CENTCOM_FREQ)
-		if (!(src.centcom))
+		if(!independent)
 			return -1
 	if (!on)
 		return -1
