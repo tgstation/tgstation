@@ -232,7 +232,7 @@
 			if(!(text2path(href_list["release"]) in stack_list))
 				return
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
-			var/obj/item/stack/sheet/out = new inp.type(src,merge=FALSE)
+			var/obj/item/stack/sheet/out = new inp.type(src, 0, FALSE)
 			var/desired = input("How many sheets?", "How many sheets to eject?", 1) as null|num
 			out.amount = round(min(desired,50,inp.amount))
 			if(out.amount)

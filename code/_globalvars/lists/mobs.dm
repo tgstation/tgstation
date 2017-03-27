@@ -14,3 +14,4 @@ GLOBAL_LIST_INIT(dead_mob_list, list())				//all dead mobs, including clientless
 GLOBAL_LIST_INIT(joined_player_list, list())			//all clients that have joined the game at round-start or as a latejoin.
 GLOBAL_LIST_INIT(silicon_mobs, list())				//all silicon mobs
 GLOBAL_LIST_INIT(pai_list, list())
+GLOBAL_LIST_INIT(available_ai_shells, list())

@@ -141,7 +141,7 @@
 				observer.real_name = observer.client.prefs.real_name
 				observer.name = observer.real_name
 			observer.update_icon()
-			observer.stopLobbySound()
+			observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 			qdel(mind)
 
 			qdel(src)
@@ -471,7 +471,7 @@
 	. = new_character
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
-		new_character.stopLobbySound()
+		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"

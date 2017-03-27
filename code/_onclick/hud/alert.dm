@@ -392,10 +392,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 						textlist += "<b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
 				textlist += "<br>"
 			else
-				if(G.ratvar_portal)
-					textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
-				else
-					textlist += "Seconds until Proselytization: <b>[G.get_arrival_text(TRUE)]</b><br>"
+				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
 		if(unconverted_ais_exist)
 			if(unconverted_ais_exist > 1)
 				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"

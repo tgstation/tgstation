@@ -528,6 +528,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		new R.product_path(get_turf(src))
+		feedback_add_details("vending_machine_usage","[R.product_path]|[src.type]")
 		vend_ready = 1
 		return
 

@@ -37,9 +37,11 @@
 			active_apc.update_icon()
 			active_apc = null
 
-/obj/machinery/computer/apc_control/attack_ai(mob/living/AI) //You already have APC access, cheater!
-	AI << "<span class='warning'>[src] does not support AI control.</span>"
-	return
+/obj/machinery/computer/apc_control/attack_ai(mob/living/AI)
+	if(!IsAdminGhost(src))
+		to_chat(AI,"<span class='warning'>[src] does not support AI control.</span>") //You already have APC access, cheater!
+		return
+	..(AI)
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
 	return APC.z == z && !APC.malfhack && !APC.aidisabled && !APC.emagged && !APC.stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors

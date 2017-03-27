@@ -67,6 +67,15 @@
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
 	var/can_be_held = TRUE //if assholes can pick us up
+	var/flavortext = \
+	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
+	"<span class='notify'>Drones are a ghost role that are allowed to fix the station and build things. Interfering with the round as a drone is against the rules.</span>\n"+\
+	"<span class='notify'>Actions that constitute interference include, but are not limited to:</span>\n"+\
+	"<span class='notify'>     - Interacting with round critical objects (IDs, weapons, contraband, powersinks, bombs, etc.)</span>\n"+\
+	"<span class='notify'>     - Interacting with living beings (communication, attacking, healing, etc.)</span>\n"+\
+	"<span class='notify'>     - Interacting with non-living beings (dragging bodies, looting bodies, etc.)</span>\n"+\
+	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
+	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
 
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
@@ -120,6 +129,9 @@
 /mob/living/simple_animal/drone/Login()
 	..()
 	check_laws()
+
+	if(flavortext)
+		to_chat(src, "[flavortext]")
 
 	updateSeeStaticMobs()
 

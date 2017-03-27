@@ -1,4 +1,4 @@
-LOBAL_LIST_INIT(cable_list, list())					//Index for all cables, so that powernets don't have to look through the entire world all the time
+GLOBAL_LIST_INIT(cable_list, list())					//Index for all cables, so that powernets don't have to look through the entire world all the time
 GLOBAL_LIST_INIT(portals, list())					//list of all /obj/effect/portal
 GLOBAL_LIST_INIT(airlocks, list())					//list of all airlocks
 GLOBAL_LIST_INIT(mechas_list, list())				//list of all mechs. Used by hostile mobs target tracking.

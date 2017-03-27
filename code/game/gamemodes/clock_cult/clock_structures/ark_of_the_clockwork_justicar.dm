@@ -19,7 +19,6 @@
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
 	var/fourth_sound_played = FALSE
-	var/ratvar_portal = TRUE //if the gateway actually summons ratvar or just produces a hugeass conversion burst
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
 	var/list/required_components = list(BELLIGERENT_EYE = 7, VANGUARD_COGWHEEL = 7, GEIS_CAPACITOR = 7, REPLICANT_ALLOY = 7, HIEROPHANT_ANSIBLE = 7)
@@ -164,7 +163,7 @@
 					to_chat(user, "<span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
 					<span class='[get_component_span(i)]_large'>[required_components[i]]</span>")
 		else
-			to_chat(user, "<span class='big'><b>Seconds until [ratvar_portal ? "Ratvar's arrival":"Proselytization"]:</b> [get_arrival_text(TRUE)]</span>")
+			to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
 			switch(progress_in_seconds)
 				if(-INFINITY to GATEWAY_REEBE_FOUND)
 					to_chat(user, "<span class='heavy_brass'>It's still opening.</span>")

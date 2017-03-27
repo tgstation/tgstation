@@ -291,8 +291,8 @@
 		if(keyslot2.syndie)
 			src.syndie = 1
 
-		if (keyslot2.centcom)
-			centcom = 1
+		if (keyslot2.independent)
+			independent = TRUE
 
 
 	for(var/ch_name in channels)
@@ -300,7 +300,9 @@
 
 	return
 
-/obj/item/device/radio/headset/AltClick(mob/user)
+/obj/item/device/radio/headset/AltClick(mob/living/user)
+	if(!istype(user) || !Adjacent(user) || user.incapacitated())
+		return
 	if (command)
 		use_command = !use_command
-		to_chat(user, "<span class='notice'>You toggle high-volume mode.</span>")
+		to_chat(user, "<span class='notice'>You toggle high-volume mode [use_command ? "on" : "off"].</span>")

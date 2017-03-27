@@ -18,6 +18,14 @@
 		. = is_eligible_servant(new_body)
 
 /datum/antagonist/clockcultist/give_to_body(mob/living/new_body)
+	if(iscyborg(new_body))
+		var/mob/living/silicon/robot/R = new_body
+		if(R.deployed)
+			var/mob/living/silicon/ai/AI = R.mainframe
+			R.undeploy()
+			var/converted = add_servant_of_ratvar(AI, silent_update)
+			to_chat(AI, "<span class='userdanger'>Anomaly Detected. Returned to core!</span>")	//The AI needs to be in its core to properly be converted
+			return converted
 	if(!silent_update)
 		if(issilicon(new_body))
 			to_chat(new_body, "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, \
@@ -69,7 +77,8 @@
 		var/mob/living/silicon/S = owner
 		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			R.UnlinkSelf()
+			if(!R.shell)
+				R.UnlinkSelf()
 			R.module.rebuild_modules()
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S

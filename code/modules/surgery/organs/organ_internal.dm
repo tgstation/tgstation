@@ -651,10 +651,6 @@
 		if("papyrus")
 			. |= SPAN_PAPYRUS
 
-/obj/item/organ/tongue/bone/chatter
-	name = "chattering bone \"tongue\""
-	chattering = TRUE
-
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."

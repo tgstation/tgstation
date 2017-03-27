@@ -76,7 +76,7 @@
 	)
 
 	for(var/wire in shuffle(wires))
-		colors[pick_n_take(possible_colors.Copy()] = wire
+		colors[pick_n_take(possible_colors.Copy())] = wire
 
 /datum/wires/proc/shuffle_wires()
 	colors.Cut()

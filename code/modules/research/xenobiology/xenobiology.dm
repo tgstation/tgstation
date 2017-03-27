@@ -523,7 +523,7 @@
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
 	G.set_species(/datum/species/golem/adamantine)
 	G.set_cloned_appearance()
-	G.real_name = "Adamantine Golem ([rand(1, 1000)])"
+	G.real_name = G.dna.species.random_name()
 	G.name = G.real_name
 	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
 	G.dna.species.auto_equip(G)
