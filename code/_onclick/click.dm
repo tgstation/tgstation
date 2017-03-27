@@ -114,10 +114,7 @@
 	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
 		// No adjacency needed
 		if(W)
-			if(W.pre_attackby(A,src,params))
-				var/resolved = A.attackby(W,src)
-				if(!resolved && A && W)
-					W.afterattack(A,src,1,params) // 1 indicates adjacency
+			melee_item_attack_chain(src, W, A)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -131,11 +128,7 @@
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
 		if(Adjacent(A) || (W && CheckReach(src, A, W.reach))) //Adjacent or reaching attacks
 			if(W)
-				if(W.pre_attackby(A,src,params))
-					// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-					var/resolved = A.attackby(W,src,params)
-					if(!resolved && A && W)
-						W.afterattack(A,src,1,params) // 1: clicking something Adjacent
+				melee_item_attack_chain(src, W, A)
 			else
 				if(ismob(A))
 					changeNext_move(CLICK_CD_MELEE)
@@ -163,7 +156,7 @@
 				if(dummy.loc == there.loc)
 					qdel(dummy)
 					return 1
-				if(there.density && dummy in range(1, there)) //For windows and 
+				if(there.density && dummy in range(1, there)) //For windows and suchlike
 					qdel(dummy)
 					return 1
 				if(!dummy.Move(T)) //we're blocked!
