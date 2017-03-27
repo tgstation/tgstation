@@ -679,8 +679,9 @@
 
 	if(!visible)
 		alpha = 0
-	if(SStitle.title_screen)
-		icon = SStitle.title_screen.icon
+
+	if(SStitle.icon)
+		icon = SStitle.icon
 
 	holder.screen += src
 	if(use_previous_title && !SSmapping.previous_map_config.defaulted)
