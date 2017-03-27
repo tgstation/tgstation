@@ -64,7 +64,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-	/client/proc/toggleSNPC, /* Toggles an npc's processing mode */
 	/client/proc/open_shuttle_manipulator /* Opens shuttle manipulator UI */
 	)
 var/list/admin_verbs_ban = list(
@@ -92,13 +91,13 @@ var/list/admin_verbs_fun = list(
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
 	/client/proc/forceEvent,
-	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all,
-	/client/proc/show_tip
+	/client/proc/show_tip,
+	/client/proc/smite
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -239,7 +238,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/debug_huds,
 	/client/proc/customiseSNPC,
 	/client/proc/resetSNPC,
-	/client/proc/toggleSNPC
 	)
 
 /client/proc/add_admin_verbs()

@@ -107,7 +107,7 @@
 	else if(data == 5)
 
 		for(var/obj/item/device/radio/R in all_radios["[freq]"])
-			if(!R.centcom)
+			if(!R.independent)
 				continue
 
 			if(R.receive_range(freq, level) > -1)
@@ -222,8 +222,8 @@
 	else if(data == 5)
 
 		for(var/obj/item/device/radio/R in all_radios["[RADIO_CHAT]"])
-			if(R.centcom)
-				receive |= R.send_hear(CENTCOM_FREQ)
+			if(R.independent)
+				receive |= R.send_hear(display_freq)
 
 	// --- Broadcast to ALL radio devices ---
 
