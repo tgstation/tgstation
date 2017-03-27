@@ -345,7 +345,7 @@
 			Radio.talk_into(src, message, message_mode, spans)
 			return REDUCE_RANGE
 
-	if(message_mode in radiochannels)
+	if(message_mode in GLOB.radiochannels)
 		Radio.talk_into(src, message, message_mode, spans)
 		return REDUCE_RANGE
 	return 0

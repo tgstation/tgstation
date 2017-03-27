@@ -1313,7 +1313,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		else
 			. = ""
 
-GLOBAL_DATUM_INIT(dview_mob, /mob/dead/dview/dview_mob, new)
+GLOBAL_DATUM_INIT(dview_mob, /mob/dead/dview, new)
 
 //Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
 /proc/dview(var/range = world.view, var/center, var/invis_flags = 0)

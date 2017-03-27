@@ -43,7 +43,7 @@
 			radio.talk_into(src, message, , spans)
 		return REDUCE_RANGE
 
-	else if(message_mode in radiochannels)
+	else if(message_mode in GLOB.radiochannels)
 		if(radio)
 			radio.talk_into(src, message, message_mode, spans)
 			return ITALICS | REDUCE_RANGE

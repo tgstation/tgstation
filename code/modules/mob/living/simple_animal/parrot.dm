@@ -170,7 +170,7 @@
 				ears.talk_into(src, message, message_mode, spans)
 			return ITALICS | REDUCE_RANGE
 
-	if(message_mode in radiochannels)
+	if(message_mode in GLOB.radiochannels)
 		if(ears)
 			ears.talk_into(src, message, message_mode, spans)
 			return ITALICS | REDUCE_RANGE

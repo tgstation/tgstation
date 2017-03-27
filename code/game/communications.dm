@@ -123,7 +123,7 @@ On the map:
 1455 for AI access
 */
 
-var/list/radiochannels = list(
+GLOBAL_LIST_INIT(radiochannels, list(
 	"Common" = 1459,
 	"Science" = 1351,
 	"Command" = 1353,
@@ -137,7 +137,7 @@ var/list/radiochannels = list(
 	"AI Private" = 1447,
 	"Red Team" = 1215,
 	"Blue Team" = 1217
-)
+))
 
 GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"1459" = "Common",

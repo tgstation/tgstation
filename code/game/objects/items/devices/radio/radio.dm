@@ -77,7 +77,7 @@
 			independent = TRUE
 
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/device/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
@@ -99,7 +99,7 @@
 	set_frequency(frequency)
 
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/device/radio/interact(mob/user)
 	if (..())
@@ -490,7 +490,7 @@
 		if (!accept)
 			for(var/ch_name in channels)
 				if(channels[ch_name] & FREQ_LISTENING)
-					if(radiochannels[ch_name] == text2num(freq) || syndie) //the radiochannels list is located in communications.dm
+					if(GLOB.radiochannels[ch_name] == text2num(freq) || syndie) //the GLOB.radiochannels list is located in communications.dm
 						accept = 1
 						break
 		if (!accept)
@@ -566,7 +566,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(keyslot)
 			for(var/ch_name in channels)
-				SSradio.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 

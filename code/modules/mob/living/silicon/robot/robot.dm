@@ -1039,7 +1039,7 @@
 		radio.subspace_transmission = TRUE
 		radio.channels = AI.radio.channels
 		for(var/chan in radio.channels)
-			radio.secure_radio_connections[chan] = add_radio(radio, radiochannels[chan])
+			radio.secure_radio_connections[chan] = add_radio(radio, GLOB.radiochannels[chan])
 
 	diag_hud_set_aishell()
 	undeployment_action.Grant(src)
