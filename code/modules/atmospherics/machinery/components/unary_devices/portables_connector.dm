@@ -7,6 +7,7 @@
 	var/obj/machinery/portable_atmospherics/connected_device
 	use_power = 0
 	level = 0
+	pipe_flags = PIPING_ONE_PER_TURF
 
 /obj/machinery/atmospherics/components/unary/portables_connector/New()
 	..()

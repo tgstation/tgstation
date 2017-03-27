@@ -16,6 +16,7 @@
 	var/target_temperature = T20C
 	var/heat_capacity = 0
 	var/interactive = TRUE // So mapmakers can disable interaction.
+	pipe_flags = PIPING_ONE_PER_TURF
 
 /obj/machinery/atmospherics/components/unary/thermomachine/New()
 	..()

@@ -25,6 +25,7 @@
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
+	pipe_flags = PIPING_ONE_PER_TURF
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()

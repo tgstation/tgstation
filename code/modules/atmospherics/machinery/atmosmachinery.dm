@@ -91,8 +91,9 @@ Pipelines + Other Objects -> Pipe network
 	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
-	if((target.initialize_directions & get_dir(target,src)) && (isConnectable(target, get_dir(src, target), layer) && target.isConnectable(src, get_dir(target, src), layer)))
-		return 1
+	if(connection_check(target))
+		return TRUE
+	return FALSE
 
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return nodes
@@ -251,8 +252,15 @@ Pipelines + Other Objects -> Pipe network
 			if(isConnectable(target, direction, layer) && target.isConnectable(src, turn(direction, 180), layer))
 				return target
 
-/obj/machinery/atmospherics/proc/isConnectable(var/obj/machinery/atmospherics/target, direction, given_layer)
-	return ((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER))
+/obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
+	if(!given_layer)
+		given_layer = piping_layer
+	if(isConnectable(target, get_dir(src, target), given_layer) && target.isConnectable(src, get_dir(target, src), target.piping_layer))
+		return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, direction, given_layer)
+	return ((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER) || (pipe_flags & PIPING_ALL_LAYER))
 
 
 #define VENT_SOUND_DELAY 30
