@@ -3,7 +3,7 @@
 /obj/item/device/autosurgeon
 	name = "autosurgeon"
 	desc = "A device that automatically inserts an implant or organ into the user without the hassle of extensive surgery. It has a slot to insert implants/organs and a screwdriver slot for removing accidentally added items."
-	icon_state = "autosurgeon"
+	icon_state = "autoimplanter"
 	item_state = "walkietalkie"//left as this so as to intentionally not have inhands
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/item/organ/storedorgan
@@ -14,7 +14,7 @@
 /obj/item/device/autosurgeon/Initialize(mapload)
 	..()
 	if(starting_organ)
-		storedorgan = new starting_organ(src)
+		insert_organ(new starting_organ(src))
 
 /obj/item/device/autosurgeon/proc/insert_organ(var/obj/item/I)
 	storedorgan = I
