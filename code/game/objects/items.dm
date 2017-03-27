@@ -502,7 +502,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(.)
 		if(initial(icon) && initial(icon_state))
 			var/index = blood_splatter_index()
-			var/icon/blood_splatter_icon = blood_splatter_icons[index]
+			var/icon/blood_splatter_icon = GLOB.blood_splatter_icons[index]
 			if(blood_splatter_icon)
 				cut_overlay(blood_splatter_icon)
 
