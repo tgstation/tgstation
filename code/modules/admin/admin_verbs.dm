@@ -708,7 +708,7 @@ var/list/admin_verbs_hideable = list(
 			j = 100
 
 			do
-				area = pick(the_station_areas)
+				area = pick(GLOB.the_station_areas)
 
 				if (area)
 
