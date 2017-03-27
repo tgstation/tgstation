@@ -179,7 +179,7 @@ GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
 	var/threats = strings(ION_FILE, "ionthreats")
 	var/foods = strings(ION_FILE, "ionfood")
 	var/drinks = strings(ION_FILE, "iondrinks")
-	var/list/locations = teleportlocs.len ? teleportlocs : drinks //if null, defaults to drinks instead.
+	var/list/locations = GLOB.teleportlocs.len ? GLOB.teleportlocs : drinks //if null, defaults to drinks instead.
 
 	var/list/names = list()
 	for(var/datum/data/record/t in GLOB.data_core.general)//Picks from crew manifest.

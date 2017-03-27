@@ -64,20 +64,20 @@
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
-var/list/teleportlocs = list()
+GLOBAL_LIST_INIT(teleportlocs, list())
 
 /proc/process_teleport_locs()
 	for(var/V in GLOB.sortedAreas)
 		var/area/AR = V
 		if(istype(AR, /area/shuttle) || AR.noteleport)
 			continue
-		if(teleportlocs[AR.name])
+		if(GLOB.teleportlocs[AR.name])
 			continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
 		if (picked && (picked.z == ZLEVEL_STATION))
-			teleportlocs[AR.name] = AR
+			GLOB.teleportlocs[AR.name] = AR
 
-	sortTim(teleportlocs, /proc/cmp_text_dsc)
+	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)
 
 // ===
 
