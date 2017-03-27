@@ -29,7 +29,6 @@ var/const/tk_maxrange = 15
 	else
 		qdel(O)
 		..()
-	return
 
 /mob/attack_tk(mob/user)
 	return
@@ -177,7 +176,6 @@ var/const/tk_maxrange = 15
 		add_overlay(focus) //this is kind of ick, but it's better than using icon()
 		focus.layer = old_layer
 		focus.plane = old_plane
-	return
 
 /obj/item/tk_grab/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
