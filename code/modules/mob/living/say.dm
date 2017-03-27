@@ -103,13 +103,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(stat && !(message_mode in crit_allowed_modes))
 		return
 
-	if(handle_inherent_channels(message, message_mode)) //Hiveminds, binary chat & holopad.
-		return
-
-	if(!can_speak_vocal(message))
-		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
-		return
-
 	// language comma detection.
 	var/datum/language/message_language = get_message_language(message)
 	if(message_language)
@@ -122,11 +115,22 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		if(findtext(message, " ", 1, 2))
 			message = copytext(message, 2)
 
-	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
-		message = treat_message(message)
-
 	if(!language)
 		language = get_default_language()
+
+	// Detection of language needs to be before inherent channels, because
+	// AIs use inherent channels for the holopad. Most inherent channels
+	// ignore the language argument however.
+
+	if(handle_inherent_channels(message, message_mode, language)) //Hiveminds, binary chat & holopad.
+		return
+
+	if(!can_speak_vocal(message))
+		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
+		return
+
+	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
+		message = treat_message(message)
 
 	spans += get_spans()
 

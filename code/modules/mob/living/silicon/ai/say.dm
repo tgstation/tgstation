@@ -29,17 +29,17 @@
 	else
 		return ..()
 
-/mob/living/silicon/ai/handle_inherent_channels(message, message_mode)
+/mob/living/silicon/ai/handle_inherent_channels(message, message_mode, language)
 	. = ..()
 	if(.)
 		return .
 
 	if(message_mode == MODE_HOLOPAD)
-		holopad_talk(message)
+		holopad_talk(message, language)
 		return 1
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(message)
+/mob/living/silicon/ai/proc/holopad_talk(message, language)
 	log_say("[key_name(src)] : [message]")
 
 	message = trim(message)
@@ -49,7 +49,7 @@
 
 	var/obj/machinery/holopad/T = current
 	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
-		send_speech(message, 7, T, "robot", get_spans())
+		send_speech(message, 7, T, "robot", get_spans(), message_language=language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
 		to_chat(src, "No holopad connected.")
