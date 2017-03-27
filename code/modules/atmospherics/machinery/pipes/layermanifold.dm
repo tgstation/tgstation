@@ -39,19 +39,17 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
 	var/invis = invisibility ? "-f" : ""
 	icon_state = "[initial(icon_state)][invis]"
-	overlays.Cut()
+	underlays.Cut()
 	for(var/obj/machinery/atmospherics/A in front_nodes)
-		var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]")
-		I.dir = A.dir
+		var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_long[invis]", get_dir(src, A))
 		I.pixel_x = A.pixel_x
 		I.pixel_y = A.pixel_y
-		add_overlay(I)
-	for(var/obj/machinery/atmospherics/A in front_nodes)
-		var/image/I = image('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]")
-		I.dir = A.dir
+		underlays += I
+	for(var/obj/machinery/atmospherics/A in back_nodes)
+		var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_long[invis]", get_dir(src, A))
 		I.pixel_x = A.pixel_x
 		I.pixel_y = A.pixel_y
-		add_overlay(I)
+		underlays += I
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
 	switch(dir)
@@ -114,4 +112,4 @@
 		user.ventcrawl_layer = Clamp(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	if((SOUTH|WEST) & dir)
 		user.ventcrawl_layer = Clamp(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
-	user << "You align yourself with the [user.ventcrawl_layer]\th output."
+	to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")
