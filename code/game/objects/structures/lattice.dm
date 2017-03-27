@@ -42,7 +42,7 @@
 
 /obj/structure/lattice/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
-		new /obj/item/stack/rods(get_turf(src), amount=number_of_rods)
+		new /obj/item/stack/rods(get_turf(src), number_of_rods)
 	qdel(src)
 
 /obj/structure/lattice/singularity_pull(S, current_size)
