@@ -1,4 +1,0 @@
-author: "octareenroon91"
-delete-after: True
-changes: 
-  - bugfix: "Bonfires that have a metal rod added should buckle instead of runtiming."
