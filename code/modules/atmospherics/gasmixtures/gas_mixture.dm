@@ -6,30 +6,24 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
+
 var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
+var/list/gaslist_cache = init_gaslist_cache()
 
-var/list/gaslist_cache = null
-/proc/gaslist(id)
-	var/list/cached_gas
+/proc/init_gaslist_cache()
+	. = list()
+	for(var/id in meta_gas_info)
+		var/list/cached_gas = new(3)
 
-	//only instantiate the first time it's needed
-	if(!gaslist_cache)
-		gaslist_cache = new(meta_gas_info.len)
-
-	//only setup the individual lists the first time they're needed
-	if(!gaslist_cache[id])
-		if(!meta_gas_info[id])
-			CRASH("Gas [id] does not exist!")
-		cached_gas = new(3)
-		gaslist_cache[id] = cached_gas
+		.[id] = cached_gas
 
 		cached_gas[MOLES] = 0
 		cached_gas[ARCHIVE] = 0
 		cached_gas[GAS_META] = meta_gas_info[id]
-	else
-		cached_gas = gaslist_cache[id]
-	//Copy() it because only GAS_META is static
-	return cached_gas.Copy()
+
+#define GASLIST(id, out_list)\
+	var/list/tmp_gaslist = gaslist_cache[id];\
+	out_list = tmp_gaslist.Copy();
 
 /datum/gas_mixture
 	var/list/gases
@@ -57,7 +51,7 @@ var/list/gaslist_cache = null
 	var/cached_gases = gases
 	if(cached_gases[gas_id])
 		return
-	cached_gases[gas_id] = gaslist(gas_id)
+	GASLIST(gas_id, cached_gases[gas_id])
 
 	//assert_gases(args) - shorthand for calling assert_gas() once for each gas type.
 /datum/gas_mixture/proc/assert_gases()
@@ -68,7 +62,7 @@ var/list/gaslist_cache = null
 		//gas list for this id. This can clobber existing gases.
 	//Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
 /datum/gas_mixture/proc/add_gas(gas_id)
-	gases[gas_id] = gaslist(gas_id)
+	GASLIST(gas_id, gases[gas_id])
 
 	//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
 /datum/gas_mixture/proc/add_gases()
