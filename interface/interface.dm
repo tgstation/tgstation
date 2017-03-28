@@ -28,7 +28,7 @@
 	set name = "troubleshooting"
 	set desc = "Visit the troubleshooting page."
 	set hidden = 1
-	if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
+	if(alert("This will open the wiki in your browser. Are you sure?",,"Yes","No")=="No")
 		return
 		src << link("https://tgstation13.org/wiki/Graphics_Troubleshooting")
 	return
