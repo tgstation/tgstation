@@ -17,6 +17,9 @@
 		loc = OB
 		OB.brainmob = src
 
+	// TODO when we get languages in the mind datum, use those instead.
+	grant_language(/datum/language/common)
+
 
 /mob/living/brain/proc/create_dna()
 	stored_dna = new /datum/dna/stored(src)
