@@ -530,16 +530,16 @@ var/list/gaslist_cache = init_gaslist_cache()
 	return sharer_temperature
 	//thermal energy of the system (self and sharer) is unchanged
 
-/datum/gas_mixture/compare(datum/gas_mixture/sample, datatype = MOLES, adjacents = 0)
+/datum/gas_mixture/compare(datum/gas_mixture/sample)
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
 
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
 		var/gas_moles = cached_gases[id]
-		gas_moles = gas_moles ? gas_moles[datatype] : 0
+		gas_moles = gas_moles ? gas_moles[MOLES] : 0
 		var/sample_moles = sample_gases[id]
-		sample_moles = sample_moles ? sample_moles[datatype] : 0
-		var/delta = abs(gas_moles - sample_moles)/(adjacents+1)
+		sample_moles = sample_moles ? sample_moles[MOLES] : 0
+		var/delta = abs(gas_moles - sample_moles)
 		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
 			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
 			return id
@@ -547,16 +547,8 @@ var/list/gaslist_cache = init_gaslist_cache()
 	var/our_moles
 	TOTAL_MOLES(cached_gases, our_moles)
 	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE)
-		var/temp
-		var/sample_temp
-
-		switch(datatype)
-			if(MOLES)
-				temp = temperature
-				sample_temp = sample.temperature
-			if(ARCHIVE)
-				temp = temperature_archived
-				sample_temp = sample.temperature_archived
+		var/temp = temperature
+		var/sample_temp = sample.temperature
 
 		var/temperature_delta = abs(temp - sample_temp)
 		if((temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
