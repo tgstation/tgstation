@@ -36,6 +36,6 @@
 		qdel(target) //Nom
 		target = null
 		adjustBruteLoss(-2)
-		return ..()
+		return TRUE
 	else
 		return ..()

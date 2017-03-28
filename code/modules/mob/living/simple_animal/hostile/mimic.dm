@@ -66,12 +66,11 @@
 	. = ..()
 	if(.)
 		icon_state = initial(icon_state)
-		if(iscarbon(target))
+		if(prob(15) && iscarbon(target))
 			var/mob/living/carbon/C = target
-			if(prob(15))
-				C.Weaken(2)
-				C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-						"<span class='userdanger'>\The [src] knocks you down!</span>")
+			C.Weaken(2)
+			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 /mob/living/simple_animal/hostile/mimic/crate/proc/trigger()
 	if(!attempt_open)
@@ -173,12 +172,11 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
 	. = ..()
-	if(knockdown_people && . && iscarbon(target))
+	if(knockdown_people && . && prob(15) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(prob(15))
-			C.Weaken(2)
-			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-					"<span class='userdanger'>\The [src] knocks you down!</span>")
+		C.Weaken(2)
+		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+				"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 /mob/living/simple_animal/hostile/mimic/copy/Aggro()
 	..()

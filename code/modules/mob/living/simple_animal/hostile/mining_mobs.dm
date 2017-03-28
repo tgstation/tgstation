@@ -165,7 +165,7 @@
 	if(istype(target, /obj/item/weapon/ore))
 		EatOre(target)
 		return
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
