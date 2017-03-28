@@ -526,8 +526,10 @@ var/list/gaslist_cache = null
 	var/list/cached_gases = gases
 
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
-		var/gas_moles = cached_gases[id] ? cached_gases[id][datatype] : 0
-		var/sample_moles = sample_gases[id] ? sample_gases[id][datatype] : 0
+		var/gas_moles = cached_gases[id]
+		gas_moles = gas_moles ? gas_moles[datatype] : 0
+		var/sample_moles = sample_gases[id]
+		sample_moles = sample_moles ? sample_moles[datatype] : 0
 		var/delta = abs(gas_moles - sample_moles)/(adjacents+1)
 		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
 			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
