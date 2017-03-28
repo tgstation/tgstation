@@ -41,6 +41,7 @@
 	else if(initialized)
 		//we were late initialized, so now it's time to...
 		take_contents()
+		return
 	..()
 	update_icon()
 
