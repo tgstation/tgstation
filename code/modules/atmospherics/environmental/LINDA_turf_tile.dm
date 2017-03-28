@@ -150,6 +150,7 @@
 
 		/******************* GROUP HANDLING START *****************************************************************/
 
+			var/should_share_air = FALSE
 			if(enemy_tile.excited)
 				//cache for sanic speed
 				var/datum/excited_group/enemy_excited_group = enemy_tile.excited_group
@@ -159,24 +160,24 @@
 							//combine groups (this also handles updating the excited_group var of all involved turfs)
 							our_excited_group.merge_groups(enemy_excited_group)
 							our_excited_group = excited_group //update our cache
-						share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
+						should_share_air = TRUE
 					else
 						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
 							our_excited_group.add_turf(enemy_tile) //add enemy to our group
-							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
+							should_share_air = TRUE
 				else
 					if(enemy_excited_group)
 						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
 							enemy_excited_group.add_turf(src) //join self to enemy group
 							our_excited_group = excited_group //update our cache
-							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
+							should_share_air = TRUE
 					else
 						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
 							var/datum/excited_group/EG = new //generate new group
 							EG.add_turf(src)
 							EG.add_turf(enemy_tile)
 							our_excited_group = excited_group //update our cache
-							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
+							should_share_air = TRUE
 			else
 				if(air.compare(enemy_tile.air)) //compare if
 					SSair.add_to_active(enemy_tile) //excite enemy
@@ -187,7 +188,18 @@
 						EG.add_turf(src)
 						EG.add_turf(enemy_tile)
 						our_excited_group = excited_group //update our cache
-					share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
+					should_share_air = TRUE
+
+			//air sharing
+			if(should_share_air)
+				var/difference = air.share(enemy_tile.air, adjacent_turfs_length)
+				if(difference)
+					if(difference > 0)
+						consider_pressure_difference(enemy_tile, difference)
+					else
+						enemy_tile.consider_pressure_difference(src, -difference)
+				last_share_check()
+
 
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
@@ -222,16 +234,6 @@
 	if(!our_excited_group && remove == 1)
 		SSair.remove_from_active(src)
 
-
-/turf/open/proc/share_air(turf/open/T, fire_count, adjacent_turfs_length)
-	if(T.current_cycle < fire_count)
-		var/difference = air.share(T.air, adjacent_turfs_length)
-		if(difference)
-			if(difference > 0)
-				consider_pressure_difference(T, difference)
-			else
-				T.consider_pressure_difference(src, -difference)
-		last_share_check()
 
 //////////////////////////SPACEWIND/////////////////////////////
 
