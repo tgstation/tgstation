@@ -192,13 +192,20 @@
 
 			//air sharing
 			if(should_share_air)
-				var/difference = air.share(enemy_tile.air, adjacent_turfs_length)
+				var/datum/gas_mixture/our_air = air
+				var/difference = our_air.share(enemy_tile.air, adjacent_turfs_length)
 				if(difference)
 					if(difference > 0)
 						consider_pressure_difference(enemy_tile, difference)
 					else
 						enemy_tile.consider_pressure_difference(src, -difference)
-				last_share_check()
+				//last_share_check
+				if(our_air.last_share > MINIMUM_AIR_TO_SUSPEND)
+					our_excited_group.reset_cooldowns()
+					atmos_cooldown = 0
+				else if(our_air.last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
+					our_excited_group.dismantle_cooldown = 0
+					atmos_cooldown = 0
 
 
 		/******************* GROUP HANDLING FINISH *********************************************************************/
@@ -207,13 +214,20 @@
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
 		G.archive()
-		if(air.compare(G))
+		var/datum/gas_mixture/our_air = air
+		if(our_air.compare(G))
 			if(!our_excited_group)
 				var/datum/excited_group/EG = new
 				EG.add_turf(src)
 				our_excited_group = excited_group
-			air.share(G, adjacent_turfs_length)
-			last_share_check()
+			our_air.share(G, adjacent_turfs_length)
+			//last_share_check
+			if(our_air.last_share > MINIMUM_AIR_TO_SUSPEND)
+				our_excited_group.reset_cooldowns()
+				atmos_cooldown = 0
+			else if(our_air.last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
+				our_excited_group.dismantle_cooldown = 0
+				atmos_cooldown = 0
 
 	air.react()
 
@@ -242,14 +256,6 @@
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, T)
 		pressure_difference = difference
-
-/turf/open/proc/last_share_check()
-	if(air.last_share > MINIMUM_AIR_TO_SUSPEND)
-		excited_group.reset_cooldowns()
-		atmos_cooldown = 0
-	else if(air.last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
-		excited_group.dismantle_cooldown = 0
-		atmos_cooldown = 0
 
 /turf/open/proc/high_pressure_movements()
 	for(var/atom/movable/M in src)
