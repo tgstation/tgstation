@@ -5,7 +5,7 @@ var/list/all_gases = list("o2","n2","co2","plasma","water vapor","freon") //add 
 /proc/meta_gas_list()
 	. = new /list
 	for(var/gas_path in subtypesof(/datum/gas))
-		var/list/gas_info = new(6)
+		var/list/gas_info = new(4)
 		var/datum/gas/gas = gas_path
 
 		gas_info[META_GAS_SPECIFIC_HEAT] = initial(gas.specific_heat)
