@@ -56,6 +56,13 @@ Pipelines + Other Objects -> Pipe network
 	return ..()
 	//return QDEL_HINT_FINDREFERENCE
 
+/obj/machinery/atmospherics/proc/destroy_network()
+	return
+
+/obj/machinery/atmospherics/proc/build_network()
+	// Called to build a network from this node
+	return
+
 /obj/machinery/atmospherics/proc/nullifyNode(I)
 	if(NODE_I)
 		var/obj/machinery/atmospherics/N = NODE_I
@@ -91,7 +98,28 @@ Pipelines + Other Objects -> Pipe network
 	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
-	if(connection_check(target))
+	if(connection_check(target, piping_layer))
+		return TRUE
+	return FALSE
+
+//Find a connecting /obj/machinery/atmospherics in specified direction
+/obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer)
+	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
+		if(target.initialize_directions & get_dir(target,src))
+			if(connection_check(target, prompted_layer))
+				return target
+
+/obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
+	if(!given_layer)
+		given_layer = piping_layer
+	if(isConnectable(target, given_layer) && target.isConnectable(src, target.piping_layer))
+		return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, given_layer)
+	if(!given_layer)
+		given_layer = piping_layer
+	if((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER))
 		return TRUE
 	return FALSE
 
@@ -116,14 +144,10 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/replacePipenet()
 	return
 
-/obj/machinery/atmospherics/proc/build_network()
-	// Called to build a network from this node
-	return
-
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
-		qdel(P.parent)
+		P.destroy_network()
 	var/I = nodes.Find(reference)
 	NODE_I = null
 	update_icon()
@@ -243,25 +267,6 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
-
-
-//Find a connecting /obj/machinery/atmospherics in specified direction
-/obj/machinery/atmospherics/proc/findConnecting(direction, layer = PIPING_LAYER_DEFAULT)
-	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
-		if(target.initialize_directions & get_dir(target,src))
-			if(isConnectable(target, direction, layer) && target.isConnectable(src, turn(direction, 180), layer))
-				return target
-
-/obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	if(!given_layer)
-		given_layer = piping_layer
-	if(isConnectable(target, get_dir(src, target), given_layer) && target.isConnectable(src, get_dir(target, src), target.piping_layer))
-		return TRUE
-	return FALSE
-
-/obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, direction, given_layer)
-	return ((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER) || (pipe_flags & PIPING_ALL_LAYER))
-
 
 #define VENT_SOUND_DELAY 30
 

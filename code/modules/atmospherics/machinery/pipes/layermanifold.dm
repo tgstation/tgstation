@@ -16,21 +16,26 @@
 	volume = 260
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/nullifyAllNodes()
-	for(var/obj/machinery/atmospherics/A in front_nodes)
+	var/list/obj/machinery/atmospherics/needs_nullifying = get_all_connected_nodes()
+	front_nodes = null
+	back_nodes = null
+	nodes = list()
+	for(var/obj/machinery/atmospherics/A in needs_nullifying)
 		A.disconnect(src)
-		front_nodes[A] = null
 		if(A)
 			A.build_network()
-	for(var/obj/machinery/atmospherics/A in back_nodes)
-		A.disconnect(src)
-		back_nodes[A] = null
-		if(A)
-			A.build_network()
-	for(var/obj/machinery/atmospherics/A in nodes)
-		A.disconnect(src)
-		nodes[A] = null
-		if(A)
-			A.build_network()
+
+/obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
+	. = list()
+	for(var/I in front_nodes)
+		if(!I in .)
+			. += I
+	for(var/I in back_nodes)
+		if(!I in .)
+			. += I
+	for(var/I in nodes)
+		if(!I in .)
+			. += I
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Destroy()
 	nullifyAllNodes()
@@ -51,8 +56,8 @@
 	if(istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
 		for(var/i = PIPING_LAYER_MIN, i <= PIPING_LAYER_MAX, i++)
 			var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_long[invis]", get_dir(src, A))
-			I.pixel_x = i * PIPING_LAYER_P_X
-			I.pixel_y = i * PIPING_LAYER_P_Y
+			I.pixel_x = (i - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
+			I.pixel_y = (i - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
 			underlays += I
 	else
 		var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_long[invis]", get_dir(src, A))
@@ -66,6 +71,9 @@
 			initialize_directions = NORTH|SOUTH
 		if(EAST || WEST)
 			initialize_directions = EAST|WEST
+
+/obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)
+	return TRUE
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/findAllConnections()
 	front_nodes = list()
@@ -83,28 +91,31 @@
 	update_icon()
 	return new_nodes
 
+/obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
+	findAllConnections()
+
 /obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
 	piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()
-	return findAllConnections()
+	findAllConnections()
+	return get_all_connected_nodes()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/disconnect(obj/machinery/atmospherics/reference)
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
-		qdel(P.parent)
-	if(reference in nodes)
-		var/I = nodes.Find(reference)
-		NODE_I = null
-	if(reference in front_nodes)
-		var/I = front_nodes.Find(reference)
-		front_nodes[I] = null
-	if(reference in back_nodes)
-		var/I = back_nodes.Find(reference)
-		back_nodes[I] = null
-	if(reference)
-		reference.build_network()
-	findAllConnections()
+		P.destroy_network()
+	while(reference in (nodes + front_nodes + back_nodes))
+		if(reference in nodes)
+			var/I = nodes.Find(reference)
+			NODE_I = null
+		if(reference in front_nodes)
+			var/I = front_nodes.Find(reference)
+			front_nodes[I] = null
+		if(reference in back_nodes)
+			var/I = back_nodes.Find(reference)
+			back_nodes[I] = null
+	update_icon()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, dir)
 	if(initialize_directions & dir)

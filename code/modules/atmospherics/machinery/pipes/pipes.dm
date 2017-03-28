@@ -24,6 +24,16 @@
 	if(oldN)
 		oldN.build_network()
 
+/obj/machinery/atmospherics/pipe/destroy_network()
+	if(parent)
+		qdel(parent)
+		return
+
+/obj/machinery/atmospherics/pipe/build_network()
+	if(!parent)
+		parent = new /datum/pipeline()
+		parent.build_pipeline(src)
+
 /obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
 	if(NODE1&&NODE2)
 		icon_state = "intact[invisibility ? "-f" : "" ]"
@@ -55,11 +65,6 @@
 
 /obj/machinery/atmospherics/pipe/return_air()
 	return parent.air
-
-/obj/machinery/atmospherics/pipe/build_network()
-	if(!parent)
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))
