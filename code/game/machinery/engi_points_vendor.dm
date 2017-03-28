@@ -671,7 +671,7 @@
 		for(var/mob/living/M in range(9,src))
 			rangers += M
 			if(!(M in listeners))
-				M << selection.song_path
+				M.playsound_local(get_turf(M), selection.song_path, 100, channel = CHANNEL_JUKEBOX)
 				listeners += M
 			if(prob(5+(allowed(M)*3)))
 				dance(M)

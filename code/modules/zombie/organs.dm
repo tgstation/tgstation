@@ -3,6 +3,7 @@
 	desc = "A black web of pus and vicera."
 	zone = "head"
 	slot = "zombie_infection"
+	icon_state = "blacktumor"
 	origin_tech = "biotech=5"
 	var/datum/species/old_species
 	var/living_transformation_time = 3
