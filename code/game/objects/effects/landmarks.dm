@@ -11,10 +11,6 @@
 	landmarks_list += src
 
 	switch(name)			//some of these are probably obsolete
-		if("monkey")
-			monkeystart += loc
-			qdel(src)
-			return
 		if("start")
 			newplayer_start += loc
 			qdel(src)

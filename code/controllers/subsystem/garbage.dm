@@ -528,7 +528,6 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(start_landmarks_list)
 	SearchVar(department_security_spawns)
 	SearchVar(generic_event_spawns)
-	SearchVar(monkeystart)
 	SearchVar(wizardstart)
 	SearchVar(newplayer_start)
 	SearchVar(latejoin)
