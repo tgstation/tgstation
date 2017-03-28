@@ -150,6 +150,7 @@
 	glass_icon_state = "nothing"
 	glass_name = "Nothing"
 	glass_desc = "Absolutely nothing."
+	shot_glass_icon_state = "shotglass"
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/M)
 	if(ishuman(M) && M.job in list("Mime"))

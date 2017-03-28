@@ -109,6 +109,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "kahluaglass"
 	glass_name = "glass of RR Coffee Liquor"
 	glass_desc = "DAMN, THIS THING LOOKS ROBUST!"
+	shot_glass_icon_state = "shotglasscream"
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
@@ -127,6 +128,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "whiskeyglass"
 	glass_name = "glass of whiskey"
 	glass_desc = "The silky, smokey whiskey goodness inside the glass makes the drink look very classy."
+	shot_glass_icon_state = "shotglassbrown"
 
 /datum/reagent/consumable/ethanol/thirteenloko
 	name = "Thirteen Loko"
@@ -159,6 +161,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "ginvodkaglass"
 	glass_name = "glass of vodka"
 	glass_desc = "The glass contain wodka. Xynta."
+	shot_glass_icon_state = "shotglassclear"
 
 /datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/M)
 	M.radiation = max(M.radiation-2,0)
@@ -218,6 +221,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "rumglass"
 	glass_name = "glass of rum"
 	glass_desc = "Now you want to Pray for a pirate suit, don't you?"
+	shot_glass_icon_state = "shotglassbrown"
 
 /datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
@@ -229,6 +233,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "tequilaglass"
 	glass_name = "glass of tequila"
 	glass_desc = "Now all that's missing is the weird colored shades!"
+	shot_glass_icon_state = "shotglassgold"
 
 /datum/reagent/consumable/ethanol/vermouth
 	name = "Vermouth"
@@ -240,6 +245,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "vermouthglass"
 	glass_name = "glass of vermouth"
 	glass_desc = "You wonder why you're even drinking this straight."
+	shot_glass_icon_state = "shotglassclear"
 
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
@@ -251,6 +257,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "wineglass"
 	glass_name = "glass of wine"
 	glass_desc = "A very classy looking drink."
+	shot_glass_icon_state = "shotglassred"
 
 /datum/reagent/consumable/ethanol/lizardwine
 	name = "Lizard wine"
@@ -281,6 +288,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "cognacglass"
 	glass_name = "glass of cognac"
 	glass_desc = "Damn, you feel like some kind of French aristocrat just by holding this."
+	shot_glass_icon_state = "shotglassbrown"
 
 /datum/reagent/consumable/ethanol/absinthe
 	name = "Absinthe"
@@ -292,6 +300,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "absinthe"
 	glass_name = "glass of absinthe"
 	glass_desc = "It's as strong as it smells."
+	shot_glass_icon_state = "shotglassgreen"
 
 /datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/M)
 	if(prob(10))
@@ -331,6 +340,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "goldschlagerglass"
 	glass_name = "glass of Goldschlager"
 	glass_desc = "100% proof that teen girls will drink anything with gold in it."
+	shot_glass_icon_state = "shotglassgold"
 
 /datum/reagent/consumable/ethanol/patron
 	name = "Patron"
@@ -342,6 +352,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "patronglass"
 	glass_name = "glass of patron"
 	glass_desc = "Drinking patron in the bar, with all the subpar ladies."
+	shot_glass_icon_state = "shotglassclear"
 
 /datum/reagent/consumable/ethanol/gintonic
 	name = "Gin and Tonic"
@@ -498,6 +509,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "toxinsspecialglass"
 	glass_name = "Toxins Special"
 	glass_desc = "Whoah, this thing is on FIRE!"
+	shot_glass_icon_state = "toxinsspecialglass"
 
 /datum/reagent/consumable/ethanol/toxins_special/on_mob_life(var/mob/living/M as mob)
 	if (M.bodytemperature < 330)
@@ -575,6 +587,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "b52glass"
 	glass_name = "B-52"
 	glass_desc = "Kahlua, Irish Cream, and cognac. You will get bombed."
+	shot_glass_icon_state = "b52glass"
 
 /datum/reagent/consumable/ethanol/irishcoffee
 	name = "Irish Coffee"
@@ -1021,6 +1034,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "whiskeyglass"
 	glass_name = "Hard Cider"
 	glass_desc = "Tastes like autumn."
+	shot_glass_icon_state = "shotglassbrown"
 
 
 /datum/reagent/consumable/ethanol/fetching_fizz //A reference to one of my favorite games of all time. Pulls nearby ores to the imbiber!

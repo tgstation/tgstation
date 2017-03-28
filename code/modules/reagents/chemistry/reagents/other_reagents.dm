@@ -9,6 +9,7 @@
 	glass_icon_state = "glass_red"
 	glass_name = "glass of tomato juice"
 	glass_desc = "Are you sure this is tomato juice?"
+	shot_glass_icon_state = "shotglassred"
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
@@ -84,6 +85,7 @@
 	color = "#FF9966"
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
+	shot_glass_icon_state = "shotglassred"
 
 /datum/reagent/vaccine
 	//data must contain virus type
@@ -113,6 +115,7 @@
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of Water"
 	glass_desc = "The father of all refreshments."
+	shot_glass_icon_state = "shotglassclear"
 
 /*
  *	Water reaction to turf

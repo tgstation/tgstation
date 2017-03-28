@@ -15,34 +15,20 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	cut_overlays()
-	if (reagents.reagent_list.len > 0)
-		var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-		if(largest_reagent)
-			if(largest_reagent.glass_name)
-				name = "[largest_reagent.glass_name]"
-
-				if(largest_reagent.glass_desc)
-					desc = "[largest_reagent.glass_desc]"
-
-				if(largest_reagent.glass_icon_state)
-					icon_state = "[largest_reagent.glass_icon_state]"
-				else
-					icon_state = "glass_clear"
-					var/image/I = image(icon, "glassoverlay")
-					I.color = largest_reagent.color
-					add_overlay(I) // looking at you, grape soda!
-			else
-				icon_state ="glass_clear"
-				var/image/I = image(icon, "glassoverlay")
-				I.color = mix_color_from_reagents(reagents.reagent_list)
-				add_overlay(I)
-				name = "glass of ..what?"
-				desc = "You can't really tell what this is."
+	if(reagents.reagent_list.len)
+		var/datum/reagent/R = reagents.get_master_reagent()
+		name = R.glass_name
+		desc = R.glass_desc
+		if(R.glass_icon_state)
+			icon_state = R.glass_icon_state
+		else
+			var/image/I = image(icon, "glassoverlay")
+			I.color = mix_color_from_reagents(reagents.reagent_list)
+			add_overlay(I)
 	else
 		icon_state = "glass_empty"
 		name = "drinking glass"
 		desc = "Your standard drinking glass."
-		return
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
@@ -62,89 +48,27 @@
 	materials = list(MAT_GLASS=100)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change()
+	cut_overlays()
+
 	if (gulp_size < 15)
 		gulp_size = 15
 	else
 		gulp_size = max(round(reagents.total_volume / 15), 15)
 
 	if (reagents.reagent_list.len > 0)
-		switch(reagents.get_master_reagent_id())
-			if("vodka")
-				icon_state = "shotglassclear"
-				name = "shot of vodka"
-				desc = "Good for cold weather."
-			if("water")
-				icon_state = "shotglassclear"
-				name = "shot of water"
-				desc = "You're not sure why someone would drink this from a shot glass."
-			if("whiskey")
-				icon_state = "shotglassbrown"
-				name = "shot of whiskey"
-				desc = "Just like the old west."
-			if("hcider")
-				icon_state = "shotglassbrown"
-				name = "shot of hard cider"
-				desc = "Not meant to be drunk from a shot glass."
-			if("rum")
-				icon_state = "shotglassbrown"
-				name = "shot of rum"
-				desc = "You dirty pirate."
-			if("b52")
-				icon_state = "b52glass"
-				name = "B-52"
-				desc = "Kahlua, Irish Cream, and cognac. You will get bombed."
-			if("toxinsspecial")
-				icon_state = "toxinsspecialglass"
-				name = "Toxins Special"
-				desc = "Whoah, this thing is on FIRE!"
-			if ("vermouth")
-				icon_state = "shotglassclear"
-				name = "shot of vermouth"
-				desc = "This better be going in a martini."
-			if ("tequila")
-				icon_state = "shotglassgold"
-				name = "shot of tequila"
-				desc = "Bad decisions ahead!"
-			if ("patron")
-				icon_state = "shotglassclear"
-				name = "shot of patron"
-				desc = "The good stuff. Goes great with a lime wedge."
-			if ("kahlua")
-				icon_state = "shotglasscream"
-				name = "shot of coffee liqueur"
-				desc = "Doesn't look too appetizing..."
-			if ("nothing")
-				icon_state = "shotglass"
-				name = "shot of nothing"
-				desc = "The mime insists there's booze in the glass. You're not so sure."
-			if ("goldschlager")
-				icon_state = "shotglassgold"
-				name = "shot of goldschlager"
-				desc = "Yup. You're officially a college girl."
-			if ("cognac")
-				icon_state = "shotglassbrown"
-				name = "shot of cognac"
-				desc = "You get the feeling this would piss off a rich person somewhere."
-			if ("wine")
-				icon_state = "shotglassred"
-				name = "shot of wine"
-				desc = "What kind of craven oaf would drink wine from a shot glass?"
-			if ("blood")
-				icon_state = "shotglassred"
-				name = "shot of blood"
-				desc = "If you close your eyes it sort of tastes like wine..."
-			if ("liquidgibs")
-				icon_state = "shotglassred"
-				name = "shot of gibs"
-				desc = "...Let's not talk about this."
-			if ("absinthe")
-				icon_state = "shotglassgreen"
-				name = "shot of absinthe"
-				desc = "I am stuck in the cycles of my guilt..."
-			else
-				icon_state = "shotglassbrown"
-				name = "shot of... what?"
-				desc = "You can't really tell what's in the glass."
+		var/datum/reagent/largest_reagent = reagents.get_master_reagent()
+		name = "filled shot glass"
+		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
+
+		if(largest_reagent.shot_glass_icon_state)
+			icon_state = largest_reagent.shot_glass_icon_state
+		else
+			icon_state = "shotglassclear"
+			var/image/I = image(icon, "shotglassoverlay")
+			I.color = mix_color_from_reagents(reagents.reagent_list)
+			add_overlay(I)
+
+
 	else
 		icon_state = "shotglass"
 		name = "shot glass"
