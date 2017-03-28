@@ -91,13 +91,15 @@ var/list/gaslist_cache = null
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
-		. += cached_gases[id][MOLES] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
+		var/gas_data = cached_gases[id]
+		. += gas_data[MOLES] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /datum/gas_mixture/proc/heat_capacity_archived() //joules per kelvin
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
-		. += cached_gases[id][ARCHIVE] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
+		var/gas_data = cached_gases[id]
+		. += gas_data[ARCHIVE] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 //prefer this in performance critical areas
 #define TOTAL_MOLES(cached_gases, out_var)\
