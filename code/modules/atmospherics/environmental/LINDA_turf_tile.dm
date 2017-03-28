@@ -141,6 +141,8 @@
 	atmos_cooldown++
 	if (planetary_atmos)
 		adjacent_turfs_length++
+	
+	var/datum/gas_mixture/our_air = air
 
 	for(var/t in adjacent_turfs)
 		var/turf/open/enemy_tile = t
@@ -151,6 +153,7 @@
 		/******************* GROUP HANDLING START *****************************************************************/
 
 			var/should_share_air = FALSE
+			var/datum/gas_mixture/enemy_air = enemy_tile.air
 			if(enemy_tile.excited)
 				//cache for sanic speed
 				var/datum/excited_group/enemy_excited_group = enemy_tile.excited_group
@@ -162,24 +165,24 @@
 							our_excited_group = excited_group //update our cache
 						should_share_air = TRUE
 					else
-						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
+						if((recently_active == 1 && enemy_tile.recently_active == 1) || our_air.compare(enemy_air))
 							our_excited_group.add_turf(enemy_tile) //add enemy to our group
 							should_share_air = TRUE
 				else
 					if(enemy_excited_group)
-						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
+						if((recently_active == 1 && enemy_tile.recently_active == 1) || our_air.compare(enemy_air))
 							enemy_excited_group.add_turf(src) //join self to enemy group
 							our_excited_group = excited_group //update our cache
 							should_share_air = TRUE
 					else
-						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
+						if((recently_active == 1 && enemy_tile.recently_active == 1) || our_air.compare(enemy_air))
 							var/datum/excited_group/EG = new //generate new group
 							EG.add_turf(src)
 							EG.add_turf(enemy_tile)
 							our_excited_group = excited_group //update our cache
 							should_share_air = TRUE
 			else
-				if(air.compare(enemy_tile.air)) //compare if
+				if(our_air.compare(enemy_air)) //compare if
 					SSair.add_to_active(enemy_tile) //excite enemy
 					if(our_excited_group)
 						our_excited_group.add_turf(enemy_tile) //add enemy to group
@@ -192,18 +195,18 @@
 
 			//air sharing
 			if(should_share_air)
-				var/datum/gas_mixture/our_air = air
-				var/difference = our_air.share(enemy_tile.air, adjacent_turfs_length)
+				var/difference = our_air.share(enemy_air, adjacent_turfs_length)
 				if(difference)
 					if(difference > 0)
 						consider_pressure_difference(enemy_tile, difference)
 					else
 						enemy_tile.consider_pressure_difference(src, -difference)
 				//last_share_check
-				if(our_air.last_share > MINIMUM_AIR_TO_SUSPEND)
+				var/last_share = our_air.last_share
+				if(last_share > MINIMUM_AIR_TO_SUSPEND)
 					our_excited_group.reset_cooldowns()
 					atmos_cooldown = 0
-				else if(our_air.last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
+				else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
 					our_excited_group.dismantle_cooldown = 0
 					atmos_cooldown = 0
 
@@ -214,7 +217,6 @@
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
 		G.archive()
-		var/datum/gas_mixture/our_air = air
 		if(our_air.compare(G))
 			if(!our_excited_group)
 				var/datum/excited_group/EG = new
@@ -222,24 +224,26 @@
 				our_excited_group = excited_group
 			our_air.share(G, adjacent_turfs_length)
 			//last_share_check
-			if(our_air.last_share > MINIMUM_AIR_TO_SUSPEND)
+			var/last_share = our_air.last_share
+			if(last_share > MINIMUM_AIR_TO_SUSPEND)
 				our_excited_group.reset_cooldowns()
 				atmos_cooldown = 0
-			else if(our_air.last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
+			else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
 				our_excited_group.dismantle_cooldown = 0
 				atmos_cooldown = 0
 
-	air.react()
+	our_air.react()
 
 	update_visuals()
 
-	if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		hotspot_expose(air.temperature, CELL_VOLUME)
+	var/our_temperature = our_air.temperature
+	if(our_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		hotspot_expose(our_temperature, CELL_VOLUME)
 		for(var/atom/movable/item in src)
-			item.temperature_expose(air, air.temperature, CELL_VOLUME)
-		temperature_expose(air, air.temperature, CELL_VOLUME)
+			item.temperature_expose(our_air, our_temperature, CELL_VOLUME)
+		temperature_expose(our_air, our_temperature, CELL_VOLUME)
 
-		if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
+		if(our_temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 			if(consider_superconductivity(starting = 1))
 				remove = 0
 
