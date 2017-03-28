@@ -333,6 +333,10 @@
 /datum/action/item_action/hands_free/shift_nerves
 	name = "Shift Nerves"
 
+/datum/action/item_action/explosive_implant
+	check_flags = 0
+	name = "Activate Explosive Implant"
+
 /datum/action/item_action/toggle_research_scanner
 	name = "Toggle Research Scanner"
 	button_icon_state = "scan_mode"
