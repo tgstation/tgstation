@@ -546,8 +546,7 @@ var/list/gaslist_cache = null
 				sample_temp = sample.temperature_archived
 
 		var/temperature_delta = abs(temp - sample_temp)
-		if((temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
-			temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND * temp)
+		if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 			return "temp"
 
 	return ""
