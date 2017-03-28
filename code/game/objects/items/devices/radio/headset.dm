@@ -291,8 +291,8 @@
 		if(keyslot2.syndie)
 			src.syndie = 1
 
-		if (keyslot2.centcom)
-			centcom = 1
+		if (keyslot2.independent)
+			independent = TRUE
 
 
 	for(var/ch_name in channels)

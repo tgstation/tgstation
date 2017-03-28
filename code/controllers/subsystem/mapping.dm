@@ -8,7 +8,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
-	var/datum/map_config/previous_map_config
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
@@ -23,10 +22,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 
 /datum/controller/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
-	if(!previous_map_config)
-		previous_map_config = new("data/previous_map.json", delete_after = TRUE)
-		if(previous_map_config.defaulted)
-			previous_map_config = null
 	if(!config)
 #ifdef FORCE_MAP
 		config = new(FORCE_MAP)
@@ -97,7 +92,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
 
-	previous_map_config = SSmapping.previous_map_config
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
@@ -193,10 +187,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 
 	next_map_config = VM
 	return TRUE
-
-/datum/controller/subsystem/mapping/Shutdown()
-	if(config)
-		config.MakePreviousMap()
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)
