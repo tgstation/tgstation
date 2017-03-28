@@ -41,20 +41,8 @@
 			prisonsecuritywarp += loc
 			qdel(src)
 			return
-		if("blobstart")
-			blobstart += loc
-			qdel(src)
-			return
-		if("secequipment")
-			secequipment += loc
-			qdel(src)
-			return
 		if("Emergencyresponseteam")
 			emergencyresponseteamspawn += loc
-			qdel(src)
-			return
-		if("xeno_spawn")
-			xeno_spawn += loc
 			qdel(src)
 			return
 	return 1
@@ -72,13 +60,112 @@
 /obj/effect/landmark/start/New()
 	start_landmarks_list += src
 	..()
-	if(name != initial(name))
+	if(name != "start")
 		tag = "start*[name]"
 	return 1
 
 /obj/effect/landmark/start/Destroy()
 	start_landmarks_list -= src
 	return ..()
+
+// START LANDMARKS FOLLOW. Don't change the names unless
+// you are refactoring shitty landmark code.
+
+/obj/effect/landmark/start/assistant
+	name = "Assistant"
+
+/obj/effect/landmark/start/janitor
+	name = "Janitor"
+
+/obj/effect/landmark/start/cargo_technician
+	name = "Cargo Technician"
+
+/obj/effect/landmark/start/bartender
+	name = "Bartender"
+
+/obj/effect/landmark/start/clown
+	name = "Clown"
+
+/obj/effect/landmark/start/mime
+	name = "Mime"
+
+/obj/effect/landmark/start/quartermaster
+	name = "Quartermaster"
+
+/obj/effect/landmark/start/atmospheric_technician
+	name = "Atmospheric Technician"
+
+/obj/effect/landmark/start/chef
+	name = "Chef"
+
+/obj/effect/landmark/start/shaft_miner
+	name = "Shaft Miner"
+
+/obj/effect/landmark/start/security_officer
+	name = "Security Officer"
+
+/obj/effect/landmark/start/botanist
+	name = "Botanist"
+
+/obj/effect/landmark/start/head_of_security
+	name = "Head of Security"
+
+/obj/effect/landmark/start/ai
+	name = "AI"
+
+/obj/effect/landmark/start/captain
+	name = "Captain"
+
+/obj/effect/landmark/start/detective
+	name = "Detective"
+
+/obj/effect/landmark/start/warden
+	name = "Warden"
+
+/obj/effect/landmark/start/chief_engineer
+	name = "Chief Engineer"
+
+/obj/effect/landmark/start/cyborg
+	name = "Cyborg"
+
+/obj/effect/landmark/start/head_of_personnel
+	name = "Head of Personnel"
+
+/obj/effect/landmark/start/librarian
+	name = "Librarian"
+
+/obj/effect/landmark/start/lawyer
+	name = "Lawyer"
+
+/obj/effect/landmark/start/station_engineer
+	name = "Station Engineer"
+
+/obj/effect/landmark/start/medical_doctor
+	name = "Medical Doctor"
+
+/obj/effect/landmark/start/scientist
+	name = "Scientist"
+
+/obj/effect/landmark/start/chemist
+	name = "Chemist"
+
+/obj/effect/landmark/start/roboticist
+	name = "Roboticist"
+
+/obj/effect/landmark/start/research_director
+	name = "Research Director"
+
+/obj/effect/landmark/start/geneticist
+	name = "Geneticist"
+
+/obj/effect/landmark/start/chief_medical_officer
+	name = "Chief Medical Officer"
+
+/obj/effect/landmark/start/virologist
+	name = "Virologist"
+
+/obj/effect/landmark/start/chaplain
+	name = "Chaplain"
 
 //Department Security spawns
 
@@ -108,10 +195,56 @@
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
 
+// carp.
+/obj/effect/landmark/carpspawn
+	name = "carpspawn"
+
+// lightsout.
+/obj/effect/landmark/lightsout
+	name = "lightsout"
+
+// observer-start.
+/obj/effect/landmark/observer_start
+	name = "Observer-Start"
+
+// revenant spawn.
+/obj/effect/landmark/revenantspawn
+	name = "revnantspawn"
+
+/obj/effect/landmark/tripai
+	name = "tripai"
+
+// xenos.
+/obj/effect/landmark/xeno_spawn
+	name = "xeno_spawn"
+
+/obj/effect/landmark/xeno_spawn/Initialize(mapload)
+	..()
+	xeno_spawn += loc
+	qdel(src)
+
+// blobs.
+/obj/effect/landmark/blobstart
+	name = "blobstart"
+
+/obj/effect/landmark/blobstart/Initialize(mapload)
+	..()
+	blobstart += loc
+	qdel(src)
+
+/obj/effect/landmark/secequipment
+	name = "secequipment"
+
+/obj/effect/landmark/secequipment/Initialize(mapload)
+	..()
+	secequipment += loc
+	qdel(src)
+
 //generic event spawns
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
 	icon_state = "x4"
+
 
 /obj/effect/landmark/event_spawn/New()
 	..()
