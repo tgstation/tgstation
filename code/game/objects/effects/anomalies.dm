@@ -17,7 +17,7 @@
 	var/countdown_colour
 	var/obj/effect/countdown/anomaly/countdown
 
-/obj/effect/anomaly/Initialize(mapload, new_lifespan=null)
+/obj/effect/anomaly/Initialize(mapload, new_lifespan)
 	..()
 	poi_list |= src
 	START_PROCESSING(SSobj, src)
