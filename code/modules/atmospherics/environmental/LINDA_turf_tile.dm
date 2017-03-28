@@ -124,6 +124,16 @@
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
+#define LAST_SHARE_CHECK \
+	var/last_share = our_air.last_share;\
+	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
+		our_excited_group.reset_cooldowns();\
+		atmos_cooldown = 0;\
+	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
+		our_excited_group.dismantle_cooldown = 0;\
+		atmos_cooldown = 0;\
+	}
+
 /turf/proc/process_cell(fire_count)
 	SSair.remove_from_active(src)
 
@@ -200,14 +210,7 @@
 						consider_pressure_difference(enemy_tile, difference)
 					else
 						enemy_tile.consider_pressure_difference(src, -difference)
-				//last_share_check
-				var/last_share = our_air.last_share
-				if(last_share > MINIMUM_AIR_TO_SUSPEND)
-					our_excited_group.reset_cooldowns()
-					atmos_cooldown = 0
-				else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
-					our_excited_group.dismantle_cooldown = 0
-					atmos_cooldown = 0
+				LAST_SHARE_CHECK
 
 
 		/******************* GROUP HANDLING FINISH *********************************************************************/
@@ -222,14 +225,7 @@
 				EG.add_turf(src)
 				our_excited_group = excited_group
 			our_air.share(G, adjacent_turfs_length)
-			//last_share_check
-			var/last_share = our_air.last_share
-			if(last_share > MINIMUM_AIR_TO_SUSPEND)
-				our_excited_group.reset_cooldowns()
-				atmos_cooldown = 0
-			else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
-				our_excited_group.dismantle_cooldown = 0
-				atmos_cooldown = 0
+			LAST_SHARE_CHECK
 
 	our_air.react()
 
