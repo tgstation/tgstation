@@ -309,7 +309,7 @@
 		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
 		return
 	if(!allowed(user))
-		to_chat(user,"<span class='warning'>You are overwhelmed by the raw amount of data being displayed, only an engineer could operate such a sophisticated device.</span>")
+		to_chat(user,"<span class='warning'>Error: Access Denied - Message: Only the engineering department can be trusted with this kind of power.</span>")
 		playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 		return
 	if(!Adjacent(user) && !isAI(user))
