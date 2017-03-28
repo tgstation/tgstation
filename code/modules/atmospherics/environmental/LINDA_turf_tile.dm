@@ -239,7 +239,8 @@
 	var/our_temperature = our_air.temperature
 	if(our_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		hotspot_expose(our_temperature, CELL_VOLUME)
-		for(var/atom/movable/item in src)
+		for(var/I in src)
+			var/atom/movable/item = I
 			item.temperature_expose(our_air, our_temperature, CELL_VOLUME)
 		temperature_expose(our_air, our_temperature, CELL_VOLUME)
 
