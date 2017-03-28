@@ -70,20 +70,25 @@
 	onclose(user, "mob[real_name]")
 	return
 
-/mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
-	if(inventory_head && inventory_back)
-		//helmet and armor = 100% protection
-		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
-			if( O.force )
-				to_chat(user, "<span class='warning'>[src] is wearing too much armor! You can't cause [p_them()] any damage.</span>")
-				visible_message("<span class='danger'>[user] hits [src] with [O], however [src] is too armored.</span>")
-			else
-				to_chat(user, "<span class='warning'>[src] is wearing too much armor! You can't reach [p_their()] skin.<span>")
-				visible_message("[user] gently taps [src] with [O].")
-			if(health>0 && prob(15))
-				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
-			return
+/mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
+	var/armorval = 0
 
+	if(def_zone)
+		if(def_zone == "head")
+			if(inventory_head)
+				armorval = inventory_head.armor[type]
+		else
+			if(inventory_back)
+				armorval = inventory_back.armor[type]
+		return armorval
+	else
+		if(inventory_head)
+			armorval += inventory_head.armor[type]
+		if(inventory_back)
+			armorval += inventory_back.armor[type]
+	return armorval*0.5
+
+/mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/razor))
 		if (shaved)
 			to_chat(user, "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>")
