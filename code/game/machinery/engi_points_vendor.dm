@@ -680,7 +680,7 @@
 				listeners -= L
 				if(!L || !L.client)
 					continue
-				L.client.stop_client_sounds()
+				L.mob.stop_sound_channel(CHANNEL_JUKEBOX)
 	else if(active)
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
