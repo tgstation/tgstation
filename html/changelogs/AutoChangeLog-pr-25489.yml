@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Wooden tiles can now be quick-replaced with a screwdriver instead of a crowbar, preserving the floor tile."
