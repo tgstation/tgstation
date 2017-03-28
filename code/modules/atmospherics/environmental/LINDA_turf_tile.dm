@@ -247,11 +247,8 @@
 			if(consider_superconductivity(starting = 1))
 				remove = 0
 
-	if (atmos_cooldown > EXCITED_GROUP_DISMANTLE_CYCLES*2)
+	if ((atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)) || (!our_excited_group && remove == 1))
 		SSair.remove_from_active(src)
-	if(!our_excited_group && remove == 1)
-		SSair.remove_from_active(src)
-
 
 //////////////////////////SPACEWIND/////////////////////////////
 
