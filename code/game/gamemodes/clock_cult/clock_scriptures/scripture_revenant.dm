@@ -136,11 +136,13 @@
 	nezbere_invoked++
 	for(var/obj/O in all_clockwork_objects)
 		O.ratvar_act()
-	spawn(600)
-		nezbere_invoked--
-		for(var/obj/O in all_clockwork_objects)
-			O.ratvar_act()
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/reset_nezbere_invocation), 600)
 	return TRUE
+
+/proc/reset_nezbere_invocation()
+	nezbere_invoked--
+	for(var/obj/O in all_clockwork_objects)
+		O.ratvar_act()
 
 
 //Invoke Nzcrentr, the Eternal Thunderbolt: Imbues an immense amount of energy into the invoker. After several seconds, everyone near the invoker will be hit with a devastating lightning blast.

@@ -1410,15 +1410,15 @@ var/valid_HTTPSGet = FALSE
 	else
 		CRASH("Invalid world.system_type ([world.system_type])? Yell at Lummox.")
 
-	world.log << "HTTPSGet: [url]"
+	log_world("HTTPSGet: [url]")
 	var/result = shell(command)
 	if(result != 0)
-		world.log << "Download failed: shell exited with code: [result]"
+		log_world("Download failed: shell exited with code: [result]")
 		return
 
 	var/f = file(temp_file)
 	if(!f)
-		world.log << "Download failed: Temp file not found"
+		log_world("Download failed: Temp file not found")
 		return
 
 	. = file2text(f)
