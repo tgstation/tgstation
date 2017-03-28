@@ -211,8 +211,19 @@
 /obj/effect/landmark/revenantspawn
 	name = "revnantspawn"
 
+// triple ais.
 /obj/effect/landmark/tripai
 	name = "tripai"
+
+// marauder entry (XXX WTF IS MAURADER ENTRY???)
+
+/obj/effect/landmark/marauder_entry
+	name = "Marauder Entry"
+
+// syndicate breach area (XXX I DON'T KNOW WHAT THIS IS EITHER)
+
+/obj/effect/landmark/syndicate_breach_area
+	name = "Syndicate Breach Area"
 
 // xenos.
 /obj/effect/landmark/xeno_spawn
