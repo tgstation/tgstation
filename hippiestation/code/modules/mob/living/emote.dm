@@ -23,7 +23,7 @@
 			sound = pick('hippiestation/sound/voice/scream_m1.ogg', 'hippiestation/sound/voice/scream_m2.ogg')
 			if(user.gender == FEMALE)
 				sound = pick('hippiestation/sound/voice/scream_f1.ogg', 'hippiestation/sound/voice/scream_f2.ogg')
-			if(is_species(user, /datum/species/android) || is_species(user, /datum/species/synth))
+			if(is_species(user, /datum/species/android) || is_species(user, /datum/species/synth) || is_species(user, /datum/species/ipc))
 				sound = 'hippiestation/sound/voice/scream_silicon.ogg'
 			if(is_species(user, /datum/species/lizard))
 				sound = 'hippiestation/sound/voice/scream_lizard.ogg'
@@ -31,6 +31,8 @@
 				sound = 'hippiestation/sound/voice/scream_skeleton.ogg'
 			if (is_species(user, /datum/species/fly))
 				sound = 'hippiestation/sound/voice/scream_moth.ogg'
+			if (is_species(user, /datum/species/bird))
+				sound = 'hippiestation/sound/voice/caw.ogg'
 		if(isalien(user))
 			sound = 'sound/voice/hiss6.ogg'
 		LAZYINITLIST(user.alternate_screams)
