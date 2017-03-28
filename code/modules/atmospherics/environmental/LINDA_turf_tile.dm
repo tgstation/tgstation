@@ -132,7 +132,6 @@
 		archive()
 
 	current_cycle = fire_count
-	var/remove = 1 //set by non simulated turfs who are sharing with this turf
 
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
@@ -237,6 +236,8 @@
 	update_visuals()
 
 	var/our_temperature = our_air.temperature
+
+	var/remove = TRUE
 	if(our_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		hotspot_expose(our_temperature, CELL_VOLUME)
 		for(var/I in src)
@@ -246,9 +247,9 @@
 
 		if(our_temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 			if(consider_superconductivity(starting = 1))
-				remove = 0
+				remove = FALSE
 
-	if ((atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)) || (!our_excited_group && remove == 1))
+	if ((atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)) || (!our_excited_group && remove))
 		SSair.remove_from_active(src)
 
 //////////////////////////SPACEWIND/////////////////////////////
