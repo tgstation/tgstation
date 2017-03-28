@@ -66,8 +66,9 @@ var/list/gaslist_cache = init_gaslist_cache()
 
 	//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
 /datum/gas_mixture/proc/add_gases()
+	var/cached_gases = gases
 	for(var/id in args)
-		add_gas(id)
+		GASLIST(id, cached_gases[id])
 
 	//garbage_collect() - removes any gas list which is empty.
 	//If called with a list as an argument, only removes gas lists with IDs from that list.
