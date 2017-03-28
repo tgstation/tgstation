@@ -11,7 +11,7 @@
 	var/point_regen_delay = 1
 
 
-/mob/living/simple_animal/hostile/boss/New()
+/mob/living/simple_animal/hostile/boss/Initialize()
 	..()
 
 	atb = new()
@@ -90,7 +90,7 @@
 
 /datum/boss_active_timed_battle/New()
 	..()
-	SSobj.processing.Add(src)
+	START_PROCESSING(SSobj, src)
 
 
 /datum/boss_active_timed_battle/proc/assign_abilities(list/L)

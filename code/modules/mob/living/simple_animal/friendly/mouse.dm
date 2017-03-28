@@ -25,7 +25,7 @@
 	gold_core_spawnable = 2
 	var/chew_probability = 1
 
-/mob/living/simple_animal/mouse/New()
+/mob/living/simple_animal/mouse/Initialize()
 	..()
 	if(!body_color)
 		body_color = pick( list("brown","gray","white") )

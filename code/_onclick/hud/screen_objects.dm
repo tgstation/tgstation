@@ -159,7 +159,7 @@
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
 		return 1
-	if(usr.incapacitated())
+	if(usr.incapacitated() || isobserver(usr))
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
@@ -679,12 +679,15 @@
 
 	if(!visible)
 		alpha = 0
-	if(SStitle.title_screen)
-		icon = SStitle.title_screen.icon
+
+	if(!use_previous_title)
+		if(SStitle.icon)
+			icon = SStitle.icon
+	else
+		if(SStitle.previous_icon)
+			icon = SStitle.previous_icon
 
 	holder.screen += src
-	if(use_previous_title && !SSmapping.previous_map_config.defaulted)
-		holder.screen -= src	//Yell at Cyberboss to finish this
 
 	..()
 

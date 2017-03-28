@@ -184,18 +184,18 @@
 		if(!iscultist(L))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Weaken(8)
+			L.Weaken(8) //stun targets for 14-16 seconds
 		else
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Weaken(4) //half the stun, but sets cultists on fire
+			L.Weaken(4) //stun for 6-8 seconds, but set cultist targets on fire
 			L.adjust_fire_stacks(2)
 			L.IgniteMob()
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.silent += 6
 		targetsjudged++
-		L.adjustBruteLoss(10)
+		L.adjustBruteLoss(10) //do a small amount of damage
 		add_logs(user, L, "struck with a judicial blast")
 	to_chat(user, "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[targetsjudged == 1 ? "":"s"].</b></span>")
 	sleep(3) //so the animation completes properly

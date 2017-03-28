@@ -65,7 +65,7 @@
 //MOVEMENT
 /datum/riding/proc/handle_ride(mob/user, direction)
 	if(user.incapacitated())
-		ridden.unbuckle_mob(user)
+		Unbuckle(user)
 		return
 
 	if(world.time < next_vehicle_move)
@@ -80,6 +80,9 @@
 		handle_vehicle_offsets()
 	else
 		to_chat(user, "<span class='notice'>You'll need the keys in one of your hands to drive \the [ridden.name].</span>")
+
+/datum/riding/proc/Unbuckle(atom/movable/M)
+	addtimer(CALLBACK(ridden, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
 
 /datum/riding/proc/Process_Spacemove(direction)
 	if(ridden.has_gravity())
@@ -251,24 +254,32 @@
 
 //SPEEDUWAGON
 
-/datum/riding/space/speedbike/speedwagon/handle_vehicle_offsets()
+/datum/riding/space/speedwagon
+	vehicle_move_delay = 0
+
+/datum/riding/space/speedwagon/handle_vehicle_offsets()
 	if(ridden.has_buckled_mobs())
 		for(var/m in ridden.buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.setDir(ridden.dir)
+			ridden.pixel_x = -48
+			ridden.pixel_y = -48
 			switch(ridden.dir)
 				if(NORTH)
-					buckled_mob.pixel_x = -5
-					buckled_mob.pixel_y = -5
+					buckled_mob.pixel_x = -10
+					buckled_mob.pixel_y = -3
 				if(SOUTH)
-					buckled_mob.pixel_x = 5
+					buckled_mob.pixel_x = 16
 					buckled_mob.pixel_y = 3
 				if(EAST)
-					buckled_mob.pixel_x = -8
-					buckled_mob.pixel_y = 5
+					buckled_mob.pixel_x = -4
+					buckled_mob.pixel_y = 30
 				if(WEST)
-					buckled_mob.pixel_x = 8
-					buckled_mob.pixel_y = 5
+					buckled_mob.pixel_x = 4
+					buckled_mob.pixel_y = -1
+
+/datum/riding/space/speedwagon/handle_vehicle_layer()
+	ridden.layer = BELOW_MOB_LAYER
 
 ///////////////BOATS////////////
 /datum/riding/boat
@@ -300,7 +311,7 @@
 
 /datum/riding/animal/handle_ride(mob/user, direction)
 	if(user.incapacitated())
-		ridden.unbuckle_mob(user)
+		Unbuckle(user)
 		return
 
 	if(world.time < next_vehicle_move)
@@ -325,11 +336,11 @@
 	var/mob/living/carbon/human/H = ridden	//IF this runtimes I'm blaming the admins.
 	if(M.incapacitated(FALSE, TRUE) || H.incapacitated(FALSE, TRUE))
 		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
-		ridden.unbuckle_mob(M)
+		Unbuckle(M)
 		return FALSE
 	if(M.restrained(TRUE))
 		M.visible_message("<span class='boldwarning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
-		ridden.unbuckle_mob(M)
+		Unbuckle(M)
 		return FALSE
 	if(H.pulling == M)
 		H.stop_pulling()
@@ -378,12 +389,12 @@
 				kick = FALSE
 		if(kick)
 			to_chat(user, "<span class='userdanger'>You fall off of [ridden]!</span>")
-			ridden.unbuckle_mob(user)
+			Unbuckle(user)
 			return
 	if(istype(user, /mob/living/carbon))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
-			ridden.unbuckle_mob(user)
+			Unbuckle(user)
 			to_chat(user, "<span class='userdanger'>You can't grab onto [ridden] with no hands!</span>")
 			return
 

@@ -1010,6 +1010,7 @@
 					/obj/item/device/flashlight/glowstick,
 					/obj/item/device/flashlight/glowstick/red,
 					/obj/item/device/flashlight/glowstick/blue,
+					/obj/item/device/flashlight/glowstick/cyan,
 					/obj/item/device/flashlight/glowstick/orange,
 					/obj/item/device/flashlight/glowstick/yellow,
 					/obj/item/device/flashlight/glowstick/pink)
@@ -1591,7 +1592,6 @@
 	                /obj/item/toy/talking/AI,
 	                /obj/item/toy/talking/owl,
 	                /obj/item/toy/talking/griffin,
-	                /obj/item/toy/talking/skeleton,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
 	                /obj/item/toy/carpplushie,

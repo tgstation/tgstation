@@ -53,7 +53,7 @@
 				topiclimiter[ADMINSWARNED_AT] = minute
 				msg += " Administrators have been informed."
 				log_game("[key_name(src)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
-				message_admins("[key_name_admin(src)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
+				message_admins("[key_name_admin(src)] [ADMIN_FLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
 
@@ -71,7 +71,7 @@
 
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+		href_logfile << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	// Admin PM
 	if(href_list["priv_msg"])

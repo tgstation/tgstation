@@ -22,7 +22,7 @@
 
 /obj/item/weapon/minigunpack/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/item/weapon/minigunpack/process()
 	overheat = max(0, overheat - heat_diffusion)
@@ -96,7 +96,7 @@
 	icon_state = "minigun_spin"
 	item_state = "minigun"
 	origin_tech = "combat=6;powerstorage=5;magnets=4"
-	flags = CONDUCT | HANDSLOW
+	flags = CONDUCT
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
@@ -109,6 +109,17 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
 	casing_ejector = 0
 	var/obj/item/weapon/minigunpack/ammo_pack
+
+/obj/item/weapon/gun/ballistic/minigun/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
+
+	if(!ammo_pack)
+		if(istype(loc,/obj/item/weapon/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
+			ammo_pack = loc
+			..()
+		else
+			qdel(src)//No pack, no gun
 
 /obj/item/weapon/gun/ballistic/minigun/attack_self(mob/living/user)
 	return
@@ -131,14 +142,6 @@
 	if(!ammo_pack || ammo_pack.loc != user)
 		to_chat(user, "You need the backpack power source to fire the gun!")
 	..()
-
-/obj/item/weapon/gun/ballistic/minigun/New()
-	if(!ammo_pack)
-		if(istype(loc,/obj/item/weapon/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
-			ammo_pack = loc
-			..()
-		else
-			qdel(src)//No pack, no gun
 
 /obj/item/weapon/gun/ballistic/minigun/dropped(mob/living/user)
 	ammo_pack.attach_gun(user)

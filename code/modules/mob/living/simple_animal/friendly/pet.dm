@@ -29,7 +29,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/pet/New()
+/mob/living/simple_animal/pet/Initialize()
 	..()
 	if(pcollar)
 		pcollar = new(src)

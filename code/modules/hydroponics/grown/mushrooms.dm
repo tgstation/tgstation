@@ -234,10 +234,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))
-		return
+		return FALSE
 	if(!isturf(user.loc))
 		to_chat(user, "<span class='warning'>You need more space to plant [src].</span>")
-		return
+		return FALSE
 	var/count = 0
 	var/maxcount = 1
 	for(var/tempdir in cardinal)
@@ -248,10 +248,11 @@
 		count++
 	if(count >= maxcount)
 		to_chat(user, "<span class='warning'>There are too many shrooms here to plant [src].</span>")
-		return
+		return FALSE
 	new effect_path(user.loc, seed)
 	to_chat(user, "<span class='notice'>You plant [src].</span>")
 	qdel(src)
+	return TRUE
 
 
 // Glowcap
@@ -301,4 +302,10 @@
 	icon_state = "shadowshroom"
 	effect_path = /obj/structure/glowshroom/shadowshroom
 	origin_tech = "biotech=4;plasmatech=4;magnets=4"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom/attack_self(mob/user)
+	. = ..()
+	if(.)
+		message_admins("Shadowshroom planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(user)]",0,1)
+		investigate_log("was planted by [key_name(user)] at [COORD(user)]", "botany")
 

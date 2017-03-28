@@ -8,7 +8,7 @@
 	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
 
-/obj/item/device/unactivated_swarmer/New()
+/obj/item/device/unactivated_swarmer/Initialize()
 	if(!crit_fail)
 		notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	..()
@@ -118,7 +118,7 @@
 	..()
 	to_chat(src, login_text_dump)
 
-/mob/living/simple_animal/hostile/swarmer/New()
+/mob/living/simple_animal/hostile/swarmer/Initialize()
 	..()
 	verbs -= /mob/living/verb/pulled
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
@@ -548,10 +548,15 @@
 	icon_state = "ui_light"
 	layer = MOB_LAYER
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	light_range = 1
+	var/lon_range = 1
+	light_color = LIGHT_COLOR_CYAN
 	obj_integrity = 30
 	max_integrity = 30
 	anchored = 1
+
+/obj/structure/swarmer/Initialize(mapload)
+	..()
+	set_light(lon_range)
 
 /obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

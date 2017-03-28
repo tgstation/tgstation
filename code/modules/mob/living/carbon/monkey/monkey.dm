@@ -18,7 +18,7 @@
 
 
 
-/mob/living/carbon/monkey/New()
+/mob/living/carbon/monkey/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 

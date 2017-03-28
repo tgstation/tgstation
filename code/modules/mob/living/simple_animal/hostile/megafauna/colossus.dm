@@ -91,7 +91,7 @@ Difficulty: Very Hard
 			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
 
 
-/mob/living/simple_animal/hostile/megafauna/colossus/New()
+/mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
 	..()
 	internal = new/obj/item/device/gps/internal/colossus(src)
 
@@ -105,7 +105,7 @@ Difficulty: Very Hard
 	duration = 8
 	var/target
 
-/obj/effect/overlay/temp/at_shield/New(new_loc, new_target)
+/obj/effect/overlay/temp/at_shield/Initialize(mapload, new_target)
 	..()
 	target = new_target
 	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
@@ -631,7 +631,7 @@ Difficulty: Very Hard
 	stop_automated_movement = 1
 	var/heal_power = 5
 
-/mob/living/simple_animal/hostile/lightgeist/New()
+/mob/living/simple_animal/hostile/lightgeist/Initialize()
 	..()
 	verbs -= /mob/living/verb/pulled
 	verbs -= /mob/verb/me_verb

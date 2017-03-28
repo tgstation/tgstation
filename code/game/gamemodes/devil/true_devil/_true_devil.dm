@@ -27,7 +27,7 @@
 
 
 
-/mob/living/carbon/true_devil/New()
+/mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
 
 	create_internal_organs()

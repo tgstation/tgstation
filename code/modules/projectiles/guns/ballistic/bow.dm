@@ -9,11 +9,14 @@
 	var/item_state_firing = "bow"
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
-	flags = HANDSLOW
 	weapon_weight = WEAPON_HEAVY
 	var/draw_sound = 'sound/weapons/draw_bow.ogg'
 	var/ready_to_fire = 0
 	var/slowdown_when_ready = 2
+
+/obj/item/weapon/gun/ballistic/bow/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 
 /obj/item/weapon/gun/ballistic/bow/update_icon()
 	if(ready_to_fire)

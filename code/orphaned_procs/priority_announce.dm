@@ -30,11 +30,17 @@
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				M << sound(sound)
 
-/proc/print_command_report(text = "", title = "Central Command Update")
-	for (var/obj/machinery/computer/communications/C in machines)
+/proc/print_command_report(text = "", title = null, announce=TRUE)
+	if(!title)
+		title = "Classified [command_name()] Update"
+
+	if(announce)
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
+
+	for(var/obj/machinery/computer/communications/C in machines)
 		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == ZLEVEL_STATION)
-			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
-			P.name = "paper- '[title]'"
+			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(C.loc)
+			P.name = "paper - '[title]'"
 			P.info = text
 			C.messagetitle.Add("[title]")
 			C.messagetext.Add(text)

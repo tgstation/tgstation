@@ -114,7 +114,7 @@
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
 
-/mob/living/simple_animal/bot/New()
+/mob/living/simple_animal/bot/Initialize()
 	..()
 	access_card = new /obj/item/weapon/card/id(src)
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
@@ -800,7 +800,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	use_power = 0
 	var/mob/living/simple_animal/bot/owner = null
 
-/obj/machinery/bot_core/New(loc)
+/obj/machinery/bot_core/Initialize()
 	..()
 	owner = loc
 	if(!istype(owner))

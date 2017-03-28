@@ -50,7 +50,7 @@
 	icon_living = "stickdog"
 	icon_dead = "stickdog_dead"
 
-/mob/living/simple_animal/hostile/stickman/New(var/turf/loc, var/wizard_summoned)
+/mob/living/simple_animal/hostile/stickman/Initialize(mapload, var/wizard_summoned)
 	..()
 	new /obj/effect/overlay/temp/paper_scatter(src)
 	summoned_by_wizard = wizard_summoned

@@ -15,6 +15,18 @@
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
 
+/obj/structure/chair/Initialize()
+	..()
+	if(!anchored)	//why would you put these on the shuttle?
+		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+
+/obj/structure/chair/Destroy()
+	RemoveFromLatejoin()
+	return ..()
+
+/obj/structure/chair/proc/RemoveFromLatejoin()
+	latejoin -= src	//These may be here due to the arrivals shuttle
+
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
 	if(buildstacktype && (!(flags & NODECONSTRUCT)))
@@ -49,7 +61,7 @@
 		return ..()
 
 /obj/structure/chair/attack_tk(mob/user)
-	if(has_buckled_mobs())
+	if(!anchored || has_buckled_mobs())
 		..()
 	else
 		rotate()

@@ -24,5 +24,4 @@ var/datum/controller/subsystem/server_maint/SSserver
 					qdel(C)
 
 	if(config.sql_enabled)
-		sql_poll_players()
-		sql_poll_admins()
+		sql_poll_population()

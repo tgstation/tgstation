@@ -19,7 +19,7 @@
 	opposable thumbs.</b>"
 	var/movement_delay_time //how long the fragment is slowed after being hit
 
-/mob/living/simple_animal/hostile/clockwork/fragment/New()
+/mob/living/simple_animal/hostile/clockwork/fragment/Initialize()
 	..()
 	set_light(2, 0.8)
 	if(prob(1))

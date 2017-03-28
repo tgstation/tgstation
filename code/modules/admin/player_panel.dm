@@ -349,12 +349,16 @@
 		var/brains = 0
 		var/other_players = 0
 		var/living_skipped = 0
+		var/drones = 0
 		for(var/mob/M in mob_list)
 			if(M.ckey)
 				if(isnewplayer(M))
 					lobby_players++
 					continue
 				else if(M.stat != DEAD && M.mind && !isbrain(M))
+					if(isdrone(M))
+						drones++
+						continue
 					if(M.z == ZLEVEL_CENTCOM)
 						living_skipped++
 						continue
@@ -373,7 +377,7 @@
 					other_players++
 		dat += "<BR><b><font color='blue' size='3'>Players:|[connected_players - lobby_players] ingame|[connected_players] connected|[lobby_players] lobby|</font></b>"
 		dat += "<BR><b><font color='green'>Living Players:|[living_players_connected] active|[living_players - living_players_connected] disconnected|[living_players_antagonist] antagonists|</font></b>"
-		dat += "<BR><b><font color='#bf42f4'>SKIPPED \[On centcom Z-level\]: [living_skipped] living players|</font></b>"
+		dat += "<BR><b><font color='#bf42f4'>SKIPPED \[On centcom Z-level\]: [living_skipped] living players|[drones] living drones|</font></b>"
 		dat += "<BR><b><font color='red'>Dead/Observing players:|[observers_connected] active|[observers - observers_connected] disconnected|[brains] brains|</font></b>"
 		if(other_players)
 			dat += "<BR><span class='userdanger'>[other_players] players in invalid state or the statistics code is bugged!</span>"

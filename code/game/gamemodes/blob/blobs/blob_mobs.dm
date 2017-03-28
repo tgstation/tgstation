@@ -102,7 +102,7 @@
 	var/is_zombie = 0
 	gold_core_spawnable = 1
 
-/mob/living/simple_animal/hostile/blob/blobspore/New(loc, var/obj/structure/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
@@ -222,7 +222,7 @@
 	see_in_dark = 8
 	var/independent = FALSE
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/New()
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
 	..()
 	if(!independent) //no pulling people deep into the blob
 		verbs -= /mob/living/verb/pulled

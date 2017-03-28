@@ -110,8 +110,8 @@ var/total_borer_hosts_needed = 10
 	var/datum/action/innate/borer/punish_victim/punish_victim_action = new
 	var/datum/action/innate/borer/jumpstart_host/jumpstart_host_action = new
 
-/mob/living/simple_animal/borer/New(atom/newloc, var/gen=1)
-	..(newloc)
+/mob/living/simple_animal/borer/Initialize(mapload, gen=1)
+	..()
 	generation = gen
 	notify_ghosts("A cortical borer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	real_name = "Cortical Borer [rand(1000,9999)]"
@@ -300,8 +300,8 @@ var/total_borer_hosts_needed = 10
 		message = copytext(message,2)
 		for(var/borer in borers)
 			to_chat(borer, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
-		for(var/mob/dead in dead_mob_list)
-			to_chat(dead, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
+		for(var/mob/D in dead_mob_list)
+			to_chat(D, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
 		return
 	if(!victim)
 		to_chat(src, "<span class='warning'>You cannot speak without a host!</span>")
@@ -336,7 +336,9 @@ var/total_borer_hosts_needed = 10
 		if(H!=src && Adjacent(H))
 			choices += H
 
-	var/mob/living/carbon/H = input(src,"Who do you wish to infest?") in null|choices
+	if(!choices.len)
+		return
+	var/mob/living/carbon/H = choices.len > 1 ? input(src,"Who do you wish to infest?") in null|choices : choices[1]
 	if(!H || !src)
 		return
 
@@ -464,11 +466,13 @@ var/total_borer_hosts_needed = 10
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
 			choices += C
+			
+	if(!choices.len)
+		return
+	var/mob/living/carbon/M = choices.len > 1 ? input(src,"Who do you wish to dominate?") in null|choices : choices[1]
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
 
-
-	if(!M || !src)
+	if(!M || !src || stat != CONSCIOUS || victim || (world.time - used_dominate < 150))
 		return
 	if(!Adjacent(M))
 		return

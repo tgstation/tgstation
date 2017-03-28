@@ -16,7 +16,7 @@
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
 
-/mob/living/simple_animal/hostile/guardian/assassin/New()
+/mob/living/simple_animal/hostile/guardian/assassin/Initialize()
 	..()
 	stealthcooldown = 0
 

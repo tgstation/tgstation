@@ -52,7 +52,7 @@
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = "AI Private"
 
-/mob/living/simple_animal/bot/secbot/New()
+/mob/living/simple_animal/bot/secbot/Initialize()
 	..()
 	icon_state = "secbot[on]"
 	spawn(3)

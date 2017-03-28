@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscdel: "A cloner that is EMP'd will merely eject the clone early, rather
-than gibbing it. Emagging the cloner will still gib the clone."

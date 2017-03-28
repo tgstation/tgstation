@@ -232,7 +232,7 @@ var/const/INJECT = 5 //injection
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(!R.holder)
+		if(QDELETED(R.holder))
 			continue
 		if(!C)
 			C = R.holder.my_atom
@@ -512,6 +512,11 @@ var/const/INJECT = 5 //injection
 				R.reaction_turf(A, R.volume * volume_modifier, show_message)
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
+
+/datum/reagents/proc/holder_full()
+	if(total_volume >= maximum_volume)
+		return TRUE
+	return FALSE
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)

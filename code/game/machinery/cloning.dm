@@ -188,12 +188,13 @@
 	check_brine() // put in chemicals NOW to stop death via cardiac arrest
 	H.Paralyse(4)
 
-	if(grab_ghost_when == CLONER_FRESH_CLONE)
-		clonemind.transfer_to(H)
-		H.ckey = ckey
-		to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
-	else if(grab_ghost_when == CLONER_MATURE_CLONE)
-		to_chat(clonemind.current, "<span class='notice'>Your body is beginning to regenerate in a cloning pod. You will become conscious when it is complete.</span>")
+	clonemind.transfer_to(H)
+
+	H.grab_ghost()
+	to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
+
+	if(grab_ghost_when == CLONER_MATURE_CLONE)
+		addtimer(CALLBACK(src, .proc/occupant_dreams), 100)
 
 	if(H)
 		H.faction |= factions
@@ -203,6 +204,11 @@
 		H.suiciding = FALSE
 	attempting = FALSE
 	return TRUE
+
+/obj/machinery/clonepod/proc/occupant_dreams()
+	if(occupant)
+		to_chat(occupant, "<span class='revennotice'>While your body grows, you have the strangest dream, like you can see yourself from the outside.</span>")
+		occupant.ghostize(TRUE)
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
@@ -334,7 +340,6 @@
 		return
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
-		clonemind.transfer_to(occupant)
 		occupant.grab_ghost()
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		occupant.flash_act()

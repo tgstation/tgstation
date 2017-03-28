@@ -269,13 +269,13 @@
 		item_color = pick(possible_colors)
 		switch(item_color)
 			if("red")
-				light_color = "#ff0000"
+				light_color = LIGHT_COLOR_RED
 			if("green")
-				light_color = "#00ff00"
+				light_color = LIGHT_COLOR_GREEN
 			if("blue")
-				light_color = "#40ceff"
+				light_color = LIGHT_COLOR_LIGHT_CYAN
 			if("purple")
-				light_color = "#9b51ff"
+				light_color = LIGHT_COLOR_LAVENDER
 
 /obj/item/weapon/twohanded/dualsaber/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -302,9 +302,9 @@
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
-	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
 		user.setDir(i)
-		if(i == 8)
+		if(i == WEST)
 			user.emote("flip")
 		sleep(1)
 
@@ -349,7 +349,7 @@
 /obj/item/weapon/twohanded/dualsaber/process()
 	if(wielded)
 		if(hacked)
-			light_color = pick("#ff0000", "#00ff00", "#40ceff", "#9b51ff")
+			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)
@@ -578,6 +578,9 @@
 	force_unwielded = 19
 	force_wielded = 25
 
+/obj/item/weapon/twohanded/pitchfork/demonic/Initialize()
+	set_light(3,6,LIGHT_COLOR_RED)
+
 /obj/item/weapon/twohanded/pitchfork/demonic/greater
 	force = 24
 	throwforce = 50
@@ -613,6 +616,17 @@
 	if(user.mind && !user.mind.devilinfo && (user.mind.soulOwner != user.mind))
 		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+	..()
+
+/obj/item/weapon/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
+	if(!proximity || !wielded)
+		return
+	if(istype(target, /turf/closed/wall))
+		var/turf/closed/wall/W = target
+		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
+		playsound(target, 'sound/magic/Disintegrate.ogg', 100, 1)
+		W.break_wall()
+		return 1
 	..()
 
 //HF blade

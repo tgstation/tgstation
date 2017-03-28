@@ -78,7 +78,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
-/mob/living/simple_animal/slime/New(loc, new_colour="grey", new_is_adult=FALSE)
+/mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
 
@@ -422,5 +422,5 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(..())
 		return 3
 
-/mob/living/simple_animal/slime/random/New(loc, new_colour, new_is_adult)
-	. = ..(loc, pick(slime_colours), prob(50))
+/mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
+	. = ..(mapload, pick(slime_colours), prob(50))

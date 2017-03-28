@@ -772,3 +772,16 @@ var/list/TYPES_SHORTCUTS = list(
 		return
 
 	error_cache.show_to(src)
+
+/client/proc/pump_random_event()
+	set category = "Debug"
+	set name = "Pump Random Event"
+	set desc = "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification."
+	if(!holder)
+		return
+
+	SSevent.scheduled = world.time
+
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] pumped a random event.</span>")
+	feedback_add_details("admin_verb","PRE")
+	log_admin("[key_name(src)] pumped a random event.")

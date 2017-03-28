@@ -25,7 +25,18 @@
 
 	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/unique_rename = 0 // can you customize the description/name of the thing?
+	
+	var/dangerous_possession = FALSE	//Admin possession yes/no
 
+/obj/vv_edit_var(vname, vval)
+	switch(vname)
+		if("dangerous_possession")
+			return FALSE
+		if("control_object")
+			var/obj/O = vval
+			if(istype(O) && O.dangerous_possession)
+				return FALSE
+	..()
 
 /obj/Initialize()
 	..()
@@ -67,14 +78,6 @@
 		return loc.return_air()
 	else
 		return null
-
-/obj/proc/rewrite(mob/user)
-	var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
-	if(!QDELETED(src) && user.canUseTopic(src, BE_CLOSE))
-		if(penchoice == "Rename")
-			rename_obj(user)
-		if(penchoice == "Change description")
-			redesc_obj(user)
 
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	//Return: (NONSTANDARD)
@@ -200,28 +203,3 @@
 	..()
 	if(unique_rename)
 		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
-
-/obj/proc/rename_obj(mob/M)
-	var/input = stripped_input(M,"What do you want to name \the [name]?", ,"", MAX_NAME_LEN)
-	var/oldname = name
-
-	if(!QDELETED(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
-		if(oldname == input)
-			to_chat(M, "You changed \the [name] to... well... \the [name].")
-			return
-		else
-			name = input
-			to_chat(M, "\The [oldname] has been successfully been renamed to \the [input].")
-			return
-	else
-		return
-
-/obj/proc/redesc_obj(mob/M)
-	var/input = stripped_input(M,"Describe \the [name] here", ,"", 100)
-
-	if(!QDELETED(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
-		desc = input
-		to_chat(M, "You have successfully changed \the [name]'s description.")
-		return
-	else
-		return

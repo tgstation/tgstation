@@ -18,6 +18,14 @@
 		. = is_eligible_servant(new_body)
 
 /datum/antagonist/clockcultist/give_to_body(mob/living/new_body)
+	if(iscyborg(new_body))
+		var/mob/living/silicon/robot/R = new_body
+		if(R.deployed)
+			var/mob/living/silicon/ai/AI = R.mainframe
+			R.undeploy()
+			var/converted = add_servant_of_ratvar(AI, silent_update)
+			to_chat(AI, "<span class='userdanger'>Anomaly Detected. Returned to core!</span>")	//The AI needs to be in its core to properly be converted
+			return converted
 	if(!silent_update)
 		if(issilicon(new_body))
 			to_chat(new_body, "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, \
@@ -69,7 +77,8 @@
 		var/mob/living/silicon/S = owner
 		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			R.UnlinkSelf()
+			if(!R.shell)
+				R.UnlinkSelf()
 			R.module.rebuild_modules()
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
@@ -112,7 +121,6 @@
 	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	if(!clockwork_gateway_activated)
 		owner.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
-	update_slab_info()
 	..()
 
 /datum/antagonist/clockcultist/remove_innate_effects()
@@ -142,7 +150,6 @@
 		R.module.rebuild_modules()
 	if(temp_owner)
 		temp_owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
-	update_slab_info()
 
 /datum/antagonist/clockcultist/on_remove()
 	if(!silent_update)

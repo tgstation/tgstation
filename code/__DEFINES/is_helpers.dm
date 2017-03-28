@@ -107,7 +107,7 @@
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
-#define isnewplayer(A) (istype(A, /mob/new_player))
+#define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 

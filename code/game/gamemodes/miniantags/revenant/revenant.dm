@@ -62,7 +62,7 @@
 	var/image/ghostimage = null //Visible to ghost with darkness off
 	var/generated_objectives_and_spells = FALSE
 
-/mob/living/simple_animal/revenant/New()
+/mob/living/simple_animal/revenant/Initialize()
 	..()
 
 	ghostimage = image(src.icon,src,src.icon_state)

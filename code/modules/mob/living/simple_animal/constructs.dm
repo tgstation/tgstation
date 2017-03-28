@@ -32,7 +32,7 @@
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 
 
-/mob/living/simple_animal/hostile/construct/New()
+/mob/living/simple_animal/hostile/construct/Initialize()
 	..()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))

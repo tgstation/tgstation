@@ -33,7 +33,12 @@
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	if(magazine)
+		cut_overlays()
+		add_overlay("deagle_magazine")
+	else
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated desert eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."

@@ -11,9 +11,13 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
+/mob/living/carbon/human/dummy/New(loc)
+	..()
+	if(!initialized)
+		args[1] = FALSE
+		Initialize(arglist(args))
 
-
-/mob/living/carbon/human/New()
+/mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
@@ -914,12 +918,15 @@
 		return
 	if(buckled)	//NO INFINITE STACKING!!
 		return
-	if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-		M.visible_message("<span class='boldwarning'>[M] can't hang onto [src]!</span>")
+	if(M.stat != CONSCIOUS)
 		return
-	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 2)))	//MAKE SURE THIS IS LAST!!
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
-		return
+	if(iscarbon(M))
+		if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+			M.visible_message("<span class='boldwarning'>[M] can't hang onto [src]!</span>")
+			return
+		if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
+			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
+			return
 	. = ..(M, force, check_loc)
 	stop_pulling()
 

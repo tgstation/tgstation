@@ -453,13 +453,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!input)
 		return
 
-	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
-	if(confirm == "Yes")
-		priority_announce(input, null, 'sound/AI/commandreport.ogg')
-	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
+	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No", "Cancel")
+	var/announce_command_report = TRUE
+	switch(confirm)
+		if("Yes")
+			priority_announce(input, null, 'sound/AI/commandreport.ogg')
+			announce_command_report = FALSE
+		if("Cancel")
+			return
 
-	print_command_report(input,"[confirm=="Yes" ? "" : "Classified "][command_name()] Update")
+	print_command_report(input, "[announce_command_report ? "Classified " : ""][command_name()] Update", announce_command_report)
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report")
@@ -746,24 +749,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z]).")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_COORDJMP(N)].")
 	feedback_add_details("admin_verb","TN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/reset_latejoin_spawns()
-	set category = "Debug"
-	set name = "Remove Latejoin Spawns"
-
-	if(!check_rights(R_DEBUG))
-		return
-	var/confirm = alert(src, "Disable Latejoin spawns??", "Message", "Yes", "No")
-	if(confirm != "Yes")
-		return
-
-	latejoin.Cut()
-
-	log_admin("[key_name(usr)] removed latejoin spawnpoints.")
-	message_admins("[key_name_admin(usr)] removed latejoin spawnpoints.")
-
-
-
 
 var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
@@ -1146,3 +1131,33 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 		message_admins("WARNING: The server will not show up on the hub because byond is detecting that a filewall is blocking incoming connections.")
 
 	feedback_add_details("admin_verb","HUB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/smite(mob/living/carbon/human/target as mob)
+	set name = "Smite"
+	set category = "Fun"
+	if(!holder)
+		return
+
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA)
+
+	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
+
+	if(QDELETED(target) || !punishment)
+		return
+
+	switch(punishment)
+		if(ADMIN_PUNISHMENT_LIGHTNING)
+			var/turf/T = get_step(get_step(target, NORTH), NORTH)
+			T.Beam(target, icon_state="lightning[rand(1,12)]", time = 5)
+			target.adjustFireLoss(75)
+			target.electrocution_animation(40)
+			to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>")
+		if(ADMIN_PUNISHMENT_BRAINDAMAGE)
+			target.adjustBrainLoss(75)
+		if(ADMIN_PUNISHMENT_GIB)
+			target.gib(FALSE)
+		if(ADMIN_PUNISHMENT_BSA)
+			bluespace_artillery(target)
+
+	message_admins("[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment].")
+	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")

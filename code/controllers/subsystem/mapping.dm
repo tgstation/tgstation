@@ -8,7 +8,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
-	var/datum/map_config/previous_map_config
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
@@ -23,10 +22,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 
 /datum/controller/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
-	if(!previous_map_config)
-		previous_map_config = new("data/previous_map.json", delete_after = TRUE)
-		if(previous_map_config.defaulted)
-			previous_map_config = null
 	if(!config)
 #ifdef FORCE_MAP
 		config = new(FORCE_MAP)
@@ -97,7 +92,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
 
-	previous_map_config = SSmapping.previous_map_config
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
@@ -110,18 +104,15 @@ var/datum/controller/subsystem/mapping/SSmapping
 	if(last)
 		QDEL_NULL(loader)
 
-/datum/controller/subsystem/mapping/proc/CreateSpace(zlevel)
-	for(var/T in block(locate(1, 1, world.maxz), locate(world.maxx, world.maxy, zlevel)))
+/datum/controller/subsystem/mapping/proc/CreateSpace(MaxZLevel)
+	while(world.maxz < MaxZLevel)
+		++world.maxz
 		CHECK_TICK
-		new /turf/open/space(T)
 
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
-
-	if(world.maxz != ZLEVEL_SPACEMAX)
-		WARNING("world.maxz does not match ZLEVEL_SPACEMAX!")
     
 	var/start_time = REALTIMEOFDAY
   
@@ -132,8 +123,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
 
-	for(var/I in (ZLEVEL_MINING + 1) to ZLEVEL_SPACEMAX)
-		CreateSpace(I)
+	CreateSpace(ZLEVEL_SPACEMAX)
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
@@ -148,38 +138,39 @@ var/datum/controller/subsystem/mapping/SSmapping
 	var/players = clients.len
 	var/list/mapvotes = list()
 	//count votes
-	for (var/client/c in clients)
-		var/vote = c.prefs.preferred_map
-		if (!vote)
-			if (global.config.defaultmap)
-				mapvotes[global.config.defaultmap.map_name] += 1
-			continue
-		mapvotes[vote] += 1
+	if(global.config.allow_map_voting)
+		for (var/client/c in clients)
+			var/vote = c.prefs.preferred_map
+			if (!vote)
+				if (global.config.defaultmap)
+					mapvotes[global.config.defaultmap.map_name] += 1
+				continue
+			mapvotes[vote] += 1
 
-	//filter votes
-	for (var/map in mapvotes)
-		if (!map)
-			mapvotes.Remove(map)
-		if (!(map in global.config.maplist))
-			mapvotes.Remove(map)
-			continue
-		var/datum/map_config/VM = global.config.maplist[map]
-		if (!VM)
-			mapvotes.Remove(map)
-			continue
-		if (VM.voteweight <= 0)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_min_users > 0 && players < VM.config_min_users)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_max_users > 0 && players > VM.config_max_users)
-			mapvotes.Remove(map)
-			continue
+		//filter votes
+		for (var/map in mapvotes)
+			if (!map)
+				mapvotes.Remove(map)
+			if (!(map in global.config.maplist))
+				mapvotes.Remove(map)
+				continue
+			var/datum/map_config/VM = global.config.maplist[map]
+			if (!VM)
+				mapvotes.Remove(map)
+				continue
+			if (VM.voteweight <= 0)
+				mapvotes.Remove(map)
+				continue
+			if (VM.config_min_users > 0 && players < VM.config_min_users)
+				mapvotes.Remove(map)
+				continue
+			if (VM.config_max_users > 0 && players > VM.config_max_users)
+				mapvotes.Remove(map)
+				continue
 
-		mapvotes[map] = mapvotes[map]*VM.voteweight
+			mapvotes[map] = mapvotes[map]*VM.voteweight
 
-	var/pickedmap = pickweight(mapvotes)
+	var/pickedmap = global.config.allow_map_voting ? pickweight(mapvotes) : pick(global.config.maplist)
 	if (!pickedmap)
 		return
 	var/datum/map_config/VM = global.config.maplist[pickedmap]
@@ -196,10 +187,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 
 	next_map_config = VM
 	return TRUE
-
-/datum/controller/subsystem/mapping/Shutdown()
-	if(config)
-		config.MakePreviousMap()
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)

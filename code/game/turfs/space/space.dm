@@ -17,6 +17,11 @@
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
+
+/turf/open/space/basic/New()	//Do not convert to Initialize
+	//This is used to optimize the map loader
+	return
+
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
@@ -24,6 +29,10 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
+
+	var/area/A = loc
+	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
+		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
 		SSair.add_to_active(src)
@@ -182,3 +191,18 @@
 
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return 0
+
+
+/turf/open/space/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)
+	return FALSE
+
+/turf/open/space/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, "<span class='notice'>You build a floor.</span>")
+			ChangeTurf(/turf/open/floor/plating)
+			return TRUE
+	return FALSE

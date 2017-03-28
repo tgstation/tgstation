@@ -348,9 +348,24 @@
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
 	sharpness = IS_SHARP
 	slot_flags = null
-	flags = HANDSLOW
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+/obj/item/weapon/nullrod/tribal_knife/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
+
+/obj/item/weapon/nullrod/tribal_knife/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/nullrod/tribal_knife/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/weapon/nullrod/tribal_knife/process()
+	slowdown = rand(-2, 2)
+
 
 /obj/item/weapon/nullrod/pitchfork
 	icon_state = "pitchfork0"
@@ -360,15 +375,3 @@
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
-
-/obj/item/weapon/nullrod/tribal_knife/New()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/nullrod/tribal_knife/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/weapon/nullrod/tribal_knife/process()
-	slowdown = rand(-2, 2)
-
