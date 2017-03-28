@@ -99,15 +99,22 @@ var/list/gaslist_cache = null
 	for(var/id in cached_gases)
 		. += cached_gases[id][ARCHIVE] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
 
-/datum/gas_mixture/proc/total_moles() //moles
-	var/list/cached_gases = gases
-	. = 0
-	for(var/id in cached_gases)
-		. += cached_gases[id][MOLES]
+//prefer this in performance critical areas
+#define TOTAL_MOLES(cached_gases, out_var)\
+	out_var = 0;\
+	for(var/total_moles_id in cached_gases){\
+		out_var += cached_gases[total_moles_id][MOLES];\
+	}
+
+/datum/gas_mixture/proc/total_moles()
+	var/cached_gases = gases
+	TOTAL_MOLES(cached_gases, .)
 
 /datum/gas_mixture/proc/return_pressure() //kilopascals
 	if(volume > 0) // to prevent division by zero
-		return total_moles() * R_IDEAL_GAS_EQUATION * temperature / volume
+		var/cached_gases = gases
+		TOTAL_MOLES(cached_gases, .)
+		. *= R_IDEAL_GAS_EQUATION * temperature / volume
 	return 0
 
 /datum/gas_mixture/proc/return_temperature() //kelvins
@@ -340,11 +347,12 @@ var/list/gaslist_cache = null
 	return 1
 
 /datum/gas_mixture/remove(amount)
-	var/sum = total_moles()
+	var/sum
+	var/list/cached_gases = gases
+	TOTAL_MOLES(cached_gases, sum)
 	amount = min(amount, sum) //Can not take more air than tile has!
 	if(amount <= 0)
 		return null
-	var/list/cached_gases = gases
 	var/datum/gas_mixture/removed = new
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
@@ -495,7 +503,11 @@ var/list/gaslist_cache = null
 		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
 	sharer.after_share(src, atmos_adjacent_turfs)
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
-		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
+		var/our_moles
+		TOTAL_MOLES(cached_gases,our_moles)
+		var/their_moles
+		TOTAL_MOLES(sharer_gases,their_moles)
+		var/delta_pressure = temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)
 		return delta_pressure * R_IDEAL_GAS_EQUATION / volume
 
 /datum/gas_mixture/after_share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
@@ -535,7 +547,9 @@ var/list/gaslist_cache = null
 			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
 			return id
 
-	if(total_moles() > MINIMUM_MOLES_DELTA_TO_MOVE)
+	var/our_moles
+	TOTAL_MOLES(cached_gases, our_moles)
+	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/temp
 		var/sample_temp
 
