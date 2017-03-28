@@ -12,6 +12,8 @@ var/datum/controller/subsystem/atoms/SSatoms
 	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
 
+	var/list/late_loaders
+
 /datum/controller/subsystem/atoms/New()
 	NEW_SS_GLOBAL(SSatoms)
 
@@ -25,8 +27,6 @@ var/datum/controller/subsystem/atoms/SSatoms
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms = null)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
-
-	var/list/late_loaders
 
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 
@@ -73,15 +73,15 @@ var/datum/controller/subsystem/atoms/SSatoms
 
 	initialized = INITIALIZATION_INNEW_REGULAR
 
-	if(late_loaders)
-		for(var/I in late_loaders)
-			var/atom/A = I
-			var/start_tick = world.time
-			A.Initialize(FALSE)
-			if(start_tick != world.time)
-				WARNING("[A]: [A.type] slept during it's Initialize!")
-			CHECK_TICK
-		testing("Late-initialized [late_loaders.len] atoms")
+	for(var/I in late_loaders)
+		var/atom/A = I
+		var/start_tick = world.time
+		A.Initialize(FALSE)
+		if(start_tick != world.time)
+			WARNING("[A]: [A.type] slept during it's Initialize!")
+		CHECK_TICK
+	testing("Late-initialized [LAZYLEN(late_loaders)] atoms")
+	LAZYCLEARLIST(late_loaders)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized
