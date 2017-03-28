@@ -1,4 +1,4 @@
-#define SOUND_CHANNEL_ADMIN 777
+
 var/sound/admin_sound
 
 /client/proc/play_sound(S as sound)
@@ -18,7 +18,7 @@ var/sound/admin_sound
 	var/sound/admin_sound = new()
 	admin_sound.file = S
 	admin_sound.priority = 250
-	admin_sound.channel = SOUND_CHANNEL_ADMIN
+	admin_sound.channel = CHANNEL_ADMIN
 	admin_sound.frequency = freq
 	admin_sound.wait = 1
 	admin_sound.repeat = 0
@@ -69,5 +69,3 @@ var/sound/admin_sound
 		if(M.client)
 			M << sound(null)
 	feedback_add_details("admin_verb","SS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-#undef SOUND_CHANNEL_ADMIN
