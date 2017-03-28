@@ -38,7 +38,7 @@
 /obj/structure/closet/Initialize(mapload)
 	..()
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		take_contents()
+		addtimer(CALLBACK(src, .proc/take_contents), 0)	//have to wait for the spawners to run
 	update_icon()
 
 /obj/structure/closet/Destroy()
