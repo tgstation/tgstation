@@ -172,7 +172,7 @@
 				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
 			return
-		if(src.charge <=95)
+		if(src.charge <=80)
 			charge+=5
 		if(!check_delay() || manual == TRUE)
 			return FALSE
@@ -204,11 +204,23 @@
 		if(NORTH)
 			P.yo = 20
 			P.xo = 0
+		if(NORTHEAST)
+			P.yo = 20
+			P.xo = 20
 		if(EAST)
 			P.yo = 0
 			P.xo = 20
+		if(SOUTHEAST)
+			P.yo = -20
+			P.xo = 20
 		if(WEST)
 			P.yo = 0
+			P.xo = -20
+		if(SOUTHWEST)
+			P.yo = -20
+			P.xo = -20
+		if(NORTHWEST)
+			P.yo = 20
 			P.xo = -20
 		else // Any other
 			P.yo = -20
@@ -226,6 +238,10 @@
 			P.starting = loc
 			P.fire()
 		else
+			if(QDELETED(target))
+				target = null
+				P.fire()
+				return P
 			P.yo = targeted_atom.y - targets_from.y
 			P.xo = targeted_atom.x - targets_from.x
 			P.current = targets_from
@@ -343,6 +359,7 @@
 	name = "Prototype Emitter"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "protoemitter"
+	icon_state_on = "protoemitter_+a"
 	can_buckle = TRUE
 	buckle_lying = 0
 	var/view_range = 12
@@ -352,6 +369,7 @@
 
 /obj/machinery/power/emitter/prototype/unbuckle_mob(mob/living/buckled_mob,force = 0)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+	manual = FALSE
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/weapon/turret_control))
 			qdel(I)
@@ -374,8 +392,10 @@
 	M.loc = get_turf(src)
 	..()
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
-	if(user.client)
-		user.client.change_view(view_range)
+	M.pixel_y = 14
+	layer = 4.1
+	if(M.client)
+		M.client.change_view(view_range)
 	var/datum/action/innate/protoemitter/firing/auto = new()
 	auto.Grant(M, src)
 
@@ -393,7 +413,7 @@
 /datum/action/innate/protoemitter/firing
 	name = "Switch to Manual Firing"
 	desc = "The emitter will only fire on your command and at your designated target"
-	button_icon_state = "mech_zoom_off"
+	button_icon_state = "mech_zoom_on"
 
 /datum/action/innate/protoemitter/firing/Activate()
 	if(PE.manual == TRUE)
@@ -401,7 +421,7 @@
 		PE.manual = FALSE
 		name = "Switch to Manual Firing"
 		desc = "The emitter will only fire on your command and at your designated target"
-		button_icon_state = "mech_zoom_off"
+		button_icon_state = "mech_zoom_on"
 		for(var/obj/item/I in U.held_items)
 			if(istype(I, /obj/item/weapon/turret_control))
 				qdel(I)
@@ -411,7 +431,7 @@
 		playsound(PE,'sound/mecha/mechmove01.ogg', 50, 1)
 		name = "Switch to Automatic Firing"
 		desc = "Emitters will switch to periodic firing at your last target"
-		button_icon_state = "mech_zoom_on"
+		button_icon_state = "mech_zoom_off"
 		PE.manual = TRUE
 		for(var/V in U.held_items)
 			var/obj/item/I = V
@@ -436,25 +456,42 @@
 /obj/item/weapon/turret_control/afterattack(atom/targeted_atom, mob/user)
 	..()
 	var/obj/machinery/power/emitter/E = user.buckled
-	user.dir = get_dir(user,targeted_atom)
 	E.dir = get_dir(E,targeted_atom)
+	user.dir = E.dir
 	switch(E.dir)
 		if(NORTH)
 			E.layer = 3.9
 			user.pixel_x = 0
 			user.pixel_y = -14
+		if(NORTHEAST)
+			E.layer = 3.9
+			user.pixel_x = -8
+			user.pixel_y = -12
 		if(EAST)
 			E.layer = 4.1
 			user.pixel_x = -14
 			user.pixel_y = 0
+		if(SOUTHEAST)
+			E.layer = 3.9
+			user.pixel_x = -8
+			user.pixel_y = 12
 		if(SOUTH)
 			E.layer = 4.1
 			user.pixel_x = 0
 			user.pixel_y = 14
+		if(SOUTHWEST)
+			E.layer = 3.9
+			user.pixel_x = 8
+			user.pixel_y = 12
 		if(WEST)
 			E.layer = 4.1
 			user.pixel_x = 14
 			user.pixel_y = 0
+		if(NORTHWEST)
+			E.layer = 3.9
+			user.pixel_x = 8
+			user.pixel_y = -12
+
 	if(E.charge >= 10 && world.time > delay)
 		E.charge -= 10
 		E.target = targeted_atom
