@@ -6,6 +6,9 @@
 	metabolization_rate = 5 //fast rate so it disappears fast.
 	taste_description = "iron"
 	taste_mult = 1.3
+	glass_icon_state = "glass_red"
+	glass_name = "glass of tomato juice"
+	glass_desc = "Are you sure this is tomato juice?"
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
@@ -107,6 +110,9 @@
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
 	var/cooling_temperature = 2
+	glass_icon_state = "glass_clear"
+	glass_name = "glass of Water"
+	glass_desc = "The father of all refreshments."
 
 /*
  *	Water reaction to turf
@@ -168,6 +174,9 @@
 	id = "holywater"
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
+	glass_icon_state  = "glass_clear"
+	glass_name = "glass of Holy Water"
+	glass_desc = "A glass of holy water."
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(is_servant_of_ratvar(M))
@@ -883,6 +892,9 @@
 	description = "Required for welders. Flamable."
 	color = "#660000" // rgb: 102, 0, 0
 	taste_description = "gross metal"
+	glass_icon_state = "dr_gibb_glass"
+	glass_name = "glass of welder fuel"
+	glass_desc = "Unless you're an industrial tool, this is probably not safe for consumption."
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(!isliving(M))
