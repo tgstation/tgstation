@@ -91,7 +91,7 @@
 /turf/open/archive()
 	air.archive()
 	archived_cycle = SSair.times_fired
-	..()
+	temperature_archived = temperature
 
 /////////////////////////GAS OVERLAYS//////////////////////////////
 
