@@ -1,6 +1,12 @@
 
 //These are all the different status effects. Use the paths for each effect in the defines.
 
+#define STATUS_EFFECT_MULTIPLE 0 //if it allows multiple instances of the effect
+
+#define STATUS_EFFECT_UNIQUE 1 //if it allows only one, preventing new instances
+
+#define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
+
 #define BASIC_STATUS_EFFECT /datum/status_effect //Has no effect.
 
 ///////////

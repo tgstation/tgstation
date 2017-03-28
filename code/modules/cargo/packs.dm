@@ -1592,7 +1592,6 @@
 	                /obj/item/toy/talking/AI,
 	                /obj/item/toy/talking/owl,
 	                /obj/item/toy/talking/griffin,
-	                /obj/item/toy/talking/skeleton,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
 	                /obj/item/toy/carpplushie,
@@ -1750,7 +1749,7 @@
 
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
-	cost = 10000
+	cost = 1000000
 	contains = list(/obj/vehicle/bicycle)
 	crate_name = "Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large

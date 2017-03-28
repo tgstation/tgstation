@@ -173,13 +173,15 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	M.mind.make_Nuke(null, null, 0, FALSE)
+	var/code = "BOMB-NOT-FOUND"
+	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+	if(nuke)
+		code = nuke.r_code
+	M.mind.make_Nuke(null, code, 0, FALSE)
 	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname
-
-
 
 //////SYNDICATE BORG
 /obj/item/weapon/antag_spawner/nuke_ops/borg_tele

@@ -638,7 +638,7 @@
 
 /obj/item/weapon/relic/proc/flash(mob/user)
 	playsound(src.loc, "sparks", rand(25,50), 1)
-	var/obj/item/weapon/grenade/flashbang/CB = new/obj/item/weapon/grenade/flashbang(get_turf(user))
+	var/obj/item/weapon/grenade/flashbang/CB = new/obj/item/weapon/grenade/flashbang(user.loc)
 	CB.prime()
 	warn_admins(user, "Flash")
 

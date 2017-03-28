@@ -28,7 +28,7 @@
 	. = 0
 	for(var/ai in ai_list)
 		var/mob/living/silicon/AI = ai
-		if(is_servant_of_ratvar(AI) || !isturf(AI.loc) || AI.z != ZLEVEL_STATION)
+		if(is_servant_of_ratvar(AI) || !isturf(AI.loc) || AI.z != ZLEVEL_STATION || AI.stat == DEAD)
 			continue
 		.++
 

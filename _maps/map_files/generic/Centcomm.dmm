@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/indestructible/riveted,
@@ -3288,6 +3288,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "ji" = (
@@ -3303,6 +3307,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jk" = (
@@ -3313,6 +3318,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -3470,6 +3479,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jB" = (
@@ -3487,6 +3500,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -3636,6 +3653,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jT" = (
@@ -3646,6 +3667,9 @@
 "jU" = (
 /obj/machinery/computer/security,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jV" = (
@@ -3660,6 +3684,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -3798,7 +3826,7 @@
 /area/centcom/control)
 "kl" = (
 /turf/closed/indestructible/riveted,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "km" = (
 /obj/machinery/door/poddoor/shuttledock{
 	checkdir = 1;
@@ -3806,7 +3834,7 @@
 	turftype = /turf/open/floor/plating/asteroid/snow
 	},
 /turf/open/floor/plating,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "kn" = (
 /turf/open/floor/plasteel/yellowsiding,
 /area/centcom/supply)
@@ -3851,7 +3879,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "kv" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/handcuffs,
@@ -3974,7 +4002,7 @@
 /area/centcom/control)
 "kI" = (
 /turf/open/floor/plating,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "kJ" = (
 /turf/open/floor/plasteel/brown,
 /area/centcom/supply)
@@ -4400,9 +4428,13 @@
 	icon_state = "fakewindows";
 	dir = 1
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "lI" = (
 /obj/item/weapon/disk/data,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
 /turf/open/floor/plating/asteroid/snow/atmosphere,
 /area/syndicate_mothership)
 "lJ" = (
@@ -4603,7 +4635,7 @@
 	icon_state = "fakewindows2";
 	dir = 1
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "mh" = (
 /obj/item/toy/figure/syndie,
 /turf/open/floor/plating/asteroid/snow/atmosphere,
@@ -4677,6 +4709,10 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
@@ -4739,7 +4775,7 @@
 /area/syndicate_mothership)
 "mA" = (
 /turf/closed/indestructible/fakeglass,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "mB" = (
 /obj/structure/sign/nosmoking_2,
 /turf/closed/indestructible/riveted,
@@ -5128,6 +5164,9 @@
 /obj/item/stack/packageWrap,
 /obj/item/weapon/hand_labeler,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "nv" = (
@@ -5498,7 +5537,7 @@
 	icon_state = "fakewindows2";
 	dir = 6
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "om" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Auxillary Dock";
@@ -5506,7 +5545,7 @@
 	req_access_txt = ""
 	},
 /turf/open/floor/plating,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "on" = (
 /obj/structure/table/wood,
 /obj/machinery/recharger,
@@ -5632,6 +5671,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -5712,18 +5752,18 @@
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "oI" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "oJ" = (
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "oK" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder/red,
@@ -5849,6 +5889,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "oY" = (
@@ -5944,19 +5985,19 @@
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pm" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pn" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "po" = (
 /obj/machinery/vending/cigarette{
 	products = list(/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 7, /obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift = 3, /obj/item/weapon/storage/fancy/cigarettes/cigpack_robust = 2, /obj/item/weapon/storage/fancy/cigarettes/cigpack_carp = 3, /obj/item/weapon/storage/fancy/cigarettes/cigpack_midori = 1, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/greyscale = 4, /obj/item/weapon/storage/fancy/rollingpapers = 5)
@@ -5964,7 +6005,7 @@
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pp" = (
 /obj/structure/urinal{
 	pixel_y = 28
@@ -5972,14 +6013,17 @@
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pq" = (
 /obj/item/weapon/soap/syndie,
 /obj/structure/mopbucket,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pr" = (
 /obj/structure/mirror{
 	pixel_x = 28
@@ -5988,7 +6032,7 @@
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "ps" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Office";
@@ -6061,19 +6105,19 @@
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pA" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pB" = (
 /mob/living/simple_animal/hostile/carp/cayenne,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pC" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Restroom";
@@ -6083,12 +6127,12 @@
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pD" = (
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pE" = (
 /obj/structure/mirror{
 	pixel_x = 28
@@ -6096,7 +6140,7 @@
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "pF" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/book/manual/wiki/security_space_law,
@@ -6440,14 +6484,14 @@
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "qo" = (
 /obj/structure/table/wood,
 /obj/item/pizzabox,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "qp" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark{
@@ -6456,13 +6500,13 @@
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "qq" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/open/floor/plasteel/podhatch{
 	dir = 9
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "qr" = (
 /obj/structure/toilet{
 	icon_state = "toilet00";
@@ -6483,16 +6527,16 @@
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "qs" = (
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "qt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "qu" = (
 /obj/machinery/computer/shuttle/white_ship,
 /obj/effect/turf_decal/stripes/line{
@@ -6849,26 +6893,26 @@
 	icon_state = "fakewindows";
 	dir = 9
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "re" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows2";
 	dir = 8
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "rf" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
 	dir = 4
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "rg" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "rh" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/drinks/beer{
@@ -6883,25 +6927,25 @@
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "ri" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/open/floor/plasteel/podhatch{
 	dir = 8
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "rj" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "rk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "rl" = (
-/turf/open/space,
+/turf/open/floor/plating/asteroid/snow/atmosphere,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
@@ -6920,7 +6964,7 @@
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
 "ro" = (
-/turf/open/space,
+/turf/open/floor/plating/asteroid/snow/atmosphere,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
@@ -6932,7 +6976,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "rq" = (
 /obj/machinery/computer/shuttle/ferry,
 /obj/effect/turf_decal/stripes/line{
@@ -7209,6 +7253,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "rU" = (
@@ -7254,13 +7302,13 @@
 	name = "shuttle dock"
 	},
 /turf/open/floor/plating,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "sa" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "sb" = (
 /obj/structure/chair{
 	dir = 4
@@ -7281,7 +7329,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "sf" = (
 /obj/item/weapon/clipboard,
 /obj/item/weapon/folder/red,
@@ -7477,13 +7525,13 @@
 	req_access_txt = "150"
 	},
 /turf/open/floor/plating,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "sC" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
 	dir = 8
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "sD" = (
 /obj/machinery/button/door{
 	id = "nukeop_ready";
@@ -7495,17 +7543,18 @@
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "sE" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/open/floor/plasteel/podhatch{
 	dir = 10
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "sF" = (
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "sG" = (
@@ -7738,23 +7787,23 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "ti" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "tj" = (
 /obj/structure/table/wood,
 /obj/item/device/syndicatedetonator{
 	desc = "This gaudy button can be used to instantly detonate syndicate bombs that have been activated on the station. It is also fun to press."
 	},
 /turf/open/floor/wood,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "tk" = (
 /obj/structure/table/wood,
 /obj/item/toy/nuke,
 /turf/open/floor/wood,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "tl" = (
 /obj/machinery/door/airlock/centcom{
 	aiControlDisabled = 1;
@@ -7951,6 +8000,10 @@
 /obj/item/weapon/paper/pamphlet/ccaInfo,
 /obj/item/weapon/paper/pamphlet/ccaInfo,
 /obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
 /turf/open/floor/plasteel/green/side{
 	dir = 9
 	},
@@ -7969,6 +8022,10 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/open/floor/plasteel/green/side{
 	dir = 5
 	},
@@ -7982,7 +8039,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/centcom/control)
+/area/centcom/evac)
 "tI" = (
 /turf/open/floor/plasteel/neutral/side{
 	dir = 10
@@ -8052,13 +8109,13 @@
 /area/syndicate_mothership)
 "tS" = (
 /turf/open/floor/wood,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "tT" = (
 /obj/effect/landmark{
 	name = "Syndicate-Spawn"
 	},
 /turf/open/floor/wood,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "tU" = (
 /obj/machinery/door/window{
 	base_state = "right";
@@ -8068,9 +8125,12 @@
 	req_access_txt = "151"
 	},
 /turf/open/floor/wood,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "tV" = (
 /obj/structure/chair,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "tW" = (
@@ -8246,7 +8306,7 @@
 /turf/open/floor/plasteel/podhatch{
 	dir = 5
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "uu" = (
 /obj/structure/sign/map/left{
 	pixel_y = -32
@@ -8258,7 +8318,7 @@
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /turf/open/floor/wood,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "uv" = (
 /obj/structure/sign/map/right{
 	pixel_y = -32
@@ -8270,7 +8330,7 @@
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin,
 /turf/open/floor/wood,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "uw" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Equipment Room";
@@ -8280,16 +8340,16 @@
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "ux" = (
-/turf/open/space,
+/turf/open/floor/plating/asteroid/snow/atmosphere,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/assault_pod)
 "uy" = (
-/turf/open/space,
+/turf/open/floor/plating/asteroid/snow/atmosphere,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
@@ -8452,36 +8512,40 @@
 "uV" = (
 /obj/structure/table/wood/fancy,
 /obj/item/weapon/storage/photo_album,
+/obj/machinery/light,
 /turf/open/floor/carpet,
 /area/wizard_station)
 "uW" = (
 /turf/open/floor/plasteel/black,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "uX" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/open/floor/plating,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "uY" = (
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mech_bay_recharge_floor,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "uZ" = (
 /obj/machinery/computer/mech_bay_power_console,
 /turf/open/floor/plating,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "va" = (
 /obj/machinery/vending/tool,
 /turf/open/floor/plasteel/black,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "vb" = (
 /obj/structure/closet/cardboard/metal,
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "vc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "vd" = (
 /obj/machinery/door/airlock/centcom{
 	aiControlDisabled = 1;
@@ -8502,7 +8566,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "vf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -8582,7 +8646,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "vr" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -8717,6 +8781,9 @@
 "vI" = (
 /obj/structure/table/wood,
 /obj/item/weapon/retractor,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "vJ" = (
@@ -8726,6 +8793,9 @@
 /obj/item/weapon/staff,
 /obj/structure/mirror/magic{
 	pixel_y = 28
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
@@ -8756,7 +8826,7 @@
 "vP" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/black,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "vQ" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/fancy/donut_box,
@@ -8953,7 +9023,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "wl" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/ionrifle{
@@ -8963,7 +9033,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/syndicate_mothership)
+/area/syndicate_mothership/control)
 "wm" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/drinkingglasses,
@@ -9690,6 +9760,7 @@
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/fernybush,
+/obj/machinery/light,
 /turf/open/floor/plasteel{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -10033,7 +10104,6 @@
 /area/centcom/evac)
 "yK" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/handcuffs,
 /obj/item/weapon/crowbar/red,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -10118,6 +10188,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/machinery/light,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -10365,6 +10436,10 @@
 /area/wizard_station)
 "zx" = (
 /obj/item/weapon/soap/homemade,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/wizard_station)
 "zy" = (
@@ -10397,6 +10472,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/wizard_station)
 "zC" = (
@@ -10673,6 +10749,9 @@
 /obj/structure/closet/secure_closet/bar{
 	req_access_txt = "25"
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
@@ -10713,6 +10792,9 @@
 "Aw" = (
 /obj/structure/rack,
 /obj/item/toy/sword,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Ax" = (
@@ -10744,6 +10826,9 @@
 	},
 /area/tdome/tdomeobserve)
 "AD" = (
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
 	},
@@ -10818,6 +10903,9 @@
 	},
 /area/tdome/tdomeobserve)
 "AO" = (
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 1
 	},
@@ -11183,6 +11271,9 @@
 "BR" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 8
 	},
@@ -11398,6 +11489,9 @@
 "Cl" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/whitegreen/side{
 	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
@@ -12035,7 +12129,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/tdome/arena)
+/area/tdome/tdomeobserve)
 "DG" = (
 /obj/machinery/igniter,
 /obj/effect/turf_decal/delivery,
@@ -12669,7 +12763,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/centcom/ferry)
+/area/tdome/tdomeadmin)
 "Fn" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/stationary{
@@ -13382,6 +13476,7 @@
 "Hw" = (
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "Hx" = (
@@ -13854,1788 +13949,1021 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "JE" = (
-/obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
-	dir = 1
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
+/obj/machinery/light,
+/turf/open/floor/plating,
+/area/syndicate_mothership/control)
 "JF" = (
-/obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
-	dir = 1
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
+/obj/machinery/light,
+/turf/open/floor/plating,
+/area/syndicate_mothership)
 "JG" = (
-/obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
-	dir = 1
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
 	},
-/turf/open/space,
-/area/shuttle/engi_ship)
+/turf/open/floor/plating,
+/area/syndicate_mothership/control)
 "JH" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar{
+	dir = 2
+	},
+/area/syndicate_mothership/control)
 "JI" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
-	dir = 1
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
 	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
+/turf/open/floor/plasteel/bar{
+	dir = 2
+	},
+/area/syndicate_mothership/control)
 "JJ" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
+/area/syndicate_mothership/control)
 "JK" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/syndicate_mothership)
 "JL" = (
-/obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
-	dir = 1
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/syndicate_mothership/control)
 "JM" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/machinery/light,
+/turf/open/floor/plasteel/bar{
+	dir = 2
 	},
-/area/shuttle/engi_ship)
+/area/syndicate_mothership/control)
 "JN" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
+/area/syndicate_mothership/control)
 "JO" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/evac)
 "JP" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/evac)
 "JQ" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
 	},
-/area/shuttle/engi_ship)
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
 "JR" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/machinery/light{
+	dir = 4
 	},
-/area/shuttle/engi_ship)
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
 "JS" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/centcom/evac)
 "JT" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/structure/bed,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
 "JU" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
-	dir = 1
+/obj/structure/table,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
 	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
 "JV" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
+/obj/structure/table,
+/obj/item/device/radio/off,
+/obj/machinery/light{
+	dir = 4
 	},
-/area/shuttle/engi_ship)
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
 "JW" = (
-/obj/machinery/satellite/meteor_shield{
-	active = 1
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
-/turf/open/floor/fakespace,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/control)
 "JX" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/control)
 "JY" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/brown{
+	tag = "icon-brown (NORTH)";
+	icon_state = "brown";
+	dir = 1
+	},
+/area/centcom/supply)
 "JZ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/brown{
+	dir = 4
+	},
+/area/centcom/supply)
 "Ka" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/brown{
+	dir = 4
+	},
+/area/centcom/supply)
 "Kb" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/control)
 "Kc" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/control)
 "Kd" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light,
+/turf/open/floor/plasteel/brown,
+/area/centcom/supply)
 "Ke" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
 "Kf" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/brown{
+	dir = 4
+	},
+/area/centcom/supply)
 "Kg" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/item/toy/figure/syndie,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "Kh" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
 "Ki" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
 	},
-/area/shuttle/engi_ship)
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
 "Kj" = (
-/obj/machinery/satellite/meteor_shield{
-	active = 1
+/obj/structure/flora/grass/both,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
 	},
-/turf/open/space,
-/area/shuttle/engi_ship)
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "Kk" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/structure/chair{
+	dir = 4
 	},
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/brown{
+	dir = 8
+	},
+/area/centcom/control)
 "Kl" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "Km" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/centcom/control)
 "Kn" = (
-/obj/structure/mirror,
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/centcom/control)
 "Ko" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/structure/flora/tree/pine,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "Kp" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/pointybush,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/centcom/control)
 "Kq" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/pointybush,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/centcom/evac)
 "Kr" = (
-/obj/machinery/door/airlock/engineering,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/genericbush,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/grass,
+/area/centcom/control)
 "Ks" = (
-/obj/machinery/door/airlock/engineering,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/palebush,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/centcom/evac)
 "Kt" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/fernybush,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
 	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
+/turf/open/floor/plasteel{
+	name = "plating";
+	icon_state = "asteroid5"
+	},
+/area/centcom/control)
 "Ku" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/genericbush,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/centcom/control)
 "Kv" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
 	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "Kw" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "Kx" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "Ky" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
 	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "Kz" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
 	},
-/area/shuttle/engi_ship)
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "KA" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
 	},
-/area/shuttle/engi_ship)
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "KB" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "KC" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "KD" = (
-/obj/structure/dresser,
+/obj/structure/chair,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "KE" = (
-/obj/structure/sink{
+/obj/structure/chair,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "KF" = (
-/obj/structure/bed/pod,
-/obj/item/weapon/bedsheet/ce,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "KG" = (
-/obj/structure/bed/pod,
-/obj/item/weapon/bedsheet/ce,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/palebush,
+/obj/machinery/light,
+/turf/open/floor/plating/asteroid,
+/area/centcom/evac)
 "KH" = (
-/obj/structure/sign/poster/contraband/tools,
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "KI" = (
-/obj/machinery/door/poddoor/preopen{
-	id = 29
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
 	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "KJ" = (
-/obj/machinery/door/poddoor/preopen{
-	id = 29
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
 	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "KK" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/engi_ship)
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "KL" = (
-/obj/structure/rack,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/plasteel/fifty{
-	step_x = -4;
-	step_y = -4
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/item/device/forcefield,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/turf/open/floor/plasteel/green/corner{
+	dir = 4
+	},
+/area/centcom/ferry)
 "KM" = (
-/obj/machinery/suit_storage_unit/ert/engineer,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "KN" = (
-/obj/machinery/suit_storage_unit/ert/engineer,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "KO" = (
-/obj/machinery/suit_storage_unit/ert/engineer,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/wizard_station)
 "KP" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
 "KQ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "KR" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
+/obj/structure/flora/grass/both,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
 	},
-/area/shuttle/engi_ship)
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "KS" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (EAST)"
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/palebush,
+/obj/machinery/light{
+	dir = 1
 	},
-/turf/open/space,
-/area/shuttle/engi_ship)
+/turf/open/floor/plating/asteroid,
+/area/centcom/control)
 "KT" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (WEST)";
-	icon_state = "heater";
-	dir = 8
+/obj/structure/chair{
+	dir = 1
 	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "KU" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "KV" = (
-/obj/machinery/shower,
-/obj/structure/curtain,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "KW" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "KX" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "KY" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/pointybush,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/centcom/evac)
 "KZ" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/genericbush,
+/obj/machinery/light,
+/turf/open/floor/grass,
+/area/centcom/evac)
 "La" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "Lb" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "Lc" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/centcom/evac)
 "Ld" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
 "Le" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/centcom/evac)
 "Lf" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
 "Lg" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/area/wizard_station)
 "Lh" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/area/wizard_station)
 "Li" = (
-/obj/structure/sign/poster/contraband/atmosia_independence,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/wizard_station)
 "Lj" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/structure/closet/crate/bin,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/tdome/tdomeobserve)
 "Lk" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (EAST)";
-	icon_state = "heater";
-	dir = 4
+/obj/machinery/light,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 1;
+	heat_capacity = 1e+006
 	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
+/area/tdome/tdomeobserve)
 "Ll" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
+/obj/machinery/light,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 1;
+	heat_capacity = 1e+006
 	},
-/turf/open/space,
-/area/shuttle/engi_ship)
+/area/tdome/tdomeobserve)
 "Lm" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 4
+	},
+/area/tdome/tdomeobserve)
 "Ln" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/tdome/tdomeobserve)
 "Lo" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/palebush,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid,
+/area/tdome/tdomeadmin)
 "Lp" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/fernybush,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel{
+	dir = 6;
+	icon_state = "asteroid8";
+	name = "sand"
+	},
+/area/tdome/tdomeadmin)
 "Lq" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/palebush,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid,
+/area/tdome/tdomeadmin)
 "Lr" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/fernybush,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel{
+	dir = 6;
+	icon_state = "asteroid8";
+	name = "sand"
+	},
+/area/tdome/tdomeadmin)
 "Ls" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/tdome/tdomeadmin)
 "Lt" = (
-/obj/machinery/recharge_station,
-/obj/machinery/light,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/tdome/tdomeadmin)
 "Lu" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/pointybush,
+/obj/machinery/light,
+/turf/open/floor/grass,
+/area/tdome/tdomeadmin)
 "Lv" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/pointybush,
+/obj/machinery/light,
+/turf/open/floor/grass,
+/area/tdome/tdomeadmin)
 "Lw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/structure/flora/bush,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "Lx" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
+/obj/structure/flora/grass/brown,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "Ly" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/structure/flora/grass/brown,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/turf/open/floor/plating/asteroid/snow/atmosphere,
+/area/syndicate_mothership)
 "Lz" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/beach/sand,
+/area/centcom/holding)
 "LA" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/machinery/light,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
 "LB" = (
-/obj/structure/rack,
-/obj/item/weapon/twohanded/fireaxe,
-/obj/item/weapon/storage/belt/utility/chief/full,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
 "LC" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LD" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LE" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LF" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (EAST)";
-	icon_state = "heater";
-	dir = 4
-	},
-/turf/closed/wall/shuttle/syndie,
-/area/shuttle/engi_ship)
+/obj/structure/fluff/arc,
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LG" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/turf/open/space,
-/area/shuttle/engi_ship)
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LH" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (EAST)"
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced,
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LI" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (WEST)";
-	icon_state = "heater";
-	dir = 8
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LJ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
 "LK" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LL" = (
-/obj/machinery/sleeper{
-	dir = 4
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/machinery/light{
+	dir = 1
 	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LM" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LN" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LO" = (
-/obj/machinery/light,
-/obj/machinery/washing_machine,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/structure/fluff/arc,
+/turf/open/floor/grass,
+/area/centcom/control)
 "LP" = (
-/obj/machinery/newscaster,
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LQ" = (
-/obj/structure/piano{
-	color = "";
-	icon_state = "piano"
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced,
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LR" = (
-/obj/structure/chair/comfy/brown{
-	dir = 8
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced,
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LS" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "LT" = (
-/obj/structure/bookcase/manuals/engineering,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "LU" = (
-/obj/structure/sign/atmosplaque,
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "LV" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/genericbush,
 /obj/machinery/light,
-/obj/machinery/power/tesla_coil,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/turf/open/floor/grass,
+/area/centcom/evac)
 "LW" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/handcuffs,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/evac)
 "LX" = (
-/obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/palebush,
+/turf/open/floor/plating/asteroid,
+/area/centcom/evac)
 "LY" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel/vault{
+	dir = 8
 	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
+/area/centcom/evac)
 "LZ" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/obj/machinery/ai_status_display,
+/turf/closed/indestructible/riveted,
+/area/centcom/evac)
 "Ma" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/evac)
 "Mb" = (
-/turf/closed/wall/shuttle/syndie,
-/area/shuttle/engi_ship)
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Security";
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
+	},
+/area/centcom/evac)
 "Mc" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
 	},
-/area/shuttle/engi_ship)
-"Md" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"Me" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"Mf" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
-"Mg" = (
-/obj/structure/sign/poster/contraband/atmosia_independence,
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
-"Mh" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Mi" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/engi_ship)
-"Mj" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/table/wood/fancy,
-/obj/item/weapon/canvas/nineteenXnineteen,
-/obj/item/weapon/canvas/nineteenXnineteen,
-/obj/item/weapon/storage/toolbox/artistic,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Mk" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Ml" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Mm" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Mn" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Mo" = (
-/obj/structure/statue/gold/ce,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Mp" = (
-/obj/item/device/radio/intercom,
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Mq" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Mr" = (
-/obj/structure/sign/poster/official/bless_this_spess,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/engi_ship)
-"Ms" = (
-/obj/machinery/button/door{
-	name = "Main Blast Doors Control";
-	desc = "A blast door remote control switch.";
-	step_x = 6;
-	step_y = -7;
-	pixel_y = 0;
-	req_access = 0;
-	req_one_access = 0;
-	req_access_txt = null;
-	req_one_access_txt = null;
-	id = 29
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"Mt" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/obj/machinery/computer/security{
-	icon_screen = "power";
-	name = "Camera console"
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Mu" = (
-/obj/structure/chair/comfy/black{
-	dir = 1
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Mv" = (
-/obj/machinery/computer/station_alert,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Mw" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	max_integrity = 200;
-	obj_integrity = 200;
-	pixel_x = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	max_integrity = 200;
-	obj_integrity = 200
-	},
-/obj/structure/grille,
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = 29
-	},
-/turf/open/floor/circuit,
-/area/shuttle/engi_ship)
-"Mx" = (
-/obj/machinery/door/airlock/engineering,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"My" = (
-/obj/machinery/door/poddoor/preopen{
-	id = 29
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Mz" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"MA" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MB" = (
-/obj/structure/easel,
-/obj/item/weapon/canvas/twentythreeXtwentythree,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MC" = (
-/obj/structure/chair/wood/wings{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"MD" = (
-/obj/structure/table/wood/fancy,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"ME" = (
-/obj/structure/table/wood/fancy,
-/obj/item/toy/cards/deck/cas/black,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"MF" = (
-/obj/structure/chair/wood/wings{
-	dir = 8
-	},
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"MG" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MH" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MI" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"MJ" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MK" = (
-/obj/machinery/door/airlock/glass_engineering,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"ML" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MM" = (
-/obj/structure/chair/comfy/black{
-	dir = 4
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MN" = (
-/obj/machinery/computer/apc_control,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MO" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	max_integrity = 200;
-	obj_integrity = 200;
-	pixel_x = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	max_integrity = 200;
-	obj_integrity = 200
-	},
-/obj/structure/grille,
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = 29
-	},
-/turf/open/floor/circuit,
-/area/shuttle/engi_ship)
-"MP" = (
-/obj/machinery/door/airlock/engineering,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MQ" = (
-/obj/machinery/door/poddoor/preopen{
-	id = 29
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MR" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"MS" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MT" = (
-/obj/item/weapon/picture_frame,
-/obj/item/weapon/canvas/nineteenXnineteen,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MU" = (
-/obj/structure/chair/wood/wings{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"MV" = (
-/obj/docking_port/mobile/engi_ship,
-/obj/structure/table/wood/fancy,
-/obj/item/weapon/storage/pill_bottle/dice,
-/obj/effect/holodeck_effect/cards{
-	step_x = -3;
-	step_y = 10
-	},
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"MW" = (
-/obj/structure/table/wood/fancy,
-/obj/item/toy/cards/deck/cas,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"MX" = (
-/obj/structure/chair/wood/wings{
-	dir = 8
-	},
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"MY" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"MZ" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Na" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Nb" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Nc" = (
-/obj/machinery/door/airlock/highsecurity,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Nd" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Ne" = (
-/obj/structure/chair/comfy/black{
-	dir = 4
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Nf" = (
-/obj/machinery/computer/shuttle/engi_ship,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Ng" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	max_integrity = 200;
-	obj_integrity = 200;
-	pixel_x = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	max_integrity = 200;
-	obj_integrity = 200
-	},
-/obj/structure/grille,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = 29
-	},
-/turf/open/floor/circuit,
-/area/shuttle/engi_ship)
-"Nh" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"Ni" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"Nj" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"Nk" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Nl" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Nm" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Nn" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"No" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Np" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Nq" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Nr" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Ns" = (
-/obj/structure/statue/gold/ce,
-/obj/machinery/light,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Nt" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Nu" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Nv" = (
-/obj/structure/sign/poster/contraband/missing_gloves,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/engi_ship)
-"Nw" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"Nx" = (
-/obj/machinery/computer/sat_control{
-	icon_screen = "comm_logs"
-	},
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Ny" = (
-/obj/structure/chair/comfy/black,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Nz" = (
-/obj/machinery/computer/engi_nav,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"NA" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	max_integrity = 200;
-	obj_integrity = 200;
-	pixel_x = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	max_integrity = 200;
-	obj_integrity = 200
-	},
-/obj/structure/grille,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = 29
-	},
-/turf/open/floor/circuit,
-/area/shuttle/engi_ship)
-"NB" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (EAST)"
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
-"NC" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (WEST)";
-	icon_state = "heater";
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"ND" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"NE" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"NF" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"NG" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"NH" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"NI" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"NJ" = (
-/obj/item/device/radio/intercom,
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"NK" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"NL" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"NM" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"NN" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"NO" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"NP" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"NQ" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"NR" = (
-/obj/machinery/computer/arcade,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"NS" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"NT" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"NU" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"NV" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"NW" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"NX" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"NY" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"NZ" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Oa" = (
-/obj/machinery/autolathe,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Ob" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Oc" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Od" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Oe" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Of" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Og" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Oh" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Oi" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Oj" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Ok" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Ol" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Om" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"On" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"Oo" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"Op" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"Oq" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (EAST)";
-	icon_state = "heater";
-	dir = 4
-	},
-/turf/closed/wall/shuttle/syndie,
-/area/shuttle/engi_ship)
-"Or" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
-	},
-/turf/closed/wall/shuttle/syndie,
-/area/shuttle/engi_ship)
-"Os" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (EAST)"
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
-"Ot" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (WEST)";
-	icon_state = "heater";
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"Ou" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Ov" = (
-/obj/machinery/chem_dispenser,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Ow" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Ox" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Oy" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Oz" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OA" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OB" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OC" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OD" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OE" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OF" = (
-/obj/structure/chair/stool/bar,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OG" = (
-/obj/structure/chair/stool/bar,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OH" = (
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OI" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"OJ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"OK" = (
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (EAST)";
-	icon_state = "heater";
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"OL" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
-"OM" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"ON" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"OO" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"OP" = (
-/obj/structure/table/wood/fancy,
-/obj/item/weapon/storage/box/beakers,
-/obj/item/weapon/disk/design_disk/adv,
-/obj/item/weapon/disk/tech_disk/adv,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"OQ" = (
-/obj/structure/table/wood/fancy,
-/obj/item/weapon/storage/firstaid,
-/obj/item/weapon/storage/firstaid/toxin{
-	step_x = 6;
-	step_y = 5
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"OR" = (
-/obj/machinery/r_n_d/circuit_imprinter,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"OS" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"OT" = (
-/obj/structure/sign/poster/contraband/power,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/engi_ship)
-"OU" = (
-/obj/machinery/door/poddoor/preopen{
-	id = 29
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"OV" = (
-/obj/machinery/door/poddoor/preopen{
-	id = 29
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"OW" = (
-/obj/structure/sign/poster/contraband/tools,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/engi_ship)
-"OX" = (
-/obj/structure/table/wood,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OY" = (
-/obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"OZ" = (
-/obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Pa" = (
-/obj/machinery/door/window/northright,
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Pb" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"Pc" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"Pd" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"Pe" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"Pf" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"Pg" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"Ph" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Pi" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Pj" = (
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/engi_ship)
-"Pk" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"Pl" = (
-/obj/machinery/door/airlock/engineering,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Pm" = (
-/obj/machinery/door/airlock/engineering,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Pn" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"Po" = (
-/obj/machinery/vending/boozeomat{
-	level = 0
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Pp" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Pq" = (
-/obj/effect/mob_spawn/human/hotel_staff,
-/obj/machinery/light,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Pr" = (
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Ps" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"Pt" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"Pu" = (
-/obj/machinery/satellite/meteor_shield{
-	active = 1
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
-"Pv" = (
-/obj/machinery/satellite/meteor_shield{
-	active = 1
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
-"Pw" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"Px" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"Py" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"Pz" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"PA" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"PB" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"PC" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"PD" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"PE" = (
-/obj/machinery/light,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"PF" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"PG" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"PH" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"PI" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"PJ" = (
-/obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"PK" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"PL" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"PM" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"PN" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"PO" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"PP" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/engi_ship)
-"PQ" = (
-/obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"PR" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/engi_ship)
-"PS" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"PT" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"PU" = (
-/obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"PV" = (
-/obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"PW" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"PX" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/space,
-/area/shuttle/engi_ship)
-"PY" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/space,
-/area/shuttle/engi_ship)
-"PZ" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/space,
-/area/shuttle/engi_ship)
-"Qa" = (
-/obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"Qb" = (
-/obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"Qc" = (
-/obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"Qd" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
-"Qe" = (
-/turf/open/space,
-/area/shuttle/engi_ship)
-"Qf" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
-"Qg" = (
-/obj/machinery/suit_storage_unit/ert/engineer,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Qh" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (EAST)"
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"Qi" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"Qj" = (
-/obj/machinery/light,
-/obj/structure/rack,
-/obj/item/weapon/rcd,
-/obj/item/weapon/rcd_ammo/large,
-/obj/item/weapon/rcd_ammo/large,
-/obj/item/device/assembly/flash{
-	step_x = 6;
-	step_y = -3
-	},
-/obj/item/clothing/glasses/welding,
-/obj/item/device/modular_computer/tablet{
-	step_x = -4;
-	step_y = -2
-	},
-/obj/item/device/paicard,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Qk" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"Ql" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (EAST)"
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"Qm" = (
-/obj/machinery/computer/ship_construction,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Qn" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
-"Qo" = (
-/obj/structure/table/wood/fancy,
-/obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba,
-/obj/item/weapon/lighter{
-	color = "yellow"
-	},
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Qp" = (
-/obj/machinery/light,
-/turf/open/space,
-/area/shuttle/engi_ship)
-"Qq" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (EAST)"
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/engi_ship)
-"Qr" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/carpet,
-/area/shuttle/engi_ship)
-"Qs" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/closet/crate/bin,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Qt" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/vending/snack/orange,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Qu" = (
-/obj/machinery/computer/ship_construction,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Qv" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/vending/engivend,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Qw" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/closet/crate/bin,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Qx" = (
-/obj/machinery/light,
-/obj/machinery/r_n_d/server/core,
-/turf/open/floor/mineral/gold,
-/area/shuttle/engi_ship)
-"Qy" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/space,
-/area/shuttle/engi_ship)
-"Qz" = (
-/turf/open/space,
-/area/shuttle/engi_ship)
-"QA" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/engi_ship)
+/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -21466,7 +20794,7 @@ sx
 tc
 tb
 tb
-tb
+KO
 pg
 pg
 wf
@@ -21474,7 +20802,7 @@ wy
 wX
 pg
 pg
-px
+La
 sz
 px
 yX
@@ -21973,7 +21301,7 @@ la
 la
 pg
 pg
-px
+Kv
 rb
 pg
 pg
@@ -21986,7 +21314,7 @@ vI
 px
 px
 px
-px
+KW
 pg
 px
 sz
@@ -22236,7 +21564,7 @@ rX
 px
 px
 px
-px
+KM
 uS
 pg
 px
@@ -22250,7 +21578,7 @@ px
 px
 pg
 zj
-sz
+Lg
 zC
 pg
 An
@@ -22750,7 +22078,7 @@ rX
 px
 px
 px
-px
+KN
 uT
 pg
 px
@@ -22764,7 +22092,7 @@ px
 px
 pg
 zk
-sz
+Lh
 zD
 pg
 An
@@ -23001,7 +22329,7 @@ la
 la
 pg
 pg
-px
+Kw
 rc
 pg
 pg
@@ -23014,7 +22342,7 @@ vJ
 px
 px
 px
-px
+KW
 pg
 px
 sz
@@ -23530,7 +22858,7 @@ wy
 wX
 pg
 pg
-px
+La
 sz
 px
 yZ
@@ -23792,7 +23120,7 @@ px
 px
 pg
 zn
-zm
+Li
 zG
 pg
 la
@@ -26128,12 +25456,12 @@ aa
 aa
 aa
 aa
-Ql
 aa
 aa
 aa
 aa
-Qq
+aa
+aa
 aa
 aa
 aa
@@ -26383,16 +25711,16 @@ aa
 aa
 aa
 aa
-Qh
-JH
-KT
 aa
 aa
 aa
 aa
-KT
-JH
-Os
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -26639,18 +25967,18 @@ aa
 aa
 aa
 aa
-JM
-KT
-JH
-JH
-Md
 aa
 aa
-JM
-JH
-JH
-KT
-Md
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -26894,22 +26222,22 @@ aa
 aa
 aa
 aa
-JW
-JM
-Kl
-Kl
-Kl
-Kl
-JH
-Qn
-Qp
-JH
-Lx
-Lx
-Lx
-Lx
-Md
-JW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -27151,22 +26479,22 @@ aa
 aa
 aa
 aa
-JM
-Kl
-Kl
-KV
-Lp
-LL
-Kl
-Kr
-Kr
-Nj
-Lx
-Oa
-Ov
-Ku
-Nj
-Md
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -27407,24 +26735,24 @@ aa
 aa
 aa
 aa
-JM
-JH
-Kl
-KD
-KW
-KW
-KW
-Mg
-KI
-KI
-Nk
-Qr
-KW
-KW
-OP
-NS
-JH
-Md
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -27663,26 +26991,26 @@ aa
 aa
 aa
 aa
-Qc
-JI
-JH
-Kn
-KE
-KW
-KW
-KW
-La
-KW
-KW
-La
-KW
-KW
-KW
-OQ
-Lx
-JH
-PJ
-PS
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -27891,18 +27219,18 @@ hq
 hq
 tR
 hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
 hm
 aa
 aa
@@ -27920,26 +27248,26 @@ aa
 aa
 aa
 aa
-JH
-JH
-JH
-Kl
-KW
-KW
-KW
-LO
-Kl
-Lv
-Lv
-Lx
-Qs
-KW
-KW
-OR
-Lx
-JH
-JH
-JH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -28142,13 +27470,13 @@ hq
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
 pk
 pk
 pk
@@ -28159,7 +27487,7 @@ pk
 pk
 pk
 pk
-hq
+Kl
 hm
 aa
 aa
@@ -28176,28 +27504,28 @@ aa
 aa
 aa
 aa
-Qa
-JI
-JH
-JH
-Kl
-KG
-KW
-Lt
-LP
-Mj
-MB
-Lp
-Nn
-Mp
-Qv
-KW
-Qx
-Lx
-JH
-JH
-PJ
-PS
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -28399,7 +27727,7 @@ hq
 hq
 hq
 hq
-hq
+Kl
 pk
 pk
 pk
@@ -28416,7 +27744,7 @@ pk
 pk
 pk
 pk
-hq
+Kl
 hm
 aa
 aa
@@ -28435,24 +27763,24 @@ aa
 aa
 aa
 aa
-JQ
-JH
-Kl
-KH
-La
-Kl
-LQ
-KW
-MC
-MC
-KW
-Lp
-Lx
-La
-OT
-Nj
-JH
-NW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -28656,7 +27984,7 @@ hq
 hq
 hq
 hq
-hq
+Kl
 pk
 pk
 pk
@@ -28673,7 +28001,7 @@ pk
 pk
 pk
 pk
-hq
+Kl
 hm
 aa
 aa
@@ -28693,22 +28021,22 @@ aa
 aa
 aa
 aa
-Qd
-Kr
-KI
-KW
-Lv
-LR
-KW
-Qo
-MV
-KW
-Lp
-Lv
-KW
-KI
-Kr
-Qy
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -28905,15 +28233,15 @@ hq
 lF
 hq
 hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
 pk
 pk
 pk
@@ -28930,7 +28258,7 @@ pk
 pk
 pk
 pk
-hq
+Kl
 hm
 aa
 aa
@@ -28950,22 +28278,22 @@ aa
 aa
 aa
 aa
-Qe
-Kr
-KI
-KW
-Lv
-Lp
-KW
-ME
-MW
-KW
-Lp
-Lv
-KW
-KI
-Kr
-Qz
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -29162,18 +28490,15 @@ hq
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
-pk
-pk
-hq
-hq
+Kl
 pk
 pk
 pk
+pk
+pk
+pk
+Kl
+Kl
 pk
 pk
 pk
@@ -29187,7 +28512,10 @@ pk
 pk
 pk
 pk
-hq
+pk
+pk
+pk
+Kl
 hm
 aa
 aa
@@ -29206,24 +28534,24 @@ aa
 aa
 aa
 aa
-JM
-Qf
-Kt
-KK
-La
-Lx
-LT
-KW
-MF
-MF
-KW
-Lp
-Lx
-La
-OW
-LC
-QA
-Md
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -29419,19 +28747,15 @@ hq
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
-pk
-pk
-pk
-hq
+Kl
 pk
 pk
 pk
 pk
+pk
+pk
+pk
+Kl
 pk
 pk
 pk
@@ -29440,11 +28764,15 @@ pk
 pk
 pk
 pk
-hq
-hq
-hq
-hq
-hq
+pk
+pk
+pk
+pk
+pk
+Kl
+Kl
+Kl
+Kl
 hm
 aa
 aa
@@ -29461,28 +28789,28 @@ aa
 aa
 aa
 aa
-Qb
-JI
-JH
-JH
-Ku
-KL
-KW
-Qj
-LU
-Mo
-Lp
-Lp
-Ns
-Lx
-Qw
-KW
-MD
-Po
-LC
-JH
-PJ
-PS
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -29676,11 +29004,7 @@ hq
 hq
 mz
 hq
-hq
-hq
-hq
-hq
-hq
+Kl
 pk
 pk
 pk
@@ -29699,8 +29023,12 @@ pk
 pk
 pk
 pk
-hq
-hq
+pk
+pk
+pk
+pk
+pk
+Kl
 hq
 hm
 aa
@@ -29719,26 +29047,26 @@ aa
 aa
 aa
 aa
-JH
-JH
-JH
-Kv
-KM
-KW
-KW
-LV
-Mp
-Lp
-Lp
-Lx
-Qt
-KW
-OF
-OY
-Lp
-PE
-Nj
-JH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -29933,11 +29261,7 @@ hq
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
+Kl
 pk
 pk
 pk
@@ -29956,8 +29280,12 @@ pk
 pk
 pk
 pk
-hq
-hq
+pk
+pk
+pk
+pk
+pk
+Kl
 hq
 hm
 aa
@@ -29976,26 +29304,26 @@ aa
 aa
 aa
 aa
-JL
-JI
-JH
-Ku
-Qg
-KW
-KW
-KW
-La
-KW
-KW
-La
-KW
-KW
-OF
-MD
-Pq
-Ku
-PJ
-PS
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -30190,11 +29518,7 @@ lF
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
+Kl
 pk
 pk
 pk
@@ -30213,8 +29537,12 @@ pk
 pk
 pk
 pk
-hq
-hq
+pk
+pk
+pk
+pk
+pk
+Kl
 hq
 hm
 aa
@@ -30234,24 +29562,24 @@ aa
 aa
 aa
 aa
-JQ
-JH
-Ku
-KM
-KW
-LB
-LX
-Mr
-Lp
-Lp
-Nv
-NR
-KW
-KW
-Pa
-Lp
-Ku
-NW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -30447,11 +29775,7 @@ hq
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
+Kl
 pk
 pk
 pk
@@ -30470,8 +29794,12 @@ pk
 pk
 pk
 pk
-hq
-hq
+pk
+pk
+pk
+pk
+pk
+Kl
 hq
 hm
 aa
@@ -30492,22 +29820,22 @@ aa
 aa
 aa
 aa
-JQ
-Kt
-Ku
-Li
-LC
-LC
-Ms
-MK
-MK
-LC
-NS
-Kt
-Ku
-Ku
-LC
-NW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -30704,11 +30032,7 @@ hq
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
+Kl
 pk
 pk
 pk
@@ -30727,8 +30051,12 @@ pk
 pk
 pk
 pk
-hq
-hq
+pk
+pk
+pk
+pk
+pk
+Kl
 hq
 hm
 aa
@@ -30749,21 +30077,21 @@ aa
 aa
 aa
 aa
-JW
-JQ
-JH
-JH
-JH
-LZ
-Mt
-Lp
-Lp
-Nx
-JH
-JH
-JH
-JH
-NW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -30961,11 +30289,11 @@ hq
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
+Kl
+pk
+pk
+pk
+pk
 pk
 pk
 pk
@@ -30983,10 +30311,10 @@ pk
 pk
 pk
 pk
-hq
-hq
-hq
-hq
+Kl
+Kl
+Kl
+Kl
 hm
 aa
 aa
@@ -31008,19 +30336,19 @@ aa
 aa
 aa
 aa
-JQ
-Lk
-JH
-Qm
-Mu
-MM
-MM
-Ny
-Qu
-JH
-Lk
-NW
-JW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -31218,14 +30546,14 @@ lG
 hq
 lF
 hq
-hq
-hq
-hq
-hq
-hq
+Kl
 pk
 pk
-hq
+pk
+pk
+pk
+pk
+Kl
 re
 kI
 sB
@@ -31243,7 +30571,7 @@ pk
 pk
 pk
 pk
-hq
+Kl
 hm
 aa
 aa
@@ -31266,16 +30594,16 @@ aa
 aa
 aa
 aa
-Qi
-LF
-Mb
-Mv
-MN
-Nf
-Nz
-JH
-LF
-OL
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -31475,14 +30803,14 @@ ln
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
 re
 kI
 sC
@@ -31500,7 +30828,7 @@ pk
 pk
 pk
 pk
-hq
+Kl
 hm
 aa
 aa
@@ -31524,14 +30852,14 @@ aa
 aa
 aa
 aa
-Qk
-JQ
-Mw
-Mw
-Ng
-Ng
-NW
-Or
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -31739,7 +31067,7 @@ hq
 hq
 mz
 hq
-hq
+Kl
 re
 kI
 re
@@ -31757,7 +31085,7 @@ pk
 pk
 pk
 pk
-hq
+Kl
 hm
 aa
 aa
@@ -31980,11 +31308,11 @@ hq
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
+Kl
+Kl
+Kl
+Kl
+Kl
 hq
 lG
 ln
@@ -31996,13 +31324,13 @@ hq
 hq
 hq
 hq
-hq
+Kl
 re
 kI
 re
-hq
-hq
-hq
+Kl
+Kl
+Kl
 pk
 pk
 pk
@@ -32014,7 +31342,7 @@ pk
 pk
 pk
 pk
-hq
+Kl
 hm
 aa
 aa
@@ -32241,7 +31569,7 @@ kl
 kl
 kl
 kl
-hq
+Kl
 hq
 hq
 hq
@@ -32253,14 +31581,14 @@ hq
 hq
 hq
 hq
-hq
+Kl
 re
 kI
 re
+Kl
 hq
-hq
-mz
-hq
+Lw
+Kl
 pk
 pk
 pk
@@ -32271,7 +31599,7 @@ pk
 pk
 pk
 pk
-hq
+Kl
 hm
 aa
 aa
@@ -32498,7 +31826,7 @@ km
 ku
 kI
 kl
-hq
+Kl
 hq
 hq
 hq
@@ -32506,29 +31834,29 @@ hq
 hq
 ln
 hq
-hq
-hq
-hq
-lF
-hq
+Kl
+Kl
+Kl
+Lx
+Kl
 rf
 kI
 rf
-hq
-lF
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
+Kl
+Lx
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
 hm
 aa
 aa
@@ -32755,15 +32083,15 @@ km
 ku
 kI
 kl
-hq
+Kl
 hq
 hq
 lG
 hq
 hq
 hq
-hq
-hq
+Kl
+Kl
 kl
 kl
 kl
@@ -32774,8 +32102,8 @@ kl
 kl
 kl
 kl
-hq
-hq
+Kl
+Kl
 hq
 hq
 hq
@@ -33012,27 +32340,27 @@ km
 ku
 kI
 kl
-hq
+Kl
 lG
 hq
 hq
 lF
 hq
 hq
-mz
+Lw
 kl
 kl
 pl
 pz
-oJ
+JI
 oJ
 oJ
 sD
 th
-tS
+JL
 kl
 kl
-hq
+Kl
 hq
 hq
 hq
@@ -33267,16 +32595,16 @@ hq
 jX
 km
 ku
-kI
+JE
 kl
+Kl
 hq
 hq
 hq
 hq
 hq
 hq
-hq
-hq
+Kl
 kl
 oH
 oJ
@@ -33289,7 +32617,7 @@ ti
 tT
 qq
 kl
-hq
+Kl
 lF
 mz
 hq
@@ -33526,14 +32854,14 @@ km
 ku
 kI
 kl
-hq
-hq
-hq
-hq
-hq
-hq
-hq
-hq
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
 ol
 oI
 oJ
@@ -33546,7 +32874,7 @@ tj
 tS
 ut
 kl
-hq
+Kl
 hq
 lG
 hq
@@ -33803,7 +33131,7 @@ ti
 tS
 uu
 kl
-mz
+Lw
 hq
 lF
 lG
@@ -34043,13 +33371,13 @@ kI
 kI
 kI
 kI
-kI
+JG
 kI
 kI
 kI
 kI
 om
-oJ
+JH
 oJ
 pB
 pA
@@ -34060,11 +33388,11 @@ tk
 tU
 uv
 kl
-hq
-ln
-mz
-hq
-hq
+Kl
+Kj
+Lw
+Kl
+Kl
 hq
 hq
 hq
@@ -34554,15 +33882,15 @@ km
 ku
 kI
 kl
-hq
+Kl
 lI
-mh
-ln
-hq
-ln
-ln
-hq
-hq
+Kg
+Kj
+Kl
+Kj
+Kj
+Kl
+Kl
 kl
 pn
 oJ
@@ -34809,9 +34137,9 @@ hq
 hq
 km
 ku
-kI
+JE
 kl
-hq
+Kl
 lG
 hq
 hq
@@ -34819,7 +34147,7 @@ lG
 hq
 hq
 lG
-ln
+Kj
 kl
 po
 oJ
@@ -34828,7 +34156,7 @@ ri
 ri
 sE
 oJ
-oJ
+JM
 kl
 uW
 uW
@@ -35068,15 +34396,15 @@ km
 ku
 kI
 kl
-hq
-hq
-hq
-lG
-hq
-lG
+Kl
 hq
 hq
 lG
+hq
+lG
+hq
+hq
+Ko
 kl
 kl
 pC
@@ -35325,7 +34653,7 @@ km
 ku
 kI
 kl
-hq
+Kl
 hq
 lG
 hq
@@ -35333,7 +34661,7 @@ ln
 hq
 hq
 lG
-hq
+Kl
 kl
 pp
 pD
@@ -35582,7 +34910,7 @@ km
 ku
 kI
 kl
-ln
+Kj
 hq
 hq
 hq
@@ -35590,7 +34918,7 @@ lG
 hq
 hq
 lG
-ln
+Kj
 kl
 pq
 pD
@@ -35839,7 +35167,7 @@ kl
 kl
 kl
 kl
-hq
+Kl
 hq
 lG
 ln
@@ -35847,7 +35175,7 @@ hq
 hq
 ln
 hq
-lG
+Ko
 ol
 pr
 pE
@@ -36092,11 +35420,11 @@ hq
 hq
 hq
 hq
-hq
-hq
-hq
-hq
-hq
+Kl
+Kl
+Kl
+Kl
+Kl
 hq
 hq
 hq
@@ -36104,7 +35432,7 @@ ln
 lG
 hq
 ln
-hq
+Kl
 kl
 kl
 kl
@@ -36361,7 +35689,7 @@ hq
 hq
 hq
 lG
-ln
+Kj
 hm
 aa
 kl
@@ -37393,7 +36721,7 @@ hq
 hm
 aa
 kl
-qt
+JJ
 rm
 sb
 sc
@@ -37401,7 +36729,7 @@ sd
 sc
 sb
 rm
-vq
+JN
 kl
 aa
 aa
@@ -40528,11 +39856,11 @@ aa
 aa
 aa
 aa
-FH
 FN
 FN
 FN
-FH
+FN
+FN
 aa
 aa
 aa
@@ -40789,8 +40117,8 @@ FI
 FO
 FR
 FR
-FR
-FH
+FN
+FN
 aa
 aa
 aa
@@ -41044,7 +40372,7 @@ aa
 aa
 FJ
 FO
-FR
+JO
 FR
 FR
 FN
@@ -41314,7 +40642,7 @@ FN
 FN
 FN
 FN
-FH
+FN
 aa
 aa
 aa
@@ -41556,10 +40884,10 @@ aa
 aa
 aa
 aa
-FH
+FN
 FN
 FT
-FZ
+JQ
 FZ
 Gp
 GB
@@ -41568,11 +40896,11 @@ GU
 FN
 Hj
 Hj
-Hj
+JT
 Hj
 Hj
 FN
-FH
+FN
 aa
 aa
 aa
@@ -41832,7 +41160,7 @@ FN
 FN
 FN
 FN
-FH
+FN
 aa
 aa
 aa
@@ -42087,7 +41415,7 @@ Hj
 Hj
 FN
 HD
-Hx
+JU
 HH
 Hk
 aa
@@ -42593,7 +41921,7 @@ FV
 FV
 FV
 FV
-FV
+JS
 FV
 FV
 FV
@@ -42819,7 +42147,7 @@ Bn
 AR
 Ay
 Ay
-Ay
+LA
 zV
 zV
 zV
@@ -43115,7 +42443,7 @@ FZ
 Hw
 FN
 HF
-HD
+JV
 HL
 Hk
 aa
@@ -43374,7 +42702,7 @@ FN
 FN
 FN
 FN
-FH
+FN
 aa
 aa
 aa
@@ -43612,10 +42940,10 @@ aa
 aa
 aa
 aa
-FH
+FN
 FN
 FT
-FZ
+JR
 FZ
 Gu
 Gu
@@ -43628,7 +42956,7 @@ FV
 FZ
 FU
 FN
-FH
+FN
 aa
 aa
 aa
@@ -43884,7 +43212,7 @@ FN
 FP
 FN
 FN
-FH
+FN
 aa
 aa
 aa
@@ -44128,7 +43456,7 @@ aa
 aa
 FJ
 FO
-FR
+JP
 FR
 FR
 FN
@@ -44361,7 +43689,7 @@ Az
 Az
 BQ
 BQ
-BQ
+LB
 zV
 aa
 aa
@@ -44387,8 +43715,8 @@ FK
 FO
 FR
 FR
-FR
-FH
+FN
+FN
 aa
 aa
 aa
@@ -44640,11 +43968,11 @@ aa
 aa
 aa
 aa
-FH
 FN
 FN
 FN
-FH
+FN
+FN
 aa
 aa
 aa
@@ -45126,7 +44454,7 @@ aa
 aa
 aa
 zV
-Az
+Lz
 AS
 Az
 BI
@@ -53591,7 +52919,7 @@ sM
 ts
 ud
 tX
-ud
+KP
 mU
 qA
 wo
@@ -53877,12 +53205,12 @@ zH
 zY
 zZ
 zN
-DK
+Lo
 Ef
 Er
 Ee
 Ef
-DK
+Lo
 Ef
 Er
 Ee
@@ -54904,14 +54232,14 @@ BS
 zH
 AX
 Bu
-DE
-DE
-DE
-DE
-DE
-DE
-DE
-DE
+zH
+DJ
+DJ
+DJ
+DJ
+DJ
+DJ
+DJ
 EO
 EO
 EO
@@ -55161,16 +54489,16 @@ zH
 zH
 AY
 Bb
-DE
+zH
 DM
 DM
 DM
 DM
 DM
 DM
-DE
+DJ
 EO
-EO
+Ls
 EO
 EO
 DJ
@@ -55415,19 +54743,19 @@ Cr
 AF
 Cr
 AF
-Cr
+Lm
 Dm
 Bu
-DE
+zH
 DN
 DN
 DN
 DN
 DN
 DN
-DE
-DE
-DE
+DJ
+DJ
+DJ
 Fb
 Fb
 DJ
@@ -55645,7 +54973,7 @@ pU
 lJ
 nf
 pt
-qy
+KL
 tX
 ru
 lJ
@@ -55684,7 +55012,7 @@ Eh
 EG
 EM
 EP
-DE
+DJ
 EO
 EO
 DJ
@@ -55922,7 +55250,7 @@ zH
 zN
 zH
 AY
-Bb
+Lk
 zH
 zH
 Ba
@@ -55932,7 +55260,7 @@ Ac
 BL
 Ac
 zH
-DE
+zH
 DP
 Ei
 Ej
@@ -55941,7 +55269,7 @@ Ei
 EH
 EM
 EP
-DE
+DJ
 EO
 EO
 Ef
@@ -56128,7 +55456,7 @@ aa
 aa
 aa
 iK
-iT
+JY
 ja
 ja
 ja
@@ -56140,7 +55468,7 @@ ja
 ja
 ja
 ja
-kJ
+Kd
 iQ
 ls
 iT
@@ -56189,7 +55517,7 @@ CX
 Dh
 Dn
 Du
-DE
+zH
 DP
 Ej
 Eu
@@ -56198,11 +55526,11 @@ Ej
 EH
 EM
 EP
-DE
+DJ
 EO
 EO
 Ef
-FE
+Lu
 DJ
 aa
 aa
@@ -56446,7 +55774,7 @@ Cs
 Bs
 Cs
 Dv
-DE
+zH
 DP
 Ei
 Ej
@@ -56455,7 +55783,7 @@ Ei
 EH
 EM
 EP
-DE
+DJ
 EO
 EO
 Ef
@@ -56703,7 +56031,7 @@ Bs
 Cs
 Bs
 Dw
-DE
+zH
 DQ
 Ek
 Ek
@@ -56712,7 +56040,7 @@ Ek
 EI
 EM
 EP
-DE
+DJ
 Fc
 Fc
 DJ
@@ -56960,16 +56288,16 @@ CY
 Di
 Do
 zH
-DE
+zH
 DR
 DR
 DR
 DR
 DR
 DR
-DE
-DE
-DE
+DJ
+DJ
+DJ
 DJ
 Fk
 DJ
@@ -57672,7 +57000,7 @@ aa
 iK
 iU
 jb
-jb
+JZ
 jr
 jv
 jv
@@ -57680,12 +57008,12 @@ jb
 jO
 jR
 jO
-jb
+JZ
 jb
 kL
 iK
 lw
-jb
+JZ
 jb
 mK
 iK
@@ -58202,14 +57530,14 @@ iz
 lQ
 mp
 mL
-mW
+Kk
 nx
 mW
 mp
 mL
 pa
 it
-pf
+Kt
 it
 rM
 mq
@@ -59751,7 +59079,7 @@ mM
 mr
 pd
 it
-lW
+Ku
 iz
 rP
 mq
@@ -60753,7 +60081,7 @@ aa
 ir
 ix
 iH
-iO
+JW
 iV
 iV
 jh
@@ -60765,12 +60093,12 @@ iV
 jS
 iV
 iV
-iV
+Kb
 kN
 iH
 kT
 lX
-iH
+Ke
 iO
 iV
 iV
@@ -61072,16 +60400,16 @@ Dd
 Dd
 Do
 zH
-DE
+zH
 DY
 DY
 DY
 DY
 DY
 DY
-DE
-DE
-DE
+DJ
+DJ
+DJ
 DJ
 Fk
 DJ
@@ -61289,7 +60617,7 @@ iz
 iz
 iz
 jx
-jH
+Km
 ir
 iz
 it
@@ -61329,7 +60657,7 @@ Cu
 Cu
 Cu
 DA
-DE
+zH
 DZ
 En
 En
@@ -61338,7 +60666,7 @@ En
 EJ
 EN
 ET
-DE
+DJ
 Fc
 Fc
 DJ
@@ -61586,7 +60914,7 @@ Cu
 Cu
 Cu
 DB
-DE
+zH
 Ea
 Eo
 Ep
@@ -61595,7 +60923,7 @@ Eo
 EK
 EN
 ET
-DE
+DJ
 EO
 EO
 Ef
@@ -61843,7 +61171,7 @@ De
 Dk
 Dq
 DC
-DE
+zH
 Ea
 Ep
 Ez
@@ -61852,11 +61180,11 @@ Ep
 EK
 EN
 ET
-DE
+DJ
 EO
 EO
 Ef
-FE
+Lu
 DJ
 aa
 aa
@@ -62084,13 +61412,13 @@ pe
 iz
 jB
 it
-iH
+Ld
 iH
 zH
 zN
 zH
 Bf
-Bb
+Lk
 zH
 zH
 Ba
@@ -62100,7 +61428,7 @@ Ac
 zH
 Ac
 zH
-DE
+zH
 Ea
 Eo
 Ep
@@ -62109,7 +61437,7 @@ Eo
 EK
 EN
 ET
-DE
+DJ
 EO
 EO
 Ef
@@ -62317,7 +61645,7 @@ iz
 iz
 iz
 jx
-jH
+Km
 ir
 iz
 ir
@@ -62339,7 +61667,7 @@ xL
 it
 iz
 it
-iH
+Ld
 kT
 jB
 jB
@@ -62366,7 +61694,7 @@ Eq
 EL
 EN
 ET
-DE
+DJ
 EO
 EO
 DJ
@@ -62601,7 +61929,7 @@ it
 iH
 iH
 zH
-zW
+Lj
 zH
 Bg
 Bc
@@ -62611,19 +61939,19 @@ Cv
 AM
 Cv
 AM
-Cv
+Ln
 Dr
 BF
-DE
+zH
 Ec
 Ec
 Ec
 Ec
 Ec
 Ec
-DE
-DE
-DE
+DJ
+DJ
+DJ
 Fb
 Fb
 DJ
@@ -62809,7 +62137,7 @@ aa
 ir
 iE
 iH
-iP
+JX
 iW
 iW
 jk
@@ -62821,12 +62149,12 @@ iW
 jW
 iW
 iW
-iW
+Kc
 kO
 iH
 kT
 lX
-iH
+Ki
 iP
 iW
 iW
@@ -62871,16 +62199,16 @@ zH
 zH
 Bf
 Bb
-DE
+zH
 Ed
 Ed
 Ed
 Ed
 Ed
 Ed
-DE
+DJ
 EO
-EO
+Lt
 EO
 EO
 DJ
@@ -63128,14 +62456,14 @@ BS
 zH
 AX
 BF
-DE
-DE
-DE
-DE
-DE
-DE
-DE
-DE
+zH
+DJ
+DJ
+DJ
+DJ
+DJ
+DJ
+DJ
 EO
 EO
 EO
@@ -63339,20 +62667,20 @@ iM
 iv
 iF
 iq
-it
 ms
 mP
+oj
 iH
 kq
 iH
-oj
 ox
 it
-it
-it
-lB
-iu
-it
+qk
+qk
+qk
+qQ
+LZ
+qk
 it
 ir
 jc
@@ -63596,7 +62924,6 @@ iq
 iq
 iq
 iq
-ir
 kd
 ks
 ks
@@ -63604,28 +62931,29 @@ ks
 ks
 ks
 oy
-iz
-pe
-iz
-qP
-iz
-ld
-it
+is
+qk
+LX
+ql
+LY
+ql
+KG
+qk
 tH
 tH
 tH
 tH
 tH
-it
-pe
-iz
-qP
-kT
-iH
-jB
-jB
-iH
-kM
+qk
+Ks
+ql
+LY
+Mb
+yS
+Lc
+yC
+yS
+Mc
 aa
 aa
 aa
@@ -63653,8 +62981,8 @@ Eg
 EO
 EO
 DJ
-jB
-lJ
+EO
+DJ
 aa
 aa
 aa
@@ -63845,24 +63173,24 @@ aa
 aa
 aa
 aa
-aa
 it
 jZ
 kq
 iH
-iH
+Ke
 iH
 ly
 it
-kd
+ke
 ks
 ks
 ks
 ks
 ks
-oz
-ir
+LJ
 it
+qk
+qk
 qk
 qQ
 qk
@@ -63910,8 +63238,8 @@ DJ
 Ef
 Ef
 DJ
-jB
-lJ
+EO
+DJ
 aa
 aa
 aa
@@ -64102,7 +63430,6 @@ aa
 aa
 aa
 aa
-aa
 it
 ka
 kr
@@ -64119,17 +63446,18 @@ ks
 ks
 oy
 it
-pw
+xX
+xW
 qk
 qR
 rT
 su
 su
-su
+KK
 un
 uP
 un
-su
+KK
 su
 su
 rT
@@ -64157,18 +63485,18 @@ zH
 Al
 Am
 zN
-Ee
+Lp
 Ef
 EA
 DK
 Ef
-Ee
+Lp
 Ef
 EA
 DK
 DJ
-jB
-lJ
+EO
+DJ
 aa
 aa
 aa
@@ -64359,7 +63687,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kb
 kr
@@ -64376,8 +63703,9 @@ iH
 iH
 kk
 it
-lW
-ql
+xW
+xX
+qk
 qS
 rU
 sv
@@ -64391,9 +63719,9 @@ sv
 sv
 wW
 xp
-ql
+qk
 xW
-ql
+qk
 yK
 yC
 qk
@@ -64424,8 +63752,8 @@ DJ
 DJ
 DJ
 DJ
-jB
-lJ
+EO
+DJ
 aa
 aa
 aa
@@ -64616,7 +63944,6 @@ aa
 aa
 aa
 aa
-aa
 it
 it
 jc
@@ -64633,9 +63960,10 @@ jc
 jc
 is
 it
-pw
-qm
-qT
+Kq
+xX
+ql
+qU
 rU
 sv
 sW
@@ -64647,12 +63975,12 @@ sv
 sv
 sv
 wW
-xq
-qm
-xX
+xs
+ql
+LV
 qk
-yJ
-yS
+LW
+Le
 qk
 aa
 aa
@@ -64680,9 +64008,9 @@ aa
 aa
 aa
 aa
-lJ
+DJ
 Fm
-lJ
+DJ
 aa
 aa
 aa
@@ -64873,7 +64201,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kc
 iH
@@ -64890,8 +64217,9 @@ iH
 iH
 ly
 it
-iz
-qk
+xX
+xW
+qm
 qT
 rU
 sv
@@ -64905,11 +64233,11 @@ sv
 sv
 wW
 xq
+qm
+xX
 qk
-ql
-qk
-qk
-qQ
+yJ
+yS
 qk
 aa
 aa
@@ -65130,7 +64458,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kd
 ks
@@ -65147,7 +64474,8 @@ kr
 kr
 kq
 it
-pw
+xX
+xW
 qk
 qT
 rU
@@ -65162,11 +64490,11 @@ sv
 sv
 wW
 xq
+qk
 ql
-xY
-yB
-yL
-yT
+qk
+qk
+qQ
 qk
 aa
 aa
@@ -65387,7 +64715,6 @@ aa
 aa
 aa
 aa
-aa
 iu
 ke
 ks
@@ -65404,9 +64731,10 @@ mw
 ks
 oA
 it
-lW
 qk
-qU
+ql
+qk
+KD
 rU
 sv
 sW
@@ -65418,12 +64746,12 @@ tL
 vF
 sv
 wW
-xp
-xP
-xZ
-yC
-yC
-yS
+KT
+qk
+xY
+yB
+yL
+yT
 qk
 aa
 aa
@@ -65644,7 +64972,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kd
 kr
@@ -65661,9 +64988,10 @@ mw
 ks
 oB
 it
-pw
-ql
-qV
+LK
+LN
+LQ
+qS
 rU
 sv
 sY
@@ -65675,12 +65003,12 @@ tM
 wd
 sv
 wW
-xr
-xQ
+xp
+xP
 xZ
 yC
 yC
-yU
+yS
 qk
 aa
 aa
@@ -65901,7 +65229,6 @@ aa
 aa
 aa
 aa
-aa
 is
 kf
 kr
@@ -65918,9 +65245,10 @@ mw
 ks
 oC
 it
-lW
-qk
-qW
+LL
+LF
+LH
+qS
 rU
 sv
 sZ
@@ -65932,12 +65260,12 @@ vF
 sZ
 sv
 wW
-xp
-xR
+xt
+xQ
 xZ
 yC
 yC
-yV
+yU
 qk
 aa
 aa
@@ -66158,7 +65486,6 @@ aa
 aa
 aa
 aa
-aa
 ir
 kg
 kr
@@ -66175,9 +65502,10 @@ mw
 ks
 oD
 it
-pw
-qk
-qT
+LM
+LP
+LR
+qS
 rU
 sv
 sW
@@ -66189,12 +65517,12 @@ tK
 vF
 sv
 wW
-xq
-ql
-ya
-yD
-yM
-yW
+xp
+xR
+xZ
+yC
+yC
+yV
 qk
 aa
 aa
@@ -66415,7 +65743,6 @@ aa
 aa
 aa
 aa
-aa
 is
 kh
 kr
@@ -66431,10 +65758,11 @@ lk
 ks
 ks
 oE
-is
-iz
+it
 qk
-qT
+ql
+qk
+KD
 rU
 sv
 sY
@@ -66446,12 +65774,12 @@ tM
 wd
 sv
 wW
-xq
+KT
 qk
-ql
-qk
-qk
-qk
+ya
+yD
+yM
+yW
 qk
 aa
 aa
@@ -66672,7 +66000,6 @@ aa
 aa
 aa
 aa
-aa
 ir
 ki
 kr
@@ -66688,9 +66015,10 @@ nC
 mw
 ks
 oF
-it
-pw
-qm
+is
+xW
+xX
+qk
 qT
 rU
 sv
@@ -66704,12 +66032,12 @@ we
 sv
 wW
 xq
-qm
-xW
 qk
-aa
-aa
-aa
+ql
+qk
+qk
+qk
+qk
 aa
 aa
 aa
@@ -66929,7 +66257,6 @@ aa
 aa
 aa
 aa
-aa
 is
 kj
 kr
@@ -66946,9 +66273,10 @@ mw
 ks
 oC
 it
-pw
-ql
-qX
+xX
+xW
+qm
+qT
 rU
 sv
 sv
@@ -66960,9 +66288,9 @@ vn
 we
 sv
 wW
-xs
-ql
-xX
+xq
+qm
+xW
 qk
 aa
 aa
@@ -67186,7 +66514,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kd
 kr
@@ -67203,9 +66530,10 @@ mw
 ks
 oB
 it
-lW
-qk
-qY
+Kq
+xX
+ql
+qX
 rU
 sv
 sv
@@ -67217,9 +66545,9 @@ uQ
 wd
 sv
 wW
-xt
-qk
-xW
+LT
+ql
+LV
 qk
 aa
 aa
@@ -67443,7 +66771,6 @@ aa
 aa
 aa
 aa
-aa
 iu
 ke
 ks
@@ -67460,7 +66787,8 @@ mw
 ks
 kd
 it
-it
+xW
+xX
 qk
 qS
 rU
@@ -67476,7 +66804,7 @@ sv
 wW
 xp
 qk
-qk
+xX
 qk
 aa
 aa
@@ -67700,7 +67028,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kd
 ks
@@ -67717,8 +67044,9 @@ kr
 kr
 oG
 it
-pe
-ql
+xW
+xX
+qk
 qZ
 rV
 rV
@@ -67732,8 +67060,8 @@ rV
 rV
 rV
 Ih
-ql
-yb
+qk
+xW
 qk
 aa
 aa
@@ -67957,7 +67285,6 @@ aa
 aa
 aa
 aa
-aa
 it
 kk
 kt
@@ -67974,8 +67301,10 @@ nT
 ok
 kh
 it
-it
 qk
+qk
+qk
+LS
 HV
 HV
 HV
@@ -67987,8 +67316,7 @@ HV
 HV
 HV
 HV
-HV
-HV
+LU
 qk
 qk
 qk
@@ -68214,7 +67542,6 @@ aa
 aa
 aa
 aa
-aa
 it
 it
 it
@@ -68231,7 +67558,8 @@ it
 it
 it
 it
-it
+qk
+qk
 qk
 ra
 ra
