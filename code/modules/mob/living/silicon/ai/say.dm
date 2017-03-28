@@ -171,7 +171,7 @@ var/const/VOX_DELAY = 600
 	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
 		. = TRUE
 	else if(is_servant_of_ratvar(src))
-		// The AI cannot speak common if converted.
-		. = !ispath(dt, /datum/language/common) && has_language(dt)
+		// Ratvarian AIs can only speak Ratvarian
+		. = ispath(dt, /datum/language/ratvar) && has_language(dt)
 	else
 		. = ..()
