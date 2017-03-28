@@ -117,8 +117,10 @@
 		var/list/gases = air.gases
 		for(var/id in gases)
 			var/gas = gases[id]
-			if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
-				. += gas[GAS_META][META_GAS_OVERLAY]
+			var/gas_meta = gas[GAS_META]
+			var/gas_overlay = gas_meta[META_GAS_OVERLAY]
+			if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
+				. += gas_overlay
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
