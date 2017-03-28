@@ -1,6 +1,6 @@
 var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases, which were at one time hardcoded. Don't change this
 
-var/list/all_gases = list("o2","n2","co2","plasma","freon") //add new gases to this list
+var/list/all_gases = list("o2","n2","co2","plasma","water vapor","freon") //add new gases to this list
 
 /proc/meta_gas_list()
 	. = new /list

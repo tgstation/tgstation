@@ -320,7 +320,7 @@ MASS SPECTROMETER
 
 
 		for(var/id in env_gases)
-			if(id in hardcoded_gases)
+			if(id in all_gases)
 				continue
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
