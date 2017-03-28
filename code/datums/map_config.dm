@@ -77,7 +77,7 @@
         
     defaulted = FALSE
 
-#define CHECK_EXISTS(X) if(!istext(json[X])) log_world(X + "missing from json!")
+#define CHECK_EXISTS(X) if(!istext(json[X])) { log_world(X + "missing from json!"); return; }
 /datum/map_config/proc/ValidateJSON(list/json)
     CHECK_EXISTS("map_name")
     CHECK_EXISTS("map_path")
