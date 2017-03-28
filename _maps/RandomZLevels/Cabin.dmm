@@ -778,9 +778,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cH" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cI" = (
