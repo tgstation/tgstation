@@ -79,7 +79,6 @@
 	if(button)
 		button.name = "Change [chameleon_name] Appearance"
 
-	var/list/chameleon_names = list()
 	chameleon_blacklist |= typecacheof(target.type)
 	for(var/V in typesof(chameleon_type))
 		if(ispath(V) && ispath(V, /obj/item))
@@ -88,8 +87,9 @@
 				continue
 			if(!initial(I.icon_state) || !initial(I.item_state))
 				continue
-			var/chameleon_item_name = avoid_assoc_duplicate_keys(initial(I.name), chameleon_names)
+			var/chameleon_item_name = "[initial(I.name)] ([initial(I.icon_state)])"
 			chameleon_list[chameleon_item_name] = I
+
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/obj/item/picked_item
