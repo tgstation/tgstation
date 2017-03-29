@@ -9,15 +9,16 @@
 	. = src.say_dead(message)
 
 /mob/dead/observer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans)
+	var/atom/movable/to_follow = speaker
 	if(radio_freq)
 		var/atom/movable/virtualspeaker/V = speaker
 
 		if(isAI(V.source))
 			var/mob/living/silicon/ai/S = V.source
-			speaker = S.eyeobj
+			to_follow = S.eyeobj
 		else
-			speaker = V.source
-	var/link = FOLLOW_LINK(src, speaker)
+			to_follow = V.source
+	var/link = FOLLOW_LINK(src, to_follow)
 	// Recompose the message, because it's scrambled by default
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans)
 	to_chat(src, "[link] [message]")
