@@ -607,6 +607,9 @@
 
 /obj/item/weapon/spellbook/Initialize()
 	..()
+	prepare_spells()
+
+/obj/item/weapon/spellbook/proc/prepare_spells()
 	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
@@ -779,12 +782,8 @@
 	desc = "This template spellbook was never meant for the eyes of man..."
 	persistence_replacement = null
 
-/obj/item/weapon/spellbook/oneuse/New()
-	..()
+/obj/item/weapon/spellbook/oneuse/prepare_spells()
 	name += spellname
-
-/obj/item/weapon/spellbook/oneuse/Initialize() //No need to init
-	return
 
 /obj/item/weapon/spellbook/oneuse/attack_self(mob/user)
 	var/obj/effect/proc_holder/spell/S = new spell
@@ -947,7 +946,8 @@
 	user <<"<span class='warning'>[src] suddenly vanishes!</span>"
 	qdel(src)
 
-/obj/item/weapon/spellbook/oneuse/random/New()
+/obj/item/weapon/spellbook/oneuse/random/Initialize()
+	..()
 	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_blockade,/obj/item/weapon/spellbook/oneuse/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse) - banned_spells)
 	new real_type(loc)
