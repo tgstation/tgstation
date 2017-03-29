@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Supermatter anomalies are more shortlived than regular anomalies, as intended."

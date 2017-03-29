@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "All tophats, rather than just the ones in maintenance, hurt a tiny
-bit if you throw them at people."
