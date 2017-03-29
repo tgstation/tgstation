@@ -34,6 +34,7 @@ ARCD
 	var/working = 0
 	var/mode = 1
 	var/canRturf = 0
+	var/ranged = FALSE
 	var/airlock_type = /obj/machinery/door/airlock
 	var/window_type = /obj/structure/window/fulltile
 
@@ -287,7 +288,7 @@ ARCD
 
 
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
-	if(!proximity)
+	if(!proximity && !ranged)
 		return FALSE
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
@@ -397,22 +398,22 @@ ARCD
 	desc = "A prototype RCD with ranged capability and extended capacity"
 	max_matter = 300
 	matter = 300
-	delay_mod = 0.7
+	delay_mod = 0.6
+	ranged = TRUE
 	icon_state = "arcd"
 
 
 /obj/item/weapon/rcd/arcd/afterattack(atom/A, mob/user, proximity)
-	proximity = 1
 	if(!(A in view(7, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the RCD blinks red.</span>")
 		return 0
-	if((isturf(A) && mode==3) || (isturf(A) && mode==1 && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==3) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==3) || istype(A, /obj/structure/girder))
-		user.Beam(A,icon_state="rped_upgrade",time=20)
+	if((isturf(A) && A.density && mode==RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
+		user.Beam(A,icon_state="rped_upgrade",time=30)
 	..()
 
 
 
-// RAPID LIGHT GENERATOR
+// RAPID LIGHTING DEVICE
 
 
 
