@@ -406,7 +406,7 @@ ARCD
 /obj/item/weapon/rcd/arcd/afterattack(atom/A, mob/user, proximity)
 	if(!(A in view(7, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the RCD blinks red.</span>")
-		return 0
+		return FALSE
 	if((isturf(A) && A.density && mode==RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
 		user.Beam(A,icon_state="rped_upgrade",time=30)
 	..()
@@ -539,12 +539,11 @@ ARCD
 		if(istype(dupe, /obj/machinery/light))
 			. |= dupe
 
-
 /obj/item/weapon/rld/afterattack(atom/A, mob/user)
 	var/turf/start = get_turf(src)
 	if(!(A in view(7, get_turf(start))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the RLD blinks red.</span>")
-		return 0
+		return FALSE
 	switch(mode)
 		if(REMOVE_MODE)
 			if(istype(A, /obj/machinery/light/))
@@ -553,11 +552,12 @@ ARCD
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, decondelay, target = A))
-						if(!useResource(deconcost, user)) return 0
+						if(!useResource(deconcost, user)) 
+							return FALSE
 						activate()
 						qdel(A)
-						return 1
-				return 0
+						return TRUE
+				return FALSE
 
 		if(LIGHT_MODE)
 			if(iswallturf(A))
@@ -569,7 +569,7 @@ ARCD
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 0)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(W))
-							return 0
+							return FALSE
 						var/list/candidates = list()
 						var/turf/open/winner = null
 						var/winning_dist = null
@@ -581,7 +581,7 @@ ARCD
 						if(!candidates.len)
 							to_chat(user, "<span class='warning'>Valid target not found...</span>")
 							playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, 1)
-							return 0
+							return FALSE
 						for(var/turf/open/O in candidates)
 							if(istype(O))
 								var/x0 = O.x
@@ -596,16 +596,15 @@ ARCD
 										winning_dist = contender
 						activate()
 						if(!useResource(wallcost, user))
-							return 0
+							return FALSE
 						var/light = get_turf(winner)
 						var/align = get_dir(winner, A)
 						var/obj/machinery/light/L = new /obj/machinery/light(light)
 						L.dir = align
 						L.color = color_choice
 						L.light_color = L.color
-						return 1
-
-				return 0
+						return TRUE
+				return FALSE
 
 			if(isfloorturf(A))
 				var/turf/open/floor/F = A
@@ -615,16 +614,17 @@ ARCD
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(do_after(user, floordelay, target = A))
-						if(!istype(F)) return 0
-						if(!useResource(floorcost, user)) return 0
+						if(!istype(F)) 
+							return FALSE
+						if(!useResource(floorcost, user)) 
+							return FALSE
 						activate()
 						var/destination = get_turf(A)
 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)
 						FL.color = color_choice
 						FL.light_color = FL.color
-						return 1
-
-				return 0
+						return TRUE
+				return FALSE
 
 		if(GLOW_MODE)
 			if(useResource(launchcost, user))
@@ -636,8 +636,8 @@ ARCD
 				G.throw_at(A, 9, 3, user)
 				G.on = TRUE
 				G.update_brightness()
-				return 1
-			return 0
+				return TRUE
+			return FALSE
 
 
 
@@ -646,12 +646,12 @@ ARCD
 		if(user)
 			to_chat(user, no_ammo_message)
 			playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, 1)
-		return 0
+		return FALSE
 	matter -= amount
 	desc = "An RLD. It currently holds [matter]/[max_matter] matter-units."
 	icon_state = "rld-[round(matter/35)]"
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/weapon/rld/proc/checkResource(amount, mob/user)
 	. = matter >= amount
