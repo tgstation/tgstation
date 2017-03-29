@@ -148,7 +148,9 @@
 	var/datum/excited_group/our_excited_group = excited_group
 	var/adjacent_turfs_length = LAZYLEN(adjacent_turfs)
 	atmos_cooldown++
-	if (planetary_atmos)
+
+	var/planet_atmos = planetary_atmos
+	if (planet_atmos)
 		adjacent_turfs_length++
 	
 	var/datum/gas_mixture/our_air = air
@@ -215,7 +217,7 @@
 
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
-	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
+	if (planet_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
 		G.archive()
