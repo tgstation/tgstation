@@ -108,10 +108,6 @@
 	for(var/i in spawnableAtoms)
 		spawnableAtoms[i] = 1
 
-/datum/mapGeneratorModule/snow/bunnies
-	//spawnableAtoms = list(/mob/living/simple_animal/chicken/rabbit/normal = 0.1)
-	spawnableAtoms = list(/mob/living/simple_animal/chicken/rabbit = 0.5)
-
 /datum/mapGeneratorModule/snow/randIceRocks
 	spawnableAtoms = list(/obj/structure/flora/rock/icy = 5, /obj/structure/flora/rock/pile/icy = 5)
 

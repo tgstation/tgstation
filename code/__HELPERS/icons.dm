@@ -1016,3 +1016,12 @@ obj/proc/make_unfrozen()
 	icon = initial(icon)
 	name = replacetext(name, "frozen ", "")
 	CLEAR_SECONDARY_FLAG(src, FROZEN)
+
+//What the mob looks like during a DISCO INFERNO
+/proc/getOnFireIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(255,255,255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/static_icon = new/icon('icons/effects/effects.dmi', "on_fire_overlay")
+	static_icon.AddAlphaMask(flat_icon)
+	return static_icon

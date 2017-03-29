@@ -18,4 +18,29 @@
 	/obj/structure/bed/chair/janicart/secway
 		parent_type = /obj/vehicle/secway
 
-*/
+	parent_type = /obj/vehicle/atv*/
+//Animal Farm Botany Expansion - 2016
+/mob/living/simple_animal/chick
+	parent_type = /mob/living/simple_animal/farm/chick
+/mob/living/simple_animal/chicken
+	parent_type = /mob/living/simple_animal/farm/chicken
+/mob/living/simple_animal/hostile/retaliate/goat
+	parent_type = /mob/living/simple_animal/farm/goat
+/mob/living/simple_animal/chicken/rabbit
+	parent_type = /mob/living/simple_animal/farm/rabbit
+/mob/living/simple_animal/chicken/rabbit/space
+	parent_type = /mob/living/simple_animal/farm/rabbit/space
+/mob/living/simple_animal/hostile/carp
+	parent_type = /mob/living/simple_animal/farm/carp
+/mob/living/simple_animal/hostile/carp/megacarp
+	parent_type = /mob/living/simple_animal/farm/carp/megacarp
+/mob/living/simple_animal/hostile/carp/holocarp
+	parent_type = /mob/living/simple_animal/farm/carp/holocarp
+/mob/living/simple_animal/hostile/carp/ranged
+	parent_type = /mob/living/simple_animal/hostile/carp_ranged
+/mob/living/simple_animal/hostile/carp/ranged/chaos
+	parent_type = /mob/living/simple_animal/hostile/carp_ranged/chaos
+/mob/living/simple_animal/cow
+	parent_type = /mob/living/simple_animal/farm/cow
+/mob/living/simple_animal/hostile/carp/cayenne
+	parent_type = /mob/living/simple_animal/farm/carp/cayenne
