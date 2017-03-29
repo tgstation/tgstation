@@ -287,6 +287,7 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 				break;
 			case 'sounddel':
 				$tags[] = "Sound";
+				$tags[] = "Revert/Removal";
 				$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
 				break;
 			case 'add':
