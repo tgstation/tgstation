@@ -65,9 +65,10 @@
 	var/never_spoken = TRUE
 	flags = NODECONSTRUCT
 
-/obj/structure/table/abductor/wabbajack/New()
+/obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	grant_language(/datum/language/common)
 
 /obj/structure/table/abductor/wabbajack/Destroy()
 	STOP_PROCESSING(SSobj, src)
