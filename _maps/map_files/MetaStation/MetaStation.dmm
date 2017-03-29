@@ -94765,9 +94765,10 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "djv" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
