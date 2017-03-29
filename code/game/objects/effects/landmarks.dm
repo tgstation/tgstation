@@ -19,10 +19,6 @@
 			wizardstart += loc
 			qdel(src)
 			return
-		if("JoinLate")
-			latejoin += loc
-			qdel(src)
-			return
 		if("prisonwarp")
 			prisonwarp += loc
 			qdel(src)
@@ -194,6 +190,11 @@
 
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
+
+/obj/effect/landmark/latejoin/Initialize(mapload)
+	..()
+	latejoin += loc
+	qdel(src)
 
 // carp.
 /obj/effect/landmark/carpspawn
