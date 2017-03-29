@@ -538,7 +538,6 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(tdome2)
 	SearchVar(tdomeobserve)
 	SearchVar(tdomeadmin)
-	SearchVar(prisonsecuritywarp)
 	SearchVar(prisonwarped)
 	SearchVar(blobstart)
 	SearchVar(secequipment)

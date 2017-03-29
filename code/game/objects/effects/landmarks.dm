@@ -10,39 +10,6 @@
 	tag = text("landmark*[]", name)
 	landmarks_list += src
 
-	switch(name)			//some of these are probably obsolete
-		if("start")
-			newplayer_start += loc
-			qdel(src)
-			return
-		if("wizard")
-			wizardstart += loc
-			qdel(src)
-			return
-		if("prisonwarp")
-			prisonwarp += loc
-			qdel(src)
-			return
-		if("Holding Facility")
-			holdingfacility += loc
-		if("tdome1")
-			tdome1	+= loc
-		if("tdome2")
-			tdome2 += loc
-		if("tdomeadmin")
-			tdomeadmin	+= loc
-		if("tdomeobserve")
-			tdomeobserve += loc
-		if("prisonsecuritywarp")
-			prisonsecuritywarp += loc
-			qdel(src)
-			return
-		if("Emergencyresponseteam")
-			emergencyresponseteamspawn += loc
-			qdel(src)
-			return
-	return 1
-
 /obj/effect/landmark/Destroy()
 	landmarks_list -= src
 	return ..()
@@ -58,7 +25,6 @@
 	..()
 	if(name != "start")
 		tag = "start*[name]"
-	return 1
 
 /obj/effect/landmark/start/Destroy()
 	start_landmarks_list -= src
@@ -188,6 +154,29 @@
 /obj/effect/landmark/start/depsec/science
 	name = "science_sec"
 
+/obj/effect/landmark/start/wizard
+	name = "wizard"
+
+/obj/effect/landmark/start/wizard/Initialize(mapload)
+	..()
+	wizardstart += loc
+	qdel(src)
+
+/obj/effect/landmark/start/new_player
+	name = "New Player"
+
+// Must be on New() rather than Initialize, because players will
+// join before SSatom initializes everything.
+/obj/effect/landmark/start/new_player/New(loc)
+	..()
+	newplayer_start += loc
+
+/obj/effect/landmark/start/new_player/Initialize(mapload)
+	..()
+	qdel(src)
+
+
+
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
 
@@ -226,6 +215,13 @@
 /obj/effect/landmark/syndicate_breach_area
 	name = "Syndicate Breach Area"
 
+// teleport scroll landmark, XXX DOES THIS DO ANYTHING?
+/obj/effect/landmark/teleport_scroll
+	name = "Teleport-Scroll"
+
+/obj/effect/landmark/syndicate_spawn
+	name = "Syndicate-Spawn"
+
 // xenos.
 /obj/effect/landmark/xeno_spawn
 	name = "xeno_spawn"
@@ -250,6 +246,62 @@
 /obj/effect/landmark/secequipment/Initialize(mapload)
 	..()
 	secequipment += loc
+	qdel(src)
+
+/obj/effect/landmark/prisonwarp
+	name = "prisonwarp"
+
+/obj/effect/landmark/prisonwarp/Initialize(mapload)
+	..()
+	prisonwarp += loc
+	qdel(src)
+
+/obj/effect/landmark/ert_spawn
+	name = "Emergencyresponseteam"
+
+/obj/effect/landmark/ert_spawn/Initialize(mapload)
+	..()
+	emergencyresponseteamspawn += loc
+	qdel(src)
+
+/obj/effect/landmark/holding_facility
+	name = "Holding Facility"
+
+/obj/effect/landmark/holding_facility/Initialize(mapload)
+	..()
+	holdingfacility += loc
+	qdel(src)
+
+/obj/effect/landmark/thunderdome/observe
+	name = "tdomeobserve"
+
+/obj/effect/landmark/thunderdome/observe/Initialize(mapload)
+	..()
+	tdomeobserve += loc
+	qdel(src)
+
+/obj/effect/landmark/thunderdome/one
+	name = "tdome1"
+
+/obj/effect/landmark/thunderdome/one/Initialize(mapload)
+	..()
+	tdome1	+= loc
+	qdel(src)
+
+/obj/effect/landmark/thunderdome/two
+	name = "tdome2"
+
+/obj/effect/landmark/thunderdome/two/Initialize(mapload)
+	..()
+	tdome2 += loc
+	qdel(src)
+
+/obj/effect/landmark/thunderdome/admin
+	name = "tdomeadmin"
+
+/obj/effect/landmark/thunderdome/admin/Initialize(mapload)
+	..()
+	tdomeadmin += loc
 	qdel(src)
 
 //generic event spawns
