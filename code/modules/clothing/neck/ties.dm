@@ -6,8 +6,6 @@
 	item_state = "bandolier"
 	pockets = /obj/item/weapon/storage/internal/pocket/bandolier
 
-
-
 /obj/item/clothing/neck/tie
 	name = "tie"
 	desc = "A neosilk clip-on tie."
