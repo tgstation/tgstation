@@ -1041,8 +1041,8 @@
 	},
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/gloves/color/black,
-/obj/item/clothing/suit/armor/swat,
-/obj/item/clothing/suit/armor/swat,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armor/vest,
 /obj/structure/table,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
@@ -2121,7 +2121,7 @@ ax
 aL
 bO
 ax
-df
+dg
 ac
 bx
 dj
@@ -2151,7 +2151,7 @@ ay
 aP
 ba
 ac
-dd
+de
 bx
 bQ
 bz
