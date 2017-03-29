@@ -171,7 +171,7 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	var/list/L = list()
 
 	for (var/obj/machinery/camera/cam in cameranet.cameras)
-		if(z_lock && cam.z != z_lock)
+		if(origin.z_lock && cam.z != origin.z_lock)
 			continue
 		L.Add(cam)
 
