@@ -1,4 +1,6 @@
-
+#define GLOW_MODE 3
+#define LIGHT_MODE 2
+#define REMOVE_MODE 1
 
 /*
 CONTAINS:
@@ -35,7 +37,8 @@ RCD
 	var/max_matter = 160
 	var/working = 0
 	var/mode = 1
-	var/canRturf = 0
+	var/canRturf = FALSE
+	var/ranged = FALSE
 	var/airlock_type = /obj/machinery/door/airlock
 	var/window_type = /obj/structure/window/fulltile
 
@@ -289,7 +292,7 @@ RCD
 
 
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
-	if(!proximity)
+	if(!proximity && !ranged)
 		return FALSE
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
@@ -391,30 +394,30 @@ RCD
 	matter = INFINITY
 
 
-/obj/item/weapon/rcd/arcd
-	name = "advanced rapid-construction-device (ARCD)"
-	max_matter = 300
-	matter = 300
-	color = "red"
-
-
 // Ranged RCD
 
 
+/obj/item/weapon/rcd/arcd
+	name = "advanced rapid-construction-device (ARCD)"
+	desc = "A prototype RCD with ranged capability and extended capacity"
+	max_matter = 300
+	matter = 300
+	ranged = TRUE
+	icon_state = "arcd"
+
+
 /obj/item/weapon/rcd/arcd/afterattack(atom/A, mob/user, proximity)
-	proximity = 1
+
 	if(!(A in view(7, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the RCD blinks red.</span>")
 		return 0
-	if(isturf(A) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window) || istype(A, /obj/structure/girder))
+	if((isturf(A) && mode==3) || (isturf(A) && mode==1 && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==3) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==3) || istype(A, /obj/structure/girder))
 		user.Beam(A,icon_state="rped_upgrade",time=20)
 		..()
 
 
 
-
 // RAPID LIGHT GENERATOR
-
 
 
 
@@ -518,14 +521,14 @@ RCD
 	//Change the mode
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 	switch(mode)
-		if(1)
-			mode = 2
+		if(REMOVE_MODE)
+			mode = LIGHT_MODE
 			to_chat(user, "<span class='notice'>You change RLD's mode to 'Permanent Light Construction'.</span>")
-		if(2)
-			mode = 3
+		if(LIGHT_MODE)
+			mode = GLOW_MODE
 			to_chat(user, "<span class='notice'>You change RLD's mode to 'Light Launcher'.</span>")
-		if(3)
-			mode = 1
+		if(GLOW_MODE)
+			mode = REMOVE_MODE
 			to_chat(user, "<span class='notice'>You change RLD's mode to 'Deconstruct'.</span>")
 	if(prob(20))
 		spark_system.start()
@@ -547,7 +550,7 @@ RCD
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the RLD blinks red.</span>")
 		return 0
 	switch(mode)
-		if(1)
+		if(REMOVE_MODE)
 			if(istype(A, /obj/machinery/light/))
 				if(checkResource(deconcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
@@ -560,7 +563,7 @@ RCD
 						return 1
 				return 0
 
-		if(2)
+		if(LIGHT_MODE)
 			if(iswallturf(A))
 				var/turf/closed/wall/W = A
 				if(checkResource(floorcost, user))
@@ -627,7 +630,7 @@ RCD
 
 				return 0
 
-		if(3)
+		if(GLOW_MODE)
 			if(useResource(launchcost, user))
 				activate()
 				to_chat(user, "<span class='notice'>You fire a glowstick!</span>")
@@ -660,3 +663,7 @@ RCD
 		to_chat(user, no_ammo_message)
 		playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, 1)
 	return .
+
+#undef GLOW_MODE
+#undef LIGHT_MODE
+#undef REMOVE_MODE
