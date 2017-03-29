@@ -128,10 +128,10 @@
 	var/last_share = our_air.last_share;\
 	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
 		our_excited_group.reset_cooldowns();\
-		atmos_cooldown = 0;\
+		cached_atmos_cooldown = 0;\
 	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
 		our_excited_group.dismantle_cooldown = 0;\
-		atmos_cooldown = 0;\
+		cached_atmos_cooldown = 0;\
 	}
 
 /turf/proc/process_cell(fire_count)
@@ -147,7 +147,7 @@
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
 	var/adjacent_turfs_length = LAZYLEN(adjacent_turfs)
-	atmos_cooldown++
+	var/cached_atmos_cooldown = atmos_cooldown + 1
 
 	var/planet_atmos = planetary_atmos
 	if (planet_atmos)
@@ -247,8 +247,10 @@
 			if(consider_superconductivity(starting = 1))
 				remove = FALSE
 
-	if ((!our_excited_group && remove) || (atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
+	if ((!our_excited_group && remove) || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
 		SSair.remove_from_active(src)
+	
+	atmos_cooldown = cached_atmos_cooldown
 
 //////////////////////////SPACEWIND/////////////////////////////
 
