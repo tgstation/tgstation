@@ -108,7 +108,7 @@ Difficulty: Hard
 	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in mob_list)
 		if(B != src)
 			qdel(src) //There can be only one
-			break
+			return
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
