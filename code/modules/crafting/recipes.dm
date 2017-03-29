@@ -401,6 +401,14 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/m_bandolier
+	name = "Makeshift Bandolier"
+	result = /obj/item/weapon/storage/belt/m_bandolier
+	time = 20
+	reqs = list(/obj/item/stack/cable_coil = 1,
+				/obj/item/stack/rods = 1)
+	category = CAT_WEAPON
+
 /datum/crafting_recipe/gold_horn
 	name = "Golden bike horn"
 	result = /obj/item/weapon/bikehorn/golden

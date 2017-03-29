@@ -378,11 +378,22 @@
 
 /obj/item/weapon/storage/belt/bandolier
 	name = "bandolier"
-	desc = "A bandolier for holding shotgun ammunition."
+	desc = "A bandolier for holding shotgun ammunition. And for looking cool."
 	icon_state = "bandolier"
 	item_state = "bandolier"
-	slot_flag = SLOT_NECK
+	//slot_flag = SLOT_NECK
 	storage_slots = 18
+	can_hold = list(
+		/obj/item/ammo_casing/shotgun
+		)
+
+/obj/item/weapon/storage/belt/m_bandolier
+	name = "makeshift bandolier"
+	desc = "A makeshift bandolier for holding small amounts of shotgun ammunition."
+	icon_state = "bandolier"
+	item_state = "bandolier"
+	//slot_flag = SLOT_NECK
+	storage_slots = 6
 	can_hold = list(
 		/obj/item/ammo_casing/shotgun
 		)
