@@ -43,6 +43,10 @@
 
 #define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
+#define GRAVITATIONAL_ANOMALY "gravitational_anomaly"
+#define FLUX_ANOMALY "flux_anomaly"
+#define PYRO_ANOMALY "pyro_anomaly"
+
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
 	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
@@ -131,13 +135,9 @@
 
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", "supermatter")
-	if(radio)
-		qdel(radio)
-		radio = null
+	QDEL_NULL(radio)
 	poi_list -= src
-	if(countdown)
-		qdel(countdown)
-		countdown = null
+	QDEL_NULL(countdown)
 	. = ..()
 
 /obj/machinery/power/supermatter_shard/examine(mob/user)
@@ -320,11 +320,11 @@
 		if(prob(15) && power > POWER_PENALTY_THRESHOLD)
 			supermatter_pull(src, power/750)
 		if(prob(5))
-			supermatter_anomaly_gen(src, 1, rand(5, 10))
+			supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
 		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
-			supermatter_anomaly_gen(src, 2, rand(5, 10))
+			supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))
 		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2) || prob(0.3) && power > POWER_PENALTY_THRESHOLD)
-			supermatter_anomaly_gen(src, 3, rand(5, 10))
+			supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
 
 
 
@@ -526,23 +526,17 @@
 				step_towards(pulled_object,center)
 				step_towards(pulled_object,center)
 
-	return
-
-/obj/machinery/power/supermatter_shard/proc/supermatter_anomaly_gen(turf/anomalycenter, type = 1, anomalyrange = 5)
+/obj/machinery/power/supermatter_shard/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
 	var/turf/L = pick(orange(anomalyrange, anomalycenter))
 	if(L)
-		if(type == 1)
-			var/obj/effect/anomaly/flux/A = new(L)
-			A.explosive = 0
-			A.lifespan = 300
-		else if(type == 2)
-			var/obj/effect/anomaly/grav/A = new(L)
-			A.lifespan = 250
-		else if(type == 3)
-			var/obj/effect/anomaly/pyro/A = new(L)
-			A.lifespan = 200
-
-	return
+		switch(type)
+			if(FLUX_ANOMALY)
+				var/obj/effect/anomaly/flux/A = new(L, 300)
+				A.explosive = FALSE
+			if(GRAVITATIONAL_ANOMALY)
+				new /obj/effect/anomaly/grav(L, 250)
+			if(PYRO_ANOMALY)
+				new /obj/effect/anomaly/pyro(L, 200)
 
 /obj/machinery/power/supermatter_shard/proc/supermatter_zap(atom/zapstart, range = 3, power)
 	. = zapstart.dir
@@ -613,3 +607,6 @@
 			supermatter_zap(target_structure, 5, power / 1.5)
 
 #undef HALLUCINATION_RANGE
+#undef GRAVITATIONAL_ANOMALY
+#undef FLUX_ANOMALY
+#undef PYRO_ANOMALY
