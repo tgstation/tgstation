@@ -16,7 +16,7 @@
 
 
 /obj/structure/blob/core/New(loc, client/new_overmind = null, new_rate = 2, placed = 0)
-	blob_cores += src
+	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
 	update_icon() //so it atleast appears
@@ -41,7 +41,7 @@
 	add_overlay(C)
 
 /obj/structure/blob/core/Destroy()
-	blob_cores -= src
+	GLOB.blob_cores -= src
 	if(overmind)
 		overmind.blob_core = null
 	overmind = null

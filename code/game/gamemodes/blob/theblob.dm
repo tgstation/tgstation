@@ -24,8 +24,8 @@
 /obj/structure/blob/New(loc)
 	var/area/Ablob = get_area(loc)
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
-		blobs_legit += src
-	blobs += src //Keep track of the blob in the normal list either way
+		GLOB.blobs_legit += src
+	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinal))
 	update_icon()
 	..()
@@ -41,8 +41,8 @@
 	if(atmosblock)
 		atmosblock = 0
 		air_update_turf(1)
-	blobs_legit -= src  //if it was in the legit blobs list, it isn't now
-	blobs -= src //it's no longer in the all blobs list either
+	GLOB.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+	GLOB.blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 

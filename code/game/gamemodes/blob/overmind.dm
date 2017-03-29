@@ -41,7 +41,7 @@
 		else
 			manualplace_min_time += world.time
 		autoplace_max_time += world.time
-	overminds += src
+	GLOB.overminds += src
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
@@ -71,7 +71,7 @@
 	..()
 
 /mob/camera/blob/Destroy()
-	for(var/BL in blobs)
+	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
 		if(B && B.overmind == src)
 			B.overmind = null
@@ -81,7 +81,7 @@
 		if(BM)
 			BM.overmind = null
 			BM.update_icons()
-	overminds -= src
+	GLOB.overminds -= src
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
@@ -161,9 +161,9 @@
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 		if(ticker && istype(ticker.mode, /datum/game_mode/blob))
 			var/datum/game_mode/blob/B = ticker.mode
-			stat(null, "Blobs to Win: [blobs_legit.len]/[B.blobwincount]")
+			stat(null, "Blobs to Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
 		else
-			stat(null, "Total Blobs: [blobs.len]")
+			stat(null, "Total Blobs: [GLOB.blobs.len]")
 		if(free_chem_rerolls)
 			stat(null, "You have [free_chem_rerolls] Free Chemical Reroll\s Remaining")
 		if(!placed)

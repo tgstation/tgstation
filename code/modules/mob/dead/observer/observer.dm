@@ -317,7 +317,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			if(istype(ticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = ticker.mode
 				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
+					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
