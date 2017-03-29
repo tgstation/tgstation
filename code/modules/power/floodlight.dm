@@ -42,7 +42,7 @@
 	desc = "A pole with powerful mounted lights on it. Due to its high power draw, it must be powered by a direct connection to a wire node."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight"
-	anchored = FALSE
+	anchored = TRUE
 	density = TRUE
 	idle_power_usage = 100
 	active_power_usage = 1000
@@ -58,7 +58,7 @@
 		change_setting(1)
 
 /obj/machinery/power/floodlight/proc/change_setting(val, mob/user)
-	if(val<1||val>light_setting_list.len)
+	if((val < 1) || (val > light_setting_list.len))
 		return
 	active_power_usage = light_setting_list[val]
 	if(!avail(active_power_usage))
