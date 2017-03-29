@@ -85,13 +85,12 @@ Pipelines + Other Objects -> Pipe network
 
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
-			if(can_be_node(target, I))
+			if(can_be_node(target))
 				NODE_I = target
 				break
-
 	update_icon()
 
-/obj/machinery/atmospherics/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
+/obj/machinery/atmospherics/proc/setPipingLayer(new_layer)
 	piping_layer = new_layer
 	pixel_x = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
 	pixel_y = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
@@ -110,9 +109,7 @@ Pipelines + Other Objects -> Pipe network
 				return target
 
 /obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	if(!given_layer)
-		given_layer = piping_layer
-	if(isConnectable(target, given_layer) && target.isConnectable(src, target.piping_layer))
+	if(isConnectable(target, given_layer) && target.isConnectable(src))
 		return TRUE
 	return FALSE
 
@@ -246,10 +243,11 @@ Pipelines + Other Objects -> Pipe network
 
 	return img
 
-/obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
+/obj/machinery/atmospherics/on_construction(pipe_type, obj_color, set_layer = PIPING_LAYER_DEFAULT)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
+	setPipingLayer(set_layer)
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
 	atmosinit()

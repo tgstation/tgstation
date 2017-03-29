@@ -5,7 +5,7 @@
 	desc = "A special pipe to bridge pipe layers with."
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH
-	pipe_flags = ALL_LAYER
+	pipe_flags = PIPING_ALL_LAYER
 	var/list/front_nodes = list()
 	var/list/back_nodes = list()
 	piping_layer = PIPING_LAYER_DEFAULT
@@ -27,13 +27,13 @@
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
 	. = list()
-	for(var/I in front_nodes)
+	for(var/obj/machinery/atmospherics/I in front_nodes)
 		if(!I in .)
 			. += I
-	for(var/I in back_nodes)
+	for(var/obj/machinery/atmospherics/I in back_nodes)
 		if(!I in .)
 			. += I
-	for(var/I in nodes)
+	for(var/obj/machinery/atmospherics/I in nodes)
 		if(!I in .)
 			. += I
 
@@ -73,7 +73,9 @@
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)
-	return TRUE
+	if(!given_layer)
+		return TRUE
+	..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/findAllConnections()
 	front_nodes = list()

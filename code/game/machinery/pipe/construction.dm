@@ -252,8 +252,7 @@ var/global/list/pipeID2State = list(
 	var/obj/machinery/atmospherics/components/trinary/T = A
 	if(istype(T))
 		T.flipped = flipped
-	A.on_construction(pipe_type, color)
-	A.setPipingLayer(piping_layer)
+	A.on_construction(pipe_type, color, piping_layer)
 
 	playsound(src.loc, W.usesound, 50, 1)
 	user.visible_message( \
