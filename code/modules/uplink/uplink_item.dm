@@ -20,7 +20,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/I = uplink_items[category][item]
-			if(istype(I))
+			if(!istype(I))
 				continue
 			if(I.include_modes.len)
 				if(!gamemode && ticker && !(ticker.mode.type in I.include_modes))
@@ -126,7 +126,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/Destroy()
 	if(src in uplink_items)
 		uplink_items -= src	//Take us out instead of leaving a null!
-	..()
+	return ..()
 	
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
