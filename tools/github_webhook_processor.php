@@ -124,10 +124,16 @@ function tag_pr($payload, $opened){
 	else
 		$tags[] = "Merge Conflict";
 
-	if(has_a_map_been_edited($payload))
+	$map_and_tool = has_a_map_or_tool_been_edited($payload);
+	if($map_and_tool['map'])
 		$tags[] = "Map Edit";
 	else
 		$remove[] = "Map Edit";
+
+	if($map_and_tool['tool'])
+		$tags[] = "Tools";
+	else
+		$remove[] = "Tools";
 
 	//only maintners should be able to remove these
 	if(strpos($title, '[DNM]') !== FALSE)
@@ -197,13 +203,18 @@ function handle_pr($payload) {
 
 }
 
-function has_a_map_been_edited($payload){
+function has_a_map_or_tool_been_edited($payload){
 	//go to the diff url
 	$url = $payload['pull_request']['diff_url'];
 	$content = file_get_contents($url);
+	if($content == FALSE)
+		return array('map' => FALSE, 'tool' => FALSE);
+	$Result = array();
 	//find things in the _maps/map_files tree
 	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
-	return $content !== FALSE && strpos($content, 'diff --git a/_maps/map_files');
+	$Result['map'] = strpos($content, 'diff --git a/_maps/map_files') !== FALSE;
+	$Result['tool'] = strpos($content, 'diff --git a/tools') !== FALSE;
+	return $Result;
 }
 
 function checkchangelog($payload, $merge = false, $compile = true) {
