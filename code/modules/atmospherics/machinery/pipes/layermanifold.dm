@@ -75,7 +75,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)
 	if(!given_layer)
 		return TRUE
-	..()
+	. = ..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/findAllConnections()
 	front_nodes = list()

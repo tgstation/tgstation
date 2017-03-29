@@ -109,7 +109,7 @@ Pipelines + Other Objects -> Pipe network
 				return target
 
 /obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	if(isConnectable(target, given_layer) && target.isConnectable(src))
+	if(isConnectable(target, given_layer) && target.isConnectable(src, given_layer))
 		return TRUE
 	return FALSE
 
