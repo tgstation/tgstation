@@ -393,6 +393,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist += "<br>"
 			else
 				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+			break
 		if(unconverted_ais_exist)
 			if(unconverted_ais_exist > 1)
 				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
