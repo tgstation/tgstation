@@ -1,3 +1,13 @@
+/obj/item/clothing/neck/bandolier
+	name = "bandolier"
+	desc = "A bandolier for holding shotgun ammunition."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "bandolier"
+	item_state = "bandolier"
+	pockets = /obj/item/weapon/storage/internal/pocket/bandolier
+
+
+
 /obj/item/clothing/neck/tie
 	name = "tie"
 	desc = "A neosilk clip-on tie."

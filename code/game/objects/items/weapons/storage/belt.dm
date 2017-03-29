@@ -376,15 +376,15 @@
 		/obj/item/clothing/gloves
 		)
 
-/obj/item/weapon/storage/belt/bandolier
-	name = "bandolier"
-	desc = "A bandolier for holding shotgun ammunition."
-	icon_state = "bandolier"
-	item_state = "bandolier"
-	storage_slots = 18
-	can_hold = list(
-		/obj/item/ammo_casing/shotgun
-		)
+///obj/item/weapon/storage/belt/bandolier
+//	name = "bandolier"
+//	desc = "A bandolier for holding shotgun ammunition."
+//	icon_state = "bandolier"
+//	item_state = "bandolier"
+//	storage_slots = 18
+//	can_hold = list(
+//		/obj/item/ammo_casing/shotgun
+//		)
 
 /obj/item/weapon/storage/belt/holster
 	name = "shoulder holster"
