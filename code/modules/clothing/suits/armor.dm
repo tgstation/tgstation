@@ -139,6 +139,14 @@
 	if (prob(hit_reflect_chance))
 		return 1
 
+/obj/item/clothing/suit/armor/swat
+	name = "MK.I SWAT Vest"
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20, fire = 50, acid = 50)
+	desc = "A lightweight vest variant of the infamous tactical suit."
+	icon_state = "swatvest"
+	item_state = "armor"
+	strip_delay = 120
+
 /obj/item/clothing/suit/armor/vest/det_suit
 	name = "armor"
 	desc = "An armored vest with a detective's badge on it."
