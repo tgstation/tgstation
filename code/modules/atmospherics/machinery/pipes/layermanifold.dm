@@ -108,7 +108,7 @@
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
-	while(reference in (nodes + front_nodes + back_nodes))
+	while(reference in get_all_connected_nodes())
 		if(reference in nodes)
 			var/I = nodes.Find(reference)
 			NODE_I = null
@@ -119,6 +119,7 @@
 			var/I = back_nodes.Find(reference)
 			back_nodes[I] = null
 	update_icon()
+	build_network()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, dir)
 	if(initialize_directions & dir)
