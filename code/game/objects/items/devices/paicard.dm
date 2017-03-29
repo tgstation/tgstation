@@ -19,6 +19,7 @@
 	pai_card_list -= src
 	if(!isnull(pai))
 		pai.death(0)
+		qdel(pai)
 	return ..()
 
 /obj/item/device/paicard/attack_self(mob/user)

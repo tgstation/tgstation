@@ -78,6 +78,8 @@
 	. += slowdown
 
 /mob/living/silicon/pai/Destroy()
+	if(card.pai)
+		card.pai = null
 	pai_list -= src
 	..()
 
