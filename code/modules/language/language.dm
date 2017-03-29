@@ -21,7 +21,7 @@
 	var/static/list/scramble_cache = list()
 	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
 
-/datum/language/proc/get_random_name(var/gender, name_count=2, syllable_count=4, syllable_divisor=2)
+/datum/language/proc/get_random_name(gender, name_count=2, syllable_count=4, syllable_divisor=2)
 	if(!syllables || !syllables.len)
 		if(gender==FEMALE)
 			return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
@@ -40,7 +40,7 @@
 
 	return "[trim(full_name)]"
 
-/datum/language/proc/scramble(var/input)
+/datum/language/proc/scramble(input)
 
 	if(!syllables || !syllables.len)
 		return stars(input)
@@ -84,7 +84,7 @@
 
 	return scrambled_text
 
-/datum/language/proc/get_spoken_verb(var/msg_end)
+/datum/language/proc/get_spoken_verb(msg_end)
 	switch(msg_end)
 		if("!")
 			return exclaim_verb
