@@ -32,9 +32,11 @@
 /mob/living/carbon/can_speak_in_language(datum/language/dt)
 	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
 		. = TRUE
-	else
+	else if(has_language(dt))
 		var/obj/item/organ/tongue/T = getorganslot("tongue")
 		if(T)
 			. = T.can_speak_in_language(dt)
 		else
 			. = initial(dt.flags) & TONGUELESS_SPEECH
+	else
+		. = FALSE
