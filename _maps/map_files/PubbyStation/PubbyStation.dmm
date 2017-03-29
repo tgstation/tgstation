@@ -23744,7 +23744,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aVF" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
 	},
@@ -25095,7 +25095,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aYx" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},

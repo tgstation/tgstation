@@ -53112,7 +53112,7 @@
 	},
 /area/crew_quarters/kitchen)
 "bOR" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bOS" = (
@@ -54154,7 +54154,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "bQJ" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
@@ -91787,7 +91787,7 @@
 	},
 /area/crew_quarters/kitchen)
 "ddE" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)

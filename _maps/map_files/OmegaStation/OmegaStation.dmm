@@ -18772,7 +18772,7 @@
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
 "aDU" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold (NORTH)";
 	icon_state = "manifold";
@@ -19436,7 +19436,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aEZ" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
 "aFa" = (
@@ -20041,7 +20041,7 @@
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
 "aFV" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/kitchen)
 "aFW" = (

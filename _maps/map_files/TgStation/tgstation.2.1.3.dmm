@@ -19943,7 +19943,7 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/kitchen)
 "aSJ" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -21952,7 +21952,7 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aXm" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aXn" = (

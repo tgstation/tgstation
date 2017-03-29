@@ -57,8 +57,8 @@
 /obj/effect/landmark/start/atmospheric_technician
 	name = "Atmospheric Technician"
 
-/obj/effect/landmark/start/chef
-	name = "Chef"
+/obj/effect/landmark/start/cook
+	name = "Cook"
 
 /obj/effect/landmark/start/shaft_miner
 	name = "Shaft Miner"

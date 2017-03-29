@@ -27049,7 +27049,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	icon_state = "manifold";
 	dir = 1
@@ -27787,7 +27787,7 @@
 /area/crew_quarters/kitchen)
 "bbr" = (
 /obj/machinery/holopad,
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
@@ -30082,7 +30082,7 @@
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
 "bfR" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/cook,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
