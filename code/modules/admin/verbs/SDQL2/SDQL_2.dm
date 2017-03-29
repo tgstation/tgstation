@@ -46,97 +46,89 @@
 	if(!querys || querys.len < 1)
 		return
 
-	try
+	for(var/list/query_tree in querys)
+		var/list/from_objs = list()
+		var/list/select_types = list()
 
-		for(var/list/query_tree in querys)
-			var/list/from_objs = list()
-			var/list/select_types = list()
+		switch(query_tree[1])
+			if("explain")
+				SDQL_testout(query_tree["explain"])
+				return
 
-			switch(query_tree[1])
-				if("explain")
-					SDQL_testout(query_tree["explain"])
+			if("call")
+				if("on" in query_tree)
+					select_types = query_tree["on"]
+				else
 					return
 
-				if("call")
-					if("on" in query_tree)
-						select_types = query_tree["on"]
-					else
-						return
+			if("select", "delete", "update")
+				select_types = query_tree[query_tree[1]]
 
-				if("select", "delete", "update")
-					select_types = query_tree[query_tree[1]]
+		from_objs = SDQL_from_objs(query_tree["from"])
 
-			from_objs = SDQL_from_objs(query_tree["from"])
+		var/list/objs = list()
 
-			var/list/objs = list()
+		for(var/type in select_types)
+			objs += SDQL_get_all(type, from_objs)
+			CHECK_TICK
 
-			for(var/type in select_types)
-				objs += SDQL_get_all(type, from_objs)
+		if("where" in query_tree)
+			var/objs_temp = objs
+			objs = list()
+			for(var/datum/d in objs_temp)
+				if(SDQL_expression(d, query_tree["where"]))
+					objs += d
 				CHECK_TICK
 
-			if("where" in query_tree)
-				var/objs_temp = objs
-				objs = list()
-				for(var/datum/d in objs_temp)
-					if(SDQL_expression(d, query_tree["where"]))
-						objs += d
+		switch(query_tree[1])
+			if("call")
+				for(var/datum/d in objs)
+					SDQL_var(d, query_tree["call"][1], source = d)
 					CHECK_TICK
 
-			switch(query_tree[1])
-				if("call")
-					for(var/datum/d in objs)
-						SDQL_var(d, query_tree["call"][1], source = d)
-						CHECK_TICK
+			if("delete")
+				for(var/datum/d in objs)
+					qdel(d)
+					CHECK_TICK
 
-				if("delete")
-					for(var/datum/d in objs)
-						qdel(d)
-						CHECK_TICK
+			if("select")
+				var/text = ""
+				for(var/datum/t in objs)
+					text += "<A HREF='?_src_=vars;Vars=\ref[t]'>\ref[t]</A>"
+					if(istype(t, /atom))
+						var/atom/a = t
 
-				if("select")
-					var/text = ""
-					for(var/datum/t in objs)
-						text += "<A HREF='?_src_=vars;Vars=\ref[t]'>\ref[t]</A>"
-						if(istype(t, /atom))
-							var/atom/a = t
+						if(a.x)
+							text += ": [t] at ([a.x], [a.y], [a.z])<br>"
 
-							if(a.x)
-								text += ": [t] at ([a.x], [a.y], [a.z])<br>"
-
-							else if(a.loc && a.loc.x)
-								text += ": [t] in [a.loc] at ([a.loc.x], [a.loc.y], [a.loc.z])<br>"
-
-							else
-								text += ": [t]<br>"
+						else if(a.loc && a.loc.x)
+							text += ": [t] in [a.loc] at ([a.loc.x], [a.loc.y], [a.loc.z])<br>"
 
 						else
 							text += ": [t]<br>"
+
+					else
+						text += ": [t]<br>"
+					CHECK_TICK
+
+				usr << browse(text, "window=SDQL-result")
+
+			if("update")
+				if("set" in query_tree)
+					var/list/set_list = query_tree["set"]
+					for(var/datum/d in objs)
+						for(var/list/sets in set_list)
+							var/datum/temp = d
+							var/i = 0
+							for(var/v in sets)
+								if(++i == sets.len)
+									temp.vv_edit_var(v, SDQL_expression(d, set_list[sets]))
+									break
+								if(temp.vars.Find(v) && (istype(temp.vars[v], /datum)))
+									temp = temp.vars[v]
+								else
+									break
 						CHECK_TICK
-
-					usr << browse(text, "window=SDQL-result")
-
-				if("update")
-					if("set" in query_tree)
-						var/list/set_list = query_tree["set"]
-						for(var/datum/d in objs)
-							for(var/list/sets in set_list)
-								var/datum/temp = d
-								var/i = 0
-								for(var/v in sets)
-									if(++i == sets.len)
-										temp.vv_edit_var(v, SDQL_expression(d, set_list[sets]))
-										break
-									if(temp.vars.Find(v) && (istype(temp.vars[v], /datum)))
-										temp = temp.vars[v]
-									else
-										break
-							CHECK_TICK
-
-	catch(var/exception/e)
-		to_chat(usr, "<span class='boldwarning'>A runtime error has occured in your SDQL2-query.</span>")
-		to_chat(usr, "\[NAME\][e.name]")
-		to_chat(usr, "\[FILE\][e.file]")
-		to_chat(usr, "\[LINE\][e.line]")
 
 /proc/SDQL_callproc_global(procname,args_list)
 	set waitfor = FALSE
