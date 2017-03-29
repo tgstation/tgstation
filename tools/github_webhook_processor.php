@@ -107,6 +107,8 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 }
 
 function tag_pr($payload, $opened){
+	global $apiKey;
+
 	$tags = array();
 	$title = $payload['pull_request']['title'];
 	if($opened){	//you only have one shot on these ones so as to not annoy maintainers
@@ -119,18 +121,18 @@ function tag_pr($payload, $opened){
 	$remove = array();
 
 	//rip bs-12
-	if(!$payload['pull_request']['mergeable'])
+	$mergeable = $payload['pull_request']['mergeable'];
+	if($mergeable == null || $mergeable)	//only look for the false value
 		$remove[] = "Merge Conflict";
 	else
 		$tags[] = "Merge Conflict";
 
-	$map_and_tool = has_a_map_or_tool_been_edited($payload);
-	if($map_and_tool['map'])
+	if(has_tree_been_edited($payload, '_maps'))
 		$tags[] = "Map Edit";
 	else
 		$remove[] = "Map Edit";
 
-	if($map_and_tool['tool'])
+	if(has_tree_been_edited($payload, 'tools'))
 		$tags[] = "Tools";
 	else
 		$remove[] = "Tools";
@@ -142,30 +144,34 @@ function tag_pr($payload, $opened){
 	if(strpos($title, '[WIP]') !== FALSE)
 		$tags[] = "Work In Progress";
 
-	$content = array (
-		'Label1' => 'LabelName'
-	);
 	$scontext = array('http' => array(
-		'method'	=> 'POST',
+		'method'	=> 'GET',
 		'header'	=>
 			"Content-type: application/json\r\n".
 			'Authorization: token ' . $apiKey,
-		'content'	=> json_encode($content),
 		'ignore_errors' => true,
 		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
 	));
-	$url = 'https://api.github.com/repos/tgstation/tgstation/issues/' . $payload['pull_request']['number'] . '/labels';
-	foreach($tags as $tag){
-		$scontext['content']['Label1'] = $tag;
-		echo file_get_contents($url, false, stream_context_create($scontext));
-	}
+	$url = $payload['pull_request']['base']['repo']['url'] . '/issues/' . $payload['pull_request']['number'] . '/labels';
 
-	//remove the others
-	$scontent['method'] = 'DELETE';
-	foreach($remove as $tag){
-		$scontext['content']['Label1'] = $tag;
-		echo file_get_contents($url, false, stream_context_create($scontext));
-	}
+	$existing_labels = file_get_contents($url, false, stream_context_create($scontext));
+	$existing_labels = json_decode($existing_labels, true);
+
+	$existing = array();
+	foreach($existing_labels as $label)
+		$existing[] = $label['name'];
+	$tags = array_merge($tags, $existing);
+	$tags = array_unique($tags);
+	$tags = array_diff($tags, $remove);
+
+	$final = array();
+	foreach($tags as $t)
+		$final[] = $t;
+
+	$scontext['http']['method'] = 'PUT';
+	$scontext['http']['content'] = json_encode($final);
+
+	echo file_get_contents($url, false, stream_context_create($scontext));
 }
 
 function handle_pr($payload) {
@@ -175,6 +181,7 @@ function handle_pr($payload) {
 			tag_pr($payload, true);
 			break;
 		case 'edited':
+		case 'synchronize':
 			tag_pr($payload, false);
 			break;
 		case 'reopened':
@@ -203,18 +210,13 @@ function handle_pr($payload) {
 
 }
 
-function has_a_map_or_tool_been_edited($payload){
+function has_tree_been_edited($payload, $tree){
 	//go to the diff url
 	$url = $payload['pull_request']['diff_url'];
 	$content = file_get_contents($url);
-	if($content == FALSE)
-		return array('map' => FALSE, 'tool' => FALSE);
-	$Result = array();
 	//find things in the _maps/map_files tree
 	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
-	$Result['map'] = strpos($content, 'diff --git a/_maps/map_files') !== FALSE;
-	$Result['tool'] = strpos($content, 'diff --git a/tools') !== FALSE;
-	return $Result;
+	return $content !== FALSE && strpos($content, 'diff --git a/' . $tree) !== FALSE;
 }
 
 function checkchangelog($payload, $merge = false, $compile = true) {
