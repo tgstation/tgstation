@@ -9,10 +9,6 @@ ARCD
 */
 
 
-/*
-CONTAINS:
-RCD
-*/
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build and deconstruct walls and floors."
@@ -37,8 +33,7 @@ RCD
 	var/max_matter = 160
 	var/working = 0
 	var/mode = 1
-	var/canRturf = FALSE
-	var/ranged = FALSE
+	var/canRturf = 0
 	var/airlock_type = /obj/machinery/door/airlock
 	var/window_type = /obj/structure/window/fulltile
 
@@ -292,7 +287,7 @@ RCD
 
 
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
-	if(!proximity && !ranged)
+	if(!proximity)
 		return FALSE
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
@@ -402,18 +397,18 @@ RCD
 	desc = "A prototype RCD with ranged capability and extended capacity"
 	max_matter = 300
 	matter = 300
-	ranged = TRUE
+	delay_mod = 0.7
 	icon_state = "arcd"
 
 
 /obj/item/weapon/rcd/arcd/afterattack(atom/A, mob/user, proximity)
-
+	proximity = 1
 	if(!(A in view(7, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the RCD blinks red.</span>")
 		return 0
 	if((isturf(A) && mode==3) || (isturf(A) && mode==1 && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==3) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==3) || istype(A, /obj/structure/girder))
 		user.Beam(A,icon_state="rped_upgrade",time=20)
-		..()
+	..()
 
 
 
