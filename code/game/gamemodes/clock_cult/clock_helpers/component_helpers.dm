@@ -26,7 +26,7 @@
 		if(G.still_needs_components())
 			for(var/i in G.required_components)
 				if(!G.required_components[i])
-					. -= I
+					. -= i
 		break
 	. = pickweight(.)
 
