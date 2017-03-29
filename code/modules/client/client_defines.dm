@@ -63,3 +63,4 @@
 
 	var/inprefs = FALSE
 	var/list/topiclimiter
+	var/list/skills = list()

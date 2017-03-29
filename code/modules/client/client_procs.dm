@@ -301,6 +301,10 @@ var/next_external_rsc = 0
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	if(!skills.len)
+		for(var/stat in subtypesof(/datum/stat))
+			skills += new stat(src)
+
 
 //////////////
 //DISCONNECT//
