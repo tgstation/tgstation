@@ -58,7 +58,7 @@
 		toggle(0, user)
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/forced_disable(bad_effects)
-	if(disabled)
+	if(disabled || !anchored)
 		return FALSE
 	if(!active)
 		toggle(0)
