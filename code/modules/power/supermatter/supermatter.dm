@@ -14,7 +14,7 @@
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
-#define POWERLOSS_INHIBITION_MOLE_THRESHOLD 100        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
+#define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
 #define POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD 500  //bonus powerloss inhibition boost if this amount of moles is reached
 
 #define MOLE_PENALTY_THRESHOLD 1800           //Higher == Shard can absorb more moles before triggering the high mole penalties.
@@ -39,7 +39,7 @@
 #define DETONATION_HALLUCINATION 600
 
 
-#define WARNING_DELAY 30
+#define WARNING_DELAY 60
 
 #define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
@@ -64,7 +64,8 @@
 	var/safe_alert = "Crystalline hyperstructure returning to safe operating levels."
 	var/warning_point = 50
 	var/warning_alert = "Danger! Crystal hyperstructure instability!"
-	var/emergency_point = 500
+	var/damage_penalty_point = 550
+	var/emergency_point = 700
 	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
 	var/explosion_point = 900
 
@@ -230,7 +231,7 @@
 	n2comp = max(removed.gases["n2"][MOLES]/combined_gas, 0)
 	freoncomp = max(removed.gases["freon"][MOLES]/combined_gas, 0)
 
-	gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2ocomp - n2comp - freoncomp, 0), 1)
+	gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2comp - freoncomp, 0), 1)
 
 	dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY)+(o2comp * OXYGEN_HEAT_PENALTY)+(co2comp * CO2_HEAT_PENALTY)+(n2comp * NITROGEN_HEAT_MODIFIER), 0.5)
 	dynamic_heat_resistance = max(n2ocomp * N2O_HEAT_RESISTANCE, 1)
@@ -245,7 +246,7 @@
 	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD)
 		powerloss_dynamic_scaling = Clamp(powerloss_dynamic_scaling + Clamp(co2comp - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
 	else
-		powerloss_dynamic_scaling = Clamp(powerloss_dynamic_scaling - 0.10,0, 1)
+		powerloss_dynamic_scaling = Clamp(powerloss_dynamic_scaling - 0.05,0, 1)
 	powerloss_inhibitor = Clamp(1-(powerloss_dynamic_scaling * Clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),0 ,1)
 
 	if(matter_power)
@@ -302,22 +303,27 @@
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.rad_act(rads)
 
-	if(power > POWER_PENALTY_THRESHOLD)
-		playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, 1, extrarange = 10)
-		supermatter_zap(src, 5, min(power*2, 20000))
-		supermatter_zap(src, 5, min(power*2, 20000))
-		if(power > SEVERE_POWER_PENALTY_THRESHOLD)
-			supermatter_zap(src, 5, min(power*2, 20000))
-			if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
-				supermatter_zap(src, 5, min(power*2, 20000))
+	if(power > POWER_PENALTY_THRESHOLD || damage > damage_penalty_point)
 
-		if(prob(15))
+		if(power > POWER_PENALTY_THRESHOLD)
+			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, 1, extrarange = 10)
+			supermatter_zap(src, 5, min(power*2, 20000))
+			supermatter_zap(src, 5, min(power*2, 20000))
+			if(power > SEVERE_POWER_PENALTY_THRESHOLD)
+				supermatter_zap(src, 5, min(power*2, 20000))
+				if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
+					supermatter_zap(src, 5, min(power*2, 20000))
+		else if (damage > damage_penalty_point && prob(20))
+			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, 1, extrarange = 10)
+			supermatter_zap(src, 5, Clamp(power*2, 4000, 20000))
+
+		if(prob(15) && power > POWER_PENALTY_THRESHOLD)
 			supermatter_pull(src, power/750)
 		if(prob(5))
 			supermatter_anomaly_gen(src, 1, rand(5, 10))
-		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(2))
+		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
 			supermatter_anomaly_gen(src, 2, rand(5, 10))
-		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2) || prob(0.3))
+		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2) || prob(0.3) && power > POWER_PENALTY_THRESHOLD)
 			supermatter_anomaly_gen(src, 3, rand(5, 10))
 
 

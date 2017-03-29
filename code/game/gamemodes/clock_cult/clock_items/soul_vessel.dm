@@ -63,28 +63,28 @@
 		to_chat(user, "<span class='nezbere'>\"It would be more wise to revive your allies, friend.\"</span>")
 		return
 	var/mob/living/carbon/human/H = target
-	var/obj/item/bodypart/head/HE = H.get_bodypart("head")
-	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
-	if(!HE)
-		to_chat(user, "<span class='warning'>[H] has no head, and thus no mind!</span>")
-		return
 	if(H.stat == CONSCIOUS)
 		to_chat(user, "<span class='warning'>[H] must be dead or unconscious for you to claim [H.p_their()] mind!</span>")
 		return
 	if(H.head)
 		var/obj/item/I = H.head
-		if(I.flags_inv & HIDEHAIR)
+		if(I.flags_inv & HIDEHAIR) //they're wearing a hat that covers their skull
 			to_chat(user, "<span class='warning'>[H]'s head is covered, remove [H.head] first!</span>")
 			return
 	if(H.wear_mask)
 		var/obj/item/I = H.wear_mask
-		if(I.flags_inv & HIDEHAIR)
+		if(I.flags_inv & HIDEHAIR) //they're wearing a mask that covers their skull
 			to_chat(user, "<span class='warning'>[H]'s head is covered, remove [H.wear_mask] first!</span>")
 			return
-	if(!B)
+	var/obj/item/bodypart/head/HE = H.get_bodypart("head")
+	if(!HE) //literally headless
+		to_chat(user, "<span class='warning'>[H] has no head, and thus no mind to claim!</span>")
+		return
+	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
+	if(!B) //either somebody already got to them or robotics did
 		to_chat(user, "<span class='warning'>[H] has no brain, and thus no mind to claim!</span>")
 		return
-	if(!H.key)
+	if(!H.key) //nobody's home
 		to_chat(user, "<span class='warning'>[H] has no mind to claim!</span>")
 		return
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)

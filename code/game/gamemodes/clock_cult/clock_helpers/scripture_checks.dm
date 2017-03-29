@@ -28,7 +28,7 @@
 	. = 0
 	for(var/ai in ai_list)
 		var/mob/living/silicon/AI = ai
-		if(is_servant_of_ratvar(AI) || !isturf(AI.loc) || AI.z != ZLEVEL_STATION)
+		if(is_servant_of_ratvar(AI) || !isturf(AI.loc) || AI.z != ZLEVEL_STATION || AI.stat == DEAD)
 			continue
 		.++
 
@@ -42,7 +42,8 @@
 	if(!set_slab || needs_update)
 		for(var/obj/item/clockwork/slab/S in all_clockwork_objects)
 			SStgui.update_uis(S)
-			S.update_quickbind()
+			if(needs_update)
+				S.update_quickbind()
 	else
 		SStgui.update_uis(set_slab)
 		set_slab.update_quickbind()
