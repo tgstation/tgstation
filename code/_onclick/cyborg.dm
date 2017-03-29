@@ -68,11 +68,7 @@
 
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 	if(A == loc || (A in loc) || (A in contents))
-		// No adjacency checks
-		if(W.pre_attackby(A,src,params))
-			var/resolved = A.attackby(W,src, params)
-			if(!resolved && A && W)
-				W.afterattack(A,src,1,params)
+		melee_item_attack_chain(src, W, A)
 		return
 
 	if(!isturf(loc))
@@ -81,10 +77,7 @@
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
 	if(isturf(A) || isturf(A.loc))
 		if(A.Adjacent(src)) // see adjacent.dm
-			if(W.pre_attackby(A,src,params))
-				var/resolved = A.attackby(W, src, params)
-				if(!resolved && A && W)
-					W.afterattack(A, src, 1, params)
+			melee_item_attack_chain(src, W, A)
 			return
 		else
 			W.afterattack(A, src, 0, params)

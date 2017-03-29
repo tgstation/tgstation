@@ -34,7 +34,9 @@
 	layer = FLY_LAYER
 
 /turf/closed/indestructible/splashscreen/New()
-	SStitle.title_screen = src
+	SStitle.splash_turf = src
+	if(SStitle.icon)
+		icon = SStitle.icon
 	..()
 
 /turf/closed/indestructible/riveted

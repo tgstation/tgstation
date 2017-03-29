@@ -38,7 +38,7 @@
 		return TRUE
 
 //procs that handle the actual buckling and unbuckling
-/atom/movable/proc/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+/atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!buckled_mobs)
 		buckled_mobs = list()
 
@@ -72,14 +72,14 @@
 
 	return 1
 
-/obj/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+/obj/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	. = ..()
 	if(.)
 		if(resistance_flags & ON_FIRE) //Sets the mob on fire if you buckle them to a burning atom/movableect
 			M.adjust_fire_stacks(1)
 			M.IgniteMob()
 
-/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force=0)
+/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
 	if(istype(buckled_mob) && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
 		buckled_mob.buckled = null
@@ -90,7 +90,7 @@
 
 		post_buckle_mob(.)
 
-/atom/movable/proc/unbuckle_all_mobs(force=0)
+/atom/movable/proc/unbuckle_all_mobs(force=FALSE)
 	if(!has_buckled_mobs())
 		return
 	for(var/m in buckled_mobs)
@@ -103,7 +103,7 @@
 
 
 //Wrapper procs that handle sanity and user feedback
-/atom/movable/proc/user_buckle_mob(mob/living/M, mob/user, check_loc = 1)
+/atom/movable/proc/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(!in_range(user, src) || user.stat || user.restrained())
 		return 0
 
