@@ -1,14 +1,18 @@
 var/list/uplink_items = list() // Global list so we only initialize this once.
 
+/proc/initialize_global_uplink_items()
+	uplink_items = list()
+	for(var/item in subtypesof(/datum/uplink_item))
+		var/datum/uplink_item/I = new item()
+		if(!I.item)
+			continue
+		if(!uplink_items[I.category])
+			uplink_items[I.category] = list()
+		uplink_items[I.category][I.name] = I
+
 /proc/get_uplink_items(var/datum/game_mode/gamemode = null)
 	if(!uplink_items.len)
-		for(var/item in subtypesof(/datum/uplink_item))
-			var/datum/uplink_item/I = new item()
-			if(!I.item)
-				continue
-			if(!uplink_items[I.category])
-				uplink_items[I.category] = list()
-			uplink_items[I.category][I.name] = I
+		initialize_global_uplink_items()
 
 	var/list/filtered_uplink_items = list()
 	var/list/sale_items = list()
@@ -16,6 +20,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/I = uplink_items[category][item]
+			if(!istype(I))
+				continue
 			if(I.include_modes.len)
 				if(!gamemode && ticker && !(ticker.mode.type in I.include_modes))
 					continue
@@ -117,6 +123,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			to_chat(H, "\The [A] materializes onto the floor.")
 	return 1
 
+/datum/uplink_item/Destroy()
+	if(src in uplink_items)
+		uplink_items -= src	//Take us out instead of leaving a null!
+	return ..()
+	
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = "Discounted Gear"
