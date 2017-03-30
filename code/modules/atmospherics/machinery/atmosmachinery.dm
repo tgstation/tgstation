@@ -85,7 +85,7 @@ Pipelines + Other Objects -> Pipe network
 
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
-			if(can_be_node(target))
+			if(can_be_node(target, I))
 				NODE_I = target
 				break
 	update_icon()

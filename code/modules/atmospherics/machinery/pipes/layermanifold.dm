@@ -87,9 +87,9 @@
 		var/obj/machinery/atmospherics/foundback = findConnecting(turn(dir, 180), iter)
 		front_nodes += foundfront
 		back_nodes += foundback
-		if(foundfront)
+		if(foundfront && !QDELETED(foundfront))
 			new_nodes += foundfront
-		if(foundback)
+		if(foundback && !QDELETED(foundback))
 			new_nodes += foundback
 	update_icon()
 	return new_nodes
@@ -101,7 +101,6 @@
 	piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()
-	findAllConnections()
 	return get_all_connected_nodes()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/disconnect(obj/machinery/atmospherics/reference)
@@ -119,7 +118,6 @@
 			var/I = back_nodes.Find(reference)
 			back_nodes[I] = null
 	update_icon()
-	build_network()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, dir)
 	if(initialize_directions & dir)

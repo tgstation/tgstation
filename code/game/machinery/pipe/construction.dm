@@ -232,7 +232,7 @@ var/global/list/pipeID2State = list(
 	A.SetInitDirections()
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
-		if((M.piping_layer != piping_layer) && !((M.pipe_flags & ALL_LAYER) || (pipe_type == PIPE_LAYER_MANIFOLD)))
+		if((M.piping_layer != piping_layer) && !((M.pipe_flags & PIPING_ALL_LAYER) || (pipe_type == PIPE_LAYER_MANIFOLD)))
 			continue
 		if(M.pipe_flags & PIPING_ONE_PER_TURF)
 			to_chat(user, "<span class='warning'>Something is hogging the tile!</span>")

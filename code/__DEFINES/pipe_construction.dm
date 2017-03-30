@@ -4,9 +4,6 @@ Update these any time a path is changed
 Construction breaks otherwise
 */
 
-//pipe_flags
-#define ALL_LAYER 1
-
 //Pipes
 #define PIPE_SIMPLE				/obj/machinery/atmospherics/pipe/simple
 #define PIPE_MANIFOLD			/obj/machinery/atmospherics/pipe/manifold
