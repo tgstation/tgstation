@@ -106,8 +106,27 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 		die();
 }
 
+//rip bs-12
 function tag_pr($payload, $opened) {
 	global $apiKey;
+
+	//We need to reget the pull_request part of the payload to actually see the mergeable field populated
+	//http://stackoverflow.com/questions/30619549/why-does-github-api-return-an-unknown-mergeable-state-in-a-pull-request
+	$scontext = array('http' => array(
+		'method'	=> 'GET',
+		'header'	=>
+			"Content-type: application/json\r\n".
+			'Authorization: token ' . $apiKey,
+		'ignore_errors' => true,
+		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
+	));
+
+	$payload['pull_request'] = json_decode(file_get_contents($payload['pull_request']['url'], false, stream_context_create($scontext)));
+	if($payload['pull_request']['mergeable'] == null) {
+		//STILL not ready. Give it a bit, then try one more time
+		sleep(10);
+		$payload['pull_request'] = json_decode(file_get_contents($payload['pull_request']['url'], false, stream_context_create($scontext)));
+	}
 
 	$tags = array();
 	$title = $payload['pull_request']['title'];
@@ -120,7 +139,6 @@ function tag_pr($payload, $opened) {
 
 	$remove = array();
 
-	//rip bs-12
 	$mergeable = $payload['pull_request']['mergeable'];
 	if($mergeable == null || $mergeable)	//only look for the false value
 		$remove[] = "Merge Conflict";
@@ -144,14 +162,6 @@ function tag_pr($payload, $opened) {
 	if(strpos($title, '[WIP]') !== FALSE)
 		$tags[] = "Work In Progress";
 
-	$scontext = array('http' => array(
-		'method'	=> 'GET',
-		'header'	=>
-			"Content-type: application/json\r\n".
-			'Authorization: token ' . $apiKey,
-		'ignore_errors' => true,
-		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
-	));
 	$url = $payload['pull_request']['base']['repo']['url'] . '/issues/' . $payload['pull_request']['number'] . '/labels';
 
 	$existing_labels = file_get_contents($url, false, stream_context_create($scontext));
