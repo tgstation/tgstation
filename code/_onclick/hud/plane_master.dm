@@ -3,6 +3,14 @@
 	icon_state = "blank"
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	blend_mode = BLEND_OVERLAY
+	var/show_alpha = 255
+	var/hide_alpha = 0
+	
+/obj/screen/plane_master/proc/Show(override)
+	alpha = override || show_alpha
+	
+/obj/screen/plane_master/proc/Hide(override)
+	alpha = override || hide_alpha
 
 //Why do plane masters need a backdrop sometimes? Read http://www.byond.com/forum/?post=2141928
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.

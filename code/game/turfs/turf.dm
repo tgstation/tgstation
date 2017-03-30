@@ -70,7 +70,7 @@
 	if(force)
 		..()
 		//this will completely wipe turf state
-		var/turf/basic/B = new /turf/basic(src)
+		var/turf/B = new world.turf(src)
 		for(var/A in B.contents)
 			qdel(A)
 		for(var/I in B.vars)
@@ -219,10 +219,13 @@
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
-
+	
+	var/old_baseturf = baseturf
 	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
+
+	W.baseturf = old_baseturf
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
@@ -488,3 +491,17 @@
 	LAZYINITLIST(decals)
 	cut_overlay(decals[group])
 	decals[group] = null
+
+/turf/proc/photograph(limit=20)
+	var/image/I = new()
+	I.overlays += src
+	for(var/V in contents)
+		var/atom/A = V
+		if(A.invisibility)
+			continue
+		I.overlays += A
+		if(limit)
+			limit--
+		else
+			return I
+	return I

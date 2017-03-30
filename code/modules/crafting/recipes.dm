@@ -254,7 +254,7 @@
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/weaponcrafting/reciever = 1,
+	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
@@ -450,5 +450,5 @@
 	name = "Pressure Plate"
 	result = /obj/item/device/pressure_plate
 	time = 5
-	reqs = list(/obj/item/stack/sheet/plasteel = 1, /obj/item/stack/tile = 1, /obj/item/stack/cable_coil = 2)
+	reqs = list(/obj/item/stack/sheet/plasteel = 1, /obj/item/stack/tile/plasteel = 1, /obj/item/stack/cable_coil = 2)
 	category = CAT_MISC

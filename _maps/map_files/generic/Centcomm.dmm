@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/indestructible/riveted,
@@ -14446,7 +14446,7 @@
 /area/wizard_station)
 "KN" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
@@ -14964,6 +14964,10 @@
 	name = "Centcom"
 	},
 /area/centcom/evac)
+"Md" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -62947,7 +62951,7 @@ tH
 qk
 Ks
 ql
-Ma
+LY
 Mb
 yS
 Lc
@@ -65807,7 +65811,7 @@ aa
 aa
 aa
 Fa
-Fh
+Md
 Fp
 FC
 Fh

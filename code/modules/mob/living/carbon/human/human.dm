@@ -918,12 +918,15 @@
 		return
 	if(buckled)	//NO INFINITE STACKING!!
 		return
-	if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-		M.visible_message("<span class='boldwarning'>[M] can't hang onto [src]!</span>")
+	if(M.stat != CONSCIOUS)
 		return
-	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 2)))	//MAKE SURE THIS IS LAST!!
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
-		return
+	if(iscarbon(M))
+		if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+			M.visible_message("<span class='boldwarning'>[M] can't hang onto [src]!</span>")
+			return
+		if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
+			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
+			return
 	. = ..(M, force, check_loc)
 	stop_pulling()
 

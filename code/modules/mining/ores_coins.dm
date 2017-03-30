@@ -270,7 +270,7 @@
 				explosion(src.loc,-1,1,3,adminlog = notify_admins)
 			qdel(src)
 
-/obj/item/weapon/ore/New()
+/obj/item/weapon/ore/Initialize()
 	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
@@ -297,14 +297,10 @@
 	var/cooldown = 0
 	var/value = 1
 
-/obj/item/weapon/coin/New()
+/obj/item/weapon/coin/Initialize()
 	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
-
-	icon_state = "coin_[cmineral]_heads"
-	if(cmineral)
-		name = "[cmineral] coin"
 
 /obj/item/weapon/coin/examine(mob/user)
 	..()
@@ -312,53 +308,62 @@
 		to_chat(user, "<span class='info'>It's worth [value] credit\s.</span>")
 
 /obj/item/weapon/coin/gold
+	name = "gold coin"
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
 	value = 50
 	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/silver
+	name = "silver coin"
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
 	value = 20
 	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/diamond
+	name = "diamond coin"
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
 	value = 500
 	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/iron
+	name = "iron coin"
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 1
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/plasma
+	name = "plasma coin"
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
 	value = 100
 	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/uranium
+	name = "uranium coin"
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
 	value = 80
 	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/clown
+	name = "bananium coin"
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
 	value = 1000 //makes the clown cry
 	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/adamantine
+	name = "adamantine coin"
 	cmineral = "adamantine"
 	icon_state = "coin_adamantine_heads"
 	value = 1500
 
 /obj/item/weapon/coin/mythril
+	name = "mythril coin"
 	cmineral = "mythril"
 	icon_state = "coin_mythril_heads"
 	value = 3000
@@ -378,9 +383,6 @@
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
 	value = 0
-
-/obj/item/weapon/coin/antagtoken/New()
-	return
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -411,12 +413,12 @@
 	else ..()
 
 /obj/item/weapon/coin/attack_self(mob/user)
-	if(cooldown < world.time - 15)
+	if(cooldown < world.time)
 		if(string_attached) //does the coin have a wire attached
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
 			return //do not flip the coin
 		var/coinflip = pick(sideslist)
-		cooldown = world.time
+		cooldown = world.time + 15
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
