@@ -7,8 +7,17 @@
 
 	if(!gibbed)
 		emote("deathgasp")
-
+	
+	handling_hal = 1
+	if(halimage)
+		qdel(halimage)
+	if(halbody)
+		qdel(halbody)
+	if(halitem)
+		qdel(halitem)
+	hal_screwyhud = 0
 	. = ..()
+	handling_hal = 0
 	if(ticker && ticker.mode)
 		ticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
