@@ -22,6 +22,7 @@ var/datum/controller/subsystem/timer/SStimer
 	var/list/timer_id_dict //list of all active timers assoicated to their timer id (for easy lookup)
 
 	var/list/clienttime_timers //special snowflake timers that run on fancy pansy "client time"
+	var/list/roundstart_timers //timers that don't start until the round starts
 
 
 /datum/controller/subsystem/timer/New()
@@ -177,6 +178,12 @@ var/datum/controller/subsystem/timer/SStimer
 	timer_id_dict |= SStimer.timer_id_dict
 	bucket_list |= SStimer.bucket_list
 
+/datum/controller/subsystem/timer/RoundStart()
+	for(var/I in roundstart_timers)
+		var/datum/callback/cb = I
+		cb.Invoke()
+	LAZYCLEARLIST(roundstart_timers)
+
 /datum/var/list/active_timers
 /datum/timedevent
 	var/id
@@ -302,6 +309,10 @@ var/datum/controller/subsystem/timer/SStimer
 
 /proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
+		return
+
+	if((flags & TIMER_ROUNDSTART) && !Master.round_started)
+		LAZYADD(SStimer.roundstart_timers, CALLBACK(GLOBAL_PROC, /proc/addtimer, callback, wait, flags & ~TIMER_ROUNDSTART))
 		return
 
 	wait = max(wait, 0)
