@@ -293,7 +293,7 @@
 					var/turf/T = get_turf(object)
 					log_admin("Build Mode: [key_name(user)] modified [T] ([T.x],[T.y],[T.z]) to [objholder]")
 					T.ChangeTurf(objholder)
-				else
+				else if(objholder)
 					var/obj/A = new objholder (get_turf(object))
 					A.setDir(build_dir)
 					log_admin("Build Mode: [key_name(user)] modified [A]'s ([A.x],[A.y],[A.z]) dir to [build_dir]")
