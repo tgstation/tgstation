@@ -17,7 +17,7 @@ var/datum/controller/subsystem/processing/flightpacks/SSflightpacks
 /datum/controller/subsystem/processing/flightpacks/vv_edit_var(var_name, var_value)
 	..(var_name, var_value)
 	switch(var_name)
-		if("flightsuit_processing"
+		if("flightsuit_processing")
 			sync_flightsuit_processing()
 
 /datum/controller/subsystem/processing/flightpacks/proc/sync_flightsuit_processing()
