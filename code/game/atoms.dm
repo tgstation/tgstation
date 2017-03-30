@@ -443,10 +443,10 @@ var/list/blood_splatter_icons = list()
 /atom/proc/ratvar_act()
 	return
 
-/atom/proc/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/atom/proc/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	return FALSE
 
-/atom/proc/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/atom/proc/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
