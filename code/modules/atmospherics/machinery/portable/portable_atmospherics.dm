@@ -60,6 +60,8 @@
 	connected_port_parent.reconcile_air()
 
 	anchored = 1 //Prevent movement
+	pixel_x = new_port.pixel_x
+	pixel_y = new_port.pixel_y
 	return 1
 
 /obj/machinery/portable_atmospherics/Move()

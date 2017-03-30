@@ -234,7 +234,7 @@ var/global/list/pipeID2State = list(
 	for(var/obj/machinery/atmospherics/M in src.loc)
 		if(M == A) //we don't want to check to see if it interferes with itself
 			continue
-		if(M.pipe_flags & PIPING_ONE_PER_TURF)
+		if((M.pipe_flags & PIPING_ONE_PER_TURF) && (A.pipe_flags & PIPING_ONE_PER_TURF))	//Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
 			to_chat(user, "<span class='warning'>Something is hogging the tile!</span>")
 			qdel(A)
 			return TRUE
