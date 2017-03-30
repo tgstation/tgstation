@@ -1,4 +1,4 @@
-/var/list/sacrificed = list() //a mixed list of minds and mobs
+GLOBAL_LIST_INIT(sacrificed, list()) //a mixed list of minds and mobs
 var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 var/global/list/rune_types //Every rune that can be drawn by tomes
 
@@ -410,11 +410,11 @@ var/list/teleport_runes = list()
 	var/sacrifice_fulfilled = FALSE
 
 	if(sacrificial.mind)
-		sacrificed += sacrificial.mind
+		GLOB.sacrificed += sacrificial.mind
 		if(is_sacrifice_target(sacrificial.mind))
 			sacrifice_fulfilled = TRUE
 	else
-		sacrificed += sacrificial
+		GLOB.sacrificed += sacrificial
 
 	new /obj/effect/overlay/temp/cult/sac(get_turf(src))
 	for(var/M in invokers)
@@ -518,7 +518,7 @@ var/list/teleport_runes = list()
 			..()
 	return
 
-//Rite of Resurrection: Requires the corpse of a cultist and that there have been less revives than the number of people sacrificed
+//Rite of Resurrection: Requires the corpse of a cultist and that there have been less revives than the number of people GLOB.sacrificed
 /obj/effect/rune/raise_dead
 	cultist_name = "Raise Dead"
 	cultist_desc = "requires the corpse of a cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be revived."
@@ -531,8 +531,8 @@ var/list/teleport_runes = list()
 	..()
 	if(iscultist(user) || user.stat == DEAD)
 		var/revive_number = 0
-		if(sacrificed.len)
-			revive_number = sacrificed.len - revives_used
+		if(GLOB.sacrificed.len)
+			revive_number = GLOB.sacrificed.len - revives_used
 		to_chat(user, "<b>Revives Remaining:</b> [revive_number]")
 
 /obj/effect/rune/raise_dead/invoke(var/list/invokers)
@@ -550,8 +550,8 @@ var/list/teleport_runes = list()
 		log_game("Raise Dead rune failed - no corpses to revive")
 		fail_invoke()
 		return
-	if(!sacrificed.len || sacrificed.len <= revives_used)
-		to_chat(user, "<span class='warning'>You have sacrificed too few people to revive a cultist!</span>")
+	if(!GLOB.sacrificed.len || GLOB.sacrificed.len <= revives_used)
+		to_chat(user, "<span class='warning'>You have GLOB.sacrificed too few people to revive a cultist!</span>")
 		fail_invoke()
 		return
 	if(potential_revive_mobs.len > 1)
@@ -594,7 +594,7 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target has no ghost")
 		return 0
-	if(!sacrificed.len || sacrificed.len <= revives_used)
+	if(!GLOB.sacrificed.len || GLOB.sacrificed.len <= revives_used)
 		to_chat(user, "<span class='warning'>You have sacrificed too few people to revive a cultist!</span>")
 		fail_invoke()
 		log_game("Raise Dead rune failed - too few sacrificed")

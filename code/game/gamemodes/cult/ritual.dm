@@ -201,7 +201,7 @@ This file contains the arcane tome files.
 			if(!("eldergod" in cult_mode.cult_objectives))
 				to_chat(user, "<span class='warning'>Nar-Sie does not wish to be summoned!</span>")
 				return
-			if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
+			if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in GLOB.sacrificed))
 				to_chat(user, "<span class='warning'>The sacrifice is not complete. The portal would lack the power to open if you tried!</span>")
 				return
 			if(!cult_mode.eldergod)
