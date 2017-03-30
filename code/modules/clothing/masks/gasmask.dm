@@ -15,7 +15,7 @@
 
 /obj/item/clothing/mask/gas/welding
 	name = "welding mask"
-	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
+	desc = "A gas mask with built-in welding goggles and a face shield."
 	icon_state = "weldingmask"
 	materials = list(MAT_METAL=4000, MAT_GLASS=2000)
 	flash_protect = 2
