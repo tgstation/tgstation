@@ -106,7 +106,7 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 		die();
 }
 
-function tag_pr($payload, $opened){
+function tag_pr($payload, $opened) {
 	global $apiKey;
 
 	$tags = array();
