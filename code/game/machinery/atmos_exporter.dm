@@ -1,6 +1,6 @@
 /obj/machinery/atmos_points
 	name = "atmospheric export computer"
-	desc = "used to monitor the galactic atmos markets"
+	desc = "used to monitor the galactic atmos markets and IEV prices"
 	icon = 'icons/obj/machines/engi_points.dmi'
 	icon_state = "atmos"
 	verb_say = "states"
@@ -47,7 +47,7 @@
 
 /obj/machinery/atmos_points_exporter
 	name = "atmospheric canister exporter"
-	desc = "used to export canisters for engineering points"
+	desc = "used to export canisters for engineering vouchers"
 	icon = 'icons/obj/machines/engi_points.dmi'
 	icon_state = "floorflush_c"
 	verb_say = "states"
@@ -100,19 +100,19 @@
 	dat += ("<A href='?src=\ref[src];action=scan'>Scan Canister Contents</A><br><br>")
 	dat += "</div>"
 	dat += ("<u><b>Economy canister order for [economy_name]:</b></u><br>")
-	dat += ("Economy canister value: <b>[e_price] points</b><br>")
+	dat += ("Economy canister value: <b>[e_price] vouchers</b><br>")
 	dat += ("Economy canister gas: <b>[e_gas[1]]</b><br>")
 	dat += ("Economy canister pressure range: <b>[e_pressure-200] to [e_pressure+200]kPa</b><br>")
 	dat += ("Economy canister temperature: <b>[e_temp-50] to [e_temp+50]K</b><br>")
 	dat += "<br>"
 	dat += ("<u><b>Standard canister order for [standard_name]:</b></u><br>")
-	dat += ("Standard canister value: <b>[s_price] points</b><br>")
+	dat += ("Standard canister value: <b>[s_price] vouchers</b><br>")
 	dat += ("Standard canister gas: <b>[s_gas[1]] at [(s_concentration1 - 5)]-[(s_concentration1 + 5)]%, [s_gas[2]] at [s_concentration2 - 5]-[s_concentration2 + 5]%</b><br>")
 	dat += ("Standard canister pressure range: <b>[s_pressure-100] to [s_pressure+100]kPa </b><br>")
 	dat += ("Standard canister temperature: <b>[s_temp-30] to [s_temp+30]K</b><br>")
 	dat += "<br>"
 	dat += ("<u><b>Premium canister order for [premium_name]:</b></u><br>")
-	dat += ("Premium canister value: <b>[p_price] points</b><br>")
+	dat += ("Premium canister value: <b>[p_price] vouchers</b><br>")
 	dat += ("Premium canister gas: <b>[p_gas[1]] at [(p_concentration1 - 5)]-[(p_concentration1 + 5)]%, [p_gas[2]] at [p_concentration2 - 5]-[p_concentration2 + 5]%, [p_gas[3]] at [p_concentration3 - 5]-[p_concentration3 + 5]%</b><br>")
 	dat += ("Premium canister pressure range: <b>[p_pressure-50] to [p_pressure+50] kPa </b><br>")
 	dat += ("Premium canister temperature: <b>[p_temp-15] to [p_temp+15]K</b><br>")
@@ -185,13 +185,12 @@
 								visible_message("<span class='danger'>Invalid gas detected!</span>")
 								playsound(src, 'sound/machines/defib_failed.ogg', 100, 1)
 								return
-						visible_message("<span class='danger'>Valid [export_target] canister detected... exporting now. Your department will receive [price] points!</span>")
+						visible_message("<span class='danger'>Valid [export_target] canister detected... exporting now. Your department will receive [price] vouchers!</span>")
 						C.anchored = 1
 						for(var/obj/machinery/atmos_points_exporter/EX in atmos_exporter_list)
 							EX.ship()
-						for(var/obj/machinery/engi_points_manager/EPM in engi_points_list)
-							EPM.GBP += price
-							EPM.GBPearned += price
+						GBP += price
+						GBPearned += price
 						quality.Remove(export_target)
 						reset()
 					else

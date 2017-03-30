@@ -95,6 +95,11 @@
 /obj/vehicle/space/speedbike/atmos/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
 	riding_datum = new/datum/riding/space/speedbike/atmos
+	var/list/dupe_check = list()
+	for(var/datum/action/innate/atmos_bike/dupe in M.actions)
+		dupe_check += dupe
+	if(dupe_check.len > 0)
+		return
 	var/datum/action/innate/atmos_bike/nanoice/N = new()
 	var/datum/action/innate/atmos_bike/scrub/S = new()
 	var/datum/action/innate/atmos_bike/extinguish/E = new()
@@ -202,7 +207,7 @@
 
 /datum/action/innate/atmos_bike/flood
 	name = "Release Stored Gas"
-	desc = "Toggles the scrubber device built in to your vehicle"
+	desc = "Releases gas from the bike's internal canister"
 	button_icon_state = "flightpack_stabilizer"
 
 /datum/action/innate/atmos_bike/flood/Activate()
@@ -288,15 +293,18 @@
 	var/obj/machinery/repair_turret/turret = null
 	light_range = 7
 
-/obj/vehicle/space/speedbike/repair/proc/recharge()
-
 /obj/vehicle/space/speedbike/repair/Initialize()
 	. = ..()
 	turret = new(loc)
 
 /obj/vehicle/space/speedbike/repair/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
-	riding_datum = new/datum/riding/space/repair
+	riding_datum = new/datum/riding/space/speedbike/repair
+	var/list/dupe_check = list()
+	for(var/datum/action/innate/repair_bike/dupe in M.actions)
+		dupe_check += dupe
+	if(dupe_check.len > 0)
+		return
 	var/datum/action/innate/repair_bike/foam_wall/F = new()
 	var/datum/action/innate/repair_bike/toggle_turret/T = new()
 	T.Grant(M, src)
@@ -361,10 +369,10 @@
 		UpdateButtonIcon()
 		return
 
-/obj/vehicle/space/speedbike/repair/Move(newloc,move_dir)
+/obj/vehicle/space/speedbike/repair/Move(var/turf/newloc,move_dir)
 	if(has_buckled_mobs())
 		if(istype(newloc,/turf/open/space))
-			new/turf/open/floor/plating(newloc)
+			newloc.ChangeTurf(/turf/open/floor/plating)
 	. = ..()
 
 

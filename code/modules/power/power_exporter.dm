@@ -1,6 +1,6 @@
 /obj/machinery/power/exporter
 	name = "power exporter"
-	desc = "It exports power for points, points get rewards."
+	desc = "This device instantaneously beams power to the IEV market in return for vouchers"
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = 1
@@ -68,10 +68,10 @@ obj/machinery/power/exporter/Destroy()
 		dat += ("Exporter: <A href='?src=\ref[src];action=disable'>On</A><br>")
 	else
 		dat += ("Exporter: <A href='?src=\ref[src];action=enable'>Off</A><br>")
-	dat += ("Power consumption: <A href='?src=\ref[src];action=set_power'>[drain_rate] kilowatts</A></u></b><br><br>")
-	dat += ("<b><u>Surplus power: [(powernet == null ? "Unconnected" : "[powernet.netexcess/1000] kilowatts")]<br>")
-	dat += ("Power exported: [power_drained] kilowatts<br>")
-	dat += ("Points earned from exports: [sqrt(power_drained)/3] points<br>")
+	dat += ("Power export rate: <A href='?src=\ref[src];action=set_power'>[drain_rate] kilowatts</A><br><br>")
+	dat += ("Surplus power: [(powernet == null ? "Unconnected" : "[powernet.netexcess/1000] kilowatts")]<br>")
+	dat += ("Total Power exported: [power_drained] kilowatts<br><br>")
+	dat += ("The current power export rate will earn approximately:<br>[round(sqrt(power_drained)*8)] vouchers per minute<br><br>")
 	switch(drain_rate)
 		if(0 to 200)
 			rating = "TERRIBLE"
@@ -79,16 +79,15 @@ obj/machinery/power/exporter/Destroy()
 			rating = "BAD"
 		if(401 to 800)
 			rating = "SUBPAR"
-		if(801 to 2500)
+		if(801 to 4500)
 			rating = "DECENT"
-		if(2501 to 6000)
+		if(4501 to 8000)
 			rating = "ROBUST"
-		if(6001 to 10000)
+		if(8001 to 15000)
 			rating = "THE 1%"
-		if(10001 to 9999999)
+		if(15001 to 9999999)
 			rating = "INCONCEIVABLE!"
-	dat += ("Current export rating: [rating]<br><br><br>")
-	dat += ("<b><u>Warning: Setting export rate above the initial surplus is feasible but will exhaust the SMES</b></u>")
+	dat += ("Current export rating is: [rating]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
 	var/datum/browser/popup = new(user, "vending", "Power Exporter", 400, 350)
 	popup.set_content(dat.Join())
