@@ -12,11 +12,10 @@
 	endWhen			= 1
 
 /datum/round_event/falsealarm/announce()
-
 	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	var/gamemode = ticker.mode.config_tag
 
-	var/events_list = gather_false_events()
+	var/events_list = gather_false_events(players_amt, gamemode)
 	var/datum/round_event_control/event_control = pick(events_list)
 	if(event_control)
 		var/datum/round_event/Event = new event_control.typepath()
@@ -24,7 +23,7 @@
 		Event.kill() 		//do not process this event - no starts, no ticks, no ends
 		Event.announce() 	//just announce it like it's happening
 
-/proc/gather_false_events()
+/proc/gather_false_events(players_amt, gamemode)
 	. = list()
 	for(var/datum/round_event_control/E in SSevent.control)
 		if(!E.canSpawnEvent(players_amt, gamemode))
