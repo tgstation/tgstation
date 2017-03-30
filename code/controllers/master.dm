@@ -158,8 +158,10 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	Master.StartProcessing(0)
 
 // Notify the MC that the round has started.
-/datum/controller/master/proc/RoundStart()
+/datum/controller/master/RoundStart()
 	round_started = 1
+	config.RoundStart()
+	Failsafe.RoundStart()
 	var/timer = world.time
 	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_FIRE_IN_LOBBY || SS.flags & SS_TICKER)
@@ -167,6 +169,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		// Stagger subsystems.
 		timer += world.tick_lag * rand(1, 5)
 		SS.next_fire = timer
+		SS.RoundStart()
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.
 /datum/controller/master/proc/StartProcessing(delay)

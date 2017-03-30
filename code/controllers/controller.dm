@@ -17,3 +17,5 @@
 /datum/controller/proc/Recover()
 
 /datum/controller/proc/stat_entry()
+
+/datum/controller/proc/RoundStart()
