@@ -232,13 +232,13 @@ var/global/list/pipeID2State = list(
 	A.SetInitDirections()
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
-		if((M.piping_layer != piping_layer) && !((M.pipe_flags & PIPING_ALL_LAYER) || (pipe_type == PIPE_LAYER_MANIFOLD)))
+		if(M == A) //we don't want to check to see if it interferes with itself
 			continue
 		if(M.pipe_flags & PIPING_ONE_PER_TURF)
 			to_chat(user, "<span class='warning'>Something is hogging the tile!</span>")
 			qdel(A)
 			return TRUE
-		if(M == A) //we don't want to check to see if it interferes with itself
+		if((M.piping_layer != piping_layer) && !((M.pipe_flags & PIPING_ALL_LAYER) || (pipe_type == PIPE_LAYER_MANIFOLD)))
 			continue
 		if(M.GetInitDirections() & A.GetInitDirections())	// matches at least one direction on either type of pipe
 			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
