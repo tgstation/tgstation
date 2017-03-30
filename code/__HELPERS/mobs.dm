@@ -132,8 +132,8 @@ GLOBAL_LIST_INIT(skin_tones, list(
 	"african2"
 	))
 
-GLOBAL_LIST_INIT(species_list, list())
-GLOBAL_LIST_INIT(roundstart_species, list())
+GLOBAL_EMPTY_LIST(species_list)
+GLOBAL_EMPTY_LIST(roundstart_species)
 
 /proc/age2agedescription(age)
 	switch(age)

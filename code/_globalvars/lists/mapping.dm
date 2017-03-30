@@ -25,34 +25,34 @@ GLOBAL_LIST(global_map)
 	//3 - AI satellite
 	//5 - empty space
 
-GLOBAL_LIST_INIT(landmarks_list, list())				//list of all landmarks created
-GLOBAL_LIST_INIT(start_landmarks_list, list())			//list of all spawn points created
-GLOBAL_LIST_INIT(department_security_spawns, list())	//list of all department security spawns
-GLOBAL_LIST_INIT(generic_event_spawns, list())			//list of all spawns for events
+GLOBAL_EMPTY_LIST(landmarks_list)				//list of all landmarks created
+GLOBAL_EMPTY_LIST(start_landmarks_list)			//list of all spawn points created
+GLOBAL_EMPTY_LIST(department_security_spawns)	//list of all department security spawns
+GLOBAL_EMPTY_LIST(generic_event_spawns)			//list of all spawns for events
 
-GLOBAL_LIST_INIT(monkeystart, list())
-GLOBAL_LIST_INIT(wizardstart, list())
-GLOBAL_LIST_INIT(newplayer_start, list())
-GLOBAL_LIST_INIT(latejoin, list())
-GLOBAL_LIST_INIT(prisonwarp, list())	//prisoners go to these
-GLOBAL_LIST_INIT(holdingfacility, list())	//captured people go here
-GLOBAL_LIST_INIT(xeno_spawn, list())//Aliens spawn at these.
-GLOBAL_LIST_INIT(tdome1, list())
-GLOBAL_LIST_INIT(tdome2, list())
-GLOBAL_LIST_INIT(tdomeobserve, list())
-GLOBAL_LIST_INIT(tdomeadmin, list())
-GLOBAL_LIST_INIT(prisonsecuritywarp, list())	//prison security goes to these
-GLOBAL_LIST_INIT(prisonwarped, list())	//list of players already warped
-GLOBAL_LIST_INIT(blobstart, list())
-GLOBAL_LIST_INIT(secequipment, list())
-GLOBAL_LIST_INIT(deathsquadspawn, list())
-GLOBAL_LIST_INIT(emergencyresponseteamspawn, list())
-GLOBAL_LIST_INIT(ruin_landmarks, list())
+GLOBAL_EMPTY_LIST(monkeystart)
+GLOBAL_EMPTY_LIST(wizardstart)
+GLOBAL_EMPTY_LIST(newplayer_start)
+GLOBAL_EMPTY_LIST(latejoin)
+GLOBAL_EMPTY_LIST(prisonwarp)	//prisoners go to these
+GLOBAL_EMPTY_LIST(holdingfacility)	//captured people go here
+GLOBAL_EMPTY_LIST(xeno_spawn)//Aliens spawn at these.
+GLOBAL_EMPTY_LIST(tdome1)
+GLOBAL_EMPTY_LIST(tdome2)
+GLOBAL_EMPTY_LIST(tdomeobserve)
+GLOBAL_EMPTY_LIST(tdomeadmin)
+GLOBAL_EMPTY_LIST(prisonsecuritywarp)	//prison security goes to these
+GLOBAL_EMPTY_LIST(prisonwarped)	//list of players already warped
+GLOBAL_EMPTY_LIST(blobstart)
+GLOBAL_EMPTY_LIST(secequipment)
+GLOBAL_EMPTY_LIST(deathsquadspawn)
+GLOBAL_EMPTY_LIST(emergencyresponseteamspawn)
+GLOBAL_EMPTY_LIST(ruin_landmarks)
 
 	//away missions
-GLOBAL_LIST_INIT(awaydestinations, list())	//a list of landmarks that the warpgate can take you to
+GLOBAL_EMPTY_LIST(awaydestinations)	//a list of landmarks that the warpgate can take you to
 
 	//used by jump-to-area etc. Updated by area/updateName()
-GLOBAL_LIST_INIT(sortedAreas, list())
+GLOBAL_EMPTY_LIST(sortedAreas)
 
-GLOBAL_LIST_INIT(transit_markers, list())
+GLOBAL_EMPTY_LIST(transit_markers)

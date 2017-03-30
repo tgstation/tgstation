@@ -281,7 +281,7 @@
 	if(AM && isturf(AM.loc))
 		step(AM, turn(AM.dir, 180))
 
-GLOBAL_LIST_INIT(blood_splatter_icons, list())
+GLOBAL_EMPTY_LIST(blood_splatter_icons)
 
 /atom/proc/blood_splatter_index()
 	return "\ref[initial(icon)]-[initial(icon_state)]"

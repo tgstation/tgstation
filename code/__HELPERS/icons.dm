@@ -872,7 +872,7 @@ The _flatIcons list is a cache for generated icon files.
 	qdel(atom_icon)
 	return text_image
 
-GLOBAL_LIST_INIT(friendly_animal_types, list())
+GLOBAL_EMPTY_LIST(friendly_animal_types)
 
 // Pick a random animal instead of the icon, and use that instead
 /proc/getRandomAnimalImage(atom/A)

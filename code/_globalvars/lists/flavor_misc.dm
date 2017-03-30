@@ -1,39 +1,39 @@
 //Preferences stuff
 	//Hairstyles
-GLOBAL_LIST_INIT(hair_styles_list, list())			//stores /datum/sprite_accessory/hair indexed by name
-GLOBAL_LIST_INIT(hair_styles_male_list, list())		//stores only hair names
-GLOBAL_LIST_INIT(hair_styles_female_list, list())	//stores only hair names
-GLOBAL_LIST_INIT(facial_hair_styles_list, list())	//stores /datum/sprite_accessory/facial_hair indexed by name
-GLOBAL_LIST_INIT(facial_hair_styles_male_list, list())	//stores only hair names
-GLOBAL_LIST_INIT(facial_hair_styles_female_list, list())	//stores only hair names
+GLOBAL_EMPTY_LIST(hair_styles_list)			//stores /datum/sprite_accessory/hair indexed by name
+GLOBAL_EMPTY_LIST(hair_styles_male_list)		//stores only hair names
+GLOBAL_EMPTY_LIST(hair_styles_female_list)	//stores only hair names
+GLOBAL_EMPTY_LIST(facial_hair_styles_list)	//stores /datum/sprite_accessory/facial_hair indexed by name
+GLOBAL_EMPTY_LIST(facial_hair_styles_male_list)	//stores only hair names
+GLOBAL_EMPTY_LIST(facial_hair_styles_female_list)	//stores only hair names
 	//Underwear
-GLOBAL_LIST_INIT(underwear_list, list())		//stores /datum/sprite_accessory/underwear indexed by name
-GLOBAL_LIST_INIT(underwear_m, list())	//stores only underwear name
-GLOBAL_LIST_INIT(underwear_f, list())	//stores only underwear name
+GLOBAL_EMPTY_LIST(underwear_list)		//stores /datum/sprite_accessory/underwear indexed by name
+GLOBAL_EMPTY_LIST(underwear_m)	//stores only underwear name
+GLOBAL_EMPTY_LIST(underwear_f)	//stores only underwear name
 	//Undershirts
-GLOBAL_LIST_INIT(undershirt_list, list()) 	//stores /datum/sprite_accessory/undershirt indexed by name
-GLOBAL_LIST_INIT(undershirt_m, list())	 //stores only undershirt name
-GLOBAL_LIST_INIT(undershirt_f, list())	 //stores only undershirt name
+GLOBAL_EMPTY_LIST(undershirt_list) 	//stores /datum/sprite_accessory/undershirt indexed by name
+GLOBAL_EMPTY_LIST(undershirt_m)	 //stores only undershirt name
+GLOBAL_EMPTY_LIST(undershirt_f)	 //stores only undershirt name
 	//Socks
-GLOBAL_LIST_INIT(socks_list, list())		//stores /datum/sprite_accessory/socks indexed by name
+GLOBAL_EMPTY_LIST(socks_list)		//stores /datum/sprite_accessory/socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
-GLOBAL_LIST_INIT(body_markings_list, list())
-GLOBAL_LIST_INIT(tails_list_lizard, list())
-GLOBAL_LIST_INIT(animated_tails_list_lizard, list())
-GLOBAL_LIST_INIT(snouts_list, list())
-GLOBAL_LIST_INIT(horns_list, list())
-GLOBAL_LIST_INIT(frills_list, list())
-GLOBAL_LIST_INIT(spines_list, list())
-GLOBAL_LIST_INIT(legs_list, list())
-GLOBAL_LIST_INIT(animated_spines_list, list())
+GLOBAL_EMPTY_LIST(body_markings_list)
+GLOBAL_EMPTY_LIST(tails_list_lizard)
+GLOBAL_EMPTY_LIST(animated_tails_list_lizard)
+GLOBAL_EMPTY_LIST(snouts_list)
+GLOBAL_EMPTY_LIST(horns_list)
+GLOBAL_EMPTY_LIST(frills_list)
+GLOBAL_EMPTY_LIST(spines_list)
+GLOBAL_EMPTY_LIST(legs_list)
+GLOBAL_EMPTY_LIST(animated_spines_list)
 
 	//Mutant Human bits
-GLOBAL_LIST_INIT(tails_list_human, list())
-GLOBAL_LIST_INIT(animated_tails_list_human, list())
-GLOBAL_LIST_INIT(ears_list, list())
-GLOBAL_LIST_INIT(wings_list, list())
-GLOBAL_LIST_INIT(wings_open_list, list())
-GLOBAL_LIST_INIT(r_wings_list, list())
+GLOBAL_EMPTY_LIST(tails_list_human)
+GLOBAL_EMPTY_LIST(animated_tails_list_human)
+GLOBAL_EMPTY_LIST(ears_list)
+GLOBAL_EMPTY_LIST(wings_list)
+GLOBAL_EMPTY_LIST(wings_open_list)
+GLOBAL_EMPTY_LIST(r_wings_list)
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, G
 GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN))
 
 	//Female Uniforms
-GLOBAL_LIST_INIT(female_clothing_icons, list())
+GLOBAL_EMPTY_LIST(female_clothing_icons)
 
 	//radical shit
 GLOBAL_LIST_INIT(hit_appends, list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF"))

@@ -1,11 +1,11 @@
 
 
 //Few global vars to track the blob
-GLOBAL_LIST_INIT(blobs, list()) //complete list of all blobs made.
-GLOBAL_LIST_INIT(blob_cores, list())
-GLOBAL_LIST_INIT(overminds, list())
-GLOBAL_LIST_INIT(blob_nodes, list())
-GLOBAL_LIST_INIT(blobs_legit, list()) //used for win-score calculations, contains only blobs counted for win condition
+GLOBAL_EMPTY_LIST(blobs) //complete list of all blobs made.
+GLOBAL_EMPTY_LIST(blob_cores)
+GLOBAL_EMPTY_LIST(overminds)
+GLOBAL_EMPTY_LIST(blob_nodes)
+GLOBAL_EMPTY_LIST(blobs_legit) //used for win-score calculations, contains only blobs counted for win condition
 
 #define BLOB_NO_PLACE_TIME 1800 //time, in deciseconds, blobs are prevented from bursting in the gamemode
 

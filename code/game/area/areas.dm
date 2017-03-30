@@ -64,7 +64,7 @@
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
-GLOBAL_LIST_INIT(teleportlocs, list())
+GLOBAL_EMPTY_LIST(teleportlocs)
 
 /proc/process_teleport_locs()
 	for(var/V in GLOB.sortedAreas)

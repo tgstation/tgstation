@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(sacrificed, list()) //a mixed list of minds and mobs
+GLOBAL_EMPTY_LIST(sacrificed) //a mixed list of minds and mobs
 GLOBAL_LIST(rune_types) //Every rune that can be drawn by tomes
 
 /*

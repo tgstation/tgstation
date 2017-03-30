@@ -21,8 +21,8 @@ GLOBAL_LIST(op_se_blocks)
 GLOBAL_VAR(NULLED_SE)
 GLOBAL_VAR(NULLED_UI)
 
-GLOBAL_LIST_INIT(global_mutations, list()) // list of hidden mutation things
+GLOBAL_EMPTY_LIST(global_mutations) // list of hidden mutation things
 
-GLOBAL_LIST_INIT(bad_mutations, list())
-GLOBAL_LIST_INIT(good_mutations, list())
-GLOBAL_LIST_INIT(not_good_mutations, list())
+GLOBAL_EMPTY_LIST(bad_mutations)
+GLOBAL_EMPTY_LIST(good_mutations)
+GLOBAL_EMPTY_LIST(not_good_mutations)
