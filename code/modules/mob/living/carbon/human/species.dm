@@ -1240,7 +1240,7 @@
 		if(!def_zone)
 			def_zone = ran_zone(def_zone)
 		BP = H.get_bodypart(check_zone(def_zone))
-		if(!BP)
+		if(!BP && H.bodyparts.len)
 			BP = H.bodyparts[1]
 
 	switch(damagetype)
