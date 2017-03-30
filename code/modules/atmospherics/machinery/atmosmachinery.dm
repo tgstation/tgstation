@@ -114,7 +114,7 @@ Pipelines + Other Objects -> Pipe network
 	return FALSE
 
 /obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, given_layer)
-	if(!given_layer)
+	if(isnull(given_layer))
 		given_layer = piping_layer
 	if((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER))
 		return TRUE
