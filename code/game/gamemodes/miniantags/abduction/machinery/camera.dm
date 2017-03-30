@@ -10,6 +10,7 @@
 	var/datum/action/innate/vest_disguise_swap/vest_disguise_action = new
 	var/datum/action/innate/set_droppoint/set_droppoint_action = new
 	var/obj/machinery/abductor/console/console
+	z_lock = ZLEVEL_STATION
 
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera"
@@ -77,8 +78,7 @@
 			C.client.images -= chunk.obscured
 	C.remote_control = null
 	C.unset_machine()
-	src.Remove(C)
-
+	Remove(C)
 
 /datum/action/innate/teleport_in
 	name = "Send To"
