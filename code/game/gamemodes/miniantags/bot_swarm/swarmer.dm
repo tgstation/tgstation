@@ -122,6 +122,9 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
+	remove_language(/datum/language/common)
+	grant_language(/datum/language/swarmer)
+
 
 /mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
