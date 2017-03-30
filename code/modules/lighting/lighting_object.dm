@@ -99,9 +99,9 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
-	if(set_luminosity && \
+	if(set_luminosity > 0.001 && \
 		//check if the tile is fully lit
-		!(rr == 1 && rg == 1 && rb == 1 && gr == 1 && gg == 1 && gb == 1 && br == 1 && bg == 1 && bb == 1 && ar == 1 && ag == 1 && ab == 1)\
+		!(rr == 1 && gr == 1 && br == 1 && ar == 1 && rg == 1 && gg == 1 && bg == 1 && ag == 1 && rb == 1 && gb == 1 && bb == 1&& ab == 1)\
 	)
 		color = list(
 			rr, rg, rb, 00,
