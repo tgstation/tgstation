@@ -130,7 +130,7 @@ function tag_pr($payload, $opened) {
 
 	$tags = array();
 	$title = $payload['pull_request']['title'];
-	if($opened){	//you only have one shot on these ones so as to not annoy maintainers
+	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
 		$tags = checkchangelog($payload, true, false);
 
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
