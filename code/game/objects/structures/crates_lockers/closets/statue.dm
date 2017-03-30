@@ -82,10 +82,12 @@
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
 	S.name = "statue of [name]"
 	bleedsuppress = 1
-	S.icon = icon
-	S.icon_state = icon_state
+	if(dna.species.id == "lizard")
+		S.icon_state = "lizard"
+	else
+		S.icon_state = "human_male"
 	S.copy_overlays(overlays)
-	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	var/newcolor = pick(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return 1
 
