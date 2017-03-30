@@ -101,7 +101,7 @@
 
 	if(set_luminosity && 
 		//check if the tile is fully lit
-		rr == 255 && rg == 255 && rb == 255 && gr == 255 && gg == 255 && gb == 255 && br == 255 && bg == 255 && bb == 255 && ar == 255 && ag == 255 && ab == 255
+		!(rr == 255 && rg == 255 && rb == 255 && gr == 255 && gg == 255 && gb == 255 && br == 255 && bg == 255 && bb == 255 && ar == 255 && ag == 255 && ab == 255)
 	)
 		color = list(
 			rr, rg, rb, 00,
