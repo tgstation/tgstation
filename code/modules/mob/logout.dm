@@ -2,7 +2,6 @@
 	SStgui.on_logout(src)
 	unset_machine()
 	player_list -= src
-	log_access("Logout: [key_name(src)]")
 	if(admin_datums[src.ckey])
 		if (ticker && ticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
 			var/admins_number = admins.len
