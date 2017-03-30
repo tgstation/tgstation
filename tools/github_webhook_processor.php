@@ -21,10 +21,10 @@
 //Github lets you have it sign the message with a secret that you can validate. This prevents people from faking events.
 //This var should match the secret you configured for this webhook on github.
 //This is required as otherwise somebody could trick the script into leaking the api key.
-$hookSecret = '08ajh0qj93209qj90jfq932j32r';
+$hookSecret = '08ajh0qj93209qj90jfq932j32r2';
 
 //Api key for pushing changelogs.
-$apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
+$apiKey = '24e1da63d5af029ee60e444ceee7572376d53bd3';
 
 //servers to announce PRs to.
 $servers = array();
@@ -121,11 +121,12 @@ function tag_pr($payload, $opened) {
 		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
 	));
 
-	$payload['pull_request'] = json_decode(file_get_contents($payload['pull_request']['url'], false, stream_context_create($scontext)));
+	$url = $payload['pull_request']['url'];
+	$payload['pull_request'] = json_decode(file_get_contents($url, false, stream_context_create($scontext)), true);
 	if($payload['pull_request']['mergeable'] == null) {
 		//STILL not ready. Give it a bit, then try one more time
 		sleep(10);
-		$payload['pull_request'] = json_decode(file_get_contents($payload['pull_request']['url'], false, stream_context_create($scontext)));
+		$payload['pull_request'] = json_decode(file_get_contents($url, false, stream_context_create($scontext)), true);
 	}
 
 	$tags = array();
