@@ -922,7 +922,7 @@
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 		qdel(src)
 	else
-		to_chat(user,"<span class='notice'>I say thee neigh</span>" //It still lives here)
+		to_chat(user,"<span class='notice'>I say thee neigh</span>") //It still lives here
 
 /obj/item/weapon/spellbook/oneuse/charge
 	spell = /obj/effect/proc_holder/spell/targeted/charge
