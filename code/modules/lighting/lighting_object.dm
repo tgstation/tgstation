@@ -110,8 +110,10 @@
 			ar, ag, ab, 00,
 			00, 00, 00, 01
 		)
+		blend_mode = BLEND_ADD
 	else
 		color = null
+		blend_mode = BLEND_DEFAULT
 	luminosity = set_luminosity
 
 // Variety of overrides so the overlays don't get affected by weird things.
