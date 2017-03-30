@@ -72,9 +72,9 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 			spawn(15)
 				wait = 0
 	if(href_list["layer_up"])
-		piping_layer = Clamp(piping_layer++, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		piping_layer = Clamp(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	if(href_list["layer_down"])
-		piping_layer = Clamp(piping_layer--, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		piping_layer = Clamp(--piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	return
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
