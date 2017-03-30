@@ -27,7 +27,7 @@
 	. = ..()
 	if(cooldown && (issilicon(user) || isobserver(user)))
 		var/seconds_remaining = (cooldown_timer - world.time) / 10
-		user << "It will be ready in [max(0, seconds_remaining)] seconds."
+		to_chat(user, "It will be ready in [max(0, seconds_remaining)] seconds.")
 
 /obj/machinery/transformer/Destroy()
 	if(countdown)
@@ -110,7 +110,7 @@
 	sleep(30)
 	if(R)
 		R.SetLockdown(0)
-		R.notify_ai(1)
+		R.notify_ai(NEW_BORG)
 
 /obj/machinery/transformer/conveyor/New()
 	..()

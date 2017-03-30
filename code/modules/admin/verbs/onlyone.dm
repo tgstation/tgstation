@@ -5,8 +5,7 @@ var/highlander = FALSE
 		return
 	highlander = TRUE
 
-	world << "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>"
-	world << sound('sound/misc/highlander.ogg')
+	send_to_playing_players("<span class='boldannounce'><font size=6>THERE CAN BE ONLY ONE</font></span>")
 
 	for(var/obj/item/weapon/disk/nuclear/N in poi_list)
 		N.relocate() //Gets it out of bags and such
@@ -19,6 +18,12 @@ var/highlander = FALSE
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
 	log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
 	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 1), 50)
+
+/client/proc/only_one_delayed()
+	send_to_playing_players("<span class='userdanger'>Bagpipes begin to blare. You feel Scottish pride coming over you.</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used (delayed) THERE CAN BE ONLY ONE!</span>")
+	log_admin("[key_name(usr)] used delayed THERE CAN BE ONLY ONE.")
+	addtimer(CALLBACK(src, .proc/only_one), 420)
 
 /mob/living/carbon/human/proc/make_scottish()
 	ticker.mode.traitors += mind
@@ -70,8 +75,8 @@ var/highlander = FALSE
 	antiwelder.icon_state = "bloodhand_right"
 	put_in_hands(antiwelder)
 
-	src << "<span class='boldannounce'>Your [H1.name] cries out for blood. Join in the slaughter, lest you be claimed yourself...\n\
-	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>"
+	to_chat(src, "<span class='boldannounce'>Your [H1.name] cries out for blood. Claim the lives of others, and your own will be restored!\n\
+	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
 
 /proc/only_me()
 	if(!ticker || !ticker.mode)
@@ -89,7 +94,7 @@ var/highlander = FALSE
 		hijack_objective.owner = H.mind
 		H.mind.objectives += hijack_objective
 
-		H << "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>"
+		to_chat(H, "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>")
 		H.mind.announce_objectives()
 
 		var/datum/gang/multiverse/G = new(src, "[H.real_name]")

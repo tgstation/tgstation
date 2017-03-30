@@ -24,10 +24,10 @@
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/aug = tool
 	if(aug.status != BODYPART_ROBOTIC)
-		user << "<span class='warning'>that's not an augment silly!</span>"
+		to_chat(user, "<span class='warning'>that's not an augment silly!</span>")
 		return -1
 	if(aug.body_zone != target_zone)
-		user << "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>"
+		to_chat(user, "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>")
 		return -1
 	L = surgery.operated_bodypart
 	if(L)
@@ -46,15 +46,17 @@
 
 //SURGERY STEP SUCCESSES
 
-/datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery)
 	if(L)
 		user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
 		L.change_bodypart_status(BODYPART_ROBOTIC, 1)
+		L.icon = tool.icon
+		L.max_damage = tool.max_damage
 		user.drop_item()
 		qdel(tool)
-		target.update_damage_overlays()
+		target.update_body_parts()
 		target.updatehealth()
 		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
-		user << "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>"
+		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")
 	return 1

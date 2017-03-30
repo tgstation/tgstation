@@ -1,4 +1,3 @@
-
 /obj/item/weapon/implant/gang
 	name = "gang implant"
 	desc = "Makes you a gangster or such."

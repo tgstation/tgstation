@@ -39,16 +39,16 @@
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
 	..()
 	if(health >= maxHealth)
-		user << "<span class='info'>It looks healthy.</span>"
+		to_chat(user, "<span class='info'>It looks healthy.</span>")
 	else
-		user << "<span class='info'>It looks like it's been roughed up.</span>"
+		to_chat(user, "<span class='info'>It looks like it's been roughed up.</span>")
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
 		adjustBruteLoss(-2)
 
-/mob/living/simple_animal/hostile/mushroom/New()//Makes every shroom a little unique
+/mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)
@@ -137,7 +137,7 @@
 			Recover()
 			qdel(I)
 		else
-			user << "<span class='warning'>[src] won't eat it!</span>"
+			to_chat(user, "<span class='warning'>[src] won't eat it!</span>")
 		return
 	if(I.force)
 		Bruise()

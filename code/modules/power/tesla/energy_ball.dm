@@ -78,7 +78,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/examine(mob/user)
 	..()
 	if(orbiting_balls.len)
-		user << "The amount of orbiting mini-balls is [orbiting_balls.len]."
+		to_chat(user, "The amount of orbiting mini-balls is [orbiting_balls.len].")
 
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
@@ -90,7 +90,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
-			loc = T
+			forceMove(T)
 			setDir(move_dir)
 			for(var/mob/living/carbon/C in loc)
 				dust_mobs(C)
@@ -244,7 +244,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
 		//common stuff
-		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5)
+		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5, maxdistance = INFINITY)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir
@@ -263,9 +263,9 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 			var/mob/living/silicon/S = closest_mob
 			if(stun_mobs)
 				S.emp_act(2)
-			tesla_zap(S, 7, power / 1.5, stun_mobs) // metallic folks bounce it further
+			tesla_zap(S, 7, power / 1.5, explosive, stun_mobs) // metallic folks bounce it further
 		else
-			tesla_zap(closest_mob, 5, power / 1.5, stun_mobs)
+			tesla_zap(closest_mob, 5, power / 1.5, explosive, stun_mobs)
 
 	else if(closest_machine)
 		closest_machine.tesla_act(power, explosive, stun_mobs)

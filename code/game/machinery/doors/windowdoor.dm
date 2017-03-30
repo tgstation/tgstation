@@ -145,7 +145,7 @@
 	sleep(10)
 
 	src.density = 0
-//	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
+//	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
 	update_freelook_sight()
 
@@ -226,11 +226,11 @@
 	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(density || operating)
-				user << "<span class='warning'>You need to open the door to access the maintenance panel!</span>"
+				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")
 				return
 			playsound(src.loc, I.usesound, 50, 1)
 			panel_open = !panel_open
-			user << "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>"
+			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
 		if(istype(I, /obj/item/weapon/crowbar))
@@ -260,11 +260,11 @@
 						WA.created_name = src.name
 
 						if(emagged)
-							user << "<span class='warning'>You discard the damaged electronics.</span>"
+							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
 							qdel(src)
 							return
 
-						user << "<span class='notice'>You remove the airlock electronics.</span>"
+						to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
 						var/obj/item/weapon/electronics/airlock/ae
 						if(!electronics)
@@ -290,7 +290,7 @@
 		else
 			close(2)
 	else
-		user << "<span class='warning'>The door's motors resist your efforts to force it!</span>"
+		to_chat(user, "<span class='warning'>The door's motors resist your efforts to force it!</span>")
 
 /obj/machinery/door/window/do_animate(animation)
 	switch(animation)
@@ -338,6 +338,10 @@
 /obj/machinery/door/window/clockwork/Destroy()
 	change_construction_value(-2)
 	return ..()
+
+/obj/machinery/door/window/clockwork/emp_act(severity)
+	if(prob(80/severity))
+		open()
 
 /obj/machinery/door/window/clockwork/ratvar_act()
 	if(ratvar_awakens)

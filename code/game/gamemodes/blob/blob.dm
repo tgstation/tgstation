@@ -70,9 +70,10 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 /datum/game_mode/blob/proc/show_message(message)
 	for(var/datum/mind/blob in blob_overminds)
-		blob.current << message
+		to_chat(blob.current, message)
 
 /datum/game_mode/blob/post_setup()
+	set waitfor = FALSE
 
 	for(var/datum/mind/blob in blob_overminds)
 		var/mob/camera/blob/B = blob.current.become_overmind(TRUE, round(blob_base_starting_points/blob_overminds.len))
@@ -88,16 +89,15 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	if(B)
 		B.max_occurrences = 0 // disable the event
 
-	spawn(0)
-		var/message_delay = rand(messagedelay_low, messagedelay_high) //between 4 and 6 minutes with 2400 low and 3600 high.
+	. = ..()
 
-		sleep(message_delay)
+	var/message_delay = rand(messagedelay_low, messagedelay_high) //between 4 and 6 minutes with 2400 low and 3600 high.
 
-		send_intercept(1)
-		message_sent = TRUE
+	sleep(message_delay)
 
-		sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 8)
-		if(!replacementmode)
-			send_intercept(2) //if the blob has been alive this long, it's time to bomb it
+	send_intercept(1)
+	message_sent = TRUE
 
-	return ..()
+	sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 8)
+	if(!replacementmode)
+		send_intercept(2) //if the blob has been alive this long, it's time to bomb it

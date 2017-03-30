@@ -36,7 +36,7 @@
 
 /datum/action/slam/Trigger()
 	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
+		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to BODY SLAM!</span>", "<b><i>Your next attack will be a BODY SLAM.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -48,7 +48,7 @@
 
 /datum/action/throw_wrassle/Trigger()
 	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
+		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to THROW!</span>", "<b><i>Your next attack will be a THROW.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -60,7 +60,7 @@
 
 /datum/action/kick/Trigger()
 	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
+		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to KICK!</span>", "<b><i>Your next attack will be a KICK.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -72,7 +72,7 @@
 
 /datum/action/strike/Trigger()
 	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
+		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to STRIKE!</span>", "<b><i>Your next attack will be a STRIKE.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -84,7 +84,7 @@
 
 /datum/action/drop/Trigger()
 	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
+		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to LEG DROP!</span>", "<b><i>Your next attack will be a LEG DROP.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -92,8 +92,8 @@
 
 /datum/martial_art/wrestling/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
 	..()
-	H << "<span class = 'userdanger'>SNAP INTO A THIN TIM!</span>"
-	H << "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>"
+	to_chat(H, "<span class = 'userdanger'>SNAP INTO A THIN TIM!</span>")
+	to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
 	drop.Grant(H)
 	kick.Grant(H)
 	slam.Grant(H)
@@ -102,7 +102,7 @@
 
 /datum/martial_art/wrestling/remove(var/mob/living/carbon/human/H)
 	..()
-	H << "<span class = 'userdanger'>You no longer feel that the tower of power is too sweet to be sour...</span>"
+	to_chat(H, "<span class = 'userdanger'>You no longer feel that the tower of power is too sweet to be sour...</span>")
 	drop.Remove(H)
 	kick.Remove(H)
 	slam.Remove(H)
@@ -119,7 +119,7 @@
 	if(!D)
 		return
 	if(!A.pulling || A.pulling != D)
-		A << "You need to have [D] in a cinch!"
+		to_chat(A, "You need to have [D] in a cinch!")
 		return
 	D.forceMove(A.loc)
 	D.setDir(get_dir(D, A))
@@ -145,11 +145,11 @@
 		if (A && D)
 
 			if (get_dist(A, D) > 1)
-				A << "[D] is too far away!"
+				to_chat(A, "[D] is too far away!")
 				return 0
 
 			if (!isturf(A.loc) || !isturf(D.loc))
-				A << "You can't throw [D] from here!"
+				to_chat(A, "You can't throw [D] from here!")
 				return 0
 
 			A.setDir(turn(A.dir, 90))
@@ -167,11 +167,11 @@
 		// These are necessary because of the sleep call.
 
 		if (get_dist(A, D) > 1)
-			A << "[D] is too far away!"
+			to_chat(A, "[D] is too far away!")
 			return 0
 
 		if (!isturf(A.loc) || !isturf(D.loc))
-			A << "You can't throw [D] from here!"
+			to_chat(A, "You can't throw [D] from here!")
 			return 0
 
 		D.forceMove(A.loc) // Maybe this will help with the wallthrowing bug.
@@ -190,7 +190,7 @@
 	if(!D)
 		return
 	if(!A.pulling || A.pulling != D)
-		A << "You need to have [D] in a cinch!"
+		to_chat(A, "You need to have [D] in a cinch!")
 		return
 	D.forceMove(A.loc)
 	A.setDir(get_dir(A, D))
@@ -223,7 +223,7 @@
 					D.pixel_x = A.pixel_x + 8
 
 			if (get_dist(A, D) > 1)
-				A << "[D] is too far away!"
+				to_chat(A, "[D] is too far away!")
 				A.pixel_x = 0
 				A.pixel_y = 0
 				D.pixel_x = 0
@@ -231,7 +231,7 @@
 				return 0
 
 			if (!isturf(A.loc) || !isturf(D.loc))
-				A << "You can't slam [D] here!"
+				to_chat(A, "You can't slam [D] here!")
 				A.pixel_x = 0
 				A.pixel_y = 0
 				D.pixel_x = 0
@@ -255,11 +255,11 @@
 		D.pixel_y = 0
 
 		if (get_dist(A, D) > 1)
-			A << "[D] is too far away!"
+			to_chat(A, "[D] is too far away!")
 			return 0
 
 		if (!isturf(A.loc) || !isturf(D.loc))
-			A << "You can't slam [D] here!"
+			to_chat(A, "You can't slam [D] here!")
 			return 0
 
 		D.forceMove(A.loc)
@@ -369,12 +369,12 @@
 				A.visible_message("<span class = 'danger'><B>...and dives head-first into the ground, ouch!</b></span>")
 				A.adjustBruteLoss(rand(10,20))
 				A.Weaken(3)
-			A << "[D] is too far away!"
+			to_chat(A, "[D] is too far away!")
 			return 0
 
 		if (!isturf(A.loc) || !isturf(D.loc))
 			A.pixel_y = 0
-			A << "You can't drop onto [D] from here!"
+			to_chat(A, "You can't drop onto [D] from here!")
 			return 0
 
 		if(A)

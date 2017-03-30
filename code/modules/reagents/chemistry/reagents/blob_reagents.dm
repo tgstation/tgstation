@@ -3,6 +3,7 @@
 	name = "Unknown"
 	description = "shouldn't exist and you should adminhelp immediately."
 	color = "#FFFFFF"
+	taste_description = "slime and errors"
 	var/complementary_color = "#000000" //a color that's complementary to the normal blob color
 	var/shortdesc = null //just damage and on_mob effects, doesn't include special, blob-tile only effects
 	var/effectdesc = null //any long, blob-tile specific effects
@@ -18,7 +19,7 @@
 	if(message_living && !issilicon(M))
 		totalmessage += message_living
 	totalmessage += "!"
-	M << "<span class='userdanger'>[totalmessage]</span>"
+	to_chat(M, "<span class='userdanger'>[totalmessage]</span>")
 
 /datum/reagent/blob/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
@@ -163,7 +164,7 @@
 		M.emote("scream")
 
 /datum/reagent/blob/blazing_oil/extinguish_reaction(obj/structure/blob/B)
-	B.take_damage(rand(1, 3), BURN, "energy")
+	B.take_damage(1.5, BURN, "energy")
 
 /datum/reagent/blob/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BURN && damage_flag != "energy")
@@ -197,7 +198,7 @@
 	M.adjustToxLoss(1*REM)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
-		N.hal_screwyhud = 5 //fully healed, honest
+		N.hal_screwyhud = SCREWYHUD_HEALTHY //fully healed, honest
 	..()
 
 /datum/reagent/blob/regenerative_materia/on_mob_delete(mob/living/M)
@@ -231,7 +232,7 @@
 		O.blob_mobs.Add(BS)
 		BS.Zombify(M)
 		O.add_points(points)
-		O << "<span class='notice'>Gained [points] resources from the zombification of [M].</span>"
+		to_chat(O, "<span class='notice'>Gained [points] resources from the zombification of [M].</span>")
 
 /datum/reagent/blob/zombifying_pods/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage <= 20 && B.obj_integrity - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.

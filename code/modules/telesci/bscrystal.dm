@@ -66,7 +66,7 @@
 	var/crystal_type = /obj/item/weapon/ore/bluespace_crystal/refined
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user) // to prevent the construction menu from ever happening
-	user << "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>"
+	to_chat(user, "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>")
 	return
 
 /obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user)
@@ -78,8 +78,8 @@
 		amount--
 		if (amount == 0)
 			qdel(src)
-			user << "<span class='notice'>You break the final crystal off.</span>"
-		else user << "<span class='notice'>You break off a crystal.</span>"
+			to_chat(user, "<span class='notice'>You break the final crystal off.</span>")
+		else to_chat(user, "<span class='notice'>You break off a crystal.</span>")
 	else
 		..()
 	return

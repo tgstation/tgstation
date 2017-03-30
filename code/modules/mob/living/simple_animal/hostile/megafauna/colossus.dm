@@ -91,7 +91,7 @@ Difficulty: Very Hard
 			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
 
 
-/mob/living/simple_animal/hostile/megafauna/colossus/New()
+/mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
 	..()
 	internal = new/obj/item/device/gps/internal/colossus(src)
 
@@ -101,11 +101,11 @@ Difficulty: Very Hard
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
-	luminosity = 2
+	light_range = 2
 	duration = 8
 	var/target
 
-/obj/effect/overlay/temp/at_shield/New(new_loc, new_target)
+/obj/effect/overlay/temp/at_shield/Initialize(mapload, new_target)
 	..()
 	target = new_target
 	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
@@ -272,7 +272,7 @@ Difficulty: Very Hard
 	icon_state = "blackbox"
 	icon_on = "blackbox"
 	icon_off = "blackbox"
-	luminosity = 8
+	light_range = 8
 	max_n_of_items = INFINITY
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	pixel_y = -4
@@ -365,7 +365,7 @@ Difficulty: Very Hard
 	desc = "A strange chunk of crystal, being in the presence of it fills you with equal parts excitement and dread."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "anomaly_crystal"
-	luminosity = 8
+	light_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = 0
 	density = 1
@@ -616,7 +616,7 @@ Difficulty: Very Hard
 	verb_exclaim = "zaps"
 	verb_yell = "bangs"
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	luminosity = 4
+	light_range = 4
 	faction = list("neutral")
 	languages_spoken = SLIME
 	languages_understood = ALL
@@ -631,7 +631,7 @@ Difficulty: Very Hard
 	stop_automated_movement = 1
 	var/heal_power = 5
 
-/mob/living/simple_animal/hostile/lightgeist/New()
+/mob/living/simple_animal/hostile/lightgeist/Initialize()
 	..()
 	verbs -= /mob/living/verb/pulled
 	verbs -= /mob/verb/me_verb

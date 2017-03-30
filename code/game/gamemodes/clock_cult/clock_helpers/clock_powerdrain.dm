@@ -45,7 +45,7 @@
 		. = min(cell.charge, 250)
 		cell.use(.)
 		if(prob(20))
-			src << "<span class='userdanger'>ERROR: Power loss detected!</span>"
+			to_chat(src, "<span class='userdanger'>ERROR: Power loss detected!</span>")
 		spark_system.start()
 
 /obj/mecha/power_drain(clockcult_user)

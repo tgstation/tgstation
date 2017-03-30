@@ -9,6 +9,9 @@
 				message = Gibberish(message, (emp_damage*6))//scrambles the message, gets worse when emp_damage is higher
 		..()
 
+/mob/living/brain/get_spans()
+	return ..() | SPAN_ROBOT
+
 /mob/living/brain/radio(message, message_mode, list/spans)
 	if(message_mode && istype(container, /obj/item/device/mmi))
 		var/obj/item/device/mmi/R = container

@@ -139,14 +139,14 @@
 		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
 		if(stat == CONSCIOUS && stasis)
-			src << "<span class='danger'>Nerve gas in the air has put you in stasis!</span>"
+			to_chat(src, "<span class='danger'>Nerve gas in the air has put you in stasis!</span>")
 			stat = UNCONSCIOUS
 			powerlevel = 0
 			rabid = 0
 			update_canmove()
 			regenerate_icons()
 		else if(stat == UNCONSCIOUS && !stasis)
-			src << "<span class='notice'>You wake up from the stasis.</span>"
+			to_chat(src, "<span class='notice'>You wake up from the stasis.</span>")
 			stat = CONSCIOUS
 			update_canmove()
 			regenerate_icons()
@@ -196,7 +196,7 @@
 						else
 							++Friends[M.LAssailant]
 		else
-			src << "<i>This subject does not have a strong enough life energy anymore...</i>"
+			to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
 
 		if(M.client && ishuman(M))
 			if(prob(85))
@@ -211,13 +211,13 @@
 		C.adjustToxLoss(rand(1,2))
 
 		if(prob(10) && C.client)
-			C << "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
+			to_chat(C, "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
 			"You feel like you're about to die!", \
 			"You feel every part of your body screaming in agony!", \
 			"A low, rolling pain passes through your body!", \
 			"Your body feels as if it's falling apart!", \
 			"You feel extremely weak!", \
-			"A sharp, deep pain bathes every inch of your body!")]</span>"
+			"A sharp, deep pain bathes every inch of your body!")]</span>")
 
 	else if(isanimal(M))
 		var/mob/living/simple_animal/SA = M

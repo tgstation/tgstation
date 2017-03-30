@@ -10,7 +10,7 @@
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
 	obj_damage = 400
-	luminosity = 3
+	light_range = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 	movement_type = FLYING
@@ -146,7 +146,7 @@
 				log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
 				message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
 			else if (result)
-				player << "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>"
+				to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
 
 
 /proc/SetScore(score,client/player,increment,force)
@@ -209,7 +209,7 @@
 			log_game("MEDAL ERROR: Could not contact hub to get medal:[medal] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to get [medal] medal for [player.ckey]!")
 		else if (result)
-			player << "[medal] is unlocked"
+			to_chat(player, "[medal] is unlocked")
 
 /proc/LockMedal(medal,client/player)
 

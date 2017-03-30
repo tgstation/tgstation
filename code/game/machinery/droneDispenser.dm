@@ -157,13 +157,11 @@
 /obj/machinery/droneDispenser/examine(mob/user)
 	..()
 	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
-		user << "<span class='warning'>[recharging_text]</span>"
+		to_chat(user, "<span class='warning'>[recharging_text]</span>")
 	if(metal_cost)
-		user << "<span class='notice'>It has [materials.amount(MAT_METAL)] \
-			units of metal stored.</span>"
+		to_chat(user, "<span class='notice'>It has [materials.amount(MAT_METAL)] units of metal stored.</span>")
 	if(glass_cost)
-		user << "<span class='notice'>It has [materials.amount(MAT_GLASS)] \
-			units of glass stored.</span>"
+		to_chat(user, "<span class='notice'>It has [materials.amount(MAT_GLASS)] units of glass stored.</span>")
 
 /obj/machinery/droneDispenser/power_change()
 	..()
@@ -248,32 +246,28 @@
 		if(!O.materials[MAT_METAL] && !O.materials[MAT_GLASS])
 			return ..()
 		if(!metal_cost && !glass_cost)
-			user << "<span class='warning'>There isn't a place \
-				to insert [O]!</span>"
+			to_chat(user, "<span class='warning'>There isn't a place to insert [O]!</span>")
 			return
 		var/obj/item/stack/sheets = O
 		if(!user.canUnEquip(sheets))
-			user << "<span class='warning'>[O] is stuck to your hand, \
-				you can't get it off!</span>"
+			to_chat(user, "<span class='warning'>[O] is stuck to your hand, you can't get it off!</span>")
 			return
 
 		var/used = materials.insert_stack(sheets, sheets.amount)
 
 		if(used)
-			user << "<span class='notice'>You insert [used] \
-				sheet[used > 1 ? "s" : ""] into [src].</span>"
+			to_chat(user, "<span class='notice'>You insert [used] sheet[used > 1 ? "s" : ""] into [src].</span>")
 		else
-			user << "<span class='warning'>The [src] isn't accepting the \
-				[sheets].</span>"
+			to_chat(user, "<span class='warning'>The [src] isn't accepting the [sheets].</span>")
 
 	else if(istype(O, /obj/item/weapon/crowbar))
 		materials.retrieve_all()
 		playsound(loc, O.usesound, 50, 1)
-		user << "<span class='notice'>You retrieve the materials from [src].</span>"
+		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
 
 	else if(istype(O, /obj/item/weapon/weldingtool))
 		if(!(stat & BROKEN))
-			user << "<span class='warning'>[src] doesn't need repairs.</span>"
+			to_chat(user, "<span class='warning'>[src] doesn't need repairs.</span>")
 			return
 
 		var/obj/item/weapon/weldingtool/WT = O
@@ -282,8 +276,7 @@
 			return
 
 		if(WT.get_fuel() < 1)
-			user << "<span class='warning'>You need more fuel to \
-				complete this task!</span>"
+			to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
 			return
 
 		playsound(src, WT.usesound, 50, 1)

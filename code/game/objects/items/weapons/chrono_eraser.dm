@@ -82,14 +82,14 @@
 	var/mob/living/user = src.loc
 	if(F.gun)
 		if(isliving(user) && F.captured)
-			user << "<span class='alert'><b>FAIL: <i>[F.captured]</i> already has an existing connection.</b></span>"
+			to_chat(user, "<span class='alert'><b>FAIL: <i>[F.captured]</i> already has an existing connection.</b></span>")
 		src.field_disconnect(F)
 	else
 		startpos = get_turf(src)
 		field = F
 		F.gun = src
 		if(isliving(user) && F.captured)
-			user << "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>"
+			to_chat(user, "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>")
 
 
 /obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(obj/effect/chrono_field/F)
@@ -98,7 +98,7 @@
 		if(F.gun == src)
 			F.gun = null
 		if(isliving(user) && F.captured)
-			user << "<span class='alert'>Disconnected from target: <b>[F.captured]</b></span>"
+			to_chat(user, "<span class='alert'>Disconnected from target: <b>[F.captured]</b></span>")
 	field = null
 	startpos = null
 
@@ -199,7 +199,7 @@
 				AM.loc = loc
 			qdel(src)
 		else if(tickstokill <= 0)
-			captured << "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>"
+			to_chat(captured, "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>")
 			var/mob/dead/observer/ghost = captured.ghostize(1)
 			if(captured.mind)
 				if(ghost)

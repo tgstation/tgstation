@@ -15,7 +15,7 @@ In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	switch(M.a_intent)
@@ -41,7 +41,7 @@ In all, this is a lot like the monkey code. /N
 				add_logs(M, src, "attacked")
 				updatehealth()
 			else
-				M << "<span class='warning'>[name] is too injured for that.</span>"
+				to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
 
 
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)

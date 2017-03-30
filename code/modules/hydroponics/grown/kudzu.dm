@@ -29,15 +29,21 @@
 /obj/item/seeds/kudzu/proc/plant(mob/user)
 	if(isspaceturf(user.loc))
 		return
-	var/turf/T = get_turf(src)
-	message_admins("Kudzu planted by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>)",0,1)
-	investigate_log("was planted by [key_name(user)] at ([T.x],[T.y],[T.z])","kudzu")
+	if(!isturf(user.loc))
+		to_chat(user, "<span class='warning'>You need more space to plant [src].</span>")
+		return FALSE
+	if(locate(/obj/structure/spacevine) in user.loc)
+		to_chat(user, "<span class='warning'>There is too much kudzu here to plant [src].</span>")
+		return FALSE
+	to_chat(user, "<span class='notice'>You plant [src].</span>")
+	message_admins("Kudzu planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(user)]",0,1)
+	investigate_log("was planted by [key_name(user)] at [COORD(user)]","botany")
 	new /obj/effect/spacevine_controller(user.loc, mutations, potency, production)
 	qdel(src)
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
 	plant(user)
-	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
+	to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
 
 /obj/item/seeds/kudzu/get_analyzer_text()
 	var/text = ..()

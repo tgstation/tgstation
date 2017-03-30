@@ -13,7 +13,7 @@ var/sound/admin_sound
 	var/freq = 1
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
-		src << "You feel the Honkmother messing with your song..."
+		to_chat(src, "You feel the Honkmother messing with your song...")
 
 	var/sound/admin_sound = new()
 	admin_sound.file = S
@@ -23,11 +23,11 @@ var/sound/admin_sound
 	admin_sound.wait = 1
 	admin_sound.repeat = 0
 	admin_sound.status = SOUND_STREAM
-		
+
 	for(var/mob/M in player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M << admin_sound
-			
+
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

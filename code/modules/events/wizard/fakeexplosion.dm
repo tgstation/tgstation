@@ -8,4 +8,4 @@
 /datum/round_event/wizard/fake_explosion/start()
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	addtimer(CALLBACK(ticker, /datum/subsystem/ticker/.proc/station_explosion_cinematic, 1, "fake"), 100) //:o)
+	addtimer(CALLBACK(ticker, /datum/controller/subsystem/ticker/.proc/station_explosion_cinematic, 1, "fake"), 100) //:o)

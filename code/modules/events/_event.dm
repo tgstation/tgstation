@@ -25,6 +25,8 @@
 	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
 	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
 
+	var/triggering	//admin cancellation
+
 /datum/round_event_control/New()
 	..()
 	if(config && !wizardevent) // Magic is unaffected by configs
@@ -53,9 +55,32 @@
 		return FALSE
 	return TRUE
 
-/datum/round_event_control/proc/runEvent()
+/datum/round_event_control/proc/preRunEvent()
 	if(!ispath(typepath,/datum/round_event))
-		return PROCESS_KILL
+		return EVENT_CANT_RUN
+
+	triggering = TRUE
+	if (alertadmins)
+		message_admins("Random Event triggering in 10 seconds: [name] ([typepath]) (<a href='?src=\ref[src];cancel=1'>CANCEL</a>)")
+		sleep(100)
+
+	if(!triggering)
+		return EVENT_CANCELLED	//admin cancelled
+	triggering = FALSE
+	return EVENT_READY
+
+/datum/round_event_control/Topic(href, href_list)
+	..()
+	if(href_list["cancel"])
+		if(!triggering)
+			to_chat(usr, "<span class='admin'>You are too late to cancel that event</span>")
+			return
+		triggering = FALSE
+		message_admins("[key_name_admin(usr)] cancelled event [name].")
+		log_admin_private("[key_name(usr)] cancelled event [name].")
+		feedback_add_details("admin_verb","CancelEvent: [typepath]")
+
+/datum/round_event_control/proc/runEvent(random)
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
@@ -63,6 +88,10 @@
 	occurrences++
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
+	if(random)
+		if(alertadmins)
+			deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been randomly triggered!</span>") //STOP ASSUMING IT'S BADMINS!
+		log_game("Random Event triggering: [name] ([typepath])")
 
 	return E
 

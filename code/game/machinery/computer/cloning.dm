@@ -18,6 +18,8 @@
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/cloning/Initialize()
 	..()
 	updatemodules(TRUE)
@@ -63,7 +65,7 @@
 
 	for(var/datum/data/record/R in records)
 		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
-			
+
 		if(!pod)
 			return
 
@@ -120,25 +122,25 @@
 				return
 			W.loc = src
 			src.diskette = W
-			user << "<span class='notice'>You insert [W].</span>"
+			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
 	else if(istype(W,/obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
-		
+
 		if(istype(P.buffer, /obj/machinery/clonepod))
 			if(get_area(P.buffer) != get_area(src))
-				user << "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>"
+				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
 				P.buffer = null
 				return
-			user << "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>"
+			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
 			var/obj/machinery/clonepod/pod = P.buffer
 			if(pod.connected)
 				pod.connected.DetachCloner(pod)
 			AttachCloner(pod)
 		else
 			P.buffer = src
-			user << "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
+			to_chat(user, "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>")
 		return
 	else
 		return ..()
@@ -159,7 +161,7 @@
 
 	var/dat = ""
 	dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a>"
-	
+
 	if(scanner && HasEfficientPod() && scanner.scan_level > 2)
 		if(!autoprocess)
 			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Autoprocess</a>"

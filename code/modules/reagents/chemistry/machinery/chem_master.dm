@@ -44,7 +44,7 @@
 
 		build_path = new_path
 		name = "[new_name] 3000 (Machine Board)"
-		user << "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>"
+		to_chat(user, "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>")
 	else
 		return ..()
 
@@ -107,30 +107,30 @@
 	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
 		. = 1 // no afterattack
 		if(panel_open)
-			user << "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>"
+			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
 		if(beaker)
-			user << "<span class='warning'>A container is already loaded in the machine!</span>"
+			to_chat(user, "<span class='warning'>A container is already loaded in the machine!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		beaker = I
 		beaker.loc = src
-		user << "<span class='notice'>You add the beaker to the machine.</span>"
+		to_chat(user, "<span class='notice'>You add the beaker to the machine.</span>")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
 	else if(!condi && istype(I, /obj/item/weapon/storage/pill_bottle))
 		if(bottle)
-			user << "<span class='warning'>A pill bottle is already loaded into the machine!</span>"
+			to_chat(user, "<span class='warning'>A pill bottle is already loaded into the machine!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		bottle = I
 		bottle.loc = src
-		user << "<span class='notice'>You add the pill bottle into the dispenser slot.</span>"
+		to_chat(user, "<span class='notice'>You add the pill bottle into the dispenser slot.</span>")
 		src.updateUsrDialog()
 	else
 		return ..()

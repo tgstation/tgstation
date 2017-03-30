@@ -1,4 +1,4 @@
-#define DEBUG					//Enables byond profiling and full runtime logs - note, this may also be defined in your .dme file
+//#define DEBUG					//Enables byond profiling and full runtime logs - note, this may also be defined in your .dme file
 								//Enables in-depth debug messages to runtime log (used for debugging)
 //#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)

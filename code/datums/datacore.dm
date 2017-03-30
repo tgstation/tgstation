@@ -16,6 +16,17 @@
 	name = "record"
 	var/list/fields = list()
 
+/datum/data/record/Destroy()
+	if(src in data_core.medical)
+		data_core.medical -= src
+	if(src in data_core.security)
+		data_core.security -= src
+	if(src in data_core.general)
+		data_core.general -= src
+	if(src in data_core.locked)
+		data_core.locked -= src
+	. = ..()
+
 /datum/data/crime
 	name = "crime"
 	var/crimeName = ""
@@ -66,8 +77,10 @@
 			return
 
 /datum/datacore/proc/manifest()
-	for(var/mob/living/carbon/human/H in player_list)
-		manifest_inject(H)
+	for(var/mob/dead/new_player/N in player_list)
+		if(ishuman(N.new_character))
+			manifest_inject(N.new_character, N.client)
+		CHECK_TICK
 
 /datum/datacore/proc/manifest_modify(name, assignment)
 	var/datum/data/record/foundrecord = find_record("name", name, data_core.general)
@@ -183,7 +196,7 @@
 
 
 var/record_id_num = 1001
-/datum/datacore/proc/manifest_inject(mob/living/carbon/human/H)
+/datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
@@ -194,7 +207,9 @@ var/record_id_num = 1001
 			assignment = "Unassigned"
 
 		var/id = num2hex(record_id_num++,6)
-		var/image = get_id_photo(H)
+		if(!C)
+			C = H.client
+		var/image = get_id_photo(H, C)
 		var/obj/item/weapon/photo/photo_front = new()
 		var/obj/item/weapon/photo/photo_side = new()
 		photo_front.photocreate(null, icon(image, dir = SOUTH))
@@ -262,7 +277,11 @@ var/record_id_num = 1001
 		locked += L
 	return
 
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H)
+/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C)
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
-	var/datum/preferences/P = H.client.prefs
+	var/datum/preferences/P
+	if(!C)
+		C = H.client
+	if(C)
+		P = C.prefs
 	return get_flat_human_icon(null,J.outfit,P)

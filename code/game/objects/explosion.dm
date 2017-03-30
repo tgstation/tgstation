@@ -36,7 +36,7 @@ var/explosionid = 1
 	var/list/cached_exp_block = list()
 
 	if(adminlog)
-		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
+		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [get_area(epicenter)] [ADMIN_COORDJMP(epicenter)]")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
 
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
@@ -163,6 +163,7 @@ var/explosionid = 1
 				I.throw_at(throw_at, throw_range, I.throw_speed)
 
 		if(TICK_CHECK)
+			stoplag()
 			var/circumference = (PI * init_dist * 2) + 8 //+8 to prevent shit gaps
 			if(exploded_this_tick.len > circumference)	//only do this every revolution
 				for(var/Unexplode in exploded_this_tick)

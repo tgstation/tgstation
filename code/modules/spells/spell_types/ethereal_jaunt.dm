@@ -26,7 +26,7 @@
 	target.notransform = 1
 	var/turf/mobloc = get_turf(target)
 	var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt(mobloc)
-	new jaunt_out_type(mobloc, holder.dir)
+	new jaunt_out_type(mobloc, target.dir)
 	target.ExtinguishMob()
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target,force=1)
@@ -51,7 +51,7 @@
 	holder.reappearing = 1
 	playsound(get_turf(target), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
 	sleep(25 - jaunt_in_time)
-	new jaunt_in_type(mobloc, holder.dir)
+	new jaunt_in_type(mobloc, target.dir)
 	sleep(jaunt_in_time)
 	qdel(holder)
 	if(!QDELETED(target))
@@ -92,7 +92,7 @@
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc
 	else
-		user << "<span class='warning'>Some strange aura is blocking the way!</span>"
+		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
 	src.canmove = 0
 	spawn(2) src.canmove = 1
 

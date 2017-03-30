@@ -73,7 +73,7 @@ Difficulty: Hard
 	del_on_death = TRUE
 	death_sound = 'sound/magic/Repulse.ogg'
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/New()
+/mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
 	..()
 	internal = new/obj/item/device/gps/internal/hierophant(src)
 	spawned_beacon = new(loc)
@@ -116,9 +116,8 @@ Difficulty: Hard
 	for(var/obj/item/W in L)
 		if(!L.dropItemToGround(W))
 			qdel(W)
-	visible_message(
-		"<span class='hierophant_warning'>\"[pick(kill_phrases)]\"\n[src] annihilates [L]!</span>",
-		"<span class='userdanger'>You annihilate [L], restoring your health!</span>")
+	visible_message("<span class='hierophant_warning'>\"[pick(kill_phrases)]\"</span>")
+	visible_message("<span class='hierophant_warning'>[src] annihilates [L]!</span>","<span class='userdanger'>You annihilate [L], restoring your health!</span>")
 	adjustHealth(-L.maxHealth*0.5)
 	L.dust()
 
@@ -435,7 +434,7 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/squares
 	icon_state = "hierophant_squares"
 	duration = 3
-	luminosity = 1
+	light_range = 1
 	randomdir = FALSE
 
 /obj/effect/overlay/temp/hierophant/squares/New(loc, new_caster)
@@ -448,7 +447,7 @@ Difficulty: Hard
 	name = "vortex wall"
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
 	icon_state = "wall"
-	luminosity = 1
+	light_range = 1
 	duration = 100
 	smooth = SMOOTH_TRUE
 
@@ -551,7 +550,7 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/blast
 	icon_state = "hierophant_blast"
 	name = "vortex blast"
-	luminosity = 1
+	light_range = 1
 	desc = "Get out of the way!"
 	duration = 9
 	var/damage = 10 //how much damage do we do?
@@ -588,12 +587,12 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/blast/proc/do_damage(turf/T)
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
 		hit_things += L
-		if((friendly_fire_check && caster && caster.faction_check(L)) || L.stat == DEAD)
+		if((friendly_fire_check && caster && caster.faction_check_mob(L)) || L.stat == DEAD)
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
 		playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
-		L << "<span class='userdanger'>You're struck by a [name]!</span>"
+		to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
 		var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor)
@@ -603,9 +602,9 @@ Difficulty: Hard
 	for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
 		hit_things += M
 		if(M.occupant)
-			if(friendly_fire_check && caster && caster.faction_check(M.occupant))
+			if(friendly_fire_check && caster && caster.faction_check_mob(M.occupant))
 				continue
-			M.occupant << "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>"
+			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
 		M.take_damage(damage, BURN, 0, 0)
 
@@ -614,7 +613,7 @@ Difficulty: Hard
 	desc = "A strange beacon, allowing mass teleportation for those able to use it."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "hierophant_tele_off"
-	luminosity = 2
+	light_range = 2
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 
@@ -627,13 +626,13 @@ Difficulty: Hard
 		if(H.timer > world.time)
 			return
 		if(H.beacon == src)
-			user << "<span class='notice'>You start removing your hierophant beacon...</span>"
+			to_chat(user, "<span class='notice'>You start removing your hierophant beacon...</span>")
 			H.timer = world.time + 51
 			INVOKE_ASYNC(H, /obj/item/weapon/hierophant_club.proc/prepare_icon_update)
 			if(do_after(user, 50, target = src))
 				playsound(src,'sound/magic/Blind.ogg', 200, 1, -4)
 				new /obj/effect/overlay/temp/hierophant/telegraph/teleport(get_turf(src), user)
-				user << "<span class='hierophant_warning'>You collect [src], reattaching it to the club!</span>"
+				to_chat(user, "<span class='hierophant_warning'>You collect [src], reattaching it to the club!</span>")
 				H.beacon = null
 				user.update_action_buttons_icon()
 				qdel(src)
@@ -641,7 +640,7 @@ Difficulty: Hard
 				H.timer = world.time
 				INVOKE_ASYNC(H, /obj/item/weapon/hierophant_club.proc/prepare_icon_update)
 		else
-			user << "<span class='hierophant_warning'>You touch the beacon with the club, but nothing happens.</span>"
+			to_chat(user, "<span class='hierophant_warning'>You touch the beacon with the club, but nothing happens.</span>")
 	else
 		return ..()
 

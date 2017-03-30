@@ -73,7 +73,7 @@
 		var/obj/item/weapon/pen/P = bin_pen
 		P.loc = user.loc
 		user.put_in_hands(P)
-		user << "<span class='notice'>You take [P] out of \the [src].</span>"
+		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 		bin_pen = null
 		update_icon()
 	else if(total_paper >= 1)
@@ -94,9 +94,9 @@
 
 		P.loc = user.loc
 		user.put_in_hands(P)
-		user << "<span class='notice'>You take [P] out of \the [src].</span>"
+		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 	else
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 	add_fingerprint(user)
 
@@ -106,7 +106,7 @@
 		var/obj/item/weapon/paper/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
-		user << "<span class='notice'>You put [P] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		papers.Add(P)
 		total_paper++
 		update_icon()
@@ -114,7 +114,7 @@
 		var/obj/item/weapon/pen/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
-		user << "<span class='notice'>You put [P] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		bin_pen = P
 		update_icon()
 	else
@@ -123,9 +123,9 @@
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()
 	if(total_paper)
-		user << "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+"."
+		to_chat(user, "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+".")
 	else
-		user << "It doesn't contain anything."
+		to_chat(user, "It doesn't contain anything.")
 
 
 /obj/item/weapon/paper_bin/update_icon()

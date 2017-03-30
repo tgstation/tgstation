@@ -16,7 +16,7 @@
 		return
 
 	if(!reagents || !reagents.total_volume)
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 
 	if(istype(M))
@@ -46,7 +46,7 @@
 				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
 				add_logs(user, M, "fed", reagentlist(src))
 			else
-				user << "<span class='notice'>You swallow a gulp of [src].</span>"
+				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
 			var/fraction = min(5/reagents.total_volume, 1)
 			reagents.reaction(M, INGEST, fraction)
 			spawn(5)
@@ -59,28 +59,28 @@
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(target.reagents && !target.reagents.total_volume)
-			user << "<span class='warning'>[target] is empty and can't be refilled!</span>"
+			to_chat(user, "<span class='warning'>[target] is empty and can't be refilled!</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='notice'>[src] is full.</span>"
+			to_chat(user, "<span class='notice'>[src] is full.</span>")
 			return
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
-		user << "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>"
+		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			user << "<span class='warning'>[src] is empty!</span>"
+			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='notice'>[target] is full.</span>"
+			to_chat(user, "<span class='notice'>[target] is full.</span>")
 			return
 
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
+		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
 
 	else if(reagents.total_volume)
 		if(user.a_intent == INTENT_HARM)
@@ -96,18 +96,18 @@
 		if(reagents)
 			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
 				reagents.chem_temp += added_heat
-				user << "<span class='notice'>You heat [src] with [I].</span>"
+				to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
 				reagents.handle_reactions()
 			else
-				user << "<span class='warning'>[src] is already hotter than [I]!</span>"
+				to_chat(user, "<span class='warning'>[src] is already hotter than [I]!</span>")
 
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "<span class='notice'>[src] is full.</span>"
+				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else
-				user << "<span class='notice'>You break [E] in [src].</span>"
+				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
 				reagents.add_reagent("eggyolk", 5)
 				qdel(E)
 			return
@@ -251,13 +251,13 @@
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/mop))
 		if(reagents.total_volume < 1)
-			user << "<span class='warning'>[src] is out of water!</span>"
+			to_chat(user, "<span class='warning'>[src] is out of water!</span>")
 		else
 			reagents.trans_to(O, 5)
-			user << "<span class='notice'>You wet [O] in [src].</span>"
+			to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 	else if(isprox(O))
-		user << "<span class='notice'>You add [O] to [src].</span>"
+		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
 		qdel(O)
 		qdel(src)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
@@ -267,7 +267,7 @@
 /obj/item/weapon/reagent_containers/glass/bucket/equipped(mob/user, slot)
 	..()
 	if(slot == slot_head && reagents.total_volume)
-		user << "<span class='userdanger'>[src]'s contents spill all over you!</span>"
+		to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
 		reagents.reaction(user, TOUCH)
 		reagents.clear_reagents()
 

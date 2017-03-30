@@ -18,6 +18,29 @@
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
 
+/obj/structure/grille/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
+		if(RCD_WINDOWGRILLE)
+			return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 10)
+	return FALSE
+
+/obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the grille.</span>")
+			qdel(src)
+			return TRUE
+		if(RCD_WINDOWGRILLE)
+			if(locate(/obj/structure/window) in loc)
+				return FALSE
+			to_chat(user, "<span class='notice'>You construct the window.</span>")
+			var/obj/structure/window/WD = new the_rcd.window_type(loc)
+			WD.anchored = TRUE
+			return TRUE
+	return FALSE
+
 /obj/structure/grille/ratvar_act()
 	if(broken)
 		new /obj/structure/grille/ratvar/broken(src.loc)
@@ -110,16 +133,16 @@
 		if (!broken)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
-				user << "<span class='warning'>You need at least two sheets of glass for that!</span>"
+				to_chat(user, "<span class='warning'>You need at least two sheets of glass for that!</span>")
 				return
 			var/dir_to_set = SOUTHWEST
 			if(!anchored)
-				user << "<span class='warning'>[src] needs to be fastened to the floor first!</span>"
+				to_chat(user, "<span class='warning'>[src] needs to be fastened to the floor first!</span>")
 				return
 			for(var/obj/structure/window/WINDOW in loc)
-				user << "<span class='warning'>There is already a window there!</span>"
+				to_chat(user, "<span class='warning'>There is already a window there!</span>")
 				return
-			user << "<span class='notice'>You start placing the window...</span>"
+			to_chat(user, "<span class='notice'>You start placing the window...</span>")
 			if(do_after(user,20, target = src))
 				if(!src.loc || !anchored) //Grille broken or unanchored while waiting
 					return
@@ -135,7 +158,7 @@
 				WD.anchored = 0
 				WD.state = 0
 				ST.use(2)
-				user << "<span class='notice'>You place [WD] on [src].</span>"
+				to_chat(user, "<span class='notice'>You place [WD] on [src].</span>")
 			return
 //window placing end
 
@@ -230,16 +253,11 @@
 
 /obj/structure/grille/ratvar/New()
 	..()
-	change_construction_value(1)
 	if(broken)
 		new /obj/effect/overlay/temp/ratvar/grille/broken(get_turf(src))
 	else
 		new /obj/effect/overlay/temp/ratvar/grille(get_turf(src))
 		new /obj/effect/overlay/temp/ratvar/beam/grille(get_turf(src))
-
-/obj/structure/grille/ratvar/Destroy()
-	change_construction_value(-1)
-	return ..()
 
 /obj/structure/grille/ratvar/narsie_act()
 	take_damage(rand(1, 3), BRUTE)
@@ -261,4 +279,3 @@
 	rods_broken = 0
 	grille_type = /obj/structure/grille/ratvar
 	broken_type = null
-

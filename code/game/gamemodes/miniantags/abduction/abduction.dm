@@ -19,10 +19,10 @@
 	var/finished = 0
 
 /datum/game_mode/abduction/announce()
-	world << "<B>The current game mode is - Abduction!</B>"
-	world << "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!"
-	world << "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones."
-	world << "<b>Crew</b> - don't get abducted and stop the abductors."
+	to_chat(world, "<B>The current game mode is - Abduction!</B>")
+	to_chat(world, "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!")
+	to_chat(world, "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones.")
+	to_chat(world, "<b>Crew</b> - don't get abducted and stop the abductors.")
 
 /datum/game_mode/abduction/pre_setup()
 	abductor_teams = max(1, min(max_teams,round(num_players()/config.abductor_scaling_coeff)))
@@ -184,9 +184,9 @@
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
-	abductor.current << "<span class='notice'>You are an agent of [team_name]!</span>"
-	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
-	abductor.current << "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>"
+	to_chat(abductor.current, "<span class='notice'>You are an agent of [team_name]!</span>")
+	to_chat(abductor.current, "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>")
+	to_chat(abductor.current, "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>")
 
 	abductor.announce_objectives()
 
@@ -194,9 +194,9 @@
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
-	abductor.current << "<span class='notice'>You are a scientist of [team_name]!</span>"
-	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
-	abductor.current << "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>"
+	to_chat(abductor.current, "<span class='notice'>You are a scientist of [team_name]!</span>")
+	to_chat(abductor.current, "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>")
+	to_chat(abductor.current, "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>")
 
 	abductor.announce_objectives()
 
@@ -269,9 +269,9 @@
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			world << "<span class='greenannounce'>[team_name] team fulfilled its mission!</span>"
+			to_chat(world, "<span class='greenannounce'>[team_name] team fulfilled its mission!</span>")
 		else
-			world << "<span class='boldannounce'>[team_name] team failed its mission.</span>"
+			to_chat(world, "<span class='boldannounce'>[team_name] team failed its mission.</span>")
 	..()
 	return 1
 
@@ -289,21 +289,12 @@
 				text += printplayer(abductee_mind)
 				text += printobjectives(abductee_mind)
 	text += "<br>"
-	world << text
+	to_chat(world, text)
 
 //Landmarks
 // TODO: Split into seperate landmarks for prettier ships
 /obj/effect/landmark/abductor
 	var/team = 1
-
-/obj/effect/landmark/abductor/console/New()
-	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
-	c.team = team
-
-	spawn(5) // I'd do this properly when i got some time, temporary hack for mappers
-		c.Setup()
-	qdel(src)
-
 
 /obj/effect/landmark/abductor/agent
 /obj/effect/landmark/abductor/scientist
@@ -354,8 +345,22 @@
 	explanation_text = "Steal all"
 
 /datum/objective/abductee/steal/New()
-	var/target = pick(list("pets","lights","monkeys","fruits","shoes","bars of soap"))
+	var/target = pick(list("pets","lights","monkeys","fruits","shoes","bars of soap", "weapons", "computers", "organs"))
 	explanation_text+=" [target]."
+
+/datum/objective/abductee/paint
+	explanation_text = "The station is hideous. You must color it all"
+
+/datum/objective/abductee/paint/New()
+	var/color = pick(list("red", "blue", "green", "yellow", "orange", "purple", "black", "in rainbows", "in blood"))
+	explanation_text+= " [color]!"
+
+/datum/objective/abductee/speech
+	explanation_text = "Your brain is broken... you can only communicate in"
+
+/datum/objective/abductee/speech/New()
+	var/style = pick(list("pantomime", "rhyme", "haiku", "extended metaphors", "riddles", "extremely literal terms", "sound effects", "military jargon"))
+	explanation_text+= " [style]."
 
 /datum/objective/abductee/capture
 	explanation_text = "Capture"
@@ -396,16 +401,16 @@
 	explanation_text = "Start a collection of corpses. Don't kill people to get these corpses."
 
 /datum/objective/abductee/floors
-	explanation_text = "Replace all the floor tiles with carpeting, wooden boards, or grass."
+	explanation_text = "Replace all the floor tiles with wood, carpeting, grass or bling."
 
 /datum/objective/abductee/POWERUNLIMITED
 	explanation_text = "Flood the station's powernet with as much electricity as you can."
 
 /datum/objective/abductee/pristine
-	explanation_text = "Ensure the station is in absolutely pristine condition."
+	explanation_text = "The CEO of Nanotrasen is coming! Ensure the station is in absolutely pristine condition."
 
-/datum/objective/abductee/window
-	explanation_text = "Replace all normal windows with reinforced windows."
+/datum/objective/abductee/nowalls
+	explanation_text = "The crew must get to know one another better. Break down the walls inside the station!"
 
 /datum/objective/abductee/nations
 	explanation_text = "Ensure your department prospers over all else."
@@ -413,17 +418,11 @@
 /datum/objective/abductee/abductception
 	explanation_text = "You have been changed forever. Find the ones that did this to you and give them a taste of their own medicine."
 
-/datum/objective/abductee/ghosts
-	explanation_text = "Conduct a seance with the spirits of the afterlife."
-
 /datum/objective/abductee/summon
-	explanation_text = "Conduct a ritual to summon an elder god."
+	explanation_text = "The elder gods hunger. Gather a cult and conduct a ritual to summon one."
 
 /datum/objective/abductee/machine
-	explanation_text = "You are secretly an android. Interface with as many machines as you can to boost your own power."
-
-/datum/objective/abductee/prevent
-	explanation_text = "You have been enlightened. This knowledge must not escape. Ensure nobody else can become enlightened."
+	explanation_text = "You are secretly an android. Interface with as many machines as you can to boost your own power so the AI may acknowledge you at last."
 
 /datum/objective/abductee/calling
 	explanation_text = "Call forth a spirit from the other side."
@@ -431,7 +430,7 @@
 /datum/objective/abductee/calling/New()
 	var/mob/dead/D = pick(dead_mob_list)
 	if(D)
-		explanation_text = "You know that [D] has perished. Call them from the spirit realm."
+		explanation_text = "You know that [D] has perished. Hold a seance to call them from the spirit realm."
 
 /datum/objective/abductee/social_experiment
 	explanation_text = "This is a secret social experiment conducted by Nanotrasen. Convince the crew that this is the truth."
@@ -443,7 +442,7 @@
 	explanation_text = "Nanotrasen is abusing the animals! Save as many as you can!"
 
 /datum/objective/abductee/defect
-	explanation_text = "Defect from your employer."
+	explanation_text = "Fuck the system! Defect from the station and start an independent colony in space, Lavaland or the derelict. Recruit crewmates if you can."
 
 /datum/objective/abductee/promote
 	explanation_text = "Climb the corporate ladder all the way to the top!"
@@ -458,17 +457,31 @@
 	explanation_text = "You are pregnant and soon due. Find a safe place to deliver your baby."
 
 /datum/objective/abductee/engine
-	explanation_text = "Go have a good conversation with the Singularity/Tesla/Supermatter crystal. Bonus points if it responds."
-	
-/datum/objective/abductee/teamredisbetterthangreen
-	explanation_text = "Tell the AI (or a borg/pAI/drone if there is no AI) some corny technology jokes until it cries for help."
-	
-/datum/objective/abductee/time
-	explanation_text = "Go bug a bronze worshipper to give you a clock."
-		
-/datum/objective/abductee/licky
-	explanation_text = "You must lick anything that you find interesting."
-	
+	explanation_text = "Go have a good conversation with the singularity/tesla/supermatter crystal. Bonus points if it responds."
+
 /datum/objective/abductee/music
-	explanation_text = "Start playing music, you're the best musician ever. If anyone hates it, beat them on the head with your instrument!"
-	
+	explanation_text = "You burn with passion for music. Share your vision. If anyone hates it, beat them on the head with your instrument!"
+
+/datum/objective/abductee/clown
+	explanation_text = "The clown is not funny. You can do better! Steal his audience and make the crew laugh!"
+
+/datum/objective/abductee/party
+	explanation_text = "You're throwing a huge rager. Make it as awesome as possible so the whole crew comes... OR ELSE!"
+
+/datum/objective/abductee/pets
+	explanation_text = "All the pets around here suck. You need to make them cooler. Replace them with exotic beasts!"
+
+/datum/objective/abductee/conspiracy
+	explanation_text = "The leaders of this station are hiding a grand, evil conspiracy. Only you can learn what it is, and expose it to the people!"
+
+/datum/objective/abductee/stalker
+	explanation_text = "The Syndicate has hired you to compile dossiers on all important members of the crew. Be sure they don't know you're doing it."
+
+/datum/objective/abductee/narrator
+	explanation_text = "You're the narrator of this tale. Follow around the protagonists to tell their story."
+
+/datum/objective/abductee/lurve
+	explanation_text = "You are doomed to feel woefully incomplete forever... until you find your true love on this station. They're waiting for you!"
+
+/datum/objective/abductee/sixthsense
+	explanation_text = "You died back there and went to heaven... or is it hell? No one here seems to know they're dead. Convince them, and maybe you can escape this limbo."

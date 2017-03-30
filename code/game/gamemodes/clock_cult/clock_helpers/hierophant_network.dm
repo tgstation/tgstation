@@ -6,11 +6,11 @@
 		if(!servantsonly && isobserver(M))
 			if(target)
 				var/link = FOLLOW_LINK(M, target)
-				M << "[link] [message]"
+				to_chat(M, "[link] [message]")
 			else
-				M << message
+				to_chat(M, message)
 		else if(is_servant_of_ratvar(M))
-			M << message
+			to_chat(M, message)
 	return TRUE
 
 //Sends a titled message from a mob to all servants of ratvar and ghosts.
@@ -18,7 +18,7 @@
 	if(!user || !message)
 		return FALSE
 	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]: \
-	</span><span class='[message_span]'>\"[message]\"</span>"
+	</span><span class='[message_span]'>\"[strip_html_properly(message)]\"</span>"
 	hierophant_message(parsed_message, FALSE, user)
 	return TRUE
 
@@ -40,8 +40,8 @@
 	return ..()
 
 /datum/action/innate/hierophant/Activate()
-	var/input = stripped_input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "")
+	var/input = strip_html_properly(sanitize_russian(input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "") as text|null))
 	if(!input || !IsAvailable())
 		return
 
-	titled_hierophant_message(owner, russian_html2text(input), span_for_name, span_for_message, title)
+	titled_hierophant_message(owner, input, span_for_name, span_for_message, title)

@@ -100,7 +100,7 @@ List of nuances:
 //Causes the mob or AM in question to speak a message; it assumes that the message is already translated to ratvar speech using text2ratvar()
 /proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
 	var/list/spans = list(SPAN_ROBOT)
-
+	message = russian_html2text(message)
 	var/old_languages_spoken = AM.languages_spoken
 	AM.languages_spoken = HUMAN //anyone who can understand HUMAN will hear weird shitty ratvar speak, otherwise it'll get starred out
 	if(isliving(AM))

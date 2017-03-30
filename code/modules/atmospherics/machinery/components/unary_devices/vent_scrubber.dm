@@ -340,7 +340,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			playsound(loc, WT.usesound, 40, 1)
-			user << "<span class='notice'>Now welding the scrubber.</span>"
+			to_chat(user, "<span class='notice'>Now welding the scrubber.</span>")
 			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn())
 					return
@@ -361,7 +361,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
 	if(..())
 		if (!(stat & NOPOWER) && on)
-			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
 		else
 			return 1
 

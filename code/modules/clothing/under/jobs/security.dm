@@ -22,6 +22,8 @@
 	random_sensor = 0
 
 /obj/item/clothing/under/rank/security/grey
+	name = "grey security jumpsuit"
+	desc = "A tactical relic of years past before nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "security"
 	item_state = "gy_suit"
 	item_color = "security"
@@ -40,6 +42,8 @@
 	random_sensor = 0
 
 /obj/item/clothing/under/rank/warden/grey
+	name = "grey security suit"
+	desc = "A formal relic of years past before nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "warden"
 	item_state = "gy_suit"
 	item_color = "warden"
@@ -83,6 +87,8 @@
 	random_sensor = 0
 
 /obj/item/clothing/under/rank/head_of_security/grey
+	name = "head of security's grey jumpsuit"
+	desc = "There are old men, and there are bold men, but there are very few old, bold men."
 	icon_state = "hos"
 	item_state = "gy_suit"
 	item_color = "hos"

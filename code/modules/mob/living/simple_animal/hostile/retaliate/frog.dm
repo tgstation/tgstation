@@ -25,7 +25,7 @@
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 1
 
-/mob/living/simple_animal/hostile/retaliate/frog/New()
+/mob/living/simple_animal/hostile/retaliate/frog/Initialize()
 	..()
 	if(prob(1))
 		name = "rare frog"

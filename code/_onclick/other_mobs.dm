@@ -7,7 +7,7 @@
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
 
 	if(!has_active_hand()) //can't attack without a hand.
-		src << "<span class='notice'>You look at your arm and sigh.</span>"
+		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
 		return
 
 	// Special glove functions:
@@ -200,5 +200,5 @@
 	New Players:
 	Have no reason to click on anything at all.
 */
-/mob/new_player/ClickOn()
+/mob/dead/new_player/ClickOn()
 	return

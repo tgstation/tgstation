@@ -3,6 +3,7 @@
 	desc = "It monitors power levels across the station."
 	icon_screen = "power"
 	icon_keyboard = "power_key"
+	light_color = LIGHT_COLOR_YELLOW
 	use_power = 2
 	idle_power_usage = 20
 	active_power_usage = 100

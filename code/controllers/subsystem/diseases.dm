@@ -1,19 +1,19 @@
-var/datum/subsystem/diseases/SSdisease
+var/datum/controller/subsystem/diseases/SSdisease
 
-/datum/subsystem/diseases
+/datum/controller/subsystem/diseases
 	name = "Diseases"
 	flags = SS_KEEP_TIMING|SS_NO_INIT
 
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/subsystem/diseases/New()
+/datum/controller/subsystem/diseases/New()
 	NEW_SS_GLOBAL(SSdisease)
 
-/datum/subsystem/diseases/stat_entry(msg)
+/datum/controller/subsystem/diseases/stat_entry(msg)
 	..("P:[processing.len]")
 
-/datum/subsystem/diseases/fire(resumed = 0)
+/datum/controller/subsystem/diseases/fire(resumed = 0)
 	if(!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)

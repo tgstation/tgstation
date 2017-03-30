@@ -234,14 +234,14 @@ var/list/wire_name_directory = list()
 				cut_color(target_wire)
 				. = TRUE
 			else
-				L << "<span class='warning'>You need wirecutters!</span>"
+				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
 			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
 				playsound(holder, 'sound/weapons/empty.ogg', 20, 1)
 				pulse_color(target_wire)
 				. = TRUE
 			else
-				L << "<span class='warning'>You need a multitool!</span>"
+				to_chat(L, "<span class='warning'>You need a multitool!</span>")
 		if("attach")
 			if(is_attached(target_wire))
 				var/obj/item/O = detach_assembly(target_wire)
@@ -257,6 +257,6 @@ var/list/wire_name_directory = list()
 						attach_assembly(target_wire, A)
 						. = TRUE
 					else
-						L << "<span class='warning'>You need an attachable assembly!</span>"
+						to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")
 
 #undef MAXIMUM_EMP_WIRES

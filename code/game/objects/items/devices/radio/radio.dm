@@ -23,7 +23,7 @@
 	var/subspace_switchable = 0
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
-	var/centcom = 0//Bleh, more dirty booleans
+	var/independent = FALSE // If true, bypasses any tcomms machinery.
 	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
@@ -58,7 +58,7 @@
 	channels = list()
 	translate_binary = 0
 	syndie = 0
-	centcom = 0
+	independent = FALSE
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
@@ -73,8 +73,8 @@
 		if(keyslot.syndie)
 			syndie = 1
 
-		if(keyslot.centcom)
-			centcom = 1
+		if(keyslot.independent)
+			independent = TRUE
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
@@ -238,6 +238,12 @@
 	var/freqnum = text2num(freq) //Why should we call text2num three times when we can just do it here?
 	var/turf/position = get_turf(src)
 
+	var/jammed = FALSE
+	for(var/obj/item/device/jammer/jammer in active_jammers)
+		if(get_dist(position,get_turf(jammer)) < jammer.range)
+			jammed = TRUE
+			break
+
 	//#### Tagging the signal with all appropriate identity values ####//
 
 	// ||-- The mob's name identity --||
@@ -254,6 +260,8 @@
 
 	var/jobname // the mob's "job"
 
+	if(jammed)
+		message = Gibberish(message,100)
 
 	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 	if(ishuman(M))
@@ -291,9 +299,9 @@
 	else
 		jobname = "Unknown"
 
-	/* ###### Centcom channel bypasses all comms relays. ###### */
+	/* ###### `independent` radios bypass all comms relays. ###### */
 
-	if (freqnum == CENTCOM_FREQ && centcom)
+	if(independent)
 		var/datum/signal/signal = new
 		signal.transmission_method = 2
 		signal.data = list(
@@ -470,7 +478,7 @@
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
 	if(freq == CENTCOM_FREQ)
-		if (!(src.centcom))
+		if(!independent)
 			return -1
 	if (!on)
 		return -1
@@ -499,18 +507,18 @@
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (b_stat)
-		user << "<span class='notice'>[name] can be attached and modified.</span>"
+		to_chat(user, "<span class='notice'>[name] can be attached and modified.</span>")
 	else
-		user << "<span class='notice'>[name] can not be modified or attached.</span>"
+		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		b_stat = !b_stat
 		if(b_stat)
-			user << "<span class='notice'>The radio can now be attached and modified!</span>"
+			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
 		else
-			user << "<span class='notice'>The radio can no longer be modified or attached!</span>"
+			to_chat(user, "<span class='notice'>The radio can no longer be modified or attached!</span>")
 	else
 		return ..()
 
@@ -518,7 +526,7 @@
 	emped++ //There's been an EMP; better count it
 	var/curremp = emped //Remember which EMP this was
 	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
-		loc << "<span class='warning'>\The [src] overloads.</span>"
+		to_chat(loc, "<span class='warning'>\The [src] overloads.</span>")
 	broadcasting = 0
 	listening = 0
 	for (var/ch_name in channels)
@@ -540,6 +548,10 @@
 	name = "cyborg radio"
 	subspace_switchable = 1
 	dog_fashion = null
+
+/obj/item/device/radio/borg/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
@@ -565,14 +577,14 @@
 					keyslot = null
 
 			recalculateChannels()
-			user << "<span class='notice'>You pop out the encryption key in the radio.</span>"
+			to_chat(user, "<span class='notice'>You pop out the encryption key in the radio.</span>")
 
 		else
-			user << "<span class='warning'>This radio doesn't have any encryption keys!</span>"
+			to_chat(user, "<span class='warning'>This radio doesn't have any encryption keys!</span>")
 
 	else if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot)
-			user << "<span class='warning'>The radio can't hold another key!</span>"
+			to_chat(user, "<span class='warning'>The radio can't hold another key!</span>")
 			return
 
 		if(!keyslot)

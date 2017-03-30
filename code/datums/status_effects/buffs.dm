@@ -44,6 +44,7 @@
 	id = "vanguard"
 	duration = 200
 	tick_interval = 0 //tick as fast as possible
+	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /obj/screen/alert/status_effect/vanguard
 	var/datum/progressbar/progbar
 
@@ -58,7 +59,8 @@
 	if(istype(L)) //this is probably more safety than actually needed
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
-		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."
+		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.\
+		[ratvar_awakens ? "":"<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."]"
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
@@ -201,3 +203,21 @@
 	if(islist(owner.stun_absorption) && owner.stun_absorption["hisgrace"])
 		owner.stun_absorption -= "hisgrace"
 
+
+/datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
+	id = "wish_granters_gift"
+	duration = 50
+	alert_type = /obj/screen/alert/status_effect/wish_granters_gift
+
+/datum/status_effect/wish_granters_gift/on_apply()
+	to_chat(owner, "<span class='notice'>Death is not your end! The Wish Granter's energy suffuses you, and you begin to rise...</span>")
+
+/datum/status_effect/wish_granters_gift/on_remove()
+	owner.revive(full_heal = 1, admin_revive = 1)
+	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>")
+	owner.update_canmove()
+
+/obj/screen/alert/status_effect/wish_granters_gift
+	name = "Wish Granter's Immortality"
+	desc = "You are being resurrected!"
+	icon_state = "wish_granter"

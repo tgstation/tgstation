@@ -8,9 +8,10 @@
 	inactive_icon = "mania_motor_inactive"
 	unanchored_icon = "mania_motor_unwrenched"
 	construction_value = 20
+	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	max_integrity = 100
 	obj_integrity = 100
-	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
+	light_color = "#AF0AAF"
 	debris = list(/obj/item/clockwork/alloy_shards/large = 2, \
 	/obj/item/clockwork/alloy_shards/small = 2, \
 	/obj/item/clockwork/component/geis_capacitor/antennae = 1)
@@ -30,7 +31,7 @@
 /obj/structure/destructible/clockwork/powered/mania_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and at least <b>[convert_cost]W</b> to attempt to convert humans adjacent to it.</span>"
+		to_chat(user, "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and at least <b>[convert_cost]W</b> to attempt to convert humans adjacent to it.</span>")
 
 /obj/structure/destructible/clockwork/powered/mania_motor/forced_disable(bad_effects)
 	if(active)
@@ -44,16 +45,16 @@
 /obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY) && is_servant_of_ratvar(user))
 		if(!total_accessable_power() >= mania_cost)
-			user << "<span class='warning'>[src] needs more power to function!</span>"
+			to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
 			return 0
 		toggle(0, user)
 
 /obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
 	. = ..()
 	if(active)
-		SetLuminosity(2, 1)
+		set_light(2, 0.9)
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 /obj/structure/destructible/clockwork/powered/mania_motor/process()
 	if(!try_use_power(mania_cost))
@@ -81,10 +82,10 @@
 			var/sound_distance = falloff_distance * 0.5
 			var/targetbrainloss = H.getBrainLoss()
 			if(distance > 3 && prob(falloff_distance * 0.5))
-				H << "<span class='sevtug_small'>\"[text2ratvar(pick(mania_messages))]\"</span>"
+				to_chat(H, "<span class='sevtug_small'>\"[text2ratvar(pick(mania_messages))]\"</span>")
 			if(distance <= 1)
 				if(!H.Adjacent(src))
-					H << "<span class='sevtug'>\"[text2ratvar(pick(close_messages))]\"</span>"
+					to_chat(H, "<span class='sevtug'>\"[text2ratvar(pick(close_messages))]\"</span>")
 					H.playsound_local(T, hum, sound_distance, 1)
 				else if(!try_use_power(convert_cost))
 					visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
@@ -98,7 +99,7 @@
 						else
 							H.Paralyse(3)
 					else if(is_eligible_servant(H))
-						H << "<span class='sevtug'>\"[text2ratvar("You are mine and his, now.")]\"</span>"
+						to_chat(H, "<span class='sevtug'>\"[text2ratvar("You are mine and his, now.")]\"</span>")
 						add_servant_of_ratvar(H)
 						H.Paralyse(5)
 			else
@@ -107,9 +108,9 @@
 				if(0 to 3)
 					if(prob(falloff_distance * 0.5))
 						if(prob(falloff_distance))
-							H << "<span class='sevtug_small'>\"[text2ratvar(pick(mania_messages))]\"</span>"
+							to_chat(H, "<span class='sevtug_small'>\"[text2ratvar(pick(mania_messages))]\"</span>")
 						else
-							H << "<span class='sevtug'>\"[text2ratvar(pick(compel_messages))]\"</span>"
+							to_chat(H, "<span class='sevtug'>\"[text2ratvar(pick(compel_messages))]\"</span>")
 					if(targetbrainloss <= 40)
 						H.adjustBrainLoss(3 * efficiency)
 					H.adjust_drugginess(Clamp(7 * efficiency, 0, 50 - H.druggy))

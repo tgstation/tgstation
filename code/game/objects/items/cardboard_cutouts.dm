@@ -37,7 +37,7 @@
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
 		return
-	user << "<span class='notice'>You right [src].</span>"
+	to_chat(user, "<span class='notice'>You right [src].</span>")
 	desc = initial(desc)
 	icon = initial(icon)
 	icon_state = initial(icon_state) //This resets a cutout to its blank state - this is intentional to allow for resetting
@@ -76,12 +76,12 @@
 	if(!crayon || !user)
 		return
 	if(pushed_over)
-		user << "<span class='warning'>Right [src] first!</span>"
+		to_chat(user, "<span class='warning'>Right [src] first!</span>")
 		return
 	if(crayon.check_empty(user))
 		return
 	if(crayon.is_capped)
-		user << "<span class='warning'>Take the cap off first!</span>"
+		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
 	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
 	if(!new_appearance || !crayon || !user.canUseTopic(src))

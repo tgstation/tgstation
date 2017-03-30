@@ -34,7 +34,7 @@
 			return cachedintel
 
 		if(dbcon.Connect())
-			var/DBQuery/query = dbcon.NewQuery({"
+			var/DBQuery/query_get_ip_intel = dbcon.NewQuery({"
 				SELECT date, intel, TIMESTAMPDIFF(MINUTE,date,NOW())
 				FROM [format_table_name("ipintel")]
 				WHERE
@@ -49,22 +49,22 @@
 							date + INTERVAL [config.ipintel_save_bad] HOUR > NOW()
 					))
 				"})
-			query.Execute()
-			if (query.NextRow())
+			if(!query_get_ip_intel.Execute())
+				return
+			if (query_get_ip_intel.NextRow())
 				res.cache = TRUE
-				res.cachedate = query.item[1]
-				res.intel = text2num(query.item[2])
-				res.cacheminutesago = text2num(query.item[3])
-				res.cacherealtime = world.realtime - (text2num(query.item[3])*10*60)
+				res.cachedate = query_get_ip_intel.item[1]
+				res.intel = text2num(query_get_ip_intel.item[2])
+				res.cacheminutesago = text2num(query_get_ip_intel.item[3])
+				res.cacherealtime = world.realtime - (text2num(query_get_ip_intel.item[3])*10*60)
 				SSipintel.cache[ip] = res
 				return
 	res.intel = ip_intel_query(ip)
 	if (updatecache && res.intel >= 0)
 		SSipintel.cache[ip] = res
 		if(dbcon.Connect())
-			var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("ipintel")] (ip, intel) VALUES (INET_ATON('[ip]'), [res.intel]) ON DUPLICATE KEY UPDATE intel = VALUES(intel), date = NOW()")
-			query.Execute()
-	return
+			var/DBQuery/query_add_ip_intel = dbcon.NewQuery("INSERT INTO [format_table_name("ipintel")] (ip, intel) VALUES (INET_ATON('[ip]'), [res.intel]) ON DUPLICATE KEY UPDATE intel = VALUES(intel), date = NOW()")
+			query_add_ip_intel.Execute()
 
 
 

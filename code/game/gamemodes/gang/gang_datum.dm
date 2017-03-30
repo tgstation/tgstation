@@ -159,7 +159,7 @@
 		var/mob/living/mob = get(tool.loc,/mob/living)
 		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(mob.mind.gang_datum == src)
-				mob << "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>"
+				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>")
 			return
 
 
@@ -206,7 +206,7 @@
 					gang_outfit = outfit
 
 			if(gang_outfit)
-				gangster << "<span class='notice'>The [src] Gang's influence grows as you wear [gang_outfit].</span>"
+				to_chat(gangster, "<span class='notice'>The [src] Gang's influence grows as you wear [gang_outfit].</span>")
 				uniformed ++
 
 	//Calculate and report influence growth

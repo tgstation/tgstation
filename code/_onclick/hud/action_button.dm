@@ -14,8 +14,9 @@
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return 1
-	if(usr.next_move >= world.time) // Is this needed ?
+	if(usr.next_click > world.time)
 		return
+	usr.next_click = world.time + 1
 	linked_action.Trigger()
 	return 1
 
@@ -71,7 +72,7 @@
 	. = list()
 	.["bg_icon"] = ui_style_icon
 	.["bg_state"] = "template"
-	
+
 	//TODO : Make these fit theme
 	.["toggle_icon"] = 'icons/mob/actions.dmi'
 	.["toggle_hide"] = "hide"

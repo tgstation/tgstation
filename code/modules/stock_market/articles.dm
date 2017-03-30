@@ -18,7 +18,7 @@ var/global/list/FrozenAccounts = list()
 
 /proc/list_frozen()
 	for (var/A in FrozenAccounts)
-		usr << "[A]: [length(FrozenAccounts[A])] borrows"
+		to_chat(usr, "[A]: [length(FrozenAccounts[A])] borrows")
 
 /datum/article
 	var/headline = "Something big is happening"

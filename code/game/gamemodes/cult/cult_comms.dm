@@ -16,7 +16,7 @@
 	if(!input || !IsAvailable())
 		return
 
-	cultist_commune(usr, input)
+	cultist_commune(usr, strip_html_properly(input))
 	return
 
 /proc/cultist_commune(mob/living/user, message)
@@ -24,22 +24,17 @@
 		return
 	if(!ishuman(user))
 		user.say("O bidai nabora se[pick("'","`")]sma!")
+		user.say(html_decode(message))
 	else
 		user.whisper("O bidai nabora se[pick("'","`")]sma!")
-	sleep(10)
-	if(!user)
-		return
-	if(!ishuman(user))
-		user.say(rhtml_decode(message,1))
-	else
-		user.whisper(rhtml_decode(message,1))
-	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [russian_html2text(message)]</span>"
+		user.whisper(html_decode(message))
+	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [russian_html2text(message)]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
-			M << my_message
+			to_chat(M, my_message)
 		else if(M in dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
-			M << "[link] [my_message]"
+			to_chat(M, "[link] [my_message]")
 
 	log_say("[user.real_name]/[user.key] : [russian_html2text(message)]")
 

@@ -2,10 +2,9 @@
 	set name = "Possess Obj"
 	set category = "Object"
 
-	if(istype(O,/obj/singularity))
-		if(config.forbid_singulo_possession)
-			usr << "It is forbidden to possess singularities."
-			return
+	if(O.dangerous_possession && config.forbid_singulo_possession)
+		to_chat(usr, "[O] is too powerful for you to possess.")
+		return
 
 	var/turf/T = get_turf(O)
 

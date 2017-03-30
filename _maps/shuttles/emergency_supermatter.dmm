@@ -60,10 +60,10 @@
 /obj/structure/reflector/single{
 	anchored = 1
 	},
-/turf/open/floor/plating,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "an" = (
 /obj/structure/reflector/box{
@@ -78,10 +78,10 @@
 	dir = 8;
 	anchored = 1
 	},
-/turf/open/floor/plating,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "ap" = (
 /obj/machinery/shower{
@@ -100,19 +100,19 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "as" = (
-/turf/open/floor/plating,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "at" = (
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "au" = (
-/turf/open/floor/plating,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair{
@@ -253,28 +253,28 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aR" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aS" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aT" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aU" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aV" = (
 /obj/machinery/power/supermatter_shard/hugbox{
@@ -284,28 +284,28 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aW" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aX" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aY" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aZ" = (
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "ba" = (
 /obj/machinery/power/emitter/energycannon{
@@ -315,10 +315,10 @@
 /area/shuttle/escape)
 "bb" = (
 /obj/structure/chair,
-/turf/open/floor/plating/airless,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bc" = (
 /obj/structure/shuttle/engine/heater,
@@ -338,17 +338,57 @@
 /area/shuttle/escape)
 "bg" = (
 /obj/structure/grille,
-/turf/open/floor/plating,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "bh" = (
 /obj/structure/grille,
-/turf/open/floor/plating,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bi" = (
+/obj/structure/closet/radiation{
+	anchored = 1
+	},
+/obj/item/clothing/glasses/meson/engine,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"bj" = (
+/obj/structure/closet/radiation{
+	anchored = 1
+	},
+/obj/item/clothing/glasses/meson/engine,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"bk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -403,7 +443,7 @@ be
 ac
 ag
 ag
-ag
+bi
 ag
 ag
 ag
@@ -458,7 +498,7 @@ as
 bg
 as
 as
-as
+bk
 ad
 at
 aO
@@ -506,7 +546,7 @@ au
 bh
 au
 au
-au
+bl
 ad
 at
 aP
@@ -547,7 +587,7 @@ aa
 ac
 ag
 ag
-ag
+bj
 ag
 ag
 ag

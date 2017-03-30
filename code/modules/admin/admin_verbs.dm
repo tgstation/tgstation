@@ -42,7 +42,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/client/proc/check_antagonists,		/*shows all antags*/
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
-//	/datum/admins/proc/mutepanel,		/*allows us to give access to runtime logs to somebody*/
+//	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
 //	/client/proc/getruntimelog,			/*allows us to access runtime logs to somebody*/
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
@@ -64,7 +64,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-	/client/proc/toggleSNPC, /* Toggles an npc's processing mode */
 	/client/proc/open_shuttle_manipulator /* Opens shuttle manipulator UI */
 	)
 var/list/admin_verbs_ban = list(
@@ -87,19 +86,18 @@ var/list/admin_verbs_fun = list(
 	/client/proc/one_click_antag,
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
-	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
 	/client/proc/forceEvent,
-	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all,
-	/client/proc/show_tip
+	/client/proc/show_tip,
+	/client/proc/smite
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -117,10 +115,8 @@ var/list/admin_verbs_server = list(
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/toggle_random_events,
-#if SERVERTOOLS
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
-#endif
 	/client/proc/panicbunker,
 	/client/proc/toggle_hub
 
@@ -148,7 +144,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/get_dynex_range,		//*debug verbs for dynex explosions.
 	/client/proc/set_dynex_scale,
 	/client/proc/cmd_display_del_log,
-	/client/proc/reset_latejoin_spawns,
 	/client/proc/create_outfits,
 	/client/proc/modify_goals,
 	/client/proc/debug_huds,
@@ -157,7 +152,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/jump_to_ruin,
 	/client/proc/clear_dynamic_transit,
 	/client/proc/toggle_medal_disable,
-	/client/proc/view_runtimes
+	/client/proc/view_runtimes,
+	/client/proc/pump_random_event
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -209,12 +205,10 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cinematic,
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
-	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/cmd_change_command_name,
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
-	/client/proc/cmd_admin_add_random_ai_law,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
@@ -244,7 +238,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/debug_huds,
 	/client/proc/customiseSNPC,
 	/client/proc/resetSNPC,
-	/client/proc/toggleSNPC
 	)
 
 /client/proc/add_admin_verbs()
@@ -326,7 +319,7 @@ var/list/admin_verbs_hideable = list(
 	verbs.Remove(/client/proc/hide_most_verbs, admin_verbs_hideable)
 	verbs += /client/proc/show_verbs
 
-	src << "<span class='interface'>Most of your adminverbs have been hidden.</span>"
+	to_chat(src, "<span class='interface'>Most of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","HMV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -337,7 +330,7 @@ var/list/admin_verbs_hideable = list(
 	remove_admin_verbs()
 	verbs += /client/proc/show_verbs
 
-	src << "<span class='interface'>Almost all of your adminverbs have been hidden.</span>"
+	to_chat(src, "<span class='interface'>Almost all of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -348,7 +341,7 @@ var/list/admin_verbs_hideable = list(
 	verbs -= /client/proc/show_verbs
 	add_admin_verbs()
 
-	src << "<span class='interface'>All of your adminverbs are now visible.</span>"
+	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>")
 	feedback_add_details("admin_verb","TAVVS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -371,7 +364,7 @@ var/list/admin_verbs_hideable = list(
 		ghost.reenter_corpse()
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else if(isnewplayer(mob))
-		src << "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
+		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
 	else
 		//ghostize
 		log_admin("[key_name(usr)] admin ghosted.")
@@ -390,10 +383,10 @@ var/list/admin_verbs_hideable = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>"
+			to_chat(mob, "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>")
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			mob << "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"
+			to_chat(mob, "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>")
 
 /client/proc/player_panel_new()
 	set name = "Player Panel"
@@ -551,7 +544,7 @@ var/list/admin_verbs_hideable = list(
 
 	var/ex_power = input("Explosive Power:") as null|num
 	var/range = round((2 * ex_power)**DYN_EX_SCALE)
-	usr << "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])"
+	to_chat(usr, "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
 
 /client/proc/get_dynex_power()
 	set category = "Debug"
@@ -560,7 +553,7 @@ var/list/admin_verbs_hideable = list(
 
 	var/ex_range = input("Light Explosion Range:") as null|num
 	var/power = (0.5 * ex_range)**(1/DYN_EX_SCALE)
-	usr << "Estimated Explosive Power: [power]"
+	to_chat(usr, "Estimated Explosive Power: [power]")
 
 /client/proc/set_dynex_scale()
 	set category = "Debug"
@@ -651,10 +644,10 @@ var/list/admin_verbs_hideable = list(
 	if(config)
 		if(config.log_hrefs)
 			config.log_hrefs = 0
-			src << "<b>Stopped logging hrefs</b>"
+			to_chat(src, "<b>Stopped logging hrefs</b>")
 		else
 			config.log_hrefs = 1
-			src << "<b>Started logging hrefs</b>"
+			to_chat(src, "<b>Started logging hrefs</b>")
 
 /client/proc/check_ai_laws()
 	set name = "Check AI Laws"
@@ -677,28 +670,28 @@ var/list/admin_verbs_hideable = list(
 	admin_datums -= ckey
 	verbs += /client/proc/readmin
 
-	src << "<span class='interface'>You are now a normal player.</span>"
+	to_chat(src, "<span class='interface'>You are now a normal player.</span>")
 	log_admin("[src] deadmined themself.")
 	message_admins("[src] deadmined themself.")
 	feedback_add_details("admin_verb","DAS")
 
 /client/proc/readmin()
- 	set name = "Readmin"
- 	set category = "Admin"
- 	set desc = "Regain your admin powers."
+	set name = "Readmin"
+	set category = "Admin"
+	set desc = "Regain your admin powers."
 
- 	load_admins(ckey)
+	load_admins(ckey)
 
- 	if(!holder) // Something went wrong...
- 			return
+	if(!holder) // Something went wrong...
+		return
 
- 	deadmins -= ckey
- 	verbs -= /client/proc/readmin
+	deadmins -= ckey
+	verbs -= /client/proc/readmin
 
- 	src << "<span class='interface'>You are now an admin.</span>"
- 	message_admins("[src] re-adminned themselves.")
- 	log_admin("[src] re-adminned themselves.")
- 	feedback_add_details("admin_verb","RAS")
+	to_chat(src, "<span class='interface'>You are now an admin.</span>")
+	message_admins("[src] re-adminned themselves.")
+	log_admin("[src] re-adminned themselves.")
+	feedback_add_details("admin_verb","RAS")
 
 /client/proc/populate_world(amount = 50 as num)
 	set name = "Populate World"

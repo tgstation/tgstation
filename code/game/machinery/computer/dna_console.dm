@@ -38,6 +38,8 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
@@ -45,7 +47,7 @@
 				return
 			I.loc = src
 			src.diskette = I
-			user << "<span class='notice'>You insert [I].</span>"
+			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			src.updateUsrDialog()
 			return
 	else
@@ -572,7 +574,7 @@
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
-	connected.occupant << "<span class='notice'>[src] activates!</span>"
+	to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
 	if(delayed_action)
 		apply_buffer(delayed_action["action"],delayed_action["buffer"])
 		delayed_action = null //or make it stick + reset button ?

@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/wizard
 	name = "Space Wizard"
 	desc = "EI NATH?"
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
@@ -36,7 +37,7 @@
 	var/next_cast = 0
 
 
-/mob/living/simple_animal/hostile/wizard/New()
+/mob/living/simple_animal/hostile/wizard/Initialize()
 	..()
 	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
 	fireball.clothes_req = 0

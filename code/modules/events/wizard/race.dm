@@ -24,6 +24,6 @@
 		H.set_species(new_species)
 		H.real_name = new_species.random_name(H.gender,1)
 		H.dna.unique_enzymes = H.dna.generate_unique_enzymes()
-		H << "<span class='notice'>You feel somehow... different?</span>"
+		to_chat(H, "<span class='notice'>You feel somehow... different?</span>")
 		if(!all_the_same)
 			new_species = pick(all_species)

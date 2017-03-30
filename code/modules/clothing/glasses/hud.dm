@@ -25,7 +25,7 @@
 /obj/item/clothing/glasses/hud/emag_act(mob/user)
 	if(emagged == 0)
 		emagged = 1
-		user << "<span class='warning'>PZZTTPFFFT</span>"
+		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
 		desc = desc + " The display flickers slightly."
 
 /obj/item/clothing/glasses/hud/health
@@ -45,6 +45,16 @@
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/hud/health/sunglasses
+	name = "Medical HUDSunglasses"
+	desc = "Sunglasses with a medical HUD."
+	icon_state = "sunhudmed"
+	origin_tech = "magnets=3;biotech=3;engineering=3"
+	darkness_view = 1
+	flash_protect = 1
+	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/blue
 
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "Diagnostic HUD"
@@ -100,9 +110,9 @@
 	icon_state = "hudpatch"
 
 /obj/item/clothing/glasses/hud/security/sunglasses
-	name = "HUDSunglasses"
-	desc = "Sunglasses with a HUD."
-	icon_state = "sunhud"
+	name = "Security HUDSunglasses"
+	desc = "Sunglasses with a security HUD."
+	icon_state = "sunhudsec"
 	origin_tech = "magnets=3;combat=3;engineering=3"
 	darkness_view = 1
 	flash_protect = 1

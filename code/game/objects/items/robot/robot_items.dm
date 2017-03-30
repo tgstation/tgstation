@@ -57,13 +57,13 @@
 			mode = 0
 	switch(mode)
 		if(0)
-			user << "Power reset. Hugs!"
+			to_chat(user, "Power reset. Hugs!")
 		if(1)
-			user << "Power increased!"
+			to_chat(user, "Power increased!")
 		if(2)
-			user << "BZZT. Electrifying arms..."
+			to_chat(user, "BZZT. Electrifying arms...")
 		if(3)
-			user << "ERROR: ARM ACTUATORS OVERLOADED."
+			to_chat(user, "ERROR: ARM ACTUATORS OVERLOADED.")
 
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
 	if(M == user)
@@ -172,7 +172,7 @@
 		mode = "charge"
 	else
 		mode = "draw"
-	user << "<span class='notice'>You toggle [src] to \"[mode]\" mode.</span>"
+	to_chat(user, "<span class='notice'>You toggle [src] to \"[mode]\" mode.</span>")
 	update_icon()
 
 /obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
@@ -182,10 +182,10 @@
 		if(is_type_in_list(target, charge_machines))
 			var/obj/machinery/M = target
 			if((M.stat & (NOPOWER|BROKEN)) || !M.anchored)
-				user << "<span class='warning'>[M] is unpowered!</span>"
+				to_chat(user, "<span class='warning'>[M] is unpowered!</span>")
 				return
 
-			user << "<span class='notice'>You connect to [M]'s power line...</span>"
+			to_chat(user, "<span class='notice'>You connect to [M]'s power line...</span>")
 			while(do_after(user, 15, target = M, progress = 0))
 				if(!user || !user.cell || mode != "draw")
 					return
@@ -198,27 +198,27 @@
 
 				M.use_power(200)
 
-			user << "<span class='notice'>You stop charging youself.</span>"
+			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
 
 		else if(is_type_in_list(target, charge_items))
 			var/obj/item/weapon/stock_parts/cell/cell = target
 			if(!istype(cell))
 				cell = locate(/obj/item/weapon/stock_parts/cell) in target
 			if(!cell)
-				user << "<span class='warning'>[target] has no power cell!</span>"
+				to_chat(user, "<span class='warning'>[target] has no power cell!</span>")
 				return
 
 			if(istype(target, /obj/item/weapon/gun/energy))
 				var/obj/item/weapon/gun/energy/E = target
 				if(!E.can_charge)
-					user << "<span class='warning'>[target] has no power port!</span>"
+					to_chat(user, "<span class='warning'>[target] has no power port!</span>")
 					return
 
 			if(!cell.charge)
-				user << "<span class='warning'>[target] has no power!</span>"
+				to_chat(user, "<span class='warning'>[target] has no power!</span>")
 
 
-			user << "<span class='notice'>You connect to [target]'s power port...</span>"
+			to_chat(user, "<span class='notice'>You connect to [target]'s power port...</span>")
 
 			while(do_after(user, 15, target = target, progress = 0))
 				if(!user || !user.cell || mode != "draw")
@@ -237,26 +237,26 @@
 					break
 				target.update_icon()
 
-			user << "<span class='notice'>You stop charging youself.</span>"
+			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
 
 	else if(is_type_in_list(target, charge_items))
 		var/obj/item/weapon/stock_parts/cell/cell = target
 		if(!istype(cell))
 			cell = locate(/obj/item/weapon/stock_parts/cell) in target
 		if(!cell)
-			user << "<span class='warning'>[target] has no power cell!</span>"
+			to_chat(user, "<span class='warning'>[target] has no power cell!</span>")
 			return
 
 		if(istype(target, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/E = target
 			if(!E.can_charge)
-				user << "<span class='warning'>[target] has no power port!</span>"
+				to_chat(user, "<span class='warning'>[target] has no power port!</span>")
 				return
 
 		if(cell.charge >= cell.maxcharge)
-			user << "<span class='warning'>[target] is already charged!</span>"
+			to_chat(user, "<span class='warning'>[target] is already charged!</span>")
 
-		user << "<span class='notice'>You connect to [target]'s power port...</span>"
+		to_chat(user, "<span class='notice'>You connect to [target]'s power port...</span>")
 
 		while(do_after(user, 15, target = target, progress = 0))
 			if(!user || !user.cell || mode != "charge")
@@ -275,7 +275,7 @@
 				break
 			target.update_icon()
 
-		user << "<span class='notice'>You stop charging [target].</span>"
+		to_chat(user, "<span class='notice'>You stop charging [target].</span>")
 
 /obj/item/device/harmalarm
 	name = "Sonic Harm Prevention Tool"
@@ -287,20 +287,20 @@
 /obj/item/device/harmalarm/emag_act(mob/user)
 	emagged = !emagged
 	if(emagged)
-		user << "<font color='red'>You short out the safeties on the [src]!</font>"
+		to_chat(user, "<font color='red'>You short out the safeties on the [src]!</font>")
 	else
-		user << "<font color='red'>You reset the safeties on the [src]!</font>"
+		to_chat(user, "<font color='red'>You reset the safeties on the [src]!</font>")
 
 /obj/item/device/harmalarm/attack_self(mob/user)
 	var/safety = !emagged
 	if(cooldown > world.time)
-		user << "<font color='red'>The device is still recharging!</font>"
+		to_chat(user, "<font color='red'>The device is still recharging!</font>")
 		return
 
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.cell.charge < 1200)
-			user << "<font color='red'>You don't have enough charge to do this!</font>"
+			to_chat(user, "<font color='red'>You don't have enough charge to do this!</font>")
 			return
 		R.cell.charge -= 1000
 		if(R.emagged)
@@ -319,7 +319,7 @@
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 		if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
-			R.connected_ai << "<br><span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span><br>"
+			to_chat(R.connected_ai, "<br><span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span><br>")
 
 		return
 
@@ -375,7 +375,7 @@
 
 /obj/item/borg/lollipop/proc/dispense(atom/A, mob/user)
 	if(candy <= 0)
-		user << "<span class='warning'>No lollipops left in storage!</span>"
+		to_chat(user, "<span class='warning'>No lollipops left in storage!</span>")
 		return FALSE
 	var/turf/T = get_turf(A)
 	if(!T || !istype(T) || !isopenturf(T))
@@ -387,13 +387,13 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/lollipop(T)
 	candy--
 	check_amount()
-	user << "<span class='notice'>Dispensing lollipop...</span>"
+	to_chat(user, "<span class='notice'>Dispensing lollipop...</span>")
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	return TRUE
 
 /obj/item/borg/lollipop/proc/shootL(atom/target, mob/living/user, params)
 	if(candy <= 0)
-		user << "<span class='warning'>Not enough lollipops left!</span>"
+		to_chat(user, "<span class='warning'>Not enough lollipops left!</span>")
 		return FALSE
 	candy--
 	var/obj/item/ammo_casing/caseless/lollipop/A = new /obj/item/ammo_casing/caseless/lollipop(src)
@@ -408,7 +408,7 @@
 
 /obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)	//Most certainly a good idea.
 	if(candy <= 0)
-		user << "<span class='warning'>Not enough gumballs left!</span>"
+		to_chat(user, "<span class='warning'>Not enough gumballs left!</span>")
 		return FALSE
 	candy--
 	var/obj/item/ammo_casing/caseless/gumball/A = new /obj/item/ammo_casing/caseless/gumball(src)
@@ -427,7 +427,7 @@
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell.use(12))
-			user << "<span class='warning'>Not enough power.</span>"
+			to_chat(user, "<span class='warning'>Not enough power.</span>")
 			return FALSE
 		if(R.emagged)
 			hitdamage = emaggedhitdamage
@@ -446,13 +446,13 @@
 	switch(mode)
 		if(1)
 			mode++
-			user << "<span class='notice'>Module is now throwing lollipops.</span>"
+			to_chat(user, "<span class='notice'>Module is now throwing lollipops.</span>")
 		if(2)
 			mode++
-			user << "<span class='notice'>Module is now blasting gumballs.</span>"
+			to_chat(user, "<span class='notice'>Module is now blasting gumballs.</span>")
 		if(3)
 			mode = 1
-			user << "<span class='notice'>Module is now dispensing lollipops.</span>"
+			to_chat(user, "<span class='notice'>Module is now dispensing lollipops.</span>")
 	..()
 
 /obj/item/ammo_casing/caseless/gumball

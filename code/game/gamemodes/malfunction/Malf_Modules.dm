@@ -31,10 +31,10 @@
 	var/turf/T = get_turf(src)
 
 	if(!istype(T) || T.z != ZLEVEL_STATION)
-		src << "<span class='warning'>You cannot activate the doomsday device while off-station!</span>"
+		to_chat(src, "<span class='warning'>You cannot activate the doomsday device while off-station!</span>")
 		return
 
-	src << "<span class='notice'>Doomsday device armed.</span>"
+	to_chat(src, "<span class='notice'>Doomsday device armed.</span>")
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
 	set_security_level("delta")
 	nuking = 1
@@ -117,9 +117,9 @@
 			continue
 		if(issilicon(L))
 			continue
-		L << "<span class='userdanger'>The blast wave from [src] tears you atom from atom!</span>"
+		to_chat(L, "<span class='userdanger'>The blast wave from [src] tears you atom from atom!</span>")
 		L.dust()
-	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
+	to_chat(world, "<B>The AI cleansed the station of life with the doomsday device!</B>")
 	ticker.force_ending = 1
 
 /datum/AI_Module/large/upgrade_turrets
@@ -144,7 +144,7 @@
 		turret.obj_integrity += 30
 		turret.lethal_projectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
 		turret.lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
-	src << "<span class='notice'>Turrets upgraded.</span>"
+	to_chat(src, "<span class='notice'>Turrets upgraded.</span>")
 
 /datum/AI_Module/large/lockdown
 	module_name = "Hostile Station Lockdown"
@@ -174,7 +174,7 @@
 
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
-	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
+	to_chat(src, "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>")
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/minor_announce,
 		"Automatic system reboot complete. Have a secure day.",
 		"Network reset:"), 900)
@@ -201,7 +201,7 @@
 			var/obj/item/weapon/rcd/RCD = I
 			RCD.detonate_pulse()
 
-	src << "<span class='warning'>RCD detonation pulse emitted.</span>"
+	to_chat(src, "<span class='warning'>RCD detonation pulse emitted.</span>")
 	malf_cooldown = 1
 	spawn(100)
 		malf_cooldown = 0
@@ -223,7 +223,7 @@
 	if(stat)
 		return
 	can_dominate_mechs = 1 //Yep. This is all it does. Honk!
-	src << "Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>"
+	to_chat(src, "Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>")
 	verbs -= /mob/living/silicon/ai/proc/mech_takeover
 
 /datum/AI_Module/large/break_fire_alarms
@@ -247,7 +247,7 @@
 		if(F.z != ZLEVEL_STATION)
 			continue
 		F.emagged = 1
-	src << "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>"
+	to_chat(src, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	src.verbs -= /mob/living/silicon/ai/proc/break_fire_alarms
 
 /datum/AI_Module/large/break_air_alarms
@@ -271,7 +271,7 @@
 		if(AA.z != ZLEVEL_STATION)
 			continue
 		AA.emagged = 1
-	src << "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode."
+	to_chat(src, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.")
 	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
 
 /datum/AI_Module/small/overload_machine
@@ -295,13 +295,13 @@
 			if(overload.uses > 0)
 				overload.uses --
 				M.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [M]!</span>")
-				src << "<span class='warning'>Overloading machine circuitry...</span>"
+				to_chat(src, "<span class='warning'>Overloading machine circuitry...</span>")
 				spawn(50)
 					if(M)
 						explosion(get_turf(M), 0,2,3,0)
 						qdel(M)
-			else src << "<span class='notice'>Out of uses.</span>"
-	else src << "<span class='notice'>That's not a machine.</span>"
+			else to_chat(src, "<span class='notice'>Out of uses.</span>")
+	else to_chat(src, "<span class='notice'>That's not a machine.</span>")
 
 /datum/AI_Module/small/override_machine
 	module_name = "Machine Override"
@@ -322,17 +322,17 @@
 
 	if (istype(M, /obj/machinery))
 		if(!M.can_be_overridden())
-			src << "Can't override this device."
+			to_chat(src, "Can't override this device.")
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
 				M.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound!</span>")
-				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
+				to_chat(src, "<span class='warning'>Reprogramming machine behaviour...</span>")
 				spawn(50)
 					if(M && !QDELETED(M))
 						new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, src, 1)
-			else src << "<span class='notice'>Out of uses.</span>"
-	else src << "<span class='notice'>That's not a machine.</span>"
+			else to_chat(src, "<span class='notice'>Out of uses.</span>")
+	else to_chat(src, "<span class='notice'>That's not a machine.</span>")
 
 /datum/AI_Module/large/place_cyborg_transformer
 	module_name = "Robotic Factory (Removes Shunting)"
@@ -363,7 +363,7 @@
 		var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in current_modules
 		PCT.uses --
 		can_shunt = 0
-		src << "<span class='warning'>You cannot shunt anymore.</span>"
+		to_chat(src, "<span class='warning'>You cannot shunt anymore.</span>")
 
 /mob/living/silicon/ai/proc/canPlaceTransformer()
 	if(!eyeobj || !isturf(src.loc) || !canUseTopic())
@@ -427,8 +427,8 @@
 				if(prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++
-			src << "<span class='notice'>Overcurrent applied to the powernet.</span>"
-		else src << "<span class='notice'>Out of uses.</span>"
+			to_chat(src, "<span class='notice'>Overcurrent applied to the powernet.</span>")
+		else to_chat(src, "<span class='notice'>Out of uses.</span>")
 
 /datum/AI_Module/small/reactivate_cameras
 	module_name = "Reactivate Camera Network"
@@ -462,10 +462,10 @@
 					fixedcams++
 					//If a camera is both deactivated and has bad focus, it will cost two uses to fully fix!
 			else
-				src << "<span class='warning'>Out of uses.</span>"
+				to_chat(src, "<span class='warning'>Out of uses.</span>")
 				verbs -= /mob/living/silicon/ai/proc/reactivate_cameras //It is useless now, clean it up.
 				break
-	src << "<span class='notice'>Diagnostic complete! Operations completed: [fixedcams].</span>"
+	to_chat(src, "<span class='notice'>Diagnostic complete! Operations completed: [fixedcams].</span>")
 
 	malf_cooldown = 1
 	spawn(30) //Lag protection
@@ -509,7 +509,7 @@
 			if(upgraded)
 				upgradedcams++
 
-	src << "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: [upgradedcams]. Light amplification system online.</span>"
+	to_chat(src, "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: [upgradedcams]. Light amplification system online.</span>")
 	verbs -= /mob/living/silicon/ai/proc/upgrade_cameras
 
 /datum/module_picker
@@ -604,5 +604,5 @@
 
 	if(eyeobj)
 		eyeobj.relay_speech = TRUE
-	src << "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>"
+	to_chat(src, "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>")
 	verbs -= /mob/living/silicon/ai/proc/surveillance

@@ -1,6 +1,6 @@
-var/datum/subsystem/job/SSjob
+var/datum/controller/subsystem/job/SSjob
 
-/datum/subsystem/job
+/datum/controller/subsystem/job
 	name = "Jobs"
 	init_order = 14
 	flags = SS_NO_FIRE
@@ -12,11 +12,13 @@ var/datum/subsystem/job/SSjob
 	var/list/job_debug = list()			//Debug info
 	var/initial_players_to_assign = 0 	//used for checking against population caps
 
-/datum/subsystem/job/New()
+	var/list/prioritized_jobs = list()
+
+/datum/controller/subsystem/job/New()
 	NEW_SS_GLOBAL(SSjob)
 
 
-/datum/subsystem/job/Initialize(timeofday)
+/datum/controller/subsystem/job/Initialize(timeofday)
 	if(!occupations.len)
 		SetupOccupations()
 	if(config.load_jobs_from_txt)
@@ -24,11 +26,11 @@ var/datum/subsystem/job/SSjob
 	..()
 
 
-/datum/subsystem/job/proc/SetupOccupations(faction = "Station")
+/datum/controller/subsystem/job/proc/SetupOccupations(faction = "Station")
 	occupations = list()
 	var/list/all_jobs = subtypesof(/datum/job)
 	if(!all_jobs.len)
-		world << "<span class='boldannounce'>Error setting up jobs, no job datums found</span>"
+		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
 		return 0
 
 	for(var/J in all_jobs)
@@ -39,6 +41,9 @@ var/datum/subsystem/job/SSjob
 			continue
 		if(!job.config_check())
 			continue
+		if(!job.map_check())	//Even though we initialize before mapping, this is fine because the config is loaded at new
+			testing("Removed [job.type] due to map config");
+			continue
 		occupations += job
 		name_occupations[job.title] = job
 		type_occupations[J] = job
@@ -46,25 +51,24 @@ var/datum/subsystem/job/SSjob
 	return 1
 
 
-/datum/subsystem/job/proc/Debug(text)
+/datum/controller/subsystem/job/proc/Debug(text)
 	if(!Debug2)
 		return 0
 	job_debug.Add(text)
 	return 1
 
 
-/datum/subsystem/job/proc/GetJob(rank)
+/datum/controller/subsystem/job/proc/GetJob(rank)
 	if(!occupations.len)
 		SetupOccupations()
 	return name_occupations[rank]
 
-/datum/subsystem/job/proc/GetJobType(jobtype)
+/datum/controller/subsystem/job/proc/GetJobType(jobtype)
 	if(!occupations.len)
 		SetupOccupations()
 	return type_occupations[jobtype]
 
-
-/datum/subsystem/job/proc/AssignRole(mob/new_player/player, rank, latejoin=0)
+/datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, rank, latejoin=0)
 	Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
 	if(player && player.mind && rank)
 		var/datum/job/job = GetJob(rank)
@@ -86,10 +90,10 @@ var/datum/subsystem/job/SSjob
 	return 0
 
 
-/datum/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level, flag)
+/datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level, flag)
 	Debug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
 	var/list/candidates = list()
-	for(var/mob/new_player/player in unassigned)
+	for(var/mob/dead/new_player/player in unassigned)
 		if(jobban_isbanned(player, job.title))
 			Debug("FOC isbanned failed, Player: [player]")
 			continue
@@ -110,7 +114,7 @@ var/datum/subsystem/job/SSjob
 			candidates += player
 	return candidates
 
-/datum/subsystem/job/proc/GiveRandomJob(mob/new_player/player)
+/datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player)
 	Debug("GRJ Giving random job, Player: [player]")
 	for(var/datum/job/job in shuffle(occupations))
 		if(!job)
@@ -145,8 +149,8 @@ var/datum/subsystem/job/SSjob
 			unassigned -= player
 			break
 
-/datum/subsystem/job/proc/ResetOccupations()
-	for(var/mob/new_player/player in player_list)
+/datum/controller/subsystem/job/proc/ResetOccupations()
+	for(var/mob/dead/new_player/player in player_list)
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
 			player.mind.special_role = null
@@ -158,7 +162,7 @@ var/datum/subsystem/job/SSjob
 //This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
-/datum/subsystem/job/proc/FillHeadPosition()
+/datum/controller/subsystem/job/proc/FillHeadPosition()
 	for(var/level = 1 to 3)
 		for(var/command_position in command_positions)
 			var/datum/job/job = GetJob(command_position)
@@ -169,7 +173,7 @@ var/datum/subsystem/job/SSjob
 			var/list/candidates = FindOccupationCandidates(job, level)
 			if(!candidates.len)
 				continue
-			var/mob/new_player/candidate = pick(candidates)
+			var/mob/dead/new_player/candidate = pick(candidates)
 			if(AssignRole(candidate, command_position))
 				return 1
 	return 0
@@ -177,7 +181,7 @@ var/datum/subsystem/job/SSjob
 
 //This proc is called at the start of the level loop of DivideOccupations() and will cause head jobs to be checked before any other jobs of the same level
 //This is also to ensure we get as many heads as possible
-/datum/subsystem/job/proc/CheckHeadPositions(level)
+/datum/controller/subsystem/job/proc/CheckHeadPositions(level)
 	for(var/command_position in command_positions)
 		var/datum/job/job = GetJob(command_position)
 		if(!job)
@@ -187,12 +191,12 @@ var/datum/subsystem/job/SSjob
 		var/list/candidates = FindOccupationCandidates(job, level)
 		if(!candidates.len)
 			continue
-		var/mob/new_player/candidate = pick(candidates)
+		var/mob/dead/new_player/candidate = pick(candidates)
 		AssignRole(candidate, command_position)
 	return
 
 
-/datum/subsystem/job/proc/FillAIPosition()
+/datum/controller/subsystem/job/proc/FillAIPosition()
 	var/ai_selected = 0
 	var/datum/job/job = GetJob("AI")
 	if(!job)
@@ -202,7 +206,7 @@ var/datum/subsystem/job/SSjob
 			var/list/candidates = list()
 			candidates = FindOccupationCandidates(job, level)
 			if(candidates.len)
-				var/mob/new_player/candidate = pick(candidates)
+				var/mob/dead/new_player/candidate = pick(candidates)
 				if(AssignRole(candidate, "AI"))
 					ai_selected++
 					break
@@ -215,7 +219,7 @@ var/datum/subsystem/job/SSjob
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
-/datum/subsystem/job/proc/DivideOccupations()
+/datum/controller/subsystem/job/proc/DivideOccupations()
 	//Setup new player list and get the jobs list
 	Debug("Running DO")
 
@@ -226,7 +230,7 @@ var/datum/subsystem/job/SSjob
 				A.spawn_positions = 3
 
 	//Get the players who are ready
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.ready && player.mind && !player.mind.assigned_role)
 			unassigned += player
 
@@ -256,7 +260,7 @@ var/datum/subsystem/job/SSjob
 	var/datum/job/assist = new /datum/job/assistant()
 	var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
 	Debug("AC1, Candidates: [assistant_candidates.len]")
-	for(var/mob/new_player/player in assistant_candidates)
+	for(var/mob/dead/new_player/player in assistant_candidates)
 		Debug("AC1 pass, Player: [player]")
 		AssignRole(player, "Assistant")
 		assistant_candidates -= player
@@ -287,7 +291,7 @@ var/datum/subsystem/job/SSjob
 		CheckHeadPositions(level)
 
 		// Loop through all unassigned players
-		for(var/mob/new_player/player in unassigned)
+		for(var/mob/dead/new_player/player in unassigned)
 			if(PopcapReached())
 				RejectPlayer(player)
 
@@ -325,13 +329,13 @@ var/datum/subsystem/job/SSjob
 
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
-	for(var/mob/new_player/player in unassigned)
+	for(var/mob/dead/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
 		else if(jobban_isbanned(player, "Assistant"))
 			GiveRandomJob(player) //you get to roll for random before everyone else just to be sure you don't get assistant. you're so speshul
 
-	for(var/mob/new_player/player in unassigned)
+	for(var/mob/dead/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
 		else if(player.client.prefs.joblessrole == BERANDOMJOB)
@@ -342,7 +346,7 @@ var/datum/subsystem/job/SSjob
 	Debug("DO, Running AC2")
 
 	// For those who wanted to be assistant if their preferences were filled, here you go.
-	for(var/mob/new_player/player in unassigned)
+	for(var/mob/dead/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
 		if(player.client.prefs.joblessrole == BEASSISTANT)
@@ -351,13 +355,21 @@ var/datum/subsystem/job/SSjob
 		else // For those who don't want to play if their preference were filled, back you go.
 			RejectPlayer(player)
 
-	for(var/mob/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
+	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		GiveRandomJob(player)
 
 	return 1
 
 //Gives the player the stuff he should have with his rank
-/datum/subsystem/job/proc/EquipRank(mob/living/H, rank, joined_late=0)
+/datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late=0)
+	var/mob/dead/new_player/N
+	var/mob/living/H
+	if(!joined_late)
+		N = M
+		H = N.new_character
+	else
+		H = M
+
 	var/datum/job/job = GetJob(rank)
 
 	H.job = rank
@@ -375,7 +387,7 @@ var/datum/subsystem/job/SSjob
 			break
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
-			S = pick(latejoin)
+			S = get_turf(pick(latejoin))
 		if(!S) //final attempt, lets find some area in the arrivals shuttle to spawn them in to.
 			log_world("Couldn't find a round start latejoin spawn point.")
 			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
@@ -398,22 +410,26 @@ var/datum/subsystem/job/SSjob
 		var/new_mob = job.equip(H)
 		if(ismob(new_mob))
 			H = new_mob
+			if(!joined_late)
+				N.new_character = H
+			else
+				M = H
 
-	H << "<b>You are the [rank].</b>"
-	H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
-	H << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
+	to_chat(M, "<b>You are the [rank].</b>")
+	to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
+	to_chat(M, "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
 	if(job.req_admin_notify)
-		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 	if(config.minimal_access_threshold)
-		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
+		to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 
 	if(job && H)
-		job.after_spawn(H)
+		job.after_spawn(H, M)
 
 	return H
 
 
-/datum/subsystem/job/proc/setup_officer_positions()
+/datum/controller/subsystem/job/proc/setup_officer_positions()
 	var/datum/job/J = SSjob.GetJob("Security Officer")
 	if(!J)
 		throw EXCEPTION("setup_officer_positions(): Security officer job is missing")
@@ -438,7 +454,7 @@ var/datum/subsystem/job/SSjob
 			break
 
 
-/datum/subsystem/job/proc/LoadJobs()
+/datum/controller/subsystem/job/proc/LoadJobs()
 	var/jobstext = return_file_text("config/jobs.txt")
 	for(var/datum/job/J in occupations)
 		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
@@ -446,7 +462,7 @@ var/datum/subsystem/job/SSjob
 		J.total_positions = text2num(jobs.group[1])
 		J.spawn_positions = text2num(jobs.group[2])
 
-/datum/subsystem/job/proc/HandleFeedbackGathering()
+/datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
 		var/tmp_str = "|[job.title]|"
 
@@ -456,7 +472,7 @@ var/datum/subsystem/job/SSjob
 		var/level4 = 0 //never
 		var/level5 = 0 //banned
 		var/level6 = 0 //account too young
-		for(var/mob/new_player/player in player_list)
+		for(var/mob/dead/new_player/player in player_list)
 			if(!(player.ready && player.mind && !player.mind.assigned_role))
 				continue //This player is not ready
 			if(jobban_isbanned(player, job.title))
@@ -476,31 +492,34 @@ var/datum/subsystem/job/SSjob
 		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
 		feedback_add_details("job_preferences",tmp_str)
 
-/datum/subsystem/job/proc/PopcapReached()
+/datum/controller/subsystem/job/proc/PopcapReached()
 	if(config.hard_popcap || config.extreme_popcap)
 		var/relevent_cap = max(config.hard_popcap, config.extreme_popcap)
 		if((initial_players_to_assign - unassigned.len) >= relevent_cap)
 			return 1
 	return 0
 
-/datum/subsystem/job/proc/RejectPlayer(mob/new_player/player)
+/datum/controller/subsystem/job/proc/RejectPlayer(mob/dead/new_player/player)
 	if(player.mind && player.mind.special_role)
 		return
 	if(PopcapReached())
 		Debug("Popcap overflow Check observer located, Player: [player]")
-	player << "<b>You have failed to qualify for any job you desired.</b>"
+	to_chat(player, "<b>You have failed to qualify for any job you desired.</b>")
 	unassigned -= player
 	player.ready = 0
 
 
-/datum/subsystem/job/Recover()
+/datum/controller/subsystem/job/Recover()
+	set waitfor = FALSE
 	var/oldjobs = SSjob.occupations
-	spawn(20)
-		for (var/datum/job/J in oldjobs)
-			spawn(-1)
-				var/datum/job/newjob = GetJob(J.title)
-				if (!istype(newjob))
-					return
-				newjob.total_positions = J.total_positions
-				newjob.spawn_positions = J.spawn_positions
-				newjob.current_positions = J.current_positions
+	sleep(20)
+	for (var/datum/job/J in oldjobs)
+		INVOKE_ASYNC(src, .proc/RecoverJob, J)
+
+/datum/controller/subsystem/job/proc/RecoverJob(datum/job/J)
+	var/datum/job/newjob = GetJob(J.title)
+	if (!istype(newjob))
+		return
+	newjob.total_positions = J.total_positions
+	newjob.spawn_positions = J.spawn_positions
+	newjob.current_positions = J.current_positions

@@ -19,8 +19,7 @@
 
 	sentience_report += "<br><br>Based on [data], we believe that [one] of the station's [pets] has developed [strength] level intelligence, and the ability to communicate."
 
-	print_command_report(sentience_report, "Classified [command_name()] Update")
-	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
+	print_command_report(text=sentience_report)
 	..()
 
 /datum/round_event/ghost_role/sentience/spawn_role()
@@ -60,10 +59,10 @@
 
 		spawned_mobs += SA
 
-		SA << "<span class='userdanger'>Hello world!</span>"
-		SA << "<span class='warning'>Due to freak radiation and/or chemicals \
+		to_chat(SA, "<span class='userdanger'>Hello world!</span>")
+		to_chat(SA, "<span class='warning'>Due to freak radiation and/or chemicals \
 			and/or lucky chance, you have gained human level intelligence \
-			and the ability to speak and understand human language!</span>"
+			and the ability to speak and understand human language!</span>")
 
 	return SUCCESSFUL_SPAWN
 

@@ -68,10 +68,10 @@
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
-			M << rendered
+			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
+			to_chat(M, "[link] [rendered]")
 
 ////////////////
 // BLOB SPORE //
@@ -98,11 +98,11 @@
 	del_on_death = 1
 	deathmessage = "explodes into a cloud of gas!"
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
-	var/list/human_overlays = list()
+	var/mob/living/carbon/human/oldguy
 	var/is_zombie = 0
 	gold_core_spawnable = 1
 
-/mob/living/simple_animal/hostile/blob/blobspore/New(loc, var/obj/structure/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
@@ -136,9 +136,9 @@
 	icon_state = "zombie"
 	H.hair_style = null
 	H.update_hair()
-	human_overlays = H.overlays
 	update_icons()
 	H.forceMove(src)
+	oldguy = H
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
@@ -167,9 +167,9 @@
 	if(factory)
 		factory.spores -= src
 	factory = null
-	if(contents)
-		for(var/mob/M in contents)
-			M.loc = src.loc
+	if(oldguy)
+		oldguy.forceMove(get_turf(src))
+		oldguy = null
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
@@ -178,8 +178,7 @@
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	if(is_zombie)
-		cut_overlays()
-		overlays = human_overlays
+		copy_overlays(oldguy, TRUE)
 		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
 		if(overmind)
 			I.color = overmind.blob_reagent_datum.complementary_color
@@ -223,7 +222,7 @@
 	see_in_dark = 8
 	var/independent = FALSE
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/New()
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
 	..()
 	if(!independent) //no pulling people deep into the blob
 		verbs -= /mob/living/verb/pulled

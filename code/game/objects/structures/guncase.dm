@@ -39,7 +39,7 @@
 			if(!user.drop_item())
 				return
 			contents += I
-			user << "<span class='notice'>You place [I] in [src].</span>"
+			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()
 			return
 

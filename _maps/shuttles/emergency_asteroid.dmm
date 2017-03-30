@@ -68,8 +68,8 @@
 /area/shuttle/escape)
 "am" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8;
+	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -253,6 +253,9 @@
 "aU" = (
 /obj/structure/chair/office/light{
 	name = "Captain"
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -480,6 +483,9 @@
 /obj/structure/toilet{
 	dir = 1
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bF" = (
@@ -505,6 +511,48 @@
 "bI" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bJ" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"bK" = (
+/obj/structure/chair,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bL" = (
+/obj/structure/chair,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bM" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"bN" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bO" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bP" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bQ" = (
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 
@@ -572,13 +620,13 @@ ac
 ad
 ap
 aq
-aq
+bJ
 ac
 aU
 bd
 bl
 ac
-at
+bO
 bu
 bE
 ad
@@ -683,7 +731,7 @@ aZ
 ah
 aK
 at
-aS
+bP
 ac
 aa
 aa
@@ -692,7 +740,7 @@ aa
 ah
 ah
 aB
-aK
+bK
 at
 aZ
 ah
@@ -752,7 +800,7 @@ aa
 ah
 ah
 aB
-aK
+bL
 at
 aZ
 ah
@@ -773,7 +821,7 @@ aZ
 ah
 aK
 at
-aS
+bQ
 ac
 aa
 aa
@@ -874,9 +922,9 @@ ax
 ax
 ax
 aw
-aw
+bM
 ac
-at
+bN
 at
 bz
 bD

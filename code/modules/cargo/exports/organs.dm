@@ -56,7 +56,7 @@
 /datum/export/organ/alien/abductor
 	cost = 2500
 	unit_name = "abductor gland"
-	export_types = list(/obj/item/organ/gland)
+	export_types = list(/obj/item/organ/heart/gland)
 
 /datum/export/organ/alien/changeling_egg
 	cost = 50000 // Holy. Fuck.

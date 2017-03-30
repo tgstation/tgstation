@@ -81,12 +81,12 @@
 	set name = "Adminhelp"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>"
+		to_chat(src, "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>")
 		return
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
@@ -94,23 +94,21 @@
 	//clean the input msg
 	if(!msg)
 		return
-//	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-//	if(!msg)	return
-	var/original_msg = sanitize_russian(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = strip_html_properly(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
+	if(!msg)	return
+	var/original_msg = strip_html_simple(sanitize_russian(msg))
 
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	src.verbs -= /client/verb/adminhelp
 	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
 
 	msg = keywords_lookup(msg)
-	msg = sanitize_russian(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
 
 	if(!mob)
 		return						//this doesn't happen
 
 	var/ref_client = "\ref[src]"
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>):</b> [msg]</span>"
+	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_FULLMONTY_NONAME(mob)] [ADMIN_SMITE(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>):</b> [msg]</span>"
 
 	//send this msg to all admins
 
@@ -118,17 +116,17 @@
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
 		window_flash(X, ignorepref = TRUE)
-		X << msg
+		to_chat(X, msg)
 
 
 	//show it to the person adminhelping too
-	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
+	to_chat(src, "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>")
 
 	//send it to irc if nobody is on and tell us how many were on
 	var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
-	sanitize_russian(log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN."))
+	sanitize_russian(log_admin_private("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN."))
 	if(admin_number_present <= 0)
-		src << "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>"
+		to_chat(src, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -169,7 +167,7 @@
 	return
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
-	if(global.cross_allowed)
+	if(config.cross_allowed)
 		var/list/message = list()
 		message["message_sender"] = source
 		message["message"] = msg
@@ -177,7 +175,7 @@
 		message["key"] = global.comms_key
 		message["crossmessage"] = type
 
-		world.Export("[global.cross_address]?[list2params(message)]")
+		world.Export("[config.cross_address]?[list2params(message)]")
 
 
 /proc/ircadminwho()

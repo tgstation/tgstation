@@ -44,8 +44,8 @@
 						citizens += H
 						ticker.mode.traitors += M
 						M.special_role = "separatist"
-						H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a separatist, long live [nation]!</font>"
-						H << "<B>You are a separatist! [nation] forever! Protect the soverignty of your newfound land with your comrades in arms!</B>"
+						H.log_message("<font color='red'>Was made into a separatist, long live [nation]!</font>", INDIVIDUAL_ATTACK_LOG)
+						to_chat(H, "<B>You are a separatist! [nation] forever! Protect the soverignty of your newfound land with your comrades in arms!</B>")
 	if(citizens.len)
 		var/message
 		for(var/job in jobs_to_revolt)

@@ -11,6 +11,7 @@ var/global/list/deliverybeacons = list()			//list of all MULEbot delivery beacon
 var/global/list/deliverybeacontags = list()			//list of all tags associated with delivery beacons.
 var/global/list/nuke_list = list()
 var/global/list/alarmdisplay = list()				//list of all machines or programs that can display station alerts
+var/global/list/singularities = list()				//list of all singularities on the station (actually technically all engines)
 
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
@@ -26,3 +27,4 @@ var/global/list/poi_list = list()					//list of points of interest for observe/f
 var/global/list/pinpointer_list = list()			//list of all pinpointers. Used to change stuff they are pointing to all at once.
 var/global/list/zombie_infection_list = list() 		// A list of all zombie_infection organs, for any mass "animation"
 var/global/list/meteor_list = list()				// List of all meteors.
+var/global/list/active_jammers = list()             // List of active radio jammers

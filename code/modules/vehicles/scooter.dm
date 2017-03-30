@@ -5,12 +5,16 @@
 
 /obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to remove the handlebars...</span>"
+		to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
 		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40*I.toolspeed, target = src))
-			new /obj/vehicle/scooter/skateboard(get_turf(src))
+			var/obj/vehicle/scooter/skateboard/S = new /obj/vehicle/scooter/skateboard(get_turf(src))
 			new /obj/item/stack/rods(get_turf(src),2)
-			user << "<span class='notice'>You remove the handlebars from [src].</span>"
+			to_chat(user, "<span class='notice'>You remove the handlebars from [src].</span>")
+			if(has_buckled_mobs())
+				var/mob/living/carbon/H = buckled_mobs[1]
+				unbuckle_mob(H)
+				S.buckle_mob(H)
 			qdel(src)
 
 
@@ -19,7 +23,7 @@
 	if(!istype(M))
 		return 0
 	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
-		M << "<span class='warning'>Your limbless body can't ride \the [src].</span>"
+		to_chat(M, "<span class='warning'>Your limbless body can't ride \the [src].</span>")
 		return 0
 	. = ..()
 
@@ -61,7 +65,7 @@
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
 	if(has_buckled_mobs() && over_object == M)
-		M << "<span class='warning'>You can't lift this up when somebody's on it.</span>"
+		to_chat(M, "<span class='warning'>You can't lift this up when somebody's on it.</span>")
 		return
 	if(over_object == M)
 		var/obj/item/weapon/melee/skateboard/board = new /obj/item/weapon/melee/skateboard()
@@ -78,7 +82,7 @@
 
 /obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You deconstruct [src].</span>"
+		to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 		new /obj/item/stack/rods(get_turf(src),10)
 		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
 		qdel(src)
@@ -87,37 +91,44 @@
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
 		if(M.get_amount() < 5)
-			user << "<span class='warning'>You need at least five metal sheets to make proper wheels!</span>"
+			to_chat(user, "<span class='warning'>You need at least five metal sheets to make proper wheels!</span>")
 			return
-		user << "<span class='notice'>You begin to add wheels to [src].</span>"
+		to_chat(user, "<span class='notice'>You begin to add wheels to [src].</span>")
 		if(do_after(user, 80, target = src))
 			if(!M || M.get_amount() < 5)
 				return
 			M.use(5)
-			user << "<span class='notice'>You finish making wheels for [src].</span>"
+			to_chat(user, "<span class='notice'>You finish making wheels for [src].</span>")
 			new /obj/vehicle/scooter/skateboard(user.loc)
 			qdel(src)
 
 /obj/vehicle/scooter/skateboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>"
+		to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
 		playsound(get_turf(user), I.usesound, 50, 1)
 		if(do_after(user, 20, target = src))
-			user << "<span class='notice'>You deconstruct the wheels on [src].</span>"
+			to_chat(user, "<span class='notice'>You deconstruct the wheels on [src].</span>")
 			new /obj/item/stack/sheet/metal(get_turf(src),5)
 			new /obj/item/scooter_frame(get_turf(src))
+			if(has_buckled_mobs())
+				var/mob/living/carbon/H = buckled_mobs[1]
+				unbuckle_mob(H)
 			qdel(src)
 
 	else if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/C = I
 		if(C.get_amount() < 2)
-			user << "<span class='warning'>You need at least two rods to make proper handlebars!</span>"
+			to_chat(user, "<span class='warning'>You need at least two rods to make proper handlebars!</span>")
 			return
-		user << "<span class='notice'>You begin making handlebars for [src].</span>"
+		to_chat(user, "<span class='notice'>You begin making handlebars for [src].</span>")
 		if(do_after(user, 25, target = src))
 			if(!C || C.get_amount() < 2)
 				return
-			user << "<span class='notice'>You add the rods to [src], creating handlebars.</span>"
+			to_chat(user, "<span class='notice'>You add the rods to [src], creating handlebars.</span>")
 			C.use(2)
-			new/obj/vehicle/scooter(get_turf(src))
+			var/obj/vehicle/scooter/S = new/obj/vehicle/scooter(get_turf(src))
+			if(has_buckled_mobs())
+				var/mob/living/carbon/H = buckled_mobs[1]
+				unbuckle_mob(H)
+				S.buckle_mob(H)
 			qdel(src)

@@ -172,7 +172,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	if(..())
 		if(!(stat & NOPOWER) && on)
-			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
 		else
 			return 1
 

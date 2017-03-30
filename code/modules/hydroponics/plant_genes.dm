@@ -257,31 +257,46 @@
 				C.update_icon()
 				batteries_recharged = 1
 		if(batteries_recharged)
-			target << "<span class='notice'>Your batteries are recharged!</span>"
+			to_chat(target, "<span class='notice'>Your batteries are recharged!</span>")
 
 
 
 /datum/plant_gene/trait/glow
 	// Makes plant glow. Makes plant in tray glow too.
-	// Adds potency*rate luminosity to products.
+	// Adds 1 + potency*rate light range and potency*(rate + 0.01) light_power to products.
 	name = "Bioluminescence"
-	rate = 0.1
+	rate = 0.03
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
 	trait_id = "glow"
+	var/glow_color = "#AAD84B"
 
-/datum/plant_gene/trait/glow/proc/get_lum(obj/item/seeds/S)
-	return round(S.potency*rate)
+/datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/S)
+	return 1.4 + S.potency*rate
+
+/datum/plant_gene/trait/glow/proc/glow_power(obj/item/seeds/S)
+	return max(S.potency*(rate + 0.01), 0.1)
 
 /datum/plant_gene/trait/glow/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
 	..()
-	if(ismob(newloc))
-		G.pickup(newloc)//adjusts the lighting on the mob
-	else
-		G.SetLuminosity(get_lum(G.seed))
+	G.set_light(glow_range(G.seed), glow_power(G.seed), glow_color)
+
+/datum/plant_gene/trait/glow/shadow
+	//makes plant emit slightly purple shadows
+	//adds -potency*(rate*0.05) light power to products
+	name = "Shadow Emission"
+	rate = 0.04
+
+/datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
+	return -max(S.potency*(rate*0.05), 0.075)
+
+/datum/plant_gene/trait/glow/red
+	name = "Red Electrical Glow"
+	glow_color = LIGHT_COLOR_RED
 
 /datum/plant_gene/trait/glow/berry
 	name = "Strong Bioluminescence"
-	rate = 0.2
+	rate = 0.05
+	glow_color = null
 
 
 /datum/plant_gene/trait/teleport
@@ -301,7 +316,7 @@
 /datum/plant_gene/trait/teleport/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/teleport_radius = max(round(G.seed.potency / 10), 1)
 	var/turf/T = get_turf(C)
-	C << "<span class='warning'>You slip through spacetime!</span>"
+	to_chat(C, "<span class='warning'>You slip through spacetime!</span>")
 	do_teleport(C, T, teleport_radius)
 	if(prob(50))
 		do_teleport(G, T, teleport_radius)
@@ -349,7 +364,7 @@
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
 		if(C.use(5))
-			user << "<span class='notice'>You add some cable to [G] and slide it inside the battery encasing.</span>"
+			to_chat(user, "<span class='notice'>You add some cable to [G] and slide it inside the battery encasing.</span>")
 			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
 			pocell.icon_state = G.icon_state
 			pocell.maxcharge = G.seed.potency * 20
@@ -367,7 +382,7 @@
 
 			qdel(G)
 		else
-			user << "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>"
+			to_chat(user, "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>")
 
 
 /datum/plant_gene/trait/stinging
@@ -381,7 +396,7 @@
 			var/fraction = min(injecting_amount/G.reagents.total_volume, 1)
 			G.reagents.reaction(L, INJECT, fraction)
 			G.reagents.trans_to(L, injecting_amount)
-			target << "<span class='danger'>You are pricked by [G]!</span>"
+			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
 
 /datum/plant_gene/trait/smoke
 	name = "gaseous decomposition"

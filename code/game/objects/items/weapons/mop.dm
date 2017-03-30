@@ -37,7 +37,7 @@
 	if(!proximity) return
 
 	if(reagents.total_volume < 1)
-		user << "<span class='warning'>Your mop is dry!</span>"
+		to_chat(user, "<span class='warning'>Your mop is dry!</span>")
 		return
 
 	var/turf/T = get_turf(A)
@@ -49,7 +49,7 @@
 		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
 
 		if(do_after(user, src.mopspeed, target = T))
-			user << "<span class='notice'>You finish mopping.</span>"
+			to_chat(user, "<span class='notice'>You finish mopping.</span>")
 			clean(T)
 
 
@@ -95,7 +95,7 @@
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj,src)
-	user << "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>"
+	to_chat(user, "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>")
 	playsound(user, 'sound/machines/click.ogg', 30, 1)
 
 /obj/item/weapon/mop/advanced/process()
@@ -105,7 +105,7 @@
 
 /obj/item/weapon/mop/advanced/examine(mob/user)
 	..()
-	user << "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>"
+	to_chat(user, "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>")
 
 /obj/item/weapon/mop/advanced/Destroy()
 	if(refill_enabled)

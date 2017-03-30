@@ -39,14 +39,15 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	var/make_runtime = 0
 
+	var/initializations_finished_with_no_players_logged_in	//I wonder what this could be?
 	// Has round started? (So we know what subsystems to run)
 	var/round_started = 0
 
 	// The type of the last subsystem to be process()'d.
 	var/last_type_processed
 
-	var/datum/subsystem/queue_head //Start of queue linked list
-	var/datum/subsystem/queue_tail //End of queue linked list (used for appending to the list)
+	var/datum/controller/subsystem/queue_head //Start of queue linked list
+	var/datum/controller/subsystem/queue_tail //End of queue linked list (used for appending to the list)
 	var/queue_priority_count = 0 //Running total so that we don't have to loop thru the queue each run to split up the tick
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 	var/map_loading = FALSE	//Are we loading in a new map?
@@ -59,7 +60,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			Recover()
 			qdel(Master)
 		else
-			init_subtypes(/datum/subsystem, subsystems)
+			init_subtypes(/datum/controller/subsystem, subsystems)
 		Master = src
 
 /datum/controller/master/Destroy()
@@ -67,9 +68,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Tell qdel() to Del() this object.
 	return QDEL_HINT_HARDDEL_NOW
 
-/datum/controller/master/proc/Shutdown()
+/datum/controller/master/Shutdown()
 	processing = FALSE
-	for(var/datum/subsystem/ss in subsystems)
+	for(var/datum/controller/subsystem/ss in subsystems)
 		ss.Shutdown()
 
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
@@ -92,7 +93,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	return 1
 
 
-/datum/controller/master/proc/Recover()
+/datum/controller/master/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
 	for (var/varname in Master.vars)
 		switch (varname)
@@ -110,39 +111,39 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		subsystems = Master.subsystems
 		StartProcessing(10)
 	else
-		world << "<span class='boldannounce'>The Master Controller is having some issues, we will need to re-initialize EVERYTHING</span>"
-		Setup(20, TRUE)
+		to_chat(world, "<span class='boldannounce'>The Master Controller is having some issues, we will need to re-initialize EVERYTHING</span>")
+		Initialize(20, TRUE)
 
 
 // Please don't stuff random bullshit here,
 // 	Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
-/datum/controller/master/proc/Setup(delay, init_sss)
+/datum/controller/master/Initialize(delay, init_sss)
 	set waitfor = 0
 
 	if(delay)
 		sleep(delay)
 
 	if(init_sss)
-		init_subtypes(/datum/subsystem, subsystems)
+		init_subtypes(/datum/controller/subsystem, subsystems)
 
-	world << "<span class='boldannounce'>Initializing subsystems...</span>"
+	to_chat(world, "<span class='boldannounce'>Initializing subsystems...</span>")
 
 	// Sort subsystems by init_order, so they initialize in the correct order.
 	sortTim(subsystems, /proc/cmp_subsystem_init)
 
-	var/start_timeofday = world.timeofday
+	var/start_timeofday = REALTIMEOFDAY
 	// Initialize subsystems.
 	CURRENT_TICKLIMIT = config.tick_limit_mc_init
-	for (var/datum/subsystem/SS in subsystems)
+	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
-		SS.Initialize(world.timeofday)
+		SS.Initialize(REALTIMEOFDAY)
 		CHECK_TICK
 	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
-	var/time = (world.timeofday - start_timeofday) / 10
+	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"
-	world << "<span class='boldannounce'>[msg]</span>"
+	to_chat(world, "<span class='boldannounce'>[msg]</span>")
 	log_world(msg)
 
 	// Sort subsystems by display setting for easy access.
@@ -150,7 +151,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Set world options.
 	world.sleep_offline = 1
 	world.fps = config.fps
+	var/initialized_tod = REALTIMEOFDAY
 	sleep(1)
+	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
 	// Loop.
 	Master.StartProcessing(0)
 
@@ -158,7 +161,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 /datum/controller/master/proc/RoundStart()
 	round_started = 1
 	var/timer = world.time
-	for (var/datum/subsystem/SS in subsystems)
+	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_FIRE_IN_LOBBY || SS.flags & SS_TICKER)
 			continue //already firing
 		// Stagger subsystems.
@@ -196,7 +199,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/list/lobbysubsystems = list()
 	var/timer = world.time
 	for (var/thing in subsystems)
-		var/datum/subsystem/SS = thing
+		var/datum/controller/subsystem/SS = thing
 		if (SS.flags & SS_NO_FIRE)
 			continue
 		SS.queued_time = 0
@@ -228,7 +231,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	normalsubsystems += tickersubsystems
 	lobbysubsystems += tickersubsystems
 
-	init_timeofday = world.timeofday
+	init_timeofday = REALTIMEOFDAY
 	init_time = world.time
 
 	iteration = 1
@@ -237,7 +240,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/list/subsystems_to_check
 	//the actual loop.
 	while (1)
-		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((world.timeofday - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
+		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
 			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep(10)
@@ -258,7 +261,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep_delta += 1
 
 		if (make_runtime)
-			var/datum/subsystem/SS
+			var/datum/controller/subsystem/SS
 			SS.can_fire = 0
 		if (!Failsafe || (Failsafe.processing_interval > 0 && (Failsafe.lasttick+(Failsafe.processing_interval*5)) < world.time))
 			new/datum/controller/failsafe() // (re)Start the failsafe.
@@ -310,7 +313,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	. = 0 //so the mc knows if we runtimed
 
 	//we create our variables outside of the loops to save on overhead
-	var/datum/subsystem/SS
+	var/datum/controller/subsystem/SS
 	var/SS_flags
 
 	for (var/thing in subsystemstocheck)
@@ -336,7 +339,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 // Run thru the queue of subsystems to run, running them while balancing out their allocated tick precentage
 /datum/controller/master/proc/RunQueue()
 	. = 0
-	var/datum/subsystem/queue_node
+	var/datum/controller/subsystem/queue_node
 	var/queue_node_flags
 	var/queue_node_priority
 	var/queue_node_paused
@@ -462,7 +465,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/subsystemstocheck = subsystems + ticker_SS + normal_SS + lobby_SS
 
 	for (var/thing in subsystemstocheck)
-		var/datum/subsystem/SS = thing
+		var/datum/controller/subsystem/SS = thing
 		if (!SS || !istype(SS))
 			//list(SS) is so if a list makes it in the subsystem list, we remove the list, not the contents
 			subsystems -= list(SS)
@@ -493,24 +496,24 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 
 
-/datum/controller/master/proc/stat_entry()
+/datum/controller/master/stat_entry()
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Initializing...", src)
+		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
 	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%))")
 	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration])"))
 
-/datum/controller/master/proc/StartLoadingMap()
+/datum/controller/master/StartLoadingMap()
 	//disallow more than one map to load at once, multithreading it will just cause race conditions
 	while(map_loading)
 		stoplag()
 	for(var/S in subsystems)
-		var/datum/subsystem/SS = S
+		var/datum/controller/subsystem/SS = S
 		SS.StartLoadingMap()
 	map_loading = TRUE
 
-/datum/controller/master/proc/StopLoadingMap(bounds = null)
+/datum/controller/master/StopLoadingMap(bounds = null)
 	map_loading = FALSE
 	for(var/S in subsystems)
-		var/datum/subsystem/SS = S
+		var/datum/controller/subsystem/SS = S
 		SS.StopLoadingMap()

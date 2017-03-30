@@ -44,8 +44,8 @@
 	else
 		update_status(FALSE)
 	if(iscultist(user)) //Cultists spontaneously combust
-		user << "<span class='heavy_brass'>\"Consider yourself judged, whelp.\"</span>"
-		user << "<span class='userdanger'>You suddenly catch fire!</span>"
+		to_chat(user, "<span class='heavy_brass'>\"Consider yourself judged, whelp.\"</span>")
+		to_chat(user, "<span class='userdanger'>You suddenly catch fire!</span>")
 		user.adjust_fire_stacks(5)
 		user.IgniteMob()
 	return 1
@@ -79,10 +79,10 @@
 		return 0
 	switch(active)
 		if(TRUE)
-			L << "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
-			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>"
+			to_chat(L, "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
+			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>")
 		if(FALSE)
-			L << "<span class='notice'>As you take off [src], its lens darkens once more.</span>"
+			to_chat(L, "<span class='notice'>As you take off [src], its lens darkens once more.</span>")
 	return 1
 
 /obj/item/clothing/glasses/judicial_visor/proc/recharge_visor(mob/living/user)
@@ -90,7 +90,7 @@
 		return 0
 	recharging = FALSE
 	if(user && src == user.get_item_by_slot(slot_glasses))
-		user << "<span class='brass'>Your [name] hums. It is ready.</span>"
+		to_chat(user, "<span class='brass'>Your [name] hums. It is ready.</span>")
 	else
 		active = FALSE
 	icon_state = "judicial_visor_[active]"
@@ -158,7 +158,7 @@
 
 /obj/effect/clockwork/judicial_marker/New(loc, caster)
 	..()
-	SetLuminosity(4, 3)
+	set_light(1.4, 2, "#FE9C11")
 	user = caster
 	INVOKE_ASYNC(src, .proc/judicialblast)
 
@@ -168,10 +168,11 @@
 	sleep(16)
 	layer = ABOVE_ALL_MOB_LAYER
 	flick("judicial_explosion", src)
+	set_light(1.4, 2, "#B451A1")
 	sleep(13)
 	var/targetsjudged = 0
 	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
-	SetLuminosity(0)
+	set_light(0)
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))
 			continue
@@ -183,20 +184,20 @@
 		if(!iscultist(L))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Weaken(8)
+			L.Weaken(8) //stun targets for 14-16 seconds
 		else
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Weaken(4) //half the stun, but sets cultists on fire
+			L.Weaken(4) //stun for 6-8 seconds, but set cultist targets on fire
 			L.adjust_fire_stacks(2)
 			L.IgniteMob()
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.silent += 6
 		targetsjudged++
-		L.adjustBruteLoss(10)
+		L.adjustBruteLoss(10) //do a small amount of damage
 		add_logs(user, L, "struck with a judicial blast")
-	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
+	to_chat(user, "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[targetsjudged == 1 ? "":"s"].</b></span>")
 	sleep(3) //so the animation completes properly
 	qdel(src)
 

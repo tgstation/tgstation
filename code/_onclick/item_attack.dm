@@ -11,17 +11,14 @@
 	return
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	if(unique_rename && istype(I, /obj/item/weapon/pen))
-		rewrite(user)
-	else
-		return I.attack_obj(src, user)
+	return I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(user.a_intent == INTENT_HARM && stat == DEAD && butcher_results) //can we butcher it?
 		var/sharpness = I.is_sharp()
 		if(sharpness)
-			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 			if(do_mob(user, src, 80/sharpness))
 				harvest(user)

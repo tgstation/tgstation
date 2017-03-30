@@ -2,7 +2,7 @@
 	set category = "Special Verbs"
 	set name = "Reestablish DB Connection"
 	if (!config.sql_enabled)
-		usr << "<span class='adminnotice'>The Database is not enabled!</span>"
+		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>")
 		return
 
 	if (dbcon && dbcon.IsConnected())

@@ -55,11 +55,11 @@
 
 /obj/machinery/space_heater/examine(mob/user)
 	..()
-	user << "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
+	to_chat(user, "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"].")
 	if(cell)
-		user << "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+		to_chat(user, "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 	else
-		user << "There is no power cell installed."
+		to_chat(user, "There is no power cell installed.")
 
 /obj/machinery/space_heater/update_icon()
 	if(on)
@@ -146,7 +146,7 @@
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(panel_open)
 			if(cell)
-				user << "<span class='warning'>There is already a power cell inside!</span>"
+				to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
 				return
 			else
 				// insert cell
@@ -161,7 +161,7 @@
 					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
 					SStgui.update_uis(src)
 		else
-			user << "<span class='warning'>The hatch must be open to insert a power cell!</span>"
+			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
 			return
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		panel_open = !panel_open

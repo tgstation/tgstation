@@ -49,27 +49,27 @@
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/documents))
 		if(!user.drop_item())
 			return
-		user << "<span class='notice'>You put [P] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		P.loc = src
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
 	else if(istype(P, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>"
+		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		playsound(loc, P.usesound, 50, 1)
 		if(do_after(user, 20, target = src))
-			user << "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>"
+			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
 			anchored = !anchored
 	else if(user.a_intent != INTENT_HARM)
-		user << "<span class='warning'>You can't put [P] in [src]!</span>"
+		to_chat(user, "<span class='warning'>You can't put [P] in [src]!</span>")
 	else
 		return ..()
 
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
 	if(contents.len <= 0)
-		user << "<span class='notice'>[src] is empty.</span>"
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		return
 
 	user.set_machine(src)
@@ -94,9 +94,9 @@
 			I.loc = loc
 			if(prob(25))
 				step_rand(I)
-			user << "<span class='notice'>You pull \a [I] out of [src] at random.</span>"
+			to_chat(user, "<span class='notice'>You pull \a [I] out of [src] at random.</span>")
 			return
-	user << "<span class='notice'>You find nothing in [src].</span>"
+	to_chat(user, "<span class='notice'>You find nothing in [src].</span>")
 
 /obj/structure/filingcabinet/Topic(href, href_list)
 	if(href_list["retrieve"])
@@ -217,4 +217,4 @@ var/list/employmentCabinets = list()
 		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		cooldown = 0
 	else
-		user << "<span class='warning'>The [src] is jammed, give it a few seconds.</span>"
+		to_chat(user, "<span class='warning'>The [src] is jammed, give it a few seconds.</span>")

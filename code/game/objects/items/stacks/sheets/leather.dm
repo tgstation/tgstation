@@ -13,7 +13,7 @@ var/global/list/datum/stack_recipe/human_recipes = list( \
 	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/animalhide/human/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/animalhide/human/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = human_recipes
 	return ..()
 
@@ -33,7 +33,7 @@ var/global/list/datum/stack_recipe/corgi_recipes = list ( \
 	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/animalhide/corgi/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/animalhide/corgi/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = corgi_recipes
 	return ..()
 
@@ -54,7 +54,7 @@ var/global/list/datum/stack_recipe/monkey_recipes = list ( \
 	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/animalhide/monkey/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/animalhide/monkey/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = monkey_recipes
 	return ..()
 
@@ -75,7 +75,7 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/animalhide/xeno/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/animalhide/xeno/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = xeno_recipes
 	return ..()
 
@@ -138,7 +138,7 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 	new/datum/stack_recipe("sinew restraints", /obj/item/weapon/restraints/handcuffs/sinew, 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/sinew/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = sinew_recipes
 	return ..()
 		/*
@@ -173,7 +173,7 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")
 		if(do_after(user,50, target = src))
-			user << "<span class='notice'>You cut the hair from this [src.singular_name].</span>"
+			to_chat(user, "<span class='notice'>You cut the hair from this [src.singular_name].</span>")
 			//Try locating an exisitng stack on the tile and add to there if possible
 			for(var/obj/item/stack/sheet/hairlesshide/HS in user.loc)
 				if(HS.amount < 50)

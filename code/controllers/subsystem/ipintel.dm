@@ -1,6 +1,6 @@
-var/datum/subsystem/ipintel/SSipintel
+var/datum/controller/subsystem/ipintel/SSipintel
 
-/datum/subsystem/ipintel
+/datum/controller/subsystem/ipintel
 	name = "XKeyScore"
 	init_order = -10
 	flags = SS_NO_FIRE
@@ -10,10 +10,10 @@ var/datum/subsystem/ipintel/SSipintel
 
 	var/list/cache = list()
 
-/datum/subsystem/ipintel/New()
+/datum/controller/subsystem/ipintel/New()
 	NEW_SS_GLOBAL(SSipintel)
 
-/datum/subsystem/ipintel/Initialize(timeofday, zlevel)
+/datum/controller/subsystem/ipintel/Initialize(timeofday, zlevel)
 	enabled = 1
 	. = ..()
 

@@ -67,8 +67,17 @@
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
 	var/can_be_held = TRUE //if assholes can pick us up
+	var/flavortext = \
+	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
+	"<span class='notify'>Drones are a ghost role that are allowed to fix the station and build things. Interfering with the round as a drone is against the rules.</span>\n"+\
+	"<span class='notify'>Actions that constitute interference include, but are not limited to:</span>\n"+\
+	"<span class='notify'>     - Interacting with round critical objects (IDs, weapons, contraband, powersinks, bombs, etc.)</span>\n"+\
+	"<span class='notify'>     - Interacting with living beings (communication, attacking, healing, etc.)</span>\n"+\
+	"<span class='notify'>     - Interacting with non-living beings (dragging bodies, looting bodies, etc.)</span>\n"+\
+	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
+	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
 
-/mob/living/simple_animal/drone/New()
+/mob/living/simple_animal/drone/Initialize()
 	. = ..()
 
 	access_card = new /obj/item/weapon/card/id(src)
@@ -121,6 +130,9 @@
 	..()
 	check_laws()
 
+	if(flavortext)
+		to_chat(src, "[flavortext]")
+
 	updateSeeStaticMobs()
 
 	if(!picked)
@@ -141,6 +153,9 @@
 	dust()
 
 /mob/living/simple_animal/drone/ratvar_act()
+	if(status_flags & GODMODE)
+		return
+
 	if(internal_storage)
 		dropItemToGround(internal_storage)
 	if(head)
@@ -201,7 +216,7 @@
 		else
 			msg += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>\n"
 	msg += "*---------*</span>"
-	user << msg
+	to_chat(user, msg)
 
 
 /mob/living/simple_animal/drone/assess_threat() //Secbots won't hunt maintenance drones.
@@ -210,10 +225,10 @@
 
 /mob/living/simple_animal/drone/emp_act(severity)
 	Stun(5)
-	src << "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>"
+	to_chat(src, "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>")
 	if(severity == 1)
 		adjustBruteLoss(heavy_emp_damage)
-		src << "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>"
+		to_chat(src, "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>")
 
 
 /mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
@@ -229,7 +244,7 @@
 					sources += alarmsource
 				return
 		L[A.name] = list(A, list(alarmsource))
-		src << "--- [class] alarm detected in [A.name]!"
+		to_chat(src, "--- [class] alarm detected in [A.name]!")
 
 
 /mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
@@ -246,7 +261,7 @@
 					cleared = 1
 					L -= I
 		if(cleared)
-			src << "--- [class] alarm in [A.name] has been cleared."
+			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
@@ -268,5 +283,5 @@
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring

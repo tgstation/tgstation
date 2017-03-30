@@ -22,7 +22,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wwvault)
 "ag" = (
-/turf/open/floor/plasteel/circuit/off,
+/turf/open/floor/circuit/off,
 /area/awaymission/wwvault)
 "ah" = (
 /turf/closed/indestructible{
@@ -55,7 +55,7 @@
 /area/awaymission/wwvault)
 "am" = (
 /mob/living/simple_animal/hostile/faithless,
-/turf/open/floor/plasteel/circuit/off,
+/turf/open/floor/circuit/off,
 /area/awaymission/wwvault)
 "an" = (
 /turf/open/floor/plasteel/cult{
@@ -64,75 +64,75 @@
 	},
 /area/awaymission/wwvault)
 "ao" = (
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "ap" = (
 /obj/machinery/wish_granter_dark,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "aq" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "ar" = (
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "as" = (
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "at" = (
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "au" = (
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "av" = (
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "aw" = (
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "ax" = (
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "ay" = (
 /obj/machinery/gateway,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "az" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "aA" = (
 /obj/effect/meatgrinder,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "aB" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/floor/plasteel/circuit/off,
+/turf/open/floor/circuit/off,
 /area/awaymission/wwvault)
 "aC" = (
 /turf/open/floor/plating{

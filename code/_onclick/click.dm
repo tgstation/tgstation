@@ -129,7 +129,7 @@
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		if(A.Adjacent(src)) // see adjacent.dm
+		if(Adjacent(A) || (W && CheckReach(src, A, W.reach))) //Adjacent or reaching attacks
 			if(W)
 				if(W.pre_attackby(A,src,params))
 					// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
@@ -146,6 +146,29 @@
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
+
+/proc/CheckReach(atom/movable/here, atom/movable/there, reach)
+	if(!here || !there)
+		return
+	switch(reach)
+		if(0)
+			return here.loc == there.loc
+		if(1)
+			return here.Adjacent(there)
+		if(2 to INFINITY)
+			var/obj/dummy = new(get_turf(here)) //We'll try to move this every tick, failing if we can't
+			dummy.pass_flags |= PASSTABLE
+			for(var/i in 1 to reach) //Limit it to that many tries
+				var/turf/T = get_step(dummy, get_dir(dummy, there))
+				if(dummy.loc == there.loc)
+					qdel(dummy)
+					return 1
+				if(there.density && dummy in range(1, there)) //For windows and 
+					qdel(dummy)
+					return 1
+				if(!dummy.Move(T)) //we're blocked!
+					qdel(dummy)
+					return
 
 // Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
 /mob/proc/DblClickOn(atom/A, params)

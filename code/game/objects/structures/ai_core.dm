@@ -30,16 +30,16 @@
 	if(!anchored)
 		if(istype(P, /obj/item/weapon/weldingtool))
 			if(state != EMPTY_CORE)
-				user << "<span class='warning'>The core must be empty to deconstruct it!</span>"
+				to_chat(user, "<span class='warning'>The core must be empty to deconstruct it!</span>")
 				return
 			var/obj/item/weapon/weldingtool/WT = P
 			if(!WT.isOn())
-				user << "<span class='warning'>The welder must be on for this task!</span>"
+				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
 				return
 			playsound(loc, WT.usesound, 50, 1)
-			user << "<span class='notice'>You start to deconstruct the frame...</span>"
+			to_chat(user, "<span class='notice'>You start to deconstruct the frame...</span>")
 			if(do_after(user, 20*P.toolspeed, target = src) && src && state == EMPTY_CORE && WT && WT.remove_fuel(0, user))
-				user << "<span class='notice'>You deconstruct the frame.</span>"
+				to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 				deconstruct(TRUE)
 			return
 	else
@@ -49,7 +49,7 @@
 					if(!user.drop_item())
 						return
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "<span class='notice'>You place the circuit board inside the frame.</span>"
+					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 					update_icon()
 					state = CIRCUIT_CORE
 					circuit = P
@@ -58,13 +58,13 @@
 			if(CIRCUIT_CORE)
 				if(istype(P, /obj/item/weapon/screwdriver))
 					playsound(loc, P.usesound, 50, 1)
-					user << "<span class='notice'>You screw the circuit board into place.</span>"
+					to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 					state = SCREWED_CORE
 					update_icon()
 					return
 				if(istype(P, /obj/item/weapon/crowbar))
 					playsound(loc, P.usesound, 50, 1)
-					user << "<span class='notice'>You remove the circuit board.</span>"
+					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 					state = EMPTY_CORE
 					update_icon()
 					circuit.forceMove(loc)
@@ -73,7 +73,7 @@
 			if(SCREWED_CORE)
 				if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 					playsound(loc, P.usesound, 50, 1)
-					user << "<span class='notice'>You unfasten the circuit board.</span>"
+					to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 					state = CIRCUIT_CORE
 					update_icon()
 					return
@@ -81,21 +81,21 @@
 					var/obj/item/stack/cable_coil/C = P
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-						user << "<span class='notice'>You start to add cables to the frame...</span>"
+						to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
-							user << "<span class='notice'>You add cables to the frame.</span>"
+							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 							state = CABLED_CORE
 							update_icon()
 					else
-						user << "<span class='warning'>You need five lengths of cable to wire the AI core!</span>"
+						to_chat(user, "<span class='warning'>You need five lengths of cable to wire the AI core!</span>")
 					return
 			if(CABLED_CORE)
 				if(istype(P, /obj/item/weapon/wirecutters))
 					if(brain)
-						user << "<span class='warning'>Get that [brain.name] out of there first!</span>"
+						to_chat(user, "<span class='warning'>Get that [brain.name] out of there first!</span>")
 					else
 						playsound(loc, P.usesound, 50, 1)
-						user << "<span class='notice'>You remove the cables.</span>"
+						to_chat(user, "<span class='notice'>You remove the cables.</span>")
 						state = SCREWED_CORE
 						update_icon()
 						var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( loc )
@@ -106,18 +106,18 @@
 					var/obj/item/stack/sheet/rglass/G = P
 					if(G.get_amount() >= 2)
 						playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-						user << "<span class='notice'>You start to put in the glass panel...</span>"
+						to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
 						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
-							user << "<span class='notice'>You put in the glass panel.</span>"
+							to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
 							state = GLASS_CORE
 							update_icon()
 					else
-						user << "<span class='warning'>You need two sheets of reinforced glass to insert them into the AI core!</span>"
+						to_chat(user, "<span class='warning'>You need two sheets of reinforced glass to insert them into the AI core!</span>")
 					return
 
 				if(istype(P, /obj/item/weapon/aiModule))
 					if(brain && brain.laws.id != DEFAULT_AI_LAWID)
-						user << "<span class='warning'>The installed [brain.name] already has set laws!</span>"
+						to_chat(user, "<span class='warning'>The installed [brain.name] already has set laws!</span>")
 						return
 					var/obj/item/weapon/aiModule/module = P
 					module.install(laws, user)
@@ -126,22 +126,22 @@
 				if(istype(P, /obj/item/device/mmi) && !brain)
 					var/obj/item/device/mmi/M = P
 					if(!M.brainmob)
-						user << "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>"
+						to_chat(user, "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>")
 						return
 					if(M.brainmob.stat == DEAD)
-						user << "<span class='warning'>Sticking a dead [M.name] into the frame would sort of defeat the purpose!</span>"
+						to_chat(user, "<span class='warning'>Sticking a dead [M.name] into the frame would sort of defeat the purpose!</span>")
 						return
 
 					if(!M.brainmob.client)
-						user << "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>"
+						to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
 						return
 
 					if((config) && (!config.allow_ai) || jobban_isbanned(M.brainmob, "AI"))
-						user << "<span class='warning'>This [M.name] does not seem to fit!</span>"
+						to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
 
 					if(!M.brainmob.mind)
-						user << "<span class='warning'>This [M.name] is mindless!</span>"
+						to_chat(user, "<span class='warning'>This [M.name] is mindless!</span>")
 						return
 
 					if(!user.drop_item())
@@ -149,13 +149,13 @@
 
 					M.forceMove(src)
 					brain = M
-					user << "<span class='notice'>You add [M.name] to the frame.</span>"
+					to_chat(user, "<span class='notice'>You add [M.name] to the frame.</span>")
 					update_icon()
 					return
 
 				if(istype(P, /obj/item/weapon/crowbar) && brain)
 					playsound(loc, P.usesound, 50, 1)
-					user << "<span class='notice'>You remove the brain.</span>"
+					to_chat(user, "<span class='notice'>You remove the brain.</span>")
 					brain.forceMove(loc)
 					brain = null
 					update_icon()
@@ -164,7 +164,7 @@
 			if(GLASS_CORE)
 				if(istype(P, /obj/item/weapon/crowbar))
 					playsound(loc, P.usesound, 50, 1)
-					user << "<span class='notice'>You remove the glass panel.</span>"
+					to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 					state = CABLED_CORE
 					update_icon()
 					new /obj/item/stack/sheet/rglass(loc, 2)
@@ -172,7 +172,7 @@
 
 				if(istype(P, /obj/item/weapon/screwdriver))
 					playsound(loc, P.usesound, 50, 1)
-					user << "<span class='notice'>You connect the monitor.</span>"
+					to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 					if(brain)
 						ticker.mode.remove_antag_for_borging(brain.brainmob.mind)
 						if(!istype(brain.laws, /datum/ai_laws/ratvar))
@@ -194,7 +194,7 @@
 
 				if(istype(P, /obj/item/weapon/screwdriver))
 					playsound(loc, P.usesound, 50, 1)
-					user << "<span class='notice'>You disconnect the monitor.</span>"
+					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 					state = GLASS_CORE
 					update_icon()
 					return
@@ -251,7 +251,7 @@ That prevents a few funky behaviors.
 /atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(istype(card))
 		if(card.flush)
-			user << "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol."
+			to_chat(user, "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol.")
 			return 0
 	return 1
 
@@ -264,12 +264,12 @@ That prevents a few funky behaviors.
 		AI.control_disabled = 0
 		AI.radio_enabled = 1
 		AI.forceMove(loc) // to replace the terminal.
-		AI << "You have been uploaded to a stationary terminal. Remote device connection restored."
-		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		to_chat(AI, "You have been uploaded to a stationary terminal. Remote device connection restored.")
+		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
-		user << "There is no AI loaded on this terminal!"
+		to_chat(user, "There is no AI loaded on this terminal!")
 
 
 /obj/item/weapon/circuitboard/aicore

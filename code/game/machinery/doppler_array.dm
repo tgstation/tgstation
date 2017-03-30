@@ -27,11 +27,11 @@ var/list/doppler_arrays = list()
 		if(!anchored && !isinspace())
 			anchored = 1
 			power_change()
-			user << "<span class='notice'>You fasten [src].</span>"
+			to_chat(user, "<span class='notice'>You fasten [src].</span>")
 		else if(anchored)
 			anchored = 0
 			power_change()
-			user << "<span class='notice'>You unfasten [src].</span>"
+			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
 		playsound(loc, O.usesound, 50, 1)
 	else
 		return ..()
@@ -50,7 +50,7 @@ var/list/doppler_arrays = list()
 
 /obj/machinery/doppler_array/AltClick(mob/living/user)
 	if(!istype(user) || user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return

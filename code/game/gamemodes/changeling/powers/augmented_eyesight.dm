@@ -17,14 +17,14 @@
 		if(E.flash_protect)
 			E.sight_flags |= SEE_MOBS
 			E.flash_protect = -1
-			user << "We adjust our eyes to sense prey through walls."
+			to_chat(user, "We adjust our eyes to sense prey through walls.")
 		else
 			E.sight_flags -= SEE_MOBS
 			E.flash_protect = 2
-			user << "We adjust our eyes to protect them from bright lights."
+			to_chat(user, "We adjust our eyes to protect them from bright lights.")
 		user.update_sight()
 	else
-		user << "We can't adjust our eyes if we don't have any!"
+		to_chat(user, "We can't adjust our eyes if we don't have any!")
 
 
 

@@ -83,17 +83,17 @@
 			else
 				mode = PRESSURE_OFF
 			playsound(src.loc, I.usesound, 50, 1)
-			user << "<span class='notice'>You [mode == SCREWS_OUT ? "remove":"attach"] the screws around the power connection.</span>"
+			to_chat(user, "<span class='notice'>You [mode == SCREWS_OUT ? "remove":"attach"] the screws around the power connection.</span>")
 			return
 		else if(istype(I,/obj/item/weapon/weldingtool) && mode == SCREWS_OUT)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
+				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 				if(do_after(user,20*I.toolspeed, target = src) && mode == SCREWS_OUT)
 					if(!W.isOn())
 						return
-					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
+					to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
 					deconstruct()
 			return
 
@@ -123,7 +123,7 @@
 	if(target.buckled || target.has_buckled_mobs())
 		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
-		user << "<span class='warning'>[target] doesn't fit inside [src]!</span>"
+		to_chat(user, "<span class='warning'>[target] doesn't fit inside [src]!</span>")
 		return
 	add_fingerprint(user)
 	if(user == target)
@@ -173,7 +173,7 @@
 // human interact with machine
 /obj/machinery/disposal/attack_hand(mob/user)
 	if(user && user.loc == src)
-		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
+		to_chat(usr, "<span class='warning'>You cannot reach the controls from inside!</span>")
 		return
 	interact(user, 0)
 
@@ -275,7 +275,7 @@
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
-		user << "<span class='warning'>You empty the bag.</span>"
+		to_chat(user, "<span class='warning'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)
 		T.update_icon()
@@ -290,7 +290,7 @@
 	if(stat & BROKEN)
 		return
 	if(user.loc == src)
-		user << "<span class='warning'>You cannot reach the controls from inside!</span>"
+		to_chat(user, "<span class='warning'>You cannot reach the controls from inside!</span>")
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -475,7 +475,7 @@
 	else if(istype(AM, /mob))
 		var/mob/M = AM
 		if(prob(2)) // to prevent mobs being stuck in infinite loops
-			M << "<span class='warning'>You hit the edge of the chute.</span>"
+			to_chat(M, "<span class='warning'>You hit the edge of the chute.</span>")
 			return
 		M.forceMove(src)
 	flush()

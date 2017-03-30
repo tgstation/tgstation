@@ -17,10 +17,19 @@
 	timeout_time = 50
 
 /datum/clockwork_scripture/ranged_ability/linked_vanguard/check_special_requirements()
-	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
-		invoker << "<span class='warning'>You are already shielded by a Vanguard!</span>"
+	if(!ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
+		to_chat(invoker, "<span class='warning'>You are already shielded by a Vanguard!</span>")
 		return FALSE
 	return TRUE
+
+/datum/clockwork_scripture/ranged_ability/linked_vanguard/scripture_effects()
+	if(ratvar_awakens) //hey, ratvar's up! give everybody stun immunity.
+		for(var/mob/living/L in view(7, get_turf(invoker)))
+			if(L.stat != DEAD && is_servant_of_ratvar(L))
+				L.apply_status_effect(STATUS_EFFECT_VANGUARD)
+			CHECK_TICK
+		return TRUE
+	return ..()
 
 //Judicial Marker: places a judicial marker at a target location
 /datum/clockwork_scripture/ranged_ability/judicial_marker
@@ -40,3 +49,4 @@
 /datum/clockwork_scripture/channeled/volt_void/cyborg
 	quickbind_desc = "Allows you to fire energy rays at target locations using your own power. Failing to fire causes backlash.<br><b>Maximum 4 chants.</b>"
 	tier = SCRIPTURE_PERIPHERAL
+	quickbind = FALSE

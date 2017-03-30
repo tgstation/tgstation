@@ -68,7 +68,7 @@
 
 				add_logs(user, M, "operated", addition="Operation type: [procedure.name], location: [selected_zone]")
 			else
-				user << "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>"
+				to_chat(user, "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>")
 
 	else if(!current_surgery.step_in_progress)
 		if(current_surgery.status == 1)
@@ -82,7 +82,7 @@
 				"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
 			qdel(current_surgery)
 		else if(current_surgery.can_cancel)
-			user << "<span class='warning'>You need to hold a cautery in inactive hand to stop [M]'s surgery!</span>"
+			to_chat(user, "<span class='warning'>You need to hold a cautery in inactive hand to stop [M]'s surgery!</span>")
 
 	return 1
 

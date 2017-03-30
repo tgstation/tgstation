@@ -65,7 +65,7 @@ var/list/holopads = list()
 	holopads -= src
 	return ..()
 
-/obj/machinery/holo_pad/power_change()
+/obj/machinery/holopad/power_change()
 	if (powered())
 		stat &= ~NOPOWER
 	else
@@ -126,7 +126,7 @@ var/list/holopads = list()
 			for(var/mob/living/silicon/ai/AI in living_mob_list)
 				if(!AI.client)
 					continue
-				AI << "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>"
+				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
 		else
 			temp = "A request for AI presence was already sent recently.<BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
@@ -180,12 +180,12 @@ var/list/holopads = list()
 /obj/machinery/holopad/proc/activate_holo(mob/living/silicon/ai/user)
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it
 		if (istype(user.current, /obj/machinery/holopad))
-			user << "<span class='danger'>ERROR:</span> \black Image feed in progress."
+			to_chat(user, "<span class='danger'>ERROR:</span> \black Image feed in progress.")
 			return
 		create_holo(user)//Create one.
 		src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
 	else
-		user << "<span class='danger'>ERROR:</span> \black Unable to project hologram."
+		to_chat(user, "<span class='danger'>ERROR:</span> \black Unable to project hologram.")
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
@@ -202,13 +202,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	h.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	h.anchored = 1//So space wind cannot drag it.
 	h.name = "[A.name] (Hologram)"//If someone decides to right click.
-	h.SetLuminosity(2)	//hologram lighting
+	h.set_light(2)	//hologram lighting
 	set_holo(A, h)
 	return TRUE
 
 /obj/machinery/holopad/proc/set_holo(mob/living/silicon/ai/A, var/obj/effect/overlay/holo_pad_hologram/h)
 	masters[A] = h
-	SetLuminosity(2) // pad lighting
+	set_light(2) // pad lighting
 	icon_state = "holopad1"
 	A.current = src
 	use_power += HOLOGRAM_POWER_USAGE
@@ -225,7 +225,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	masters -= user // Discard AI from the list of those who use holopad
 	use_power = max(HOLOPAD_PASSIVE_POWER_USAGE, use_power - HOLOGRAM_POWER_USAGE)//Reduce power usage
 	if (!masters.len) // If no users left
-		SetLuminosity(0) // pad lighting (hologram lighting will be handled automatically since its owner was deleted)
+		set_light(0) // pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 		icon_state = "holopad0"
 		use_power = HOLOPAD_PASSIVE_POWER_USAGE
 	return TRUE

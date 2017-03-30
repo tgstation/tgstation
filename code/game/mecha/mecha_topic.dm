@@ -228,10 +228,10 @@
 			if(user)
 				if(state==0)
 					state = 1
-					user << "The securing bolts are now exposed."
+					to_chat(user, "The securing bolts are now exposed.")
 				else if(state==1)
 					state = 0
-					user << "The securing bolts are now hidden."
+					to_chat(user, "The securing bolts are now hidden.")
 				output_maintenance_dialog(filter.getObj("id_card"),user)
 
 		if(href_list["set_internal_tank_valve"] && state >=1)
@@ -240,7 +240,7 @@
 				var/new_pressure = input(user,"Input new output pressure","Pressure setting",internal_tank_valve) as num
 				if(new_pressure)
 					internal_tank_valve = new_pressure
-					user << "The internal pressure valve has been set to [internal_tank_valve]kPa."
+					to_chat(user, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
 
 		if(href_list["add_req_access"] && add_req_access && filter.getObj("id_card"))
 			operation_req_access += filter.getNum("add_req_access")
@@ -308,7 +308,7 @@
 
 	if(href_list["dna_lock"])
 		if(occupant && !iscarbon(occupant))
-			occupant << "<span class='danger'> You do not have any DNA!</span>"
+			to_chat(occupant, "<span class='danger'> You do not have any DNA!</span>")
 			return
 		dna_lock = occupant.dna.unique_enzymes
 		occupant_message("You feel a prick as the needle takes your DNA sample.")

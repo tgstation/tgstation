@@ -21,7 +21,7 @@
 
 /obj/effect/proc_holder/changeling/fleshmend/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/effect/proc_holder/changeling/fleshmend/process()
 	if(recent_uses > 1)
@@ -30,10 +30,10 @@
 //Starts healing you every second for 10 seconds.
 //Can be used whilst unconscious.
 /obj/effect/proc_holder/changeling/fleshmend/sting_action(mob/living/user)
-	user << "<span class='notice'>We begin to heal rapidly.</span>"
+	to_chat(user, "<span class='notice'>We begin to heal rapidly.</span>")
 	if(recent_uses > 1)
-		user << "<span class='warning'>Our healing's effectiveness is reduced \
-			by quick repeated use!</span>"
+		to_chat(user, "<span class='warning'>Our healing's effectiveness is reduced \
+			by quick repeated use!</span>")
 
 	recent_uses++
 	INVOKE_ASYNC(src, .proc/fleshmend, user)

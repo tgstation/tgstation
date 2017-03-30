@@ -100,6 +100,17 @@
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/Laser.ogg'
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
+	equip_cooldown = 35
+	name = "\improper MKI Tesla Cannon"
+	desc = "A weapon for combat exosuits. Fires bolts of electricity similar to the experimental tesla engine"
+	icon_state = "mecha_ion"
+	origin_tech = "materials=4;engineering=4;combat=6;magnets=6"
+	energy_drain = 500
+	projectile = /obj/item/projectile/energy/tesla_cannon
+	fire_sound = 'sound/magic/lightningbolt.ogg'
+
+
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
 	name = "eZ-13 MK2 heavy pulse rifle"
@@ -163,7 +174,7 @@
 			var/mob/living/carbon/human/H = M
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue
-		M << "<font color='red' size='7'>HONK</font>"
+		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.stuttering += 20
 		M.adjustEarDamage(0, 30)

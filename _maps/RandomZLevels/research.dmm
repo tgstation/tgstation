@@ -479,31 +479,31 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-warndark (NORTHWEST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/turf/open/floor/plasteel/black{
+	tag = "icon-warndark (NORTHWEST)"
 	},
 /area/awaymission/research/interior/gateway)
 "bB" = (
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "bC" = (
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-warndark (NORTHEAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
+	},
+/turf/open/floor/plasteel/black{
+	tag = "icon-warndark (NORTHEAST)"
 	},
 /area/awaymission/research/interior/gateway)
 "bD" = (
@@ -623,10 +623,10 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "bT" = (
 /obj/machinery/gateway/centeraway{
@@ -638,11 +638,11 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-warndark (EAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	tag = "icon-warndark (EAST)"
 	},
 /area/awaymission/research/interior/gateway)
 "bV" = (
@@ -677,11 +677,11 @@
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-warndark (SOUTHWEST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
+	},
+/turf/open/floor/plasteel/black{
+	tag = "icon-warndark (SOUTHWEST)"
 	},
 /area/awaymission/research/interior/gateway)
 "bZ" = (
@@ -689,18 +689,18 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "ca" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-warndark (SOUTHEAST)"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/turf/open/floor/plasteel/black{
+	tag = "icon-warndark (SOUTHEAST)"
 	},
 /area/awaymission/research/interior/gateway)
 "cb" = (
@@ -4575,9 +4575,9 @@
 "mf" = (
 /turf/open/floor/plating/asteroid/airless,
 /obj/structure/shuttle/engine/propulsion/burst{
-	tag = "icon-propulsion (WEST)";
+	dir = 4;
 	icon_state = "propulsion";
-	dir = 8
+	tag = "icon-propulsion (WEST)"
 	},
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)

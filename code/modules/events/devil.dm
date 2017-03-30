@@ -32,7 +32,7 @@
 
 	var/mob/living/carbon/human/devil = create_event_devil(spawn_loc)
 	Mind.transfer_to(devil)
-	ticker.mode.finalize_devil(Mind)
+	ticker.mode.finalize_devil(Mind, FALSE)
 	ticker.mode.add_devil_objectives(src, 2)
 	Mind.announceDevilLaws()
 	Mind.announce_objectives()

@@ -1,16 +1,16 @@
-var/datum/subsystem/stickyban/SSstickyban
+var/datum/controller/subsystem/stickyban/SSstickyban
 
-/datum/subsystem/stickyban
+/datum/controller/subsystem/stickyban
 	name = "Sticky Ban"
 	init_order = -10
 	flags = SS_NO_FIRE
 
 	var/list/cache = list()
 
-/datum/subsystem/stickyban/New()
+/datum/controller/subsystem/stickyban/New()
 	NEW_SS_GLOBAL(SSstickyban)
 
-/datum/subsystem/stickyban/Initialize(timeofday)
+/datum/controller/subsystem/stickyban/Initialize(timeofday)
 	var/list/bannedkeys = world.GetConfig("ban")
 	//sanitize the sticky ban list
 	for (var/bannedkey in bannedkeys)

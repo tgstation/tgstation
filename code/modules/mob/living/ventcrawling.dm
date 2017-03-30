@@ -7,19 +7,19 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 	if(!ventcrawler || !Adjacent(A))
 		return
 	if(stat)
-		src << "You must be conscious to do this!"
+		to_chat(src, "You must be conscious to do this!")
 		return
 	if(lying)
-		src << "You can't vent crawl while you're stunned!"
+		to_chat(src, "You can't vent crawl while you're stunned!")
 		return
 	if(restrained())
-		src << "You can't vent crawl while you're restrained!"
+		to_chat(src, "You can't vent crawl while you're restrained!")
 		return
 	if(has_buckled_mobs())
-		src << "You can't vent crawl with other creatures on you!"
+		to_chat(src, "You can't vent crawl with other creatures on you!")
 		return
 	if(buckled)
-		src << "You can't vent crawl while buckled!"
+		to_chat(src, "You can't vent crawl while buckled!")
 		return
 
 	var/obj/machinery/atmospherics/components/unary/vent_found
@@ -62,17 +62,17 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 					failed = 1
 					break
 				if(failed)
-					src << "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>"
+					to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
 					return
 
 			visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
 			forceMove(vent_found)
 	else
-		src << "<span class='warning'>This ventilation duct is not connected to anything!</span>"
+		to_chat(src, "<span class='warning'>This ventilation duct is not connected to anything!</span>")
 
 /mob/living/simple_animal/slime/handle_ventcrawl(atom/A)
 	if(buckled)
-		src << "<i>I can't vent crawl while feeding...</i>"
+		to_chat(src, "<i>I can't vent crawl while feeding...</i>")
 		return
 	..()
 

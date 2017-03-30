@@ -80,7 +80,7 @@
 		return 1
 	var/area/A = get_area(usr)
 	if(!A.outdoors)
-		usr << "<span class='warning'>There is already a defined structure here.</span>"
+		to_chat(usr, "<span class='warning'>There is already a defined structure here.</span>")
 		return 1
 	create_area(usr)
 
@@ -159,7 +159,7 @@
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
 		return 1
-	if(usr.incapacitated())
+	if(usr.incapacitated() || isobserver(usr))
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
@@ -241,49 +241,49 @@
 
 	if(C.internal)
 		C.internal = null
-		C << "<span class='notice'>You are no longer running on internals.</span>"
+		to_chat(C, "<span class='notice'>You are no longer running on internals.</span>")
 		icon_state = "internal0"
 	else
 		if(!C.getorganslot("breathing_tube"))
 			if(!istype(C.wear_mask, /obj/item/clothing/mask))
-				C << "<span class='warning'>You are not wearing an internals mask!</span>"
+				to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
 				return 1
 			else
 				var/obj/item/clothing/mask/M = C.wear_mask
 				if(M.mask_adjusted) // if mask on face but pushed down
 					M.adjustmask(C) // adjust it back
 				if( !(M.flags & MASKINTERNALS) )
-					C << "<span class='warning'>You are not wearing an internals mask!</span>"
+					to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
 					return
 
 		var/obj/item/I = C.is_holding_item_of_type(/obj/item/weapon/tank)
 		if(I)
-			C << "<span class='notice'>You are now running on internals from the [I] on your [C.get_held_index_name(C.get_held_index_of_item(I))].</span>"
+			to_chat(C, "<span class='notice'>You are now running on internals from the [I] on your [C.get_held_index_name(C.get_held_index_of_item(I))].</span>")
 			C.internal = I
 		else if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(istype(H.s_store, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>"
+				to_chat(H, "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>")
 				H.internal = H.s_store
 			else if(istype(H.belt, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>"
+				to_chat(H, "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>")
 				H.internal = H.belt
 			else if(istype(H.l_store, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>"
+				to_chat(H, "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>")
 				H.internal = H.l_store
 			else if(istype(H.r_store, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>"
+				to_chat(H, "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>")
 				H.internal = H.r_store
 
 		//Seperate so CO2 jetpacks are a little less cumbersome.
 		if(!C.internal && istype(C.back, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
+			to_chat(C, "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>")
 			C.internal = C.back
 
 		if(C.internal)
 			icon_state = "internal1"
 		else
-			C << "<span class='warning'>You don't have an oxygen tank!</span>"
+			to_chat(C, "<span class='warning'>You don't have an oxygen tank!</span>")
 			return
 	C.update_action_buttons_icon()
 
@@ -667,21 +667,29 @@
 			L.say(pick(word_messages))
 
 /obj/screen/splash
-	icon = 'icons/misc/fullscreen.dmi'
-	icon_state = "title"
+	icon = 'config/title_screens/images/blank.png'
+	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, fadeout, qdel_after = TRUE)
-	..()
+/obj/screen/splash/New(client/C, visible, use_previous_title)
 	holder = C
+
+	if(!visible)
+		alpha = 0
+	if(SStitle.title_screen)
+		icon = SStitle.title_screen.icon
+
 	holder.screen += src
-	var/titlescreen = TITLESCREEN
-	if(titlescreen)
-		icon_state = titlescreen
-	if(fadeout)
+	if(use_previous_title && !SSmapping.previous_map_config.defaulted)
+		holder.screen -= src	//Yell at Cyberboss to finish this
+
+	..()
+
+/obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
+	if(out)
 		animate(src, alpha = 0, time = 30)
 	else
 		alpha = 0
@@ -690,5 +698,7 @@
 		QDEL_IN(src, 30)
 
 /obj/screen/splash/Destroy()
-	holder.screen -= src
+	if(holder)
+		holder.screen -= src
+		holder = null
 	return ..()

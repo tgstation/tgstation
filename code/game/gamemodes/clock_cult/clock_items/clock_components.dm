@@ -12,20 +12,20 @@
 /obj/item/clockwork/component/pickup(mob/living/user)
 	..()
 	if(iscultist(user) || (user.mind && user.mind.isholy))
-		user << "<span class='[message_span]'>[cultist_message]</span>"
+		to_chat(user, "<span class='[message_span]'>[cultist_message]</span>")
 		if(user.mind && user.mind.isholy)
-			user << "<span class='boldannounce'>The power of your faith melts away the [src]!</span>"
+			to_chat(user, "<span class='boldannounce'>The power of your faith melts away the [src]!</span>")
 			var/obj/item/weapon/ore/slag/wrath = new /obj/item/weapon/ore/slag
 			qdel(src)
 			user.put_in_active_hand(wrath)
 	if(is_servant_of_ratvar(user) && prob(20))
 		var/pickedmessage = pick(servant_of_ratvar_messages)
-		user << "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>"
+		to_chat(user, "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>")
 
 /obj/item/clockwork/component/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user))
-		user << "<span class='[message_span]'>You should put this in a slab or cache immediately.</span>"
+		to_chat(user, "<span class='[message_span]'>You should put this in a slab or cache immediately.</span>")
 
 /obj/item/clockwork/component/belligerent_eye
 	name = "belligerent eye"
@@ -53,6 +53,13 @@
 	cultist_message = "The gem turns black and cold for a moment before its normal glow returns."
 	servant_of_ratvar_messages = list("\"Disgusting failure.\"" = TRUE, "You feel scrutinized." = FALSE, "\"Weaklings.\"" = TRUE, "\"Pathetic defenses.\"" = TRUE)
 	w_class = WEIGHT_CLASS_TINY
+	light_range = 1.4
+	light_power = 0.4
+	light_color = "#F42B9D"
+
+/obj/item/clockwork/component/belligerent_eye/lens_gem/New()
+	..()
+	update_light()
 
 /obj/item/clockwork/component/vanguard_cogwheel
 	name = "vanguard cogwheel"

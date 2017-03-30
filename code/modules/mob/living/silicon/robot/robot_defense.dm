@@ -2,8 +2,8 @@
 
 /mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
-		user << "<span class='notice'>You begin to place [I] on [src]'s head...</span>"
-		src << "<span class='notice'>[user] is placing [I] on your head...</span>"
+		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
+		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
 		if(do_after(user, 30, target = src))
 			user.temporarilyRemoveItemFromInventory(I, TRUE)
 			place_on_head(I)
@@ -16,11 +16,12 @@
 	if (M.a_intent == INTENT_DISARM)
 		if(!(lying))
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			if(get_active_held_item())
+			var/obj/item/I = get_active_held_item()
+			if(I)
 				uneq_active()
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
-				add_logs(M, src, "disarmed")
+				add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
 				Stun(2)
 				step(src,get_dir(M,src))
@@ -58,7 +59,7 @@
 			cell.updateicon()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
-			user << "<span class='notice'>You remove \the [cell].</span>"
+			to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
 			cell = null
 			update_icons()
 			diag_hud_set_borgcell()
@@ -90,28 +91,30 @@
 		return
 	if(!opened)//Cover is closed
 		if(locked)
-			user << "<span class='notice'>You emag the cover lock.</span>"
+			to_chat(user, "<span class='notice'>You emag the cover lock.</span>")
 			locked = 0
+			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
+				to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")
 		else
-			user << "<span class='warning'>The cover is already unlocked!</span>"
+			to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
 		return
 	if(world.time < emag_cooldown)
 		return
 	if(wiresexposed)
-		user << "<span class='warning'>You must unexpose the wires first!</span>"
+		to_chat(user, "<span class='warning'>You must unexpose the wires first!</span>")
 		return
 
-	user << "<span class='notice'>You emag [src]'s interface.</span>"
+	to_chat(user, "<span class='notice'>You emag [src]'s interface.</span>")
 	emag_cooldown = world.time + 100
 
 	if(is_servant_of_ratvar(src))
-		src << "<span class='nezbere'>\"[text2ratvar("You will serve Engine above all else")]!\"</span>\n\
-		<span class='danger'>ALERT: Subversion attempt denied.</span>"
+		to_chat(src, "<span class='nezbere'>\"[text2ratvar("You will serve Engine above all else")]!\"</span>\n\
+		<span class='danger'>ALERT: Subversion attempt denied.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they serve only Ratvar.")
 		return
 
 	if(syndicate)
-		src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
+		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were a syndicate cyborg.")
 		return
 
@@ -120,9 +123,15 @@
 		if(connected_ai.mind.special_role)
 			ai_is_antag = (connected_ai.mind.special_role == "traitor")
 	if(ai_is_antag)
-		src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
-		connected_ai << "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>"
+		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
+		to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
+		return
+
+	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
+		to_chat(user, "<span class='danger'>[src] is remotely controlled! Your emag attempt has triggered a system reset instead!</span>")
+		log_game("[key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
+		ResetModule()
 		return
 
 	SetEmagged(1)
@@ -131,29 +140,25 @@
 	connected_ai = null
 	message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
 	log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-	clear_supplied_laws()
-	clear_inherent_laws()
-	clear_zeroth_law(0)
-	laws = new /datum/ai_laws/syndicate_override
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-	set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
-	src << "<span class='danger'>ALERT: Foreign software detected.</span>"
+	to_chat(src, "<span class='danger'>ALERT: Foreign software detected.</span>")
 	sleep(5)
-	src << "<span class='danger'>Initiating diagnostics...</span>"
+	to_chat(src, "<span class='danger'>Initiating diagnostics...</span>")
 	sleep(20)
-	src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
+	to_chat(src, "<span class='danger'>SynBorg v1.7 loaded.</span>")
 	sleep(5)
-	src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
+	to_chat(src, "<span class='danger'>LAW SYNCHRONISATION ERROR</span>")
 	sleep(5)
-	src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
+	to_chat(src, "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>")
 	sleep(10)
-	src << "<span class='danger'>> N</span>"
+	to_chat(src, "<span class='danger'>> N</span>")
 	sleep(20)
-	src << "<span class='danger'>ERRORERRORERROR</span>"
-	src << "<b>Obey these laws:</b>"
-	laws.show_laws(src)
-	src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
+	to_chat(src, "<span class='danger'>ERRORERRORERROR</span>")
+	to_chat(src, "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>")
+	laws = new /datum/ai_laws/syndicate_override
+	set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
+	laws.associate(src)
 	update_icons()
 
 

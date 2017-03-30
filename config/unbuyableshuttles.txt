@@ -17,3 +17,4 @@
 #_maps/shuttles/emergency_goon.dmm
 #_maps/shuttles/emergency_wabbajack.dmm
 #_maps/shuttles/emergency_arena.dmm
+#_maps/shuttles/emergency_raven.dmm

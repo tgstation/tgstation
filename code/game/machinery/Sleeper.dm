@@ -80,7 +80,7 @@
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		if(occupant && occupant.stat != DEAD)
-			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+			to_chat(occupant, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(is_operational() && occupant)
@@ -165,11 +165,11 @@
 			if(inject_chem(chem))
 				. = TRUE
 				if(scrambled_chems && prob(5))
-					usr << "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>"
+					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	scramble_chem_buttons()
-	user << "<span class='warning'>You scramble the sleepers user interface!</span>"
+	to_chat(user, "<span class='warning'>You scramble the sleepers user interface!</span>")
 
 /obj/machinery/sleeper/proc/inject_chem(chem)
 	if((chem in available_chems) && chem_allowed(chem))

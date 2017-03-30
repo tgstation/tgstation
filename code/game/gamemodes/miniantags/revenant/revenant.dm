@@ -62,7 +62,7 @@
 	var/image/ghostimage = null //Visible to ghost with darkness off
 	var/generated_objectives_and_spells = FALSE
 
-/mob/living/simple_animal/revenant/New()
+/mob/living/simple_animal/revenant/Initialize()
 	..()
 
 	ghostimage = image(src.icon,src,src.icon_state)
@@ -71,13 +71,13 @@
 
 /mob/living/simple_animal/revenant/Login()
 	..()
-	src << "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>"
-	src << "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
-	src << "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>"
-	src << "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>"
-	src << "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>"
-	src << "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>"
-	src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>"
+	to_chat(src, "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>")
+	to_chat(src, "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>")
+	to_chat(src, "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>")
+	to_chat(src, "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>")
+	to_chat(src, "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>")
+	to_chat(src, "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>")
+	to_chat(src, "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>")
 	if(!generated_objectives_and_spells)
 		generated_objectives_and_spells = TRUE
 		mind.remove_all_antag()
@@ -86,11 +86,11 @@
 		var/datum/objective/revenant/objective = new
 		objective.owner = mind
 		mind.objectives += objective
-		src << "<b>Objective #1</b>: [objective.explanation_text]"
+		to_chat(src, "<b>Objective #1</b>: [objective.explanation_text]")
 		var/datum/objective/revenantFluff/objective2 = new
 		objective2.owner = mind
 		mind.objectives += objective2
-		src << "<b>Objective #2</b>: [objective2.explanation_text]"
+		to_chat(src, "<b>Objective #2</b>: [objective2.explanation_text]")
 		mind.assigned_role = "revenant"
 		mind.special_role = "Revenant"
 		ticker.mode.traitors |= mind //Necessary for announcing
@@ -110,11 +110,11 @@
 		revealed = 0
 		incorporeal_move = 3
 		invisibility = INVISIBILITY_REVENANT
-		src << "<span class='revenboldnotice'>You are once more concealed.</span>"
+		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
 		notransform = 0
-		src << "<span class='revenboldnotice'>You can move again!</span>"
+		to_chat(src, "<span class='revenboldnotice'>You can move again!</span>")
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
 		update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
@@ -151,10 +151,10 @@
 	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in mob_list)
 		if(isrevenant(M))
-			M << rendered
+			to_chat(M, rendered)
 		else if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
+			to_chat(M, "[link] [rendered]")
 	return
 
 
@@ -215,7 +215,7 @@
 	..(1)
 	ghost_darkness_images -= ghostimage
 	updateallghostimages()
-	src << "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>"
+	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = 1
 	revealed = 1
 	invisibility = 0
@@ -245,10 +245,10 @@
 	invisibility = 0
 	incorporeal_move = 0
 	if(!unreveal_time)
-		src << "<span class='revendanger'>You have been revealed!</span>"
+		to_chat(src, "<span class='revendanger'>You have been revealed!</span>")
 		unreveal_time = world.time + time
 	else
-		src << "<span class='revenwarning'>You have been revealed!</span>"
+		to_chat(src, "<span class='revenwarning'>You have been revealed!</span>")
 		unreveal_time = unreveal_time + time
 	update_spooky_icon()
 
@@ -259,10 +259,10 @@
 		return
 	notransform = 1
 	if(!unstun_time)
-		src << "<span class='revendanger'>You cannot move!</span>"
+		to_chat(src, "<span class='revendanger'>You cannot move!</span>")
 		unstun_time = world.time + time
 	else
-		src << "<span class='revenwarning'>You cannot move!</span>"
+		to_chat(src, "<span class='revenwarning'>You cannot move!</span>")
 		unstun_time = unstun_time + time
 	update_spooky_icon()
 
@@ -286,17 +286,17 @@
 		return
 	var/turf/T = get_turf(src)
 	if(isclosedturf(T))
-		src << "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>"
+		to_chat(src, "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>")
 		return 0
 	for(var/obj/O in T)
 		if(O.density && !O.CanPass(src, T, 5))
-			src << "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>"
+			to_chat(src, "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>")
 			return 0
 	if(inhibited)
-		src << "<span class='revenwarning'>Your powers have been suppressed by nulling energy!</span>"
+		to_chat(src, "<span class='revenwarning'>Your powers have been suppressed by nulling energy!</span>")
 		return 0
 	if(!change_essence_amount(essence_cost, 1))
-		src << "<span class='revenwarning'>You lack the essence to use that ability.</span>"
+		to_chat(src, "<span class='revenwarning'>You lack the essence to use that ability.</span>")
 		return 0
 	return 1
 
@@ -312,9 +312,9 @@
 		essence_accumulated = max(0, essence_accumulated+essence_amt)
 	if(!silent)
 		if(essence_amt > 0)
-			src << "<span class='revennotice'>Gained [essence_amt]E from [source].</span>"
+			to_chat(src, "<span class='revennotice'>Gained [essence_amt]E from [source].</span>")
 		else
-			src << "<span class='revenminor'>Lost [essence_amt]E from [source].</span>"
+			to_chat(src, "<span class='revenminor'>Lost [essence_amt]E from [source].</span>")
 	return 1
 
 
@@ -361,9 +361,9 @@
 /obj/item/weapon/ectoplasm/revenant/examine(mob/user)
 	..()
 	if(inert)
-		user << "<span class='revennotice'>It seems inert.</span>"
+		to_chat(user, "<span class='revennotice'>It seems inert.</span>")
 	else if(reforming)
-		user << "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>"
+		to_chat(user, "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>")
 
 /obj/item/weapon/ectoplasm/revenant/proc/reform()
 	if(!src || QDELETED(src) || inert)

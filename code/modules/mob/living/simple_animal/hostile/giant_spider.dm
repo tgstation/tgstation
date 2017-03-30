@@ -68,7 +68,7 @@
 	if(spider_ask == "No" || !src || QDELETED(src))
 		return 1
 	if(key)
-		user << "<span class='notice'>Someone else already took this spider.</span>"
+		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
 		return 1
 	key = user.key
 	return 1
@@ -260,9 +260,9 @@
 	if(stat == DEAD)
 		return
 	if(E)
-		src << "<span class='warning'>There is already a cluster of eggs here!</span>"
+		to_chat(src, "<span class='warning'>There is already a cluster of eggs here!</span>")
 	else if(!fed)
-		src << "<span class='warning'>You are too hungry to do this!</span>"
+		to_chat(src, "<span class='warning'>You are too hungry to do this!</span>")
 	else if(busy != LAYING_EGGS)
 		busy = LAYING_EGGS
 		src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")

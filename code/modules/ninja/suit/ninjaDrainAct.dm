@@ -121,27 +121,27 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 	. = DRAIN_RD_HACK_FAILED
 
-	H << "<span class='notice'>Hacking \the [src]...</span>"
+	to_chat(H, "<span class='notice'>Hacking \the [src]...</span>")
 	spawn(0)
 		var/turf/location = get_turf(H)
 		for(var/mob/living/silicon/ai/AI in player_list)
-			AI << "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
+			to_chat(AI, "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>.")
 
 	if(files && files.known_tech.len)
 		for(var/datum/tech/current_data in S.stored_research)
-			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
+			to_chat(H, "<span class='notice'>Checking \the [current_data.name] database.</span>")
 			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
 				for(var/datum/tech/analyzing_data in files.known_tech)
 					if(current_data.id == analyzing_data.id)
 						if(analyzing_data.level > current_data.level)
-							H << "<span class='notice'>Database:</span> <b>UPDATED</b>."
+							to_chat(H, "<span class='notice'>Database:</span> <b>UPDATED</b>.")
 							current_data.level = analyzing_data.level
 							. = DRAIN_RD_HACKED
 						break//Move on to next.
 			else
 				break//Otherwise, quit processing.
 
-	H << "<span class='notice'>Data analyzed. Process finished.</span>"
+	to_chat(H, "<span class='notice'>Data analyzed. Process finished.</span>")
 
 
 //RD SERVER//
@@ -152,27 +152,27 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 	. = DRAIN_RD_HACK_FAILED
 
-	H << "<span class='notice'>Hacking \the [src]...</span>"
+	to_chat(H, "<span class='notice'>Hacking \the [src]...</span>")
 	spawn(0)
 		var/turf/location = get_turf(H)
 		for(var/mob/living/silicon/ai/AI in player_list)
-			AI << "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
+			to_chat(AI, "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>.")
 
 	if(files && files.known_tech.len)
 		for(var/datum/tech/current_data in S.stored_research)
-			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
+			to_chat(H, "<span class='notice'>Checking \the [current_data.name] database.</span>")
 			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
 				for(var/datum/tech/analyzing_data in files.known_tech)
 					if(current_data.id == analyzing_data.id)
 						if(analyzing_data.level > current_data.level)
-							H << "<span class='notice'>Database:</span> <b>UPDATED</b>."
+							to_chat(H, "<span class='notice'>Database:</span> <b>UPDATED</b>.")
 							current_data.level = analyzing_data.level
 							. = DRAIN_RD_HACKED
 						break//Move on to next.
 			else
 				break//Otherwise, quit processing.
 
-	H << "<span class='notice'>Data analyzed. Process finished.</span>"
+	to_chat(H, "<span class='notice'>Data analyzed. Process finished.</span>")
 
 
 //WIRE//
@@ -247,7 +247,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	var/drain = 0 //Drain amount
 	. = 0
 
-	src << "<span class='danger'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>"
+	to_chat(src, "<span class='danger'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>")
 
 	if(cell && cell.charge)
 		while(G.candrain && cell.charge > 0 && !maxcapacity)

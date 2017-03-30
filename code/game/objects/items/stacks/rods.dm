@@ -21,7 +21,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
 
-/obj/item/stack/rods/New(var/loc, var/amount=null)
+/obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	..()
 
 	recipes = rod_recipes
@@ -39,7 +39,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(get_amount() < 2)
-			user << "<span class='warning'>You need at least two rods to do this!</span>"
+			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
 			return
 
 		if(WT.remove_fuel(0,user))
@@ -57,9 +57,9 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(amount != 1)
-			user << "<span class='warning'>You must use a single rod!</span>"
+			to_chat(user, "<span class='warning'>You must use a single rod!</span>")
 		else if(S.w_class > WEIGHT_CLASS_SMALL)
-			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
+			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/kebab(get_turf(src))
 			A.initialize_custom_food(src, S, user)

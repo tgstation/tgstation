@@ -65,25 +65,27 @@
 		SSpai.findPAI(src, usr)
 
 	if(pai)
+		if(!(loc == usr))
+			return
 		if(href_list["setdna"])
 			if(pai.master_dna)
 				return
 			if(!istype(usr, /mob/living/carbon))
-				usr << "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>"
+				to_chat(usr, "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>")
 			else
 				var/mob/living/carbon/M = usr
 				pai.master = M.real_name
 				pai.master_dna = M.dna.unique_enzymes
-				pai << "<span class='notice'>You have been bound to a new master.</span>"
+				to_chat(pai, "<span class='notice'>You have been bound to a new master.</span>")
 				pai.emittersemicd = FALSE
 		if(href_list["wipe"])
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 			if(confirm == "Yes")
 				if(pai)
-					pai << "<span class='warning'>You feel yourself slipping away from reality.</span>"
-					pai << "<span class='danger'>Byte by byte you lose your sense of self.</span>"
-					pai << "<span class='userdanger'>Your mental faculties leave you.</span>"
-					pai << "<span class='rose'>oblivion... </span>"
+					to_chat(pai, "<span class='warning'>You feel yourself slipping away from reality.</span>")
+					to_chat(pai, "<span class='danger'>Byte by byte you lose your sense of self.</span>")
+					to_chat(pai, "<span class='userdanger'>Your mental faculties leave you.</span>")
+					to_chat(pai, "<span class='rose'>oblivion... </span>")
 					pai.death(0)
 		if(href_list["wires"])
 			var/wire = text2num(href_list["wires"])
@@ -93,19 +95,15 @@
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
-				pai << "Your supplemental directives have been updated. Your new directives are:"
-				pai << "Prime Directive : <br>[pai.laws.zeroth]"
-				for(var/slaws in pai.laws.supplied)
-					pai << "Supplemental Directives: <br>[slaws]"
 		if(href_list["toggle_holo"])
 			if(pai.canholo)
-				pai << "<span class='userdanger'>Your owner has disabled your holomatrix projectors!</span>"
+				to_chat(pai, "<span class='userdanger'>Your owner has disabled your holomatrix projectors!</span>")
 				pai.canholo = FALSE
-				usr << "<span class='warning'>You disable your pAI's holomatrix!</span>"
+				to_chat(usr, "<span class='warning'>You disable your pAI's holomatrix!</span>")
 			else
-				pai << "<span class='boldnotice'>Your owner has enabled your holomatrix projectors!</span>"
+				to_chat(pai, "<span class='boldnotice'>Your owner has enabled your holomatrix projectors!</span>")
 				pai.canholo = TRUE
-				usr << "<span class='notice'>You enable your pAI's holomatrix!</span>"
+				to_chat(usr, "<span class='notice'>You enable your pAI's holomatrix!</span>")
 
 	attack_self(usr)
 

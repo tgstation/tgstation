@@ -73,16 +73,16 @@
 /obj/machinery/computer/power_change()
 	..()
 	if(stat & NOPOWER)
-		SetLuminosity(0)
+		set_light(0)
 	else
-		SetLuminosity(brightness_on)
+		set_light(brightness_on)
 	update_icon()
 	return
 
 /obj/machinery/computer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, I.usesound, 50, 1)
-		user << "<span class='notice'> You start to disconnect the monitor...</span>"
+		to_chat(user, "<span class='notice'> You start to disconnect the monitor...</span>")
 		if(do_after(user, 20*I.toolspeed, target = src))
 			deconstruct(TRUE, user)
 	else
@@ -124,7 +124,7 @@
 			A.anchored = 1
 			if(stat & BROKEN)
 				if(user)
-					user << "<span class='notice'>The broken glass falls out.</span>"
+					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				else
 					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 				new /obj/item/weapon/shard(src.loc)
@@ -133,7 +133,7 @@
 				A.icon_state = "3"
 			else
 				if(user)
-					user << "<span class='notice'>You disconnect the monitor.</span>"
+					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
 			circuit = null

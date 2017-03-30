@@ -15,7 +15,7 @@
 	var/beacon_cooldown = 0
 	var/toggle = FALSE
 
-/mob/living/simple_animal/hostile/guardian/healer/New()
+/mob/living/simple_animal/hostile/guardian/healer/Initialize()
 	..()
 	var/datum/atom_hud/medsensor = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.add_hud_to(src)
@@ -51,7 +51,7 @@
 			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 			melee_damage_lower = 15
 			melee_damage_upper = 15
-			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
+			to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
 			toggle = FALSE
 		else
 			a_intent = INTENT_HELP
@@ -59,10 +59,10 @@
 			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			melee_damage_lower = 0
 			melee_damage_upper = 0
-			src << "<span class='danger'><B>You switch to healing mode.</span></B>"
+			to_chat(src, "<span class='danger'><B>You switch to healing mode.</span></B>")
 			toggle = TRUE
 	else
-		src << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
+		to_chat(src, "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>")
 
 
 /mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
@@ -71,7 +71,7 @@
 	set desc = "Mark a floor as your beacon point, allowing you to warp targets to it. Your beacon will not work at extreme distances."
 
 	if(beacon_cooldown >= world.time)
-		src << "<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>"
+		to_chat(src, "<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>")
 		return
 
 	var/turf/beacon_loc = get_turf(src.loc)
@@ -84,7 +84,7 @@
 
 	beacon = new(beacon_loc, src)
 
-	src << "<span class='danger'><B>Beacon placed! You may now warp targets and objects to it, including your user, via Alt+Click.</span></B>"
+	to_chat(src, "<span class='danger'><B>Beacon placed! You may now warp targets and objects to it, including your user, via Alt+Click.</span></B>")
 
 	beacon_cooldown = world.time + 3000
 
@@ -93,7 +93,7 @@
 	icon = 'icons/turf/floors.dmi'
 	desc = "A recieving zone for bluespace teleportations."
 	icon_state = "light_on-w"
-	luminosity = 1
+	light_range = 1
 	density = FALSE
 	anchored = TRUE
 	layer = ABOVE_OPEN_TURF_LAYER
@@ -111,30 +111,30 @@
 	if(!istype(A))
 		return
 	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to warp a target!</span></B>"
+		to_chat(src, "<span class='danger'><B>You must be manifested to warp a target!</span></B>")
 		return
 	if(!beacon)
-		src << "<span class='danger'><B>You need a beacon placed to warp things!</span></B>"
+		to_chat(src, "<span class='danger'><B>You need a beacon placed to warp things!</span></B>")
 		return
 	if(!Adjacent(A))
-		src << "<span class='danger'><B>You must be adjacent to your target!</span></B>"
+		to_chat(src, "<span class='danger'><B>You must be adjacent to your target!</span></B>")
 		return
 	if(A.anchored)
-		src << "<span class='danger'><B>Your target cannot be anchored!</span></B>"
+		to_chat(src, "<span class='danger'><B>Your target cannot be anchored!</span></B>")
 		return
 
 	var/turf/T = get_turf(A)
 	if(beacon.z != T.z)
-		src << "<span class='danger'><B>The beacon is too far away to warp to!</span></B>"
+		to_chat(src, "<span class='danger'><B>The beacon is too far away to warp to!</span></B>")
 		return
 
-	src << "<span class='danger'><B>You begin to warp [A].</span></B>"
+	to_chat(src, "<span class='danger'><B>You begin to warp [A].</span></B>")
 	A.visible_message("<span class='danger'>[A] starts to glow faintly!</span>", \
 	"<span class='userdanger'>You start to faintly glow, and you feel strangely weightless!</span>")
 	do_attack_animation(A, null, 1)
 
 	if(!do_mob(src, A, 60)) //now start the channel
-		src << "<span class='danger'><B>You need to hold still!</span></B>"
+		to_chat(src, "<span class='danger'><B>You need to hold still!</span></B>")
 		return
 
 	new /obj/effect/overlay/temp/guardian/phase/out(T)

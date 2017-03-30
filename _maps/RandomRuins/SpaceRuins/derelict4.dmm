@@ -43,9 +43,9 @@
 /area/ruin/unpowered)
 "l" = (
 /obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (WEST)";
+	dir = 4;
 	icon_state = "propulsion";
-	dir = 8
+	tag = "icon-propulsion (WEST)"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)

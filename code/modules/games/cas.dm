@@ -60,7 +60,7 @@ var/global/list/cards_against_space
 	if(user.lying)
 		return
 	if(cards.len == 0)
-		user << "<span class='warning'>There are no more cards to draw!</span>"
+		to_chat(user, "<span class='warning'>There are no more cards to draw!</span>")
 		return
 	var/obj/item/toy/cards/singlecard/cas/H = new/obj/item/toy/cards/singlecard/cas(user.loc)
 	var/datum/playingcard/choice = cards[1]
@@ -81,7 +81,7 @@ var/global/list/cards_against_space
 	if(istype(I, /obj/item/toy/cards/singlecard/cas))
 		var/obj/item/toy/cards/singlecard/cas/SC = I
 		if(!user.temporarilyRemoveItemFromInventory(SC))
-			user << "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>"
+			to_chat(user, "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>")
 			return
 		var/datum/playingcard/RC // replace null datum for the re-added card
 		RC = new()
@@ -107,11 +107,11 @@ var/global/list/cards_against_space
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
 	if (flipped)
-		user << "<span class='notice'>The card is face down.</span>"
+		to_chat(user, "<span class='notice'>The card is face down.</span>")
 	else if (blank)
-		user << "<span class='notice'>The card is blank. Write on it with a pen.</span>"
+		to_chat(user, "<span class='notice'>The card is blank. Write on it with a pen.</span>")
 	else
-		user << "<span class='notice'>The card reads: [name]</span>"
+		to_chat(user, "<span class='notice'>The card reads: [name]</span>")
 
 /obj/item/toy/cards/singlecard/cas/Flip()
 	set name = "Flip Card"
@@ -140,7 +140,7 @@ var/global/list/cards_against_space
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		if(!blank)
-			user << "You cannot write on that card."
+			to_chat(user, "You cannot write on that card.")
 			return
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
 		if(!cardtext)

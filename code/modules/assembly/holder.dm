@@ -100,7 +100,7 @@
 /obj/item/device/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(!a_left || !a_right)
-		user << "<span class='danger'>Assembly part missing!</span>"
+		to_chat(user, "<span class='danger'>Assembly part missing!</span>")
 		return
 	if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
 		switch(alert("Which side would you like to use?",,"Left","Right"))

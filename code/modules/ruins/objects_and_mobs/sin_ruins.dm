@@ -17,7 +17,7 @@
 	in_use = TRUE
 	user.adjustCloneLoss(20)
 	if(user.stat)
-		user << "<span class='userdanger'>No... just one more try...</span>"
+		to_chat(user, "<span class='userdanger'>No... just one more try...</span>")
 		user.gib()
 	else
 		user.visible_message("<span class='warning'>[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
@@ -31,11 +31,11 @@
 		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, 0)
 		new/obj/structure/cursed_money(get_turf(src))
 		if(user)
-			user << "<span class='boldwarning'>You've hit jackpot. Laughter echoes around you as your reward appears in the machine's place.</span>"
+			to_chat(user, "<span class='boldwarning'>You've hit jackpot. Laughter echoes around you as your reward appears in the machine's place.</span>")
 		qdel(src)
 	else
 		if(user)
-			user << "<span class='boldwarning'>Fucking machine! Must be rigged. Still... one more try couldn't hurt, right?</span>"
+			to_chat(user, "<span class='boldwarning'>Fucking machine! Must be rigged. Still... one more try couldn't hurt, right?</span>")
 
 /obj/structure/cursed_money
 	name = "bag of money"
@@ -85,7 +85,7 @@
 			H.visible_message("<span class='warning'>[H] pushes through [src]!</span>", "<span class='notice'>You've seen and eaten worse than this.</span>")
 			return 1
 		else
-			H << "<span class='warning'>You're repulsed by even looking at [src]. Only a pig could force themselves to go through it.</span>"
+			to_chat(H, "<span class='warning'>You're repulsed by even looking at [src]. Only a pig could force themselves to go through it.</span>")
 	else
 		return 0
 

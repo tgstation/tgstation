@@ -13,16 +13,16 @@
 					R.volume -= amount_to_transfer//Remove from reagent volume. Don't want to delete the reagent now since we need to perserve the name.
 					reagents.add_reagent(reagent_id, amount_to_transfer)//Add to suit. Reactions are not important.
 					total_reagent_transfer += amount_to_transfer//Add to total reagent trans.
-					U << "Added [amount_to_transfer] units of [R.name]."//Reports on the specific reagent added.
+					to_chat(U, "Added [amount_to_transfer] units of [R.name].")
 					I.reagents.update_total()//Now we manually update the total to make sure everything is properly shoved under the rug.
 
-			U << "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units."//Let the player know how much total volume was added.
+			to_chat(U, "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units.")
 			return
 
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
 			var/obj/item/weapon/stock_parts/cell/CELL = I
 			if(CELL.maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
-				U << "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>"
+				to_chat(U, "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>")
 				if (n_gloves && n_gloves.candrain && do_after(U,s_delay, target = src))
 					U.drop_item()
 					CELL.loc = src
@@ -34,9 +34,9 @@
 					old_cell.corrupt()
 					old_cell.updateicon()
 					cell = CELL
-					U << "<span class='notice'>Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%</span>"
+					to_chat(U, "<span class='notice'>Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%</span>")
 				else
-					U << "<span class='danger'>Procedure interrupted. Protocol terminated.</span>"
+					to_chat(U, "<span class='danger'>Procedure interrupted. Protocol terminated.</span>")
 			return
 
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
@@ -47,7 +47,7 @@
 					has_research = 1
 					break
 			if(has_research)//If it has something on it.
-				U << "Research information detected, processing..."
+				to_chat(U, "Research information detected, processing...")
 				if(do_after(U,s_delay, target = src))
 					for(var/V1 in 1 to TD.max_tech_stored)
 						var/datum/tech/new_data = TD.tech_stored[V1]
@@ -59,12 +59,12 @@
 							if(current_data.id == new_data.id)
 								current_data.level = max(current_data.level, new_data.level)
 								break
-					U << "<span class='notice'>Data analyzed and updated. Disk erased.</span>"
+					to_chat(U, "<span class='notice'>Data analyzed and updated. Disk erased.</span>")
 				else
-					U << "<span class='userdanger'>ERROR</span>: Procedure interrupted. Process terminated."
+					to_chat(U, "<span class='userdanger'>ERROR</span>: Procedure interrupted. Process terminated.")
 			else
 				I.loc = src
 				t_disk = I
-				U << "<span class='notice'>You slot \the [I] into \the [src].</span>"
+				to_chat(U, "<span class='notice'>You slot \the [I] into \the [src].</span>")
 			return
 	..()

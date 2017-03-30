@@ -1,6 +1,12 @@
 
 //These are all the different status effects. Use the paths for each effect in the defines.
 
+#define STATUS_EFFECT_MULTIPLE 0 //if it allows multiple instances of the effect
+
+#define STATUS_EFFECT_UNIQUE 1 //if it allows only one, preventing new instances
+
+#define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
+
 #define BASIC_STATUS_EFFECT /datum/status_effect //Has no effect.
 
 ///////////
@@ -17,6 +23,8 @@
 #define STATUS_EFFECT_POWERREGEN /datum/status_effect/cyborg_power_regen //Regenerates power on a given cyborg over time
 
 #define STATUS_EFFECT_HISGRACE /datum/status_effect/his_grace //His Grace.
+
+#define STATUS_EFFECT_WISH_GRANTERS_GIFT /datum/status_effect/wish_granters_gift //If you're currently resurrecting with the Wish Granter
 
 /////////////
 // DEBUFFS //

@@ -27,6 +27,7 @@
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	dangerous_possession = TRUE
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -36,6 +37,7 @@
 	..()
 	START_PROCESSING(SSobj, src)
 	poi_list |= src
+	singularities |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
@@ -45,6 +47,7 @@
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
+	singularities.Remove(src)
 	return ..()
 
 /obj/singularity/Move(atom/newloc, direct)
@@ -413,7 +416,7 @@
 				if(istype(H.glasses, /obj/item/clothing/glasses/meson))
 					var/obj/item/clothing/glasses/meson/MS = H.glasses
 					if(MS.vision_flags == SEE_TURFS)
-						H << "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>"
+						to_chat(H, "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>")
 						return
 
 		M.apply_effect(3, STUN)

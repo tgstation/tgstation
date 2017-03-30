@@ -29,7 +29,7 @@
 		T.density = 1
 		T.layer = OBJ_LAYER + 0.01
 		T.loc = loc
-		user << "<span class='notice'>You slide the target into the stake.</span>"
+		to_chat(user, "<span class='notice'>You slide the target into the stake.</span>")
 
 /obj/structure/target_stake/attack_hand(mob/user)
 	if(pinned_target)
@@ -43,10 +43,10 @@
 	if(ishuman(user))
 		if(!user.get_active_held_item())
 			user.put_in_hands(pinned_target)
-			user << "<span class='notice'>You take the target out of the stake.</span>"
+			to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
 	else
 		pinned_target.loc = get_turf(user)
-		user << "<span class='notice'>You take the target out of the stake.</span>"
+		to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
 
 /obj/structure/target_stake/bullet_act(obj/item/projectile/P)
 	if(pinned_target)

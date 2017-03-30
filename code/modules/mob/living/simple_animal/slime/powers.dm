@@ -56,54 +56,54 @@
 		return 0
 
 	if(isslime(M))
-		src << "<span class='warning'><i>I can't latch onto another slime...</i></span>"
+		to_chat(src, "<span class='warning'><i>I can't latch onto another slime...</i></span>")
 		return 0
 
 	if(docile)
-		src << "<span class='notice'><i>I'm not hungry anymore...</i></span>"
+		to_chat(src, "<span class='notice'><i>I'm not hungry anymore...</i></span>")
 		return 0
 
 	if(stat)
-		src << "<span class='warning'><i>I must be conscious to do this...</i></span>"
+		to_chat(src, "<span class='warning'><i>I must be conscious to do this...</i></span>")
 		return 0
 
 	if(M.stat == DEAD)
-		src << "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>"
+		to_chat(src, "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>")
 		return 0
 
 	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
-		src << "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>"
+		to_chat(src, "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>")
 		return 0
 	return 1
 
 /mob/living/simple_animal/slime/proc/Feedon(mob/living/M)
 	M.unbuckle_all_mobs(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())
-	if(M.buckle_mob(src, force=1))
+	if(M.buckle_mob(src, force=TRUE))
 		layer = M.layer+0.01 //appear above the target mob
 		M.visible_message("<span class='danger'>[name] has latched onto [M]!</span>", \
 						"<span class='userdanger'>[name] has latched onto [M]!</span>")
 	else
-		src << "<span class='warning'><i>I have failed to latch onto the subject</i></span>"
+		to_chat(src, "<span class='warning'><i>I have failed to latch onto the subject!</i></span>")
 
 /mob/living/simple_animal/slime/proc/Feedstop(silent=0, living=1)
 	if(buckled)
 		if(!living)
-			src << "<span class='warning'>[pick("This subject is incompatible", \
+			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
 			"This subject does not have life energy", "This subject is empty", \
 			"I am not satisified", "I can not feed from this subject", \
-			"I do not feel nourished", "This subject is not food")]!</span>"
+			"I do not feel nourished", "This subject is not food")]!</span>")
 		if(!silent)
 			visible_message("<span class='warning'>[src] has let go of [buckled]!</span>", \
 							"<span class='notice'><i>I stopped feeding.</i></span>")
 		layer = initial(layer)
-		buckled.unbuckle_mob(src,force=1)
+		buckled.unbuckle_mob(src,force=TRUE)
 
 /mob/living/simple_animal/slime/verb/Evolve()
 	set category = "Slime"
 	set desc = "This will let you evolve from baby to adult slime."
 
 	if(stat)
-		src << "<i>I must be conscious to do this...</i>"
+		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 	if(!is_adult)
 		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
@@ -115,9 +115,9 @@
 			regenerate_icons()
 			update_name()
 		else
-			src << "<i>I am not ready to evolve yet...</i>"
+			to_chat(src, "<i>I am not ready to evolve yet...</i>")
 	else
-		src << "<i>I have already evolved...</i>"
+		to_chat(src, "<i>I have already evolved...</i>")
 
 /datum/action/innate/slime/evolve
 	name = "Evolve"
@@ -136,13 +136,13 @@
 	set desc = "This will make you split into four Slimes."
 
 	if(stat)
-		src << "<i>I must be conscious to do this...</i>"
+		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 
 	if(is_adult)
 		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			if(stat)
-				src << "<i>I must be conscious to do this...</i>"
+				to_chat(src, "<i>I must be conscious to do this...</i>")
 				return
 
 			var/list/babies = list()
@@ -178,9 +178,9 @@
 				new_slime.key = src.key
 			qdel(src)
 		else
-			src << "<i>I am not ready to reproduce yet...</i>"
+			to_chat(src, "<i>I am not ready to reproduce yet...</i>")
 	else
-		src << "<i>I am not old enough to reproduce yet...</i>"
+		to_chat(src, "<i>I am not old enough to reproduce yet...</i>")
 
 /datum/action/innate/slime/reproduce
 	name = "Reproduce"

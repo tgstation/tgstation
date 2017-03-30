@@ -117,17 +117,23 @@
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>", null, COMBAT_MESSAGE_RANGE)
+
 		if (M.a_intent == INTENT_DISARM)
+			var/obj/item/I = null
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(prob(95))
 				Weaken(10)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
 						"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			else
+				I = get_active_held_item()
 				if(drop_item())
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
-			add_logs(M, src, "disarmed")
+				else
+					I = null//did not manage to actually disarm the item, gross but no time to refactor
+
+			add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			updatehealth()
 
 
@@ -167,13 +173,13 @@
 			if(!(wear_mask.resistance_flags & UNACIDABLE))
 				wear_mask.acid_act(acidpwr)
 			else
-				src << "<span class='warning'>Your mask protects you from the acid.</span>"
+				to_chat(src, "<span class='warning'>Your mask protects you from the acid.</span>")
 			return
 		if(head)
 			if(!(head.resistance_flags & UNACIDABLE))
 				head.acid_act(acidpwr)
 			else
-				src << "<span class='warning'>Your hat protects you from the acid.</span>"
+				to_chat(src, "<span class='warning'>Your hat protects you from the acid.</span>")
 			return
 	take_bodypart_damage(acidpwr * min(0.6, acid_volume*0.1))
 

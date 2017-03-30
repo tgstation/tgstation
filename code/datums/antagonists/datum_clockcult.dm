@@ -18,22 +18,30 @@
 		. = is_eligible_servant(new_body)
 
 /datum/antagonist/clockcultist/give_to_body(mob/living/new_body)
+	if(iscyborg(new_body))
+		var/mob/living/silicon/robot/R = new_body
+		if(R.deployed)
+			var/mob/living/silicon/ai/AI = R.mainframe
+			R.undeploy()
+			var/converted = add_servant_of_ratvar(AI, silent_update)
+			to_chat(AI, "<span class='userdanger'>Anomaly Detected. Returned to core!</span>")	//The AI needs to be in its core to properly be converted
+			return converted
 	if(!silent_update)
 		if(issilicon(new_body))
-			new_body << "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, \
-			lies in exile, derelict and forgotten in an unseen realm.</span>"
+			to_chat(new_body, "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, \
+			lies in exile, derelict and forgotten in an unseen realm.</span>")
 		else
-			new_body << "<span class='heavy_brass'>[iscarbon(new_body) ? "Your mind is racing! Your body feels incredibly light! ":""]Your world glows a brilliant yellow! All at once it comes to you. \
-			Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
+			to_chat(new_body, "<span class='heavy_brass'>[iscarbon(new_body) ? "Your mind is racing! Your body feels incredibly light! ":""]Your world glows a brilliant yellow! All at once it comes to you. \
+			Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
 	. = ..()
 	if(!silent_update && new_body)
 		if(.)
 			new_body.visible_message("<span class='heavy_brass'>[new_body]'s eyes glow a blazing yellow!</span>")
-			new_body << "<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. \
-			Perform his every whim without hesitation.</span>"
+			to_chat(new_body, "<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. \
+			Perform his every whim without hesitation.</span>")
 		else
 			new_body.visible_message("<span class='boldwarning'>[new_body] seems to resist an unseen force!</span>")
-			new_body << "<span class='userdanger'>And yet, you somehow push it all away.</span>"
+			to_chat(new_body, "<span class='userdanger'>And yet, you somehow push it all away.</span>")
 
 /datum/antagonist/clockcultist/on_gain()
 	if(ticker && ticker.mode && owner.mind)
@@ -43,17 +51,17 @@
 			INVOKE_ASYNC(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
 	if(owner.mind)
 		owner.mind.special_role = "Servant of Ratvar"
-	owner.attack_log += "\[[time_stamp()]\] <font color=#BE8700>Has been converted to the cult of Ratvar!</font>"
+	owner.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
 		if(iscyborg(S) && !silent_update)
-			S << "<span class='boldwarning'>You have been desynced from your master AI.\n\
-			In addition, your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>"
+			to_chat(S, "<span class='boldwarning'>You have been desynced from your master AI.\n\
+			In addition, your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>")
 		if(isAI(S))
-			S << "<span class='boldwarning'>You are able to use your cameras to listen in on conversations.</span>"
-		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
+			to_chat(S, "<span class='boldwarning'>You are able to use your cameras to listen in on conversations.</span>")
+		to_chat(S, "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>")
 	else if(isbrain(owner) || isclockmob(owner))
-		owner << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
+		to_chat(owner, "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>")
 	..()
 	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
@@ -69,7 +77,8 @@
 		var/mob/living/silicon/S = owner
 		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			R.UnlinkSelf()
+			if(!R.shell)
+				R.UnlinkSelf()
 			R.module.rebuild_modules()
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
@@ -89,7 +98,7 @@
 					R.visible_message("<span class='heavy_brass'>[R]'s eyes glow a blazing yellow!</span>", \
 					"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
 					whim without hesitation.</span>")
-					R << "<span class='boldwarning'>Your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>"
+					to_chat(R, "<span class='boldwarning'>Your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>")
 					add_servant_of_ratvar(R, TRUE)
 		S.laws = new/datum/ai_laws/ratvar
 		S.laws.associate(S)
@@ -112,7 +121,6 @@
 	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	if(!clockwork_gateway_activated)
 		owner.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
-	update_slab_info()
 	..()
 
 /datum/antagonist/clockcultist/remove_innate_effects()
@@ -142,7 +150,6 @@
 		R.module.rebuild_modules()
 	if(temp_owner)
 		temp_owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
-	update_slab_info()
 
 /datum/antagonist/clockcultist/on_remove()
 	if(!silent_update)
@@ -154,7 +161,7 @@
 	if(owner.mind)
 		owner.mind.wipe_memory()
 		owner.mind.special_role = null
-	owner.attack_log += "\[[time_stamp()]\] <font color=#BE8700>Has renounced the cult of Ratvar!</font>"
+	owner.log_message("<font color=#BE8700>Has renounced the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(iscyborg(owner))
-		owner << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
+		to_chat(owner, "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>")
 	..()

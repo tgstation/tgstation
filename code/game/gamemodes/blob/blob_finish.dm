@@ -21,24 +21,24 @@
 		..()
 	if(blobwincount <= blobs_legit.len)
 		feedback_set_details("round_end_result","win - blob took over")
-		world << "<FONT size = 3><B>The blob has taken over the station!</B></FONT>"
-		world << "<B>The entire station was eaten by the Blob!</B>"
+		to_chat(world, "<FONT size = 3><B>The blob has taken over the station!</B></FONT>")
+		to_chat(world, "<B>The entire station was eaten by the Blob!</B>")
 		log_game("Blob mode completed with a blob victory.")
 
 		ticker.news_report = BLOB_WIN
 
 	else if(station_was_nuked)
 		feedback_set_details("round_end_result","halfwin - nuke")
-		world << "<FONT size = 3><B>Partial Win: The station has been destroyed!</B></FONT>"
-		world << "<B>Directive 7-12 has been successfully carried out, preventing the Blob from spreading.</B>"
+		to_chat(world, "<FONT size = 3><B>Partial Win: The station has been destroyed!</B></FONT>")
+		to_chat(world, "<B>Directive 7-12 has been successfully carried out, preventing the Blob from spreading.</B>")
 		log_game("Blob mode completed with a tie (station destroyed).")
 
 		ticker.news_report = BLOB_NUKE
 
 	else if(!blob_cores.len)
 		feedback_set_details("round_end_result","loss - blob eliminated")
-		world << "<FONT size = 3><B>The staff has won!</B></FONT>"
-		world << "<B>The alien organism has been eradicated from the station!</B>"
+		to_chat(world, "<FONT size = 3><B>The staff has won!</B></FONT>")
+		to_chat(world, "<B>The alien organism has been eradicated from the station!</B>")
 		log_game("Blob mode completed with a crew victory.")
 
 		ticker.news_report = BLOB_DESTROYED
@@ -68,5 +68,5 @@
 			var/text = "<FONT size = 2><B>The blob[(blob_mode.blob_overminds.len > 1 ? "s were" : " was")]:</B></FONT>"
 			for(var/datum/mind/blob in blob_mode.blob_overminds)
 				text += printplayer(blob)
-			world << text
+			to_chat(world, text)
 		return 1

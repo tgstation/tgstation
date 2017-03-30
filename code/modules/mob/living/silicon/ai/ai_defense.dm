@@ -7,7 +7,7 @@
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 	..()
 
@@ -22,6 +22,7 @@
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)
+	disconnect_shell()
 	if (prob(30))
 		switch(pick(1,2))
 			if(1)

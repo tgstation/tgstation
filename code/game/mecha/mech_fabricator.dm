@@ -160,7 +160,7 @@
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
 	use_power = 1
-	overlays -= "fab-active"
+	cut_overlay("fab-active")
 	desc = initial(desc)
 
 	var/location = get_step(src,(dir))
@@ -244,7 +244,7 @@
 	updateUsrDialog()
 	sleep(30) //only sleep if called by user
 
-	for(var/obj/machinery/computer/rdconsole/RDC in oview(5,src))
+	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		if(!RDC.sync)
 			continue
 		for(var/v in RDC.files.known_tech)
@@ -431,33 +431,33 @@
 
 	if(istype(W, /obj/item/stack/sheet))
 		if(panel_open)
-			user << "<span class='warning'>You can't load [src] while it's opened!</span>"
+			to_chat(user, "<span class='warning'>You can't load [src] while it's opened!</span>")
 			return 1
 		if(being_built)
-			user << "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>"
+			to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
 			return 1
 
 		var/material_amount = materials.get_item_material_amount(W)
 		if(!material_amount)
-			user << "<span class='warning'>This object does not contain sufficient amounts of materials to be accepted by [src].</span>"
+			to_chat(user, "<span class='warning'>This object does not contain sufficient amounts of materials to be accepted by [src].</span>")
 			return 1
 		if(!materials.has_space(material_amount))
-			user << "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>"
+			to_chat(user, "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>")
 			return 1
 		if(!user.temporarilyRemoveItemFromInventory(W))
-			user << "<span class='warning'>\The [W] is stuck to you and cannot be placed into [src].</span>"
+			to_chat(user, "<span class='warning'>\The [W] is stuck to you and cannot be placed into [src].</span>")
 			return 1
 
 		var/inserted = materials.insert_item(W)
 		if(inserted)
-			user << "<span class='notice'>You insert [inserted] sheet\s into [src].</span>"
+			to_chat(user, "<span class='notice'>You insert [inserted] sheet\s into [src].</span>")
 			if(W && W.materials.len)
 				if(!QDELETED(W))
 					user.put_in_active_hand(W)
 				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
 				add_overlay(mat_overlay)
 				sleep(10)
-				overlays -= mat_overlay //No matter what the overlay shall still be deleted
+				cut_overlay(mat_overlay) //No matter what the overlay shall still be deleted
 
 		updateUsrDialog()
 

@@ -92,20 +92,20 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
-		user << "<span class='danger'>It's locked and running.</span>"
+		to_chat(user, "<span class='danger'>It's locked and running.</span>")
 		return
 
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
-			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
+			to_chat(user, "<span class='danger'>This item is not suitable for the gibber!</span>")
 			return
 		var/mob/living/carbon/C = L
 		if(C.buckled ||C.has_buckled_mobs())
-			user << "<span class='warning'>[C] is attached to something!</span>"
+			to_chat(user, "<span class='warning'>[C] is attached to something!</span>")
 			return
 		if(C.abiotic(1) && !ignore_clothing)
-			user << "<span class='danger'>Subject may not have abiotic items on.</span>"
+			to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 			return
 
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")

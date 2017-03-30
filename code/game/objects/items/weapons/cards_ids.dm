@@ -94,7 +94,7 @@
 /obj/item/weapon/card/id/examine(mob/user)
 	..()
 	if(mining_points)
-		user << "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
@@ -150,14 +150,14 @@ update_label("John Doe", "Clowny")
 		src.access |= I.access
 		if(isliving(user) && user.mind)
 			if(user.mind.special_role)
-				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
+				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(isliving(user) && user.mind)
 		if(user.mind.special_role || anyone)
 			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
 				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
-				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
+				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
 					if (t)
 						alert("Invalid name.")
 					return
@@ -169,7 +169,7 @@ update_label("John Doe", "Clowny")
 					return
 				assignment = u
 				update_label()
-				user << "<span class='notice'>You successfully forge the ID card.</span>"
+				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 				return
 	..()
 
@@ -249,7 +249,7 @@ update_label("John Doe", "Clowny")
 	var/points = 0
 
 /obj/item/weapon/card/id/prisoner/attack_self(mob/user)
-	usr << "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>"
+	to_chat(usr, "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")
 
 /obj/item/weapon/card/id/prisoner/one
 	name = "Prisoner #13-001"

@@ -10,7 +10,7 @@
 
 /obj/effect/light_emitter/New()
 	..()
-	SetLuminosity(set_luminosity, set_cap)
+	set_light(set_luminosity, set_cap)
 
 /**********************Miner Lockers**************************/
 
@@ -69,7 +69,7 @@
 
 /obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
 	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in ticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
-		user << "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>"
+		to_chat(user, "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>")
 		dumb_rev_heads += user.mind
 		return
 	..()
@@ -198,7 +198,7 @@
 
 /obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/ore/glass))
-		user << "<span class='notice'>You fill the sandbag.</span>"
+		to_chat(user, "<span class='notice'>You fill the sandbag.</span>")
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
 		qdel(src)
 		user.put_in_hands(I)
@@ -248,8 +248,8 @@
 /obj/item/weapon/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-	user << "This capsule has the [template.name] stored."
-	user << template.description
+	to_chat(user, "This capsule has the [template.name] stored.")
+	to_chat(user, template.description)
 
 /obj/item/weapon/survivalcapsule/attack_self()
 	// Can't grab when capsule is New() because templates aren't loaded then
@@ -453,6 +453,12 @@
 	var/turf/T = loc
 	. = ..()
 	T.air_update_turf(1)
+
+//Inivisible, indestructible fans
+/obj/structure/fans/tiny/invisible
+	name = "air flow blocker"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	invisibility = INVISIBILITY_ABSTRACT
 
 
 //Signs

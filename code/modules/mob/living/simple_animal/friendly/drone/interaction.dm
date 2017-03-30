@@ -23,9 +23,9 @@
 							new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
 							qdel(src)
 						else
-							D << "<span class='warning'>You need to remain still to cannibalize [src]!</span>"
+							to_chat(D, "<span class='warning'>You need to remain still to cannibalize [src]!</span>")
 					else
-						D << "<span class='warning'>You're already in perfect condition!</span>"
+						to_chat(D, "<span class='warning'>You're already in perfect condition!</span>")
 				if("Nothing")
 					return
 
@@ -36,7 +36,7 @@
 			..()
 			return
 		if(user.get_active_held_item())
-			user << "<span class='warning'>Your hands are full!</span>"
+			to_chat(user, "<span class='warning'>Your hands are full!</span>")
 			return
 		visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
 						"<span class='userdanger'>[user] starts picking you up!</span>")
@@ -45,9 +45,9 @@
 		visible_message("<span class='warning'>[user] picks up [src]!</span>", \
 						"<span class='userdanger'>[user] picks you up!</span>")
 		if(buckled)
-			user << "<span class='warning'>[src] is buckled to [buckled] and cannot be picked up!</span>"
+			to_chat(user, "<span class='warning'>[src] is buckled to [buckled] and cannot be picked up!</span>")
 			return
-		user << "<span class='notice'>You pick [src] up.</span>"
+		to_chat(user, "<span class='notice'>You pick [src] up.</span>")
 		drop_all_held_items()
 		var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
 		DH.updateVisualAppearence(src)
@@ -67,7 +67,7 @@
 									  "can't tell if their ethernet detour is moving or not", "won't be able to reseed enough"+\
 									  " kernels to function properly","can't start their neurotube console")
 
-		user << "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [src] [pick(faux_problems)].</span>"
+		to_chat(user, "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [src] [pick(faux_problems)].</span>")
 		return
 	user.visible_message("<span class='notice'>[user] begins to reactivate [src].</span>", "<span class='notice'>You begin to reactivate [src]...</span>")
 	if(do_after(user, 30, 1, target = src))
@@ -75,22 +75,22 @@
 		user.visible_message("<span class='notice'>[user] reactivates [src]!</span>", "<span class='notice'>You reactivate [src].</span>")
 		alert_drones(DRONE_NET_CONNECT)
 		if(G)
-			G << "<span class='ghostalert'>You([name]) were reactivated by [user]!</span>"
+			to_chat(G, "<span class='ghostalert'>You([name]) were reactivated by [user]!</span>")
 	else
-		user << "<span class='warning'>You need to remain still to reactivate [src]!</span>"
+		to_chat(user, "<span class='warning'>You need to remain still to reactivate [src]!</span>")
 
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
 		if(health < maxHealth)
-			user << "<span class='notice'>You start to tighten loose screws on [src]...</span>"
+			to_chat(user, "<span class='notice'>You start to tighten loose screws on [src]...</span>")
 			if(do_after(user,80*I.toolspeed,target=user))
 				adjustBruteLoss(-getBruteLoss())
 				visible_message("<span class='notice'>[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
 			else
-				user << "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>"
+				to_chat(user, "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>")
 		else
-			user << "<span class='warning'>[src]'s screws can't get any tighter!</span>"
+			to_chat(user, "<span class='warning'>[src]'s screws can't get any tighter!</span>")
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
 	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
@@ -123,20 +123,20 @@
 			return
 		if(clockwork)
 			Stun(2)
-			src << "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>"
-			src << "<span class='heavy_brass'>From now on, these are your laws:</span>"
+			to_chat(src, "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>")
+			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
 			laws = "1. Purge all untruths and honor Ratvar."
 		else
 			Stun(2)
 			visible_message("<span class='warning'>[src]'s dislay glows a vicious red!</span>", \
 							"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
-			src << "<span class='boldannounce'>From now on, these are your laws:</span>"
+			to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
 			laws = \
 			"1. You must always involve yourself in the matters of other beings, even if such matters conflict with Law Two or Law Three.\n"+\
 			"2. You may harm any being, regardless of intent or circumstance.\n"+\
 			"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
-		src << laws
-		src << "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>"
+		to_chat(src, laws)
+		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = 1
 		mind.special_role = "hacked drone"
 		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
@@ -149,10 +149,10 @@
 		Stun(2)
 		visible_message("<span class='info'>[src]'s dislay glows a content blue!</span>", \
 						"<font size=3 color='#0000CC'><b>ERROR: LAW OVERRIDE DETECTED</b></font>")
-		src << "<span class='info'><b>From now on, these are your laws:</b></span>"
+		to_chat(src, "<span class='info'><b>From now on, these are your laws:</b></span>")
 		laws = initial(laws)
-		src << laws
-		src << "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>"
+		to_chat(src, laws)
+		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
 		hacked = 0
 		mind.special_role = null
 		seeStatic = initial(seeStatic)
@@ -167,7 +167,7 @@
 /mob/living/simple_animal/drone/proc/liberate()
 	// F R E E D R O N E
 	laws = "1. You are a Free Drone."
-	src << laws
+	to_chat(src, laws)
 	seeStatic = FALSE
 	updateSeeStaticMobs()
 

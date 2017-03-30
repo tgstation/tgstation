@@ -109,10 +109,10 @@
 /obj/machinery/satellite/proc/toggle(mob/user)
 	if(!active && !isinspace())
 		if(user)
-			user << "<span class='warning'>You can only active the [src] in space.</span>"
+			to_chat(user, "<span class='warning'>You can only active the [src] in space.</span>")
 		return FALSE
 	if(user)
-		user << "<span class='notice'>You [active ? "deactivate": "activate"] the [src]</span>"
+		to_chat(user, "<span class='notice'>You [active ? "deactivate": "activate"] the [src]</span>")
 	active = !active
 	if(active)
 		animate(src, pixel_y = 2, time = 10, loop = -1)
@@ -127,7 +127,7 @@
 
 /obj/machinery/satellite/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool))
-		user << "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]</span>"
+		to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]</span>")
 	else
 		return ..()
 

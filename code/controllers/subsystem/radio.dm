@@ -1,16 +1,16 @@
-var/datum/subsystem/radio/SSradio
+var/datum/controller/subsystem/radio/SSradio
 
-/datum/subsystem/radio
+/datum/controller/subsystem/radio
 	name = "Radio"
 	init_order = 18
 	flags = SS_NO_FIRE|SS_NO_INIT
 
 	var/list/datum/radio_frequency/frequencies = list()
 
-/datum/subsystem/radio/New()
+/datum/controller/subsystem/radio/New()
 	NEW_SS_GLOBAL(SSradio)
 
-/datum/subsystem/radio/proc/add_object(obj/device, new_frequency as num, filter = null as text|null)
+/datum/controller/subsystem/radio/proc/add_object(obj/device, new_frequency as num, filter = null as text|null)
 	var/f_text = num2text(new_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
 
@@ -22,7 +22,7 @@ var/datum/subsystem/radio/SSradio
 	frequency.add_listener(device, filter)
 	return frequency
 
-/datum/subsystem/radio/proc/remove_object(obj/device, old_frequency)
+/datum/controller/subsystem/radio/proc/remove_object(obj/device, old_frequency)
 	var/f_text = num2text(old_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
 
@@ -35,7 +35,7 @@ var/datum/subsystem/radio/SSradio
 
 	return 1
 
-/datum/subsystem/radio/proc/return_frequency(new_frequency as num)
+/datum/controller/subsystem/radio/proc/return_frequency(new_frequency as num)
 	var/f_text = num2text(new_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
 

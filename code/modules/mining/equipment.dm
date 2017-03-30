@@ -74,7 +74,7 @@
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
 	if(!device_turf||device_turf.z==2||device_turf.z>=7)
-		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
+		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return FALSE
 	return TRUE
 
@@ -104,7 +104,7 @@
 
 	var/list/L = get_destinations(user)
 	if(!L.len)
-		user << "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>"
+		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
 		return
 	var/chosen_beacon = pick(L)
 	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
@@ -129,11 +129,11 @@
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
-		user << "Your [src] activates, saving you from the chasm!</span>"
+		to_chat(user, "Your [src] activates, saving you from the chasm!</span>")
 		feedback_add_details("jaunter","C") // chasm automatic activation
 		activate(user)
 	else
-		user << "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>"
+		to_chat(user, "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
 
 
 /obj/effect/portal/wormhole/jaunt_tunnel
@@ -203,10 +203,10 @@
 /obj/item/weapon/resonator/attack_self(mob/user)
 	if(burst_time == 50)
 		burst_time = 30
-		user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
+		to_chat(user, "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>")
 	else
 		burst_time = 50
-		user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
+		to_chat(user, "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>")
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -262,7 +262,7 @@
 	for(var/mob/living/L in T)
 		if(creator)
 			add_logs(creator, L, "used a resonator field on", "resonator")
-		L << "<span class='userdanger'>[src] ruptured with you in it!</span>"
+		to_chat(L, "<span class='userdanger'>[src] ruptured with you in it!</span>")
 		L.apply_damage(resonance_damage, BRUTE)
 	qdel(src)
 
@@ -303,7 +303,7 @@
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)
-				user << "<span class='info'>[src] does not work on this sort of creature.</span>"
+				to_chat(user, "<span class='info'>[src] does not work on this sort of creature.</span>")
 				return
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
@@ -325,10 +325,10 @@
 				icon_state = "lazarus_empty"
 				return
 			else
-				user << "<span class='info'>[src] is only effective on the dead.</span>"
+				to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
 				return
 		else
-			user << "<span class='info'>[src] is only effective on lesser beings.</span>"
+			to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
 			return
 
 /obj/item/weapon/lazarus_injector/emp_act()
@@ -338,9 +338,9 @@
 /obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()
 	if(!loaded)
-		user << "<span class='info'>[src] is empty.</span>"
+		to_chat(user, "<span class='info'>[src] is empty.</span>")
 	if(malfunctioning)
-		user << "<span class='info'>The display on [src] seems to be flickering.</span>"
+		to_chat(user, "<span class='info'>The display on [src] seems to be flickering.</span>")
 
 /**********************Mining Scanners**********************/
 
@@ -480,11 +480,11 @@
 /obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
 	var/obj/item/organ/hivelord_core/C = M
 	if(!istype(C, /obj/item/organ/hivelord_core))
-		user << "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>"
+		to_chat(user, "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>")
 		return ..()
 
 	C.preserved()
-	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
+	to_chat(user, "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>")
 	qdel(src)
 
 /*********************Mining Hammer****************/
@@ -586,11 +586,3 @@
 		charged = 1
 		icon_state = "mining_hammer1"
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-
-/obj/item/weapon/twohanded/required/mining_hammer/pickup(mob/user)
-	..()
-	user.AddLuminosity(luminosity)
-
-/obj/item/weapon/twohanded/required/mining_hammer/dropped(mob/user)
-	..()
-	user.AddLuminosity(-luminosity)

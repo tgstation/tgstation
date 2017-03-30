@@ -17,6 +17,10 @@
 								 "recognizer",
 								 "voice sensor")
 
+/obj/item/device/assembly/voice/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Use a multitool to swap between \"inclusive\", \"exclusive\", \"recognizer\", and \"voice sensor\" mode.</span>")
+
 /obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(speaker == src)
 		return
@@ -67,7 +71,7 @@
 	if(istype(W, /obj/item/device/multitool))
 		mode %= modes.len
 		mode++
-		user << "You set [src] into a [modes[mode]] mode."
+		to_chat(user, "You set [src] into a [modes[mode]] mode.")
 		listening = 0
 		recorded = ""
 	else

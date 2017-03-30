@@ -14,12 +14,12 @@
 /obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
 	active = !active
 	if(active)
-		user << "<span class='notice'>Our muscles tense and strengthen.</span>"
+		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
 	else
 		user.status_flags &= ~GOTTAGOFAST
-		user << "<span class='notice'>Our muscles relax.</span>"
+		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
 		if(stacks >= 10)
-			user << "<span class='danger'>We collapse in exhaustion.</span>"
+			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
 			user.Weaken(3)
 			user.emote("gasp")
 
@@ -27,7 +27,7 @@
 		user.status_flags |= GOTTAGOFAST
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
-			user << "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>"
+			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
 			user.Weaken(2)
 			user.status_flags &= ~GOTTAGOFAST
 			break
@@ -37,7 +37,7 @@
 		user.staminaloss += stacks * 1.3 //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
 
 		if(stacks == 11) //Warning message that the stacks are getting too high
-			user << "<span class='warning'>Our legs are really starting to hurt...</span>"
+			to_chat(user, "<span class='warning'>Our legs are really starting to hurt...</span>")
 
 		sleep(40)
 

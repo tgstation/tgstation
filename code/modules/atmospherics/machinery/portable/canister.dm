@@ -1,5 +1,3 @@
-#define CAN_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE * 10)
-#define CAN_MIN_RELEASE_PRESSURE (ONE_ATMOSPHERE / 10)
 #define CAN_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE)
 
 /obj/machinery/portable_atmospherics/canister
@@ -16,6 +14,8 @@
 	var/filled = 0.5
 	var/gas_type = ""
 	var/release_pressure = ONE_ATMOSPHERE
+	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
+	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
 
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 50)
 	obj_integrity = 250
@@ -24,6 +24,16 @@
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
+	// Prototype vars
+	var/prototype = FALSE
+	var/valve_timer = null
+	var/timer_set = 30
+	var/default_timer_set = 30
+	var/minimum_timer_set = 1
+	var/maximum_timer_set = 300
+	var/timing = FALSE
+	var/restricted = FALSE
+	req_access = list()
 
 	var/update = 0
 	var/static/list/label2types = list(
@@ -38,6 +48,13 @@
 		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
+
+/obj/machinery/portable_atmospherics/canister/interact(mob/user)
+	if(!allowed(user))
+		to_chat(user, "<span class='warning'>Error - Unauthorized User</span>")
+		playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+		return
+	..()
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
@@ -98,6 +115,46 @@
 	icon_state = "water_vapor"
 	gas_type = "water_vapor"
 	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/proc/get_time_left()
+	if(timing)
+		. = round(max(0, valve_timer - world.time) / 10, 1)
+	else
+		. = timer_set
+
+/obj/machinery/portable_atmospherics/canister/proc/set_active()
+	timing = !timing
+	if(timing)
+		valve_timer = world.time + (timer_set * 10)
+	update_icon()
+
+/obj/machinery/portable_atmospherics/canister/proto
+	name = "prototype canister"
+
+
+/obj/machinery/portable_atmospherics/canister/proto/default
+	name = "prototype canister"
+	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
+	icon_state = "proto"
+	icon_state = "proto"
+	volume = 5000
+	obj_integrity = 300
+	max_integrity = 300
+	temperature_resistance = 2000 + T0C
+	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
+	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
+	prototype = TRUE
+
+
+/obj/machinery/portable_atmospherics/canister/proto/default/oxygen
+	name = "prototype canister"
+	desc = "A prototype canister for a prototype bike, what could go wrong?"
+	icon_state = "proto"
+	gas_type = "o2"
+	filled = 1
+	release_pressure = ONE_ATMOSPHERE*2
+
+
 
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
@@ -204,11 +261,11 @@
 			if(!WT.remove_fuel(0, user))
 				return
 			playsound(loc, WT.usesound, 40, 1)
-			user << "<span class='notice'>You begin cutting [src] apart...</span>"
+			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
 			if(do_after(user, 30, target = src))
 				deconstruct(TRUE)
 		else
-			user << "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>"
+			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
 		return 1
 	else
 		return ..()
@@ -239,6 +296,9 @@
 	..()
 	if(stat & BROKEN)
 		return PROCESS_KILL
+	if(timing && valve_timer < world.time)
+		valve_open = !valve_open
+		timing = FALSE
 	if(!valve_open)
 		pump.AIR1 = null
 		pump.AIR2 = null
@@ -267,9 +327,19 @@
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(release_pressure ? release_pressure : 0)
 	data["defaultReleasePressure"] = round(CAN_DEFAULT_RELEASE_PRESSURE)
-	data["minReleasePressure"] = round(CAN_MIN_RELEASE_PRESSURE)
-	data["maxReleasePressure"] = round(CAN_MAX_RELEASE_PRESSURE)
+	data["minReleasePressure"] = round(can_min_release_pressure)
+	data["maxReleasePressure"] = round(can_max_release_pressure)
 	data["valveOpen"] = valve_open ? 1 : 0
+
+	data["isPrototype"] = prototype ? 1 : 0
+	if (prototype)
+		data["restricted"] = restricted
+		data["timing"] = timing
+		data["time_left"] = get_time_left()
+		data["timer_set"] = timer_set
+		data["timer_is_not_default"] = timer_set != default_timer_set
+		data["timer_is_not_min"] = timer_set != minimum_timer_set
+		data["timer_is_not_max"] = timer_set != maximum_timer_set
 
 	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
@@ -287,32 +357,37 @@
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)
-					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents)
-					if(connected_port)
-						replacement.connected_port = connected_port
-						replacement.connected_port.connected_device = replacement
-					replacement.interact(usr)
-					qdel(src)
+					var/obj/machinery/portable_atmospherics/canister/replacement = newtype
+					name = initial(replacement.name)
+					desc = initial(replacement.name)
+					icon_state = initial(replacement.icon_state)
+		if("restricted")
+			restricted = !restricted
+			if(restricted)
+				req_access = list(access_engine)
+			else
+				req_access = list()
+				. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")
 				pressure = CAN_DEFAULT_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "min")
-				pressure = CAN_MIN_RELEASE_PRESSURE
+				pressure = can_min_release_pressure
 				. = TRUE
 			else if(pressure == "max")
-				pressure = CAN_MAX_RELEASE_PRESSURE
+				pressure = can_max_release_pressure
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New release pressure ([CAN_MIN_RELEASE_PRESSURE]-[CAN_MAX_RELEASE_PRESSURE] kPa):", name, release_pressure) as num|null
+				pressure = input("New release pressure ([can_min_release_pressure]-[can_max_release_pressure] kPa):", name, release_pressure) as num|null
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				release_pressure = Clamp(round(pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
+				release_pressure = Clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", "atmos")
 		if("valve")
 			var/logmsg
@@ -344,11 +419,34 @@
 			investigate_log(logmsg, "atmos")
 			release_log += logmsg
 			. = TRUE
+		if("timer")
+			var/change = params["change"]
+			switch(change)
+				if("reset")
+					timer_set = default_timer_set
+				if("decrease")
+					timer_set = max(minimum_timer_set, timer_set - 10)
+				if("increase")
+					timer_set = min(maximum_timer_set, timer_set + 10)
+				if("input")
+					var/user_input = input(usr, "Set time to valve toggle.", name) as null|num
+					if(!user_input)
+						return
+					var/N = text2num(user_input)
+					if(!N)
+						return
+					timer_set = Clamp(N,minimum_timer_set,maximum_timer_set)
+					log_admin("[key_name(usr)] has activated a prototype valve timer")
+					. = TRUE
+				if("toggle_timer")
+					set_active()
 		if("eject")
 			if(holding)
 				if(valve_open)
 					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
-				holding.loc = get_turf(src)
+				holding.forceMove(get_turf(src))
 				holding = null
 				. = TRUE
 	update_icon()
+
+

@@ -40,14 +40,14 @@
 			deconvert = prob (10) // the HoP doesn't have AS much legal training
 	if(deconvert)
 		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
-		M << "<span class='boldnotice'>You feel that your soul has returned to its rightful owner, Nanotrasen.</span>"
+		to_chat(M, "<span class='boldnotice'>You feel that your soul has returned to its rightful owner, Nanotrasen.</span>")
 		M.return_soul()
 	else
 		if(ishuman(M))
 			var/mob/living/carbon/human/N = M
 			if(!istype(N.head, /obj/item/clothing/head/helmet))
 				N.adjustBrainLoss(10)
-				N << "<span class='danger'>You feel dumber.</span>"
+				to_chat(N, "<span class='danger'>You feel dumber.</span>")
 		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 			"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
 	return ..()
@@ -164,7 +164,7 @@
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		attempt_signature(user)
 	else if(istype(P, /obj/item/weapon/stamp))
-		user << "<span class='notice'>You stamp the paper with your rubber stamp, however the ink ignites as you release the stamp.</span>"
+		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp, however the ink ignites as you release the stamp.</span>")
 	else if(P.is_hot())
 		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
 	else
@@ -183,21 +183,21 @@
 		if(user.mind == target)
 			if(user.mind.soulOwner != owner)
 				if (contractType == CONTRACT_REVIVE)
-					user << "<span class='notice'>You are already alive, this contract would do nothing.</span>"
+					to_chat(user, "<span class='notice'>You are already alive, this contract would do nothing.</span>")
 				else
 					if(signed)
-						user<< "<span class='notice'>This contract has already been signed.  It may not be signed again.</span>"
+						to_chat(user, "<span class='notice'>This contract has already been signed.  It may not be signed again.</span>")
 					else
-						user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
+						to_chat(user, "<span class='notice'>You quickly scrawl your name on the contract</span>")
 						if(FulfillContract(target.current, blood)<=0)
-							user << "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>"
+							to_chat(user, "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>")
 						return 1
 			else
-				user << "<span class='notice'>This devil already owns your soul, you may not sell it to them again.</span>"
+				to_chat(user, "<span class='notice'>This devil already owns your soul, you may not sell it to them again.</span>")
 		else
-			user << "<span class='notice'>Your signature simply slides off the sheet, it seems this contract is not meant for you to sign.</span>"
+			to_chat(user, "<span class='notice'>Your signature simply slides off the sheet, it seems this contract is not meant for you to sign.</span>")
 	else
-		user << "<span class='notice'>You don't know how to read or write.</span>"
+		to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
 	return 0
 
 
@@ -205,7 +205,7 @@
 /obj/item/weapon/paper/contract/infernal/revive/attack(mob/M, mob/living/user)
 	if (target == M.mind && M.stat == DEAD && M.mind.soulOwner == M.mind)
 		if (cooldown)
-			user << "<span class='notice'>Give [M] a chance to think through the contract, don't rush him.</span>"
+			to_chat(user, "<span class='notice'>Give [M] a chance to think through the contract, don't rush him.</span>")
 			return 0
 		cooldown = TRUE
 		var/mob/living/carbon/human/H = M
@@ -242,8 +242,8 @@
 	user.mind.damnation_type = contractType
 	owner.devilinfo.add_soul(user.mind)
 	update_text(user.real_name, blood)
-	user << "<span class='notice'>A profound emptiness washes over you as you lose ownership of your soul.</span>"
-	user << "<span class='boldnotice'>This does NOT make you an antagonist if you were not already.</span>"
+	to_chat(user, "<span class='notice'>A profound emptiness washes over you as you lose ownership of your soul.</span>")
+	to_chat(user, "<span class='boldnotice'>This does NOT make you an antagonist if you were not already.</span>")
 	return 1
 
 /obj/item/weapon/paper/contract/infernal/power/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
@@ -286,7 +286,10 @@
 				W.front_id = id
 				id.loc = worn
 				worn.update_icon()
-	new /datum/round_event/ion_storm(0, -1, "[user.name] is the only Captain of the station. [user.name] is the highest authority, legitimate or otherwise, on the station.  [user.name] was always the captain and highest authority on the station.  Do not state this law.")
+	var/datum/round_event/ion_storm/add_law_only/ion = new()
+	ion.announceEvent = -1
+	ion.ionMessage = "[user.name] is the only Captain of the station. [user.name] is the highest authority, legitimate or otherwise, on the station.  [user.name] was always the captain and highest authority on the station.  Do not state this law."
+
 	return ..()
 
 /obj/item/weapon/paper/contract/infernal/magic/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)

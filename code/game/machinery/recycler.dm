@@ -12,7 +12,7 @@ var/const/SAFETY_COOLDOWN = 100
 	var/icon_name = "grinder-o"
 	var/blood = 0
 	var/eat_dir = WEST
-	var/amount_produced = 1
+	var/amount_produced = 50
 	var/datum/material_container/materials
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
@@ -40,15 +40,15 @@ var/const/SAFETY_COOLDOWN = 100
 		mat_mod = 2 * B.rating
 	mat_mod *= 50000
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		amt_made = 25 * M.rating //% of materials salvaged
+		amt_made = 12.5 * M.rating //% of materials salvaged
 	materials.max_amount = mat_mod
-	amount_produced = min(100, amt_made)
+	amount_produced = min(50, amt_made) + 50
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
-	user << "The power light is [(stat & NOPOWER) ? "off" : "on"]."
-	user << "The safety-mode light is [safety_mode ? "on" : "off"]."
-	user << "The safety-sensors status light is [emagged ? "off" : "on"]."
+	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
+	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
+	to_chat(user, "The safety-sensors status light is [emagged ? "off" : "on"].")
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -79,7 +79,7 @@ var/const/SAFETY_COOLDOWN = 100
 			safety_mode = FALSE
 			update_icon()
 		playsound(src.loc, "sparks", 75, 1, -1)
-		user << "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>"
+		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
 
 /obj/machinery/recycler/update_icon()
 	..()

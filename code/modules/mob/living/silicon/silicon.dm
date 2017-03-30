@@ -15,13 +15,13 @@
 
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
+	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
 	var/designation = ""
 	var/radiomod = "" //Radio character used before state laws/arrivals announce to allow department transmissions, default, or none at all.
 	var/obj/item/device/camera/siliconcam/aicamera = null //photography
-	//hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
-	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_TRACK_HUD)
 
 	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
 
@@ -38,7 +38,7 @@
 
 	var/law_change_counter = 0
 
-/mob/living/silicon/New()
+/mob/living/silicon/Initialize()
 	..()
 	silicon_mobs += src
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
@@ -81,7 +81,7 @@
 
 			if(alarms_to_show.len < 5)
 				for(var/msg in alarms_to_show)
-					src << msg
+					to_chat(src, msg)
 			else if(alarms_to_show.len)
 
 				var/msg = "--- "
@@ -105,11 +105,11 @@
 					msg += "CAMERA: [alarm_types_show["Camera"]] alarms detected. - "
 
 				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
-				src << msg
+				to_chat(src, msg)
 
 			if(alarms_to_clear.len < 3)
 				for(var/msg in alarms_to_clear)
-					src << msg
+					to_chat(src, msg)
 
 			else if(alarms_to_clear.len)
 				var/msg = "--- "
@@ -130,7 +130,7 @@
 					msg += "CAMERA: [alarm_types_clear["Camera"]] alarms cleared. - "
 
 				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
-				src << msg
+				to_chat(src, msg)
 
 
 			alarms_to_show = list()
@@ -145,7 +145,7 @@
 
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
-		user << "<span class='alert'>Their outer shell is too tough.</span>"
+		to_chat(user, "<span class='alert'>Their outer shell is too tough.</span>")
 	return 0
 
 /mob/living/silicon/IsAdvancedToolUser()
@@ -292,7 +292,7 @@
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
 	if(!radio)
-		src << "Radio not detected."
+		to_chat(src, "Radio not detected.")
 		return
 
 	//Ask the user to pick a channel from what it has available.
@@ -311,7 +311,7 @@
 				radiomod = key
 				break
 
-	src << "<span class='notice'>Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]</span>"
+	to_chat(src, "<span class='notice'>Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]</span>")
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return 0
@@ -353,15 +353,15 @@
 	switch(sensor_type)
 		if ("Security")
 			add_sec_hud()
-			src << "<span class='notice'>Security records overlay enabled.</span>"
+			to_chat(src, "<span class='notice'>Security records overlay enabled.</span>")
 		if ("Medical")
 			add_med_hud()
-			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
+			to_chat(src, "<span class='notice'>Life signs monitor overlay enabled.</span>")
 		if ("Diagnostic")
 			add_diag_hud()
-			src << "<span class='notice'>Robotics diagnostic overlay enabled.</span>"
+			to_chat(src, "<span class='notice'>Robotics diagnostic overlay enabled.</span>")
 		if ("Disable")
-			src << "Sensor augmentations disabled."
+			to_chat(src, "Sensor augmentations disabled.")
 
 
 /mob/living/silicon/proc/GetPhoto()

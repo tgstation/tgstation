@@ -91,7 +91,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	if(!get_cost(O, contr, emag))
 		return FALSE
-	if(O.flags & HOLOGRAM)
+	if(HAS_SECONDARY_FLAG(O, HOLOGRAM))
 		return FALSE
 	return TRUE
 

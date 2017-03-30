@@ -70,7 +70,7 @@
 	canmove = FALSE
 	var/silent = 0
 	var/hit_slowdown = 0
-	var/light_power = 5
+	var/brightness_power = 5
 	var/slowdown = 0
 
 /mob/living/silicon/pai/movement_delay()
@@ -81,7 +81,8 @@
 	pai_list -= src
 	..()
 
-/mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
+/mob/living/silicon/pai/Initialize()
+	var/obj/item/device/paicard/P = loc
 	START_PROCESSING(SSfastprocess, src)
 	pai_list += src
 	make_laws()
@@ -212,7 +213,7 @@
 
 /mob/living/silicon/pai/examine(mob/user)
 	..()
-	user << "A personal AI in holochassis mode. Its master ID string seems to be [master]."
+	to_chat(user, "A personal AI in holochassis mode. Its master ID string seems to be [master].")
 
 /mob/living/silicon/pai/Life()
 	if(stat == DEAD)

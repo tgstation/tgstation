@@ -46,7 +46,7 @@ var/datum/events/keycard_events = new()
 	if(isanimal(user))
 		var/mob/living/simple_animal/A = user
 		if(!A.dextrous)
-			user << "<span class='warning'>You are too primitive to use this device!</span>"
+			to_chat(user, "<span class='warning'>You are too primitive to use this device!</span>")
 			return UI_CLOSE
 	return ..()
 

@@ -248,7 +248,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
 			playsound(loc, WT.usesound, 40, 1)
-			user << "<span class='notice'>You begin welding the vent...</span>"
+			to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
 			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -268,14 +268,14 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
 	if(..())
 		if(!(stat & NOPOWER) && on)
-			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
 		else
 			return 1
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	..()
 	if(welded)
-		user << "It seems welded shut."
+		to_chat(user, "It seems welded shut.")
 
 /obj/machinery/atmospherics/components/unary/vent_pump/power_change()
 	..()

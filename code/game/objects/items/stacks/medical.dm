@@ -23,11 +23,11 @@
 			t_him = "him"
 		else if(M.gender == FEMALE)
 			t_him = "her"
-		user << "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>"
+		to_chat(user, "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>")
 		return
 
 	if(!istype(M, /mob/living/carbon) && !istype(M, /mob/living/simple_animal))
-		user << "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>"
+		to_chat(user, "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>")
 		return 1
 
 	var/obj/item/bodypart/affecting
@@ -35,16 +35,16 @@
 		var/mob/living/carbon/C = M
 		affecting = C.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting) //Missing limb?
-			user << "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>"
+			to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
 			return
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(stop_bleeding)
 				if(H.bleedsuppress)
-					user << "<span class='warning'>[H]'s bleeding is already bandaged!</span>"
+					to_chat(user, "<span class='warning'>[H]'s bleeding is already bandaged!</span>")
 					return
 				else if(!H.bleed_rate)
-					user << "<span class='warning'>[H] isn't bleeding!</span>"
+					to_chat(user, "<span class='warning'>[H] isn't bleeding!</span>")
 					return
 
 
@@ -57,13 +57,13 @@
 			if (istype(M, /mob/living/simple_animal))
 				var/mob/living/simple_animal/critter = M
 				if (!(critter.healable))
-					user << "<span class='notice'> You cannot use [src] on [M]!</span>"
+					to_chat(user, "<span class='notice'> You cannot use [src] on [M]!</span>")
 					return
 				else if (critter.health == critter.maxHealth)
-					user << "<span class='notice'> [M] is at full health.</span>"
+					to_chat(user, "<span class='notice'> [M] is at full health.</span>")
 					return
 				else if(src.heal_brute < 1)
-					user << "<span class='notice'> [src] won't help [M] at all.</span>"
+					to_chat(user, "<span class='notice'> [src] won't help [M] at all.</span>")
 					return
 			user.visible_message("<span class='green'>[user] applies [src] on [M].</span>", "<span class='green'>You apply [src] on [M].</span>")
 		else
@@ -82,7 +82,7 @@
 		var/mob/living/carbon/C = M
 		affecting = C.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting) //Missing limb?
-			user << "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>"
+			to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
 			return
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
@@ -93,7 +93,7 @@
 			if(affecting.heal_damage(heal_brute, heal_burn))
 				C.update_damage_overlays()
 		else
-			user << "<span class='notice'>Medicine won't work on a robotic limb!</span>"
+			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 	else
 		M.heal_bodypart_damage((src.heal_brute/2), (src.heal_burn/2))
 
@@ -118,6 +118,7 @@
 	icon_state = "gauze"
 	stop_bleeding = 1800
 	self_delay = 20
+	max_amount = 12
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"

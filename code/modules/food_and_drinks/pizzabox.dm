@@ -92,14 +92,14 @@
 	if(open)
 		if(pizza)
 			user.put_in_hands(pizza)
-			user << "<span class='notice'>You take [pizza] out of [src].</span>"
+			to_chat(user, "<span class='notice'>You take [pizza] out of [src].</span>")
 			pizza = null
 			update_icon()
 			return
 		else if(bomb)
 			if(wires.is_all_cut() && bomb_defused)
 				user.put_in_hands(bomb)
-				user << "<span class='notice'>You carefully remove the [bomb] from [src].</span>"
+				to_chat(user, "<span class='notice'>You carefully remove the [bomb] from [src].</span>")
 				bomb = null
 				update_icon()
 				return
@@ -114,14 +114,14 @@
 				log_game("[key_name(user)] has trapped a [src] with [bomb] set to [bomb_timer * 2] seconds.")
 				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
 
-				user << "<span class='warning'>You trap [src] with [bomb].</span>"
+				to_chat(user, "<span class='warning'>You trap [src] with [bomb].</span>")
 				update_icon()
 			return
 	else if(boxes.len)
 		var/obj/item/pizzabox/topbox = boxes[boxes.len]
 		boxes -= topbox
 		user.put_in_hands(topbox)
-		user << "<span class='notice'>You remove the topmost [name] from the stack.</span>"
+		to_chat(user, "<span class='notice'>You remove the topmost [name] from the stack.</span>")
 		topbox.update_icon()
 		update_icon()
 		return
@@ -141,21 +141,21 @@
 				boxes += add
 				newbox.boxes.Cut()
 				newbox.loc = src
-				user << "<span class='notice'>You put [newbox] on top of [src]!</span>"
+				to_chat(user, "<span class='notice'>You put [newbox] on top of [src]!</span>")
 				newbox.update_icon()
 				update_icon()
 				return
 			else
-				user << "<span class='notice'>The stack is dangerously high!</span>"
+				to_chat(user, "<span class='notice'>The stack is dangerously high!</span>")
 		else
-			user << "<span class='notice'>Close [open ? src : newbox] first!</span>"
+			to_chat(user, "<span class='notice'>Close [open ? src : newbox] first!</span>")
 	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizza) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza))
 		if(open)
 			if(!user.drop_item())
 				return
 			pizza = I
 			I.loc = src
-			user << "<span class='notice'>You put [I] in [src].</span>"
+			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 			update_icon()
 			return
 	else if(istype(I, /obj/item/weapon/bombcore/pizza))
@@ -165,23 +165,23 @@
 			wires = new /datum/wires/explosive/pizza(src)
 			bomb = I
 			I.loc = src
-			user << "<span class='notice'>You put [I] in [src]. Sneeki breeki...</span>"
+			to_chat(user, "<span class='notice'>You put [I] in [src]. Sneeki breeki...</span>")
 			update_icon()
 			return
 		else if(bomb)
-			user << "<span class='notice'>[src] already has a bomb in it!</span>"
+			to_chat(user, "<span class='notice'>[src] already has a bomb in it!</span>")
 	else if(istype(I, /obj/item/weapon/pen))
 		if(!open)
 			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 			box.boxtag += stripped_input(user, "Write on [box]'s tag:", box, "", 30)
-			user << "<span class='notice'>You write with [I] on [src].</span>"
+			to_chat(user, "<span class='notice'>You write with [I] on [src].</span>")
 			update_icon()
 			return
 	else if(is_wire_tool(I))
 		if(wires && bomb)
 			wires.interact(user)
 	else if(istype(I, /obj/item/weapon/reagent_containers/food))
-		user << "<span class='notice'>That's not a pizza!</span>"
+		to_chat(user, "<span class='notice'>That's not a pizza!</span>")
 	..()
 
 /obj/item/pizzabox/process()

@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "lordsingulo" = 1, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
@@ -128,14 +128,15 @@
 			new /obj/item/weapon/throwing_star(src)
 			new /obj/item/weapon/throwing_star(src)
 			new /obj/item/weapon/throwing_star(src)
-			new /obj/item/weapon/storage/belt/military/assault(src) // 3 tc
+			new /obj/item/weapon/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/weapon/card/id/syndicate(src) // 2 tc
 			new /obj/item/device/chameleon(src) // 7 tc
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
-	icon_state = "box_of_doom"
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"

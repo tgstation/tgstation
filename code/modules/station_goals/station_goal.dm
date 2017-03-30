@@ -13,7 +13,7 @@
 
 /datum/station_goal/proc/send_report()
 	priority_announce("Priority Nanotrasen directive received. Project \"[name]\" details inbound.", "Incoming Priority Message", 'sound/AI/commandreport.ogg')
-	print_command_report(get_report(),"Nanotrasen Directive [pick(phonetic_alphabet)] \Roman[rand(1,50)]")
+	print_command_report(get_report(),"Nanotrasen Directive [pick(phonetic_alphabet)] \Roman[rand(1,50)]", announce=FALSE)
 	on_report()
 
 /datum/station_goal/proc/on_report()
@@ -28,9 +28,9 @@
 
 /datum/station_goal/proc/print_result()
 	if(check_completion())
-		world << "<b>Station Goal</b> : [name] :  <span class='greenannounce'>Completed!</span>"
+		to_chat(world, "<b>Station Goal</b> : [name] :  <span class='greenannounce'>Completed!</span>")
 	else
-		world << "<b>Station Goal</b> : [name] : <span class='boldannounce'>Failed!</span>"
+		to_chat(world, "<b>Station Goal</b> : [name] : <span class='boldannounce'>Failed!</span>")
 
 /datum/station_goal/Destroy()
 	ticker.mode.station_goals -= src

@@ -5,9 +5,10 @@
 	name = "chasm"
 	desc = "Watch your step."
 	baseturf = /turf/open/chasm
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
+	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
 	var/drop_x = 1
 	var/drop_y = 1
 	var/drop_z = 1
@@ -19,6 +20,34 @@
 /turf/open/chasm/process()
 	if(!drop_stuff())
 		STOP_PROCESSING(SSobj, src)
+
+
+/turf/open/chasm/attackby(obj/item/C, mob/user, params, area/area_restriction)
+	..()
+	if(istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		if(!L)
+			if(R.use(1))
+				to_chat(user, "<span class='notice'>You construct a lattice.</span>")
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				ReplaceWithLattice()
+			else
+				to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
+			return
+	if(istype(C, /obj/item/stack/tile/plasteel))
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		if(L)
+			var/obj/item/stack/tile/plasteel/S = C
+			if(S.use(1))
+				qdel(L)
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				to_chat(user, "<span class='notice'>You build a floor.</span>")
+				ChangeTurf(/turf/open/floor/plating)
+			else
+				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
+		else
+			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
 /turf/open/chasm/proc/drop_stuff(AM)
 	. = 0

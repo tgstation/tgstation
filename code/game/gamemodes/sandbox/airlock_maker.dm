@@ -75,7 +75,7 @@
 		return
 
 	if("rename" in href_list)
-		var/newname = stripped_input(usr,"New airlock name:","Name the airlock",doorname)
+		var/newname = strip_html_properly(stripped_input(usr,"New airlock name:","Name the airlock",doorname))
 		if(newname)
 			doorname = russian_html2text(newname)
 	if("access" in href_list)
@@ -115,7 +115,7 @@
 		var/final = target_type
 		target_type = text2path(final)
 		if(!target_type)
-			usr << "Didn't work, contact Sayu with this: [final]"
+			to_chat(usr, "Didn't work, contact Sayu with this: [final]")
 			usr << browse(null,"window=airlockmaker")
 			return
 

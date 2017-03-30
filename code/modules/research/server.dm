@@ -185,7 +185,7 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
-		usr << "<span class='danger'>You do not have the required access level.</span>"
+		to_chat(usr, "<span class='danger'>You do not have the required access level.</span>")
 		return
 
 	if(href_list["main"])
@@ -319,7 +319,7 @@
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='notice'>You you disable the security protocols.</span>"
+		to_chat(user, "<span class='notice'>You you disable the security protocols.</span>")
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

@@ -51,7 +51,7 @@
 			if(petrified_mob)
 				S.mind.transfer_to(petrified_mob)
 				petrified_mob.Weaken(5)
-				petrified_mob << "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>"
+				to_chat(petrified_mob, "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>")
 		qdel(S)
 
 	for(var/obj/O in src)
@@ -84,7 +84,7 @@
 	bleedsuppress = 1
 	S.icon = icon
 	S.icon_state = icon_state
-	S.overlays = overlays
+	S.copy_overlays(overlays)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return 1

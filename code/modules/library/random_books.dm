@@ -1,4 +1,5 @@
-/obj/item/weapon/book/manual/random/New()
+/obj/item/weapon/book/manual/random/Initialize()
+	..()
 	var/static/banned_books = list(/obj/item/weapon/book/manual/random,/obj/item/weapon/book/manual/nuclear,/obj/item/weapon/book/manual/wiki)
 	var/newtype = pick(subtypesof(/obj/item/weapon/book/manual) - banned_books)
 	new newtype(loc)
@@ -8,7 +9,8 @@
 	var/amount = 1
 	var/category = null
 
-/obj/item/weapon/book/random/New()
+/obj/item/weapon/book/random/Initialize()
+	..()
 	create_random_books(amount, src.loc, TRUE, category)
 	qdel(src)
 
@@ -43,19 +45,18 @@
 	if(prob(25))
 		category = null
 	var/c = category? " AND category='[sanitizeSQL(category)]'" :""
-	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE isnull(deleted)[c] GROUP BY title ORDER BY rand() LIMIT [amount];") // isdeleted copyright (c) not me
-	if(query.Execute())
-		while(query.NextRow())
+	var/DBQuery/query_get_random_books = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE isnull(deleted)[c] GROUP BY title ORDER BY rand() LIMIT [amount];") // isdeleted copyright (c) not me
+	if(query_get_random_books.Execute())
+		while(query_get_random_books.NextRow())
 			var/obj/item/weapon/book/B = new(location)
 			. += B
-			B.author	=	query.item[2]
-			B.title		=	query.item[3]
-			B.dat		=	query.item[4]
+			B.author	=	query_get_random_books.item[2]
+			B.title		=	query_get_random_books.item[3]
+			B.dat		=	query_get_random_books.item[4]
 			B.name		=	"Book: [B.title]"
 			B.icon_state=	"book[rand(1,8)]"
 	else
-		log_game("SQL ERROR populating library bookshelf.  Category: \[[category]\], Count: [amount], Error: \[[query.ErrorMsg()]\]\n")
-
+		return
 
 /obj/structure/bookcase/random/fiction
 	name = "bookcase (Fiction)"

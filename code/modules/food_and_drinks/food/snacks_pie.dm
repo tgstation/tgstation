@@ -6,6 +6,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	volume = 80
 	list_reagents = list("nutriment" = 10, "vitamin" = 2)
+	tastes = list("pie" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/plain
 	name = "plain pie"
@@ -13,6 +14,7 @@
 	icon_state = "pie"
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pie
 	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)
+	tastes = list("pie" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream
 	name = "banana cream pie"
@@ -21,6 +23,7 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
+	tastes = list("pie" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
@@ -49,6 +52,7 @@
 	icon_state = "berryclafoutis"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 10, "berryjuice" = 5, "vitamin" = 2)
+	tastes = list("pie" = 1, "blackberries" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/bearypie
 	name = "beary pie"
@@ -56,12 +60,14 @@
 	icon_state = "bearypie"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
 	list_reagents = list("nutriment" = 2, "vitamin" = 3)
+	tastes = list("pie" = 1, "meat" = 1, "salmon" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/meatpie
 	name = "meat-pie"
 	icon_state = "meatpie"
 	desc = "An old barber recipe, very delicious!"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
+	tastes = list("pie" = 1, "meat" = 1)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/tofupie
@@ -69,6 +75,7 @@
 	icon_state = "meatpie"
 	desc = "A delicious tofu pie."
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
+	tastes = list("pie" = 1, "tofu" = 1)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/amanita_pie
@@ -78,6 +85,7 @@
 	bitesize = 4
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 6, "amatoxin" = 3, "mushroomhallucinogen" = 1, "vitamin" = 4)
+	tastes = list("pie" = 1, "mushroom" = 1)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/plump_pie
@@ -85,14 +93,18 @@
 	desc = "I bet you love stuff made out of plump helmets!"
 	icon_state = "plump_pie"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
+	tastes = list("pie" = 1, "mushroom" = 1)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/plump_pie/New()
-	..()
-	if(prob(10))
+	var/fey = prob(10)
+	if(fey)
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
-		reagents.add_reagent("omnizine", 5)
 		bonus_reagents = list("nutriment" = 1, "omnizine" = 5, "vitamin" = 4)
+	..()
+	if(fey)
+		reagents.add_reagent("omnizine", 5)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/xemeatpie
@@ -101,6 +113,7 @@
 	desc = "A delicious meatpie. Probably heretical."
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
+	tastes = list("pie" = 1, "meat" = 1, "acid" = 1)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/applepie
@@ -108,6 +121,7 @@
 	desc = "A pie containing sweet sweet love...or apple."
 	icon_state = "applepie"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
+	tastes = list("pie" = 1, "apple" = 1)
 
 
 
@@ -116,6 +130,7 @@
 	desc = "Taste so good, make a grown man cry."
 	icon_state = "cherrypie"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
+	tastes = list("pie" = 7, "Nicole Paige Brooks" = 2)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/pumpkinpie
@@ -125,6 +140,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pumpkinpieslice
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
+	tastes = list("pie" = 1, "pumpkin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pumpkinpieslice
 	name = "pumpkin pie slice"
@@ -134,6 +150,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#FFA500"
 	list_reagents = list("nutriment" = 2)
+	tastes = list("pie" = 1, "pumpkin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/appletart
 	name = "golden apple streusel tart"
@@ -141,6 +158,7 @@
 	icon_state = "gappletart"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 8, "gold" = 5, "vitamin" = 4)
+	tastes = list("pie" = 1, "apple" = 1, "expensive metal" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/grapetart
 	name = "grape tart"
@@ -148,6 +166,7 @@
 	icon_state = "grapetart"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 4, "vitamin" = 4)
+	tastes = list("pie" = 1, "grape" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/blumpkinpie
 	name = "blumpkin pie"
@@ -156,6 +175,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/blumpkinpieslice
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 6)
+	tastes = list("pie" = 1, "a mouthful of pool water" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/blumpkinpieslice
 	name = "blumpkin pie slice"
@@ -165,6 +185,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#1E90FF"
 	list_reagents = list("nutriment" = 2)
+	tastes = list("pie" = 1, "a mouthful of pool water" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/dulcedebatata
 	name = "dulce de batata"
@@ -173,6 +194,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/dulcedebatataslice
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 8)
+	tastes = list("jelly" = 1, "sweet potato" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/dulcedebatataslice
 	name = "dulce de batata slice"
@@ -182,9 +204,11 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#8B4513"
 	list_reagents = list("nutriment" = 2)
+	tastes = list("jelly" = 1, "sweet potato" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/frostypie
 	name = "frosty pie"
 	desc = "Tastes like blue and cold."
 	icon_state = "frostypie"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
+	tastes = list("mint" = 1, "pie" = 1)

@@ -15,27 +15,54 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	layer = ABOVE_NORMAL_TURF_LAYER
 	obj_integrity = 30
 	max_integrity = 30
-	var/potency = 30
 	var/delay = 1200
 	var/floor = 0
-	var/yield = 3
 	var/generation = 1
 	var/spreadIntoAdjacentChance = 60
+	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
 
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
+	desc = "Mycena Ruthenia, a species of mushroom that, while it does glow in the dark, is not actually bioluminescent."
 	icon_state = "glowcap"
+	myseed = /obj/item/seeds/glowshroom/glowcap
 
-/obj/structure/glowshroom/single
-	yield = 0
+/obj/structure/glowshroom/shadowshroom
+	name = "shadowshroom"
+	desc = "Mycena Umbra, a species of mushroom that emits shadow instead of light."
+	icon_state = "shadowshroom"
+	myseed = /obj/item/seeds/glowshroom/shadowshroom
+
+/obj/structure/glowshroom/single/Spread()
+	return
 
 /obj/structure/glowshroom/examine(mob/user)
 	. = ..()
-	user << "This is a [generation]\th generation [name]!"
+	to_chat(user, "This is a [generation]\th generation [name]!")
 
-/obj/structure/glowshroom/New()
+/obj/structure/glowshroom/Destroy()
+	if(myseed)
+		QDEL_NULL(myseed)
+	return ..()
+
+/obj/structure/glowshroom/New(loc, obj/item/seeds/newseed, mutate_stats)
 	..()
-	SetLuminosity(round(potency/10))
+	if(newseed)
+		myseed = newseed.Copy()
+		myseed.forceMove(src)
+	else
+		myseed = new myseed(src)
+	if(mutate_stats) //baby mushrooms have different stats :3
+		myseed.adjust_potency(rand(-3,6))
+		myseed.adjust_yield(rand(-1,2))
+		myseed.adjust_production(rand(-3,6))
+		myseed.adjust_endurance(rand(-3,6))
+	delay = delay - myseed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
+	obj_integrity = myseed.endurance
+	max_integrity = myseed.endurance
+	if(myseed.get_gene(/datum/plant_gene/trait/glow))
+		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
+		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)
@@ -55,7 +82,9 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	addtimer(CALLBACK(src, .proc/Spread), delay)
 
 /obj/structure/glowshroom/proc/Spread()
-	for(var/i = 1 to yield)
+	var/turf/ownturf = get_turf(src)
+	var/shrooms_planted = 0
+	for(var/i in 1 to myseed.yield)
 		if(prob(1/(generation * generation) * 100))//This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 			var/list/possibleLocs = list()
 			var/spreadsIntoAdjacent = FALSE
@@ -65,6 +94,8 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 
 			for(var/turf/open/floor/earth in view(3,src))
 				if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
+					continue
+				if(!ownturf.CanAtmosPass(earth))
 					continue
 				if(spreadsIntoAdjacent || !locate(/obj/structure/glowshroom) in view(1,earth))
 					possibleLocs += earth
@@ -86,16 +117,16 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 			if(shroomCount >= placeCount)
 				continue
 
-			var/obj/structure/glowshroom/child = new type(newLoc)//The baby mushrooms have different stats :3
-			child.potency = max(potency + rand(-3,6), 0)
-			child.yield = max(yield + rand(-1,2), 0)
-			child.delay = max(delay + rand(-30,60), 0)
-			var/newhealth = max(obj_integrity + rand(-3,6), 1)
-			child.obj_integrity = newhealth
-			child.max_integrity = newhealth
+			var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE)
 			child.generation = generation + 1
+			shrooms_planted++
 
 			CHECK_TICK
+		else
+			shrooms_planted++ //if we failed due to generation, don't try to plant one later
+	if(shrooms_planted < myseed.yield) //if we didn't get all possible shrooms planted, try again later
+		myseed.yield -= shrooms_planted
+		addtimer(CALLBACK(src, .proc/Spread), delay)
 
 /obj/structure/glowshroom/proc/CalcDir(turf/location = loc)
 	var/direction = 16

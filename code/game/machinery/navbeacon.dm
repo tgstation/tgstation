@@ -94,12 +94,12 @@
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked
-				user << "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>"
+				to_chat(user, "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>")
 			else
-				user << "<span class='danger'>Access denied.</span>"
+				to_chat(user, "<span class='danger'>Access denied.</span>")
 			updateDialog()
 		else
-			user << "<span class='warning'>You must open the cover first!</span>"
+			to_chat(user, "<span class='warning'>You must open the cover first!</span>")
 	else
 		return ..()
 
@@ -118,7 +118,7 @@
 		return		// prevent intraction when T-scanner revealed
 
 	if(!open && !ai)	// can't alter controls if not open, unless you're an AI
-		user << "<span class='warning'>The beacon's control cover is closed!</span>"
+		to_chat(user, "<span class='warning'>The beacon's control cover is closed!</span>")
 		return
 
 

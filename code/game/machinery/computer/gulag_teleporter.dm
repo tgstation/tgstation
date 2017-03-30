@@ -13,6 +13,8 @@
 	var/mob/living/carbon/human/prisoner = null
 	var/datum/data/record/temporary_record = null
 
+	light_color = LIGHT_COLOR_RED
+
 /obj/machinery/computer/gulag_teleporter_computer/New()
 	..()
 	addtimer(CALLBACK(src, .proc/scan_machinery), 5)
@@ -29,10 +31,10 @@
 				return
 			W.forceMove(src)
 			id = W
-			user << "<span class='notice'>You insert [W].</span>"
+			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			return
 		else
-			user << "<span class='notice'>There's an ID inserted already.</span>"
+			to_chat(user, "<span class='notice'>There's an ID inserted already.</span>")
 	return ..()
 
 /obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
@@ -82,7 +84,7 @@
 	if(..())
 		return
 	if(!allowed(usr))
-		usr << "<span class='warning'>Access denied.</span>"
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return
 	switch(action)
 		if("scan_teleporter")
@@ -113,12 +115,12 @@
 			id.goal = Clamp(new_goal, 0, 1000) //maximum 1000 points
 		if("toggle_open")
 			if(teleporter.locked)
-				usr << "The teleporter is locked"
+				to_chat(usr, "The teleporter is locked")
 				return
 			teleporter.toggle_open()
 		if("teleporter_lock")
 			if(teleporter.state_open)
-				usr << "Close the teleporter before locking!"
+				to_chat(usr, "Close the teleporter before locking!")
 				return
 			teleporter.locked = !teleporter.locked
 		if("teleport")
@@ -147,7 +149,7 @@
 	playsound(loc, 'sound/weapons/emitter.ogg', 50, 1)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Weaken(2) // small travel dizziness
-	prisoner << "<span class='warning'>The teleportation makes you a little dizzy.</span>"
+	to_chat(prisoner, "<span class='warning'>The teleportation makes you a little dizzy.</span>")
 	new /obj/effect/particle_effect/sparks(prisoner.loc)
 	playsound(src.loc, "sparks", 50, 1)
 	if(teleporter.locked)
@@ -155,10 +157,3 @@
 	teleporter.toggle_open()
 	id = null
 	temporary_record = null
-
-
-
-
-
-
-

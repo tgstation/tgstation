@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/secbot
 	name = "\improper Securitron"
 	desc = "A little security robot.  He looks less than thrilled."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "secbot0"
 	density = 0
 	anchored = 0
@@ -52,7 +52,7 @@
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = "AI Private"
 
-/mob/living/simple_animal/bot/secbot/New()
+/mob/living/simple_animal/bot/secbot/Initialize()
 	..()
 	icon_state = "secbot[on]"
 	spawn(3)
@@ -161,7 +161,7 @@ Auto Patrol: []"},
 	..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'>You short out [src]'s target assessment circuits.</span>"
+			to_chat(user, "<span class='danger'>You short out [src]'s target assessment circuits.</span>")
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = 0

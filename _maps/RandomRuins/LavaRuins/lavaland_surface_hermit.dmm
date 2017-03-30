@@ -186,7 +186,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/interior{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface

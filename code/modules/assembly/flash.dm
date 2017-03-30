@@ -92,12 +92,12 @@
 			terrible_conversion_proc(M, user)
 			M.Weaken(rand(4,6))
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
-			user << "<span class='danger'>You blind [M] with the flash!</span>"
-			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
+			to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
+			to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
 		else
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
-			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
-			M << "<span class='danger'>[user] fails to blind you with the flash!</span>"
+			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
+			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
 	else
 		if(M.flash_act())
 			M.confused += power
@@ -160,11 +160,11 @@
 						resisted = 1
 
 					if(resisted)
-						user << "<span class='warning'>This mind seems resistant to the flash!</span>"
+						to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 				else
-					user << "<span class='warning'>They must be conscious before you can convert them!</span>"
+					to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
 			else
-				user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
+				to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
 
 
 /obj/item/device/assembly/flash/cyborg
@@ -199,7 +199,7 @@
 
 /obj/item/device/assembly/flash/armimplant/burn_out()
 	if(I && I.owner)
-		I.owner << "<span class='warning'>Your photon projector implant overheats and deactivates!</span>"
+		to_chat(I.owner, "<span class='warning'>Your photon projector implant overheats and deactivates!</span>")
 		I.Retract()
 	overheat = FALSE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd * 2)
@@ -207,7 +207,7 @@
 /obj/item/device/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
 		if(I && I.owner)
-			I.owner << "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>"
+			to_chat(I.owner, "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>")
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
@@ -247,10 +247,10 @@
 	if(istype(W, /obj/item/device/assembly/flash/handheld))
 		var/obj/item/device/assembly/flash/handheld/flash = W
 		if(flash.crit_fail)
-			user << "No sense replacing it with a broken bulb."
+			to_chat(user, "No sense replacing it with a broken bulb.")
 			return
 		else
-			user << "You begin to replace the bulb."
+			to_chat(user, "You begin to replace the bulb.")
 			if(do_after(user, 20, target = src))
 				if(flash.crit_fail || !flash || QDELETED(flash))
 					return

@@ -9,7 +9,7 @@
 	desc = "Taps the limitless power of Inath-neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all Servants in range for fifteen seconds."
 	invocations = list("I call upon you, Vanguard!!", "Let the Resonant Cogs turn once more!!", "Grant me and my allies the strength to vanquish our foes!!")
 	channel_time = 100
-	consumed_components = list(VANGUARD_COGWHEEL = 6, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 3)
+	consumed_components = list(VANGUARD_COGWHEEL = 4, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
 	usage_tip = "Servants affected by this scripture are only weak to things that outright destroy bodies, such as bombs or the singularity."
 	tier = SCRIPTURE_REVENANT
 	primary_component = VANGUARD_COGWHEEL
@@ -17,8 +17,8 @@
 
 /datum/clockwork_scripture/invoke_inathneq/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["inath-neq"] > world.time)
-		invoker << "<span class='inathneq'>\"[text2ratvar("I cannot lend you my aid yet, champion. Please be careful.")]\"</span>\n\
-		<span class='warning'>Inath-neq has already been invoked recently! You must wait several minutes before calling upon the Resonant Cogwheel.</span>"
+		to_chat(invoker, "<span class='inathneq'>\"[text2ratvar("I cannot lend you my aid yet, champion. Please be careful.")]\"</span>\n\
+		<span class='warning'>Inath-neq has already been invoked recently! You must wait several minutes before calling upon the Resonant Cogwheel.</span>")
 		return FALSE
 	return TRUE
 
@@ -57,19 +57,19 @@
 
 /datum/clockwork_scripture/invoke_sevtug/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
-		invoker << "<span class='sevtug'>\"[text2ratvar("Is it really so hard - even for a simpleton like you - to grasp the concept of waiting?")]\"</span>\n\
-		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>"
+		to_chat(invoker, "<span class='sevtug'>\"[text2ratvar("Is it really so hard - even for a simpleton like you - to grasp the concept of waiting?")]\"</span>\n\
+		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>")
 		return FALSE
 	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='sevtug'>\"[text2ratvar("Do you really think anything I can do right now will compare to Engine's power?")]\"</span>\n\
-		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>"
+		to_chat(invoker, "<span class='sevtug'>\"[text2ratvar("Do you really think anything I can do right now will compare to Engine's power?")]\"</span>\n\
+		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>")
 		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/invoke_sevtug/scripture_effects()
 	new/obj/effect/clockwork/general_marker/sevtug(get_turf(invoker))
 	hierophant_message("<span class='sevtug_large'>[text2ratvar("Fright: \"I heed your call, idiots. Get going and use this chance while it lasts!")]\"</span>", FALSE, invoker)
-	clockwork_generals_invoked["sevtug"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
+	clockwork_generals_invoked["sevtug"] = world.time + GLOBAL_CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 	var/turf/T = get_turf(invoker)
@@ -81,16 +81,16 @@
 			var/minordistance = max(200 - distance*2, 5)
 			var/majordistance = max(150 - distance*3, 5)
 			if(H.null_rod_check())
-				H << "<span class='sevtug'>[text2ratvar("Oh, a void weapon. How annoying, I may as well not bother.")]</span>\n\
-				<span class='warning'>Your holy weapon glows a faint orange, defending your mind!</span>"
+				to_chat(H, "<span class='sevtug'>[text2ratvar("Oh, a void weapon. How annoying, I may as well not bother.")]</span>\n\
+				<span class='warning'>Your holy weapon glows a faint orange, defending your mind!</span>")
 				continue
 			else if(H.isloyal())
 				visualsdistance = round(visualsdistance * 0.5) //half effect for shielded targets
 				minordistance = round(minordistance * 0.5)
 				majordistance = round(majordistance * 0.5)
-				H << "<span class='sevtug'>[text2ratvar("Oh, look, a mindshield. Cute, I suppose I'll humor it.")]</span>"
+				to_chat(H, "<span class='sevtug'>[text2ratvar("Oh, look, a mindshield. Cute, I suppose I'll humor it.")]</span>")
 			else if(prob(visualsdistance))
-				H << "<span class='sevtug'>[text2ratvar(pick(mindbreaksayings))]</span>"
+				to_chat(H, "<span class='sevtug'>[text2ratvar(pick(mindbreaksayings))]</span>")
 			H.playsound_local(T, hum, visualsdistance, 1)
 			flash_color(H, flash_color="#AF0AAF", flash_time=visualsdistance*10)
 			H.dizziness = minordistance + H.dizziness
@@ -119,45 +119,27 @@
 
 /datum/clockwork_scripture/invoke_nezbere/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["nezbere"] > world.time)
-		invoker << "<span class='nezbere'>\"[text2ratvar("Not just yet, friend. Patience is a virtue.")]\"</span>\n\
-		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>"
+		to_chat(invoker, "<span class='nezbere'>\"[text2ratvar("Not just yet, friend. Patience is a virtue.")]\"</span>\n\
+		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>")
 		return FALSE
 	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='nezbere'>\"[text2ratvar("Our master is here already. You do not require my help, friend.")]\"</span>\n\
-		<span class='warning'>There is no need for Nezbere's assistance while Ratvar is risen!</span>"
+		to_chat(invoker, "<span class='nezbere'>\"[text2ratvar("Our master is here already. You do not require my help, friend.")]\"</span>\n\
+		<span class='warning'>There is no need for Nezbere's assistance while Ratvar is risen!</span>")
 		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/invoke_nezbere/scripture_effects()
 	new/obj/effect/clockwork/general_marker/nezbere(get_turf(invoker))
 	hierophant_message("<span class='nezbere_large'>[text2ratvar("Armorer: \"I heed your call, champions. May your artifacts bring ruin upon the heathens that oppose our master!")]\"</span>", FALSE, invoker)
-	clockwork_generals_invoked["nezbere"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
+	clockwork_generals_invoked["nezbere"] = world.time + GLOBAL_CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
-	for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
-		W.damage_per_tick = 5
-		W.sight_range = 5
-	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require power
-		P.charge_rate = 1250
-	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
-		M.needs_power = FALSE
-		if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon)) //Daemons produce components twice as quickly
-			var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
-			D.production_time = 0
-			D.production_cooldown *= 0.5
+	nezbere_invoked++
+	for(var/obj/O in all_clockwork_objects)
+		O.ratvar_act()
 	spawn(600)
-		for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects)
-			if(W.damage_per_tick == 5)
-				W.damage_per_tick = initial(W.damage_per_tick)
-			if(W.sight_range == 5)
-				W.sight_range = initial(W.sight_range)
-		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
-			if(P.charge_rate == 1250)
-				P.charge_rate = initial(P.charge_rate)
-		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
-			M.needs_power = initial(M.needs_power)
-			if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon))
-				var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
-				D.production_cooldown = initial(D.production_cooldown)
+		nezbere_invoked--
+		for(var/obj/O in all_clockwork_objects)
+			O.ratvar_act()
 	return TRUE
 
 
@@ -169,7 +151,7 @@
 	will be struck by devastating lightning bolts."
 	invocations = list("I call upon you, Amperage!!", "Let your energy flow through me!!", "Let your boundless power shatter stars!!")
 	channel_time = 100
-	consumed_components = list(BELLIGERENT_EYE = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 6)
+	consumed_components = list(BELLIGERENT_EYE = 2, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 4)
 	usage_tip = "Struck targets will also be knocked down for about sixteen seconds."
 	tier = SCRIPTURE_REVENANT
 	primary_component = HIEROPHANT_ANSIBLE
@@ -177,8 +159,8 @@
 
 /datum/clockwork_scripture/invoke_nzcrentr/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["nzcrentr"] > world.time)
-		invoker << "<span class='nzcrentr'>\"[text2ratvar("The boss says you have to wait. Hey, do you think he would mind if I killed you? ...He would? Ok.")]\"</span>\n\
-		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Eternal Thunderbolt.</span>"
+		to_chat(invoker, "<span class='nzcrentr'>\"[text2ratvar("The boss says you have to wait. Hey, do you think he would mind if I killed you? ...He would? Ok.")]\"</span>\n\
+		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Eternal Thunderbolt.</span>")
 		return FALSE
 	return TRUE
 

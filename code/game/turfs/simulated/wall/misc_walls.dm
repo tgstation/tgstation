@@ -43,7 +43,7 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	hardness = 10
-	slicing_duration = 120
+	slicing_duration = 80
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
@@ -61,7 +61,7 @@
 /turf/closed/wall/clockwork/examine(mob/user)
 	..()
 	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
-		user << "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>"
+		to_chat(user, "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>")
 
 /turf/closed/wall/clockwork/Destroy()
 	if(linkedcache)

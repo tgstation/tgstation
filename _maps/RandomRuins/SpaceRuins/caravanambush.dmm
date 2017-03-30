@@ -99,7 +99,7 @@
 /area/ruin/powered)
 "ar" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/powered)
@@ -222,7 +222,7 @@
 /area/ruin/powered)
 "aN" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
@@ -626,9 +626,9 @@
 /area/ruin/unpowered)
 "ca" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	tag = "icon-burst_l (EAST)";
+	dir = 8;
 	icon_state = "burst_l";
-	dir = 4
+	tag = "icon-burst_l (EAST)"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
@@ -712,7 +712,7 @@
 /area/ruin/unpowered)
 "co" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
@@ -847,9 +847,9 @@
 /area/ruin/unpowered)
 "cF" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	tag = "icon-burst_r (EAST)";
+	dir = 8;
 	icon_state = "burst_r";
-	dir = 4
+	tag = "icon-burst_r (EAST)"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)

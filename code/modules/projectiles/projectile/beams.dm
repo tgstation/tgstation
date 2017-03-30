@@ -3,13 +3,14 @@
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
-	luminosity = 1
+	light_range = 2
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	flag = "laser"
 	eyeblur = 2
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/red_laser
+	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/beam/laser
 
@@ -48,6 +49,7 @@
 	range = 15
 	forcedodge = 1
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/green_laser
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
@@ -58,13 +60,14 @@
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
-	luminosity = 2
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -90,9 +93,9 @@
 	icon_state = "emitter"
 	damage = 30
 	legacy = 1
-	luminosity = 2
 	animate_movement = SLIDE_STEPS
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/green_laser
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
@@ -106,6 +109,7 @@
 	flag = "laser"
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/item/projectile/beam/lasertag/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -119,6 +123,7 @@
 	icon_state = "laser"
 	suit_types = list(/obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/red_laser
+	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
@@ -130,14 +135,17 @@
 	damage = 200
 	damage_type = BURN
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
+	light_color = LIGHT_COLOR_PURPLE
 
 /obj/item/projectile/beam/instakill/blue
 	icon_state = "blue_laser"
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/item/projectile/beam/instakill/red
 	icon_state = "red_laser"
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/red_laser
+	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/beam/instakill/on_hit(atom/target)
 	. = ..()

@@ -29,7 +29,7 @@
 /datum/antagonist/proc/on_gain() //on initial gain of antag datum, do this. should only be called once per datum
 	apply_innate_effects()
 	if(!silent_update && some_flufftext)
-		owner << some_flufftext
+		to_chat(owner, some_flufftext)
 
 /datum/antagonist/proc/apply_innate_effects() //applies innate effects to the owner, may be called multiple times due to mind transferral, but should only be called once per mob
 	//antag huds would go here if antag huds were less completely unworkable as-is

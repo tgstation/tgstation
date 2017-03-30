@@ -10,21 +10,24 @@
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
 	max_integrity = 80
 	obj_integrity = 80
+	light_color = "#C2852F"
 	var/wall_generation_cooldown
 	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
+	var/static/linked_caches = 0 //how many caches are linked to walls; affects how fast components are produced
 
 /obj/structure/destructible/clockwork/cache/New()
 	..()
 	START_PROCESSING(SSobj, src)
 	clockwork_caches++
 	update_slab_info()
-	SetLuminosity(2,1)
+	set_light(2, 0.7)
 
 /obj/structure/destructible/clockwork/cache/Destroy()
 	clockwork_caches--
 	update_slab_info()
 	STOP_PROCESSING(SSobj, src)
 	if(linkedwall)
+		linked_caches--
 		linkedwall.linkedcache = null
 		linkedwall = null
 	return ..()
@@ -32,18 +35,20 @@
 /obj/structure/destructible/clockwork/cache/process()
 	if(!anchored)
 		if(linkedwall)
+			linked_caches--
 			linkedwall.linkedcache = null
 			linkedwall = null
 		return
 	for(var/turf/closed/wall/clockwork/C in range(4, src))
 		if(!C.linkedcache && !linkedwall)
+			linked_caches++
 			C.linkedcache = src
 			linkedwall = C
-			wall_generation_cooldown = world.time + (CACHE_PRODUCTION_TIME * get_efficiency_mod(TRUE))
+			wall_generation_cooldown = world.time + get_production_time()
 			visible_message("<span class='warning'>[src] starts to whirr in the presence of [C]...</span>")
 			break
 	if(linkedwall && wall_generation_cooldown <= world.time)
-		wall_generation_cooldown = world.time + (CACHE_PRODUCTION_TIME * get_efficiency_mod(TRUE))
+		wall_generation_cooldown = world.time + get_production_time()
 		var/component_id = generate_cache_component(null, src)
 		playsound(linkedwall, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
 		visible_message("<span class='[get_component_span(component_id)]'>Something</span><span class='warning'> cl[pick("ank", "ink", "unk", "ang")]s around inside of [src]...</span>")
@@ -54,18 +59,18 @@
 	if(istype(I, /obj/item/clockwork/component))
 		var/obj/item/clockwork/component/C = I
 		if(!anchored)
-			user << "<span class='warning'>[src] needs to be secured to place [C] into it!</span>"
+			to_chat(user, "<span class='warning'>[src] needs to be secured to place [C] into it!</span>")
 		else
 			clockwork_component_cache[C.component_id]++
 			update_slab_info()
-			user << "<span class='notice'>You add [C] to [src].</span>"
+			to_chat(user, "<span class='notice'>You add [C] to [src].</span>")
 			user.drop_item()
 			qdel(C)
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
 		if(!anchored)
-			user << "<span class='warning'>[src] needs to be secured to offload your slab's components into it!</span>"
+			to_chat(user, "<span class='warning'>[src] needs to be secured to offload your slab's components into it!</span>")
 		else
 			for(var/i in S.stored_components)
 				clockwork_component_cache[i] += S.stored_components[i]
@@ -76,27 +81,37 @@
 	else
 		return ..()
 
+/obj/structure/destructible/clockwork/cache/update_anchored(mob/user, do_damage)
+	..()
+	if(anchored)
+		set_light(2, 0.7)
+	else
+		set_light(0)
+
 /obj/structure/destructible/clockwork/cache/attack_hand(mob/living/user)
 	..()
 	if(is_servant_of_ratvar(user))
 		if(linkedwall)
 			if(wall_generation_cooldown > world.time)
 				var/temp_time = (wall_generation_cooldown - world.time) * 0.1
-				user << "<span class='alloy'>[src] will produce a component in <b>[temp_time]</b> second[temp_time == 1 ? "":"s"].</span>"
+				to_chat(user, "<span class='alloy'>[src] will produce a component in <b>[temp_time]</b> second[temp_time == 1 ? "":"s"].</span>")
 			else
-				user << "<span class='brass'>[src] is about to produce a component!</span>"
+				to_chat(user, "<span class='brass'>[src] is about to produce a component!</span>")
 		else if(anchored)
-			user << "<span class='alloy'>[src] is unlinked! Construct a Clockwork Wall nearby to generate components!</span>"
+			to_chat(user, "<span class='alloy'>[src] is unlinked! Construct a Clockwork Wall nearby to generate components!</span>")
 		else
-			user << "<span class='alloy'>[src] needs to be secured to generate components!</span>"
+			to_chat(user, "<span class='alloy'>[src] needs to be secured to generate components!</span>")
 
 /obj/structure/destructible/clockwork/cache/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(linkedwall)
-			user << "<span class='brass'>It is linked to a Clockwork Wall and will generate a component every <b>[round((CACHE_PRODUCTION_TIME * 0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds!</span>"
+			to_chat(user, "<span class='brass'>It is linked to a Clockwork Wall and will generate a component every <b>[round(get_production_time() * 0.1, 0.1)]</b> seconds!</span>")
 		else
-			user << "<span class='alloy'>It is unlinked! Construct a Clockwork Wall nearby to generate components!</span>"
-		user << "<b>Stored components:</b>"
+			to_chat(user, "<span class='alloy'>It is unlinked! Construct a Clockwork Wall nearby to generate components!</span>")
+		to_chat(user, "<b>Stored components:</b>")
 		for(var/i in clockwork_component_cache)
-			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"
+			to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>")
+
+/obj/structure/destructible/clockwork/cache/proc/get_production_time()
+	return (CACHE_PRODUCTION_TIME + (ACTIVE_CACHE_SLOWDOWN * linked_caches)) * get_efficiency_mod(TRUE)

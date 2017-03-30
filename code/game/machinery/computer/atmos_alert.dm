@@ -9,6 +9,8 @@
 	var/receive_frequency = 1437
 	var/datum/radio_frequency/radio_connection
 
+	light_color = LIGHT_COLOR_CYAN
+
 /obj/machinery/computer/atmos_alert/Initialize()
 	..()
 	set_frequency(receive_frequency)
@@ -44,11 +46,11 @@
 		if("clear")
 			var/zone = params["zone"]
 			if(zone in priority_alarms)
-				usr << "Priority alarm for [zone] cleared."
+				to_chat(usr, "Priority alarm for [zone] cleared.")
 				priority_alarms -= zone
 				. = TRUE
 			if(zone in minor_alarms)
-				usr << "Minor alarm for [zone] cleared."
+				to_chat(usr, "Minor alarm for [zone] cleared.")
 				minor_alarms -= zone
 				. = TRUE
 	update_icon()

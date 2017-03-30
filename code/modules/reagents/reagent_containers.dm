@@ -21,6 +21,10 @@
 		var/datum/disease/F = new spawned_disease(0)
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", disease_amount, data)
+
+	add_initial_reagents()
+
+/obj/item/weapon/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 
@@ -34,7 +38,7 @@
 					amount_per_transfer_from_this = possible_transfer_amounts[i+1]
 				else
 					amount_per_transfer_from_this = possible_transfer_amounts[1]
-				user << "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>"
+				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
 				return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
@@ -63,7 +67,7 @@
 		covered = "mask"
 	if(covered)
 		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
-		user << "<span class='warning'>You have to remove [who] [covered] first!</span>"
+		to_chat(user, "<span class='warning'>You have to remove [who] [covered] first!</span>")
 		return 0
 	return 1
 

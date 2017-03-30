@@ -22,7 +22,7 @@
 
 /obj/structure/stacklifter/attack_hand(mob/user as mob)
 	if(in_use)
-		user << "It's already in use - wait a bit."
+		to_chat(user, "It's already in use - wait a bit.")
 		return
 	else
 		in_use = 1
@@ -48,7 +48,7 @@
 		user.pixel_y = 0
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
-		user << finishmessage
+		to_chat(user, finishmessage)
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -60,7 +60,7 @@
 
 /obj/structure/weightlifter/attack_hand(mob/user as mob)
 	if(in_use)
-		user << "It's already in use - wait a bit."
+		to_chat(user, "It's already in use - wait a bit.")
 		return
 	else
 		in_use = 1
@@ -93,5 +93,5 @@
 		animate(user, pixel_y = 0, time = 3)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
-		overlays -= W
-		user << "[finishmessage]"
+		cut_overlay(W)
+		to_chat(user, "[finishmessage]")

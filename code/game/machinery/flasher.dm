@@ -73,17 +73,17 @@
 			bulb = W
 			power_change()
 		else
-			user << "<span class='warning'>A flashbulb is already installed in [src]!</span>"
+			to_chat(user, "<span class='warning'>A flashbulb is already installed in [src]!</span>")
 
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(!bulb)
-			user << "<span class='notice'>You start unsecuring the flasher frame...</span>"
+			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
 			playsound(loc, W.usesound, 50, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
-				user << "<span class='notice'>You unsecure the flasher frame.</span>"
+				to_chat(user, "<span class='notice'>You unsecure the flasher frame.</span>")
 				deconstruct(TRUE)
 		else
-			user << "<span class='warning'>Remove a flashbulb from [src] first!</span>"
+			to_chat(user, "<span class='warning'>Remove a flashbulb from [src] first!</span>")
 	else
 		return ..()
 
@@ -168,13 +168,13 @@
 		playsound(src.loc, W.usesound, 100, 1)
 
 		if (!anchored && !isinspace())
-			user << "<span class='notice'>[src] is now secured.</span>"
+			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
 			anchored = 1
 			power_change()
 			add_to_proximity_list(src, range)
 		else
-			user << "<span class='notice'>[src] can now be moved.</span>"
+			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
 			anchored = 0
 			power_change()
@@ -187,7 +187,7 @@
 	remove_from_proximity_list(src, range)
 	return ..()
 
-/obj/machinery/flasher/protable/Moved(oldloc)
+/obj/machinery/flasher/portable/Moved(oldloc)
 	remove_from_proximity_list(oldloc, range)
 	return ..()
 
@@ -201,7 +201,7 @@
 
 /obj/item/wallframe/flasher/examine(mob/user)
 	..()
-	user << "<span class='notice'>Its channel ID is '[id]'.</span>"
+	to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
 
 /obj/item/wallframe/flasher/after_attach(var/obj/O)
 	..()

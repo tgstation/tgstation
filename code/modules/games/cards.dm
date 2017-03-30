@@ -145,7 +145,7 @@
 	if(cards.len == 1 && istype(O, /obj/item/weapon/pen))
 		var/datum/playingcard/P = cards[1]
 		if(!blank)
-			user << "You cannot write on that card."
+			to_chat(user, "You cannot write on that card.")
 			return
 		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Writing") as text|null, 50)
 		if(!cardtext)
@@ -230,7 +230,7 @@
 			name = "a playing card"
 			desc = "A playing card."
 
-		overlays.len = 0
+		cut_overlays()
 
 		if (cards.len == 1)
 			var/datum/playingcard/P = cards[1]
@@ -239,7 +239,7 @@
 			I.pixel_x               = I.pixel_x + (-5 + rand(10))
 			I.pixel_y               = I.pixel_y + (-5 + rand(10))
 
-			overlays.Add(I)
+			add_overlay(I)
 		else
 			var/origin              = -12
 			var/offset              = round(32 / cards.len)
@@ -251,7 +251,7 @@
 				I                   = new(src.icon, (concealed ? "card_back" : "[P.card_icon]") )
 				I.pixel_x           = origin + (offset * i)
 
-				overlays.Add(I)
+				add_overlay(I)
 
 				i                   = i + 1
 

@@ -134,7 +134,9 @@ var/list/radiochannels = list(
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 	"Service" = 1349,
-	"AI Private" = 1447
+	"AI Private" = 1447,
+	"Red Team" = 1215,
+	"Blue Team" = 1217
 )
 
 var/list/radiochannelsreverse = list(
@@ -148,7 +150,9 @@ var/list/radiochannelsreverse = list(
 	"1213" = "Syndicate",
 	"1347" = "Supply",
 	"1349" = "Service",
-	"1447" = "AI Private"
+	"1447" = "AI Private",
+	"1215" = "Red Team",
+	"1217" = "Blue Team"
 )
 
 //depenging helpers
@@ -162,6 +166,8 @@ var/const/ENG_FREQ = 1357 //engineering, coloured orange in chat window
 var/const/SEC_FREQ = 1359 //security, coloured red in chat window
 var/const/CENTCOM_FREQ = 1337 //centcom frequency, coloured grey in chat window
 var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
+var/const/REDTEAM_FREQ = 1215 // red team (CTF) frequency, coloured red
+var/const/BLUETEAM_FREQ = 1217 // blue team (CTF) frequency, coloured blue
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1
@@ -245,12 +251,12 @@ var/list/pointers = list()
 	if(!holder)
 		return
 
-	src << "There are [pointers.len] pointers:"
+	to_chat(src, "There are [pointers.len] pointers:")
 	for(var/p in pointers)
-		src << p
+		to_chat(src, p)
 		var/datum/signal/S = locate(p)
 		if(istype(S))
-			src << S.debug_print()
+			to_chat(src, S.debug_print())
 
 /obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
 	return

@@ -1,5 +1,5 @@
 /mob/dead/observer/say(message)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = strip_html_properly(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
@@ -18,5 +18,5 @@
 		else
 			speaker = V.source
 	var/link = FOLLOW_LINK(src, speaker)
-	src << "[link] [message]"
+	to_chat(src, "[link] [message]")
 

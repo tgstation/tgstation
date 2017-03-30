@@ -57,7 +57,7 @@
 			newtype = heater
 		name = initial(newtype.name)
 		build_path = initial(newtype.build_path)
-		user << "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>"
+		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
 	else
 		return ..()
 

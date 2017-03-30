@@ -7,7 +7,7 @@
 	item_state = "buildpipe"
 	icon = 'icons/obj/robot_parts.dmi'
 	flags = CONDUCT
-	icon_state = "l_arm"
+	icon_state = "borg_l_arm"
 	status = BODYPART_ROBOTIC
 
 
@@ -18,7 +18,7 @@
 	item_state = "buildpipe"
 	icon = 'icons/obj/robot_parts.dmi'
 	flags = CONDUCT
-	icon_state = "r_arm"
+	icon_state = "borg_r_arm"
 	status = BODYPART_ROBOTIC
 
 
@@ -29,7 +29,7 @@
 	item_state = "buildpipe"
 	icon = 'icons/obj/robot_parts.dmi'
 	flags = CONDUCT
-	icon_state = "l_leg"
+	icon_state = "borg_l_leg"
 	status = BODYPART_ROBOTIC
 
 
@@ -40,7 +40,7 @@
 	item_state = "buildpipe"
 	icon = 'icons/obj/robot_parts.dmi'
 	flags = CONDUCT
-	icon_state = "r_leg"
+	icon_state = "borg_r_leg"
 	status = BODYPART_ROBOTIC
 
 
@@ -50,7 +50,7 @@
 	item_state = "buildpipe"
 	icon = 'icons/obj/robot_parts.dmi'
 	flags = CONDUCT
-	icon_state = "chest"
+	icon_state = "borg_chest"
 	status = BODYPART_ROBOTIC
 	var/wired = 0
 	var/obj/item/weapon/stock_parts/cell/cell = null
@@ -58,23 +58,23 @@
 /obj/item/bodypart/chest/robot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(src.cell)
-			user << "<span class='warning'>You have already inserted a cell!</span>"
+			to_chat(user, "<span class='warning'>You have already inserted a cell!</span>")
 			return
 		else
 			if(!user.transferItemToLoc(W, src))
 				return
 			src.cell = W
-			user << "<span class='notice'>You insert the cell.</span>"
+			to_chat(user, "<span class='notice'>You insert the cell.</span>")
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(src.wired)
-			user << "<span class='warning'>You have already inserted wire!</span>"
+			to_chat(user, "<span class='warning'>You have already inserted wire!</span>")
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
 			src.wired = 1
-			user << "<span class='notice'>You insert the wire.</span>"
+			to_chat(user, "<span class='notice'>You insert the wire.</span>")
 		else
-			user << "<span class='warning'>You need one length of coil to wire it!</span>"
+			to_chat(user, "<span class='warning'>You need one length of coil to wire it!</span>")
 	else
 		return ..()
 
@@ -100,7 +100,7 @@
 	item_state = "buildpipe"
 	icon = 'icons/obj/robot_parts.dmi'
 	flags = CONDUCT
-	icon_state = "head"
+	icon_state = "borg_head"
 	status = BODYPART_ROBOTIC
 	var/obj/item/device/assembly/flash/handheld/flash1 = null
 	var/obj/item/device/assembly/flash/handheld/flash2 = null
@@ -111,10 +111,10 @@
 	if(istype(W, /obj/item/device/assembly/flash/handheld))
 		var/obj/item/device/assembly/flash/handheld/F = W
 		if(src.flash1 && src.flash2)
-			user << "<span class='warning'>You have already inserted the eyes!</span>"
+			to_chat(user, "<span class='warning'>You have already inserted the eyes!</span>")
 			return
 		else if(F.crit_fail)
-			user << "<span class='warning'>You can't use a broken flash!</span>"
+			to_chat(user, "<span class='warning'>You can't use a broken flash!</span>")
 			return
 		else
 			if(!user.transferItemToLoc(F, src))
@@ -123,11 +123,11 @@
 				src.flash2 = F
 			else
 				src.flash1 = F
-			user << "<span class='notice'>You insert the flash into the eye socket.</span>"
+			to_chat(user, "<span class='notice'>You insert the flash into the eye socket.</span>")
 	else if(istype(W, /obj/item/weapon/crowbar))
 		if(flash1 || flash2)
 			playsound(src.loc, W.usesound, 50, 1)
-			user << "<span class='notice'>You remove the flash from [src].</span>"
+			to_chat(user, "<span class='notice'>You remove the flash from [src].</span>")
 			if(flash1)
 				flash1.forceMove(user.loc)
 				flash1 = null
@@ -135,7 +135,7 @@
 				flash2.forceMove(user.loc)
 				flash2 = null
 		else
-			user << "<span class='warning'>There are no flash to remove from [src].</span>"
+			to_chat(user, "<span class='warning'>There are no flash to remove from [src].</span>")
 
 	else
 		return ..()
@@ -165,27 +165,27 @@
 /obj/item/bodypart/l_arm/robot/surplus
 	name = "surplus prosthetic left arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
-	icon = 'icons/mob/augments.dmi'
-	icon_state = "surplus_l_arm"
+	icon = 'icons/mob/surplus_augments.dmi'
+	icon_state = "l_arm"
 	max_damage = 20
 
 /obj/item/bodypart/r_arm/robot/surplus
 	name = "surplus prosthetic right arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
-	icon = 'icons/mob/augments.dmi'
-	icon_state = "surplus_r_arm"
+	icon = 'icons/mob/surplus_augments.dmi'
+	icon_state = "r_arm"
 	max_damage = 20
 
 /obj/item/bodypart/l_leg/robot/surplus
-	name = "surplus prosthetic leg"
+	name = "surplus prosthetic left leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
-	icon = 'icons/mob/augments.dmi'
-	icon_state = "surplus_l_leg"
+	icon = 'icons/mob/surplus_augments.dmi'
+	icon_state = "l_leg"
 	max_damage = 20
 
 /obj/item/bodypart/r_leg/robot/surplus
-	name = "surplus prosthetic leg"
+	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
-	icon = 'icons/mob/augments.dmi'
+	icon = 'icons/mob/surplus_augments.dmi'
 	icon_state = "surplus_r_leg"
 	max_damage = 20
