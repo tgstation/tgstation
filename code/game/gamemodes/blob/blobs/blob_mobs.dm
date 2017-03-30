@@ -255,13 +255,11 @@
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round((health / maxHealth) * 100, 0.5)]%</font></div>"
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
-	if(isliving(target))
-		if(overmind)
-			var/mob/living/L = target
-			var/mob_protection = L.get_permeability_protection()
-			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
-	if(target)
-		..()
+	. = ..()
+	if(. && isliving(target) && overmind)
+		var/mob/living/L = target
+		var/mob_protection = L.get_permeability_protection()
+		overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()

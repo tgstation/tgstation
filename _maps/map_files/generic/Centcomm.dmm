@@ -14964,6 +14964,10 @@
 	name = "Centcom"
 	},
 /area/centcom/evac)
+"Md" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -65807,7 +65811,7 @@ aa
 aa
 aa
 Fa
-Fh
+Md
 Fp
 FC
 Fh

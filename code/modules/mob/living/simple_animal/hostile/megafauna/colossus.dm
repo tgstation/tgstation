@@ -639,7 +639,7 @@ Difficulty: Very Hard
 	medsensor.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/lightgeist/AttackingTarget()
-	..()
+	. = ..()
 	if(isliving(target) && target != src)
 		var/mob/living/L = target
 		if(L.stat < DEAD)

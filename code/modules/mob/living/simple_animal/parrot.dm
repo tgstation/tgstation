@@ -307,7 +307,7 @@
 
 //Simple animals
 /mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
-	..() //goodbye immortal parrots
+	. = ..() //goodbye immortal parrots
 
 	if(client)
 		return

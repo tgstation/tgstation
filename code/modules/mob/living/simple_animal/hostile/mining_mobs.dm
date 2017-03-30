@@ -165,7 +165,7 @@
 	if(istype(target, /obj/item/weapon/ore))
 		EatOre(target)
 		return
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
@@ -233,6 +233,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
+	return TRUE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	mouse_opacity = 1
@@ -360,8 +361,8 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/AttackingTarget()
-	..()
-	if(iscarbon(target))
+	. = ..()
+	if(. && iscarbon(target))
 		transfer_reagents(target, 1)
 
 
@@ -924,7 +925,7 @@
 		regenerate_icons()
 		visible_message("<span class='notice'>[src] slurps up [target].</span>")
 		qdel(target)
-	..()
+	return ..()
 
 
 /obj/item/udder/gutlunch

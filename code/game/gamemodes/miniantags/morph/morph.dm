@@ -193,7 +193,7 @@
 			if(do_after(src, 20, target = I))
 				eat(I)
 			return
-	target.attack_animal(src)
+	return ..()
 
 //Spawn Event
 

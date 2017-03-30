@@ -24,6 +24,8 @@
 	slot_flags = SLOT_BACK
 	resistance_flags = FIRE_PROOF
 
+	var/processing_mode = FLIGHTSUIT_PROCESSING_FULL
+
 	var/obj/item/clothing/suit/space/hardsuit/flightsuit/suit = null
 	var/mob/living/carbon/human/wearer = null
 	var/slowdown_ground = 1
@@ -104,14 +106,15 @@
 
 
 //Start/Stop processing the item to use momentum and flight mechanics.
-/obj/item/device/flightpack/New()
+/obj/item/device/flightpack/Initialize()
 	ion_trail = new
 	ion_trail.set_up(src)
 	START_PROCESSING(SSflightpacks, src)
-	..()
 	update_parts()
+	sync_processing(SSflightpacks)
+	..()
 
-/obj/item/device/flightpack/full/New()
+/obj/item/device/flightpack/full/Initialize()
 	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico(src)
 	part_scan = new /obj/item/weapon/stock_parts/scanning_module/phasic(src)
 	part_cap = new /obj/item/weapon/stock_parts/capacitor/super(src)
@@ -119,6 +122,18 @@
 	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super(src)
 	assembled = TRUE
 	..()
+
+/obj/item/device/flightpack/proc/sync_processing(datum/controller/subsystem/processing/flightpacks/FPS)
+	processing_mode = FPS.flightsuit_processing
+	if(processing_mode == FLIGHTSUIT_PROCESSING_NONE)
+		momentum_x = 0
+		momentum_y = 0
+		momentum_speed_x = 0
+		momentum_speed_y = 0
+		momentum_speed = 0
+		boost_charge = 0
+		boost = FALSE
+		update_slowdown()
 
 /obj/item/device/flightpack/proc/update_parts()
 	boost_chargerate = initial(boost_chargerate)
@@ -339,7 +354,7 @@
 		suit.slowdown = slowdown_air
 
 /obj/item/device/flightpack/process()
-	if(!suit)
+	if(!suit || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
 		return FALSE
 	update_slowdown()
 	update_icon()
@@ -451,7 +466,7 @@
 	wearer.visible_message("[wearer] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim, crashdir)	//Yes, victim.
-	if((unmovablevictim == wearer) || crashing)
+	if((unmovablevictim == wearer) || crashing || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
 		return FALSE
 	crashing = TRUE
 	var/crashpower = 0

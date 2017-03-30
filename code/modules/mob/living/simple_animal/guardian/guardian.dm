@@ -183,12 +183,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	return 0
 
 /mob/living/simple_animal/hostile/guardian/AttackingTarget()
-	if(src.loc == summoner)
+	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to attack!</span></B>")
-		return 0
+		return FALSE
 	else
-		..()
-		return 1
+		return ..()
 
 /mob/living/simple_animal/hostile/guardian/death()
 	drop_all_held_items()

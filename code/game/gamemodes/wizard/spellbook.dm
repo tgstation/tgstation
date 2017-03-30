@@ -607,6 +607,9 @@
 
 /obj/item/weapon/spellbook/Initialize()
 	..()
+	prepare_spells()
+
+/obj/item/weapon/spellbook/proc/prepare_spells()
 	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
@@ -779,12 +782,8 @@
 	desc = "This template spellbook was never meant for the eyes of man..."
 	persistence_replacement = null
 
-/obj/item/weapon/spellbook/oneuse/New()
-	..()
+/obj/item/weapon/spellbook/oneuse/prepare_spells()
 	name += spellname
-
-/obj/item/weapon/spellbook/oneuse/Initialize() //No need to init
-	return
 
 /obj/item/weapon/spellbook/oneuse/attack_self(mob/user)
 	var/obj/effect/proc_holder/spell/S = new spell
@@ -792,15 +791,15 @@
 		if(knownspell.type == S.type)
 			if(user.mind)
 				if(user.mind.special_role == "apprentice" || user.mind.special_role == "Wizard")
-					user <<"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>"
+					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
-					user <<"<span class='notice'>You've already read this one.</span>"
+					to_chat(user,"<span class='notice'>You've already read this one.</span>")
 			return
 	if(used)
 		recoil(user)
 	else
 		user.mind.AddSpell(S)
-		user <<"<span class='notice'>You rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
+		to_chat(user,"<span class='notice'>You rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>")
 		user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
 		onlearned(user)
 
@@ -833,7 +832,7 @@
 
 /obj/item/weapon/spellbook/oneuse/smoke/recoil(mob/user)
 	..()
-	user <<"<span class='caution'>Your stomach rumbles...</span>"
+	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
 	if(user.nutrition)
 		user.nutrition -= 200
 		if(user.nutrition <= 0)
@@ -847,7 +846,7 @@
 
 /obj/item/weapon/spellbook/oneuse/blind/recoil(mob/user)
 	..()
-	user <<"<span class='warning'>You go blind!</span>"
+	to_chat(user,"<span class='warning'>You go blind!</span>")
 	user.blind_eyes(10)
 
 /obj/item/weapon/spellbook/oneuse/mindswap
@@ -869,17 +868,17 @@
 		stored_swap = null
 	if(!stored_swap)
 		stored_swap = user
-		user <<"<span class='warning'>For a moment you feel like you don't even know who you are anymore.</span>"
+		to_chat(user,"<span class='warning'>For a moment you feel like you don't even know who you are anymore.</span>")
 		return
 	if(stored_swap == user)
-		user <<"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>"
+		to_chat(user,"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>")
 		return
 
 	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
 	swapper.cast(user, stored_swap, 1)
 
-	stored_swap <<"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>"
-	user <<"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>"
+	to_chat(stored_swap,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
+	to_chat(user,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
 	stored_swap = null
 
 /obj/item/weapon/spellbook/oneuse/forcewall
@@ -890,7 +889,7 @@
 
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
-	user <<"<span class='warning'>You suddenly feel very solid!</span>"
+	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
 	user.Stun(2)
 	user.petrify(30)
 
@@ -902,7 +901,7 @@
 
 /obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user)
 	..()
-	user <<"<span class='warning'>You're knocked down!</span>"
+	to_chat(user,"<span class='warning'>You're knocked down!</span>")
 	user.Weaken(20)
 
 /obj/item/weapon/spellbook/oneuse/barnyard
@@ -913,7 +912,7 @@
 
 /obj/item/weapon/spellbook/oneuse/barnyard/recoil(mob/living/carbon/user)
 	if(ishuman(user))
-		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
+		to_chat(user,"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>")
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
 		magichead.flags |= NODROP		//curses!
 		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
@@ -923,7 +922,7 @@
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 		qdel(src)
 	else
-		user <<"<span class='notice'>I say thee neigh</span>" //It still lives here
+		to_chat(user,"<span class='notice'>I say thee neigh</span>") //It still lives here
 
 /obj/item/weapon/spellbook/oneuse/charge
 	spell = /obj/effect/proc_holder/spell/targeted/charge
@@ -933,7 +932,7 @@
 
 /obj/item/weapon/spellbook/oneuse/charge/recoil(mob/user)
 	..()
-	user <<"<span class='warning'>[src] suddenly feels very warm!</span>"
+	to_chat(user,"<span class='warning'>[src] suddenly feels very warm!</span>")
 	empulse(src, 1, 1)
 
 /obj/item/weapon/spellbook/oneuse/summonitem
@@ -944,10 +943,11 @@
 
 /obj/item/weapon/spellbook/oneuse/summonitem/recoil(mob/user)
 	..()
-	user <<"<span class='warning'>[src] suddenly vanishes!</span>"
+	to_chat(user,"<span class='warning'>[src] suddenly vanishes!</span>")
 	qdel(src)
 
-/obj/item/weapon/spellbook/oneuse/random/New()
+/obj/item/weapon/spellbook/oneuse/random/Initialize()
+	..()
 	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_blockade,/obj/item/weapon/spellbook/oneuse/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse) - banned_spells)
 	new real_type(loc)
