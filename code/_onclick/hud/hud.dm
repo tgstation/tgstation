@@ -141,10 +141,9 @@
 /datum/hud/proc/show_hud(version = 0,mob/viewmob)
 	if(!ismob(mymob))
 		return 0
-	if(!mymob.client)
-		return 0
-
 	var/mob/screenmob = viewmob || mymob
+	if(!screenmob.client)
+		return 0
 
 	screenmob.client.screen = list()
 
@@ -166,7 +165,7 @@
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
 
-			mymob.client.screen += hide_actions_toggle
+			screenmob.client.screen += hide_actions_toggle
 
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
@@ -210,7 +209,7 @@
 	mymob.update_action_buttons(1)
 	reorganize_alerts()
 	mymob.reload_fullscreen()
-	create_parallax()
+	update_parallax_pref(screenmob)
 
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)

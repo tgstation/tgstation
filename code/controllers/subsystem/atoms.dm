@@ -10,6 +10,8 @@ SUBSYSTEM_DEF(atoms)
 	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
 
+	var/list/late_loaders
+
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
@@ -20,8 +22,6 @@ SUBSYSTEM_DEF(atoms)
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms = null)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
-
-	var/list/late_loaders
 
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 
@@ -68,15 +68,15 @@ SUBSYSTEM_DEF(atoms)
 
 	initialized = INITIALIZATION_INNEW_REGULAR
 
-	if(late_loaders)
-		for(var/I in late_loaders)
-			var/atom/A = I
-			var/start_tick = world.time
-			A.Initialize(FALSE)
-			if(start_tick != world.time)
-				WARNING("[A]: [A.type] slept during it's Initialize!")
-			CHECK_TICK
-		testing("Late-initialized [late_loaders.len] atoms")
+	for(var/I in late_loaders)
+		var/atom/A = I
+		var/start_tick = world.time
+		A.Initialize(FALSE)
+		if(start_tick != world.time)
+			WARNING("[A]: [A.type] slept during it's Initialize!")
+		CHECK_TICK
+	testing("Late-initialized [LAZYLEN(late_loaders)] atoms")
+	LAZYCLEARLIST(late_loaders)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized

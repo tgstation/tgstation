@@ -1,14 +1,18 @@
 var/list/uplink_items = list() // Global list so we only initialize this once.
 
+/proc/initialize_global_uplink_items()
+	uplink_items = list()
+	for(var/item in subtypesof(/datum/uplink_item))
+		var/datum/uplink_item/I = new item()
+		if(!I.item)
+			continue
+		if(!uplink_items[I.category])
+			uplink_items[I.category] = list()
+		uplink_items[I.category][I.name] = I
+
 /proc/get_uplink_items(var/datum/game_mode/gamemode = null)
 	if(!uplink_items.len)
-		for(var/item in subtypesof(/datum/uplink_item))
-			var/datum/uplink_item/I = new item()
-			if(!I.item)
-				continue
-			if(!uplink_items[I.category])
-				uplink_items[I.category] = list()
-			uplink_items[I.category][I.name] = I
+		initialize_global_uplink_items()
 
 	var/list/filtered_uplink_items = list()
 	var/list/sale_items = list()
@@ -16,6 +20,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/I = uplink_items[category][item]
+			if(!istype(I))
+				continue
 			if(I.include_modes.len)
 				if(!gamemode && SSticker && !(SSticker.mode.type in I.include_modes))
 					continue
@@ -117,6 +123,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			to_chat(H, "\The [A] materializes onto the floor.")
 	return 1
 
+/datum/uplink_item/Destroy()
+	if(src in uplink_items)
+		uplink_items -= src	//Take us out instead of leaving a null!
+	return ..()
+	
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = "Discounted Gear"
@@ -1146,40 +1157,40 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		if(istype(item, /obj/item/organ/cyberimp))
+		if(istype(item, /obj/item/organ))
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
 
 
 /datum/uplink_item/cyber_implants/thermals
-	name = "Thermal eyes"
-	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autoimplanter."
-	item = /obj/item/organ/eyes/robotic/thermals
+	name = "Thermal Eyes"
+	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
+	item = /obj/item/device/autosurgeon/thermal_eyes
 	cost = 8
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
-	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autoimplanter."
-	item = /obj/item/organ/eyes/robotic/xray
+	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
+	item = /obj/item/device/autosurgeon/xray_eyes
 	cost = 10
 
 /datum/uplink_item/cyber_implants/antistun
 	name = "CNS Rebooter Implant"
-	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autoimplanter."
-	item = /obj/item/organ/cyberimp/brain/anti_stun
+	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
+	item = /obj/item/device/autosurgeon/anti_stun
 	cost = 12
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
-	desc = "This implant will attempt to revive you if you lose consciousness. Comes with an autoimplanter."
-	item = /obj/item/organ/cyberimp/chest/reviver
+	desc = "This implant will attempt to revive you if you lose consciousness. Comes with an autosurgeon."
+	item = /obj/item/device/autosurgeon/reviver
 	cost = 8
 
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"
-	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autoimplanter."
-	item = /obj/item/weapon/storage/box/cyber_implants/bundle
+	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autosurgeon."
+	item = /obj/item/weapon/storage/box/cyber_implants
 	cost = 40
 	cant_discount = TRUE
 
