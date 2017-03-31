@@ -358,8 +358,8 @@
 		if(!canPlaceTransformer())
 			return
 		var/turf/T = get_turf(eyeobj)
-		var/obj/machinery/transformer/conveyer = new(T)
-		conveyer.master = src
+		var/obj/machinery/transformer/conveyor = new(T)
+		conveyor.master = src
 		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
 		var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in current_modules
 		PCT.uses --
