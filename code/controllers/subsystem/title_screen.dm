@@ -17,7 +17,6 @@ var/datum/controller/subsystem/title/SStitle
 
 	if(fexists("data/previous_title.dat"))
 		previous_icon = new("data/previous_title.dat")
-		fdel("data/previous_title.dat")	//linger not
 
 	var/list/provisional_title_screens = flist("config/title_screens/images/")
 	var/list/title_screens = list()
