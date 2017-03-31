@@ -143,3 +143,10 @@
 /obj/machinery/computer/pod/old/swf
 	name = "\improper Magix System IV"
 	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
+
+/obj/machinery/computer/pod/old/chapel
+	icon = 'icons/obj/airlock_machines.dmi'
+	icon_state = "airlock_control_standby"
+	id = "chapelgun"
+	name = "Mass Driver Controller"
+	pixel_x = 24
