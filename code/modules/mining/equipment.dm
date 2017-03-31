@@ -573,7 +573,6 @@
 			L.underlays -= marked_image
 			qdel(marked_image)
 			marked_image = null
-			var/backstab = check_target_facings(user, L)
 			var/def_check = L.getarmor(type = "bomb")
 			if(get_turf(user) == get_turf(get_step(L, turn(L.dir, 180))) || get_turf(user) == get_turf(get_step(L, turn(L.dir, 135))) || get_turf(user) == get_turf(get_step(L, turn(L.dir, 225))))		//Checks the 3 tiles behind the target.
 				L.apply_damage(80, BRUTE, blocked = def_check)
