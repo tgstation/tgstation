@@ -10,7 +10,6 @@
 #define NUKE_ON_TIMING		2
 #define NUKE_ON_EXPLODING	3
 
-var/bomb_set
 
 /obj/machinery/nuclearbomb
 	name = "nuclear fission explosive"
@@ -41,6 +40,7 @@ var/bomb_set
 	var/image/lights = null
 	var/image/interior = null
 	var/obj/effect/countdown/nuclearbomb/countdown
+	var/static/bomb_set
 
 /obj/machinery/nuclearbomb/New()
 	..()
