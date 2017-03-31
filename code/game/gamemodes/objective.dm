@@ -439,8 +439,7 @@
 		return 1
 	return 0
 
-
-var/global/list/possible_items = list()
+GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
@@ -452,12 +451,12 @@ var/global/list/possible_items = list()
 
 /datum/objective/steal/New()
 	..()
-	if(!possible_items.len)//Only need to fill the list when it's needed.
-		init_subtypes(/datum/objective_item/steal,possible_items)
+	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
+		init_subtypes(/datum/objective_item/steal,GLOB.possible_items)
 
 /datum/objective/steal/find_target()
 	var/approved_targets = list()
-	for(var/datum/objective_item/possible_item in possible_items)
+	for(var/datum/objective_item/possible_item in GLOB.possible_items)
 		if(is_unique_objective(possible_item.targetitem) && !(owner.current.mind.assigned_role in possible_item.excludefromjob))
 			approved_targets += possible_item
 	return set_target(safepick(approved_targets))
@@ -476,8 +475,8 @@ var/global/list/possible_items = list()
 		return
 
 /datum/objective/steal/proc/select_target() //For admins setting objectives manually.
-	var/list/possible_items_all = possible_items+"custom"
-	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
+	var/list/possible_items_all = GLOB.possible_items+"custom"
+	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in GLOB.possible_items_all
 	if (!new_target) return
 
 	if (new_target == "custom") //Can set custom items.
@@ -524,19 +523,17 @@ var/global/list/possible_items = list()
 				H.equip_in_one_of_slots(O, slots)
 
 
-var/global/list/possible_items_special = list()
+GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal/special //ninjas are so special they get their own subtype good for them
 
 /datum/objective/steal/special/New()
 	..()
-	if(!possible_items_special.len)
-		init_subtypes(/datum/objective_item/special,possible_items)
-		init_subtypes(/datum/objective_item/stack,possible_items)
+	if(!GLOB.possible_items_special.len)
+		init_subtypes(/datum/objective_item/special,GLOB.possible_items)
+		init_subtypes(/datum/objective_item/stack,GLOB.possible_items)
 
 /datum/objective/steal/special/find_target()
-	return set_target(pick(possible_items_special))
-
-
+	return set_target(pick(GLOB.possible_items_special))
 
 /datum/objective/steal/exchange
 	dangerrating = 10
