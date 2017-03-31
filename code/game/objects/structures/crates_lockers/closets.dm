@@ -37,11 +37,7 @@
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		. = TRUE	//late initialize so we come back here
-	else if(initialized)
-		//we were late initialized, so now it's time to...
-		take_contents()
-		return
+		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	..()
 	update_icon()
 
