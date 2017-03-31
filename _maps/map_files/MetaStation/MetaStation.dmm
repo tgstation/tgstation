@@ -42612,7 +42612,9 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "bvU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
@@ -49825,7 +49827,9 @@
 	initialize_directions = 10
 	},
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "bIw" = (
 /obj/machinery/light,
 /obj/machinery/camera{
@@ -49840,7 +49844,9 @@
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "bIy" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -82793,7 +82799,9 @@
 	target_temperature = 80
 	},
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "cLF" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -87040,7 +87048,9 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "cTo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -87050,7 +87060,9 @@
 "cTp" = (
 /obj/structure/closet,
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "cTq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -87163,7 +87175,9 @@
 "cTC" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "cTD" = (
 /obj/machinery/shieldwallgen{
 	req_access_txt = "55"
@@ -90823,7 +90837,9 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "daQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -90833,7 +90849,9 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "daR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -92124,7 +92142,9 @@
 "ddi" = (
 /obj/structure/rack,
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "ddj" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -92236,7 +92256,9 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "ddr" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -92259,7 +92281,9 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "ddu" = (
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -92292,7 +92316,9 @@
 "ddw" = (
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "ddx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -92304,7 +92330,9 @@
 	initialize_directions = 11
 	},
 /turf/open/floor/plating,
-/area/toxins/xenobiology)
+/area/maintenance/aft{
+	name = "Aft Maintenance"
+	})
 "ddy" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -127719,10 +127747,10 @@ cRi
 cRi
 cRi
 cRi
-cRi
-cRi
-cRi
-cRi
+clK
+clK
+clK
+clK
 aaf
 aaa
 aaa
@@ -127976,18 +128004,18 @@ cSh
 dbs
 cSn
 cRi
-dde
-ddj
+cdl
+cgs
 cTp
-cRi
-cRi
-cRi
-cRi
-cRi
-cRi
-cRi
-cRi
-cRi
+clK
+clK
+clK
+clK
+clK
+clK
+clK
+clK
+clK
 aaa
 aaa
 aai
@@ -128233,7 +128261,7 @@ cSg
 cSo
 cSn
 cRi
-cTA
+bXE
 cTn
 cTC
 cTC
@@ -128242,9 +128270,9 @@ cTC
 cTC
 cTC
 cTC
-daO
+cLd
 bIx
-cRi
+clK
 aaf
 aaf
 aag
@@ -128757,7 +128785,7 @@ daF
 daJ
 cRi
 bvT
-cRi
+clK
 cRi
 cRi
 cRi
@@ -129014,7 +129042,7 @@ cSn
 cSn
 cRi
 bvT
-cRi
+clK
 cZv
 cZv
 cRi
@@ -130041,8 +130069,8 @@ cSn
 cSn
 daN
 cRi
-cTA
-cRi
+bXE
+clK
 cZv
 dbw
 cRi
@@ -130298,8 +130326,8 @@ daE
 daI
 daM
 cRi
-cTA
-cRi
+bXE
+clK
 cRi
 cRi
 cRi
@@ -130555,8 +130583,8 @@ cRi
 cRi
 cRi
 cRi
-cTA
-cRi
+bXE
+clK
 aaf
 aaa
 aaa
@@ -130803,17 +130831,17 @@ cSn
 cSo
 cSg
 cRi
-ddh
+cnb
 ddq
 ddt
 ddt
 ddt
 ddt
 ddw
-cTA
-cTA
-ddy
-cRi
+bXE
+bXE
+bVW
+clK
 aaf
 aaf
 aaa
@@ -131061,16 +131089,16 @@ dbt
 cSF
 cRi
 ddi
-ddr
-cTB
-cRi
-cRi
-cRi
-cRi
-cRi
-cRi
-cRi
-cRi
+cdm
+bZT
+clK
+clK
+clK
+clK
+clK
+clK
+clK
+clK
 aaf
 aaa
 aaa
@@ -131317,10 +131345,10 @@ cRi
 cRi
 cRi
 cRi
-cRi
-cRi
-cRi
-cRi
+clK
+clK
+clK
+clK
 aaa
 aaf
 aaf
@@ -137891,11 +137919,11 @@ aEr
 aFC
 aGZ
 aGZ
-dlL
+dlJ
 aKG
 aMj
 aKG
-dlP
+dlJ
 aQe
 aRv
 dfD
@@ -138148,11 +138176,11 @@ dej
 aFC
 deC
 deC
-dlM
+dlJ
 aKH
 aMk
 aNu
-dlQ
+dlJ
 dfp
 dfp
 dfE
@@ -138410,7 +138438,7 @@ aKI
 aMj
 dfb
 dfj
-dlS
+dlJ
 deD
 dfF
 aTN
@@ -139432,13 +139460,13 @@ aCY
 dem
 aFD
 deD
-dlK
-dlN
+dlJ
+dlJ
 deV
 dlO
 dfc
-dlR
-dlT
+dlJ
+dlJ
 deD
 dfI
 dfS
