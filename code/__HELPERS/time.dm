@@ -1,6 +1,6 @@
 //Returns the world time in english
 /proc/worldtime2text()
-	return gameTimestamp("hh:mm:ss", wtime=world.time)
+	return gameTimestamp("hh:mm:ss", world.time)
 
 /proc/time_stamp(format = "hh:mm:ss", show_ds)
 	var/time_string = time2text(world.timeofday, format)
