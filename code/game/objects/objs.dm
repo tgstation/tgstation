@@ -1,6 +1,7 @@
 /obj
 	languages_spoken = HUMAN
 	languages_understood = HUMAN
+	invisibility = OBJ_INVIS_DEFAULT
 	var/crit_fail = 0
 	animate_movement = 2
 	var/throwforce = 0

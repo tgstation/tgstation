@@ -23,7 +23,7 @@
 #define BRAIN_DAMAGE_FILE "brain_damage_lines.json"
 
 /mob/living/carbon/human/Life()
-	set invisibility = 0
+	set invisibility = MOB_INVIS_DEFAULT
 	set background = BACKGROUND_ENABLED
 
 	if (notransform)
