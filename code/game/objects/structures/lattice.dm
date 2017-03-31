@@ -22,7 +22,6 @@
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
 			QDEL_IN(LAT, 0)
-			return
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
