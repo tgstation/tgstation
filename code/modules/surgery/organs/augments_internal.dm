@@ -144,28 +144,19 @@
 //BOX O' IMPLANTS
 
 /obj/item/weapon/storage/box/cyber_implants
-	name = "boxed cybernetic implant"
+	name = "boxed cybernetic implants"
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
-
-/obj/item/weapon/storage/box/cyber_implants/New(loc, implant)
-	..()
-	new /obj/item/device/autoimplanter(src)
-	if(ispath(implant))
-		new implant(src)
-
-/obj/item/weapon/storage/box/cyber_implants/bundle
-	name = "boxed cybernetic implants"
 	var/list/boxed = list(
-		/obj/item/organ/eyes/robotic/xray,
-		/obj/item/organ/eyes/robotic/thermals,
-		/obj/item/organ/cyberimp/brain/anti_stun,
-		/obj/item/organ/cyberimp/chest/reviver)
+		/obj/item/device/autosurgeon/thermal_eyes,
+		/obj/item/device/autosurgeon/xray_eyes,
+		/obj/item/device/autosurgeon/anti_stun,
+		/obj/item/device/autosurgeon/reviver)
 	var/amount = 5
 
 /obj/item/weapon/storage/box/cyber_implants/bundle/New()
 	..()
 	var/implant
-	while(contents.len <= amount + 1) // +1 for the autoimplanter.
+	while(contents.len <= amount)
 		implant = pick(boxed)
 		new implant(src)

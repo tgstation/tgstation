@@ -3,6 +3,7 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
+	var/z_lock = null // Lock use to this zlevel
 	var/mob/camera/aiEye/remote/eyeobj
 	var/mob/living/current_user = null
 	var/list/networks = list("SS13")
@@ -50,13 +51,13 @@
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		for(var/obj/machinery/camera/C in cameranet.cameras)
-			if(!C.can_use())
+			if(!C.can_use() || z_lock && C.z != z_lock)
 				continue
-			if(C.network&networks)
+			if(C.network & networks)
 				camera_location = get_turf(C)
 				break
 		if(camera_location)
-			eyeobj.eye_initialized = 1
+			eyeobj.eye_initialized = TRUE
 			give_eye_control(L)
 			eyeobj.setLoc(camera_location)
 		else
@@ -79,6 +80,7 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	eyeobj.name = "Camera Eye ([user.name])"
 	user.remote_control = eyeobj
 	user.reset_perspective(eyeobj)
+	eyeobj.setLoc(eyeobj.loc)
 
 /mob/camera/aiEye/remote
 	name = "Inactive Camera Eye"
@@ -124,7 +126,7 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	for(var/i = 0; i < max(sprint, initial); i += 20)
 		var/turf/step = get_turf(get_step(src, direct))
 		if(step)
-			src.setLoc(step)
+			setLoc(step)
 
 	cooldown = world.timeofday + 5
 	if(acceleration)
@@ -152,7 +154,7 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 			C.client.images -= chunk.obscured
 	C.remote_control = null
 	C.unset_machine()
-	src.Remove(C)
+	Remove(C)
 	playsound(remote_eye.origin, 'sound/machines/terminal_off.ogg', 25, 0)
 
 /datum/action/innate/camera_jump
@@ -169,6 +171,8 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	var/list/L = list()
 
 	for (var/obj/machinery/camera/cam in cameranet.cameras)
+		if(origin.z_lock && cam.z != origin.z_lock)
+			continue
 		L.Add(cam)
 
 	camera_sort(L)
@@ -176,10 +180,9 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	var/list/T = list()
 
 	for (var/obj/machinery/camera/netcam in L)
-		var/list/tempnetwork = netcam.network&origin.networks
+		var/list/tempnetwork = netcam.network & origin.networks
 		if (tempnetwork.len)
-			T[text("[][]", netcam.c_tag, (netcam.can_use() ? null : " (Deactivated)"))] = netcam
-
+			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
