@@ -575,7 +575,7 @@
 			marked_image = null
 			var/backstab = check_target_facings(user, L)
 			var/def_check = L.getarmor(type = "bomb")
-			if(backstab == FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR || backstab == FACING_SAME_DIR)
+			if(get_turf(user) == get_turf(get_step(L, turn(L.dir, 180))) || get_turf(user) == get_turf(get_step(L, turn(L.dir, 135))) || get_turf(user) == get_turf(get_step(L, turn(L.dir, 225))))		//Checks the 3 tiles behind the target.
 				L.apply_damage(80, BRUTE, blocked = def_check)
 				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 			else
