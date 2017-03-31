@@ -35,7 +35,12 @@
 #define STATIONLOVING "stationloving"
 #define INFORM_ADMINS_ON_RELOCATE "inform_admins_on_relocate"
 #define BANG_PROTECT "bang_protect"
-#define CAN_ALWAYS_SPEAK_A_LANGUAGE "can_always_speak_a_language"
+
+// A mob with OMNITONGUE has no restriction in the ability to speak
+// languages that they know. So even if they wouldn't normally be able to
+// through mob or tongue restrictions, this flag allows them to ignore
+// those restrictions.
+#define OMNITONGUE "omnitongue"
 
 //turf-only flags
 #define NOJAUNT		1

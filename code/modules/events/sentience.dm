@@ -51,7 +51,7 @@
 		SA.key = SG.key
 
 		SA.grant_language(/datum/language/common)
-		SET_SECONDARY_FLAG(SA, CAN_ALWAYS_SPEAK_A_LANGUAGE)
+		SET_SECONDARY_FLAG(SA, OMNITONGUE)
 
 		SA.sentience_act()
 

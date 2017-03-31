@@ -22,9 +22,9 @@
 </ui-display>
 {{#if data.admin_mode}}
   <ui-button
-    action='toggle_can_always_speak'
-    style='{{data.can_always_speak ? "selected" : null}}'
-    >Can Always Speak A Language {{data.can_always_speak ? "Enabled" : "Disabled"}}
+    action='toggle_omnitongue'
+    style='{{data.omnitongue ? "selected" : null}}'
+    >Omnitongue {{data.omnitongue ? "Enabled" : "Disabled"}}
     </ui-button>
   <ui-display title="Unknown Languages">
     {{#each data.unknown_languages}}

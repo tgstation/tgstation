@@ -110,7 +110,8 @@
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
-	initial_languages = list(/datum/language/common, /datum/language/machine, /datum/language/drone, /datum/language/ratvar)
+	initial_languages = list(/datum/language/common, /datum/language/ratvar)
+	only_speaks_language = /datum/language/ratvar
 	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
@@ -191,12 +192,6 @@
 
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
-
-/mob/living/simple_animal/drone/cogscarab/can_speak_in_language(datum/language/dt)
-	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
-		. = TRUE
-	else
-		. = ispath(dt, /datum/language/ratvar) && has_language(dt)
 
 /obj/item/drone_shell/dusty
 	name = "derelict drone shell"

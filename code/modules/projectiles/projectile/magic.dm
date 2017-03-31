@@ -262,7 +262,7 @@
 	if(!new_mob)
 		return
 	new_mob.grant_language(/datum/language/common)
-	SET_SECONDARY_FLAG(new_mob, CAN_ALWAYS_SPEAK_A_LANGUAGE)
+	SET_SECONDARY_FLAG(new_mob, OMNITONGUE)
 	new_mob.logging = M.logging
 
 	// Some forms can still wear some items

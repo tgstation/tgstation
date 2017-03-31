@@ -35,7 +35,7 @@
 
 	if(check_rights_for(user.client, R_ADMIN))
 		data["admin_mode"] = TRUE
-		data["can_always_speak"] = HAS_SECONDARY_FLAG(owner, CAN_ALWAYS_SPEAK_A_LANGUAGE)
+		data["omnitongue"] = HAS_SECONDARY_FLAG(owner, OMNITONGUE)
 
 		data["unknown_languages"] = list()
 		for(var/ld in subtypesof(/datum/language))
@@ -81,9 +81,9 @@
 				message_admins("[key_name_admin(user)] removed the [language_name] language to [key_name_admin(owner)].")
 				log_admin("[key_name(user)] removed the language [language_name] to [key_name(owner)].")
 				. = TRUE
-		if("toggle_can_always_speak")
+		if("toggle_omnitongue")
 			if(is_admin)
-				TOGGLE_SECONDARY_FLAG(owner, CAN_ALWAYS_SPEAK_A_LANGUAGE)
-				message_admins("[key_name_admin(user)] [HAS_SECONDARY_FLAG(owner, CAN_ALWAYS_SPEAK_A_LANGUAGE) ? "enabled" : "disabled"] the ability to speak all languages of [key_name_admin(owner)].")
-				log_admin("[key_name(user)] [HAS_SECONDARY_FLAG(owner, CAN_ALWAYS_SPEAK_A_LANGUAGE) ? "enabled" : "disabled"] the ability to speak all languages of [key_name(owner)].")
+				TOGGLE_SECONDARY_FLAG(owner, OMNITONGUE)
+				message_admins("[key_name_admin(user)] [HAS_SECONDARY_FLAG(owner, OMNITONGUE) ? "enabled" : "disabled"] the ability to speak all languages (that they know) of [key_name_admin(owner)].")
+				log_admin("[key_name(user)] [HAS_SECONDARY_FLAG(owner, OMNITONGUE) ? "enabled" : "disabled"] the ability to speak all languages (that_they know) of [key_name(owner)].")
 				. = TRUE

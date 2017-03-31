@@ -8,6 +8,7 @@
 	var/mob/pulledby = null
 	var/list/languages
 	var/list/initial_languages = list(/datum/language/common)
+	var/only_speaks_language = null
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -563,12 +564,12 @@
 		languages = list()
 	languages[dt] = TRUE
 
-/atom/movable/proc/grant_all_languages(ignore_restrictions=FALSE)
+/atom/movable/proc/grant_all_languages(omnitongue=FALSE)
 	for(var/la in subtypesof(/datum/language))
 		grant_language(la)
 
-	if(ignore_restrictions)
-		SET_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE)
+	if(omnitongue)
+		SET_SECONDARY_FLAG(src, OMNITONGUE)
 
 /atom/movable/proc/remove_language(datum/language/dt)
 	if(languages && languages.len)
@@ -582,10 +583,9 @@
 	. = is_type_in_typecache(dt, languages)
 
 /atom/movable/proc/can_speak_in_language(datum/language/dt)
-	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
-		. = TRUE
-	else
-		. = has_language(dt)
+	. = has_language(dt)
+	if(only_speaks_language && !HAS_SECONDARY_FLAG(src, OMNITONGUE))
+		. = . && ispath(only_speaks_language, dt)
 
 /atom/movable/proc/get_default_language()
 	// if no language is specified, and we want to say() something, which

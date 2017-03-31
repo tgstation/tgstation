@@ -41,9 +41,3 @@
 
 /mob/living/simple_animal/drone/binarycheck()
 	return TRUE
-
-/mob/living/simple_animal/drone/can_speak_in_language(datum/language/dt)
-	if(HAS_SECONDARY_FLAG(src, CAN_ALWAYS_SPEAK_A_LANGUAGE))
-		. = TRUE
-	else
-		. = ispath(dt, /datum/language/drone) && has_language(dt)
