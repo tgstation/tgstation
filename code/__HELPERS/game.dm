@@ -520,12 +520,12 @@
 		[character.real_name]</span> ([rank]) has arrived at the station at \
 		<span class='name'>[A.name]</span>.</span>"
 	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
-	if((!announcement_systems.len) || (!character.mind))
+	if((!GLOB.announcement_systems.len) || (!character.mind))
 		return
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
 		return
 
-	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 /proc/GetRedPart(const/hexa)

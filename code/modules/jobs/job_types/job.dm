@@ -91,8 +91,8 @@
 
 /datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	spawn(4) //to allow some initialization
-		if(H && announcement_systems.len)
-			var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+		if(H && GLOB.announcement_systems.len)
+			var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 			announcer.announce("NEWHEAD", H.real_name, H.job, channels)
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
