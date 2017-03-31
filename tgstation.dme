@@ -206,6 +206,7 @@
 #include "code\datums\emotes.dm"
 #include "code\datums\forced_movement.dm"
 #include "code\datums\gas_overrides.dm"
+#include "code\datums\holocall.dm"
 #include "code\datums\hud.dm"
 #include "code\datums\map_config.dm"
 #include "code\datums\martial.dm"

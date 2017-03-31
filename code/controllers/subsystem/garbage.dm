@@ -725,7 +725,6 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(multiverse)
 	SearchVar(announcement_systems)
 	SearchVar(doppler_arrays)
-	SearchVar(HOLOPAD_MODE)
 	SearchVar(holopads)
 	SearchVar(news_network)
 	SearchVar(allCasters)
