@@ -1,8 +1,8 @@
 GLOBAL_REAL(SSlighting, /datum/controller/subsystem/lighting)
 
-GLOBAL_EMPTY_LIST(lighting_update_lights) // List of lighting sources  queued for update.
-GLOBAL_EMPTY_LIST(lighting_update_corners) // List of lighting corners  queued for update.
-GLOBAL_EMPTY_LIST(lighting_update_objects) // List of lighting objects queued for update.
+GLOBAL_LIST_EMPTY(lighting_update_lights) // List of lighting sources  queued for update.
+GLOBAL_LIST_EMPTY(lighting_update_corners) // List of lighting corners  queued for update.
+GLOBAL_LIST_EMPTY(lighting_update_objects) // List of lighting objects queued for update.
 
 
 /datum/controller/subsystem/lighting

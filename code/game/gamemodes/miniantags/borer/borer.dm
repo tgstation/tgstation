@@ -52,7 +52,7 @@
     to_chat(B.victim, "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>")
     B.detatch()
 
-GLOBAL_EMPTY_LIST(borers)
+GLOBAL_LIST_EMPTY(borers)
 GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 /mob/living/simple_animal/borer

@@ -1,4 +1,4 @@
-GLOBAL_EMPTY_LIST(all_lighting_objects) // Global list of lighting objects.
+GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 
 /atom/movable/lighting_object
 	name          = ""

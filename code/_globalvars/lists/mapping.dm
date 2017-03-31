@@ -25,34 +25,34 @@ GLOBAL_LIST(global_map)
 	//3 - AI satellite
 	//5 - empty space
 
-GLOBAL_EMPTY_LIST(landmarks_list)				//list of all landmarks created
-GLOBAL_EMPTY_LIST(start_landmarks_list)			//list of all spawn points created
-GLOBAL_EMPTY_LIST(department_security_spawns)	//list of all department security spawns
-GLOBAL_EMPTY_LIST(generic_event_spawns)			//list of all spawns for events
+GLOBAL_LIST_EMPTY(landmarks_list)				//list of all landmarks created
+GLOBAL_LIST_EMPTY(start_landmarks_list)			//list of all spawn points created
+GLOBAL_LIST_EMPTY(department_security_spawns)	//list of all department security spawns
+GLOBAL_LIST_EMPTY(generic_event_spawns)			//list of all spawns for events
 
-GLOBAL_EMPTY_LIST(monkeystart)
-GLOBAL_EMPTY_LIST(wizardstart)
-GLOBAL_EMPTY_LIST(newplayer_start)
-GLOBAL_EMPTY_LIST(latejoin)
-GLOBAL_EMPTY_LIST(prisonwarp)	//prisoners go to these
-GLOBAL_EMPTY_LIST(holdingfacility)	//captured people go here
-GLOBAL_EMPTY_LIST(xeno_spawn)//Aliens spawn at these.
-GLOBAL_EMPTY_LIST(tdome1)
-GLOBAL_EMPTY_LIST(tdome2)
-GLOBAL_EMPTY_LIST(tdomeobserve)
-GLOBAL_EMPTY_LIST(tdomeadmin)
-GLOBAL_EMPTY_LIST(prisonsecuritywarp)	//prison security goes to these
-GLOBAL_EMPTY_LIST(prisonwarped)	//list of players already warped
-GLOBAL_EMPTY_LIST(blobstart)
-GLOBAL_EMPTY_LIST(secequipment)
-GLOBAL_EMPTY_LIST(deathsquadspawn)
-GLOBAL_EMPTY_LIST(emergencyresponseteamspawn)
-GLOBAL_EMPTY_LIST(ruin_landmarks)
+GLOBAL_LIST_EMPTY(monkeystart)
+GLOBAL_LIST_EMPTY(wizardstart)
+GLOBAL_LIST_EMPTY(newplayer_start)
+GLOBAL_LIST_EMPTY(latejoin)
+GLOBAL_LIST_EMPTY(prisonwarp)	//prisoners go to these
+GLOBAL_LIST_EMPTY(holdingfacility)	//captured people go here
+GLOBAL_LIST_EMPTY(xeno_spawn)//Aliens spawn at these.
+GLOBAL_LIST_EMPTY(tdome1)
+GLOBAL_LIST_EMPTY(tdome2)
+GLOBAL_LIST_EMPTY(tdomeobserve)
+GLOBAL_LIST_EMPTY(tdomeadmin)
+GLOBAL_LIST_EMPTY(prisonsecuritywarp)	//prison security goes to these
+GLOBAL_LIST_EMPTY(prisonwarped)	//list of players already warped
+GLOBAL_LIST_EMPTY(blobstart)
+GLOBAL_LIST_EMPTY(secequipment)
+GLOBAL_LIST_EMPTY(deathsquadspawn)
+GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
+GLOBAL_LIST_EMPTY(ruin_landmarks)
 
 	//away missions
-GLOBAL_EMPTY_LIST(awaydestinations)	//a list of landmarks that the warpgate can take you to
+GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can take you to
 
 	//used by jump-to-area etc. Updated by area/updateName()
-GLOBAL_EMPTY_LIST(sortedAreas)
+GLOBAL_LIST_EMPTY(sortedAreas)
 
-GLOBAL_EMPTY_LIST(transit_markers)
+GLOBAL_LIST_EMPTY(transit_markers)

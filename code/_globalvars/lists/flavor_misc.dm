@@ -1,39 +1,39 @@
 //Preferences stuff
 	//Hairstyles
-GLOBAL_EMPTY_LIST(hair_styles_list)			//stores /datum/sprite_accessory/hair indexed by name
-GLOBAL_EMPTY_LIST(hair_styles_male_list)		//stores only hair names
-GLOBAL_EMPTY_LIST(hair_styles_female_list)	//stores only hair names
-GLOBAL_EMPTY_LIST(facial_hair_styles_list)	//stores /datum/sprite_accessory/facial_hair indexed by name
-GLOBAL_EMPTY_LIST(facial_hair_styles_male_list)	//stores only hair names
-GLOBAL_EMPTY_LIST(facial_hair_styles_female_list)	//stores only hair names
+GLOBAL_LIST_EMPTY(hair_styles_list)			//stores /datum/sprite_accessory/hair indexed by name
+GLOBAL_LIST_EMPTY(hair_styles_male_list)		//stores only hair names
+GLOBAL_LIST_EMPTY(hair_styles_female_list)	//stores only hair names
+GLOBAL_LIST_EMPTY(facial_hair_styles_list)	//stores /datum/sprite_accessory/facial_hair indexed by name
+GLOBAL_LIST_EMPTY(facial_hair_styles_male_list)	//stores only hair names
+GLOBAL_LIST_EMPTY(facial_hair_styles_female_list)	//stores only hair names
 	//Underwear
-GLOBAL_EMPTY_LIST(underwear_list)		//stores /datum/sprite_accessory/underwear indexed by name
-GLOBAL_EMPTY_LIST(underwear_m)	//stores only underwear name
-GLOBAL_EMPTY_LIST(underwear_f)	//stores only underwear name
+GLOBAL_LIST_EMPTY(underwear_list)		//stores /datum/sprite_accessory/underwear indexed by name
+GLOBAL_LIST_EMPTY(underwear_m)	//stores only underwear name
+GLOBAL_LIST_EMPTY(underwear_f)	//stores only underwear name
 	//Undershirts
-GLOBAL_EMPTY_LIST(undershirt_list) 	//stores /datum/sprite_accessory/undershirt indexed by name
-GLOBAL_EMPTY_LIST(undershirt_m)	 //stores only undershirt name
-GLOBAL_EMPTY_LIST(undershirt_f)	 //stores only undershirt name
+GLOBAL_LIST_EMPTY(undershirt_list) 	//stores /datum/sprite_accessory/undershirt indexed by name
+GLOBAL_LIST_EMPTY(undershirt_m)	 //stores only undershirt name
+GLOBAL_LIST_EMPTY(undershirt_f)	 //stores only undershirt name
 	//Socks
-GLOBAL_EMPTY_LIST(socks_list)		//stores /datum/sprite_accessory/socks indexed by name
+GLOBAL_LIST_EMPTY(socks_list)		//stores /datum/sprite_accessory/socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
-GLOBAL_EMPTY_LIST(body_markings_list)
-GLOBAL_EMPTY_LIST(tails_list_lizard)
-GLOBAL_EMPTY_LIST(animated_tails_list_lizard)
-GLOBAL_EMPTY_LIST(snouts_list)
-GLOBAL_EMPTY_LIST(horns_list)
-GLOBAL_EMPTY_LIST(frills_list)
-GLOBAL_EMPTY_LIST(spines_list)
-GLOBAL_EMPTY_LIST(legs_list)
-GLOBAL_EMPTY_LIST(animated_spines_list)
+GLOBAL_LIST_EMPTY(body_markings_list)
+GLOBAL_LIST_EMPTY(tails_list_lizard)
+GLOBAL_LIST_EMPTY(animated_tails_list_lizard)
+GLOBAL_LIST_EMPTY(snouts_list)
+GLOBAL_LIST_EMPTY(horns_list)
+GLOBAL_LIST_EMPTY(frills_list)
+GLOBAL_LIST_EMPTY(spines_list)
+GLOBAL_LIST_EMPTY(legs_list)
+GLOBAL_LIST_EMPTY(animated_spines_list)
 
 	//Mutant Human bits
-GLOBAL_EMPTY_LIST(tails_list_human)
-GLOBAL_EMPTY_LIST(animated_tails_list_human)
-GLOBAL_EMPTY_LIST(ears_list)
-GLOBAL_EMPTY_LIST(wings_list)
-GLOBAL_EMPTY_LIST(wings_open_list)
-GLOBAL_EMPTY_LIST(r_wings_list)
+GLOBAL_LIST_EMPTY(tails_list_human)
+GLOBAL_LIST_EMPTY(animated_tails_list_human)
+GLOBAL_LIST_EMPTY(ears_list)
+GLOBAL_LIST_EMPTY(wings_list)
+GLOBAL_LIST_EMPTY(wings_open_list)
+GLOBAL_LIST_EMPTY(r_wings_list)
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, G
 GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN))
 
 	//Female Uniforms
-GLOBAL_EMPTY_LIST(female_clothing_icons)
+GLOBAL_LIST_EMPTY(female_clothing_icons)
 
 	//radical shit
 GLOBAL_LIST_INIT(hit_appends, list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF"))

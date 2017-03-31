@@ -6,4 +6,4 @@
 #define POLL_IGNORE_ALIEN_LARVA "alien_larva"
 #define POLL_IGNORE_CLOCKWORK_MARAUDER "clockwork_marauder"
 
-GLOBAL_EMPTY_LIST(poll_ignore)
+GLOBAL_LIST_EMPTY(poll_ignore)

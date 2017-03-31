@@ -26,7 +26,7 @@ GLOBAL_REAL(GLOB, /datum/global_vars);
 
 #define GLOBAL_LIST_INIT(X, InitValue) GLOBAL_RAW(/list/##X); GLOBAL_MANAGED(X, InitValue)
 
-#define GLOBAL_EMPTY_LIST(X) GLOBAL_LIST_INIT(X, list())
+#define GLOBAL_LIST_EMPTY(X) GLOBAL_LIST_INIT(X, list())
 
 #define GLOBAL_DATUM_INIT(X, Typepath, InitValue) GLOBAL_RAW(Typepath/##X); GLOBAL_MANAGED(X, InitValue)
 

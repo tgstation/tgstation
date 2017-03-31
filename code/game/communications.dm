@@ -63,7 +63,7 @@
 /*	the radio controller is a confusing piece of shit and didnt work
 	so i made radios not use the radio controller.
 */
-GLOBAL_EMPTY_LIST(all_radios)
+GLOBAL_LIST_EMPTY(all_radios)
 /proc/add_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return

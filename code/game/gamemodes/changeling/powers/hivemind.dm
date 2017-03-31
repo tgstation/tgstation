@@ -20,7 +20,7 @@
 	return
 
 // HIVE MIND UPLOAD/DOWNLOAD DNA
-GLOBAL_EMPTY_LIST(hivemind_bank)
+GLOBAL_LIST_EMPTY(hivemind_bank)
 
 /obj/effect/proc_holder/changeling/hivemind_upload
 	name = "Hive Channel DNA"

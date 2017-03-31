@@ -1,7 +1,7 @@
-GLOBAL_EMPTY_LIST(sacrificed) //a mixed list of minds and mobs
+GLOBAL_LIST_EMPTY(sacrificed) //a mixed list of minds and mobs
 GLOBAL_LIST(rune_types) //Every rune that can be drawn by tomes
-GLOBAL_EMPTY_LIST(teleport_runes)
-GLOBAL_EMPTY_LIST(wall_runes)
+GLOBAL_LIST_EMPTY(teleport_runes)
+GLOBAL_LIST_EMPTY(wall_runes)
 /*
 
 This file contains runes.
