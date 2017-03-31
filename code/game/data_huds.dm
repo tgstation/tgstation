@@ -131,7 +131,7 @@
 	B.update_suit_sensors(src)
 
 	var/turf/T = get_turf(src)
-	if (T) crewmonitor.queueUpdate(T.z)
+	if (T) GLOB.crewmonitor.queueUpdate(T.z)
 
 //called when a living mob changes health
 /mob/living/proc/med_hud_set_health()
@@ -146,7 +146,7 @@
 
 	var/turf/T = get_turf(src)
 	if(T)
-		crewmonitor.queueUpdate(T.z)
+		GLOB.crewmonitor.queueUpdate(T.z)
 
 //called when a carbon changes stat, virus or XENO_HOST
 /mob/living/proc/med_hud_set_status()
@@ -194,7 +194,7 @@
 	sec_hud_set_security_status()
 
 	var/turf/T = get_turf(src)
-	if (T) crewmonitor.queueUpdate(T.z)
+	if (T) GLOB.crewmonitor.queueUpdate(T.z)
 
 /mob/living/carbon/human/proc/sec_hud_set_implants()
 	var/image/holder

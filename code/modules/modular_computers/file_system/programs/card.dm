@@ -53,7 +53,7 @@
 	if(job)
 		if(!job_blacklisted(job.title))
 			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
-				var/delta = (world.time / 10) - time_last_changed_position
+				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
 					return 1
 				return -2
@@ -65,7 +65,7 @@
 	if(job)
 		if(!job_blacklisted(job.title))
 			if(job.total_positions > job.current_positions)
-				var/delta = (world.time / 10) - time_last_changed_position
+				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
 					return 1
 				return -2
@@ -260,7 +260,7 @@
 			if(can_open_job(j) != 1)
 				return 0
 			if(opened_positions[edit_job_target] >= 0)
-				time_last_changed_position = world.time / 10
+				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions++
 			opened_positions[edit_job_target]++
 		if("PRG_close_job")
@@ -272,7 +272,7 @@
 				return 0
 			//Allow instant closing without cooldown if a position has been opened before
 			if(opened_positions[edit_job_target] <= 0)
-				time_last_changed_position = world.time / 10
+				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions--
 			opened_positions[edit_job_target]--
 		if("PRG_regsel")
@@ -435,7 +435,7 @@
 		out = "[open ? "Open Position" : "Close Position"]"
 		enable = 1
 	else if(can_change == -2)
-		var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
+		var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - GLOB.time_last_changed_position), 1)
 		var/mins = round(time_to_wait / 60)
 		var/seconds = time_to_wait - (60*mins)
 		out = "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"

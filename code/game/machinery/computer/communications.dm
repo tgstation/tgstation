@@ -1,5 +1,3 @@
-var/const/CALL_SHUTTLE_REASON_LENGTH = 12
-
 // The communications computer
 /obj/machinery/computer/communications
 	name = "communications console"

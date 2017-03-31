@@ -476,7 +476,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal/proc/select_target() //For admins setting objectives manually.
 	var/list/possible_items_all = GLOB.possible_items+"custom"
-	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in GLOB.possible_items_all
+	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
 	if (!new_target) return
 
 	if (new_target == "custom") //Can set custom items.

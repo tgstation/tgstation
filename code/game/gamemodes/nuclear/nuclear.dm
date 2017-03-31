@@ -176,8 +176,9 @@
 	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
 		return 1
 	if(are_operatives_dead())
-		if(bomb_set) //snaaaaaaaaaake! It's not over yet!
-			return 0
+		var/obj/machinery/nuclearbomb/N
+		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
+			return 0	//its a static var btw
 	..()
 
 /datum/game_mode/nuclear/declare_completion()
