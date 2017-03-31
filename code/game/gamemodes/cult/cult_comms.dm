@@ -17,7 +17,6 @@
 		return
 
 	cultist_commune(usr, input)
-	return
 
 /proc/cultist_commune(mob/living/user, message)
 	if(!message)

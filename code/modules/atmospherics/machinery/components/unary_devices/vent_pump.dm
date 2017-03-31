@@ -7,7 +7,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump
 	name = "air vent"
-	desc = "Has a valve and pump attached to it"
+	desc = "Has a valve and pump attached to it."
 	icon_state = "vent_map"
 	use_power = 1
 	can_unwrench = 1

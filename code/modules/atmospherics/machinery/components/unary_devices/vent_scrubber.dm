@@ -3,7 +3,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber
 	name = "air scrubber"
-	desc = "Has a valve and pump attached to it"
+	desc = "Has a valve and pump attached to it."
 	icon_state = "scrub_map"
 	use_power = 1
 	idle_power_usage = 10
