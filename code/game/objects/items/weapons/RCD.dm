@@ -428,7 +428,7 @@ obj/item/weapon/construction
 /obj/item/weapon/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	range_check(A,user)
 	target_check(A,user)
-		user.Beam(A,icon_state="rped_upgrade",time=30)
+	user.Beam(A,icon_state="rped_upgrade",time=30)
 	..()
 
 
