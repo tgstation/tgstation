@@ -77,7 +77,7 @@
         
     defaulted = FALSE
 
-#define CHECK_EXISTS(X) if(!istext(json[X])) log_world(X + "missing from json!")
+#define CHECK_EXISTS(X) if(!istext(json[X])) { log_world(X + "missing from json!"); return; }
 /datum/map_config/proc/ValidateJSON(list/json)
     CHECK_EXISTS("map_name")
     CHECK_EXISTS("map_path")
@@ -141,6 +141,3 @@
 
 /datum/map_config/proc/MakeNextMap()
     return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
-
-/datum/map_config/proc/MakePreviousMap()
-    return config_filename == "data/previous_map.json" || fcopy(config_filename, "data/previous_map.json")

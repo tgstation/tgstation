@@ -8,7 +8,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
-	var/datum/map_config/previous_map_config
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
@@ -23,10 +22,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 
 /datum/controller/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
-	if(!previous_map_config)
-		previous_map_config = new("data/previous_map.json", delete_after = TRUE)
-		if(previous_map_config.defaulted)
-			previous_map_config = null
 	if(!config)
 #ifdef FORCE_MAP
 		config = new(FORCE_MAP)
@@ -97,7 +92,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
 
-	previous_map_config = SSmapping.previous_map_config
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
@@ -125,6 +119,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
+	feedback_add_details("map_name", config.map_name)
 
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
@@ -193,10 +188,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 
 	next_map_config = VM
 	return TRUE
-
-/datum/controller/subsystem/mapping/Shutdown()
-	if(config)
-		config.MakePreviousMap()
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)

@@ -7,6 +7,8 @@
 //#define GC_FAILURE_HARD_LOOKUP	//makes paths that fail to GC call find_references before del'ing.
 									//Also allows for recursive reference searching of datums.
 									//Sets world.loop_checks to false and prevents find references from sleeping
+
+//#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 #endif
 
 #define PRELOAD_RSC	1			/*set to:

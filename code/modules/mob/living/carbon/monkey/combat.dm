@@ -16,6 +16,8 @@
 	var/pickpocketing = FALSE
 	var/disposing_body = FALSE
 	var/obj/machinery/disposal/bodyDisposal = null
+	var/next_battle_screech = 0
+	var/battle_screech_cooldown = 50
 
 /mob/living/carbon/monkey/proc/IsStandingStill()
 	return resisting || pickpocketing || disposing_body
@@ -58,6 +60,12 @@
 	if(stat)
 		return 1
 	return 0
+
+/mob/living/carbon/monkey/proc/battle_screech()
+	if(next_battle_screech < world.time)
+		emote(pick("roar","screech"))
+		for(var/mob/living/carbon/monkey/M in view(7,src))
+			M.next_battle_screech = world.time + battle_screech_cooldown
 
 /mob/living/carbon/monkey/proc/equip_item(var/obj/item/I)
 
@@ -197,7 +205,7 @@
 			for(var/mob/living/L in around)
 				if( should_target(L) )
 					if(L.stat == CONSCIOUS)
-						emote(pick("roar","screech"))
+						battle_screech()
 						retaliate(L)
 						return TRUE
 					else if(bodyDisposal)
@@ -241,7 +249,7 @@
 			var/list/around = view(src, MONKEY_ENEMY_VISION)
 			for(var/mob/living/carbon/monkey/M in around)
 				if(M.mode == MONKEY_IDLE && prob(MONKEY_RECRUIT_PROB))
-					M.emote(pick("roar","screech"))
+					M.battle_screech()
 					M.target = target
 					M.mode = MONKEY_HUNT
 
@@ -406,7 +414,7 @@
 	enemies[L] += MONKEY_HATRED_AMOUNT
 
 	if(a_intent != INTENT_HARM)
-		emote(pick("roar","screech"))
+		battle_screech()
 		a_intent = INTENT_HARM
 
 /mob/living/carbon/monkey/attack_hand(mob/living/L)

@@ -244,6 +244,9 @@ var/datum/controller/subsystem/air/SSair
 	active_turfs -= T
 	if(currentpart == SSAIR_ACTIVETURFS)
 		currentrun -= T
+	#ifdef VISUALIZE_ACTIVE_TURFS
+	T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#00ff00")
+	#endif
 	if(istype(T))
 		T.excited = 0
 		if(T.excited_group)
@@ -251,6 +254,9 @@ var/datum/controller/subsystem/air/SSair
 
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
+		#ifdef VISUALIZE_ACTIVE_TURFS
+		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
+		#endif
 		T.excited = 1
 		active_turfs |= T
 		if(currentpart == SSAIR_ACTIVETURFS)

@@ -58,13 +58,10 @@ To draw a rune, use an arcane tome.
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
 		to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 		qdel(src)
-		return
 	else if(istype(I, /obj/item/weapon/nullrod))
 		user.say("BEGONE FOUL MAGIKS!!")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
-		return
-	return
 
 /obj/effect/rune/attack_hand(mob/living/user)
 	if(!iscultist(user))
@@ -143,20 +140,20 @@ structure_check() searches for nearby cultist structures required for the invoca
 	do_invoke_glow()
 
 /obj/effect/rune/proc/do_invoke_glow()
+	set waitfor = FALSE
 	var/oldtransform = transform
-	spawn(0) //animate is a delay, we want to avoid being delayed
-		animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
-		animate(transform = oldtransform, alpha = 255, time = 0)
+	animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
+	sleep(5)
+	animate(transform = oldtransform, alpha = 255, time = 0)
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
 	visible_message("<span class='warning'>The markings pulse with a \
 		small flash of red light, then fall dark.</span>")
-	spawn(0) //animate is a delay, we want to avoid being delayed
-		var/oldcolor = color
-		color = rgb(255, 0, 0)
-		animate(src, color = oldcolor, time = 5)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
+	var/oldcolor = color
+	color = rgb(255, 0, 0)
+	animate(src, color = oldcolor, time = 5)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 
 //Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
 /obj/effect/rune/malformed
@@ -510,13 +507,11 @@ var/list/teleport_runes = list()
 			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) with a tome")
 			message_admins("[key_name_admin(user)] erased a Narsie rune with a tome")
 			..()
-			return
 	else
 		if(istype(I, /obj/item/weapon/nullrod))	//Begone foul magiks. You cannot hinder me.
 			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) using a null rod")
 			message_admins("[key_name_admin(user)] erased a Narsie rune with a null rod")
 			..()
-	return
 
 //Rite of Resurrection: Requires the corpse of a cultist and that there have been less revives than the number of people sacrificed
 /obj/effect/rune/raise_dead
