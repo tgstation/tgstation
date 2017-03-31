@@ -41,7 +41,6 @@
 #define ELECTRIFIED_PERMANENT -1
 
 
-var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock
 	name = "airlock"
@@ -93,6 +92,7 @@ var/list/airlock_overlays = list()
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
+	var/static/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/Initialize()
 	..()
@@ -490,6 +490,8 @@ var/list/airlock_overlays = list()
 	add_overlay(damag_overlay)
 
 /proc/get_airlock_overlay(icon_state, icon_file)
+	var/obj/machinery/door/airlock/A
+	var/list/airlock_overlays = A.airlock_overlays
 	var/iconkey = "[icon_state][icon_file]"
 	if(airlock_overlays[iconkey])
 		return airlock_overlays[iconkey]
