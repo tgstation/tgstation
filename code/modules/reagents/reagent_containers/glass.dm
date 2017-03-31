@@ -199,6 +199,10 @@
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric
 	list_reagents = list("sacid" = 50)
 
+/obj/item/weapon/reagent_containers/glass/beaker/mutagen
+	name = "Beaker with Mutagen"
+	list_reagents = list("mutagen" = 50)
+
 /obj/item/weapon/reagent_containers/glass/beaker/slime
 	list_reagents = list("slimejelly" = 50)
 
