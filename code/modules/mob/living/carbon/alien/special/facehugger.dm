@@ -152,22 +152,22 @@ var/const/MAX_ACTIVE_TIME = 400
 	// probiscis-blocker handling
 	if(iscarbon(M))
 		var/mob/living/carbon/target = M
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.is_mouth_covered(head_only = 1))
+				H.visible_message("<span class='danger'>[src] smashes against [H]'s \the [H.head]!</span>", \
+									"<span class='userdanger'>[src] smashes against [H]'s \the [H.head]!</span>")
+				Die()
+				return FALSE
 		if(target.wear_mask)
 			var/obj/item/clothing/W = target.wear_mask
 			if(W.flags & NODROP)
 				return FALSE
 			if(!istype(W,/obj/item/clothing/mask/facehugger))
 				target.dropItemToGround(W)
-				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
-									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
+				target.visible_message("<span class='danger'>[src] tears [W] off [target]'s face!</span>", \
+									"<span class='userdanger'>[src] tears [W] off [target]'s face!</span>")
 
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.is_mouth_covered(head_only = 1))
-				H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
-									"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
-				Die()
-				return FALSE
 		forceMove(target)
 		target.equip_to_slot_if_possible(src, slot_wear_mask, 0, 1, 1)
 	// early returns and validity checks done: attach.
