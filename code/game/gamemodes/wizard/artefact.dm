@@ -195,7 +195,6 @@
 
 
 /////////////////////Multiverse Blade////////////////////
-var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword
 	name = "multiverse sword"
@@ -214,10 +213,11 @@ var/global/list/multiverse = list()
 	var/faction = list("unassigned")
 	var/cooldown = 0
 	var/assigned = "unassigned"
+	var/static/list/multiverse = list()
 
 /obj/item/weapon/multisword/New()
 	..()
-	multiverse |= src
+	multiverse += src
 
 
 /obj/item/weapon/multisword/Destroy()
