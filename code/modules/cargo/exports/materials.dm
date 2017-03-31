@@ -79,6 +79,12 @@
 	material_id = MAT_TITANIUM
 	message = "cm3 of titanium"
 
+// Plastitanium.
+/datum/export/material/plastitanium
+	cost = 750
+	material_id = MAT_TITANIUM // code can only check for one material_id; plastitanium is half plasma, half titanium, so ((250 x 250) + (250 x 500)) / 250
+	message = "cm3 of plastitanium"
+
 // Metal. Common building material.
 /datum/export/material/metal
 	message = "cm3 of metal"
