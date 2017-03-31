@@ -298,11 +298,11 @@
 
 	if(safety)
 		var/safety_check = 0
-		var/list/safety_zone = return_ordered_turfs(S.x, S.y, S.z, S.dir)
+		var/list/safety_zone = ripple_area(S)
 		for(var/turf/checked in safety_zone)
 			if(!istype(checked, /turf/open/space))
 				safety_check++
-		if(safety_check > 4)  // The limit on non-space turfs in the docking area
+		if(safety_check > 2)  // The limit on non-space turfs in the docking area
 			return SHUTTLE_DOCK_OBSTRUCTED
 
 

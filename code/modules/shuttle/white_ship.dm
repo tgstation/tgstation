@@ -13,10 +13,10 @@
 	width = 23
 	height = 23
 	dir = 1
-	ignitionTime = 10
-	callTime = 30
+	ignitionTime = 20
+	callTime = 40
+	port_angle = 180
 	safety = TRUE
-	var/obj/machinery/computer/shuttle/engi_ship/C = null
 
 /obj/machinery/computer/shuttle/engi_ship
 	name = "ship control console"
@@ -56,12 +56,14 @@
 	GrantActions(user)
 	eyeobj.eye_user = user
 	user.client.change_view(20)
-	user.update_sight()
 	user.see_invisible = SEE_INVISIBLE_MINIMUM
+	user.update_sight()
+	user.see_in_dark = 20
 	eyeobj.name = "Navigation Probe([user.name])"
 	user.remote_control = eyeobj
 	user.reset_perspective(eyeobj)
 	user.sight |= SEE_TURFS
+
 
 
 /obj/machinery/computer/engi_nav/proc/clear()
@@ -78,7 +80,6 @@
 	var/turf/T = safepick(get_area_turfs(picked_area))
 	if(!T)
 		return
-	spawn_atom_to_turf(/obj/effect/overlay/temp/emp/pulse, target_area, 1)
 	landing_zone = new(target_area)
 	landing_zone.id = "engi_ship(\ref[src])"
 	landing_zone.name = "Navigator's Beacon"
@@ -87,9 +88,10 @@
 	landing_zone.width = width
 	landing_zone.height = height
 	landing_zone.setDir(lz_dir)
-	var/list/dock_zone = landing_zone.return_ordered_turfs(landing_zone.x, landing_zone.y, landing_zone.z, landing_zone.dir)
-	for(var/turf/checked in dock_zone)
-		spawn_atom_to_turf(/obj/effect/overlay/temp/emp/pulse, checked, 1)
+	var/obj/docking_port/mobile/assigned = SSshuttle.getShuttle(shuttle_id)
+	var/list/check_zone = assigned.ripple_area(landing_zone)
+	for(var/turf/checking in check_zone)
+		spawn_atom_to_turf(/obj/effect/overlay/temp/emp/pulse, checking, 1)
 
 	for(var/obj/machinery/computer/shuttle/S in machines)
 		if(S.shuttleId == shuttle_id)
@@ -205,12 +207,14 @@
 	desc = "An engineering computer integrated with a camera-assisted rapid construction drone."
 	var/obj/item/weapon/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
 	var/obj/item/device/forcefield/mounted/FF // Internal Forcefield Generator
+	var/obj/machinery/portable_atmospherics/canister/oxygen/OXY // Internal Air Supply
 	var/datum/action/innate/engi_ship/camera_off/off = new
 	var/datum/action/innate/engi_ship/switch_mode/switch_mode_action = new //Action for switching the RCD's build modes
 	var/datum/action/innate/engi_ship/build/build_action = new //Action for using the RCD
 	var/datum/action/innate/engi_ship/airlock_type/airlock_mode_action = new //Action for setting the airlock type
 	var/datum/action/innate/engi_ship/forcefield/shield = new // Action for placing forcefields
-	var/datum/action/innate/engi_ship/machiner/APC = new
+	var/datum/action/innate/engi_ship/machiner/APC = new // Places a directional, working, APC
+	var/datum/action/innate/engi_ship/airflow/repressurize = new // Adds a burst of oxygen to that area
 	var/datum/action/innate/engi_ship/recaller/rec = new // BRING HIM HOME
 	var/mob/camera/aiEye/construction/eyeobj
 
@@ -230,6 +234,7 @@
 	..()
 	RCD = new /obj/item/weapon/rcd/internal(src)
 	FF = new /obj/item/device/forcefield/mounted(src)
+	OXY = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
 
 /obj/machinery/computer/ship_construction/Destroy()
 	qdel(RCD)
@@ -243,6 +248,7 @@
 	airlock_mode_action.Grant(user, src)
 	shield.Grant(user, src)
 	APC.Grant(user, src)
+	repressurize.Grant(user, src)
 	rec.Grant(user, src)
 
 /obj/machinery/computer/ship_construction/attackby(obj/item/W, mob/user, params)
@@ -303,7 +309,10 @@
 	else
 		sprint = initial
 
-
+/mob/camera/aiEye/construction/proc/Visualize()
+	var/turf/choice = get_turf(pick(engiship_constructors))
+	choice.Beam(get_turf(src),icon_state="ship_beam",time=20,maxdistance=75)
+	spawn_atom_to_turf(/obj/effect/overlay/temp/small_smoke, get_turf(src), 1)
 
 
 /datum/action/innate/engi_ship //Parent aux base action
@@ -314,19 +323,6 @@
 	C = H
 	B = SC
 	..()
-
-/datum/action/innate/engi_ship/Activate()
-	var/one
-	var/two
-	for(var/obj/machinery/speshul/wew in range(75,B))
-		if(!one)
-			one = wew
-			continue
-		if(!two)
-			two = wew
-			break
-	var/turf/choice = get_turf(pick(one,two))
-	choice.Beam(get_turf(B.eyeobj),icon_state="ship_beam",time=20,maxdistance=75)
 
 
 /datum/action/innate/engi_ship/camera_off
@@ -342,6 +338,7 @@
 	N.origin.airlock_mode_action.Remove(C)
 	N.origin.shield.Remove(C)
 	N.origin.APC.Remove(C)
+	N.origin.repressurize.Remove(C)
 	N.origin.rec.Remove(C)
 	N.eye_user = null
 	if(C.client)
@@ -371,14 +368,17 @@
 	rcd_target = locate(/obj/machinery/door/airlock) in target_turf
 
 	if(!rcd_target)
-		rcd_target = locate (/obj/structure) in target_turf
+		rcd_target = locate (/obj/structure/grille) in target_turf
+		rcd_target = locate (/obj/structure/window) in target_turf
 
 	if(!rcd_target || !rcd_target.anchored)
 		rcd_target = target_turf
 
 	owner.changeNext_move(CLICK_CD_RANGE)
+	remote_eye.Visualize()
 	B.RCD.afterattack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
 	playsound(target_turf, 'sound/items/Deconstruct.ogg', 60, 1)
+
 
 
 /datum/action/innate/engi_ship/switch_mode
@@ -421,40 +421,52 @@
 	button_icon_state = "add_APC"
 
 /datum/action/innate/engi_ship/machiner/Activate()
-	var/turf/remote = get_turf(C.remote_control)
+	var/mob/camera/aiEye/construction/remote_eye = C.remote_control
+	var/turf/remote = get_turf(remote_eye)
 	if(remote.density)
 		var/direct = input("Select the Terminal Direction", "Terminal Direction") in list("NORTH","SOUTH","EAST","WEST")
-		switch(direct)
-			if("NORTH")
-				var/turf/terminal = get_step(remote, 1)
-				var/obj/machinery/power/apc/powered/placed = new(terminal)
-				var/obj/machinery/power/terminal/term = placed.terminal
-				term.dir = 2
-				placed.pixel_y = -24
-			if("SOUTH")
-				var/turf/terminal = get_step(remote, 2)
-				var/obj/machinery/power/apc/powered/placed = new(terminal)
-				var/obj/machinery/power/terminal/term = placed.terminal
-				term.dir = 1
-				placed.pixel_y = 24
-			if("EAST")
-				var/turf/terminal = get_step(remote, 4)
-				var/obj/machinery/power/apc/powered/placed = new(terminal)
-				var/obj/machinery/power/terminal/term = placed.terminal
-				term.dir = 8
-				placed.pixel_x = -24
-			if("WEST")
-				var/turf/terminal = get_step(remote, 8)
-				var/obj/machinery/power/apc/powered/placed = new(terminal)
-				var/obj/machinery/power/terminal/term = placed.terminal
-				term.dir = 4
-				placed.pixel_x = 24
-
-
-
+		if(do_after(C, 25, target = remote))
+			remote_eye.Visualize()
+			switch(direct)
+				if("NORTH")
+					var/turf/terminal = get_step(remote, 1)
+					var/obj/machinery/power/apc/powered/placed = new(terminal)
+					var/obj/machinery/power/terminal/term = placed.terminal
+					term.dir = 2
+					placed.pixel_y = -24
+				if("SOUTH")
+					var/turf/terminal = get_step(remote, 2)
+					var/obj/machinery/power/apc/powered/placed = new(terminal)
+					var/obj/machinery/power/terminal/term = placed.terminal
+					term.dir = 1
+					placed.pixel_y = 24
+				if("EAST")
+					var/turf/terminal = get_step(remote, 4)
+					var/obj/machinery/power/apc/powered/placed = new(terminal)
+					var/obj/machinery/power/terminal/term = placed.terminal
+					term.dir = 8
+					placed.pixel_x = -24
+				if("WEST")
+					var/turf/terminal = get_step(remote, 8)
+					var/obj/machinery/power/apc/powered/placed = new(terminal)
+					var/obj/machinery/power/terminal/term = placed.terminal
+					term.dir = 4
+					placed.pixel_x = 24
 	else
 		to_chat(C, "Error - Nonsuitable destination detected.")
 
+
+/datum/action/innate/engi_ship/airflow
+	name = "Oxygenate Environment"
+	button_icon_state = "mech_internals_off"
+
+/datum/action/innate/engi_ship/airflow/Activate()
+	var/obj/machinery/portable_atmospherics/canister/reserve = B.OXY
+	var/datum/gas_mixture/airburst = reserve.air_contents.remove(reserve.air_contents)
+	var/mob/camera/aiEye/construction/remote_eye = C.remote_control
+	var/turf/T = get_turf(remote_eye)
+	T.assume_air(airburst)
+	remote_eye.Visualize()
 
 /datum/action/innate/engi_ship/recaller
 	name = "Recall the Holo-drone"
@@ -464,11 +476,21 @@
 	var/mob/camera/aiEye/construction/remote_eye = C.remote_control
 	remote_eye.setLoc(get_turf(B))
 
-var/obj/machinery/speshul
+/obj/machinery/speshul
+	name = "utility laser"
+	desc = "This laser can be programmed to assist in long distance construction or meteor defense"
 	anchored = 1
 	density = 1
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "construction_drone"
+
+/obj/machinery/speshul/Initialize()
+	..()
+	engiship_constructors |= src
+
+/obj/machinery/speshul/Destroy()
+	engiship_constructors -= src
+	..()
 
 /obj/machinery/speshul/process()
 	for(var/obj/effect/meteor/M in meteor_list)

@@ -1931,6 +1931,7 @@
 #include "code\modules\shuttle\assault_pod.dm"
 #include "code\modules\shuttle\computer.dm"
 #include "code\modules\shuttle\emergency.dm"
+#include "code\modules\shuttle\engi_ship.dm"
 #include "code\modules\shuttle\ferry.dm"
 #include "code\modules\shuttle\manipulator.dm"
 #include "code\modules\shuttle\on_move.dm"

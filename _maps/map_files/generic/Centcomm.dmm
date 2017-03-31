@@ -14129,7 +14129,7 @@
 /area/shuttle/engi_ship)
 "KH" = (
 /obj/structure/sign/poster/contraband/tools,
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/engi_ship)
 "KI" = (
 /obj/machinery/door/poddoor/preopen{
@@ -14529,7 +14529,7 @@
 /obj/machinery/button/door{
 	id = 29
 	},
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/engi_ship)
 "Mt" = (
 /obj/machinery/light{
@@ -15149,10 +15149,6 @@
 "OQ" = (
 /obj/structure/table/wood/fancy,
 /obj/item/weapon/storage/firstaid,
-/obj/item/weapon/storage/firstaid/toxin{
-	step_x = 6;
-	step_y = 5
-	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
 "OR" = (
@@ -15471,14 +15467,14 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/fakespace,
 /area/shuttle/engi_ship)
 "Qe" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/floor/fakespace,
 /area/shuttle/engi_ship)
 "Qf" = (
 /obj/machinery/light{
@@ -15650,6 +15646,30 @@
 	dir = 1
 	},
 /turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QF" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"QG" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"QH" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"QI" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"QJ" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"QK" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"QL" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"QM" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/engi_ship)
 
 (1,1,1) = {"
@@ -26914,7 +26934,7 @@ JM
 Kl
 Kl
 Kl
-Kl
+QH
 JH
 Qn
 Qp
@@ -27172,10 +27192,10 @@ Kl
 KV
 Lp
 LL
-Kl
+QI
 Kr
 Kr
-Nj
+QJ
 Lx
 Oa
 Ov
@@ -28452,7 +28472,7 @@ aa
 aa
 JQ
 JH
-Kl
+QF
 KH
 La
 Kl
@@ -28971,10 +28991,10 @@ KI
 KW
 Lv
 Lp
-QC
+QB
 ME
 MW
-QE
+QD
 Lp
 Lv
 KW
@@ -29223,7 +29243,7 @@ aa
 aa
 JM
 JH
-Kt
+QG
 KK
 La
 Lx
@@ -29494,7 +29514,7 @@ Qs
 KW
 MD
 Po
-LC
+QK
 JH
 PJ
 PS
@@ -29752,7 +29772,7 @@ OF
 OY
 Lp
 PE
-Nj
+QM
 JH
 aa
 aa
@@ -30008,7 +30028,7 @@ KW
 OF
 MD
 Pq
-Ku
+QL
 PJ
 PS
 aa

@@ -122,6 +122,7 @@
 	if(PF && PF.generator == src)
 		to_chat(C, "<span class='notice'>You deactivate the forcefield.</span>")
 		qdel(PF)
+		return
 	if(T.density)
 		return
 	if(get_dist(T,src) > field_distance_limit)
