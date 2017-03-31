@@ -1,6 +1,6 @@
 #define NUKESCALINGMODIFIER 1
 
-var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
+GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner"))
 
 /obj/machinery/computer/telecrystals
 	name = "\improper Telecrystal assignment station"
@@ -25,9 +25,9 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	..()
 
 	var/ID
-	if(possible_uplinker_IDs.len)
-		ID = pick(possible_uplinker_IDs)
-		possible_uplinker_IDs -= ID
+	if(GLOB.possible_uplinker_IDs.len)
+		ID = pick(GLOB.possible_uplinker_IDs)
+		GLOB.possible_uplinker_IDs -= ID
 		name = "[name] [ID]"
 	else
 		name = "[name] [rand(1,999)]"
