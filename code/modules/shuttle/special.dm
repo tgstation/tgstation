@@ -152,7 +152,7 @@
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
 	access_card.access |= access_cent_bar
-	grant_all_languages(ignore_restrictions=TRUE)
+	grant_all_languages(polytongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = 0
@@ -172,7 +172,7 @@
 	access_card.access |= access_cent_bar
 	access_card.flags |= NODROP
 
-	grant_all_languages(ignore_restrictions=TRUE)
+	grant_all_languages(polytongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
