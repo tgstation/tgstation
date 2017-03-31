@@ -895,8 +895,6 @@
 	else
 		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
 
-	grant_language(/datum/language/common)
-
 	..()
 
 /mob/living/simple_animal/parrot/Poly/Life()

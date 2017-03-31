@@ -110,6 +110,7 @@
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
+	initial_languages = list(/datum/language/common, /datum/language/machine, /datum/language/drone, /datum/language/ratvar)
 	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."

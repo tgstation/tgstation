@@ -24,10 +24,6 @@
 		mytape = new starting_tape_type(src)
 	update_icon()
 
-	grant_language(/datum/language/common)
-	// It overrides Hear to understand all languages, this is just
-	// what it speaks.
-
 
 /obj/item/device/taperecorder/examine(mob/user)
 	..()

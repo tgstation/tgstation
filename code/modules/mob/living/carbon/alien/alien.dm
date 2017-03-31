@@ -14,6 +14,7 @@
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"
+	initial_languages = list(/datum/language/xenocommon)
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	var/nightvision = 1
@@ -38,8 +39,6 @@
 	create_bodyparts() //initialize bodyparts
 
 	create_internal_organs()
-
-	grant_language(/datum/language/xenocommon)
 
 	..()
 

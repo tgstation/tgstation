@@ -37,6 +37,7 @@
 	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")
 	bubble_icon = "machine"
+	initial_languages = list(/datum/language/common, /datum/language/machine, /datum/language/drone)
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
@@ -101,11 +102,6 @@
 
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
-
-	grant_language(/datum/language/drone)
-
-	grant_language(/datum/language/common) // they cannot speak it though.
-	grant_language(/datum/language/machine) // ditto.
 
 
 /mob/living/simple_animal/drone/med_hud_set_health()

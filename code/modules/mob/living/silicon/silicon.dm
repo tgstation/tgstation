@@ -6,6 +6,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	initial_languages = list(/datum/language/common, /datum/language/machine)
 	see_in_dark = 8
 	bubble_icon = "machine"
 	weather_immunities = list("ash")
@@ -43,9 +44,6 @@
 	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
-
-	grant_language(/datum/language/common)
-	grant_language(/datum/language/machine)
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud

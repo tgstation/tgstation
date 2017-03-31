@@ -62,6 +62,7 @@
 	icon = 'icons/mob/swarmer.dmi'
 	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
+	initial_languages = list(/datum/language/swarmer)
 	bubble_icon = "swarmer"
 	health = 40
 	maxHealth = 40
@@ -121,9 +122,6 @@
 	verbs -= /mob/living/verb/pulled
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
-
-	remove_language(/datum/language/common)
-	grant_language(/datum/language/swarmer)
 
 
 /mob/living/simple_animal/hostile/swarmer/med_hud_set_health()

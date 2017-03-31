@@ -134,7 +134,6 @@ Class Procs:
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
-	grant_language(/datum/language/common)
 
 /obj/machinery/Destroy()
 	machines.Remove(src)

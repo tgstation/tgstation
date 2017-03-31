@@ -7,6 +7,7 @@
 	var/throw_range = 7
 	var/mob/pulledby = null
 	var/list/languages
+	var/list/initial_languages = list(/datum/language/common)
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -33,6 +34,11 @@
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
 	return ..()
+
+/atom/movable/Initialize(mapload)
+	..()
+	for(var/L in initial_languages)
+		grant_language(L)
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
