@@ -171,7 +171,7 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 	
 	var/list/cached_other = other.our_overlays
 	if(cached_other)
-		if(cut_old)
+		if(cut_old || !LAZYLEN(our_overlays))
 			our_overlays = cached_other.Copy()
 		else
 			our_overlays |= cached_other
