@@ -163,10 +163,7 @@
 
 		if(target.wear_mask)
 			var/obj/item/clothing/W = target.wear_mask
-			if(W.flags & NODROP)
-				return FALSE
-			if(!istype(W,/obj/item/clothing/mask/facehugger))
-				target.dropItemToGround(W)
+			if(!istype(W,/obj/item/clothing/mask/facehugger) && target.dropItemToGround(W))
 				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
 									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
 		forceMove(target)
