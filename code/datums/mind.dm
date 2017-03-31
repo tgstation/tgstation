@@ -351,7 +351,7 @@
 				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
 			text += "<BR>"
 
-		if(gang_colors_pool.len)
+		if(GLOB.gang_colors_pool.len)
 			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
 
 		sections["gang"] = text
@@ -898,11 +898,11 @@
 					qdel(SC)
 
 			if("new")
-				if(gang_colors_pool.len)
-					var/list/names = list("Random") + gang_name_pool
+				if(GLOB.gang_colors_pool.len)
+					var/list/names = list("Random") + GLOB.gang_name_pool
 					var/gangname = input("Pick a gang name.","Select Name") as null|anything in names
-					if(gangname && gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
-						if(!(gangname in gang_name_pool))
+					if(gangname && GLOB.gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
+						if(!(gangname in GLOB.gang_name_pool))
 							gangname = null
 						var/datum/gang/newgang = new(null,gangname)
 						ticker.mode.gangs += newgang
