@@ -52,8 +52,8 @@
     to_chat(B.victim, "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>")
     B.detatch()
 
-var/list/mob/living/simple_animal/borer/borers = list()
-var/total_borer_hosts_needed = 10
+GLOBAL_EMPTY_LIST(borers)
+GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 /mob/living/simple_animal/borer
 	name = "cortical borer"
@@ -129,7 +129,7 @@ var/total_borer_hosts_needed = 10
 	borer_chems += /datum/borer_chem/ethanol
 	borer_chems += /datum/borer_chem/rezadone
 
-	borers += src
+	GLOB.borers += src
 
 	GrantBorerActions()
 
@@ -298,7 +298,7 @@ var/total_borer_hosts_needed = 10
 /mob/living/simple_animal/borer/say(message)
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
-		for(var/borer in borers)
+		for(var/borer in GLOB.borers)
 			to_chat(borer, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
 		for(var/mob/D in GLOB.dead_mob_list)
 			to_chat(D, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
@@ -810,13 +810,13 @@ var/total_borer_hosts_needed = 10
 		ckey = candidate.ckey
 
 		if(mind)
-			mind.store_memory("You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle.")
+			mind.store_memory("You must escape with at least [GLOB.total_borer_hosts_needed] borers with hosts on the shuttle.")
 
 		to_chat(src, "<span class='notice'>You are a cortical borer!</span>")
 		to_chat(src, "You are a brain slug that worms its way into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, your host and your eventual spawn safe and warm.")
 		to_chat(src, "Sugar nullifies your abilities, avoid it at all costs!")
 		to_chat(src, "You can speak to your fellow borers by prefixing your messages with ';'. Check out your Borer tab to see your abilities.")
-		to_chat(src, "You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle. To reproduce you must have 100 chemicals and be controlling a host.")
+		to_chat(src, "You must escape with at least [GLOB.total_borer_hosts_needed] borers with hosts on the shuttle. To reproduce you must have 100 chemicals and be controlling a host.")
 
 /mob/living/simple_animal/borer/proc/detatch()
 	if(!victim || !controlling)

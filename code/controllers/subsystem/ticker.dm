@@ -542,9 +542,9 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 
 	//Borers
 	var/borerwin = FALSE
-	if(borers.len)
+	if(GLOB.borers.len)
 		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
-		for(var/mob/living/simple_animal/borer/B in borers)
+		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
 			if((B.key || B.controlling) && B.stat != DEAD)
 				borertext += "<br>[B.controlling ? B.victim.key : B.key] was [B.truename] ("
 				var/turf/location = get_turf(B)
@@ -556,7 +556,7 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 		to_chat(world, borertext)
 
 		var/total_borers = 0
-		for(var/mob/living/simple_animal/borer/B in borers)
+		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
 			if((B.key || B.victim) && B.stat != DEAD)
 				total_borers++
 		if(total_borers)
@@ -566,10 +566,10 @@ GLOBAL_REAL(ticker, /datum/controller/subsystem/ticker)
 				var/turf/location = get_turf(C)
 				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
 					total_borer_hosts++
-			if(total_borer_hosts_needed <= total_borer_hosts)
+			if(GLOB.total_borer_hosts_needed <= total_borer_hosts)
 				borerwin = TRUE
 			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
-			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [total_borer_hosts_needed] hosts to escape.</b>")
+			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [GLOB.total_borer_hosts_needed] hosts to escape.</b>")
 			if(borerwin)
 				to_chat(world, "<b><font color='green'>The borers were successful!</font></b>")
 			else
