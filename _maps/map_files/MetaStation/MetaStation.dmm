@@ -42613,7 +42613,8 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft{
-	name = "Aft Maintenance"
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
 	})
 "bvU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -49826,10 +49827,8 @@
 	dir = 10;
 	initialize_directions = 10
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/turf/open/floor/plasteel/white,
+/area/toxins/xenobiology)
 "bIw" = (
 /obj/machinery/light,
 /obj/machinery/camera{
@@ -49845,7 +49844,8 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/plating,
 /area/maintenance/aft{
-	name = "Aft Maintenance"
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
 	})
 "bIy" = (
 /obj/machinery/firealarm{
@@ -82799,9 +82799,7 @@
 	target_temperature = 80
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/area/toxins/xenobiology)
 "cLF" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -87049,7 +87047,8 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft{
-	name = "Aft Maintenance"
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
 	})
 "cTo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -87061,7 +87060,8 @@
 /obj/structure/closet,
 /turf/open/floor/plating,
 /area/maintenance/aft{
-	name = "Aft Maintenance"
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
 	})
 "cTq" = (
 /obj/structure/disposalpipe/segment{
@@ -87176,7 +87176,8 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/aft{
-	name = "Aft Maintenance"
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
 	})
 "cTD" = (
 /obj/machinery/shieldwallgen{
@@ -90838,7 +90839,8 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft{
-	name = "Aft Maintenance"
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
 	})
 "daQ" = (
 /obj/structure/disposalpipe/segment{
@@ -90848,10 +90850,8 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/turf/open/floor/plasteel/white,
+/area/toxins/xenobiology)
 "daR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -92143,7 +92143,8 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/aft{
-	name = "Aft Maintenance"
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
 	})
 "ddj" = (
 /turf/open/floor/plating{
@@ -92257,7 +92258,8 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft{
-	name = "Aft Maintenance"
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
 	})
 "ddr" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -92282,7 +92284,8 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft{
-	name = "Aft Maintenance"
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
 	})
 "ddu" = (
 /obj/structure/cable/yellow{
@@ -92317,7 +92320,8 @@
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/maintenance/aft{
-	name = "Aft Maintenance"
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
 	})
 "ddx" = (
 /obj/structure/disposalpipe/segment{
@@ -92329,10 +92333,8 @@
 	dir = 1;
 	initialize_directions = 11
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/turf/open/floor/plasteel/white,
+/area/toxins/xenobiology)
 "ddy" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -92352,7 +92354,7 @@
 	opacity = 0;
 	req_access_txt = "55"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "ddB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -95670,6 +95672,307 @@
 "dlT" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"dlU" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dlV" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dlW" = (
+/turf/open/floor/plating,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dlX" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dlY" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dlZ" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dma" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmb" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmc" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmd" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dme" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmf" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmg" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmh" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmi" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmj" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmk" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dml" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmm" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmn" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmo" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmp" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmq" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmr" = (
+/turf/open/floor/plating,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dms" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmt" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmu" = (
+/turf/open/floor/plating,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmv" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmw" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmx" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmy" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/obj/machinery/door/airlock/research{
+	glass = 1;
+	name = "Slime Euthanization Chamber";
+	opacity = 0;
+	req_access_txt = "55"
+	},
+/turf/open/floor/plasteel/white,
+/area/toxins/xenobiology)
+"dmz" = (
+/obj/machinery/door/airlock/research{
+	glass = 1;
+	name = "Slime Euthanization Chamber";
+	opacity = 0;
+	req_access_txt = "55"
+	},
+/turf/open/floor/plasteel/white,
+/area/toxins/xenobiology)
+"dmA" = (
+/turf/open/floor/plating,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmB" = (
+/turf/open/floor/plating,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmC" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmD" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmE" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmF" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmG" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmH" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmI" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmJ" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmK" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmL" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmM" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
+"dmN" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/aft{
+	icon_state = "xenomaint";
+	name = "Xeno Maintenance"
+	})
 
 (1,1,1) = {"
 aaa
@@ -127747,10 +128050,10 @@ cRi
 cRi
 cRi
 cRi
-clK
-clK
-clK
-clK
+dlU
+dlZ
+dmd
+dmg
 aaf
 aaa
 aaa
@@ -128004,18 +128307,18 @@ cSh
 dbs
 cSn
 cRi
-cdl
-cgs
+dlV
+dma
 cTp
-clK
-clK
-clK
-clK
-clK
-clK
-clK
-clK
-clK
+dmh
+dmk
+dmm
+dmo
+dmq
+dmt
+dmw
+dmE
+dmM
 aaa
 aaa
 aai
@@ -128261,7 +128564,7 @@ cSg
 cSo
 cSn
 cRi
-bXE
+dlW
 cTn
 cTC
 cTC
@@ -128270,9 +128573,9 @@ cTC
 cTC
 cTC
 cTC
-cLd
+dmx
 bIx
-clK
+dmN
 aaf
 aaf
 aag
@@ -128785,7 +129088,7 @@ daF
 daJ
 cRi
 bvT
-clK
+dmF
 cRi
 cRi
 cRi
@@ -129041,8 +129344,8 @@ cSn
 cSn
 cSn
 cRi
-bvT
-clK
+dmy
+dmG
 cZv
 cZv
 cRi
@@ -130069,8 +130372,8 @@ cSn
 cSn
 daN
 cRi
-bXE
-clK
+dmz
+dmH
 cZv
 dbw
 cRi
@@ -130326,8 +130629,8 @@ daE
 daI
 daM
 cRi
-bXE
-clK
+dmA
+dmI
 cRi
 cRi
 cRi
@@ -130583,8 +130886,8 @@ cRi
 cRi
 cRi
 cRi
-bXE
-clK
+dmB
+dmJ
 aaf
 aaa
 aaa
@@ -130831,17 +131134,17 @@ cSn
 cSo
 cSg
 cRi
-cnb
+dlX
 ddq
 ddt
 ddt
 ddt
 ddt
 ddw
-bXE
-bXE
-bVW
-clK
+dmr
+dmu
+dmC
+dmK
 aaf
 aaf
 aaa
@@ -131089,16 +131392,16 @@ dbt
 cSF
 cRi
 ddi
-cdm
-bZT
-clK
-clK
-clK
-clK
-clK
-clK
-clK
-clK
+dmb
+dme
+dmi
+dml
+dmn
+dmp
+dms
+dmv
+dmD
+dmL
 aaf
 aaa
 aaa
@@ -131345,10 +131648,10 @@ cRi
 cRi
 cRi
 cRi
-clK
-clK
-clK
-clK
+dlY
+dmc
+dmf
+dmj
 aaa
 aaf
 aaf
