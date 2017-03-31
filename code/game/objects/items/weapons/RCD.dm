@@ -38,7 +38,7 @@ obj/item/weapon/construction
 	spark_system.attach(src)
 
 
-/obj/item/weapon/construction/rcd/Destroy()
+/obj/item/weapon/construction/Destroy()
 	qdel(spark_system)
 	spark_system = null
 	. = ..()
@@ -101,7 +101,18 @@ obj/item/weapon/construction
 		to_chat(user, no_ammo_message)
 	return .
 
-/obj/item/weapon/construction/proc/range_check(proximity)
+/obj/item/weapon/construction/proc/range_check(atom/A, mob/user)
+	if(!(A in view(7, get_turf(user))))
+		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the [src] blinks red.</span>")
+		return FALSE
+
+/obj/item/weapon/construction/proc/target_check(atom/A, mob/user) // only returns true for stuff the device can actually work with
+	if((isturf(A) && A.density && mode==RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
+		return TRUE
+	else
+		return FALSE
+
+/obj/item/weapon/construction/proc/prox_check(proximity)
 	if(!proximity)
 		return
 
@@ -315,7 +326,7 @@ obj/item/weapon/construction
 
 
 /obj/item/weapon/construction/rcd/afterattack(atom/A, mob/user, proximity)
-	range_check()
+	prox_check()
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
@@ -414,15 +425,9 @@ obj/item/weapon/construction
 	ranged = TRUE
 	icon_state = "arcd"
 
-/obj/item/weapon/construction/rcd/arcd/range_check(atom/A, mob/user)
-	if(!(A in view(7, get_turf(user))))
-		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the [src] blinks red.</span>")
-		return FALSE
-
-
 /obj/item/weapon/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	range_check(A,user)
-	if((isturf(A) && A.density && mode==RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
+	target_check(A,user)
 		user.Beam(A,icon_state="rped_upgrade",time=30)
 	..()
 
@@ -439,7 +444,7 @@ obj/item/weapon/construction
 	icon_state = "rld-5"
 	matter = 200
 	max_matter = 200
-	var/mode = 1
+	var/mode = LIGHT_MODE
 	actions_types = list(/datum/action/item_action/pick_color)
 
 	var/wallcost = 10
@@ -461,26 +466,12 @@ obj/item/weapon/construction
 		..()
 
 /obj/item/weapon/construction/rld/attackby(obj/item/weapon/W, mob/user, params)
-	var/loaded = FALSE
-	if(istype(W, /obj/item/weapon/rcd_ammo))
-		var/obj/item/weapon/rcd_ammo/R = W
-		if((matter + R.ammoamt) > max_matter)
-			to_chat(user, "<span class='warning'>The RLD can't hold any more matter-units!</span>")
-			return
-		qdel(W)
-		matter += R.ammoamt
-		icon_state = "rld-[round(matter/35)]"
-		update_icon()
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		loaded = TRUE
-	else if(istype(W, /obj/item/stack/sheet/glass))
-		loaded = loadwithsheets(W, sheetmultiplier, user)
-	if(loaded)
-		to_chat(user, "<span class='notice'>The RLD now holds [matter]/[max_matter] matter-units.</span>")
-		desc = "An RLD. It currently holds [matter]/[max_matter] matter-units."
-	else
-		return ..()
-
+	..()
+	IconAmmo()
+		
+/obj/item/weapon/construction/rld/proc/IconAmmo()
+	icon_state = "rld-[round(matter/35)]"
+	update_icon()
 
 /obj/item/weapon/construction/rld/attack_self(mob/user)
 	..()
@@ -505,10 +496,8 @@ obj/item/weapon/construction
 
 
 /obj/item/weapon/construction/rld/afterattack(atom/A, mob/user)
+	range_check(A,user)
 	var/turf/start = get_turf(src)
-	if(!(A in view(7, get_turf(start))))
-		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the RLD blinks red.</span>")
-		return FALSE
 	switch(mode)
 		if(REMOVE_MODE)
 			if(istype(A, /obj/machinery/light/))
