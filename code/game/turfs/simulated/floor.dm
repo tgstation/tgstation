@@ -97,9 +97,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				togo = EAST
 			else if(src.x == user.x - 1)
 				togo = WEST
+			visible_message("<span class='danger'>[user] trying to crawl on [src]!</span>", "<span class='userdanger'>You trying to crawl on [src].</span>")
 			if(do_after(user, crawl_time*2, 1, null))
 				step(user, togo)
-				visible_message("<span class='danger'>[user] trying to crawl on [src]!</span>", "<span class='userdanger'>You trying to crawl on [src].</span>")
 			return
 		else
 			..(user)
