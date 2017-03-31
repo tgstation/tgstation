@@ -29,9 +29,7 @@ Possible to do for anyone motivated enough:
 #define RANGE_BASED 4
 #define AREA_BASED 6
 
-var/const/HOLOPAD_MODE = RANGE_BASED
-
-var/list/holopads = list()
+#define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
 	name = "\improper AI holopad"
@@ -52,6 +50,7 @@ var/list/holopads = list()
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 	var/temp = ""
+	var/static/list/holopads = list()
 
 /obj/machinery/holopad/New()
 	..()
