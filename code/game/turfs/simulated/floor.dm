@@ -78,6 +78,34 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
 
+//Joctopus Crawl
+//Secret Tau-Ceti development
+/turf/open/floor/attack_hand(mob/user as mob)
+	if(user.resting)
+		if(!density)
+			var/crawl_time = 5
+			var/atom/U
+			for(U in src)
+				if(U.density)
+					return
+			var/togo
+			if(src.y == user.y + 1)
+				togo = NORTH
+			else if(src.y == user.y - 1)
+				togo = SOUTH
+			else if(src.x == user.x + 1)
+				togo = EAST
+			else if(src.x == user.x - 1)
+				togo = WEST
+			if(do_after(user, crawl_time*2, 1, null))
+				step(user, togo)
+				visible_message("<span class='danger'>[user] trying to crawl on [src]!</span>", "<span class='userdanger'>You trying to crawl on [src].</span>")
+			return
+		else
+			..(user)
+	else
+		..(user)
+
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
 		if(A.level == 3)
