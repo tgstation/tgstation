@@ -1,6 +1,7 @@
 GLOBAL_EMPTY_LIST(sacrificed) //a mixed list of minds and mobs
 GLOBAL_LIST(rune_types) //Every rune that can be drawn by tomes
-
+GLOBAL_EMPTY_LIST(teleport_runes)
+GLOBAL_EMPTY_LIST(wall_runes)
 /*
 
 This file contains runes.
@@ -243,7 +244,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(!P.info && !istype(P, /obj/item/weapon/paper/talisman))
 			. |= P
 
-var/list/teleport_runes = list()
 /obj/effect/rune/teleport
 	cultist_name = "Teleport"
 	cultist_desc = "warps everything above it to another chosen teleport rune."
@@ -258,17 +258,17 @@ var/list/teleport_runes = list()
 	var/area/A = get_area(src)
 	var/locname = initial(A.name)
 	listkey = set_keyword ? "[set_keyword] [locname]":"[locname]"
-	teleport_runes += src
+	GLOB.teleport_runes += src
 
 /obj/effect/rune/teleport/Destroy()
-	teleport_runes -= src
+	GLOB.teleport_runes -= src
 	return ..()
 
 /obj/effect/rune/teleport/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1] //the first invoker is always the user
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
-	for(var/R in teleport_runes)
+	for(var/R in GLOB.teleport_runes)
 		var/obj/effect/rune/teleport/T = R
 		if(T != src && (T.z <= ZLEVEL_SPACEMAX))
 			potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
@@ -704,8 +704,6 @@ var/list/teleport_runes = list()
 		sleep(1)
 	rune_in_use = 0
 
-
-var/list/wall_runes = list()
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
 /obj/effect/rune/wall
 	cultist_name = "Form Barrier"
@@ -719,7 +717,7 @@ var/list/wall_runes = list()
 
 /obj/effect/rune/wall/New()
 	..()
-	wall_runes += src
+	GLOB.wall_runes += src
 
 /obj/effect/rune/wall/examine(mob/user)
 	..()
@@ -728,7 +726,7 @@ var/list/wall_runes = list()
 
 /obj/effect/rune/wall/Destroy()
 	density = 0
-	wall_runes -= src
+	GLOB.wall_runes -= src
 	air_update_turf(1)
 	return ..()
 
@@ -751,7 +749,7 @@ var/list/wall_runes = list()
 		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
 
 /obj/effect/rune/wall/proc/spread_density()
-	for(var/R in wall_runes)
+	for(var/R in GLOB.wall_runes)
 		var/obj/effect/rune/wall/W = R
 		if(W.z == z && get_dist(src, W) <= 2 && !W.density && !W.recharging)
 			W.density = TRUE
