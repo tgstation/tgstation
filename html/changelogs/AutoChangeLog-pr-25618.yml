@@ -1,0 +1,4 @@
+author: "BeeSting12"
+delete-after: True
+changes: 
+  - bugfix: "Metastation's northeast radiation collector is now connected to the grid. Nanotrasen would like to apologize for any inconvenience caused to engineers, but copper is expensive."
