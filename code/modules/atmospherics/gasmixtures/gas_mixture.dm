@@ -123,46 +123,6 @@ var/list/gaslist_cache = init_gaslist_cache()
 /datum/gas_mixture/proc/thermal_energy() //joules
 	return temperature * heat_capacity()
 
-/datum/gas_mixture/proc/react(turf/open/dump_location)
-	. = 0
-	if(temperature < TCMB) //just for safety
-		temperature = TCMB
-	fuel_burnt = 0
-
-	var/list/cached_gases = gases
-
-	reaction_loop:
-		for(var/r in gas_reactions)
-			var/datum/gas_reaction/reaction = r
-
-			var/list/min_reqs = params2list(reaction.min_requirements)
-			if((min_reqs["TEMP"] && temperature < text2num(min_reqs["TEMP"])) \
-			|| (min_reqs["ENER"] && thermal_energy() < text2num(min_reqs["ENER"])))
-				continue
-			min_reqs -= "TEMP"
-			min_reqs -= "ENER"
-
-			for(var/id in min_reqs)
-				if(cached_gases[id][MOLES] < text2num(min_reqs[id]))
-					continue reaction_loop
-			//at this point, all minimum requirements for the reaction are satisfied.
-
-			/* currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
-			var/list/max_reqs = params2list(reaction.max_requirements)
-			if((max_reqs["TEMP"] && temperature > text2num(max_reqs["TEMP"])) \
-			|| (max_reqs["ENER"] && thermal_energy() > text2num(max_reqs["ENER"])))
-				continue
-			max_reqs -= "TEMP"
-			max_reqs -= "ENER"
-
-			for(var/id in max_reqs)
-				if(cached_gases[id][MOLES] > text2num(max_reqs[id]))
-					continue reaction_loop
-			//at this point, all requirements for the reaction are satisfied. we can now react()
-			*/
-
-			. |= reaction.react(src, dump_location)
-
 /datum/gas_mixture/proc/archive()
 	//Update archived versions of variables
 	//Returns: 1 in all cases
@@ -209,6 +169,10 @@ var/list/gaslist_cache = init_gaslist_cache()
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
 	//Compares sample to self to see if within acceptable ranges that group processing may be enabled
 	//Returns: a string indicating what check failed, or "" if check passes
+
+/datum/gas_mixture/proc/react(turf/open/dump_location)
+	//Performs various reactions such as combustion or fusion (LOL)
+	//Returns: 1 if any reaction took place; 0 otherwise
 
 /datum/gas_mixture/archive()
 	var/list/cached_gases = gases
@@ -452,6 +416,46 @@ var/list/gaslist_cache = init_gaslist_cache()
 			return "temp"
 
 	return ""
+
+/datum/gas_mixture/proc/react(turf/open/dump_location)
+	. = 0
+	if(temperature < TCMB) //just for safety
+		temperature = TCMB
+	fuel_burnt = 0
+
+	var/list/cached_gases = gases
+
+	reaction_loop:
+		for(var/r in gas_reactions)
+			var/datum/gas_reaction/reaction = r
+
+			var/list/min_reqs = params2list(reaction.min_requirements)
+			if((min_reqs["TEMP"] && temperature < text2num(min_reqs["TEMP"])) \
+			|| (min_reqs["ENER"] && thermal_energy() < text2num(min_reqs["ENER"])))
+				continue
+			min_reqs -= "TEMP"
+			min_reqs -= "ENER"
+
+			for(var/id in min_reqs)
+				if(cached_gases[id][MOLES] < text2num(min_reqs[id]))
+					continue reaction_loop
+			//at this point, all minimum requirements for the reaction are satisfied.
+
+			/* currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
+			var/list/max_reqs = params2list(reaction.max_requirements)
+			if((max_reqs["TEMP"] && temperature > text2num(max_reqs["TEMP"])) \
+			|| (max_reqs["ENER"] && thermal_energy() > text2num(max_reqs["ENER"])))
+				continue
+			max_reqs -= "TEMP"
+			max_reqs -= "ENER"
+
+			for(var/id in max_reqs)
+				if(cached_gases[id][MOLES] > text2num(max_reqs[id]))
+					continue reaction_loop
+			//at this point, all requirements for the reaction are satisfied. we can now react()
+			*/
+
+			. |= reaction.react(src, dump_location)
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
