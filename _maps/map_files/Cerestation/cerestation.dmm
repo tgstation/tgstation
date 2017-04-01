@@ -8523,7 +8523,7 @@
 "aqx" = (
 /obj/structure/window/reinforced,
 /obj/machinery/computer/card,
-/obj/item/weapon/card/id/gold,
+/obj/item/weapon/card/id/captains_spare,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -20026,6 +20026,7 @@
 "aLu" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/northright{
+	name = "Cargo Desk";
 	req_one_access_txt = "50;48"
 	},
 /turf/open/floor/plating{
@@ -42402,6 +42403,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastleft{
+	name = "Hydroponics Desk";
 	req_access_txt = "35"
 	},
 /turf/open/floor/plating{
@@ -43379,6 +43381,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastright{
+	name = "Hydroponics Desk";
 	req_access_txt = "35"
 	},
 /turf/open/floor/plating{
@@ -47164,7 +47167,8 @@
 /area/medical/chemistry)
 "bEL" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/southright{
+/obj/machinery/door/window/northleft{
+	name = "Chemistry Desk";
 	req_access_txt = "33"
 	},
 /turf/open/floor/plasteel/white{
@@ -70252,6 +70256,7 @@
 	id = "RoboticsShutters"
 	},
 /obj/machinery/door/window/northright{
+	name = "Robotics Desk";
 	req_access_txt = "29"
 	},
 /turf/open/floor/plating{
@@ -70309,6 +70314,7 @@
 	id = "RnDShutters"
 	},
 /obj/machinery/door/window/northleft{
+	name = "Research Desk";
 	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/purple{
@@ -70322,6 +70328,7 @@
 	id = "RnDShutters"
 	},
 /obj/machinery/door/window/northright{
+	name = "Research Desk";
 	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/purple{
@@ -79991,6 +79998,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/window/southleft{
+	name = "Medbay Mail Chute";
 	req_access_txt = "45"
 	},
 /turf/open/floor/plating{
@@ -94036,11 +94044,11 @@ asO
 atU
 ava
 awm
-cLW
-cLX
+cLV
+cLV
 azR
-cLZ
-cMa
+cLV
+cLV
 aDr
 aED
 aGa
@@ -97992,7 +98000,7 @@ cML
 bZD
 cbf
 cbL
-cNa
+cML
 ccB
 ccR
 cdr
@@ -99020,7 +99028,7 @@ bZA
 cax
 bZD
 bZA
-bZy
+cML
 ccB
 ccV
 cdv
@@ -100280,7 +100288,7 @@ bzI
 byv
 byv
 bCT
-cMv
+cMs
 bFk
 bGB
 bBL
@@ -100365,7 +100373,7 @@ cEt
 cFz
 cEt
 cEt
-cNv
+cNu
 cGL
 cGX
 cCc
@@ -101501,7 +101509,7 @@ aHL
 aIK
 aJQ
 aJQ
-cMi
+cMf
 aMR
 aNU
 aLm
@@ -103810,10 +103818,10 @@ aBy
 aBy
 aBy
 cMc
-cMd
-cMe
-cMg
-cMh
+cMc
+cMc
+cMc
+cMc
 aGE
 aGE
 aGE
@@ -105859,7 +105867,7 @@ atb
 atb
 atf
 axH
-cLY
+cLS
 aAf
 atd
 axG
@@ -107498,7 +107506,7 @@ bAd
 bAd
 byS
 cae
-cMN
+cMH
 aZH
 aZt
 aZt
@@ -109046,8 +109054,8 @@ byP
 byP
 byP
 byP
-cNk
-cNl
+cMH
+cMH
 byS
 aZI
 abC
@@ -109297,10 +109305,10 @@ bRp
 bZc
 bOM
 bGE
-cMO
-cMU
+cMH
+cMH
 byS
-cNb
+cMH
 byP
 byP
 bBN
@@ -110071,7 +110079,7 @@ bGE
 cMQ
 cMW
 cbr
-cNd
+cMH
 bAd
 byQ
 byP
@@ -115706,7 +115714,7 @@ bFx
 bIh
 bJO
 bLq
-bMK
+cMC
 bLo
 bPa
 bQC
@@ -118293,8 +118301,8 @@ byQ
 byP
 byP
 bZS
-cMX
-cMY
+cMH
+cMH
 bZS
 aZH
 aZH
@@ -118549,10 +118557,10 @@ bAd
 byQ
 byP
 bZS
-cMR
+cMH
 cbq
 cbT
-cNe
+cMH
 aZH
 aZH
 aZH
@@ -119062,11 +119070,11 @@ byP
 byP
 byO
 bZS
-cMM
-cMS
+cMH
+cMH
 cbr
 cbU
-cNf
+cMH
 aZH
 aZH
 aZH
@@ -119318,12 +119326,12 @@ byQ
 byQ
 byQ
 byP
-cMI
+cMH
 cak
 caO
 cbr
 cbr
-cNg
+cMH
 aZt
 aaa
 aaa
@@ -119575,12 +119583,12 @@ bVA
 byQ
 byP
 byP
-cMJ
+cMH
 cal
 caP
 caO
 caO
-cNh
+cMH
 aZt
 aaa
 aaa
@@ -119832,12 +119840,12 @@ bYa
 byQ
 byP
 bAd
-cMK
+cMH
 bZS
 bZS
 cbs
 cbV
-cNi
+cMH
 aZt
 aaa
 aaa
@@ -120091,10 +120099,10 @@ bYK
 byS
 aZH
 aZH
-cMT
+cMH
 bZS
-cMZ
-cNj
+cMH
+cMH
 aZt
 aaa
 aaa
@@ -133237,7 +133245,7 @@ clX
 cnY
 cLq
 clX
-cqj
+cNm
 clX
 csn
 clu
