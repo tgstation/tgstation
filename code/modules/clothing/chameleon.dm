@@ -79,30 +79,25 @@
 	if(button)
 		button.name = "Change [chameleon_name] Appearance"
 
-
 	chameleon_blacklist |= typecacheof(target.type)
 	for(var/V in typesof(chameleon_type))
-		if(ispath(V, /obj/item))
+		if(ispath(V) && ispath(V, /obj/item))
 			var/obj/item/I = V
 			if(chameleon_blacklist[V] || (initial(I.flags) & ABSTRACT))
 				continue
-			chameleon_list += I
+			if(!initial(I.icon_state) || !initial(I.item_state))
+				continue
+			var/chameleon_item_name = "[initial(I.name)] ([initial(I.icon_state)])"
+			chameleon_list[chameleon_item_name] = I
+
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
-	var/list/item_names = list()
 	var/obj/item/picked_item
-	for(var/U in chameleon_list)
-		var/obj/item/I = U
-		item_names += initial(I.name)
 	var/picked_name
-	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) in item_names
+	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) as null|anything in chameleon_list
 	if(!picked_name)
 		return
-	for(var/V in chameleon_list)
-		var/obj/item/I = V
-		if(initial(I.name) == picked_name)
-			picked_item = V
-			break
+	picked_item = chameleon_list[picked_name]
 	if(!picked_item)
 		return
 	update_look(user, picked_item)
