@@ -93,9 +93,9 @@
 	if(can_be_seen(get_turf(loc)))
 		if(client)
 			to_chat(src, "<span class='warning'>You cannot attack, there are eyes on you!</span>")
-			return
+		return FALSE
 	else
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/statue/DestroySurroundings()
 	if(!can_be_seen(get_turf(loc)))
@@ -110,7 +110,7 @@
 		return null
 	// Check for darkness
 	var/turf/T = get_turf(loc)
-	if(T && destination && T.lighting_overlay)
+	if(T && destination && T.lighting_object)
 		if(T.get_lumcount()<0.1 && destination.get_lumcount()<0.1) // No one can see us in the darkness, right?
 			return null
 		if(T == destination)

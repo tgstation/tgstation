@@ -54,7 +54,9 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
-	set_safety() //turn that shit off, if we're gone we can't blow up and things should acknowledge this
+	if(!exploding)
+		// If we're not exploding, set the alert level back to normal
+		set_safety()
 	poi_list -= src
 	nuke_list -= src
 	if(countdown)

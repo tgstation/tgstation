@@ -50,8 +50,8 @@
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
 	var/species
-	if(istype(I, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/O = I
+	if(istype(I, /obj/item/stack/))
+		var/obj/item/stack/O = I
 
 		if(istype(O, /obj/item/stack/sheet/metal))
 			species = /datum/species/golem
@@ -97,6 +97,12 @@
 
 		if(istype(O, /obj/item/stack/sheet/bluespace_crystal))
 			species = /datum/species/golem/bluespace
+
+		if(istype(O, /obj/item/stack/sheet/runed_metal))
+			species = /datum/species/golem/runic
+
+		if(istype(O, /obj/item/stack/medical/gauze) || istype(O, /obj/item/stack/sheet/cloth))
+			species = /datum/species/golem/cloth
 
 		if(species)
 			if(O.use(10))

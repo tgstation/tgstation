@@ -61,7 +61,7 @@
 		else
 			to_chat(H, "<span class='notice'>You break your vow of silence.</span>")
 
-// These spells can only be gotten from the "Guide for Advanced Mimery series+" for Mime Traitors.
+// These spells can only be gotten from the "Guide for Advanced Mimery series" for Mime Traitors.
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mime
 	name = "Invisible Blockade"
@@ -99,6 +99,7 @@
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
 	projectile_type = /obj/item/projectile/bullet/weakbullet2
+	projectile_amount = 3
 	sound = null
 	active_msg = "You draw your fingers!"
 	deactive_msg = "You put your fingers at ease. Another time."

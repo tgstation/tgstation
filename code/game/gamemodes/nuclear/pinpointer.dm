@@ -26,6 +26,7 @@
 
 /obj/item/weapon/pinpointer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
+	pinpointer_list -= src
 	return ..()
 
 /obj/item/weapon/pinpointer/attack_self(mob/living/user)

@@ -452,3 +452,8 @@
 			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
 	else
 		return ..()
+
+/obj/item/weapon/circuitboard/computer/apc_control
+	name = "\improper Power Flow Control Console (Computer Board)"
+	build_path = /obj/machinery/computer/apc_control
+	origin_tech = "programming=3;engineering=3;powerstorage=2"

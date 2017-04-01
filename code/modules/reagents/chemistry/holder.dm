@@ -132,6 +132,18 @@ var/const/INJECT = 5 //injection
 
 	return id
 
+/datum/reagents/proc/get_master_reagent()
+	var/list/cached_reagents = reagent_list
+	var/datum/reagent/master
+	var/max_volume = 0
+	for(var/reagent in cached_reagents)
+		var/datum/reagent/R = reagent
+		if(R.volume > max_volume)
+			max_volume = R.volume
+			master = R
+
+	return master
+
 /datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
@@ -232,7 +244,7 @@ var/const/INJECT = 5 //injection
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(!R.holder)
+		if(QDELETED(R.holder))
 			continue
 		if(!C)
 			C = R.holder.my_atom
@@ -512,6 +524,11 @@ var/const/INJECT = 5 //injection
 				R.reaction_turf(A, R.volume * volume_modifier, show_message)
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
+
+/datum/reagents/proc/holder_full()
+	if(total_volume >= maximum_volume)
+		return TRUE
+	return FALSE
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)

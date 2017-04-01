@@ -17,6 +17,11 @@
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
+
+/turf/open/space/basic/New()	//Do not convert to Initialize
+	//This is used to optimize the map loader
+	return
+
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
@@ -24,6 +29,10 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
+
+	var/area/A = loc
+	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
+		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
 		SSair.add_to_active(src)
@@ -67,11 +76,14 @@
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/space/attackby(obj/item/C, mob/user, params, area/area_restriction)
+/turf/open/space/proc/CanBuildHere()
+	return TRUE
+
+/turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
+	if(!CanBuildHere())
+		return
 	if(istype(C, /obj/item/stack/rods))
-		if(istype(area_restriction) && !istype(get_area(src), area_restriction))
-			return
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
@@ -182,3 +194,20 @@
 
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return 0
+
+
+/turf/open/space/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	if(!CanBuildHere())
+		return FALSE
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)
+	return FALSE
+
+/turf/open/space/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, "<span class='notice'>You build a floor.</span>")
+			ChangeTurf(/turf/open/floor/plating)
+			return TRUE
+	return FALSE

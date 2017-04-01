@@ -395,3 +395,25 @@
 	if(!(flags & NODECONSTRUCT))
 		new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
 	qdel(src)
+
+/obj/structure/girder/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 8)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 13)
+	return FALSE
+
+/obj/structure/girder/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	var/turf/T = get_turf(src)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, "<span class='notice'>You finish a wall.</span>")
+			T.ChangeTurf(/turf/closed/wall)
+			qdel(src)
+			return TRUE
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the girder.</span>")
+			qdel(src)
+			return TRUE
+	return FALSE

@@ -28,7 +28,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 /obj/effect/landmark/awaystart/Destroy()
 	awaydestinations -= src
-	..()
+	return ..()
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()

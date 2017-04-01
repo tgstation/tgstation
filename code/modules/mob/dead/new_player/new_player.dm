@@ -141,7 +141,7 @@
 				observer.real_name = observer.client.prefs.real_name
 				observer.name = observer.real_name
 			observer.update_icon()
-			observer.stopLobbySound()
+			observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 			qdel(mind)
 
 			qdel(src)
@@ -300,15 +300,18 @@
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(!IsJobAvailable(rank))
-		to_chat(src, alert("[rank] is not available. Please try another."))
+		alert(src, "[rank] is not available. Please try another.")
 		return 0
+	
+	if(ticker.late_join_disabled)
+		alert(src, "An administrator has disabled late join spawning.")
+		return FALSE
 
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up
 		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
 			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
-		SSshuttle.arrivals.RequireUndocked(src)
 
 	//Remove the player from the join queue if he was in one and reset the timer
 	ticker.queued_players -= src
@@ -468,7 +471,7 @@
 	. = new_character
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
-		new_character.stopLobbySound()
+		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"

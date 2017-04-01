@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/indestructible/riveted,
@@ -2297,7 +2297,7 @@
 /turf/closed/indestructible/riveted,
 /area/start)
 "gd" = (
-/obj/effect/landmark/start,
+/obj/effect/landmark/start/new_player,
 /turf/open/floor/plating,
 /area/start)
 "ge" = (
@@ -2992,9 +2992,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "iv" = (
-/obj/effect/landmark{
-	name = "prisonwarp"
-	},
+/obj/effect/landmark/prisonwarp,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -6494,9 +6492,7 @@
 /area/syndicate_mothership/control)
 "qp" = (
 /obj/structure/chair/stool,
-/obj/effect/landmark{
-	name = "Syndicate-Spawn"
-	},
+/obj/effect/landmark/syndicate_spawn,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
@@ -8039,7 +8035,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/centcom/control)
+/area/centcom/evac)
 "tI" = (
 /turf/open/floor/plasteel/neutral/side{
 	dir = 10
@@ -8111,9 +8107,7 @@
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "tT" = (
-/obj/effect/landmark{
-	name = "Syndicate-Spawn"
-	},
+/obj/effect/landmark/syndicate_spawn,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "tU" = (
@@ -9049,16 +9043,12 @@
 /area/centcom/ferry)
 "wo" = (
 /obj/structure/chair/office/dark,
-/obj/effect/landmark{
-	name = "Emergencyresponseteam"
-	},
+/obj/effect/landmark/ert_spawn,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "wp" = (
 /obj/structure/chair/office/dark,
-/obj/effect/landmark{
-	name = "Emergencyresponseteam"
-	},
+/obj/effect/landmark/ert_spawn,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -9204,9 +9194,7 @@
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
-/obj/effect/landmark{
-	name = "Emergencyresponseteam"
-	},
+/obj/effect/landmark/ert_spawn,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "wK" = (
@@ -9294,9 +9282,7 @@
 	},
 /area/wizard_station)
 "wY" = (
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
+/obj/effect/landmark/start/wizard,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "wZ" = (
@@ -9357,9 +9343,7 @@
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
-/obj/effect/landmark{
-	name = "Emergencyresponseteam"
-	},
+/obj/effect/landmark/ert_spawn,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -9697,18 +9681,14 @@
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/obj/effect/landmark{
-	name = "Emergencyresponseteam"
-	},
+/obj/effect/landmark/ert_spawn,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "xV" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/obj/effect/landmark{
-	name = "Emergencyresponseteam"
-	},
+/obj/effect/landmark/ert_spawn,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -10328,9 +10308,7 @@
 /area/wizard_station)
 "zj" = (
 /obj/structure/table/wood,
-/obj/effect/landmark{
-	name = "Teleport-Scroll"
-	},
+/obj/effect/landmark/teleport_scroll,
 /obj/item/weapon/dice/d20,
 /obj/item/weapon/dice,
 /turf/open/floor/carpet,
@@ -11791,9 +11769,7 @@
 /turf/open/space,
 /area/space)
 "CV" = (
-/obj/effect/landmark{
-	name = "Holding Facility"
-	},
+/obj/effect/landmark/holding_facility,
 /turf/open/floor/engine,
 /area/centcom/holding)
 "CW" = (
@@ -11837,9 +11813,7 @@
 /area/tdome/tdomeobserve)
 "Da" = (
 /obj/structure/chair,
-/obj/effect/landmark{
-	name = "tdomeobserve"
-	},
+/obj/effect/landmark/thunderdome/observe,
 /obj/structure/sign/barsign{
 	pixel_y = 32
 	},
@@ -11849,9 +11823,7 @@
 /area/tdome/tdomeobserve)
 "Db" = (
 /obj/structure/chair,
-/obj/effect/landmark{
-	name = "tdomeobserve"
-	},
+/obj/effect/landmark/thunderdome/observe,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -12189,27 +12161,21 @@
 	},
 /area/tdome/arena)
 "DO" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "DP" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "DQ" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -12262,27 +12228,21 @@
 	},
 /area/tdome/arena)
 "DZ" = (
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ea" = (
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Eb" = (
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -12336,9 +12296,7 @@
 	},
 /area/tdome/tdomeadmin)
 "Eh" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -12348,22 +12306,16 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ej" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /turf/open/floor/plasteel/neutral,
 /area/tdome/arena)
 "Ek" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -12380,9 +12332,7 @@
 	},
 /area/tdome/arena)
 "En" = (
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -12392,22 +12342,16 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ep" = (
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /turf/open/floor/plasteel/neutral,
 /area/tdome/arena)
 "Eq" = (
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -12441,9 +12385,7 @@
 	network = list("thunder");
 	c_tag = "Red Team"
 	},
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /turf/open/floor/plasteel/neutral,
 /area/tdome/arena)
 "Ev" = (
@@ -12474,9 +12416,7 @@
 	network = list("thunder");
 	c_tag = "Green Team"
 	},
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /turf/open/floor/plasteel/neutral,
 /area/tdome/arena)
 "EA" = (
@@ -12516,50 +12456,38 @@
 /turf/open/floor/plasteel/green/corner,
 /area/tdome/arena)
 "EG" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "EH" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "EI" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
+/obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "EJ" = (
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "EK" = (
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "EL" = (
-/obj/effect/landmark{
-	name = "tdome1"
-	},
+/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -12644,9 +12572,7 @@
 	},
 /area/tdome/tdomeadmin)
 "EV" = (
-/obj/effect/landmark{
-	name = "tdomeadmin"
-	},
+/obj/effect/landmark/thunderdome/admin,
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
@@ -14252,7 +14178,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass,
-/area/centcom/control)
+/area/centcom/evac)
 "Kr" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -14275,7 +14201,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid,
-/area/centcom/control)
+/area/centcom/evac)
 "Kt" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -14394,7 +14320,7 @@
 /obj/structure/flora/ausbushes/palebush,
 /obj/machinery/light,
 /turf/open/floor/plating/asteroid,
-/area/centcom/control)
+/area/centcom/evac)
 "KH" = (
 /obj/effect/light_emitter{
 	set_cap = 1;
@@ -14446,7 +14372,7 @@
 /area/wizard_station)
 "KN" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
@@ -14562,7 +14488,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/centcom/control)
+/area/centcom/evac)
 "Ld" = (
 /obj/machinery/light{
 	dir = 1
@@ -14848,7 +14774,7 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass,
-/area/space)
+/area/centcom/evac)
 "LL" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -14857,17 +14783,17 @@
 	dir = 1
 	},
 /turf/open/floor/grass,
-/area/space)
+/area/centcom/evac)
 "LM" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass,
-/area/space)
+/area/centcom/evac)
 "LN" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
-/area/centcom/control)
+/area/centcom/evac)
 "LO" = (
 /obj/structure/fluff/arc,
 /turf/open/floor/grass,
@@ -14876,7 +14802,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
-/area/centcom/control)
+/area/centcom/evac)
 "LQ" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -14922,6 +14848,52 @@
 	dir = 8
 	},
 /area/centcom/evac)
+"LX" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/palebush,
+/turf/open/floor/plating/asteroid,
+/area/centcom/evac)
+"LY" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/evac)
+"LZ" = (
+/obj/machinery/ai_status_display,
+/turf/closed/indestructible/riveted,
+/area/centcom/evac)
+"Ma" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/evac)
+"Mb" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Security";
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (EAST)"
+	},
+/area/centcom/evac)
+"Mc" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/centcom/evac)
+"Md" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -62633,12 +62605,12 @@ kq
 iH
 ox
 it
-it
-it
-it
-lB
-iu
-it
+qk
+qk
+qk
+qQ
+LZ
+qk
 it
 ir
 jc
@@ -62890,28 +62862,28 @@ ks
 ks
 oy
 is
-it
-pe
-iz
-qP
-iz
+qk
+LX
+ql
+LY
+ql
 KG
-it
+qk
 tH
 tH
 tH
 tH
 tH
-it
+qk
 Ks
-iz
-qP
-kT
-iH
+ql
+LY
+Mb
+yS
 Lc
-jB
-iH
-kM
+yC
+yS
+Mc
 aa
 aa
 aa
@@ -63147,8 +63119,8 @@ ks
 ks
 LJ
 it
-it
-it
+qk
+qk
 qk
 qQ
 qk
@@ -63404,8 +63376,8 @@ ks
 ks
 oy
 it
-lW
-pw
+xX
+xW
 qk
 qR
 rT
@@ -63661,8 +63633,8 @@ iH
 iH
 kk
 it
-pw
-lW
+xW
+xX
 qk
 qS
 rU
@@ -63919,7 +63891,7 @@ jc
 is
 it
 Kq
-lW
+xX
 ql
 qU
 rU
@@ -64175,8 +64147,8 @@ iH
 iH
 ly
 it
-lW
-pw
+xX
+xW
 qm
 qT
 rU
@@ -64432,8 +64404,8 @@ kr
 kr
 kq
 it
-lW
-pw
+xX
+xW
 qk
 qT
 rU
@@ -64688,9 +64660,9 @@ nB
 mw
 ks
 oA
-ab
 it
-iz
+qk
+ql
 qk
 KD
 rU
@@ -65204,7 +65176,7 @@ ks
 oC
 it
 LL
-LO
+LF
 LH
 qS
 rU
@@ -65717,8 +65689,8 @@ ks
 ks
 oE
 it
-it
-iz
+qk
+ql
 qk
 KD
 rU
@@ -65765,7 +65737,7 @@ aa
 aa
 aa
 Fa
-Fh
+Md
 Fp
 FC
 Fh
@@ -65974,8 +65946,8 @@ mw
 ks
 oF
 is
-pw
-lW
+xW
+xX
 qk
 qT
 rU
@@ -65993,9 +65965,9 @@ xq
 qk
 ql
 qk
-ab
-ab
-ab
+qk
+qk
+qk
 aa
 aa
 aa
@@ -66231,8 +66203,8 @@ mw
 ks
 oC
 it
-lW
-pw
+xX
+xW
 qm
 qT
 rU
@@ -66489,7 +66461,7 @@ ks
 oB
 it
 Kq
-lW
+xX
 ql
 qX
 rU
@@ -66745,8 +66717,8 @@ mw
 ks
 kd
 it
-pw
-lW
+xW
+xX
 qk
 qS
 rU
@@ -67002,8 +66974,8 @@ kr
 kr
 oG
 it
-pw
-lW
+xW
+xX
 qk
 qZ
 rV
@@ -67259,8 +67231,8 @@ nT
 ok
 kh
 it
-it
-it
+qk
+qk
 qk
 LS
 HV
@@ -67516,8 +67488,8 @@ it
 it
 it
 it
-it
-it
+qk
+qk
 qk
 ra
 ra

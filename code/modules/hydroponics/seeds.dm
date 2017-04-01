@@ -163,7 +163,7 @@
 				T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id], 1), list("blood_type"="O-"))
 				continue
 
-			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]), 1)
+			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id],1))
 		return 1
 
 

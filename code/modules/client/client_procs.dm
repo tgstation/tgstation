@@ -53,7 +53,7 @@
 				topiclimiter[ADMINSWARNED_AT] = minute
 				msg += " Administrators have been informed."
 				log_game("[key_name(src)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
-				message_admins("[key_name_admin(src)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
+				message_admins("[key_name_admin(src)] [ADMIN_FLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
 
@@ -71,7 +71,7 @@
 
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+		href_logfile << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -194,7 +194,35 @@ var/next_external_rsc = 0
 		vars["fps"] = prefs.clientfps
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
+	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
+	var/alert_mob_dupe_login = FALSE
+	if(config.log_access)
+		for(var/I in clients)
+			if(I == src)
+				continue
+			var/client/C = I
+			if(C.key && (C.key != key) )
+				var/matches
+				if( (C.address == address) )
+					matches += "IP ([address])"
+				if( (C.computer_id == computer_id) )
+					if(matches)
+						matches += " and "
+					matches += "ID ([computer_id])"
+					alert_mob_dupe_login = TRUE
+				if(matches)
+					if(C)
+						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)].</font>")
+						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)].")
+					else
+						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </font>")
+						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
+
 	. = ..()	//calls mob.Login()
+
+	if(alert_mob_dupe_login)
+		set waitfor = FALSE
+		alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 
 	connection_time = world.time
 	connection_realtime = world.realtime
@@ -307,6 +335,7 @@ var/next_external_rsc = 0
 //////////////
 
 /client/Del()
+	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
 		holder.owner = null

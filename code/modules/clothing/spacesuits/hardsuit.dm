@@ -20,7 +20,10 @@
 	icon_state = "[basestate][on]-[item_color]"
 	user.update_inv_head()	//so our mob-overlays update
 
-	set_light(brightness_on)
+	if(on)
+		set_light(brightness_on)
+	else
+		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

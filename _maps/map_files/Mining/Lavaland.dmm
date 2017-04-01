@@ -383,7 +383,6 @@
 	d2 = 4
 	},
 /obj/structure/cable{
-	tag = "icon-0-9";
 	icon_state = "0-9";
 	d1 = 2;
 	d2 = 4
@@ -515,7 +514,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
-	tag = ""
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -552,7 +550,6 @@
 "bn" = (
 /obj/structure/ore_box,
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (SOUTHWEST)";
 	dir = 10;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -653,7 +650,6 @@
 	req_access_txt = "2"
 	},
 /obj/structure/cable{
-	tag = "icon-1-10";
 	icon_state = "1-10";
 	d1 = 2;
 	d2 = 4
@@ -759,7 +755,6 @@
 	icon_state = "2-4"
 	},
 /obj/structure/cable{
-	tag = "icon-5-6";
 	icon_state = "5-6";
 	d1 = 2;
 	d2 = 4
@@ -804,7 +799,6 @@
 	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (WEST)";
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -1021,7 +1015,6 @@
 "cd" = (
 /obj/machinery/mineral/equipment_vendor,
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTHWEST)";
 	dir = 9;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -1048,7 +1041,6 @@
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
-	tag = "icon-brown (NORTH)"
 	},
 /area/mine/living_quarters)
 "cg" = (
@@ -1071,7 +1063,6 @@
 /area/mine/production)
 "ci" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (NORTH)";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -1084,7 +1075,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
-	tag = ""
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1098,7 +1088,6 @@
 	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (NORTH)";
 	dir = 1
 	},
 /turf/open/floor/plasteel{
@@ -1313,7 +1302,6 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	tag = "icon-warnplate (NORTH)";
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -1337,7 +1325,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	tag = "icon-warnplatecorner (EAST)";
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -1394,7 +1381,6 @@
 /area/mine/living_quarters)
 "cO" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (EAST)";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -1912,7 +1898,6 @@
 /area/mine/production)
 "dT" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (EAST)";
 	dir = 4
 	},
 /obj/structure/cable{
@@ -2208,7 +2193,6 @@
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8;
-	tag = "icon-vault (WEST)"
 	},
 /area/mine/maintenance)
 "ez" = (
@@ -2231,14 +2215,12 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
-	tag = "icon-whiteblue (NORTH)"
 	},
 /area/mine/living_quarters)
 "eB" = (
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
-	tag = "icon-whiteblue (NORTH)"
 	},
 /area/mine/living_quarters)
 "eC" = (
@@ -2250,7 +2232,6 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 5;
-	tag = "icon-whiteblue (NORTHEAST)"
 	},
 /area/mine/living_quarters)
 "eD" = (
@@ -2309,7 +2290,6 @@
 /area/mine/production)
 "eK" = (
 /turf/open/floor/plasteel/loadingarea{
-	tag = "icon-loadingarea (EAST)";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -2419,7 +2399,6 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4;
-	tag = "icon-whiteblue (EAST)"
 	},
 /area/mine/living_quarters)
 "eU" = (
@@ -2542,7 +2521,6 @@
 /turf/open/floor/plasteel/brown/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/mine/production)
 "ff" = (
@@ -2576,7 +2554,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	tag = "icon-warnplate (WEST)";
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -2602,7 +2579,6 @@
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
-	tag = "icon-brown (NORTH)"
 	},
 /area/mine/living_quarters)
 "fm" = (
@@ -2625,7 +2601,6 @@
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
-	tag = "icon-brown (NORTH)"
 	},
 /area/mine/living_quarters)
 "fp" = (
@@ -2700,7 +2675,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
-	tag = ""
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -2759,7 +2733,6 @@
 "fE" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/loadingarea{
-	tag = "icon-loadingarea (EAST)";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},

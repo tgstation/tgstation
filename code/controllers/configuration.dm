@@ -223,6 +223,7 @@
 	var/datum/map_config/defaultmap = null
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
+	var/allow_map_voting = TRUE
 
 	// Enables random events mid-round when set to 1
 	var/allow_random_events = 0
@@ -494,6 +495,8 @@
 					config.announce_admin_login = 1
 				if("maprotation")
 					config.maprotation = 1
+				if("allow_map_voting")
+					config.allow_map_voting = text2num(value)
 				if("maprotationchancedelta")
 					config.maprotatechancedelta = text2num(value)
 				if("autoadmin")
@@ -906,6 +909,6 @@
 
 /datum/configuration/proc/stat_entry()
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Edit", src)
+		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 
 	stat("[name]:", statclick)

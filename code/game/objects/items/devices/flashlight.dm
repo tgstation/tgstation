@@ -10,7 +10,8 @@
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = 0
-	var/brightness_on = 4 //luminosity when on
+	var/brightness_on = 4 //range of light when on
+	var/flashlight_power //strength of the light when on. optional
 
 /obj/item/device/flashlight/Initialize()
 	..()
@@ -19,7 +20,10 @@
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
+		if(flashlight_power)
+			set_light(l_range = brightness_on, l_power = flashlight_power)
+		else
+			set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
@@ -397,3 +401,11 @@
 	name = initial(glowtype.name)
 	color = initial(glowtype.color)
 	. = ..()
+
+/obj/item/device/flashlight/flashdark
+	name = "flashdark"
+	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
+	icon_state = "flashdark"
+	item_state = "flashdark"
+	brightness_on = 2.5
+	flashlight_power = -3

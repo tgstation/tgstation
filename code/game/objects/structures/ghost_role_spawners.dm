@@ -26,7 +26,7 @@
 
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
-	..()
+	return ..()
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 /obj/effect/mob_spawn/human/ash_walker
@@ -74,7 +74,7 @@
 
 /obj/effect/mob_spawn/human/exile/Destroy()
 	new/obj/structure/fluff/empty_sleeper(get_turf(src))
-	..()
+	return ..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
 	new_spawn.real_name = "Wish Granter's Victim ([rand(0,999)])"
@@ -109,7 +109,7 @@
 /obj/effect/mob_spawn/human/golem/New(loc, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
 	..()
 	if(species)
-		name += " ([initial(species.id)])"
+		name += " ([initial(species.prefix)])"
 		mob_species = species
 	var/area/A = get_area(src)
 	if(A)
@@ -120,26 +120,7 @@
 		owner = creator
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
-	var/golem_surname = pick(golem_names)
-	// 3% chance that our golem has a human surname, because
-	// cultural contamination
-	if(prob(3))
-		golem_surname = pick(last_names)
-
 	var/datum/species/golem/X = mob_species
-	var/golem_forename = initial(X.id)
-
-	// The id of golem species is either their material "diamond","gold",
-	// or just "golem" for the plain ones. So we're using it for naming.
-
-	if(golem_forename == "golem")
-		golem_forename = "iron"
-
-	new_spawn.real_name = "[capitalize(golem_forename)] [golem_surname]"
-	// This means golems have names like Iron Forge, or Diamond Quarry
-	// also a tiny chance of being called "Plasma Meme"
-	// which is clearly a feature
-
 	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)
 		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
@@ -151,6 +132,7 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
+		H.real_name = H.dna.species.random_name()
 
 /obj/effect/mob_spawn/human/golem/adamantine
 	name = "dust-caked golem shell"
@@ -210,7 +192,7 @@
 
 /obj/effect/mob_spawn/human/hermit/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
-	..()
+	return ..()
 
 //Broken rejuvenation pod: Spawns in animal hospitals in lavaland. Ghosts become disoriented interns and are advised to search for help.
 /obj/effect/mob_spawn/human/doctor/alive/lavaland
@@ -250,7 +232,7 @@
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
-	..()
+	return ..()
 
 //Space Hotel Staff
 /obj/effect/mob_spawn/human/hotel_staff //not free antag u little shits

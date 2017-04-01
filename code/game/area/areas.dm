@@ -123,6 +123,9 @@ var/list/teleportlocs = list()
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
+	if(!IS_DYNAMIC_LIGHTING(src))
+		add_overlay(/obj/effect/fullbright)
+
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -331,15 +334,11 @@ var/list/teleportlocs = list()
 			icon_state = "party"
 		else
 			icon_state = "blue-red"
-		invisibility = INVISIBILITY_LIGHTING
 	else
-	//	new lighting behaviour with obj lights
 		icon_state = null
-		invisibility = INVISIBILITY_MAXIMUM
 
 /area/space/updateicon()
 	icon_state = null
-	invisibility = INVISIBILITY_MAXIMUM
 
 /*
 #define EQUIP 1

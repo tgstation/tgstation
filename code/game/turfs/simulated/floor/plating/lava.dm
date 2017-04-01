@@ -9,7 +9,7 @@
 
 	light_range = 2
 	light_power = 0.75
-	light_color = "#c48a18"
+	light_color = LIGHT_COLOR_LAVA
 
 /turf/open/floor/plating/lava/ex_act()
 	return

@@ -39,8 +39,10 @@
 	if(do_initialize > INITIALIZATION_INSSATOMS)
 		if(QDELETED(src))
 			CRASH("Found new qdeletion in type [type]!")
-		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		Initialize(arglist(args))
+		var/mapload = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		args[1] = mapload
+		if(Initialize(arglist(args)) && mapload)
+			LAZYADD(SSatoms.late_loaders, src)
 
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is being loaded. mapload = FALSE
@@ -424,6 +426,7 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/handle_slip()
 	return
+
 /atom/proc/singularity_act()
 	return
 
@@ -441,6 +444,12 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/ratvar_act()
 	return
+
+/atom/proc/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	return FALSE
+
+/atom/proc/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
     return 0

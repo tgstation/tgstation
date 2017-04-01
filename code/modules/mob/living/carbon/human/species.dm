@@ -17,8 +17,13 @@
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
+	
+	var/face_y_offset = 0
+	var/hair_y_offset = 0
+	
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
+
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
@@ -110,7 +115,7 @@
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
-	var/obj/item/organ/eyes/eyes = C.getorganslot("eyes")
+	var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
 
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
@@ -126,7 +131,7 @@
 	if(eyes)
 		qdel(eyes)
 		eyes = new mutanteyes
-		mutanteyes.Insert(C)
+		eyes.Insert(C)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
@@ -169,22 +174,49 @@
 		return
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
-	var/hair_hidden = 0
-	var/facialhair_hidden = 0
+
+	var/hair_hidden = FALSE //ignored if the matching dynamic_X_suffix is non-empty
+	var/facialhair_hidden = FALSE // ^
+
+	var/dynamic_hair_suffix = "" //if this is non-null, and hair+suffix matches an iconstate, then we render that hair instead
+	var/dynamic_fhair_suffix = ""
+
 	//we check if our hat or helmet hides our facial hair.
 	if(H.head)
 		var/obj/item/I = H.head
+		if(istype(I, /obj/item/clothing))
+			var/obj/item/clothing/C = I
+			dynamic_fhair_suffix = C.dynamic_fhair_suffix
 		if(I.flags_inv & HIDEFACIALHAIR)
-			facialhair_hidden = 1
+			facialhair_hidden = TRUE
+
 	if(H.wear_mask)
 		var/obj/item/clothing/mask/M = H.wear_mask
+		dynamic_fhair_suffix = M.dynamic_fhair_suffix //mask > head in terms of facial hair
 		if(M.flags_inv & HIDEFACIALHAIR)
-			facialhair_hidden = 1
+			facialhair_hidden = TRUE
 
-	if(H.facial_hair_style && (FACEHAIR in species_traits) && !facialhair_hidden)
+	if(H.facial_hair_style && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
 		S = facial_hair_styles_list[H.facial_hair_style]
 		if(S)
-			var/image/img_facial = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
+
+			//List of all valid dynamic_fhair_suffixes
+			var/static/list/fextensions
+			if(!fextensions)
+				var/icon/fhair_extensions = icon('icons/mob/facialhair_extensions.dmi')
+				fextensions = list()
+				for(var/s in fhair_extensions.IconStates(1))
+					fextensions[s] = TRUE
+				qdel(fhair_extensions)
+
+			//Is hair+dynamic_fhair_suffix a valid iconstate?
+			var/fhair_state = S.icon_state
+			var/fhair_file = S.icon
+			if(fextensions[fhair_state+dynamic_fhair_suffix])
+				fhair_state += dynamic_fhair_suffix
+				fhair_file = 'icons/mob/facialhair_extensions.dmi'
+
+			var/image/img_facial = image("icon" = fhair_file, "icon_state" = fhair_state, "layer" = -HAIR_LAYER)
 
 			if(!forced_colour)
 				if(hair_color)
@@ -201,24 +233,47 @@
 
 			standing += img_facial
 
-	//we check if our hat or helmet hides our hair.
 	if(H.head)
 		var/obj/item/I = H.head
+		if(istype(I, /obj/item/clothing))
+			var/obj/item/clothing/C = I
+			dynamic_hair_suffix = C.dynamic_hair_suffix
 		if(I.flags_inv & HIDEHAIR)
-			hair_hidden = 1
+			hair_hidden = TRUE
+
 	if(H.wear_mask)
 		var/obj/item/clothing/mask/M = H.wear_mask
+		if(!dynamic_hair_suffix) //head > mask in terms of head hair
+			dynamic_hair_suffix = M.dynamic_hair_suffix
 		if(M.flags_inv & HIDEHAIR)
-			hair_hidden = 1
-	if(!hair_hidden)
-		if(!H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
+			hair_hidden = TRUE
+
+	if(!hair_hidden || dynamic_hair_suffix)
+		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
 			if(!(NOBLOOD in species_traits))
 				standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained", "layer" = -HAIR_LAYER)
 
 		else if(H.hair_style && (HAIR in species_traits))
 			S = hair_styles_list[H.hair_style]
 			if(S)
-				var/image/img_hair = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
+
+				//List of all valid dynamic_hair_suffixes
+				var/static/list/extensions
+				if(!extensions)
+					var/icon/hair_extensions = icon('icons/mob/hair_extensions.dmi') //hehe
+					extensions = list()
+					for(var/s in hair_extensions.IconStates(1))
+						extensions[s] = TRUE
+					qdel(hair_extensions)
+
+				//Is hair+dynamic_hair_suffix a valid iconstate?
+				var/hair_state = S.icon_state
+				var/hair_file = S.icon
+				if(extensions[hair_state+dynamic_hair_suffix])
+					hair_state += dynamic_hair_suffix
+					hair_file = 'icons/mob/hair_extensions.dmi'
+
+				var/image/img_hair = image("icon" = hair_file, "icon_state" = hair_state, "layer" = -HAIR_LAYER)
 
 				if(!forced_colour)
 					if(hair_color)
@@ -231,7 +286,7 @@
 				else
 					img_hair.color = forced_colour
 				img_hair.alpha = hair_alpha
-
+				img_hair.pixel_y += hair_y_offset
 				standing += img_hair
 
 	if(standing.len)
@@ -259,12 +314,14 @@
 		if(H.lip_style && (LIPS in species_traits) && HD)
 			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]", "layer" = -BODY_LAYER)
 			lips.color = H.lip_color
+			lips.pixel_y += face_y_offset
 			standing	+= lips
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD && has_eyes)
 			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
 			img_eyes.color = "#" + H.eye_color
+			img_eyes.pixel_y += face_y_offset
 			standing	+= img_eyes
 
 	//Underwear, Undershirts & Socks
@@ -1016,7 +1073,6 @@
 		return 1
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-		add_logs(user, target, "disarmed")
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
@@ -1028,23 +1084,23 @@
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(2, WEAKEN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(hit_appends)
+			add_logs(user, target, "disarmed", " pushing them to the ground")
 			return
 
-		var/talked = 0	// BubbleWrap
-
 		if(randn <= 60)
-			//BubbleWrap: Disarming breaks a pull
+			var/obj/item/I = null
 			if(target.pulling)
 				to_chat(target, "<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
-				talked = 1
 				target.stop_pulling()
-			//End BubbleWrap
-
-			if(!talked)	//BubbleWrap
+			else
+				I = target.get_active_held_item()
 				if(target.drop_item())
 					target.visible_message("<span class='danger'>[user] has disarmed [target]!</span>", \
 						"<span class='userdanger'>[user] has disarmed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+				else
+					I = null
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			add_logs(user, target, "disarmed", "[I ? " removing \the [I]" : ""]")
 			return
 
 

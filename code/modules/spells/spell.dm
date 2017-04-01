@@ -242,6 +242,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
+/obj/effect/proc_holder/spell/proc/can_target(mob/living/target)
+	return TRUE
+
 /obj/effect/proc_holder/spell/proc/start_recharge()
 	if(action)
 		action.UpdateButtonIcon()
@@ -361,6 +364,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	switch(max_targets)
 		if(0) //unlimited
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
+				if(!can_target(target))
+					continue
 				targets += target
 		if(1) //single target can be picked
 			if(range < 0)
@@ -370,6 +375,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
+						continue
+					if(!can_target(M))
 						continue
 					possible_targets += M
 
@@ -396,6 +403,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
+				if(!can_target(target))
+					continue
 				possible_targets += target
 			for(var/i=1,i<=max_targets,i++)
 				if(!possible_targets.len)
@@ -420,6 +429,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/list/targets = list()
 
 	for(var/turf/target in view_or_range(range,user,selection_type))
+		if(!can_target(target))
+			continue
 		if(!(target in view_or_range(inner_radius,user,selection_type)))
 			targets += target
 

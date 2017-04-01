@@ -284,7 +284,7 @@
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.setDir(WEST)
 					if(NORTHWEST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
+						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced/fulltile(get_turf(object))
 						WIN.setDir(NORTHWEST)
 				log_admin("Build Mode: [key_name(user)] built a window at ([object.x],[object.y],[object.z])")
 		if(ADV_BUILDMODE)

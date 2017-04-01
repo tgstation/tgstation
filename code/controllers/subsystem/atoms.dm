@@ -12,6 +12,8 @@ var/datum/controller/subsystem/atoms/SSatoms
 	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
 
+	var/list/late_loaders
+
 /datum/controller/subsystem/atoms/New()
 	NEW_SS_GLOBAL(SSatoms)
 
@@ -26,16 +28,18 @@ var/datum/controller/subsystem/atoms/SSatoms
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
-	var/list/late_loaders
-
 	initialized = INITIALIZATION_INNEW_MAPLOAD
+
+	var/static/list/NewQdelList = list()
 
 	if(atoms)
 		for(var/I in atoms)
 			var/atom/A = I
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
 				if(QDELETED(A))
-					stack_trace("Found new qdeletion in type [A.type]!")
+					if(!(NewQdelList[A.type]))
+						WARNING("Found new qdeletion in type [A.type]!")
+						NewQdelList[A.type] = TRUE
 					continue
 				var/start_tick = world.time
 				if(A.Initialize(TRUE))
@@ -51,7 +55,9 @@ var/datum/controller/subsystem/atoms/SSatoms
 		for(var/atom/A in world)
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
 				if(QDELETED(A))
-					stack_trace("Found new qdeletion in type [A.type]!")
+					if(!(NewQdelList[A.type]))
+						WARNING("Found new qdeletion in type [A.type]!")
+						NewQdelList[A.type] = TRUE
 					continue
 				var/start_tick = world.time
 				if(A.Initialize(TRUE))
@@ -67,15 +73,15 @@ var/datum/controller/subsystem/atoms/SSatoms
 
 	initialized = INITIALIZATION_INNEW_REGULAR
 
-	if(late_loaders)
-		for(var/I in late_loaders)
-			var/atom/A = I
-			var/start_tick = world.time
-			A.Initialize(FALSE)
-			if(start_tick != world.time)
-				WARNING("[A]: [A.type] slept during it's Initialize!")
-			CHECK_TICK
-		testing("Late-initialized [late_loaders.len] atoms")
+	for(var/I in late_loaders)
+		var/atom/A = I
+		var/start_tick = world.time
+		A.Initialize(FALSE)
+		if(start_tick != world.time)
+			WARNING("[A]: [A.type] slept during it's Initialize!")
+		CHECK_TICK
+	testing("Late-initialized [LAZYLEN(late_loaders)] atoms")
+	LAZYCLEARLIST(late_loaders)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized

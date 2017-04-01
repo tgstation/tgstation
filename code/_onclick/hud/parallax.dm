@@ -2,7 +2,6 @@
 /client
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
-	var/static/list/parallax_static_layers_tail = newlist(/obj/screen/parallax_pmaster, /obj/screen/parallax_space_whitifier)
 	var/atom/movable/movingmob
 	var/turf/previous_turf
 	var/dont_animate_parallax //world.time of when we can state animate()ing parallax again
@@ -12,9 +11,10 @@
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
 
-/datum/hud/proc/create_parallax()
-	var/client/C = mymob.client
-	if (!apply_parallax_pref())
+/datum/hud/proc/create_parallax(mob/viewmob)
+	var/mob/screenmob = viewmob || mymob
+	var/client/C = screenmob.client
+	if (!apply_parallax_pref(viewmob)) //don't want shit computers to crash when specing someone with insane parallax, so use the viewer's pref
 		return
 
 	if(!length(C.parallax_layers_cached))
@@ -27,15 +27,34 @@
 	if (length(C.parallax_layers) > C.parallax_layers_max)
 		C.parallax_layers.len = C.parallax_layers_max
 
-	C.screen |= (C.parallax_layers + C.parallax_static_layers_tail)
+	C.screen |= (C.parallax_layers)
+	var/obj/screen/plane_master/PM = screenmob.hud_used.plane_masters["[PLANE_SPACE]"]
+	if(screenmob != mymob)
+		C.screen -= locate(/obj/screen/plane_master/parallax_white) in C.screen
+		C.screen += PM
+	PM.color = list(
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		1, 1, 1, 1,
+		0, 0, 0, 0
+		)
 
-/datum/hud/proc/remove_parallax()
-	var/client/C = mymob.client
-	C.screen -= (C.parallax_layers_cached + C.parallax_static_layers_tail)
+
+/datum/hud/proc/remove_parallax(mob/viewmob)
+	var/mob/screenmob = viewmob || mymob
+	var/client/C = screenmob.client
+	C.screen -= (C.parallax_layers_cached)
+	var/obj/screen/plane_master/PM = screenmob.hud_used.plane_masters["[PLANE_SPACE]"]
+	if(screenmob != mymob)
+		C.screen -= locate(/obj/screen/plane_master/parallax_white) in C.screen
+		C.screen += PM
+	PM.color = initial(PM.color)
 	C.parallax_layers = null
 
-/datum/hud/proc/apply_parallax_pref()
-	var/client/C = mymob.client
+/datum/hud/proc/apply_parallax_pref(mob/viewmob)
+	var/mob/screenmob = viewmob || mymob
+	var/client/C = screenmob.client
 	if(C.prefs)
 		var/pref = C.prefs.parallax
 		if (isnull(pref))
@@ -65,9 +84,9 @@
 	C.parallax_layers_max = 3
 	return TRUE
 
-/datum/hud/proc/update_parallax_pref()
-	remove_parallax()
-	create_parallax()
+/datum/hud/proc/update_parallax_pref(mob/viewmob)
+	remove_parallax(viewmob)
+	create_parallax(viewmob)
 
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)
 /datum/hud/proc/set_parallax_movedir(new_parallax_movedir, skip_windups)
@@ -226,7 +245,7 @@
 	mouse_opacity = 0
 
 
-/obj/screen/parallax_layer/New(view)
+/obj/screen/parallax_layer/Initialize(mapload, view)
 	..()
 	if (!view)
 		view = world.view
@@ -258,26 +277,6 @@
 	icon_state = "layer2"
 	speed = 1
 	layer = 2
-
-/obj/screen/parallax_pmaster
-	appearance_flags = PLANE_MASTER
-	plane = PLANE_SPACE_PARALLAX
-	blend_mode = BLEND_MULTIPLY
-	mouse_opacity = FALSE
-	screen_loc = "CENTER-7,CENTER-7"
-
-/obj/screen/parallax_space_whitifier
-	appearance_flags = PLANE_MASTER
-	plane = PLANE_SPACE
-	color = list(
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		1, 1, 1, 1,
-		0, 0, 0, 0
-		)
-	screen_loc = "CENTER-7,CENTER-7"
-
 
 #undef LOOP_NONE
 #undef LOOP_NORMAL
