@@ -43,6 +43,14 @@ var/datum/controller/subsystem/title/SStitle
 		if(splash_turf)
 			splash_turf.icon = icon
 
+/datum/controller/subsystem/title/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		switch(var_name)
+			if("icon")
+				if(splash_turf)
+					splash_turf.icon = icon
+
 /datum/controller/subsystem/title/Shutdown()
 	if(file_path)
 		fcopy(file_path, "data/previous_title.dat")
