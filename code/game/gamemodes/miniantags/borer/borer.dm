@@ -467,7 +467,9 @@ var/total_borer_hosts_needed = 10
 		if(C.stat == CONSCIOUS)
 			choices += C
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
+	if(!choices.len)
+		return
+	var/mob/living/carbon/M = choices.len > 1 ? input(src,"Who do you wish to dominate?") in null|choices : choices[1]
 
 
 	if(!M || !src || stat != CONSCIOUS || victim || (world.time - used_dominate < 150))
