@@ -294,6 +294,8 @@
 		env.merge(removed)
 
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
+		if(l.stat == DEAD)
+			continue
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * config_hallucination_power * D
@@ -359,6 +361,8 @@
 		if(damage > explosion_point)
 			for(var/mob in living_mob_list)
 				var/mob/living/L = mob
+				if(L.stat == DEAD)
+					continue
 				if(istype(L) && L.z == z)
 					if(ishuman(mob))
 						//Hilariously enough, running into a closet should make you get hit the hardest.
