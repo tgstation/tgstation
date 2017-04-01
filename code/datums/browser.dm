@@ -36,7 +36,7 @@
 	window_options = nwindow_options
 
 /datum/browser/proc/set_title_image(ntitle_image)
-	//title_image = ntitle_image
+	title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
 	stylesheets["[ckey(name)].css"] = file
@@ -213,7 +213,6 @@
 // This is added to mob so that it can be used without a reference to the browser object
 // There is probably a better place for this...
 /mob/proc/browse_rsc_icon(icon, icon_state, dir = -1)
-	/*
 	var/icon/I
 	if (dir >= 0)
 		I = new /icon(icon, icon_state, dir)
@@ -224,7 +223,6 @@
 	var/filename = "[ckey("[icon]_[icon_state]_[dir]")].png"
 	src << browse_rsc(I, filename)
 	return filename
-	*/
 
 
 // Registers the on-close verb for a browse window (client/verb/.windowclose)
