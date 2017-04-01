@@ -249,11 +249,11 @@
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg'
-		'sound/roundend/G@ME of W33D - MLG Airhorn Remix.ogg'
-		'sound/roundend/Pokemon - MLG Airhorn Remix.ogg'
-		'sound/roundend/Skyrim - MLG Airhorn Remix.ogg'
-		'sound/roundend/Spooky Scary Skeletons - MLG Airhorn Remix [SPOOK WARNING].ogg'
-		'sound/roundend/Star Wars Duel of the Fates - MLG Airhorn Remix.ogg'\
+		'sound/roundend/G@MEofW33D-MLGAirhornRemix.ogg'
+		'sound/roundend/Pokemon-MLGAirhornRemix.ogg'
+		'sound/roundend/Skyrim-MLGAirhornRemix.ogg'
+		'sound/roundend/SpookyScarySkeletons-MLGAirhornRemix.ogg'
+		'sound/roundend/StarWarsDueloftheFates-MLG AirhornRemix.ogg'\
 		)
 
 	for(var/thing in clients)
