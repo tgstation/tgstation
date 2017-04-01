@@ -141,6 +141,3 @@
 
 /datum/map_config/proc/MakeNextMap()
     return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
-
-/datum/map_config/proc/MakePreviousMap()
-    return config_filename == "data/previous_map.json" || fcopy(config_filename, "data/previous_map.json")
