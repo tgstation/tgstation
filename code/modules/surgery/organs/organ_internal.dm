@@ -12,13 +12,17 @@
 	var/vital = 0
 
 
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
 		replaced.Remove(M, special = 1)
+		if(drop_if_replaced)
+			replaced.forceMove(get_turf(src))
+		else
+			qdel(replaced)
 
 	owner = M
 	M.internal_organs |= src
@@ -650,10 +654,6 @@
 			. |= SPAN_SANS
 		if("papyrus")
 			. |= SPAN_PAPYRUS
-
-/obj/item/organ/tongue/bone/chatter
-	name = "chattering bone \"tongue\""
-	chattering = TRUE
 
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"

@@ -18,6 +18,19 @@
 		pry_tile(C, user)
 		return
 
+/turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	if(T.turf_type == type)
+		return
+	var/obj/item/weapon/tool = user.is_holding_item_of_type(/obj/item/weapon/screwdriver)
+	if(!tool)
+		tool = user.is_holding_item_of_type(/obj/item/weapon/crowbar)
+	if(!tool)
+		return
+	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
+	if(!istype(P))
+		return
+	P.attackby(T, user, params)
+
 /turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
 	var/is_screwdriver = istype(C, /obj/item/weapon/screwdriver)
 	playsound(src, C.usesound, 80, 1)

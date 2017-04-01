@@ -1,3 +1,4 @@
+
 //used for holding information about unique properties of maps
 //feed it json files that match the datum layout
 //defaults to box
@@ -44,12 +45,12 @@
     if(!json)
         log_world("Could not open map_config: [filename]")
         return
-    
+
     json = file2text(json)
     if(!json)
         log_world("map_config is not text: [filename]")
         return
-    
+
     json = json_decode(json)
     if(!json)
         log_world("map_config is not json: [filename]")
@@ -58,7 +59,7 @@
     if(!ValidateJSON(json))
         log_world("map_config failed to validate for above reason: [filename]")
         return
-    
+
     config_filename = filename
 
     map_name = json["map_name"]
@@ -74,10 +75,10 @@
 
         for(var/I in jtcl)
             transition_config[TransitionStringToEnum(I)] = TransitionStringToEnum(jtcl[I])
-        
+
     defaulted = FALSE
 
-#define CHECK_EXISTS(X) if(!istext(json[X])) log_world(X + "missing from json!")
+#define CHECK_EXISTS(X) if(!istext(json[X])) { log_world(X + "missing from json!"); return; }
 /datum/map_config/proc/ValidateJSON(list/json)
     CHECK_EXISTS("map_name")
     CHECK_EXISTS("map_path")
@@ -92,7 +93,7 @@
 
     if(json["transition_config"] != "default")
         if(!islist(json["transition_config"]))
-            log_world("transition_config is not a list!") 
+            log_world("transition_config is not a list!")
             return
 
         var/list/jtcl = json["transition_config"]
@@ -141,6 +142,3 @@
 
 /datum/map_config/proc/MakeNextMap()
     return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
-
-/datum/map_config/proc/MakePreviousMap()
-    return config_filename == "data/previous_map.json" || fcopy(config_filename, "data/previous_map.json")

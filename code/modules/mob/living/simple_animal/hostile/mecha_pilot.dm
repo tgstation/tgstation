@@ -194,7 +194,7 @@
 					target = null
 					return
 
-		target.attack_animal(src)
+		return target.attack_animal(src)
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/handle_automated_action()

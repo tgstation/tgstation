@@ -1,5 +1,4 @@
 
-
 /mob/dead/new_player
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
@@ -141,7 +140,7 @@
 				observer.real_name = observer.client.prefs.real_name
 				observer.name = observer.real_name
 			observer.update_icon()
-			observer.stopLobbySound()
+			observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 			qdel(mind)
 
 			qdel(src)
@@ -302,7 +301,7 @@
 	if(!IsJobAvailable(rank))
 		alert(src, "[rank] is not available. Please try another.")
 		return 0
-	
+
 	if(ticker.late_join_disabled)
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
@@ -471,7 +470,7 @@
 	. = new_character
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
-		new_character.stopLobbySound()
+		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"

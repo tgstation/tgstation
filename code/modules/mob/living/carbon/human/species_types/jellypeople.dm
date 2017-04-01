@@ -1,3 +1,4 @@
+
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
 	name = "Xenobiological Jelly Entity"
@@ -7,6 +8,7 @@
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
+	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)

@@ -39,8 +39,10 @@
 	if(do_initialize > INITIALIZATION_INSSATOMS)
 		if(QDELETED(src))
 			CRASH("Found new qdeletion in type [type]!")
-		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		Initialize(arglist(args))
+		var/mapload = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		args[1] = mapload
+		if(Initialize(arglist(args)) && mapload)
+			LAZYADD(SSatoms.late_loaders, src)
 
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is being loaded. mapload = FALSE

@@ -595,7 +595,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
 		return 0
 
-	if(can_reenter_corpse || (mind && mind.current))
+	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
 	if(target.key)
@@ -805,7 +805,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(mob_eye.hud_used)
 			LAZYINITLIST(mob_eye.observers)
 			mob_eye.observers |= src
-			mob_eye.hud_used.show_hud(1,src)
+			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
 			observetarget = mob_eye
 
 /mob/dead/observer/verb/register_pai_candidate()
