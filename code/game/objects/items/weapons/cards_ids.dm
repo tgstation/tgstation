@@ -216,6 +216,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/ert/New()
 	access = get_all_accesses()+get_ert_access("commander")-access_change_ids
+	..()
 
 /obj/item/weapon/card/id/ert/Security
 	registered_name = "Security Response Officer"
@@ -223,6 +224,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/ert/Security/New()
 	access = get_all_accesses()+get_ert_access("sec")-access_change_ids
+	..()
 
 /obj/item/weapon/card/id/ert/Engineer
 	registered_name = "Engineer Response Officer"
@@ -230,6 +232,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/ert/Engineer/New()
 	access = get_all_accesses()+get_ert_access("eng")-access_change_ids
+	..()
 
 /obj/item/weapon/card/id/ert/Medical
 	registered_name = "Medical Response Officer"
@@ -237,6 +240,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/ert/Medical/New()
 	access = get_all_accesses()+get_ert_access("med")-access_change_ids
+	..()
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
