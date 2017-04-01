@@ -44,6 +44,8 @@
 		message = Ellipsis(message, 10, 1)
 
 	message = treat_message(message)
+	if(!message)
+		return
 
 	var/list/listening_dead = list()
 	for(var/mob/M in player_list)
