@@ -1,0 +1,8 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Autoimplanters have been renamed to autosurgeons. Currently only
+the CMO and nuclear operatives have access to autosurgeons. What is the
+CMO hiding?"
+  - bugfix: "All upgraded organs for purchase by nuclear operatives now actually
+come in an autosurgeon, for speed of surgery."
