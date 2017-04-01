@@ -97,7 +97,7 @@
 			if ("shatter")
 				soundin = pick('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg')
 			if ("explosion")
-				soundin = pick('sound/effects/Explosion1.ogg','sound/effects/Explosion2.ogg')
+				soundin = pick('sound/items/bikehorn.ogg')
 			if ("sparks")
 				soundin = pick('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg')
 			if ("rustle")
