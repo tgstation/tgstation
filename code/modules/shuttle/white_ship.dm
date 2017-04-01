@@ -14,7 +14,7 @@
 	height = 23
 	dir = 1
 	ignitionTime = 20
-	callTime = 40
+	callTime = 50
 	port_angle = 180
 	safety = TRUE
 
@@ -207,7 +207,7 @@
 	desc = "An engineering computer integrated with a camera-assisted rapid construction drone."
 	var/obj/item/weapon/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
 	var/obj/item/device/forcefield/mounted/FF // Internal Forcefield Generator
-	var/obj/machinery/portable_atmospherics/canister/oxygen/OXY // Internal Air Supply
+	var/obj/machinery/portable_atmospherics/canister/oxygen/reserve // Internal Air Supply
 	var/datum/action/innate/engi_ship/camera_off/off = new
 	var/datum/action/innate/engi_ship/switch_mode/switch_mode_action = new //Action for switching the RCD's build modes
 	var/datum/action/innate/engi_ship/build/build_action = new //Action for using the RCD
@@ -234,7 +234,7 @@
 	..()
 	RCD = new /obj/item/weapon/rcd/internal(src)
 	FF = new /obj/item/device/forcefield/mounted(src)
-	OXY = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
+	reserve = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
 
 /obj/machinery/computer/ship_construction/Destroy()
 	qdel(RCD)
@@ -369,6 +369,8 @@
 
 	if(!rcd_target)
 		rcd_target = locate (/obj/structure/grille) in target_turf
+
+	if(!rcd_target) // Need a separate check or else it will refuse to build windows over grilles or grilles under windows
 		rcd_target = locate (/obj/structure/window) in target_turf
 
 	if(!rcd_target || !rcd_target.anchored)
@@ -415,6 +417,7 @@
 	var/mob/camera/aiEye/construction/remote_eye = C.remote_control
 	var/turf/T = get_turf(remote_eye)
 	B.FF.place(T,C)
+	remote_eye.Visualize()
 
 /datum/action/innate/engi_ship/machiner
 	name = "Build APC"
@@ -461,11 +464,11 @@
 	button_icon_state = "mech_internals_off"
 
 /datum/action/innate/engi_ship/airflow/Activate()
-	var/obj/machinery/portable_atmospherics/canister/reserve = B.OXY
-	var/datum/gas_mixture/airburst = reserve.air_contents.remove(reserve.air_contents)
+	var/datum/gas_mixture/airburst = B.reserve.air_contents.total_moles()
 	var/mob/camera/aiEye/construction/remote_eye = C.remote_control
 	var/turf/T = get_turf(remote_eye)
 	T.assume_air(airburst)
+	T.air_update_turf()
 	remote_eye.Visualize()
 
 /datum/action/innate/engi_ship/recaller

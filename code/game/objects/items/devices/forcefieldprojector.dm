@@ -63,13 +63,13 @@
 		shield_integrity = min(shield_integrity + 4, max_shield_integrity)
 	else
 		shield_integrity = max(shield_integrity - LAZYLEN(current_fields), 0) //fields degrade slowly over time
-	for(var/obj/structure/projected_forcefield/F in current_fields)
-		if(shield_integrity <= max_shield_integrity*0.5)
-			F.icon_state = "shield_orange"
-		if(shield_integrity <= 0 || get_dist(F,src) > field_distance_limit)
+	if(shield_integrity <= 0)
+		for(var/obj/structure/projected_forcefield/F in current_fields)
 			qdel(F)
-		else
-			break
+	if(shield_integrity <= max_shield_integrity*0.5)
+		for(var/obj/structure/projected_forcefield/F in current_fields)
+			F.icon_state = "shield_orange"
+
 
 /obj/structure/projected_forcefield
 	name = "forcefield"
@@ -115,7 +115,7 @@
 	max_shield_integrity = 500
 	shield_integrity = 500
 	max_fields = 9
-	field_distance_limit = 120
+	field_distance_limit = 90
 
 /obj/item/device/forcefield/mounted/proc/place(turf/T, mob/living/C)
 	var/obj/structure/projected_forcefield/PF = locate() in T
