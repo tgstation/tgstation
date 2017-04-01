@@ -5,7 +5,7 @@
 	layer = POINT_LAYER
 	duration = 25
 
-/obj/effect/overlay/temp/point/New(mapload, set_invis = 0)
+/obj/effect/overlay/temp/point/Initialize(mapload, set_invis = 0)
 	..()
 	var/atom/old_loc = loc
 	loc = get_turf(src)
