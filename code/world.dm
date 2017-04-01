@@ -188,7 +188,7 @@
 	else
 		delay = config.round_end_countdown * 10
 	if(ticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>An admin has delayed the .</span>")
+		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
 	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
 	var/round_end_sound_sent = FALSE
