@@ -216,6 +216,11 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		return
 	if(!stationgate || QDELETED(stationgate))
 		return
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.block_gateway)
+			visible_message("<span class='warning'>[src] rejects [L] from entering!</span>")
+			return
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/C = AM
 		for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
