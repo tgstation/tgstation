@@ -112,6 +112,7 @@ var/list/gaslist_cache = init_gaslist_cache()
 		var/cached_gases = gases
 		TOTAL_MOLES(cached_gases, .)
 		. *= R_IDEAL_GAS_EQUATION * temperature / volume
+		return
 	return 0
 
 /datum/gas_mixture/proc/return_temperature() //kelvins
