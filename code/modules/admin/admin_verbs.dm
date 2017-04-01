@@ -64,7 +64,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-	/client/proc/toggleSNPC, /* Toggles an npc's processing mode */
 	/client/proc/aooc,		 /* Antag OOC */
 	/client/proc/fill_breach,
 	/client/proc/reset_atmos, /* Clean air */
