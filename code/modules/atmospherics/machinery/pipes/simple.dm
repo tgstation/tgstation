@@ -8,7 +8,7 @@ The regular pipe you see everywhere, including bent ones.
 	icon_state = "intact"
 
 	name = "pipe"
-	desc = "A one meter section of regular pipe"
+	desc = "A one meter section of regular pipe."
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH

@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "The command report for random xeno eggs will now be delivered along with the rest of the roundstart reports"

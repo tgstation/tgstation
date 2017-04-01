@@ -58,6 +58,8 @@ var/datum/controller/subsystem/ticker/ticker
 
 	var/late_join_disabled
 
+	var/list/round_start_events
+
 /datum/controller/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
@@ -202,6 +204,11 @@ var/datum/controller/subsystem/ticker/ticker
 	transfer_characters()	//transfer keys to the new mobs
 
 	Master.RoundStart()	//let the party begin...
+	
+	for(var/I in round_start_events)
+		var/datum/callback/cb = I
+		cb.InvokeAsync()
+	LAZYCLEARLIST(round_start_events)
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	round_start_time = world.time
@@ -233,6 +240,12 @@ var/datum/controller/subsystem/ticker/ticker
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
 	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
+
+/datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
+	if(current_state < GAME_STATE_PLAYING)
+		LAZYADD(round_start_events, cb)
+	else
+		cb.InvokeAsync()
 
 /datum/controller/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
