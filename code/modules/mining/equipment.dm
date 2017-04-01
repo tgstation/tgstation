@@ -573,8 +573,9 @@
 			L.underlays -= marked_image
 			qdel(marked_image)
 			marked_image = null
+			var/backstab_dir = get_dir(user, L)
 			var/def_check = L.getarmor(type = "bomb")
-			if(get_turf(user) == get_turf(get_step(L, turn(L.dir, 180))) || get_turf(user) == get_turf(get_step(L, turn(L.dir, 135))) || get_turf(user) == get_turf(get_step(L, turn(L.dir, 225))))		//Checks the 3 tiles behind the target.
+			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
 				L.apply_damage(80, BRUTE, blocked = def_check)
 				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 			else
