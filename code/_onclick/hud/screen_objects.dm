@@ -684,14 +684,18 @@
 		if(SStitle.icon)
 			icon = SStitle.icon
 	else
-		if(SStitle.previous_icon)
-			icon = SStitle.previous_icon
+		if(!SStitle.previous_icon)
+			qdel(src)
+			return
+		icon = SStitle.previous_icon
 
 	holder.screen += src
 
 	..()
 
 /obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
+	if(QDELETED(src))
+		return
 	if(out)
 		animate(src, alpha = 0, time = 30)
 	else
