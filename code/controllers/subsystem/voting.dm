@@ -138,8 +138,6 @@ var/datum/controller/subsystem/vote/SSvote
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
 
-	return .
-
 /datum/controller/subsystem/vote/proc/submit_vote(vote)
 	if(mode)
 		if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
