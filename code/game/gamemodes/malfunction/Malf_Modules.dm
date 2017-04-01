@@ -359,7 +359,7 @@
 			return
 		var/turf/T = get_turf(eyeobj)
 		var/obj/machinery/transformer/conveyor = new(T)
-		conveyor.master = src
+		conveyor.masterAI = src
 		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
 		var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in current_modules
 		PCT.uses --
