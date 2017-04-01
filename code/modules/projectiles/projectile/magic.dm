@@ -13,6 +13,8 @@
 
 /obj/item/projectile/magic/death/on_hit(target)
 	. = ..()
+	if(prob(blocked))
+		return
 	if(ismob(target))
 		var/mob/M = target
 		M.death(0)
@@ -26,6 +28,8 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
+	if(prob(blocked))
+		return
 	if(isliving(target))
 		if(target.hellbound)
 			return
@@ -50,6 +54,8 @@
 
 /obj/item/projectile/magic/teleport/on_hit(mob/target)
 	. = ..()
+	if(prob(blocked))
+		return
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -75,6 +81,8 @@
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
+	if(prob(blocked))
+		return
 	if(istype(target, /obj/machinery/door))
 		OpenDoor(target)
 	else
@@ -103,6 +111,8 @@
 
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
+	if(prob(blocked))
+		return
 	wabbajack(change)
 	qdel(src)
 
@@ -289,6 +299,8 @@
 	nodamage = 1
 
 /obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
+	if(prob(blocked))
+		return
 	target.animate_atom_living(firer)
 	..()
 
@@ -391,6 +403,8 @@
 
 /obj/item/projectile/magic/aoe/lightning/on_hit(target)
 	. = ..()
+	if(prob(blocked))
+		return
 	tesla_zap(src, tesla_range, tesla_power, tesla_boom)
 	qdel(src)
 
@@ -413,6 +427,8 @@
 
 /obj/item/projectile/magic/aoe/fireball/on_hit(target)
 	. = ..()
+	if(prob(blocked))
+		return
 	var/turf/T = get_turf(target)
 	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
 	if(ismob(target)) //multiple flavors of pain
