@@ -16,9 +16,10 @@
 	var/free_pen = 0
 	var/promotable = 0
 
-/obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
+/obj/item/device/gangtool/Initialize() //Initialize supply point income if it hasn't already been started
 	if(!ticker.mode.gang_points)
 		ticker.mode.gang_points = new /datum/gang_points(ticker.mode)
+	..()
 
 /obj/item/device/gangtool/attack_self(mob/user)
 	if (!can_use(user))
