@@ -58,17 +58,3 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-
-/mob/living/simple_animal/cockroach/clownbug
-	name = "clown bug"
-	desc = "Absolutely disgusting... almost as horrid as that one green clown."
-	icon_state = "cockroach"
-	icon_dead = "cockroach"
-
-/mob/living/simple_animal/cockroach/clownbug/death(gibbed)
-	var/turf/T = get_turf(src)
-	if(T)
-		new /mob/living/simple_animal/cockroach/clownbug(T) //OH GOD NO, WHY.
-		playsound(loc, 'sound/items/bikehorn.ogg', 100, 0)
-	new /obj/item/weapon/grown/bananapeel(src.loc)
-	..()
