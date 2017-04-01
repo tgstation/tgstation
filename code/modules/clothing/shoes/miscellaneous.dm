@@ -1,4 +1,8 @@
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
+	if(prob(0.1*global_peel_chance))
+		new /obj/item/weapon/grown/bananapeel/specialpeel(get_turf(src))
+		playsound(src, 'sound/magic/WarpWhistle.ogg', 40, FALSE)
+	return ..()
 
 /obj/item/clothing/shoes/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?</span>")
@@ -11,6 +15,10 @@
 	name = "mime shoes"
 	icon_state = "mime"
 	item_color = "mime"
+
+/obj/item/clothing/shoes/sneakers/mime/step_action()
+	if(prob(3*global_peel_chance))
+		new /obj/item/weapon/grown/bananapeel/mimanapeel(get_turf(src))
 
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
@@ -69,6 +77,7 @@
 	if(istype(t_loc) && t_loc.wet)
 		t_loc.MakeDry(TURF_WET_WATER)
 		t_loc.wet_time = 0
+	return ..()
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
@@ -86,6 +95,9 @@
 		footstep = 0
 	else
 		footstep++
+	if(prob(5*global_peel_chance))
+		new /obj/item/weapon/grown/bananapeel/specialpeel(get_turf(src))
+		playsound(src, 'sound/magic/WarpWhistle.ogg', 40, FALSE)
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"

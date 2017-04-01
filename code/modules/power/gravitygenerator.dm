@@ -69,6 +69,12 @@ var/const/GRAV_NEEDS_WRENCH = 3
 /obj/machinery/gravity_generator/part/Destroy()
 	if(main_part)
 		qdel(main_part)
+	qdel(peel1)
+	peel1 = null
+	qdel(peel2)
+	peel2 = null
+	qdel(peel3)
+	peel3 = null
 	set_broken()
 	return ..()
 
@@ -78,6 +84,25 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 /obj/machinery/gravity_generator/part
 	var/obj/machinery/gravity_generator/main/main_part = null
+	var/obj/item/weapon/grown/bananapeel/peel1
+	var/obj/item/weapon/grown/bananapeel/peel2
+	var/obj/item/weapon/grown/bananapeel/peel3
+
+/obj/machinery/gravity_generator/part/Initialize(mapload)
+	..()
+	if(locate(/obj/machinery/gravity_generator/main) in locate(x,y-1,z))
+		peel1 = new(get_turf(src))
+		peel2 = new(get_turf(src))
+		peel3 = new(get_turf(src))
+		peel1.anchored = TRUE
+		peel1.orbit(src, 40, FALSE, 20, 36, FALSE)
+		peel1.set_light(4, 30, "#ffff00")
+		peel2.anchored = TRUE
+		peel2.orbit(src, 20, TRUE, 20, 36, FALSE)
+		peel2.set_light(4, 30, "#ffff00")
+		peel3.anchored = TRUE
+		peel3.orbit(src, 30, FALSE, 40, 36, FALSE)
+		peel3.set_light(4, 30, "#ffff00")
 
 /obj/machinery/gravity_generator/part/attackby(obj/item/I, mob/user, params)
 	return main_part.attackby(I, user)
@@ -129,6 +154,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/charge_count = 100
 	var/current_overlay = null
 	var/broken_state = 0
+	var/banana_peel_chance = 1
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", "gravity")
@@ -324,6 +350,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Charge/Discharge and turn on/off gravity when you reach 0/100 percent.
 // Also emit radiation and handle the overlays.
 /obj/machinery/gravity_generator/main/process()
+	global_peel_chance = banana_peel_chance > 0 ? 1 : 0 //prevent banana peel apocalypse
 	if(stat & BROKEN)
 		return
 	if(charging_state != POWER_IDLE)
