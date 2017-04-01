@@ -248,7 +248,8 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			M.updatehealth()
 
 /mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		attacked += 10
 
 
