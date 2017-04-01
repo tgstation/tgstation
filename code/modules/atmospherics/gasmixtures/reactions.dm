@@ -3,8 +3,8 @@
 
 var/list/gas_reactions = init_gas_reactions() //this is our singleton of all reactions
 /proc/init_gas_reactions()
-	. = new list
-	var/list/reaction_types = typesof(datum/gas_reaction - datum/gas_reaction)
+	. = new /list
+	var/list/reaction_types = typesof(/datum/gas_reaction - /datum/gas_reaction)
 
 	for(var/i in 2 to reaction_types.len) //holy shit there's gotta be a better way of sorting this lmao. sorts in descending order of priority
 		var/j = i
@@ -46,7 +46,7 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 	cached_gases["co2"][MOLES] -= reaction_rate
 	cached_gases["agent_b"][MOLES] -= reaction_rate*0.05
 
-	assert_gas("o2") //only need to assert oxygen, as this reaction doesn't occur without the other gases existing
+	air.assert_gas("o2") //only need to assert oxygen, as this reaction doesn't occur without the other gases existing
 	cached_gases["o2"][MOLES] += reaction_rate
 
 	air.temperature -= (reaction_rate*20000)/air.heat_capacity()
@@ -144,7 +144,7 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 				air.fuel_burnt += (plasma_burn_rate)*(1+oxygen_burn_rate)
 
 	if(energy_released > 0)
-		var/new_heat_capacity = heat_capacity()
+		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
 
@@ -157,14 +157,13 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 		location.hotspot_expose(loc_temperature, CELL_VOLUME)
 		for(var/I in location)
 			var/atom/movable/item = I
-			item.temperature_expose(loc_air, our_temperature, CELL_VOLUME)
+			item.temperature_expose(loc_air, loc_temperature, CELL_VOLUME)
 		location.temperature_expose(loc_air, loc_temperature, CELL_VOLUME)
 
 	return air.fuel_burnt ? REACTING : NO_REACTION
 
 //fusion: a terrible idea that was fun to try. turns co2 and plasma into REALLY HOT oxygen and nitrogen. super exothermic lol
 /datum/gas_reaction/fusion
-	id = "fusion"
 	exclude = TRUE
 
 /datum/gas_reaction/fusion/init_reqs()
@@ -174,7 +173,7 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
-	if((cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])/total_moles() < FUSION_PURITY_THRESHOLD)
+	if((cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])/air.total_moles() < FUSION_PURITY_THRESHOLD)
 		//Fusion wont occur if the level of impurities is too high.
 		return NO_REACTION
 
@@ -182,12 +181,12 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 	var/old_heat_capacity = air.heat_capacity()
 	var/carbon_efficency = min(cached_gases["plasma"][MOLES]/cached_gases["co2"][MOLES],MAX_CARBON_EFFICENCY)
 	var/reaction_energy = air.thermal_energy()
-	var/moles_impurities = total_moles()-(cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])
+	var/moles_impurities = air.total_moles()-(cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])
 
 	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 	var/carbon_catalyzed = (CARBON_CATALYST_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 	var/oxygen_added = carbon_catalyzed
-	var/nitrogen_added = (plasma_fused-oxygen_added)-(thermal_energy()/PLASMA_BINDING_ENERGY)
+	var/nitrogen_added = (plasma_fused-oxygen_added)-(air.thermal_energy()/PLASMA_BINDING_ENERGY)
 
 	reaction_energy = max(reaction_energy+((carbon_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
 
@@ -198,10 +197,8 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 	cached_gases["o2"][MOLES] += oxygen_added
 	cached_gases["n2"][MOLES] += nitrogen_added
 
-	air.garbage_collect()
-
 	if(reaction_energy > 0)
-		var/new_heat_capacity = heat_capacity()
+		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
 			//Prevents whatever mechanism is causing it to hit negative temperatures.

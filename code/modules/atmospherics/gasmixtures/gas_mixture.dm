@@ -417,7 +417,7 @@ var/list/gaslist_cache = init_gaslist_cache()
 
 	return ""
 
-/datum/gas_mixture/proc/react(turf/open/dump_location)
+/datum/gas_mixture/react(turf/open/dump_location)
 	. = 0
 	if(temperature < TCMB) //just for safety
 		temperature = TCMB
@@ -456,6 +456,8 @@ var/list/gaslist_cache = init_gaslist_cache()
 			*/
 
 			. |= reaction.react(src, dump_location)
+	if(.)
+		garbage_collect()
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
