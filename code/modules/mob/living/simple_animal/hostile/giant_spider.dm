@@ -198,7 +198,7 @@
 	if(!cocoon_target)
 		var/list/choices = list()
 		for(var/mob/living/L in view(1,src))
-			if(L == src | L.anchored)
+			if(L == src || L.anchored)
 				continue
 			if(Adjacent(L))
 				choices += L
