@@ -409,7 +409,10 @@ var/const/INJECT = 5 //injection
 					var/list/seen = viewers(4, get_turf(my_atom))
 					if(cached_my_atom)
 						if(!ismob(cached_my_atom)) // No bubbling mobs
-							if(C.mix_sound)
+							if(prob(5*global_peel_chance))
+								new /obj/item/weapon/grown/bananapeel(get_turf(cached_my_atom))
+								playsound(get_turf(cached_my_atom), 'sound/magic/WarpWhistle.ogg', 70, FALSE)
+							else if(C.mix_sound)
 								playsound(get_turf(cached_my_atom), C.mix_sound, 80, 1)
 							for(var/mob/M in seen)
 								to_chat(M, "<span class='notice'>\icon[my_atom] [C.mix_message]</span>")

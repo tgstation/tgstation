@@ -219,7 +219,7 @@
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
-	
+
 	var/old_baseturf = baseturf
 	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
@@ -248,6 +248,9 @@
 			FD.CalculateAffectingAreas()
 
 	queue_smooth_neighbors(src)
+	if(prob(1*global_peel_chance))
+		new /obj/item/weapon/grown/bananapeel(src)
+		playsound(src, 'sound/magic/WarpWhistle.ogg', 70, FALSE)
 
 /turf/open/AfterChange(ignore_air)
 	..()

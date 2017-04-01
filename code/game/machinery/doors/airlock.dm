@@ -1281,6 +1281,9 @@ var/list/airlock_overlays = list()
 	update_icon(AIRLOCK_OPENING, 1)
 	src.set_opacity(0)
 	sleep(5)
+	if(prob(5*global_peel_chance))
+		new /obj/item/weapon/grown/bananapeel/specialpeel(get_turf(src))
+		playsound(src, 'sound/magic/WarpWhistle.ogg', 70, FALSE)
 	src.density = 0
 	sleep(9)
 	src.layer = OPEN_DOOR_LAYER

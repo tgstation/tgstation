@@ -37,6 +37,10 @@
 	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
+	if(prob(5*global_peel_chance))
+		new /obj/item/weapon/grown/bananapeel(get_turf(src))
+		playsound(src, 'sound/magic/WarpWhistle.ogg', 50, FALSE)
+		return 0
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)

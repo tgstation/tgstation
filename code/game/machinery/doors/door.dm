@@ -235,6 +235,9 @@
 	do_animate("opening")
 	set_opacity(0)
 	sleep(5)
+	if(prob(5*global_peel_chance))
+		new /obj/item/weapon/grown/bananapeel/specialpeel(get_turf(src))
+		playsound(src, 'sound/magic/WarpWhistle.ogg', 70, FALSE)
 	density = 0
 	sleep(5)
 	layer = OPEN_DOOR_LAYER
@@ -345,4 +348,3 @@
 /obj/machinery/door/ex_act(severity, target)
 	//if it blows up a wall it should blow up a door
 	..(severity ? max(1, severity - 1) : 0, target)
-

@@ -7,3 +7,4 @@ var/timezoneOffset = 0 // The difference betwen midnight (of the host computer) 
 var/fileaccess_timer = 0
 
 var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
+var/global_peel_chance = 1
