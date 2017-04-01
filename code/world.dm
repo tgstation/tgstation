@@ -188,7 +188,7 @@
 	else
 		delay = config.round_end_countdown * 10
 	if(ticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
+		to_chat(world, "<span class='boldannounce'>An admin has delayed the .</span>")
 		return
 	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
 	var/round_end_sound_sent = FALSE
@@ -248,7 +248,12 @@
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
+		'sound/roundend/disappointed.ogg'
+		'sound/roundend/G@ME of W33D - MLG Airhorn Remix.ogg'
+		'sound/roundend/Pokemon - MLG Airhorn Remix.ogg'
+		'sound/roundend/Skyrim - MLG Airhorn Remix.ogg'
+		'sound/roundend/Spooky Scary Skeletons - MLG Airhorn Remix [SPOOK WARNING].ogg'
+		'sound/roundend/Star Wars Duel of the Fates - MLG Airhorn Remix.ogg'\
 		)
 
 	for(var/thing in clients)
