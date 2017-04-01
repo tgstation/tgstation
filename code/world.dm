@@ -253,7 +253,7 @@
 		'sound/roundend/Pokemon-MLGAirhornRemix.ogg'
 		'sound/roundend/Skyrim-MLGAirhornRemix.ogg'
 		'sound/roundend/SpookyScarySkeletons-MLGAirhornRemix.ogg'
-		'sound/roundend/StarWarsDueloftheFates-MLG AirhornRemix.ogg'\
+		'sound/roundend/StarWarsDueloftheFates-MLGAirhornRemix.ogg'\
 		)
 
 	for(var/thing in clients)
