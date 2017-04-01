@@ -35,6 +35,7 @@
 	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/mm = null
 
 	var/next_cast = 0
+	block_gateway = TRUE
 
 
 /mob/living/simple_animal/hostile/wizard/Initialize()
