@@ -17,6 +17,8 @@
 	medhud.add_to_hud(src)
 	faction += "\ref[src]"
 
+	language_menu = new(src)
+
 
 /mob/living/prepare_huds()
 	..()
@@ -40,6 +42,8 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
+
+	QDEL_NULL(language_menu)
 
 	return ..()
 
