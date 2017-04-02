@@ -340,11 +340,11 @@
 		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(75))
-			I.loc = src
-			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
+			I.forceMove(src)
+			visible_message("<span class='notice'>[I] lands in [src].</span>")
 			update_icon()
 		else
-			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")
+			visible_message("<span class='notice'>[I] bounces off of [src]'s rim!</span>")
 		return 0
 	else
 		return ..(mover, target, height)

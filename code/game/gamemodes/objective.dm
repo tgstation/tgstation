@@ -483,9 +483,7 @@ var/global/list/possible_items = list()
 	if (new_target == "custom") //Can set custom items.
 		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
 		if (!custom_target) return
-		var/tmp_obj = new custom_target
-		var/custom_name = tmp_obj:name
-		qdel(tmp_obj)
+		var/custom_name = initial(custom_target.name)
 		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
 		if (!custom_name) return
 		steal_target = custom_target
@@ -530,8 +528,8 @@ var/global/list/possible_items_special = list()
 /datum/objective/steal/special/New()
 	..()
 	if(!possible_items_special.len)
-		init_subtypes(/datum/objective_item/special,possible_items)
-		init_subtypes(/datum/objective_item/stack,possible_items)
+		init_subtypes(/datum/objective_item/special,possible_items_special)
+		init_subtypes(/datum/objective_item/stack,possible_items_special)
 
 /datum/objective/steal/special/find_target()
 	return set_target(pick(possible_items_special))

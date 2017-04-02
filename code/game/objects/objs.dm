@@ -1,12 +1,12 @@
 /obj
 	languages_spoken = HUMAN
 	languages_understood = HUMAN
-	var/crit_fail = 0
+	var/crit_fail = FALSE
 	animate_movement = 2
 	var/throwforce = 0
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
-	var/damtype = "brute"
+	var/damtype = BRUTE
 	var/force = 0
 
 	var/list/armor
@@ -18,13 +18,13 @@
 
 	var/acid_level = 0 //how much acid is on that obj
 
-	var/being_shocked = 0
+	var/being_shocked = FALSE
 
 	var/on_blueprints = FALSE //Are we visible on the station blueprints at roundstart?
 	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
 
-	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
-	var/unique_rename = 0 // can you customize the description/name of the thing?
+	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
+	var/unique_rename = FALSE // can you customize the description/name of the thing?
 	
 	var/dangerous_possession = FALSE	//Admin possession yes/no
 

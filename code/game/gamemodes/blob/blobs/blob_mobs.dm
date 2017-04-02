@@ -136,9 +136,9 @@
 	icon_state = "zombie"
 	H.hair_style = null
 	H.update_hair()
-	update_icons()
 	H.forceMove(src)
 	oldguy = H
+	update_icons()
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
