@@ -86,9 +86,13 @@
 	var/mob/living/carbon/C = owner
 	update_limb(1)
 	C.bodyparts -= src
-	if(held_index)
-		C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
+
+	var/psuedo_limb = FALSE //For things that takes the limb with it, attached chainsaws etc, but not things that don't really exist like zombie claws.
+	if(held_index) //ABSTRACT keeps things like the botany mister or defib paddles from counting
+		var/obj/item/held_item = owner.get_item_for_held_index(held_index)
+		C.dropItemToGround(held_item, 1)
 		C.hand_bodyparts[held_index] = null
+		psuedo_limb = held_item && held_item.flags & NODROP && held_item.flags & ABSTRACT && !(held_item.flags & DROPDEL)
 
 	owner = null
 
@@ -125,6 +129,8 @@
 	C.update_body()
 	C.update_hair()
 	C.update_canmove()
+	if(psuedo_limb)
+		qdel(src)
 
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
