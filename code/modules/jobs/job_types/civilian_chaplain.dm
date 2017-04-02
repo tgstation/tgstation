@@ -81,13 +81,22 @@ Chaplain
 			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 		else
 			B.name = "The Holy Book of [new_religion]"
+		if("sun")
+			B.name = "PRAISE THE SUN"
+			B.deity_name = "The Sun"
+			B.force = 0
+			B.throwforce = 0
+			B.SetLuminosity(9)
 	feedback_set_details("religion_name","[new_religion]")
 	SSreligion.Bible_name = B.name
 
 	var/new_deity = "Space Jesus"
 	if(H.client && H.client.prefs.custom_names["deity"])
 		new_deity = H.client.prefs.custom_names["deity"]
-	B.deity_name = new_deity
+	if(lowertext(new_religion) == "sun")
+		B.deity_name = "The Sun"
+	else
+		B.deity_name = new_deity
 
 	SSreligion.Bible_deity_name = B.deity_name
 	feedback_set_details("religion_deity","[new_deity]")
