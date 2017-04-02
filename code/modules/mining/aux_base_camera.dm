@@ -23,6 +23,7 @@
 /obj/item/weapon/rcd/internal //Base console's internal RCD. Roundstart consoles are filled, rebuilt cosoles start empty.
 	name = "internal RCD"
 	max_matter = 600 //Bigger container and faster speeds due to being specialized and stationary.
+	matter = 600
 	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
 	delay_mod = 0.5
 
@@ -55,7 +56,6 @@
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	..()
 	if(mapload) //Map spawned consoles have a filled RCD and stocked special structures
-		RCD.matter = RCD.max_matter
 		fans_remaining = 4
 		turret_stock = 4
 
