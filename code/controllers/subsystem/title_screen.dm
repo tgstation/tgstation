@@ -55,7 +55,7 @@ var/datum/controller/subsystem/title/SStitle
 
 /datum/controller/subsystem/title/Shutdown()
 	if(file_path)
-		var/F = "data/previous_title.dat"
+		var/F = file("data/previous_title.dat")
 		F << file_path
 
 /datum/controller/subsystem/title/Recover()
