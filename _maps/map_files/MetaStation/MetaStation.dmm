@@ -75737,7 +75737,8 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Genetics";
 	opacity = 1;
-	req_access_txt = "9"
+	req_access_txt = "9";
+	security_level = 0
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/genetics)
@@ -77442,7 +77443,8 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Morgue";
 	opacity = 1;
-	req_access_txt = "5"
+	req_access_txt = "5";
+	security_level = 0
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
@@ -78089,7 +78091,8 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Morgue";
 	opacity = 1;
-	req_access_txt = "6"
+	req_access_txt = "6";
+	security_level = 0
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
@@ -81818,7 +81821,8 @@
 	layer = 2.7;
 	name = "Crematorium Maintenance";
 	opacity = 1;
-	req_access_txt = "27"
+	req_access_txt = "27";
+	security_level = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -81829,7 +81833,8 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Chapel Office Maintenance";
 	opacity = 1;
-	req_access_txt = "27"
+	req_access_txt = "27";
+	security_level = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -83413,7 +83418,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "Chapel";
-	opacity = 1
+	opacity = 1;
+	security_level = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -83759,7 +83765,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "Chapel";
-	opacity = 1
+	opacity = 1;
+	security_level = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -84288,7 +84295,8 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Chapel Office";
 	opacity = 1;
-	req_access_txt = "27"
+	req_access_txt = "27";
+	security_level = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
@@ -84753,7 +84761,8 @@
 	},
 /obj/machinery/door/airlock/centcom{
 	name = "Funeral Parlour";
-	opacity = 1
+	opacity = 1;
+	security_level = 0
 	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
@@ -137314,11 +137323,11 @@ aEr
 aFC
 aGZ
 aGZ
-dlL
+dlJ
 aKG
 aMj
 aKG
-dlP
+dlJ
 aQe
 aRv
 dfD
@@ -137571,11 +137580,11 @@ dej
 aFC
 deC
 deC
-dlM
+dlJ
 aKH
 aMk
 aNu
-dlQ
+dlJ
 dfp
 dfp
 dfE
@@ -137833,7 +137842,7 @@ aKI
 aMj
 dfb
 dfj
-dlS
+dlJ
 deD
 dfF
 aTN
@@ -138855,13 +138864,13 @@ aCY
 dem
 aFD
 deD
-dlK
-dlN
+dlJ
+dlJ
 deV
 dlO
 dfc
-dlR
-dlT
+dlJ
+dlJ
 deD
 dfI
 dfS
