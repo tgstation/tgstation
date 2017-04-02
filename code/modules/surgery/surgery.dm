@@ -13,7 +13,7 @@
 	var/obj/item/bodypart/operated_bodypart					//Operable body part
 	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
 	var/success_multiplier = 0								//Step success propability multiplier
-
+	var/requires_real_bodypart = 0							//Some surgeries don't work on limbs that don't really exist
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()

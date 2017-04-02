@@ -59,6 +59,8 @@
 		return 1
 	else
 		target.regenerate_limb(target_zone)
+		var/obj/item/bodypart/L = target.get_bodypart(target_zone)
+		L.set_fakeness(1)
 		user.visible_message("[user] finishes attaching [tool]!", "<span class='notice'>You attach [tool].</span>")
 		qdel(tool)
 		if(istype(tool, /obj/item/weapon/twohanded/required/chainsaw))
