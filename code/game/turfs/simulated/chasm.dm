@@ -9,7 +9,7 @@
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
 	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
-	density = TRUE
+	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	var/drop_x = 1
 	var/drop_y = 1
 	var/drop_z = 1
