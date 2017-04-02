@@ -135,7 +135,7 @@ update_label("John Doe", "Clowny")
 	origin_tech = "syndicate=1"
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
-/obj/item/weapon/card/id/syndicate/New()
+/obj/item/weapon/card/id/syndicate/Initialize()
 	..()
 	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/card/id
@@ -191,7 +191,7 @@ update_label("John Doe", "Clowny")
 	registered_name = "Captain"
 	assignment = "Captain"
 
-/obj/item/weapon/card/id/captains_spare/New()
+/obj/item/weapon/card/id/captains_spare/Initialize()
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
 	..()
@@ -203,7 +203,7 @@ update_label("John Doe", "Clowny")
 	registered_name = "Central Command"
 	assignment = "General"
 
-/obj/item/weapon/card/id/centcom/New()
+/obj/item/weapon/card/id/centcom/Initialize()
 	access = get_all_centcom_access()
 	..()
 
@@ -214,29 +214,33 @@ update_label("John Doe", "Clowny")
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 
-/obj/item/weapon/card/id/ert/New()
+/obj/item/weapon/card/id/ert/Initialize()
 	access = get_all_accesses()+get_ert_access("commander")-access_change_ids
+	..()
 
 /obj/item/weapon/card/id/ert/Security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
 
-/obj/item/weapon/card/id/ert/Security/New()
+/obj/item/weapon/card/id/ert/Security/Initialize()
 	access = get_all_accesses()+get_ert_access("sec")-access_change_ids
+	..()
 
 /obj/item/weapon/card/id/ert/Engineer
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
 
-/obj/item/weapon/card/id/ert/Engineer/New()
+/obj/item/weapon/card/id/ert/Engineer/Initialize()
 	access = get_all_accesses()+get_ert_access("eng")-access_change_ids
+	..()
 
 /obj/item/weapon/card/id/ert/Medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
 
-/obj/item/weapon/card/id/ert/Medical/New()
+/obj/item/weapon/card/id/ert/Medical/Initialize()
 	access = get_all_accesses()+get_ert_access("med")-access_change_ids
+	..()
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
