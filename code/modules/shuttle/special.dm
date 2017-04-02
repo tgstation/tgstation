@@ -242,7 +242,7 @@
 		if(total_cash >= threshold)
 			break
 
-	if(total_cash >= threshhold)
+	if(total_cash >= threshold)
 		for(var/obj/I in counted_money)
 			qdel(I)
 
