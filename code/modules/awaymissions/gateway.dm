@@ -18,9 +18,10 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 /obj/machinery/gateway/Initialize()
 	randomspawns = awaydestinations
 	update_icon()
-	switch(dir)
-		if(SOUTH,SOUTHEAST,SOUTHWEST)
-			density = 0
+	if(!istype(src, /obj/machinery/gateway/centerstation) && !istype(src, /obj/machinery/gateway/centeraway))
+		switch(dir)
+			if(SOUTH,SOUTHEAST,SOUTHWEST)
+				density = 0
 	..()
 
 /obj/machinery/gateway/proc/toggleoff()
