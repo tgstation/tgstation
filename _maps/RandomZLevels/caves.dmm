@@ -1175,7 +1175,9 @@
 	},
 /area/awaymission/BMPship)
 "cz" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1335,7 +1337,9 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "cR" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
@@ -1631,7 +1635,9 @@
 "dw" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1712,7 +1718,9 @@
 "dH" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1825,7 +1833,9 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1864,7 +1874,9 @@
 /area/awaymission/northblock)
 "ed" = (
 /obj/structure/bed,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
@@ -2070,7 +2082,9 @@
 	},
 /area/awaymission/BMPship)
 "eE" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2137,7 +2151,9 @@
 	},
 /area/awaymission/listeningpost)
 "eO" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2614,7 +2630,9 @@
 	},
 /area/awaymission/BMPship)
 "fU" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel/elevatorshaft{
 	name = "elevator flooring";
 	initial_gas_mix = "n2=23;o2=14"
@@ -2750,7 +2768,9 @@
 	},
 /area/awaymission/BMPship)
 "gk" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},

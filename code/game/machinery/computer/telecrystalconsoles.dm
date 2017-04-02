@@ -21,13 +21,16 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	var/obj/item/uplinkholder = null
 	var/obj/machinery/computer/telecrystals/boss/linkedboss = null
 
-/obj/machinery/computer/telecrystals/uplinker/Initialize()
+/obj/machinery/computer/telecrystals/uplinker/New()
 	..()
 
-	var/ID = pick_n_take(possible_uplinker_IDs)
-	if(!ID)
-		ID = rand(1,999)
-	name = "[name] [ID]"
+	var/ID
+	if(possible_uplinker_IDs.len)
+		ID = pick(possible_uplinker_IDs)
+		possible_uplinker_IDs -= ID
+		name = "[name] [ID]"
+	else
+		name = "[name] [rand(1,999)]"
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
 	if(uplinkholder)

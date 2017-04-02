@@ -16,10 +16,8 @@ var/datum/controller/subsystem/title/SStitle
 		return
 
 	if(fexists("data/previous_title.dat"))
-		var/previous_path = file2text("data/previous_title.dat")
-		if(istext(previous_path))
-			previous_icon = new(previous_icon)
-	fdel("data/previous_title.dat")
+		previous_icon = new("data/previous_title.dat")
+		fdel("data/previous_title.dat")	//linger not
 
 	var/list/provisional_title_screens = flist("config/title_screens/images/")
 	var/list/title_screens = list()
@@ -47,8 +45,7 @@ var/datum/controller/subsystem/title/SStitle
 
 /datum/controller/subsystem/title/Shutdown()
 	if(file_path)
-		var/F = "data/previous_title.dat"
-		F << file_path
+		fcopy(file_path, "data/previous_title.dat")
 
 /datum/controller/subsystem/title/Recover()
 	icon = SStitle.icon

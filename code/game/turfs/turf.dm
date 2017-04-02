@@ -249,8 +249,6 @@
 
 	queue_smooth_neighbors(src)
 
-	HandleTurfChange(src)
-
 /turf/open/AfterChange(ignore_air)
 	..()
 	RemoveLattice()

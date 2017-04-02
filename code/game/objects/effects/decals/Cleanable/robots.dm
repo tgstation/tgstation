@@ -48,7 +48,7 @@
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = MAX_SHOE_BLOODINESS
 
-/obj/effect/decal/cleanable/oil/Initialize()
+/obj/effect/decal/cleanable/oil/New()
 	..()
 	reagents.add_reagent("oil", 30)
 
