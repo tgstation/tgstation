@@ -1814,6 +1814,16 @@
 			return
 
 		show_individual_logging_panel(M, href_list["log_type"])
+	else if(href_list["languagemenu"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/L = locate(href_list["languagemenu"]) in mob_list
+		if(!isliving(L))
+			to_chat(usr, "This can only be used on instances of type /mob/living.")
+			return
+
+		L.open_language_menu(usr)
 
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))

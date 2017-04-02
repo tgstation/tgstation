@@ -1,6 +1,4 @@
 /obj
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
 	var/crit_fail = FALSE
 	animate_movement = 2
 	var/throwforce = 0
