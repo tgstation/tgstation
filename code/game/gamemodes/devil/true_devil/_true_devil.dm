@@ -14,7 +14,7 @@
 	ventcrawler = VENTCRAWLER_NONE
 	density = 1
 	pass_flags =  0
-	var/ascended = 0
+	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
 	mob_size = MOB_SIZE_LARGE
@@ -29,6 +29,8 @@
 	create_bodyparts() //initialize bodyparts
 
 	create_internal_organs()
+
+	grant_all_languages(omnitongue=TRUE)
 	..()
 
 /mob/living/carbon/true_devil/create_internal_organs()
@@ -40,7 +42,7 @@
 
 /mob/living/carbon/true_devil/proc/convert_to_archdevil()
 	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.
-	ascended = 1
+	ascended = TRUE
 	health = maxHealth
 	icon_state = "arch_devil"
 

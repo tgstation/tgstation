@@ -170,7 +170,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	return 1
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans)
-	//world << "[src] Hear(message=[message], speaker=[speaker], message_language=[message_language], raw_message=[raw_message], radio_freq=[radio_freq], spans=[json_encode(spans)])"
 	if(!client)
 		return
 	var/deaf_message
@@ -182,10 +181,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	/*
-	if(!has_language(message_language) || force_compose) //force_compose is so AIs don't end up without their hrefs.
-	*/
-	// For debug purposes, let's always compose.
+
+	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
@@ -250,9 +247,13 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		return department_radio_keys[copytext(message, 1, 3)]
 
 /mob/living/proc/get_message_language(message)
+	var/static/list/langlist
+	if(!langlist)
+		langlist = subtypesof(/datum/language)
+
 	if(copytext(message, 1, 2) == ",")
 		var/key = copytext(message, 2, 3)
-		for(var/ld in subtypesof(/datum/language))
+		for(var/ld in langlist)
 			var/datum/language/LD = ld
 			if(initial(LD.key) == key)
 				return LD

@@ -560,8 +560,7 @@
 
 /* Language procs */
 /atom/movable/proc/grant_language(datum/language/dt)
-	if(!languages)
-		languages = list()
+	LAZYINITLIST(languages)
 	languages[dt] = TRUE
 
 /atom/movable/proc/grant_all_languages(omnitongue=FALSE)
@@ -571,13 +570,17 @@
 	if(omnitongue)
 		SET_SECONDARY_FLAG(src, OMNITONGUE)
 
+/atom/movable/proc/get_understood_language()
+	var/list/possible = list()
+	for(var/dt in languages)
+		possible += dt
+	. = safepick(possible)
+
 /atom/movable/proc/remove_language(datum/language/dt)
-	if(languages && languages.len)
-		languages -= dt
+	LAZYREMOVE(languages, dt)
 
 /atom/movable/proc/remove_all_languages()
-	languages.Cut()
-	languages = null
+	LAZYCLEARLIST(languages)
 
 /atom/movable/proc/has_language(datum/language/dt)
 	. = is_type_in_typecache(dt, languages)

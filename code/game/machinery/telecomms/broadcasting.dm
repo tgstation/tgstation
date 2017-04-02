@@ -60,8 +60,6 @@
 						var/data, var/compression, var/list/level, var/freq, var/list/spans,
 						var/verb_say, var/verb_ask, var/verb_exclaim, var/verb_yell, var/datum/language/language)
 
-	//world << "Broadcast_Message src=[src] (AM=[AM], vmask=[vmask], radio=[radio], message=[message], name=[name], job=[job], realname=[realname], data=[data], compression=[compression], level=[json_encode(level)], freq=[freq], spans=[json_encode(spans)], verb_say=[verb_say], verb_ask=[verb_ask], verb_exclaim=[verb_exclaim], verb_yell=[verb_yell], language=[language])"
-
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 
 	if(!message)

@@ -201,8 +201,6 @@
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
 
-	//world << "radio [src], [loc] talk_into_imp(M=[M], message=[message], channel=[channel], spans=[spans], language=[language])"
-
 	if(wires.is_cut(WIRE_TX))
 		return
 

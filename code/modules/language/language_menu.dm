@@ -2,7 +2,6 @@
 	var/mob/living/owner
 
 /datum/language_menu/New(new_owner)
-	..()
 	owner = new_owner
 
 /datum/language_menu/Destroy()
