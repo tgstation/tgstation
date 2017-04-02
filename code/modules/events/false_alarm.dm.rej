@@ -1,0 +1,10 @@
+diff a/code/modules/events/false_alarm.dm b/code/modules/events/false_alarm.dm	(rejected hunks)
+@@ -4,7 +4,7 @@
+ 	weight			= 20
+ 	max_occurrences = 5
+ 
+-/datum/round_event_control/canSpawnEvent(players_amt, gamemode)
++/datum/round_event_control/falsealarm/canSpawnEvent(players_amt, gamemode)
+ 	return ..() && length(gather_false_events())
+ 
+ /datum/round_event/falsealarm
