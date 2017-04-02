@@ -21,6 +21,7 @@
 			C.memorize_cult_objectives(owner.mind)
 		if(jobban_isbanned(owner, ROLE_CULTIST))
 			INVOKE_ASYNC(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST)
+			addtimer(CALLBACK(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST), 0)
 	if(owner.mind)
 		owner.mind.special_role = "Cultist"
 	owner.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
@@ -29,12 +30,19 @@
 /datum/antagonist/cultist/apply_innate_effects()
 	owner.faction |= "cult"
 	owner.verbs += /mob/living/proc/cult_help
+	if(cult_mastered == 0)
+		owner.verbs += /mob/living/proc/cult_master
 	communion.Grant(owner)
+	owner.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 	..()
 
 /datum/antagonist/cultist/remove_innate_effects()
 	owner.faction -= "cult"
 	owner.verbs -= /mob/living/proc/cult_help
+	owner.verbs -= /mob/living/proc/cult_master
+	for(var/datum/action/innate/cultmast/H in owner.actions)
+		qdel(H)
+	owner.clear_alert("bloodsense")
 	..()
 
 /datum/antagonist/cultist/on_remove()

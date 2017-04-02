@@ -227,6 +227,12 @@
 /obj/effect/overlay/temp/dir_setting/cult/phase/out
 	icon_state = "cultout"
 
+/obj/effect/overlay/temp/cult/final_jaunt
+	name = "final jaunt"
+	duration = 12
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "cult_jaunt"
+
 /obj/effect/overlay/temp/cult/sac
 	name = "maw of Nar-Sie"
 	icon_state = "sacconsume"

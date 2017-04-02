@@ -43,6 +43,8 @@
 		if(override)
 			thealert.timeout = null
 
+	thealert.mob_viewer = src
+
 	if(new_master)
 		var/old_layer = new_master.layer
 		var/old_plane = new_master.plane
@@ -95,8 +97,10 @@
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
-	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 
+	var/mob/mob_viewer //the mob viewing this alert
+
+	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 
 /obj/screen/alert/MouseEntered(location,control,params)
 	openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
@@ -255,6 +259,65 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "You have no factory, and are slowly dying!"
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
+	
+// BLOODCULT
+
+/obj/screen/alert/bloodsense
+	name = "Blood Sense"
+	desc = "Allows you to sense blood that is manipulated by dark magicks."
+	icon_state = "cult_sense"
+	var/image/finder
+	var/image/sacimage
+
+/obj/screen/alert/bloodsense/New()
+	..()
+	finder = new('icons/mob/screen_alert.dmi', "no_sacrifice")
+	if(sac_target.client.prefs && sac_target.client.prefs.UI_style)
+		sacimage = ui_style2icon(sac_target.client.prefs.UI_style)
+	add_overlay(finder)
+	START_PROCESSING(SSprocessing, src)
+	process()
+
+/obj/screen/alert/bloodsense/Destroy()
+    qdel(finder)
+    finder = null
+    STOP_PROCESSING(SSprocessing, src)
+    return ..()
+
+/obj/screen/alert/bloodsense/process()
+	if (!sac_target)
+		return
+	if(!blood_target && !sac_complete)
+		cut_overlays()
+		finder.icon_state = "no_sacrifice"
+		desc = "Nar-Sie demands that [sac_target] be sacrificed before the summoning can begin."
+		add_overlay(finder)
+		add_overlay(sacimage)
+		return
+	if(!blood_target && sac_complete)
+		cut_overlays()
+		finder.icon_state = "sacrifice"
+		desc = "The sacrifice is complete, prepare to summon Nar-Sie!"
+		add_overlay(finder)
+		return
+	var/turf/Q = get_turf(blood_target)
+	var/turf/A = get_turf(mob_viewer)
+	if(Q.z != A.z) //The target is on a different Z level, we cannot sense that far.
+		return
+	finder.dir = get_dir(A, Q)
+	var/Qdist = get_dist(A, Q)
+	setDir(finder.dir)
+	cut_overlays()
+	switch(Qdist)
+		if(2 to 7)
+			finder.icon_state = "finder_far"
+		if(8 to 20)
+			finder.icon_state = "finder_med"
+		if(21 to INFINITY)
+			finder.icon_state = "finder_far"
+		else
+			finder.icon_state = "finder_center"
+	add_overlay(finder)
 
 // CLOCKCULT
 /obj/screen/alert/clockwork
@@ -604,4 +667,3 @@ so as to remain in compliance with the most up-to-date laws."
 	severity = 0
 	master = null
 	screen_loc = ""
-

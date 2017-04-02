@@ -11,6 +11,11 @@
 	. = ..()
 	if(ticker && ticker.mode)
 		ticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+		
+	if(src.mind.special_role == "Cult Master")
+		for(var/mob/M in mob_list)
+			if(iscultist(M))
+				M << "<span class='cultlarge'> The Cult Master, [src], has fallen!"
 
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
 	for(var/mob/M in src)

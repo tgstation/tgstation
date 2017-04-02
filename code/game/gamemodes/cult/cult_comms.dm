@@ -28,6 +28,9 @@
 		user.whisper("O bidai nabora se[pick("'","`")]sma!")
 		user.whisper(html_decode(message))
 	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
+	if (user.mind.special_role == "Cult Master")
+		my_message = "<span class='cultlarge'><b>[(ishuman(user) ? "Master" : "Lord")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
+
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
 			to_chat(M, my_message)
@@ -69,3 +72,116 @@
 	popup.set_content(text)
 	popup.open()
 	return 1
+
+/mob/living/proc/cult_master()
+	set category = "Cultist"
+	set name = "Assert Leadership"
+	pollCultists()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
+/datum/action/innate/cultmast
+	name = "FinalReckoning"
+	desc = "A single use spell that brings the entire cult to the master's location"
+	button_icon_state = "sintouch"
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+
+/datum/action/innate/cultmast/IsAvailable()
+	if(owner.mind.special_role != "Cult Master")
+		return 0
+	return ..()
+
+/datum/action/innate/cultmast/Activate()
+	for(var/i in 1 to 4)
+		if(do_after(owner, 30, target = owner))
+			for(var/mob/M in mob_list)
+				if(iscultist(M) && M != owner)
+					var/turf/mobloc = get_turf(M)
+					switch(i)
+						if (1)
+							new /obj/effect/overlay/temp/cult/sparks(mobloc, M.dir)
+							playsound(mobloc, "sparks", 50, 1)
+						if (2)
+							new /obj/effect/overlay/temp/dir_setting/cult/phase/out(mobloc, M.dir)
+							playsound(mobloc, "sparks", 75, 1)
+						if (3)
+							new /obj/effect/overlay/temp/dir_setting/cult/phase(mobloc, M.dir)
+							playsound(mobloc, "sparks", 100, 1)
+						if (4)
+							new /obj/effect/overlay/temp/cult/final_jaunt(mobloc)
+							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, 1)
+							mobloc = get_turf(owner)
+							M.forceMove(mobloc)
+							for(var/datum/action/innate/cultmast/H in owner.actions)
+								qdel(H)
+
+/datum/action/innate/cultmark
+	name = "Mark Target"
+	desc = "Marks a target for the cult"
+	button_icon_state = "cult_mark"
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	var/obj/effect/proc_holder/cultmark/CM
+	var/time = 0
+
+/datum/action/innate/cultmark/New()
+    CM = new()
+    ..()
+
+/datum/action/innate/cultmark/IsAvailable()
+	if(owner.mind.special_role != "Cult Master")
+		return 0
+	if((world.time - time)<900)
+		owner << "<span class='cultlarge'><b>You need to wait [(900-(world.time-time))/10] seconds before you can mark another target!</b></span>"
+		return 0
+	return ..()
+
+/datum/action/innate/cultmark/Destroy()
+    qdel(CM)
+    CM = null
+    return ..()
+
+/datum/action/innate/cultmark/Activate()
+    CM.toggle(owner) //the important bit
+    time = world.time
+    return TRUE
+
+/obj/effect/proc_holder/cultmark
+    active = FALSE
+    ranged_mousepointer = 'icons/effects/cult_target.dmi'
+
+/obj/effect/proc_holder/cultmark/proc/toggle(mob/user) 
+    if(active)
+        remove_ranged_ability("You cease the marking ritual...")
+    else
+        add_ranged_ability(user, "You prepare to mark a target for your cult...")
+
+/obj/effect/proc_holder/cultmark/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return
+	if(ranged_ability_user.incapacitated())
+		remove_ranged_ability()
+		return
+	var/turf/T = ranged_ability_user.loc
+	if(!isturf(T))
+		return FALSE
+	if(target in view(7, get_turf(ranged_ability_user)))
+		blood_target = target
+		for(var/mob/M in mob_list)
+			if(iscultist(M))
+				M << "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [blood_target] as the cult's highest priority, get there immediately!</b></span>"
+				M << pick(sound('sound/hallucinations/over_here2.ogg',0,1,75), sound('sound/hallucinations/over_here3.ogg',0,1,75))
+		remove_ranged_ability(caller, "The marking rite is complete! It will last for one minute.")
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_blood_target), 120, TIMER_OVERRIDE)
+		return TRUE
+	return FALSE
+	
+/proc/reset_blood_target()
+	for(var/mob/M in mob_list)
+		if(iscultist(M))
+			M << "<span class='cultlarge'><b>The blood mark on [blood_target] has expired!</b></span>"
+	blood_target = null
