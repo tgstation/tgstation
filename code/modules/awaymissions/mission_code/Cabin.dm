@@ -117,7 +117,3 @@
 
 /obj/effect/landmark/mapGenerator/snowy
 	mapGeneratorType = /datum/mapGenerator/snowy
-	endTurfX = 159
-	endTurfY = 157
-	startTurfX = 37
-	startTurfY = 35

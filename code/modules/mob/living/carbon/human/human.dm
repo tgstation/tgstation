@@ -17,9 +17,6 @@
 		args[1] = FALSE
 		Initialize(arglist(args))
 
-/mob/living/carbon/human/dummy/Life()
-	return
-
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
