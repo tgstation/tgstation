@@ -43,7 +43,9 @@
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/start)
 "aj" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
@@ -55,7 +57,9 @@
 	},
 /area/awaymission/challenge/start)
 "al" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/start)
 "am" = (

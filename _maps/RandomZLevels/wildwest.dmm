@@ -2165,7 +2165,9 @@
 	},
 /area/awaymission/wwrefine)
 "gV" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},

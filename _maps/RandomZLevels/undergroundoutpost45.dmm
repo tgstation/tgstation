@@ -250,7 +250,9 @@
 	name = "UO45 Central Hall"
 	})
 "ax" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -263,7 +265,9 @@
 	icon_state = "comfychair";
 	dir = 4
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel/grimy{
 	heat_capacity = 1e+006
 	},
@@ -278,7 +282,9 @@
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -303,7 +309,9 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -490,7 +498,9 @@
 	name = "UO45 Central Hall"
 	})
 "aT" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark{
+	name = "awaystart"
+	},
 /turf/open/floor/plasteel/grimy{
 	heat_capacity = 1e+006
 	},
