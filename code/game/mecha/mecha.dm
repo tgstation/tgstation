@@ -664,7 +664,7 @@
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
 			AI.disconnect_shell()
-			RemoveActions(AI, 1)
+			RemoveActions(AI, TRUE)
 			occupant = null
 			AI.forceMove(card)
 			card.AI = AI
@@ -720,7 +720,7 @@
 	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]")
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
 	if(interaction == AI_TRANS_FROM_CARD)
-		GrantActions(AI, 0) //No eject/return to core action for AI uploaded by card
+		GrantActions(AI, FALSE) //No eject/return to core action for AI uploaded by card
 	else
 		GrantActions(AI, !AI.can_dominate_mechs)
 
