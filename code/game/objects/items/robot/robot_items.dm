@@ -400,7 +400,7 @@
 	A.BB.damage = hitdamage
 	if(hitdamage)
 		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+	A.BB.movespeed = 1
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0)
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
@@ -415,7 +415,7 @@
 	A.BB.damage = hitdamage
 	if(hitdamage)
 		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+	A.BB.movespeed = 1
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0)
