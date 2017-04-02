@@ -77,12 +77,9 @@
 	desc = "A catwalk for easier EVA maneuvering and cable placement."
 	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk"
+	number_of_rods = 2
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
-
-/obj/structure/lattice/catwalk/Initialize(mapload)
-	..()
-	number_of_rods++
 
 /obj/structure/lattice/catwalk/ratvar_act()
 	new /obj/structure/lattice/catwalk/clockwork(loc)

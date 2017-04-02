@@ -1,140 +1,1208 @@
-"aa" = (/turf/open/space,/area/space)
-"ab" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (NORTH)"; icon_state = "propulsion"; dir = 1},/turf/open/floor/plating/airless,/area/shuttle/engi_ship)
-"ac" = (/turf/closed/wall/mineral/plastitanium,/area/shuttle/engi_ship)
-"ad" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (NORTH)"; icon_state = "heater"; dir = 1},/turf/open/floor/plating/airless,/area/shuttle/engi_ship)
-"ae" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (NORTH)"; icon_state = "propulsion"; dir = 1},/turf/open/space,/area/shuttle/engi_ship)
-"af" = (/turf/open/space,/turf/closed/wall/mineral/plastitanium{dir = 8; icon_state = "diagonalWall3"},/area/shuttle/engi_ship)
-"ag" = (/turf/open/space,/turf/closed/wall/mineral/plastitanium{dir = 1; icon_state = "diagonalWall3"},/area/shuttle/engi_ship)
-"ah" = (/obj/machinery/speshul,/turf/open/floor/fakespace,/area/shuttle/engi_ship)
-"ai" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/fakespace,/area/shuttle/engi_ship)
-"aj" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/open/floor/fakespace,/area/shuttle/engi_ship)
-"ak" = (/turf/closed/wall/mineral/titanium/interior,/area/shuttle/engi_ship)
-"al" = (/obj/structure/mirror,/turf/closed/wall/mineral/titanium/interior,/area/shuttle/engi_ship)
-"am" = (/turf/closed/wall/shuttle/smooth/nodiagonal,/area/shuttle/engi_ship)
-"an" = (/obj/machinery/door/airlock/engineering,/obj/structure/fans/tiny,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"ao" = (/turf/closed/wall/mineral/titanium,/area/shuttle/engi_ship)
-"ap" = (/turf/open/floor/plating,/turf/closed/wall/mineral/plastitanium{dir = 4; icon_state = "diagonalWall3"},/turf/closed/wall/mineral/titanium,/area/shuttle/engi_ship)
-"aq" = (/turf/open/floor/plating,/turf/closed/wall/mineral/plastitanium{icon_state = "diagonalWall3"},/turf/closed/wall/mineral/titanium,/area/shuttle/engi_ship)
-"ar" = (/obj/structure/dresser,/obj/machinery/light{dir = 1},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"as" = (/obj/structure/sink{dir = 1},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"at" = (/obj/structure/bed/pod,/obj/item/weapon/bedsheet/ce,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"au" = (/obj/structure/sign/poster/contraband/tools,/turf/closed/wall/shuttle/smooth/nodiagonal,/area/shuttle/engi_ship)
-"av" = (/obj/machinery/door/poddoor/preopen{id = 29},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aw" = (/obj/structure/extinguisher_cabinet,/turf/closed/wall/mineral/titanium/nodiagonal,/area/shuttle/engi_ship)
-"ax" = (/obj/structure/rack,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/sheet/plasteel/fifty{step_x = -4; step_y = -4},/obj/item/device/forcefield,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"ay" = (/obj/machinery/suit_storage_unit/ert/engineer,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"az" = (/obj/machinery/suit_storage_unit/ert/engineer,/obj/machinery/light{dir = 1},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aA" = (/obj/structure/shuttle/engine/propulsion{dir = 8; icon_state = "propulsion"; tag = "icon-propulsion (EAST)"},/turf/open/floor/plating/airless,/area/shuttle/engi_ship)
-"aB" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (WEST)"; icon_state = "heater"; dir = 8},/turf/open/floor/plating/airless,/area/shuttle/engi_ship)
-"aC" = (/obj/machinery/shower,/obj/structure/curtain,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aD" = (/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"aE" = (/obj/machinery/door/airlock/glass,/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"aF" = (/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aG" = (/obj/structure/sign/poster/contraband/atmosia_independence,/turf/closed/wall/mineral/titanium,/area/shuttle/engi_ship)
-"aH" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (EAST)"; icon_state = "heater"; dir = 4},/turf/open/floor/plating/airless,/area/shuttle/engi_ship)
-"aI" = (/obj/structure/shuttle/engine/propulsion{dir = 4; icon_state = "propulsion"; tag = "icon-propulsion (WEST)"},/turf/open/floor/plating/airless,/area/shuttle/engi_ship)
-"aJ" = (/obj/machinery/recharge_station,/obj/machinery/light,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aK" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aL" = (/turf/closed/wall/shuttle/smooth,/area/shuttle/engi_ship)
-"aM" = (/obj/machinery/light,/obj/structure/rack,/obj/item/weapon/rcd,/obj/item/weapon/rcd_ammo/large,/obj/item/weapon/rcd_ammo/large,/obj/item/device/assembly/flash,/obj/item/clothing/glasses/welding,/obj/item/device/modular_computer/tablet,/obj/item/device/paicard,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aN" = (/obj/structure/rack,/obj/item/weapon/twohanded/fireaxe,/obj/item/weapon/storage/belt/utility/chief/full,/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aO" = (/turf/open/floor/plating,/turf/closed/wall/mineral/plastitanium{dir = 8; icon_state = "diagonalWall3"},/turf/closed/wall/mineral/titanium,/area/shuttle/engi_ship)
-"aP" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (EAST)"; icon_state = "heater"; dir = 4},/turf/closed/wall/shuttle/syndie,/area/shuttle/engi_ship)
-"aQ" = (/obj/machinery/sleeper{dir = 4},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aR" = (/obj/machinery/light,/obj/machinery/washing_machine,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aS" = (/obj/machinery/newscaster,/turf/closed/wall/mineral/titanium/interior,/area/shuttle/engi_ship)
-"aT" = (/obj/structure/piano{color = ""; icon_state = "piano"},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aU" = (/obj/structure/chair/comfy/brown{dir = 8},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aV" = (/obj/structure/bookcase/manuals/engineering,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aW" = (/obj/structure/sign/atmosplaque,/turf/closed/wall/shuttle/smooth,/area/shuttle/engi_ship)
-"aX" = (/obj/machinery/light,/obj/structure/rack,/obj/item/weapon/hand_tele,/obj/item/weapon/melee/classic_baton/telescopic,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aY" = (/obj/structure/tank_dispenser/oxygen,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"aZ" = (/obj/machinery/status_display,/turf/closed/wall/mineral/plastitanium,/area/shuttle/engi_ship)
-"ba" = (/obj/machinery/computer/ship_construction,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bb" = (/turf/closed/wall/shuttle/syndie,/area/shuttle/engi_ship)
-"bc" = (/turf/open/space,/turf/closed/wall/mineral/plastitanium{icon_state = "diagonalWall3"},/area/shuttle/engi_ship)
-"bd" = (/obj/structure/sign/poster/contraband/atmosia_independence,/turf/closed/wall/mineral/titanium/interior,/area/shuttle/engi_ship)
-"be" = (/obj/machinery/light{dir = 1},/obj/structure/table/wood/fancy,/obj/item/weapon/canvas/nineteenXnineteen,/obj/item/weapon/canvas/nineteenXnineteen,/obj/item/weapon/storage/crayons,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bf" = (/obj/structure/chair/comfy/brown,/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bg" = (/obj/structure/statue/gold/ce,/obj/machinery/light{dir = 1},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bh" = (/obj/item/device/radio/intercom,/turf/closed/wall/shuttle/smooth,/area/shuttle/engi_ship)
-"bi" = (/obj/structure/sign/poster/official/bless_this_spess,/turf/closed/wall/mineral/titanium/nodiagonal,/area/shuttle/engi_ship)
-"bj" = (/obj/machinery/button/door{id = 29},/turf/closed/wall/shuttle/smooth,/area/shuttle/engi_ship)
-"bk" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/machinery/computer/security{icon_screen = "power"; name = "Camera console"},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bl" = (/obj/structure/chair/comfy/black{dir = 1},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bm" = (/obj/machinery/computer/station_alert,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bn" = (/obj/structure/window/reinforced{dir = 4; max_integrity = 200; obj_integrity = 200; pixel_x = 0},/obj/structure/window/reinforced{dir = 8; max_integrity = 200; obj_integrity = 200},/obj/structure/grille,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/door/poddoor/preopen{id = 29},/turf/open/floor/plating,/area/shuttle/engi_ship)
-"bo" = (/obj/machinery/light{dir = 1},/turf/open/floor/fakespace,/area/shuttle/engi_ship)
-"bp" = (/obj/structure/easel,/obj/item/weapon/canvas/twentythreeXtwentythree,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bq" = (/obj/structure/chair/comfy/brown{color = "#c45c57"; dir = 4; icon_state = "comfychair"},/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"br" = (/obj/structure/table/wood/fancy,/obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba,/obj/item/weapon/lighter{color = "yellow"},/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bs" = (/obj/structure/table/wood/fancy,/obj/item/toy/cards/deck/cas/black,/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bt" = (/obj/structure/chair/comfy/brown{color = "#c45c57"; dir = 8; icon_state = "comfychair"},/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bu" = (/obj/machinery/door/airlock/glass_engineering,/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bv" = (/obj/structure/chair/comfy/black{dir = 4},/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bw" = (/obj/machinery/computer/apc_control,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bx" = (/obj/machinery/light,/turf/open/floor/fakespace,/area/shuttle/engi_ship)
-"by" = (/obj/structure/table/wood/fancy,/obj/item/weapon/storage/pill_bottle/dice,/obj/effect/holodeck_effect/cards{step_x = -3; step_y = 10},/obj/docking_port/mobile/engi_ship,/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bz" = (/obj/structure/table/wood/fancy,/obj/item/toy/cards/deck/cas,/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bA" = (/obj/machinery/computer/shuttle/engi_ship,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bB" = (/obj/structure/window/reinforced{dir = 4; max_integrity = 200; obj_integrity = 200; pixel_x = 0},/obj/structure/window/reinforced{dir = 8; max_integrity = 200; obj_integrity = 200},/obj/structure/grille,/obj/structure/cable,/obj/machinery/door/poddoor/preopen{id = 29},/turf/open/floor/plating,/area/shuttle/engi_ship)
-"bC" = (/obj/structure/extinguisher_cabinet,/turf/closed/wall/shuttle/smooth,/area/shuttle/engi_ship)
-"bD" = (/obj/machinery/light,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bE" = (/obj/structure/chair/comfy/brown{color = "#596479"; dir = 1},/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bF" = (/obj/structure/statue/gold/ce,/obj/machinery/light,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bG" = (/obj/structure/sign/poster/contraband/missing_gloves,/turf/closed/wall/mineral/titanium/nodiagonal,/area/shuttle/engi_ship)
-"bH" = (/obj/machinery/computer/sat_control{icon_screen = "comm_logs"},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bI" = (/obj/structure/chair/comfy/black,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bJ" = (/obj/machinery/computer/engi_nav,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bK" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bL" = (/obj/machinery/light{dir = 1},/obj/structure/closet/crate/bin,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bM" = (/obj/machinery/light{dir = 1},/obj/machinery/vending/snack/orange,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bN" = (/obj/machinery/computer/arcade,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bO" = (/turf/open/floor/plating,/turf/closed/wall/mineral/titanium,/area/shuttle/engi_ship)
-"bP" = (/turf/open/space,/turf/closed/wall/mineral/plastitanium{dir = 4; icon_state = "diagonalWall3"},/area/shuttle/engi_ship)
-"bQ" = (/obj/machinery/autolathe,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bR" = (/obj/machinery/light{dir = 1},/obj/machinery/vending/engivend,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bS" = (/obj/structure/shuttle/engine/propulsion{dir = 4; icon_state = "propulsion"; tag = "icon-propulsion (WEST)"},/turf/closed/wall/shuttle/syndie,/area/shuttle/engi_ship)
-"bT" = (/obj/machinery/chem_dispenser,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bU" = (/obj/structure/chair/stool/bar,/turf/open/floor/carpet,/area/shuttle/engi_ship)
-"bV" = (/obj/structure/shuttle/engine/propulsion{dir = 4; icon_state = "propulsion"; tag = "icon-propulsion (WEST)"},/turf/open/space,/area/shuttle/engi_ship)
-"bW" = (/obj/structure/table/wood/fancy,/obj/item/weapon/storage/box/beakers,/obj/item/weapon/disk/design_disk/adv,/obj/item/weapon/disk/tech_disk/adv,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bX" = (/obj/structure/table/wood/fancy,/obj/item/weapon/storage/firstaid,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bY" = (/obj/machinery/r_n_d/circuit_imprinter,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"bZ" = (/obj/machinery/light,/obj/machinery/r_n_d/server/core,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"ca" = (/obj/structure/sign/poster/contraband/power,/turf/closed/wall/mineral/titanium/nodiagonal,/area/shuttle/engi_ship)
-"cb" = (/obj/structure/sign/poster/contraband/tools,/turf/closed/wall/mineral/titanium/nodiagonal,/area/shuttle/engi_ship)
-"cc" = (/obj/structure/table/wood/fancy,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"cd" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/spray/cleaner,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"ce" = (/obj/machinery/door/window/northright,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"cf" = (/turf/open/floor/plating,/turf/closed/wall/mineral/plastitanium{dir = 1; icon_state = "diagonalWall3"},/turf/closed/wall/mineral/titanium,/area/shuttle/engi_ship)
-"cg" = (/obj/machinery/vending/boozeomat{level = 0},/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"ch" = (/obj/effect/mob_spawn/human/hotel_staff,/obj/machinery/light,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"ci" = (/obj/machinery/light,/obj/machinery/chem_dispenser/drinks/beer,/turf/open/floor/mineral/gold,/area/shuttle/engi_ship)
-"cj" = (/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/engi_ship)
-"ck" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/engi_ship)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/open/space,
+/area/space)
+"ab" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"ac" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"ad" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"ae" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/space,
+/area/shuttle/engi_ship)
+"af" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"ag" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"ah" = (
+/obj/machinery/speshul,
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"ai" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"aj" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"ak" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"al" = (
+/obj/structure/mirror,
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"am" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"an" = (
+/obj/machinery/door/airlock/engineering,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"ao" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"ap" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"aq" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"ar" = (
+/obj/structure/dresser,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"as" = (
+/obj/structure/sink{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"at" = (
+/obj/structure/bed/pod,
+/obj/item/weapon/bedsheet/ce,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"au" = (
+/obj/structure/sign/poster/contraband/tools,
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"av" = (
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aw" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/engi_ship)
+"ax" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/plasteel/fifty{
+	step_x = -4;
+	step_y = -4
+	},
+/obj/item/device/forcefield,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"ay" = (
+/obj/machinery/suit_storage_unit/ert/engineer,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"az" = (
+/obj/machinery/suit_storage_unit/ert/engineer,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aA" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (EAST)"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"aB" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (WEST)";
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"aC" = (
+/obj/machinery/shower,
+/obj/structure/curtain,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aD" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"aE" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"aF" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aG" = (
+/obj/structure/sign/poster/contraband/atmosia_independence,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"aH" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (EAST)";
+	icon_state = "heater";
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"aI" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (WEST)"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"aJ" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aK" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aL" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"aM" = (
+/obj/machinery/light,
+/obj/structure/rack,
+/obj/item/weapon/rcd,
+/obj/item/weapon/rcd_ammo/large,
+/obj/item/weapon/rcd_ammo/large,
+/obj/item/device/assembly/flash,
+/obj/item/clothing/glasses/welding,
+/obj/item/device/modular_computer/tablet,
+/obj/item/device/paicard,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aN" = (
+/obj/structure/rack,
+/obj/item/weapon/twohanded/fireaxe,
+/obj/item/weapon/storage/belt/utility/chief/full,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aO" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"aP" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (EAST)";
+	icon_state = "heater";
+	dir = 4
+	},
+/turf/closed/wall/shuttle/syndie,
+/area/shuttle/engi_ship)
+"aQ" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aR" = (
+/obj/machinery/light,
+/obj/machinery/washing_machine,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aS" = (
+/obj/machinery/newscaster,
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"aT" = (
+/obj/structure/piano{
+	color = "";
+	icon_state = "piano"
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aU" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aV" = (
+/obj/structure/bookcase/manuals/engineering,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aW" = (
+/obj/structure/sign/atmosplaque,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"aX" = (
+/obj/machinery/light,
+/obj/structure/rack,
+/obj/item/weapon/hand_tele,
+/obj/item/weapon/melee/classic_baton/telescopic,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aY" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"aZ" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"ba" = (
+/obj/machinery/computer/ship_construction,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bb" = (
+/turf/closed/wall/shuttle/syndie,
+/area/shuttle/engi_ship)
+"bc" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"bd" = (
+/obj/structure/sign/poster/contraband/atmosia_independence,
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"be" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/canvas/nineteenXnineteen,
+/obj/item/weapon/canvas/nineteenXnineteen,
+/obj/item/weapon/storage/crayons,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bf" = (
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bg" = (
+/obj/structure/statue/gold/ce,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bh" = (
+/obj/item/device/radio/intercom,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"bi" = (
+/obj/structure/sign/poster/official/bless_this_spess,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/engi_ship)
+"bj" = (
+/obj/machinery/button/door{
+	id = 29
+	},
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"bk" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/obj/machinery/computer/security{
+	icon_screen = "power";
+	name = "Camera console"
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bl" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bm" = (
+/obj/machinery/computer/station_alert,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bn" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	max_integrity = 200;
+	obj_integrity = 200;
+	pixel_x = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	max_integrity = 200;
+	obj_integrity = 200
+	},
+/obj/structure/grille,
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/plating,
+/area/shuttle/engi_ship)
+"bo" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"bp" = (
+/obj/structure/easel,
+/obj/item/weapon/canvas/twentythreeXtwentythree,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bq" = (
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 4;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"br" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba,
+/obj/item/weapon/lighter{
+	color = "yellow"
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bs" = (
+/obj/structure/table/wood/fancy,
+/obj/item/toy/cards/deck/cas/black,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bt" = (
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 8;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bu" = (
+/obj/machinery/door/airlock/glass_engineering,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bv" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bw" = (
+/obj/machinery/computer/apc_control,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bx" = (
+/obj/machinery/light,
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"by" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/storage/pill_bottle/dice,
+/obj/effect/holodeck_effect/cards{
+	step_x = -3;
+	step_y = 10
+	},
+/obj/docking_port/mobile/engi_ship,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bz" = (
+/obj/structure/table/wood/fancy,
+/obj/item/toy/cards/deck/cas,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bA" = (
+/obj/machinery/computer/shuttle/engi_ship,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bB" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	max_integrity = 200;
+	obj_integrity = 200;
+	pixel_x = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	max_integrity = 200;
+	obj_integrity = 200
+	},
+/obj/structure/grille,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/plating,
+/area/shuttle/engi_ship)
+"bC" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"bD" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bE" = (
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bF" = (
+/obj/structure/statue/gold/ce,
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bG" = (
+/obj/structure/sign/poster/contraband/missing_gloves,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/engi_ship)
+"bH" = (
+/obj/machinery/computer/sat_control{
+	icon_screen = "comm_logs"
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bI" = (
+/obj/structure/chair/comfy/black,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bJ" = (
+/obj/machinery/computer/engi_nav,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bK" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bL" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/closet/crate/bin,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bM" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/vending/snack/orange,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bN" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bO" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"bP" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"bQ" = (
+/obj/machinery/autolathe,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bR" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/vending/engivend,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bS" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (WEST)"
+	},
+/turf/closed/wall/shuttle/syndie,
+/area/shuttle/engi_ship)
+"bT" = (
+/obj/machinery/chem_dispenser,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bU" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"bV" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (WEST)"
+	},
+/turf/open/space,
+/area/shuttle/engi_ship)
+"bW" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/storage/box/beakers,
+/obj/item/weapon/disk/design_disk/adv,
+/obj/item/weapon/disk/tech_disk/adv,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bX" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/storage/firstaid,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bY" = (
+/obj/machinery/r_n_d/circuit_imprinter,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"bZ" = (
+/obj/machinery/light,
+/obj/machinery/r_n_d/server/core,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"ca" = (
+/obj/structure/sign/poster/contraband/power,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/engi_ship)
+"cb" = (
+/obj/structure/sign/poster/contraband/tools,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/engi_ship)
+"cc" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"cd" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"ce" = (
+/obj/machinery/door/window/northright,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"cf" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"cg" = (
+/obj/machinery/vending/boozeomat{
+	level = 0
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"ch" = (
+/obj/effect/mob_spawn/human/hotel_staff,
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"ci" = (
+/obj/machinery/light,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"cj" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"ck" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaabaaaaaaaaabaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaabacadaaaaaaaaadacaeaaaaaaaaaaaa
-aaaaaaaaaaafadacacagaaaaafacacadagaaaaaaaaaa
-aaaaaaahafacacacacacaiajacacacacacagahaaaaaa
-aaaaaaafakakalakakamananamaoapaoaoaqagaaaaaa
-aaaaafakakarasatatauavavawaxayazayaoacagaaaa
-aaaAaBakaCaDaDaDaDaEaDaDaEaDaDaDaFaGacaHaIaa
-aaacacakaFaDaDaDaJakaKaKaLaMaDaDaNaOacacaPaI
-aAaBacamaQaDaDaRaSaTaUaFaVaWaXaDaYaOaZbabbag
-aaaabcacambdaEakbeaDbfbfaDbgbhaEbibjbkblbmbn
-aaaaaaboanavaDaKbpbqbrbsbtaDaDaDaDbuaDbvbwbn
-aaaaaabxanavaDaKaFbqbybzbtaDaDaDaDbuaDbvbAbB
-aaaaafacambCaEaLbDaDbEbEaDbFaLaEbGaObHbIbJbB
-aAaBacaLaLbKaDbLbhaFaFaFaFaLbMaDbNbOacbaacbP
-aaacacaLbQaDaDaDbRaLaKaKaLbLaDaDaFaqacacaPbS
-aaaAaBaLbTaDaDaDaDaEaDaDaEaDbUbUaFaoacaHbVaa
-aaaabcaLaobWbXbYbZcaavavcbcccdccceaoacbPaaaa
-aaaaaabccfbOaLaLaLcfananamcgaFchaFaObPahaaaa
-aaaaaaahbcacacacacacaiajacamciamaobPaaaaaaaa
-aaaaaaaaaabccjacacbPaaaabcacamcjbPaaaaaaaaaa
-aaaaaaaaaaaackaccjaaaaaaaacjacckaaaaaaaaaaaa
-aaaaaaaaaaaaaaaackaaaaaaaackaaaaaaaaaaaaaaaa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aA
+aa
+aa
+aa
+aa
+aA
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aA
+ac
+aB
+aa
+aa
+aa
+aa
+aB
+ac
+aA
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+af
+aB
+ac
+ac
+bc
+aa
+aa
+af
+ac
+ac
+aB
+bc
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+ah
+af
+ak
+ak
+ak
+am
+ac
+bo
+bx
+ac
+aL
+aL
+aL
+aL
+bc
+ah
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+af
+ak
+ak
+aC
+aF
+aQ
+am
+an
+an
+am
+aL
+bQ
+bT
+ao
+cf
+bc
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+af
+ac
+ak
+ar
+aD
+aD
+aD
+bd
+av
+av
+bC
+bK
+aD
+aD
+bW
+bO
+ac
+bc
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+ab
+ad
+ac
+al
+as
+aD
+aD
+aD
+aE
+aD
+aD
+aE
+aD
+aD
+aD
+bX
+aL
+ac
+cj
+ck
+aa
+"}
+(8,1,1) = {"
+aa
+ac
+ac
+ac
+ak
+at
+aD
+aD
+aR
+ak
+aK
+aK
+aL
+bL
+aD
+aD
+bY
+aL
+ac
+ac
+ac
+aa
+"}
+(9,1,1) = {"
+ab
+ad
+ac
+ac
+ak
+at
+aD
+aJ
+aS
+be
+bp
+aF
+bD
+bh
+bR
+aD
+bZ
+aL
+ac
+ac
+cj
+ck
+"}
+(10,1,1) = {"
+aa
+aa
+ag
+ac
+am
+au
+aE
+ak
+aT
+aD
+bq
+bq
+aD
+aF
+aL
+aE
+ca
+cf
+ac
+bP
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+ai
+an
+av
+aD
+aK
+aU
+bf
+br
+by
+bE
+aF
+aK
+aD
+av
+an
+ai
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aj
+an
+av
+aD
+aK
+aF
+bf
+bs
+bz
+bE
+aF
+aK
+aD
+av
+an
+aj
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+af
+ac
+am
+aw
+aE
+aL
+aV
+aD
+bt
+bt
+aD
+aF
+aL
+aE
+cb
+am
+ac
+bc
+aa
+aa
+"}
+(14,1,1) = {"
+ab
+ad
+ac
+ac
+ao
+ax
+aD
+aM
+aW
+bg
+aD
+aD
+bF
+aL
+bL
+aD
+cc
+cg
+am
+ac
+cj
+ck
+"}
+(15,1,1) = {"
+aa
+ac
+ac
+ac
+ap
+ay
+aD
+aD
+aX
+bh
+aD
+aD
+aL
+bM
+aD
+bU
+cd
+aF
+ci
+am
+ac
+aa
+"}
+(16,1,1) = {"
+aa
+ae
+ad
+ac
+ao
+az
+aD
+aD
+aD
+aE
+aD
+aD
+aE
+aD
+aD
+bU
+cc
+ch
+am
+cj
+ck
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+ag
+ac
+ao
+ay
+aF
+aN
+aY
+bi
+aD
+aD
+bG
+bN
+aF
+aF
+ce
+aF
+ao
+bP
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+ag
+aq
+ao
+aG
+aO
+aO
+bj
+bu
+bu
+aO
+bO
+aq
+ao
+ao
+aO
+bP
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+ah
+ag
+ac
+ac
+ac
+aZ
+bk
+aD
+aD
+bH
+ac
+ac
+ac
+ac
+bP
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ag
+aH
+ac
+ba
+bl
+bv
+bv
+bI
+ba
+ac
+aH
+bP
+ah
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aI
+aP
+bb
+bm
+bw
+bA
+bJ
+ac
+aP
+bV
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aI
+ag
+bn
+bn
+bB
+bB
+bP
+bS
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}

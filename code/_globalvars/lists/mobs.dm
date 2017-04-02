@@ -15,3 +15,4 @@ var/global/list/joined_player_list = list()			//all clients that have joined the
 var/global/list/silicon_mobs = list()				//all silicon mobs
 var/global/list/pai_list = list()
 var/global/list/available_ai_shells = list()
+var/global/list/language_datums = list()
