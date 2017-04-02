@@ -570,7 +570,7 @@
 	if(omnitongue)
 		SET_SECONDARY_FLAG(src, OMNITONGUE)
 
-/atom/movable/proc/get_understood_language()
+/atom/movable/proc/get_random_understood_language()
 	var/list/possible = list()
 	for(var/dt in languages)
 		possible += dt

@@ -707,7 +707,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 
 	var/list/mob/living/carbon/people = list()
 	var/list/mob/living/carbon/person = null
-	var/datum/language/understood_language = target.get_understood_language()
+	var/datum/language/understood_language = target.get_random_understood_language()
 	for(var/mob/living/carbon/H in view(target))
 		if(H == target)
 			continue
