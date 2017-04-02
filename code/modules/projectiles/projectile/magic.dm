@@ -26,7 +26,7 @@
 	damage_type = OXY
 	nodamage = 1
 
-/obj/item/projectile/magic/resurrection/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/magic/resurrection/on_hit(mob/living/target, blocked = 0)
 	. = ..()
 	if(prob(blocked))
 		return
@@ -52,7 +52,7 @@
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
-/obj/item/projectile/magic/teleport/on_hit(mob/target)
+/obj/item/projectile/magic/teleport/on_hit(mob/target, blocked = 0)
 	. = ..()
 	if(prob(blocked))
 		return
@@ -113,7 +113,7 @@
 	. = ..()
 	if(prob(blocked))
 		return
-	wabbajack(change)
+	wabbajack(target)
 	qdel(src)
 
 /proc/wabbajack(mob/living/M)
