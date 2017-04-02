@@ -11,7 +11,7 @@
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
-/obj/item/projectile/magic/death/on_hit(target)
+/obj/item/projectile/magic/death/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(prob(blocked))
 		return
@@ -26,7 +26,7 @@
 	damage_type = OXY
 	nodamage = 1
 
-/obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
+/obj/item/projectile/magic/resurrection/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(prob(blocked))
 		return
@@ -79,7 +79,7 @@
 		/obj/structure/mineral_door/transparent/diamond)
 
 
-/obj/item/projectile/magic/door/on_hit(atom/target)
+/obj/item/projectile/magic/door/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(prob(blocked))
 		return
@@ -109,7 +109,7 @@
 	damage_type = BURN
 	nodamage = 1
 
-/obj/item/projectile/magic/change/on_hit(atom/change)
+/obj/item/projectile/magic/change/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(prob(blocked))
 		return
@@ -401,7 +401,7 @@
 		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
 
-/obj/item/projectile/magic/aoe/lightning/on_hit(target)
+/obj/item/projectile/magic/aoe/lightning/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(prob(blocked))
 		return
@@ -425,7 +425,7 @@
 	var/exp_flash = 3
 	var/exp_fire = 2
 
-/obj/item/projectile/magic/aoe/fireball/on_hit(target)
+/obj/item/projectile/magic/aoe/fireball/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(prob(blocked))
 		return
