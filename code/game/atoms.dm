@@ -457,6 +457,12 @@ var/list/blood_splatter_icons = list()
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
 
+//called when the turf the atom resides on is ChangeTurfed
+/atom/proc/HandleTurfChange(turf/T)
+	for(var/a in src)
+		var/atom/A = a
+		A.HandleTurfChange(T)
+
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.
 // So we slow this down a little.
