@@ -48,7 +48,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/ctf/attack_hand(mob/living/user)
-	if(!user)
+	if(!is_ctf_target(user))
 		return
 	if(team in user.faction)
 		to_chat(user, "You can't move your own flag!")
@@ -534,6 +534,8 @@
 	return
 
 /obj/structure/trap/ctf/trap_effect(mob/living/L)
+	if(!is_ctf_target(L))
+		return
 	if(!(src.team in L.faction))
 		to_chat(L, "<span class='danger'><B>Stay out of the enemy spawn!</B></span>")
 		L.death()
