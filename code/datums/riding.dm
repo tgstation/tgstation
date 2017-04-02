@@ -252,6 +252,49 @@
 					buckled_mob.pixel_x = 10
 					buckled_mob.pixel_y = 5
 
+
+//prototype repair vehicle
+
+
+/datum/riding/space/speedbike/repair
+	vehicle_move_delay = 1
+	var/obj/vehicle/space/speedbike/repair/R = null
+
+/datum/riding/space/speedbike/repair/handle_vehicle_layer()
+	..()
+	R = ridden
+	if(R.turret)
+		if(ridden.dir == SOUTH)
+			R.turret.layer = 4
+		else
+			R.turret.layer = 4.5
+
+/datum/riding/space/speedbike/repair/handle_vehicle_offsets()
+	..()
+	R = ridden
+	if(R.turret)
+		R.turret.forceMove(get_turf(ridden))
+		switch(ridden.dir)
+			if(NORTH)
+				R.turret.pixel_x = 1
+				R.turret.pixel_y = -16
+			if(EAST)
+				R.turret.pixel_x = -23
+				R.turret.pixel_y = 10
+			if(SOUTH)
+				R.turret.pixel_x = 1
+				R.turret.pixel_y = 23
+			if(WEST)
+				R.turret.pixel_x = 23
+				R.turret.pixel_y = 10
+
+
+//ATMOBILE
+
+datum/riding/space/speedbike/atmos
+	vehicle_move_delay = 1
+
+
 //SPEEDUWAGON
 
 /datum/riding/space/speedwagon
