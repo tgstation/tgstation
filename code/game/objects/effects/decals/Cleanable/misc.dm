@@ -11,7 +11,7 @@
 	icon_state = "ash"
 	mergeable_decal = 0
 
-/obj/effect/decal/cleanable/ash/Initialize(mapload)
+/obj/effect/decal/cleanable/ash/Initialize()
 	..()
 	reagents.add_reagent("ash", 30)
 	pixel_x = rand(-5, 5)
@@ -21,7 +21,7 @@
 	name = "large pile of ashes"
 	icon_state = "big_ash"
 
-/obj/effect/decal/cleanable/ash/large/Initialize(mapload)
+/obj/effect/decal/cleanable/ash/large/Initialize()
 	..()
 	reagents.add_reagent("ash", 30) //double the amount of ash.
 
@@ -149,7 +149,7 @@
 	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
 		qdel(src)
 
-/obj/effect/decal/cleanable/shreds/Initialize(mapload)
+/obj/effect/decal/cleanable/shreds/Initialize()
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
 	..()
