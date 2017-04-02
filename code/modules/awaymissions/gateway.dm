@@ -16,8 +16,12 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/can_link = FALSE	//Is this the centerpiece?
 
 /obj/machinery/gateway/Initialize()
-	..()
 	randomspawns = awaydestinations
+	update_icon()
+	switch(dir)
+		if(SOUTH,SOUTHEAST,SOUTHWEST)
+			density = 0
+	..()
 
 /obj/machinery/gateway/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -48,14 +52,6 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if((linked.len == 8) || !checkparts)
 		ready = TRUE
 	return ready
-
-/obj/machinery/gateway/Initialize()
-	..()
-	update_icon()
-	switch(dir)
-		if(SOUTH,SOUTHEAST,SOUTHWEST)
-			density = 0
-
 
 /obj/machinery/gateway/update_icon()
 	if(active)
