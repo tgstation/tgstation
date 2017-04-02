@@ -194,6 +194,8 @@
 	var/mob/camera/aiEye/nav/N = C.remote_control
 	var/list/zees = list(1,5,7,8,9,10,11,12)
 	var/selection = input(C,"Select Local Quadrant Number", "Quadrant Number") as null|anything in zees
+	if(!selection)
+		return
 	N.setLoc(locate(125,125,selection))
 
 
@@ -268,8 +270,10 @@
 	var/acceleration = 1
 	invisibility = 45
 	alpha = 100
+	luminosity = 3
 	var/obj/machinery/computer/ship_construction/origin
 	var/mob/living/eye_user
+	var/airCD = 0
 
 /mob/camera/aiEye/construction/Destroy()
 	eye_user = null
@@ -464,12 +468,17 @@
 	button_icon_state = "mech_internals_off"
 
 /datum/action/innate/engi_ship/airflow/Activate()
-	var/datum/gas_mixture/airburst = B.reserve.air_contents.total_moles()
 	var/mob/camera/aiEye/construction/remote_eye = C.remote_control
 	var/turf/T = get_turf(remote_eye)
-	T.assume_air(airburst)
-	T.air_update_turf()
-	remote_eye.Visualize()
+	if(world.time > remote_eye.airCD)
+		var/datum/gas_mixture/airburst = B.reserve.air_contents.copy()
+		T.assume_air(airburst)
+		remote_eye.airCD = world.time + 300
+		T.air_update_turf()
+		remote_eye.Visualize()
+	else
+		C << 'sound/machines/buzz-sigh.ogg'
+
 
 /datum/action/innate/engi_ship/recaller
 	name = "Recall the Holo-drone"
