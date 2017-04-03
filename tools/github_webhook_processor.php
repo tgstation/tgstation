@@ -256,7 +256,9 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			$foundcltag = true;
 			$pos = strpos($line, " ");
 			if ($pos)
-				$username = substr($line, $pos+1);
+				$tmp = substr($line, $pos+1);
+				if (trim($tmp) != 'optional name here')
+					$username = $tmp;
 			continue;
 		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/🆑' || substr($line,0,6) == '/ 🆑' ) {
 			$incltag = false;
@@ -293,61 +295,84 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			case 'fix':
 			case 'fixes':
 			case 'bugfix':
-				$tags[] = "Fix";
-				$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
+				if($item != 'fixed a few things') {
+					$tags[] = "Fix";
+					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
+				}
 				break;
 			case 'wip':
-				$currentchangelogblock[] = array('type' => 'wip', 'body' => $item);
+				if($item != 'added a few works in progress')
+					$currentchangelogblock[] = array('type' => 'wip', 'body' => $item);
 				break;
 			case 'rsctweak':
 			case 'tweaks':
 			case 'tweak':
-				$tags[] = "Tweak";
-				$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
+				if($item != 'tweaked a few things') {
+					$tags[] = "Tweak";
+					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
+				}
 				break;
 			case 'soundadd':
-				$tags[] = "Sound";
-				$currentchangelogblock[] = array('type' => 'soundadd', 'body' => $item);
+				if($item != 'added a new sound thingy') {
+					$tags[] = "Sound";
+					$currentchangelogblock[] = array('type' => 'soundadd', 'body' => $item);
+				}
 				break;
 			case 'sounddel':
-				$tags[] = "Sound";
-				$tags[] = "Revert/Removal";
-				$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
+				if($item != 'removed an old sound thingy') {
+					$tags[] = "Sound";
+					$tags[] = "Revert/Removal";
+					$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
+				}
 				break;
 			case 'add':
 			case 'adds':
 			case 'rscadd':
-				$tags[] = "Feature";
-				$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
+				if($item != 'Added new things' && $item != 'Added more things') {
+					$tags[] = "Feature";
+					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
+				}
 				break;
 			case 'del':
 			case 'dels':
 			case 'rscdel':
-				$tags[] = "Revert/Removal";
-				$currentchangelogblock[] = array('type' => 'rscdel', 'body' => $item);
+				if($item != 'Removed old things') {
+					$tags[] = "Revert/Removal";
+					$currentchangelogblock[] = array('type' => 'rscdel', 'body' => $item);
+				}
 				break;
 			case 'imageadd':
-				$tags[] = "Sprites";
-				$currentchangelogblock[] = array('type' => 'imageadd', 'body' => $item);
+				if($item != 'added some icons and images') {
+					$tags[] = "Sprites";
+					$currentchangelogblock[] = array('type' => 'imageadd', 'body' => $item);
+				}
 				break;
 			case 'imagedel':
-				$tags[] = "Sprites";
-				$tags[] = "Revert/Removal";
-				$currentchangelogblock[] = array('type' => 'imagedel', 'body' => $item);
+				if($item != 'deleted some icons and images') {
+					$tags[] = "Sprites";
+					$tags[] = "Revert/Removal";
+					$currentchangelogblock[] = array('type' => 'imagedel', 'body' => $item);
+				}
 				break;
 			case 'typo':
 			case 'spellcheck':
-				$tags[] = "Grammar and Formatting";
-				$currentchangelogblock[] = array('type' => 'spellcheck', 'body' => $item);
+				if($item != 'fixed a few typos') {
+					$tags[] = "Grammar and Formatting";
+					$currentchangelogblock[] = array('type' => 'spellcheck', 'body' => $item);
+				}
 				break;
 			case 'experimental':
 			case 'experiment':
-				$currentchangelogblock[] = array('type' => 'experiment', 'body' => $item);
+				if($item != 'added an experimental thingy')
+					$currentchangelogblock[] = array('type' => 'experiment', 'body' => $item);
 				break;
 			case 'balance':
 			case 'rebalance':
-				$tags[] = "Balance/Rebalance";
-				$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
+				if($item != 'rebalanced something'){
+					$tags[] = "Balance/Rebalance";
+					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
+				}
+				break;
 			case 'tgs':
 				$currentchangelogblock[] = array('type' => 'tgs', 'body' => $item);
 				break;
