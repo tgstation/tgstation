@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/title/SStitle
-
-/datum/controller/subsystem/title
+SUBSYSTEM_DEF(title)
 	name = "Title Screen"
 	flags = SS_NO_FIRE|SS_NO_INIT
 
@@ -9,9 +7,7 @@ var/datum/controller/subsystem/title/SStitle
 	var/icon/previous_icon
 	var/turf/closed/indestructible/splashscreen/splash_turf
 
-/datum/controller/subsystem/title/New()
-	NEW_SS_GLOBAL(SStitle)
-
+/datum/controller/subsystem/title/PreInit()
 	if(file_path && icon)
 		return
 

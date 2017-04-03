@@ -9,8 +9,8 @@
 		emote("deathgasp")
 
 	. = ..()
-	if(ticker && ticker.mode)
-		ticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+	if(SSticker && SSticker.mode)
+		SSticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
 	for(var/mob/M in src)

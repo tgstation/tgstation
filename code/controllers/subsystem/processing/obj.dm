@@ -1,5 +1,4 @@
-var/datum/controller/subsystem/objects/SSobj
-/datum/controller/subsystem/objects
+SUBSYSTEM_DEF(obj)
 	name = "Objects"
 	priority = 40
 	flags = SS_NO_INIT
@@ -7,12 +6,10 @@ var/datum/controller/subsystem/objects/SSobj
 	var/list/processing = list()
 	var/list/currentrun = list()
 
-/datum/controller/subsystem/objects/New()
-	NEW_SS_GLOBAL(SSobj)
-/datum/controller/subsystem/objects/stat_entry()
+/datum/controller/subsystem/obj/stat_entry()
 	..("P:[processing.len]")
 
-/datum/controller/subsystem/objects/fire(resumed = 0)
+/datum/controller/subsystem/obj/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -28,5 +25,5 @@ var/datum/controller/subsystem/objects/SSobj
 		if (MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/objects/Recover()
+/datum/controller/subsystem/obj/Recover()
 	processing = SSobj.processing

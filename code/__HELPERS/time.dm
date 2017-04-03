@@ -9,7 +9,7 @@
 /proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
 	if(!wtime)
 		wtime = world.time
-	return time2text(wtime - timezoneOffset + ticker.gametime_offset - round_start_time, format)
+	return time2text(wtime - timezoneOffset + SSticker.gametime_offset - round_start_time, format)
 
 /* Returns 1 if it is the selected month and day */
 /proc/isDay(month, day)

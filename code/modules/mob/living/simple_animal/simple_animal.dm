@@ -347,7 +347,7 @@
 		. = 1
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
+	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || SSticker.current_state != GAME_STATE_PLAYING)
 		return
 	next_scan_time = world.time + 400
 	var/alone = 1
