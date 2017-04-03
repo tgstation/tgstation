@@ -45,7 +45,7 @@
 #define AMT_OF_CANVASES	4 //Keep this up to date or shit will break.
 
 //To safe memory on making /icons we cache the blanks..
-var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
+GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 
 /obj/item/weapon/canvas
 	name = "canvas"
