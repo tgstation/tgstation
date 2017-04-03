@@ -39,7 +39,7 @@
 		return 1
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(message)
+/mob/living/silicon/ai/proc/holopad_talk(message, language)
 	sanitize_russian(log_say("[key_name(src)] : [message]"))
 
 	message = trim(message)
