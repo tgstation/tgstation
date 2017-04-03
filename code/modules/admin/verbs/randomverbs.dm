@@ -750,7 +750,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_COORDJMP(N)].")
 	feedback_add_details("admin_verb","TN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-var/list/datum/outfit/custom_outfits = list() //Admin created outfits
+GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 /client/proc/create_outfits()
 	set category = "Debug"

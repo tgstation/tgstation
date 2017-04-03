@@ -1,4 +1,4 @@
-var/highlander = FALSE
+GLOBAL_VAR(highlander, FALSE)
 /client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
 	if(!SSticker || !SSticker.mode)
 		alert("The game hasn't started yet!")

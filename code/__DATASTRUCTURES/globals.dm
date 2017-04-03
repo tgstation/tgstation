@@ -23,11 +23,15 @@
         if(end_tick - start_tick)
             WARNING("Global [I] slept during initialization!")
 
+#ifndef TESTING
 #define PROTECT_GLOBAL(X)\
 /datum/global_vars/InitGlobal##X(){\
     ..();
     protected_varlist += #X;\
 }
+#else
+#define PROTECT_GLOBAL(X)
+#endif
 
 #define GLOBAL_MANAGED(X, InitValue)\
 /datum/global_vars/proc/InitGlobal##X(){\

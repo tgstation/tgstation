@@ -1,4 +1,5 @@
-var/list/admin_datums = list()
+GLOBAL_EMPTY_LIST(admin_datums)
+PROTECT_GLOBAL(admin_datums)
 
 /datum/admins
 	var/datum/admin_rank/rank

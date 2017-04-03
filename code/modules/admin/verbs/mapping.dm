@@ -18,9 +18,9 @@
 //- Check for any misplaced or stacked piece of wire
 //- Identify how hard it is to break into the area and where the weak points are
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
-var/intercom_range_display_status = 0
 
-var/list/admin_verbs_debug_mapping = list(
+PROTECT_GLOBAL(admin_verbs_debug_mapping)
+GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/do_not_use_these, 			//-errorage
 	/client/proc/camera_view, 				//-errorage
 	/client/proc/sec_camera_report, 		//-errorage
@@ -43,7 +43,7 @@ var/list/admin_verbs_debug_mapping = list(
 	/client/proc/cmd_show_at_list,
 	/client/proc/cmd_show_at_list,
 	/client/proc/manipulate_organs
-)
+))
 
 /obj/effect/debugging/mapfix_marker
 	name = "map fix marker"
@@ -129,6 +129,7 @@ var/list/admin_verbs_debug_mapping = list(
 	set category = "Mapping"
 	set name = "Intercom Range Display"
 
+	var/static/intercom_range_display_status = 0
 	if(intercom_range_display_status)
 		intercom_range_display_status = 0
 	else
@@ -249,7 +250,7 @@ var/list/admin_verbs_debug_mapping = list(
 
 
 //This proc is intended to detect lag problems relating to communication procs
-var/global/say_disabled = 0
+GLOBAL_VAR_INIT(say_disabled, FALSE)
 /client/proc/disable_communication()
 	set category = "Mapping"
 	set name = "Disable all communication verbs"
