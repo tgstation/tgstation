@@ -15386,10 +15386,7 @@
 /obj/structure/rack,
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/plasteel/fifty{
-	step_x = -4;
-	step_y = -4
-	},
+/obj/item/stack/sheet/plasteel/fifty,
 /obj/item/device/forcefield,
 /turf/open/floor/mineral/gold,
 /area/shuttle/engi_ship)
@@ -16003,10 +16000,7 @@
 "QW" = (
 /obj/structure/table/wood/fancy,
 /obj/item/weapon/storage/pill_bottle/dice,
-/obj/effect/holodeck_effect/cards{
-	step_x = -3;
-	step_y = 10
-	},
+/obj/effect/holodeck_effect/cards,
 /obj/docking_port/mobile/engi_ship{
 	launch_status = 0
 	},
