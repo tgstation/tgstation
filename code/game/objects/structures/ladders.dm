@@ -12,12 +12,13 @@
 	name = "sturdy ladder"
 	desc = "An extremely sturdy metal ladder."
 
-/obj/structure/ladder/New()
-	..()
-	ladders += src
 
-/obj/structure/ladder/Initialize()
-	..()
+/obj/structure/ladder/Initialize(mapload)
+	if(!initalized)
+		ladders += src
+		..()
+	if(mapload)
+		return TRUE
 	update_link()
 
 /obj/structure/ladder/Destroy()
