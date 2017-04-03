@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/mapping/SSmapping
-
-/datum/controller/subsystem/mapping
+SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = 12
 	flags = SS_NO_FIRE

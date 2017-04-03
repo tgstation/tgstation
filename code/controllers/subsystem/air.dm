@@ -5,9 +5,8 @@
 #define SSAIR_HIGHPRESSURE 5
 #define SSAIR_HOTSPOTS 6
 #define SSAIR_SUPERCONDUCTIVITY 7
-var/datum/controller/subsystem/air/SSair
 
-/datum/controller/subsystem/air
+SUBSYSTEM_DEF(air)
 	name = "Air"
 	init_order = -1
 	priority = 20
@@ -40,9 +39,6 @@ var/datum/controller/subsystem/air/SSair
 
 	var/map_loading = TRUE
 	var/list/queued_for_activation
-
-/datum/controller/subsystem/air/New()
-	NEW_SS_GLOBAL(SSair)
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"

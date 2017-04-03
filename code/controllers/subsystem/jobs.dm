@@ -223,10 +223,10 @@ var/datum/controller/subsystem/job/SSjob
 	//Setup new player list and get the jobs list
 	Debug("Running DO")
 
-	//Holder for Triumvirate is stored in the ticker, this just processes it
-	if(ticker)
+	//Holder for Triumvirate is stored in the SSticker, this just processes it
+	if(SSticker)
 		for(var/datum/job/ai/A in occupations)
-			if(ticker.triai)
+			if(SSticker.triai)
 				A.spawn_positions = 3
 
 	//Get the players who are ready

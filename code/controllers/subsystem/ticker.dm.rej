@@ -1,0 +1,11 @@
+diff a/code/controllers/subsystem/ticker.dm b/code/controllers/subsystem/ticker.dm	(rejected hunks)
+@@ -58,9 +56,6 @@ var/datum/controller/subsystem/ticker/SSticker
+ 
+ 	var/late_join_disabled
+ 
+-/datum/controller/subsystem/ticker/New()
+-	NEW_SS_GLOBAL(SSticker)
+-
+ /datum/controller/subsystem/ticker/Initialize(timeofday)
+ 	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
+ 	login_music = pick(music)

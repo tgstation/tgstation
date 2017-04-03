@@ -104,7 +104,7 @@
 		if(TRACK_OPERATIVES)
 			var/list/possible_targets = list()
 			var/turf/here = get_turf(src)
-			for(var/V in ticker.mode.syndicates)
+			for(var/V in SSticker.mode.syndicates)
 				var/datum/mind/M = V
 				if(M.current && M.current.stat != DEAD)
 					possible_targets |= M.current

@@ -1308,7 +1308,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/uplink_items = get_uplink_items(ticker.mode)
+	var/list/uplink_items = get_uplink_items(SSticker.mode)
 
 	var/crate_value = 50
 	var/obj/structure/closet/crate/C = new(loc)
@@ -1336,7 +1336,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/uplink_items = get_uplink_items(ticker.mode)
+	var/list/uplink_items = get_uplink_items(SSticker.mode)
 	var/list/possible_items = list()
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])

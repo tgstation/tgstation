@@ -1,0 +1,16 @@
+diff a/code/modules/uplink/uplink_item.dm b/code/modules/uplink/uplink_item.dm	(rejected hunks)
+@@ -17,12 +17,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
+ 		for(var/item in uplink_items[category])
+ 			var/datum/uplink_item/I = uplink_items[category][item]
+ 			if(I.include_modes.len)
+-				if(!gamemode && ticker && !(ticker.mode.type in I.include_modes))
++				if(!gamemode && SSticker && !(SSticker.mode.type in I.include_modes))
+ 					continue
+ 				if(gamemode && !(gamemode in I.include_modes))
+ 					continue
+ 			if(I.exclude_modes.len)
+-				if(!gamemode && ticker && (ticker.mode.type in I.exclude_modes))
++				if(!gamemode && SSticker && (SSticker.mode.type in I.exclude_modes))
+ 					continue
+ 				if(gamemode && (gamemode in I.exclude_modes))
+ 					continue
