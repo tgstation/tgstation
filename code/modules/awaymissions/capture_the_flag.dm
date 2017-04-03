@@ -49,6 +49,7 @@
 
 /obj/item/weapon/twohanded/ctf/attack_hand(mob/living/user)
 	if(!is_ctf_target(user))
+		to_chat(user, "Non players shouldn't be moving the flag!")
 		return
 	if(team in user.faction)
 		to_chat(user, "You can't move your own flag!")
@@ -510,6 +511,7 @@
 	R.set_frequency(REDTEAM_FREQ)
 	R.freqlock = TRUE
 	R.independent = TRUE
+	H.dna.species.stunmod = 0
 
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
@@ -517,6 +519,7 @@
 	R.set_frequency(BLUETEAM_FREQ)
 	R.freqlock = TRUE
 	R.independent = TRUE
+	H.dna.species.stunmod = 0
 
 
 
