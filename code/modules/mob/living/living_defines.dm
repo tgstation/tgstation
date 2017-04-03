@@ -1,7 +1,5 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
 	sight = 0
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
@@ -75,3 +73,6 @@
 	var/tesla_ignore = FALSE
 
 	var/datum/riding/riding_datum
+
+	var/datum/language/selected_default_language
+	var/datum/language_menu/language_menu

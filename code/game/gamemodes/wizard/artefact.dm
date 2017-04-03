@@ -283,8 +283,8 @@ var/global/list/multiverse = list()
 	if(prob(50))
 		var/list/all_species = list()
 		for(var/speciestype in subtypesof(/datum/species))
-			var/datum/species/S = new speciestype()
-			if(!S.dangerous_existence)
+			var/datum/species/S = speciestype
+			if(!initial(S.dangerous_existence))
 				all_species += speciestype
 		M.set_species(pick(all_species), icon_update=0)
 	M.update_body()

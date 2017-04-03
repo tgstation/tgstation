@@ -4,7 +4,7 @@
 	weight			= 20
 	max_occurrences = 5
 
-/datum/round_event_control/canSpawnEvent(players_amt, gamemode)
+/datum/round_event_control/falsealarm/canSpawnEvent(players_amt, gamemode)
 	return ..() && length(gather_false_events())
 
 /datum/round_event/falsealarm
@@ -26,6 +26,8 @@
 /proc/gather_false_events(players_amt, gamemode)
 	. = list()
 	for(var/datum/round_event_control/E in SSevents.control)
+		if(istype(E,/datum/round_event_control/falsealarm))
+			continue
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
 

@@ -578,9 +578,12 @@
 		spawn()
 			A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
-		wearer.forceMove(get_turf(A))
+		var/turf/target = get_turf(A)
+		if(istype(A, /obj/machinery/door/window) && (get_turf(wearer) == get_turf(A)))
+			target = get_step(A, A.dir)
+		wearer.forceMove(target)
 		if(dragging_through)
-			dragging_through.forceMove(get_turf(A))
+			dragging_through.forceMove(target)
 			wearer.pulling = dragging_through
 	return pass
 

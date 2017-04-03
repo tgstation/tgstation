@@ -512,8 +512,17 @@
 	zone = "mouth"
 	slot = "tongue"
 	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
+	var/list/languages_possible
 	var/say_mod = null
 	var/taste_sensitivity = 15 // lower is more sensitive.
+
+/obj/item/organ/tongue/Initialize(mapload)
+	..()
+	languages_possible = typecacheof(list(
+		/datum/language/common,
+		/datum/language/monkey,
+		/datum/language/ratvar
+	))
 
 /obj/item/organ/tongue/get_spans()
 	return list()
@@ -530,6 +539,9 @@
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
+
+/obj/item/organ/tongue/can_speak_in_language(datum/language/dt)
+	. = is_type_in_typecache(dt, languages_possible)
 
 /obj/item/organ/tongue/lizard
 	name = "forked tongue"
@@ -617,6 +629,14 @@
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 
+/obj/item/organ/tongue/alien/Initialize(mapload)
+	..()
+	languages_possible = typecacheof(list(
+		/datum/language/xenocommon,
+		/datum/language/common,
+		/datum/language/ratvar,
+		/datum/language/monkey))
+
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)
 	return message
@@ -663,6 +683,17 @@
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
 	taste_sensitivity = 25 // not as good as an organic tongue
+
+/obj/item/organ/tongue/robot/Initialize(mapload)
+	..()
+	languages_possible = typecacheof(list(
+		/datum/language/xenocommon,
+		/datum/language/common,
+		/datum/language/ratvar,
+		/datum/language/monkey,
+		/datum/language/drone,
+		/datum/language/machine,
+		/datum/language/swarmer))
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT

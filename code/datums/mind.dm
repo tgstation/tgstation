@@ -1172,7 +1172,6 @@
 				log_admin("[key_name(usr)] has devil'ed [current]. The devil has been marked as ascendable.")
 			if("sintouched")
 				if(ishuman(current))
-					SSticker.mode.sintouched += src
 					var/mob/living/carbon/human/H = current
 					H.influenceSin()
 					message_admins("[key_name_admin(usr)] has sintouch'ed [current].")

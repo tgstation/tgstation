@@ -27,7 +27,7 @@
 			else
 				to_chat(M, msg)
 		if(dead_can_hear && (M in dead_mob_list))
-			var/link = FOLLOW_LINK(M, src)
+			var/link = FOLLOW_LINK(M, faction_checked_mob)
 			to_chat(M, "[link] [msg]")
 
 

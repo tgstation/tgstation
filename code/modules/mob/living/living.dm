@@ -17,6 +17,8 @@
 	medhud.add_to_hud(src)
 	faction += "\ref[src]"
 
+	language_menu = new(src)
+
 
 /mob/living/prepare_huds()
 	..()
@@ -40,6 +42,8 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
+
+	QDEL_NULL(language_menu)
 
 	return ..()
 
@@ -665,7 +669,8 @@
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
 					if(where_list)
-						who.put_in_hand(what, where_list[2])
+						if(!who.put_in_hand(what, where_list[2]))
+							what.forceMove(get_turf(who))
 					else
 						who.equip_to_slot(what, where, TRUE)
 

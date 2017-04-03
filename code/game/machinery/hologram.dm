@@ -39,8 +39,6 @@ var/list/holopads = list()
 	icon_state = "holopad0"
 	layer = LOW_OBJ_LAYER
 	flags = HEAR
-	languages_spoken = ROBOT | HUMAN
-	languages_understood = ROBOT | HUMAN
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
@@ -189,11 +187,11 @@ var/list/holopads = list()
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/holopad/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans)
 	if(speaker && masters.len && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				master.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)
+				master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans)
 
 /obj/machinery/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
 	var/obj/effect/overlay/holo_pad_hologram/h = new(T)//Spawn a blank effect at the location.
