@@ -22,10 +22,48 @@ SUBSYSTEM_DEF(timer)
 
 	var/list/clienttime_timers = list() //special snowflake timers that run on fancy pansy "client time"
 
+	var/last_invoke_tick = 0
+	var/static/last_invoke_warning = 0
+	var/static/bucket_auto_reset = TRUE
+
 /datum/controller/subsystem/timer/stat_entry(msg)
 	..("B:[bucket_count] P:[length(processing)] H:[length(hashes)] C:[length(clienttime_timers)]")
 
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
+	var/lit = last_invoke_tick
+	var/last_check = world.time - TIMER_NO_INVOKE_WARNING
+
+	if(!bucket_count)
+		last_invoke_tick = world.time
+
+	if(lit && lit < last_check && last_invoke_warning < last_check)
+		last_invoke_warning = world.time
+		var/msg = "No regular timers processed in the last [TIMER_NO_INVOKE_WARNING] ticks[bucket_auto_reset ? ", resetting buckets" : ""]!"
+		message_admins(msg)
+		WARNING(msg)
+		if(bucket_auto_reset)
+			bucket_resolution = 0
+		
+		log_world("Active timers at tick [world.time]:")
+		for(var/I in processing)
+			var/datum/timedevent/TE = I
+			msg = "Timer: [TE.id]: TTR: [TE.timeToRun], Flags: [TE.flags], "
+			if(TE.spent)
+				msg += "SPENT"
+			else
+				var/datum/callback/CB = TE.callBack
+				msg += "callBack: "
+				if(CB.object == GLOBAL_PROC)
+					msg += "GP: [CB.delegate]"
+				else
+					msg += "[!QDELETED(CB.object) ? CB.object : "SRC DELETED"]: [CB.delegate]("
+					var/first = TRUE
+					for(var/J in CB.arguments)
+						msg += "[first ? "" : ", "][J]"
+						first = FALSE
+					msg += ")"
+			log_world(msg)
+
 	while(length(clienttime_timers))
 		var/datum/timedevent/ctime_timer = clienttime_timers[clienttime_timers.len]
 		if (ctime_timer.timeToRun <= REALTIMEOFDAY)
@@ -74,6 +112,7 @@ SUBSYSTEM_DEF(timer)
 				spent += timer
 				timer.spent = TRUE
 				callBack.InvokeAsync()
+				last_invoke_tick = world.time
 
 			timer = timer.next
 
