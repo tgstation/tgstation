@@ -35,8 +35,6 @@
 	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/mm = null
 
 	var/next_cast = 0
-	block_gateway = TRUE
-
 
 /mob/living/simple_animal/hostile/wizard/Initialize()
 	..()
@@ -45,6 +43,7 @@
 	fireball.human_req = 0
 	fireball.player_lock = 0
 	AddSpell(fireball)
+	implants += new /obj/item/weapon/implant/exile(src)
 
 	mm = new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	mm.clothes_req = 0
