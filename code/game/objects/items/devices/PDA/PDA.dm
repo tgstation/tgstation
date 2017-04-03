@@ -1,7 +1,7 @@
 
 //The advanced pea-green monochrome lcd of tomorrow.
 
-var/global/list/obj/item/device/pda/PDAs = list()
+GLOBAL_LIST_EMPTY(PDAs, list())
 
 
 /obj/item/device/pda

@@ -9,9 +9,9 @@
 	singular_name = "human skin piece"
 	icon_state = "sheet-hide"
 
-var/global/list/datum/stack_recipe/human_recipes = list( \
+GLOBAL_LIST_INIT(human_recipes, list( \
 	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, on_floor = 1), \
-	)
+	))
 
 /obj/item/stack/sheet/animalhide/human/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = human_recipes
@@ -29,9 +29,9 @@ var/global/list/datum/stack_recipe/human_recipes = list( \
 	singular_name = "corgi hide piece"
 	icon_state = "sheet-corgi"
 
-var/global/list/datum/stack_recipe/corgi_recipes = list ( \
+GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, on_floor = 1), \
-	)
+	))
 
 /obj/item/stack/sheet/animalhide/corgi/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = corgi_recipes
@@ -49,10 +49,10 @@ var/global/list/datum/stack_recipe/corgi_recipes = list ( \
 	singular_name = "monkey hide piece"
 	icon_state = "sheet-monkey"
 
-var/global/list/datum/stack_recipe/monkey_recipes = list ( \
+GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1, on_floor = 1), \
 	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2, on_floor = 1), \
-	)
+	))
 
 /obj/item/stack/sheet/animalhide/monkey/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = monkey_recipes
@@ -70,10 +70,10 @@ var/global/list/datum/stack_recipe/monkey_recipes = list ( \
 	singular_name = "alien hide piece"
 	icon_state = "sheet-xeno"
 
-var/global/list/datum/stack_recipe/xeno_recipes = list ( \
+GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1, on_floor = 1), \
 	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2, on_floor = 1), \
-	)
+	))
 
 /obj/item/stack/sheet/animalhide/xeno/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = xeno_recipes
@@ -134,9 +134,9 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	origin_tech = "biotech=4"
 
 
-var/global/list/datum/stack_recipe/sinew_recipes = list ( \
+GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	new/datum/stack_recipe("sinew restraints", /obj/item/weapon/restraints/handcuffs/sinew, 1, on_floor = 1), \
-	)
+	))
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = sinew_recipes

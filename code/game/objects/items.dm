@@ -1,4 +1,4 @@
-var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire")
+GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire"))
 
 /obj/item
 	name = "item"

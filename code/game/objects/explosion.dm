@@ -1,5 +1,3 @@
-var/explosionid = 1
-
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0, smoke = 1)
 	set waitfor = 0
 	src = null //so we don't abort once src is deleted
@@ -29,6 +27,7 @@ var/explosionid = 1
 	//and somethings expect us to ex_act them so they can qdel()
 	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
 
+	var/static/explosionid = 1
 	var/id = explosionid++
 	var/start = world.timeofday
 

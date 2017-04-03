@@ -1,9 +1,5 @@
 //separate dm since hydro is getting bloated already
 
-var/list/blacklisted_glowshroom_turfs = typecacheof(list(
-	/turf/open/floor/plating/lava,
-	/turf/open/floor/plating/beach/water))
-
 /obj/structure/glowshroom
 	name = "glowshroom"
 	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
@@ -20,6 +16,9 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	var/generation = 1
 	var/spreadIntoAdjacentChance = 60
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
+	var/static/list/blacklisted_glowshroom_turfs = typecacheof(list(
+	/turf/open/floor/plating/lava,
+	/turf/open/floor/plating/beach/water))
 
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
