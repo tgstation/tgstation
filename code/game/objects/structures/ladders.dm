@@ -12,13 +12,20 @@
 	name = "sturdy ladder"
 	desc = "An extremely sturdy metal ladder."
 
+/obj/structure/ladder/New()
+	..()
+	ladders += src
 
 /obj/structure/ladder/Initialize()
 	..()
 	update_link()
 
+/obj/structure/ladder/Destroy()
+	ladders -= src
+	. = ..()
+
 /obj/structure/ladder/proc/update_link()
-	for(var/obj/structure/ladder/L in world)
+	for(var/obj/structure/ladder/L in ladders)
 		if(L.id == id)
 			if(L.height == (height - 1))
 				down = L
