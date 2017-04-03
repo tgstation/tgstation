@@ -106,12 +106,6 @@ obj/item/weapon/construction
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the [src] blinks red.</span>")
 		return FALSE
 
-/obj/item/weapon/construction/proc/target_check(atom/A, mob/user) // only returns true for stuff the device can actually work with
-	if((isturf(A) && A.density && mode==RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
-		return TRUE
-	else
-		return FALSE
-
 /obj/item/weapon/construction/proc/prox_check(proximity)
 	if(!proximity)
 		return
@@ -323,7 +317,11 @@ obj/item/weapon/construction
 			mode = 1
 			to_chat(user, "<span class='notice'>You change RCD's mode to 'Floor & Walls'.</span>")
 
-
+/obj/item/weapon/construction/rcd/proc/target_check(atom/A, mob/user) // only returns true for stuff the device can actually work with
+	if((isturf(A) && A.density && mode==RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/weapon/construction/rcd/afterattack(atom/A, mob/user, proximity)
 	prox_check()
@@ -468,7 +466,7 @@ obj/item/weapon/construction
 /obj/item/weapon/construction/rld/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	IconAmmo()
-		
+
 /obj/item/weapon/construction/rld/proc/IconAmmo()
 	icon_state = "rld-[round(matter/35)]"
 	update_icon()
