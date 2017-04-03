@@ -30,8 +30,8 @@
 	return time2text(timevar, "YYYY-MM-DD hh:mm:ss")
 
 
-/var/midnight_rollovers = 0
-/var/rollovercheck_last_timeofday = 0
+GLOBAL_VAR_INIT(midnight_rollovers, 0)
+GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 /proc/update_midnight_rollover()
 	if (world.timeofday < rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
 		return midnight_rollovers++
