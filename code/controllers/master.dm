@@ -109,11 +109,13 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	log_world(msg)
 
 	var/datum/controller/subsystem/BadBoy = Master.last_type_processed
+	var/FireHim = FALSE
 	if(istype(BadBoy))
 		msg = null
 		switch(++BadBoy.failure_strikes)
 			if(2)
-				msg = "The [BadBoy.name] subsystem was the last to fire for 2 controller restarts. Will be disabled if it happens again."
+				msg = "The [BadBoy.name] subsystem was the last to fire for 2 controller restarts. It will be recovered now and disabled if it happens again."
+				FireHim = TRUE
 			if(3)
 				msg = "The [BadBoy.name] subsystem seems to be destabilizing the MC and will be offlined."
 				BadBoy.flags |= SS_NO_FIRE
@@ -122,6 +124,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			log_world(msg)
 
 	if (istype(Master.subsystems))
+		if(FireHim)
+			Master.subsystems += new BadBoy.type	//NEW_SS_GLOBAL will remove the old one
 		subsystems = Master.subsystems
 		StartProcessing(10)
 	else
