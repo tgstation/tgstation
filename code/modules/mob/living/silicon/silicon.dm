@@ -1,13 +1,12 @@
 /mob/living/silicon
 	gender = NEUTER
 	voice_name = "synthesized voice"
-	languages_spoken = ROBOT | HUMAN
-	languages_understood = ROBOT | HUMAN
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	initial_languages = list(/datum/language/common, /datum/language/machine)
 	see_in_dark = 8
 	bubble_icon = "machine"
 	weather_immunities = list("ash")

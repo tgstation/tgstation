@@ -1,17 +1,12 @@
 #define COMMUNICATION_COOLDOWN 600
 #define COMMUNICATION_COOLDOWN_AI 600
 
-var/datum/controller/subsystem/communications/SScommunications
-
-/datum/controller/subsystem/communications
+SUBSYSTEM_DEF(communications)
 	name = "Communications"
 	flags = SS_NO_INIT | SS_NO_FIRE
 
 	var/silicon_message_cooldown
 	var/nonsilicon_message_cooldown
-
-/datum/controller/subsystem/communications/New()
-	NEW_SS_GLOBAL(SScommunications)
 
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && silicon_message_cooldown > world.time)

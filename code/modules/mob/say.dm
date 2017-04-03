@@ -7,13 +7,17 @@
 		return
 	usr.say(message)
 
-/mob/verb/whisper(message as text)
+
+/mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
 	set category = "IC"
 	if(say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	say(message) //only carbons actually whisper, everything else just talks
+	whisper(message)
+
+/mob/proc/whisper(message, datum/language/language=null)
+	say(message, language) //only carbons actually whisper, everything else just talks
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"

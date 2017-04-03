@@ -272,7 +272,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if(reject_bad_text(href_list["write"]))
 		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
 
-		var/new_message = copytext(reject_bad_text(sanitize_russian(input(usr, "Write your message:", "Awaiting Input", ""),1)),1,MAX_MESSAGE_LEN)
+		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
 			screen = 9
@@ -288,7 +288,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = copytext(reject_bad_text(sanitize_russian(input(usr, "Write your message:", "Awaiting Input", ""),1)),1,MAX_MESSAGE_LEN)
+		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
 			if (text2num(href_list["priority"]) < 2)
@@ -303,7 +303,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)
 			return
-		minor_announce(russian_html2text(message), "[department] Announcement:")
+		minor_announce(message, "[department] Announcement:")
 		news_network.SubmitArticle(message, department, "Station Announcements", null)
 		log_say("[key_name(usr)] has made a station announcement: [message]")
 		message_admins("[key_name_admin(usr)] has made a station announcement.")
@@ -326,11 +326,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
-				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
+				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq,get_spans(),get_default_language())
 				update_icon()
-				spawn(3000)
-					emergency = null
-					update_icon()
+				addtimer(CALLBACK(src, .proc/clear_emergency), 3000)
 
 	if( href_list["department"] && message )
 		var/log_msg = message
@@ -386,7 +384,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 						screen = 6
 
 				if(radio_freq)
-					Radio.talk_into(src,"[alert]: <i>[russian_html2text(message)]</i>",radio_freq)
+					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq,get_spans(),get_default_language())
 
 				switch(priority)
 					if(2)
@@ -441,12 +439,16 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 
-/obj/machinery/say_quote(input, list/spans)
+/obj/machinery/requests_console/say_quote(input, list/spans)
 	var/ending = copytext(input, length(input) - 2)
 	if (ending == "!!!")
 		return "blares, \"[attach_spans(input, spans)]\""
 
 	return ..()
+
+/obj/machinery/requests_console/proc/clear_emergency()
+	emergency = null
+	update_icon()
 
 /obj/machinery/requests_console/proc/createmessage(source, title, message, priority)
 	var/linkedsender

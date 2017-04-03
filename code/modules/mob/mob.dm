@@ -431,7 +431,7 @@ var/next_mob_id = 0
 
 	if (!( abandon_allowed ))
 		return
-	if ((stat != 2 || !( ticker )))
+	if ((stat != 2 || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
@@ -882,7 +882,7 @@ var/next_mob_id = 0
 		//update our pda and id if we have them on our person
 		replace_identification_name(oldname,newname)
 
-		for(var/datum/mind/T in ticker.minds)
+		for(var/datum/mind/T in SSticker.minds)
 			for(var/datum/objective/obj in T.objectives)
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)

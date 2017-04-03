@@ -133,6 +133,28 @@ var/total_borer_hosts_needed = 10
 
 	GrantBorerActions()
 
+/mob/living/simple_animal/borer/Destroy()
+	borers -= src
+
+	host_brain = null
+	victim = null
+	
+	QDEL_NULL(talk_to_host_action)
+	QDEL_NULL(infest_host_action)
+	QDEL_NULL(toggle_hide_action)
+	QDEL_NULL(talk_to_borer_action)
+	QDEL_NULL(talk_to_brain_action)
+	QDEL_NULL(take_control_action)
+	QDEL_NULL(give_back_control_action)
+	QDEL_NULL(leave_body_action)
+	QDEL_NULL(make_chems_action)
+	QDEL_NULL(make_larvae_action)
+	QDEL_NULL(freeze_victim_action)
+	QDEL_NULL(punish_victim_action)
+	QDEL_NULL(jumpstart_host_action)
+	
+	return ..()
+
 /mob/living/simple_animal/borer/Topic(href, href_list)//not entirely sure if this is even required
 	if(href_list["ghostjoin"])
 		var/mob/dead/observer/ghost = usr

@@ -115,9 +115,9 @@
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-			radio.talk_into(src, "Patient fully restored", radio_channel)
+			radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
 			if(autoeject) // Eject if configured.
-				radio.talk_into(src, "Auto ejecting patient now", radio_channel)
+				radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
 				open_machine()
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.

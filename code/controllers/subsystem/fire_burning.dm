@@ -1,16 +1,10 @@
-var/datum/controller/subsystem/fire_burning/SSfire_burning
-
-/datum/controller/subsystem/fire_burning
+SUBSYSTEM_DEF(fire_burning)
 	name = "Fire Burning"
 	priority = 40
 	flags = SS_NO_INIT|SS_BACKGROUND
 
 	var/list/currentrun = list()
 	var/list/processing = list()
-
-/datum/controller/subsystem/fire_burning/New()
-	NEW_SS_GLOBAL(SSfire_burning)
-
 
 /datum/controller/subsystem/fire_burning/stat_entry()
 	..("P:[processing.len]")

@@ -22,7 +22,6 @@ var/list/ai_list = list()
 	canmove = 0
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
-	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8
 	med_hud = DATA_HUD_MEDICAL_BASIC
@@ -316,7 +315,7 @@ var/list/ai_list = list()
 			to_chat(usr, "Wireless control is disabled!")
 			return
 
-	var/reason = sanitize_russian(input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text)
+	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
 
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)
@@ -381,7 +380,7 @@ var/list/ai_list = list()
 #endif
 	if(href_list["show_paper"])
 		if(last_paper_seen)
-			src << browse(sanitize_russian(last_paper_seen,1), "window=show_paper")
+			src << browse(last_paper_seen, "window=show_paper")
 	//Carn: holopad requests
 	if(href_list["jumptoholopad"])
 		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"])
@@ -831,8 +830,8 @@ var/list/ai_list = list()
 		return
 	return 1
 
-/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-	raw_message = lang_treat(speaker, message_langs, raw_message, spans)
+/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans)
+	raw_message = lang_treat(speaker, message_language, raw_message, spans)
 	var/name_used = speaker.GetVoice()
 	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
 	show_message(rendered, 2)

@@ -302,7 +302,7 @@ Difficulty: Very Hard
 
 /obj/machinery/smartfridge/black_box/process()
 	..()
-	if(!memory_saved && ticker.current_state == GAME_STATE_FINISHED)
+	if(!memory_saved && SSticker.current_state == GAME_STATE_FINISHED)
 		WriteMemory()
 
 /obj/machinery/smartfridge/black_box/proc/WriteMemory()
@@ -369,8 +369,6 @@ Difficulty: Very Hard
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = 0
 	density = 1
-	languages_spoken = ALL
-	languages_understood = ALL
 	flags = HEAR
 	var/activation_method = "touch"
 	var/activation_damage_type = null
@@ -618,8 +616,6 @@ Difficulty: Very Hard
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	light_range = 4
 	faction = list("neutral")
-	languages_spoken = SLIME
-	languages_understood = ALL
 	del_on_death = 1
 	unsuitable_atmos_damage = 0
 	movement_type = FLYING

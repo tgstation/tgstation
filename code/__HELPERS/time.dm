@@ -1,13 +1,15 @@
 //Returns the world time in english
 /proc/worldtime2text()
-	return gameTimestamp("hh:mm:ss")
+	return gameTimestamp("hh:mm:ss", world.time)
 
 /proc/time_stamp(format = "hh:mm:ss", show_ds)
 	var/time_string = time2text(world.timeofday, format)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
-/proc/gameTimestamp(format = "hh:mm:ss") // Get the game time in text
-	return time2text(world.time - timezoneOffset + 432000 - round_start_time, format)
+/proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
+	if(!wtime)
+		wtime = world.time
+	return time2text(wtime - timezoneOffset + SSticker.gametime_offset - round_start_time, format)
 
 /* Returns 1 if it is the selected month and day */
 /proc/isDay(month, day)
