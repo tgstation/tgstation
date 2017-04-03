@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	var/name
 
 /datum/mutation/New()
-	GLOB.GLOB.mutations_list[name] = src
+	GLOB.mutations_list[name] = src
 
 /datum/mutation/human
 
