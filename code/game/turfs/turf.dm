@@ -249,6 +249,8 @@
 
 	queue_smooth_neighbors(src)
 
+	HandleTurfChange(src)
+
 /turf/open/AfterChange(ignore_air)
 	..()
 	RemoveLattice()
@@ -351,7 +353,7 @@
 	return can_have_cabling() & !intact
 
 /turf/proc/visibilityChanged()
-	if(ticker)
+	if(SSticker)
 		cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
@@ -402,7 +404,7 @@
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
-	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		add_blueprints(AM)
 
 /turf/proc/empty(turf_type=/turf/open/space)

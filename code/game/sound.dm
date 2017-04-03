@@ -74,7 +74,7 @@
 
 	src << S
 
-/mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
+/mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0)
 	if(!client || ear_deaf > 0)
 		return
 	..()
@@ -83,10 +83,10 @@
 	src << sound(null, repeat = 0, wait = 0, channel = chan)
 
 /client/proc/playtitlemusic()
-	UNTIL(ticker.login_music) //wait for ticker init to set the login music
+	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
-		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = CHANNEL_LOBBYMUSIC) // MAD JAMS
+		src << sound(SSticker.login_music, repeat = 0, wait = 0, volume = 85, channel = CHANNEL_LOBBYMUSIC) // MAD JAMS
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.

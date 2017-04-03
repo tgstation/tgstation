@@ -29,7 +29,6 @@
 	laws = new /datum/ai_laws/ratvar()
 	braintype = picked_fluff_name
 	all_clockwork_objects += src
-	brainmob.languages_spoken = RATVAR
 
 /obj/item/device/mmi/posibrain/soul_vessel/Destroy()
 	all_clockwork_objects -= src

@@ -413,7 +413,7 @@
 	else ..()
 
 /obj/item/weapon/coin/attack_self(mob/user)
-	if(cooldown > world.time)
+	if(cooldown < world.time)
 		if(string_attached) //does the coin have a wire attached
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
 			return //do not flip the coin

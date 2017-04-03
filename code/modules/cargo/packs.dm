@@ -37,6 +37,19 @@
 /datum/supply_pack/emergency
 	group = "Emergency"
 
+/datum/supply_pack/emergency/spacesuit
+	name = "Space Suit Crate"
+	cost = 3000
+	access = access_eva
+	contains = list(/obj/item/clothing/suit/space,
+					/obj/item/clothing/suit/space,
+					/obj/item/clothing/head/helmet/space,
+					/obj/item/clothing/head/helmet/space,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath)
+	crate_name = "space suit crate"
+	crate_type = /obj/structure/closet/crate/secure
+
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
 	cost = 2000
@@ -177,7 +190,7 @@
 
 /datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
 	var/crate_value = 50
-	var/list/uplink_items = get_uplink_items(ticker.mode)
+	var/list/uplink_items = get_uplink_items(SSticker.mode)
 	while(crate_value)
 		var/category = pick(uplink_items)
 		var/item = pick(uplink_items[category])
@@ -549,18 +562,6 @@
 					/obj/item/clothing/glasses/meson/engine)
 	crate_name = "engineering gear crate"
 
-/datum/supply_pack/engineering/engine/spacesuit
-	name = "Space Suit Crate"
-	cost = 3000
-	access = access_eva
-	contains = list(/obj/item/clothing/suit/space,
-					/obj/item/clothing/suit/space,
-					/obj/item/clothing/head/helmet/space,
-					/obj/item/clothing/head/helmet/space,
-					/obj/item/clothing/mask/breath,
-					/obj/item/clothing/mask/breath)
-	crate_name = "space suit crate"
-	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/engineering/shieldgen
 	name = "Anti-breach Shield Projector Crate"

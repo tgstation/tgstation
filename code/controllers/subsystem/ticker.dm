@@ -2,9 +2,7 @@
 
 var/round_start_time = 0
 
-var/datum/controller/subsystem/ticker/ticker
-
-/datum/controller/subsystem/ticker
+SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
 	init_order = 13
 
@@ -44,6 +42,8 @@ var/datum/controller/subsystem/ticker/ticker
 	var/timeLeft						//pregame timer
 	var/start_at
 
+	var/gametime_offset = 432000 // equal to 12 hours, making gametime at roundstart 12:00:00
+
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
 
@@ -58,8 +58,7 @@ var/datum/controller/subsystem/ticker/ticker
 
 	var/late_join_disabled
 
-/datum/controller/subsystem/ticker/New()
-	NEW_SS_GLOBAL(ticker)
+	var/list/round_start_events
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
@@ -202,6 +201,11 @@ var/datum/controller/subsystem/ticker/ticker
 	transfer_characters()	//transfer keys to the new mobs
 
 	Master.RoundStart()	//let the party begin...
+	
+	for(var/I in round_start_events)
+		var/datum/callback/cb = I
+		cb.InvokeAsync()
+	LAZYCLEARLIST(round_start_events)
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	round_start_time = world.time
@@ -211,10 +215,10 @@ var/datum/controller/subsystem/ticker/ticker
 
 	current_state = GAME_STATE_PLAYING
 
-	if(SSevent.holidays)
+	if(SSevents.holidays)
 		to_chat(world, "<font color='blue'>and...</font>")
-		for(var/holidayname in SSevent.holidays)
-			var/datum/holiday/holiday = SSevent.holidays[holidayname]
+		for(var/holidayname in SSevents.holidays)
+			var/datum/holiday/holiday = SSevents.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
@@ -233,6 +237,12 @@ var/datum/controller/subsystem/ticker/ticker
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
 	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
+
+/datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
+	if(current_state < GAME_STATE_PLAYING)
+		LAZYADD(round_start_events, cb)
+	else
+		cb.InvokeAsync()
 
 /datum/controller/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
@@ -377,7 +387,7 @@ var/datum/controller/subsystem/ticker/ticker
 /datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/dead/new_player/P in player_list)
 		if(P.new_character && P.new_character.mind)
-			ticker.minds += P.new_character.mind
+			SSticker.minds += P.new_character.mind
 		CHECK_TICK
 
 
@@ -456,7 +466,7 @@ var/datum/controller/subsystem/ticker/ticker
 	to_chat(world, "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
 	to_chat(world, "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(mode.station_was_nuked)
-		ticker.news_report = STATION_DESTROYED_NUKE
+		SSticker.news_report = STATION_DESTROYED_NUKE
 	var/total_players = joined_player_list.len
 	if(joined_player_list.len)
 		to_chat(world, "<BR>[TAB]Total Population: <B>[total_players]</B>")
@@ -660,42 +670,42 @@ var/datum/controller/subsystem/ticker/ticker
 
 
 /world/proc/has_round_started()
-	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
 		return TRUE
 	return FALSE
 
 /datum/controller/subsystem/ticker/Recover()
-	current_state = ticker.current_state
-	force_ending = ticker.force_ending
-	hide_mode = ticker.hide_mode
-	mode = ticker.mode
-	event_time = ticker.event_time
-	event = ticker.event
+	current_state = SSticker.current_state
+	force_ending = SSticker.force_ending
+	hide_mode = SSticker.hide_mode
+	mode = SSticker.mode
+	event_time = SSticker.event_time
+	event = SSticker.event
 
-	login_music = ticker.login_music
-	round_end_sound = ticker.round_end_sound
+	login_music = SSticker.login_music
+	round_end_sound = SSticker.round_end_sound
 
-	minds = ticker.minds
+	minds = SSticker.minds
 
-	syndicate_coalition = ticker.syndicate_coalition
-	factions = ticker.factions
-	availablefactions = ticker.availablefactions
+	syndicate_coalition = SSticker.syndicate_coalition
+	factions = SSticker.factions
+	availablefactions = SSticker.availablefactions
 
-	delay_end = ticker.delay_end
+	delay_end = SSticker.delay_end
 
-	triai = ticker.triai
-	tipped = ticker.tipped
-	selected_tip = ticker.selected_tip
+	triai = SSticker.triai
+	tipped = SSticker.tipped
+	selected_tip = SSticker.selected_tip
 
-	timeLeft = ticker.timeLeft
+	timeLeft = SSticker.timeLeft
 
-	totalPlayers = ticker.totalPlayers
-	totalPlayersReady = ticker.totalPlayersReady
+	totalPlayers = SSticker.totalPlayers
+	totalPlayersReady = SSticker.totalPlayersReady
 
-	queue_delay = ticker.queue_delay
-	queued_players = ticker.queued_players
-	cinematic = ticker.cinematic
-	maprotatechecked = ticker.maprotatechecked
+	queue_delay = SSticker.queue_delay
+	queued_players = SSticker.queued_players
+	cinematic = SSticker.cinematic
+	maprotatechecked = SSticker.maprotatechecked
 
 
 /datum/controller/subsystem/ticker/proc/send_news_report()
@@ -751,7 +761,7 @@ var/datum/controller/subsystem/ticker/ticker
 		send2otherserver(news_source, news_message,"News_Report")
 
 /datum/controller/subsystem/ticker/proc/GetTimeLeft()
-	if(isnull(ticker.timeLeft))
+	if(isnull(SSticker.timeLeft))
 		return max(0, start_at - world.time)
 	return timeLeft
 

@@ -326,11 +326,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
-				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
+				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq,get_spans(),get_default_language())
 				update_icon()
-				spawn(3000)
-					emergency = null
-					update_icon()
+				addtimer(CALLBACK(src, .proc/clear_emergency), 3000)
 
 	if( href_list["department"] && message )
 		var/log_msg = message
@@ -386,7 +384,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 						screen = 6
 
 				if(radio_freq)
-					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq)
+					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq,get_spans(),get_default_language())
 
 				switch(priority)
 					if(2)
@@ -441,12 +439,16 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 
-/obj/machinery/say_quote(input, list/spans)
+/obj/machinery/requests_console/say_quote(input, list/spans)
 	var/ending = copytext(input, length(input) - 2)
 	if (ending == "!!!")
 		return "blares, \"[attach_spans(input, spans)]\""
 
 	return ..()
+
+/obj/machinery/requests_console/proc/clear_emergency()
+	emergency = null
+	update_icon()
 
 /obj/machinery/requests_console/proc/createmessage(source, title, message, priority)
 	var/linkedsender

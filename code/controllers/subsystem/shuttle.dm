@@ -1,9 +1,7 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
 
-var/datum/controller/subsystem/shuttle/SSshuttle
-
-/datum/controller/subsystem/shuttle
-	name = "Shuttles"
+SUBSYSTEM_DEF(shuttle)
+	name = "Shuttle"
 	wait = 10
 	init_order = 3
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
@@ -46,9 +44,6 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
-
-/datum/controller/subsystem/shuttle/New()
-	NEW_SS_GLOBAL(SSshuttle)
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
@@ -240,7 +235,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 /datum/controller/subsystem/shuttle/proc/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL)
 		return
-	if(ticker.mode.name == "meteor")
+	if(SSticker.mode.name == "meteor")
 		return
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)
@@ -457,6 +452,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 	//to_chat(world, "Making transit dock at [COORD(midpoint)]")
 	var/area/shuttle/transit/A = new()
 	A.parallax_movedir = travel_dir
+	A.contents = proposed_zone
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
@@ -472,7 +468,6 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 		var/turf/T = i
 		T.ChangeTurf(transit_path)
 		T.flags &= ~(UNUSED_TRANSIT_TURF)
-		A.contents += T
 
 	M.assigned_transit = new_transit_dock
 	return TRUE

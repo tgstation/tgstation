@@ -191,7 +191,7 @@
 	for(var/mob/living/carbon/human/H in targets)
 		if(!H.mind)
 			continue
-		for(var/datum/objective/sintouched/A in H.mind.objectives)
+		if(locate(/datum/objective/sintouched) in H.mind.objectives)
 			continue
 		H.influenceSin()
 		H.Weaken(2)

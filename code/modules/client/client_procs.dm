@@ -194,7 +194,35 @@ var/next_external_rsc = 0
 		vars["fps"] = prefs.clientfps
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
+	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
+	var/alert_mob_dupe_login = FALSE
+	if(config.log_access)
+		for(var/I in clients)
+			if(I == src)
+				continue
+			var/client/C = I
+			if(C.key && (C.key != key) )
+				var/matches
+				if( (C.address == address) )
+					matches += "IP ([address])"
+				if( (C.computer_id == computer_id) )
+					if(matches)
+						matches += " and "
+					matches += "ID ([computer_id])"
+					alert_mob_dupe_login = TRUE
+				if(matches)
+					if(C)
+						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)].</font>")
+						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)].")
+					else
+						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </font>")
+						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
+
 	. = ..()	//calls mob.Login()
+
+	if(alert_mob_dupe_login)
+		set waitfor = FALSE
+		alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 
 	connection_time = world.time
 	connection_realtime = world.realtime
@@ -307,6 +335,7 @@ var/next_external_rsc = 0
 //////////////
 
 /client/Del()
+	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
@@ -530,7 +559,7 @@ var/next_external_rsc = 0
 		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+		getFilesSlow(src, SSassets.cache, register_asset = FALSE)
 
 
 //Hook, override it to run code when dir changes

@@ -69,7 +69,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
 	if(!swooping)
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/DestroySurroundings()
 	if(!swooping)

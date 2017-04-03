@@ -404,7 +404,7 @@
 								"<span class='notice'>You break the charred power control board and remove the remains.</span>",
 								"<span class='italics'>You hear a crack.</span>")
 							return
-							//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
+							//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 						else if (emagged) // We emag board, not APC's frame
 							emagged = 0
 							user.visible_message(\

@@ -211,7 +211,7 @@
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
 			. = TRUE
 		if("pressure")
-			var/target = tginput("New target pressure:", name, output_info["internal"], nullable = TRUE, isnum = TRUE)
+			var/target = tginput("New target pressure:", name, output_info ? output_info["internal"] : 0, nullable = TRUE, isnum = TRUE)
 			if(!isnull(target) && !..())
 				target =  Clamp(target, 0, 50 * ONE_ATMOSPHERE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)

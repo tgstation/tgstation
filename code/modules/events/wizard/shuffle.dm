@@ -82,7 +82,7 @@
 	var/list/mobs	 = list()
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(H.stat || !H.mind || (H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices))
+		if(H.stat || !H.mind || (H.mind in SSticker.mode.wizards) || (H.mind in SSticker.mode.apprentices))
 			continue //the wizard(s) are spared on this one
 		mobs += H
 

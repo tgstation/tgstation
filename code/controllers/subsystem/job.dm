@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/job/SSjob
-
-/datum/controller/subsystem/job
+SUBSYSTEM_DEF(job)
 	name = "Jobs"
 	init_order = 14
 	flags = SS_NO_FIRE
@@ -13,10 +11,6 @@ var/datum/controller/subsystem/job/SSjob
 	var/initial_players_to_assign = 0 	//used for checking against population caps
 
 	var/list/prioritized_jobs = list()
-
-/datum/controller/subsystem/job/New()
-	NEW_SS_GLOBAL(SSjob)
-
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	if(!occupations.len)
@@ -223,10 +217,10 @@ var/datum/controller/subsystem/job/SSjob
 	//Setup new player list and get the jobs list
 	Debug("Running DO")
 
-	//Holder for Triumvirate is stored in the ticker, this just processes it
-	if(ticker)
+	//Holder for Triumvirate is stored in the SSticker, this just processes it
+	if(SSticker)
 		for(var/datum/job/ai/A in occupations)
-			if(ticker.triai)
+			if(SSticker.triai)
 				A.spawn_positions = 3
 
 	//Get the players who are ready

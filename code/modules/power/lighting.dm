@@ -500,6 +500,7 @@
 
 	status = LIGHT_EMPTY
 	update()
+	return L
 
 /obj/machinery/light/attack_tk(mob/user)
 	if(status == LIGHT_EMPTY)
@@ -508,7 +509,8 @@
 
 	to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
 	// create a light tube/bulb item and put it in the user's hand
-	drop_light_tube()
+	var/obj/item/weapon/light/L = drop_light_tube()
+	L.attack_tk(user)
 
 
 // break the light and make sparks if was on
