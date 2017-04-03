@@ -2,22 +2,17 @@
 #define REACTING	1
 
 var/list/gas_reactions = init_gas_reactions() //this is our singleton of all reactions
+
 /proc/init_gas_reactions()
-	. = new /list
-	var/list/reaction_types = typesof(/datum/gas_reaction - /datum/gas_reaction)
+	var/list/reaction_types = list()
+	for(var/r in subtypesof(/datum/gas_reaction))
+		var/datum/gas_reaction/reaction = r
+		if(!reaction.exclude)
+			reaction_types += reaction
+	return newlist(sortList(reaction_types, /proc/cmp_gas_reactions))
 
-	for(var/i in 2 to reaction_types.len) //holy shit there's gotta be a better way of sorting this lmao. sorts in descending order of priority
-		var/j = i
-		var/datum/gas_reaction/a = reaction_types[j-1]
-		var/datum/gas_reaction/b = reaction_types[j]
-		while(j > 0 && initial(a.priority) < initial(b.priority))
-			reaction_types.Swap(j, j-1)
-			j--
-			a = reaction_types[j-1]
-			b = reaction_types[j]
-
-	for(var/path in reaction_types)
-		. += new path
+/proc/cmp_gas_reactions(datum/gas_reaction/a, datum/gas_reaction/b) //sorts in descending order of priority
+	return initial(b.priority) - initial(a.priority)
 
 /datum/gas_reaction
 	var/min_requirements
