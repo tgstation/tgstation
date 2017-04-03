@@ -45,8 +45,8 @@
 				if (pixel_turf.obscured)
 					log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)])")
 					message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
-					if(world.time >= chnotify + 9000)
-						chnotify = world.time
+					if(REALTIMEOFDAY >= chnotify + 9000)
+						chnotify = REALTIMEOFDAY
 						send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)]))")
 				return
 
