@@ -1,4 +1,4 @@
-var/obj/machinery/gateway/centerstation/the_gateway = null
+GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 /obj/machinery/gateway
 	name = "gateway"

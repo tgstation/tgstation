@@ -138,8 +138,7 @@
 	//CONNECT//
 	///////////
 #if (PRELOAD_RSC == 0)
-var/list/external_rsc_urls
-var/next_external_rsc = 0
+GLOBAL_LIST(external_rsc_urls)
 #endif
 
 
@@ -151,6 +150,7 @@ var/next_external_rsc = 0
 		return null
 
 #if (PRELOAD_RSC == 0)
+	var/static/next_external_rsc = 0
 	if(external_rsc_urls && external_rsc_urls.len)
 		next_external_rsc = Wrap(next_external_rsc+1, 1, external_rsc_urls.len+1)
 		preload_rsc = external_rsc_urls[next_external_rsc]

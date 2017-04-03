@@ -7,8 +7,8 @@ What are the archived variables for?
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 
-var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
-var/list/gaslist_cache = init_gaslist_cache()
+GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
+GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /proc/init_gaslist_cache()
 	. = list()

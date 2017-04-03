@@ -134,10 +134,10 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	total_cost = 0
 	total_amount = 0
 
-var/list/exports_list = list()
+GLOBAL_LIST_EMPTY(exports_list, list())
 
 /proc/setupExports()
 	for(var/subtype in subtypesof(/datum/export))
 		var/datum/export/E = new subtype
 		if(E.export_types && E.export_types.len) // Exports without a type are invalid/base types
-			exports_list += E
+			GLOB.exports_list += E
