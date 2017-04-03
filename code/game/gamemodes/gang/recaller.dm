@@ -18,8 +18,8 @@
 
 /obj/item/device/gangtool/Initialize() //Initialize supply point income if it hasn't already been started
 	..()
-	if(!ticker.mode.gang_points)
-		ticker.mode.gang_points = new /datum/gang_points(ticker.mode)
+	if(!SSticker.mode.gang_points)
+		SSticker.mode.gang_points = new /datum/gang_points(SSticker.mode)
 
 /obj/item/device/gangtool/attack_self(mob/user)
 	if (!can_use(user))
@@ -28,7 +28,7 @@
 	var/dat
 	if(!gang)
 		dat += "This device is not registered.<br><br>"
-		if(user.mind in ticker.mode.get_gang_bosses())
+		if(user.mind in SSticker.mode.get_gang_bosses())
 			if(promotable && user.mind.gang_datum.bosses.len < 3)
 				dat += "Give this device to another member of your organization to use to promote them to Lieutenant.<br><br>"
 				dat += "If this is meant as a spare device for yourself:<br>"
@@ -49,7 +49,7 @@
 		dat += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/start_state.num_territories)*100, 1)]%</B><br>"
 		dat += "Gang Influence: <B>[gang.points]</B><br>"
-		dat += "Time until Influence grows: <B>[(gang.points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
+		dat += "Time until Influence grows: <B>[(gang.points >= 999) ? ("--:--") : (time2text(SSticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<hr>"
 
 
@@ -140,12 +140,12 @@
 /obj/item/device/gangtool/proc/register_device(mob/user)
 	if(gang)	//It's already been registered!
 		return
-	if((promotable && (user.mind in ticker.mode.get_gangsters())) || (user.mind in ticker.mode.get_gang_bosses()))
+	if((promotable && (user.mind in SSticker.mode.get_gangsters())) || (user.mind in SSticker.mode.get_gang_bosses()))
 		gang = user.mind.gang_datum
 		gang.gangtools += src
 		icon_state = "gangtool-[gang.color]"
 		if(!(user.mind in gang.bosses))
-			ticker.mode.remove_gangster(user.mind, 0, 2)
+			SSticker.mode.remove_gangster(user.mind, 0, 2)
 			gang.bosses += user.mind
 			user.mind.gang_datum = gang
 			user.mind.special_role = "[gang.name] Gang Lieutenant"
@@ -154,8 +154,8 @@
 			free_pen = 1
 			gang.message_gangtools("[user] has been promoted to Lieutenant.")
 			to_chat(user, "<FONT size=3 color=red><B>You have been promoted to Lieutenant!</B></FONT>")
-			ticker.mode.forge_gang_objectives(user.mind)
-			ticker.mode.greet_gang(user.mind,0)
+			SSticker.mode.forge_gang_objectives(user.mind)
+			SSticker.mode.greet_gang(user.mind,0)
 			to_chat(user, "The <b>Gangtool</b> you registered will allow you to purchase weapons and equipment, and send messages to your gang.")
 			to_chat(user, "Unlike regular gangsters, you may use <b>recruitment pens</b> to add recruits to your gang. Use them on unsuspecting crew members to recruit them. Don't forget to get your one free pen from the gangtool.")
 	else
@@ -228,7 +228,7 @@
 		if(user.mind in gang.bosses)
 			return 1
 	else	//If it's not registered, any gangster can use this to register
-		if(user.mind in ticker.mode.get_all_gangsters())
+		if(user.mind in SSticker.mode.get_all_gangsters())
 			return 1
 
 	return 0

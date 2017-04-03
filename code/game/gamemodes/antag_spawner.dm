@@ -65,7 +65,7 @@
 				var/mob/dead/observer/theghost = pick(candidates)
 				spawn_antag(theghost.client, get_turf(src), href_list["school"])
 				if(H && H.mind)
-					ticker.mode.update_wiz_icons_added(H.mind)
+					SSticker.mode.update_wiz_icons_added(H.mind)
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
@@ -107,9 +107,9 @@
 		new_objective.target = usr.mind
 		new_objective.explanation_text = "Protect [usr.real_name], the wizard."
 		M.mind.objectives += new_objective
-	ticker.mode.apprentices += M.mind
+	SSticker.mode.apprentices += M.mind
 	M.mind.special_role = "apprentice"
-	ticker.mode.update_wiz_icons_added(M.mind)
+	SSticker.mode.update_wiz_icons_added(M.mind)
 	M << sound('sound/effects/magic.ogg')
 	var/newname = copytext(sanitize(input(M, "You are [wizard_name]'s apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
 	if (!newname)
@@ -142,7 +142,7 @@
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is out of power!</span>")
 		return 0
-	if(!(user.mind in ticker.mode.syndicates))
+	if(!(user.mind in SSticker.mode.syndicates))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
 		return 0
 	if(user.z != ZLEVEL_CENTCOM)
@@ -178,7 +178,7 @@
 	if(nuke)
 		code = nuke.r_code
 	M.mind.make_Nuke(null, code, 0, FALSE)
-	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
+	var/newname = M.dna.species.random_name(M.gender,0,SSticker.mode.nukeops_lastname)
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname
@@ -210,8 +210,8 @@
 	if(prob(50))
 		brainfirstname = pick(first_names_female)
 	var/brainopslastname = pick(last_names)
-	if(ticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
-		brainopslastname = ticker.mode.nukeops_lastname
+	if(SSticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
+		brainopslastname = SSticker.mode.nukeops_lastname
 	var/brainopsname = "[brainfirstname] [brainopslastname]"
 
 	R.mmi.name = "Man-Machine Interface: [brainopsname]"
@@ -265,7 +265,7 @@
 	S.key = C.key
 	S.mind.assigned_role = S.name
 	S.mind.special_role = S.name
-	ticker.mode.traitors += S.mind
+	SSticker.mode.traitors += S.mind
 	var/datum/objective/assassinate/new_objective
 	if(usr)
 		new_objective = new /datum/objective/assassinate

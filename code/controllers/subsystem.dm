@@ -1,5 +1,4 @@
 
-
 /datum/controller/subsystem
 	// Metadata; you should define these.
 	name = "fire coderbus" //name of the subsystem
@@ -29,8 +28,15 @@
 	var/datum/controller/subsystem/queue_next
 	var/datum/controller/subsystem/queue_prev
 
-// Used to initialize the subsystem BEFORE the map has loaded
+//Do not override
 /datum/controller/subsystem/New()
+	return
+
+// Used to initialize the subsystem BEFORE the map has loaded
+// Called AFTER Recover if that is called
+// Prefer to use Initialize if possible
+/datum/controller/subsystem/proc/PreInit()
+	return
 
 //This is used so the mc knows when the subsystem sleeps. do not override.
 /datum/controller/subsystem/proc/ignite(resumed = 0)
