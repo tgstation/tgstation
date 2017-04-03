@@ -1,5 +1,5 @@
-var/datum/newscaster/feed_network/news_network = new /datum/newscaster/feed_network
-var/list/obj/machinery/newscaster/allCasters = list()
+GLOBAL_DATUM_INIT(news_network, /datum/newscaster/feed_network, new)
+GLOBAL_EMPTY_LIST(allCasters)
 
 /datum/newscaster
 

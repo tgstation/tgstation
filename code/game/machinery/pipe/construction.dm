@@ -22,7 +22,7 @@ Buildable meters
 	var/flipped = 0
 	var/is_bent = 0
 
-	var/global/list/pipe_types = list(
+	var/static/list/pipe_types = list(
 		PIPE_SIMPLE, \
 		PIPE_MANIFOLD, \
 		PIPE_4WAYMANIFOLD, \
@@ -81,7 +81,7 @@ Buildable meters
 	src.pixel_y = rand(-5, 5)
 
 //update the name and icon of the pipe item depending on the type
-var/global/list/pipeID2State = list(
+GLOBAL_LIST_INIT(pipeID2State, list(
 	"[PIPE_SIMPLE]"			 = "simple", \
 	"[PIPE_MANIFOLD]"		 = "manifold", \
 	"[PIPE_4WAYMANIFOLD]"	 = "manifold4w", \
@@ -103,7 +103,7 @@ var/global/list/pipeID2State = list(
 	\
 	"[PIPE_GAS_FILTER]"		 = "filter", \
 	"[PIPE_GAS_MIXER]"		 = "mixer", \
-)
+))
 
 /obj/item/pipe/proc/update()
 	var/list/nlist = list(\

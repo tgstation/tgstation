@@ -1,10 +1,10 @@
 /******************** Requests Console ********************/
 /** Originally written by errorage, updated by: Carn, needs more work though. I just added some security fixes */
 
-var/req_console_assistance = list()
-var/req_console_supplies = list()
-var/req_console_information = list()
-var/list/obj/machinery/requests_console/allConsoles = list()
+GLOBAL_EMPTY_LIST(req_console_assistance)
+GLOBAL_EMPTY_LIST(req_console_supplies)
+GLOBAL_EMPTY_LIST(req_console_information)
+GLOBAL_EMPTY_LIST(allConsoles)
 
 /obj/machinery/requests_console
 	name = "requests console"

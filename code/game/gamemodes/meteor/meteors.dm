@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 //Spookoween meteors
 /////////////////////////
 
-/var/list/meteorsSPOOKY = list(/obj/effect/meteor/pumpkin)
+GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 
 /obj/effect/meteor/pumpkin
 	name = "PUMPKING"

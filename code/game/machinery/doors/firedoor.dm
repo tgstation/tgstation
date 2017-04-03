@@ -4,8 +4,8 @@
 #define CONSTRUCTION_GUTTED 3 //Wires are removed, circuit ready to remove
 #define CONSTRUCTION_NOCIRCUIT 4 //Circuit board removed, can safely weld apart
 
-/var/const/OPEN = 1
-/var/const/CLOSED = 2
+#define OPEN 1
+#define CLOSED 2
 
 /obj/machinery/door/firedoor
 	name = "firelock"
@@ -423,3 +423,6 @@
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
 	reinforced = 1
+
+#undef OPEN
+#undef CLOSED
