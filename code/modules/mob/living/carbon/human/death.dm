@@ -32,7 +32,7 @@
 
 	dna.species.spec_death(gibbed, src)
 
-	if(ticker && ticker.mode)
+	if(SSticker && SSticker.mode)
 		sql_report_death(src)
 	if(mind && mind.devilinfo)
 		INVOKE_ASYNC(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src)

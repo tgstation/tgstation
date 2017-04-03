@@ -82,9 +82,7 @@
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
 	S.name = "statue of [name]"
 	bleedsuppress = 1
-	S.icon = icon
-	S.icon_state = icon_state
-	S.copy_overlays(overlays)
+	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return 1

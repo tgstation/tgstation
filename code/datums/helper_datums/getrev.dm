@@ -91,7 +91,7 @@ var/global/datum/getrev/revdata = new()
 	to_chat(src, "Enforce Continuous Rounds: [config.continuous.len] of [config.modes.len] roundtypes")
 	to_chat(src, "Allow Midround Antagonists: [config.midround_antag.len] of [config.modes.len] roundtypes")
 	if(config.show_game_type_odds)
-		if(ticker.current_state == GAME_STATE_PLAYING)
+		if(SSticker.current_state == GAME_STATE_PLAYING)
 			var/prob_sum = 0
 			var/current_odds_differ = FALSE
 			var/list/probs = list()
@@ -101,7 +101,7 @@ var/global/datum/getrev/revdata = new()
 				var/ctag = initial(M.config_tag)
 				if(!(ctag in config.probabilities))
 					continue
-				if((config.min_pop[ctag] && (config.min_pop[ctag] > ticker.totalPlayersReady)) || (config.max_pop[ctag] && (config.max_pop[ctag] < ticker.totalPlayersReady)) || (initial(M.required_players) > ticker.totalPlayersReady))
+				if((config.min_pop[ctag] && (config.min_pop[ctag] > SSticker.totalPlayersReady)) || (config.max_pop[ctag] && (config.max_pop[ctag] < SSticker.totalPlayersReady)) || (initial(M.required_players) > SSticker.totalPlayersReady))
 					current_odds_differ = TRUE
 					continue
 				probs[ctag] = 1

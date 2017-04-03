@@ -30,7 +30,6 @@ var/list/start_landmarks_list = list()			//list of all spawn points created
 var/list/department_security_spawns = list()	//list of all department security spawns
 var/list/generic_event_spawns = list()			//list of all spawns for events
 
-var/list/monkeystart = list()
 var/list/wizardstart = list()
 var/list/newplayer_start = list()
 var/list/latejoin = list()
@@ -41,7 +40,6 @@ var/list/tdome1 = list()
 var/list/tdome2 = list()
 var/list/tdomeobserve = list()
 var/list/tdomeadmin = list()
-var/list/prisonsecuritywarp = list()	//prison security goes to these
 var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()
 var/list/secequipment = list()

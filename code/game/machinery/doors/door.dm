@@ -229,7 +229,7 @@
 		return 1
 	if(operating)
 		return
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		return 0
 	operating = 1
 	do_animate("opening")

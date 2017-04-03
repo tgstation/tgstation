@@ -133,7 +133,7 @@ var/time_last_changed_position = 0
 
 	user.set_machine(src)
 	var/dat
-	if(!ticker)
+	if(!SSticker)
 		return
 	if (mode == 1) // accessing crew manifest
 		var/crew = ""

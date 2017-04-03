@@ -16,7 +16,7 @@
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
 
-/obj/machinery/smartfridge/New()
+/obj/machinery/smartfridge/Initialize()
 	..()
 	create_reagents()
 	reagents.set_reacting(FALSE)

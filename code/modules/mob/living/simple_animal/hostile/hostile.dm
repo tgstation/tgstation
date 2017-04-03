@@ -280,7 +280,7 @@
 
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
-	target.attack_animal(src)
+	return target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
