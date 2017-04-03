@@ -199,7 +199,7 @@
 			M.Turn(Angle)
 			transform = M
 
-			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//Without the 1 it rounds to -1 for cos because byond's functions are shit.
+			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() doesn't round unless you specify 1.
 			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
 			var/pixel_x_offset = pixel_x + Pixel_x
 			var/pixel_y_offset = pixel_y + Pixel_y
