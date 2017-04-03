@@ -35,7 +35,6 @@ var/list/gaslist_cache = init_gaslist_cache()
 	var/datum/holder
 
 /datum/gas_mixture/New(volume = CELL_VOLUME)
-	..()
 	gases = new
 	temperature = 0
 	temperature_archived = 0

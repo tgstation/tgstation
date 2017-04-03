@@ -382,17 +382,16 @@
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/mecha/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans)
 	if(speaker == occupant)
 		if(radio.broadcasting)
-			radio.talk_into(speaker, text, , spans)
+			radio.talk_into(speaker, text, , spans, message_language)
 		//flick speech bubble
 		var/list/speech_bubble_recipients = list()
 		for(var/mob/M in get_hearers_in_view(7,src))
 			if(M.client)
 				speech_bubble_recipients.Add(M.client)
-		spawn(0)
-			flick_overlay(image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+		INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 ////////////////////////////
 ///// Action processing ////
@@ -663,9 +662,11 @@
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
+			AI.disconnect_shell()
+			RemoveActions(AI, TRUE)
+			occupant = null
 			AI.forceMove(card)
 			card.AI = AI
-			occupant = null
 			AI.controlled_mech = null
 			AI.remote_control = null
 			icon_state = initial(icon_state)+"-open"
@@ -686,10 +687,12 @@
 			if(!AI)
 				to_chat(user, "<span class='warning'>There is no AI currently installed on this device.</span>")
 				return
-			else if(AI.stat || !AI.client)
+			if(AI.deployed_shell) //Recall AI if shelled so it can be checked for a client
+				AI.disconnect_shell()
+			if(AI.stat || !AI.client)
 				to_chat(user, "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>")
 				return
-			else if(occupant || dna_lock) //Normal AIs cannot steal mechs!
+			if(occupant || dna_lock) //Normal AIs cannot steal mechs!
 				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].")
 				return
 			AI.control_disabled = 0
@@ -715,7 +718,10 @@
 	to_chat(AI, "[AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
 	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]")
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
-	GrantActions(AI, !AI.can_dominate_mechs)
+	if(interaction == AI_TRANS_FROM_CARD)
+		GrantActions(AI, FALSE) //No eject/return to core action for AI uploaded by card
+	else
+		GrantActions(AI, !AI.can_dominate_mechs)
 
 
 //An actual AI (simple_animal mecha pilot) entering the mech

@@ -145,7 +145,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
 	var/danger
-	danger = joined_player_list.len - ticker.mode.syndicates.len
+	danger = joined_player_list.len - SSticker.mode.syndicates.len
 	danger = Ceiling(danger, 10)
 	scaleTC(danger)
 

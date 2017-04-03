@@ -25,7 +25,7 @@
 		to_chat(world, "<B>The entire station was eaten by the Blob!</B>")
 		log_game("Blob mode completed with a blob victory.")
 
-		ticker.news_report = BLOB_WIN
+		SSticker.news_report = BLOB_WIN
 
 	else if(station_was_nuked)
 		feedback_set_details("round_end_result","halfwin - nuke")
@@ -33,7 +33,7 @@
 		to_chat(world, "<B>Directive 7-12 has been successfully carried out, preventing the Blob from spreading.</B>")
 		log_game("Blob mode completed with a tie (station destroyed).")
 
-		ticker.news_report = BLOB_NUKE
+		SSticker.news_report = BLOB_NUKE
 
 	else if(!blob_cores.len)
 		feedback_set_details("round_end_result","loss - blob eliminated")
@@ -41,7 +41,7 @@
 		to_chat(world, "<B>The alien organism has been eradicated from the station!</B>")
 		log_game("Blob mode completed with a crew victory.")
 
-		ticker.news_report = BLOB_DESTROYED
+		SSticker.news_report = BLOB_DESTROYED
 
 	..()
 	return 1
@@ -62,7 +62,7 @@
 	return ..()
 
 /datum/game_mode/proc/auto_declare_completion_blob()
-	if(istype(ticker.mode,/datum/game_mode/blob) )
+	if(istype(SSticker.mode,/datum/game_mode/blob) )
 		var/datum/game_mode/blob/blob_mode = src
 		if(blob_mode.blob_overminds.len)
 			var/text = "<FONT size = 2><B>The blob[(blob_mode.blob_overminds.len > 1 ? "s were" : " was")]:</B></FONT>"

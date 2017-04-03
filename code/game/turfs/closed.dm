@@ -39,6 +39,13 @@
 		icon = SStitle.icon
 	..()
 
+/turf/closed/indestructible/splashscreen/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		switch(var_name)
+			if("icon")
+				SStitle.icon = icon
+
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"

@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/title/SStitle
-
-/datum/controller/subsystem/title
+SUBSYSTEM_DEF(title)
 	name = "Title Screen"
 	flags = SS_NO_FIRE|SS_NO_INIT
 
@@ -9,9 +7,7 @@ var/datum/controller/subsystem/title/SStitle
 	var/icon/previous_icon
 	var/turf/closed/indestructible/splashscreen/splash_turf
 
-/datum/controller/subsystem/title/New()
-	NEW_SS_GLOBAL(SStitle)
-
+/datum/controller/subsystem/title/PreInit()
 	if(file_path && icon)
 		return
 
@@ -45,9 +41,17 @@ var/datum/controller/subsystem/title/SStitle
 		if(splash_turf)
 			splash_turf.icon = icon
 
+/datum/controller/subsystem/title/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		switch(var_name)
+			if("icon")
+				if(splash_turf)
+					splash_turf.icon = icon
+
 /datum/controller/subsystem/title/Shutdown()
 	if(file_path)
-		var/F = "data/previous_title.dat"
+		var/F = file("data/previous_title.dat")
 		F << file_path
 
 /datum/controller/subsystem/title/Recover()

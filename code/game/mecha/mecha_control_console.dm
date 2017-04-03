@@ -75,13 +75,13 @@
 		return 0
 	var/obj/mecha/M = src.loc
 	var/cell_charge = M.get_charge()
-	var/answer = {"<b>Name:</b> [M.name]<br>
-						<b>Integrity:</b> [M.obj_integrity/M.max_integrity*100]%<br>
-						<b>Cell charge:</b> [isnull(cell_charge)?"Not found":"[M.cell.percent()]%"]<br>
-						<b>Airtank:</b> [M.return_pressure()]kPa<br>
-						<b>Pilot:</b> [M.occupant||"None"]<br>
-						<b>Location:</b> [get_area(M)||"Unknown"]<br>
-						<b>Active equipment:</b> [M.selected||"None"]<br>"}
+	var/answer = {"<b>Name:</b> [M.name]
+<b>Integrity:</b> [M.obj_integrity/M.max_integrity*100]%
+<b>Cell charge:</b> [isnull(cell_charge)?"Not found":"[M.cell.percent()]%"]
+<b>Airtank:</b> [M.return_pressure()]kPa
+<b>Pilot:</b> [M.occupant||"None"]
+<b>Location:</b> [get_area(M)||"Unknown"]
+<b>Active equipment:</b> [M.selected||"None"] "}
 	if(istype(M, /obj/mecha/working/ripley))
 		var/obj/mecha/working/ripley/RM = M
 		answer += "<b>Used cargo space:</b> [RM.cargo.len/RM.cargo_capacity*100]%<br>"

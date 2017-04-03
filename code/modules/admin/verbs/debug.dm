@@ -181,7 +181,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Robot"
 
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -197,7 +197,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Blob"
 
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -215,7 +215,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		alert("Wait until the game starts")
 		return
 
@@ -263,7 +263,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Alien"
 
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -280,7 +280,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make slime"
 
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -383,7 +383,7 @@ var/list/TYPES_SHORTCUTS = list(
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
 	set name = "Make Powernets"
-	SSmachine.makepowernets()
+	SSmachines.makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -392,7 +392,7 @@ var/list/TYPES_SHORTCUTS = list(
 	set category = "Admin"
 	set name = "Grant Full Access"
 
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -780,7 +780,7 @@ var/list/TYPES_SHORTCUTS = list(
 	if(!holder)
 		return
 
-	SSevent.scheduled = world.time
+	SSevents.scheduled = world.time
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] pumped a random event.</span>")
 	feedback_add_details("admin_verb","PRE")

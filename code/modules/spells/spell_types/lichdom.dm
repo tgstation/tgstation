@@ -93,15 +93,15 @@
 	poi_list |= src
 	START_PROCESSING(SSobj, src)
 	set_light(lon_range)
-	if(initial(ticker.mode.round_ends_with_antag_death))
-		ticker.mode.round_ends_with_antag_death = FALSE
+	if(initial(SSticker.mode.round_ends_with_antag_death))
+		SSticker.mode.round_ends_with_antag_death = FALSE
 
 /obj/item/phylactery/Destroy(force=FALSE)
 	STOP_PROCESSING(SSobj, src)
 	active_phylacteries--
 	poi_list -= src
 	if(!active_phylacteries)
-		ticker.mode.round_ends_with_antag_death = initial(ticker.mode.round_ends_with_antag_death)
+		SSticker.mode.round_ends_with_antag_death = initial(SSticker.mode.round_ends_with_antag_death)
 	. = ..()
 
 /obj/item/phylactery/process()
