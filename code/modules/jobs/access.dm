@@ -3,14 +3,14 @@
 GLOBAL_VAR_INIT(access_security, 1) // Security equipment
 GLOBAL_VAR_INIT(access_brig, 2) // Brig timers and permabrig
 GLOBAL_VAR_INIT(access_armory, 3)
-/var/const/access_forensics_lockers= 4
+GLOBAL_VAR_INIT(access_forensics_lockers, 4)
 GLOBAL_VAR_INIT(access_medical, 5)
 GLOBAL_VAR_INIT(access_morgue, 6)
 GLOBAL_VAR_INIT(access_tox, 7)
 GLOBAL_VAR_INIT(access_tox_storage, 8)
 GLOBAL_VAR_INIT(access_genetics, 9)
 GLOBAL_VAR_INIT(access_engine, 10)
-/var/const/access_engine_equip= 11
+GLOBAL_VAR_INIT(access_engine_equip, 11)
 GLOBAL_VAR_INIT(access_maint_tunnels, 12)
 GLOBAL_VAR_INIT(access_external_airlocks, 13)
 GLOBAL_VAR_INIT(access_emergency_storage, 14)
@@ -69,7 +69,7 @@ GLOBAL_VAR_INIT(access_cloning, 68) //Cloning room
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
-/var/const/Mostly for admin fun times.*/
+	Mostly for admin fun times.*/
 GLOBAL_VAR_INIT(access_cent_general, 101)//General facilities.
 GLOBAL_VAR_INIT(access_cent_thunder, 102)//Thunderdome.
 GLOBAL_VAR_INIT(access_cent_specops, 103)//Special Ops.
