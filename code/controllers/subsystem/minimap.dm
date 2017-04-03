@@ -1,6 +1,4 @@
-GLOBAL_REAL(SSminimap, /datum/controller/subsystem/minimap)
-
-/datum/controller/subsystem/minimap
+SUBSYSTEM_DEF(minimap)
 	name = "Minimap"
 	init_order = -2
 	flags = SS_NO_FIRE
@@ -8,9 +6,6 @@ GLOBAL_REAL(SSminimap, /datum/controller/subsystem/minimap)
 	var/const/TILE_SIZE = 8
 
 	var/list/z_levels = list(ZLEVEL_STATION)
-
-/datum/controller/subsystem/minimap/New()
-	NEW_SS_GLOBAL(SSminimap)
 
 /datum/controller/subsystem/minimap/Initialize(timeofday)
 	var/hash = md5(SSmapping.config.GetFullMapPath())

@@ -1,9 +1,7 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
 
-GLOBAL_REAL(SSshuttle, /datum/controller/subsystem/shuttle)
-
-/datum/controller/subsystem/shuttle
-	name = "Shuttles"
+SUBSYSTEM_DEF(shuttle)
+	name = "Shuttle"
 	wait = 10
 	init_order = 3
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
@@ -46,9 +44,6 @@ GLOBAL_REAL(SSshuttle, /datum/controller/subsystem/shuttle)
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
-
-/datum/controller/subsystem/shuttle/New()
-	NEW_SS_GLOBAL(SSshuttle)
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
@@ -179,8 +174,8 @@ GLOBAL_REAL(SSshuttle, /datum/controller/subsystem/shuttle)
 			return
 		emergency = backup_shuttle
 
-	if(world.time - ticker.round_start_time < config.shuttle_refuel_delay)
-		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - ticker.round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
+	if(world.time - SSticker.round_start_time < config.shuttle_refuel_delay)
+		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - SSticker.round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
 		return
 
 	switch(emergency.mode)
@@ -240,7 +235,7 @@ GLOBAL_REAL(SSshuttle, /datum/controller/subsystem/shuttle)
 /datum/controller/subsystem/shuttle/proc/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL)
 		return
-	if(ticker.mode.name == "meteor")
+	if(SSticker.mode.name == "meteor")
 		return
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)

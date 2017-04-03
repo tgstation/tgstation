@@ -1,14 +1,9 @@
-GLOBAL_REAL(SSstickyban, /datum/controller/subsystem/stickyban)
-
-/datum/controller/subsystem/stickyban
+SUBSYSTEM_DEF(stickyban)
 	name = "Sticky Ban"
 	init_order = -10
 	flags = SS_NO_FIRE
 
 	var/list/cache = list()
-
-/datum/controller/subsystem/stickyban/New()
-	NEW_SS_GLOBAL(SSstickyban)
 
 /datum/controller/subsystem/stickyban/Initialize(timeofday)
 	var/list/bannedkeys = world.GetConfig("ban")

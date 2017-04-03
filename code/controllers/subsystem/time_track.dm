@@ -1,6 +1,4 @@
-GLOBAL_REAL(SStime_track, /datum/controller/subsystem/time_track)
-
-/datum/controller/subsystem/time_track
+SUBSYSTEM_DEF(time_track)
 	name = "Time Tracking"
 	wait = 600
 	flags = SS_NO_INIT|SS_FIRE_IN_LOBBY
@@ -16,9 +14,6 @@ GLOBAL_REAL(SStime_track, /datum/controller/subsystem/time_track)
 	var/last_tick_realtime = 0
 	var/last_tick_byond_time = 0
 	var/last_tick_tickcount = 0
-
-/datum/controller/subsystem/time_track/New()
-	NEW_SS_GLOBAL(SStime_track)
 
 /datum/controller/subsystem/time_track/fire()
 

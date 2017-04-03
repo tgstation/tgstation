@@ -311,9 +311,11 @@
 		if(prob(30))
 			spark_system.start()
 		if(on && !attacked && !emagged)
-			attacked = 1
-			spawn(60)
-				attacked = 0
+			attacked = TRUE
+			addtimer(CALLBACK(src, .proc/reset_attacked), 60)
+
+/obj/machinery/porta_turret/proc/reset_attacked()
+	attacked = FALSE
 
 /obj/machinery/porta_turret/deconstruct(disassembled = TRUE)
 	qdel(src)

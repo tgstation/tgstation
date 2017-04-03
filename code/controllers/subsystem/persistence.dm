@@ -1,6 +1,4 @@
-GLOBAL_REAL(SSpersistence, /datum/controller/subsystem/persistence)
-
-/datum/controller/subsystem/persistence
+SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
 	init_order = -100
 	flags = SS_NO_FIRE
@@ -12,9 +10,6 @@ GLOBAL_REAL(SSpersistence, /datum/controller/subsystem/persistence)
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/savefile/chisel_messages_sav
-
-/datum/controller/subsystem/persistence/New()
-	NEW_SS_GLOBAL(SSpersistence)
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()

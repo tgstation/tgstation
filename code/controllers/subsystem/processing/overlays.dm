@@ -1,6 +1,4 @@
-GLOBAL_REAL(SSoverlays, /datum/controller/subsystem/processing/overlays)
-
-/datum/controller/subsystem/processing/overlays
+PROCESSING_SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER|SS_FIRE_IN_LOBBY
 	wait = 1
@@ -13,8 +11,7 @@ GLOBAL_REAL(SSoverlays, /datum/controller/subsystem/processing/overlays)
 	var/list/overlay_icon_cache
 	var/initialized = FALSE
 
-/datum/controller/subsystem/processing/overlays/New()
-	NEW_SS_GLOBAL(SSoverlays)
+/datum/controller/subsystem/processing/overlays/PreInit()
 	LAZYINITLIST(overlay_icon_state_caches)
 	LAZYINITLIST(overlay_icon_cache)
 

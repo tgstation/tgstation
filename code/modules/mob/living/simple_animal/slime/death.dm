@@ -26,8 +26,8 @@
 
 	update_canmove()
 
-	if(ticker && ticker.mode)
-		ticker.mode.check_win()
+	if(SSticker && SSticker.mode)
+		SSticker.mode.check_win()
 
 	return ..(gibbed)
 

@@ -203,7 +203,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 					if(A.fire)
 						cont = FALSE
 						break
-			if(cont)
+			if(cont && D.is_operational())
 				if(D.operating)
 					D.nextstate = opening ? OPEN : CLOSED
 				else if(!(D.density ^ opening))

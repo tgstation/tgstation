@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(blobs_legit) //used for win-score calculations, contains only 
 	SSshuttle.registerHostileEnvironment(src)
 
 	// Disable the blob event for this round.
-	var/datum/round_event_control/blob/B = locate() in SSevent.control
+	var/datum/round_event_control/blob/B = locate() in SSevents.control
 	if(B)
 		B.max_occurrences = 0 // disable the event
 

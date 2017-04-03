@@ -1,16 +1,11 @@
 //Used for all kinds of weather, ex. lavaland ash storms.
-
-GLOBAL_REAL(SSweather, /datum/controller/subsystem/weather)
-/datum/controller/subsystem/weather
+SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
 	wait = 10
 	var/list/processing = list()
 	var/list/existing_weather = list()
 	var/list/eligible_zlevels = list(ZLEVEL_LAVALAND)
-
-/datum/controller/subsystem/weather/New()
-	NEW_SS_GLOBAL(SSweather)
 
 /datum/controller/subsystem/weather/fire()
 	for(var/V in processing)

@@ -11,7 +11,7 @@ var/sound/admin_sound
 	message_admins("[key_name_admin(src)] played sound [S]")
 
 	var/freq = 1
-	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
 		to_chat(src, "You feel the Honkmother messing with your song...")
 
@@ -48,8 +48,8 @@ var/sound/admin_sound
 	if(!check_rights(R_SOUNDS))
 		return
 
-	if(ticker)
-		ticker.round_end_sound = fcopy_rsc(S)
+	if(SSticker)
+		SSticker.round_end_sound = fcopy_rsc(S)
 	else
 		return
 

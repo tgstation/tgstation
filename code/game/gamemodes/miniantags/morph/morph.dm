@@ -222,7 +222,7 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
-	ticker.mode.traitors |= player_mind
+	SSticker.mode.traitors |= player_mind
 	to_chat(S, S.playstyle_string)
 	S << 'sound/magic/Mutate.ogg'
 	message_admins("[key_name_admin(S)] has been made into a morph by an event.")

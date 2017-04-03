@@ -17,6 +17,9 @@
 		args[1] = FALSE
 		Initialize(arglist(args))
 
+/mob/living/carbon/human/dummy/Life()
+	return
+
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -38,6 +41,8 @@
 	martial_art = default_martial_art
 
 	handcrafting = new()
+
+	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
 
 	..()
 
@@ -853,7 +858,7 @@
 		if(7) // Pride
 			log_game("[src] was influenced by the sin of pride.")
 			O = new /datum/objective/sintouched/pride
-	ticker.mode.sintouched += src.mind
+	SSticker.mode.sintouched += src.mind
 	src.mind.objectives += O
 	src.mind.announce_objectives()
 

@@ -37,8 +37,8 @@
 	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")
 	bubble_icon = "machine"
-	languages_spoken = DRONE
-	languages_understood = DRONE|HUMAN
+	initial_languages = list(/datum/language/common, /datum/language/machine, /datum/language/drone)
+	only_speaks_language = /datum/language/drone
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)

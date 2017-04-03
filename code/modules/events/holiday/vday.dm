@@ -45,12 +45,12 @@
 			to_chat(L, "<span class='warning'><B>You didn't get a date! They're all having fun without you! you'll show them though...</B></span>")
 			var/datum/objective/martyr/normiesgetout = new
 			normiesgetout.owner = L.mind
-			ticker.mode.traitors |= L.mind
+			SSticker.mode.traitors |= L.mind
 			L.mind.objectives += normiesgetout
 
 /proc/forge_valentines_objective(mob/living/lover,mob/living/date)
 
-	ticker.mode.traitors |= lover.mind
+	SSticker.mode.traitors |= lover.mind
 	lover.mind.special_role = "valentine"
 
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect

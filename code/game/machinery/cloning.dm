@@ -6,7 +6,7 @@
 #define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
 #define MINIMUM_HEAL_LEVEL 40
 
-#define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans())
+#define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans(), get_default_language())
 
 /obj/machinery/clonepod
 	anchored = 1

@@ -132,7 +132,7 @@
 
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
-			if(ticker.mode.name == "cult" && T.mind == ticker.mode:sacrifice_target)
+			if(SSticker.mode.name == "cult" && T.mind == SSticker.mode:sacrifice_target)
 				if(iscultist(user))
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else
@@ -201,8 +201,8 @@
 	if(stoner)
 		newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
-	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && ticker && ticker.mode)
-		ticker.mode.add_cultist(newstruct.mind, 0)
+	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
+		SSticker.mode.add_cultist(newstruct.mind, 0)
 	if(iscultist(stoner) || cultoverride)
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>")
 	else if(stoner)
@@ -223,7 +223,7 @@
 	if(U)
 		S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
 	if(U && iscultist(U))
-		ticker.mode.add_cultist(S.mind, 0)
+		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
 	icon_state = "soulstone2"

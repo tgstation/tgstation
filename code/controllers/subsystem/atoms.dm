@@ -1,10 +1,8 @@
-GLOBAL_REAL(SSatoms, /datum/controller/subsystem/atoms)
-
 #define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
 #define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
 
-/datum/controller/subsystem/atoms
+SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = 11
 	flags = SS_NO_FIRE
@@ -13,9 +11,6 @@ GLOBAL_REAL(SSatoms, /datum/controller/subsystem/atoms)
 	var/old_initialized
 
 	var/list/late_loaders
-
-/datum/controller/subsystem/atoms/New()
-	NEW_SS_GLOBAL(SSatoms)
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	fire_overlay.appearance_flags = RESET_COLOR

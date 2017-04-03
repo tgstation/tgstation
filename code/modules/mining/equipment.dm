@@ -573,9 +573,9 @@
 			L.underlays -= marked_image
 			qdel(marked_image)
 			marked_image = null
-			var/backstab = check_target_facings(user, L)
+			var/backstab_dir = get_dir(user, L)
 			var/def_check = L.getarmor(type = "bomb")
-			if(backstab == FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR || backstab == FACING_SAME_DIR)
+			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
 				L.apply_damage(80, BRUTE, blocked = def_check)
 				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 			else

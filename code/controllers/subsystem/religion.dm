@@ -1,6 +1,4 @@
-GLOBAL_REAL(SSreligion, /datum/controller/subsystem/religion)
-
-/datum/controller/subsystem/religion
+SUBSYSTEM_DEF(religion)
 	name = "Religion"
 	init_order = 19
 	flags = SS_NO_FIRE|SS_NO_INIT
@@ -12,6 +10,3 @@ GLOBAL_REAL(SSreligion, /datum/controller/subsystem/religion)
 	var/Bible_deity_name
 
 	var/holy_weapon
-
-/datum/controller/subsystem/religion/New()
-	NEW_SS_GLOBAL(SSreligion)

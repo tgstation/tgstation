@@ -1,6 +1,4 @@
-GLOBAL_REAL(SSipintel, /datum/controller/subsystem/ipintel)
-
-/datum/controller/subsystem/ipintel
+SUBSYSTEM_DEF(ipintel)
 	name = "XKeyScore"
 	init_order = -10
 	flags = SS_NO_FIRE
@@ -9,9 +7,6 @@ GLOBAL_REAL(SSipintel, /datum/controller/subsystem/ipintel)
 	var/errors = 0
 
 	var/list/cache = list()
-
-/datum/controller/subsystem/ipintel/New()
-	NEW_SS_GLOBAL(SSipintel)
 
 /datum/controller/subsystem/ipintel/Initialize(timeofday, zlevel)
 	enabled = 1

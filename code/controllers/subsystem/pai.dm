@@ -1,6 +1,4 @@
-GLOBAL_REAL(SSpai, /datum/controller/subsystem/pai)
-
-/datum/controller/subsystem/pai
+SUBSYSTEM_DEF(pai)
 	name = "pAI"
 
 	flags = SS_NO_INIT|SS_NO_FIRE
@@ -9,9 +7,6 @@ GLOBAL_REAL(SSpai, /datum/controller/subsystem/pai)
 	var/ghost_spam = FALSE
 	var/spam_delay = 100
 	var/list/pai_card_list = list()
-
-/datum/controller/subsystem/pai/New()
-	NEW_SS_GLOBAL(SSpai)
 
 /datum/controller/subsystem/pai/Topic(href, href_list[])
 	if(href_list["download"])
@@ -32,8 +27,8 @@ GLOBAL_REAL(SSpai, /datum/controller/subsystem/pai)
 
 			card.setPersonality(pai)
 
-			ticker.mode.update_cult_icons_removed(card.pai.mind)
-			ticker.mode.update_rev_icons_removed(card.pai.mind)
+			SSticker.mode.update_cult_icons_removed(card.pai.mind)
+			SSticker.mode.update_rev_icons_removed(card.pai.mind)
 
 			candidates -= candidate
 			usr << browse(null, "window=findPai")

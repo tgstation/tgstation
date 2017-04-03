@@ -1,6 +1,4 @@
-GLOBAL_REAL(SSvote, /datum/controller/subsystem/vote)
-
-/datum/controller/subsystem/vote
+SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 10
 
@@ -15,9 +13,6 @@ GLOBAL_REAL(SSvote, /datum/controller/subsystem/vote)
 	var/list/voted = list()
 	var/list/voting = list()
 	var/list/generated_actions = list()
-
-/datum/controller/subsystem/vote/New()
-	NEW_SS_GLOBAL(SSvote)
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
@@ -122,7 +117,7 @@ GLOBAL_REAL(SSvote, /datum/controller/subsystem/vote)
 			if("gamemode")
 				if(GLOB.master_mode != .)
 					world.save_mode(.)
-					if(ticker && ticker.mode)
+					if(SSticker && SSticker.mode)
 						restart = 1
 					else
 						GLOB.master_mode = .

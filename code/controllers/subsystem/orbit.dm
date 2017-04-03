@@ -1,6 +1,4 @@
-GLOBAL_REAL(SSorbit, /datum/controller/subsystem/orbit)
-
-/datum/controller/subsystem/orbit
+SUBSYSTEM_DEF(orbit)
 	name = "Orbits"
 	priority = 35
 	wait = 2
@@ -8,10 +6,6 @@ GLOBAL_REAL(SSorbit, /datum/controller/subsystem/orbit)
 
 	var/list/currentrun = list()
 	var/list/processing = list()
-
-/datum/controller/subsystem/orbit/New()
-	NEW_SS_GLOBAL(SSorbit)
-
 
 /datum/controller/subsystem/orbit/stat_entry()
 	..("P:[processing.len]")

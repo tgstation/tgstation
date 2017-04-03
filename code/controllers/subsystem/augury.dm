@@ -1,6 +1,4 @@
-GLOBAL_REAL(SSaugury, /datum/controller/subsystem/augury)
-
-/datum/controller/subsystem/augury
+SUBSYSTEM_DEF(augury)
 	name = "Augury"
 	flags = SS_NO_INIT
 
@@ -8,9 +6,6 @@ GLOBAL_REAL(SSaugury, /datum/controller/subsystem/augury)
 	var/list/doombringers = list()
 
 	var/list/observers_given_action = list()
-
-/datum/controller/subsystem/augury/New()
-	NEW_SS_GLOBAL(SSaugury)
 
 /datum/controller/subsystem/augury/stat_entry(msg)
 	..("W:[watchers.len]|D:[doombringers.len]")

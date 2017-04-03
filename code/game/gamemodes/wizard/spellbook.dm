@@ -507,7 +507,7 @@
 	log_name = "SGH"
 
 /datum/spellbook_entry/summon/ghosts/IsAvailible()
-	if(!ticker.mode)
+	if(!SSticker.mode)
 		return FALSE
 	else
 		return TRUE
@@ -526,9 +526,9 @@
 	log_name = "SG"
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
+	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (ticker.mode.name != "ragin' mages" && !config.no_summon_guns)
+	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
@@ -544,9 +544,9 @@
 	log_name = "SU"
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
+	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
+	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
@@ -564,9 +564,9 @@
 	var/times = 0
 
 /datum/spellbook_entry/summon/events/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
+	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (ticker.mode.name != "ragin' mages" && !config.no_summon_events)
+	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)

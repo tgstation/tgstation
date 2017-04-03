@@ -286,9 +286,9 @@ GLOBAL_LIST_INIT(lawlorify, list (
 	if(A)
 		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner.current, action=NOTIFY_ATTACK)
 	sleep(50)
-	if(!ticker.mode.devil_ascended)
+	if(!SSticker.mode.devil_ascended)
 		SSshuttle.emergency.request(null, 0.3)
-	ticker.mode.devil_ascended++
+	SSticker.mode.devil_ascended++
 	form = ARCH_DEVIL
 
 /datum/devilinfo/proc/remove_spells()

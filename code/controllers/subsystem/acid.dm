@@ -1,16 +1,10 @@
-GLOBAL_REAL(SSacid, /datum/controller/subsystem/acid)
-
-/datum/controller/subsystem/acid
+SUBSYSTEM_DEF(acid)
 	name = "Acid"
 	priority = 40
 	flags = SS_NO_INIT|SS_BACKGROUND
 
 	var/list/currentrun = list()
 	var/list/processing = list()
-
-/datum/controller/subsystem/acid/New()
-	NEW_SS_GLOBAL(SSacid)
-
 
 /datum/controller/subsystem/acid/stat_entry()
 	..("P:[processing.len]")

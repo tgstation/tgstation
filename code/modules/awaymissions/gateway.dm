@@ -209,6 +209,12 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	active = 1
 	update_icon()
 
+/obj/machinery/gateway/centeraway/proc/check_exile_implant(mob/living/carbon/C)
+	for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
+		to_chat(C, "\black The station gate has detected your exile implant and is blocking your entry.")
+		return TRUE
+	return FALSE
+
 /obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
 	if(!detect())
 		return
@@ -217,10 +223,18 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(!stationgate || QDELETED(stationgate))
 		return
 	if(istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/C = AM
-		for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
-			to_chat(AM, "\black The station gate has detected your exile implant and is blocking your entry.")
+		if(check_exile_implant(AM))
 			return
+	else
+		for(var/mob/living/carbon/C in AM.contents)
+			if(check_exile_implant(C))
+				say("Rejecting [AM]: Exile implant detected in contained lifeform.")
+				return
+	if(AM.buckled_mobs.len)
+		for(var/mob/living/carbon/C in AM.buckled_mobs)
+			if(check_exile_implant(C))
+				say("Rejecting [AM]: Exile implant detected in close proximity lifeform.")
+				return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
 	AM.setDir(SOUTH)
 	if (ismob(AM))

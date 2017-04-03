@@ -30,7 +30,6 @@ GLOBAL_LIST_EMPTY(start_landmarks_list)			//list of all spawn points created
 GLOBAL_LIST_EMPTY(department_security_spawns)	//list of all department security spawns
 GLOBAL_LIST_EMPTY(generic_event_spawns)			//list of all spawns for events
 
-GLOBAL_LIST_EMPTY(monkeystart)
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(newplayer_start)
 GLOBAL_LIST_EMPTY(latejoin)
@@ -41,7 +40,6 @@ GLOBAL_LIST_EMPTY(tdome1)
 GLOBAL_LIST_EMPTY(tdome2)
 GLOBAL_LIST_EMPTY(tdomeobserve)
 GLOBAL_LIST_EMPTY(tdomeadmin)
-GLOBAL_LIST_EMPTY(prisonsecuritywarp)	//prison security goes to these
 GLOBAL_LIST_EMPTY(prisonwarped)	//list of players already warped
 GLOBAL_LIST_EMPTY(blobstart)
 GLOBAL_LIST_EMPTY(secequipment)

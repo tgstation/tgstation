@@ -21,16 +21,13 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	var/obj/item/uplinkholder = null
 	var/obj/machinery/computer/telecrystals/boss/linkedboss = null
 
-/obj/machinery/computer/telecrystals/uplinker/New()
+/obj/machinery/computer/telecrystals/uplinker/Initialize()
 	..()
 
-	var/ID
-	if(GLOB.possible_uplinker_IDs.len)
-		ID = pick(GLOB.possible_uplinker_IDs)
-		GLOB.possible_uplinker_IDs -= ID
-		name = "[name] [ID]"
-	else
-		name = "[name] [rand(1,999)]"
+	var/ID = pick_n_take(GLOB.possible_uplinker_IDs)
+	if(!ID)
+		ID = rand(1,999)
+	name = "[name] [ID]"
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
 	if(uplinkholder)
@@ -147,8 +144,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
-	var/danger
-	danger = GLOB.joined_player_list.len - ticker.mode.syndicates.len
+	var/danger = GLOB.joined_player_list.len - SSticker.mode.syndicates.len
 	danger = Ceiling(danger, 10)
 	scaleTC(danger)
 

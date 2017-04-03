@@ -32,8 +32,8 @@
 
 	var/mob/living/carbon/human/devil = create_event_devil(spawn_loc)
 	Mind.transfer_to(devil)
-	ticker.mode.finalize_devil(Mind, FALSE)
-	ticker.mode.add_devil_objectives(src, 2)
+	SSticker.mode.finalize_devil(Mind, FALSE)
+	SSticker.mode.add_devil_objectives(src, 2)
 	Mind.announceDevilLaws()
 	Mind.announce_objectives()
 
@@ -58,5 +58,5 @@
 	var/datum/mind/Mind = new /datum/mind(key)
 	Mind.assigned_role = "devil"
 	Mind.special_role = "devil"
-	ticker.mode.devils |= Mind
+	SSticker.mode.devils |= Mind
 	return Mind

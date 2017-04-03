@@ -113,7 +113,7 @@
 
 	if(!forced)
 		Radio.set_frequency(GLOB.SEC_FREQ)
-		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", GLOB.SEC_FREQ)
+		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", GLOB.SEC_FREQ, get_default_language())
 
 	timing = FALSE
 	activation_time = null

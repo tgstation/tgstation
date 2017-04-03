@@ -1,17 +1,17 @@
-GLOBAL_LIST_EMPTY(cable_list)					//Index for all cables, so that powernets don't have to look through the entire world all the time
-GLOBAL_LIST_EMPTY(portals)					//list of all /obj/effect/portal
-GLOBAL_LIST_EMPTY(airlocks)					//list of all airlocks
-GLOBAL_LIST_EMPTY(mechas_list)				//list of all mechs. Used by hostile mobs target tracking.
-GLOBAL_LIST_EMPTY(shuttle_caller_list)  		//list of all communication consoles and AIs, for automatic shuttle calls when there are none.
-GLOBAL_LIST_EMPTY(machines)					//NOTE: this is a list of ALL machines now. The processing machines list is SSmachine.processing !
-GLOBAL_LIST_EMPTY(syndicate_shuttle_boards)	//important to keep track of for managing nukeops war declarations.
-GLOBAL_LIST_EMPTY(navbeacons)					//list of all bot nagivation beacons, used for patrolling.
-GLOBAL_LIST_EMPTY(teleportbeacons)			//list of all tracking beacons used by teleporters
-GLOBAL_LIST_EMPTY(deliverybeacons)			//list of all MULEbot delivery beacons.
-GLOBAL_LIST_EMPTY(deliverybeacontags)			//list of all tags associated with delivery beacons.
+GLOBAL_LIST_EMPTY(cable_list)					    //Index for all cables, so that powernets don't have to look through the entire world all the time
+GLOBAL_LIST_EMPTY(portals)					        //list of all /obj/effect/portal
+GLOBAL_LIST_EMPTY(airlocks)					        //list of all airlocks
+GLOBAL_LIST_EMPTY(mechas_list)				        //list of all mechs. Used by hostile mobs target tracking.
+GLOBAL_LIST_EMPTY(shuttle_caller_list)  		    //list of all communication consoles and AIs, for automatic shuttle calls when there are none.
+GLOBAL_LIST_EMPTY(machines)					        //NOTE: this is a list of ALL machines now. The processing machines list is SSmachine.processing !
+GLOBAL_LIST_EMPTY(syndicate_shuttle_boards)	        //important to keep track of for managing nukeops war declarations.
+GLOBAL_LIST_EMPTY(navbeacons)					    //list of all bot nagivation beacons, used for patrolling.
+GLOBAL_LIST_EMPTY(teleportbeacons)			        //list of all tracking beacons used by teleporters
+GLOBAL_LIST_EMPTY(deliverybeacons)			        //list of all MULEbot delivery beacons.
+GLOBAL_LIST_EMPTY(deliverybeacontags)			    //list of all tags associated with delivery beacons.
 GLOBAL_LIST_EMPTY(nuke_list)
-GLOBAL_LIST_EMPTY(alarmdisplay)				//list of all machines or programs that can display station alerts
-GLOBAL_LIST_EMPTY(singularities)				//list of all singularities on the station (actually technically all engines)
+GLOBAL_LIST_EMPTY(alarmdisplay)				        //list of all machines or programs that can display station alerts
+GLOBAL_LIST_EMPTY(singularities)				    //list of all singularities on the station (actually technically all engines)
 
 GLOBAL_LIST(chemical_reactions_list)				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 GLOBAL_LIST(chemical_reagents_list)				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff

@@ -1,22 +1,14 @@
-GLOBAL_REAL(SSlighting, /datum/controller/subsystem/lighting)
-
 GLOBAL_LIST_EMPTY(lighting_update_lights) // List of lighting sources  queued for update.
 GLOBAL_LIST_EMPTY(lighting_update_corners) // List of lighting corners  queued for update.
 GLOBAL_LIST_EMPTY(lighting_update_objects) // List of lighting objects queued for update.
 
-
-/datum/controller/subsystem/lighting
+SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
 	wait = 2
 	init_order = -20
 	flags = SS_TICKER
 
 	var/initialized = FALSE
-
-
-/datum/controller/subsystem/lighting/New()
-	NEW_SS_GLOBAL(SSlighting)
-
 
 /datum/controller/subsystem/lighting/stat_entry()
 	..("L:[GLOB.lighting_update_lights.len]|C:[GLOB.lighting_update_corners.len]|O:[GLOB.lighting_update_objects.len]")

@@ -190,8 +190,6 @@
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
-		SM.languages_spoken |= HUMAN
-		SM.languages_understood |= HUMAN
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
@@ -238,8 +236,6 @@
 
 
 	user.mind.transfer_to(SM)
-	SM.languages_spoken = user.languages_spoken
-	SM.languages_understood = user.languages_understood
 	SM.faction = user.faction.Copy()
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()

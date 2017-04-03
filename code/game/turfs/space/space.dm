@@ -76,11 +76,14 @@
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/space/attackby(obj/item/C, mob/user, params, area/area_restriction)
+/turf/open/space/proc/CanBuildHere()
+	return TRUE
+
+/turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
+	if(!CanBuildHere())
+		return
 	if(istype(C, /obj/item/stack/rods))
-		if(istype(area_restriction) && !istype(get_area(src), area_restriction))
-			return
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
@@ -194,6 +197,8 @@
 
 
 /turf/open/space/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	if(!CanBuildHere())
+		return FALSE
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)

@@ -180,10 +180,10 @@
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		var/objtype = pick(subtypesof(/datum/objective/abductee/))
 		var/datum/objective/abductee/O = new objtype()
-		ticker.mode.abductees += H.mind
+		SSticker.mode.abductees += H.mind
 		H.mind.objectives += O
 		H.mind.announce_objectives()
-		ticker.mode.update_abductor_icons_added(H.mind)
+		SSticker.mode.update_abductor_icons_added(H.mind)
 
 		for(var/obj/item/organ/heart/gland/G in H.internal_organs)
 			G.Start()

@@ -1,7 +1,5 @@
-GLOBAL_REAL(SSdisease, /datum/controller/subsystem/diseases)
-
-/datum/controller/subsystem/diseases
-	name = "Diseases"
+SUBSYSTEM_DEF(disease)
+	name = "Disease"
 	flags = SS_KEEP_TIMING|SS_NO_INIT
 
 	var/list/currentrun = list()
@@ -12,21 +10,20 @@ GLOBAL_REAL(SSdisease, /datum/controller/subsystem/diseases)
 
 	var/static/list/list_symptoms = subtypesof(/datum/symptom)
 
-/datum/controller/subsystem/diseases/New()
-	NEW_SS_GLOBAL(SSdisease)
+/datum/controller/subsystem/disease/PreInit()
 	if(!diseases)
 		diseases = subtypesof(/datum/disease)
 
-/datum/controller/subsystem/diseases/Recover()
+/datum/controller/subsystem/disease/Recover()
 	currentrun = SSdisease.currentrun
 	processing = SSdisease.processing
 	diseases = SSdisease.diseases
 	archive_diseases = SSdisease.archive_diseases
 
-/datum/controller/subsystem/diseases/stat_entry(msg)
+/datum/controller/subsystem/disease/stat_entry(msg)
 	..("P:[processing.len]")
 
-/datum/controller/subsystem/diseases/fire(resumed = 0)
+/datum/controller/subsystem/disease/fire(resumed = 0)
 	if(!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
