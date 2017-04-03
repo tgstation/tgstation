@@ -11,7 +11,7 @@
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 #endif
 
-#define PROTECT_GLOBAL_VARS_FROM_VV //Uncomment to allow global variables to be varedited through debugging the MC
+#define GLOBAL_PROTECT_VARS_FROM_VV //Uncomment to allow global variables to be varedited through debugging the MC
 
 #define PRELOAD_RSC	1			/*set to:
 								0 to allow using external resources or on-demand behaviour;
@@ -58,7 +58,7 @@
 //Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
-#undef PROTECT_GLOBAL_VARS_FROM_VV
+#undef GLOBAL_PROTECT_VARS_FROM_VV
 #endif
 
 #ifdef TRAVISTESTING

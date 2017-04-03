@@ -1,11 +1,11 @@
 GLOBAL_LIST_INIT(VVlocked, list("vars", "var_edited", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "force_ending"))
-PROTECT_GLOBAL(VVlocked)
+GLOBAL_PROTECT(VVlocked)
 GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays", "resize"))
-PROTECT_GLOBAL(VVicon_edit_lock)
+GLOBAL_PROTECT(VVicon_edit_lock)
 GLOBAL_LIST_INIT(VVckey_edit, list("key", "ckey"))
-PROTECT_GLOBAL(VVckey_edit)
+GLOBAL_PROTECT(VVckey_edit)
 GLOBAL_LIST_INIT(VVpixelmovement, list("step_x", "step_y", "bound_height", "bound_width", "bound_x", "bound_y"))
-PROTECT_GLOBAL(VVpixelmovement)
+GLOBAL_PROTECT(VVpixelmovement)
 
 
 /client/proc/vv_get_class(var/var_value)

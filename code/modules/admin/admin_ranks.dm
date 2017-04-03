@@ -1,5 +1,5 @@
 GLOBAL_EMPTY_LIST(admin_ranks)								//list of all admin_rank datums
-PROTECT_GLOBAL(admin_ranks)
+GLOBAL_PROTECT(admin_ranks)
 
 /datum/admin_rank
 	var/name = "NoRank"

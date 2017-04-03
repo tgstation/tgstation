@@ -1,6 +1,8 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
-PROTECT_GLOBAL(admin_verbs_default)
-GLOBAL_LIST_INIT(admin_verbs_default, list(
+GLOBAL_PROTECT(admin_verbs_default)
+GLOBAL_LIST_INIT(admin_verbs_default, AVerbsDefault())
+/proc/AVerbsDefault()
+	return list(
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/toggleannouncelogin, /*toggles if an admin's login is announced during a round*/
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
@@ -20,9 +22,11 @@ GLOBAL_LIST_INIT(admin_verbs_default, list(
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/stop_sounds
-	))
-PROTECT_GLOBAL(admin_verbs_admin)
-GLOBAL_LIST_INIT(admin_verbs_admin, list(
+	)
+GLOBAL_PROTECT(admin_verbs_admin)
+GLOBAL_LIST_INIT(admin_verbs_admin, AVerbsAdmin())
+/proc/AVerbsAdmin()
+	return list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
@@ -67,21 +71,15 @@ GLOBAL_LIST_INIT(admin_verbs_admin, list(
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
 	/client/proc/open_shuttle_manipulator /* Opens shuttle manipulator UI */
-	))
-PROTECT_GLOBAL(admin_verbs_ban)
-GLOBAL_LIST_INIT(admin_verbs_ban, list(
-	/client/proc/unban_panel,
-	/client/proc/DB_ban_panel,
-	/client/proc/stickybanpanel
-	))
-PROTECT_GLOBAL(admin_verbs_sounds)
-GLOBAL_LIST_INIT(admin_verbs_sounds, list(
-	/client/proc/play_local_sound,
-	/client/proc/play_sound,
-	/client/proc/set_round_end_sound,
-	))
-PROTECT_GLOBAL(admin_verbs_fun)
-GLOBAL_LIST_INIT(admin_verbs_fun, list(
+	)
+GLOBAL_PROTECT(admin_verbs_ban)
+GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel,/client/proc/DB_ban_panel,/client/proc/stickybanpanel))
+GLOBAL_PROTECT(admin_verbs_sounds)
+GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound,/client/proc/play_sound,/client/proc/set_round_end_sound))
+GLOBAL_PROTECT(admin_verbs_fun)
+GLOBAL_LIST_INIT(admin_verbs_fun, AVerbsFun())
+/proc/AVerbsFun()
+	return list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -103,14 +101,13 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/polymorph_all,
 	/client/proc/show_tip,
 	/client/proc/smite
-	))
+	)
 PROTECT_GLOBAL(admin_verbs_spawn)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(
-	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
-	/client/proc/respawn_character
-	))
-PROTECT_GLOBAL(admin_verbs_server)
-GLOBAL_LIST_INIT(admin_verbs_server, list(
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom,/client/proc/respawn_character))
+GLOBAL_PROTECT(admin_verbs_server)
+GLOBAL_LIST_INIT(admin_verbs_server, AVerbsServer())
+/proc/AVerbsServer()
+	return list(
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/end_round,
@@ -126,10 +123,11 @@ GLOBAL_LIST_INIT(admin_verbs_server, list(
 	/client/proc/adminchangemap,
 	/client/proc/panicbunker,
 	/client/proc/toggle_hub
-
-	))
-PROTECT_GLOBAL(admin_verbs_debug)
-GLOBAL_LIST_INIT(admin_verbs_debug, list(
+	)
+GLOBAL_PROTECT(admin_verbs_debug)
+GLOBAL_LIST_INIT(admin_verbs_debug, AVerbsDebug())
+/proc/AVerbsDebug()
+	return list(
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
@@ -162,25 +160,19 @@ GLOBAL_LIST_INIT(admin_verbs_debug, list(
 	/client/proc/toggle_medal_disable,
 	/client/proc/view_runtimes,
 	/client/proc/pump_random_event
-	))
-PROTECT_GLOBAL(admin_verbs_possess)
-GLOBAL_LIST_INIT(admin_verbs_possess, list(
-	/proc/possess,
-	/proc/release
-	))
-PROTECT_GLOBAL(admin_verbs_permissions)
-GLOBAL_LIST_INIT(admin_verbs_permissions, list(
-	/client/proc/edit_admin_permissions,
-	/client/proc/create_poll
-	))
-PROTECT_GLOBAL(admin_verbs_rejuv)
-GLOBAL_LIST_INIT(admin_verbs_rejuv, list(
-	/client/proc/respawn_character
-	))
+	)
+GLOBAL_PROTECT(admin_verbs_possess)
+GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess,/proc/release))
+GLOBAL_PROTECT(admin_verbs_permissions)
+GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions,/client/proc/create_poll))
+GLOBAL_PROTECT(admin_verbs_rejuv)
+GLOBAL_LIST_INIT(admin_verbs_rejuv, list(/client/proc/respawn_character))
 
 //verbs which can be hidden - needs work
-PROTECT_GLOBAL(admin_verbs_hideable)
-GLOBAL_LIST_INIT(admin_verbs_hideable, list(
+GLOBAL_PROTECT(admin_verbs_hideable)
+GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
+/proc/AVerbsHideable()
+	return list(
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
 	/client/proc/deadmin,
@@ -250,7 +242,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/debug_huds,
 	/client/proc/customiseSNPC,
 	/client/proc/resetSNPC,
-	))
+	)
 
 /client/proc/add_admin_verbs()
 	if(holder)

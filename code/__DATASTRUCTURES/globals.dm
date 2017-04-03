@@ -24,13 +24,13 @@
             WARNING("Global [I] slept during initialization!")
 
 #ifndef TESTING
-#define PROTECT_GLOBAL(X)\
+#define GLOBAL_PROTECT(X)\
 /datum/global_vars/InitGlobal##X(){\
-    ..();
+    ..();\
     protected_varlist += #X;\
 }
 #else
-#define PROTECT_GLOBAL(X)
+#define GLOBAL_PROTECT(X)
 #endif
 
 #define GLOBAL_MANAGED(X, InitValue)\

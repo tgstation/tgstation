@@ -1,5 +1,5 @@
 //this function places received data into element with specified id.
-GLOBAL_VAR_INIT(js_byjax, {"
+#define js_byjax {"
 
 function replaceContent() {
 	var args = Array.prototype.slice.call(arguments);
@@ -20,7 +20,7 @@ function replaceContent() {
 		window\[callback\].apply(null,args);
 	}
 }
-"})
+"}
 
 /*
 sends data to control_id:replaceContent

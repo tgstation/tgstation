@@ -14,6 +14,8 @@
 /obj/effect/portal/Bumped(mob/M as mob|obj)
 	teleport(M)
 
+
+
 /obj/effect/portal/attack_hand(mob/user)
 	if(Adjacent(user))
 		teleport(user)

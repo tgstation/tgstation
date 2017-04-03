@@ -1,6 +1,6 @@
 GLOBAL_VAR(CMinutes)
 GLOBAL_DATUM(Banlist, /savefile)
-PROTECT_GLOBAL(Banlist)
+GLOBAL_PROTECT(Banlist)
 
 
 /proc/CheckBan(ckey, id, address)

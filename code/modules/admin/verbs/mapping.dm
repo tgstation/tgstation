@@ -19,7 +19,7 @@
 //- Identify how hard it is to break into the area and where the weak points are
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
-PROTECT_GLOBAL(admin_verbs_debug_mapping)
+GLOBAL_PROTECT(admin_verbs_debug_mapping)
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/do_not_use_these, 			//-errorage
 	/client/proc/camera_view, 				//-errorage
