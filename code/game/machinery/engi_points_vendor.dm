@@ -36,10 +36,8 @@
 		new /datum/GBP_equipment("Forcefield Projector x3",		/obj/item/device/forcefield,								1500,	3),
 		new /datum/GBP_equipment("Powertools x4",			/obj/item/weapon/storage/belt/utility/chief/full,				2000,	4),
 		new /datum/GBP_equipment("Freon Canister",			/obj/machinery/portable_atmospherics/canister/freon,			2500,	1),
-		new /datum/GBP_equipment("BZ Gas Canister",			/obj/machinery/portable_atmospherics/canister/bz,				2500,	1),
 		new /datum/GBP_equipment("Prototype Canister",		/obj/machinery/portable_atmospherics/canister/proto/default,	2500,	1),
 		new /datum/GBP_equipment("Rapid Lighting Device x3",	/obj/item/weapon/rld/,										3000,	3),
-		new /datum/GBP_equipment("Reflector Box x3",			/obj/structure/reflector/box,								3500,	3),
 		new /datum/GBP_equipment("Radiation Collector x3",			/obj/machinery/power/rad_collector,						4000,	3),
 		new /datum/GBP_equipment("Prototype Emitter x2",			/obj/machinery/power/emitters/proto,					4000,	3),
 		new /datum/GBP_equipment("Advanced Magboot x3",			/obj/item/clothing/shoes/magboots/advance,					5000,	3),
@@ -50,7 +48,7 @@
 		new /datum/GBP_equipment("Prototype Repair Vehicle x3",		/obj/vehicle/space/speedbike/repair,					15000,	3),
 		new /datum/GBP_equipment("Chrono Suit x5",			/obj/item/clothing/suit/space/chronos,							20000,	5),
 		new /datum/GBP_equipment("Nuclear Construction Device",			/obj/machinery/construction_nuke,					22500,	1),
-		new /datum/GBP_equipment("The Motherfucking Space Ship (name TBD)",		/obj/thebeaconthatcallstheship,				30000,	4)
+		new /datum/GBP_equipment("Nanotrasen Support Ship",			/obj/item/device/ship_caller,							30000,	1)
 */
 		)
 
