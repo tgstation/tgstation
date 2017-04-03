@@ -44,7 +44,7 @@
 			if(TryMove())
 				moved_at_all = TRUE
 				if(on_step)
-					on_step.InvokeAsync()
+					on_step.InvokeAsync(src)
 			else
 				qdel(src)
 				return
