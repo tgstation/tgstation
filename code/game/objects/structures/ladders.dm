@@ -14,7 +14,7 @@
 
 
 /obj/structure/ladder/Initialize(mapload)
-	if(!initalized)
+	if(!initialized)
 		ladders += src
 		..()
 	if(mapload)
