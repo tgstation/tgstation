@@ -94,7 +94,6 @@
 		return 0
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	//TODO; Add support for reagents in water.
 	if(refilling)
 		refilling = FALSE
 		return
@@ -113,28 +112,11 @@
 		var/direction = get_dir(src,target)
 
 		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
-			spawn(0)
-				var/obj/B = user.buckled
-				var/movementdirection = turn(direction,180)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(2)
-				step(B, movementdirection)
-				sleep(2)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-
-		else user.newtonian_move(turn(direction, 180))
+			var/obj/B = user.buckled
+			var/movementdirection = turn(direction,180)
+			new /datum/forced_movement(B, get_step_away(B, movementdirection, 9), 1)
+		else
+			user.newtonian_move(turn(direction, 180))
 
 		var/turf/T = get_turf(target)
 		var/turf/T1 = get_step(T,turn(direction, 90))
