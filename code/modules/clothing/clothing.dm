@@ -146,10 +146,10 @@
 	if(!damaged_clothes)
 		update_clothes_damaged_state(TRUE)
 
-var/list/damaged_clothes_icons = list()
 
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "\ref[initial(icon)]-[initial(icon_state)]"
+	var/static/list/damaged_clothes_icons = list()
 	if(damaging)
 		damaged_clothes = 1
 		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]

@@ -80,7 +80,7 @@ You have to use modules/client/asset_cache to ensure they get sent BEFORE the in
 
 */
 
-/var/list/html_interfaces = new/list()
+GLOBAL_LIST_EMPTY(html_interfaces)
 
 /datum/html_interface
 	// The atom we should report to.

@@ -82,7 +82,7 @@
 		GLOB.ooc_allowed = !GLOB.ooc_allowed
 	to_chat(world, "<B>The OOC channel has been globally [GLOB.ooc_allowed ? "enabled" : "disabled"].</B>")
 
-var/global/normal_ooc_colour = OOC_COLOR
+GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 
 /client/proc/set_ooc(newColor as color)
 	set name = "Set Player OOC Color"

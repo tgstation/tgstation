@@ -1,14 +1,16 @@
-var/global/list/error_last_seen = list()
-var/global/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
-											 If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
-var/global/total_runtimes = 0
-var/global/total_runtimes_skipped = 0
+GLOBAL_VAR_INIT(total_runtimes, 0)
+GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 #ifdef DEBUG
 /world/Error(exception/E, datum/e_src)
 	if(!istype(E)) //Something threw an unusual exception
 		log_world("\[[time_stamp()]] Uncaught exception: [E]")
 		return ..()
+	
+	var/static/list/error_last_seen = list()
+	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
+												If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
+
 	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
 		return ..()
 

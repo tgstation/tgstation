@@ -1,6 +1,6 @@
 
 
-var/list/preferences_datums = list()
+GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 
