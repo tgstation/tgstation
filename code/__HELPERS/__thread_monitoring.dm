@@ -8,7 +8,7 @@
     world.SleepEnd(world.time - X);
 
 /proc/sleep_proc(X) //for places the define can't be used. *coughcough*world.dm
-    SLEEP(X)
+    sleep(X)
 
 /proc/wrap_alert(Usr = usr, Message, Title, Button1 = "Ok", Button2, Button3)
     var/sleep_start_tick = world.time
