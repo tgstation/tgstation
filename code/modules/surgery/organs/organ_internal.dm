@@ -457,7 +457,7 @@
 		if(H && H.dna && H.dna.species && H.dna.species.species_traits)
 			species_traits = H.dna.species.species_traits
 
-		if(!(mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
+		if(!(GLOB.mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")

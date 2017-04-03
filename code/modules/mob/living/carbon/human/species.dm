@@ -1331,7 +1331,7 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
+	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
 		switch(H.bodytemperature)
 			if(200 to 260)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)

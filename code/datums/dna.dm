@@ -41,15 +41,15 @@
 	new_dna.mutations = mutations.Copy()
 
 /datum/dna/proc/add_mutation(mutation_name)
-	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
 	HM.on_acquiring(holder)
 
 /datum/dna/proc/remove_mutation(mutation_name)
-	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
 	HM.on_losing(holder)
 
 /datum/dna/proc/check_mutation(mutation_name)
-	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
 	return mutations.Find(HM)
 
 /datum/dna/proc/remove_all_mutations()
@@ -325,7 +325,7 @@
 /mob/living/carbon/proc/randmutb()
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick((GLOB.bad_mutations | GLOB.not_good_mutations) - mutations_list[RACEMUT])
+	var/datum/mutation/human/HM = pick((GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT])
 	. = HM.force_give(src)
 
 /mob/living/carbon/proc/randmutg()
@@ -337,7 +337,7 @@
 /mob/living/carbon/proc/randmutvg()
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick((GLOB.good_mutations) - mutations_list[HULK] - mutations_list[DWARFISM])
+	var/datum/mutation/human/HM = pick((GLOB.good_mutations) - GLOB.mutations_list[HULK] - GLOB.mutations_list[DWARFISM])
 	. = HM.force_give(src)
 
 /mob/living/carbon/proc/randmuti()
