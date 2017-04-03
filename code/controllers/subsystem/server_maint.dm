@@ -1,12 +1,7 @@
-var/datum/controller/subsystem/server_maint/SSserver
-
-/datum/controller/subsystem/server_maint
+SUBSYSTEM_DEF(server_maint)
 	name = "Server Tasks"
 	wait = 6000
 	flags = SS_NO_TICK_CHECK
-
-/datum/controller/subsystem/server_maint/New()
-	NEW_SS_GLOBAL(SSserver)
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (config.hub)

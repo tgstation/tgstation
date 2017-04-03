@@ -29169,13 +29169,11 @@
 	},
 /area/hallway/primary/central)
 "bnO" = (
-/obj/structure/table,
 /obj/machinery/newscaster/security_unit{
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/obj/item/weapon/hand_labeler,
-/obj/item/stack/packageWrap,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "bnP" = (
@@ -31259,7 +31257,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/vending/cart,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "brX" = (
@@ -33388,7 +33386,11 @@
 /area/crew_quarters/heads)
 "bwk" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/hand_labeler,
+/obj/item/stack/packageWrap{
+	pixel_x = -1;
+	pixel_y = -1
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "bwl" = (

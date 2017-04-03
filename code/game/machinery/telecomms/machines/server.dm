@@ -72,7 +72,8 @@
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 
-				log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+				//log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+				// TODO languages: ^ I don't know what this does
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)

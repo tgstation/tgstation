@@ -707,6 +707,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 
 	var/list/mob/living/carbon/people = list()
 	var/list/mob/living/carbon/person = null
+	var/datum/language/understood_language = target.get_random_understood_language()
 	for(var/mob/living/carbon/H in view(target))
 		if(H == target)
 			continue
@@ -718,7 +719,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		people += H
 	if(person) //Basic talk
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
-		to_chat(target, target.compose_message(person,person.languages_understood,pick(speak_messages),null,person.get_spans()))
+		to_chat(target, target.compose_message(person,understood_language,pick(speak_messages),null,person.get_spans()))
 		if(target.client)
 			target.client.images |= speech_overlay
 			sleep(30)
@@ -728,7 +729,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			humans += H
 		person = pick(humans)
-		to_chat(target, target.compose_message(person,person.languages_understood,pick(radio_messages),"1459",person.get_spans()))
+		to_chat(target, target.compose_message(person,understood_language,pick(radio_messages),"1459",person.get_spans()))
 	qdel(src)
 
 /obj/effect/hallucination/message

@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/garbage_collector/SSgarbage
-
-/datum/controller/subsystem/garbage_collector
+SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = 15
 	wait = 5
@@ -34,10 +32,7 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	var/list/qdel_list = list()	// list of all types that have been qdel()eted
 #endif
 
-/datum/controller/subsystem/garbage_collector/New()
-	NEW_SS_GLOBAL(SSgarbage)
-
-/datum/controller/subsystem/garbage_collector/stat_entry(msg)
+/datum/controller/subsystem/garbage/stat_entry(msg)
 	msg += "Q:[queue.len]|D:[delslasttick]|G:[gcedlasttick]|"
 	msg += "GR:"
 	if (!(delslasttick+gcedlasttick))
@@ -52,14 +47,14 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
 	..(msg)
 
-/datum/controller/subsystem/garbage_collector/fire()
+/datum/controller/subsystem/garbage/fire()
 	HandleToBeQueued()
 	if(state == SS_RUNNING)
 		HandleQueue()
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
-/datum/controller/subsystem/garbage_collector/proc/HandleToBeQueued()
+/datum/controller/subsystem/garbage/proc/HandleToBeQueued()
 	var/list/tobequeued = src.tobequeued
 	var/starttime = world.time
 	var/starttimeofday = world.timeofday
@@ -70,7 +65,7 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 		Queue(ref)
 		tobequeued.Cut(1, 2)
 
-/datum/controller/subsystem/garbage_collector/proc/HandleQueue()
+/datum/controller/subsystem/garbage/proc/HandleQueue()
 	delslasttick = 0
 	gcedlasttick = 0
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
@@ -124,12 +119,12 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 			++gcedlasttick
 			++totalgcs
 
-/datum/controller/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
+/datum/controller/subsystem/garbage/proc/QueueForQueuing(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
-/datum/controller/subsystem/garbage_collector/proc/Queue(datum/A)
+/datum/controller/subsystem/garbage/proc/Queue(datum/A)
 	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
 		return
 	if (A.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
@@ -145,12 +140,12 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 
 	queue[refid] = gctime
 
-/datum/controller/subsystem/garbage_collector/proc/HardQueue(datum/A)
+/datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
 
-/datum/controller/subsystem/garbage_collector/Recover()
+/datum/controller/subsystem/garbage/Recover()
 	if (istype(SSgarbage.queue))
 		queue |= SSgarbage.queue
 	if (istype(SSgarbage.tobequeued))
@@ -615,22 +610,22 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(CURRENT_TICKLIMIT)
 	SearchVar(SSacid)
 	SearchVar(SSair)
-	SearchVar(SSasset)
+	SearchVar(SSassets)
 	SearchVar(SSaugury)
 	SearchVar(SScommunications)
 	SearchVar(SSdisease)
-	SearchVar(SSevent)
+	SearchVar(SSevents)
 	SearchVar(SSfire_burning)
 	SearchVar(SSgarbage)
 	SearchVar(SSicon_smooth)
 	SearchVar(SSipintel)
 	SearchVar(SSjob)
 	SearchVar(SSlighting)
-	SearchVar(SSmachine)
+	SearchVar(SSmachines)
 	SearchVar(SSmapping)
 	SearchVar(SSminimap)
-	SearchVar(SSmob)
-	SearchVar(SSnpc)
+	SearchVar(SSmobs)
+	SearchVar(SSnpcpool)
 	SearchVar(SSorbit)
 	SearchVar(SSpai)
 	SearchVar(pai_card_list)
@@ -639,7 +634,7 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(SSping)
 	SearchVar(SSradio)
 	SearchVar(SSreligion)
-	SearchVar(SSserver)
+	SearchVar(SSserver_maint)
 	SearchVar(SSshuttle)
 	SearchVar(SSspacedrift)
 	SearchVar(SSsqueak)
@@ -648,7 +643,7 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(SStgui)
 	SearchVar(SSthrowing)
 	SearchVar(round_start_time)
-	SearchVar(ticker)
+	SearchVar(SSticker)
 	SearchVar(SStimer)
 	SearchVar(SSvote)
 	SearchVar(SSweather)

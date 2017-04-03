@@ -14,11 +14,9 @@
 	ventcrawler = VENTCRAWLER_NONE
 	density = 1
 	pass_flags =  0
-	var/ascended = 0
+	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
-	languages_spoken = ALL //The devil speaks all languages meme
-	languages_understood = ALL //The devil speaks all languages meme
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
@@ -31,6 +29,8 @@
 	create_bodyparts() //initialize bodyparts
 
 	create_internal_organs()
+
+	grant_all_languages(omnitongue=TRUE)
 	..()
 
 /mob/living/carbon/true_devil/create_internal_organs()
@@ -42,7 +42,7 @@
 
 /mob/living/carbon/true_devil/proc/convert_to_archdevil()
 	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.
-	ascended = 1
+	ascended = TRUE
 	health = maxHealth
 	icon_state = "arch_devil"
 
