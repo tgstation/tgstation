@@ -1,101 +1,101 @@
 
 
-/var/const/access_security = 1 // Security equipment
-/var/const/access_brig = 2 // Brig timers and permabrig
-/var/const/access_armory = 3
+GLOBAL_VAR_INIT(access_security, 1) // Security equipment
+GLOBAL_VAR_INIT(access_brig, 2) // Brig timers and permabrig
+GLOBAL_VAR_INIT(access_armory, 3)
 /var/const/access_forensics_lockers= 4
-/var/const/access_medical = 5
-/var/const/access_morgue = 6
-/var/const/access_tox = 7
-/var/const/access_tox_storage = 8
-/var/const/access_genetics = 9
-/var/const/access_engine = 10
+GLOBAL_VAR_INIT(access_medical, 5)
+GLOBAL_VAR_INIT(access_morgue, 6)
+GLOBAL_VAR_INIT(access_tox, 7)
+GLOBAL_VAR_INIT(access_tox_storage, 8)
+GLOBAL_VAR_INIT(access_genetics, 9)
+GLOBAL_VAR_INIT(access_engine, 10)
 /var/const/access_engine_equip= 11
-/var/const/access_maint_tunnels = 12
-/var/const/access_external_airlocks = 13
-/var/const/access_emergency_storage = 14
-/var/const/access_change_ids = 15
-/var/const/access_ai_upload = 16
-/var/const/access_teleporter = 17
-/var/const/access_eva = 18
-/var/const/access_heads = 19
-/var/const/access_captain = 20
-/var/const/access_all_personal_lockers = 21
-/var/const/access_chapel_office = 22
-/var/const/access_tech_storage = 23
-/var/const/access_atmospherics = 24
-/var/const/access_bar = 25
-/var/const/access_janitor = 26
-/var/const/access_crematorium = 27
-/var/const/access_kitchen = 28
-/var/const/access_robotics = 29
-/var/const/access_rd = 30
-/var/const/access_cargo = 31
-/var/const/access_construction = 32
-/var/const/access_chemistry = 33
-/var/const/access_cargo_bot = 34
-/var/const/access_hydroponics = 35
-/var/const/access_manufacturing = 36
-/var/const/access_library = 37
-/var/const/access_lawyer = 38
-/var/const/access_virology = 39
-/var/const/access_cmo = 40
-/var/const/access_qm = 41
-/var/const/access_court = 42
-/var/const/access_surgery = 45
-/var/const/access_theatre = 46
-/var/const/access_research = 47
-/var/const/access_mining = 48
-/var/const/access_mining_office = 49 //not in use
-/var/const/access_mailsorting = 50
-/var/const/access_mint = 51
-/var/const/access_mint_vault = 52
-/var/const/access_heads_vault = 53
-/var/const/access_mining_station = 54
-/var/const/access_xenobiology = 55
-/var/const/access_ce = 56
-/var/const/access_hop = 57
-/var/const/access_hos = 58
-/var/const/access_RC_announce = 59 //Request console announcements
-/var/const/access_keycard_auth = 60 //Used for events which require at least two people to confirm them
-/var/const/access_tcomsat = 61 // has access to the entire telecomms satellite / machinery
-/var/const/access_gateway = 62
-/var/const/access_sec_doors = 63 // Security front doors
-/var/const/access_mineral_storeroom = 64
-/var/const/access_minisat = 65
-/var/const/access_weapons = 66 //Weapon authorization for secbots
-/var/const/access_network = 67
-/var/const/access_cloning = 68 //Cloning room
+GLOBAL_VAR_INIT(access_maint_tunnels, 12)
+GLOBAL_VAR_INIT(access_external_airlocks, 13)
+GLOBAL_VAR_INIT(access_emergency_storage, 14)
+GLOBAL_VAR_INIT(access_change_ids, 15)
+GLOBAL_VAR_INIT(access_ai_upload, 16)
+GLOBAL_VAR_INIT(access_teleporter, 17)
+GLOBAL_VAR_INIT(access_eva, 18)
+GLOBAL_VAR_INIT(access_heads, 19)
+GLOBAL_VAR_INIT(access_captain, 20)
+GLOBAL_VAR_INIT(access_all_personal_lockers, 21)
+GLOBAL_VAR_INIT(access_chapel_office, 22)
+GLOBAL_VAR_INIT(access_tech_storage, 23)
+GLOBAL_VAR_INIT(access_atmospherics, 24)
+GLOBAL_VAR_INIT(access_bar, 25)
+GLOBAL_VAR_INIT(access_janitor, 26)
+GLOBAL_VAR_INIT(access_crematorium, 27)
+GLOBAL_VAR_INIT(access_kitchen, 28)
+GLOBAL_VAR_INIT(access_robotics, 29)
+GLOBAL_VAR_INIT(access_rd, 30)
+GLOBAL_VAR_INIT(access_cargo, 31)
+GLOBAL_VAR_INIT(access_construction, 32)
+GLOBAL_VAR_INIT(access_chemistry, 33)
+GLOBAL_VAR_INIT(access_cargo_bot, 34)
+GLOBAL_VAR_INIT(access_hydroponics, 35)
+GLOBAL_VAR_INIT(access_manufacturing, 36)
+GLOBAL_VAR_INIT(access_library, 37)
+GLOBAL_VAR_INIT(access_lawyer, 38)
+GLOBAL_VAR_INIT(access_virology, 39)
+GLOBAL_VAR_INIT(access_cmo, 40)
+GLOBAL_VAR_INIT(access_qm, 41)
+GLOBAL_VAR_INIT(access_court, 42)
+GLOBAL_VAR_INIT(access_surgery, 45)
+GLOBAL_VAR_INIT(access_theatre, 46)
+GLOBAL_VAR_INIT(access_research, 47)
+GLOBAL_VAR_INIT(access_mining, 48)
+GLOBAL_VAR_INIT(access_mining_office, 49) //not in use
+GLOBAL_VAR_INIT(access_mailsorting, 50)
+GLOBAL_VAR_INIT(access_mint, 51)
+GLOBAL_VAR_INIT(access_mint_vault, 52)
+GLOBAL_VAR_INIT(access_heads_vault, 53)
+GLOBAL_VAR_INIT(access_mining_station, 54)
+GLOBAL_VAR_INIT(access_xenobiology, 55)
+GLOBAL_VAR_INIT(access_ce, 56)
+GLOBAL_VAR_INIT(access_hop, 57)
+GLOBAL_VAR_INIT(access_hos, 58)
+GLOBAL_VAR_INIT(access_RC_announce, 59) //Request console announcements
+GLOBAL_VAR_INIT(access_keycard_auth, 60) //Used for events which require at least two people to confirm them
+GLOBAL_VAR_INIT(access_tcomsat, 61) // has access to the entire telecomms satellite / machinery
+GLOBAL_VAR_INIT(access_gateway, 62)
+GLOBAL_VAR_INIT(access_sec_doors, 63) // Security front doors
+GLOBAL_VAR_INIT(access_mineral_storeroom, 64)
+GLOBAL_VAR_INIT(access_minisat, 65)
+GLOBAL_VAR_INIT(access_weapons, 66) //Weapon authorization for secbots
+GLOBAL_VAR_INIT(access_network, 67)
+GLOBAL_VAR_INIT(access_cloning, 68) //Cloning room
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
 /var/const/Mostly for admin fun times.*/
-/var/const/access_cent_general = 101//General facilities.
-/var/const/access_cent_thunder = 102//Thunderdome.
-/var/const/access_cent_specops = 103//Special Ops.
-/var/const/access_cent_medical = 104//Medical/Research
-/var/const/access_cent_living = 105//Living quarters.
-/var/const/access_cent_storage = 106//Generic storage areas.
-/var/const/access_cent_teleporter = 107//Teleporter.
-/var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
-/var/const/access_cent_bar = 110 // The non-existent Centcom Bar
+GLOBAL_VAR_INIT(access_cent_general, 101)//General facilities.
+GLOBAL_VAR_INIT(access_cent_thunder, 102)//Thunderdome.
+GLOBAL_VAR_INIT(access_cent_specops, 103)//Special Ops.
+GLOBAL_VAR_INIT(access_cent_medical, 104)//Medical/Research
+GLOBAL_VAR_INIT(access_cent_living, 105)//Living quarters.
+GLOBAL_VAR_INIT(access_cent_storage, 106)//Generic storage areas.
+GLOBAL_VAR_INIT(access_cent_teleporter, 107)//Teleporter.
+GLOBAL_VAR_INIT(access_cent_captain, 109)//Captain's office/ID comp/AI.
+GLOBAL_VAR_INIT(access_cent_bar, 110) // The non-existent Centcom Bar
 
 	//The Syndicate
-/var/const/access_syndicate = 150//General Syndicate Access
-/var/const/access_syndicate_leader = 151//Nuke Op Leader Access
+GLOBAL_VAR_INIT(access_syndicate, 150)//General Syndicate Access
+GLOBAL_VAR_INIT(access_syndicate_leader, 151)//Nuke Op Leader Access
 
 	//Away Missions or Ruins
 	/*For generic away-mission/ruin access. Why would normal crew have access to a long-abandoned derelict
 	or a 2000 year-old temple? */
-/var/const/access_away_general = 200//General facilities.
-/var/const/access_away_maint = 201//Away maintenance
-/var/const/access_away_med = 202//Away medical
-/var/const/access_away_sec = 203//Away security
-/var/const/access_away_engine = 204//Away engineering
-/var/const/access_away_generic1 = 205//Away generic access
-/var/const/access_away_generic2 = 206
-/var/const/access_away_generic3 = 207
-/var/const/access_away_generic4 = 208
+GLOBAL_VAR_INIT(access_away_general, 200)//General facilities.
+GLOBAL_VAR_INIT(access_away_maint, 201)//Away maintenance
+GLOBAL_VAR_INIT(access_away_med, 202)//Away medical
+GLOBAL_VAR_INIT(access_away_sec, 203)//Away security
+GLOBAL_VAR_INIT(access_away_engine, 204)//Away engineering
+GLOBAL_VAR_INIT(access_away_generic1, 205)//Away generic access
+GLOBAL_VAR_INIT(access_away_generic2, 206)
+GLOBAL_VAR_INIT(access_away_generic3, 207)
+GLOBAL_VAR_INIT(access_away_generic4, 208)
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
