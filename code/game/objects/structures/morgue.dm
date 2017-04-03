@@ -147,7 +147,7 @@
 /*
  * Crematorium
  */
-var/global/list/crematoriums = new/list()
+GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbeque nights."

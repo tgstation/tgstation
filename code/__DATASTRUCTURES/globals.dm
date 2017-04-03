@@ -1,8 +1,33 @@
+/datum/global_vars
+    var/list/protected_varlist
+
+/datum/global_vars/vv_get_var(var_name)
+	if(var_name in protected_varlist)
+		return debug_variable(var_name, "SECRET", 0, src)
+	return ..()
+
+/datum/global_vars/vv_edit_var(var_name, var_value)
+	if(var_name in protected_varlist)
+		return FALSE
+	return ..()
+
 /datum/global_vars/proc/InitEverything()
     var/datum/exclude_these = new
-    for(var/I in (vars - exclude_these.vars))
-        call(src, "InitGlobal[I]")()
+    var/list/check_these = vars - exclude_these.vars - "protected_varlist"
     qdel(exclude_these)
+    protected_varlist = list("protected_varlist")
+    for(var/I in check_these)
+        var/start_tick = world.time
+        call(src, "InitGlobal[I]")()
+        var/end_tick = world.time
+        if(end_tick - start_tick)
+            WARNING("Global [I] slept during initialization!")
+
+#define PROTECT_GLOBAL(X)\
+/datum/global_vars/InitGlobal##X(){\
+    ..();
+    protected_varlist += #X;\
+}
 
 #define GLOBAL_MANAGED(X, InitValue)\
 /datum/global_vars/proc/InitGlobal##X(){\

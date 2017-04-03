@@ -1,4 +1,5 @@
-var/list/admin_ranks = list()								//list of all admin_rank datums
+GLOBAL_EMPTY_LIST(admin_ranks)								//list of all admin_rank datums
+PROTECT_GLOBAL(admin_ranks)
 
 /datum/admin_rank
 	var/name = "NoRank"
