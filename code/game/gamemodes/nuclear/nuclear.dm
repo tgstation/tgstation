@@ -177,6 +177,7 @@
 		return 1
 	if(are_operatives_dead())
 		var/obj/machinery/nuclearbomb/N
+		pass(N)	//suppress unused warning
 		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
 			return 0	//its a static var btw
 	..()
