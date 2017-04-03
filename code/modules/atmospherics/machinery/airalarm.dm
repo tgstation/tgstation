@@ -730,3 +730,14 @@
 			I.obj_integrity = I.max_integrity * 0.5
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
+
+#undef AALARM_MODE_SCRUBBING
+#undef AALARM_MODE_VENTING
+#undef AALARM_MODE_PANIC
+#undef AALARM_MODE_REPLACEMENT
+#undef AALARM_MODE_OFF
+#undef AALARM_MODE_FLOOD
+#undef AALARM_MODE_SIPHON
+#undef AALARM_MODE_CONTAMINATED
+#undef AALARM_MODE_REFILL
+#undef AALARM_REPORT_TIMEOUT
