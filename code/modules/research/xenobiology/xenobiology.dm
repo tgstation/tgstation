@@ -484,6 +484,7 @@
 
 /obj/effect/golemrune/New()
 	..()
+	poi_list |= src
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/golemrune/process()
