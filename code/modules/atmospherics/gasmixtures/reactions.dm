@@ -1,7 +1,7 @@
 #define NO_REACTION	0
 #define REACTING	1
 
-var/list/gas_reactions = init_gas_reactions() //this is our singleton of all reactions
+/datum/controller/subsystem/air/var/list/gas_reactions //this is our singleton of all reactions
 
 /proc/init_gas_reactions()
 	var/list/reaction_types = list()
@@ -15,10 +15,11 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 	return initial(b.priority) - initial(a.priority)
 
 /datum/gas_reaction
-	var/min_requirements
-	var/max_requirements
+	var/list/min_requirements
+	var/list/max_requirements
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
 	var/priority //lower numbers are checked/react later than higher numbers. if two reactions have the same priority they may happen in either order
+	var/name = "reaction"
 
 /datum/gas_reaction/New()
 	init_reqs()
@@ -30,9 +31,16 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 //agent b: converts hot co2 and agent b to oxygen. requires plasma as a catalyst. endothermic
 /datum/gas_reaction/agent_b
 	priority = 2
+	name = "Agent B"
 
 /datum/gas_reaction/agent_b/init_reqs()
-	min_requirements = "TEMP=900;agent_b=0;plasma=[MINIMUM_HEAT_CAPACITY];co2=[MINIMUM_HEAT_CAPACITY]"
+	min_requirements = list(
+		"TEMP" = 900,
+		"agent_b" = 0,
+		"plasma" = MINIMUM_HEAT_CAPACITY,
+		"co2" = MINIMUM_HEAT_CAPACITY
+	)
+
 
 /datum/gas_reaction/agent_b/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
@@ -51,9 +59,10 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 //freon: does a freezy thing?
 /datum/gas_reaction/freon
 	priority = 1
+	name = "Freon"
 
 /datum/gas_reaction/freon/init_reqs()
-	min_requirements = "freon=[MOLES_PLASMA_VISIBLE]"
+	min_requirements = list("freon" = MOLES_PLASMA_VISIBLE)
 
 /datum/gas_reaction/freon/react(datum/gas_mixture/air, turf/open/location)
 	. = NO_REACTION
@@ -64,9 +73,10 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 //water vapor: puts out fires?
 /datum/gas_reaction/water_vapor
 	priority = 1
+	name = "Water Vapor"
 
 /datum/gas_reaction/water_vapor/init_reqs()
-	min_requirements = "water_vapor=[MOLES_PLASMA_VISIBLE]"
+	min_requirements = list("water_vapor" = MOLES_PLASMA_VISIBLE)
 
 /datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, turf/open/location)
 	. = NO_REACTION
@@ -77,9 +87,10 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 //fire: combustion of plasma and volatile fuel (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/fire
 	priority = -1 //fire should ALWAYS be last
+	name = "Hydrocarbon Combustion"
 
 /datum/gas_reaction/fire/init_reqs()
-	min_requirements = "TEMP=[FIRE_MINIMUM_TEMPERATURE_TO_EXIST]" //doesn't include plasma reqs b/c of volatile fuel stuff - consider finally axing volatile fuel
+	min_requirements = list("TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //doesn't include plasma reqs b/c of volatile fuel stuff - consider finally axing volatile fuel
 
 /datum/gas_reaction/fire/react(datum/gas_mixture/air, turf/open/location)
 	var/energy_released = 0
@@ -146,23 +157,28 @@ var/list/gas_reactions = init_gas_reactions() //this is our singleton of all rea
 	//to_chat(world, "post [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]")
 
 	//let the floor know a fire is happening
-	var/loc_temperature = location.air.temperature
-	var/loc_air = location.air
-	if(loc_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		location.hotspot_expose(loc_temperature, CELL_VOLUME)
+	temperature = air.temperature
+	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		location.hotspot_expose(temperature, CELL_VOLUME)
 		for(var/I in location)
 			var/atom/movable/item = I
-			item.temperature_expose(loc_air, loc_temperature, CELL_VOLUME)
-		location.temperature_expose(loc_air, loc_temperature, CELL_VOLUME)
+			item.temperature_expose(air, temperature, CELL_VOLUME)
+		location.temperature_expose(air, temperature, CELL_VOLUME)
 
 	return air.fuel_burnt ? REACTING : NO_REACTION
 
 //fusion: a terrible idea that was fun to try. turns co2 and plasma into REALLY HOT oxygen and nitrogen. super exothermic lol
 /datum/gas_reaction/fusion
 	exclude = TRUE
+	priority = 2
+	name = "Plasmic Fusion"
 
 /datum/gas_reaction/fusion/init_reqs()
-	min_requirements = "ENER=[PLASMA_BINDING_ENERGY*10];plasma=[MINIMUM_HEAT_CAPACITY];co2=[MINIMUM_HEAT_CAPACITY]"
+	min_requirements = list(
+		"ENER" = PLASMA_BINDING_ENERGY * 10,
+		"plasma" = MINIMUM_HEAT_CAPACITY,
+		"co2" = MINIMUM_HEAT_CAPACITY
+	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases

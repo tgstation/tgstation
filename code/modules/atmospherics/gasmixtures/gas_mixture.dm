@@ -417,7 +417,7 @@ var/list/gaslist_cache = init_gaslist_cache()
 
 	return ""
 
-/datum/gas_mixture/react(turf/open/dump_location)
+/datum/gas_mixture/react(turf/open/dump_location, debug)
 	. = 0
 	if(temperature < TCMB) //just for safety
 		temperature = TCMB
@@ -426,23 +426,27 @@ var/list/gaslist_cache = init_gaslist_cache()
 	var/list/cached_gases = gases
 
 	reaction_loop:
-		for(var/r in gas_reactions)
+		for(var/r in SSair.gas_reactions)
 			var/datum/gas_reaction/reaction = r
 
-			var/list/min_reqs = params2list(reaction.min_requirements)
+			var/list/min_reqs = reaction.min_requirements.Copy()
 			if((min_reqs["TEMP"] && temperature < text2num(min_reqs["TEMP"])) \
 			|| (min_reqs["ENER"] && thermal_energy() < text2num(min_reqs["ENER"])))
+				if(debug)
+					to_chat(world, "Reaction: [reaction.name] did not occur because temperature or energy requirements were not met.")
 				continue
 			min_reqs -= "TEMP"
 			min_reqs -= "ENER"
 
 			for(var/id in min_reqs)
 				if(cached_gases[id][MOLES] < text2num(min_reqs[id]))
+					if(debug)
+						to_chat(world, "Reaction: [reaction.name] did not occur because [id] requirements were not met. Requirement: [text2num(min_reqs[id])] moles. Current level: [cached_gases[id][MOLES]] moles.")
 					continue reaction_loop
 			//at this point, all minimum requirements for the reaction are satisfied.
 
 			/* currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
-			var/list/max_reqs = params2list(reaction.max_requirements)
+			var/list/max_reqs = reaction.max_requirements.Copy()
 			if((max_reqs["TEMP"] && temperature > text2num(max_reqs["TEMP"])) \
 			|| (max_reqs["ENER"] && thermal_energy() > text2num(max_reqs["ENER"])))
 				continue
@@ -455,7 +459,10 @@ var/list/gaslist_cache = init_gaslist_cache()
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 			*/
 
-			. |= reaction.react(src, dump_location)
+			var/result = reaction.react(src, dump_location)
+			. |= result
+			if(result && debug)
+				to_chat(world, "Reaction: [reaction.name] succesfully reacted.")
 	if(.)
 		garbage_collect()
 
