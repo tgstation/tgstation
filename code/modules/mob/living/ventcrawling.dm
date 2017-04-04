@@ -1,5 +1,5 @@
 
-var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary/vent_pump, /obj/machinery/atmospherics/components/unary/vent_scrubber)
+GLOBAL_LIST_INIT(ventcrawl_machinery, list(/obj/machinery/atmospherics/components/unary/vent_pump, /obj/machinery/atmospherics/components/unary/vent_scrubber))
 
 //VENTCRAWLING
 

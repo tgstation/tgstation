@@ -17,9 +17,9 @@ Difficulty: Special
 
 */
 
-var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmers = list()
-var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmersByType = list()//AISwarmersByType[.../resource] = list(1st, 2nd, nth), AISwarmersByType[../ranged] = list(1st, 2nd, nth) etc.
-var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swarmer/ai/resource = 30, /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat = 20, /mob/living/simple_animal/hostile/swarmer/ai/melee_combat = 10)
+GLOBAL_LIST_EMPTY(AISwarmers)
+GLOBAL_LIST_EMPTY(AISwarmersByType)//AISwarmersByType[.../resource] = list(1st, 2nd, nth), AISwarmersByType[../ranged] = list(1st, 2nd, nth) etc.
+GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swarmer/ai/resource = 30, /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat = 20, /mob/living/simple_animal/hostile/swarmer/ai/melee_combat = 10))
 
 
 //returns a type of AI swarmer that is NOT at max cap

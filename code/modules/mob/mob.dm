@@ -19,7 +19,6 @@
 	..()
 	return QDEL_HINT_HARDDEL
 
-var/next_mob_id = 0
 /mob/Initialize()
 	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src

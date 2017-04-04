@@ -92,7 +92,7 @@
 		O.loc = C
 	..()
 
-var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/cable, /obj/structure/window)
+GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/cable, /obj/structure/window))
 
 /mob/living/simple_animal/hostile/mimic/copy
 	health = 100
