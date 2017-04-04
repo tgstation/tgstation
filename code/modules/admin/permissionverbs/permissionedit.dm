@@ -27,8 +27,8 @@
 </tr>
 "}
 
-	for(var/adm_ckey in admin_datums)
-		var/datum/admins/D = admin_datums[adm_ckey]
+	for(var/adm_ckey in GLOB.admin_datums)
+		var/datum/admins/D = GLOB.admin_datums[adm_ckey]
 		if(!D)
 			continue
 

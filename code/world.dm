@@ -218,8 +218,8 @@
 		if(count > 10)
 			log << "#[count]\t[index]"
 #endif
-	if(blackbox)
-		blackbox.save_all_data_to_sql()
+	if(GLOB.blackbox)
+		GLOB.blackbox.save_all_data_to_sql()
 	Master.Shutdown()	//run SS shutdowns
 	RoundEndAnimation(round_end_sound_sent)
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked

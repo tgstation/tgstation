@@ -466,8 +466,8 @@
 			return
 
 		var/banfolder = href_list["unbanf"]
-		Banlist.cd = "/base/[banfolder]"
-		var/key = Banlist["key"]
+		GLOB.Banlist.cd = "/base/[banfolder]"
+		var/key = GLOB.Banlist["key"]
 		if(alert(usr, "Are you sure you want to unban [key]?", "Confirmation", "Yes", "No") == "Yes")
 			if(RemoveBan(banfolder))
 				unbanpanel()
@@ -483,14 +483,14 @@
 		var/reason
 
 		var/banfolder = href_list["unbane"]
-		Banlist.cd = "/base/[banfolder]"
-		var/reason2 = Banlist["reason"]
-		var/temp = Banlist["temp"]
+		GLOB.Banlist.cd = "/base/[banfolder]"
+		var/reason2 = GLOB.Banlist["reason"]
+		var/temp = GLOB.Banlist["temp"]
 
-		var/minutes = Banlist["minutes"]
+		var/minutes = GLOB.Banlist["minutes"]
 
-		var/banned_key = Banlist["key"]
-		Banlist.cd = "/base"
+		var/banned_key = GLOB.Banlist["key"]
+		GLOB.Banlist.cd = "/base"
 
 		var/duration
 
@@ -498,12 +498,12 @@
 			if("Yes")
 				temp = 1
 				var/mins = 0
-				if(minutes > CMinutes)
-					mins = minutes - CMinutes
+				if(minutes > GLOB.CMinutes)
+					mins = minutes - GLOB.CMinutes
 				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
 				if(!mins)
 					return
-				minutes = CMinutes + mins
+				minutes = GLOB.CMinutes + mins
 				duration = GetExp(minutes)
 				reason = input(usr,"Please State Reason.","Reason",reason2) as message|null
 				if(!reason)
@@ -518,12 +518,12 @@
 		log_admin_private("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
 		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
-		Banlist.cd = "/base/[banfolder]"
-		Banlist["reason"] << reason
-		Banlist["temp"] << temp
-		Banlist["minutes"] << minutes
-		Banlist["bannedby"] << usr.ckey
-		Banlist.cd = "/base"
+		GLOB.Banlist.cd = "/base/[banfolder]"
+		GLOB.Banlist["reason"] << reason
+		GLOB.Banlist["temp"] << temp
+		GLOB.Banlist["minutes"] << minutes
+		GLOB.Banlist["bannedby"] << usr.ckey
+		GLOB.Banlist.cd = "/base"
 		feedback_inc("ban_edit",1)
 		unbanpanel()
 
@@ -599,7 +599,7 @@
 //Regular jobs
 	//Command (Blue)
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr align='center' bgcolor='ccccff'><th colspan='[length(command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
+		dat += "<tr align='center' bgcolor='ccccff'><th colspan='[length(GLOB.command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in command_positions)
 			if(!jobPos)
 				continue

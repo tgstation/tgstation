@@ -69,7 +69,7 @@ Contents:
 			if(ishuman(M.current))
 				if(M.special_role)
 					possible_targets[M] = 0						//bad-guy
-				else if(M.assigned_role in command_positions)
+				else if(M.assigned_role in GLOB.command_positions)
 					possible_targets[M] = 1						//good-guy
 
 	var/list/objectives = list(1,2,3,4)

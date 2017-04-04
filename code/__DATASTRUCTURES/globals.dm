@@ -21,7 +21,7 @@
         call(src, "InitGlobal[I]")()
         var/end_tick = world.time
         if(end_tick - start_tick)
-            WARNING("Global [I] slept during initialization!")
+            warning("Global [I] slept during initialization!")
 
 #ifndef TESTING
 #define GLOBAL_PROTECT(X)\

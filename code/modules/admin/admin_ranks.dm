@@ -267,7 +267,7 @@ GLOBAL_PROTECT(admin_ranks)
 			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null) as text|null)
 			if(!new_ckey)
 				return
-			if(new_ckey in admin_datums)
+			if(new_ckey in GLOB.admin_datums)
 				to_chat(usr, "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>")
 				return
 			adm_ckey = new_ckey
@@ -278,7 +278,7 @@ GLOBAL_PROTECT(admin_ranks)
 				to_chat(usr, "<font color='red'>Error: Topic 'editrights': No valid ckey</font>")
 				return
 
-	var/datum/admins/D = admin_datums[adm_ckey]
+	var/datum/admins/D = GLOB.admin_datums[adm_ckey]
 
 	switch(task)
 		if("remove")
@@ -289,7 +289,7 @@ GLOBAL_PROTECT(admin_ranks)
 					message_admins("[key_name_admin(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
 					log_admin("[key_name(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
 					return
-				admin_datums -= adm_ckey
+				GLOB.admin_datums -= adm_ckey
 				D.disassociate()
 
 				updateranktodb(adm_ckey, "player")
@@ -301,7 +301,7 @@ GLOBAL_PROTECT(admin_ranks)
 			var/datum/admin_rank/R
 
 			var/list/rank_names = list("*New Rank*")
-			for(R in admin_ranks)
+			for(R in GLOB.admin_ranks)
 				rank_names[R.name] = R
 
 			var/new_rank = input("Please select a rank", "New rank", null, null) as null|anything in rank_names
@@ -326,7 +326,7 @@ GLOBAL_PROTECT(admin_ranks)
 					R = new(new_rank, D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
 				else
 					R = new(new_rank)							//blank new admin_rank
-				admin_ranks += R
+				GLOB.admin_ranks += R
 
 			if(D)	//they were previously an admin
 				D.disassociate()	//existing admin needs to be disassociated

@@ -171,19 +171,19 @@ GLOBAL_PROTECT(Banlist)
 	var/count = 0
 	var/dat
 	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
-	Banlist.cd = "/base"
-	for (var/A in Banlist.dir)
+	GLOB.Banlist.cd = "/base"
+	for (var/A in GLOB.Banlist.dir)
 		count++
-		Banlist.cd = "/base/[A]"
+		GLOB.Banlist.cd = "/base/[A]"
 		var/ref		= "\ref[src]"
-		var/key		= Banlist["key"]
-		var/id		= Banlist["id"]
-		var/ip		= Banlist["ip"]
-		var/reason	= Banlist["reason"]
-		var/by		= Banlist["bannedby"]
+		var/key		= GLOB.Banlist["key"]
+		var/id		= GLOB.Banlist["id"]
+		var/ip		= GLOB.Banlist["ip"]
+		var/reason	= GLOB.Banlist["reason"]
+		var/by		= GLOB.Banlist["bannedby"]
 		var/expiry
-		if(Banlist["temp"])
-			expiry = GetExp(Banlist["minutes"])
+		if(GLOB.Banlist["temp"])
+			expiry = GetExp(GLOB.Banlist["minutes"])
 			if(!expiry)
 				expiry = "Removal Pending"
 		else

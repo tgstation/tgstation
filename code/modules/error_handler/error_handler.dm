@@ -14,7 +14,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
 		return ..()
 
-	total_runtimes++
+	GLOB.total_runtimes++
 
 	var/erroruid = "[E.file][E.line]"
 	var/last_seen = error_last_seen[erroruid]
@@ -26,7 +26,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	if(cooldown < 0)
 		error_cooldown[erroruid]-- //Used to keep track of skip count for this error
-		total_runtimes_skipped++
+		GLOB.total_runtimes_skipped++
 		return //Error is currently silenced, skip handling it
 	//Handle cooldowns and silencing spammy errors
 	var/silencing = FALSE
@@ -56,7 +56,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 			error_cooldown[erroruid] = 0
 			if(skipcount > 0)
 				world.log << "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line]."
-				error_cache.log_error(E, skip_count = skipcount)
+				GLOB.error_cache.log_error(E, skip_count = skipcount)
 
 	error_last_seen[erroruid] = world.time
 	error_cooldown[erroruid] = cooldown
@@ -89,8 +89,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		desclines.Add(usrinfo)
 	if(silencing)
 		desclines += "  (This error will now be silenced for [configured_error_silence_time / 600] minutes)"
-	if(error_cache)
-		error_cache.log_error(E, desclines)
+	if(GLOB.error_cache)
+		GLOB.error_cache.log_error(E, desclines)
 
 	world.log << "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
 	for(var/line in desclines)

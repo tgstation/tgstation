@@ -255,7 +255,7 @@ SUBSYSTEM_DEF(ticker)
 	if( cinematic )
 		return	//already a cinematic in progress!
 
-	for (var/datum/html_interface/hi in html_interfaces)
+	for (var/datum/html_interface/hi in GLOB.html_interfaces)
 		hi.closeAll()
 	SStgui.close_all_uis()
 

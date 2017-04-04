@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(atoms)
 	var/list/late_loaders
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
-	fire_overlay.appearance_flags = RESET_COLOR
+	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()

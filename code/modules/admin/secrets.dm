@@ -116,9 +116,9 @@
 
 		if("show_admins")
 			var/dat = "<B>Current admins:</B><HR>"
-			if(admin_datums)
-				for(var/ckey in admin_datums)
-					var/datum/admins/D = admin_datums[ckey]
+			if(GLOB.admin_datums)
+				for(var/ckey in GLOB.admin_datums)
+					var/datum/admins/D = GLOB.admin_datums[ckey]
 					dat += "[ckey] - [D.rank.name]<br>"
 				usr << browse(dat, "window=showadmins;size=600x500")
 
@@ -579,17 +579,17 @@
 				return
 			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
 				M.check_access()
-				if (access_maint_tunnels in M.req_access)
-					M.req_access = list(access_brig)
+				if (GLOB.access_maint_tunnels in M.req_access)
+					M.req_access = list(GLOB.access_brig)
 			message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 		if("maint_access_engiebrig")
 			if(!check_rights(R_DEBUG))
 				return
 			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
 				M.check_access()
-				if (access_maint_tunnels in M.req_access)
+				if (GLOB.access_maint_tunnels in M.req_access)
 					M.req_access = list()
-					M.req_one_access = list(access_brig,access_engine)
+					M.req_one_access = list(GLOB.access_brig,GLOB.access_engine)
 			message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
 		if("infinite_sec")
 			if(!check_rights(R_DEBUG))

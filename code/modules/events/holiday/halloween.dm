@@ -52,7 +52,7 @@
 
 /datum/round_event/meteor_wave/spooky/tick()
 	if(IsMultiple(activeFor, 4))
-		spawn_meteors(3, meteorsSPOOKY) //meteor list types defined in gamemode/meteor/meteors.dm
+		spawn_meteors(3, GLOB.meteorsSPOOKY) //meteor list types defined in gamemode/meteor/meteors.dm
 
 //Creepy clown invasion
 /datum/round_event_control/creepy_clowns
