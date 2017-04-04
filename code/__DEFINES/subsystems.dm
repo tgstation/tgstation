@@ -17,3 +17,10 @@
 //For servers that can't do with any additional lag, set this to none in flightpacks.dm in subsystem/processing.
 #define FLIGHTSUIT_PROCESSING_NONE 0
 #define FLIGHTSUIT_PROCESSING_FULL 1
+
+#define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
+#define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
+#define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
+
+#define INITIALIZE_HINT_NORMAL 0    //Nothing happens
+#define INITIALIZE_HINT_LATELOAD 1  //Call initialize again with mapload = FALSE, no effect if mapload != TRUE

@@ -1,6 +1,7 @@
-#define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
-#define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
-#define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
+#define BAD_INIT_QDEL_BEFORE 1
+#define BAD_INIT_DIDNT_INIT 2
+#define BAD_INIT_SLEPT 4
+#define BAD_INIT_NO_HINT 8
 
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
@@ -12,6 +13,8 @@ SUBSYSTEM_DEF(atoms)
 
 	var/list/late_loaders
 
+	var/list/BadInitializeCalls = list()
+
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
@@ -19,74 +22,47 @@ SUBSYSTEM_DEF(atoms)
 	InitializeAtoms()
 	return ..()
 
-/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms = null)
+/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, LateRecurse = FALSE)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
-	initialized = INITIALIZATION_INNEW_MAPLOAD
+	if(!LateRecurse)
+		initialized = INITIALIZATION_INNEW_MAPLOAD
+		LAZYINITLIST(late_loaders)
+	
+	var/thing_to_check = atoms ? atoms : world
 
-	var/static/list/NewQdelList = list()
-	var/static/list/DidntInitialize = list()
-
-	if(atoms)
-		for(var/I in atoms)
-			var/atom/A = I
-			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
-				if(QDELETED(A))
-					if(!(NewQdelList[A.type]))
-						WARNING("Found new qdeletion in type [A.type]!")
-						NewQdelList[A.type] = TRUE
-					continue
-				var/start_tick = world.time
-				if(A.Initialize(TRUE))
-					LAZYADD(late_loaders, A)
-				else if(!A.initialized && !(A.type in DidntInitialize))
-					WARNING("[A.type] isn't initializing!")
-					DidntInitialize[A.type] = TRUE
-				if(start_tick != world.time)
-					WARNING("[A]: [A.type] slept during it's Initialize!")
-				CHECK_TICK
-		testing("Initialized [atoms.len] atoms")
-	else
-		#ifdef TESTING
-		var/count = 0
-		#endif
-		for(var/atom/A in world)
-			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
-				if(QDELETED(A))
-					if(!(NewQdelList[A.type]))
-						WARNING("Found new qdeletion in type [A.type]!")
-						NewQdelList[A.type] = TRUE
-					continue
-				var/start_tick = world.time
-				if(A.Initialize(TRUE))
-					LAZYADD(late_loaders, A)
-				else if(!A.initialized && !(A.type in DidntInitialize))
-					WARNING("[A.type] isn't initializing!")
-					DidntInitialize[A.type] = TRUE
-				#ifdef TESTING
-				else
-					++count
-				#endif TESTING
-				if(start_tick != world.time)
-					WARNING("[A]: [A.type] slept during it's Initialize!")
-				CHECK_TICK
-		testing("Roundstart initialized [count] atoms")
-
-	initialized = INITIALIZATION_INNEW_REGULAR
-
-	for(var/I in late_loaders)
+	for(var/I in thing_to_check)
 		var/atom/A = I
-		var/start_tick = world.time
-		A.Initialize(FALSE)
-		if(!A.initialized && !(A.type in DidntInitialize))
-			WARNING("[A.type] isn't initializing!")
-			DidntInitialize[A.type] = TRUE
-		if(start_tick != world.time)
-			WARNING("[A]: [A.type] slept during it's Initialize!")
-		CHECK_TICK
-	testing("Late-initialized [LAZYLEN(late_loaders)] atoms")
-	LAZYCLEARLIST(late_loaders)
+		if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+			if(QDELETED(A))
+				if(A)
+					BadInitializeCalls[A.type] |= BAD_INIT_QDEL_BEFORE
+				continue
+			var/start_tick = world.time
+			var/result = A.Initialize(TRUE)
+			if(start_tick != world.time)
+				BadInitializeCalls[A.type] |= BAD_INIT_SLEPT
+
+			if(!A.initialized)
+				BadInitializeCalls[A.type] |= BAD_INIT_DIDNT_INIT
+			
+			if(result != INITIALIZE_HINT_NORMAL)
+				switch(result)
+					if(INITIALIZE_HINT_LATELOAD)
+						if(!LateRecurse)
+							late_loaders += A
+						break
+					else
+						BadInitializeCalls[A.type] |= BAD_INIT_NO_HINT
+
+			CHECK_TICK
+	testing("Initialized [atoms ? atoms.len : world.contents.len] atoms")
+
+	if(!LateRecurse)
+		initialized = INITIALIZATION_INNEW_REGULAR
+		.(late_loaders, TRUE)
+		late_loaders.Cut()
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized
@@ -100,6 +76,7 @@ SUBSYSTEM_DEF(atoms)
 	if(initialized == INITIALIZATION_INNEW_MAPLOAD)
 		InitializeAtoms()
 	old_initialized = SSatoms.old_initialized
+	BadInitializeCalls = SSatoms.BadInitializeCalls
 
 /datum/controller/subsystem/atoms/proc/setupGenetics()
 	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
@@ -119,3 +96,27 @@ SUBSYSTEM_DEF(atoms)
 		else if(B.quality == MINOR_NEGATIVE)
 			not_good_mutations |= B
 		CHECK_TICK
+
+/datum/controller/subsystem/atoms/proc/InitLog()
+	. = ""
+	for(var/path in BadInitializeCalls)
+		. += "Path : [path] \n"
+		var/fails = BadInitializeCalls[path]
+		if(fails & BAD_INIT_DIDNT_INIT)
+			. += "- Didn't call atom/Initialize()\n"
+		if(fails & BAD_INIT_NO_HINT)
+			. += "- Didn't return an Initialize hint\n"
+		if(fails & BAD_INIT_QDEL_BEFORE)
+			. += "- Qdel'd in New()\n"
+		if(fails & BAD_INIT_SLEPT)
+			. += "- Slept during Initialize()\n"
+
+/datum/controller/subsystem/atoms/Shutdown()
+	var/initlog = InitLog()
+	if(initlog)
+		log_world(initlog)
+
+#undef BAD_INIT_QDEL_BEFORE
+#undef BAD_INIT_DIDNT_INIT
+#undef BAD_INIT_SLEPT
+#undef BAD_INIT_NO_HINT

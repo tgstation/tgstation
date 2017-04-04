@@ -102,7 +102,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
-	..()
+	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null

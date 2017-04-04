@@ -42,6 +42,8 @@
 
 	if (opacity)
 		has_opaque_atom = TRUE
+	
+	return INITIALIZE_HINT_NORMAL
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
