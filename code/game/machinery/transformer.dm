@@ -15,7 +15,7 @@
 	var/cooldown_timer
 	var/robot_cell_charge = 5000
 	var/obj/effect/countdown/transformer/countdown
-	var/mob/living/silicon/AI/masterAI
+	var/mob/living/silicon/ai/masterAI
 	
 /obj/machinery/transformer/New()
 	// On us
