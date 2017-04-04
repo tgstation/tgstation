@@ -3,9 +3,9 @@
 /datum/status_effect/shadow_mend
 	id = "shadow_mend"
 	duration = 30
-	alert_type = /obj/screen/alert/status_effect/shadow_mend
+	alert_type = /obj/screen/alert_icon/status_effect/shadow_mend
 
-/obj/screen/alert/status_effect/shadow_mend
+/obj/screen/alert_icon/status_effect/shadow_mend
 	name = "Shadow Mend"
 	desc = "Shadowy energies wrap around your wounds, sealing them at a price. After healing, you will slowly lose health every three seconds for thirty seconds."
 	icon_state = "shadow_mend"
@@ -28,9 +28,9 @@
 	id = "void_price"
 	duration = 300
 	tick_interval = 30
-	alert_type = /obj/screen/alert/status_effect/void_price
+	alert_type = /obj/screen/alert_icon/status_effect/void_price
 
-/obj/screen/alert/status_effect/void_price
+/obj/screen/alert_icon/status_effect/void_price
 	name = "Void Price"
 	desc = "Black tendrils cinch tightly against you, digging wicked barbs into your flesh."
 	icon_state = "shadow_mend"
@@ -45,16 +45,16 @@
 	duration = 200
 	tick_interval = 0 //tick as fast as possible
 	status_type = STATUS_EFFECT_REPLACE
-	alert_type = /obj/screen/alert/status_effect/vanguard
+	alert_type = /obj/screen/alert_icon/status_effect/vanguard
 	var/datum/progressbar/progbar
 
-/obj/screen/alert/status_effect/vanguard
+/obj/screen/alert_icon/status_effect/vanguard
 	name = "Vanguard"
 	desc = "You're absorbing stuns! 25% of all stuns taken will affect you after this effect ends."
 	icon_state = "vanguard"
 	alerttooltipstyle = "clockcult"
 
-/obj/screen/alert/status_effect/vanguard/MouseEntered(location,control,params)
+/obj/screen/alert_icon/status_effect/vanguard/MouseEntered(location,control,params)
 	var/mob/living/L = usr
 	if(istype(L)) //this is probably more safety than actually needed
 		var/vanguard = L.stun_absorption["vanguard"]
@@ -108,9 +108,9 @@
 /datum/status_effect/inathneqs_endowment
 	id = "inathneqs_endowment"
 	duration = 150
-	alert_type = /obj/screen/alert/status_effect/inathneqs_endowment
+	alert_type = /obj/screen/alert_icon/status_effect/inathneqs_endowment
 
-/obj/screen/alert/status_effect/inathneqs_endowment
+/obj/screen/alert_icon/status_effect/inathneqs_endowment
 	name = "Inath-neq's Endowment"
 	desc = "Adrenaline courses through you as the Resonant Cogwheel's energy shields you from all harm!"
 	icon_state = "inathneqs_endowment"
@@ -138,10 +138,10 @@
 /datum/status_effect/cyborg_power_regen
 	id = "power_regen"
 	duration = 100
-	alert_type = /obj/screen/alert/status_effect/power_regen
+	alert_type = /obj/screen/alert_icon/status_effect/power_regen
 	var/power_to_give = 0 //how much power is gained each tick
 
-/obj/screen/alert/status_effect/power_regen
+/obj/screen/alert_icon/status_effect/power_regen
 	name = "Power Regeneration"
 	desc = "You are quickly regenerating power!"
 	icon_state = "power_regen"
@@ -158,16 +158,16 @@
 	id = "his_grace"
 	duration = -1
 	tick_interval = 4
-	alert_type = /obj/screen/alert/status_effect/his_grace
+	alert_type = /obj/screen/alert_icon/status_effect/his_grace
 	var/bloodlust = 0
 
-/obj/screen/alert/status_effect/his_grace
+/obj/screen/alert_icon/status_effect/his_grace
 	name = "His Grace"
 	desc = "His Grace hungers, and you must feed Him."
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
-/obj/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
+/obj/screen/alert_icon/status_effect/his_grace/MouseEntered(location,control,params)
 	desc = initial(desc)
 	var/datum/status_effect/his_grace/HG = attached_effect
 	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
@@ -207,7 +207,7 @@
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
 	id = "wish_granters_gift"
 	duration = 50
-	alert_type = /obj/screen/alert/status_effect/wish_granters_gift
+	alert_type = /obj/screen/alert_icon/status_effect/wish_granters_gift
 
 /datum/status_effect/wish_granters_gift/on_apply()
 	to_chat(owner, "<span class='notice'>Death is not your end! The Wish Granter's energy suffuses you, and you begin to rise...</span>")
@@ -217,7 +217,7 @@
 	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>")
 	owner.update_canmove()
 
-/obj/screen/alert/status_effect/wish_granters_gift
+/obj/screen/alert_icon/status_effect/wish_granters_gift
 	name = "Wish Granter's Immortality"
 	desc = "You are being resurrected!"
 	icon_state = "wish_granter"

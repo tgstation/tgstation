@@ -81,7 +81,7 @@ var/list/GPS_list = list()
 /obj/item/device/gps/Topic(href, href_list)
 	..()
 	if(href_list["tag"] )
-		var/a = input("Please enter desired tag.", name, gpstag) as text
+		var/a = tginput("Please enter desired tag.", name, gpstag, istext = TRUE)
 		a = uppertext(copytext(sanitize(a), 1, 5))
 		if(in_range(src, usr))
 			gpstag = a

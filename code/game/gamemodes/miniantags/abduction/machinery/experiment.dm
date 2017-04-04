@@ -168,7 +168,7 @@
 		history += H
 		abductee_minds += H.mind
 		say("Processing specimen...")
-		sleep(5)
+		SLEEP(5)
 		switch(text2num(type))
 			if(1)
 				to_chat(H, "<span class='warning'>You feel violated.</span>")
@@ -176,7 +176,7 @@
 				to_chat(H, "<span class='warning'>You feel yourself being sliced apart and put back together.</span>")
 			if(3)
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
-		sleep(5)
+		SLEEP(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		var/objtype = pick(subtypesof(/datum/objective/abductee/))
 		var/datum/objective/abductee/O = new objtype()

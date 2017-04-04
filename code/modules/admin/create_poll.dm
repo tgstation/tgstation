@@ -28,7 +28,7 @@
 				return
 
 /client/proc/create_poll_function()
-	var/polltype = input("Choose poll type.","Poll Type") in list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting")|null
+	var/polltype = tginput("Choose poll type.","Poll Type", nullable = TRUE, choices = list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting"))
 	var/choice_amount = 0
 	switch(polltype)
 		if("Single Option")
@@ -39,7 +39,7 @@
 			polltype = POLLTYPE_RATING
 		if("Multiple Choice")
 			polltype = POLLTYPE_MULTI
-			choice_amount = input("How many choices should be allowed?","Select choice amount") as num|null
+			choice_amount = tginput("How many choices should be allowed?","Select choice amount", nullable = TRUE, isnum = TRUE)
 			if(!choice_amount)
 				return
 		if ("Instant Runoff Voting")
@@ -47,7 +47,7 @@
 		else
 			return 0
 	var/starttime = SQLtime()
-	var/endtime = input("Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime()) as text
+	var/endtime = tginput("Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime(), istext = TRUE)
 	if(!endtime)
 		return
 	endtime = sanitizeSQL(endtime)
@@ -84,7 +84,7 @@
 		else
 			return
 	var/sql_ckey = sanitizeSQL(ckey)
-	var/question = input("Write your question","Question") as message|null
+	var/question = tginput("Write your question","Question", nullable = TRUE, ismessage = TRUE)
 	if(!question)
 		return
 	question = sanitizeSQL(question)
@@ -103,7 +103,7 @@
 		pollid = query_get_id.item[1]
 	var/add_option = 1
 	while(add_option)
-		var/option = input("Write your option","Option") as message|null
+		var/option = tginput("Write your option","Option", nullable = TRUE, ismessage = TRUE)
 		if(!option)
 			return pollid
 		option = sanitizeSQL(option)
@@ -122,26 +122,26 @@
 		var/descmid = ""
 		var/descmax = ""
 		if(polltype == POLLTYPE_RATING)
-			minval = input("Set minimum rating value.","Minimum rating") as num|null
+			minval = tginput("Set minimum rating value.","Minimum rating", nullable = TRUE, isnum = TRUE)
 			if(!minval)
 				return pollid
-			maxval = input("Set maximum rating value.","Maximum rating") as num|null
+			maxval = tginput("Set maximum rating value.","Maximum rating", nullable = TRUE, isnum = TRUE)
 			if(!maxval)
 				return pollid
 			if(minval >= maxval)
 				to_chat(src, "Minimum rating value can't be more than maximum rating value")
 				return pollid
-			descmin = input("Optional: Set description for minimum rating","Minimum rating description") as message|null
+			descmin = tginput("Optional: Set description for minimum rating","Minimum rating description", nullable = TRUE, ismessage = TRUE)
 			if(descmin)
 				descmin = sanitizeSQL(descmin)
 			else if(descmin == null)
 				return pollid
-			descmid = input("Optional: Set description for median rating","Median rating description") as message|null
+			descmid = tginput("Optional: Set description for median rating","Median rating description", nullable = TRUE, ismessage = TRUE)
 			if(descmid)
 				descmid = sanitizeSQL(descmid)
 			else if(descmid == null)
 				return pollid
-			descmax = input("Optional: Set description for maximum rating","Maximum rating description") as message|null
+			descmax = tginput("Optional: Set description for maximum rating","Maximum rating description", nullable = TRUE, ismessage = TRUE)
 			if(descmax)
 				descmax = sanitizeSQL(descmax)
 			else if(descmax == null)

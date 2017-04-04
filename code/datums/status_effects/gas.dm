@@ -2,10 +2,10 @@
 	id = "frozen"
 	duration = 100
 	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /obj/screen/alert/status_effect/freon
+	alert_type = /obj/screen/alert_icon/status_effect/freon
 	var/icon/cube
 
-/obj/screen/alert/status_effect/freon
+/obj/screen/alert_icon/status_effect/freon
 	name = "Frozen Solid"
 	desc = "You're frozen inside of an ice cube, and cannot move! You can still do stuff, like shooting. Resist out of the cube!"
 	icon_state = "frozen"

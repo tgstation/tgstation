@@ -475,7 +475,7 @@
 		return
 	if(on && !floating)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
-		sleep(10)
+		SLEEP(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
 		floating = TRUE
 	else if (!on && floating)

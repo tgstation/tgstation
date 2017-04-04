@@ -675,10 +675,10 @@
 	if((start_eject + 30) < world.time)
 		start_eject = world.time
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
-		sleep(20)
+		SLEEP(20)
 		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 	else
-		sleep(20)
+		SLEEP(20)
 	if(H)
 		for(var/atom/movable/AM in H)
 			AM.forceMove(T)

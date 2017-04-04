@@ -18,7 +18,7 @@
 			var/direct = pick(alldirs)
 			var/steps_amt = pick(1;25,2;50,3,4;200)
 			for(var/j in 1 to steps_amt)
-				sleep(1)
+				SLEEP(1)
 				step(expl,direct)
 
 /obj/effect/explosion

@@ -141,7 +141,7 @@
 
 					if(prob(50))
 						audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
-					sleep(travel_time)
+					SLEEP(travel_time)
 
 					if(!exit_vent || exit_vent.welded)
 						loc = entry_vent

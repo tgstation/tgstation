@@ -4,7 +4,7 @@
 
 	var/datum/map_template/template
 
-	var/map = input(usr, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template") as null|anything in SSmapping.map_templates
+	var/map = tginput(usr, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template", nullable = TRUE, choices = SSmapping.map_templates)
 	if(!map)
 		return
 	template = SSmapping.map_templates[map]
@@ -28,7 +28,7 @@
 	set category = "Debug"
 	set name = "Map Template - Upload"
 
-	var/map = input(usr, "Choose a Map Template to upload to template storage","Upload Map Template") as null|file
+	var/map = tginput(usr, "Choose a Map Template to upload to template storage","Upload Map Template", nullable = TRUE, isfile = TRUE)
 	if(!map)
 		return
 	if(copytext("[map]",-4) != ".dmm")

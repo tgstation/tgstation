@@ -197,7 +197,7 @@
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)
 				src.update_icon()
-				sleep(10)
+				SLEEP(10)
 			src.update_icon()
 
 	else if(valve_open && tank_one && tank_two)

@@ -52,6 +52,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 	var/map_loading = FALSE	//Are we loading in a new map?
 
+	var/static/sleeping_threads = 0
+	var/static/stack_trace_sleeps_before
+
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	subsystems = list()
@@ -121,7 +124,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	set waitfor = 0
 
 	if(delay)
-		sleep(delay)
+		SLEEP(delay)
 
 	if(init_sss)
 		init_subtypes(/datum/controller/subsystem, subsystems)
@@ -152,7 +155,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	world.sleep_offline = 1
 	world.fps = config.fps
 	var/initialized_tod = REALTIMEOFDAY
-	sleep(1)
+	SLEEP(1)
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
 	// Loop.
 	Master.StartProcessing(0)
@@ -172,7 +175,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 /datum/controller/master/proc/StartProcessing(delay)
 	set waitfor = 0
 	if(delay)
-		sleep(delay)
+		SLEEP(delay)
 	var/rtn = Loop()
 	if (rtn > 0 || processing < 0)
 		return //this was suppose to happen.
@@ -243,7 +246,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
 			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
-			sleep(10)
+			SLEEP(10)
 			continue
 
 		//if there are mutiple sleeping procs running before us hogging the cpu, we have to run later
@@ -251,7 +254,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		if (world.tick_usage > TICK_LIMIT_MC)
 			sleep_delta += 2
 			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.5)
-			sleep(world.tick_lag * (processing + sleep_delta))
+			SLEEP(world.tick_lag * (processing + sleep_delta))
 			continue
 
 		sleep_delta = MC_AVERAGE_FAST(sleep_delta, 0)
@@ -280,7 +283,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				iteration++
 			error_level++
 			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
-			sleep(10)
+			SLEEP(10)
 			continue
 
 		if (queue_head)
@@ -292,7 +295,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 					iteration++
 				error_level++
 				CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
-				sleep(10)
+				SLEEP(10)
 				continue
 		error_level--
 		if (!queue_head) //reset the counts if the queue is empty, in the off chance they get out of sync
@@ -303,7 +306,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		last_run = world.time
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
 		CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc.
-		sleep(world.tick_lag * (processing + sleep_delta))
+		SLEEP(world.tick_lag * (processing + sleep_delta))
 
 
 
@@ -500,7 +503,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
-	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%))")
+	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Threads:[sleeping_threads + 1])")	//have to count this one
 	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration])"))
 
 /datum/controller/master/StartLoadingMap()
@@ -517,3 +520,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	for(var/S in subsystems)
 		var/datum/controller/subsystem/SS = S
 		SS.StopLoadingMap()
+
+/datum/controller/master/proc/StackTraceAllSleepingThreads()
+	stack_trace_sleeps_before = world.time + 1
+	log_world("Thread checking for tick [stack_trace_sleeps_before].")
+
+/world/proc/SleepEnd(sleep_start_tick)
+	if(Master.stack_trace_sleeps_before > sleep_start_tick)
+		var/static/crash_message = "Thread Check. Tick: "
+		CRASH(crash_message + "[sleep_start_tick]")

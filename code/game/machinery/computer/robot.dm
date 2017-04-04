@@ -105,7 +105,7 @@
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["killbot"]) in silicon_mobs
 			if(can_control(usr, R))
-				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
+				var/choice = tginput("Are you certain you wish to detonate [R.name]?", choices = list("Confirm", "Abort"))
 				if(choice == "Confirm" && can_control(usr, R) && !..())
 					if(R.syndicate && R.emagged)
 						to_chat(R, "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered.")
@@ -125,7 +125,7 @@
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["stopbot"]) in silicon_mobs
 			if(can_control(usr, R))
-				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
+				var/choice = tginput("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?", choices = list("Confirm", "Abort"))
 				if(choice == "Confirm" && can_control(usr, R) && !..())
 					message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [R.canmove ? "locked down" : "released"] [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[R]'>FLW</A>)!</span>")
 					log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [key_name(R)]!")

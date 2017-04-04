@@ -12,7 +12,7 @@
 		var/hitverb = "punched"
 		if(mob_size < MOB_SIZE_LARGE)
 			step_away(src,user,15)
-			sleep(1)
+			SLEEP(1)
 			step_away(src,user,15)
 			hitverb = "slammed"
 		playsound(loc, "punch", 25, 1, -1)

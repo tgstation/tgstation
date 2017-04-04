@@ -87,7 +87,7 @@
 	set name = "Remove Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Disarm unwanted surveillance snares."
-	var/picked_snare = input(src, "Pick which snare to remove", "Remove Snare") as null|anything in src.snares
+	var/picked_snare = tginput(src, "Pick which snare to remove", "Remove Snare", nullable = TRUE, choices = snares)
 	if(picked_snare)
 		src.snares -= picked_snare
 		qdel(picked_snare)

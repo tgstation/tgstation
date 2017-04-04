@@ -106,7 +106,7 @@
 	use_power(100)
 
 	affecting = loc.contents - src		// moved items will be all in loc
-	sleep(1)
+	SLEEP(1)
 	for(var/atom/movable/A in affecting)
 		if(!A.anchored)
 			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.

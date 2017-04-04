@@ -96,7 +96,7 @@
 				var/list/components = list()
 				for(var/i in clockwork_component_cache)
 					components["[get_component_name(i)] ([get_component_cost(i)]W)"] = i
-				var/input_component = input(user, "Choose a component type.", name) as null|anything in components
+				var/input_component = tginput(user, "Choose a component type.", name, nullable = TRUE, choices = components)
 				component_id_to_produce = components[input_component]
 				servants = 0
 				for(var/mob/living/L in living_mob_list)

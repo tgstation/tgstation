@@ -149,7 +149,7 @@
 				empty_tiles()
 
 		if("linemode")
-			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
+			var/setdir = tginput("Select construction direction:", nullable = TRUE, choices = list("north","east","south","west","disable"))
 			switch(setdir)
 				if("north")
 					targetdirection = 1
@@ -319,7 +319,7 @@
 		icon_state = "floorbot-c"
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
-		sleep(50)
+		SLEEP(50)
 		if(mode == BOT_REPAIRING && src.loc == target_turf)
 			if(autotile) //Build the floor and include a tile.
 				target_turf.ChangeTurf(/turf/open/floor/plasteel)
@@ -334,7 +334,7 @@
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
-			sleep(50)
+			SLEEP(50)
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0
@@ -345,7 +345,7 @@
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
-			sleep(50)
+			SLEEP(50)
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0

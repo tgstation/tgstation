@@ -27,7 +27,7 @@ var/explosionid = 1
 	//I would make this not ex_act the thing that triggered the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
-	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
+	SLEEP(1) //tldr, let the calling proc call qdel(src) before we explode
 
 	var/id = explosionid++
 	var/start = world.timeofday
@@ -209,8 +209,7 @@ var/explosionid = 1
 	var/dev = 0
 	var/heavy = 0
 	var/light = 0
-	var/list/choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb")
-	var/choice = input("Bomb Size?") in choices
+	var/choice = tginput("Bomb Size?", choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb"))
 	switch(choice)
 		if(null)
 			return 0
@@ -227,9 +226,9 @@ var/explosionid = 1
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input("Devestation range (Tiles):") as num
-			heavy = input("Heavy impact range (Tiles):") as num
-			light = input("Light impact range (Tiles):") as num
+			dev = tginput("Devestation range (Tiles):", isnum = TRUE)
+			heavy = tginput("Heavy impact range (Tiles):", isnum = TRUE)
+			light = tginput("Light impact range (Tiles):", isnum = TRUE)
 
 	var/max_range = max(dev, heavy, light)
 	var/x0 = epicenter.x
@@ -269,7 +268,7 @@ var/explosionid = 1
 		else
 			continue
 
-	sleep(100)
+	SLEEP(100)
 	for(var/turf/T in wipe_colours)
 		T.color = null
 		T.maptext = ""

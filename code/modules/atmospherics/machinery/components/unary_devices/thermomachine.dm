@@ -179,7 +179,7 @@
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
-				target = input("Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature) as num|null
+				target = tginput("Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature, nullable = TRUE, isnum = TRUE)
 				if(!isnull(target) && !..())
 					. = TRUE
 			else if(adjust)

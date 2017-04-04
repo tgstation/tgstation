@@ -27,7 +27,7 @@ Borg Hypospray
 	var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "antitoxin", "epinephrine", "spaceacillin", "salglu_solution")
 	var/accepts_reagent_upgrades = TRUE //If upgrades can increase number of reagents dispensed.
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
-								//Used as list for input() in shakers.
+								//Used as list for tginput() in shakers.
 
 
 /obj/item/weapon/reagent_containers/borghypo/New()
@@ -105,7 +105,7 @@ Borg Hypospray
 	add_logs(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
-	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
+	var/chosen_reagent = modes[tginput(user, "What reagent do you want to dispense?", nullable = TRUE, choices = reagent_ids)]
 	if(!chosen_reagent)
 		return
 	mode = chosen_reagent

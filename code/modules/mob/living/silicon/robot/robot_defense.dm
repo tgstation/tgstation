@@ -69,7 +69,7 @@
 			spark_system.start()
 			spawn(0)
 				step_away(src,user,15)
-				sleep(3)
+				SLEEP(3)
 				step_away(src,user,15)
 
 /mob/living/silicon/robot/fire_act()
@@ -93,7 +93,7 @@
 		if(locked)
 			to_chat(user, "<span class='notice'>You emag the cover lock.</span>")
 			locked = 0
-			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
+			if(ai_shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
 				to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")
 		else
 			to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
@@ -128,7 +128,7 @@
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
 		return
 
-	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
+	if(ai_shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
 		to_chat(user, "<span class='danger'>[src] is remotely controlled! Your emag attempt has triggered a system reset instead!</span>")
 		log_game("[key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
 		ResetModule()
@@ -143,17 +143,17 @@
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 	to_chat(src, "<span class='danger'>ALERT: Foreign software detected.</span>")
-	sleep(5)
+	SLEEP(5)
 	to_chat(src, "<span class='danger'>Initiating diagnostics...</span>")
-	sleep(20)
+	SLEEP(20)
 	to_chat(src, "<span class='danger'>SynBorg v1.7 loaded.</span>")
-	sleep(5)
+	SLEEP(5)
 	to_chat(src, "<span class='danger'>LAW SYNCHRONISATION ERROR</span>")
-	sleep(5)
+	SLEEP(5)
 	to_chat(src, "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>")
-	sleep(10)
+	SLEEP(10)
 	to_chat(src, "<span class='danger'>> N</span>")
-	sleep(20)
+	SLEEP(20)
 	to_chat(src, "<span class='danger'>ERRORERRORERROR</span>")
 	to_chat(src, "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>")
 	laws = new /datum/ai_laws/syndicate_override

@@ -148,7 +148,7 @@ Code:
 
 /obj/item/device/assembly/signaler/proc/set_frequency(new_frequency)
 	if(!SSradio)
-		sleep(20)
+		SLEEP(20)
 	if(!SSradio)
 		return
 	SSradio.remove_object(src, frequency)

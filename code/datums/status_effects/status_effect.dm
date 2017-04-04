@@ -10,7 +10,7 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 	var/tick_interval = 10 //How many deciseconds between ticks, approximately. Leave at 10 for every second.
 	var/mob/living/owner //The mob affected by the status effect.
 	var/status_type = STATUS_EFFECT_UNIQUE //How many of the effect can be on one mob, and what happens when you try to add another
-	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
+	var/alert_type = /obj/screen/alert_icon/status_effect //the alert thrown by the status effect, contains name and description
 
 /datum/status_effect/New(mob/living/new_owner)
 	if(new_owner)
@@ -40,7 +40,7 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 		duration = world.time + initial(duration)
 	tick_interval = world.time + initial(tick_interval)
 	if(alert_type)
-		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
+		var/obj/screen/alert_icon/status_effect/A = owner.throw_alert(id, alert_type)
 		A.attached_effect = src //so the alert can reference us, if it needs to
 	START_PROCESSING(SSfastprocess, src)
 
@@ -67,7 +67,7 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 // ALERT HOOK //
 ////////////////
 
-/obj/screen/alert/status_effect
+/obj/screen/alert_icon/status_effect
 	name = "Curse of Mundanity"
 	desc = "You don't feel any different..."
 	var/datum/status_effect/attached_effect

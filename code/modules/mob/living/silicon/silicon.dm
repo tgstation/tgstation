@@ -199,19 +199,19 @@
 	//src.laws_sanity_check()
 	//src.laws.show_laws(world)
 	var/number = 1
-	sleep(10)
+	SLEEP(10)
 
 	if (src.laws.devillaws && src.laws.devillaws.len)
 		for(var/index = 1, index <= src.laws.devillaws.len, index++)
 			if (force || src.devillawcheck[index] == "Yes")
 				src.say("[radiomod] 666. [src.laws.devillaws[index]]")
-				sleep(10)
+				SLEEP(10)
 
 
 	if (src.laws.zeroth)
 		if (force || src.lawcheck[1] == "Yes")
 			src.say("[radiomod] 0. [src.laws.zeroth]")
-			sleep(10)
+			SLEEP(10)
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
 		var/law = src.laws.ion[index]
@@ -219,7 +219,7 @@
 		if (length(law) > 0)
 			if (force || src.ioncheck[index] == "Yes")
 				src.say("[radiomod] [num]. [law]")
-				sleep(10)
+				SLEEP(10)
 
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
 		var/law = src.laws.inherent[index]
@@ -228,7 +228,7 @@
 			if (force || src.lawcheck[index+1] == "Yes")
 				src.say("[radiomod] [number]. [law]")
 				number++
-				sleep(10)
+				SLEEP(10)
 
 	for (var/index = 1, index <= src.laws.supplied.len, index++)
 		var/law = src.laws.supplied[index]
@@ -238,7 +238,7 @@
 				if (force || src.lawcheck[number+1] == "Yes")
 					src.say("[radiomod] [number]. [law]")
 					number++
-					sleep(10)
+					SLEEP(10)
 
 
 /mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
@@ -295,7 +295,7 @@
 		return
 
 	//Ask the user to pick a channel from what it has available.
-	var/Autochan = input("Select a channel:") as null|anything in list("Default","None") + radio.channels
+	var/Autochan = tginput("Select a channel:", nullable = TRUE, choices = (list("Default","None") + radio.channels))
 
 	if(!Autochan)
 		return
@@ -347,7 +347,7 @@
 /mob/living/silicon/proc/sensor_mode()
 	if(incapacitated())
 		return
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
+	var/sensor_type = tginput("Please select sensor type.", "Sensor Integration", null, choices = list("Security", "Medical","Diagnostic","Disable"))
 	remove_med_sec_hud()
 	switch(sensor_type)
 		if ("Security")

@@ -106,7 +106,7 @@
 
 	..()
 
-	var/datum/action/innate/pai/shell/AS = new /datum/action/innate/pai/shell
+	var/datum/action/innate/pai/holoshell/AS = new /datum/action/innate/pai/holoshell
 	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
 	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
 	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
@@ -168,12 +168,12 @@
 		return 0
 	P = owner
 
-/datum/action/innate/pai/shell
+/datum/action/innate/pai/holoshell
 	name = "Toggle Holoform"
 	button_icon_state = "pai_holoform"
 	background_icon_state = "bg_tech"
 
-/datum/action/innate/pai/shell/Trigger()
+/datum/action/innate/pai/holoshell/Trigger()
 	..()
 	if(P.holoform)
 		P.fold_in(0)

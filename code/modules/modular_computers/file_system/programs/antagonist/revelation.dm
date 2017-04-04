@@ -47,7 +47,7 @@
 			activate()
 		if("PRG_obfuscate")
 			var/mob/living/user = usr
-			var/newname = sanitize(input(user, "Enter new program name: "))
+			var/newname = sanitize(tginput(user, "Enter new program name: "))
 			if(!newname)
 				return
 			filedesc = newname

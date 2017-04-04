@@ -205,7 +205,7 @@
 		s.set_up(4, 0, L)
 		s.start()
 		new /obj/effect/overlay/temp/revenant(L.loc)
-		sleep(20)
+		SLEEP(20)
 		if(!L.on) //wait, wait, don't shock me
 			return
 		flick("[L.base_state]2", L)

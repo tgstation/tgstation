@@ -54,9 +54,9 @@
 /obj/machinery/door/window/proc/open_and_close()
 	open()
 	if(src.check_access(null))
-		sleep(50)
+		SLEEP(50)
 	else //secure doors close faster
-		sleep(20)
+		SLEEP(20)
 	close()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
@@ -142,7 +142,7 @@
 	do_animate("opening")
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state ="[src.base_state]open"
-	sleep(10)
+	SLEEP(10)
 
 	src.density = 0
 //	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
@@ -170,7 +170,7 @@
 	src.density = 1
 	air_update_turf(1)
 	update_freelook_sight()
-	sleep(10)
+	SLEEP(10)
 
 	src.operating = 0
 	return 1
@@ -211,7 +211,7 @@
 	if(!operating && density && !emagged)
 		operating = 1
 		flick("[src.base_state]spark", src)
-		sleep(6)
+		SLEEP(6)
 		operating = 0
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
 		open()

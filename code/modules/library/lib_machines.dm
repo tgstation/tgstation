@@ -75,21 +75,21 @@
 		return
 
 	if(href_list["settitle"])
-		var/newtitle = input("Enter a title to search for:") as text|null
+		var/newtitle = tginput("Enter a title to search for:", nullable = TRUE, istext = TRUE)
 		if(newtitle)
 			title = sanitize(newtitle)
 		else
 			title = null
 		title = sanitizeSQL(title)
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = tginput("Choose a category to search for:", choices = list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
 		if(newcategory)
 			category = sanitize(newcategory)
 		else
 			category = "Any"
 		category = sanitizeSQL(category)
 	if(href_list["setauthor"])
-		var/newauthor = input("Enter an author to search for:") as text|null
+		var/newauthor = tginput("Enter an author to search for:", nullable = TRUE, istext = TRUE)
 		if(newauthor)
 			author = sanitize(newauthor)
 		else
@@ -380,9 +380,9 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = copytext(sanitize(input("Enter the book's title:") as text|null),1,MAX_MESSAGE_LEN)
+		buffer_book = copytext(sanitize(tginput("Enter the book's title:", nullable = TRUE, istext = TRUE)),1,MAX_MESSAGE_LEN)
 	if(href_list["editmob"])
-		buffer_mob = copytext(sanitize(input("Enter the recipient's name:") as text|null),1,MAX_NAME_LEN)
+		buffer_mob = copytext(sanitize(tginput("Enter the recipient's name:", nullable = TRUE, istext = TRUE)),1,MAX_NAME_LEN)
 	if(href_list["checkout"])
 		var/datum/borrowbook/b = new /datum/borrowbook
 		b.bookname = sanitize(buffer_book)
@@ -399,17 +399,17 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(b && istype(b))
 			inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = copytext(sanitize(input("Enter the author's name: ") as text|null),1,MAX_MESSAGE_LEN)
+		var/newauthor = copytext(sanitize(tginput("Enter the author's name: ", nullable = TRUE, istext = TRUE)),1,MAX_MESSAGE_LEN)
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = tginput("Choose a category: ", choices = list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
 		if(newcategory)
 			upload_category = newcategory
 	if(href_list["upload"])
 		if(scanner)
 			if(scanner.cache)
-				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
+				var/choice = tginput("Are you certain you wish to upload this title to the Archive?", choices = list("Confirm", "Abort"))
 				if(choice == "Confirm")
 					if (!dbcon.Connect())
 						alert("Connection to Archive has been severed. Aborting.")
@@ -442,7 +442,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			var/orderid = input("Enter your order:") as num|null
+			var/orderid = tginput("Enter your order:", nullable = TRUE, isnum = TRUE)
 			if(orderid)
 				if(isnum(orderid) && IsInteger(orderid))
 					href_list["targetid"] = num2text(orderid)
@@ -578,7 +578,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 	audible_message("[src] begins to hum as it warms up its printing drums.")
 	busy = 1
-	sleep(rand(200,400))
+	SLEEP(rand(200,400))
 	busy = 0
 	if(P)
 		if(!stat)

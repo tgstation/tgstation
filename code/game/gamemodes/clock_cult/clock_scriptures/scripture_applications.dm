@@ -161,7 +161,7 @@
 	invocations = list("Call forth...", "...the soldiers of Armorer.")
 	channel_time = 80
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 2)
-	object_path = /obj/structure/destructible/clockwork/shell/fragment
+	object_path = /obj/structure/destructible/clockwork/chassis/fragment
 	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptacle.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."

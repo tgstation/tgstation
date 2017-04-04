@@ -84,7 +84,7 @@
 				M.Turn(dir2angle(projectile.dir))
 				projectile.transform = M
 
-				sleep(proj_step_delay)
+				SLEEP(proj_step_delay)
 
 			if(projectile)
 				qdel(projectile)

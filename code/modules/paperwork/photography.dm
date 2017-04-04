@@ -44,7 +44,7 @@
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
+		var/txt = sanitize(tginput(user, "What would you like to write on the back?", "Photo Writing", null, istext = TRUE))
 		txt = copytext(txt, 1, 128)
 		if(loc == user && user.stat == 0)
 			scribble = txt
@@ -75,7 +75,7 @@
 	set category = "Object"
 	set src in usr
 
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
+	var/n_name = copytext(sanitize(tginput(usr, "What would you like to label the photo?", "Photo Labelling", null, istext = TRUE)), 1, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
 	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0 && usr.canmove && !usr.restrained())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
@@ -394,7 +394,7 @@
 		return
 	for(var/datum/picture/t in targetloc.aipictures)
 		nametemp += t.fields["name"]
-	find = input("Select image (numbered in order taken)") in nametemp
+	find = tginput("Select image (numbered in order taken)", choices = nametemp)
 	for(var/datum/picture/q in targetloc.aipictures)
 		if(q.fields["name"] == find)
 			return q
@@ -473,7 +473,7 @@
 		return
 	for(var/datum/picture/t in targetcam.aipictures)
 		nametemp += t.fields["name"]
-	find = input("Select image (numbered in order taken)") in nametemp
+	find = tginput("Select image (numbered in order taken)", choices = nametemp)
 	for(var/datum/picture/q in targetcam.aipictures)
 		if(q.fields["name"] == find)
 			selection = q

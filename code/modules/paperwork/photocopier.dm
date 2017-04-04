@@ -91,7 +91,7 @@
 							c.updateinfolinks()
 							toner--
 					busy = 1
-					sleep(15)
+					SLEEP(15)
 					busy = 0
 				else
 					break
@@ -124,7 +124,7 @@
 					p.pixel_y = rand(-10, 10)
 					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
 					busy = 1
-					sleep(15)
+					SLEEP(15)
 					busy = 0
 				else
 					break
@@ -134,7 +134,7 @@
 					new /obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
 					busy = 1
-					sleep(15)
+					SLEEP(15)
 					busy = 0
 				else
 					break
@@ -171,7 +171,7 @@
 					p.icon = ic
 					toner -= 5
 					busy = 1
-					sleep(15)
+					SLEEP(15)
 					busy = 0
 				else
 					break
@@ -210,7 +210,7 @@
 				return
 			for(var/datum/picture/t in tempAI.aicamera.aipictures)
 				nametemp += t.fields["name"]
-			find = input("Select image (numbered in order taken)") in nametemp
+			find = tginput("Select image (numbered in order taken)", choices = nametemp)
 			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 			for(var/datum/picture/q in tempAI.aicamera.aipictures)
 				if(q.fields["name"] == find)
@@ -226,7 +226,7 @@
 			p.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
 			busy = 1
-			sleep(15)
+			SLEEP(15)
 			busy = 0
 		updateUsrDialog()
 	else if(href_list["colortoggle"])

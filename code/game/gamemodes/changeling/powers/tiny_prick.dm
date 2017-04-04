@@ -104,7 +104,7 @@
 	feedback_add_details("changeling_powers","TS")
 	. = TRUE
 	if(istype(C))
-		sleep(10)
+		SLEEP(10)
 		C.real_name = NewDNA.real_name
 		NewDNA.transfer_identity(C, transfer_SE=1)
 		C.updateappearance(mutcolor_update=1)

@@ -32,19 +32,19 @@
 	new/obj/effect/clockwork/general_marker/inathneq(T)
 	hierophant_message("<span class='inathneq'>\"[text2ratvar("Engine, come forth and show your servants your mercy")]!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
-	sleep(10)
+	SLEEP(10)
 	new/obj/effect/clockwork/general_marker/sevtug(T)
 	hierophant_message("<span class='sevtug'>\"[text2ratvar("Engine, come forth and show this station your decorating skills")]!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 45, 0)
-	sleep(10)
+	SLEEP(10)
 	new/obj/effect/clockwork/general_marker/nezbere(T)
 	hierophant_message("<span class='nezbere'>\"[text2ratvar("Engine, come forth and shine your light across this realm")]!!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 60, 0)
-	sleep(10)
+	SLEEP(10)
 	new/obj/effect/clockwork/general_marker/nzcrentr(T)
 	hierophant_message("<span class='nzcrentr'>\"[text2ratvar("Engine, come forth")].\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 75, 0)
-	sleep(10)
+	SLEEP(10)
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
 	var/list/open_turfs = list()
 	for(var/turf/open/OT in orange(1, T))
@@ -92,7 +92,7 @@
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
-			sleep(27)
+			SLEEP(27)
 			explosion(src, 1, 3, 8, 8)
 	qdel(src)
 
@@ -255,12 +255,12 @@
 				make_glow()
 				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
 				send_to_playing_players(sound('sound/effects/ratvar_rises.ogg', 0, channel = 8)) //End the sounds
-				sleep(125)
+				SLEEP(125)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
 				var/turf/startpoint = get_turf(src)
 				QDEL_IN(src, 3)
-				sleep(3)
+				SLEEP(3)
 				clockwork_gateway_activated = TRUE
 				new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				send_to_playing_players("<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\

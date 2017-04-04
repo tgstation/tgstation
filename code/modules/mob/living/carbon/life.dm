@@ -106,7 +106,7 @@
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("oxy", /obj/screen/alert_icon/oxy)
 		return 0
 
 	var/safe_oxy_min = 16
@@ -137,7 +137,7 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("oxy", /obj/screen/alert_icon/oxy)
 
 	else //Enough oxygen
 		failed_last_breath = 0
@@ -169,7 +169,7 @@
 		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
 		if(reagents)
 			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
+		throw_alert("tox_in_air", /obj/screen/alert_icon/tox_in_air)
 	else
 		clear_alert("tox_in_air")
 
@@ -334,7 +334,7 @@
 					temp = amplitude * cos(0.008 * saved_dizz * world.time)
 					pixel_y_diff += temp
 					C.pixel_y += temp
-					sleep(3)
+					SLEEP(3)
 					if(C)
 						temp = amplitude * sin(0.008 * saved_dizz * world.time)
 						pixel_x_diff += temp
@@ -342,7 +342,7 @@
 						temp = amplitude * cos(0.008 * saved_dizz * world.time)
 						pixel_y_diff += temp
 						C.pixel_y += temp
-					sleep(3)
+					SLEEP(3)
 					if(C)
 						C.pixel_x -= pixel_x_diff
 						C.pixel_y -= pixel_y_diff

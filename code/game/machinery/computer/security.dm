@@ -357,7 +357,7 @@ What a mess.*/
 					printing = 1
 					data_core.securityPrintCount++
 					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
-					sleep(30)
+					SLEEP(30)
 					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 					P.info = "<CENTER><B>Security Record - (SR-[data_core.securityPrintCount])</B></CENTER><BR>"
 					if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
@@ -438,7 +438,7 @@ What a mess.*/
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 							printing = 1
-							sleep(30)
+							SLEEP(30)
 							if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
 								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, info)
@@ -557,7 +557,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text),1,MAX_MESSAGE_LEN)
+							var/t1 = copytext(sanitize(tginput("Please input name:", "Secure. records", active1.fields["name"], null, istext = TRUE)),1,MAX_MESSAGE_LEN)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -587,13 +587,13 @@ What a mess.*/
 								active1.fields["sex"] = "Male"
 					if("age")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num
+							var/t1 = tginput("Please input age:", "Secure. records", active1.fields["age"], null, isnum = TRUE)
 							if(!canUseSecurityRecordsConsole(usr, "age", a1))
 								return
 							active1.fields["age"] = t1
 					if("species")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Select a species", "Species Selection") as null|anything in roundstart_species
+							var/t1 = tginput("Select a species", "Species Selection", nullable = TRUE, choices = roundstart_species)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1

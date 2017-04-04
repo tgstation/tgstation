@@ -45,7 +45,7 @@
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
 	user.drop_item()
 	user.Stun(5)
-	sleep(20)
+	SLEEP(20)
 	playsound(src, "rustle", 50, 1, -5)
 	qdel(user)
 	return

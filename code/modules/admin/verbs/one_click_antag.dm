@@ -287,7 +287,7 @@
 
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
-	var/mission = input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
+	var/mission = tginput("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "deathsquad", null)
 	var/squadSpawned = 0
 
@@ -395,7 +395,7 @@
 
 
 /datum/admins/proc/makeOfficial()
-	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
+	var/mission = tginput("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered to be a Centcom Official?", "deathsquad")
 
 	if(candidates.len)
@@ -436,7 +436,7 @@
 
 // CENTCOM RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
-	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad")
+	var/alert = tginput("Which team should we send?", "Select Response Level", nullable = TRUE, choices = list("Green: Centcom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad"))
 	if(!alert)
 		return
 	switch(alert)
@@ -450,8 +450,8 @@
 			alert = "Blue"
 		if("Green: Centcom Official")
 			return makeOfficial()
-	var/teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
-	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
+	var/teamsize = min(7,tginput("Maximum size of team? (7 max)", "Select Team Size",4, nullable = TRUE, isnum = TRUE))
+	var/mission = tginput("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
 	var/teamSpawned = 0
 

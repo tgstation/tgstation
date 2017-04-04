@@ -345,7 +345,7 @@ var/next_mob_id = 0
 	set waitfor = 0
 	var/D = dir
 	while(spintime >= speed)
-		sleep(speed)
+		SLEEP(speed)
 		switch(D)
 			if(NORTH)
 				D = EAST

@@ -151,7 +151,7 @@
 /obj/item/weapon/gun/energy/suicide_act(mob/user)
 	if (src.can_shoot())
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		sleep(25)
+		SLEEP(25)
 		if(user.is_holding(src))
 			user.visible_message("<span class='suicide'>[user] melts [user.p_their()] face off with [src]!</span>")
 			playsound(loc, fire_sound, 50, 1, -1)

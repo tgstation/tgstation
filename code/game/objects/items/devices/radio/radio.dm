@@ -146,7 +146,7 @@
 			if(tune == "input")
 				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
 				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
-				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
+				tune = tginput("Tune frequency ([min]-[max]):", name, format_frequency(frequency), nullable = TRUE, isnum = TRUE)
 				if(!isnull(tune) && !..())
 					. = TRUE
 			else if(adjust)
@@ -363,7 +363,7 @@
 			"compression" = rand(35,65), // compressed radio signal
 			"message" = message, // the actual sent message
 			"radio" = src, // stores the radio used for transmission
-			"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
+			"slow" = 0, // how much to SLEEP() before broadcasting - simulates net lag
 			"traffic" = 0, // dictates the total traffic sum that the signal went through
 			"type" = 0, // determines what type of radio input it is: normal broadcast
 			"server" = null, // the last server to log this signal

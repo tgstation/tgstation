@@ -129,7 +129,7 @@
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
-	sleep(100) //10 seconds
+	SLEEP(100) //10 seconds
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	emagged = 1
 	req_access = list(access_syndicate)
@@ -138,7 +138,7 @@
 
 
 /obj/structure/sign/barsign/proc/pick_sign()
-	var/picked_name = input("Available Signage", "Bar Sign") as null|anything in barsigns
+	var/picked_name = tginput("Available Signage", "Bar Sign", nullable = TRUE, choices = barsigns)
 	if(!picked_name)
 		return
 	set_sign(picked_name)

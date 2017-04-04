@@ -45,7 +45,7 @@
 					src.l_setshort = 1
 					src.l_set = 0
 					user.show_message("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
-					sleep(80)
+					SLEEP(80)
 					src.l_setshort = 0
 					src.l_hacking = 0
 				else

@@ -106,7 +106,7 @@
 					if("reset")
 						inserted_id.points = 0
 					if("setgoal")
-						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
+						var/num = round(tginput(usr, "Choose prisoner's goal:", "Input an Integer", null, nullable = TRUE, isnum = TRUE))
 						if(num >= 0)
 							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
 							inserted_id.goal = num
@@ -131,7 +131,7 @@
 				to_chat(usr, "Unauthorized Access.")
 
 		else if(href_list["warn"])
-			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
+			var/warning = copytext(sanitize(tginput(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
 			if(!warning)
 				return
 			var/obj/item/weapon/implant/I = locate(href_list["warn"]) in tracked_implants

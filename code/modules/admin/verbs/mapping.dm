@@ -180,13 +180,13 @@ var/list/admin_verbs_debug_mapping = list(
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
 	set name = "Count Objects On Level"
-	var/level = input("Which z-level?","Level?") as text
+	var/level = tginput("Which z-level?","Level?", istext = TRUE)
 	if(!level) return
 	var/num_level = text2num(level)
 	if(!num_level) return
 	if(!isnum(num_level)) return
 
-	var/type_text = input("Which type path?","Path?") as text
+	var/type_text = tginput("Which type path?","Path?", istext = TRUE)
 	if(!type_text) return
 	var/type_path = text2path(type_text)
 	if(!type_path) return
@@ -224,7 +224,7 @@ var/list/admin_verbs_debug_mapping = list(
 	set category = "Mapping"
 	set name = "Count Objects All"
 
-	var/type_text = input("Which type path?","") as text
+	var/type_text = tginput("Which type path?","", istext = TRUE)
 	if(!type_text) return
 	var/type_path = text2path(type_text)
 	if(!type_path) return

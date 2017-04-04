@@ -81,11 +81,11 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 				spawn(0) //so everything moves at the same time.
 					if(setting_type)
 						for(var/i = 0, i < moving_power, i++)
-							sleep(2)
+							SLEEP(2)
 							if(!step_away(X, T))
 								break
 					else
 						for(var/i = 0, i < moving_power, i++)
-							sleep(2)
+							SLEEP(2)
 							if(!step_towards(X, T))
 								break

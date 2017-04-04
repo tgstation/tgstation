@@ -86,13 +86,13 @@ dmm_suite{
 					var/key_number = text2num(x_block)
 					var/temp_key = keys[key_number]
 					dmm_text += temp_key
-					sleep(-1)
+					SLEEP(-1)
 					}
 				dmm_text += {"\n"}
-				sleep(-1)
+				SLEEP(-1)
 				}
 			dmm_text += {"\"}"}
-			sleep(-1)
+			SLEEP(-1)
 			}
 		return dmm_text
 		}
@@ -133,7 +133,7 @@ dmm_suite{
 		check_attributes(var/atom/A){
 			var/attributes_text = {"{"}
 			for(var/V in A.vars){
-				sleep(-1)
+				SLEEP(-1)
 				if((!issaved(A.vars[V])) || (A.vars[V]==initial(A.vars[V]))){continue}
 				if(istext(A.vars[V])){
 					attributes_text += {"[V] = "[A.vars[V]]""}

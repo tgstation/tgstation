@@ -491,7 +491,7 @@ var/global/list/multiverse = list()
 
 /obj/item/voodoo/attack_self(mob/user)
 	if(!target && possible.len)
-		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
+		target = tginput(user, "Select your victim!", "Voodoo", nullable = TRUE, choices = possible)
 		return
 
 	if(user.zone_selected == "chest")
@@ -506,7 +506,7 @@ var/global/list/multiverse = list()
 	if(target && cooldown < world.time)
 		switch(user.zone_selected)
 			if("mouth")
-				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
+				var/wgw =  sanitize(tginput(user, "What would you like the victim to say", "Voodoo", null, istext = TRUE))
 				target.say(wgw)
 				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
 			if("eyes")
@@ -585,12 +585,12 @@ var/global/list/multiverse = list()
 	playsound(T,'sound/magic/WarpWhistle.ogg', 200, 1)
 	user.canmove = 0
 	new /obj/effect/overlay/temp/tornado(T)
-	sleep(20)
+	SLEEP(20)
 	if(interrupted(user))
 		return
 	user.invisibility = INVISIBILITY_MAXIMUM
 	user.status_flags |= GODMODE
-	sleep(20)
+	SLEEP(20)
 	if(interrupted(user))
 		return
 	var/breakout = 0
@@ -603,14 +603,14 @@ var/global/list/multiverse = list()
 			break
 		breakout += 1
 	new /obj/effect/overlay/temp/tornado(T)
-	sleep(20)
+	SLEEP(20)
 	if(interrupted(user))
 		return
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
 	user.canmove = 1
 	on_cooldown = 2
-	sleep(40)
+	SLEEP(40)
 	on_cooldown = 0
 
 /obj/item/warpwhistle/Destroy()

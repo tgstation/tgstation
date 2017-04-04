@@ -159,7 +159,7 @@
 		IO |= text[1]
 	if(!IO.len)
 		to_chat(user, "<span class='alert'>No machinery detected.</span>")
-	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in IO
+	var/S = tginput("Select the device set: ", "Selection", IO[1], choices = IO)
 	if(src)
 		src.input_tag = "[S]_in"
 		src.output_tag = "[S]_out"
@@ -211,7 +211,7 @@
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
 			. = TRUE
 		if("pressure")
-			var/target = input("New target pressure:", name, output_info ? output_info["internal"] : 0) as num|null
+			var/target = tginput("New target pressure:", name, output_info ? output_info["internal"] : 0, nullable = TRUE, isnum = TRUE)
 			if(!isnull(target) && !..())
 				target =  Clamp(target, 0, 50 * ONE_ATMOSPHERE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)

@@ -476,7 +476,7 @@
 				if(clockwork_caches)
 					cache_components = clockwork_component_cache[i]
 				components["[get_component_name(i)] [(cache_components + stored_components[i])]"] = i
-			var/input_component = input("Choose a component type.", "Target Component") as null|anything in components
+			var/input_component = tginput("Choose a component type.", "Target Component", nullable = TRUE, choices = components)
 			if(input_component && !..())
 				target_component_id = components[input_component]
 		if("bind")
@@ -489,7 +489,7 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
-				var/target_index = input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
+				var/target_index = tginput("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input", nullable = TRUE, isnum = TRUE)
 				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
 					var/datum/clockwork_scripture/S
 					if(LAZYLEN(quickbound) >= target_index)

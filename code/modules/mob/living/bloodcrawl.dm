@@ -99,7 +99,7 @@
 
 	for(var/i in 1 to 3)
 		playsound(get_turf(src),sound, 100, 1)
-		sleep(30)
+		SLEEP(30)
 
 	if(!victim)
 		return FALSE

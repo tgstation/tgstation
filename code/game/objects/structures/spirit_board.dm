@@ -32,7 +32,7 @@
 		virgin = 0
 		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!", source = src)
 
-	planchette = input("Choose the letter.", "Seance!") as null|anything in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+	planchette = tginput("Choose the letter.", "Seance!", nullable = TRUE, choices = list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"))
 	if(!planchette || !Adjacent(M) || next_use > world.time)
 		return
 	add_logs(M, src, "picked a letter on", " which was \"[planchette]\".")

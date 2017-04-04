@@ -102,7 +102,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			return 1
 
 		var/obj/item/stack/sheet/stack = O
-		var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
+		var/amount = round(tginput("How many sheets do you want to add?", isnum = TRUE))//No decimals
 		if(!in_range(src, stack) || !user.Adjacent(src))
 			return
 		var/amount_inserted = materials.insert_stack(O,amount)

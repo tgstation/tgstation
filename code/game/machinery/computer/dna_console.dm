@@ -340,12 +340,12 @@
 				connected.toggle_open(usr)
 		if("setduration")
 			if(!num)
-				num = round(input(usr, "Choose pulse duration:", "Input an Integer", null) as num|null)
+				num = round(tginput(usr, "Choose pulse duration:", "Input an Integer", null, nullable = TRUE, isnum = TRUE))
 			if(num)
 				radduration = Wrap(num, 1, RADIATION_DURATION_MAX+1)
 		if("setstrength")
 			if(!num)
-				num = round(input(usr, "Choose pulse strength:", "Input an Integer", null) as num|null)
+				num = round(tginput(usr, "Choose pulse strength:", "Input an Integer", null, nullable = TRUE, isnum = TRUE))
 			if(num)
 				radstrength = Wrap(num, 1, RADIATION_STRENGTH_MAX+1)
 		if("screen")
@@ -356,7 +356,7 @@
 				var/can_add = max(min(REJUVENATORS_MAX - potassiodide_amount, REJUVENATORS_INJECT), 0)
 				viable_occupant.reagents.add_reagent("potass_iodide", can_add)
 		if("setbufferlabel")
-			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
+			var/text = sanitize(tginput(usr, "Input a new label:", "Input an Text", null, nullable = TRUE, istext = TRUE))
 			if(num && text)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
@@ -471,7 +471,7 @@
 				current_screen = "working"
 				ShowInterface(usr)
 
-				sleep(radduration*10)
+				SLEEP(radduration*10)
 				current_screen = "mainmenu"
 
 				if(viable_occupant && connected && connected.occupant==viable_occupant)

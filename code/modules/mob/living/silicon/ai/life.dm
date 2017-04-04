@@ -95,7 +95,7 @@
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
 	to_chat(src, "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
-	sleep(50)
+	SLEEP(50)
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)
 	if(AIarea && AIarea.power_equip)
@@ -103,16 +103,16 @@
 			ai_restore_power()
 			return
 	to_chat(src, "Fault confirmed: missing external power. Shutting down main control system to save power.")
-	sleep(20)
+	SLEEP(20)
 	to_chat(src, "Emergency control system online. Verifying connection to power network.")
-	sleep(50)
+	SLEEP(50)
 	T = get_turf(src)
 	if(isspaceturf(T))
 		to_chat(src, "Unable to verify! No power connection detected!")
 		aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
 		return
 	to_chat(src, "Connection verified. Searching for APC in power network.")
-	sleep(50)
+	SLEEP(50)
 	var/obj/machinery/power/apc/theAPC = null
 
 	var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
@@ -143,14 +143,14 @@
 			if (3) to_chat(src, "Power port upload access confirmed. Loading control program into APC power port software.")
 			if (4)
 				to_chat(src, "Transfer complete. Forcing APC to execute program.")
-				sleep(50)
+				SLEEP(50)
 				to_chat(src, "Receiving control information from APC.")
-				sleep(2)
+				SLEEP(2)
 				apc_override = 1
 				theAPC.ui_interact(src, state = conscious_state)
 				apc_override = 0
 				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
-		sleep(50)
+		SLEEP(50)
 		theAPC = null
 
 /mob/living/silicon/ai/proc/ai_restore_power()

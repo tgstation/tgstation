@@ -199,7 +199,7 @@
 			if (!C)
 				continue
 			C.Export("##action=load_rsc", SSticker.round_end_sound)
-	sleep(delay)
+	sleep_proc(delay)
 	if(SSticker.delay_end)
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return

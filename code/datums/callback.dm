@@ -13,7 +13,7 @@
 	INVOKING THE CALLBACK:
 		var/result = C.Invoke(args, to, add) //additional args are added after the ones given when the callback was created
 		OR
-		var/result = C.InvokeAsync(args, to, add) //Sleeps will not block, returns . on the first sleep (then continues on in the "background" after the sleep/block ends), otherwise operates normally.
+		var/result = C.InvokeAsync(args, to, add) //Sleeps will not block, returns . on the first SLEEP (then continues on in the "background" after the sleep/block ends), otherwise operates normally.
 		OR
 		INVOKE_ASYNC(<CALLBACK args>) to immediately create and call InvokeAsync
 

@@ -40,7 +40,7 @@
 	target.notransform=0 //mob is safely inside holder now, no need for protection.
 	jaunt_steam(mobloc)
 
-	sleep(jaunt_duration)
+	SLEEP(jaunt_duration)
 
 	if(target.loc != holder) //mob warped out of the warp
 		qdel(holder)
@@ -50,9 +50,9 @@
 	target.canmove = 0
 	holder.reappearing = 1
 	playsound(get_turf(target), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
-	sleep(25 - jaunt_in_time)
+	SLEEP(25 - jaunt_in_time)
 	new jaunt_in_type(mobloc, target.dir)
-	sleep(jaunt_in_time)
+	SLEEP(jaunt_in_time)
 	qdel(holder)
 	if(!QDELETED(target))
 		if(mobloc.density)

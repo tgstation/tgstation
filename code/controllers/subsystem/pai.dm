@@ -40,19 +40,19 @@ SUBSYSTEM_DEF(pai)
 
 		switch(option)
 			if("name")
-				t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
+				t = tginput("Enter a name for your pAI", "pAI Name", candidate.name, istext = TRUE)
 				if(t)
 					candidate.name = copytext(sanitize(t),1,MAX_NAME_LEN)
 			if("desc")
-				t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
+				t = tginput("Enter a description for your pAI", "pAI Description", candidate.description, ismessage = TRUE)
 				if(t)
 					candidate.description = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if("role")
-				t = input("Enter a role for your pAI", "pAI Role", candidate.role) as text
+				t = tginput("Enter a role for your pAI", "pAI Role", candidate.role, istext = TRUE)
 				if(t)
 					candidate.role = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if("ooc")
-				t = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
+				t = tginput("Enter any OOC comments", "pAI OOC Comments", candidate.comments, ismessage = TRUE)
 				if(t)
 					candidate.comments = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if("save")

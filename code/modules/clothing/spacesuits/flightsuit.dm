@@ -292,7 +292,7 @@
 				if(dragging_through && oldturf)
 					dragging_through.forceMove(oldturf)
 					wearer.pulling = dragging_through
-				sleep(1)
+				SLEEP(1)
 
 //Make the wearer lose some momentum.
 /obj/item/device/flightpack/proc/momentum_decay()
@@ -634,7 +634,7 @@
 	if(wearer)
 		if(move)
 			while(momentum_x != 0 || momentum_y != 0)
-				sleep(2)
+				SLEEP(2)
 				step(wearer, pick(cardinal))
 				momentum_decay()
 				adjust_momentum(0, 0, 10)
@@ -1200,7 +1200,7 @@
 		if(!inputlist.len)
 			usermessage("There is nothing inside the flightsuit to remove!", 1)
 			return FALSE
-		var/input = input(user, "What to remove?", "Removing module") as null|anything in list("Pack", "Shoes")
+		var/input = tginput(user, "What to remove?", "Removing module", nullable = TRUE, choices = list("Pack", "Shoes"))
 		if(pack && input == "Pack")
 			if(pack.flight)
 				usermessage("You can not pry off an active flightpack!", 1)

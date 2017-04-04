@@ -457,7 +457,7 @@
 				continue
 
 		showCandidatePollWindow(G, poll_time, Question, candidates, ignore_category, time_passed, flashwindow)
-	sleep(poll_time)
+	SLEEP(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.
 	for(var/mob/dead/observer/G in candidates)

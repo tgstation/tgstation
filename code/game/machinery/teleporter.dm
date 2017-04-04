@@ -188,7 +188,7 @@
 					continue
 				L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
 
-		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
+		var/desc = tginput("Please select a location to lock in.", "Locking Computer", nullable = TRUE, choices = L)
 		target = L[desc]
 
 	else
@@ -203,7 +203,7 @@
 			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
 				continue
 			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
-		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
+		var/desc = tginput("Please select a station to lock in.", "Locking Computer", nullable = TRUE, choices = L)
 		target = L[desc]
 		if(target)
 			var/obj/machinery/teleport/station/trg = target

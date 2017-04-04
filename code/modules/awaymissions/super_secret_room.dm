@@ -89,7 +89,7 @@
 	for(var/i in 1 to statements.len)
 		say("<span class='deadsay'>[statements[i]]</span>")
 		if(i != statements.len)
-			sleep(30)
+			SLEEP(30)
 
 /obj/item/rupee
 	name = "weird crystal"

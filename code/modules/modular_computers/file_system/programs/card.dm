@@ -207,19 +207,19 @@
 		if("PRG_edit")
 			if(computer && authorized())
 				if(params["name"])
-					var/temp_name = reject_bad_name(input("Enter name.", "Name", id_card.registered_name))
+					var/temp_name = reject_bad_name(tginput("Enter name.", "Name", id_card.registered_name))
 					if(temp_name)
 						id_card.registered_name = temp_name
 					else
 						computer.visible_message("<span class='notice'>[computer] buzzes rudely.</span>")
 				//else if(params["account"])
-				//	var/account_num = text2num(input("Enter account number.", "Account", id_card.associated_account_number))
+				//	var/account_num = text2num(tginput("Enter account number.", "Account", id_card.associated_account_number))
 				//	id_card.associated_account_number = account_num
 		if("PRG_assign")
 			if(computer && authorized() && id_card)
 				var/t1 = params["assign_target"]
 				if(t1 == "Custom")
-					var/temp_t = reject_bad_text(input("Enter a custom job assignment.","Assignment", id_card.assignment), 45)
+					var/temp_t = reject_bad_text(tginput("Enter a custom job assignment.","Assignment", id_card.assignment), 45)
 					//let custom jobs function as an impromptu alt title, mainly for sechuds
 					if(temp_t)
 						id_card.assignment = temp_t

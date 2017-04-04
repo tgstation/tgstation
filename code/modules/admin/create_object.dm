@@ -15,7 +15,7 @@ var/list/create_object_forms = list(
 
 
 /datum/admins/proc/quick_create_object(mob/user)
-	var/path = input("Select the path of the object you wish to create.", "Path", /obj) in create_object_forms
+	var/path = tginput("Select the path of the object you wish to create.", "Path", /obj, choices = create_object_forms)
 	var/html_form = create_object_forms[path]
 
 	if (!html_form)

@@ -390,8 +390,8 @@
 /obj/machinery/clonepod/proc/horrifyingsound()
 	for(var/i in 1 to 5)
 		playsound(loc,pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg'), 100, rand(0.95,1.05))
-		sleep(1)
-	sleep(10)
+		SLEEP(1)
+	SLEEP(10)
 	playsound(loc,'sound/hallucinations/wail.ogg',100,1)
 
 /obj/machinery/clonepod/deconstruct(disassembled = TRUE)

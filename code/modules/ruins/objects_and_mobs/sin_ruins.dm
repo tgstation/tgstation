@@ -24,7 +24,7 @@
 		know it'll be worth it.</span>")
 	icon_state = "slots2"
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, 0)
-	sleep(50)
+	SLEEP(50)
 	icon_state = "slots1"
 	in_use = FALSE
 	if(prob(win_prob))

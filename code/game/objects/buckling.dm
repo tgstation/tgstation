@@ -13,7 +13,7 @@
 	. = ..()
 	if(can_buckle && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
-			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in buckled_mobs
+			var/unbuckled = tginput(user, "Who do you wish to unbuckle?","Unbuckle Who?", nullable = TRUE, choices = buckled_mobs)
 			if(user_unbuckle_mob(unbuckled,user))
 				return 1
 		else
@@ -67,7 +67,7 @@
 	M.setDir(dir)
 	buckled_mobs |= M
 	M.update_canmove()
-	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled, new_master = src)
+	M.throw_alert("buckled", /obj/screen/alert_icon/restrained/buckled, new_master = src)
 	post_buckle_mob(M)
 
 	return 1

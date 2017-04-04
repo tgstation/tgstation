@@ -52,7 +52,7 @@
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		P.loc = src
 		icon_state = "[initial(icon_state)]-open"
-		sleep(5)
+		SLEEP(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
 	else if(istype(P, /obj/item/weapon/wrench))
@@ -108,7 +108,7 @@
 			usr.put_in_hands(P)
 			updateUsrDialog()
 			icon_state = "[initial(icon_state)]-open"
-			sleep(5)
+			SLEEP(5)
 			icon_state = initial(icon_state)
 
 
@@ -214,7 +214,7 @@ var/list/employmentCabinets = list()
 			virgin = 0
 		cooldown = 1
 		..()
-		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
+		SLEEP(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		cooldown = 0
 	else
 		to_chat(user, "<span class='warning'>The [src] is jammed, give it a few seconds.</span>")

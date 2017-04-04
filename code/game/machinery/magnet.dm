@@ -197,7 +197,7 @@
 				step_towards(S, center)
 
 		use_power(electricity_level * 5)
-		sleep(13 - electricity_level)
+		SLEEP(13 - electricity_level)
 
 	pulling = 0
 
@@ -339,7 +339,7 @@
 				if(speed <= 0)
 					speed = 1
 			if("setpath")
-				var/newpath = copytext(sanitize(input(usr, "Please define a new path!",,path) as text|null),1,MAX_MESSAGE_LEN)
+				var/newpath = copytext(sanitize(tginput(usr, "Please define a new path!",,path, nullable = TRUE, istext = TRUE)),1,MAX_MESSAGE_LEN)
 				if(newpath && newpath != "")
 					moving = 0 // stop moving
 					path = newpath
@@ -393,9 +393,9 @@
 			radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
 		if(speed == 10)
-			sleep(1)
+			SLEEP(1)
 		else
-			sleep(12-speed)
+			SLEEP(12-speed)
 
 	looping = 0
 

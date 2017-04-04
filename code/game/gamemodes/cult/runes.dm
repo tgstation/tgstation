@@ -143,7 +143,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set waitfor = FALSE
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
-	sleep(5)
+	SLEEP(5)
 	animate(transform = oldtransform, alpha = 255, time = 0)
 
 /obj/effect/rune/proc/fail_invoke()
@@ -216,7 +216,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/talisman_cult_name = initial(J.cultist_name)
 		if(talisman_cult_name)
 			possible_talismans[talisman_cult_name] = J //This is to allow the menu to let cultists select talismans by name
-	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
+	entered_talisman_name = tginput(user, "Choose a talisman to imbue.", "Talisman Choices", nullable = TRUE, choices = possible_talismans)
 	talisman_type = possible_talismans[entered_talisman_name]
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated() || rune_in_use || !talisman_type)
 		return
@@ -286,7 +286,7 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		return
 
-	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
+	var/input_rune_key = tginput(user, "Choose a rune to teleport to.", "Rune to Teleport to", nullable = TRUE, choices = potential_runes) //we know what key they picked
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated() || !actual_selected_rune)
 		fail_invoke()
@@ -493,7 +493,7 @@ var/list/teleport_runes = list()
 	..()
 	send_to_playing_players('sound/effects/dimensional_rend.ogg') //There used to be a message for this but every time it was changed it got edgier so I removed it
 	var/turf/T = get_turf(src)
-	sleep(40)
+	SLEEP(40)
 	if(src)
 		color = "#FF0000"
 	if(cult_mode)
@@ -550,7 +550,7 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		return
 	if(potential_revive_mobs.len > 1)
-		mob_to_revive = input(user, "Choose a cultist to revive.", "Cultist to Revive") as null|anything in potential_revive_mobs
+		mob_to_revive = tginput(user, "Choose a cultist to revive.", "Cultist to Revive", nullable = TRUE, choices = potential_revive_mobs)
 	else
 		mob_to_revive = potential_revive_mobs[1]
 	if(!src || QDELETED(src) || rune_in_use || !validness_checks(mob_to_revive, user))
@@ -702,7 +702,7 @@ var/list/teleport_runes = list()
 			var/mob/dead/observer/G = user.get_ghost()
 			to_chat(G, "<span class='cultitalic'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>")
 			return
-		sleep(1)
+		SLEEP(1)
 	rune_in_use = 0
 
 
@@ -804,7 +804,7 @@ var/list/wall_runes = list()
 	for(var/datum/mind/M in SSticker.mode.cult)
 		if(!(M.current in invokers) && M.current && M.current.stat != DEAD)
 			cultists |= M.current
-	var/mob/living/cultist_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
+	var/mob/living/cultist_to_summon = tginput(user, "Who do you wish to call to [src]?", "Followers of the Geometer", nullable = TRUE, choices = cultists)
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 		return
 	if(!cultist_to_summon)
@@ -874,17 +874,17 @@ var/list/wall_runes = list()
 			if(is_servant_of_ratvar(L))
 				to_chat(L, "<span class='userdanger'>You feel an unholy darkness dimming the Justiciar's light!</span>")
 	animate(src, color = "#FCB56D", time = 4)
-	sleep(4)
+	SLEEP(4)
 	if(!src)
 		return
 	do_area_burn(T, 0.5)
 	animate(src, color = "#FFDF80", time = 5)
-	sleep(5)
+	SLEEP(5)
 	if(!src)
 		return
 	do_area_burn(T, 1)
 	animate(src, color = "#FFFDF4", time = 6)
-	sleep(6)
+	SLEEP(6)
 	if(!src)
 		return
 	do_area_burn(T, 1.5)
@@ -994,7 +994,7 @@ var/list/wall_runes = list()
 		if(user.stat)
 			break
 		user.apply_damage(0.1, BRUTE)
-		sleep(3)
+		SLEEP(3)
 
 	qdel(N)
 	if(new_human)

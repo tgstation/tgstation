@@ -196,18 +196,18 @@
 	if(stat == DEAD)
 		return
 	if(!cocoon_target)
-		var/list/choices = list()
+		var/list/tchoices = list()
 		for(var/mob/living/L in view(1,src))
 			if(L == src || L.anchored)
 				continue
 			if(Adjacent(L))
-				choices += L
+				tchoices += L
 		for(var/obj/O in src.loc)
 			if(O.anchored)
 				continue
 			if(Adjacent(O))
-				choices += O
-		cocoon_target = input(src,"What do you wish to cocoon?") in null|choices
+				tchoices += O
+		cocoon_target = tginput(src,"What do you wish to cocoon?", nullable = TRUE, choices = tchoices)
 
 	if(stat != DEAD && cocoon_target && busy != SPINNING_COCOON)
 		if(cocoon_target.anchored)

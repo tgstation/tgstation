@@ -88,7 +88,7 @@
 	isSwitchingStates = 1
 	playsound(loc, openSound, 100, 1)
 	flick("[initial_state]opening",src)
-	sleep(10)
+	SLEEP(10)
 	density = 0
 	opacity = 0
 	state = 1
@@ -108,7 +108,7 @@
 	isSwitchingStates = 1
 	playsound(loc, closeSound, 100, 1)
 	flick("[initial_state]closing",src)
-	sleep(10)
+	SLEEP(10)
 	density = 1
 	opacity = 1
 	state = 0

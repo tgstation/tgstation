@@ -604,7 +604,7 @@
 	if(has_gravity)
 		clear_alert("weightless")
 	else
-		throw_alert("weightless", /obj/screen/alert/weightless)
+		throw_alert("weightless", /obj/screen/alert_icon/weightless)
 	if(!override)
 		float(!has_gravity)
 
@@ -616,7 +616,7 @@
 		fixed = 1
 	if(on && !floating && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
-		sleep(10)
+		SLEEP(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
@@ -872,7 +872,7 @@
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
 		src.set_light(3)
-		throw_alert("fire", /obj/screen/alert/fire)
+		throw_alert("fire", /obj/screen/alert_icon/fire)
 		update_fire()
 		return TRUE
 	return FALSE

@@ -185,7 +185,7 @@
 							step_rand(item_to_add)
 						for(var/i in list(1,2,4,8,4,8,4,dir))
 							setDir(i)
-							sleep(1)
+							SLEEP(1)
 						return
 
 					usr.drop_item()
@@ -245,7 +245,7 @@
 			step_rand(item_to_add)
 		for(var/i in list(1,2,4,8,4,8,4,dir))
 			setDir(i)
-			sleep(1)
+			SLEEP(1)
 
 	return valid
 
@@ -367,9 +367,9 @@
 			if(movement_target)
 				stop_automated_movement = 1
 				step_to(src,movement_target,1)
-				sleep(3)
+				SLEEP(3)
 				step_to(src,movement_target,1)
-				sleep(3)
+				SLEEP(3)
 				step_to(src,movement_target,1)
 
 				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
@@ -398,7 +398,7 @@
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)
-					sleep(1)
+					SLEEP(1)
 
 
 
@@ -525,7 +525,7 @@
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)
-					sleep(1)
+					SLEEP(1)
 
 /mob/living/simple_animal/pet/dog/pug/Life()
 	..()
@@ -536,7 +536,7 @@
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)
-					sleep(1)
+					SLEEP(1)
 
 /mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
 	. = ..()

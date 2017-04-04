@@ -288,7 +288,7 @@
 		to_chat(user, "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
 		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 50, 1)
 		qdel(src)
-		sleep(20)
+		SLEEP(20)
 		var/global/list/curses
 		if(!curses)
 			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",
@@ -378,7 +378,7 @@
 		for(var/datum/mind/M in SSticker.mode.cult)
 			if(M.current && M.current.stat != DEAD)
 				cultists |= M.current
-		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
+		var/mob/living/cultist_to_receive = tginput(user, "Who do you wish to call to [src]?", "Followers of the Geometer", nullable = TRUE, choices = (cultists - user))
 		if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 			return
 		if(!cultist_to_receive)

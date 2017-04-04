@@ -477,11 +477,11 @@ var/global/list/possible_items = list()
 
 /datum/objective/steal/proc/select_target() //For admins setting objectives manually.
 	var/list/possible_items_all = possible_items+"custom"
-	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
+	var/new_target = tginput("Select target:", "Objective target", steal_target, nullable = TRUE, possible_items_all)
 	if (!new_target) return
 
 	if (new_target == "custom") //Can set custom items.
-		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
+		var/obj/item/custom_target = tginput("Select type:","Type", nullable = TRUE, choices = typesof(/obj/item))
 		if (!custom_target) return
 		var/custom_name = initial(custom_target.name)
 		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)

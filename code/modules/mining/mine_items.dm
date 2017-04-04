@@ -258,7 +258,7 @@
 		src.loc.visible_message("<span class='warning'>\The [src] begins \
 			to shake. Stand back!</span>")
 		used = TRUE
-		sleep(50)
+		SLEEP(50)
 		var/turf/deploy_location = get_turf(src)
 		var/status = template.check_deploy(deploy_location)
 		switch(status)

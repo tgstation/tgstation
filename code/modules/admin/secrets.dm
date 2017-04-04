@@ -145,7 +145,7 @@
 
 		if("clear_virus")
 
-			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
+			var/choice = tginput("Are you sure you want to cure all disease?", choices = list("Yes", "Cancel"))
 			if(choice == "Yes")
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
 				for(var/datum/disease/D in SSdisease.processing)
@@ -153,7 +153,7 @@
 		if("set_name")
 			if(!check_rights(R_ADMIN))
 				return
-			var/new_name = input(usr, "Please input a new name for the station.", "What?", "") as text|null
+			var/new_name = tginput(usr, "Please input a new name for the station.", "What?", "", nullable = TRUE, istext = TRUE)
 			if(!new_name)
 				return
 			change_station_name(new_name)
@@ -289,7 +289,7 @@
 		if("allspecies")
 			if(!check_rights(R_FUN))
 				return
-			var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
+			var/result = tginput(usr, "Please choose a new species","Species", nullable = TRUE, choices = species_list)
 			if(result)
 				log_admin("[key_name(usr)] turned all humans into [result]", 1)
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
@@ -347,7 +347,7 @@
 			if(!SSticker || !SSticker.mode)
 				alert("The game hasn't started yet!")
 				return
-			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
+			var/objective = copytext(sanitize(tginput("Enter an objective")),1,MAX_MESSAGE_LEN)
 			if(!objective)
 				return
 			feedback_inc("admin_secrets_fun_used",1)
@@ -386,7 +386,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BC")
 
-			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", MAX_EX_LIGHT_RANGE) as num|null
+			var/newBombCap = tginput(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", MAX_EX_LIGHT_RANGE, nullable = TRUE, isnum = TRUE)
 			if (newBombCap < 4)
 				return
 
@@ -467,7 +467,7 @@
 				if("Random")
 					E = new /datum/round_event/disease_outbreak()
 				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in typesof(/datum/disease)
+					var/virus = tginput("Choose the virus to spread", "BIOHAZARD", nullable = TRUE, choices = typesof(/datum/disease))
 					E = new /datum/round_event/disease_outbreak{}()
 					var/datum/round_event/disease_outbreak/DO = E
 					DO.virus_type = virus

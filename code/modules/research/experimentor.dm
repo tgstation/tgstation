@@ -44,7 +44,7 @@
 	set name = "Force Experimentor Reaction"
 	set category = "Debug"
 	set src in oview(1)
-	var/reaction = input(usr,"What reaction?") in list(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+	var/reaction = tginput(usr,"What reaction?", choices = list(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE))
 	var/oldReaction = item_reactions["[loaded_item.type]"]
 	item_reactions["[loaded_item.type]"] = reaction
 	experiment(item_reactions["[loaded_item.type]"],loaded_item)

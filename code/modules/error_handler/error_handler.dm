@@ -49,7 +49,7 @@ var/global/total_runtimes_skipped = 0
 		silencing = TRUE
 		spawn(0)
 			usr = null
-			sleep(configured_error_silence_time)
+			SLEEP(configured_error_silence_time)
 			var/skipcount = abs(error_cooldown[erroruid]) - 1
 			error_cooldown[erroruid] = 0
 			if(skipcount > 0)

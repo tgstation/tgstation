@@ -47,7 +47,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 	while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 30 seconds have not passed.
 		check--
-		sleep(10)
+		SLEEP(10)
 
 	if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 		if(!isnull(master))//As long as they still exist.

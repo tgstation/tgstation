@@ -7,7 +7,7 @@
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/new_fps = round(input("Sets game frames-per-second. Can potentially break the game (default: [config.fps])","FPS", world.fps) as num|null)
+	var/new_fps = round(tginput("Sets game frames-per-second. Can potentially break the game (default: [config.fps])","FPS", world.fps, nullable = TRUE, isnum = TRUE))
 
 	if(new_fps <= 0)
 		to_chat(src, "<span class='danger'>Error: set_server_fps(): Invalid world.fps value. No changes made.</span>")

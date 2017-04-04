@@ -356,7 +356,7 @@
 				mechsyringe.icon = initial(mechsyringe.icon)
 				mechsyringe.update_icon()
 				break
-			sleep(1)
+			SLEEP(1)
 	return 1
 
 

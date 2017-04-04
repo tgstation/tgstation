@@ -469,7 +469,7 @@ var/list/blood_splatter_icons = list()
 // See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
 /atom/Stat()
 	. = ..()
-	sleep(1)
+	SLEEP(1)
 	stoplag()
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)

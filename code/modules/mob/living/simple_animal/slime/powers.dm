@@ -26,12 +26,12 @@
 	if(stat)
 		return 0
 
-	var/list/choices = list()
+	var/list/tchoices = list()
 	for(var/mob/living/C in view(1,src))
 		if(C!=src && Adjacent(C))
-			choices += C
+			tchoices += C
 
-	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
+	var/mob/living/M = tginput(src,"Who do you wish to feed on?", nullable = TRUE, choices = tchoices)
 	if(!M)
 		return 0
 	if(CanFeedon(M))

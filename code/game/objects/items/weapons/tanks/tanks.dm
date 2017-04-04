@@ -124,7 +124,7 @@
 		H.status_flags |= DISFIGURED
 		H.bleed_rate = 5
 		H.gib_animation()
-		sleep(3)
+		SLEEP(3)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
 		H.spawn_gibs()
 		H.spill_organs()
@@ -184,7 +184,7 @@
 				pressure = TANK_MAX_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New release pressure ([TANK_MIN_RELEASE_PRESSURE]-[TANK_MAX_RELEASE_PRESSURE] kPa):", name, distribute_pressure) as num|null
+				pressure = tginput("New release pressure ([TANK_MIN_RELEASE_PRESSURE]-[TANK_MAX_RELEASE_PRESSURE] kPa):", name, distribute_pressure, nullable = TRUE, isnum = TRUE)
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)

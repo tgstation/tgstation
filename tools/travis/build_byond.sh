@@ -13,6 +13,10 @@ if [ "$BUILD_TOOLS" = false ]; then
     	echo "base /turf path use detected in maps, please replace with proper paths."
     	exit 1
 	fi;
+	if ( grep "[ \t;]sleep *(" | wc -l ) > 1; then
+    	echo "sleep() usage detected, please use the SLEEP macro"
+    	exit 1
+	fi;
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
 		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme

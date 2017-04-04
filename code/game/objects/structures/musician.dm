@@ -118,9 +118,9 @@
 							cur_acc[cur_note] = "n"
 					playnote(cur_note, cur_acc[cur_note], cur_oct[cur_note])
 				if(notes.len >= 2 && text2num(notes[2]))
-					sleep(sanitize_tempo(tempo / text2num(notes[2])))
+					SLEEP(sanitize_tempo(tempo / text2num(notes[2])))
 				else
-					sleep(tempo)
+					SLEEP(tempo)
 		repeat--
 	playing = 0
 	repeat = 0
@@ -220,12 +220,12 @@
 	else if(href_list["import"])
 		var/t = ""
 		do
-			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
+			t = html_encode(tginput(usr, "Please paste the entire song, formatted:", text("[]", name), t, ismessage = TRUE))
 			if(!in_range(instrumentObj, usr))
 				return
 
 			if(lentext(t) >= 3072)
-				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+				var/cont = tginput(usr, "Your message is too long! Would you like to continue editing it?", "", "yes", choices = list("yes", "no"))
 				if(cont == "no")
 					break
 		while(lentext(t) > 3072)
@@ -255,7 +255,7 @@
 			playsong(usr)
 
 	else if(href_list["newline"])
-		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
+		var/newline = html_encode(tginput("Enter your line: ", instrumentObj.name, nullable = TRUE, istext = TRUE))
 		if(!newline || !in_range(instrumentObj, usr))
 			return
 		if(lines.len > 50)
@@ -272,7 +272,7 @@
 
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
-		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
+		var/content = html_encode(tginput("Enter your line: ", instrumentObj.name, lines[num], nullable = TRUE, istext = TRUE))
 		if(!content || !in_range(instrumentObj, usr))
 			return
 		if(lentext(content) > 50)

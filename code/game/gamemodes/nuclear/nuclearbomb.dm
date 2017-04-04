@@ -331,7 +331,7 @@ var/bomb_set
 				else if(change == "increase")
 					timer_set = min(maximum_timer_set, timer_set + 10)
 				else if(change == "input")
-					var/user_input = input(usr, "Set time to detonation.", name) as null|num
+					var/user_input = tginput(usr, "Set time to detonation.", name, nullable = TRUE, isnum = TRUE)
 					if(!user_input)
 						return
 					var/N = text2num(user_input)
@@ -423,7 +423,7 @@ var/bomb_set
 		M << 'sound/machines/Alarm.ogg'
 	if(SSticker && SSticker.mode)
 		SSticker.mode.explosion_in_progress = 1
-	sleep(100)
+	SLEEP(100)
 
 	if(!core)
 		SSticker.station_explosion_cinematic(3,"no_core",src)
@@ -537,7 +537,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 		else
 			newcolor = "#FF0000"
 		user.add_atom_colour(newcolor, ADMIN_COLOUR_PRIORITY)
-		sleep(1)
+		SLEEP(1)
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
 	return OXYLOSS

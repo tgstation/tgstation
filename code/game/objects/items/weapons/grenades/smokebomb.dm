@@ -27,5 +27,5 @@
 	for(var/obj/structure/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
 		B.take_damage(damage, BURN, "melee", 0)
-	sleep(80)
+	SLEEP(80)
 	qdel(src)

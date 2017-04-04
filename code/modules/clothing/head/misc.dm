@@ -190,7 +190,7 @@
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like they're trying to be nice to girls.</span>")
 	user.say("M'lady.")
-	sleep(10)
+	SLEEP(10)
 	H.facial_hair_style = "Neckbeard"
 	return(BRUTELOSS)
 

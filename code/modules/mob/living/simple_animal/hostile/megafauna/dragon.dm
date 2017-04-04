@@ -129,7 +129,7 @@ Difficulty: Medium
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Fireball.ogg', 200, 1)
 	new /obj/effect/overlay/temp/fireball(T)
-	sleep(12)
+	SLEEP(12)
 	explosion(T, 0, 0, 1, 0, 0, 0, 1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
@@ -181,7 +181,7 @@ Difficulty: Medium
 			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
 			hit_things += L
 		previousturf = J
-		sleep(1)
+		SLEEP(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
 	swoop_attack()
@@ -206,7 +206,7 @@ Difficulty: Medium
 		animate(src, pixel_x = 500, pixel_z = 500, time = 10)
 	else
 		animate(src, pixel_x = -500, pixel_z = 500, time = 10)
-	sleep(30)
+	SLEEP(30)
 
 	var/turf/tturf
 	if(fire_rain)
@@ -220,7 +220,7 @@ Difficulty: Medium
 	forceMove(tturf)
 	new /obj/effect/overlay/temp/dragon_swoop(tturf)
 	animate(src, pixel_x = initial(pixel_x), pixel_z = 0, time = 10)
-	sleep(10)
+	SLEEP(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		if(L.stat)

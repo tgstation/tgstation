@@ -173,7 +173,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
+	var/icontype = tginput("Please, select a display!", "AI", null/*, null*/, choices = list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel"))
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -252,7 +252,7 @@ var/list/ai_list = list()
 			for(var/mob/living/silicon/robot/R in connected_robots)
 				borg_area = get_area(R)
 				var/robot_status = "Nominal"
-				if(R.shell)
+				if(R.ai_shell)
 					robot_status = "AI SHELL"
 				else if(R.stat || !R.client)
 					robot_status = "OFFLINE"
@@ -316,7 +316,7 @@ var/list/ai_list = list()
 			to_chat(usr, "Wireless control is disabled!")
 			return
 
-	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
+	var/reason = tginput(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call", nullable = TRUE, istext = TRUE)
 
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)
@@ -600,7 +600,7 @@ var/list/ai_list = list()
 			for(var/i in C.network)
 				cameralist[i] = i
 	var/old_network = network
-	network = input(U, "Which network would you like to view?") as null|anything in cameralist
+	network = tginput(U, "Which network would you like to view?", nullable = TRUE, choices = cameralist)
 
 	if(!U.eyeobj)
 		U.view_core()
@@ -632,7 +632,7 @@ var/list/ai_list = list()
 	if(stat == 2)
 		return //won't work if dead
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/emote = tginput("Please, select a status!", "AI Status", null, null, choices = ai_emotions)
 	for (var/obj/machinery/M in machines) //change status
 		if(istype(M, /obj/machinery/ai_status_display))
 			var/obj/machinery/ai_status_display/AISD = M
@@ -664,7 +664,7 @@ var/list/ai_list = list()
 				personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
 
 			if(personnel_list.len)
-				input = input("Select a crew member:") as null|anything in personnel_list
+				input = tginput("Select a crew member:", nullable = TRUE, choices = personnel_list)
 				var/icon/character_icon = personnel_list[input]
 				if(character_icon)
 					qdel(holo_icon)//Clear old icon so we're not storing it in memory.
@@ -689,7 +689,7 @@ var/list/ai_list = list()
 			"spider" = 'icons/mob/animal.dmi'
 			)
 
-			input = input("Please select a hologram:") as null|anything in icon_list
+			input = tginput("Please select a hologram:", nullable = TRUE, choices = icon_list)
 			if(input)
 				qdel(holo_icon)
 				switch(input)
@@ -709,7 +709,7 @@ var/list/ai_list = list()
 				"horror" = 'icons/mob/AI.dmi'
 				)
 
-			input = input("Please select a hologram:") as null|anything in icon_list
+			input = tginput("Please select a hologram:", nullable = TRUE, choices = icon_list)
 			if(input)
 				qdel(holo_icon)
 				switch(input)
@@ -928,14 +928,14 @@ var/list/ai_list = list()
 
 	for(var/borgie in available_ai_shells)
 		var/mob/living/silicon/robot/R = borgie
-		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai ||(R.connected_ai == src)))
+		if(R.ai_shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai ||(R.connected_ai == src)))
 			possible += R
 
 	if(!LAZYLEN(possible))
 		to_chat(src, "No usable AI shell beacons detected.")
 
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
-		target = input(src, "Which body to control?") as null|anything in possible
+		target = tginput(src, "Which body to control?", nullable = TRUE, choices = possible)
 
 	if (!target || target.stat == DEAD || target.deployed || !(!target.connected_ai ||(target.connected_ai == src)))
 		return

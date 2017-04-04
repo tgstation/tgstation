@@ -314,7 +314,7 @@
 								src.active1.fields["sex"] = "Male"
 					if("age")
 						if(active1)
-							var/t1 = input("Please input age:", "Med. records", src.active1.fields["age"], null)  as num
+							var/t1 = tginput("Please input age:", "Med. records", src.active1.fields["age"], null, isnum = TRUE)
 							if(!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							src.active1.fields["age"] = t1
@@ -535,7 +535,7 @@
 					src.printing = 1
 					data_core.medicalPrintCount++
 					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
-					sleep(30)
+					SLEEP(30)
 					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
 					P.info = "<CENTER><B>Medical Record - (MR-[data_core.medicalPrintCount])</B></CENTER><BR>"
 					if(active1 in data_core.general)

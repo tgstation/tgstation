@@ -10,14 +10,14 @@
  */
 
 //Returns a list in plain english as a string
-/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
-	var/total = input.len
+/proc/english_list(list/inp, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
+	var/total = inp.len
 	if (!total)
 		return "[nothing_text]"
 	else if (total == 1)
-		return "[input[1]]"
+		return "[inp[1]]"
 	else if (total == 2)
-		return "[input[1]][and_text][input[2]]"
+		return "[inp[1]][and_text][inp[2]]"
 	else
 		var/output = ""
 		var/index = 1
@@ -25,10 +25,10 @@
 			if (index == total - 1)
 				comma_text = final_comma_text
 
-			output += "[input[index]][comma_text]"
+			output += "[inp[index]][comma_text]"
 			index++
 
-		return "[output][and_text][input[index]]"
+		return "[output][and_text][inp[index]]"
 
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)

@@ -107,7 +107,7 @@
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
-				target = input("New target temperature:", name, target_temperature) as num|null
+				target = tginput("New target temperature:", name, target_temperature, nullable = TRUE, isnum = TRUE)
 				if(!isnull(target) && !..())
 					. = TRUE
 			else if(adjust)

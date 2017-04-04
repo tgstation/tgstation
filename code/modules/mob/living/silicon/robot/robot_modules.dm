@@ -210,10 +210,10 @@
 	var/prev_lockcharge = R.lockcharge
 	R.SetLockdown(1)
 	R.anchored = TRUE
-	sleep(2)
+	SLEEP(2)
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/Welder.ogg', 'sound/items/Ratchet.ogg'), 80, 1, -1)
-		sleep(12)
+		SLEEP(12)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
 	R.anchored = FALSE
@@ -452,7 +452,7 @@
 
 /obj/item/weapon/robot_module/butler/be_transformed_to(obj/item/weapon/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Waitress", "Butler", "Tophat", "Kent", "Bro")
+	var/borg_icon = tginput(R, "Select an icon!", "Robot Icon", null, nullable = TRUE, choices = list("Waitress", "Butler", "Tophat", "Kent", "Bro"))
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)

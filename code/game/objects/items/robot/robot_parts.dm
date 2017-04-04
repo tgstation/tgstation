@@ -258,7 +258,7 @@
 				to_chat(user, "<span class='warning'>[M] is stuck to your hand!</span>")
 				return
 			qdel(M)
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/ai_shell(get_turf(src))
 
 			if(!aisync)
 				lawsync = FALSE
@@ -311,7 +311,7 @@
 		return
 
 	if(href_list["Name"])
-		var/new_name = reject_bad_name(input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name),1)
+		var/new_name = reject_bad_name(tginput(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name),1)
 		if(!in_range(src, usr) && src.loc != usr)
 			return
 		if(new_name)

@@ -113,7 +113,7 @@
 		exit_delay = current_tube.exit_delay(src, dir)
 		last_delay += exit_delay
 
-		sleep(exit_delay)
+		SLEEP(exit_delay)
 
 		next_loc = get_step(loc, next_dir)
 
@@ -129,7 +129,7 @@
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
-		sleep(last_delay)
+		SLEEP(last_delay)
 		setDir(next_dir)
 		loc = next_loc // When moving from one tube to another, skip collision and such.
 		density = current_tube.density

@@ -174,11 +174,11 @@
 	"<span class='nzcrentr'>\"[text2ratvar("The boss says it's okay to do this. Don't blame me if you die from it.")]\"</span>\n\
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
-	sleep(2)
+	SLEEP(2)
 	playsound(invoker, 'sound/magic/lightning_chargeup.ogg', 100, 0)
 	var/oldcolor = invoker.color
 	animate(invoker, color = list(rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(0,0,0)), time = 88) //Gradual advancement to extreme brightness
-	sleep(88)
+	SLEEP(88)
 	if(invoker)
 		invoker.visible_message("<span class='warning'>Massive bolts of energy emerge from across [invoker]'s body!</span>", \
 		"<span class='nzcrentr'>\"[text2ratvar("I told you you wouldn't be able to handle it.")]\"</span>\n\

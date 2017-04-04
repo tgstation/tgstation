@@ -239,7 +239,6 @@ swapmap
 					T.Write(S)
 					S.cd=".."
 				S.cd=".."
-			sleep()
 			S.cd=oldcd
 		locked=0
 		qdel(areas)
@@ -295,7 +294,6 @@ swapmap
 					T.Read(S)
 					S.cd=".."
 				S.cd=".."
-			sleep()
 			S.cd=oldcd
 		locked=0
 		qdel(areas)
@@ -384,7 +382,7 @@ swapmap
 		if(id==src) return 0
 		var/savefile/S=mode?(new):new("map_[id].sav")
 		S << src
-		while(locked) sleep(1)
+		while(locked) SLEEP(1)
 		if(mode)
 			fdel("map_[id].txt")
 			S.ExportText("/","map_[id].txt")
@@ -549,7 +547,7 @@ var/swapmaps_byname
 			S=new
 			S.ImportText("/",file("map_[id].txt"))
 		S >> M
-		while(M.locked) sleep(1)
+		while(M.locked) SLEEP(1)
 		M.mode=text
 	return M
 
@@ -599,7 +597,7 @@ var/swapmaps_byname
 	S.cd="//.0"
 	M.Read(S,M)
 	M.mode=text
-	while(M.locked) sleep(1)
+	while(M.locked) SLEEP(1)
 	return M
 
 /proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
@@ -625,7 +623,7 @@ var/swapmaps_byname
 	 */
 	S.cd="//.0"
 	M.Read(S,M,locorner)
-	while(M.locked) sleep(1)
+	while(M.locked) SLEEP(1)
 	qdel(M)
 	return 1
 
@@ -648,7 +646,7 @@ var/swapmaps_byname
 	M.z2=max(corner1.z,corner2.z)
 	M.mode=swapmaps_mode
 	M.Save()
-	while(M.locked) sleep(1)
+	while(M.locked) SLEEP(1)
 	qdel(M)
 	return 1
 

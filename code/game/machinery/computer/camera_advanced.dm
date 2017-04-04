@@ -185,7 +185,7 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, 0)
-	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
+	var/camera = tginput("Choose which camera you want to view", "Cameras", nullable = TRUE, choices = T)
 	var/obj/machinery/camera/final = T[camera]
 	playsound(src, "terminal_type", 25, 0)
 	if(final)

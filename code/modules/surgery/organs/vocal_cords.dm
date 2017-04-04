@@ -103,7 +103,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		if(world.time < cords.next_command)
 			to_chat(owner, "<span class='notice'>You must wait [(cords.next_command - world.time)/10] seconds before Speaking again.</span>")
 		return
-	var/command = input(owner, "Speak with the Voice of God", "Command")
+	var/command = tginput(owner, "Speak with the Voice of God", "Command")
 	if(QDELETED(src) || QDELETED(owner))
 		return
 	if(!command)
@@ -332,7 +332,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 				L.say("[L.mind.devilinfo.truename]")
 			else
 				L.say("[L.real_name]")
-			sleep(5) //So the chat flows more naturally
+			SLEEP(5) //So the chat flows more naturally
 
 	//SAY MY NAME
 	else if((findtext(message, saymyname_words)))
@@ -340,7 +340,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.say("[user.name]!") //"Unknown!"
-			sleep(5) //So the chat flows more naturally
+			SLEEP(5) //So the chat flows more naturally
 
 	//KNOCK KNOCK
 	else if((findtext(message, knockknock_words)))
@@ -348,7 +348,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.say("Who's there?")
-			sleep(5) //So the chat flows more naturally
+			SLEEP(5) //So the chat flows more naturally
 
 	//STATE LAWS
 	else if((findtext(message, statelaws_words)))
@@ -372,7 +372,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 			for(var/V in listeners)
 				var/mob/living/L = V
 				step(L, direction ? direction : pick(cardinal))
-			sleep(10)
+			SLEEP(10)
 
 	//WALK
 	else if((findtext(message, walk_words)))
@@ -396,7 +396,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_HELP)
 			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			SLEEP(2) //delay to make it feel more natural
 
 	//DISARM INTENT
 	else if((findtext(message, disarmintent_words)))
@@ -404,7 +404,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_DISARM)
 			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			SLEEP(2) //delay to make it feel more natural
 
 	//GRAB INTENT
 	else if((findtext(message, grabintent_words)))
@@ -412,7 +412,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_GRAB)
 			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			SLEEP(2) //delay to make it feel more natural
 
 	//HARM INTENT
 	else if((findtext(message, harmintent_words)))
@@ -420,7 +420,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_HARM)
 			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			SLEEP(2) //delay to make it feel more natural
 
 	//THROW/CATCH
 	else if((findtext(message, throwmode_words)))
@@ -441,7 +441,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
-			sleep(5) //So the chat flows more naturally
+			SLEEP(5) //So the chat flows more naturally
 
 	//REST
 	else if((findtext(message, rest_words)))
@@ -485,7 +485,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("dance")
-			sleep(5) //So the chat flows more naturally
+			SLEEP(5) //So the chat flows more naturally
 
 	//JUMP
 	else if((findtext(message, jump_words)))
@@ -495,7 +495,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 			if(prob(25))
 				L.say("HOW HIGH?!!")
 			L.emote("jump")
-			sleep(5) //So the chat flows more naturally
+			SLEEP(5) //So the chat flows more naturally
 
 	//SALUTE
 	else if((findtext(message, salute_words)))
@@ -503,7 +503,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("salute")
-			sleep(5) //So the chat flows more naturally
+			SLEEP(5) //So the chat flows more naturally
 
 	//PLAY DEAD
 	else if((findtext(message, deathgasp_words)))
@@ -511,7 +511,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("deathgasp")
-			sleep(5) //So the chat flows more naturally
+			SLEEP(5) //So the chat flows more naturally
 
 	//PLEASE CLAP
 	else if((findtext(message, clap_words)))
@@ -519,7 +519,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("clap")
-			sleep(5) //So the chat flows more naturally
+			SLEEP(5) //So the chat flows more naturally
 
 	//HONK
 	else if((findtext(message, honk_words)))

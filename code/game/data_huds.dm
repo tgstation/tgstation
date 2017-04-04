@@ -302,7 +302,7 @@
 	var/image/holder = hud_list[DIAG_TRACK_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(!shell) //Not an AI shell
+	if(!ai_shell) //Not an AI shell
 		holder.icon_state = null
 	else if(deployed) //AI shell in use by an AI
 		holder.icon_state = "hudtrackingai"

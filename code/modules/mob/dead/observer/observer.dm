@@ -344,7 +344,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(message)
 		to_chat(src, "<span class='ghostalert'>[message]</span>")
 		if(source)
-			var/obj/screen/alert/A = throw_alert("\ref[source]_notify_cloning", /obj/screen/alert/notify_cloning)
+			var/obj/screen/alert_icon/A = throw_alert("\ref[source]_notify_cloning", /obj/screen/alert_icon/notify_cloning)
 			if(A)
 				if(client && client.prefs && client.prefs.UI_style)
 					A.icon = ui_style2icon(client.prefs.UI_style)
@@ -368,7 +368,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "Not when you're not dead!")
 		return
 	var/A
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in sortedAreas
+	A = tginput("Area to jump to", "BOOYEA", A, nullable = TRUE, choices = sortedAreas)
 	var/area/thearea = A
 	if(!thearea)
 		return
@@ -389,7 +389,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Follow and orbit a mob."
 
 	var/list/mobs = getpois(skip_mindless=1)
-	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
+	var/input = tginput("Please, select a mob!", "Haunt", null, null, nullable = TRUE, choices = mobs)
 	var/mob/target = mobs[input]
 	ManualFollow(target)
 
@@ -444,7 +444,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/target = null	   //Chosen target.
 
 		dest += getpois(mobs_only=1) //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
+		target = tginput("Please, select a player!", "Jump to Mob", null, null, nullable = TRUE, choices = dest)
 
 		if (!target)//Make sure we actually have a target
 			return
@@ -469,7 +469,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/list/views = list()
 		for(var/i in 1 to max_view)
 			views |= i
-		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
+		var/new_view = tginput("Choose your new view", "Modify view range", 7, nullable = TRUE, choices = views)
 		if(new_view)
 			client.view = Clamp(new_view, 1, max_view)
 	else
@@ -586,7 +586,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(!(L in player_list) && !L.mind)
 			possessible += L
 
-	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in possessible
+	var/mob/living/target = tginput("Your new life begins today!", "Possess Mob", null, null, nullable = TRUE, choices = possessible)
 
 	if(!target)
 		return 0
@@ -622,7 +622,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Sending you to [config.cross_address].</span>")
 		new /obj/screen/splash(client)
 		notransform = TRUE
-		sleep(29)	//let the animation play
+		SLEEP(29)	//let the animation play
 		notransform = FALSE
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 		client << link(config.cross_address + "?server_hop=[key]")
@@ -792,7 +792,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/eye_name = null
 
-	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+	eye_name = tginput("Please, select a player!", "Observe", null, null, nullable = TRUE, choices = creatures)
 
 	if (!eye_name)
 		return

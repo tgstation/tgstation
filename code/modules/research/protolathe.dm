@@ -102,7 +102,7 @@ Note: Must be placed west/left of and R&D console to function.
 			return 1
 
 		var/obj/item/stack/sheet/stack = O
-		var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
+		var/amount = round(tginput("How many sheets do you want to add?", isnum = TRUE))//No decimals
 		if(!in_range(src, stack) || !user.Adjacent(src))
 			return
 		var/amount_inserted = materials.insert_stack(O,amount)
@@ -114,7 +114,7 @@ Note: Must be placed west/left of and R&D console to function.
 			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
 			to_chat(user, "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>")
 			add_overlay("protolathe_[stack_name]")
-			sleep(10)
+			SLEEP(10)
 			cut_overlay("protolathe_[stack_name]")
 			busy = FALSE
 		updateUsrDialog()
@@ -137,7 +137,7 @@ Note: Must be placed west/left of and R&D console to function.
 		to_chat(user, "<span class='notice'>You add [O] to the [src.name].</span>")
 		qdel(O)
 		add_overlay("protolathe_bluespace")
-		sleep(10)
+		SLEEP(10)
 		cut_overlay("protolathe_bluespace")
 		busy = FALSE
 		updateUsrDialog()

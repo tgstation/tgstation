@@ -150,11 +150,11 @@ RCD
 	set category = "Object"
 	set src in usr
 
-	var airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
+	var airlockcat = tginput(usr, "Select whether the airlock is solid or glass.", choices = list("Solid", "Glass"))
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+				var airlockpaint = tginput(usr, "Select the paintjob of the airlock.", choices = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security"))
 				switch(airlockpaint)
 					if("Default")
 						airlock_type = /obj/machinery/door/airlock
@@ -183,7 +183,7 @@ RCD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+				var airlockpaint = tginput(usr, "Select the paintjob of the airlock.", choices = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining"))
 				switch(airlockpaint)
 					if("Default")
 						airlock_type = /obj/machinery/door/airlock/glass

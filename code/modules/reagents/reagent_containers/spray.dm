@@ -77,7 +77,7 @@
 		for(var/i=0, i<range, i++)
 			range_left--
 			step_towards(D,A)
-			sleep(wait_step)
+			SLEEP(wait_step)
 
 			for(var/atom/T in get_turf(D))
 				if(T == D || T.invisibility) //we ignore the puff itself and stuff below the floor

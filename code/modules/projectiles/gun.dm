@@ -242,7 +242,7 @@
 				break
 			process_chamber()
 			update_icon()
-			sleep(fire_delay)
+			SLEEP(fire_delay)
 		firing_burst = 0
 	else
 		if(chambered)
@@ -362,7 +362,7 @@
 
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
-	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
+	var/choice = tginput(M,"Warning, you can only reskin your weapon once!","Reskin Gun", choices = options)
 
 	if(src && choice && !current_skin && !M.incapacitated() && in_range(M,src))
 		if(options[choice] == null)

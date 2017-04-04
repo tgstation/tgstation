@@ -45,7 +45,7 @@
 	target = user
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)
 	message_admins("[key_name(user)] suicided with [name] at ([x],[y],[z])")
-	sleep(10)
+	SLEEP(10)
 	explode(get_turf(user))
 	user.gib(1, 1)
 
@@ -59,7 +59,7 @@
 		return ..()
 
 /obj/item/weapon/c4/attack_self(mob/user)
-	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
+	var/newtime = tginput(usr, "Please set the timer.", "Timer", 10, isnum = TRUE)
 	if(user.get_active_held_item() == src)
 		newtime = Clamp(newtime, 10, 60000)
 		timer = newtime

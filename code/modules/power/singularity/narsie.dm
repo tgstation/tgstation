@@ -38,7 +38,7 @@
 
 	narsie_spawn_animation()
 
-	sleep(70)
+	SLEEP(70)
 	SSshuttle.emergency.request(null, 0.1) // Cannot recall
 
 
@@ -159,7 +159,7 @@
 	setDir(SOUTH)
 	move_self = 0
 	flick("narsie_spawn_anim",src)
-	sleep(11)
+	SLEEP(11)
 	move_self = 1
 	icon = initial(icon)
 

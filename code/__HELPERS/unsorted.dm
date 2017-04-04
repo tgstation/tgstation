@@ -232,7 +232,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/active_free_borgs()
 	. = list()
 	for(var/mob/living/silicon/robot/R in living_mob_list)
-		if(R.connected_ai || R.shell)
+		if(R.connected_ai || R.ai_shell)
 			continue
 		if(R.stat == DEAD)
 			continue
@@ -268,7 +268,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/borgs = active_free_borgs()
 	if(borgs.len)
 		if(user)
-			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in borgs
+			. = tginput(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1], choices = borgs)
 		else
 			. = pick(borgs)
 	return .
@@ -277,7 +277,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/ais = active_ais()
 	if(ais.len)
 		if(user)
-			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in ais
+			. = tginput(user,"AI signals detected:", "AI Selection", ais[1], choices = ais)
 		else
 			. = pick(ais)
 	return .
@@ -1182,7 +1182,7 @@ B --><-- A
 	if(!A || !I)
 		return
 	A.add_overlay(I)
-	sleep(duration)
+	SLEEP(duration)
 	A.cut_overlay(I)
 
 /proc/get_areas_in_z(zlevel)
@@ -1217,7 +1217,7 @@ B --><-- A
 
 proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	if (value == FALSE) //nothing should be calling us with a number, so this is safe
-		value = input("Enter type to find (blank for all, cancel to cancel)", "Search for type") as null|text
+		value = tginput("Enter type to find (blank for all, cancel to cancel)", "Search for type", nullable = TRUE, istext = TRUE)
 		if (isnull(value))
 			return
 	value = trim(value)
@@ -1231,7 +1231,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	if(matches.len==1)
 		chosen = matches[1]
 	else
-		chosen = input("Select a type", "Pick Type", matches[1]) as null|anything in matches
+		chosen = tginput("Select a type", "Pick Type", matches[1], nullable = TRUE, choices = matches)
 		if(!chosen)
 			return
 	chosen = matches[chosen]
@@ -1252,7 +1252,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	var/i = 1
 	do
 		. += round(i*DELTA_CALC)
-		sleep(i*world.tick_lag*DELTA_CALC)
+		SLEEP(i*world.tick_lag*DELTA_CALC)
 		i *= 2
 	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
 

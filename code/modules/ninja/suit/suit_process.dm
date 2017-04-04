@@ -19,6 +19,6 @@
 			cell.charge = 0
 			cancel_stealth()
 
-		sleep(10)//Checks every second.
+		SLEEP(10)//Checks every second.
 
 

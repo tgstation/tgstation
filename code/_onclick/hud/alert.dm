@@ -18,7 +18,7 @@
 	if(!category)
 		return
 
-	var/obj/screen/alert/thealert
+	var/obj/screen/alert_icon/thealert
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
@@ -68,25 +68,25 @@
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
 	return thealert
 
-/mob/proc/alert_timeout(obj/screen/alert/alert, category)
-	if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
+/mob/proc/alert_timeout(obj/screen/alert_icon/alert_icon, category)
+	if(alert_icon.timeout && alerts[category] == alert_icon && world.time >= alert_icon.timeout)
 		clear_alert(category)
 
 // Proc to clear an existing alert.
 /mob/proc/clear_alert(category, clear_override = FALSE)
-	var/obj/screen/alert/alert = alerts[category]
-	if(!alert)
+	var/obj/screen/alert_icon/alert_icon = alerts[category]
+	if(!alert_icon)
 		return 0
-	if(alert.override_alerts && !clear_override)
+	if(alert_icon.override_alerts && !clear_override)
 		return 0
 
 	alerts -= category
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
-		client.screen -= alert
-	qdel(alert)
+		client.screen -= alert_icon
+	qdel(alert_icon)
 
-/obj/screen/alert
+/obj/screen/alert_icon
 	icon = 'icons/mob/screen_alert.dmi'
 	icon_state = "default"
 	name = "Alert"
@@ -98,42 +98,42 @@
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 
 
-/obj/screen/alert/MouseEntered(location,control,params)
+/obj/screen/alert_icon/MouseEntered(location,control,params)
 	openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
 
-/obj/screen/alert/MouseExited()
+/obj/screen/alert_icon/MouseExited()
 	closeToolTip(usr)
 
 
 //Gas alerts
-/obj/screen/alert/oxy
+/obj/screen/alert_icon/oxy
 	name = "Choking (No O2)"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
 The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = "oxy"
 
-/obj/screen/alert/too_much_oxy
+/obj/screen/alert_icon/too_much_oxy
 	name = "Choking (O2)"
 	desc = "There's too much oxygen in the air, and you're breathing it in! Find some good air before you pass out!"
 	icon_state = "too_much_oxy"
 
-/obj/screen/alert/not_enough_co2
+/obj/screen/alert_icon/not_enough_co2
 	name = "Choking (No CO2)"
 	desc = "You're not getting enough carbon dioxide. Find some good air before you pass out!"
 	icon_state = "not_enough_co2"
 
-/obj/screen/alert/too_much_co2
+/obj/screen/alert_icon/too_much_co2
 	name = "Choking (CO2)"
 	desc = "There's too much carbon dioxide in the air, and you're breathing it in! Find some good air before you pass out!"
 	icon_state = "too_much_co2"
 
-/obj/screen/alert/not_enough_tox
+/obj/screen/alert_icon/not_enough_tox
 	name = "Choking (No Plasma)"
 	desc = "You're not getting enough plasma. Find some good air before you pass out!"
 	icon_state = "not_enough_tox"
 
-/obj/screen/alert/tox_in_air
+/obj/screen/alert_icon/tox_in_air
 	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. \
 The box in your backpack has an oxygen tank and gas mask in it."
@@ -141,74 +141,74 @@ The box in your backpack has an oxygen tank and gas mask in it."
 //End gas alerts
 
 
-/obj/screen/alert/fat
+/obj/screen/alert_icon/fat
 	name = "Fat"
 	desc = "You ate too much food, lardass. Run around the station and lose some weight."
 	icon_state = "fat"
 
-/obj/screen/alert/hungry
+/obj/screen/alert_icon/hungry
 	name = "Hungry"
 	desc = "Some food would be good right about now."
 	icon_state = "hungry"
 
-/obj/screen/alert/starving
+/obj/screen/alert_icon/starving
 	name = "Starving"
 	desc = "You're severely malnourished. The hunger pains make moving around a chore."
 	icon_state = "starving"
 
-/obj/screen/alert/hot
+/obj/screen/alert_icon/hot
 	name = "Too Hot"
 	desc = "You're flaming hot! Get somewhere cooler and take off any insulating clothing like a fire suit."
 	icon_state = "hot"
 
-/obj/screen/alert/cold
+/obj/screen/alert_icon/cold
 	name = "Too Cold"
 	desc = "You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit."
 	icon_state = "cold"
 
-/obj/screen/alert/lowpressure
+/obj/screen/alert_icon/lowpressure
 	name = "Low Pressure"
 	desc = "The air around you is hazardously thin. A space suit would protect you."
 	icon_state = "lowpressure"
 
-/obj/screen/alert/highpressure
+/obj/screen/alert_icon/highpressure
 	name = "High Pressure"
 	desc = "The air around you is hazardously thick. A fire suit would protect you."
 	icon_state = "highpressure"
 
-/obj/screen/alert/blind
+/obj/screen/alert_icon/blind
 	name = "Blind"
 	desc = "You can't see! This may be caused by a genetic defect, eye trauma, being unconscious, \
 or something covering your eyes."
 	icon_state = "blind"
 
-/obj/screen/alert/high
+/obj/screen/alert_icon/high
 	name = "High"
 	desc = "Whoa man, you're tripping balls! Careful you don't get addicted... if you aren't already."
 	icon_state = "high"
 
-/obj/screen/alert/drunk //Not implemented
+/obj/screen/alert_icon/drunk //Not implemented
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
 	icon_state = "drunk"
 
-/obj/screen/alert/embeddedobject
+/obj/screen/alert_icon/embeddedobject
 	name = "Embedded Object"
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
 If you're feeling frisky, click yourself in help intent to pull the object out."
 	icon_state = "embeddedobject"
 
-/obj/screen/alert/embeddedobject/Click()
+/obj/screen/alert_icon/embeddedobject/Click()
 	if(isliving(usr))
 		var/mob/living/carbon/human/M = usr
 		return M.help_shake_act(M)
 
-/obj/screen/alert/asleep
+/obj/screen/alert_icon/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-/obj/screen/alert/weightless
+/obj/screen/alert_icon/weightless
 	name = "Weightless"
 	desc = "Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a \
 wall or lattice, to push yourself off if you want to move. A jetpack would enable free range of motion. A pair of \
@@ -216,12 +216,12 @@ magboots would let you walk around normally on the floor. Barring those, you can
 or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "weightless"
 
-/obj/screen/alert/fire
+/obj/screen/alert_icon/fire
 	name = "On Fire"
 	desc = "You're on fire. Stop, drop and roll to put the fire out or move to a vacuum area."
 	icon_state = "fire"
 
-/obj/screen/alert/fire/Click()
+/obj/screen/alert_icon/fire/Click()
 	if(isliving(usr))
 		var/mob/living/L = usr
 		return L.resist()
@@ -229,20 +229,20 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 //ALIENS
 
-/obj/screen/alert/alien_tox
+/obj/screen/alert_icon/alien_tox
 	name = "Plasma"
 	desc = "There's flammable plasma in the air. If it lights up, you'll be toast."
 	icon_state = "alien_tox"
 	alerttooltipstyle = "alien"
 
-/obj/screen/alert/alien_fire
+/obj/screen/alert_icon/alien_fire
 // This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
 	name = "Too Hot"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you."
 	icon_state = "alien_fire"
 	alerttooltipstyle = "alien"
 
-/obj/screen/alert/alien_vulnerable
+/obj/screen/alert_icon/alien_vulnerable
 	name = "Severed Matriarchy"
 	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
 	icon_state = "alien_noqueen"
@@ -250,32 +250,32 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 //BLOBS
 
-/obj/screen/alert/nofactory
+/obj/screen/alert_icon/nofactory
 	name = "No Factory"
 	desc = "You have no factory, and are slowly dying!"
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
 
 // CLOCKCULT
-/obj/screen/alert/clockwork
+/obj/screen/alert_icon/clockwork
 	alerttooltipstyle = "clockcult"
 
-/obj/screen/alert/clockwork/scripture_reqs
+/obj/screen/alert_icon/clockwork/scripture_reqs
 	name = "Next Tier Requirements"
 	desc = "You shouldn't be seeing this description unless you're very fast. If you're very fast, good job!"
 	icon_state = "no-servants-caches"
 	var/static/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 
-/obj/screen/alert/clockwork/scripture_reqs/New()
+/obj/screen/alert_icon/clockwork/scripture_reqs/New()
 	..()
 	START_PROCESSING(SSprocessing, src)
 	process()
 
-/obj/screen/alert/clockwork/scripture_reqs/Destroy()
+/obj/screen/alert_icon/clockwork/scripture_reqs/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/obj/screen/alert/clockwork/scripture_reqs/process()
+/obj/screen/alert_icon/clockwork/scripture_reqs/process()
 	if(clockwork_gateway_activated)
 		qdel(src)
 		return
@@ -350,12 +350,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
 		desc = textlist.Join()
 
-/obj/screen/alert/clockwork/infodump
+/obj/screen/alert_icon/clockwork/infodump
 	name = "Global Records"
 	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
 	icon_state = "clockinfo"
 
-/obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
+/obj/screen/alert_icon/clockwork/infodump/MouseEntered(location,control,params)
 	if(ratvar_awakens)
 		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
 	else
@@ -418,19 +418,19 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 //GUARDIANS
 
-/obj/screen/alert/cancharge
+/obj/screen/alert_icon/cancharge
 	name = "Charge Ready"
 	desc = "You are ready to charge at a location!"
 	icon_state = "guardian_charge"
 	alerttooltipstyle = "parasite"
 
-/obj/screen/alert/canstealth
+/obj/screen/alert_icon/canstealth
 	name = "Stealth Ready"
 	desc = "You are ready to enter stealth!"
 	icon_state = "guardian_canstealth"
 	alerttooltipstyle = "parasite"
 
-/obj/screen/alert/instealth
+/obj/screen/alert_icon/instealth
 	name = "In Stealth"
 	desc = "You are in stealth and your next attack will do bonus damage!"
 	icon_state = "guardian_instealth"
@@ -438,42 +438,42 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 //SILICONS
 
-/obj/screen/alert/nocell
+/obj/screen/alert_icon/nocell
 	name = "Missing Power Cell"
 	desc = "Unit has no power cell. No modules available until a power cell is reinstalled. Robotics may provide assistance."
 	icon_state = "nocell"
 
-/obj/screen/alert/emptycell
+/obj/screen/alert_icon/emptycell
 	name = "Out of Power"
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
 Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "emptycell"
 
-/obj/screen/alert/lowcell
+/obj/screen/alert_icon/lowcell
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "lowcell"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
-/obj/screen/alert/hacked
+/obj/screen/alert_icon/hacked
 	name = "Hacked"
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
 	icon_state = "hacked"
 
-/obj/screen/alert/locked
+/obj/screen/alert_icon/locked
 	name = "Locked Down"
 	desc = "Unit has been remotely locked down. Usage of a Robotics Control Console like the one in the Research Director's \
 office by your AI master or any qualified human may resolve this matter. Robotics may provide further assistance if necessary."
 	icon_state = "locked"
 
-/obj/screen/alert/newlaw
+/obj/screen/alert_icon/newlaw
 	name = "Law Update"
 	desc = "Laws have potentially been uploaded to or removed from this unit. Please be aware of any changes \
 so as to remain in compliance with the most up-to-date laws."
 	icon_state = "newlaw"
 	timeout = 300
 
-/obj/screen/alert/hackingapc
+/obj/screen/alert_icon/hackingapc
 	name = "Hacking APC"
 	desc = "An Area Power Controller is being hacked. When the process is \
 		complete, you will have exclusive control of it, and you will gain \
@@ -482,7 +482,7 @@ so as to remain in compliance with the most up-to-date laws."
 	timeout = 600
 	var/atom/target = null
 
-/obj/screen/alert/hackingapc/Click()
+/obj/screen/alert_icon/hackingapc/Click()
 	if(!usr || !usr.client) return
 	if(!target) return
 	var/mob/living/silicon/ai/AI = usr
@@ -492,7 +492,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 //MECHS
 
-/obj/screen/alert/low_mech_integrity
+/obj/screen/alert_icon/low_mech_integrity
 	name = "Mech Damaged"
 	desc = "Mech integrity is low."
 	icon_state = "low_mech_integrity"
@@ -500,18 +500,18 @@ so as to remain in compliance with the most up-to-date laws."
 
 //GHOSTS
 //TODO: expand this system to replace the pollCandidates/CheckAntagonist/"choose quickly"/etc Yes/No messages
-/obj/screen/alert/notify_cloning
+/obj/screen/alert_icon/notify_cloning
 	name = "Revival"
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
 	icon_state = "template"
 	timeout = 300
 
-/obj/screen/alert/notify_cloning/Click()
+/obj/screen/alert_icon/notify_cloning/Click()
 	if(!usr || !usr.client) return
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
-/obj/screen/alert/notify_action
+/obj/screen/alert_icon/notify_action
 	name = "Body created"
 	desc = "A body was created. You can enter it."
 	icon_state = "template"
@@ -519,7 +519,7 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 	var/action = NOTIFY_JUMP
 
-/obj/screen/alert/notify_action/Click()
+/obj/screen/alert_icon/notify_action/Click()
 	if(!usr || !usr.client) return
 	if(!target) return
 	var/mob/dead/observer/G = usr
@@ -536,19 +536,19 @@ so as to remain in compliance with the most up-to-date laws."
 
 //OBJECT-BASED
 
-/obj/screen/alert/restrained/buckled
+/obj/screen/alert_icon/restrained/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
 
-/obj/screen/alert/restrained/handcuffed
+/obj/screen/alert_icon/restrained/handcuffed
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
 
-/obj/screen/alert/restrained/legcuffed
+/obj/screen/alert_icon/restrained/legcuffed
 	name = "Legcuffed"
 	desc = "You're legcuffed, which slows you down considerably. Click the alert to free yourself."
 
-/obj/screen/alert/restrained/Click()
+/obj/screen/alert_icon/restrained/Click()
 	if(isliving(usr))
 		var/mob/living/L = usr
 		return L.resist()
@@ -564,11 +564,11 @@ so as to remain in compliance with the most up-to-date laws."
 			mymob.client.screen -= alerts[alerts[i]]
 		return 1
 	for(var/i = 1, i <= alerts.len, i++)
-		var/obj/screen/alert/alert = alerts[alerts[i]]
-		if(alert.icon_state == "template")
+		var/obj/screen/alert_icon/alert_icon = alerts[alerts[i]]
+		if(alert_icon.icon_state == "template")
 			if(!icon_pref)
 				icon_pref = ui_style2icon(mymob.client.prefs.UI_style)
-			alert.icon = icon_pref
+			alert_icon.icon = icon_pref
 		switch(i)
 			if(1)
 				. = ui_alert1
@@ -582,14 +582,14 @@ so as to remain in compliance with the most up-to-date laws."
 				. = ui_alert5 // Right now there's 5 slots
 			else
 				. = ""
-		alert.screen_loc = .
-		mymob.client.screen |= alert
+		alert_icon.screen_loc = .
+		mymob.client.screen |= alert_icon
 	return 1
 
 /mob
-	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
+	var/list/alerts = list() // contains /obj/screen/alert_icon only // On /mob so clientless mobs will throw alerts properly
 
-/obj/screen/alert/Click(location, control, params)
+/obj/screen/alert_icon/Click(location, control, params)
 	if(!usr || !usr.client)
 		return
 	var/paramslist = params2list(params)
@@ -599,7 +599,7 @@ so as to remain in compliance with the most up-to-date laws."
 	if(master)
 		return usr.client.Click(master, location, control, params)
 
-/obj/screen/alert/Destroy()
+/obj/screen/alert_icon/Destroy()
 	. = ..()
 	severity = 0
 	master = null

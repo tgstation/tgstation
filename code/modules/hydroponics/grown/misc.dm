@@ -75,7 +75,7 @@
 	icon_state = "seed-gatfruit"
 	species = "gatfruit"
 	plantname = "Gatfruit Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/with_shell/gatfruit
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 20
 	endurance = 20
@@ -88,7 +88,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	reagents_add = list("sulfur" = 0.1, "carbon" = 0.1, "nitrogen" = 0.07, "potassium" = 0.05)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit
+/obj/item/weapon/reagent_containers/food/snacks/grown/with_shell/gatfruit
 	seed = /obj/item/seeds/gatfruit
 	name = "gatfruit"
 	desc = "It smells like burning."

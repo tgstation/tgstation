@@ -37,7 +37,7 @@
 		to_chat(user, "<span class='notice'>You put [W] into [src].</span>")
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
-		var/n_name = copytext(sanitize(input(user, "What would you like to label the folder?", "Folder Labelling", null) as text), 1, MAX_NAME_LEN)
+		var/n_name = copytext(sanitize(tginput(user, "What would you like to label the folder?", "Folder Labelling", null, istext = TRUE)), 1, MAX_NAME_LEN)
 		if((in_range(src,user) && user.stat == CONSCIOUS))
 			name = "folder[(n_name ? " - '[n_name]'" : null)]"
 

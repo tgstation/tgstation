@@ -82,7 +82,7 @@
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	use_power(500)
 	grinded++
-	sleep(50)
+	SLEEP(50)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	to_chat(user, "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>")
 

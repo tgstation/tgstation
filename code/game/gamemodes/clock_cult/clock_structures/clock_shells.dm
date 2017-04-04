@@ -1,5 +1,5 @@
 //Useless on their own, these shells can create powerful constructs.
-/obj/structure/destructible/clockwork/shell
+/obj/structure/destructible/clockwork/chassis
 	construction_value = 0
 	anchored = 0
 	density = 0
@@ -7,7 +7,7 @@
 	var/mobtype = /mob/living/simple_animal/hostile/clockwork
 	var/spawn_message = " is an error and you should yell at whoever spawned this shell."
 
-/obj/structure/destructible/clockwork/shell/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/destructible/clockwork/chassis/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/mmi/posibrain/soul_vessel))
 		if(!is_servant_of_ratvar(user))
 			..()
@@ -31,7 +31,7 @@
 	else
 		return ..()
 
-/obj/structure/destructible/clockwork/shell/cogscarab
+/obj/structure/destructible/clockwork/chassis/cogscarab
 	name = "cogscarab shell"
 	desc = "A small brass shell with a cube-shaped receptable in its center. It gives off an aura of obsessive perfectionism."
 	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a weak construct with an inbuilt proselytizer."
@@ -39,7 +39,7 @@
 	mobtype = /mob/living/simple_animal/drone/cogscarab
 	spawn_message = "'s eyes blink open, glowing bright red."
 
-/obj/structure/destructible/clockwork/shell/fragment
+/obj/structure/destructible/clockwork/chassis/fragment
 	name = "fragment shell"
 	desc = "A massive brass shell with a small cube-shaped receptable in its center. It gives off an aura of contained power."
 	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a powerful construct."

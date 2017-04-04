@@ -69,7 +69,7 @@
 			R.stun(20)
 			R.reveal(100)
 			R.adjustHealth(50)
-		sleep(20)
+		SLEEP(20)
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
@@ -95,7 +95,7 @@
 	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
-	sleep(rand(50,100))
+	SLEEP(rand(50,100))
 	..()
 
 /datum/chemical_reaction/thermite
@@ -377,15 +377,15 @@
 	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
 	var/T2 = created_volume * 50
 	var/T3 = created_volume * 120
-	sleep(5)
+	SLEEP(5)
 	if(created_volume >= 75)
 		tesla_zap(holder.my_atom, 7, T1)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
-		sleep(15)
+		SLEEP(15)
 	if(created_volume >= 40)
 		tesla_zap(holder.my_atom, 7, T2)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
-		sleep(15)
+		SLEEP(15)
 	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
 		tesla_zap(holder.my_atom, 7, T3)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)

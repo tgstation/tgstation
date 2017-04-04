@@ -51,7 +51,7 @@
 		A.fire()
 		playsound(chassis, fire_sound, 50, 1)
 
-		sleep(max(0, projectile_delay))
+		SLEEP(max(0, projectile_delay))
 
 	chassis.log_message("Fired from [src.name], targeting [target].")
 	return 1
@@ -249,7 +249,7 @@
 	icon_state = "mecha_carbine"
 	origin_tech = "materials=4;combat=4"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/incendiary/shell
+	projectile = /obj/item/projectile/bullet/incendiary/slug
 	projectiles = 24
 	projectile_energy_cost = 15
 

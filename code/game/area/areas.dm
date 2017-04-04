@@ -440,7 +440,7 @@ var/list/teleportlocs = list()
 		if(!L.client.played)
 			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
 			L.client.played = 1
-			sleep(600)			//ewww - this is very very bad
+			SLEEP(600)			//ewww - this is very very bad
 			if(L.&& L.client)
 				L.client.played = 0
 

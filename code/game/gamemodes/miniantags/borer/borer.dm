@@ -353,14 +353,14 @@ var/total_borer_hosts_needed = 10
 	if(stat == DEAD)
 		return
 
-	var/list/choices = list()
+	var/list/tchoices = list()
 	for(var/mob/living/carbon/H in view(1,src))
 		if(H!=src && Adjacent(H))
-			choices += H
+			tchoices += H
 
-	if(!choices.len)
+	if(!tchoices.len)
 		return
-	var/mob/living/carbon/H = choices.len > 1 ? input(src,"Who do you wish to infest?") in null|choices : choices[1]
+	var/mob/living/carbon/H = tchoices.len > 1 ? tginput(src,"Who do you wish to infest?", nullable = TRUE, choices = tchoices) : tchoices[1]
 	if(!H || !src)
 		return
 
@@ -484,14 +484,14 @@ var/total_borer_hosts_needed = 10
 		to_chat(src, "<span class='warning'>You cannot do that in your current state.</span>")
 		return
 
-	var/list/choices = list()
+	var/list/tchoices = list()
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
-			choices += C
+			tchoices += C
 			
-	if(!choices.len)
+	if(!tchoices.len)
 		return
-	var/mob/living/carbon/M = choices.len > 1 ? input(src,"Who do you wish to dominate?") in null|choices : choices[1]
+	var/mob/living/carbon/M = tchoices.len > 1 ? tginput(src,"Who do you wish to dominate?", nullable = TRUE, choices = tchoices) : tchoices[1]
 
 
 	if(!M || !src || stat != CONSCIOUS || victim || (world.time - used_dominate < 150))
@@ -751,7 +751,7 @@ var/total_borer_hosts_needed = 10
 		to_chat(src, "<span class='warning'>You need 75 chems to punish your host.</span>")
 		return
 
-	var/punishment = input("Select a punishment:.", "Punish") as null|anything in list("Blindness","Deafness","Stun")
+	var/punishment = tginput("Select a punishment:.", "Punish", nullable = TRUE, choices = list("Blindness","Deafness","Stun"))
 
 	if(!punishment)
 		return

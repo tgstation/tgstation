@@ -80,7 +80,7 @@
 
 				current_loc = projectile.loc
 
-				sleep(proj_step_delay)
+				SLEEP(proj_step_delay)
 
 			if(projectile)
 				qdel(projectile)

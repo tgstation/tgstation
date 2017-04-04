@@ -36,11 +36,11 @@
 		while (lifts++ < 6)
 			if (user.loc != src.loc)
 				break
-			sleep(3)
+			SLEEP(3)
 			animate(user, pixel_y = -2, time = 3)
-			sleep(3)
+			SLEEP(3)
 			animate(user, pixel_y = -4, time = 3)
-			sleep(3)
+			SLEEP(3)
 			playsound(user, 'goon/sound/effects/spring.ogg', 60, 1)
 
 		playsound(user, 'sound/machines/click.ogg', 60, 1)
@@ -80,14 +80,14 @@
 				break
 
 			for (var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
-				sleep(3)
+				SLEEP(3)
 				animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
 
 			playsound(user, 'goon/sound/effects/spring.ogg', 60, 1)
 
-		sleep(3)
+		SLEEP(3)
 		animate(user, pixel_y = 2, time = 3)
-		sleep(3)
+		SLEEP(3)
 		playsound(user, 'sound/machines/click.ogg', 60, 1)
 		in_use = 0
 		animate(user, pixel_y = 0, time = 3)

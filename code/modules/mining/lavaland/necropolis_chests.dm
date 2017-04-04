@@ -722,7 +722,7 @@
 	if(used)
 		return
 	used = TRUE
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in player_list
+	var/choice = tginput(user,"Who do you want dead?","Choose Your Victim", nullable = TRUE, choices = player_list)
 
 	if(!(isliving(choice)))
 		to_chat(user, "[choice] is already dead!")
@@ -836,7 +836,7 @@
 
 /obj/item/weapon/hierophant_club/proc/prepare_icon_update()
 	update_icon()
-	sleep(timer - world.time)
+	SLEEP(timer - world.time)
 	update_icon()
 
 /obj/item/weapon/hierophant_club/ui_action_click(mob/user, action)
@@ -930,7 +930,7 @@
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user) //regardless, take all mobs near us along
-		sleep(6) //at this point the blasts detonate
+		SLEEP(6) //at this point the blasts detonate
 		if(beacon)
 			beacon.icon_state = "hierophant_tele_off"
 	else
@@ -949,19 +949,19 @@
 	if(!turf_to_teleport_to || is_blocked_turf(turf_to_teleport_to, TRUE))
 		return
 	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
-	sleep(1)
+	SLEEP(1)
 	if(!M)
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades out!</span>")
-	sleep(2)
+	SLEEP(2)
 	if(!M)
 		return
 	M.forceMove(turf_to_teleport_to)
-	sleep(1)
+	SLEEP(1)
 	if(!M)
 		return
 	animate(M, alpha = 255, time = 2, easing = EASE_IN) //fade IN
-	sleep(1)
+	SLEEP(1)
 	if(!M)
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
@@ -973,7 +973,7 @@
 		return
 	new /obj/effect/overlay/temp/hierophant/telegraph/cardinal(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
-	sleep(2)
+	SLEEP(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, user, friendly_fire_check)
 	for(var/d in cardinal)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
@@ -996,6 +996,6 @@
 		return
 	new /obj/effect/overlay/temp/hierophant/telegraph(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
-	sleep(2)
+	SLEEP(2)
 	for(var/t in RANGE_TURFS(1, T))
 		new /obj/effect/overlay/temp/hierophant/blast(t, user, friendly_fire_check)

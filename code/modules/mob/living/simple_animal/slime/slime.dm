@@ -397,14 +397,14 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 
 	spawn(0)
 		SStun = 1
-		sleep(rand(20,60))
+		SLEEP(rand(20,60))
 		SStun = 0
 
 	spawn(0)
 		canmove = 0
 		if(user)
 			step_away(src,user,15)
-		sleep(3)
+		SLEEP(3)
 		if(user)
 			step_away(src,user,15)
 		update_canmove()

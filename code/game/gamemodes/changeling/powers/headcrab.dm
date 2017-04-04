@@ -28,7 +28,7 @@
 	user.gib()
 	feedback_add_details("changeling_powers","LR")
 	. = TRUE
-	sleep(5) // So it's not killed in explosion
+	SLEEP(5) // So it's not killed in explosion
 	var/mob/living/simple_animal/hostile/headcrab/crab = new(turf)
 	for(var/obj/item/organ/I in organs)
 		I.loc = crab

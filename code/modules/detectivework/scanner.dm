@@ -112,7 +112,7 @@
 
 		// Fingerprints
 		if(fingerprints && fingerprints.len)
-			sleep(30)
+			SLEEP(30)
 			add_log("<span class='info'><B>Prints:</B></span>")
 			for(var/finger in fingerprints)
 				add_log("[finger]")
@@ -120,7 +120,7 @@
 
 		// Blood
 		if (blood && blood.len)
-			sleep(30)
+			SLEEP(30)
 			add_log("<span class='info'><B>Blood:</B></span>")
 			found_something = 1
 			for(var/B in blood)
@@ -128,7 +128,7 @@
 
 		//Fibers
 		if(fibers && fibers.len)
-			sleep(30)
+			SLEEP(30)
 			add_log("<span class='info'><B>Fibers:</B></span>")
 			for(var/fiber in fibers)
 				add_log("[fiber]")
@@ -136,7 +136,7 @@
 
 		//Reagents
 		if(reagents && reagents.len)
-			sleep(30)
+			SLEEP(30)
 			add_log("<span class='info'><B>Reagents:</B></span>")
 			for(var/R in reagents)
 				add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")

@@ -392,7 +392,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					scanmode = 5
 			if("Drone Phone")
 				var/area/A = get_area(U)
-				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
+				var/alert_s = tginput(U,"Alert severity level","Ping Drones",null, nullable = TRUE, choices = list("Low","Medium","High","Critical"))
 				if(A && alert_s)
 					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
 					_alert_drones(msg, TRUE)
@@ -421,7 +421,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = input(U, "Please enter new ringtone", name, ttone) as text
+				var/t = tginput(U, "Please enter new ringtone", name, ttone, istext = TRUE)
 				if(in_range(src, U) && loc == U)
 					if(t)
 						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
@@ -931,7 +931,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
 
-	var/c = input(user, "Please select a PDA") as null|anything in sortList(plist)
+	var/c = tginput(user, "Please select a PDA", nullable = TRUE, choices = sortList(plist))
 
 	if (!c)
 		return
@@ -939,7 +939,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/selected = plist[c]
 
 	if(aicamera.aipictures.len>0)
-		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
+		var/add_photo = tginput(user,"Do you want to attach a photo?","Photo","No", nullable = TRUE, choices = list("Yes","No"))
 		if(add_photo=="Yes")
 			var/datum/picture/Pic = aicamera.selectpicture(aicamera)
 			src.aiPDA.photo = Pic.fields["img"]

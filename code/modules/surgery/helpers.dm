@@ -40,15 +40,15 @@
 					available_surgeries[S.name] = S
 					break
 
-		var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
+		var/P = tginput("Begin which procedure?", "Surgery", null, null, nullable = TRUE, choices = available_surgeries)
 		if(P && user && user.Adjacent(M) && (I in user))
 			var/datum/surgery/S = available_surgeries[P]
 
 			for(var/datum/surgery/other in M.surgeries)
 				if(other.location == S.location)
-					return //during the input() another surgery was started at the same location.
+					return //during the tginput() another surgery was started at the same location.
 
-			//we check that the surgery is still doable after the input() wait.
+			//we check that the surgery is still doable after the tginput() wait.
 			if(C)
 				affecting = C.get_bodypart(check_zone(selected_zone))
 			if(affecting)
