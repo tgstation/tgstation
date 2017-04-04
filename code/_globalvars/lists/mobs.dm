@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(living_mob_list)			//all alive mobs, including clientless. Exc
 GLOBAL_LIST_EMPTY(dead_mob_list)			//all dead mobs, including clientless. Excludes /mob/dead/new_player
 GLOBAL_LIST_EMPTY(joined_player_list)   	//all clients that have joined the game at round-start or as a latejoin.
 GLOBAL_LIST_EMPTY(silicon_mobs)				//all silicon mobs
+GLOBAL_LIST_EMPTY(ai_list)
 GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)
 GLOBAL_LIST_EMPTY(language_datums)

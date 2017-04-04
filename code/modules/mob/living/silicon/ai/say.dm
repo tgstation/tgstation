@@ -58,9 +58,8 @@
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
 
-var/announcing_vox = 0 // Stores the time of the last announcement
-var/const/VOX_CHANNEL = 200
-var/const/VOX_DELAY = 600
+#define VOX_CHANNEL 200
+#define VOX_DELAY 600
 
 /mob/living/silicon/ai/verb/announcement_help()
 
@@ -90,6 +89,7 @@ var/const/VOX_DELAY = 600
 
 
 /mob/living/silicon/ai/proc/announcement()
+	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
 		to_chat(src, "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>")
 		return

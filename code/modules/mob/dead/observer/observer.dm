@@ -1,9 +1,9 @@
-var/list/image/ghost_darkness_images = list() //this is a list of images for things ghosts should still be able to see when they toggle darkness, BUT NOT THE GHOSTS THEMSELVES!
-var/list/image/ghost_images_full = list() //this is a list of full images of the ghosts themselves
-var/list/image/ghost_images_default = list() //this is a list of the default (non-accessorized, non-dir) images of the ghosts themselves
-var/list/image/ghost_images_simple = list() //this is a list of all ghost images as the simple white ghost
+GLOBAL_LIST_EMPTY(ghost_darkness_images) //this is a list of images for things ghosts should still be able to see when they toggle darkness, BUT NOT THE GHOSTS THEMSELVES!
+GLOBAL_LIST_EMPTY(ghost_images_full) //this is a list of full images of the ghosts themselves
+GLOBAL_LIST_EMPTY(ghost_images_default) //this is a list of the default (non-accessorized, non-dir) images of the ghosts themselves
+GLOBAL_LIST_EMPTY(ghost_images_simple) //this is a list of all ghost images as the simple white ghost
 
-var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
+GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer
 	name = "ghost"

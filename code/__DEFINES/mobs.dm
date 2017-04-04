@@ -110,3 +110,8 @@
 #define INDIVIDUAL_SHOW_ALL_LOG "All logs"
 
 #define TK_MAXRANGE 15
+
+#define NO_SLIP_WHEN_WALKING 1
+#define SLIDE 2
+#define GALOSHES_DONT_HELP 4
+#define SLIDE_ICE 8

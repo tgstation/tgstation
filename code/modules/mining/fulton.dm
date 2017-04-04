@@ -1,5 +1,3 @@
-var/list/total_extraction_beacons = list()
-
 /obj/item/weapon/extraction_pack
 	name = "fulton extraction pack"
 	desc = "A balloon that can be used to extract equipment or personnel to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
@@ -11,6 +9,7 @@ var/list/total_extraction_beacons = list()
 	var/uses_left = 3
 	var/can_use_indoors
 	var/safe_for_living_creatures = 1
+	var/static/list/total_extraction_beacons = list()
 
 /obj/item/weapon/extraction_pack/examine()
 	. = ..()

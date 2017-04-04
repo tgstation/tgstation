@@ -1,5 +1,4 @@
 #define CALL_BOT_COOLDOWN 900
-var/list/ai_list = list()
 
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)

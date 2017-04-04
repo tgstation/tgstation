@@ -1,5 +1,3 @@
-var/global/posibrain_notif_cooldown = 0
-
 /obj/item/device/mmi/posibrain
 	name = "positronic brain"
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
@@ -27,6 +25,7 @@ var/global/posibrain_notif_cooldown = 0
 	var/dead_message = "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>"
 	var/list/fluff_names
 	var/picked_fluff_name //which fluff name we picked
+	var/static/posibrain_notif_cooldown = FALSE
 
 
 /obj/item/device/mmi/posibrain/Topic(href, href_list)
@@ -39,11 +38,11 @@ var/global/posibrain_notif_cooldown = 0
 	if(newlymade || !posibrain_notif_cooldown)
 		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
 		if(!newlymade)
-			posibrain_notif_cooldown = 1
+			posibrain_notif_cooldown = TRUE
 			addtimer(CALLBACK(src, .proc/reset_posibrain_cooldown), askDelay)
 
 /obj/item/device/mmi/posibrain/proc/reset_posibrain_cooldown()
-	posibrain_notif_cooldown = 0
+	posibrain_notif_cooldown = FALSE
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
 	if(brainmob && !brainmob.key && !notified)

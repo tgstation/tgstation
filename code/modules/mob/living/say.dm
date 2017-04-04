@@ -1,4 +1,4 @@
-var/list/department_radio_keys = list(
+GLOBAL_LIST_INIT(department_radio_keys, list(
 	  ":r" = "right hand",	"#r" = "right hand",	".r" = "right hand",
 	  ":l" = "left hand",	"#l" = "left hand",		".l" = "left hand",
 	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
@@ -59,10 +59,7 @@ var/list/department_radio_keys = list(
 	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
 	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
 	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
-)
-
-var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
+	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
 	if(sanitize)
@@ -99,7 +96,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(!can_speak_basic(original_message)) //Stat is seperate so I can handle whispers properly.
 		return
-
+	
+	var/static/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(stat && !(message_mode in crit_allowed_modes))
 		return
 
