@@ -132,11 +132,11 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 
 
 /proc/load_library_db_to_cache()
-	if(cachedbooks)
+	if(GLOB.cachedbooks)
 		return
 	if(!GLOB.dbcon.Connect())
 		return
-	cachedbooks = list()
+	GLOB.cachedbooks = list()
 	var/DBQuery/query_library_cache = GLOB.dbcon.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
 	if(!query_library_cache.Execute())
 		return
@@ -146,7 +146,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		newbook.author = query_library_cache.item[2]
 		newbook.title = query_library_cache.item[3]
 		newbook.category = query_library_cache.item[4]
-		cachedbooks += newbook
+		GLOB.cachedbooks += newbook
 
 
 

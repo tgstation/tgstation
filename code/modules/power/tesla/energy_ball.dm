@@ -197,7 +197,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 				closest_atom = A
 				closest_dist = dist
 
-		else if(closest_grounding_rod || is_type_in_typecache(A, blacklisted_tesla_types))
+		else if(closest_grounding_rod || is_type_in_typecache(A, GLOB.blacklisted_tesla_types))
 			continue
 
 		else if(isliving(A))

@@ -301,7 +301,7 @@ GLOBAL_VAR_INIT(access_away_generic4, 208)
 		if(7) //command
 			return "Command"
 
-/proc/get_GLOB.access_desc(A)
+/proc/get_access_desc(A)
 	switch(A)
 		if(GLOB.access_cargo)
 			return "Cargo Bay"

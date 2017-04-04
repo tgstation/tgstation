@@ -196,7 +196,7 @@
 
 
 /datum/computer_file/program/chatclient/ui_data(mob/user)
-	if(!ntnet_global || !GLOB.ntnet_global.chat_channels)
+	if(!GLOB.ntnet_global || !GLOB.ntnet_global.chat_channels)
 		return
 
 	var/list/data = list()

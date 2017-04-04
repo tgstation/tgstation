@@ -146,9 +146,9 @@
 
 	word = lowertext(word)
 
-	if(vox_sounds[word])
+	if(GLOB.vox_sounds[word])
 
-		var/sound_file = vox_sounds[word]
+		var/sound_file = GLOB.vox_sounds[word]
 		var/sound/voice = sound(sound_file, wait = 1, channel = VOX_CHANNEL)
 		voice.status = SOUND_STREAM
 

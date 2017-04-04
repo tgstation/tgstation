@@ -17,8 +17,8 @@
 GLOBAL_EMPTY_LIST(FrozenAccounts)
 
 /proc/list_frozen()
-	for (var/A in FrozenAccounts)
-		to_chat(usr, "[A]: [length(FrozenAccounts[A])] borrows")
+	for (var/A in GLOB.FrozenAccounts)
+		to_chat(usr, "[A]: [length(GLOB.FrozenAccounts[A])] borrows")
 
 /datum/article
 	var/headline = "Something big is happening"

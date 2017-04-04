@@ -26,10 +26,10 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 //type order is shuffled, to prevent bias
 /proc/GetUncappedAISwarmerType()
 	var/static/list/swarmerTypes = subtypesof(/mob/living/simple_animal/hostile/swarmer/ai)
-	LAZYINITLIST(AISwarmersByType)
+	LAZYINITLIST(GLOB.AISwarmersByType)
 	for(var/t in shuffle(swarmerTypes))
-		var/list/amount = AISwarmersByType[t]
-		if(!amount || amount.len <  AISwarmerCapsByType[t])
+		var/list/amount = GLOB.AISwarmersByType[t]
+		if(!amount || amount.len <  GLOB.AISwarmerCapsByType[t])
 			return t
 
 
@@ -37,9 +37,9 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 /proc/GetTotalAISwarmerCap()
 	var/static/list/swarmerTypes = subtypesof(/mob/living/simple_animal/hostile/swarmer/ai)
 	. = 0
-	LAZYINITLIST(AISwarmersByType)
+	LAZYINITLIST(GLOB.AISwarmersByType)
 	for(var/t in swarmerTypes)
-		. += AISwarmerCapsByType[t]
+		. += GLOB.AISwarmerCapsByType[t]
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon
@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Initialize()
 	..()
-	swarmer_caps = AISwarmerCapsByType //for admin-edits
+	swarmer_caps = GLOB.AISwarmerCapsByType //for admin-edits
 	internal = new/obj/item/device/gps/internal/swarmer_beacon(src)
 	for(var/ddir in GLOB.cardinal)
 		new /obj/structure/swarmer/blockade (get_step(src, ddir))

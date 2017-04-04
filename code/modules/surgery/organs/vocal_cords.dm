@@ -125,7 +125,7 @@
 		if(user.mind.assigned_role == "Chaplain")
 			power_multiplier *= 2
 		//Command staff has authority
-		if(user.mind.assigned_role in command_positions)
+		if(user.mind.assigned_role in GLOB.command_positions)
 			power_multiplier *= 1.4
 		//Why are you speaking
 		if(user.mind.assigned_role == "Mime")

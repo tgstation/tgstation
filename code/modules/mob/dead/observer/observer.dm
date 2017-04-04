@@ -533,10 +533,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	updateghostimages()
 
 /proc/updateallghostimages()
-	listclearnulls(ghost_images_full)
-	listclearnulls(ghost_images_default)
-	listclearnulls(ghost_images_simple)
-	listclearnulls(ghost_darkness_images)
+	listclearnulls(GLOB.ghost_images_full)
+	listclearnulls(GLOB.ghost_images_default)
+	listclearnulls(GLOB.ghost_images_simple)
+	listclearnulls(GLOB.ghost_darkness_images)
 
 	for (var/mob/dead/observer/O in GLOB.player_list)
 		O.updateghostimages()
@@ -831,4 +831,4 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		G.invisibility = amount
 		if(message)
 			to_chat(G, message)
-	observer_default_invisibility = amount
+	GLOB.observer_default_invisibility = amount

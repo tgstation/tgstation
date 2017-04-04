@@ -91,10 +91,10 @@ GLOBAL_DATUM_INIT(blackbox, /datum/feedback, new)
 
 
 /proc/feedback_set(variable,value)
-	if(!blackbox)
+	if(!GLOB.blackbox)
 		return
 
-	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
 
 	if(!FV)
 		return
@@ -105,7 +105,7 @@ GLOBAL_DATUM_INIT(blackbox, /datum/feedback, new)
 	if(!blackbox)
 		return
 
-	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
 
 	if(!FV)
 		return
@@ -113,10 +113,10 @@ GLOBAL_DATUM_INIT(blackbox, /datum/feedback, new)
 	FV.inc(value)
 
 /proc/feedback_dec(variable,value)
-	if(!blackbox)
+	if(!GLOB.blackbox)
 		return
 
-	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
 
 	if(!FV)
 		return
@@ -124,10 +124,10 @@ GLOBAL_DATUM_INIT(blackbox, /datum/feedback, new)
 	FV.dec(value)
 
 /proc/feedback_set_details(variable,details)
-	if(!blackbox)
+	if(!GLOB.blackbox)
 		return
 
-	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
 
 	if(!FV)
 		return
@@ -135,10 +135,10 @@ GLOBAL_DATUM_INIT(blackbox, /datum/feedback, new)
 	FV.set_details(details)
 
 /proc/feedback_add_details(variable,details)
-	if(!blackbox)
+	if(!GLOB.blackbox)
 		return
 
-	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
 
 	if(!FV)
 		return

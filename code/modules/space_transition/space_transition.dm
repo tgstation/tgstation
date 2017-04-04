@@ -85,7 +85,7 @@ GLOBAL_EMPTY_LIST(z_levels_list)
 		D.name = A
 		D.z_value = k
 		if(D.linked != CROSSLINKED)
-			z_levels_list["[D.z_value]"] = D
+			GLOB.z_levels_list["[D.z_value]"] = D
 		else
 			SLS.Add(D)
 		k++
@@ -115,8 +115,8 @@ GLOBAL_EMPTY_LIST(z_levels_list)
 		P = pick(possible_points)
 		grid["[D.z_value]"] = D
 
-	for(var/A in z_levels_list)
-		grid[A] = z_levels_list[A]
+	for(var/A in GLOB.z_levels_list)
+		grid[A] = GLOB.z_levels_list[A]
 
 	//Lists below are pre-calculated values arranged in the list in such a way to be easily accessable in the loop by the counter
 	//Its either this or madness with lotsa math
@@ -156,7 +156,7 @@ GLOBAL_EMPTY_LIST(z_levels_list)
 				//S.maptext = "[zdestination]" // for debugging
 
 	for(var/A in grid)
-		z_levels_list[A] = grid[A]
+		GLOB.z_levels_list[A] = grid[A]
 
 #undef Z_LEVEL_NORTH
 #undef Z_LEVEL_SOUTH
