@@ -128,7 +128,7 @@
 	var/author
 	var/category
 
-var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
+GLOBAL_LIST(cachedbooks) // List of our cached book datums
 
 
 /proc/load_library_db_to_cache()

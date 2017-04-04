@@ -1,11 +1,9 @@
-/var/list/datum/lighting_corner/all_lighting_corners = list()
-/var/datum/lighting_corner/dummy/dummy_lighting_corner = new
 // Because we can control each corner of every lighting object.
 // And corners get shared between multiple turfs (unless you're on the corners of the map, then 1 corner doesn't).
 // For the record: these should never ever ever be deleted, even if the turf doesn't have dynamic lighting.
 
 // This list is what the code that assigns corners listens to, the order in this list is the order in which corners are added to the /turf/corners list.
-/var/list/LIGHTING_CORNER_DIAGONAL = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
+GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST))
 
 /datum/lighting_corner
 	var/list/turf/masters                 = list()
@@ -31,8 +29,6 @@
 
 /datum/lighting_corner/New(var/turf/new_turf, var/diagonal)
 	. = ..()
-
-	all_lighting_corners += src
 
 	masters[new_turf] = turn(diagonal, 180)
 	z = new_turf.z

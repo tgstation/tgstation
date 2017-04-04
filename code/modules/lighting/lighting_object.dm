@@ -68,6 +68,7 @@ GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 	// Including with these comments.
 
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
+	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 	var/datum/lighting_corner/cr  = T.corners[3] || dummy_lighting_corner
 	var/datum/lighting_corner/cg  = T.corners[2] || dummy_lighting_corner
 	var/datum/lighting_corner/cb  = T.corners[4] || dummy_lighting_corner
@@ -94,7 +95,7 @@ GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
 	#else
-	// Because of floating points™?, it won't even be a flat 0.
+	// Because of floating pointsï¿½?, it won't even be a flat 0.
 	// This number is mostly arbitrary.
 	var/set_luminosity = max > 1e-6
 	#endif
