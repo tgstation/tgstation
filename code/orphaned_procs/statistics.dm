@@ -1,4 +1,4 @@
-var/datum/feedback/blackbox = new()
+GLOBAL_DATUM_INIT(blackbox, /datum/feedback, new)
 
 //the feedback datum; stores all feedback
 /datum/feedback
