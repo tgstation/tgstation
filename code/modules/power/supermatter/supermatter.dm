@@ -422,7 +422,7 @@
 /obj/machinery/power/supermatter_shard/attack_tk(mob/user)
     if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		to_chat(C, "<span class='userdanger'>That was a really dumb idead.</span>")
+		to_chat(C, "<span class='userdanger'>That was a really dumb idea.</span>")
 		var/obj/item/bodypart/head/rip_u = C.get_bodypart("head")
 		rip_u.dismember(BURN) //nice try jedi
 
