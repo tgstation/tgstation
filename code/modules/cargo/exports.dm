@@ -134,7 +134,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	total_cost = 0
 	total_amount = 0
 
-GLOBAL_LIST_EMPTY(exports_list, list())
+GLOBAL_LIST_EMPTY(exports_list)
 
 /proc/setupExports()
 	for(var/subtype in subtypesof(/datum/export))
