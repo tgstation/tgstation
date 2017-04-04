@@ -33,7 +33,7 @@ GLOBAL_DATUM_INIT(blackbox, /datum/feedback, new)
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
-	for (var/obj/machinery/message_server/MS in message_servers)
+	for (var/obj/machinery/message_server/MS in GLOB.message_servers)
 		if (MS.pda_msgs.len > pda_msg_amt)
 			pda_msg_amt = MS.pda_msgs.len
 		if (MS.rc_msgs.len > rc_msg_amt)

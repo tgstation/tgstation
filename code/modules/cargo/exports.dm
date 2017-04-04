@@ -27,7 +27,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
  then the player gets the profit from selling his own wasted time.
 */
 /proc/export_item_and_contents(atom/movable/AM, contraband, emagged, dry_run=FALSE)
-	if(!exports_list.len)
+	if(!GLOB.exports_list.len)
 		setupExports()
 
 	var/sold_str = ""
@@ -38,7 +38,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	// We go backwards, so it'll be innermost objects sold first
 	for(var/i in reverseRange(contents))
 		var/atom/movable/thing = i
-		for(var/datum/export/E in exports_list)
+		for(var/datum/export/E in GLOB.exports_list)
 			if(!E)
 				continue
 			if(E.applies_to(thing, contraband, emagged))

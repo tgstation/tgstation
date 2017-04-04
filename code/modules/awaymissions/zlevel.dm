@@ -5,9 +5,9 @@ GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "config/away
 	if(GLOB.awaydestinations.len)	//crude, but it saves another var!
 		return
 
-	if(potentialRandomZlevels && potentialRandomZlevels.len)
+	if(GLOB.potentialRandomZlevels && GLOB.potentialRandomZlevels.len)
 		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
-		var/map = pick(potentialRandomZlevels)
+		var/map = pick(GLOB.potentialRandomZlevels)
 		load_new_z_level(map)
 		to_chat(world, "<span class='boldannounce'>Away mission loaded.</span>")
 

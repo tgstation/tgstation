@@ -124,8 +124,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	return 1
 
 /datum/uplink_item/Destroy()
-	if(src in uplink_items)
-		uplink_items -= src	//Take us out instead of leaving a null!
+	if(src in GLOB.uplink_items)
+		GLOB.uplink_items -= src	//Take us out instead of leaving a null!
 	return ..()
 	
 //Discounts (dynamically filled above)
