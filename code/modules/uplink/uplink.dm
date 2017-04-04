@@ -1,4 +1,4 @@
-var/global/list/uplinks = list()
+GLOBAL_LIST_EMPTY(uplinks)
 
 /**
  * Uplinks

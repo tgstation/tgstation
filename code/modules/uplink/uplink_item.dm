@@ -1,4 +1,4 @@
-var/list/uplink_items = list() // Global list so we only initialize this once.
+GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /proc/initialize_global_uplink_items()
 	uplink_items = list()
