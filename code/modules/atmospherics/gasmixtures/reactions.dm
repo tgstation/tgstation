@@ -7,9 +7,13 @@
 	var/list/reaction_types = list()
 	for(var/r in subtypesof(/datum/gas_reaction))
 		var/datum/gas_reaction/reaction = r
-		if(!reaction.exclude)
+		if(!initial(reaction.exclude))
 			reaction_types += reaction
-	return newlist(sortList(reaction_types, /proc/cmp_gas_reactions))
+	reaction_types = sortList(reaction_types, /proc/cmp_gas_reactions)
+
+	. = list()
+	for(var/path in reaction_types)
+		. += new path
 
 /proc/cmp_gas_reactions(datum/gas_reaction/a, datum/gas_reaction/b) //sorts in descending order of priority
 	return initial(b.priority) - initial(a.priority)
