@@ -1,5 +1,3 @@
-var/global/nttransfer_uid = 0
-
 /datum/computer_file/program/nttransfer
 	filename = "nttransfer"
 	filedesc = "NTNet P2P Transfer Client"
@@ -22,10 +20,10 @@ var/global/nttransfer_uid = 0
 	var/actual_netspeed = 0								// Displayed in the UI, this is the actual transfer speed.
 	var/unique_token 									// UID of this program
 	var/upload_menu = 0									// Whether we show the program list and upload menu
+	var/static/nttransfer_uid = 0
 
 /datum/computer_file/program/nttransfer/New()
-	unique_token = nttransfer_uid
-	nttransfer_uid++
+	unique_token = nttransfer_uid++
 	..()
 
 /datum/computer_file/program/nttransfer/process_tick()

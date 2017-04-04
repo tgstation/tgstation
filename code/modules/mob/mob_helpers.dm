@@ -274,9 +274,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return M
 	return 0
 
-var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
-
 /mob/proc/first_name()
+	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
 	firstname.Find(real_name)
 	return firstname.match
 
