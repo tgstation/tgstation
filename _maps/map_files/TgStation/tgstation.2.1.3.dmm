@@ -8331,6 +8331,10 @@
 	dir = 4
 	},
 /obj/structure/filingcabinet/employment,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "arW" = (
