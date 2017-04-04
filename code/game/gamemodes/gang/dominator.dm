@@ -54,12 +54,12 @@
 				warned = 1
 				var/area/domloc = get_area(loc)
 				gang.message_gangtools("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!")
-				for(var/datum/gang/G in ticker.mode.gangs)
+				for(var/datum/gang/G in SSticker.mode.gangs)
 					if(G != gang)
 						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 
 	if(!.)
-		STOP_PROCESSING(SSmachine, src)
+		STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -102,7 +102,7 @@
 		gang.is_dominating = FALSE
 
 		var/takeover_in_progress = 0
-		for(var/datum/gang/G in ticker.mode.gangs)
+		for(var/datum/gang/G in SSticker.mode.gangs)
 			if(G.is_dominating)
 				takeover_in_progress = 1
 				break
@@ -122,7 +122,7 @@
 	cut_overlays()
 	operating = 0
 	stat |= BROKEN
-	STOP_PROCESSING(SSmachine, src)
+	STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
@@ -132,7 +132,7 @@
 	qdel(spark_system)
 	qdel(countdown)
 	countdown = null
-	STOP_PROCESSING(SSmachine, src)
+	STOP_PROCESSING(SSmachines, src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
@@ -146,7 +146,7 @@
 
 	var/datum/gang/tempgang
 
-	if(user.mind in ticker.mode.get_all_gangsters())
+	if(user.mind in SSticker.mode.get_all_gangsters())
 		tempgang = user.mind.gang_datum
 	else
 		examine(user)
@@ -181,9 +181,9 @@
 		countdown.start()
 
 		set_light(3)
-		START_PROCESSING(SSmachine, src)
+		START_PROCESSING(SSmachines, src)
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
-		for(var/datum/gang/G in ticker.mode.gangs)
+		for(var/datum/gang/G in SSticker.mode.gangs)
 			if(G != gang)
 				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)

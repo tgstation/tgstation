@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/sun/SSsun
-
-/datum/controller/subsystem/sun
+SUBSYSTEM_DEF(sun)
 	name = "Sun"
 	wait = 600
 	init_order = 2
@@ -11,9 +9,7 @@ var/datum/controller/subsystem/sun/SSsun
 	var/rate
 	var/list/solars	= list()
 
-/datum/controller/subsystem/sun/New()
-	NEW_SS_GLOBAL(SSsun)
-
+/datum/controller/subsystem/sun/PreInit()
 	angle = rand (0,360)			// the station position to the sun is randomised at round start
 	rate = rand(50,200)/100			// 50% - 200% of standard rotation
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise

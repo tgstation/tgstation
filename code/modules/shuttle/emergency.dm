@@ -118,7 +118,14 @@
 	// Launch check is in process in case auth_need changes for some reason
 	// probably external.
 	. = FALSE
-	if(!SSshuttle.emergency || ENGINES_STARTED || (!IS_DOCKED))
+	if(!SSshuttle.emergency)
+		return
+
+	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+		authorized.Cut()
+		emagged = FALSE
+
+	if(ENGINES_STARTED || (!IS_DOCKED))
 		return .
 
 	// Check to see if we've reached criteria for early launch
@@ -288,7 +295,7 @@
 				// Gangs only have one attempt left if the shuttle has
 				// docked with the station to prevent suffering from
 				// endless dominator delays
-				for(var/datum/gang/G in ticker.mode.gangs)
+				for(var/datum/gang/G in SSticker.mode.gangs)
 					if(G.is_dominating)
 						G.dom_attempts = 0
 					else

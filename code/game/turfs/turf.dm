@@ -70,7 +70,7 @@
 	if(force)
 		..()
 		//this will completely wipe turf state
-		var/turf/basic/B = new /turf/basic(src)
+		var/turf/B = new world.turf(src)
 		for(var/A in B.contents)
 			qdel(A)
 		for(var/I in B.vars)
@@ -193,10 +193,13 @@
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
-
+	
+	var/old_baseturf = baseturf
 	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
+
+	W.baseturf = old_baseturf
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
@@ -219,6 +222,8 @@
 			FD.CalculateAffectingAreas()
 
 	queue_smooth_neighbors(src)
+
+	HandleTurfChange(src)
 
 /turf/open/AfterChange(ignore_air)
 	..()
@@ -322,7 +327,7 @@
 	return can_have_cabling() & !intact
 
 /turf/proc/visibilityChanged()
-	if(ticker)
+	if(SSticker)
 		cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
@@ -373,7 +378,7 @@
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
-	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		add_blueprints(AM)
 
 /turf/proc/empty(turf_type=/turf/open/space)

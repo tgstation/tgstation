@@ -19,8 +19,6 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
-	languages_spoken = ALL
-	languages_understood = ALL
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
@@ -123,6 +121,8 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 		verbs -= /mob/dead/observer/verb/possess
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
+
+	grant_all_languages()
 	..()
 
 /mob/dead/observer/narsie_act()
@@ -310,12 +310,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Stat()
 	..()
 	if(statpanel("Status"))
-		if(ticker && ticker.mode)
-			for(var/datum/gang/G in ticker.mode.gangs)
+		if(SSticker && SSticker.mode)
+			for(var/datum/gang/G in SSticker.mode.gangs)
 				if(G.is_dominating)
 					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
-			if(istype(ticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/B = ticker.mode
+			if(istype(SSticker.mode, /datum/game_mode/blob))
+				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
 					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
 
@@ -595,7 +595,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
 		return 0
 
-	if(can_reenter_corpse || (mind && mind.current))
+	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
 	if(target.key)
@@ -805,7 +805,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(mob_eye.hud_used)
 			LAZYINITLIST(mob_eye.observers)
 			mob_eye.observers |= src
-			mob_eye.hud_used.show_hud(1,src)
+			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
 			observetarget = mob_eye
 
 /mob/dead/observer/verb/register_pai_candidate()

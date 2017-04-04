@@ -291,11 +291,18 @@
 		if(keyslot2.syndie)
 			src.syndie = 1
 
-		if (keyslot2.centcom)
-			centcom = 1
+		if (keyslot2.independent)
+			independent = TRUE
 
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 	return
+
+/obj/item/device/radio/headset/AltClick(mob/living/user)
+	if(!istype(user) || !Adjacent(user) || user.incapacitated())
+		return
+	if (command)
+		use_command = !use_command
+		to_chat(user, "<span class='notice'>You toggle high-volume mode [use_command ? "on" : "off"].</span>")

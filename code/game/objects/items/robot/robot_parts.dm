@@ -42,17 +42,17 @@
 /obj/item/robot_suit/proc/updateicon()
 	cut_overlays()
 	if(l_arm)
-		add_overlay("l_arm+o")
+		add_overlay("[l_arm.icon_state]+o")
 	if(r_arm)
-		add_overlay("r_arm+o")
+		add_overlay("[r_arm.icon_state]+o")
 	if(chest)
-		add_overlay("chest+o")
+		add_overlay("[chest.icon_state]+o")
 	if(l_leg)
-		add_overlay("l_leg+o")
+		add_overlay("[l_leg.icon_state]+o")
 	if(r_leg)
-		add_overlay("r_leg+o")
+		add_overlay("[r_leg.icon_state]+o")
 	if(head)
-		add_overlay("head+o")
+		add_overlay("[head.icon_state]+o")
 
 /obj/item/robot_suit/proc/check_completion()
 	if(src.l_arm && src.r_arm)
@@ -206,7 +206,7 @@
 				lawsync = 0
 				O.connected_ai = null
 			else
-				O.notify_ai(1)
+				O.notify_ai(NEW_BORG)
 				if(forced_ai)
 					O.connected_ai = forced_ai
 			if(!lawsync)
@@ -214,7 +214,7 @@
 				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
 
-			ticker.mode.remove_antag_for_borging(BM.mind)
+			SSticker.mode.remove_antag_for_borging(BM.mind)
 			if(!istype(M.laws, /datum/ai_laws/ratvar))
 				remove_servant_of_ratvar(BM, TRUE)
 			BM.mind.transfer_to(O)
@@ -247,6 +247,41 @@
 
 		else
 			to_chat(user, "<span class='warning'>The MMI must go in after everything else!</span>")
+
+	else if(istype(W, /obj/item/borg/upgrade/ai))
+		var/obj/item/borg/upgrade/ai/M = W
+		if(check_completion())
+			if(!isturf(loc))
+				to_chat(user, "<span class='warning'>You cannot install[M], the frame has to be standing on the ground to be perfectly precise!</span>")
+				return
+			if(!user.drop_item())
+				to_chat(user, "<span class='warning'>[M] is stuck to your hand!</span>")
+				return
+			qdel(M)
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src))
+
+			if(!aisync)
+				lawsync = FALSE
+				O.connected_ai = null
+			else
+				if(forced_ai)
+					O.connected_ai = forced_ai
+				O.notify_ai(AI_SHELL)
+			if(!lawsync)
+				O.lawupdate = FALSE
+				O.make_laws()
+
+
+			O.cell = chest.cell
+			chest.cell.loc = O
+			chest.cell = null
+			O.locked = panel_locked
+			O.job = "Cyborg"
+			forceMove(O)
+			O.robot_suit = src
+			if(!locomotion)
+				O.lockcharge = TRUE
+				O.update_canmove()
 
 	else if(istype(W,/obj/item/weapon/pen))
 		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")

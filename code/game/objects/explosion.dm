@@ -36,7 +36,7 @@ var/explosionid = 1
 	var/list/cached_exp_block = list()
 
 	if(adminlog)
-		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
+		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [get_area(epicenter)] [ADMIN_COORDJMP(epicenter)]")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
 
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
@@ -51,6 +51,7 @@ var/explosionid = 1
 
 	if(!silent)
 		var/frequency = get_rand_frequency()
+		var/ex_sound = get_sfx("explosion")
 		for(var/mob/M in player_list)
 			// Double check for client
 			if(M && M.client)
@@ -59,7 +60,7 @@ var/explosionid = 1
 					var/dist = get_dist(M_turf, epicenter)
 					// If inside the blast radius + world.view - 2
 					if(dist <= round(max_range + world.view - 2, 1))
-						M.playsound_local(epicenter, get_sfx("explosion"), 100, 1, frequency, falloff = 5) // get_sfx() is so that everyone gets the same sound
+						M.playsound_local(epicenter, ex_sound, 100, 1, frequency, falloff = 5)
 					// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 					else if(dist <= far_dist)
 						var/far_volume = Clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
@@ -69,7 +70,7 @@ var/explosionid = 1
 	//postpone processing for a bit
 	var/postponeCycles = max(round(devastation_range/8),1)
 	SSlighting.postpone(postponeCycles)
-	SSmachine.postpone(postponeCycles)
+	SSmachines.postpone(postponeCycles)
 
 	if(heavy_impact_range > 1)
 		if(smoke)

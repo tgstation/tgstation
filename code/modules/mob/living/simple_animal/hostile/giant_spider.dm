@@ -9,8 +9,8 @@
 	var/poison_type = "toxin"
 
 /mob/living/simple_animal/hostile/poison/AttackingTarget()
-	..()
-	if(isliving(target))
+	. = ..()
+	if(. && isliving(target))
 		var/mob/living/L = target
 		if(L.reagents)
 			L.reagents.add_reagent(poison_type, poison_per_bite)
@@ -198,7 +198,7 @@
 	if(!cocoon_target)
 		var/list/choices = list()
 		for(var/mob/living/L in view(1,src))
-			if(L == src | L.anchored)
+			if(L == src || L.anchored)
 				continue
 			if(Adjacent(L))
 				choices += L

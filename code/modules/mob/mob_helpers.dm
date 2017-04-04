@@ -327,7 +327,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 	return 0
 
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		return 0
 	if(!istype(M))
 		return 0
@@ -347,30 +347,30 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 				return 1
 		return 0
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
-		switch(ticker.mode.config_tag)
+		switch(SSticker.mode.config_tag)
 			if("revolution")
-				if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
+				if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
 					return 2
 			if("cult")
-				if(M.mind in ticker.mode.cult)
+				if(M.mind in SSticker.mode.cult)
 					return 2
 			if("nuclear")
-				if(M.mind in ticker.mode.syndicates)
+				if(M.mind in SSticker.mode.syndicates)
 					return 2
 			if("changeling")
-				if(M.mind in ticker.mode.changelings)
+				if(M.mind in SSticker.mode.changelings)
 					return 2
 			if("wizard")
-				if(M.mind in ticker.mode.wizards)
+				if(M.mind in SSticker.mode.wizards)
 					return 2
 			if("apprentice")
-				if(M.mind in ticker.mode.apprentices)
+				if(M.mind in SSticker.mode.apprentices)
 					return 2
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
 			if("abductor")
-				if(M.mind in ticker.mode.abductors)
+				if(M.mind in SSticker.mode.abductors)
 					return 2
 		return 1
 	return 0
@@ -463,17 +463,6 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 		to_chat(M, "There were no ghosts willing to take control.")
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
-
-//toggles the talk wheel
-/mob/verb/toggle_talk_wheel()
-	set name = "talk-wheel"
-	set hidden = 1
-
-	if(isliving(src))
-		var/mob/living/L = src
-		if(L.hud_used)
-			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
-				TW.Click()
 
 /mob/proc/is_flying(mob/M = src)
 	if(M.movement_type & FLYING)

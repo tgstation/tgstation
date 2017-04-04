@@ -122,7 +122,7 @@
 		var/mob/living/silicon/robot/Robot = M
 		if(Robot.mmi)
 			qdel(Robot.mmi)
-		Robot.notify_ai(1)
+		Robot.notify_ai(NEW_BORG)
 	else
 		for(var/obj/item/W in contents)
 			if(!M.dropItemToGround(W))
@@ -261,9 +261,8 @@
 
 	if(!new_mob)
 		return
-
-	new_mob.languages_spoken |= HUMAN
-	new_mob.languages_understood |= HUMAN
+	new_mob.grant_language(/datum/language/common)
+	SET_SECONDARY_FLAG(new_mob, OMNITONGUE)
 	new_mob.logging = M.logging
 
 	// Some forms can still wear some items

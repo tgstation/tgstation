@@ -207,7 +207,7 @@
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
 			qdel(src)
 
 	else if(istype(I, /obj/item/weapon/electronics/airlock))

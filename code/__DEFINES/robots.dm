@@ -34,3 +34,9 @@
 #define FLOOR_BOT			4	// Floorbots
 #define CLEAN_BOT			8	// Cleanbots
 #define MED_BOT				16	// Medibots
+
+//AI notification defines
+#define		NEW_BORG     1
+#define		NEW_MODULE   2
+#define		RENAME       3
+#define		AI_SHELL     4

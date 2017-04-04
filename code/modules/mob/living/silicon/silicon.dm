@@ -1,13 +1,12 @@
 /mob/living/silicon
 	gender = NEUTER
 	voice_name = "synthesized voice"
-	languages_spoken = ROBOT | HUMAN
-	languages_understood = ROBOT | HUMAN
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	initial_languages = list(/datum/language/common, /datum/language/machine)
 	see_in_dark = 8
 	bubble_icon = "machine"
 	weather_immunities = list("ash")
@@ -21,8 +20,7 @@
 	var/designation = ""
 	var/radiomod = "" //Radio character used before state laws/arrivals announce to allow department transmissions, default, or none at all.
 	var/obj/item/device/camera/siliconcam/aicamera = null //photography
-	//hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
-	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_TRACK_HUD)
 
 	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
 

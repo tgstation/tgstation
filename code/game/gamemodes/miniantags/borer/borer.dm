@@ -133,6 +133,28 @@ var/total_borer_hosts_needed = 10
 
 	GrantBorerActions()
 
+/mob/living/simple_animal/borer/Destroy()
+	borers -= src
+
+	host_brain = null
+	victim = null
+	
+	QDEL_NULL(talk_to_host_action)
+	QDEL_NULL(infest_host_action)
+	QDEL_NULL(toggle_hide_action)
+	QDEL_NULL(talk_to_borer_action)
+	QDEL_NULL(talk_to_brain_action)
+	QDEL_NULL(take_control_action)
+	QDEL_NULL(give_back_control_action)
+	QDEL_NULL(leave_body_action)
+	QDEL_NULL(make_chems_action)
+	QDEL_NULL(make_larvae_action)
+	QDEL_NULL(freeze_victim_action)
+	QDEL_NULL(punish_victim_action)
+	QDEL_NULL(jumpstart_host_action)
+	
+	return ..()
+
 /mob/living/simple_animal/borer/Topic(href, href_list)//not entirely sure if this is even required
 	if(href_list["ghostjoin"])
 		var/mob/dead/observer/ghost = usr
@@ -336,7 +358,9 @@ var/total_borer_hosts_needed = 10
 		if(H!=src && Adjacent(H))
 			choices += H
 
-	var/mob/living/carbon/H = input(src,"Who do you wish to infest?") in null|choices
+	if(!choices.len)
+		return
+	var/mob/living/carbon/H = choices.len > 1 ? input(src,"Who do you wish to infest?") in null|choices : choices[1]
 	if(!H || !src)
 		return
 
@@ -464,11 +488,13 @@ var/total_borer_hosts_needed = 10
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
 			choices += C
+			
+	if(!choices.len)
+		return
+	var/mob/living/carbon/M = choices.len > 1 ? input(src,"Who do you wish to dominate?") in null|choices : choices[1]
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
 
-
-	if(!M || !src)
+	if(!M || !src || stat != CONSCIOUS || victim || (world.time - used_dominate < 150))
 		return
 	if(!Adjacent(M))
 		return

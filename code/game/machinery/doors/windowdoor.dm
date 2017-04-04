@@ -70,7 +70,7 @@
 			else
 				do_animate("deny")
 		return
-	if (!( ticker ))
+	if (!( SSticker ))
 		return
 	var/mob/M = AM
 	if(M.restrained() || ((isdrone(M) || iscyborg(M)) && M.stat))
@@ -129,7 +129,7 @@
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		return 0
 	if(!forced)
 		if(!hasPower())

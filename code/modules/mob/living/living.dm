@@ -16,6 +16,7 @@
 	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
 	faction += "\ref[src]"
+	language_menu = new(src)
 
 /mob/living/prepare_huds()
 	..()
@@ -78,6 +79,8 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
+
+	QDEL_NULL(language_menu)
 
 	return ..()
 
@@ -642,7 +645,7 @@
 	return name
 
 /mob/living/update_gravity(has_gravity,override = 0)
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		return
 	if(has_gravity)
 		clear_alert("weightless")
@@ -712,7 +715,8 @@
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
 					if(where_list)
-						who.put_in_hand(what, where_list[2])
+						if(!who.put_in_hand(what, where_list[2]))
+							what.forceMove(get_turf(who))
 					else
 						who.equip_to_slot(what, where, TRUE)
 
@@ -769,12 +773,12 @@
 	..()
 
 	if(statpanel("Status"))
-		if(ticker && ticker.mode)
-			for(var/datum/gang/G in ticker.mode.gangs)
+		if(SSticker && SSticker.mode)
+			for(var/datum/gang/G in SSticker.mode.gangs)
 				if(G.is_dominating)
 					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
-			if(istype(ticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/B = ticker.mode
+			if(istype(SSticker.mode, /datum/game_mode/blob))
+				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
 					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
 
@@ -954,13 +958,14 @@
 
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(var/mob/living/carbon/C)
-	C.visible_message("<span class='warning'>[pick( \
-					  "[C] dives out of [src]'s way!", \
-					  "[C] stumbles over [src]!", \
-					  "[C] jumps out of [src]'s path!", \
-					  "[C] trips over [src] and falls!", \
-					  "[C] topples over [src]!", \
-					  "[C] leaps out of [src]'s way!")]</span>")
+	if(C.key) //save us from monkey hordes
+		C.visible_message("<span class='warning'>[pick( \
+						"[C] dives out of [src]'s way!", \
+						"[C] stumbles over [src]!", \
+						"[C] jumps out of [src]'s path!", \
+						"[C] trips over [src] and falls!", \
+						"[C] topples over [src]!", \
+						"[C] leaps out of [src]'s way!")]</span>")
 	C.Weaken(2)
 
 /mob/living/post_buckle_mob(mob/living/M)

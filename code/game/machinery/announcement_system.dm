@@ -103,10 +103,10 @@ var/list/announcement_systems = list()
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
 	if(channels.len == 0)
-		radio.talk_into(src, message, null, list(SPAN_ROBOT))
+		radio.talk_into(src, message, null, list(SPAN_ROBOT), get_default_language())
 	else
 		for(var/channel in channels)
-			radio.talk_into(src, message, channel, list(SPAN_ROBOT))
+			radio.talk_into(src, message, channel, list(SPAN_ROBOT), get_default_language())
 
 //config stuff
 
@@ -132,13 +132,13 @@ var/list/announcement_systems = list()
 
 	if(href_list["ArrivalTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival)
-		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
 			return
 		if(NewMessage)
 			arrival = NewMessage
 	else if(href_list["NewheadTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
-		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
 			return
 		if(NewMessage)
 			newhead = NewMessage
@@ -156,8 +156,8 @@ var/list/announcement_systems = list()
 /obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
 	. = attack_ai(user)
 
-/obj/machinery/announcement_system/attack_ai(mob/living/silicon/user)
-	if(!issilicon(user))
+/obj/machinery/announcement_system/attack_ai(mob/user)
+	if(!issilicon(user) && !IsAdminGhost(user))
 		return
 	if(stat & BROKEN)
 		to_chat(user, "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")

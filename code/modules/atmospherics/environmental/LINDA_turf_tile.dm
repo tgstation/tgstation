@@ -91,7 +91,7 @@
 /turf/open/archive()
 	air.archive()
 	archived_cycle = SSair.times_fired
-	..()
+	temperature_archived = temperature
 
 /////////////////////////GAS OVERLAYS//////////////////////////////
 
@@ -117,10 +117,22 @@
 		var/list/gases = air.gases
 		for(var/id in gases)
 			var/gas = gases[id]
-			if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
-				. += gas[GAS_META][META_GAS_OVERLAY]
+			var/gas_meta = gas[GAS_META]
+			var/gas_overlay = gas_meta[META_GAS_OVERLAY]
+			if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
+				. += gas_overlay
 
 /////////////////////////////SIMULATION///////////////////////////////////
+
+#define LAST_SHARE_CHECK \
+	var/last_share = our_air.last_share;\
+	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
+		our_excited_group.reset_cooldowns();\
+		cached_atmos_cooldown = 0;\
+	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
+		our_excited_group.dismantle_cooldown = 0;\
+		cached_atmos_cooldown = 0;\
+	}
 
 /turf/proc/process_cell(fire_count)
 	SSair.remove_from_active(src)
@@ -130,15 +142,18 @@
 		archive()
 
 	current_cycle = fire_count
-	var/remove = 1 //set by non simulated turfs who are sharing with this turf
 
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
 	var/adjacent_turfs_length = LAZYLEN(adjacent_turfs)
-	atmos_cooldown++
-	if (planetary_atmos)
+	var/cached_atmos_cooldown = atmos_cooldown + 1
+
+	var/planet_atmos = planetary_atmos
+	if (planet_atmos)
 		adjacent_turfs_length++
+	
+	var/datum/gas_mixture/our_air = air
 
 	for(var/t in adjacent_turfs)
 		var/turf/open/enemy_tile = t
@@ -148,6 +163,8 @@
 
 		/******************* GROUP HANDLING START *****************************************************************/
 
+			var/should_share_air = FALSE
+			var/datum/gas_mixture/enemy_air = enemy_tile.air
 			if(enemy_tile.excited)
 				//cache for sanic speed
 				var/datum/excited_group/enemy_excited_group = enemy_tile.excited_group
@@ -157,26 +174,26 @@
 							//combine groups (this also handles updating the excited_group var of all involved turfs)
 							our_excited_group.merge_groups(enemy_excited_group)
 							our_excited_group = excited_group //update our cache
-						share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
+						should_share_air = TRUE
 					else
-						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
+						if((recently_active == 1 && enemy_tile.recently_active == 1) || our_air.compare(enemy_air))
 							our_excited_group.add_turf(enemy_tile) //add enemy to our group
-							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
+							should_share_air = TRUE
 				else
 					if(enemy_excited_group)
-						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
+						if((recently_active == 1 && enemy_tile.recently_active == 1) || our_air.compare(enemy_air))
 							enemy_excited_group.add_turf(src) //join self to enemy group
 							our_excited_group = excited_group //update our cache
-							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
+							should_share_air = TRUE
 					else
-						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
+						if((recently_active == 1 && enemy_tile.recently_active == 1) || our_air.compare(enemy_air))
 							var/datum/excited_group/EG = new //generate new group
 							EG.add_turf(src)
 							EG.add_turf(enemy_tile)
 							our_excited_group = excited_group //update our cache
-							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
+							should_share_air = TRUE
 			else
-				if(air.compare(enemy_tile.air)) //compare if
+				if(our_air.compare(enemy_air)) //compare if
 					SSair.add_to_active(enemy_tile) //excite enemy
 					if(our_excited_group)
 						our_excited_group.add_turf(enemy_tile) //add enemy to group
@@ -185,51 +202,55 @@
 						EG.add_turf(src)
 						EG.add_turf(enemy_tile)
 						our_excited_group = excited_group //update our cache
-					share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
+					should_share_air = TRUE
+
+			//air sharing
+			if(should_share_air)
+				var/difference = our_air.share(enemy_air, adjacent_turfs_length)
+				if(difference)
+					if(difference > 0)
+						consider_pressure_difference(enemy_tile, difference)
+					else
+						enemy_tile.consider_pressure_difference(src, -difference)
+				LAST_SHARE_CHECK
+
 
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
-	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
+	if (planet_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
 		G.archive()
-		if(air.compare(G))
+		if(our_air.compare(G))
 			if(!our_excited_group)
 				var/datum/excited_group/EG = new
 				EG.add_turf(src)
 				our_excited_group = excited_group
-			air.share(G, adjacent_turfs_length)
-			last_share_check()
+			our_air.share(G, adjacent_turfs_length)
+			LAST_SHARE_CHECK
 
-	air.react()
+	our_air.react()
 
 	update_visuals()
 
-	if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		hotspot_expose(air.temperature, CELL_VOLUME)
-		for(var/atom/movable/item in src)
-			item.temperature_expose(air, air.temperature, CELL_VOLUME)
-		temperature_expose(air, air.temperature, CELL_VOLUME)
+	var/our_temperature = our_air.temperature
 
-		if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
+	var/remove = TRUE
+	if(our_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		hotspot_expose(our_temperature, CELL_VOLUME)
+		for(var/I in src)
+			var/atom/movable/item = I
+			item.temperature_expose(our_air, our_temperature, CELL_VOLUME)
+		temperature_expose(our_air, our_temperature, CELL_VOLUME)
+
+		if(our_temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 			if(consider_superconductivity(starting = 1))
-				remove = 0
+				remove = FALSE
 
-	if (atmos_cooldown > EXCITED_GROUP_DISMANTLE_CYCLES*2)
+	if ((!our_excited_group && remove) || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
 		SSair.remove_from_active(src)
-	if(!our_excited_group && remove == 1)
-		SSair.remove_from_active(src)
-
-
-/turf/open/proc/share_air(turf/open/T, fire_count, adjacent_turfs_length)
-	if(T.current_cycle < fire_count)
-		var/difference = air.share(T.air, adjacent_turfs_length)
-		if(difference)
-			if(difference > 0)
-				consider_pressure_difference(T, difference)
-			else
-				T.consider_pressure_difference(src, -difference)
-		last_share_check()
+	
+	atmos_cooldown = cached_atmos_cooldown
 
 //////////////////////////SPACEWIND/////////////////////////////
 
@@ -238,14 +259,6 @@
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, T)
 		pressure_difference = difference
-
-/turf/open/proc/last_share_check()
-	if(air.last_share > MINIMUM_AIR_TO_SUSPEND)
-		excited_group.reset_cooldowns()
-		atmos_cooldown = 0
-	else if(air.last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
-		excited_group.dismantle_cooldown = 0
-		atmos_cooldown = 0
 
 /turf/open/proc/high_pressure_movements()
 	for(var/atom/movable/M in src)

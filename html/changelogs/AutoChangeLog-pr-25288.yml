@@ -1,6 +1,0 @@
-author: "Penguaro"
-delete-after: True
-changes: 
-  - rscadd: "Added Cameras for Supermatter Chamber (to view rad collectors and crystal)"
-  - tweak: "Adjusted Engine Camera Names for Station Consistency"
-  - bugfix: "Adjusted Monitor Names / Networks to view the Engine Cameras"
