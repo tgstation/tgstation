@@ -27,7 +27,7 @@
 
 /obj/item/device/radio/intercom/interact(mob/user)
 	..()
-	ui_interact(user, state = default_state)
+	ui_interact(user, state = GLOB.default_state)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)
 	if(!on)

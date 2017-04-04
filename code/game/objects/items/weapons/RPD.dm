@@ -204,8 +204,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 
 	var/icon/preview=null
 	var/datbuild = ""
-	for(var/category in RPD_recipes)
-		var/list/cat=RPD_recipes[category]
+	for(var/category in GLOB.RPD_recipes)
+		var/list/cat = GLOB.RPD_recipes[category]
 		for(var/label in cat)
 			var/datum/pipe_info/I = cat[label]
 			var/found=0

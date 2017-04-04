@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	amount = 50
 
 /obj/item/stack/sheet/glass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = glass_recipes
+	recipes = GLOB.glass_recipes
 	..()
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	glasource.add_charge(amount * glacost)
 
 /obj/item/stack/sheet/rglass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = reinforced_glass_recipes
+	recipes = GLOB.reinforced_glass_recipes
 	..()
 
 

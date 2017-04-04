@@ -9,7 +9,7 @@
 	var/askDelay = 600 //one minute
 	var/used = 0 //Prevents split personality virus. May be reset if personality deletion code is added.
 	brainmob = null
-	req_access = list(access_robotics)
+	req_access = list(GLOB.access_robotics)
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
 	var/autoping = TRUE //if it pings on creation immediately

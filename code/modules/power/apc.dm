@@ -111,7 +111,7 @@
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	if (!req_access)
-		req_access = list(access_engine_equip)
+		req_access = list(GLOB.access_engine_equip)
 	if (!armor)
 		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	..()
@@ -677,7 +677,7 @@
 	..()
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
@@ -1244,7 +1244,7 @@
 	for(var/obj/machinery/M in area.contents)
 		if(M.critical_machine)
 			return
-	for(var/A in ai_list)
+	for(var/A in GLOB.ai_list)
 		var/mob/living/silicon/ai/I = A
 		if(get_area(I) == area)
 			return

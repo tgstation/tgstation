@@ -162,7 +162,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/wood
 
 /obj/item/stack/sheet/mineral/wood/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = wood_recipes
+	recipes = GLOB.wood_recipes
 	return ..()
 
 /obj/item/stack/sheet/mineral/wood/fifty
@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = cloth_recipes
+	recipes = GLOB.cloth_recipes
 	return ..()
 
 /obj/item/stack/sheet/cloth/ten
@@ -239,8 +239,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cardboard
 
 /obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge = TRUE)
-		recipes = cardboard_recipes
-		return ..()
+	recipes = GLOB.cardboard_recipes
+	return ..()
 
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	amount = 50
 
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = runed_metal_recipes
+	recipes = GLOB.runed_metal_recipes
 	return ..()
 
 /*
@@ -380,5 +380,5 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	amount = 5
 
 /obj/item/stack/sheet/plastic/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = plastic_recipes
+	recipes = GLOB.plastic_recipes
 	. = ..()

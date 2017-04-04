@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 	icon_state = "ca"
 	anchored = 0
 	density = 1
-	req_access = list(access_engine_equip)
+	req_access = list(GLOB.access_engine_equip)
 //	use_power = 0
 	obj_integrity = 350
 	max_integrity = 350
@@ -21,10 +21,10 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/New()
 	..()
-	rad_collectors += src
+	GLOB.rad_collectors += src
 
 /obj/machinery/power/rad_collector/Destroy()
-	rad_collectors -= src
+	GLOB.rad_collectors -= src
 	return ..()
 
 /obj/machinery/power/rad_collector/process()

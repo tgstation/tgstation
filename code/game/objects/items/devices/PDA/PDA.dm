@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(fon)
 		set_light(f_lum)
 
-	PDAs += src
+	GLOB.PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
 	inserted_item =	new /obj/item/weapon/pen(src)
@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
 				dat += "[worldtime2text()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
-				dat += "[time2text(world.realtime, "MMM DD")] [year_integer+540]"
+				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]"
 
 				dat += "<br><br>"
 
@@ -646,8 +646,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return null
 
 	var/obj/machinery/message_server/useMS = null
-	if(message_servers)
-		for (var/obj/machinery/message_server/MS in message_servers)
+	if(GLOB.message_servers)
+		for (var/obj/machinery/message_server/MS in GLOB.message_servers)
 		//PDAs are now dependant on the Message Server.
 			if(MS.active)
 				useMS = MS
@@ -895,7 +895,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return
 
 /obj/item/device/pda/Destroy()
-	PDAs -= src
+	GLOB.PDAs -= src
 	if(id)
 		qdel(id)
 		id = null

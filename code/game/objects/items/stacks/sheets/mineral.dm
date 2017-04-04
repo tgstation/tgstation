@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	sheettype = "sandstone"
 
 /obj/item/stack/sheet/mineral/sandstone/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = sandstone_recipes
+	recipes = GLOB.sandstone_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/sandbags/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = sandbag_recipes
+	recipes = GLOB.sandbag_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/diamond/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = diamond_recipes
+	recipes = GLOB.diamond_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/uranium/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = uranium_recipes
+	recipes = GLOB.uranium_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -147,7 +147,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/plasma/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = plasma_recipes
+	recipes = GLOB.plasma_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/gold/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = gold_recipes
+	recipes = GLOB.gold_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/silver/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = silver_recipes
+	recipes = GLOB.silver_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -236,7 +236,7 @@ GLOBAL_LIST_INIT(clown_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/bananium/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = clown_recipes
+	recipes = GLOB.clown_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/titanium/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = titanium_recipes
+	recipes = GLOB.titanium_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/plastitanium/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = plastitanium_recipes
+	recipes = GLOB.plastitanium_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -314,7 +314,7 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/snow/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = snow_recipes
+	recipes = GLOB.snow_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
@@ -374,5 +374,5 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	))
 
 /obj/item/stack/sheet/mineral/abductor/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = abductor_recipes
+	recipes = GLOB.abductor_recipes
 	..()

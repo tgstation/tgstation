@@ -158,14 +158,9 @@
 	prefs.save_preferences()
 	if(prefs.toggles & SOUND_MIDI)
 		to_chat(src, "You will now hear any sounds uploaded by admins.")
-		if(GLOB.admin_sound)
-			src << GLOB.admin_sound
 	else
-		to_chat(src, "You will no longer hear sounds uploaded by admins; any currently playing midis have been disabled.")
-		if(GLOB.admin_sound && !(GLOB.admin_sound.status & SOUND_PAUSED))
-			GLOB.admin_sound.status |= SOUND_PAUSED
-			src << GLOB.admin_sound
-			GLOB.admin_sound.status ^= SOUND_PAUSED
+		to_chat(src, "You will no longer hear sounds uploaded by admins")
+		stop_sound_channel(CHANNEL_ADMIN)
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/stop_client_sounds()

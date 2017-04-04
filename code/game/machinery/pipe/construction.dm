@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		)
 	//fix_pipe_type()
 	name = nlist["[pipe_type][is_bent ? "_b" : ""]"] + " fitting"
-	icon_state = pipeID2State["[pipe_type]"]
+	icon_state = GLOB.pipeID2State["[pipe_type]"]
 
 // rotate the pipe item clockwise
 
