@@ -19,6 +19,8 @@
 	return initial(b.priority) - initial(a.priority)
 
 /datum/gas_reaction
+	//regarding the requirements lists: the minimum or maximum requirements must be non-zero.
+	//when in doubt, use MINIMUM_HEAT_CAPACITY.
 	var/list/min_requirements
 	var/list/max_requirements
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
@@ -40,7 +42,7 @@
 /datum/gas_reaction/agent_b/init_reqs()
 	min_requirements = list(
 		"TEMP" = 900,
-		"agent_b" = 0,
+		"agent_b" = MINIMUM_HEAT_CAPACITY,
 		"plasma" = MINIMUM_HEAT_CAPACITY,
 		"co2" = MINIMUM_HEAT_CAPACITY
 	)
@@ -70,7 +72,7 @@
 
 /datum/gas_reaction/freon/react(datum/gas_mixture/air, turf/open/location)
 	. = NO_REACTION
-	if(location.freon_gas_act())
+	if(location && location.freon_gas_act())
 		air.gases["freon"][MOLES] -= MOLES_PLASMA_VISIBLE
 		. = REACTING
 
@@ -84,7 +86,7 @@
 
 /datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, turf/open/location)
 	. = NO_REACTION
-	if(location.water_vapor_gas_act())
+	if(location && location.water_vapor_gas_act())
 		air.gases["water_vapor"][MOLES] -= MOLES_PLASMA_VISIBLE
 		. = REACTING
 
@@ -161,13 +163,14 @@
 	//to_chat(world, "post [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]")
 
 	//let the floor know a fire is happening
-	temperature = air.temperature
-	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		location.hotspot_expose(temperature, CELL_VOLUME)
-		for(var/I in location)
-			var/atom/movable/item = I
-			item.temperature_expose(air, temperature, CELL_VOLUME)
-		location.temperature_expose(air, temperature, CELL_VOLUME)
+	if(istype(location))
+		temperature = air.temperature
+		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			location.hotspot_expose(temperature, CELL_VOLUME)
+			for(var/I in location)
+				var/atom/movable/item = I
+				item.temperature_expose(air, temperature, CELL_VOLUME)
+			location.temperature_expose(air, temperature, CELL_VOLUME)
 
 	return air.fuel_burnt ? REACTING : NO_REACTION
 

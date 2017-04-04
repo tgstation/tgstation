@@ -424,14 +424,16 @@ var/list/gaslist_cache = init_gaslist_cache()
 	fuel_burnt = 0
 
 	var/list/cached_gases = gases
+	var/temp = temperature
+	var/ener = thermal_energy()
 
 	reaction_loop:
 		for(var/r in SSair.gas_reactions)
 			var/datum/gas_reaction/reaction = r
 
 			var/list/min_reqs = reaction.min_requirements.Copy()
-			if((min_reqs["TEMP"] && temperature < text2num(min_reqs["TEMP"])) \
-			|| (min_reqs["ENER"] && thermal_energy() < text2num(min_reqs["ENER"])))
+			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
+			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
 				if(debug)
 					to_chat(world, "Reaction: [reaction.name] did not occur because temperature or energy requirements were not met.")
 				continue
@@ -439,22 +441,22 @@ var/list/gaslist_cache = init_gaslist_cache()
 			min_reqs -= "ENER"
 
 			for(var/id in min_reqs)
-				if(cached_gases[id][MOLES] < text2num(min_reqs[id]))
+				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					if(debug)
-						to_chat(world, "Reaction: [reaction.name] did not occur because [id] requirements were not met. Requirement: [text2num(min_reqs[id])] moles. Current level: [cached_gases[id][MOLES]] moles.")
+						to_chat(world, "Reaction: [reaction.name] did not occur because [id] requirements were not met. Requirement: [text2num(min_reqs[id])] moles. Current level: [cached_gases[id] ? cached_gases[id][MOLES] : 0] moles.")
 					continue reaction_loop
 			//at this point, all minimum requirements for the reaction are satisfied.
 
 			/* currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
 			var/list/max_reqs = reaction.max_requirements.Copy()
-			if((max_reqs["TEMP"] && temperature > text2num(max_reqs["TEMP"])) \
-			|| (max_reqs["ENER"] && thermal_energy() > text2num(max_reqs["ENER"])))
+			if((max_reqs["TEMP"] && temp > max_reqs["TEMP"]) \
+			|| (max_reqs["ENER"] && ener > max_reqs["ENER"]))
 				continue
 			max_reqs -= "TEMP"
 			max_reqs -= "ENER"
 
 			for(var/id in max_reqs)
-				if(cached_gases[id][MOLES] > text2num(max_reqs[id]))
+				if(cached_gases[id] && cached_gases[id][MOLES] > max_reqs[id])
 					continue reaction_loop
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 			*/
@@ -471,7 +473,7 @@ var/list/gaslist_cache = init_gaslist_cache()
 //eg:
 //Tox_PP = get_partial_pressure(gas_mixture.toxins)
 //O2_PP = get_partial_pressure(gas_mixture.oxygen)
-//Does handle trace gases!
+
 /datum/gas_mixture/proc/get_breath_partial_pressure(gas_pressure)
 	return (gas_pressure * R_IDEAL_GAS_EQUATION * temperature) / BREATH_VOLUME
 //inverse
