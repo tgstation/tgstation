@@ -169,7 +169,7 @@
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
-	access_card.access |= access_cent_bar
+	access_card.access |= GLOB.access_cent_bar
 	access_card.flags |= NODROP
 
 	grant_all_languages(omnitongue=TRUE)

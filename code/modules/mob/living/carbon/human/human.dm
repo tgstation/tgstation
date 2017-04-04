@@ -392,7 +392,7 @@
 						if (!G.emagged)
 							if(H.wear_id)
 								var/list/access = H.wear_id.GetAccess()
-								if(access_sec_doors in access)
+								if(GLOB.access_sec_doors in access)
 									allowed_access = H.get_authentification_name()
 						else
 							allowed_access = "@%&ERROR_%$*"
@@ -498,7 +498,7 @@
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
-											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1)
+											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 											to_chat(usr, "<span class='notice'>Successfully added comment.</span>")
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
@@ -585,7 +585,7 @@
 
 	//Check for weapons
 	if(judgebot.weaponscheck)
-		if(!idcard || !(access_weapons in idcard.access))
+		if(!idcard || !(GLOB.access_weapons in idcard.access))
 			for(var/obj/item/I in held_items)
 				if(judgebot.check_for_weapons(I))
 					threatcount += 4

@@ -64,7 +64,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	equip_to_slot_or_del(W, slot_wear_id)
 
 	var/obj/item/weapon/claymore/highlander/H1 = new(src)
-	if(!highlander)
+	if(!GLOB.highlander)
 		H1.admin_spawned = TRUE //To prevent announcing
 	put_in_hands(H1)
 	H1.pickup(src) //For the stun shielding

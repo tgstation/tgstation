@@ -256,7 +256,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	set name = "Disable all communication verbs"
 
 	GLOB.say_disabled = !GLOB.say_disabled
-	if(say_disabled)
+	if(GLOB.say_disabled)
 		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
 	else
 		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")

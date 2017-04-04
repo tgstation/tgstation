@@ -77,10 +77,10 @@
 	<font class='bad'>WARNING:</font><BR>Misuse of the announcement system will get you job banned.<HR>"
 
 	var/index = 0
-	for(var/word in vox_sounds)
+	for(var/word in GLOB.vox_sounds)
 		index++
 		dat += "<A href='?src=\ref[src];say_word=[word]'>[capitalize(word)]</A>"
-		if(index != vox_sounds.len)
+		if(index != GLOB.vox_sounds.len)
 			dat += " / "
 
 	var/datum/browser/popup = new(src, "announce_help", "Announcement Help", 500, 400)
@@ -119,7 +119,7 @@
 		if(!word)
 			words -= word
 			continue
-		if(!vox_sounds[word])
+		if(!GLOB.vox_sounds[word])
 			incorrect_words += word
 
 	if(incorrect_words.len)

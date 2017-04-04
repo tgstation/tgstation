@@ -64,7 +64,7 @@
 	..()
 
 	ghostimage = image(src.icon,src,src.icon_state)
-	ghost_darkness_images |= ghostimage
+	GLOB.ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
 /mob/living/simple_animal/revenant/Login()
@@ -211,7 +211,7 @@
 	if(!revealed || stat == DEAD) //Revenants cannot die if they aren't revealed //or are already dead
 		return 0
 	..(1)
-	ghost_darkness_images -= ghostimage
+	GLOB.ghost_darkness_images -= ghostimage
 	updateallghostimages()
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = 1

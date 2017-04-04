@@ -167,9 +167,9 @@ GLOBAL_LIST(external_rsc_urls)
 			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
 			localhost_holder.associate(src)
 	if(config.autoadmin)
-		if(!admin_datums[ckey])
+		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank
-			for(var/datum/admin_rank/R in admin_ranks)
+			for(var/datum/admin_rank/R in GLOB.admin_ranks)
 				if(R.name == config.autoadmin_rank)
 					autorank = R
 					break
@@ -177,17 +177,17 @@ GLOBAL_LIST(external_rsc_urls)
 				to_chat(world, "Autoadmin rank not found")
 			else
 				var/datum/admins/D = new(autorank, ckey)
-				admin_datums[ckey] = D
-	holder = admin_datums[ckey]
+				GLOB.admin_datums[ckey] = D
+	holder = GLOB.admin_datums[ckey]
 	if(holder)
 		GLOB.admins |= src
 		holder.owner = src
 
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
-	prefs = preferences_datums[ckey]
+	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
 		prefs = new /datum/preferences(src)
-		preferences_datums[ckey] = prefs
+		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
@@ -313,10 +313,10 @@ GLOBAL_LIST(external_rsc_urls)
 		else
 			winset(src, "infowindow.changelog", "font-style=bold")
 
-	if(ckey in clientmessages)
-		for(var/message in clientmessages[ckey])
+	if(ckey in GLOB.clientmessages)
+		for(var/message in GLOB.clientmessages[ckey])
 			to_chat(src, message)
-		clientmessages.Remove(ckey)
+		GLOB.clientmessages.Remove(ckey)
 
 	if(config && config.autoconvert_notes)
 		convert_notes_sql(ckey)

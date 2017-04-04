@@ -215,7 +215,7 @@
 						ears.loc = src.loc
 						ears = null
 						for(var/possible_phrase in speak)
-							if(copytext(possible_phrase,1,3) in department_radio_keys)
+							if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
 								possible_phrase = copytext(possible_phrase,3)
 					else
 						to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")

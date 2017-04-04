@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
-	parasites += src
+	GLOB.parasites += src
 	setthemename(theme)
 
 	..()
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			holder.icon_state = "hudhealthy"
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
-	parasites -= src
+	GLOB.parasites -= src
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/proc/setthemename(pickedtheme) //set the guardian's theme to something cool!

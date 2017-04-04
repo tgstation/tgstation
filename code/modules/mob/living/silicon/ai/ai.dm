@@ -148,7 +148,7 @@
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
 		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel)
 
-	ai_list += src
+	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
 	builtInCamera = new /obj/machinery/camera/portable(src)
@@ -156,7 +156,7 @@
 
 
 /mob/living/silicon/ai/Destroy()
-	ai_list -= src
+	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 	qdel(eyeobj) // No AI, no Eye
@@ -370,7 +370,7 @@
 		unset_machine()
 		src << browse(null, t1)
 	if (href_list["switchcamera"])
-		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
+		switchCamera(locate(href_list["switchcamera"])) in GLOB.cameranet.cameras
 	if (href_list["showalerts"])
 		ai_alerts()
 #ifdef AI_VOX
@@ -430,7 +430,7 @@
 		if(controlled_mech)
 			to_chat(src, "<span class='warning'>You are already loaded into an onboard computer!</span>")
 			return
-		if(!cameranet.checkCameraVis(M))
+		if(!GLOB.cameranet.checkCameraVis(M))
 			to_chat(src, "<span class='warning'>Exosuit is no longer near active cameras.</span>")
 			return
 		if(lacks_power())
@@ -826,7 +826,7 @@
 	//stop AIs from leaving windows open and using then after they lose vision
 	//apc_override is needed here because AIs use their own APC when powerless
 	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
-	if(M && cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
+	if(M && GLOB.cameranet && !GLOB.cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
 	return 1
 

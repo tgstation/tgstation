@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	. = ..()
 	if(.)
 		var/createtype = GetUncappedAISwarmerType()
-		if(createtype && world.time > swarmer_spawn_cooldown && AISwarmers.len < (GetTotalAISwarmerCap()*0.5))
+		if(createtype && world.time > swarmer_spawn_cooldown && GLOB.AISwarmers.len < (GetTotalAISwarmerCap()*0.5))
 			swarmer_spawn_cooldown = world.time + swarmer_spawn_cooldown_amt
 			new createtype(loc)
 

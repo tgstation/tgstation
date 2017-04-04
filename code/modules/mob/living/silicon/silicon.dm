@@ -305,8 +305,8 @@
 	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
 	else	//For department channels, if any, given by the internal radio.
-		for(var/key in department_radio_keys)
-			if(department_radio_keys[key] == Autochan)
+		for(var/key in GLOB.department_radio_keys)
+			if(GLOB.department_radio_keys[key] == Autochan)
 				radiomod = key
 				break
 

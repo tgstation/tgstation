@@ -51,7 +51,7 @@
 
 	var/ident = 0
 	var/locked = 1
-	var/list/req_access = list(access_robotics)
+	var/list/req_access = list(GLOB.access_robotics)
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 
@@ -611,7 +611,7 @@
 
 /mob/living/silicon/robot/proc/do_camera_update(oldLoc)
 	if(oldLoc != src.loc)
-		cameranet.updatePortableCamera(src.camera)
+		GLOB.cameranet.updatePortableCamera(src.camera)
 	updating = 0
 
 /mob/living/silicon/robot/Move(a, b, flag)
@@ -793,7 +793,7 @@
 	icon_state = "syndie_bloodhound"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
-	req_access = list(access_syndicate)
+	req_access = list(GLOB.access_syndicate)
 	lawupdate = FALSE
 	scrambledcodes = TRUE // These are rogue borgs.
 	ionpulse = TRUE
