@@ -37489,7 +37489,9 @@
 	},
 /area/engine/engineering)
 "box" = (
-/obj/structure/reflector/box,
+/obj/structure/reflector/box{
+	anchored = 1
+	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
