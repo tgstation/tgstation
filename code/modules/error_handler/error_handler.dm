@@ -33,8 +33,8 @@ var/global/total_runtimes_skipped = 0
 	// This is a bunch of workaround code for that. Hooray!
 
 	var/configured_error_cooldown = initial(config.error_cooldown)
-	var/configured_error_limit = initial(config.error_limit)
 	var/configured_error_silence_time = initial(config.error_silence_time)
+	var/configured_error_limit = initial(config.error_limit)
 	if(config)
 		configured_error_cooldown = config.error_cooldown
 		configured_error_limit = config.error_limit
@@ -45,6 +45,7 @@ var/global/total_runtimes_skipped = 0
 	cooldown = max(0, cooldown - (world.time - last_seen)) + configured_error_cooldown
 	// ... which is used to silence an error if it occurs too often, too fast
 	if(cooldown > configured_error_cooldown * configured_error_limit)
+#ifndef TESTING
 		cooldown = -1
 		silencing = TRUE
 		spawn(0)
@@ -55,6 +56,9 @@ var/global/total_runtimes_skipped = 0
 			if(skipcount > 0)
 				world.log << "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line]."
 				error_cache.log_error(E, skip_count = skipcount)
+#else
+		silencing = FALSE
+#endif
 
 	error_last_seen[erroruid] = world.time
 	error_cooldown[erroruid] = cooldown
