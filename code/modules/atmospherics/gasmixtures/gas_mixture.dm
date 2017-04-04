@@ -31,8 +31,7 @@ var/list/gaslist_cache = init_gaslist_cache()
 	var/tmp/temperature_archived
 	var/volume //liters
 	var/last_share
-	var/tmp/fuel_burnt
-	//var/datum/holder
+	var/list/reaction_results
 
 /datum/gas_mixture/New(volume = CELL_VOLUME)
 	gases = new
@@ -40,7 +39,7 @@ var/list/gaslist_cache = init_gaslist_cache()
 	temperature_archived = 0
 	src.volume = volume
 	last_share = 0
-	fuel_burnt = 0
+	reaction_results = new
 
 //listmos procs
 
@@ -417,11 +416,11 @@ var/list/gaslist_cache = init_gaslist_cache()
 
 	return ""
 
-/datum/gas_mixture/react(turf/open/dump_location, debug)
+/datum/gas_mixture/react(turf/open/dump_location)
 	. = 0
 	if(temperature < TCMB) //just for safety
 		temperature = TCMB
-	fuel_burnt = 0
+	reaction_results = new
 
 	var/list/cached_gases = gases
 	var/temp = temperature
@@ -434,16 +433,12 @@ var/list/gaslist_cache = init_gaslist_cache()
 			var/list/min_reqs = reaction.min_requirements.Copy()
 			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
 			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
-				if(debug)
-					to_chat(world, "Reaction: [reaction.name] did not occur because temperature or energy requirements were not met.")
 				continue
 			min_reqs -= "TEMP"
 			min_reqs -= "ENER"
 
 			for(var/id in min_reqs)
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
-					if(debug)
-						to_chat(world, "Reaction: [reaction.name] did not occur because [id] requirements were not met. Requirement: [text2num(min_reqs[id])] moles. Current level: [cached_gases[id] ? cached_gases[id][MOLES] : 0] moles.")
 					continue reaction_loop
 			//at this point, all minimum requirements for the reaction are satisfied.
 
@@ -461,10 +456,7 @@ var/list/gaslist_cache = init_gaslist_cache()
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 			*/
 
-			var/result = reaction.react(src, dump_location)
-			. |= result
-			if(result && debug)
-				to_chat(world, "Reaction: [reaction.name] succesfully reacted.")
+			. |= reaction.react(src, dump_location)
 	if(.)
 		garbage_collect()
 

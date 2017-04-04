@@ -24,8 +24,9 @@
 	var/list/min_requirements
 	var/list/max_requirements
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
-	var/priority //lower numbers are checked/react later than higher numbers. if two reactions have the same priority they may happen in either order
+	var/priority = 100 //lower numbers are checked/react later than higher numbers. if two reactions have the same priority they may happen in either order
 	var/name = "reaction"
+	var/id = "r"
 
 /datum/gas_reaction/New()
 	init_reqs()
@@ -38,6 +39,7 @@
 /datum/gas_reaction/agent_b
 	priority = 2
 	name = "Agent B"
+	id = "agent_b"
 
 /datum/gas_reaction/agent_b/init_reqs()
 	min_requirements = list(
@@ -66,6 +68,7 @@
 /datum/gas_reaction/freon
 	priority = 1
 	name = "Freon"
+	id = "freon"
 
 /datum/gas_reaction/freon/init_reqs()
 	min_requirements = list("freon" = MOLES_PLASMA_VISIBLE)
@@ -80,6 +83,7 @@
 /datum/gas_reaction/water_vapor
 	priority = 1
 	name = "Water Vapor"
+	id = "vapor"
 
 /datum/gas_reaction/water_vapor/init_reqs()
 	min_requirements = list("water_vapor" = MOLES_PLASMA_VISIBLE)
@@ -94,6 +98,7 @@
 /datum/gas_reaction/fire
 	priority = -1 //fire should ALWAYS be last
 	name = "Hydrocarbon Combustion"
+	id = "fire"
 
 /datum/gas_reaction/fire/init_reqs()
 	min_requirements = list("TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //doesn't include plasma reqs b/c of volatile fuel stuff - consider finally axing volatile fuel
@@ -103,13 +108,14 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
 	var/temperature = air.temperature
+	var/list/cached_results = air.reaction_results
 
 	//to_chat(world, "pre [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]")
+	cached_results[id] = 0
 
 	//General volatile gas burn
 	if(cached_gases["v_fuel"] && cached_gases["v_fuel"][MOLES])
 		var/burned_fuel
-
 		if(!cached_gases["o2"])
 			burned_fuel = 0
 		else if(cached_gases["o2"][MOLES] < cached_gases["v_fuel"][MOLES])
@@ -126,7 +132,7 @@
 			air.assert_gas("co2")
 			cached_gases["co2"][MOLES] += burned_fuel
 
-			air.fuel_burnt += burned_fuel
+			cached_results[id] += burned_fuel
 
 	//Handle plasma burning
 	if(cached_gases["plasma"] && cached_gases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY)
@@ -153,7 +159,7 @@
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 
-				air.fuel_burnt += (plasma_burn_rate)*(1+oxygen_burn_rate)
+				cached_results[id] += (plasma_burn_rate)*(1+oxygen_burn_rate)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -172,13 +178,14 @@
 				item.temperature_expose(air, temperature, CELL_VOLUME)
 			location.temperature_expose(air, temperature, CELL_VOLUME)
 
-	return air.fuel_burnt ? REACTING : NO_REACTION
+	return cached_results[id] ? REACTING : NO_REACTION
 
 //fusion: a terrible idea that was fun to try. turns co2 and plasma into REALLY HOT oxygen and nitrogen. super exothermic lol
 /datum/gas_reaction/fusion
 	exclude = TRUE
 	priority = 2
 	name = "Plasmic Fusion"
+	id = "fusion"
 
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
