@@ -118,7 +118,14 @@
 	// Launch check is in process in case auth_need changes for some reason
 	// probably external.
 	. = FALSE
-	if(!SSshuttle.emergency || ENGINES_STARTED || (!IS_DOCKED))
+	if(!SSshuttle.emergency)
+		return
+
+	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+		authorized.Cut()
+		emagged = FALSE
+
+	if(ENGINES_STARTED || (!IS_DOCKED))
 		return .
 
 	// Check to see if we've reached criteria for early launch

@@ -16,8 +16,13 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	var/can_link = FALSE	//Is this the centerpiece?
 
 /obj/machinery/gateway/Initialize()
-	..()
 	randomspawns = GLOB.awaydestinations
+	update_icon()
+	if(!istype(src, /obj/machinery/gateway/centerstation) && !istype(src, /obj/machinery/gateway/centeraway))
+		switch(dir)
+			if(SOUTH,SOUTHEAST,SOUTHWEST)
+				density = 0
+	..()
 
 /obj/machinery/gateway/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -48,14 +53,6 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	if((linked.len == 8) || !checkparts)
 		ready = TRUE
 	return ready
-
-/obj/machinery/gateway/Initialize()
-	..()
-	update_icon()
-	switch(dir)
-		if(SOUTH,SOUTHEAST,SOUTHWEST)
-			density = 0
-
 
 /obj/machinery/gateway/update_icon()
 	if(active)
