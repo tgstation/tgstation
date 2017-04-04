@@ -1,4 +1,4 @@
-var/list/blacklisted_cargo_types = typecacheof(list(
+GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/mob/living,
 		/obj/structure/blob,
 		/obj/effect/rune,
@@ -18,7 +18,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		/obj/effect/clockwork/spatial_gateway,
 		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
 		/obj/item/device/warp_cube
-	))
+	)))
 
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"

@@ -5,8 +5,7 @@
 #define Z_LEVEL_EAST 		"4"
 #define Z_LEVEL_WEST 		"8"
 
-
-var/list/z_levels_list = list()
+GLOBAL_EMPTY_LIST(z_levels_list)
 
 /datum/space_level
 	var/name = "Your config settings failed, you need to fix this for the datum space levels to work"

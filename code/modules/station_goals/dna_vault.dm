@@ -75,8 +75,6 @@
 	plants = list()
 	dna = list()
 
-var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/living/carbon/alien))
-
 /obj/item/device/dna_probe/afterattack(atom/target, mob/user, proximity)
 	..()
 	if(!proximity || !target)
@@ -96,6 +94,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		to_chat(user, "<span class='notice'>Plant data added to local storage.<span>")
 
 	//animals
+	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/living/carbon/alien))
 	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals))
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target

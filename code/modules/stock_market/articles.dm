@@ -14,7 +14,7 @@
 		M += ucfirst(P)
 	return jointext(M, " ")
 
-var/global/list/FrozenAccounts = list()
+GLOBAL_EMPTY_LIST(FrozenAccounts)
 
 /proc/list_frozen()
 	for (var/A in FrozenAccounts)

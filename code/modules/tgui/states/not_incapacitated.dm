@@ -4,7 +4,7 @@
   * Checks that the user isn't incapacitated
  **/
 
-/var/global/datum/ui_state/not_incapacitated_state/not_incapacitated_state = new()
+GLOBAL_DATUM_INIT(not_incapacitated_state, /datum/ui_state/not_incapacitated_state, new)
 
  /**
   * tgui state: not_incapacitated_turf_state
