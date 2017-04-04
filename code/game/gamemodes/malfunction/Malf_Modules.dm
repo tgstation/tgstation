@@ -70,7 +70,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
 	SSmapping.remove_nuke_threat(src)
-	for(var/A in ai_list)
+	for(var/A in GLOB.ai_list)
 		var/mob/living/silicon/ai/Mlf = A
 		if(Mlf.doomsday_device == src)
 			Mlf.doomsday_device = null
