@@ -100,7 +100,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 //load our rank - > rights associations
 /proc/load_admin_ranks()
-	admin_ranks.Cut()
+	GLOB.admin_ranks.Cut()
 
 	if(config.admin_legacy_system)
 		var/previous_rights = 0
@@ -115,7 +115,7 @@ GLOBAL_PROTECT(admin_ranks)
 			var/datum/admin_rank/R = new(ckeyEx(copytext(line, 1, next)))
 			if(!R)
 				continue
-			admin_ranks += R
+			GLOB.admin_ranks += R
 
 			var/prev = findchar(line, "+-", next, 0)
 			while(prev)
@@ -143,7 +143,7 @@ GLOBAL_PROTECT(admin_ranks)
 			var/datum/admin_rank/R = new(rank_name, flags)
 			if(!R)
 				continue
-			admin_ranks += R
+			GLOB.admin_ranks += R
 
 	#ifdef TESTING
 	var/msg = "Permission Sets Built:\n"
@@ -159,7 +159,7 @@ GLOBAL_PROTECT(admin_ranks)
 /proc/load_admins(target = null)
 	//clear the datums references
 	if(!target)
-		admin_datums.Cut()
+		GLOB.admin_datums.Cut()
 		for(var/client/C in GLOB.admins)
 			C.remove_admin_verbs()
 			C.holder = null
@@ -170,7 +170,7 @@ GLOBAL_PROTECT(admin_ranks)
 			world.SetConfig("APP/admin", A, null)
 
 	var/list/rank_names = list()
-	for(var/datum/admin_rank/R in admin_ranks)
+	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		rank_names[R.name] = R
 
 	if(config.admin_legacy_system)

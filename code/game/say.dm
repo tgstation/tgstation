@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return "makes a strange sound."
 
 /proc/get_radio_span(freq)
-	var/returntext = freqtospan["[freq]"]
+	var/returntext = GLOB.freqtospan["[freq]"]
 	if(returntext)
 		return returntext
 	return "radio"

@@ -1004,7 +1004,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /proc/get_viewable_pdas()
 	. = list()
 	// Returns a list of PDAs which can be viewed from another PDA/message monitor.
-	for(var/obj/item/device/pda/P in PDAs)
+	for(var/obj/item/device/pda/P in GLOB.PDAs)
 		if(!P.owner || P.toff || P.hidden) continue
 		. += P
 	return .

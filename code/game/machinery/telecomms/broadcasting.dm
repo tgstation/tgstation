@@ -142,30 +142,30 @@
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
 		var/blackbox_msg = "[AM] [AM.say_quote(message, spans)]"
-		if(istype(blackbox))
+		if(istype(GLOB.blackbox))
 			switch(freq)
 				if(1459)
-					blackbox.msg_common += blackbox_msg
+					GLOB.blackbox.msg_common += blackbox_msg
 				if(1351)
-					blackbox.msg_science += blackbox_msg
+					GLOB.blackbox.msg_science += blackbox_msg
 				if(1353)
-					blackbox.msg_command += blackbox_msg
+					GLOB.blackbox.msg_command += blackbox_msg
 				if(1355)
-					blackbox.msg_medical += blackbox_msg
+					GLOB.blackbox.msg_medical += blackbox_msg
 				if(1357)
-					blackbox.msg_engineering += blackbox_msg
+					GLOB.blackbox.msg_engineering += blackbox_msg
 				if(1359)
-					blackbox.msg_security += blackbox_msg
+					GLOB.blackbox.msg_security += blackbox_msg
 				if(1441)
-					blackbox.msg_deathsquad += blackbox_msg
+					GLOB.blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
-					blackbox.msg_syndicate += blackbox_msg
+					GLOB.blackbox.msg_syndicate += blackbox_msg
 				if(1349)
-					blackbox.msg_service += blackbox_msg
+					GLOB.blackbox.msg_service += blackbox_msg
 				if(1347)
-					blackbox.msg_cargo += blackbox_msg
+					GLOB.blackbox.msg_cargo += blackbox_msg
 				else
-					blackbox.messages += blackbox_msg
+					GLOB.blackbox.messages += blackbox_msg
 
 	spawn(50)
 		qdel(virt)
