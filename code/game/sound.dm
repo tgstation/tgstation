@@ -10,6 +10,9 @@
 		frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
+	//allocate a channel if necessary now so its the same for everyone
+	channel = channel || open_sound_channel()
+
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
 		var/mob/M = P
@@ -28,7 +31,7 @@
 
 	var/sound/S = sound(soundin)
 	S.wait = 0 //No queue
-	S.channel = channel
+	S.channel = channel || open_sound_channel()
 	S.volume = vol
 
 	if (vary)
@@ -81,6 +84,12 @@
 	if(!client || ear_deaf > 0)
 		return
 	..()
+
+/proc/open_sound_channel()
+	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
+	. = ++next_channel
+	if(next_channel > CHANNEL_HIGHEST_AVAILABLE)
+		next_channel = 1
 
 /mob/proc/stop_sound_channel(chan)
 	src << sound(null, repeat = 0, wait = 0, channel = chan)
