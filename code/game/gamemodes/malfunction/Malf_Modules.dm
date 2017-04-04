@@ -383,7 +383,7 @@
 			var/turf/T = turfs[n]
 			if(!isfloorturf(T))
 				fail = 1
-			var/datum/camerachunk/C = cameranet.getCameraChunk(T.x, T.y, T.z)
+			var/datum/camerachunk/C = GLOB.cameranet.getCameraChunk(T.x, T.y, T.z)
 			if(!C.visibleTurfs[T])
 				alert_msg = "We cannot get camera vision of this location."
 				fail = 1
@@ -450,7 +450,7 @@
 	var/fixedcams = 0 //Tells the AI how many cams it fixed. Stats are fun.
 
 	for(var/datum/AI_Module/small/reactivate_cameras/camera in current_modules)
-		for(var/obj/machinery/camera/C in cameranet.cameras)
+		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 			var/initial_range = initial(C.view_range) //To prevent calling the proc twice
 			if(camera.uses > 0)
 				if(!C.status)
@@ -493,14 +493,14 @@
 	see_override = SEE_INVISIBLE_MINIMUM //Night-vision, without which X-ray would be very limited in power.
 	update_sight()
 
-	for(var/obj/machinery/camera/C in cameranet.cameras)
+	for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 		if(C.assembly)
 			var/upgraded = 0
 
 			if(!C.isXRay())
 				C.upgradeXRay()
 				//Update what it can see.
-				cameranet.updateVisibility(C, 0)
+				GLOB.cameranet.updateVisibility(C, 0)
 				upgraded = 1
 
 			if(!C.isEmpProof())
