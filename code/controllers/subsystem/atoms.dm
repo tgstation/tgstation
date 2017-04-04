@@ -9,11 +9,14 @@ SUBSYSTEM_DEF(atoms)
 
 	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
+	var/list/CraftableReagents
+	var/list/NonCraftableReagents
 
 	var/list/late_loaders
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	fire_overlay.appearance_flags = RESET_COLOR
+	BuildReagentsLists()
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
@@ -90,6 +93,8 @@ SUBSYSTEM_DEF(atoms)
 	if(initialized == INITIALIZATION_INNEW_MAPLOAD)
 		InitializeAtoms()
 	old_initialized = SSatoms.old_initialized
+	CraftableReagents = SSatoms.CraftableReagents
+	NonCraftableReagents = SSatoms.NonCraftableReagents
 
 /datum/controller/subsystem/atoms/proc/setupGenetics()
 	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
@@ -109,3 +114,26 @@ SUBSYSTEM_DEF(atoms)
 		else if(B.quality == MINOR_NEGATIVE)
 			not_good_mutations |= B
 		CHECK_TICK
+
+/datum/controller/subsystem/atoms/proc/BuildReagentsLists()
+	var/list/reagent_ids = list()
+	for(var/R in subtypesof(/datum/reagent))
+		var/datum/reagent/Reagent = R
+		reagent_ids[initial(Reagent.id)] = R
+		CHECK_TICK
+	
+	var/list/AllReagents = reagent_ids.Copy()
+
+	for(var/R in subtypesof(/datum/chemical_reaction))
+		var/datum/chemical_reaction/Recipe = R
+		reagent_ids -= initial(Recipe.results)	//list -= list, remove all ids
+		CHECK_TICK
+
+	NonCraftableReagents = reagent_ids
+	CraftableReagents = AllReagents - reagent_ids
+
+/datum/controller/subsystem/atoms/proc/CanSynthReagent(id_or_path)
+	if(ispath(id_or_path, /datum/reagent))
+		var/datum/reagent/Reagent = id_or_path
+		id_or_path = initial(Reagent.id)
+	return !(id_or_path in NonCraftableReagents)
