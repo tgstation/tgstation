@@ -585,7 +585,7 @@ Code:
 			menu = "<h4><img src=pda_notes.png> Newscaster Access</h4>"
 			menu += "<br> Current Newsfeed: <A href='byond://?src=\ref[src];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
 			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(!current)
@@ -685,14 +685,14 @@ Code:
 			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
 			var/message = pda.msg_input()
 			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != pda_owner_name)
 				pda.cart += "<h5> ERROR : NOT AUTHORIZED [pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
 				pda.Topic(null,list("choice"="Refresh"))
 				return
-			news_network.SubmitArticle(message,pda.owner,current_channel)
+			GLOB.news_network.SubmitArticle(message,pda.owner,current_channel)
 			pda.Topic(null,list("choice"=num2text(mode)))
 			return
 

@@ -36,9 +36,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	if(!SSreligion.Bible_icon_state && H.job == "Chaplain")
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 		var/i
-		for(i = 1, i < biblestates.len, i++)
-			var/icon/bibleicon = icon('icons/obj/storage.dmi', biblestates[i])
-			var/nicename = biblenames[i]
+		for(i = 1, i < GLOB.biblestates.len, i++)
+			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
+			var/nicename = GLOB.biblenames[i]
 			H << browse_rsc(bibleicon, nicename)
 			dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=\ref[src];seticon=[i]">[nicename]</a></td></tr>"}
 		dat += "</table></body></html>"
@@ -49,10 +49,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		return
 	if(href_list["seticon"] && SSticker && !SSreligion.Bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
-		var/biblename = biblenames[iconi]
+		var/biblename = GLOB.biblenames[iconi]
 		var/obj/item/weapon/storage/book/bible/B = locate(href_list["src"])
-		B.icon_state = biblestates[iconi]
-		B.item_state = bibleitemstates[iconi]
+		B.icon_state = GLOB.biblestates[iconi]
+		B.item_state = GLOB.bibleitemstates[iconi]
 
 		if(B.icon_state == "honk1" || B.icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr

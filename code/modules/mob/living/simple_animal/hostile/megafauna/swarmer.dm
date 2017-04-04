@@ -111,14 +111,14 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/Initialize()
 	..()
 	ToggleLight() //so you can see them eating you out of house and home/shooting you/stunlocking you for eternity
-	LAZYINITLIST(AISwarmersByType[type])
+	LAZYINITLIST(GLOB.AISwarmersByType[type])
 	AISwarmers += src
 	AISwarmersByType[type] += src
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/Destroy()
-	AISwarmers -= src
-	AISwarmersByType[type] -= src
+	GLOB.AISwarmers -= src
+	GLOB.AISwarmersByType[type] -= src
 	return ..()
 
 
@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	. = ..()
 	if(.)
 		if(!stop_automated_movement)
-			if(AISwarmers.len < GetTotalAISwarmerCap() && resources >= 50)
+			if(GLOB.AISwarmers.len < GetTotalAISwarmerCap() && resources >= 50)
 				StartAction(100) //so they'll actually sit still and use the verbs
 				CreateSwarmer()
 				return

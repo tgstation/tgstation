@@ -58,7 +58,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/deadchat_name
 
 /mob/dead/observer/Initialize()
-	invisibility = observer_default_invisibility
+	invisibility = GLOB.observer_default_invisibility
 
 	verbs += /mob/dead/observer/proc/dead_tele
 
@@ -71,9 +71,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	else
 		ghostimage_default = image(src.icon,src,src.icon_state)
 	ghostimage_simple = image(src.icon,src,"ghost_nodir")
-	ghost_images_full |= ghostimage
-	ghost_images_default |= ghostimage_default
-	ghost_images_simple |= ghostimage_simple
+	GLOB.ghost_images_full |= ghostimage
+	GLOB.ghost_images_default |= ghostimage_default
+	GLOB.ghost_images_simple |= ghostimage_simple
 	updateallghostimages()
 
 	var/turf/T
@@ -138,15 +138,15 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/Destroy()
-	ghost_images_full -= ghostimage
+	GLOB.ghost_images_full -= ghostimage
 	qdel(ghostimage)
 	ghostimage = null
 
-	ghost_images_default -= ghostimage_default
+	GLOB.ghost_images_default -= ghostimage_default
 	qdel(ghostimage_default)
 	ghostimage_default = null
 
-	ghost_images_simple -= ghostimage_simple
+	GLOB.ghost_images_simple -= ghostimage_simple
 	qdel(ghostimage_simple)
 	ghostimage_simple = null
 
@@ -548,30 +548,30 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(lastsetting)
 		switch(lastsetting) //checks the setting we last came from, for a little efficiency so we don't try to delete images from the client that it doesn't have anyway
 			if(GHOST_OTHERS_THEIR_SETTING)
-				client.images -= ghost_images_full
+				client.images -= GLOB.ghost_images_full
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
-				client.images -= ghost_images_default
+				client.images -= GLOB.ghost_images_default
 			if(GHOST_OTHERS_SIMPLE)
-				client.images -= ghost_images_simple
+				client.images -= GLOB.ghost_images_simple
 
 	if ((seedarkness || !ghostvision) && client.prefs.ghost_others == GHOST_OTHERS_THEIR_SETTING)
-		client.images -= ghost_darkness_images
+		client.images -= GLOB.ghost_darkness_images
 		lastsetting = null
 	else if(ghostvision && (!seedarkness || client.prefs.ghost_others <= GHOST_OTHERS_DEFAULT_SPRITE))
 		//add images for the 60inv things ghosts can normally see when darkness is enabled so they can see them now
 		if(!lastsetting)
-			client.images |= ghost_darkness_images
+			client.images |= GLOB.ghost_darkness_images
 		switch(client.prefs.ghost_others)
 			if(GHOST_OTHERS_THEIR_SETTING)
-				client.images |= ghost_images_full
+				client.images |= GLOB.ghost_images_full
 				if (ghostimage)
 					client.images -= ghostimage //remove ourself
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
-				client.images |= ghost_images_default
+				client.images |= GLOB.ghost_images_default
 				if(ghostimage_default)
 					client.images -= ghostimage_default
 			if(GHOST_OTHERS_SIMPLE)
-				client.images |= ghost_images_simple
+				client.images |= GLOB.ghost_images_simple
 				if(ghostimage_simple)
 					client.images -= ghostimage_simple
 		lastsetting = client.prefs.ghost_others

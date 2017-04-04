@@ -91,7 +91,7 @@
 			var/obj/item/weapon/disk/nuclear/N = locate()
 			target = N
 		if(TRACK_MALF_AI)
-			for(var/V in ai_list)
+			for(var/V in GLOB.ai_list)
 				var/mob/living/silicon/ai/A = V
 				if(A.nuking)
 					target = A

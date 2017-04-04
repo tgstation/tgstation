@@ -109,7 +109,7 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 			return
 		T = get_turf(T)
 		loc = T
-		cameranet.visibility(src)
+		GLOB.cameranet.visibility(src)
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image

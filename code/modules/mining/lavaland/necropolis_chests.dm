@@ -490,7 +490,7 @@
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
-		G.invisibility = observer_default_invisibility
+		G.invisibility = GLOB.observer_default_invisibility
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list -= src
@@ -537,7 +537,7 @@
 			current_spirits |= G
 
 	for(var/mob/dead/observer/G in spirits - current_spirits)
-		G.invisibility = observer_default_invisibility
+		G.invisibility = GLOB.observer_default_invisibility
 
 	spirits = current_spirits
 

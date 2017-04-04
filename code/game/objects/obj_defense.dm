@@ -206,7 +206,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /image, image("icon" = 'icons/effects/effects.dm
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		cut_overlay(fire_overlay, TRUE)
+		cut_overlay(GLOB.fire_overlay, TRUE)
 		SSfire_burning.processing -= src
 
 

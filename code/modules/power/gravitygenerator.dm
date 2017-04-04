@@ -3,7 +3,7 @@
 // Gravity Generator
 //
 
-GLOBAL_EMPTY_LIST(gravity_generators) // We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
+GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
 
 #define POWER_IDLE 0
 #define POWER_UP 1

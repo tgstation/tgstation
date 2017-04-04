@@ -151,7 +151,7 @@
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.access |= access_cent_bar
+	access_card.access |= GLOB.access_cent_bar
 	grant_all_languages(omnitongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid

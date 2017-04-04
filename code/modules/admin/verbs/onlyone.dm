@@ -3,7 +3,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	if(!SSticker || !SSticker.mode)
 		alert("The game hasn't started yet!")
 		return
-	highlander = TRUE
+	GLOB.highlander = TRUE
 
 	send_to_playing_players("<span class='boldannounce'><font size=6>THERE CAN BE ONLY ONE</font></span>")
 

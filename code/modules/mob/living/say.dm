@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(copytext(message, 1, 2) == ";")
 		return MODE_HEADSET
 	else if(length(message) > 2)
-		return department_radio_keys[copytext(message, 1, 3)]
+		return GLOB.department_radio_keys[copytext(message, 1, 3)]
 
 /mob/living/proc/get_message_language(message)
 	var/static/list/langlist

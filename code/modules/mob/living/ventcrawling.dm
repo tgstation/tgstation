@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, list(/obj/machinery/atmospherics/component
 
 	if(!vent_found)
 		for(var/obj/machinery/atmospherics/machine in range(1,src))
-			if(is_type_in_list(machine, ventcrawl_machinery))
+			if(is_type_in_list(machine, GLOB.ventcrawl_machinery))
 				vent_found = machine
 
 			if(!vent_found.can_crawl_through())

@@ -53,7 +53,7 @@
 		blob_core.update_icon()
 
 	ghostimage = image(src.icon,src,src.icon_state)
-	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
+	GLOB.ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
 	updateallghostimages()
 	..()
 
@@ -83,7 +83,7 @@
 			BM.update_icons()
 	GLOB.overminds -= src
 	if(ghostimage)
-		ghost_darkness_images -= ghostimage
+		GLOB.ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
