@@ -8,7 +8,6 @@
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
-
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	return TRUE	//Pure humans are always allowed in all roles.
 

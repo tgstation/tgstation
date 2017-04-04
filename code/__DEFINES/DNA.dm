@@ -113,3 +113,4 @@
 #define EASYLIMBATTACHMENT 23
 #define TOXINLOVER		24
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+#define SPECIALCOLORS_PARTSONLY		26 //COLOR INDEPENDENT of 17 and fixed mut color
