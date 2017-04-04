@@ -1,18 +1,22 @@
 /datum/riding
 	var/generic_pixel_x = 0 //All dirs show this pixel_x for the driver
 	var/generic_pixel_y = 0 //All dirs show this pixel_y for the driver, use these vars if the pixel shift is stable across all dir, override handle_vehicle_offsets otherwise.
+
 	var/next_vehicle_move = 0 //used for move delays
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/keytype = null
 	var/atom/movable/ridden = null
+	var/obj/machinery/porta_turret/turret = null //the turret that the thingu has if any
 
 	var/slowed = FALSE
 	var/slowvalue = 1
+
 
 /datum/riding/New(atom/movable/_ridden)
 	ridden = _ridden
 
 /datum/riding/Destroy()
+	turret = null
 	ridden = null
 	return ..()
 
@@ -64,17 +68,18 @@
 
 //MOVEMENT
 /datum/riding/proc/handle_ride(mob/user, direction)
-	if(user.incapacitated())
-		Unbuckle(user)
-		return
-
+	for(var/mob/rider in ridden.buckled_mobs)
+		if(rider.incapacitated())
+			Unbuckle(rider)
+			return
+	var/turf/targetm = get_step(get_turf(ridden), direction)
 	if(world.time < next_vehicle_move)
 		return
 	next_vehicle_move = world.time + vehicle_move_delay
 	if(keycheck(user))
 		if(!Process_Spacemove(direction) || !isturf(ridden.loc))
 			return
-		step(ridden, direction)
+		ridden.Move(targetm)
 
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
@@ -111,7 +116,7 @@
 		ridden.layer = OBJ_LAYER
 
 /datum/riding/atv/turret
-	var/obj/machinery/porta_turret/syndicate/vehicle_turret/turret = null
+	turret = /obj/machinery/porta_turret/syndicate/vehicle_turret
 
 /datum/riding/atv/turret/handle_vehicle_layer()
 	if(ridden.dir == SOUTH)
@@ -264,19 +269,75 @@
 			buckled_mob.setDir(ridden.dir)
 			ridden.pixel_x = -48
 			ridden.pixel_y = -48
-			switch(ridden.dir)
-				if(NORTH)
-					buckled_mob.pixel_x = -10
-					buckled_mob.pixel_y = -3
-				if(SOUTH)
-					buckled_mob.pixel_x = 16
-					buckled_mob.pixel_y = 3
-				if(EAST)
-					buckled_mob.pixel_x = -4
-					buckled_mob.pixel_y = 30
-				if(WEST)
-					buckled_mob.pixel_x = 4
-					buckled_mob.pixel_y = -1
+			if(buckled_mob = ridden.buckled_mobs[1])
+				switch(ridden.dir)
+					if(NORTH)
+						buckled_mob.pixel_x = -10
+						buckled_mob.pixel_y = -4
+					if(SOUTH)
+						buckled_mob.pixel_x = 16
+						buckled_mob.pixel_y = 3
+					if(EAST)
+						buckled_mob.pixel_x = -4
+						buckled_mob.pixel_y = 30
+					if(WEST)
+						buckled_mob.pixel_x = 4
+						buckled_mob.pixel_y = -3
+
+			if(buckled_mob = ridden.buckled_mobs[2])
+				switch(ridden.dir)
+					if(NORTH)
+						buckled_mob.pixel_x = 19
+						buckled_mob.pixel_y = -5
+						buckled_mob.layer = 4
+					if(SOUTH)
+						buckled_mob.pixel_x = -13
+						buckled_mob.pixel_y = 3
+						buckled_mob.layer = 4
+					if(EAST)
+						buckled_mob.pixel_x = -4
+						buckled_mob.pixel_y = -3
+						buckled_mob.layer = 4.1
+					if(WEST)
+						buckled_mob.pixel_x = 4
+						buckled_mob.pixel_y = 28
+						buckled_mob.layer = 3.9
+
+			if(buckled_mob = ridden.buckled_mobs[3])
+				switch(ridden.dir)
+					if(NORTH)
+						buckled_mob.pixel_x = -10
+						buckled_mob.pixel_y = -18
+						buckled_mob.layer = 4.2
+					if(SOUTH)
+						buckled_mob.pixel_x = 16
+						buckled_mob.pixel_y = 25
+						buckled_mob.layer = 3.9
+					if(EAST)
+						buckled_mob.pixel_x = -22
+						buckled_mob.pixel_y = 30
+					if(WEST)
+						buckled_mob.pixel_x = 22
+						buckled_mob.pixel_y = -3
+						buckled_mob.layer = 4.1
+
+			if(buckled_mob = ridden.buckled_mobs[4])
+				switch(ridden.dir)
+					if(NORTH)
+						buckled_mob.pixel_x = 19
+						buckled_mob.pixel_y = -18
+						buckled_mob.layer = 4.2
+					if(SOUTH)
+						buckled_mob.pixel_x = -13
+						buckled_mob.pixel_y = 25
+						buckled_mob.layer = 3.9
+					if(EAST)
+						buckled_mob.pixel_x = -22
+						buckled_mob.pixel_y = -3
+						buckled_mob.layer = 3.9
+					if(WEST)
+						buckled_mob.pixel_x = 22
+						buckled_mob.pixel_y = 28
 
 /datum/riding/space/speedwagon/handle_vehicle_layer()
 	ridden.layer = BELOW_MOB_LAYER
