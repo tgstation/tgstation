@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 	var/static/list/asset_list
 
 /datum/html_interface/New(atom/ref, title, width = 700, height = 480, head = "")
-	html_interfaces.Add(src)
+	GLOB.html_interfaces.Add(src)
 
 	. = ..()
 
@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 /datum/html_interface/Destroy()
 	src.closeAll()
 
-	html_interfaces.Remove(src)
+	GLOB.html_interfaces.Remove(src)
 
 	return ..()
 

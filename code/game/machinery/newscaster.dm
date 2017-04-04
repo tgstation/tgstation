@@ -45,7 +45,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 	else
 		authorCensorTime.Add(GLOB.news_network.lastAction)
 	authorCensor = !authorCensor
-	news_network.lastAction ++
+	GLOB.news_network.lastAction ++
 
 /datum/newscaster/feed_message/proc/toggleCensorBody()
 	if(bodyCensor)
