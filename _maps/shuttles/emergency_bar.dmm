@@ -250,7 +250,7 @@
 "aN" = (
 /obj/structure/chair/stool/bar{
 	can_buckle = 1;
-	name = "buckable bar stool"
+	name = "buckleable bar stool"
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)

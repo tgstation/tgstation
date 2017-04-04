@@ -10,8 +10,11 @@
 	else
 		new /obj/effect/gibspawner/humanbodypartless(loc, viruses, dna)
 
-/mob/living/carbon/human/spawn_dust()
-	new /obj/effect/decal/remains/human(loc)
+/mob/living/carbon/human/spawn_dust(just_ash = FALSE)
+	if(just_ash)
+		new /obj/effect/decal/cleanable/ash(loc)
+	else
+		new /obj/effect/decal/remains/human(loc)
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
@@ -29,7 +32,7 @@
 
 	dna.species.spec_death(gibbed, src)
 
-	if(ticker && ticker.mode)
+	if(SSticker && SSticker.mode)
 		sql_report_death(src)
 	if(mind && mind.devilinfo)
 		INVOKE_ASYNC(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src)

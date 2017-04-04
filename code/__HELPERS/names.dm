@@ -82,10 +82,10 @@ var/religion_name = null
 		name = ""
 
 	// Prefix
-	for(var/holiday_name in SSevent.holidays)
+	for(var/holiday_name in SSevents.holidays)
 		if(holiday_name == "Friday the 13th")
 			random = 13
-		var/datum/holiday/holiday = SSevent.holidays[holiday_name]
+		var/datum/holiday/holiday = SSevents.holidays[holiday_name]
 		name = holiday.getStationPrefix()
 		//get normal name
 	if(!name)
@@ -217,7 +217,7 @@ var/syndicate_code_response//Code response for traitors.
 					if(2)
 						code_phrase += lowertext(pick(foods))
 					if(3)
-						code_phrase += pick(locations)
+						code_phrase += lowertext(pick(locations))
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.

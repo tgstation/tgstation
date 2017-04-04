@@ -65,7 +65,10 @@
 	if(!L || !L.len || !A)
 
 		return 0
-	return L[A.type]
+	if(ispath(A))
+		. = L[A]
+	else
+		. = L[A.type]
 
 //Checks for a string in a list
 /proc/is_string_in_list(string, list/L)

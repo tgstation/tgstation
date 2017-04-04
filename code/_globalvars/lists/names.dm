@@ -14,6 +14,7 @@ var/list/mime_names = file2list("config/names/mime.txt")
 var/list/carp_names = file2list("config/names/carp.txt")
 var/list/golem_names = file2list("config/names/golem.txt")
 var/list/plasmaman_names = file2list("config/names/plasmaman.txt")
+var/list/posibrain_names = list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","GOOF","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","WJ","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","COI")
 
 
 var/list/verbs = file2list("config/names/verbs.txt")

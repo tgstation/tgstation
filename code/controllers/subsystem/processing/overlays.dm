@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/processing/overlays/SSoverlays
-
-/datum/controller/subsystem/processing/overlays
+PROCESSING_SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER|SS_FIRE_IN_LOBBY
 	wait = 1
@@ -13,8 +11,7 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 	var/list/overlay_icon_cache
 	var/initialized = FALSE
 
-/datum/controller/subsystem/processing/overlays/New()
-	NEW_SS_GLOBAL(SSoverlays)
+/datum/controller/subsystem/processing/overlays/PreInit()
 	LAZYINITLIST(overlay_icon_state_caches)
 	LAZYINITLIST(overlay_icon_cache)
 
@@ -171,7 +168,7 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 	
 	var/list/cached_other = other.our_overlays
 	if(cached_other)
-		if(cut_old)
+		if(cut_old || !LAZYLEN(our_overlays))
 			our_overlays = cached_other.Copy()
 		else
 			our_overlays |= cached_other

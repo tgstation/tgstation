@@ -6,7 +6,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 
 /obj/item/stack/rods
 	name = "metal rod"
-	desc = "Some rods. Can be used for building, or something."
+	desc = "Some rods. Can be used for building or something."
 	singular_name = "metal rod"
 	icon_state = "rods"
 	item_state = "rods"
@@ -21,7 +21,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
 
-/obj/item/stack/rods/New(var/loc, var/amount=null)
+/obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	..()
 
 	recipes = rod_recipes

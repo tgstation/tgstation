@@ -177,12 +177,12 @@
 		return ..()
 	var/mob/living/simple_animal/SM = M
 	if(SM.sentience_type != sentience_type)
-		to_chat(user, "<span class='warning'>The potion won't work on [SM].</span>")
+		to_chat(user, "<span class='warning'>[src] won't work on [SM].</span>")
 		return ..()
 
 
 
-	to_chat(user, "<span class='notice'>You offer the sentience potion to [SM]...</span>")
+	to_chat(user, "<span class='notice'>You offer [src] to [SM]...</span>")
 	being_used = 1
 
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
@@ -190,13 +190,11 @@
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
-		SM.languages_spoken |= HUMAN
-		SM.languages_understood |= HUMAN
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
 		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
-		to_chat(user, "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>")
+		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
 		qdel(src)
 	else
 		to_chat(user, "<span class='notice'>[SM] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>")
@@ -238,8 +236,6 @@
 
 
 	user.mind.transfer_to(SM)
-	SM.languages_spoken = user.languages_spoken
-	SM.languages_understood = user.languages_understood
 	SM.faction = user.faction.Copy()
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
@@ -523,7 +519,7 @@
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
 	G.set_species(/datum/species/golem/adamantine)
 	G.set_cloned_appearance()
-	G.real_name = "Adamantine Golem ([rand(1, 1000)])"
+	G.real_name = G.dna.species.random_name()
 	G.name = G.real_name
 	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
 	G.dna.species.auto_equip(G)

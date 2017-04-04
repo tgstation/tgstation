@@ -99,16 +99,16 @@ insert ascii eagle on american flag background here
 			reagents.trans_to(S, 2*(cook_time/15))
 			switch(cook_time)
 				if(0 to 15)
-					S.color = rgb(166,103,54)
+					S.add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
 					S.name = "lightly-fried [frying.name]"
 				if(16 to 49)
-					S.color = rgb(103,63,24)
+					S.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 					S.name = "fried [frying.name]"
 				if(50 to 59)
-					S.color = rgb(63, 23, 4)
+					S.add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
 					S.name = "deep-fried [frying.name]"
 				if(60 to INFINITY)
-					S.color = rgb(33,19,9)
+					S.add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
 					S.name = "the physical manifestation of the very concept of fried foods"
 					S.desc = "A heavily fried...something.  Who can tell anymore?"
 			S.filling_color = S.color

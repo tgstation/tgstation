@@ -6,8 +6,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags = HEAR
 	slot_flags = SLOT_BELT
-	languages_spoken = ALL //this is a translator, after all.
-	languages_understood = ALL //this is a translator, after all.
 	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
 	throwforce = 0
@@ -15,14 +13,16 @@
 	var/playing = 0
 	var/playsleepseconds = 0
 	var/obj/item/device/tape/mytape
+	var/starting_tape_type = /obj/item/device/tape/random
 	var/open_panel = 0
 	var/canprint = 1
 
 
-/obj/item/device/taperecorder/New()
-	mytape = new /obj/item/device/tape/random(src)
-	update_icon()
+/obj/item/device/taperecorder/Initialize(mapload)
 	..()
+	if(starting_tape_type)
+		mytape = new starting_tape_type(src)
+	update_icon()
 
 
 /obj/item/device/taperecorder/examine(mob/user)
@@ -229,8 +229,8 @@
 
 
 //empty tape recorders
-/obj/item/device/taperecorder/empty/New()
-	return
+/obj/item/device/taperecorder/empty
+	starting_tape_type = null
 
 
 /obj/item/device/tape

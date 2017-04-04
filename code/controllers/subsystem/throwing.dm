@@ -1,20 +1,14 @@
 #define MAX_THROWING_DIST 512 // 2 z-levels on default width
 #define MAX_TICKS_TO_MAKE_UP 3 //how many missed ticks will we attempt to make up for this run.
-var/datum/controller/subsystem/throwing/SSthrowing
 
-/datum/controller/subsystem/throwing
+SUBSYSTEM_DEF(throwing)
 	name = "Throwing"
 	priority = 25
 	wait = 1
 	flags = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
 
 	var/list/currentrun
-	var/list/processing
-
-/datum/controller/subsystem/throwing/New()
-	NEW_SS_GLOBAL(SSthrowing)
-	processing = list()
-
+	var/list/processing = list()
 
 /datum/controller/subsystem/throwing/stat_entry()
 	..("P:[processing.len]")

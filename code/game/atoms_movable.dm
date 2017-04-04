@@ -6,8 +6,9 @@
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
-	var/languages_spoken = 0 //For say() and Hear()
-	var/languages_understood = 0
+	var/list/languages
+	var/list/initial_languages = list(/datum/language/common)
+	var/only_speaks_language = null
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -34,6 +35,11 @@
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
 	return ..()
+
+/atom/movable/Initialize(mapload)
+	..()
+	for(var/L in initial_languages)
+		grant_language(L)
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -103,7 +109,39 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+
+	if(flags & CLEAN_ON_MOVE)
+		clean_on_move()
 	return 1
+
+/atom/movable/proc/clean_on_move()
+	var/turf/tile = loc
+	if(isturf(tile))
+		tile.clean_blood()
+		for(var/A in tile)
+			if(is_cleanable(A))
+				qdel(A)
+			else if(istype(A, /obj/item))
+				var/obj/item/cleaned_item = A
+				cleaned_item.clean_blood()
+			else if(ishuman(A))
+				var/mob/living/carbon/human/cleaned_human = A
+				if(cleaned_human.lying)
+					if(cleaned_human.head)
+						cleaned_human.head.clean_blood()
+						cleaned_human.update_inv_head()
+					if(cleaned_human.wear_suit)
+						cleaned_human.wear_suit.clean_blood()
+						cleaned_human.update_inv_wear_suit()
+					else if(cleaned_human.w_uniform)
+						cleaned_human.w_uniform.clean_blood()
+						cleaned_human.update_inv_w_uniform()
+					if(cleaned_human.shoes)
+						cleaned_human.shoes.clean_blood()
+						cleaned_human.update_inv_shoes()
+					cleaned_human.clean_blood()
+					cleaned_human.wash_cream()
+					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 
 /atom/movable/Destroy(force)
 	var/inform_admins = HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
@@ -518,3 +556,54 @@
 	var/turf/currentturf = get_turf(src)
 	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
 		. = TRUE
+
+
+/* Language procs */
+/atom/movable/proc/grant_language(datum/language/dt)
+	LAZYINITLIST(languages)
+	languages[dt] = TRUE
+
+/atom/movable/proc/grant_all_languages(omnitongue=FALSE)
+	for(var/la in subtypesof(/datum/language))
+		grant_language(la)
+
+	if(omnitongue)
+		SET_SECONDARY_FLAG(src, OMNITONGUE)
+
+/atom/movable/proc/get_random_understood_language()
+	var/list/possible = list()
+	for(var/dt in languages)
+		possible += dt
+	. = safepick(possible)
+
+/atom/movable/proc/remove_language(datum/language/dt)
+	LAZYREMOVE(languages, dt)
+
+/atom/movable/proc/remove_all_languages()
+	LAZYCLEARLIST(languages)
+
+/atom/movable/proc/has_language(datum/language/dt)
+	. = is_type_in_typecache(dt, languages)
+
+/atom/movable/proc/can_speak_in_language(datum/language/dt)
+	. = has_language(dt)
+	if(only_speaks_language && !HAS_SECONDARY_FLAG(src, OMNITONGUE))
+		. = . && ispath(only_speaks_language, dt)
+
+/atom/movable/proc/get_default_language()
+	// if no language is specified, and we want to say() something, which
+	// language do we use?
+	var/datum/language/chosen_langtype
+	var/highest_priority
+
+	for(var/lt in languages)
+		var/datum/language/langtype = lt
+		if(!can_speak_in_language(langtype))
+			continue
+
+		var/pri = initial(langtype.default_priority)
+		if(!highest_priority || (pri > highest_priority))
+			chosen_langtype = langtype
+			highest_priority = pri
+
+	. = chosen_langtype

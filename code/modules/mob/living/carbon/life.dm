@@ -29,7 +29,7 @@
 
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing()
-	if(SSmob.times_fired%4==2 || failed_last_breath)
+	if(SSmobs.times_fired%4==2 || failed_last_breath)
 		breathe() //Breathe per 4 ticks, unless suffocating
 	else
 		if(istype(loc, /obj/))
@@ -130,7 +130,7 @@
 		if(prob(20))
 			emote("gasp")
 		if(O2_partialpressure > 0)
-			var/ratio = safe_oxy_min/O2_partialpressure
+			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
 			oxygen_used = breath_gases["o2"][MOLES]*ratio
@@ -292,7 +292,7 @@
 				stomach_contents.Remove(M)
 				qdel(M)
 				continue
-			if(SSmob.times_fired%3==1)
+			if(SSmobs.times_fired%3==1)
 				if(!(M.status_flags & GODMODE))
 					M.adjustBruteLoss(5)
 				nutrition += 10

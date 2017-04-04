@@ -74,13 +74,19 @@
 	quickbind_desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
-	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
+	if(!ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
 		to_chat(invoker, "<span class='warning'>You are already shielded by a Vanguard!</span>")
 		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	invoker.apply_status_effect(STATUS_EFFECT_VANGUARD)
+	if(ratvar_awakens)
+		for(var/mob/living/L in view(7, get_turf(invoker)))
+			if(L.stat != DEAD && is_servant_of_ratvar(L))
+				L.apply_status_effect(STATUS_EFFECT_VANGUARD)
+			CHECK_TICK
+	else
+		invoker.apply_status_effect(STATUS_EFFECT_VANGUARD)
 	return TRUE
 
 
@@ -279,14 +285,14 @@
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
 /datum/clockwork_scripture/create_object/wraith_spectacles
-	descname = "Xray Vision Glasses"
+	descname = "Limited Xray Vision Glasses"
 	name = "Wraith Spectacles"
-	desc = "Fabricates a pair of glasses that provides true sight but quickly damage vision, eventually causing blindness if worn for too long."
+	desc = "Fabricates a pair of glasses which grant true sight but cause gradual vision loss."
 	invocations = list("Show the truth of this world to me!")
 	channel_time = 10
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/wraith_spectacles
-	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which will grant true sight when worn.</span>"
+	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which grant true sight but cause gradual vision loss.</span>"
 	usage_tip = "\"True sight\" means that you are able to see through walls and in darkness."
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
