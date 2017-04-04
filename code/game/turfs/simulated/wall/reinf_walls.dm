@@ -249,8 +249,12 @@
 		if(prob(30))
 			dismantle_wall()
 
-/turf/closed/wall/r_vall/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
-	return FALSE
+/turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	if(!the_rcd.canRturf)
+		return FALSE
+	return ..()
 
-/turf/closed/wall/r_vall/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
-	return FALSE
+/turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	if(!the_rcd.canRturf)
+		return FALSE
+	return ..()
