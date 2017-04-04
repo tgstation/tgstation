@@ -17,14 +17,14 @@ Chief Engineer
 
 	outfit = /datum/outfit/job/ce
 
-	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_construction, access_sec_doors, access_minisat,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
-	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_construction, access_sec_doors, access_minisat,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
+	access = list(GLOB.access_engine, GLOB.access_engine_equip, GLOB.access_tech_storage, GLOB.access_maint_tunnels,
+			            GLOB.access_external_airlocks, GLOB.access_atmospherics, GLOB.access_emergency_storage, GLOB.access_eva,
+			            GLOB.access_heads, GLOB.access_construction, GLOB.access_sec_doors, GLOB.access_minisat,
+			            GLOB.access_ce, GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_tcomsat, GLOB.access_mineral_storeroom)
+	minimal_access = list(GLOB.access_engine, GLOB.access_engine_equip, GLOB.access_tech_storage, GLOB.access_maint_tunnels,
+			            GLOB.access_external_airlocks, GLOB.access_atmospherics, GLOB.access_emergency_storage, GLOB.access_eva,
+			            GLOB.access_heads, GLOB.access_construction, GLOB.access_sec_doors, GLOB.access_minisat,
+			            GLOB.access_ce, GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_tcomsat, GLOB.access_mineral_storeroom)
 
 /datum/outfit/job/ce
 	name = "Chief Engineer"
@@ -74,10 +74,10 @@ Station Engineer
 
 	outfit = /datum/outfit/job/engineer
 
-	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-									access_external_airlocks, access_construction, access_atmospherics, access_tcomsat)
-	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-									access_external_airlocks, access_construction, access_tcomsat)
+	access = list(GLOB.access_engine, GLOB.access_engine_equip, GLOB.access_tech_storage, GLOB.access_maint_tunnels,
+									GLOB.access_external_airlocks, GLOB.access_construction, GLOB.access_atmospherics, GLOB.access_tcomsat)
+	minimal_access = list(GLOB.access_engine, GLOB.access_engine_equip, GLOB.access_tech_storage, GLOB.access_maint_tunnels,
+									GLOB.access_external_airlocks, GLOB.access_construction, GLOB.access_tcomsat)
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"
@@ -125,9 +125,9 @@ Atmospheric Technician
 
 	outfit = /datum/outfit/job/atmos
 
-	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-									access_external_airlocks, access_construction, access_atmospherics)
-	minimal_access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
+	access = list(GLOB.access_engine, GLOB.access_engine_equip, GLOB.access_tech_storage, GLOB.access_maint_tunnels,
+									GLOB.access_external_airlocks, GLOB.access_construction, GLOB.access_atmospherics)
+	minimal_access = list(GLOB.access_atmospherics, GLOB.access_maint_tunnels, GLOB.access_emergency_storage, GLOB.access_construction)
 
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"
