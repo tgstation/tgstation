@@ -11,6 +11,17 @@
 
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
+/turf/proc/lighting_clear_overlay()
+/turf/proc/lighting_build_overlay()
+/turf/proc/get_lumcount(var/minlum = 0, var/maxlum = 1)
+/turf/proc/is_softly_lit()
+/turf/proc/recalc_atom_opacity()
+/turf/proc/change_area(var/area/old_area, var/area/new_area)
+/turf/proc/get_corners()
+/turf/proc/generate_missing_corners()
+
+// Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
+/turf/proc/reconsider_lights()
 	var/datum/light_source/L
 	var/thing
 	for (thing in affecting_lights)
@@ -89,21 +100,6 @@
 				has_opaque_atom = TRUE
 				break
 
-// If an opaque movable atom moves around we need to potentially update visibility.
-/turf/Entered(var/atom/movable/Obj, var/atom/OldLoc)
-	. = ..()
-
-	if (Obj && Obj.opacity)
-		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
-		reconsider_lights()
-
-/turf/Exited(var/atom/movable/Obj, var/atom/newloc)
-	. = ..()
-
-	if (Obj && Obj.opacity)
-		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
-		reconsider_lights()
-
 /turf/proc/change_area(var/area/old_area, var/area/new_area)
 	if (new_area.dynamic_lighting != old_area.dynamic_lighting)
 		if (new_area.dynamic_lighting)
@@ -129,6 +125,20 @@
 
 		corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
 
+// If an opaque movable atom moves around we need to potentially update visibility.
+/turf/Entered(var/atom/movable/Obj, var/atom/OldLoc)
+	. = ..()
+
+	if (Obj && Obj.opacity)
+		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
+		reconsider_lights()
+
+/turf/Exited(var/atom/movable/Obj, var/atom/newloc)
+	. = ..()
+
+	if (Obj && Obj.opacity)
+		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
+		reconsider_lights()
 
 /turf/ChangeTurf(path)
 	if (!path || (!use_preloader && path == type) || !SSlighting.initialized)
