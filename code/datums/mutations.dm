@@ -129,7 +129,7 @@
 	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.status_flags &= ~status
 	owner.update_body_parts()
-
+	addtimer(CALLBACK(owner.dna, .proc/remove_mutation, HULK), rand(1500,3000))
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	if(proximity) //no telekinetic hulk attack
 		return target.attack_hulk(owner)
@@ -144,6 +144,7 @@
 		return
 	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.update_body_parts()
+	owner.Weaken(5)
 
 /datum/mutation/human/hulk/say_mod(message)
 	if(message)
@@ -536,9 +537,9 @@
 	if(message)
 		message = replacetext(message,"w","v")
 		message = replacetext(message,"j","y")
-		message = replacetext(message,"a",pick("å","ä","æ","a"))
+		message = replacetext(message,"a",pick("Ã¥","Ã¤","Ã¦","a"))
 		message = replacetext(message,"bo","bjo")
-		message = replacetext(message,"o",pick("ö","ø","o"))
+		message = replacetext(message,"o",pick("Ã¶","Ã¸","o"))
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
 	return message
