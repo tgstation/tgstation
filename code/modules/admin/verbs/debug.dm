@@ -171,7 +171,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/t = ""
 	for(var/id in env_gases)
-		if(id in hardcoded_gases || env_gases[id][MOLES])
+		if(id in GLOB.hardcoded_gases || env_gases[id][MOLES])
 			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
 
 	to_chat(usr, t)
@@ -572,7 +572,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/datum/outfit/custom = null
 	if (dresscode == "Custom")
 		var/list/custom_names = list()
-		for(var/datum/outfit/D in custom_outfits)
+		for(var/datum/outfit/D in GLOB.custom_outfits)
 			custom_names[D.name] = D
 		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in custom_names
 		custom = custom_names[selected_name]
@@ -770,7 +770,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!holder)
 		return
 
-	error_cache.show_to(src)
+	GLOB.error_cache.show_to(src)
 
 /client/proc/pump_random_event()
 	set category = "Debug"

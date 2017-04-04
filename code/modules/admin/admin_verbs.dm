@@ -320,7 +320,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 	set name = "Adminverbs - Hide Most"
 	set category = "Admin"
 
-	verbs.Remove(/client/proc/hide_most_verbs, admin_verbs_hideable)
+	verbs.Remove(/client/proc/hide_most_verbs, GLOB.admin_verbs_hideable)
 	verbs += /client/proc/show_verbs
 
 	to_chat(src, "<span class='interface'>Most of your adminverbs have been hidden.</span>")
@@ -578,7 +578,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 
 	var/list/spell_list = list()
 	var/type_length = length("/obj/effect/proc_holder/spell") + 2
-	for(var/A in spells)
+	for(var/A in GLOB.spells)
 		spell_list[copytext("[A]", type_length)] = A
 	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_list
 	if(!S)
@@ -668,7 +668,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 	qdel(holder)
 
 	GLOB.deadmins += ckey
-	admin_datums -= ckey
+	GLOB.admin_datums -= ckey
 	verbs += /client/proc/readmin
 
 	to_chat(src, "<span class='interface'>You are now a normal player.</span>")

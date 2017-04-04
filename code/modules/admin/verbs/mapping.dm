@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	if(!on)
 		var/list/seen = list()
-		for(var/obj/machinery/camera/C in cameranet.cameras)
+		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 			for(var/turf/T in C.can_see())
 				seen[T]++
 		for(var/turf/T in seen)
@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	var/list/obj/machinery/camera/CL = list()
 
-	for(var/obj/machinery/camera/C in cameranet.cameras)
+	for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 		CL += C
 
 	var/output = {"<B>CAMERA ANNOMALITIES REPORT</B><HR>
@@ -168,13 +168,13 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	if(!check_rights(R_DEBUG))
 		return
 	verbs -= /client/proc/enable_debug_verbs
-	verbs.Add(/client/proc/disable_debug_verbs, admin_verbs_debug_mapping)
+	verbs.Add(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
 	feedback_add_details("admin_verb","mDVE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/disable_debug_verbs()
 	set category = "Debug"
 	set name = "Debug verbs - Disable"
-	verbs.Remove(/client/proc/disable_debug_verbs, admin_verbs_debug_mapping)
+	verbs.Remove(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
 	verbs += /client/proc/enable_debug_verbs
 	feedback_add_details("admin_verb", "mDVD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -255,7 +255,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	set category = "Mapping"
 	set name = "Disable all communication verbs"
 
-	say_disabled = !say_disabled
+	GLOB.say_disabled = !GLOB.say_disabled
 	if(say_disabled)
 		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
 	else

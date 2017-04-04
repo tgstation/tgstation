@@ -102,7 +102,7 @@ GLOBAL_DATUM_INIT(blackbox, /datum/feedback, new)
 	FV.set_value(value)
 
 /proc/feedback_inc(variable,value)
-	if(!blackbox)
+	if(!GLOB.blackbox)
 		return
 
 	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
