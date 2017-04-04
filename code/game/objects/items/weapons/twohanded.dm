@@ -720,7 +720,6 @@
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored", "lanced") //Added lanced for flavour.
 	sharpness = IS_SHARP
 	var/maxdist = 16
-	var/throw_cooldown = 0				//Should equate to half a second. Not supposed to be varedited.
 
 /obj/item/weapon/twohanded/skybulge/update_icon()
 	icon_state = "sky_bulge[wielded]"
