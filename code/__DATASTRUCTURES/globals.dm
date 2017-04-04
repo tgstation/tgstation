@@ -43,7 +43,7 @@
 
 GLOBAL_REAL(GLOB, /datum/global_vars);
 
-#define GLOBAL_RAW(X) /datum/global_vars/var/static##X
+#define GLOBAL_RAW(X) /datum/global_vars/var/global##X
 
 #define GLOBAL_VAR_INIT(X, InitValue) GLOBAL_RAW(/##X); GLOBAL_MANAGED(X, InitValue)
 
