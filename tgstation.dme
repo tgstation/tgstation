@@ -1389,8 +1389,6 @@
 #include "code\modules\mapping\map_template.dm"
 #include "code\modules\mapping\reader.dm"
 #include "code\modules\mapping\ruins.dm"
-#include "code\modules\mapping\swapmaps.dm"
-#include "code\modules\mapping\writer.dm"
 #include "code\modules\mining\abandoned_crates.dm"
 #include "code\modules\mining\aux_base.dm"
 #include "code\modules\mining\aux_base_camera.dm"
