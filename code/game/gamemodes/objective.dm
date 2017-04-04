@@ -793,7 +793,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	//So at the time of writing, rand(3,6), it's also capped by the amount of lings there are
 	//Because you can't fill 6 head roles with 3 lings
 
-	var/needed_heads = rand(min_lings,command_positions.len)
+	var/needed_heads = rand(min_lings,GLOB.command_positions.len)
 	needed_heads = min(SSticker.mode.changelings.len,needed_heads)
 
 	var/list/heads = SSticker.mode.get_living_heads()

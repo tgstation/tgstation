@@ -291,7 +291,7 @@
 
 	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
-	if(security_level < SEC_LEVEL_BLUE)
+	if(GLOB.security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
 
@@ -395,7 +395,7 @@
 /datum/game_mode/proc/get_living_heads()
 	. = list()
 	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in command_positions))
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.command_positions))
 			. |= player.mind
 
 
@@ -405,7 +405,7 @@
 /datum/game_mode/proc/get_all_heads()
 	. = list()
 	for(var/mob/player in GLOB.mob_list)
-		if(player.mind && (player.mind.assigned_role in command_positions))
+		if(player.mind && (player.mind.assigned_role in GLOB.command_positions))
 			. |= player.mind
 
 //////////////////////////////////////////////
@@ -414,7 +414,7 @@
 /datum/game_mode/proc/get_living_sec()
 	. = list()
 	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in security_positions))
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
 			. |= player.mind
 
 ////////////////////////////////////////
@@ -423,7 +423,7 @@
 /datum/game_mode/proc/get_all_sec()
 	. = list()
 	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.mind && (player.mind.assigned_role in security_positions))
+		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
 			. |= player.mind
 
 //////////////////////////

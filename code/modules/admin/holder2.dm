@@ -1,4 +1,4 @@
-GLOBAL_EMPTY_LIST(admin_datums)
+GLOBAL_LIST_EMPTY(admin_datums)
 GLOBAL_PROTECT(admin_datums)
 
 /datum/admins

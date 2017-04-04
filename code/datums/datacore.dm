@@ -115,28 +115,28 @@
 		var/name = t.fields["name"]
 		var/rank = t.fields["rank"]
 		var/department = 0
-		if(rank in command_positions)
+		if(rank in GLOB.command_positions)
 			heads[name] = rank
 			department = 1
-		if(rank in security_positions)
+		if(rank in GLOB.security_positions)
 			sec[name] = rank
 			department = 1
-		if(rank in engineering_positions)
+		if(rank in GLOB.engineering_positions)
 			eng[name] = rank
 			department = 1
-		if(rank in medical_positions)
+		if(rank in GLOB.medical_positions)
 			med[name] = rank
 			department = 1
-		if(rank in science_positions)
+		if(rank in GLOB.science_positions)
 			sci[name] = rank
 			department = 1
-		if(rank in supply_positions)
+		if(rank in GLOB.supply_positions)
 			sup[name] = rank
 			department = 1
-		if(rank in civilian_positions)
+		if(rank in GLOB.civilian_positions)
 			civ[name] = rank
 			department = 1
-		if(rank in nonhuman_positions)
+		if(rank in GLOB.nonhuman_positions)
 			bot[name] = rank
 			department = 1
 		if(!department && !(name in heads))

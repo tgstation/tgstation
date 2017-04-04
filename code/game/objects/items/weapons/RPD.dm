@@ -31,7 +31,7 @@ RPD
 
 /datum/pipe_info/New(pid,direction,dt)
 	src.id=pid
-	src.icon_state=pipeID2State["[pid]"]
+	src.icon_state=GLOB.pipeID2State["[pid]"]
 	src.dir = direction
 	src.dirtype=dt
 
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 
 /datum/pipe_info/disposal/New(var/pid,var/dt)
 	src.id=pid
-	src.icon_state=disposalpipeID2State[pid+1]
+	src.icon_state=GLOB.disposalpipeID2State[pid+1]
 	src.dir = SOUTH
 	src.dirtype=dt
 	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)

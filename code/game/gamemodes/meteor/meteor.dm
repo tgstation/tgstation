@@ -14,15 +14,15 @@
 	if(nometeors || meteordelay > world.time - SSticker.round_start_time)
 		return
 
-	var/list/wavetype = meteors_normal
+	var/list/wavetype = GLOB.meteors_normal
 	var/meteorminutes = (world.time - SSticker.round_start_time - meteordelay) / 10 / 60
 
 
 	if (prob(meteorminutes))
-		wavetype = meteors_threatening
+		wavetype = GLOB.meteors_threatening
 
 	if (prob(meteorminutes/2))
-		wavetype = meteors_catastrophic
+		wavetype = GLOB.meteors_catastrophic
 
 	var/ramp_up_final = Clamp(round(meteorminutes/rampupdelta), 1, 10)
 

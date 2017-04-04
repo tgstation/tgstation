@@ -283,7 +283,7 @@
 		if (SSticker.mode.config_tag=="revolution")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (assigned_role in command_positions)
+		if (assigned_role in GLOB.command_positions)
 			text += "<b>HEAD</b>|loyal|employee|headrev|rev"
 		else if (src in SSticker.mode.head_revolutionaries)
 			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"

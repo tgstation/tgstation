@@ -116,7 +116,7 @@
 	if(foundIDs.len)
 		for(var/obj/item/weapon/card/id/ID in foundIDs)
 			ID.name = "lead agent card"
-			ID.access += access_syndicate_leader
+			ID.access += GLOB.access_syndicate_leader
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
 
@@ -279,7 +279,7 @@
 		var/TC_uses = 0
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayer(syndicate)
-			for(var/obj/item/device/uplink/H in uplinks)
+			for(var/obj/item/device/uplink/H in GLOB.uplinks)
 				if(H && H.owner && H.owner == syndicate.key)
 					TC_uses += H.spent_telecrystals
 					purchases += H.purchase_log

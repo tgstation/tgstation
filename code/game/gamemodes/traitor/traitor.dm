@@ -248,7 +248,7 @@
 			var/TC_uses = 0
 			var/uplink_true = 0
 			var/purchases = ""
-			for(var/obj/item/device/uplink/H in uplinks)
+			for(var/obj/item/device/uplink/H in GLOB.uplinks)
 				if(H && H.owner && H.owner == traitor.key)
 					TC_uses += H.spent_telecrystals
 					uplink_true = 1

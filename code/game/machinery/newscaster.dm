@@ -26,7 +26,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 /datum/newscaster/feed_message/proc/returnAuthor(censor)
 	if(censor == -1)
 		censor = authorCensor
-	var/txt = "[news_network.redactedText]"
+	var/txt = "[GLOB.news_network.redactedText]"
 	if(!censor)
 		txt = author
 	return txt
@@ -34,26 +34,26 @@ GLOBAL_EMPTY_LIST(allCasters)
 /datum/newscaster/feed_message/proc/returnBody(censor)
 	if(censor == -1)
 		censor = bodyCensor
-	var/txt = "[news_network.redactedText]"
+	var/txt = "[GLOB.news_network.redactedText]"
 	if(!censor)
 		txt = body
 	return txt
 
 /datum/newscaster/feed_message/proc/toggleCensorAuthor()
 	if(authorCensor)
-		authorCensorTime.Add(news_network.lastAction*-1)
+		authorCensorTime.Add(GLOB.news_network.lastAction*-1)
 	else
-		authorCensorTime.Add(news_network.lastAction)
+		authorCensorTime.Add(GLOB.news_network.lastAction)
 	authorCensor = !authorCensor
 	news_network.lastAction ++
 
 /datum/newscaster/feed_message/proc/toggleCensorBody()
 	if(bodyCensor)
-		bodyCensorTime.Add(news_network.lastAction*-1)
+		bodyCensorTime.Add(GLOB.news_network.lastAction*-1)
 	else
-		bodyCensorTime.Add(news_network.lastAction)
+		bodyCensorTime.Add(GLOB.news_network.lastAction)
 	bodyCensor = !bodyCensor
-	news_network.lastAction ++
+	GLOB.news_network.lastAction ++
 
 /datum/newscaster/feed_channel
 	var/channel_name = ""
@@ -69,26 +69,26 @@ GLOBAL_EMPTY_LIST(allCasters)
 /datum/newscaster/feed_channel/proc/returnAuthor(censor)
 	if(censor == -1)
 		censor = authorCensor
-	var/txt = "[news_network.redactedText]"
+	var/txt = "[GLOB.news_network.redactedText]"
 	if(!censor)
 		txt = author
 	return txt
 
 /datum/newscaster/feed_channel/proc/toggleCensorDclass()
 	if(censored)
-		DclassCensorTime.Add(news_network.lastAction*-1)
+		DclassCensorTime.Add(GLOB.news_network.lastAction*-1)
 	else
-		DclassCensorTime.Add(news_network.lastAction)
+		DclassCensorTime.Add(GLOB.news_network.lastAction)
 	censored = !censored
-	news_network.lastAction ++
+	GLOB.news_network.lastAction ++
 
 /datum/newscaster/feed_channel/proc/toggleCensorAuthor()
 	if(authorCensor)
-		authorCensorTime.Add(news_network.lastAction*-1)
+		authorCensorTime.Add(GLOB.news_network.lastAction*-1)
 	else
-		authorCensorTime.Add(news_network.lastAction)
+		authorCensorTime.Add(GLOB.news_network.lastAction)
 	authorCensor = !authorCensor
-	news_network.lastAction ++
+	GLOB.news_network.lastAction ++
 
 /datum/newscaster/wanted_message
 	var/active
@@ -130,7 +130,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 		if(FC.channel_name == channel_name)
 			FC.messages += newMsg
 			break
-	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
 		NEWSCASTER.newsAlert(channel_name)
 	lastAction ++
 	newMsg.creationTime = lastAction
@@ -144,7 +144,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 	if(photo)
 		wanted_issue.img = photo.img
 	if(newMessage)
-		for(var/obj/machinery/newscaster/N in allCasters)
+		for(var/obj/machinery/newscaster/N in GLOB.allCasters)
 			N.newsAlert()
 			N.update_icon()
 
@@ -154,7 +154,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 	wanted_issue.body = null
 	wanted_issue.scannedUser = null
 	wanted_issue.img = null
-	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
 		NEWSCASTER.update_icon()
 
 

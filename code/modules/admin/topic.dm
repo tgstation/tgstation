@@ -600,7 +600,7 @@
 	//Command (Blue)
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
 		dat += "<tr align='center' bgcolor='ccccff'><th colspan='[length(GLOB.command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in command_positions)
+		for(var/jobPos in GLOB.command_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
@@ -618,8 +618,8 @@
 	//Security (Red)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='ffddf0'><th colspan='[length(security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in security_positions)
+		dat += "<tr bgcolor='ffddf0'><th colspan='[length(GLOB.security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in GLOB.security_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
@@ -637,8 +637,8 @@
 	//Engineering (Yellow)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='fff5cc'><th colspan='[length(engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in engineering_positions)
+		dat += "<tr bgcolor='fff5cc'><th colspan='[length(GLOB.engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in GLOB.engineering_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
@@ -656,8 +656,8 @@
 	//Medical (White)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='ffeef0'><th colspan='[length(medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in medical_positions)
+		dat += "<tr bgcolor='ffeef0'><th colspan='[length(GLOB.medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in GLOB.medical_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
@@ -675,8 +675,8 @@
 	//Science (Purple)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='e79fff'><th colspan='[length(science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in science_positions)
+		dat += "<tr bgcolor='e79fff'><th colspan='[length(GLOB.science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in GLOB.science_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
@@ -694,8 +694,8 @@
 	//Supply (Brown)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='DDAA55'><th colspan='[length(supply_positions)]'><a href='?src=\ref[src];jobban3=supplydept;jobban4=\ref[M]'>Supply Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in supply_positions)
+		dat += "<tr bgcolor='DDAA55'><th colspan='[length(GLOB.supply_positions)]'><a href='?src=\ref[src];jobban3=supplydept;jobban4=\ref[M]'>Supply Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in GLOB.supply_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
@@ -713,8 +713,8 @@
 	//Civilian (Grey)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='dddddd'><th colspan='[length(civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in civilian_positions)
+		dat += "<tr bgcolor='dddddd'><th colspan='[length(GLOB.civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in GLOB.civilian_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
@@ -732,8 +732,8 @@
 	//Non-Human (Green)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in nonhuman_positions)
+		dat += "<tr bgcolor='ccffcc'><th colspan='[length(GLOB.nonhuman_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in GLOB.nonhuman_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
@@ -880,42 +880,42 @@
 		var/list/joblist = list()
 		switch(href_list["jobban3"])
 			if("commanddept")
-				for(var/jobPos in command_positions)
+				for(var/jobPos in GLOB.command_positions)
 					if(!jobPos)
 						continue
 					joblist += jobPos
 			if("securitydept")
-				for(var/jobPos in security_positions)
+				for(var/jobPos in GLOB.security_positions)
 					if(!jobPos)
 						continue
 					joblist += jobPos
 			if("engineeringdept")
-				for(var/jobPos in engineering_positions)
+				for(var/jobPos in GLOB.engineering_positions)
 					if(!jobPos)
 						continue
 					joblist += jobPos
 			if("medicaldept")
-				for(var/jobPos in medical_positions)
+				for(var/jobPos in GLOB.medical_positions)
 					if(!jobPos)
 						continue
 					joblist += jobPos
 			if("sciencedept")
-				for(var/jobPos in science_positions)
+				for(var/jobPos in GLOB.science_positions)
 					if(!jobPos)
 						continue
 					joblist += jobPos
 			if("supplydept")
-				for(var/jobPos in supply_positions)
+				for(var/jobPos in GLOB.supply_positions)
 					if(!jobPos)
 						continue
 					joblist += jobPos
 			if("civiliandept")
-				for(var/jobPos in civilian_positions)
+				for(var/jobPos in GLOB.civilian_positions)
 					if(!jobPos)
 						continue
 					joblist += jobPos
 			if("nonhumandept")
-				for(var/jobPos in nonhuman_positions)
+				for(var/jobPos in GLOB.nonhuman_positions)
 					if(!jobPos)
 						continue
 					joblist += jobPos
@@ -1996,7 +1996,7 @@
 
 	else if(href_list["ac_submit_new_channel"])
 		var/check = 0
-		for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
+		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 				check = 1
 				break
@@ -2005,7 +2005,7 @@
 		else
 			var/choice = alert("Please confirm Feed channel creation.","Network Channel Handler","Confirm","Cancel")
 			if(choice=="Confirm")
-				news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admin_signature, src.admincaster_feed_channel.locked, 1)
+				GLOB.news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admin_signature, src.admincaster_feed_channel.locked, 1)
 				feedback_inc("newscaster_channels",1)
 				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
@@ -2013,7 +2013,7 @@
 
 	else if(href_list["ac_set_channel_receiving"])
 		var/list/available_channels = list()
-		for(var/datum/newscaster/feed_channel/F in news_network.network_channels)
+		for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
 			available_channels += F.channel_name
 		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in available_channels )
 		src.access_news_network()
@@ -2028,11 +2028,11 @@
 		if(src.admincaster_feed_message.returnBody(-1) =="" || src.admincaster_feed_message.returnBody(-1) =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
 			src.admincaster_screen = 6
 		else
-			news_network.SubmitArticle(src.admincaster_feed_message.returnBody(-1), src.admin_signature, src.admincaster_feed_channel.channel_name, null, 1)
+			GLOB.news_network.SubmitArticle(src.admincaster_feed_message.returnBody(-1), src.admin_signature, src.admincaster_feed_channel.channel_name, null, 1)
 			feedback_inc("newscaster_stories",1)
 			src.admincaster_screen=4
 
-		for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+		for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
 			NEWSCASTER.newsAlert(src.admincaster_feed_channel.channel_name)
 
 		log_admin("[key_name(usr)] submitted a feed story to channel: [src.admincaster_feed_channel.channel_name]!")
@@ -2056,12 +2056,12 @@
 
 	else if(href_list["ac_menu_wanted"])
 		var/already_wanted = 0
-		if(news_network.wanted_issue.active)
+		if(GLOB.news_network.wanted_issue.active)
 			already_wanted = 1
 
 		if(already_wanted)
-			src.admincaster_wanted_message.criminal  = news_network.wanted_issue.criminal
-			src.admincaster_wanted_message.body = news_network.wanted_issue.body
+			src.admincaster_wanted_message.criminal  = GLOB.news_network.wanted_issue.criminal
+			src.admincaster_wanted_message.body = GLOB.news_network.wanted_issue.body
 		src.admincaster_screen = 14
 		src.access_news_network()
 
@@ -2085,10 +2085,10 @@
 			var/choice = alert("Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler","Confirm","Cancel")
 			if(choice=="Confirm")
 				if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
-					news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature, null, 1, 1)
+					GLOB.news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature, null, 1, 1)
 					src.admincaster_screen = 15
 				else
-					news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature)
+					GLOB.news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature)
 					src.admincaster_screen = 19
 				log_admin("[key_name(usr)] issued a Station-wide Wanted Notification for [src.admincaster_wanted_message.criminal]!")
 		src.access_news_network()
@@ -2096,7 +2096,7 @@
 	else if(href_list["ac_cancel_wanted"])
 		var/choice = alert("Please confirm Wanted Issue removal.","Network Security Handler","Confirm","Cancel")
 		if(choice=="Confirm")
-			news_network.deleteWanted()
+			GLOB.news_network.deleteWanted()
 			src.admincaster_screen=17
 		src.access_news_network()
 
@@ -2219,7 +2219,7 @@
 		O.belt = text2path(href_list["outfit_belt"])
 		O.ears = text2path(href_list["outfit_ears"])
 
-		custom_outfits.Add(O)
+		GLOB.custom_outfits.Add(O)
 		message_admins("[key_name(usr)] created \"[O.name]\" outfit!")
 
 	else if(href_list["set_selfdestruct_code"])

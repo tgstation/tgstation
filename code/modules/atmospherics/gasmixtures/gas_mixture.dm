@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /proc/init_gaslist_cache()
 	. = list()
-	for(var/id in meta_gas_info)
+	for(var/id in GLOB.meta_gas_info)
 		var/list/cached_gas = new(3)
 
 		.[id] = cached_gas
@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		cached_gas[GAS_META] = meta_gas_info[id]
 
 #define GASLIST(id, out_list)\
-	var/list/tmp_gaslist = gaslist_cache[id];\
+	var/list/tmp_gaslist = GLOB.gaslist_cache[id];\
 	out_list = tmp_gaslist.Copy();
 
 /datum/gas_mixture
