@@ -151,7 +151,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 			var/pos_y
 			var/life_status
 
-			for(var/mob/living/carbon/human/H in mob_list)
+			for(var/mob/living/carbon/human/H in living_mob_list)
 				// Check if their z-level is correct and if they are wearing a uniform.
 				// Accept H.z==0 as well in case the mob is inside an object.
 				if ((H.z == 0 || H.z == z) && istype(H.w_uniform, /obj/item/clothing/under))
