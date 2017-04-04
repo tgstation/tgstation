@@ -1,5 +1,5 @@
 
-var/global/list/parasites = list() //all currently existing/living guardians
+GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 #define GUARDIAN_HANDS_LAYER 1
 #define GUARDIAN_TOTAL_LAYERS 1
@@ -51,7 +51,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
-	parasites |= src
+	parasites += src
 	setthemename(theme)
 
 	..()
@@ -452,7 +452,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	for(var/P in parasites)
 		var/mob/living/simple_animal/hostile/guardian/G = P
 		if(G.summoner == src)
-			. |= G
+			. += G
 
 /mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
 	return (istype(G) && G.summoner == summoner)

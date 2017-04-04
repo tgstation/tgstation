@@ -4,8 +4,6 @@
 // Navigates via floor navbeacons
 // Remote Controlled from QM's PDA
 
-var/global/mulebot_count = 0
-
 #define SIGH 0
 #define ANNOYED 1
 #define DELIGHT 2
@@ -58,10 +56,10 @@ var/global/mulebot_count = 0
 	cell.charge = 2000
 	cell.maxcharge = 2000
 
-	spawn(10) // must wait for map loading to finish
-		mulebot_count += 1
-		if(!suffix)
-			set_suffix("#[mulebot_count]")
+	var/static/mulebot_count = 0
+	mulebot_count += 1
+	if(!suffix)
+		set_suffix("#[mulebot_count]")
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
 	unload(0)

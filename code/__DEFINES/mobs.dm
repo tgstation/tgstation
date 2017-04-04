@@ -115,3 +115,5 @@
 #define SLIDE 2
 #define GALOSHES_DONT_HELP 4
 #define SLIDE_ICE 8
+
+#define MAX_CHICKENS 50
