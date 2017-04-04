@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 		cached_gas[MOLES] = 0
 		cached_gas[ARCHIVE] = 0
-		cached_gas[GAS_META] = meta_gas_info[id]
+		cached_gas[GAS_META] = GLOB.meta_gas_info[id]
 
 #define GASLIST(id, out_list)\
 	var/list/tmp_gaslist = GLOB.gaslist_cache[id];\

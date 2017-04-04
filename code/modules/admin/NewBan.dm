@@ -6,7 +6,7 @@ GLOBAL_PROTECT(Banlist)
 /proc/CheckBan(ckey, id, address)
 	if(!GLOB.Banlist)		// if Banlist cannot be located for some reason
 		LoadBans()		// try to load the bans
-		if(!Banlist)	// uh oh, can't find bans!
+		if(!GLOB.Banlist)	// uh oh, can't find bans!
 			return 0	// ABORT ABORT ABORT
 
 	. = list()
@@ -154,7 +154,7 @@ GLOBAL_PROTECT(Banlist)
 
 /proc/GetExp(minutes as num)
 	UpdateTime()
-	var/exp = minutes - CMinutes
+	var/exp = minutes - GLOB.CMinutes
 	if (exp <= 0)
 		return 0
 	else
@@ -220,14 +220,14 @@ GLOBAL_PROTECT(Banlist)
 		GLOB.Banlist["id"] << "trashid[i]"
 		GLOB.Banlist["reason"] << "Trashban[i]."
 		GLOB.Banlist["temp"] << a
-		GLOB.Banlist["minutes"] << CMinutes + rand(1,2000)
+		GLOB.Banlist["minutes"] << GLOB.CMinutes + rand(1,2000)
 		GLOB.Banlist["bannedby"] << "trashmin"
 		last = "trash[i]"
 
 	GLOB.Banlist.cd = "/base"
 
 /proc/ClearAllBans()
-	Banlist.cd = "/base"
-	for (var/A in Banlist.dir)
+	GLOB.Banlist.cd = "/base"
+	for (var/A in GLOB.Banlist.dir)
 		RemoveBan(A)
 

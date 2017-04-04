@@ -249,31 +249,31 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 		var/rights = holder.rank.rights
-		verbs += admin_verbs_default
+		verbs += GLOB.admin_verbs_default
 		if(rights & R_BUILDMODE)
 			verbs += /client/proc/togglebuildmodeself
 		if(rights & R_ADMIN)
-			verbs += admin_verbs_admin
+			verbs += GLOB.admin_verbs_admin
 		if(rights & R_BAN)
-			verbs += admin_verbs_ban
+			verbs += GLOB.admin_verbs_ban
 		if(rights & R_FUN)
-			verbs += admin_verbs_fun
+			verbs += GLOB.admin_verbs_fun
 		if(rights & R_SERVER)
-			verbs += admin_verbs_server
+			verbs += GLOB.admin_verbs_server
 		if(rights & R_DEBUG)
-			verbs += admin_verbs_debug
+			verbs += GLOB.admin_verbs_debug
 		if(rights & R_POSSESS)
-			verbs += admin_verbs_possess
+			verbs += GLOB.admin_verbs_possess
 		if(rights & R_PERMISSIONS)
-			verbs += admin_verbs_permissions
+			verbs += GLOB.admin_verbs_permissions
 		if(rights & R_STEALTH)
 			verbs += /client/proc/stealth
 		if(rights & R_REJUVINATE)
-			verbs += admin_verbs_rejuv
+			verbs += GLOB.admin_verbs_rejuv
 		if(rights & R_SOUNDS)
-			verbs += admin_verbs_sounds
+			verbs += GLOB.admin_verbs_sounds
 		if(rights & R_SPAWN)
-			verbs += admin_verbs_spawn
+			verbs += GLOB.admin_verbs_spawn
 
 		for(var/path in holder.rank.adds)
 			verbs += path
@@ -282,19 +282,19 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
-		admin_verbs_default,
+		GLOB.admin_verbs_default,
 		/client/proc/togglebuildmodeself,
-		admin_verbs_admin,
-		admin_verbs_ban,
-		admin_verbs_fun,
-		admin_verbs_server,
-		admin_verbs_debug,
-		admin_verbs_possess,
-		admin_verbs_permissions,
+		GLOB.admin_verbs_admin,
+		GLOB.admin_verbs_ban,
+		GLOB.admin_verbs_fun,
+		GLOB.admin_verbs_server,
+		GLOB.admin_verbs_debug,
+		GLOB.admin_verbs_possess,
+		GLOB.admin_verbs_permissions,
 		/client/proc/stealth,
-		admin_verbs_rejuv,
-		admin_verbs_sounds,
-		admin_verbs_spawn,
+		GLOB.admin_verbs_rejuv,
+		GLOB.admin_verbs_sounds,
+		GLOB.admin_verbs_spawn,
 		/*Debug verbs added by "show debug verbs"*/
 		/client/proc/Cell,
 		/client/proc/do_not_use_these,

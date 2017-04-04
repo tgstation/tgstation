@@ -155,7 +155,7 @@
 	if(C)
 		P = C.prefs
 	else
-		P = preferences_datums[whom]
+		P = GLOB.preferences_datums[whom]
 	if(!P)
 		return
 
