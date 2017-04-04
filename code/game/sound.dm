@@ -23,7 +23,7 @@
 			if(T && T.z == turf_source.z)
 				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround, channel, pressure_affected)
 
-/atom/proc/playsound_direct(soundin, vol as num, vary,  frequency, falloff, surround = TRUE, channel = 0, pressure_affected = TRUE)
+/atom/proc/playsound_direct(soundin, vol as num, vary,  frequency, falloff, surround = TRUE, channel = 0, pressure_affected = FALSE)
 	playsound_local(get_turf(src), soundin, vol, vary, frequency, falloff, surround, channel)
 
 /atom/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0, pressure_affected = TRUE)
