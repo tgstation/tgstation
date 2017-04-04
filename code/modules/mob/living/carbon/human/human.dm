@@ -42,6 +42,8 @@
 
 	handcrafting = new()
 
+	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
+
 	..()
 
 /mob/living/carbon/human/create_internal_organs()
@@ -856,7 +858,7 @@
 		if(7) // Pride
 			log_game("[src] was influenced by the sin of pride.")
 			O = new /datum/objective/sintouched/pride
-	ticker.mode.sintouched += src.mind
+	SSticker.mode.sintouched += src.mind
 	src.mind.objectives += O
 	src.mind.announce_objectives()
 

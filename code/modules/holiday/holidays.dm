@@ -142,8 +142,8 @@
 	begin_month = APRIL
 
 /datum/holiday/april_fools/celebrate()
-	if(ticker)
-		ticker.login_music = 'sound/ambience/clown.ogg'
+	if(SSticker)
+		SSticker.login_music = 'sound/ambience/clown.ogg'
 		for(var/mob/dead/new_player/P in mob_list)
 			if(P.client)
 				P.client.playtitlemusic()

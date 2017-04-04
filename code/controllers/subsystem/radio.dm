@@ -1,14 +1,9 @@
-var/datum/controller/subsystem/radio/SSradio
-
-/datum/controller/subsystem/radio
+SUBSYSTEM_DEF(radio)
 	name = "Radio"
 	init_order = 18
 	flags = SS_NO_FIRE|SS_NO_INIT
 
 	var/list/datum/radio_frequency/frequencies = list()
-
-/datum/controller/subsystem/radio/New()
-	NEW_SS_GLOBAL(SSradio)
 
 /datum/controller/subsystem/radio/proc/add_object(obj/device, new_frequency as num, filter = null as text|null)
 	var/f_text = num2text(new_frequency)

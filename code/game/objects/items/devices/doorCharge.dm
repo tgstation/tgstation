@@ -34,7 +34,7 @@
 
 /obj/item/device/doorCharge/examine(mob/user)
 	..()
-	if(user.mind in ticker.mode.traitors) //No nuke ops because the device is excluded from nuclear
+	if(user.mind in SSticker.mode.traitors) //No nuke ops because the device is excluded from nuclear
 		to_chat(user, "A small explosive device that can be used to sabotage airlocks to cause an explosion upon opening. To apply, remove the airlock's maintenance panel and place it within.")
 	else
 		to_chat(user, "A small, suspicious object that feels lukewarm when held.")

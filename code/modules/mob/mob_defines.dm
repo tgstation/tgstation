@@ -131,8 +131,6 @@
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
-	var/force_compose = 0 //If this is nonzero, the mob will always compose it's own hear message instead of using the one given in the arguments.
-
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 

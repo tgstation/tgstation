@@ -62,6 +62,7 @@
 	icon = 'icons/mob/swarmer.dmi'
 	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
+	initial_languages = list(/datum/language/swarmer)
 	bubble_icon = "swarmer"
 	health = 40
 	maxHealth = 40
@@ -81,8 +82,6 @@
 	melee_damage_type = STAMINA
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
-	languages_spoken = SWARMER
-	languages_understood = SWARMER
 	obj_damage = 0
 	environment_smash = 0
 	attacktext = "shocks"

@@ -32,7 +32,7 @@
 		equip_to_slot_or_del(new relic_mask, slot_wear_mask)
 
 /mob/living/carbon/monkey/punpun/Life()
-	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(0)
 	..()
 

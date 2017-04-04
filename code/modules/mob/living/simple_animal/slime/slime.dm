@@ -13,8 +13,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
-	languages_spoken = SLIME | HUMAN
-	languages_understood = SLIME | HUMAN
 	faction = list("slime","neutral")
 
 	harm_intent_damage = 5
@@ -94,6 +92,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		E.Grant(src)
 	create_reagents(100)
 	set_colour(new_colour)
+	grant_language(/datum/language/slime)
 	..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)

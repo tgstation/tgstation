@@ -350,9 +350,9 @@
 		return 0
 	if(!owner.current || owner.current.stat == DEAD)
 		return 0
-	if(ticker.force_ending) //This one isn't their fault, so lets just assume good faith
+	if(SSticker.force_ending) //This one isn't their fault, so lets just assume good faith
 		return 1
-	if(ticker.mode.station_was_nuked) //If they escaped the blast somehow, let them win
+	if(SSticker.mode.station_was_nuked) //If they escaped the blast somehow, let them win
 		return 1
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 0
@@ -435,7 +435,7 @@
 	martyr_compatible = 1
 
 /datum/objective/nuclear/check_completion()
-	if(ticker && ticker.mode && ticker.mode.station_was_nuked)
+	if(SSticker && SSticker.mode && SSticker.mode.station_was_nuked)
 		return 1
 	return 0
 
@@ -651,15 +651,15 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
-	if (ticker)
+	if (SSticker)
 		var/n_p = 1 //autowin
-		if (ticker.current_state == GAME_STATE_SETTING_UP)
+		if (SSticker.current_state == GAME_STATE_SETTING_UP)
 			for(var/mob/dead/new_player/P in player_list)
 				if(P.client && P.ready && P.mind!=owner)
 					n_p ++
-		else if (ticker.current_state == GAME_STATE_PLAYING)
+		else if (SSticker.current_state == GAME_STATE_PLAYING)
 			for(var/mob/living/carbon/human/P in player_list)
-				if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
+				if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
 					n_p ++
 		target_amount = min(target_amount, n_p)
 
@@ -768,10 +768,10 @@ var/global/list/possible_items_special = list()
 		if("Chief Medical Officer")
 			department_string = "medical"
 
-	var/ling_count = ticker.mode.changelings
+	var/ling_count = SSticker.mode.changelings
 
-	for(var/datum/mind/M in ticker.minds)
-		if(M in ticker.mode.changelings)
+	for(var/datum/mind/M in SSticker.minds)
+		if(M in SSticker.mode.changelings)
 			continue
 		if(department_head in get_department_heads(M.assigned_role))
 			if(ling_count)
@@ -797,11 +797,11 @@ var/global/list/possible_items_special = list()
 	//Because you can't fill 6 head roles with 3 lings
 
 	var/needed_heads = rand(min_lings,command_positions.len)
-	needed_heads = min(ticker.mode.changelings.len,needed_heads)
+	needed_heads = min(SSticker.mode.changelings.len,needed_heads)
 
-	var/list/heads = ticker.mode.get_living_heads()
+	var/list/heads = SSticker.mode.get_living_heads()
 	for(var/datum/mind/head in heads)
-		if(head in ticker.mode.changelings) //Looking at you HoP.
+		if(head in SSticker.mode.changelings) //Looking at you HoP.
 			continue
 		if(needed_heads)
 			department_minds += head
@@ -861,7 +861,7 @@ var/global/list/possible_items_special = list()
 
 	//Check each department member's mind to see if any of them made it to centcomm alive, if they did it's an automatic fail
 	for(var/datum/mind/M in department_minds)
-		if(M in ticker.mode.changelings) //Lings aren't picked for this, but let's be safe
+		if(M in SSticker.mode.changelings) //Lings aren't picked for this, but let's be safe
 			continue
 
 		if(M.current)
@@ -872,7 +872,7 @@ var/global/list/possible_items_special = list()
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
 	changelings:
-		for(var/datum/mind/changeling in ticker.mode.changelings)
+		for(var/datum/mind/changeling in SSticker.mode.changelings)
 			if(success >= department_minds.len) //We did it, stop here!
 				return 1
 			if(ishuman(changeling.current))

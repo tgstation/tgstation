@@ -1275,7 +1275,7 @@ var/list/airlock_overlays = list()
 
 	if(!density)
 		return 1
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		return 0
 	operating = 1
 	update_icon(AIRLOCK_OPENING, 1)

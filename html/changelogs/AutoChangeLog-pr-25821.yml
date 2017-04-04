@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Emergency shuttles will now forget early launch authorizations if
+they cannot launch due to a hostile environment."

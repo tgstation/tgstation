@@ -101,6 +101,6 @@
 	change_setting(current, user)
 	..()
 
-/obj/machinery/power/floodlight/attack_ai(mob/living/silicon/user)
+/obj/machinery/power/floodlight/attack_ai(mob/user)
 	attack_hand(user)
 	..()
