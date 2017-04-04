@@ -1,4 +1,4 @@
-/var/security_level = 0
+GLOBAL_VAR_INIT(security_level, 0)
 //0 = code green
 //1 = code blue
 //2 = code red

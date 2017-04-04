@@ -1,5 +1,5 @@
 
-var/global/list/rad_collectors = list()
+GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"

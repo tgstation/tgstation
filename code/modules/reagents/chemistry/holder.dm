@@ -1,11 +1,5 @@
 
 
-var/const/TOUCH = 1 //splashing
-var/const/INGEST = 2 //ingestion
-var/const/VAPOR = 3 //foam, spray, blob attack
-var/const/PATCH = 4 //patches
-var/const/INJECT = 5 //injection
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagents

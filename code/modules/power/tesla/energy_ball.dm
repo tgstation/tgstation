@@ -1,7 +1,7 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
-var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
+GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field/generator,
 										/mob/living/simple_animal,
@@ -18,7 +18,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/gateway,
 										/obj/structure/lattice,
 										/obj/structure/grille,
-										/obj/machinery/the_singularitygen/tesla))
+										/obj/machinery/the_singularitygen/tesla)))
 /obj/singularity/energy_ball
 	name = "energy ball"
 	desc = "An energy ball."

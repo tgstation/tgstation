@@ -1,4 +1,4 @@
-var/global/list/obj/machinery/message_server/message_servers = list()
+GLOBAL_LIST_INIT(message_servers, list())
 
 /datum/data_pda_msg
 	var/recipient = "Unspecified" //name of the person

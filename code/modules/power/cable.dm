@@ -437,9 +437,7 @@ By design, d1 is the smallest direction and d2 is the highest
 // Definitions
 ////////////////////////////////
 
-var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
-	new/datum/stack_recipe("cable restraints", /obj/item/weapon/restraints/handcuffs/cable, 15), \
-	)
+GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restraints", /obj/item/weapon/restraints/handcuffs/cable, 15)))
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -488,7 +486,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
-	recipes = cable_coil_recipes
+	recipes = GLOB.cable_coil_recipes
 
 ///////////////////////////////////
 // General procedures
