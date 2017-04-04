@@ -40,6 +40,21 @@ SUBSYSTEM_DEF(air)
 	var/map_loading = TRUE
 	var/list/queued_for_activation
 
+/datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
+/datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = 0)
+/datum/controller/subsystem/air/proc/process_super_conductivity(resumed = 0)
+/datum/controller/subsystem/air/proc/process_hotspots(resumed = 0)
+/datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = 0)
+/datum/controller/subsystem/air/proc/process_active_turfs(resumed = 0)
+/datum/controller/subsystem/air/proc/process_excited_groups(resumed = 0)
+/datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
+/datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
+/datum/controller/subsystem/air/proc/setup_allturfs()
+/turf/open/proc/resolve_active_graph()
+/datum/controller/subsystem/air/proc/setup_atmos_machinery()
+/datum/controller/subsystem/air/proc/setup_pipenets()
+/datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
+
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "AT:[round(cost_turfs,1)]|"
@@ -135,7 +150,7 @@ SUBSYSTEM_DEF(air)
 
 
 
-/datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
+/datum/controller/subsystem/air/process_pipenets(resumed = 0)
 	if (!resumed)
 		src.currentrun = networks.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -151,7 +166,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 
-/datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = 0)
+/datum/controller/subsystem/air/process_atmos_machinery(resumed = 0)
 	var/seconds = wait * 0.1
 	if (!resumed)
 		src.currentrun = atmos_machinery.Copy()
@@ -166,7 +181,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 
-/datum/controller/subsystem/air/proc/process_super_conductivity(resumed = 0)
+/datum/controller/subsystem/air/process_super_conductivity(resumed = 0)
 	if (!resumed)
 		src.currentrun = active_super_conductivity.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -178,7 +193,7 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_hotspots(resumed = 0)
+/datum/controller/subsystem/air/process_hotspots(resumed = 0)
 	if (!resumed)
 		src.currentrun = hotspots.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -194,7 +209,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 
-/datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = 0)
+/datum/controller/subsystem/air/process_high_pressure_delta(resumed = 0)
 	while (high_pressure_delta.len)
 		var/turf/open/T = high_pressure_delta[high_pressure_delta.len]
 		high_pressure_delta.len--
@@ -203,7 +218,7 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_active_turfs(resumed = 0)
+/datum/controller/subsystem/air/process_active_turfs(resumed = 0)
 	//cache for sanic speed
 	var/fire_count = times_fired
 	if (!resumed)
@@ -218,7 +233,7 @@ SUBSYSTEM_DEF(air)
 		if (MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_excited_groups(resumed = 0)
+/datum/controller/subsystem/air/process_excited_groups(resumed = 0)
 	if (!resumed)
 		src.currentrun = excited_groups.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -236,7 +251,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 
-/datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
+/datum/controller/subsystem/air/remove_from_active(turf/open/T)
 	active_turfs -= T
 	if(currentpart == SSAIR_ACTIVETURFS)
 		currentrun -= T
@@ -248,7 +263,7 @@ SUBSYSTEM_DEF(air)
 		if(T.excited_group)
 			T.excited_group.garbage_collect()
 
-/datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
+/datum/controller/subsystem/air/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
@@ -279,7 +294,7 @@ SUBSYSTEM_DEF(air)
 		add_to_active(T)
 	queued_for_activation.Cut()
 
-/datum/controller/subsystem/air/proc/setup_allturfs()
+/datum/controller/subsystem/air/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 	var/list/active_turfs = src.active_turfs
 	var/times_fired = ++src.times_fired
@@ -323,7 +338,7 @@ SUBSYSTEM_DEF(air)
 		to_chat(world, "<span class='boldannounce'>[msg]</span>")
 		warning(msg)
 
-/turf/open/proc/resolve_active_graph()
+/turf/open/resolve_active_graph()
 	. = list()
 	var/datum/excited_group/EG = excited_group
 	if (blocks_air || !air)
@@ -349,7 +364,7 @@ SUBSYSTEM_DEF(air)
 /turf/open/space/resolve_active_graph()
 	return list()
 
-/datum/controller/subsystem/air/proc/setup_atmos_machinery()
+/datum/controller/subsystem/air/setup_atmos_machinery()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		AM.atmosinit()
 		CHECK_TICK
@@ -357,12 +372,12 @@ SUBSYSTEM_DEF(air)
 //this can't be done with setup_atmos_machinery() because
 //	all atmos machinery has to initalize before the first
 //	pipenet can be built.
-/datum/controller/subsystem/air/proc/setup_pipenets()
+/datum/controller/subsystem/air/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		AM.build_network()
 		CHECK_TICK
 
-/datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
+/datum/controller/subsystem/air/setup_template_machinery(list/atmos_machines)
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.atmosinit()
