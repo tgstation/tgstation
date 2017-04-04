@@ -3,7 +3,7 @@ AI
 */
 /datum/job/ai
 	title = "AI"
-	flag = AI
+	flag = AI_JF
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 0

@@ -229,8 +229,8 @@
 /datum/stock/proc/generateBrokers()
 	if (borrow_brokers.len > 2)
 		return
-	if (!stockExchange.stockBrokers.len)
-		stockExchange.generateBrokers()
+	if (!GLOB.stockExchange.stockBrokers.len)
+		GLOB.stockExchange.generateBrokers()
 	var/broker = pick(stockExchange.stockBrokers)
 	var/datum/borrow/B = new
 	B.broker = broker

@@ -102,11 +102,11 @@
 				company.bankrupt = 1
 				for (var/X in company.shareholders)
 					var/amt = company.shareholders[X]
-					stockExchange.balanceLog(X, -amt * company.current_value)
+					GLOB.stockExchange.balanceLog(X, -amt * company.current_value)
 				company.shareholders = list()
 				company.current_value = 0
 				company.borrow_brokers = list()
-				stockExchange.generateStocks(1)
+				GLOB.stockExchange.generateStocks(1)
 
 			var/bailout = (effect > 0 && prob(80)) || (effect < 0 && prob(20))
 			current_title = "[company.name] [bailout ? "bailed out" : "on a painful rebound"]"

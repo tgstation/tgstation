@@ -151,7 +151,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
-	stat(name, statclick.update("Cameras: [cameranet.cameras.len] | Chunks: [cameranet.chunks.len]"))
+	stat(name, statclick.update("Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]"))
 
 // Debug verb for VVing the chunk that the turf is in.
 /*

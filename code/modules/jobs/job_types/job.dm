@@ -70,7 +70,7 @@
 	if(!visualsOnly && announce)
 		announce(H)
 
-	if(config.enforce_human_authority && (title in command_positions))
+	if(config.enforce_human_authority && (title in GLOB.command_positions))
 		H.dna.features["tail_human"] = "None"
 		H.dna.features["ears"] = "None"
 		H.regenerate_icons()
@@ -87,7 +87,7 @@
 		. = src.access.Copy()
 
 	if(config.jobs_have_maint_access & EVERYONE_HAS_MAINT_ACCESS) //Config has global maint access set
-		. |= list(access_maint_tunnels)
+		. |= list(GLOB.access_maint_tunnels)
 
 /datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	spawn(4) //to allow some initialization
