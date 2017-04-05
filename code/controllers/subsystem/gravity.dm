@@ -120,12 +120,12 @@ var/datum/controller/subsystem/gravity/SSgravity
 				LAZYCLEARLIST(src.purging_atoms)
 				purging = TRUE
 				purge_tick = 0
-	var/list/currentrun_manual = src.currentrun_manual
-	var/list/purging_atoms = src.purging_atoms
-	var/list/currentrun = src.currentrun
-	while(currentrun_manual.len)
-		var/atom/movable/AM = currentrun_manual[currentrun_manual.len]
-		currentrun_manual.len--
+	var/list/currentrun_manual_cached = currentrun_manual
+	var/list/purging_atoms_cached = purging_atoms
+	var/list/currentrun_cached = currentrun
+	while(currentrun_manual_cached.len)
+		var/atom/movable/AM = currentrun_manual_cached[currentrun_manual_cached.len]
+		currentrun_manual_cached.len--
 		if(istype(AM))
 			AM.gravity_tick += wait
 			if(AM.gravity_tick >= AM.gravity_speed)
@@ -137,9 +137,9 @@ var/datum/controller/subsystem/gravity/SSgravity
 			purging_atoms += AM
 		if(MC_TICK_CHECK)
 			return
-	while(currentrun.len)
-		var/atom/movable/AM = currentrun[currentrun.len]
-		currentrun.len--
+	while(currentrun_cached.len)
+		var/atom/movable/AM = currentrun_cached[currentrun_cached.len]
+		currentrun_cached.len--
 		if(AM && !AM.force_gravity_processing)
 			AM.gravity_tick += wait
 			if(AM.gravity_tick >= AM.gravity_speed)
@@ -150,9 +150,9 @@ var/datum/controller/subsystem/gravity/SSgravity
 		if(MC_TICK_CHECK)
 			return
 	if(purging && do_purge)
-		while(purging_atoms.len)
-			var/atom/movable/AM = purging_atoms[purging_atoms.len]
-			purging_atoms.len--
+		while(purging_atoms_cached.len)
+			var/atom/movable/AM = purging_atoms_cached[purging_atoms_cached.len]
+			purging_atoms_cached.len--
 			if(AM.gravity_ignores_turfcheck || isturf(AM.loc))
 				if(AM.forced_gravity_by_turf != AM.loc)
 					error_mismatched_turf["[AM.type]-[AM.loc.type]-[AM.forced_gravity_by_turf.type]"]++
