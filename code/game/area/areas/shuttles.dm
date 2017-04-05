@@ -51,10 +51,12 @@
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 	blob_allowed = FALSE
+	teleporter_blocked = 1
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
 	blob_allowed = FALSE
+	teleporter_blocked = 1
 
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
