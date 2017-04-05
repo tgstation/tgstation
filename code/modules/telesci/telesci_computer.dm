@@ -213,7 +213,7 @@
 
 			var/sparks = get_turf(target)
 			var/datum/effect_system/spark_spread/y = new /datum/effect_system/spark_spread
-			y.set_up(5, 1, sparks)istype(
+			y.set_up(5, 1, sparks)
 			y.start()
 
 			var/turf/source = target
