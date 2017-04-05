@@ -147,7 +147,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 	#ifdef TESTING
 	var/msg = "Permission Sets Built:\n"
-	for(var/datum/admin_rank/R in admin_ranks)
+	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		msg += "\t[R.name]"
 		var/rights = rights2text(R.rights,"\n\t\t",R.adds,R.subs)
 		if(rights)
@@ -229,15 +229,15 @@ GLOBAL_PROTECT(admin_ranks)
 
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
-	for(var/ckey in admin_datums)
-		var/datum/admins/D = admin_datums[ckey]
+	for(var/ckey in GLOB.admin_datums)
+		var/datum/admins/D = GLOB.admin_datums[ckey]
 		msg += "\t[ckey] - [D.rank.name]\n"
 	testing(msg)
 	#endif
 
 
 #ifdef TESTING
-/client/verb/changerank(newrank in admin_ranks)
+/client/verb/changerank(newrank in GLOB.admin_ranks)
 	if(holder)
 		holder.rank = newrank
 	else
