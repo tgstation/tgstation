@@ -951,7 +951,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 /client/proc/has_antag_hud()
 	var/datum/atom_hud/A = huds[ANTAG_HUD_TRAITOR]
-	return usr in A.hudusers
+	return mob in A.hudusers
 
 /client/proc/open_shuttle_manipulator()
 	set category = "Admin"
