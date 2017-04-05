@@ -1058,7 +1058,7 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Officer"
-	id_access_list = list(access_syndicate)
+	id_access_list = list(GLOB.access_syndicate)
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"

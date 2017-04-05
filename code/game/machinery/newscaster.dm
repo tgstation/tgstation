@@ -540,7 +540,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			updateUsrDialog()
 		else if(href_list["set_channel_receiving"])
 			var/list/available_channels = list()
-			for(var/datum/newscaster/feed_channel/F in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
 			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
@@ -854,7 +854,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/obj/item/weapon/newspaper/NEWSPAPER = new /obj/item/weapon/newspaper
 	for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 		NEWSPAPER.news_content += FC
-	if(news_network.wanted_issue.active)
+	if(GLOB.news_network.wanted_issue.active)
 		NEWSPAPER.wantedAuthor = GLOB.news_network.wanted_issue.scannedUser
 		NEWSPAPER.wantedCriminal = GLOB.news_network.wanted_issue.criminal
 		NEWSPAPER.wantedBody = GLOB.news_network.wanted_issue.body
