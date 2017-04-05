@@ -37489,7 +37489,9 @@
 	},
 /area/engine/engineering)
 "box" = (
-/obj/structure/reflector/box,
+/obj/structure/reflector/box{
+	anchored = 1
+	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -102190,11 +102192,11 @@ aaa
 aaa
 aaa
 aaa
-cPG
-cPK
-cPP
-cPU
-cQa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -102447,11 +102449,11 @@ aaa
 aaa
 aaa
 aaa
-cPH
-cPK
-cPQ
-cPV
-abD
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -102704,11 +102706,11 @@ abE
 aaa
 aaa
 aaa
-cPI
-cPK
-cPK
-cPK
-cPK
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -102964,7 +102966,7 @@ aaa
 aaa
 aaa
 aaa
-cPX
+aaa
 aaa
 aaa
 aaa
@@ -112968,7 +112970,7 @@ abW
 abW
 abW
 abW
-abD
+aLm
 aQh
 aRD
 aSl
@@ -113225,7 +113227,7 @@ aHS
 aHS
 aHS
 abW
-abD
+aLm
 aQh
 aRD
 aSx
@@ -113482,7 +113484,7 @@ aLe
 aLQ
 aHS
 abW
-abD
+aLm
 aQo
 aRD
 aSl
@@ -113739,7 +113741,7 @@ aLf
 aLR
 aHS
 abW
-abD
+aLm
 aQp
 aRD
 aSl
@@ -113996,7 +113998,7 @@ aLg
 aLS
 aHS
 abW
-abD
+aLm
 cOy
 aRD
 aSl
@@ -140276,9 +140278,9 @@ bGk
 cWy
 bHv
 bHv
-cWC
+cWy
 bIK
-cWE
+cWy
 bGk
 bgq
 bOn

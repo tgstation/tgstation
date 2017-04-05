@@ -59,7 +59,6 @@
 #ifdef AI_VOX
 
 var/announcing_vox = 0 // Stores the time of the last announcement
-var/const/VOX_CHANNEL = 200
 var/const/VOX_DELAY = 600
 
 /mob/living/silicon/ai/verb/announcement_help()
@@ -149,7 +148,7 @@ var/const/VOX_DELAY = 600
 	if(vox_sounds[word])
 
 		var/sound_file = vox_sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = VOX_CHANNEL)
+		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
  		// If there is no single listener, broadcast to everyone in the same z level

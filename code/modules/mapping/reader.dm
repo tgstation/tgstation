@@ -346,7 +346,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
 //returns 0 if reached the last delimiter
-/dmm_suite/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape=quote,closing_escape=quote)
+/dmm_suite/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape="\"",closing_escape="\"")
 	var/position = initial_position
 	var/next_delimiter = findtext(text,delimiter,position,0)
 	var/next_opening = findtext(text,opening_escape,position,0)
@@ -382,8 +382,8 @@ var/global/dmm_suite/preloader/_preloader = new
 			var/trim_right = trim_text(copytext(text,equal_position+1,position))//the content of the variable
 
 			//Check for string
-			if(findtext(trim_right,quote,1,2))
-				trim_right = copytext(trim_right,2,findtext(trim_right,quote,3,0))
+			if(findtext(trim_right,"\"",1,2))
+				trim_right = copytext(trim_right,2,findtext(trim_right,"\"",3,0))
 
 			//Check for number
 			else if(isnum(text2num(trim_right)))
