@@ -11,6 +11,10 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	var/list/overlay_icon_cache
 	var/initialized = FALSE
 
+/datum/controller/subsystem/processing/overlays/proc/Flush()
+/atom/proc/compile_overlays()
+/atom/proc/build_appearance_list(new_overlays)
+
 /datum/controller/subsystem/processing/overlays/PreInit()
 	LAZYINITLIST(overlay_icon_state_caches)
 	LAZYINITLIST(overlay_icon_cache)
@@ -37,12 +41,12 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 		else
 			CHECK_TICK
 
-/datum/controller/subsystem/processing/overlays/proc/Flush()
+/datum/controller/subsystem/processing/overlays/Flush()
 	if(processing.len)
 		testing("Flushing [processing.len] overlays")
 		fire(mc_check = FALSE)	//pair this thread up with the MC to get extra compile time
 
-/atom/proc/compile_overlays()
+/atom/compile_overlays()
 	if(LAZYLEN(priority_overlays) && LAZYLEN(our_overlays))
 		overlays = our_overlays + priority_overlays
 	else if(LAZYLEN(our_overlays))
@@ -55,7 +59,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()
-	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches 
+	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches
 	var/list/cached_icon = icon_states_cache[icon]
 	if (cached_icon)
 		var/cached_appearance = cached_icon["[iconstate]"]
@@ -79,7 +83,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 		. = iconbro.appearance
 		icon_cache[icon] = .
 
-/atom/proc/build_appearance_list(new_overlays)
+/atom/build_appearance_list(new_overlays)
 	var/static/image/appearance_bro = new()
 	if (!islist(new_overlays))
 		new_overlays = list(new_overlays)
@@ -99,11 +103,17 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	return new_overlays
 
 #define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
-#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src; 
+#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src;
+
 /atom/proc/cut_overlays(priority = FALSE)
+/atom/proc/cut_overlay(list/overlays, priority)
+/atom/proc/add_overlay(list/overlays, priority = FALSE)
+/atom/proc/copy_overlays(atom/other, cut_old = FALSE)
+
+/atom/cut_overlays(priority = FALSE)
 	var/list/cached_overlays = our_overlays
 	var/list/cached_priority = priority_overlays
-	
+
 	var/need_compile = FALSE
 
 	if(LAZYLEN(cached_overlays)) //don't queue empty lists, don't cut priority overlays
@@ -117,7 +127,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	if(NOT_QUEUED_ALREADY && need_compile)
 		QUEUE_FOR_COMPILE
 
-/atom/proc/cut_overlay(list/overlays, priority)
+/atom/cut_overlay(list/overlays, priority)
 	if(!overlays)
 		return
 
@@ -135,7 +145,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	if(NOT_QUEUED_ALREADY && ((init_o_len != LAZYLEN(cached_priority)) || (init_p_len != LAZYLEN(cached_overlays))))
 		QUEUE_FOR_COMPILE
 
-/atom/proc/add_overlay(list/overlays, priority = FALSE)
+/atom/add_overlay(list/overlays, priority = FALSE)
 	if(!overlays)
 		return
 
@@ -160,12 +170,12 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	if(NOT_QUEUED_ALREADY && need_compile) //have we caught more pokemon?
 		QUEUE_FOR_COMPILE
 
-/atom/proc/copy_overlays(atom/other, cut_old = FALSE)	//copys our_overlays from another atom
+/atom/copy_overlays(atom/other, cut_old = FALSE)	//copys our_overlays from another atom
 	if(!other)
 		if(cut_old)
 			cut_overlays()
 		return
-	
+
 	var/list/cached_other = other.our_overlays
 	if(cached_other)
 		if(cut_old || !LAZYLEN(our_overlays))
@@ -180,12 +190,16 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 #undef NOT_QUEUED_ALREADY
 #undef QUEUE_FOR_COMPILE
 
-//TODO: Better solution for these?
 /image/proc/add_overlay(x)
+/image/proc/cut_overlay(x)
+/image/proc/cut_overlays(x)
+
+//TODO: Better solution for these?
+/image/add_overlay(x)
 	overlays += x
 
-/image/proc/cut_overlay(x)
+/image/cut_overlay(x)
 	overlays -= x
 
-/image/proc/cut_overlays(x)
+/image/cut_overlays(x)
 	overlays.Cut()

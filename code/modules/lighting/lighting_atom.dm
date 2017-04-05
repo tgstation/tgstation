@@ -1,4 +1,5 @@
 #define MINIMUM_USEFUL_LIGHT_RANGE 1.4
+#define NONSENSICAL_VALUE -99999
 
 /atom
 	var/light_power = 1 // Intensity of the light.
@@ -7,11 +8,13 @@
 
 	var/tmp/datum/light_source/light // Our light source. Don't fuck with this directly unless you have a good reason!
 	var/tmp/list/light_sources       // Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
+/atom/proc/set_light(var/l_range, var/l_power, var/l_color = NONSENSICAL_VALUE)
+/atom/proc/update_light()
+/atom/proc/set_opacity(var/new_opacity)
 
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
-#define NONSENSICAL_VALUE -99999
-/atom/proc/set_light(var/l_range, var/l_power, var/l_color = NONSENSICAL_VALUE)
+/atom/set_light(var/l_range, var/l_power, var/l_color = NONSENSICAL_VALUE)
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
 		l_range = MINIMUM_USEFUL_LIGHT_RANGE	//Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
 	if (l_power != null)
@@ -25,11 +28,9 @@
 
 	update_light()
 
-#undef NONSENSICAL_VALUE
-
 // Will update the light (duh).
 // Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
-/atom/proc/update_light()
+/atom/update_light()
 	set waitfor = FALSE
 	if (QDELETED(src))
 		return
@@ -48,27 +49,10 @@
 			light.update(.)
 		else
 			light = new/datum/light_source(src, .)
-
-// Destroy our light source so we GC correctly.
-/atom/Destroy()
-	if (light)
-		light.destroy()
-		light = null
-	. = ..()
-
-// If we have opacity, make sure to tell (potentially) affected light sources.
-/atom/movable/Destroy()
-	var/turf/T = loc
-	. = ..()
-	if (opacity && istype(T))
-		var/old_has_opaque_atom = T.has_opaque_atom
-		T.recalc_atom_opacity()
-		if (old_has_opaque_atom != T.has_opaque_atom)
-			T.reconsider_lights()
-
+			
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).
-/atom/proc/set_opacity(var/new_opacity)
+/atom/set_opacity(var/new_opacity)
 	if (new_opacity == opacity)
 		return
 
@@ -86,6 +70,22 @@
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
 
+// Destroy our light source so we GC correctly.
+/atom/Destroy()
+	if (light)
+		light.destroy()
+		light = null
+	. = ..()
+
+// If we have opacity, make sure to tell (potentially) affected light sources.
+/atom/movable/Destroy()
+	var/turf/T = loc
+	. = ..()
+	if (opacity && istype(T))
+		var/old_has_opaque_atom = T.has_opaque_atom
+		T.recalc_atom_opacity()
+		if (old_has_opaque_atom != T.has_opaque_atom)
+			T.reconsider_lights()
 
 /atom/movable/Moved(atom/OldLoc, Dir)
 	. = ..()
@@ -110,3 +110,4 @@
 			return
 
 	return ..()
+#undef NONSENSICAL_VALUE

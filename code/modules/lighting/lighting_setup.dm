@@ -1,8 +1,11 @@
 /proc/create_all_lighting_objects()
+/proc/create_lighting_objects_zlevel(zlevel)
+
+/create_all_lighting_objects()
 	for (var/zlevel = 1 to world.maxz)
 		create_lighting_objects_zlevel(zlevel)
 
-/proc/create_lighting_objects_zlevel(zlevel)
+/create_lighting_objects_zlevel(zlevel)
 	ASSERT(zlevel)
 	var/turf/T
 	var/thing

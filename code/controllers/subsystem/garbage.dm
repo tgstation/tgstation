@@ -32,6 +32,13 @@ SUBSYSTEM_DEF(garbage)
 	var/list/qdel_list = list()	// list of all types that have been qdel()eted
 #endif
 
+/datum/controller/subsystem/garbage/proc/HandleToBeQueued()
+/datum/controller/subsystem/garbage/proc/HandleQueue()
+/datum/controller/subsystem/garbage/proc/QueueForQueuing(datum/A)
+/datum/controller/subsystem/garbage/proc/Queue(datum/A)
+/datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
+/datum/proc/Destroy(force=FALSE)
+
 /datum/controller/subsystem/garbage/stat_entry(msg)
 	msg += "Q:[queue.len]|D:[delslasttick]|G:[gcedlasttick]|"
 	msg += "GR:"
@@ -54,7 +61,7 @@ SUBSYSTEM_DEF(garbage)
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
-/datum/controller/subsystem/garbage/proc/HandleToBeQueued()
+/datum/controller/subsystem/garbage/HandleToBeQueued()
 	var/list/tobequeued = src.tobequeued
 	var/starttime = world.time
 	var/starttimeofday = world.timeofday
@@ -65,7 +72,7 @@ SUBSYSTEM_DEF(garbage)
 		Queue(ref)
 		tobequeued.Cut(1, 2)
 
-/datum/controller/subsystem/garbage/proc/HandleQueue()
+/datum/controller/subsystem/garbage/HandleQueue()
 	delslasttick = 0
 	gcedlasttick = 0
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
@@ -119,12 +126,12 @@ SUBSYSTEM_DEF(garbage)
 			++gcedlasttick
 			++totalgcs
 
-/datum/controller/subsystem/garbage/proc/QueueForQueuing(datum/A)
+/datum/controller/subsystem/garbage/QueueForQueuing(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
-/datum/controller/subsystem/garbage/proc/Queue(datum/A)
+/datum/controller/subsystem/garbage/Queue(datum/A)
 	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
 		return
 	if (A.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
@@ -140,7 +147,7 @@ SUBSYSTEM_DEF(garbage)
 
 	queue[refid] = gctime
 
-/datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
+/datum/controller/subsystem/garbage/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
@@ -209,7 +216,7 @@ SUBSYSTEM_DEF(garbage)
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
-/datum/proc/Destroy(force=FALSE)
+/datum/Destroy(force=FALSE)
 	tag = null
 	var/list/timers = active_timers
 	active_timers = null

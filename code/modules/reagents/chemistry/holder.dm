@@ -70,33 +70,53 @@ var/const/INJECT = 5 //injection
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 
-/datum/reagents/proc/remove_any(amount = 1)
+/datum/reagents/process()
 	var/list/cached_reagents = reagent_list
-	var/total_transfered = 0
-	var/current_list_element = 1
+	if(flags & REAGENT_NOREACT)
+		STOP_PROCESSING(SSobj, src)
+		return
 
-	current_list_element = rand(1, cached_reagents.len)
+	for(var/reagent in cached_reagents)
+		var/datum/reagent/R = reagent
+		R.on_tick()
 
-	while(total_transfered != amount)
-		if(total_transfered >= amount)
-			break
-		if(total_volume <= 0 || !cached_reagents.len)
-			break
-
-		if(current_list_element > cached_reagents.len)
-			current_list_element = 1
-
-		var/datum/reagent/R = cached_reagents[current_list_element]
-		remove_reagent(R.id, 1)
-
-		current_list_element++
-		total_transfered++
-		update_total()
-
-	handle_reactions()
-	return total_transfered
-
+/datum/reagents/proc/remove_any(amount = 1)
 /datum/reagents/proc/remove_all(amount = 1)
+/datum/reagents/proc/get_master_reagent_name()
+/datum/reagents/proc/get_master_reagent_id()
+/datum/reagents/proc/get_master_reagent()
+/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
+/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
+/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
+/datum/reagents/proc/set_reacting(react = TRUE)
+/datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
+/datum/reagents/proc/conditional_update(atom/A)
+/datum/reagents/proc/handle_reactions()
+/datum/reagents/proc/isolate_reagent(reagent)
+/datum/reagents/proc/del_reagent(reagent)
+/datum/reagents/proc/check_ignoreslow(mob/M)
+/datum/reagents/proc/check_gofast(mob/M)
+/datum/reagents/proc/check_goreallyfast(mob/M)
+/datum/reagents/proc/update_total()
+/datum/reagents/proc/clear_reagents()
+/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
+/datum/reagents/proc/holder_full()
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
+/datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
+/datum/reagents/proc/has_reagent(reagent, amount = -1)
+/datum/reagents/proc/get_reagent_amount(reagent)
+/datum/reagents/proc/get_reagents()
+/datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
+//two helper functions to preserve data across reactions (needed for xenoarch) (((WE DONT EVEN HAVE XENOARCH AAAAAA)))
+/datum/reagents/proc/get_data(reagent_id)
+/datum/reagents/proc/set_data(reagent_id, new_data)
+/datum/reagents/proc/copy_data(datum/reagent/current_reagent)
+/datum/reagents/proc/get_reagent(type)
+/datum/reagents/proc/generate_taste_message(minimum_percent=15)
+
+/datum/reagents/remove_all(amount = 1)
 	var/list/cached_reagents = reagent_list
 	if(total_volume > 0)
 		var/part = amount / total_volume
@@ -108,7 +128,7 @@ var/const/INJECT = 5 //injection
 		handle_reactions()
 		return amount
 
-/datum/reagents/proc/get_master_reagent_name()
+/datum/reagents/get_master_reagent_name()
 	var/list/cached_reagents = reagent_list
 	var/name
 	var/max_volume = 0
@@ -120,7 +140,7 @@ var/const/INJECT = 5 //injection
 
 	return name
 
-/datum/reagents/proc/get_master_reagent_id()
+/datum/reagents/get_master_reagent_id()
 	var/list/cached_reagents = reagent_list
 	var/id
 	var/max_volume = 0
@@ -132,7 +152,7 @@ var/const/INJECT = 5 //injection
 
 	return id
 
-/datum/reagents/proc/get_master_reagent()
+/datum/reagents/get_master_reagent()
 	var/list/cached_reagents = reagent_list
 	var/datum/reagent/master
 	var/max_volume = 0
@@ -144,7 +164,7 @@ var/const/INJECT = 5 //injection
 
 	return master
 
-/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -176,7 +196,7 @@ var/const/INJECT = 5 //injection
 		src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
+/datum/reagents/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
 	var/list/cached_reagents = reagent_list
 	if(!target)
 		return
@@ -207,7 +227,7 @@ var/const/INJECT = 5 //injection
 	src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
+/datum/reagents/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	var/list/cached_reagents = reagent_list
 	if (!target)
 		return
@@ -235,7 +255,7 @@ var/const/INJECT = 5 //injection
 	R.handle_reactions()
 	return amount
 
-/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
+/datum/reagents/metabolize(mob/living/carbon/C, can_overdose = 0)
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
@@ -293,18 +313,8 @@ var/const/INJECT = 5 //injection
 		C.update_canmove()
 		C.update_stamina()
 	update_total()
-
-/datum/reagents/process()
-	var/list/cached_reagents = reagent_list
-	if(flags & REAGENT_NOREACT)
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		R.on_tick()
-
-/datum/reagents/proc/set_reacting(react = TRUE)
+	
+/datum/reagents/set_reacting(react = TRUE)
 	if(react)
 		// Order is important, process() can remove from processing if
 		// the flag is present
@@ -314,21 +324,21 @@ var/const/INJECT = 5 //injection
 		STOP_PROCESSING(SSobj, src)
 		flags |= REAGENT_NOREACT
 
-/datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
+/datum/reagents/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		R.on_move (A, Running)
 	update_total()
 
-/datum/reagents/proc/conditional_update(atom/A)
+/datum/reagents/conditional_update(atom/A)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		R.on_update (A)
 	update_total()
 
-/datum/reagents/proc/handle_reactions()
+/datum/reagents/handle_reactions()
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
@@ -431,7 +441,7 @@ var/const/INJECT = 5 //injection
 	update_total()
 	return 0
 
-/datum/reagents/proc/isolate_reagent(reagent)
+/datum/reagents/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
@@ -439,7 +449,7 @@ var/const/INJECT = 5 //injection
 			del_reagent(R.id)
 			update_total()
 
-/datum/reagents/proc/del_reagent(reagent)
+/datum/reagents/del_reagent(reagent)
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
@@ -457,28 +467,28 @@ var/const/INJECT = 5 //injection
 				check_goreallyfast(my_atom)
 	return 1
 
-/datum/reagents/proc/check_ignoreslow(mob/M)
+/datum/reagents/check_ignoreslow(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
 
-/datum/reagents/proc/check_gofast(mob/M)
+/datum/reagents/check_gofast(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
 
-/datum/reagents/proc/check_goreallyfast(mob/M)
+/datum/reagents/check_goreallyfast(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOREALLYFAST
 
-/datum/reagents/proc/update_total()
+/datum/reagents/update_total()
 	var/list/cached_reagents = reagent_list
 	total_volume = 0
 	for(var/reagent in cached_reagents)
@@ -490,14 +500,14 @@ var/const/INJECT = 5 //injection
 
 	return 0
 
-/datum/reagents/proc/clear_reagents()
+/datum/reagents/clear_reagents()
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		del_reagent(R.id)
 	return 0
 
-/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
+/datum/reagents/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
 	var/react_type
 	if(isliving(A))
 		react_type = "LIVING"
@@ -525,12 +535,12 @@ var/const/INJECT = 5 //injection
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
 
-/datum/reagents/proc/holder_full()
+/datum/reagents/holder_full()
 	if(total_volume >= maximum_volume)
 		return TRUE
 	return FALSE
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
+/datum/reagents/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -577,12 +587,12 @@ var/const/INJECT = 5 //injection
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 	return FALSE
 
-/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
+/datum/reagents/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
 	for(var/r_id in list_reagents)
 		var/amt = list_reagents[r_id]
 		add_reagent(r_id, amt, data)
 
-/datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
+/datum/reagents/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
 
 	if(isnull(amount))
 		amount = 0
@@ -613,7 +623,7 @@ var/const/INJECT = 5 //injection
 
 	return FALSE
 
-/datum/reagents/proc/has_reagent(reagent, amount = -1)
+/datum/reagents/has_reagent(reagent, amount = -1)
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
@@ -628,7 +638,7 @@ var/const/INJECT = 5 //injection
 
 	return 0
 
-/datum/reagents/proc/get_reagent_amount(reagent)
+/datum/reagents/get_reagent_amount(reagent)
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
@@ -637,7 +647,7 @@ var/const/INJECT = 5 //injection
 
 	return 0
 
-/datum/reagents/proc/get_reagents()
+/datum/reagents/get_reagents()
 	var/list/names = list()
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
@@ -646,7 +656,7 @@ var/const/INJECT = 5 //injection
 
 	return jointext(names, ",")
 
-/datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
+/datum/reagents/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount)) return 1
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
@@ -668,8 +678,7 @@ var/const/INJECT = 5 //injection
 
 	return has_removed_reagent
 
-//two helper functions to preserve data across reactions (needed for xenoarch)
-/datum/reagents/proc/get_data(reagent_id)
+/datum/reagents/get_data(reagent_id)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -677,7 +686,7 @@ var/const/INJECT = 5 //injection
 			//to_chat(world, "proffering a data-carrying reagent ([reagent_id])")
 			return R.data
 
-/datum/reagents/proc/set_data(reagent_id, new_data)
+/datum/reagents/set_data(reagent_id, new_data)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -685,7 +694,7 @@ var/const/INJECT = 5 //injection
 			//to_chat(world, "reagent data set ([reagent_id])")
 			R.data = new_data
 
-/datum/reagents/proc/copy_data(datum/reagent/current_reagent)
+/datum/reagents/copy_data(datum/reagent/current_reagent)
 	if(!current_reagent || !current_reagent.data)
 		return null
 	if(!istype(current_reagent.data, /list))
@@ -706,11 +715,11 @@ var/const/INJECT = 5 //injection
 
 	return trans_data
 
-/datum/reagents/proc/get_reagent(type)
+/datum/reagents/get_reagent(type)
 	var/list/cached_reagents = reagent_list
 	. = locate(type) in cached_reagents
 
-/datum/reagents/proc/generate_taste_message(minimum_percent=15)
+/datum/reagents/generate_taste_message(minimum_percent=15)
 	// the lower the minimum percent, the more sensitive the message is.
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
@@ -761,6 +770,8 @@ var/const/INJECT = 5 //injection
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
 /atom/proc/create_reagents(max_vol)
+
+/atom/create_reagents(max_vol)
 	if(reagents)
 		qdel(reagents)
 	reagents = new/datum/reagents(max_vol)

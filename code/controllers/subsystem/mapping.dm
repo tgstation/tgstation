@@ -18,6 +18,19 @@ SUBSYSTEM_DEF(mapping)
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
+/datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
+/datum/controller/subsystem/mapping/proc/remove_nuke_threat(datum/nuke)
+/datum/controller/subsystem/mapping/proc/check_nuke_threats()
+/datum/controller/subsystem/mapping/proc/TryLoadZ(filename, errorList, forceLevel, last)
+/datum/controller/subsystem/mapping/proc/CreateSpace(MaxZLevel)
+/datum/controller/subsystem/mapping/proc/loadWorld()
+/datum/controller/subsystem/mapping/proc/maprotate()
+/datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
+/datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
+/datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
+/datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
+/datum/controller/subsystem/mapping/proc/preloadShelterTemplates()
+
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
@@ -63,15 +76,15 @@ SUBSYSTEM_DEF(mapping)
    Used by the AI doomsday and the self destruct nuke.
 */
 
-/datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
+/datum/controller/subsystem/mapping/add_nuke_threat(datum/nuke)
 	nuke_threats[nuke] = TRUE
 	check_nuke_threats()
 
-/datum/controller/subsystem/mapping/proc/remove_nuke_threat(datum/nuke)
+/datum/controller/subsystem/mapping/remove_nuke_threat(datum/nuke)
 	nuke_threats -= nuke
 	check_nuke_threats()
 
-/datum/controller/subsystem/mapping/proc/check_nuke_threats()
+/datum/controller/subsystem/mapping/check_nuke_threats()
 	for(var/datum/d in nuke_threats)
 		if(!istype(d) || QDELETED(d))
 			nuke_threats -= d
@@ -92,7 +105,7 @@ SUBSYSTEM_DEF(mapping)
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
-/datum/controller/subsystem/mapping/proc/TryLoadZ(filename, errorList, forceLevel, last)
+/datum/controller/subsystem/mapping/TryLoadZ(filename, errorList, forceLevel, last)
 	var/static/dmm_suite/loader
 	if(!loader)
 		loader = new
@@ -101,13 +114,13 @@ SUBSYSTEM_DEF(mapping)
 	if(last)
 		QDEL_NULL(loader)
 
-/datum/controller/subsystem/mapping/proc/CreateSpace(MaxZLevel)
+/datum/controller/subsystem/mapping/CreateSpace(MaxZLevel)
 	while(world.maxz < MaxZLevel)
 		++world.maxz
 		CHECK_TICK
 
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
-/datum/controller/subsystem/mapping/proc/loadWorld()
+/datum/controller/subsystem/mapping/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
     
@@ -132,7 +145,7 @@ SUBSYSTEM_DEF(mapping)
 		INIT_ANNOUNCE(msg)
 #undef INIT_ANNOUNCE
 
-/datum/controller/subsystem/mapping/proc/maprotate()
+/datum/controller/subsystem/mapping/maprotate()
 	var/players = clients.len
 	var/list/mapvotes = list()
 	//count votes
@@ -177,7 +190,7 @@ SUBSYSTEM_DEF(mapping)
 	if (. && VM.map_name != config.map_name)
 		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>")
 
-/datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
+/datum/controller/subsystem/mapping/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
 		next_map_config = new(default_to_box = TRUE)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
@@ -186,7 +199,7 @@ SUBSYSTEM_DEF(mapping)
 	next_map_config = VM
 	return TRUE
 
-/datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
+/datum/controller/subsystem/mapping/preloadTemplates(path = "_maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)
 	for(var/map in filelist)
 		var/datum/map_template/T = new(path = "[path][map]", rename = "[map]")
@@ -196,7 +209,7 @@ SUBSYSTEM_DEF(mapping)
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
 
-/datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
+/datum/controller/subsystem/mapping/preloadRuinTemplates()
 	// Still supporting bans by filename
 	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
 	banned += generateMapList("config/spaceruinblacklist.txt")
@@ -219,7 +232,7 @@ SUBSYSTEM_DEF(mapping)
 		else if(istype(R, /datum/map_template/ruin/space))
 			space_ruins_templates[R.name] = R
 
-/datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
+/datum/controller/subsystem/mapping/preloadShuttleTemplates()
 	var/list/unbuyable = generateMapList("config/unbuyableshuttles.txt")
 
 	for(var/item in subtypesof(/datum/map_template/shuttle))
@@ -234,7 +247,7 @@ SUBSYSTEM_DEF(mapping)
 		shuttle_templates[S.shuttle_id] = S
 		map_templates[S.shuttle_id] = S
 
-/datum/controller/subsystem/mapping/proc/preloadShelterTemplates()
+/datum/controller/subsystem/mapping/preloadShelterTemplates()
 	for(var/item in subtypesof(/datum/map_template/shelter))
 		var/datum/map_template/shelter/shelter_type = item
 		if(!(initial(shelter_type.mappath)))
