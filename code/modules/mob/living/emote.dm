@@ -140,7 +140,7 @@
 /datum/emote/living/flip
 	key = "flip"
 	key_third_person = "flips"
-	message = "<B>[src]</B> does a flip
+	message = "<B>[src]</B> does a flip"
 	restraint_check = TRUE
 
 /datum/emote/living/flip/run_emote(mob/user, params)
