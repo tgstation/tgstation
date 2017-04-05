@@ -54,8 +54,10 @@
 	if (handcuffed)
 		drop_all_held_items()
 		return
-
+	
+	var/facing_left = dir == WEST
 	var/list/hands = list()
+	var/list/inhands = list()
 	for(var/obj/item/I in held_items)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			I.screen_loc = ui_hand_position(get_held_index_of_item(I))
@@ -76,11 +78,17 @@
 			t_state = I.icon_state
 
 		var/icon_file = I.lefthand_file
+		var/right_handed = FALSE
 		if(get_held_index_of_item(I) % 2 == 0)
 			icon_file = I.righthand_file
+			right_handed = TRUE
 
 		var/image/standing = I.build_worn_icon(state = t_state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
-		hands += standing
+
+		if(facing_left && right_handed)
+			hands = list(standing) + hands
+		else
+			hands += standing
 
 	overlays_standing[HANDS_LAYER] = hands
 	apply_overlay(HANDS_LAYER)
