@@ -3,7 +3,7 @@
 	desc = "Used to remotely locate or lockdown exosuits."
 	icon_screen = "mecha"
 	icon_keyboard = "tech_key"
-	req_access = list(access_robotics)
+	req_access = list(GLOB.access_robotics)
 	circuit = /obj/item/weapon/circuitboard/computer/mecha_control
 	var/list/located = list()
 	var/screen = 0

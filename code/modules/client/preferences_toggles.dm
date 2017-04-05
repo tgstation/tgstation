@@ -160,7 +160,7 @@
 		to_chat(src, "You will now hear any sounds uploaded by admins.")
 	else
 		to_chat(src, "You will no longer hear sounds uploaded by admins")
-		stop_sound_channel(CHANNEL_ADMIN)
+		mob.stop_sound_channel(CHANNEL_ADMIN)
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/stop_client_sounds()

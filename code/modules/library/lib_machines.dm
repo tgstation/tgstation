@@ -181,12 +181,12 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(libcomp_menu)
 		return
 	load_library_db_to_cache()
-	if(!cachedbooks)
+	if(!GLOB.cachedbooks)
 		return
 	libcomp_menu = list("")
 
-	for(var/i in 1 to cachedbooks.len)
-		var/datum/cachedbook/C = cachedbooks[i]
+	for(var/i in 1 to GLOB.cachedbooks.len)
+		var/datum/cachedbook/C = GLOB.cachedbooks[i]
 		var/page = round(i/250)+1
 		if (libcomp_menu.len < page)
 			libcomp_menu.len = page
@@ -257,7 +257,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			dat += "<h3>External Archive</h3>"
 			build_library_menu()
 
-			if(!cachedbooks)
+			if(!GLOB.cachedbooks)
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
 				dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
@@ -427,16 +427,16 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 							alert("Upload Complete. Uploaded title will be unavailable for printing for a short period")
 	if(href_list["newspost"])
-		if(!news_network)
+		if(!GLOB.news_network)
 			alert("No news network found on station. Aborting.")
 		var/channelexists = 0
-		for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
+		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == "Nanotrasen Book Club")
 				channelexists = 1
 				break
 		if(!channelexists)
-			news_network.CreateFeedChannel("Nanotrasen Book Club", "Library", null)
-		news_network.SubmitArticle(scanner.cache.dat, "[scanner.cache.name]", "Nanotrasen Book Club", null)
+			GLOB.news_network.CreateFeedChannel("Nanotrasen Book Club", "Library", null)
+		GLOB.news_network.SubmitArticle(scanner.cache.dat, "[scanner.cache.name]", "Nanotrasen Book Club", null)
 		alert("Upload complete. Your uploaded title is now available on station newscasters.")
 	if(href_list["orderbyid"])
 		if(cooldown > world.time)

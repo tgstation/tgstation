@@ -9,7 +9,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	desc = "You can use this to manage jobs and ID access."
 	icon_screen = "id"
 	icon_keyboard = "id_key"
-	req_one_access = list(access_heads, access_change_ids)
+	req_one_access = list(GLOB.access_heads, GLOB.access_change_ids)
 	circuit = /obj/item/weapon/circuitboard/computer/card
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
@@ -154,7 +154,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		dat += "<table>"
 		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b><td style='width:25%'><b>Prioritize</b></td></td></tr>"
 		var/ID
-		if(scan && (access_change_ids in scan.access) && !target_dept)
+		if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 			ID = 1
 		else
 			ID = 0
@@ -388,7 +388,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if (check_access(scan))
 					region_access = list()
 					head_subordinates = list()
-					if(access_change_ids in scan.access)
+					if(GLOB.access_change_ids in scan.access)
 						if(target_dept)
 							head_subordinates = get_all_jobs()
 							region_access |= target_dept
@@ -398,20 +398,20 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 
 					else
-						if((access_hop in scan.access) && ((target_dept==1) || !target_dept))
+						if((GLOB.access_hop in scan.access) && ((target_dept==1) || !target_dept))
 							region_access |= 1
 							region_access |= 6
 							get_subordinates("Head of Personnel")
-						if((access_hos in scan.access) && ((target_dept==2) || !target_dept))
+						if((GLOB.access_hos in scan.access) && ((target_dept==2) || !target_dept))
 							region_access |= 2
 							get_subordinates("Head of Security")
-						if((access_cmo in scan.access) && ((target_dept==3) || !target_dept))
+						if((GLOB.access_cmo in scan.access) && ((target_dept==3) || !target_dept))
 							region_access |= 3
 							get_subordinates("Chief Medical Officer")
-						if((access_rd in scan.access) && ((target_dept==4) || !target_dept))
+						if((GLOB.access_rd in scan.access) && ((target_dept==4) || !target_dept))
 							region_access |= 4
 							get_subordinates("Research Director")
-						if((access_ce in scan.access) && ((target_dept==5) || !target_dept))
+						if((GLOB.access_ce in scan.access) && ((target_dept==5) || !target_dept))
 							region_access |= 5
 							get_subordinates("Chief Engineer")
 						if(region_access)
@@ -488,7 +488,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
-			if(scan && (access_change_ids in scan.access) && !target_dept)
+			if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -503,7 +503,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		if("make_job_unavailable")
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
-			if(scan && (access_change_ids in scan.access) && !target_dept)
+			if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -519,7 +519,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		if ("prioritize_job")
 			// TOGGLE WHETHER JOB APPEARS AS PRIORITIZED IN THE LOBBY
-			if(scan && (access_change_ids in scan.access) && !target_dept)
+			if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 				var/priority_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
@@ -560,7 +560,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/centcom
 	name = "\improper Centcom identification console"
 	circuit = /obj/item/weapon/circuitboard/computer/card/centcom
-	req_access = list(access_cent_captain)
+	req_access = list(GLOB.access_cent_captain)
 
 /obj/machinery/computer/card/minor
 	name = "department management console"

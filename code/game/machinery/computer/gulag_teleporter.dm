@@ -4,7 +4,7 @@
 	desc = "Used to send criminals to the Labor Camp"
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	circuit = /obj/item/weapon/circuitboard/computer/gulag_teleporter_console
 	var/default_goal = 200
 	var/obj/item/weapon/card/id/prisoner/id = null
@@ -38,7 +38,7 @@
 	return ..()
 
 /obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "gulag_console", name, 455, 440, master_ui, state)

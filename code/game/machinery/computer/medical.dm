@@ -5,7 +5,7 @@
 	desc = "This can be used to check medical records."
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"
-	req_one_access = list(access_medical, access_forensics_lockers)
+	req_one_access = list(GLOB.access_medical, GLOB.access_forensics_lockers)
 	circuit = /obj/item/weapon/circuitboard/computer/med_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
@@ -502,7 +502,7 @@
 				var/counter = 1
 				while(src.active2.fields[text("com_[]", counter)])
 					counter++
-				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1)
+				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 
 			else if(href_list["del_c"])
 				if((istype(src.active2, /datum/data/record) && src.active2.fields[text("com_[]", href_list["del_c"])]))

@@ -50,7 +50,7 @@
 
 	if(!eyeobj.eye_initialized)
 		var/camera_location
-		for(var/obj/machinery/camera/C in cameranet.cameras)
+		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 			if(!C.can_use() || z_lock && C.z != z_lock)
 				continue
 			if(C.network & networks)

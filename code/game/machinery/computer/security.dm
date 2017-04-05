@@ -3,7 +3,7 @@
 	desc = "Used to view and edit personnel's security records."
 	icon_screen = "security"
 	icon_keyboard = "security_key"
-	req_one_access = list(access_security, access_forensics_lockers)
+	req_one_access = list(GLOB.access_security, GLOB.access_forensics_lockers)
 	circuit = /obj/item/weapon/circuitboard/computer/secure_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
@@ -468,7 +468,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 
 			if("Delete Record (ALL)")
 				if(active1)

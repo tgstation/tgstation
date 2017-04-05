@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	cost = 500
 
 /obj/item/stack/sheet/metal/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = metal_recipes
+	recipes = GLOB.metal_recipes
 	return ..()
 
 /*
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/plasteel
 
 /obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = plasteel_recipes
+	recipes = GLOB.plasteel_recipes
 	return ..()
 
 /obj/item/stack/sheet/plasteel/twenty
@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 		qdel(src)
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = brass_recipes
+	recipes = GLOB.brass_recipes
 	..()
 	pixel_x = 0
 	pixel_y = 0
