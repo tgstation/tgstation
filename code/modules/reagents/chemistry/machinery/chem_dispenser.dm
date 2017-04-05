@@ -168,6 +168,8 @@
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
+		if(!anchored)
+			feedback_add_details("chem_dispenser_unanchored", "[loc.x],[loc.y],[loc.z]")
 		return
 
 	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
