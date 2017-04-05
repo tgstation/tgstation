@@ -159,11 +159,11 @@
 /obj/structure/extraction_point/New()
 	var/area/area_name = get_area(src)
 	name += " ([rand(100,999)]) ([area_name.name])"
-	total_extraction_beacons += src
+	GLOB.total_extraction_beacons += src
 	..()
 
 /obj/structure/extraction_point/Destroy()
-	total_extraction_beacons -= src
+	GLOB.total_extraction_beacons -= src
 	..()
 
 /obj/effect/extraction_holder

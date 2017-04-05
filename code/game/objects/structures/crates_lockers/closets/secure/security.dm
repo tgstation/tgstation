@@ -205,7 +205,7 @@
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "courtroom locker"
-	req_access = list(access_court)
+	req_access = list(GLOB.access_court)
 
 /obj/structure/closet/secure_closet/courtroom/New()
 	..()
@@ -219,7 +219,7 @@
 
 /obj/structure/closet/secure_closet/armory1
 	name = "armory armor locker"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory1/New()
@@ -234,7 +234,7 @@
 
 /obj/structure/closet/secure_closet/armory2
 	name = "armory ballistics locker"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory2/New()
@@ -247,7 +247,7 @@
 
 /obj/structure/closet/secure_closet/armory3
 	name = "armory energy gun locker"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory3/New()
@@ -261,7 +261,7 @@
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "tac"
 
 /obj/structure/closet/secure_closet/tac/New()
@@ -273,7 +273,7 @@
 
 /obj/structure/closet/secure_closet/lethalshots
 	name = "shotgun lethal rounds"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "tac"
 
 /obj/structure/closet/secure_closet/lethalshots/New()

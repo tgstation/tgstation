@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, AVerbsFun())
 	/client/proc/show_tip,
 	/client/proc/smite
 	)
-PROTECT_GLOBAL(admin_verbs_spawn)
+GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom,/client/proc/respawn_character))
 GLOBAL_PROTECT(admin_verbs_server)
 GLOBAL_LIST_INIT(admin_verbs_server, AVerbsServer())

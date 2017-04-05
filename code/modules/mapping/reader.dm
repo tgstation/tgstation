@@ -275,14 +275,14 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	index = members.len
 	if(members[index] != /area/template_noop)
 		var/atom/instance
-		_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
+		GLOB._preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
 
 		instance = locate(members[index])
 		if(crds)
 			instance.contents.Add(crds)
 
-		if(use_preloader && instance)
-			_preloader.load(instance)
+		if(GLOB.use_preloader && instance)
+			GLOB._preloader.load(instance)
 
 	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
 
@@ -318,7 +318,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /dmm_suite/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf)
-	_preloader.setup(attributes, path)
+	GLOB._preloader.setup(attributes, path)
 
 	if(crds)
 		if(!no_changeturf && ispath(path, /turf))
@@ -326,8 +326,8 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 		else
 			. = new path (crds)//first preloader pass
 
-	if(use_preloader && .)//second preloader pass, for those atoms that don't ..() in New()
-		_preloader.load(.)
+	if(GLOB.use_preloader && .)//second preloader pass, for those atoms that don't ..() in New()
+		GLOB._preloader.load(.)
 
 	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
 	if(TICK_CHECK)
@@ -429,7 +429,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
 /dmm_suite/preloader/proc/setup(list/the_attributes, path)
 	if(the_attributes.len)
-		use_preloader = TRUE
+		GLOB.use_preloader = TRUE
 		attributes = the_attributes
 		target_path = path
 
@@ -439,7 +439,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 		if(islist(value))
 			value = deepCopyList(value)
 		what.vars[attribute] = value
-	use_preloader = FALSE
+	GLOB.use_preloader = FALSE
 
 /area/template_noop
 	name = "Area Passthrough"

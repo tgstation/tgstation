@@ -187,11 +187,11 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	var/virgin = 1
 
 /obj/structure/filingcabinet/employment/New()
-	employmentCabinets += src
+	GLOB.employmentCabinets += src
 	return ..()
 
 /obj/structure/filingcabinet/employment/Destroy()
-	employmentCabinets -= src
+	GLOB.employmentCabinets -= src
 	return ..()
 
 /obj/structure/filingcabinet/employment/proc/fillCurrent()

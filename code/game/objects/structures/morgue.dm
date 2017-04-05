@@ -160,14 +160,14 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
-	crematoriums.Remove(src)
+	GLOB.crematoriums.Remove(src)
 	return ..()
 
 /obj/structure/bodycontainer/crematorium/New()
 	connected = new/obj/structure/tray/c_tray(src)
 	connected.connected = src
 
-	crematoriums.Add(src)
+	GLOB.crematoriums.Add(src)
 	..()
 
 /obj/structure/bodycontainer/crematorium/update_icon()

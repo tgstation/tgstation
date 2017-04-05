@@ -404,7 +404,7 @@
 /obj/docking_port/mobile/pod/request()
 	var/obj/machinery/computer/shuttle/S = getControlConsole()
 
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA || (S && S.emagged))
+	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || (S && S.emagged))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
