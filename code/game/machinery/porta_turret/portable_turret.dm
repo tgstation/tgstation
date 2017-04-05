@@ -12,7 +12,7 @@
 	use_power = 1				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "standard"
@@ -845,7 +845,7 @@
 	. = ..()
 
 /obj/machinery/porta_turret/lasertag
-	req_access = list(access_maint_tunnels, access_theatre)
+	req_access = list(GLOB.access_maint_tunnels, GLOB.access_theatre)
 	check_records = 0
 	criminals = 0
 	auth_weapons = 1

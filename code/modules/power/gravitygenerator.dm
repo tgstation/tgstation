@@ -383,19 +383,19 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
-	if(gravity_generators["[T.z]"])
-		return length(gravity_generators["[T.z]"])
+	if(GLOB.gravity_generators["[T.z]"])
+		return length(GLOB.gravity_generators["[T.z]"])
 	return 0
 
 /obj/machinery/gravity_generator/main/proc/update_list()
 	var/turf/T = get_turf(src.loc)
 	if(T)
-		if(!gravity_generators["[T.z]"])
-			gravity_generators["[T.z]"] = list()
+		if(!GLOB.gravity_generators["[T.z]"])
+			GLOB.gravity_generators["[T.z]"] = list()
 		if(on)
-			gravity_generators["[T.z]"] |= src
+			GLOB.gravity_generators["[T.z]"] |= src
 		else
-			gravity_generators["[T.z]"] -= src
+			GLOB.gravity_generators["[T.z]"] -= src
 
 // Misc
 

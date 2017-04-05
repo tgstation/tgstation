@@ -205,13 +205,13 @@ GLOBAL_EMPTY_LIST(allCasters)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
 		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
-	allCasters += src
-	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+	GLOB.allCasters += src
+	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
 		unit_no++
 	update_icon()
 
 /obj/machinery/newscaster/Destroy()
-	allCasters -= src
+	GLOB.allCasters -= src
 	viewing_channel = null
 	photo = null
 	return ..()
@@ -221,7 +221,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = "newscaster_off"
 	else
-		if(news_network.wanted_issue.active)
+		if(GLOB.news_network.wanted_issue.active)
 			icon_state = "newscaster_wanted"
 		else
 			icon_state = "newscaster_normal"
@@ -268,7 +268,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 			if(0)
 				dat += "Welcome to Newscasting Unit #[unit_no].<BR> Interface & News networks Operational."
 				dat += "<BR><FONT SIZE=1>Property of Nanotrasen Inc</FONT>"
-				if(news_network.wanted_issue.active)
+				if(GLOB.news_network.wanted_issue.active)
 					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Read Wanted Issue</A>"
 				dat+= "<HR><BR><A href='?src=\ref[src];create_channel=1'>Create Feed Channel</A>"
 				dat+= "<BR><A href='?src=\ref[src];view=1'>View Feed Channels</A>"
@@ -278,7 +278,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 				dat+= "<BR><BR><A href='?src=\ref[human_or_robot_user];mach_close=newscaster_main'>Exit</A>"
 				if(securityCaster)
 					var/wanted_already = 0
-					if(news_network.wanted_issue.active)
+					if(GLOB.news_network.wanted_issue.active)
 						wanted_already = 1
 					dat+="<HR><B>Feed Security functions:</B><BR>"
 					dat+="<BR><A href='?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
@@ -287,10 +287,10 @@ GLOBAL_EMPTY_LIST(allCasters)
 				dat+="<BR><HR>The newscaster recognises you as: <FONT COLOR='green'>[scanned_user]</FONT>"
 			if(1)
 				dat+= "Station Feed Channels<HR>"
-				if( isemptylist(news_network.network_channels) )
+				if( isemptylist(GLOB.news_network.network_channels) )
 					dat+="<I>No active channels found...</I>"
 				else
-					for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
+					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 						if(CHANNEL.is_admin_channel)
 							dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen '><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 						else
@@ -329,9 +329,9 @@ GLOBAL_EMPTY_LIST(allCasters)
 			if(7)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
 				var/list/existing_authors = list()
-				for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 					if(FC.authorCensor)
-						existing_authors += news_network.redactedText
+						existing_authors += GLOB.news_network.redactedText
 					else
 						existing_authors += FC.author
 				if(scanned_user in existing_authors)
@@ -339,7 +339,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 				if(channel_name=="" || channel_name == "\[REDACTED\]")
 					dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
 				var/check = 0
-				for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 					if(FC.channel_name == channel_name)
 						check = 1
 						break
@@ -349,10 +349,10 @@ GLOBAL_EMPTY_LIST(allCasters)
 					dat+="<FONT COLOR='maroon'>Channel author unverified.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[2]'>Return</A><BR>"
 			if(8)
-				var/total_num=length(news_network.network_channels)
+				var/total_num=length(GLOB.news_network.network_channels)
 				var/active_num=total_num
 				var/message_num=0
-				for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 					if(!FC.censored)
 						message_num += length(FC.messages)
 					else
@@ -395,10 +395,10 @@ GLOBAL_EMPTY_LIST(allCasters)
 				dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
 				dat+="Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>"
 				dat+="<HR>Select Feed channel to get Stories from:<BR>"
-				if(isemptylist(news_network.network_channels))
+				if(isemptylist(GLOB.news_network.network_channels))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
-					for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
+					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
 			if(11)
@@ -406,10 +406,10 @@ GLOBAL_EMPTY_LIST(allCasters)
 				dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
 				dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
 				dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
-				if(isemptylist(news_network.network_channels))
+				if(isemptylist(GLOB.news_network.network_channels))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
-					for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
+					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 						dat+="<A href='?src=\ref[src];pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A>"
 			if(12)
@@ -442,7 +442,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 				dat+="<B>Wanted Issue Handler:</B>"
 				var/wanted_already = 0
 				var/end_param = 1
-				if(news_network.wanted_issue.active)
+				if(GLOB.news_network.wanted_issue.active)
 					wanted_already = 1
 					end_param = 2
 				if(wanted_already)
@@ -452,7 +452,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 				dat+="<A href='?src=\ref[src];set_wanted_desc=1'>Description</A>: [msg] <BR>"
 				dat+="<A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>: [(photo ? "Photo Attached" : "No Photo")]</BR>"
 				if(wanted_already)
-					dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[news_network.wanted_issue.scannedUser]</FONT><BR>"
+					dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[GLOB.news_network.wanted_issue.scannedUser]</FONT><BR>"
 				else
 					dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'>[scanned_user]</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
@@ -475,10 +475,10 @@ GLOBAL_EMPTY_LIST(allCasters)
 				dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 			if(18)
-				if(news_network.wanted_issue.active)
-					dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.scannedUser]</FONT>\]</FONT><HR>"
-					dat+="<B>Criminal</B>: [news_network.wanted_issue.criminal]<BR>"
-					dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
+				if(GLOB.news_network.wanted_issue.active)
+					dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[GLOB.news_network.wanted_issue.scannedUser]</FONT>\]</FONT><HR>"
+					dat+="<B>Criminal</B>: [GLOB.news_network.wanted_issue.criminal]<BR>"
+					dat+="<B>Description</B>: [GLOB.news_network.wanted_issue.body]<BR>"
 					dat+="<B>Photo:</B>: "
 					if(news_network.wanted_issue.img)
 						usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")

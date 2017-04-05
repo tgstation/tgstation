@@ -38,9 +38,9 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 			original.data["level"] = signal.data["level"]
 
 		var/signal_message = "[signal.frequency]:[signal.data["message"]]:[signal.data["realname"]]"
-		if(signal_message in recentmessages)
+		if(signal_message in GLOB.recentmessages)
 			return
-		recentmessages.Add(signal_message)
+		GLOB.recentmessages.Add(signal_message)
 
 		if(signal.data["slow"] > 0)
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
@@ -73,11 +73,11 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 							  signal.data["realname"], 4, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
 							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"], signal.data["language"])
 
-		if(!message_delay)
-			message_delay = 1
+		if(!GLOB.message_delay)
+			GLOB.message_delay = 1
 			spawn(10)
-				message_delay = 0
-				recentmessages = list()
+				GLOB.message_delay = 0
+				GLOB.recentmessages = list()
 
 		/* --- Do a snazzy animation! --- */
 		flick("broadcaster_send", src)
@@ -100,8 +100,8 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 
 /obj/machinery/telecomms/broadcaster/Destroy()
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
-	if(message_delay)
-		message_delay = 0
+	if(GLOB.message_delay)
+		GLOB.message_delay = 0
 	return ..()
 
 

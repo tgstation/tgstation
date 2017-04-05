@@ -144,7 +144,7 @@ a.updated {
 			dat += "<td>[S.available_shares]</td>"
 			var/news = 0
 			if (logged_in)
-				var/list/LR = stockExchange.last_read[S]
+				var/list/LR = GLOB.stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
 				for (var/datum/article/A in S.articles)
 					if (A.ticks > lrt)
@@ -257,7 +257,7 @@ a.updated {
 		usr.machine = src
 
 	if (href_list["viewhistory"])
-		var/datum/stock/S = locate(href_list["viewhistory"]) in stockExchange.stocks
+		var/datum/stock/S = locate(href_list["viewhistory"]) in GLOB.stockExchange.stocks
 		if (S)
 			S.displayValues(usr)
 
@@ -265,18 +265,18 @@ a.updated {
 		logged_in = null
 
 	if (href_list["buyshares"])
-		var/datum/stock/S = locate(href_list["buyshares"]) in stockExchange.stocks
+		var/datum/stock/S = locate(href_list["buyshares"]) in GLOB.stockExchange.stocks
 		if (S)
 			buy_some_shares(S, usr)
 
 	if (href_list["sellshares"])
-		var/datum/stock/S = locate(href_list["sellshares"]) in stockExchange.stocks
+		var/datum/stock/S = locate(href_list["sellshares"]) in GLOB.stockExchange.stocks
 		if (S)
 			sell_some_shares(S, usr)
 
 	if (href_list["show_logs"])
 		var/dat = "<html><head><title>Stock Transaction Logs</title></head><body><h2>Stock Transaction Logs</h2><div><a href='?src=\ref[src];show_logs=1'>Refresh</a></div><br>"
-		for(var/D in stockExchange.logs)
+		for(var/D in GLOB.stockExchange.logs)
 			var/datum/stock_log/L = D
 			if(istype(L, /datum/stock_log/buy))
 				dat += "[L.time] | <b>[L.user_name]</b> bought <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> total credits in <b>[L.company_name]</b>.<br>"
@@ -295,7 +295,7 @@ a.updated {
 	if (href_list["archive"])
 		var/datum/stock/S = locate(href_list["archive"])
 		if (logged_in && logged_in != "")
-			var/list/LR = stockExchange.last_read[S]
+			var/list/LR = GLOB.stockExchange.last_read[S]
 			LR[logged_in] = world.time
 		var/dat = "<html><head><title>News feed for [S.name]</title></head><body><h2>News feed for [S.name]</h2><div><a href='?src=\ref[src];archive=\ref[S]'>Refresh</a></div>"
 		dat += "<div><h3>Events</h3>"
