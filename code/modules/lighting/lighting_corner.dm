@@ -29,7 +29,7 @@
 
 	var/update_gen = 0
 
-/datum/lighting_corner/New(var/turf/new_turf, var/diagonal)
+/datum/lighting_corner/New(var/turf/new_turf, var/diagonal) // TODO: Maybe split this off into its own proc idk
 	. = ..()
 
 	all_lighting_corners += src
@@ -82,6 +82,10 @@
 	update_active()
 
 /datum/lighting_corner/proc/update_active()
+/datum/lighting_corner/proc/update_lumcount(var/delta_r, var/delta_g, var/delta_b)
+/datum/lighting_corner/proc/update_objects()
+
+/datum/lighting_corner/update_active()
 	active = FALSE
 	var/turf/T
 	var/thing
@@ -91,7 +95,7 @@
 			active = TRUE
 
 // God that was a mess, now to do the rest of the corner code! Hooray!
-/datum/lighting_corner/proc/update_lumcount(var/delta_r, var/delta_g, var/delta_b)
+/datum/lighting_corner/update_lumcount(var/delta_r, var/delta_g, var/delta_b)
 	lum_r += delta_r
 	lum_g += delta_g
 	lum_b += delta_b
@@ -100,7 +104,7 @@
 		needs_update = TRUE
 		lighting_update_corners += src
 
-/datum/lighting_corner/proc/update_objects()
+/datum/lighting_corner/update_objects()
 	// Cache these values a head of time so 4 individual lighting objects don't all calculate them individually.
 	var/lum_r = src.lum_r
 	var/lum_g = src.lum_g

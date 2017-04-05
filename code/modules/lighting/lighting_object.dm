@@ -48,6 +48,8 @@
 		return QDEL_HINT_LETMELIVE
 
 /atom/movable/lighting_object/proc/update()
+
+/atom/movable/lighting_object/update()
 	var/turf/T = loc
 	if (!istype(T)) // Erm...
 		if (loc)
@@ -94,7 +96,7 @@
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
 	#else
-	// Because of floating points™?, it won't even be a flat 0.
+	// Because of floating pointsâ„¢?, it won't even be a flat 0.
 	// This number is mostly arbitrary.
 	var/set_luminosity = max > 1e-6
 	#endif
@@ -117,7 +119,6 @@
 		)
 
 	luminosity = set_luminosity
-
 // Variety of overrides so the overlays don't get affected by weird things.
 
 /atom/movable/lighting_object/ex_act(severity)
