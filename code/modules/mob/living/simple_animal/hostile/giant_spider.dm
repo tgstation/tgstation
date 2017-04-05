@@ -226,8 +226,8 @@
 				var/obj/structure/spider/cocoon/C = new(cocoon_target.loc)
 				if(isliving(cocoon_target))
 					var/mob/living/L = cocoon_target
-					if(L.blood_volume && (L.stat != DEAD || !(L in consumed_mobs))) //if they're not dead, you can consume them anyway
-						consumed_mobs += L
+					if(L.blood_volume && (L.stat != DEAD || !consumed_mobs[L])) //if they're not dead, you can consume them anyway
+						consumed_mobs[L] = TRUE
 						fed++
 						visible_message("<span class='danger'>\the [src] sticks a proboscis into \the [L] and sucks a viscous substance out.</span>")
 						L.death() //you just ate them, they're dead.
