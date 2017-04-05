@@ -572,7 +572,6 @@
 			stat("Location:", "([x], [y], [z])")
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[world.contents.len]")
-			GLOB.stat_entry()
 			config.stat_entry()
 			stat(null)
 			if(Master)

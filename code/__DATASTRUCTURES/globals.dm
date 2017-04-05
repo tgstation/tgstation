@@ -1,16 +1,39 @@
-//See controllers/globals.dm
+/datum/global_vars
+    var/list/protected_varlist
+
+/datum/global_vars/vv_get_var(var_name)
+	if(var_name in protected_varlist)
+		return debug_variable(var_name, "SECRET", 0, src)
+	return ..()
+
+/datum/global_vars/vv_edit_var(var_name, var_value)
+	if(var_name in protected_varlist)
+		return FALSE
+	return ..()
+
+/datum/global_vars/proc/InitEverything()
+    var/datum/exclude_these = new
+    var/list/check_these = vars - exclude_these.vars - "protected_varlist"
+    qdel(exclude_these)
+    protected_varlist = list("protected_varlist")
+    for(var/I in check_these)
+        var/start_tick = world.time
+        call(src, "InitGlobal[I]")()
+        var/end_tick = world.time
+        if(end_tick - start_tick)
+            warning("Global [I] slept during initialization!")
+
 #define GLOBAL_MANAGED(X, InitValue)\
-/datum/controller/global_vars/proc/InitGlobal##X(){\
+/datum/global_vars/proc/InitGlobal##X(){\
     ##X = ##InitValue;\
-    gvars_datum_init_order += #X;\
 }
-#define GLOBAL_UNMANAGED(X, InitValue) /datum/controller/global_vars/proc/InitGlobal##X()
+#define GLOBAL_UNMANAGED(X, InitValue) /datum/global_vars/proc/InitGlobal##X()
 
 #ifndef TESTING
 #define GLOBAL_PROTECT(X)\
-/datum/controller/global_vars/InitGlobal##X(){\
+/datum/global_vars/InitGlobal##X(){\
     ..();\
-    gvars_datum_protected_varlist += #X;\
+    protected_varlist += #X;\
 }
 #else
 #define GLOBAL_PROTECT(X)
@@ -18,7 +41,9 @@
 
 #define GLOBAL_REAL(X, Typepath) var/global##Typepath/##X
 
-#define GLOBAL_RAW(X) /datum/controller/global_vars/var/global##X
+GLOBAL_REAL(GLOB, /datum/global_vars);
+
+#define GLOBAL_RAW(X) /datum/global_vars/var/global##X
 
 #define GLOBAL_VAR_INIT(X, InitValue) GLOBAL_RAW(/##X); GLOBAL_MANAGED(X, InitValue)
 

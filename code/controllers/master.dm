@@ -55,6 +55,10 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 	var/map_loading = FALSE	//Are we loading in a new map?
 
+	#ifndef GLOBAL_PROTECT_VARS_FROM_VV
+	var/datum/global_vars/global_vars
+	#endif
+
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	subsystems = list()
@@ -67,7 +71,18 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		Master = src
 	
 	if(!GLOB)
-		new /datum/controller/global_vars
+		GLOB = new
+		#ifdef TESTING
+		var/start_time = REALTIMEOFDAY
+		#endif
+		GLOB.InitEverything()
+		#ifdef TESTING
+		testing("Globals initialization took [(REALTIMEOFDAY - start_time)/10]s.")
+		#endif
+	
+	#ifndef GLOBAL_PROTECT_VARS_FROM_VV
+	global_vars = GLOB
+	#endif
 
 /datum/controller/master/Destroy()
 	..()
