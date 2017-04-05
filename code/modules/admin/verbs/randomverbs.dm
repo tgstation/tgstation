@@ -943,10 +943,10 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 		var/datum/atom_hud/antag/H = G.ganghud
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
+	to_chat(usr, "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"].")
+	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
+	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	if(!silent)
-		to_chat(usr, "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"].")
-		message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
-		log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 		feedback_add_details("admin_verb","TAH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/has_antag_hud()
