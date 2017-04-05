@@ -30,7 +30,7 @@
 /obj/structure/spider/stickyweb
 	icon_state = "stickyweb1"
 
-/obj/structure/spider/stickyweb/Initalize()
+/obj/structure/spider/stickyweb/Initialize()
 	if(prob(50))
 		icon_state = "stickyweb2"
 	. = ..()
@@ -190,7 +190,7 @@
 	icon_state = "cocoon1"
 	obj_integrity = 60
 
-/obj/structure/spider/cocoon/Initalize()
+/obj/structure/spider/cocoon/Initialize()
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 	. = ..()
 
