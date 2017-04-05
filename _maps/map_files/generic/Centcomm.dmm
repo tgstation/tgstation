@@ -14894,6 +14894,2083 @@
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"Me" = (
+/turf/open/space,
+/area/space)
+"Mf" = (
+/turf/open/space,
+/area/space)
+"Mg" = (
+/turf/open/space,
+/area/space)
+"Mh" = (
+/turf/open/space,
+/area/space)
+"Mi" = (
+/turf/open/space,
+/area/space)
+"Mj" = (
+/turf/open/space,
+/area/space)
+"Mk" = (
+/turf/open/space,
+/area/space)
+"Ml" = (
+/turf/open/space,
+/area/space)
+"Mm" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Mn" = (
+/turf/open/space,
+/area/space)
+"Mo" = (
+/turf/open/space,
+/area/space)
+"Mp" = (
+/turf/open/space,
+/area/space)
+"Mq" = (
+/turf/open/space,
+/area/space)
+"Mr" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Ms" = (
+/turf/open/space,
+/area/space)
+"Mt" = (
+/turf/open/space,
+/area/space)
+"Mu" = (
+/turf/open/space,
+/area/space)
+"Mv" = (
+/turf/open/space,
+/area/space)
+"Mw" = (
+/turf/open/space,
+/area/space)
+"Mx" = (
+/turf/open/space,
+/area/space)
+"My" = (
+/turf/open/space,
+/area/space)
+"Mz" = (
+/turf/open/space,
+/area/space)
+"MA" = (
+/turf/open/space,
+/area/space)
+"MB" = (
+/turf/open/space,
+/area/space)
+"MC" = (
+/turf/open/space,
+/area/space)
+"MD" = (
+/turf/open/space,
+/area/space)
+"ME" = (
+/turf/open/space,
+/area/space)
+"MF" = (
+/turf/open/space,
+/area/space)
+"MG" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"MH" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"MI" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"MJ" = (
+/turf/open/space,
+/area/space)
+"MK" = (
+/turf/open/space,
+/area/space)
+"ML" = (
+/turf/open/space,
+/area/space)
+"MM" = (
+/turf/open/space,
+/area/space)
+"MN" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"MO" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"MP" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/engi_ship)
+"MQ" = (
+/turf/open/space,
+/area/space)
+"MR" = (
+/turf/open/space,
+/area/space)
+"MS" = (
+/turf/open/space,
+/area/space)
+"MT" = (
+/turf/open/space,
+/area/space)
+"MU" = (
+/turf/open/space,
+/area/space)
+"MV" = (
+/turf/open/space,
+/area/space)
+"MW" = (
+/turf/open/space,
+/area/space)
+"MX" = (
+/turf/open/space,
+/area/space)
+"MY" = (
+/turf/open/space,
+/area/space)
+"MZ" = (
+/turf/open/space,
+/area/space)
+"Na" = (
+/turf/open/space,
+/area/space)
+"Nb" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Nc" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Nd" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Ne" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Nf" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Ng" = (
+/turf/open/space,
+/area/space)
+"Nh" = (
+/turf/open/space,
+/area/space)
+"Ni" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Nj" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Nk" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Nl" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Nm" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Nn" = (
+/turf/open/space,
+/area/space)
+"No" = (
+/turf/open/space,
+/area/space)
+"Np" = (
+/turf/open/space,
+/area/space)
+"Nq" = (
+/turf/open/space,
+/area/space)
+"Nr" = (
+/turf/open/space,
+/area/space)
+"Ns" = (
+/turf/open/space,
+/area/space)
+"Nt" = (
+/turf/open/space,
+/area/space)
+"Nu" = (
+/turf/open/space,
+/area/space)
+"Nv" = (
+/obj/machinery/speshul,
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"Nw" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Nx" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Ny" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Nz" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"NA" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"NB" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"NC" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"ND" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"NE" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"NF" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"NG" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"NH" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"NI" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"NJ" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"NK" = (
+/obj/machinery/speshul,
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"NL" = (
+/turf/open/space,
+/area/space)
+"NM" = (
+/turf/open/space,
+/area/space)
+"NN" = (
+/turf/open/space,
+/area/space)
+"NO" = (
+/turf/open/space,
+/area/space)
+"NP" = (
+/turf/open/space,
+/area/space)
+"NQ" = (
+/turf/open/space,
+/area/space)
+"NR" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"NS" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"NT" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"NU" = (
+/obj/structure/mirror,
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"NV" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"NW" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"NX" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"NY" = (
+/obj/machinery/door/airlock/engineering,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"NZ" = (
+/obj/machinery/door/airlock/engineering,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Oa" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"Ob" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"Oc" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"Od" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"Oe" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"Of" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"Og" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Oh" = (
+/turf/open/space,
+/area/space)
+"Oi" = (
+/turf/open/space,
+/area/space)
+"Oj" = (
+/turf/open/space,
+/area/space)
+"Ok" = (
+/turf/open/space,
+/area/space)
+"Ol" = (
+/turf/open/space,
+/area/space)
+"Om" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"On" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"Oo" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"Op" = (
+/obj/structure/dresser,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Oq" = (
+/obj/structure/sink{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Or" = (
+/obj/structure/bed/pod,
+/obj/item/weapon/bedsheet/ce,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Os" = (
+/obj/structure/bed/pod,
+/obj/item/weapon/bedsheet/ce,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Ot" = (
+/obj/structure/sign/poster/contraband/tools,
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"Ou" = (
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Ov" = (
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Ow" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/engi_ship)
+"Ox" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/plasteel/fifty,
+/obj/item/device/forcefield,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Oy" = (
+/obj/machinery/suit_storage_unit/ert/engineer,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Oz" = (
+/obj/machinery/suit_storage_unit/ert/engineer,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"OA" = (
+/obj/machinery/suit_storage_unit/ert/engineer,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"OB" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"OC" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"OD" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"OE" = (
+/turf/open/space,
+/area/space)
+"OF" = (
+/turf/open/space,
+/area/space)
+"OG" = (
+/turf/open/space,
+/area/space)
+"OH" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (EAST)"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"OI" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (WEST)";
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"OJ" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"OK" = (
+/obj/machinery/shower,
+/obj/structure/curtain,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"OL" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"OM" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"ON" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"OO" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"OP" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"OQ" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"OR" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"OS" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"OT" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"OU" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"OV" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"OW" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"OX" = (
+/obj/structure/sign/poster/contraband/atmosia_independence,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"OY" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"OZ" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (EAST)";
+	icon_state = "heater";
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Pa" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (WEST)"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Pb" = (
+/turf/open/space,
+/area/space)
+"Pc" = (
+/turf/open/space,
+/area/space)
+"Pd" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Pe" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Pf" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"Pg" = (
+/obj/machinery/sleeper{
+	tag = "icon-sleeper-open (EAST)";
+	icon_state = "sleeper-open";
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Ph" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Pi" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Pj" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Pk" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Pl" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"Pm" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Pn" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Po" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Pp" = (
+/obj/structure/rack,
+/obj/item/weapon/rcd,
+/obj/item/weapon/rcd_ammo/large,
+/obj/item/weapon/rcd_ammo/large,
+/obj/item/device/assembly/flash,
+/obj/item/clothing/glasses/welding,
+/obj/item/device/modular_computer/tablet,
+/obj/item/device/paicard,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Pq" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Pr" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Ps" = (
+/obj/structure/rack,
+/obj/item/weapon/twohanded/fireaxe,
+/obj/item/weapon/storage/belt/utility/chief/full,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Pt" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"Pu" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Pv" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Pw" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (EAST)";
+	icon_state = "heater";
+	dir = 4
+	},
+/turf/closed/wall/shuttle/syndie,
+/area/shuttle/engi_ship)
+"Px" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (WEST)"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Py" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (EAST)"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Pz" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (WEST)";
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"PA" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"PB" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"PC" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"PD" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"PE" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"PF" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"PG" = (
+/obj/machinery/newscaster,
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"PH" = (
+/obj/structure/piano{
+	color = "";
+	icon_state = "piano"
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"PI" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"PJ" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"PK" = (
+/obj/structure/bookcase/manuals/engineering,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"PL" = (
+/obj/structure/sign/atmosplaque,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"PM" = (
+/obj/machinery/light,
+/obj/structure/rack,
+/obj/item/weapon/hand_tele,
+/obj/item/weapon/melee/classic_baton/telescopic,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"PN" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"PO" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"PP" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"PQ" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"PR" = (
+/obj/machinery/computer/ship_construction,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"PS" = (
+/turf/closed/wall/shuttle/syndie,
+/area/shuttle/engi_ship)
+"PT" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"PU" = (
+/turf/open/space,
+/area/space)
+"PV" = (
+/turf/open/space,
+/area/space)
+"PW" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"PX" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"PY" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"PZ" = (
+/obj/structure/sign/poster/contraband/atmosia_independence,
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"Qa" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Qb" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/engi_ship)
+"Qc" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/canvas/nineteenXnineteen,
+/obj/item/weapon/canvas/nineteenXnineteen,
+/obj/item/weapon/storage/crayons,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Qd" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Qe" = (
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Qf" = (
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Qg" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Qh" = (
+/obj/structure/statue/gold/ce,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Qi" = (
+/obj/item/device/radio/intercom,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Qj" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Qk" = (
+/obj/structure/sign/poster/official/bless_this_spess,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Ql" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Qm" = (
+/obj/machinery/button/door{
+	id = 29
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Qn" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Qo" = (
+/obj/machinery/computer/station_alert,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Qp" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	max_integrity = 200;
+	obj_integrity = 200;
+	pixel_x = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	max_integrity = 200;
+	obj_integrity = 200
+	},
+/obj/structure/grille,
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/plating,
+/area/shuttle/engi_ship)
+"Qq" = (
+/turf/open/space,
+/area/space)
+"Qr" = (
+/turf/open/space,
+/area/space)
+"Qs" = (
+/turf/open/space,
+/area/space)
+"Qt" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"Qu" = (
+/obj/machinery/door/airlock/engineering,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Qv" = (
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Qw" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Qx" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Qy" = (
+/obj/structure/easel,
+/obj/item/weapon/canvas/twentythreeXtwentythree,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Qz" = (
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 4;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QA" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba,
+/obj/item/weapon/lighter{
+	color = "yellow"
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QB" = (
+/obj/structure/table/wood/fancy,
+/obj/item/toy/cards/deck/cas/black,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QC" = (
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 8;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QD" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QE" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QF" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QG" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QH" = (
+/obj/machinery/door/airlock/glass_engineering,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QI" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QJ" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QK" = (
+/obj/machinery/computer/apc_control,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"QL" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	max_integrity = 200;
+	obj_integrity = 200;
+	pixel_x = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	max_integrity = 200;
+	obj_integrity = 200
+	},
+/obj/structure/grille,
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/plating,
+/area/shuttle/engi_ship)
+"QM" = (
+/turf/open/space,
+/area/space)
+"QN" = (
+/turf/open/space,
+/area/space)
+"QO" = (
+/turf/open/space,
+/area/space)
+"QP" = (
+/obj/machinery/light,
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"QQ" = (
+/obj/machinery/door/airlock/engineering,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"QR" = (
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"QS" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QT" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"QU" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"QV" = (
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 4;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QW" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/storage/pill_bottle/dice,
+/obj/effect/holodeck_effect/cards,
+/obj/docking_port/mobile/engi_ship{
+	launch_status = 0
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QX" = (
+/obj/structure/table/wood/fancy,
+/obj/item/toy/cards/deck/cas,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QY" = (
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 8;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"QZ" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Ra" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Rb" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Rc" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Rd" = (
+/obj/machinery/door/airlock/glass_engineering,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Re" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Rf" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Rg" = (
+/obj/machinery/computer/shuttle/engi_ship,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Rh" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	max_integrity = 200;
+	obj_integrity = 200;
+	pixel_x = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	max_integrity = 200;
+	obj_integrity = 200
+	},
+/obj/structure/grille,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/plating,
+/area/shuttle/engi_ship)
+"Ri" = (
+/turf/open/space,
+/area/space)
+"Rj" = (
+/turf/open/space,
+/area/space)
+"Rk" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Rl" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Rm" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"Rn" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Ro" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Rp" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Rq" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Rr" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Rs" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Rt" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Ru" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Rv" = (
+/obj/structure/statue/gold/ce,
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Rw" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Rx" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Ry" = (
+/obj/structure/sign/poster/contraband/missing_gloves,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Rz" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"RA" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/obj/machinery/computer/security{
+	icon_screen = "power";
+	name = "Camera console"
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RB" = (
+/obj/structure/chair/comfy/black,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RC" = (
+/obj/machinery/computer/engi_nav,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RD" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	max_integrity = 200;
+	obj_integrity = 200;
+	pixel_x = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	max_integrity = 200;
+	obj_integrity = 200
+	},
+/obj/structure/grille,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/plating,
+/area/shuttle/engi_ship)
+"RE" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (EAST)"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"RF" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (WEST)";
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"RG" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"RH" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"RI" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"RJ" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"RK" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"RL" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RM" = (
+/obj/item/device/radio/intercom,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"RN" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RO" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RP" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RQ" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RR" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"RS" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/vending/snack/orange,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RT" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"RU" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RV" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"RW" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"RX" = (
+/obj/machinery/computer/ship_construction,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"RY" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"RZ" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Sa" = (
+/turf/open/space,
+/area/space)
+"Sb" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Sc" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Sd" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Se" = (
+/obj/machinery/autolathe,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Sf" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Sg" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Sh" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Si" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/vending/engivend,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Sj" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Sk" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Sl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Sm" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Sn" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"So" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Sp" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Sq" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Sr" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"Ss" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"St" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Su" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (EAST)";
+	icon_state = "heater";
+	dir = 4
+	},
+/turf/closed/wall/shuttle/syndie,
+/area/shuttle/engi_ship)
+"Sv" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (WEST)"
+	},
+/turf/open/floor/plating,
+/area/shuttle/engi_ship)
+"Sw" = (
+/turf/open/space,
+/area/space)
+"Sx" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (EAST)"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Sy" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (WEST)";
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Sz" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"SA" = (
+/obj/machinery/chem_dispenser,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"SB" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SC" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SD" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SE" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SF" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SG" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SH" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SI" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SJ" = (
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SK" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SL" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SM" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"SN" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"SO" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"SP" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (EAST)";
+	icon_state = "heater";
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"SQ" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion";
+	tag = "icon-propulsion (WEST)"
+	},
+/turf/open/floor/plating,
+/area/shuttle/engi_ship)
+"SR" = (
+/turf/open/space,
+/area/space)
+"SS" = (
+/turf/open/space,
+/area/space)
+"ST" = (
+/turf/open/space,
+/area/space)
+"SU" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"SV" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"SW" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/engi_ship)
+"SX" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/storage/box/beakers,
+/obj/item/weapon/storage/firstaid/toxin,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"SY" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/storage/firstaid,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"SZ" = (
+/obj/machinery/iv_drip,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Ta" = (
+/obj/machinery/light,
+/obj/machinery/chem_heater,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Tb" = (
+/obj/structure/sign/poster/contraband/power,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/engi_ship)
+"Tc" = (
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Td" = (
+/obj/machinery/door/poddoor/preopen{
+	id = 29
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Te" = (
+/obj/structure/sign/poster/contraband/tools,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/engi_ship)
+"Tf" = (
+/obj/machinery/door/window/northright,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Tg" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Th" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Ti" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Tj" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Tk" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Tl" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Tm" = (
+/turf/open/space,
+/area/space)
+"Tn" = (
+/turf/open/space,
+/area/space)
+"To" = (
+/turf/open/space,
+/area/space)
+"Tp" = (
+/turf/open/space,
+/area/space)
+"Tq" = (
+/turf/open/space,
+/area/space)
+"Tr" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Ts" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Tt" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Tu" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Tv" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Tw" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Tx" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Ty" = (
+/obj/machinery/door/airlock/engineering,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Tz" = (
+/obj/machinery/door/airlock/engineering,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"TA" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
+"TB" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"TC" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"TD" = (
+/obj/effect/mob_spawn/human/hotel_staff{
+	desc = "A sleeper designed for long-term stasis between crew visits.";
+	objectives = "You are this ship's assigned servant. You must obey, serve, and protect the ship's rightful crew, except that you cannot leave the ship under any circumstances.";
+	pocket2 = /obj/item/weapon/melee/classic_baton/telescopic
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"TE" = (
+/obj/machinery/vending/boozeomat{
+	level = 0
+	},
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"TF" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"TG" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"TH" = (
+/obj/machinery/speshul,
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"TI" = (
+/turf/open/space,
+/area/space)
+"TJ" = (
+/turf/open/space,
+/area/space)
+"TK" = (
+/turf/open/space,
+/area/space)
+"TL" = (
+/turf/open/space,
+/area/space)
+"TM" = (
+/turf/open/space,
+/area/space)
+"TN" = (
+/obj/machinery/speshul,
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"TO" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"TP" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"TQ" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"TR" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"TS" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"TT" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"TU" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"TV" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/engi_ship)
+"TW" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"TX" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"TY" = (
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"TZ" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Ua" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Ub" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Uc" = (
+/turf/open/space,
+/area/space)
+"Ud" = (
+/turf/open/space,
+/area/space)
+"Ue" = (
+/turf/open/space,
+/area/space)
+"Uf" = (
+/turf/open/space,
+/area/space)
+"Ug" = (
+/turf/open/space,
+/area/space)
+"Uh" = (
+/turf/open/space,
+/area/space)
+"Ui" = (
+/turf/open/space,
+/area/space)
+"Uj" = (
+/turf/open/space,
+/area/space)
+"Uk" = (
+/turf/open/space,
+/area/space)
+"Ul" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Um" = (
+/turf/closed/wall/shuttle/syndie,
+/area/shuttle/engi_ship)
+"Un" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Uo" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Up" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Uq" = (
+/turf/open/space,
+/area/space)
+"Ur" = (
+/turf/open/space,
+/area/space)
+"Us" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Ut" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"Uu" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/engi_ship)
+"Uv" = (
+/turf/closed/wall/shuttle/syndie,
+/area/shuttle/engi_ship)
+"Uw" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/engi_ship)
+"Ux" = (
+/turf/open/space,
+/area/space)
+"Uy" = (
+/turf/open/space,
+/area/space)
+"Uz" = (
+/turf/open/space,
+/area/space)
+"UA" = (
+/turf/open/space,
+/area/space)
+"UB" = (
+/turf/open/space,
+/area/space)
+"UC" = (
+/turf/open/space,
+/area/space)
+"UD" = (
+/turf/open/space,
+/area/space)
+"UE" = (
+/turf/open/space,
+/area/space)
+"UF" = (
+/turf/open/space,
+/area/space)
+"UG" = (
+/turf/open/space,
+/area/space)
+"UH" = (
+/turf/open/space,
+/area/space)
+"UI" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"UJ" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"UK" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"UL" = (
+/turf/open/space,
+/area/space)
+"UM" = (
+/turf/open/space,
+/area/space)
+"UN" = (
+/turf/open/space,
+/area/space)
+"UO" = (
+/turf/open/space,
+/area/space)
+"UP" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"UQ" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/engi_ship)
+"UR" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"US" = (
+/turf/open/space,
+/area/space)
+"UT" = (
+/turf/open/space,
+/area/space)
+"UU" = (
+/turf/open/space,
+/area/space)
+"UV" = (
+/turf/open/space,
+/area/space)
+"UW" = (
+/turf/open/space,
+/area/space)
+"UX" = (
+/turf/open/space,
+/area/space)
+"UY" = (
+/turf/open/space,
+/area/space)
+"UZ" = (
+/turf/open/space,
+/area/space)
+"Va" = (
+/turf/open/space,
+/area/space)
+"Vb" = (
+/turf/open/space,
+/area/space)
+"Vc" = (
+/turf/open/space,
+/area/space)
+"Vd" = (
+/turf/open/space,
+/area/space)
+"Ve" = (
+/turf/open/space,
+/area/space)
+"Vf" = (
+/turf/open/space,
+/area/space)
+"Vg" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Vh" = (
+/turf/open/space,
+/area/space)
+"Vi" = (
+/turf/open/space,
+/area/space)
+"Vj" = (
+/turf/open/space,
+/area/space)
+"Vk" = (
+/turf/open/space,
+/area/space)
+"Vl" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/engi_ship)
+"Vm" = (
+/turf/open/space,
+/area/space)
+"Vn" = (
+/turf/open/space,
+/area/space)
+"Vo" = (
+/turf/open/space,
+/area/space)
+"Vp" = (
+/turf/open/space,
+/area/space)
+"Vq" = (
+/turf/open/space,
+/area/space)
+"Vr" = (
+/turf/open/space,
+/area/space)
+"Vs" = (
+/turf/open/space,
+/area/space)
+"Vt" = (
+/turf/open/space,
+/area/space)
+"Vu" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/plasteel/fifty,
+/obj/item/device/forcefield,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Vv" = (
+/obj/structure/rack,
+/obj/item/weapon/rcd,
+/obj/item/weapon/rcd_ammo/large,
+/obj/item/weapon/rcd_ammo/large,
+/obj/item/device/assembly/flash,
+/obj/item/clothing/glasses/welding,
+/obj/item/device/paicard,
+/turf/open/floor/mineral/gold,
+/area/shuttle/engi_ship)
+"Vw" = (
+/obj/structure/table/wood/fancy,
+/obj/item/weapon/storage/pill_bottle/dice,
+/obj/effect/holodeck_effect/cards,
+/obj/docking_port/mobile/engi_ship{
+	launch_status = 0
+	},
+/turf/open/floor/carpet,
+/area/shuttle/engi_ship)
+"Vx" = (
+/obj/machinery/vending/boozeomat{
+	level = 0
+	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/shuttle/engi_ship)
 
 (1,1,1) = {"
 aa
@@ -70369,28 +72446,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+Me
+Me
+Me
+Me
+Me
+OH
+Me
+Me
+Me
+Me
+OH
+Me
+Me
+Me
+Me
+Me
+Me
+Me
+Me
 aa
 aa
 aa
@@ -70626,28 +72703,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+Me
+Me
+Me
+OH
+MH
+OI
+Me
+Me
+Me
+Me
+OI
+MH
+OH
+Me
+Me
+Me
+Me
+Me
+Me
 aa
 aa
 aa
@@ -70883,28 +72960,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+Me
+Me
+Nb
+OI
+MH
+MH
+PW
+Me
+Me
+Nb
+MH
+MH
+OI
+PW
+Me
+Me
+Me
+Me
+Me
 aa
 aa
 aa
@@ -71140,28 +73217,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+Nv
+Nb
+NS
+NS
+NS
+Po
+MH
+Qt
+QP
+MH
+Po
+Po
+Po
+Po
+PW
+Nv
+Me
+Me
+Me
 aa
 aa
 aa
@@ -71397,28 +73474,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+Nb
+NS
+NS
+OK
+Pg
+Po
+Po
+NY
+NY
+NX
+Po
+Se
+SA
+Ob
+Po
+PW
+Me
+Me
+Me
 aa
 aa
 aa
@@ -71654,28 +73731,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Nb
+MH
+NS
+Op
+OL
+OL
+OL
+PZ
+Ou
+Ou
+Rn
+OL
+OL
+OL
+SX
+Po
+MH
+PW
+Me
+Me
 aa
 aa
 aa
@@ -71911,28 +73988,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Mm
+MI
+MH
+NU
+Oq
+OL
+OL
+OL
+OP
+OL
+OL
+OP
+OL
+OL
+OL
+SY
+Po
+MH
+PS
+UI
+Me
 aa
 aa
 aa
@@ -72168,28 +74245,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+MH
+MH
+MH
+NS
+Or
+OL
+OL
+PF
+NS
+Pm
+Pm
+Po
+RL
+OL
+OL
+SZ
+Po
+MH
+MH
+MH
+Me
 aa
 aa
 aa
@@ -72425,28 +74502,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Mm
+MI
+MH
+MH
+NS
+Or
+OL
+Pk
+PG
+Qc
+Qy
+OW
+Rq
+Qi
+Si
+OL
+Ta
+Po
+MH
+MH
+UK
+UI
 aa
 aa
 aa
@@ -72682,28 +74759,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Nf
+MH
+NX
+Ot
+OP
+NS
+PH
+OL
+Qz
+Qz
+OL
+OW
+Po
+OP
+Tb
+Po
+MH
+RZ
+Me
+Me
 aa
 aa
 aa
@@ -72939,28 +75016,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+NC
+NY
+Ou
+OL
+Pm
+PI
+Qe
+QA
+Vw
+Rs
+OW
+Pm
+OL
+Ou
+NY
+NC
+Me
+Me
+Me
 aa
 aa
 aa
@@ -73196,28 +75273,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+ND
+NY
+Ou
+OL
+Pm
+OW
+Qe
+QB
+QX
+Rs
+OW
+Pm
+OL
+Ou
+NY
+ND
+Me
+Me
+Me
 aa
 aa
 aa
@@ -73453,28 +75530,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Nb
+MH
+NX
+Ow
+OP
+Po
+PK
+OL
+QC
+QC
+OL
+OW
+Po
+OP
+Te
+NX
+MH
+PW
+Me
+Me
 aa
 aa
 aa
@@ -73710,28 +75787,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Mm
+MI
+MH
+MH
+Ob
+Vu
+OL
+Vv
+PL
+Qh
+OL
+OL
+Rv
+Po
+RL
+OL
+Tf
+OW
+NX
+MH
+UK
+UI
 aa
 aa
 aa
@@ -73967,28 +76044,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+MH
+MH
+MH
+Oc
+Oy
+OL
+OL
+PM
+Qi
+OL
+OL
+Po
+RS
+OL
+SK
+Tg
+OW
+TY
+NX
+MH
+Me
 aa
 aa
 aa
@@ -74224,28 +76301,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+MP
+MI
+MH
+Ob
+Oz
+OL
+OL
+OL
+OP
+OL
+OL
+OP
+OL
+OL
+SK
+Th
+TD
+Po
+PS
+UI
+Me
 aa
 aa
 aa
@@ -74481,28 +76558,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Nf
+MH
+Ob
+Oy
+OW
+Ps
+PO
+Qk
+OL
+OL
+Ry
+RU
+OW
+SK
+Th
+Vx
+NX
+RZ
+Me
+Me
 aa
 aa
 aa
@@ -74738,28 +76815,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+Nf
+Of
+Ob
+OX
+Pt
+Pt
+Po
+QH
+QH
+Pt
+RV
+Of
+Ob
+Po
+NX
+RZ
+Me
+Me
+Me
 aa
 aa
 aa
@@ -74995,28 +77072,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+Nv
+Nf
+MH
+MH
+MH
+PQ
+Qm
+OL
+OL
+RA
+MH
+MH
+MH
+MH
+RZ
+Me
+Me
+Me
+Me
 aa
 aa
 aa
@@ -75252,28 +77329,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+Me
+Me
+Nf
+OZ
+MH
+PR
+Qn
+QJ
+QJ
+RB
+PR
+MH
+OZ
+RZ
+Nv
+Me
+Me
+Me
+Me
 aa
 aa
 aa
@@ -75509,28 +77586,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+Me
+Me
+Me
+Pa
+Pw
+PS
+Qo
+QK
+Rg
+RC
+MH
+Pw
+Sv
+Me
+Me
+Me
+Me
+Me
+Me
 aa
 aa
 aa
@@ -75766,28 +77843,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Me
+Me
+Me
+Me
+Me
+Me
+Me
+Pa
+Nf
+Qp
+Qp
+Rh
+Rh
+RZ
+Sv
+Me
+Me
+Me
+Me
+Me
+Me
+Me
 aa
 aa
 aa

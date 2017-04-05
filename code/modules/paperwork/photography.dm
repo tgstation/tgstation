@@ -493,12 +493,12 @@
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-empty"
-	var/obj/item/weapon/photo/displayed
+	var/obj/item/displayed
 
 /obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/photo))
+	if(istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/weapon/canvas))
 		if(!displayed)
-			var/obj/item/weapon/photo/P = I
+			var/obj/item/P = I
 			if(!user.transferItemToLoc(P, src))
 				return
 			displayed = P
@@ -521,12 +521,6 @@
 
 /obj/item/weapon/picture_frame/attack_self(mob/user)
 	user.examinate(src)
-
-/obj/item/weapon/picture_frame/examine(mob/user)
-	if(user.is_holding(src) && displayed)
-		displayed.show(user)
-	else
-		..()
 
 /obj/item/weapon/picture_frame/update_icon()
 	cut_overlays()

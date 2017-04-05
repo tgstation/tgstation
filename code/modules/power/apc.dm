@@ -1259,3 +1259,32 @@
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
+
+/obj/machinery/power/apc/powered
+
+/obj/machinery/power/apc/powered/Initialize()
+	..()
+	has_electronics = 2 //installed and secured
+	if(cell_type)
+		src.cell = new/obj/item/weapon/stock_parts/cell(src)
+		cell.maxcharge = cell_type
+		cell.charge = start_charge * cell.maxcharge / 100
+
+	var/area/A = src.loc.loc
+
+	if(isarea(A) && src.areastring == null)
+		src.area = A
+	else
+		src.area = get_area_by_name(areastring)
+	update_icon()
+
+	make_terminal()
+
+	addtimer(CALLBACK(src, .proc/update), 5)
+
+/obj/machinery/power/apc/powered/New()
+	..()
+	pixel_x = 0
+	pixel_y = 0
+
+
