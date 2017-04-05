@@ -1,0 +1,5 @@
+author: "Penguaro"
+delete-after: True
+changes: 
+  - rscadd: "[Box] Adds access for Scientists to Starboard Maintenance Areas outside of Toxins."
+  - tweak: "[Box] Adjusted Science doors to more logical access codes."
