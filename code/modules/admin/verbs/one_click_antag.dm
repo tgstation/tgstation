@@ -453,7 +453,7 @@
 	var/teamcheck = input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num
 	if(isnull(teamcheck))
 		return
-	var/teamsize = min(7,)
+	var/teamsize = min(7,teamcheck)
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.") as null|text
 	if(!mission)
 		return
