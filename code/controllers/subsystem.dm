@@ -28,6 +28,15 @@
 	var/datum/controller/subsystem/queue_next
 	var/datum/controller/subsystem/queue_prev
 
+/datum/controller/subsystem/proc/PreInit()
+/datum/controller/subsystem/proc/ignite(resumed = 0)
+/datum/controller/subsystem/proc/fire(resumed = 0)
+/datum/controller/subsystem/proc/enqueue()
+/datum/controller/subsystem/proc/dequeue()
+/datum/controller/subsystem/proc/pause()
+/datum/controller/subsystem/proc/state_letter()
+/datum/controller/subsystem/proc/postpone(cycles = 1)
+
 //Do not override
 /datum/controller/subsystem/New()
 	return
@@ -35,11 +44,11 @@
 // Used to initialize the subsystem BEFORE the map has loaded
 // Called AFTER Recover if that is called
 // Prefer to use Initialize if possible
-/datum/controller/subsystem/proc/PreInit()
+/datum/controller/subsystem/PreInit()
 	return
 
 //This is used so the mc knows when the subsystem sleeps. do not override.
-/datum/controller/subsystem/proc/ignite(resumed = 0)
+/datum/controller/subsystem/ignite(resumed = 0)
 	set waitfor = 0
 	. = SS_SLEEPING
 	fire(resumed)
@@ -55,7 +64,7 @@
 //previously, this would have been named 'process()' but that name is used everywhere for different things!
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
 //Sleeping in here prevents future fires until returned.
-/datum/controller/subsystem/proc/fire(resumed = 0)
+/datum/controller/subsystem/fire(resumed = 0)
 	flags |= SS_NO_FIRE
 	throw EXCEPTION("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
 
@@ -69,7 +78,7 @@
 //Queue it to run.
 //	(we loop thru a linked list until we get to the end or find the right point)
 //	(this lets us sort our run order correctly without having to re-sort the entire already sorted list)
-/datum/controller/subsystem/proc/enqueue()
+/datum/controller/subsystem/enqueue()
 	var/SS_priority = priority
 	var/SS_flags = flags
 	var/datum/controller/subsystem/queue_node
@@ -127,7 +136,7 @@
 		queue_node.queue_prev = src
 
 
-/datum/controller/subsystem/proc/dequeue()
+/datum/controller/subsystem/dequeue()
 	if (queue_next)
 		queue_next.queue_prev = queue_prev
 	if (queue_prev)
@@ -141,7 +150,7 @@
 		state = SS_IDLE
 
 
-/datum/controller/subsystem/proc/pause()
+/datum/controller/subsystem/pause()
 	. = 1
 	if (state == SS_RUNNING)
 		state = SS_PAUSED
@@ -175,7 +184,7 @@
 
 	stat(title, statclick.update(msg))
 
-/datum/controller/subsystem/proc/state_letter()
+/datum/controller/subsystem/state_letter()
 	switch (state)
 		if (SS_RUNNING)
 			. = "R"
@@ -190,7 +199,7 @@
 
 //could be used to postpone a costly subsystem for (default one) var/cycles, cycles
 //for instance, during cpu intensive operations like explosions
-/datum/controller/subsystem/proc/postpone(cycles = 1)
+/datum/controller/subsystem/postpone(cycles = 1)
 	if(next_fire - world.time < wait)
 		next_fire += (wait*cycles)
 
