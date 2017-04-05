@@ -213,7 +213,7 @@
 
 			var/sparks = get_turf(target)
 			var/datum/effect_system/spark_spread/y = new /datum/effect_system/spark_spread
-			y.set_up(5, 1, sparks)
+			y.set_up(5, 1, sparks)istype(
 			y.start()
 
 			var/turf/source = target
@@ -286,6 +286,10 @@
 	if(z_co == ZLEVEL_CENTCOM || z_co < 1 || z_co > ZLEVEL_SPACEMAX)
 		telefail()
 		temp_msg = "ERROR! Sector is outside known time and space!"
+		return
+	if(A.teleporter_blocked == 1)
+		telefail()
+		temp_msg = "ERROR! Sector is teleporter blocked!"
 		return
 	if(teles_left > 0)
 		doteleport(user)
