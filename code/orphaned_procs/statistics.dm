@@ -216,7 +216,7 @@ var/datum/feedback/blackbox = new()
 		if(M.client)
 			playercount += 1
 	var/admincount = admins.len
-	var/DBQuery/query_record_playercount = dbcon.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()], INET_ATON('[world.internet_address]'), '[world.port]')")
+	var/DBQuery/query_record_playercount = dbcon.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON('[world.internet_address]'), '[world.port]')")
 	query_record_playercount.Execute()
 
 /proc/sql_report_death(mob/living/L)

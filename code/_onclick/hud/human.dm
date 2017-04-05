@@ -96,9 +96,8 @@
 	using.icon = ui_style
 	static_inventory += using
 
-	using = new/obj/screen/wheel/talk
+	using = new/obj/screen/language_menu
 	using.icon = ui_style
-	wheels += using
 	static_inventory += using
 
 	using = new /obj/screen/area_creator

@@ -2,11 +2,11 @@
 
 //TODO: Make these simple_animals
 
-var/const/MIN_IMPREGNATION_TIME = 100 //time it takes to impregnate someone
-var/const/MAX_IMPREGNATION_TIME = 150
+#define MIN_IMPREGNATION_TIME 100 //time it takes to impregnate someone
+#define MAX_IMPREGNATION_TIME 150
 
-var/const/MIN_ACTIVE_TIME = 200 //time between being dropped and going idle
-var/const/MAX_ACTIVE_TIME = 400
+#define MIN_ACTIVE_TIME 200 //time between being dropped and going idle
+#define MAX_ACTIVE_TIME 400
 
 /obj/item/clothing/mask/facehugger
 	name = "alien"
@@ -152,14 +152,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	// probiscis-blocker handling
 	if(iscarbon(M))
 		var/mob/living/carbon/target = M
-		if(target.wear_mask)
-			var/obj/item/clothing/W = target.wear_mask
-			if(W.flags & NODROP)
-				return FALSE
-			if(!istype(W,/obj/item/clothing/mask/facehugger))
-				target.dropItemToGround(W)
-				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
-									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
 
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -168,6 +160,12 @@ var/const/MAX_ACTIVE_TIME = 400
 									"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
 				Die()
 				return FALSE
+
+		if(target.wear_mask)
+			var/obj/item/clothing/W = target.wear_mask
+			if(!istype(W,/obj/item/clothing/mask/facehugger) && target.dropItemToGround(W))
+				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
+									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
 		forceMove(target)
 		target.equip_to_slot_if_possible(src, slot_wear_mask, 0, 1, 1)
 	// early returns and validity checks done: attach.

@@ -33,15 +33,12 @@
 	var/material_drop = /obj/item/stack/sheet/metal
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
+	var/anchorable = TRUE
 
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		. = TRUE	//late initialize so we come back here
-	else if(initialized)
-		//we were late initialized, so now it's time to...
-		take_contents()
-		return
+		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	..()
 	update_icon()
 
@@ -122,7 +119,7 @@
 /obj/structure/closet/proc/take_contents()
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in T)
-		if(insert(AM) == -1) // limit reached
+		if(AM != src && insert(AM) == -1) // limit reached
 			break
 
 /obj/structure/closet/proc/open(mob/living/user)
@@ -244,7 +241,7 @@
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/weapon/wrench) && anchorable)
 		if(isinspace() && !anchored)
 			return
 		anchored = !anchored
@@ -318,6 +315,9 @@
 	if(!toggle(user))
 		togglelock(user)
 		return
+
+/obj/structure/closet/attack_paw(mob/user)
+	return attack_hand(user)
 
 /obj/structure/closet/attack_robot(mob/user)
 	if(user.Adjacent(src))

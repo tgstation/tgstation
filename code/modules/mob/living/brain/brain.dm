@@ -1,8 +1,6 @@
 
 
 /mob/living/brain
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
 	var/obj/item/device/mmi/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage

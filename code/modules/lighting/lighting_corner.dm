@@ -102,6 +102,9 @@
 
 /datum/lighting_corner/proc/update_objects()
 	// Cache these values a head of time so 4 individual lighting objects don't all calculate them individually.
+	var/lum_r = src.lum_r
+	var/lum_g = src.lum_g
+	var/lum_b = src.lum_b
 	var/mx = max(lum_r, lum_g, lum_b) // Scale it so one of them is the strongest lum, if it is above 1.
 	. = 1 // factor
 	if (mx > 1)
@@ -111,15 +114,15 @@
 	else if (mx < LIGHTING_SOFT_THRESHOLD)
 		. = 0 // 0 means soft lighting.
 
-	cache_r  = lum_r * . || LIGHTING_SOFT_THRESHOLD
-	cache_g  = lum_g * . || LIGHTING_SOFT_THRESHOLD
-	cache_b  = lum_b * . || LIGHTING_SOFT_THRESHOLD
+	cache_r  = round(lum_r * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
+	cache_g  = round(lum_g * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
+	cache_b  = round(lum_b * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
 	#else
-	cache_r  = lum_r * .
-	cache_g  = lum_g * .
-	cache_b  = lum_b * .
+	cache_r  = round(lum_r * ., LIGHTING_ROUND_VALUE)
+	cache_g  = round(lum_g * ., LIGHTING_ROUND_VALUE)
+	cache_b  = round(lum_b * ., LIGHTING_ROUND_VALUE)
 	#endif
-	cache_mx = mx
+	cache_mx = round(mx, LIGHTING_ROUND_VALUE)
 
 	for (var/TT in masters)
 		var/turf/T = TT

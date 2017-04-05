@@ -1,0 +1,4 @@
+author: "QV"
+delete-after: True
+changes: 
+  - bugfix: "Fixed taking max suffocation damage whenever oxygen was slightly low"

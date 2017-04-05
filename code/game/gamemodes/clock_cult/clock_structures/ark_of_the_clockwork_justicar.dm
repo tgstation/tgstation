@@ -21,7 +21,7 @@
 	var/fourth_sound_played = FALSE
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
-	var/list/required_components = list(BELLIGERENT_EYE = 7, VANGUARD_COGWHEEL = 7, GEIS_CAPACITOR = 7, REPLICANT_ALLOY = 7, HIEROPHANT_ANSIBLE = 7)
+	var/list/required_components = list(BELLIGERENT_EYE = ARK_CONSUME_COST, VANGUARD_COGWHEEL = ARK_CONSUME_COST, GEIS_CAPACITOR = ARK_CONSUME_COST, REPLICANT_ALLOY = ARK_CONSUME_COST, HIEROPHANT_ANSIBLE = ARK_CONSUME_COST)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/New()
 	..()

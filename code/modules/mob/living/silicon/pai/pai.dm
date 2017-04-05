@@ -110,10 +110,13 @@
 	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
 	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
 	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
+
+	var/datum/action/language_menu/ALM = new
 	AS.Grant(src)
 	AC.Grant(src)
 	AR.Grant(src)
 	AL.Grant(src)
+	ALM.Grant(src)
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 

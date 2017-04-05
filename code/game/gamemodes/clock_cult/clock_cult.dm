@@ -176,12 +176,12 @@ Credit where due:
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	if(clockwork_gateway_activated)
-		ticker.news_report = CLOCK_PROSELYTIZATION //failure, technically, but we have the station
+		SSticker.news_report = CLOCK_PROSELYTIZATION //failure, technically, but we have the station
 		if(ratvar_awakens)
-			ticker.news_report = CLOCK_SUMMON
+			SSticker.news_report = CLOCK_SUMMON
 			return TRUE
 	else
-		ticker.news_report = CULT_FAILURE
+		SSticker.news_report = CULT_FAILURE
 	return FALSE
 
 /datum/game_mode/clockwork_cult/declare_completion()
@@ -190,8 +190,8 @@ Credit where due:
 
 /datum/game_mode/proc/auto_declare_completion_clockwork_cult()
 	var/text = ""
-	if(istype(ticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
-		var/datum/game_mode/clockwork_cult/C = ticker.mode
+	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
+		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		if(C.check_clockwork_victory())
 			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
 			feedback_set_details("round_end_result", "win - servants completed their objective (summon ratvar)")
