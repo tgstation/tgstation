@@ -496,6 +496,7 @@
 #include "code\game\machinery\cell_charger.dm"
 #include "code\game\machinery\cloning.dm"
 #include "code\game\machinery\constructable_frame.dm"
+#include "code\game\machinery\dance_machine.dm"
 #include "code\game\machinery\deployable.dm"
 #include "code\game\machinery\dna_scanner.dm"
 #include "code\game\machinery\doppler_array.dm"
