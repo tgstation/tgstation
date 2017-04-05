@@ -49,11 +49,8 @@
 	if(length(A.name) + length(label) > 64)
 		to_chat(user, "<span class='warning'>Label too big!</span>")
 		return
-	if(ishuman(A))
-		to_chat(user, "<span class='warning'>You can't label humans!</span>")
-		return
-	if(issilicon(A))
-		to_chat(user, "<span class='warning'>You can't label cyborgs!</span>")
+	if(ismob(A))
+		to_chat(user, "<span class='warning'>You can't label creatures!</span>") // use a collar
 		return
 
 	user.visible_message("[user] labels [A] as [label].", \

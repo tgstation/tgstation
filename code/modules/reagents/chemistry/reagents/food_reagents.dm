@@ -326,6 +326,9 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "creamy chocolate"
+	glass_icon_state  = "chocolateglass"
+	glass_name = "glass of chocolate"
+	glass_desc = "Tasty."
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055

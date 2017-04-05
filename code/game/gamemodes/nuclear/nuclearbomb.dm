@@ -421,13 +421,13 @@ var/bomb_set
 	update_icon()
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	if(ticker && ticker.mode)
-		ticker.mode.explosion_in_progress = 1
+	if(SSticker && SSticker.mode)
+		SSticker.mode.explosion_in_progress = 1
 	sleep(100)
 
 	if(!core)
-		ticker.station_explosion_cinematic(3,"no_core",src)
-		ticker.mode.explosion_in_progress = 0
+		SSticker.station_explosion_cinematic(3,"no_core",src)
+		SSticker.mode.explosion_in_progress = 0
 		return
 
 	enter_allowed = 0
@@ -445,18 +445,18 @@ var/bomb_set
 	else
 		off_station = NUKE_NEAR_MISS
 
-	if(istype(ticker.mode, /datum/game_mode/nuclear))
+	if(istype(SSticker.mode, /datum/game_mode/nuclear))
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-		var/datum/game_mode/nuclear/NM = ticker.mode
+		var/datum/game_mode/nuclear/NM = SSticker.mode
 		NM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
 		NM.nuke_off_station = off_station
 
-	ticker.station_explosion_cinematic(off_station,null,src)
-	if(ticker.mode)
-		if(istype(ticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/NM = ticker.mode
+	SSticker.station_explosion_cinematic(off_station,null,src)
+	if(SSticker.mode)
+		if(istype(SSticker.mode, /datum/game_mode/nuclear))
+			var/datum/game_mode/nuclear/NM = SSticker.mode
 			NM.nukes_left --
-		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
+		if(!SSticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
 			spawn()
 				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
 

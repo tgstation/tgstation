@@ -48,7 +48,8 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/ctf/attack_hand(mob/living/user)
-	if(!user)
+	if(!is_ctf_target(user))
+		to_chat(user, "Non players shouldn't be moving the flag!")
 		return
 	if(team in user.faction)
 		to_chat(user, "You can't move your own flag!")
@@ -205,7 +206,7 @@
 				toggle_all_ctf(user)
 		return
 
-	if(ticker.current_state < GAME_STATE_PLAYING)
+	if(SSticker.current_state < GAME_STATE_PLAYING)
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
@@ -510,6 +511,7 @@
 	R.set_frequency(REDTEAM_FREQ)
 	R.freqlock = TRUE
 	R.independent = TRUE
+	H.dna.species.stunmod = 0
 
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
@@ -517,6 +519,7 @@
 	R.set_frequency(BLUETEAM_FREQ)
 	R.freqlock = TRUE
 	R.independent = TRUE
+	H.dna.species.stunmod = 0
 
 
 
@@ -534,6 +537,8 @@
 	return
 
 /obj/structure/trap/ctf/trap_effect(mob/living/L)
+	if(!is_ctf_target(L))
+		return
 	if(!(src.team in L.faction))
 		to_chat(L, "<span class='danger'><B>Stay out of the enemy spawn!</B></span>")
 		L.death()

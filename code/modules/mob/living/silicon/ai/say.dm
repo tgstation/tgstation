@@ -1,6 +1,6 @@
-/mob/living/silicon/ai/say(message)
+/mob/living/silicon/ai/say(message, language)
 	if(parent && istype(parent) && parent.stat != 2) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
-		parent.say(message)
+		parent.say(message, language)
 		return
 	..(message)
 
@@ -17,7 +17,7 @@
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai
 
-/mob/living/silicon/ai/radio(message, message_mode, list/spans)
+/mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
 	if(!radio_enabled || aiRestorePowerRoutine || stat) //AI cannot speak if radio is disabled (via intellicard) or depowered.
 		to_chat(src, "<span class='danger'>Your radio transmitter is offline!</span>")
 		return 0
@@ -29,17 +29,17 @@
 	else
 		return ..()
 
-/mob/living/silicon/ai/handle_inherent_channels(message, message_mode)
+/mob/living/silicon/ai/handle_inherent_channels(message, message_mode, language)
 	. = ..()
 	if(.)
 		return .
 
 	if(message_mode == MODE_HOLOPAD)
-		holopad_talk(message)
+		holopad_talk(message, language)
 		return 1
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(message)
+/mob/living/silicon/ai/proc/holopad_talk(message, language)
 	log_say("[key_name(src)] : [message]")
 
 	message = trim(message)
@@ -49,18 +49,16 @@
 
 	var/obj/machinery/holopad/T = current
 	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
-		send_speech(message, 7, T, "robot", get_spans())
+		send_speech(message, 7, T, "robot", get_spans(), message_language=language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
 		to_chat(src, "No holopad connected.")
-	return
 
 
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
 
 var/announcing_vox = 0 // Stores the time of the last announcement
-var/const/VOX_CHANNEL = 200
 var/const/VOX_DELAY = 600
 
 /mob/living/silicon/ai/verb/announcement_help()
@@ -150,7 +148,7 @@ var/const/VOX_DELAY = 600
 	if(vox_sounds[word])
 
 		var/sound_file = vox_sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = VOX_CHANNEL)
+		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
  		// If there is no single listener, broadcast to everyone in the same z level
@@ -167,3 +165,12 @@ var/const/VOX_DELAY = 600
 	return 0
 
 #endif
+
+/mob/living/silicon/ai/can_speak_in_language(datum/language/dt)
+	if(HAS_SECONDARY_FLAG(src, OMNITONGUE))
+		. = has_language(dt)
+	else if(is_servant_of_ratvar(src))
+		// Ratvarian AIs can only speak Ratvarian
+		. = ispath(dt, /datum/language/ratvar) && has_language(dt)
+	else
+		. = ..()

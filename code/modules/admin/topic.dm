@@ -49,7 +49,7 @@
 		stickyban(href_list["stickyban"],href_list)
 
 	else if(href_list["makeAntag"])
-		if (!ticker.mode)
+		if (!SSticker.mode)
 			to_chat(usr, "<span class='danger'>Not until the round starts!</span>")
 			return
 		switch(href_list["makeAntag"])
@@ -161,7 +161,7 @@
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
 			return
-		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevent.control
+		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
 		if(E)
 			var/datum/round_event/event = E.runEvent()
 			if(event.announceWhen>0)
@@ -312,24 +312,24 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!config.continuous[ticker.mode.config_tag])
-			config.continuous[ticker.mode.config_tag] = 1
+		if(!config.continuous[SSticker.mode.config_tag])
+			config.continuous[SSticker.mode.config_tag] = 1
 		else
-			config.continuous[ticker.mode.config_tag] = 0
+			config.continuous[SSticker.mode.config_tag] = 0
 
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [config.continuous[ticker.mode.config_tag] ? "continue if all antagonists die" : "end with the antagonists"].</span>")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [config.continuous[SSticker.mode.config_tag] ? "continue if all antagonists die" : "end with the antagonists"].</span>")
 		check_antagonists()
 
 	else if(href_list["toggle_midround_antag"])
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!config.midround_antag[ticker.mode.config_tag])
-			config.midround_antag[ticker.mode.config_tag] = 1
+		if(!config.midround_antag[SSticker.mode.config_tag])
+			config.midround_antag[SSticker.mode.config_tag] = 1
 		else
-			config.midround_antag[ticker.mode.config_tag] = 0
+			config.midround_antag[SSticker.mode.config_tag] = 0
 
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [config.midround_antag[ticker.mode.config_tag] ? "use" : "skip"] the midround antag system.</span>")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [config.midround_antag[SSticker.mode.config_tag] ? "use" : "skip"] the midround antag system.</span>")
 		check_antagonists()
 
 	else if(href_list["alter_midround_time_limit"])
@@ -358,21 +358,21 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!ticker.mode.round_ends_with_antag_death)
-			ticker.mode.round_ends_with_antag_death = 1
+		if(!SSticker.mode.round_ends_with_antag_death)
+			SSticker.mode.round_ends_with_antag_death = 1
 		else
-			ticker.mode.round_ends_with_antag_death = 0
+			SSticker.mode.round_ends_with_antag_death = 0
 
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist system to [ticker.mode.round_ends_with_antag_death ? "end the round" : "continue as extended"] upon failure.")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist system to [SSticker.mode.round_ends_with_antag_death ? "end the round" : "continue as extended"] upon failure.")
 		check_antagonists()
 
 	else if(href_list["delay_round_end"])
 		if(!check_rights(R_SERVER))
 			return
 
-		ticker.delay_end = !ticker.delay_end
-		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("<span class='adminnotice'>[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
+		SSticker.delay_end = !SSticker.delay_end
+		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
 		href_list["secrets"] = "check_antagonist"
 
 	else if(href_list["end_round"])
@@ -383,7 +383,7 @@
 		if(alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
 			if(alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", "Yes", "No") == "Yes")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has ended the round.</span>")
-				ticker.force_ending = 1 //Yeah there we go APC destroyed mission accomplished
+				SSticker.force_ending = 1 //Yeah there we go APC destroyed mission accomplished
 				return
 			else
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] decided against ending the round.</span>")
@@ -1189,7 +1189,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(ticker && ticker.mode)
+		if(SSticker && SSticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		var/dat = {"<B>What mode do you wish to play?</B><HR>"}
 		for(var/mode in config.modes)
@@ -1203,7 +1203,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(ticker && ticker.mode)
+		if(SSticker && SSticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1218,7 +1218,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if (ticker && ticker.mode)
+		if (SSticker && SSticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		master_mode = href_list["c_mode2"]
 		log_admin("[key_name(usr)] set the mode as [master_mode].")
@@ -1232,7 +1232,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if(ticker && ticker.mode)
+		if(SSticker && SSticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1531,7 +1531,7 @@
 		usr.client.cmd_admin_animalize(M)
 
 	else if(href_list["gangpoints"])
-		var/datum/gang/G = locate(href_list["gangpoints"]) in ticker.mode.gangs
+		var/datum/gang/G = locate(href_list["gangpoints"]) in SSticker.mode.gangs
 		if(G)
 			var/newpoints = input("Set [G.name ] Gang's influence.","Set Influence",G.points) as null|num
 			if(!newpoints)
@@ -1814,12 +1814,22 @@
 			return
 
 		show_individual_logging_panel(M, href_list["log_type"])
+	else if(href_list["languagemenu"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/L = locate(href_list["languagemenu"]) in mob_list
+		if(!isliving(L))
+			to_chat(usr, "This can only be used on instances of type /mob/living.")
+			return
+
+		L.open_language_menu(usr)
 
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!ticker || !ticker.mode)
+		if(!SSticker || !SSticker.mode)
 			alert("The game hasn't started yet!")
 			return
 
@@ -2170,7 +2180,7 @@
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+		if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
 			var/afkonly = text2num(href_list["afkonly"])
 			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
 				to_chat(usr, "Kick clients from lobby aborted")
@@ -2239,7 +2249,7 @@
 				return
 			G.report_message = description
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
-		ticker.mode.station_goals += G
+		SSticker.mode.station_goals += G
 		modify_goals()
 
 	else if(href_list["viewruntime"])

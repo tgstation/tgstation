@@ -20,6 +20,7 @@
 
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
+	feedback_add_details("changeling_powers","[type]")
 	return
 
 /obj/effect/proc_holder/changeling/proc/on_refund(mob/user)

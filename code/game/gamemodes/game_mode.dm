@@ -82,8 +82,8 @@
 		display_roundstart_logout_report()
 
 	feedback_set_details("round_start","[time2text(world.realtime)]")
-	if(ticker && ticker.mode)
-		feedback_set_details("game_mode","[ticker.mode]")
+	if(SSticker && SSticker.mode)
+		feedback_set_details("game_mode","[SSticker.mode]")
 	if(revdata.commit)
 		feedback_set_details("revision","[revdata.commit]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
@@ -159,7 +159,7 @@
 	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
 	spawn(rand(600,1800)) //somewhere between 1 and 3 minutes from now
-		if(!config.midround_antag[ticker.mode.config_tag])
+		if(!config.midround_antag[SSticker.mode.config_tag])
 			round_converted = 0
 			return 1
 		for(var/mob/living/carbon/human/H in antag_candidates)
@@ -169,12 +169,12 @@
 	return 1
 
 
-///Called by the gameticker
+///Called by the gameSSticker
 /datum/game_mode/process()
 	return 0
 
 
-/datum/game_mode/proc/check_finished() //to be called by ticker
+/datum/game_mode/proc/check_finished() //to be called by SSticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
@@ -537,9 +537,9 @@
 		M.key = theghost.key
 
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
-	ticker.mode.remove_cultist(newborgie, 0, 0)
-	ticker.mode.remove_revolutionary(newborgie, 0)
-	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
+	SSticker.mode.remove_cultist(newborgie, 0, 0)
+	SSticker.mode.remove_revolutionary(newborgie, 0)
+	SSticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()

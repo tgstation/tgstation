@@ -50,7 +50,7 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = 0
 
-/obj/effect/decal/cleanable/blood/gibs/New()
+/obj/effect/decal/cleanable/blood/gibs/Initialize()
 	..()
 	reagents.add_reagent("liquidgibs", 5)
 

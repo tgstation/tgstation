@@ -479,8 +479,10 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/Initialize(mapload, amount = MAXCOIL, var/param_color = null)
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null, var/param_color = null)
 	..()
+	if(new_amount) // MAXCOIL by default
+		amount = new_amount
 	if(param_color)
 		item_color = param_color
 	pixel_x = rand(-2,2)

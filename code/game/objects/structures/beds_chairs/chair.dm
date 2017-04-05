@@ -112,7 +112,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
 		qdel(src)
 
 /obj/structure/chair/attack_tk(mob/user)
-	if(has_buckled_mobs())
+	if(!anchored || has_buckled_mobs())
 		..()
 	else
 		rotate()

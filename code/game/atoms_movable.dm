@@ -6,8 +6,9 @@
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
-	var/languages_spoken = 0 //For say() and Hear()
-	var/languages_understood = 0
+	var/list/languages
+	var/list/initial_languages = list(/datum/language/common)
+	var/only_speaks_language = null
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -34,6 +35,11 @@
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
 	return ..()
+
+/atom/movable/Initialize(mapload)
+	..()
+	for(var/L in initial_languages)
+		grant_language(L)
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -266,6 +272,7 @@
 	return pass_flags&passflag
 
 /atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
+	set waitfor = 0
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
@@ -550,3 +557,54 @@
 	var/turf/currentturf = get_turf(src)
 	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
 		. = TRUE
+
+
+/* Language procs */
+/atom/movable/proc/grant_language(datum/language/dt)
+	LAZYINITLIST(languages)
+	languages[dt] = TRUE
+
+/atom/movable/proc/grant_all_languages(omnitongue=FALSE)
+	for(var/la in subtypesof(/datum/language))
+		grant_language(la)
+
+	if(omnitongue)
+		SET_SECONDARY_FLAG(src, OMNITONGUE)
+
+/atom/movable/proc/get_random_understood_language()
+	var/list/possible = list()
+	for(var/dt in languages)
+		possible += dt
+	. = safepick(possible)
+
+/atom/movable/proc/remove_language(datum/language/dt)
+	LAZYREMOVE(languages, dt)
+
+/atom/movable/proc/remove_all_languages()
+	LAZYCLEARLIST(languages)
+
+/atom/movable/proc/has_language(datum/language/dt)
+	. = is_type_in_typecache(dt, languages)
+
+/atom/movable/proc/can_speak_in_language(datum/language/dt)
+	. = has_language(dt)
+	if(only_speaks_language && !HAS_SECONDARY_FLAG(src, OMNITONGUE))
+		. = . && ispath(only_speaks_language, dt)
+
+/atom/movable/proc/get_default_language()
+	// if no language is specified, and we want to say() something, which
+	// language do we use?
+	var/datum/language/chosen_langtype
+	var/highest_priority
+
+	for(var/lt in languages)
+		var/datum/language/langtype = lt
+		if(!can_speak_in_language(langtype))
+			continue
+
+		var/pri = initial(langtype.default_priority)
+		if(!highest_priority || (pri > highest_priority))
+			chosen_langtype = langtype
+			highest_priority = pri
+
+	. = chosen_langtype

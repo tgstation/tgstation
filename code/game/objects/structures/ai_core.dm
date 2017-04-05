@@ -105,7 +105,7 @@ CONSTRUCTION_BLUEPRINT(/obj/structure/AIcore, TRUE, TRUE)
 	..()
 	if(state_id != AI_READY_CORE || !brain)
 		return
-	ticker.mode.remove_antag_for_borging(brain.brainmob.mind)
+	SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
 	if(!istype(brain.laws, /datum/ai_laws/ratvar))
 		remove_servant_of_ratvar(brain.brainmob, TRUE)
 	var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
