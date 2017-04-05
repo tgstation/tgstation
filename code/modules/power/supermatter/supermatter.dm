@@ -419,6 +419,9 @@
 			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 			Consume(B)
 
+/obj/machinery/power/supermatter_shard/attack_tk(mob/user)
+	return // no.
+
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
 	return attack_hand(user)
 
