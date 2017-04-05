@@ -212,7 +212,7 @@
 			return TRUE
 
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
-	if(ID && (access_cent_bar in ID.access))
+	if(ID && (GLOB.access_cent_bar in ID.access))
 		return TRUE
 
 //Luxury Shuttle Blockers

@@ -12,7 +12,7 @@
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 10
-	req_access = list(access_rd) //Only the R&D can change server settings.
+	req_access = list(GLOB.access_rd) //Only the R&D can change server settings.
 
 /obj/machinery/r_n_d/server/New()
 	..()
