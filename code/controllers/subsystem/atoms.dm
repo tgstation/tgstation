@@ -20,6 +20,11 @@ SUBSYSTEM_DEF(atoms)
 	return ..()
 
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms = null)
+/datum/controller/subsystem/atoms/proc/map_loader_begin()
+/datum/controller/subsystem/atoms/proc/map_loader_stop()
+/datum/controller/subsystem/atoms/proc/setupGenetics()
+
+/datum/controller/subsystem/atoms/InitializeAtoms(list/atoms = null)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
@@ -78,11 +83,11 @@ SUBSYSTEM_DEF(atoms)
 	testing("Late-initialized [LAZYLEN(late_loaders)] atoms")
 	LAZYCLEARLIST(late_loaders)
 
-/datum/controller/subsystem/atoms/proc/map_loader_begin()
+/datum/controller/subsystem/atoms/map_loader_begin()
 	old_initialized = initialized
 	initialized = INITIALIZATION_INSSATOMS
 
-/datum/controller/subsystem/atoms/proc/map_loader_stop()
+/datum/controller/subsystem/atoms/map_loader_stop()
 	initialized = old_initialized
 
 /datum/controller/subsystem/atoms/Recover()
@@ -91,7 +96,7 @@ SUBSYSTEM_DEF(atoms)
 		InitializeAtoms()
 	old_initialized = SSatoms.old_initialized
 
-/datum/controller/subsystem/atoms/proc/setupGenetics()
+/datum/controller/subsystem/atoms/setupGenetics()
 	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
 	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 		avnums[i] = i

@@ -45,6 +45,23 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
+/datum/controller/subsystem/shuttle/proc/setup_transit_zone()
+/datum/controller/subsystem/shuttle/proc/getShuttle(id)
+/datum/controller/subsystem/shuttle/proc/getDock(id)
+/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
+/datum/controller/subsystem/shuttle/proc/emergencyDeregister()
+/datum/controller/subsystem/shuttle/proc/cancelEvac(mob/user)
+/datum/controller/subsystem/shuttle/proc/canRecall()
+/datum/controller/subsystem/shuttle/proc/autoEvac()
+/datum/controller/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
+/datum/controller/subsystem/shuttle/proc/clearHostileEnvironment(datum/bad)
+/datum/controller/subsystem/shuttle/proc/checkHostileEnvironment()
+/datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
+/datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
+/datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
+/datum/controller/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
+/datum/controller/subsystem/shuttle/proc/initial_move()
+
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
@@ -70,7 +87,7 @@ SUBSYSTEM_DEF(shuttle)
 #endif
 	..()
 
-/datum/controller/subsystem/shuttle/proc/setup_transit_zone()
+/datum/controller/subsystem/shuttle/setup_transit_zone()
 	if(transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
@@ -147,19 +164,19 @@ SUBSYSTEM_DEF(shuttle)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/shuttle/proc/getShuttle(id)
+/datum/controller/subsystem/shuttle/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.id == id)
 			return M
 	WARNING("couldn't find shuttle with id: [id]")
 
-/datum/controller/subsystem/shuttle/proc/getDock(id)
+/datum/controller/subsystem/shuttle/getDock(id)
 	for(var/obj/docking_port/stationary/S in stationary)
 		if(S.id == id)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
-/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
+/datum/controller/subsystem/shuttle/requestEvac(mob/user, call_reason)
 	if(!emergency)
 		WARNING("requestEvac(): There is no emergency shuttle, but the \
 			shuttle was called. Using the backup shuttle instead.")
@@ -220,19 +237,19 @@ SUBSYSTEM_DEF(shuttle)
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
-/datum/controller/subsystem/shuttle/proc/emergencyDeregister()
+/datum/controller/subsystem/shuttle/emergencyDeregister()
 	// When a new emergency shuttle is created, it will override the
 	// backup shuttle.
 	src.emergency = src.backup_shuttle
 
-/datum/controller/subsystem/shuttle/proc/cancelEvac(mob/user)
+/datum/controller/subsystem/shuttle/cancelEvac(mob/user)
 	if(canRecall())
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.")
 		return 1
 
-/datum/controller/subsystem/shuttle/proc/canRecall()
+/datum/controller/subsystem/shuttle/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL)
 		return
 	if(SSticker.mode.name == "meteor")
@@ -250,7 +267,7 @@ SUBSYSTEM_DEF(shuttle)
 				return
 	return 1
 
-/datum/controller/subsystem/shuttle/proc/autoEvac()
+/datum/controller/subsystem/shuttle/autoEvac()
 	var/callShuttle = 1
 
 	for(var/thing in shuttle_caller_list)
@@ -274,15 +291,15 @@ SUBSYSTEM_DEF(shuttle)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 
-/datum/controller/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
+/datum/controller/subsystem/shuttle/registerHostileEnvironment(datum/bad)
 	hostileEnvironments[bad] = TRUE
 	checkHostileEnvironment()
 
-/datum/controller/subsystem/shuttle/proc/clearHostileEnvironment(datum/bad)
+/datum/controller/subsystem/shuttle/clearHostileEnvironment(datum/bad)
 	hostileEnvironments -= bad
 	checkHostileEnvironment()
 
-/datum/controller/subsystem/shuttle/proc/checkHostileEnvironment()
+/datum/controller/subsystem/shuttle/checkHostileEnvironment()
 	for(var/datum/d in hostileEnvironments)
 		if(!istype(d) || QDELETED(d))
 			hostileEnvironments -= d
@@ -303,7 +320,7 @@ SUBSYSTEM_DEF(shuttle)
 			null, 'sound/AI/shuttledock.ogg', "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
-/datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
+/datum/controller/subsystem/shuttle/toggleShuttle(shuttleId, dockHome, dockAway, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	if(!M)
 		return 1
@@ -320,7 +337,7 @@ SUBSYSTEM_DEF(shuttle)
 	return 0	//dock successful
 
 
-/datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
+/datum/controller/subsystem/shuttle/moveShuttle(shuttleId, dockId, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	var/obj/docking_port/stationary/D = getDock(dockId)
 
@@ -334,7 +351,7 @@ SUBSYSTEM_DEF(shuttle)
 			return 2
 	return 0	//dock successful
 
-/datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
+/datum/controller/subsystem/shuttle/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
 		throw EXCEPTION("[M] is not a mobile docking port")
 
@@ -344,7 +361,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(!(M in transit_requesters))
 			transit_requesters += M
 
-/datum/controller/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
+/datum/controller/subsystem/shuttle/generate_transit_dock(obj/docking_port/mobile/M)
 	// First, determine the size of the needed zone
 	// Because of shuttle rotation, the "width" of the shuttle is not
 	// always x.
@@ -472,7 +489,7 @@ SUBSYSTEM_DEF(shuttle)
 	M.assigned_transit = new_transit_dock
 	return TRUE
 
-/datum/controller/subsystem/shuttle/proc/initial_move()
+/datum/controller/subsystem/shuttle/initial_move()
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(!M.roundstart_move)
 			continue

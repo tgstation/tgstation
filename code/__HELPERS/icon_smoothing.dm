@@ -55,6 +55,10 @@
 /atom/movable/var/can_be_unanchored = 0
 /turf/var/list/fixed_underlay = null
 
+/atom/proc/diagonal_smooth(adjacencies)
+/atom/proc/clear_smooth_overlays()
+/atom/proc/replace_smooth_overlays(nw, ne, sw, se)
+
 /proc/calculate_adjacencies(atom/A)
 	if(!A.loc)
 		return 0
@@ -126,7 +130,7 @@
 		else
 			cardinal_smooth(A, adjacencies)
 
-/atom/proc/diagonal_smooth(adjacencies)
+/atom/diagonal_smooth(adjacencies)
 	switch(adjacencies)
 		if(N_NORTH|N_WEST)
 			replace_smooth_overlays("d-se","d-se-0")
@@ -310,7 +314,7 @@
 				else
 					queue_smooth(A)
 
-/atom/proc/clear_smooth_overlays()
+/atom/clear_smooth_overlays()
 	cut_overlay(top_left_corner)
 	top_left_corner = null
 	cut_overlay(top_right_corner)
@@ -320,7 +324,7 @@
 	cut_overlay(bottom_left_corner)
 	bottom_left_corner = null
 
-/atom/proc/replace_smooth_overlays(nw, ne, sw, se)
+/atom/replace_smooth_overlays(nw, ne, sw, se)
 	clear_smooth_overlays()
 	var/list/O = list()
 	top_left_corner = nw

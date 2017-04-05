@@ -28,16 +28,16 @@ SUBSYSTEM_DEF(garbage)
 	// of the immortality qdel hints
 	var/list/noforcerespect = list()
 
+#ifdef TESTING
+	var/list/qdel_list = list()	// list of all types that have been qdel()eted
+#endif
+
 /datum/controller/subsystem/garbage/proc/HandleToBeQueued()
 /datum/controller/subsystem/garbage/proc/HandleQueue()
 /datum/controller/subsystem/garbage/proc/QueueForQueuing(datum/A)
 /datum/controller/subsystem/garbage/proc/Queue(datum/A)
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
 /datum/proc/Destroy(force=FALSE)
-
-#ifdef TESTING
-	var/list/qdel_list = list()	// list of all types that have been qdel()eted
-#endif
 
 /datum/controller/subsystem/garbage/stat_entry(msg)
 	msg += "Q:[queue.len]|D:[delslasttick]|G:[gcedlasttick]|"
