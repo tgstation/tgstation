@@ -91,46 +91,46 @@ GLOBAL_EMPTY_LIST(allConsoles)
 /obj/machinery/requests_console/Initialize()
 	..()
 	name = "\improper [department] requests console"
-	allConsoles += src
+	GLOB.allConsoles += src
 	switch(departmentType)
 		if(1)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
+			if(!("[department]" in GLOB.req_console_assistance))
+				GLOB.req_console_assistance += department
 		if(2)
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
+			if(!("[department]" in GLOB.req_console_supplies))
+				GLOB.req_console_supplies += department
 		if(3)
-			if(!("[department]" in req_console_information))
-				req_console_information += department
+			if(!("[department]" in GLOB.req_console_information))
+				GLOB.req_console_information += department
 		if(4)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
+			if(!("[department]" in GLOB.req_console_assistance))
+				GLOB.req_console_assistance += department
+			if(!("[department]" in GLOB.req_console_supplies))
+				GLOB.req_console_supplies += department
 		if(5)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
-			if(!("[department]" in req_console_information))
-				req_console_information += department
+			if(!("[department]" in GLOB.req_console_assistance))
+				GLOB.req_console_assistance += department
+			if(!("[department]" in GLOB.req_console_information))
+				GLOB.req_console_information += department
 		if(6)
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
-			if(!("[department]" in req_console_information))
-				req_console_information += department
+			if(!("[department]" in GLOB.req_console_supplies))
+				GLOB.req_console_supplies += department
+			if(!("[department]" in GLOB.req_console_information))
+				GLOB.req_console_information += department
 		if(7)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
-			if(!("[department]" in req_console_information))
-				req_console_information += department
+			if(!("[department]" in GLOB.req_console_assistance))
+				GLOB.req_console_assistance += department
+			if(!("[department]" in GLOB.req_console_supplies))
+				GLOB.req_console_supplies += department
+			if(!("[department]" in GLOB.req_console_information))
+				GLOB.req_console_information += department
 
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(Radio)
-	allConsoles -= src
+	GLOB.allConsoles -= src
 	return ..()
 
 /obj/machinery/requests_console/attack_hand(mob/user)
@@ -142,7 +142,7 @@ GLOBAL_EMPTY_LIST(allConsoles)
 			if(1)	//req. assistance
 				dat += "Which department do you need assistance from?<BR><BR>"
 				dat += "<table width='100%'>"
-				for(var/dpt in req_console_assistance)
+				for(var/dpt in GLOB.req_console_assistance)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
@@ -157,7 +157,7 @@ GLOBAL_EMPTY_LIST(allConsoles)
 			if(2)	//req. supplies
 				dat += "Which department do you need supplies from?<BR><BR>"
 				dat += "<table width='100%'>"
-				for(var/dpt in req_console_supplies)
+				for(var/dpt in GLOB.req_console_supplies)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
@@ -172,7 +172,7 @@ GLOBAL_EMPTY_LIST(allConsoles)
 			if(3)	//relay information
 				dat += "Which department would you like to send information to?<BR><BR>"
 				dat += "<table width='100%'>"
-				for(var/dpt in req_console_information)
+				for(var/dpt in GLOB.req_console_information)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
@@ -193,7 +193,7 @@ GLOBAL_EMPTY_LIST(allConsoles)
 				dat += "<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>"
 
 			if(8)	//view messages
-				for (var/obj/machinery/requests_console/Console in allConsoles)
+				for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.update_icon()
@@ -304,7 +304,7 @@ GLOBAL_EMPTY_LIST(allConsoles)
 		if(!announcementConsole)
 			return
 		minor_announce(message, "[department] Announcement:")
-		news_network.SubmitArticle(message, department, "Station Announcements", null)
+		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
 		log_say("[key_name(usr)] has made a station announcement: [message]")
 		message_admins("[key_name_admin(usr)] has made a station announcement.")
 		announceAuth = 0
@@ -369,7 +369,7 @@ GLOBAL_EMPTY_LIST(allConsoles)
 					authentic = " (Authenticated)"
 
 				var/alert = ""
-				for (var/obj/machinery/requests_console/Console in allConsoles)
+				for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
 					if (ckey(Console.department) == ckey(href_list["department"]))
 						switch(priority)
 							if(2)		//High priority
@@ -515,7 +515,7 @@ GLOBAL_EMPTY_LIST(allConsoles)
 			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == 10)
-			if (access_RC_announce in ID.access)
+			if (GLOB.access_RC_announce in ID.access)
 				announceAuth = 1
 			else
 				announceAuth = 0

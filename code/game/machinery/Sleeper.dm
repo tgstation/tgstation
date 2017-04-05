@@ -107,10 +107,10 @@
 	return ..()
 
 /obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 
-	if(controls_inside && state == notcontained_state)
-		state = default_state // If it has a set of controls on the inside, make it actually controllable by the mob in it.
+	if(controls_inside && state == GLOB.notcontained_state)
+		state = GLOB.default_state // If it has a set of controls on the inside, make it actually controllable by the mob in it.
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

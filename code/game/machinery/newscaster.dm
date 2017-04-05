@@ -1,5 +1,5 @@
 GLOBAL_DATUM_INIT(news_network, /datum/newscaster/feed_network, new)
-GLOBAL_EMPTY_LIST(allCasters)
+GLOBAL_LIST_EMPTY(allCasters)
 
 /datum/newscaster
 
@@ -480,8 +480,8 @@ GLOBAL_EMPTY_LIST(allCasters)
 					dat+="<B>Criminal</B>: [GLOB.news_network.wanted_issue.criminal]<BR>"
 					dat+="<B>Description</B>: [GLOB.news_network.wanted_issue.body]<BR>"
 					dat+="<B>Photo:</B>: "
-					if(news_network.wanted_issue.img)
-						usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
+					if(GLOB.news_network.wanted_issue.img)
+						usr << browse_rsc(GLOB.news_network.wanted_issue.img, "tmp_photow.png")
 						dat+="<BR><img src='tmp_photow.png' width = '180'>"
 					else
 						dat+="None"
@@ -518,13 +518,13 @@ GLOBAL_EMPTY_LIST(allCasters)
 			updateUsrDialog()
 		else if(href_list["submit_new_channel"])
 			var/list/existing_authors = list()
-			for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.authorCensor)
-					existing_authors += news_network.redactedText
+					existing_authors += GLOB.news_network.redactedText
 				else
 					existing_authors += FC.author
 			var/check = 0
-			for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.channel_name == channel_name)
 					check = 1
 					break
@@ -534,7 +534,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 				var/choice = alert("Please confirm Feed channel creation","Network Channel Handler","Confirm","Cancel")
 				if(choice=="Confirm")
 					scan_user(usr)
-					news_network.CreateFeedChannel(channel_name, scanned_user, c_locked)
+					GLOB.news_network.CreateFeedChannel(channel_name, scanned_user, c_locked)
 					feedback_inc("newscaster_channels",1)
 					screen=5
 			updateUsrDialog()
@@ -557,7 +557,7 @@ GLOBAL_EMPTY_LIST(allCasters)
 			if(msg =="" || msg=="\[REDACTED\]" || scanned_user == "Unknown" || channel_name == "" )
 				screen=6
 			else
-				news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsepencode(msg, usr, SIGNFONT)]</font>", scanned_user, channel_name, photo, 0, allow_comments)
+				GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsepencode(msg, usr, SIGNFONT)]</font>", scanned_user, channel_name, photo, 0, allow_comments)
 				feedback_inc("newscaster_stories",1)
 				screen=4
 				msg = ""
@@ -586,11 +586,11 @@ GLOBAL_EMPTY_LIST(allCasters)
 			updateUsrDialog()
 		else if(href_list["menu_wanted"])
 			var/already_wanted = 0
-			if(news_network.wanted_issue.active)
+			if(GLOB.news_network.wanted_issue.active)
 				already_wanted = 1
 			if(already_wanted)
-				channel_name = news_network.wanted_issue.criminal
-				msg = news_network.wanted_issue.body
+				channel_name = GLOB.news_network.wanted_issue.criminal
+				msg = GLOB.news_network.wanted_issue.body
 			screen = 14
 			updateUsrDialog()
 		else if(href_list["set_wanted_name"])
@@ -608,22 +608,22 @@ GLOBAL_EMPTY_LIST(allCasters)
 				if(choice=="Confirm")
 					scan_user(usr)
 					if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one.
-						news_network.submitWanted(channel_name, msg, scanned_user, photo, 0 , 1)
+						GLOB.news_network.submitWanted(channel_name, msg, scanned_user, photo, 0 , 1)
 						screen = 15
 					else
-						if(news_network.wanted_issue.isAdminMsg)
+						if(GLOB.news_network.wanted_issue.isAdminMsg)
 							alert("The wanted issue has been distributed by a Nanotrasen higherup. You cannot edit it.","Ok")
 							return
-						news_network.submitWanted(channel_name, msg, scanned_user, photo)
+						GLOB.news_network.submitWanted(channel_name, msg, scanned_user, photo)
 						screen = 19
 			updateUsrDialog()
 		else if(href_list["cancel_wanted"])
-			if(news_network.wanted_issue.isAdminMsg)
+			if(GLOB.news_network.wanted_issue.isAdminMsg)
 				alert("The wanted issue has been distributed by a Nanotrasen higherup. You cannot take it down.","Ok")
 				return
 			var/choice = alert("Please confirm Wanted Issue removal","Network Security Handler","Confirm","Cancel")
 			if(choice=="Confirm")
-				news_network.deleteWanted()
+				GLOB.news_network.deleteWanted()
 				screen=17
 			updateUsrDialog()
 		else if(href_list["view_wanted"])
@@ -852,16 +852,16 @@ GLOBAL_EMPTY_LIST(allCasters)
 /obj/machinery/newscaster/proc/print_paper()
 	feedback_inc("newscaster_newspapers_printed",1)
 	var/obj/item/weapon/newspaper/NEWSPAPER = new /obj/item/weapon/newspaper
-	for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
+	for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 		NEWSPAPER.news_content += FC
 	if(news_network.wanted_issue.active)
-		NEWSPAPER.wantedAuthor = news_network.wanted_issue.scannedUser
-		NEWSPAPER.wantedCriminal = news_network.wanted_issue.criminal
-		NEWSPAPER.wantedBody = news_network.wanted_issue.body
-		if(news_network.wanted_issue.img)
-			NEWSPAPER.wantedPhoto = news_network.wanted_issue.img
+		NEWSPAPER.wantedAuthor = GLOB.news_network.wanted_issue.scannedUser
+		NEWSPAPER.wantedCriminal = GLOB.news_network.wanted_issue.criminal
+		NEWSPAPER.wantedBody = GLOB.news_network.wanted_issue.body
+		if(GLOB.news_network.wanted_issue.img)
+			NEWSPAPER.wantedPhoto = GLOB.news_network.wanted_issue.img
 	NEWSPAPER.loc = get_turf(src)
-	NEWSPAPER.creationTime = news_network.lastAction
+	NEWSPAPER.creationTime = GLOB.news_network.lastAction
 	paper_remaining--
 
 /obj/machinery/newscaster/proc/newsAlert(channel)
