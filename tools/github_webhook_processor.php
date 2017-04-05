@@ -135,33 +135,33 @@ function tag_pr($payload, $opened) {
 		$tags = checkchangelog($payload, true, false);
 
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
-			$tags[] = "Refactor";
+			$tags[] = 'Refactor';
 	}
 
 	$remove = array();
 
 	$mergeable = $payload['pull_request']['mergeable'];
 	if($mergeable == null || $mergeable)	//only look for the false value
-		$remove[] = "Merge Conflict";
+		$remove[] = 'Merge Conflict';
 	else
-		$tags[] = "Merge Conflict";
+		$tags[] = 'Merge Conflict';
 
 	if(has_tree_been_edited($payload, '_maps'))
-		$tags[] = "Map Edit";
+		$tags[] = 'Map Edit';
 	else
-		$remove[] = "Map Edit";
+		$remove[] = 'Map Edit';
 
 	if(has_tree_been_edited($payload, 'tools'))
-		$tags[] = "Tools";
+		$tags[] = 'Tools';
 	else
-		$remove[] = "Tools";
+		$remove[] = 'Tools';
 
 	//only maintners should be able to remove these
 	if(strpos($title, '[DNM]') !== FALSE)
-		$tags[] = "Do Not Merge";
+		$tags[] = 'Do Not Merge';
 
 	if(strpos($title, '[WIP]') !== FALSE)
-		$tags[] = "Work In Progress";
+		$tags[] = 'Work In Progress';
 
 	$url = $payload['pull_request']['base']['repo']['url'] . '/issues/' . $payload['pull_request']['number'] . '/labels';
 
@@ -296,7 +296,7 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			case 'fixes':
 			case 'bugfix':
 				if($item != 'fixed a few things') {
-					$tags[] = "Fix";
+					$tags[] = 'Fix';
 					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
 				}
 				break;
@@ -308,20 +308,20 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			case 'tweaks':
 			case 'tweak':
 				if($item != 'tweaked a few things') {
-					$tags[] = "Tweak";
+					$tags[] = 'Tweak';
 					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
 				}
 				break;
 			case 'soundadd':
 				if($item != 'added a new sound thingy') {
-					$tags[] = "Sound";
+					$tags[] = 'Sound';
 					$currentchangelogblock[] = array('type' => 'soundadd', 'body' => $item);
 				}
 				break;
 			case 'sounddel':
 				if($item != 'removed an old sound thingy') {
-					$tags[] = "Sound";
-					$tags[] = "Revert/Removal";
+					$tags[] = 'Sound';
+					$tags[] = 'Revert/Removal';
 					$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
 				}
 				break;
@@ -329,7 +329,7 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			case 'adds':
 			case 'rscadd':
 				if($item != 'Added new things' && $item != 'Added more things') {
-					$tags[] = "Feature";
+					$tags[] = 'Feature';
 					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
 				}
 				break;
@@ -337,27 +337,27 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			case 'dels':
 			case 'rscdel':
 				if($item != 'Removed old things') {
-					$tags[] = "Revert/Removal";
+					$tags[] = 'Revert/Removal';
 					$currentchangelogblock[] = array('type' => 'rscdel', 'body' => $item);
 				}
 				break;
 			case 'imageadd':
 				if($item != 'added some icons and images') {
-					$tags[] = "Sprites";
+					$tags[] = 'Sprites';
 					$currentchangelogblock[] = array('type' => 'imageadd', 'body' => $item);
 				}
 				break;
 			case 'imagedel':
 				if($item != 'deleted some icons and images') {
-					$tags[] = "Sprites";
-					$tags[] = "Revert/Removal";
+					$tags[] = 'Sprites';
+					$tags[] = 'Revert/Removal';
 					$currentchangelogblock[] = array('type' => 'imagedel', 'body' => $item);
 				}
 				break;
 			case 'typo':
 			case 'spellcheck':
 				if($item != 'fixed a few typos') {
-					$tags[] = "Grammar and Formatting";
+					$tags[] = 'Grammar and Formatting';
 					$currentchangelogblock[] = array('type' => 'spellcheck', 'body' => $item);
 				}
 				break;
@@ -369,7 +369,7 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			case 'balance':
 			case 'rebalance':
 				if($item != 'rebalanced something'){
-					$tags[] = "Balance/Rebalance";
+					$tags[] = 'Balance/Rebalance';
 					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
 				}
 				break;
