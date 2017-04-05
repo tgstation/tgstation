@@ -42,7 +42,6 @@
 		addMachineryMember(base)
 	if(!air)
 		air = new
-		air.holder = src
 	var/list/possible_expansions = list(base)
 	while(possible_expansions.len>0)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
@@ -245,4 +244,3 @@
 			var/list/G_gases = G.gases
 			for(var/id in G_gases)
 				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
-

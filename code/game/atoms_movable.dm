@@ -272,6 +272,7 @@
 	return pass_flags&passflag
 
 /atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
+	set waitfor = 0
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)

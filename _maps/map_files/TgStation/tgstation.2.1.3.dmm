@@ -8331,6 +8331,10 @@
 	dir = 4
 	},
 /obj/structure/filingcabinet/employment,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "arW" = (
@@ -31002,7 +31006,7 @@
 "bry" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Experimentation Lab Maintenance";
-	req_access_txt = "7"
+	req_access_txt = "47"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -31070,7 +31074,8 @@
 /area/toxins/explab)
 "brE" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = "0";
+	req_one_access_txt = "8;12"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -31591,7 +31596,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
 	name = "Experimentation Lab";
-	req_access_txt = "7"
+	req_access_txt = "47"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -34013,7 +34018,8 @@
 	id = "telelab";
 	name = "Test Chamber Blast Doors";
 	pixel_x = 25;
-	pixel_y = 0
+	pixel_y = 0;
+	req_access_txt = "47"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -38037,7 +38043,8 @@
 /area/toxins/mixing)
 "bFY" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = "0";
+	req_one_access_txt = "8;12"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -38310,7 +38317,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
 	name = "Toxins Launch Room Access";
-	req_access_txt = "8"
+	req_access_txt = "7"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38660,7 +38667,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
 	name = "Toxins Lab";
-	req_access_txt = "8"
+	req_access_txt = "7"
 	},
 /turf/open/floor/plasteel/white,
 /area/toxins/mixing)
@@ -39553,7 +39560,7 @@
 "bIS" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Launch Room";
-	req_access_txt = "8"
+	req_access_txt = "7"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
