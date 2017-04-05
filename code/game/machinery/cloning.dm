@@ -126,6 +126,16 @@
 	if (is_operational() && (!isnull(occupant)) && (occupant.stat != DEAD))
 		to_chat(user, "Current clone cycle is [round(get_completion())]% complete.")
 
+/obj/machinery/clonepod/return_air()
+	// We want to simulate the clone not being in contact with
+	// the atmosphere, so we'll put them in a constant pressure
+	// nitrogen. They'll breathe through the chemicals we pump into them.
+	var/datum/gas_mixture/GM = new
+	GM.assert_gases("n2")
+	GM.gases["n2"][MOLES] = MOLES_O2STANDARD + MOLES_N2STANDARD
+	GM.temperature = T20C
+	return GM
+
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
 
