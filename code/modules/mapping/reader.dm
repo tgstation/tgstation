@@ -44,6 +44,13 @@ var/global/dmm_suite/preloader/_preloader = new
 	Master.StopLoadingMap()
 
 /dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
+/dmm_suite/proc/parse_grid(model as text, model_key as text, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
+/dmm_suite/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf)
+/dmm_suite/proc/trim_text(what as text,trim_quotes=0)
+/dmm_suite/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape=quote,closing_escape=quote)
+/dmm_suite/proc/readlist(text as text, delimiter=",")
+
+/dmm_suite/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
@@ -186,7 +193,7 @@ var/global/dmm_suite/preloader/_preloader = new
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(model as text, model_key as text, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
+/dmm_suite/parse_grid(model as text, model_key as text, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -317,7 +324,7 @@ var/global/dmm_suite/preloader/_preloader = new
 ////////////////
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
-/dmm_suite/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf)
+/dmm_suite/instance_atom(path,list/attributes, turf/crds, no_changeturf)
 	_preloader.setup(attributes, path)
 
 	if(crds)
@@ -337,7 +344,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
-/dmm_suite/proc/trim_text(what as text,trim_quotes=0)
+/dmm_suite/trim_text(what as text,trim_quotes=0)
 	if(trim_quotes)
 		return trimQuotesRegex.Replace(what, "")
 	else
@@ -346,7 +353,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
 //returns 0 if reached the last delimiter
-/dmm_suite/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape=quote,closing_escape=quote)
+/dmm_suite/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape=quote,closing_escape=quote)
 	var/position = initial_position
 	var/next_delimiter = findtext(text,delimiter,position,0)
 	var/next_opening = findtext(text,opening_escape,position,0)
@@ -361,7 +368,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
 //return the filled list
-/dmm_suite/proc/readlist(text as text, delimiter=",")
+/dmm_suite/readlist(text as text, delimiter=",")
 
 	var/list/to_return = list()
 
@@ -428,12 +435,15 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/target_path
 
 /dmm_suite/preloader/proc/setup(list/the_attributes, path)
+/dmm_suite/preloader/proc/load(atom/what)
+
+/dmm_suite/preloader/setup(list/the_attributes, path)
 	if(the_attributes.len)
 		use_preloader = TRUE
 		attributes = the_attributes
 		target_path = path
 
-/dmm_suite/preloader/proc/load(atom/what)
+/dmm_suite/preloader/load(atom/what)
 	for(var/attribute in attributes)
 		var/value = attributes[attribute]
 		if(islist(value))
