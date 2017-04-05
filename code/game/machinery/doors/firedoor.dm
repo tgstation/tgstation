@@ -420,6 +420,3 @@
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
 	reinforced = 1
-
-#undef OPEN
-#undef CLOSED
