@@ -19,7 +19,7 @@
 		if(prob(10))
 			to_chat(target, "You feel as if you are being watched.")
 		return
-	draining = 1
+	draining = TRUE
 	essence_drained += rand(15, 20)
 	to_chat(src, "<span class='revennotice'>You search for the soul of [target].</span>")
 	if(do_after(src, rand(10, 20), 0, target)) //did they get deleted in that second?
@@ -56,13 +56,13 @@
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
-					change_essence_amount(essence_drained, 0, target)
+					change_essence_amount(essence_drained, FALSE, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
 						essence_regen_cap += 5
 						to_chat(src, "<span class='revenboldnotice'>The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>")
 					if(essence_drained > 90)
 						essence_regen_cap += 15
-						perfectsouls += 1
+						perfectsouls++
 						to_chat(src, "<span class='revenboldnotice'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>")
 					to_chat(src, "<span class='revennotice'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>")
 					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
@@ -77,7 +77,7 @@
 				qdel(B)
 			else
 				to_chat(src, "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>")
-	draining = 0
+	draining = FALSE
 	essence_drained = 0
 
 //Toggle night vision: lets the revenant toggle its night vision
@@ -125,7 +125,7 @@
 	name = "Report this to a coder"
 	var/reveal = 80 //How long it reveals the revenant in deciseconds
 	var/stun = 20 //How long it stuns the revenant in deciseconds
-	var/locked = 1 //If it's locked and needs to be unlocked before use
+	var/locked = TRUE //If it's locked and needs to be unlocked before use
 	var/unlock_amount = 100 //How much essence it costs to unlock
 	var/cast_amount = 50 //How much essence it costs to use
 
@@ -137,47 +137,45 @@
 		name = "[initial(name)] ([cast_amount]E)"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
-	if(!istype(user)) //Badmins, no. Badmins, don't do it.
-		if(charge_counter < charge_max)
-			return 0
-		return 1
-	if(user.inhibited)
-		return 0
 	if(charge_counter < charge_max)
-		return 0
+		return FALSE
+	if(!istype(user)) //Badmins, no. Badmins, don't do it.
+		return TRUE
+	if(user.inhibited)
+		return FALSE
 	if(locked)
 		if(user.essence <= unlock_amount)
-			return 0
+			return FALSE
 	if(user.essence <= cast_amount)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/proc/attempt_cast(mob/living/simple_animal/revenant/user = usr)
 	if(!istype(user)) //If you're not a revenant, it works. Please, please, please don't give this to a non-revenant.
 		name = "[initial(name)]"
 		if(locked)
 			panel = "Revenant Abilities"
-			locked = 0
-		return 1
+			locked = FALSE
+		return TRUE
 	if(locked)
 		if(!user.castcheck(-unlock_amount))
 			charge_counter = charge_max
-			return 0
+			return FALSE
 		name = "[initial(name)] ([cast_amount]E)"
 		to_chat(user, "<span class='revennotice'>You have unlocked [initial(name)]!</span>")
 		panel = "Revenant Abilities"
-		locked = 0
+		locked = FALSE
 		charge_counter = charge_max
-		return 0
+		return FALSE
 	if(!user.castcheck(-cast_amount))
 		charge_counter = charge_max
-		return 0
+		return FALSE
 	name = "[initial(name)] ([cast_amount]E)"
 	user.reveal(reveal)
 	user.stun(stun)
 	if(action)
 		action.UpdateButtonIcon()
-	return 1
+	return TRUE
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload
@@ -337,9 +335,9 @@
 				var/mob/living/carbon/human/H = mob
 				if(H.dna && H.dna.species)
 					H.dna.species.handle_hair(H,"#1d2953") //will be reset when blight is cured
-				var/blightfound = 0
+				var/blightfound = FALSE
 				for(var/datum/disease/revblight/blight in H.viruses)
-					blightfound = 1
+					blightfound = TRUE
 					if(blight.stage < 5)
 						blight.stage++
 				if(!blightfound)

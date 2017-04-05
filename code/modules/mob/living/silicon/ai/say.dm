@@ -57,10 +57,7 @@
 
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
-
-#define VOX_CHANNEL 200
 #define VOX_DELAY 600
-
 /mob/living/silicon/ai/verb/announcement_help()
 
 	set name = "Announcement Help"
@@ -149,7 +146,7 @@
 	if(GLOB.vox_sounds[word])
 
 		var/sound_file = GLOB.vox_sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = VOX_CHANNEL)
+		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
  		// If there is no single listener, broadcast to everyone in the same z level
