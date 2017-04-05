@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(total_extraction_beacons)
+
 /obj/item/weapon/extraction_pack
 	name = "fulton extraction pack"
 	desc = "A balloon that can be used to extract equipment or personnel to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
@@ -9,7 +11,6 @@
 	var/uses_left = 3
 	var/can_use_indoors
 	var/safe_for_living_creatures = 1
-	var/static/list/total_extraction_beacons = list()
 
 /obj/item/weapon/extraction_pack/examine()
 	. = ..()
@@ -17,7 +18,7 @@
 
 /obj/item/weapon/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
-	for(var/B in total_extraction_beacons)
+	for(var/B in GLOB.total_extraction_beacons)
 		var/obj/structure/extraction_point/EP = B
 		if(EP.beacon_network in beacon_networks)
 			possible_beacons += EP

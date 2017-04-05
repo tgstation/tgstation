@@ -205,7 +205,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 						break
 			if(cont && D.is_operational())
 				if(D.operating)
-					D.nextstate = opening ? OPEN : CLOSED
+					D.nextstate = opening ? FIREDOOR_OPEN : FIREDOOR_CLOSED
 				else if(!(D.density ^ opening))
 					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
 
