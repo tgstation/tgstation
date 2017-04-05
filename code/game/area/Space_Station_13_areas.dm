@@ -649,10 +649,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	teleporter_blocked = 1
 
 /area/ai_monitored/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	teleporter_blocked = 1
 
 /area/security/checkpoint
 	name = "Security Checkpoint"
