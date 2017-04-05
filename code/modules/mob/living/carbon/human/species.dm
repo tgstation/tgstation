@@ -17,10 +17,10 @@
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
-	
+
 	var/face_y_offset = 0
 	var/hair_y_offset = 0
-	
+
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 
@@ -34,7 +34,6 @@
 	var/blacklisted = 0 //Flag to exclude from green slime core species.
 	var/dangerous_existence = null //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
-	var/special_mut_color = "" //special color for mutant parts only
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
 	var/list/mutant_organs = list(/obj/item/organ/tongue)		//Internal organs that are unique to this race.
@@ -50,8 +49,8 @@
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
-
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+
 	// species flags. these can be found in flags.dm
 	var/list/species_traits = list()
 
@@ -70,7 +69,6 @@
 
 	//Eyes
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
-	var/eye_appearance = "eyes"
 	///////////
 	// PROCS //
 	///////////
@@ -309,6 +307,7 @@
 
 	if(!H.getorgan(/obj/item/organ/eyes) && HD)
 		standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "eyes_missing", "layer" = -BODY_LAYER)
+		world << "lol no eyes"
 		has_eyes = FALSE
 
 	if(!(H.disabilities & HUSK))
@@ -321,7 +320,7 @@
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD && has_eyes)
-			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = eye_appearance, "layer" = -BODY_LAYER)
+			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
 			img_eyes.color = "#" + H.eye_color
 			img_eyes.pixel_y += face_y_offset
 			standing	+= img_eyes
@@ -487,8 +486,6 @@
 					S = wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = legs_list[H.dna.features["legs"]]
-				if("caps")
-					S = caps_list[H.dna.features["caps"]]
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -508,14 +505,12 @@
 				icon_string = "m_[bodypart]_[S.icon_state]_[layertext]"
 
 			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
-			if(SPECIALCOLORS_PARTSONLY in species_traits)
-				I.color = "#[special_mut_color]"
 
 			if(S.center)
 				I = center_image(I,S.dimension_x,S.dimension_y)
 
 			if(!(H.disabilities & HUSK))
-				if(!forced_colour && !special_mut_color)
+				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
 							if(fixed_mut_color)

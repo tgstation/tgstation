@@ -4,7 +4,7 @@
 	mutant_bodyparts = list("caps", "tail_human", "ears", "wings")
 	default_features = list("mcolor" = "DBBF92", "caps" = "Round", "tail_human" = "None", "ears" = "None", "wings" = "None")
 
-	special_mut_color = "F42424" //cap color - eye color is what the spots are
+
 	say_mod = "moops" //what does a mushroom sound like
 	species_traits = list(EYECOLOR, MUTCOLORS, SPECIALCOLORS_PARTSONLY)
 
@@ -23,7 +23,6 @@
 
 	meat = /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 
-	eye_appearance = "musheyes"
 	mutanteyes = /obj/item/organ/eyes/night_vision
 	use_skintones = FALSE
 
