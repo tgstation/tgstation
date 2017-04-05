@@ -148,6 +148,7 @@
 		else
 			how_cool_are_your_threads += "Your [src]'s storage opens when dragged to yourself.\n" 
 		how_cool_are_your_threads += "Your [src] can store [pockets.storage_slots] item[pockets.storage_slots > 1 ? "s" : ""].\n"
+		how_cool_are_your_threads += "Your [src] can store items that are [weightclass2text(pockets.max_w_class)] or smaller.\n"
 		if(pockets.quickdraw)
 			how_cool_are_your_threads += "You can quickly remove an item from your [src] using Alt-Click.\n"
 		if(pockets.silent)
