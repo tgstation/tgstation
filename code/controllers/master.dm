@@ -7,7 +7,7 @@
   *
  **/
 
-//This is to get around the global variable ban, and it's the ONLY thing that should do so
+//This is the ABSOLUTE ONLY THING that should init globally like this
 GLOBAL_REAL(Master, /datum/controller/master) = new
 
 GLOBAL_VAR_INIT(MC_restart_clear, 0)
@@ -55,8 +55,6 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 	var/map_loading = FALSE	//Are we loading in a new map?
 
-	var/datum/global_vars/global_vars
-
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	subsystems = list()
@@ -69,16 +67,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		Master = src
 	
 	if(!GLOB)
-		GLOB = new
-		#ifdef TESTING
-		var/start_time = REALTIMEOFDAY
-		#endif
-		GLOB.InitEverything()
-		#ifdef TESTING
-		testing("Globals initialization took [(REALTIMEOFDAY - start_time)/10]s.")
-		#endif
-	
-	global_vars = GLOB
+		new /datum/controller/global_vars
 
 /datum/controller/master/Destroy()
 	..()
