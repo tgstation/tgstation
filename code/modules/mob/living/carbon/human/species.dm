@@ -49,6 +49,8 @@
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
+
+	var/special_mut_color = ""
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
 	// species flags. these can be found in flags.dm
@@ -307,7 +309,6 @@
 
 	if(!H.getorgan(/obj/item/organ/eyes) && HD)
 		standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "eyes_missing", "layer" = -BODY_LAYER)
-		world << "lol no eyes"
 		has_eyes = FALSE
 
 	if(!(H.disabilities & HUSK))
@@ -486,6 +487,8 @@
 					S = wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = legs_list[H.dna.features["legs"]]
+				if("caps")
+					S = caps_list[H.dna.features["caps"]]
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -508,9 +511,10 @@
 
 			if(S.center)
 				I = center_image(I,S.dimension_x,S.dimension_y)
-
+			if(special_mut_color)
+				I.color = "#[special_mut_color]"
 			if(!(H.disabilities & HUSK))
-				if(!forced_colour)
+				if(!forced_colour && !special_mut_color)
 					switch(S.color_src)
 						if(MUTCOLORS)
 							if(fixed_mut_color)

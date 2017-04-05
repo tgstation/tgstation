@@ -4,7 +4,7 @@
 	mutant_bodyparts = list("caps", "tail_human", "ears", "wings")
 	default_features = list("mcolor" = "DBBF92", "caps" = "Round", "tail_human" = "None", "ears" = "None", "wings" = "None")
 
-
+	special_mut_color = "FF7D59"
 	say_mod = "moops" //what does a mushroom sound like
 	species_traits = list(EYECOLOR, MUTCOLORS, SPECIALCOLORS_PARTSONLY)
 
