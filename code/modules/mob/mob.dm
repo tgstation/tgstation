@@ -572,6 +572,9 @@
 			stat("Location:", "([x], [y], [z])")
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[world.contents.len]")
+			#ifndef GLOBAL_PROTECT_VARS_FROM_VV
+			GLOB.stat_entry()
+			#endif
 			config.stat_entry()
 			stat(null)
 			if(Master)
