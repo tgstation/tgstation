@@ -214,8 +214,10 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/resource/AttackingTarget()
 	if(target.swarmer_act(src))
 		add_type_to_wanted(target.type)
+		return TRUE
 	else
 		add_type_to_ignore(target.type)
+		return FALSE
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource/handle_automated_action()
@@ -308,8 +310,9 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 			var/mob/living/L = target
 			L.attack_animal(src)
 			L.electrocute_act(10, src, safety = TRUE) //safety = TRUE means we don't check gloves... Ok?
+		return TRUE
 	else
-		..()
+		return ..()
 
 
 

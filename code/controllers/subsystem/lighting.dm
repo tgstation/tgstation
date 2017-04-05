@@ -1,22 +1,14 @@
-var/datum/controller/subsystem/lighting/SSlighting
-
 var/list/lighting_update_lights    = list() // List of lighting sources  queued for update.
 var/list/lighting_update_corners   = list() // List of lighting corners  queued for update.
 var/list/lighting_update_objects  = list() // List of lighting objects queued for update.
 
-
-/datum/controller/subsystem/lighting
+SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
 	wait = 2
 	init_order = -20
 	flags = SS_TICKER
 
 	var/initialized = FALSE
-
-
-/datum/controller/subsystem/lighting/New()
-	NEW_SS_GLOBAL(SSlighting)
-
 
 /datum/controller/subsystem/lighting/stat_entry()
 	..("L:[lighting_update_lights.len]|C:[lighting_update_corners.len]|O:[lighting_update_objects.len]")

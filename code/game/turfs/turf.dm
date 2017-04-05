@@ -219,7 +219,7 @@
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
-	
+
 	var/old_baseturf = baseturf
 	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
@@ -248,6 +248,8 @@
 			FD.CalculateAffectingAreas()
 
 	queue_smooth_neighbors(src)
+
+	HandleTurfChange(src)
 
 /turf/open/AfterChange(ignore_air)
 	..()
@@ -284,7 +286,6 @@
 		air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 
 	air.temperature /= turf_count
-	air.holder = src
 	SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
@@ -351,7 +352,7 @@
 	return can_have_cabling() & !intact
 
 /turf/proc/visibilityChanged()
-	if(ticker)
+	if(SSticker)
 		cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
@@ -402,7 +403,7 @@
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
-	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		add_blueprints(AM)
 
 /turf/proc/empty(turf_type=/turf/open/space)

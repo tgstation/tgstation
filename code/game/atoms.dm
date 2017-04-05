@@ -39,8 +39,10 @@
 	if(do_initialize > INITIALIZATION_INSSATOMS)
 		if(QDELETED(src))
 			CRASH("Found new qdeletion in type [type]!")
-		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		Initialize(arglist(args))
+		var/mapload = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		args[1] = mapload
+		if(Initialize(arglist(args)) && mapload)
+			LAZYADD(SSatoms.late_loaders, src)
 
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is being loaded. mapload = FALSE
@@ -454,6 +456,12 @@ var/list/blood_splatter_icons = list()
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
+
+//called when the turf the atom resides on is ChangeTurfed
+/atom/proc/HandleTurfChange(turf/T)
+	for(var/a in src)
+		var/atom/A = a
+		A.HandleTurfChange(T)
 
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.

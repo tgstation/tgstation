@@ -159,8 +159,8 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.obj_integrity]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
-		if(ticker && istype(ticker.mode, /datum/game_mode/blob))
-			var/datum/game_mode/blob/B = ticker.mode
+		if(SSticker && istype(SSticker.mode, /datum/game_mode/blob))
+			var/datum/game_mode/blob/B = SSticker.mode
 			stat(null, "Blobs to Win: [blobs_legit.len]/[B.blobwincount]")
 		else
 			stat(null, "Total Blobs: [blobs.len]")

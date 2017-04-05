@@ -139,7 +139,7 @@ Difficulty: Hard
 	if(!blinking)
 		if(target && isliving(target))
 			INVOKE_ASYNC(src, .proc/melee_blast, get_turf(target)) //melee attacks on living mobs produce a 3x3 blast
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/DestroySurroundings()
 	if(!blinking)

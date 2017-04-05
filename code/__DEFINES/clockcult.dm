@@ -87,6 +87,10 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 
+#define ARK_SUMMON_COST 3 //how many of each component an Ark costs to summon
+
+#define ARK_CONSUME_COST 7 //how many of each component an Ark needs to consume to activate
+
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
 

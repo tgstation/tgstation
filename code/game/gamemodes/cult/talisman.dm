@@ -421,7 +421,6 @@
 	if(uses <= 0)
 		user.drop_item()
 		qdel(src)
-	return
 
 /obj/item/weapon/restraints/handcuffs/energy/cult //For the talisman of shackling
 	name = "cult shackles"

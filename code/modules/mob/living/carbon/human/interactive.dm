@@ -145,8 +145,7 @@
 		retal_target = potentialAssault
 	..()
 
-
-/client/proc/resetSNPC(var/mob/A in SSnpc.processing)
+/client/proc/resetSNPC(var/mob/A in SSnpcpool.processing)
 	set name = "Reset SNPC"
 	set desc = "Reset the SNPC"
 	set category = "Debug"
@@ -163,7 +162,7 @@
 			T.retal = 0
 			T.doing = 0
 
-/client/proc/customiseSNPC(var/mob/A in SSnpc.processing)
+/client/proc/customiseSNPC(var/mob/A in SSnpcpool.processing)
 	set name = "Customize SNPC"
 	set desc = "Customise the SNPC"
 	set category = "Debug"
@@ -373,7 +372,7 @@
 
 	doSetup()
 
-	START_PROCESSING(SSnpc, src)
+	START_PROCESSING(SSnpcpool, src)
 
 	loadVoice()
 
@@ -384,7 +383,7 @@
 	slyness += rand(-10,10)
 
 /mob/living/carbon/human/interactive/Destroy()
-	SSnpc.stop_processing(src)
+	SSnpcpool.stop_processing(src)
 	return ..()
 
 /mob/living/carbon/human/interactive/proc/retalTarget(var/target)
@@ -518,7 +517,7 @@
 	return get_dist(get_turf(towhere), get_turf(src))
 
 /mob/living/carbon/human/interactive/proc/InteractiveProcess()
-	if(ticker.current_state == GAME_STATE_FINISHED)
+	if(SSticker.current_state == GAME_STATE_FINISHED)
 		saveVoice()
 	doProcess()
 

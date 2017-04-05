@@ -1,0 +1,4 @@
+author: "RemieRichards"
+delete-after: True
+changes: 
+  - rscadd: "Examining clothing with pockets will now give information about the pockets: number of slots, how it is interacted with (backpack, etc.), if it has quickdraw (Alt-Click) support and whether or not it is silent to interact with."

@@ -168,9 +168,9 @@
 		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return ..()
 
-	if(SSevent.wizardmode) //If summon events was active, turn it off
-		SSevent.toggleWizardmode()
-		SSevent.resetFrequency()
+	if(SSevents.wizardmode) //If summon events was active, turn it off
+		SSevents.toggleWizardmode()
+		SSevents.resetFrequency()
 
 	return ..()
 
@@ -179,7 +179,7 @@
 		feedback_set_details("round_end_result","loss - wizard killed")
 		to_chat(world, "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>")
 
-		ticker.news_report = WIZARD_KILLED
+		SSticker.news_report = WIZARD_KILLED
 
 	..()
 	return 1
@@ -247,7 +247,7 @@
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && ((M.mind in ticker.mode.wizards) || (M.mind in ticker.mode.apprentices))
+	return istype(M) && M.mind && SSticker && SSticker.mode && ((M.mind in SSticker.mode.wizards) || (M.mind in SSticker.mode.apprentices))
 
 
 /datum/game_mode/proc/update_wiz_icons_added(datum/mind/wiz_mind)

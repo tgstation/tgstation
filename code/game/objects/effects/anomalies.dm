@@ -17,7 +17,7 @@
 	var/countdown_colour
 	var/obj/effect/countdown/anomaly/countdown
 
-/obj/effect/anomaly/New()
+/obj/effect/anomaly/Initialize(mapload, new_lifespan)
 	..()
 	poi_list |= src
 	START_PROCESSING(SSobj, src)
@@ -31,6 +31,8 @@
 	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
+	if(new_lifespan)
+		lifespan = new_lifespan
 	death_time = world.time + lifespan
 	countdown = new(src)
 	if(countdown_colour)
@@ -126,7 +128,7 @@
 	density = 1
 	var/canshock = 0
 	var/shockdamage = 20
-	var/explosive = 1
+	var/explosive = TRUE
 
 /obj/effect/anomaly/flux/New()
 	..()

@@ -50,8 +50,8 @@
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
 	var/species
-	if(istype(I, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/O = I
+	if(istype(I, /obj/item/stack/))
+		var/obj/item/stack/O = I
 
 		if(istype(O, /obj/item/stack/sheet/metal))
 			species = /datum/species/golem

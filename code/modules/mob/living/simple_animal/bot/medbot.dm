@@ -338,7 +338,7 @@
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
-	if(C.stat == 2)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		return 0 //welp too late for them!
 
 	if(C.suiciding)
@@ -404,7 +404,7 @@
 		soft_reset()
 		return
 
-	if(C.stat == 2)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/mno.ogg',"Live, damnit! LIVE!" = 'sound/voice/mlive.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/mlost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
