@@ -73,8 +73,6 @@
 	..()
 	if(anchored)
 		to_chat(user, "It is anchored to the ground.")
-	if(broken)
-		to_chat(user, "<span class='notice'>It appears to be broken.</span>")
 	else if(secure && !opened)
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
 
