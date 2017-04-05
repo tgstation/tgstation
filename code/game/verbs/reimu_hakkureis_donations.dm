@@ -208,9 +208,6 @@ var/list/datum/donator/donators = list()
 	var/category = "Debug"
 
 proc/load_donator(ckey)
-	if(ckey=="joctopus")		//for test
-		new /datum/donator("joctopus", 1000000)
-
 	var/DBConnection/dbcon2 = new()
 	dbcon2.doConnect("dbi:mysql:forum2:[sqladdress]:[sqlport]","[sqlfdbklogin]","[sqlfdbkpass]") //pidorasy
 
