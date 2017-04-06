@@ -575,7 +575,7 @@
 	return 1
 
 /mob/living/carbon/human/proc/CQC_help()
-	set name = "Recall Teachings"
+	set name = "Remember The Basics"
 	set desc = "You try to remember some of the basics of CQC."
 	set category = "CQC"
 
