@@ -52,6 +52,14 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 	var/map_loading = FALSE	//Are we loading in a new map?
 
+
+/datum/controller/master/proc/RoundStart()
+/datum/controller/master/proc/StartProcessing(delay)
+/datum/controller/master/proc/Loop()
+/datum/controller/master/proc/CheckQueue(list/subsystemstocheck)
+/datum/controller/master/proc/RunQueue()
+/datum/controller/master/proc/SoftReset(list/ticker_SS, list/normal_SS, list/lobby_SS)
+
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	subsystems = list()
@@ -158,7 +166,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	Master.StartProcessing(0)
 
 // Notify the MC that the round has started.
-/datum/controller/master/proc/RoundStart()
+/datum/controller/master/RoundStart()
 	round_started = 1
 	var/timer = world.time
 	for (var/datum/controller/subsystem/SS in subsystems)
@@ -169,7 +177,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		SS.next_fire = timer
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.
-/datum/controller/master/proc/StartProcessing(delay)
+/datum/controller/master/StartProcessing(delay)
 	set waitfor = 0
 	if(delay)
 		sleep(delay)
@@ -186,7 +194,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		Failsafe.defcon = 2
 
 // Main loop.
-/datum/controller/master/proc/Loop()
+/datum/controller/master/Loop()
 	. = -1
 	//Prep the loop (most of this is because we want MC restarts to reset as much state as we can, and because
 	//	local vars rock
@@ -309,7 +317,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 
 // This is what decides if something should run.
-/datum/controller/master/proc/CheckQueue(list/subsystemstocheck)
+/datum/controller/master/CheckQueue(list/subsystemstocheck)
 	. = 0 //so the mc knows if we runtimed
 
 	//we create our variables outside of the loops to save on overhead
@@ -337,7 +345,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 
 // Run thru the queue of subsystems to run, running them while balancing out their allocated tick precentage
-/datum/controller/master/proc/RunQueue()
+/datum/controller/master/RunQueue()
 	. = 0
 	var/datum/controller/subsystem/queue_node
 	var/queue_node_flags
@@ -456,7 +464,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 //resets the queue, and all subsystems, while filtering out the subsystem lists
 //	called if any mc's queue procs runtime or exit improperly.
-/datum/controller/master/proc/SoftReset(list/ticker_SS, list/normal_SS, list/lobby_SS)
+/datum/controller/master/SoftReset(list/ticker_SS, list/normal_SS, list/lobby_SS)
 	. = 0
 	log_world("MC: SoftReset called, resetting MC queue state.")
 	if (!istype(subsystems) || !istype(ticker_SS) || !istype(normal_SS) || !istype(lobby_SS))
