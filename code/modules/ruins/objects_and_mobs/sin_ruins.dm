@@ -86,6 +86,8 @@
 			return 1
 		else
 			to_chat(H, "<span class='warning'>You're repulsed by even looking at [src]. Only a pig could force themselves to go through it.</span>")
+	if(istype(mover, /mob/living/simple_animal/hostile/morph))
+		return 1
 	else
 		return 0
 
