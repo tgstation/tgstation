@@ -62,6 +62,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		else
 			init_subtypes(/datum/controller/subsystem, subsystems)
 		Master = src
+	
+	if(!config)
+		config = new
 
 /datum/controller/master/Destroy()
 	..()
