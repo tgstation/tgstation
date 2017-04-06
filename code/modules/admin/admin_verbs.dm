@@ -663,6 +663,9 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 
 	if(!holder)
 		return
+	
+	if(has_antag_hud())
+		toggle_antag_hud(silent = TRUE)
 
 	holder.disassociate()
 	qdel(holder)
