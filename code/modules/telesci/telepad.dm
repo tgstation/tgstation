@@ -9,6 +9,7 @@
 	idle_power_usage = 200
 	active_power_usage = 5000
 	var/efficiency
+	var/telepower
 
 /obj/machinery/telepad/New()
 	..()
@@ -22,6 +23,7 @@
 	req_components = list(
 							/obj/item/weapon/ore/bluespace_crystal = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/stock_parts/micro_manipulator = 1,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
@@ -30,6 +32,10 @@
 	var/E
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		E += C.rating
+	telepower = E
+	E = 0
+	for(var/obj/item/weapon/stock_parts/micro_manipulator/MM in component_parts)
+		E += MM.rating
 	efficiency = E
 
 /obj/machinery/telepad/attackby(obj/item/I, mob/user, params)

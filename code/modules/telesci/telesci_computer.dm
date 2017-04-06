@@ -1,39 +1,39 @@
+#define INTERSECTOR_CYCLES 30
+#define RANGE_PER_CRYSTAL 20
+#define RANGE_PER_TECH_TIER 20
+
 /obj/machinery/computer/telescience
 	name = "\improper Telepad Control Console"
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
 	circuit = /obj/item/weapon/circuitboard/computer/telesci_console
-	var/sending = 1
+	var/sending = TRUE
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
 
 	// VARIABLES //
-	var/teles_left	// How many teleports left until it becomes uncalibrated
-	var/datum/projectile_data/last_tele_data = null
 	var/power_off
-	var/rotation_off
-	//var/angle_off
+	var/target_point //current teleport target
 	var/last_target
 
-	var/target_x
-	var/target_y
+	var/target_x = 0
+	var/target_y = 0
 	var/target_z = 1
 	var/calibrated = FALSE
 	var/calibrating = FALSE
+	var/range = 15
 
-	// Based on the power used
-	var/teleport_cooldown = 0 // every index requires a bluespace crystal
-	var/teleporting = 0
+	var/teleporting = FALSE
 	var/starting_crystals = 3
-	var/max_crystals = 4
+	var/max_crystals = 5
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
 
 /obj/machinery/computer/telescience/Destroy()
 	eject()
 	if(inserted_gps)
-		inserted_gps.loc = loc
+		inserted_gps.forceMove(get_turf(src))
 		inserted_gps = null
 	return ..()
 
@@ -45,21 +45,25 @@
 	..()
 	if(mapload)
 		for(var/i = 1; i <= starting_crystals; i++)
-			crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
+			crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(src) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")
 	return
+
+/obj/machinery/computer/telescience/proc/update_range()
+	range = initial(range) + RANGE_PER_CRYSTAL * LAZYLEN(crystals)
+	range += RANGE_PER_TECH_TIER * telepad.telepower
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
 		if(crystals.len >= max_crystals)
 			to_chat(user, "<span class='warning'>There are not enough crystal slots.</span>")
 			return
-		if(!user.drop_item())
+		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		crystals += W
-		W.loc = null
+		W.forceMove(src)
 		user.visible_message("[user] inserts [W] into \the [src]'s crystal slot.", "<span class='notice'>You insert [W] into \the [src]'s crystal slot.</span>")
 		updateDialog()
 	else if(istype(W, /obj/item/device/gps))
@@ -112,12 +116,6 @@
 
 		// Information about the last teleport
 		t += "<BR><div class='statusDisplay'>"
-		if(!last_tele_data)
-			t += "No teleport data found."
-		else
-			t += "Source Location: ([last_tele_data.src_x], [last_tele_data.src_y])<BR>"
-			//t += "Distance: [round(last_tele_data.distance, 0.1)]m<BR>"
-			t += "Time: [round(last_tele_data.time, 0.1)] secs<BR>"
 		t += "</div>"
 
 	var/datum/browser/popup = new(user, "telesci", name, 300, 500)
@@ -140,23 +138,20 @@
 
 /obj/machinery/computer/telescience/proc/doteleport(mob/user)
 
-	if(teleport_cooldown > world.time)
-		temp_msg = "Telepad is recharging power.<BR>Please wait [round((teleport_cooldown - world.time) / 10)] seconds."
-		return
-
 	if(teleporting)
 		temp_msg = "Telepad is in use.<BR>Please wait."
 		return
 
-	if(telepad)
-		var/trueX = Clamp(round(proj_data.dest_x, 1), 1, world.maxx)
-		var/trueY = Clamp(round(proj_data.dest_y, 1), 1, world.maxy)
-		var/spawn_time = round(proj_data.time) * 10
+	if(!target_point)
+		temp_msg = "Telepad is not calibrated for any location."
+		return
 
-		var/turf/target = locate(trueX, trueY, z_co)
-		last_target = target
+	if(telepad)
+		var/turf/target = target_point
 		var/area/A = get_area(target)
 		flick("pad-beam", telepad)
+
+
 
 		if(spawn_time > 15) // 1.5 seconds
 			playsound(telepad.loc, 'sound/weapons/flash.ogg', 25, 1)
@@ -165,105 +160,92 @@
 			temp_msg = "Powering up bluespace crystals.<BR>Please wait."
 
 
-		spawn(round(proj_data.time) * 10) // in seconds
-			if(!telepad)
-				return
-			if(telepad.stat & NOPOWER)
-				return
-			teleporting = 0
-			teleport_cooldown = world.time + (power * 2)
-			teles_left -= 1
+		sleep(10) // in seconds
+		if(!telepad)
+			return
+		if(telepad.stat & NOPOWER)
+			return
+		teleporting = FALSE
 
-			// use a lot of power
-			use_power(power * 10)
+		// use a lot of power
+		use_power(10)
 
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(5, 1, get_turf(telepad))
-			s.start()
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(5, 1, get_turf(telepad))
+		s.start()
 
-			temp_msg = "Teleport successful.<BR>"
-			if(teles_left < 10)
-				temp_msg += "<BR>Calibration required soon."
-			else
-				temp_msg += "Data printed below."
+		temp_msg = "Teleport successful.<BR>"
+		temp_msg += "Data printed below."
 
-			var/sparks = get_turf(target)
-			var/datum/effect_system/spark_spread/y = new /datum/effect_system/spark_spread
-			y.set_up(5, 1, sparks)
-			y.start()
+		var/sparks = get_turf(target)
+		var/datum/effect_system/spark_spread/y = new /datum/effect_system/spark_spread
+		y.set_up(5, 1, sparks)
+		y.start()
 
-			var/turf/source = target
-			var/turf/dest = get_turf(telepad)
-			var/log_msg = ""
-			log_msg += ": [key_name(user)] has teleported "
+		var/turf/source = target
+		var/turf/dest = get_turf(telepad)
+		var/log_msg = ""
+		log_msg += ": [key_name(user)] has teleported "
 
-			if(sending)
-				source = dest
-				dest = target
+		if(sending)
+			source = dest
+			dest = target
 
-			flick("pad-beam", telepad)
-			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
-			for(var/atom/movable/ROI in source)
-				// if is anchored, don't let through
-				if(ROI.anchored)
-					if(isliving(ROI))
-						var/mob/living/L = ROI
-						if(L.buckled)
-							// TP people on office chairs
-							if(L.buckled.anchored)
-								continue
-
-							log_msg += "[key_name(L)] (on a chair), "
-						else
+		flick("pad-beam", telepad)
+		playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
+		for(var/atom/movable/ROI in source)
+			// if is anchored, don't let through
+			if(ROI.anchored)
+				if(isliving(ROI))
+					var/mob/living/L = ROI
+					if(L.buckled)
+						// TP people on office chairs
+						if(L.buckled.anchored)
 							continue
-					else if(!isobserver(ROI))
-						continue
-				if(ismob(ROI))
-					var/mob/T = ROI
-					log_msg += "[key_name(T)], "
-				else
-					log_msg += "[ROI.name]"
-					if (istype(ROI, /obj/structure/closet))
-						var/obj/structure/closet/C = ROI
-						log_msg += " ("
-						for(var/atom/movable/Q as mob|obj in C)
-							if(ismob(Q))
-								log_msg += "[key_name(Q)], "
-							else
-								log_msg += "[Q.name], "
-						if (dd_hassuffix(log_msg, "("))
-							log_msg += "empty)"
-						else
-							log_msg = dd_limittext(log_msg, length(log_msg) - 2)
-							log_msg += ")"
-					log_msg += ", "
-				do_teleport(ROI, dest)
 
-			if (dd_hassuffix(log_msg, ", "))
-				log_msg = dd_limittext(log_msg, length(log_msg) - 2)
+						log_msg += "[key_name(L)] (on a chair), "
+					else
+						continue
+				else if(!isobserver(ROI))
+					continue
+			if(ismob(ROI))
+				var/mob/T = ROI
+				log_msg += "[key_name(T)], "
 			else
-				log_msg += "nothing"
-			log_msg += " [sending ? "to" : "from"] [trueX], [trueY], [z_co] ([A ? A.name : "null area"])"
-			investigate_log(log_msg, "telesci")
-			updateDialog()
+				log_msg += "[ROI.name]"
+				if (istype(ROI, /obj/structure/closet))
+					var/obj/structure/closet/C = ROI
+					log_msg += " ("
+					for(var/atom/movable/Q as mob|obj in C)
+						if(ismob(Q))
+							log_msg += "[key_name(Q)], "
+						else
+							log_msg += "[Q.name], "
+					if (dd_hassuffix(log_msg, "("))
+						log_msg += "empty)"
+					else
+						log_msg = dd_limittext(log_msg, length(log_msg) - 2)
+						log_msg += ")"
+				log_msg += ", "
+			do_teleport(ROI, dest)
+
+		if (dd_hassuffix(log_msg, ", "))
+			log_msg = dd_limittext(log_msg, length(log_msg) - 2)
+		else
+			log_msg += "nothing"
+		log_msg += " [sending ? "to" : "from"] [trueX], [trueY], [target_z] ([A ? A.name : "null area"])"
+		investigate_log(log_msg, "telesci")
+		updateDialog()
 
 /obj/machinery/computer/telescience/proc/teleport(mob/user)
-	if(rotation == null || angle == null || z_co == null)
-		temp_msg = "ERROR!<BR>Set a angle, rotation and sector."
+	if(target_x == null || target_y == null || target_z == null)
+		temp_msg = "ERROR!<BR>Set a parallel, trasversal and sector."
 		return
-	if(power <= 0)
-		telefail()
-		temp_msg = "ERROR!<BR>No power selected!"
-		return
-	if(angle < 1 || angle > 90)
-		telefail()
-		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
-		return
-	if(z_co == ZLEVEL_CENTCOM || z_co < 1 || z_co > ZLEVEL_SPACEMAX)
+	if(target_z == ZLEVEL_CENTCOM || target_z < 1 || target_z > ZLEVEL_SPACEMAX)
 		telefail()
 		temp_msg = "ERROR! Sector is outside known time and space!"
 		return
-	if(teles_left > 0)
+	if(calibrated)
 		doteleport(user)
 	else
 		telefail()
@@ -273,9 +255,8 @@
 
 /obj/machinery/computer/telescience/proc/eject()
 	for(var/obj/item/I in crystals)
-		I.loc = src.loc
+		I.forceMove(get_turf(src))
 		crystals -= I
-	power = 0
 
 /obj/machinery/computer/telescience/Topic(href, href_list)
 	if(..())
@@ -286,31 +267,23 @@
 	if(telepad.panel_open)
 		temp_msg = "Telepad undergoing physical maintenance operations."
 
-	if(href_list["setrotation"])
-		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
+	if(href_list["set_x"])
+		var/new_x = input("Please input desired parallel.", name, target_x) as num
 		if(..()) // Check after we input a value, as they could've moved after they entered something
 			return
-		rotation = Clamp(new_rot, -900, 900)
-		rotation = round(rotation, 0.01)
+		target_x = new_x
 
-	if(href_list["setangle"])
-		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
+	if(href_list["set_y"])
+		var/new_y = input("Please input desired trasversal.", name, target_y) as num
 		if(..())
 			return
-		angle = Clamp(round(new_angle, 0.1), 1, 9999)
+		target_y = new_y
 
-	if(href_list["setpower"])
-		var/index = href_list["setpower"]
-		index = text2num(index)
-		if(index != null && power_options[index])
-			if(crystals.len + telepad.efficiency >= index)
-				power = power_options[index]
-
-	if(href_list["setz"])
-		var/new_z = input("Please input desired sector.", name, z_co) as num
+	if(href_list["set_z"])
+		var/new_z = input("Please input desired sector.", name, target_z) as num
 		if(..())
 			return
-		z_co = Clamp(round(new_z), 1, 10)
+		target_z = Clamp(round(new_z), 1, 10)
 
 	if(href_list["ejectGPS"])
 		if(inserted_gps)
@@ -332,10 +305,11 @@
 		sending = 0
 		teleport(usr)
 
-	if(href_list["recal"])
-		recalibrate()
-		sparks()
-		temp_msg = "NOTICE:<BR>Calibration successful."
+	if(href_list["calibrate"])
+		if(!calibrating)
+			calibrate()
+		else
+			temp_msg = "ERROR!<BR>Calibration in progress."
 
 	if(href_list["eject"])
 		eject()
@@ -347,9 +321,43 @@
 	calibrating = TRUE
 	calibrated = FALSE
 
+	temp_msg = "Calibration in progress..."
+	updateDialog()
+
 	var/turf/target = locate(target_x, target_y, target_z)
 	var/area/A = get_area(target)
+	var/inter_sector = FALSE
 
-	var/dist_from_last = get_dist(target, last_target)
-	var/dist_from_pad = get_dist(get_turf(telepad), target)
-	var/effective_dist = min(dist_from_pad, dist_from_last*2)
+	if(target_z != telepad.z)
+		inter_sector = TRUE
+
+	var/calibration_cycles
+	var/calibration_time = 12 - (2 * telepad.efficiency) //0.5 second per tile, going down to 0.2 seconds per tile
+
+	if(!inter_sector)
+		var/dist_from_last = get_dist(target, last_target)
+		var/dist_from_pad = get_dist(get_turf(telepad), target)
+		var/effective_dist = min(dist_from_pad, dist_from_last*2)
+		calibration_cycles = round(effective_dist / 2)
+	else
+		calibration_cycles = INTERSECTOR_CYCLES
+
+	var/calibration_radius = round(calibration_cycles / 60) //Radius of the visual effect
+	var/calibration_turfs = range(target, calibration_radius)
+
+	for(var/i in 1 to calibration_cycles)
+		var/turf/T = pick(calibration_turfs)
+		new /obj/effect/overlay/temp/swarmer/integrate(get_turf(T))
+		sleep(calibration_time)
+
+	new /obj/effect/overlay/temp/emp/pulse(get_turf(target))
+
+	temp_msg = "Calibration complete."
+	updateDialog()
+
+	target_point = target
+	last_target = target
+
+	calibrated = TRUE
+	calibrating = FALSE
+
