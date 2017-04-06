@@ -514,13 +514,15 @@
 	if(I && I.usesound)
 		playsound(src, I.usesound, CONSTRUCTION_VOLUME, TRUE)
 
-	LAZYADD(user.construction_tasks, src)	//prevent repeats
+	LAZYINITLIST(user.construction_tasks)	//prevent repeats
+	user.construction_tasks[src] = world.time
 	//Checks will always run because we've verified do_after will last at least 1 tick
 	. = do_after(user, delay, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccsid, action_type, I, user, FALSE))
 	LAZYREMOVE(user.construction_tasks, src)
 
 /obj/proc/ConstructionChecks(state_started_id, action_type, obj/item/I, mob/user, first_check) 
-	if(first_check && (src in user.construction_tasks))
+	var/list/user_con_tasks = user.construction_tasks
+	if(first_check && (src in user_con_tasks))
 		testing("Cancelled [user]'s construction on [src]([type]) due to duplicate action")
 		return FALSE	//fail silently
 
@@ -533,9 +535,12 @@
 		return FALSE
 	
 	var/obj/item/weapon/weldingtool/WT = I
-	if(istype(WT) && !WT.isOn())
-		to_chat(user, "<span class='warning'>\The [WT] [first_check ? "needs to be on for this task" : "runs out of fuel"]!</span>")
-		return FALSE
+	if(istype(WT)
+		if(!WT.isOn())
+			to_chat(user, "<span class='warning'>\The [WT] [first_check ? "needs to be on for this task" : "runs out of fuel"]!</span>")
+			return FALSE
+		if(first_check || WT.last_flash < user_con_tasks[src])
+			WT.remove_fuel(0, user)
 
 	var/obj/item/stack/Mats = I
 	if(istype(Mats))
