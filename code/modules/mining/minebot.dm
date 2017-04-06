@@ -195,13 +195,18 @@
 
 /datum/action/innate/minedrone/toggle_meson_vision/Activate()
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-
+	var/lightingalpha
 	if(user.sight & SEE_TURFS)
 		user.sight &= ~SEE_TURFS
-		user.see_invisible = SEE_INVISIBLE_LIVING
+		lightingalpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	else
 		user.sight |= SEE_TURFS
-		user.see_invisible = SEE_INVISIBLE_MINIMUM
+		lightingalpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+	if (user.hud_used)
+		var/obj/screen/plane_master/lighting/L = user.hud_used.plane_masters["[LIGHTING_PLANE]"]
+		if (L)
+			L.alpha = lightingalpha
 
 	to_chat(user, "<span class='notice'>You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"].</span>")
 

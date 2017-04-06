@@ -874,6 +874,10 @@
 	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
 
+	var/obj/screen/plane_master/lighting/L
+	if (hud_used)
+		L = hud_used.plane_masters["[LIGHTING_PLANE]"]
+
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
@@ -881,12 +885,14 @@
 
 	if(sight_mode & BORGMESON)
 		sight |= SEE_TURFS
-		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		if (L)
+			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGMATERIAL)
 		sight |= SEE_OBJS
-		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		if (L)
+			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGXRAY)

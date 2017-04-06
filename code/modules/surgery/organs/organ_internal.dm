@@ -784,6 +784,7 @@
 	var/old_eye_color = "fff"
 	var/flash_protect = 0
 	var/see_invisible = SEE_INVISIBLE_LIVING
+	var/lighting_alpha
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -811,26 +812,27 @@
 	name = "shadow eyes"
 	desc = "A spooky set of eyes that can see in the dark."
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/night_vision = TRUE
 
 /obj/item/organ/eyes/night_vision/ui_action_click()
-	if(night_vision)
-		see_in_dark = 4
-		see_invisible = SEE_INVISIBLE_LIVING
-		night_vision = FALSE
-	else
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-		night_vision = TRUE
+	switch(lighting_alpha)
+		if (LIGHTING_PLANE_ALPHA_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		else
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	owner.update_sight()
 
 /obj/item/organ/eyes/night_vision/alien
 	name = "alien eyes"
 	desc = "It turned out they had them after all!"
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	sight_flags = SEE_MOBS
 
 
@@ -864,7 +866,7 @@
 	eye_color = "FC0"
 	origin_tech = "materials=5;programming=4;biotech=4;magnets=4;syndicate=1"
 	sight_flags = SEE_MOBS
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = -1
 	see_in_dark = 8
 

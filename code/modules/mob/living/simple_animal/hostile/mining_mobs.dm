@@ -15,8 +15,14 @@
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	mob_size = MOB_SIZE_LARGE
+
+/mob/living/simple_animal/hostile/asteroid/Login()
+	. = ..()
+	if (hud_used)
+		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
+		if (L)
+			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()

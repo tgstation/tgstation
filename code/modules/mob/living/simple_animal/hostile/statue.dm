@@ -44,9 +44,11 @@
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	anchored = 1
 
+	gold_core_spawnable = 1
+
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
-	gold_core_spawnable = 1
+
 
 
 // No movement while seen code.
@@ -58,12 +60,16 @@
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
 
-	// Give nightvision
-	see_invisible = SEE_INVISIBLE_NOLIGHTING
-
 	// Set creator
 	if(creator)
 		src.creator = creator
+
+/mob/living/simple_animal/hostile/statue/Login()
+	. = ..()
+	if (hud_used)
+		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
+		if (L)
+			L.alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
 /mob/living/simple_animal/hostile/statue/med_hud_set_health()
 	return //we're a statue we're invincible
@@ -205,15 +211,28 @@
 	range = -1
 	include_user = 1
 
-/obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets, mob/user = usr)
 	for(var/mob/living/target in targets)
-		if(!iscarbon(target)) //Carbons should be toggling their vision via organ, this spell is used as a power for simple mobs
-			if(target.see_invisible == SEE_INVISIBLE_LIVING)
-				target.see_invisible = SEE_INVISIBLE_NOLIGHTING
-				name = "Toggle Nightvision \[ON]"
-			else
-				target.see_invisible = SEE_INVISIBLE_LIVING
+		if (iscarbon(target)) //Carbons should be toggling their vision via organ, this spell is used as a power for simple mobs
+			continue
+		if(!target.hud_used)
+			continue
+		var/obj/screen/plane_master/lighting/L = target.hud_used.plane_masters["[LIGHTING_PLANE]"]
+		if (!L)
+			continue
+		switch(L.alpha)
+			if (LIGHTING_PLANE_ALPHA_VISIBLE)
+				L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+				name = "Toggle Nightvision \[More]"
+			if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+				L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+				name = "Toggle Nightvision \[Full]"
+			if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+				L.alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 				name = "Toggle Nightvision \[OFF]"
+			else
+				L.alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+				name = "Toggle Nightvision \[ON]"
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"
