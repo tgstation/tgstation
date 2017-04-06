@@ -26,7 +26,7 @@ var/list/GPS_list = list()
 	emped = TRUE
 	cut_overlay("working")
 	add_overlay("emp")
-	addtimer(CALLBACK(src, .proc/reboot), 300)
+	addtimer(CALLBACK(src, .proc/reboot), 300, TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
 
 /obj/item/device/gps/proc/reboot()
 	emped = FALSE
