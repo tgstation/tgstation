@@ -536,7 +536,7 @@
 		return FALSE
 	
 	var/obj/item/weapon/weldingtool/WT = I
-	if(istype(WT)
+	if(istype(WT))
 		if(!WT.isOn())
 			to_chat(user, "<span class='warning'>\The [WT] [first_check ? "needs to be on for this task" : "runs out of fuel"]!</span>")
 			return FALSE
