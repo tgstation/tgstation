@@ -79,7 +79,6 @@
 	dat += "<A href='?src=\ref[src];action=select'> Select Track</A><br>"
 	dat += "Track Selected: [selection.song_name]<br>"
 	dat += "Track Length: [selection.song_length/10] seconds<br><br>"
-	dat += "<i>More songs can be unlocked by earning more IEV points</i><br>"
 	dat += "<br>DJ's Soundboard:<b><br>"
 	dat +="<div class='statusDisplay'><div style='text-align:center'>"
 	dat += "<A href='?src=\ref[src];action=horn'>Air Horn</A>  "
@@ -310,6 +309,7 @@
 
 
 /obj/machinery/disco/proc/dance(var/mob/living/carbon/M) //Show your moves
+
 	switch(rand(0,9))
 		if(0 to 1)
 			dance2(M)
@@ -319,17 +319,16 @@
 			dance4(M)
 		if(7 to 9)
 			dance5(M)
-	animate(M, transform = null, time = 1, loop = 0)
 
 /obj/machinery/disco/proc/dance2(var/mob/living/carbon/M)
 	set waitfor = 0
-	for(var/i = 1, i < 8, i++)
-		M.SpinAnimation(7,1)
+	for(var/i = 1, i < 10, i++)
+		M.SpinAnimation(15,1)
 		M.setDir(pick(cardinal))
-		sleep(10)
+		sleep(8)
 
 /obj/machinery/disco/proc/dance3(var/mob/living/carbon/M)
-	set waitfor = 0
+	var/matrix/initial_matrix = matrix(M.transform)
 	for(var/i in 1 to 6)
 		if (!M)
 			return
@@ -340,22 +339,34 @@
 			if (!M)
 				return
 			if (i<5)
-				M.pixel_y += 1
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(0,1)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
 			if (i>4)
-				M.pixel_y -= 2
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(0,-2)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
 			M.setDir(turn(M.dir, 90))
 			switch (M.dir)
 				if (NORTH)
-					M.pixel_y += 3
+					initial_matrix = matrix(M.transform)
+					initial_matrix.Translate(0,3)
+					animate(M, transform = initial_matrix, time = 1, loop = 0)
 				if (SOUTH)
-					M.pixel_y -= 3
+					initial_matrix = matrix(M.transform)
+					initial_matrix.Translate(0,-3)
+					animate(M, transform = initial_matrix, time = 1, loop = 0)
 				if (EAST)
-					M.pixel_x -= 3
+					initial_matrix = matrix(M.transform)
+					initial_matrix.Translate(3,0)
+					animate(M, transform = initial_matrix, time = 1, loop = 0)
 				if (WEST)
-					M.pixel_x += 3
-		sleep(12)
-	M.pixel_x = 0
-	M.pixel_y = 0
+					initial_matrix = matrix(M.transform)
+					initial_matrix.Translate(-3,0)
+					animate(M, transform = initial_matrix, time = 1, loop = 0)
+			sleep(1)
+		animate(M, transform = null, time = 1, loop = 0)
+
 
 /obj/machinery/disco/proc/dance4(var/mob/living/carbon/M)
 	var/speed = rand(1,3)
@@ -369,10 +380,11 @@
 		 time--
 
 /obj/machinery/disco/proc/dance5(var/mob/living/carbon/M)
-	M.setDir(get_dir(M, src))
+	var/matrix/initial_matrix = matrix(M.transform)
 	spawn (0)
 		if (M)
 			animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
+			initial_matrix = matrix(M.transform)
 		sleep (70)
 		if (M)
 			animate(M, transform = null, time = 1, loop = 0)
@@ -380,22 +392,77 @@
 		if (!M)
 			return
 		if (i<31)
-			M.pixel_y += 1
+			initial_matrix = matrix(M.transform)
+			initial_matrix.Translate(0,1)
+			animate(M, transform = initial_matrix, time = 1, loop = 0)
 		if (i>30)
-			M.pixel_y -= 1
+			initial_matrix = matrix(M.transform)
+			initial_matrix.Translate(0,-1)
+			animate(M, transform = initial_matrix, time = 1, loop = 0)
 		M.setDir(turn(M.dir, 90))
 		switch (M.dir)
 			if (NORTH)
-				M.pixel_y += 3
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(0,3)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
 			if (SOUTH)
-				M.pixel_y -= 3
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(0,-3)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
 			if (EAST)
-				M.pixel_x -= 3
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(3,0)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
 			if (WEST)
-				M.pixel_x += 3
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(-3,0)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
 		sleep (1)
-	M.pixel_x = 0
-	M.pixel_y = 0
+	animate(M, transform = null, time = 1, loop = 0)
+
+/mob/living/carbon/proc/dancey()
+	var/matrix/initial_matrix = matrix(transform)
+	spawn (0)
+		if (src)
+			animate(src, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
+			initial_matrix = matrix(transform)
+		sleep (70)
+		if (src)
+			animate(src, transform = null, time = 1, loop = 0)
+	for (var/i = 0, i < 60, i++)
+		if (!src)
+			return
+		if (i<31)
+			initial_matrix = matrix(transform)
+			initial_matrix.Translate(0,1)
+			transform = initial_matrix
+			animate(src, transform, time = 1, loop = 0)
+		if (i>30)
+			initial_matrix = matrix(transform)
+			initial_matrix.Translate(0,-1)
+			transform = initial_matrix
+			animate(src, transform, time = 1, loop = 0)
+		setDir(turn(src.dir, 90))
+		switch (dir)
+			if (NORTH)
+				initial_matrix = matrix(transform)
+				initial_matrix.Translate(0,3)
+				animate(src, transform, time = 1, loop = 0)
+			if (SOUTH)
+				initial_matrix = matrix(transform)
+				initial_matrix.Translate(0,-3)
+				animate(src, transform, time = 1, loop = 0)
+			if (EAST)
+				initial_matrix = matrix(transform)
+				initial_matrix.Translate(3,0)
+				animate(src, transform, time = 1, loop = 0)
+			if (WEST)
+				initial_matrix = matrix(transform)
+				initial_matrix.Translate(-3,0)
+				animate(src, transform, time = 1, loop = 0)
+		sleep (1)
+	animate(src, transform = null, time = 1, loop = 0)
+
 
 /obj/machinery/disco/proc/dance_over()
 	for(var/obj/item/device/flashlight/spotlight/SL in spotlights)
@@ -408,7 +475,7 @@
 	for(var/mob/living/L in listeners)
 		if(!L || !L.client)
 			continue
-		L.client.stop_client_sounds()
+		L.stop_sound_channel(CHANNEL_JUKEBOX)
 	listeners.Cut()
 
 
@@ -422,7 +489,7 @@
 			if(!(M in listeners))
 				M.playsound_local(get_turf(M), selection.song_path, 100, channel = CHANNEL_JUKEBOX)
 				listeners += M
-			if(prob(5+(allowed(M)*3)))
+			if(prob(5+(allowed(M)*4)))
 				dance(M)
 		for(var/mob/living/L in listeners)
 			if(!(L in rangers))
