@@ -1,4 +1,4 @@
-
+#define SPIDER_IDLE 0
 #define SPINNING_WEB 1
 #define LAYING_EGGS 2
 #define MOVING_TO_TARGET 3
@@ -39,7 +39,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	faction = list("spiders")
-	var/busy = 0
+	var/busy = SPIDER_IDLE
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -88,7 +88,7 @@
 	poison_per_bite = 3
 	var/atom/movable/cocoon_target
 	var/fed = 0
-	var/static/list/consumed_mobs = list() //mobs that have been consumed by nurse spiders to lay eggs
+	var/static/list/consumed_mobs = list() //the tags of mobs that have been consumed by nurse spiders to lay eggs
 
 //hunters have the most poison and move the fastest, so they can find prey
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter
@@ -166,8 +166,8 @@
 				Wrap()
 
 	else
-		busy = 0
-		stop_automated_movement = 0
+		busy = SPIDER_IDLE
+		stop_automated_movement = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/verb/Web()
 	set name = "Lay Web"
@@ -185,8 +185,8 @@
 		if(do_after(src, 40, target = T))
 			if(busy == SPINNING_WEB && src.loc == T)
 				new /obj/structure/spider/stickyweb(T)
-		busy = 0
-		stop_automated_movement = 0
+		busy = SPIDER_IDLE
+		stop_automated_movement = FALSE
 
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/Wrap()
@@ -219,15 +219,15 @@
 			return //we're already doing this, don't cancel out or anything
 		busy = SPINNING_COCOON
 		visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
-		stop_automated_movement = 1
+		stop_automated_movement = TRUE
 		walk(src,0)
 		if(do_after(src, 50, target = cocoon_target))
 			if(busy == SPINNING_COCOON)
 				var/obj/structure/spider/cocoon/C = new(cocoon_target.loc)
 				if(isliving(cocoon_target))
 					var/mob/living/L = cocoon_target
-					if(L.blood_volume && (L.stat != DEAD || !consumed_mobs[L])) //if they're not dead, you can consume them anyway
-						consumed_mobs[L] = TRUE
+					if(L.blood_volume && (L.stat != DEAD || !consumed_mobs[L.tag])) //if they're not dead, you can consume them anyway
+						consumed_mobs[L.tag] = TRUE
 						fed++
 						visible_message("<span class='danger'>\the [src] sticks a proboscis into \the [L] and sucks a viscous substance out.</span>")
 						L.death() //you just ate them, they're dead.
@@ -238,8 +238,8 @@
 				if(cocoon_target.density || ismob(cocoon_target))
 					C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
 	cocoon_target = null
-	busy = 0
-	stop_automated_movement = 0
+	busy = SPIDER_IDLE
+	stop_automated_movement = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/LayEggs()
 	set name = "Lay Eggs"
@@ -268,8 +268,8 @@
 					C.poison_per_bite = poison_per_bite
 					C.faction = faction.Copy()
 					fed--
-		busy = 0
-		stop_automated_movement = 0
+		busy = SPIDER_IDLE
+		stop_automated_movement = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
@@ -277,6 +277,7 @@
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
 
+#undef SPIDER_IDLE
 #undef SPINNING_WEB
 #undef LAYING_EGGS
 #undef MOVING_TO_TARGET
