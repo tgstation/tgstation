@@ -25,7 +25,7 @@ var/global/global_posibrain_notify_cooldown = 0
 	Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	var/dead_message = "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>"
-	var/list/possible_names = list() //If you leave this blank, it will use the global posibrain names
+	var/list/possible_names //If you leave this blank, it will use the global posibrain names
 	var/picked_name
 
 /obj/item/device/mmi/posibrain/Topic(href, href_list)
