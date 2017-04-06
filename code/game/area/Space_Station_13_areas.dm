@@ -595,7 +595,105 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/sleeper
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
+480
 
+/area/assembly/assembly_line //Derelict Assembly Line
+
+481
+
+    name = "Assembly Line"
+
+482
+
+    icon_state = "ass_line"
+
+483
+
+    power_equip = 0
+
+484
+
+    power_light = 0
+
+485
+
+    power_environ = 0
+
+486
+
+​
+
+487
+
+//Teleporter
+
+488
+
+​
+
+489
+
+/area/teleporter
+
+490
+
+    name = "Teleporter Room"
+
+491
+
+    icon_state = "teleporter"
+
+492
+
+    music = "signal"
+
+493
+
+​
+
+494
+
+/area/gateway
+
+495
+
+    name = "Gateway"
+
+496
+
+    icon_state = "teleporter"
+
+497
+
+    music = "signal"
+
+498
+
+​
+
+499
+
+//MedBay
+
+500
+
+​
+
+501
+
+/area/medical/medbay
+
+502
+
+    name = "Medbay Central"
+
+503
+
+    icon_state = "medbay"
+
+504
+
+    music = 'sound/ambience/signal.ogg'
 //Security
 
 /area/security/main
@@ -621,7 +719,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/armory
 	name = "Armory"
 	icon_state = "armory"
-	teleporter_blocked = 1
+	teleporter_blocked = TRUE
 
 /area/security/hos
 	name = "Head of Security's Office"
@@ -649,12 +747,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
-	teleporter_blocked = 1
+	teleporter_blocked = TRUE
 
-/area/ai_monitored/nuke_storage
+/area/ai_monitored/nuke_storage // Todo, purg
 	name = "Vault"
 	icon_state = "nuke_storage"
-	teleporter_blocked = 1
+	teleporter_blocked = TRUE
 
 /area/security/checkpoint
 	name = "Security Checkpoint"
