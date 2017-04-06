@@ -128,6 +128,9 @@
 /obj/effect/particle_effect/foam/metal/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
+/obj/effect/particle_effect/foam/long_life
+	lifetime = 150
+
 
 ///////////////////////////////////////////////
 //FOAM EFFECT DATUM
@@ -141,6 +144,8 @@
 /datum/effect_system/foam_spread/metal
 	effect_type = /obj/effect/particle_effect/foam/metal
 
+/datum/effect_system/foam_spread/long
+	effect_type = /obj/effect/particle_effect/foam/long_life
 
 /datum/effect_system/foam_spread/New()
 	..()
