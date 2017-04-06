@@ -30,7 +30,7 @@ var/list/total_extraction_beacons = list()
 	else
 		var/A
 
-		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) in possible_beacons
+		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in possible_beacons
 
 		if(!A)
 			return
