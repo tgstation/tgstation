@@ -364,7 +364,7 @@
 					initial_matrix = matrix(M.transform)
 					initial_matrix.Translate(-3,0)
 					animate(M, transform = initial_matrix, time = 1, loop = 0)
-			sleep(1)
+		sleep(10)
 		animate(M, transform = null, time = 1, loop = 0)
 
 
