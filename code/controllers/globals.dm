@@ -16,7 +16,7 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	gvars_datum_in_built_vars = exclude_these.vars + list("gvars_datum_protected_varlist", "gvars_datum_in_built_vars", "gvars_datum_init_order")
 	qdel(exclude_these)
 
-	InitEverything()
+	Initialize()
 
 /datum/controller/global_vars/Destroy(force)
 	if(!force)
@@ -51,7 +51,7 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 		return FALSE
 	return ..()
 
-/datum/controller/global_vars/proc/InitEverything()
+/datum/controller/global_vars/Initialize()
 	gvars_datum_init_order = list()
 	gvars_datum_protected_varlist = list("gvars_datum_protected_varlist")
 	for(var/I in vars - gvars_datum_in_built_vars)
