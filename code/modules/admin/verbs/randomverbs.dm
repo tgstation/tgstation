@@ -926,15 +926,14 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	"}
 	usr << browse(dat, "window=dressup;size=550x600")
 
-/client/proc/toggle_antag_hud()
+/client/proc/toggle_antag_hud(silent = FALSE)
 	set category = "Admin"
 	set name = "Toggle AntagHUD"
 	set desc = "Toggles the Admin AntagHUD"
 
 	if(!holder) return
 
-	var/datum/atom_hud/A = huds[ANTAG_HUD_TRAITOR]
-	var/adding_hud = (usr in A.hudusers) ? 0 : 1
+	var/adding_hud = !has_antag_hud()
 
 	for(var/datum/atom_hud/H in huds)
 		if(istype(H, /datum/atom_hud/antag))
@@ -947,7 +946,12 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	to_chat(usr, "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
-	feedback_add_details("admin_verb","TAH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(!silent)
+		feedback_add_details("admin_verb","TAH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/has_antag_hud()
+	var/datum/atom_hud/A = huds[ANTAG_HUD_TRAITOR]
+	return mob in A.hudusers
 
 /client/proc/open_shuttle_manipulator()
 	set category = "Admin"

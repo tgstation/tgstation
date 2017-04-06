@@ -659,6 +659,9 @@ var/list/admin_verbs_hideable = list(
 
 	if(!holder)
 		return
+	
+	if(has_antag_hud())
+		toggle_antag_hud(silent = TRUE)
 
 	holder.disassociate()
 	qdel(holder)
