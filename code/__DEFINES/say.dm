@@ -11,6 +11,7 @@
 #define MODE_INTERCOM "intercom"
 #define MODE_BINARY "binary"
 #define MODE_WHISPER "whisper"
+#define MODE_WHISPER_CRIT "whispercrit"
 #define MODE_DEPARTMENT "department"
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"

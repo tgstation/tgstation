@@ -1,67 +1,69 @@
 GLOBAL_LIST_INIT(department_radio_keys, list(
-	  ":r" = "right hand",	"#r" = "right hand",	".r" = "right hand",
-	  ":l" = "left hand",	"#l" = "left hand",		".l" = "left hand",
-	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
-	  ":h" = "department",	"#h" = "department",	".h" = "department",
-	  ":c" = "Command",		"#c" = "Command",		".c" = "Command",
-	  ":n" = "Science",		"#n" = "Science",		".n" = "Science",
-	  ":m" = "Medical",		"#m" = "Medical",		".m" = "Medical",
-	  ":e" = "Engineering", "#e" = "Engineering",	".e" = "Engineering",
-	  ":s" = "Security",	"#s" = "Security",		".s" = "Security",
-	  ":w" = "whisper",		"#w" = "whisper",		".w" = "whisper",
-	  ":b" = "binary",		"#b" = "binary",		".b" = "binary",
-	  ":a" = "alientalk",	"#a" = "alientalk",		".a" = "alientalk",
-	  ":t" = "Syndicate",	"#t" = "Syndicate",		".t" = "Syndicate",
-	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
-	  ":v" = "Service",		"#v" = "Service",		".v" = "Service",
-	  ":o" = "AI Private",	"#o" = "AI Private",	".o" = "AI Private",
-	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
-	  ":y" = "Centcom",		"#y" = "Centcom",		".y" = "Centcom",
-	  ":x" = "cords",		"#x" = "cords",			".x" = "cords",
-	  ":p" = "admin",		"#p" = "admin",			".p" = "admin",
-	  ":d" = "deadmin",		"#d" = "deadmin",		".d" = "deadmin",
+	  ":r" = "right hand",	".r" = "right hand",
+	  ":l" = "left hand",	".l" = "left hand",
+	  ":i" = "intercom",	".i" = "intercom",
+	  ":h" = "department",	".h" = "department",
+	  ":c" = "Command",		".c" = "Command",
+	  ":n" = "Science",		".n" = "Science",
+	  ":m" = "Medical",		".m" = "Medical",
+	  ":e" = "Engineering", ".e" = "Engineering",
+	  ":s" = "Security",	".s" = "Security",
+	  ":b" = "binary",		".b" = "binary",
+	  ":a" = "alientalk",	".a" = "alientalk",
+	  ":t" = "Syndicate",	".t" = "Syndicate",
+	  ":u" = "Supply",		".u" = "Supply",
+	  ":v" = "Service",		".v" = "Service",
+	  ":o" = "AI Private",	".o" = "AI Private",
+	  ":g" = "changeling",	".g" = "changeling",
+	  ":y" = "Centcom",		".y" = "Centcom",
+	  ":x" = "cords",		".x" = "cords",
+	  ":p" = "admin",		".p" = "admin",
+	  ":d" = "deadmin",		".d" = "deadmin",
 
-	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
-	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
-	  ":I" = "intercom",	"#I" = "intercom",		".I" = "intercom",
-	  ":H" = "department",	"#H" = "department",	".H" = "department",
-	  ":C" = "Command",		"#C" = "Command",		".C" = "Command",
-	  ":N" = "Science",		"#N" = "Science",		".N" = "Science",
-	  ":M" = "Medical",		"#M" = "Medical",		".M" = "Medical",
-	  ":E" = "Engineering",	"#E" = "Engineering",	".E" = "Engineering",
-	  ":S" = "Security",	"#S" = "Security",		".S" = "Security",
-	  ":W" = "whisper",		"#W" = "whisper",		".W" = "whisper",
-	  ":B" = "binary",		"#B" = "binary",		".B" = "binary",
-	  ":A" = "alientalk",	"#A" = "alientalk",		".A" = "alientalk",
-	  ":T" = "Syndicate",	"#T" = "Syndicate",		".T" = "Syndicate",
-	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
-	  ":V" = "Service",		"#V" = "Service",		".V" = "Service",
-	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
-	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
-	  ":Y" = "Centcom",		"#Y" = "Centcom",		".Y" = "Centcom",
-	  ":X" = "cords",		"#X" = "cords",			".X" = "cords",
-	  ":P" = "admin",		"#P" = "admin",			".P" = "admin",
-	  ":D" = "deadmin",		"#D" = "deadmin",		".D" = "deadmin",
+	  ":R" = "right hand",	".R" = "right hand",
+	  ":L" = "left hand",	".L" = "left hand",
+	  ":I" = "intercom",	".I" = "intercom",
+	  ":H" = "department",	".H" = "department",
+	  ":C" = "Command",		".C" = "Command",
+	  ":N" = "Science",		".N" = "Science",
+	  ":M" = "Medical",		".M" = "Medical",
+	  ":E" = "Engineering",	".E" = "Engineering",
+	  ":S" = "Security",	".S" = "Security",
+	  ":B" = "binary",		".B" = "binary",
+	  ":A" = "alientalk",	".A" = "alientalk",
+	  ":T" = "Syndicate",	".T" = "Syndicate",
+	  ":U" = "Supply",		".U" = "Supply",
+	  ":V" = "Service",		".V" = "Service",
+	  ":O" = "AI Private",	".O" = "AI Private",
+	  ":G" = "changeling",	".G" = "changeling",
+	  ":Y" = "Centcom",		".Y" = "Centcom",
+	  ":X" = "cords",		".X" = "cords",
+	  ":P" = "admin",		".P" = "admin",
+	  ":D" = "deadmin",		".D" = "deadmin",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":ê" = "right hand",	"#ê" = "right hand",	".ê" = "right hand",
-	  ":ä" = "left hand",	"#ä" = "left hand",		".ä" = "left hand",
-	  ":ø" = "intercom",	"#ø" = "intercom",		".ø" = "intercom",
-	  ":ð" = "department",	"#ð" = "department",	".ð" = "department",
-	  ":ñ" = "Command",		"#ñ" = "Command",		".ñ" = "Command",
-	  ":ò" = "Science",		"#ò" = "Science",		".ò" = "Science",
-	  ":ü" = "Medical",		"#ü" = "Medical",		".ü" = "Medical",
-	  ":ó" = "Engineering",	"#ó" = "Engineering",	".ó" = "Engineering",
-	  ":û" = "Security",	"#û" = "Security",		".û" = "Security",
-	  ":ö" = "whisper",		"#ö" = "whisper",		".ö" = "whisper",
-	  ":è" = "binary",		"#è" = "binary",		".è" = "binary",
-	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
-	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
-	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"))
+	  ":ê" = "right hand",	".ê" = "right hand",
+	  ":ä" = "left hand",	".ä" = "left hand",
+	  ":ø" = "intercom",	".ø" = "intercom",
+	  ":ð" = "department",	".ð" = "department",
+	  ":ñ" = "Command",		".ñ" = "Command",
+	  ":ò" = "Science",		".ò" = "Science",
+	  ":ü" = "Medical",		".ü" = "Medical",
+	  ":ó" = "Engineering",	".ó" = "Engineering",
+	  ":û" = "Security",	".û" = "Security",
+	  ":è" = "binary",		".è" = "binary",
+	  ":ô" = "alientalk",	".ô" = "alientalk",
+	  ":å" = "Syndicate",	".å" = "Syndicate",
+	  ":é" = "Supply",		".é" = "Supply",
+	  ":ï" = "changeling",	".ï" = "changeling"))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+	var/static/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
+	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING,MODE_ALIEN)
+
+	var/static/list/one_character_prefix = list(MODE_HEADSET,MODE_ROBOT,MODE_WHISPER)
+
 	if(sanitize)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
@@ -69,8 +71,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/message_mode = get_message_mode(message)
 	var/original_message = message
+	var/in_critical = InCritical()
 
-	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
+	if(message_mode in one_character_prefix)
 		message = copytext(message, 2)
 	else if(message_mode)
 		message = copytext(message, 3)
@@ -91,15 +94,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		say_dead(original_message)
 		return
 
-	if(check_emote(original_message))
+	if(check_emote(original_message) || !can_speak_basic(original_message))
 		return
 
-	if(!can_speak_basic(original_message)) //Stat is seperate so I can handle whispers properly.
-		return
-	
-	var/static/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
-	if(stat && !(message_mode in crit_allowed_modes))
-		return
+	if(in_critical)
+		if(!(message_mode in crit_allowed_modes))
+			return
+	else if(stat == UNCONSCIOUS)
+		if(!(message_mode in unconscious_allowed_modes))
+			return
 
 	// language comma detection.
 	var/datum/language/message_language = get_message_language(message)
@@ -127,10 +130,26 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
 
-	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
-		message = treat_message(message)
-		if(!message)
-			return
+	var/message_range = 6
+
+	if(message_mode == MODE_WHISPER)
+		message_range = 1
+		spans |= SPAN_ITALICS
+		log_whisper("[src.name]/[src.key] : [message]")
+		if(in_critical)
+			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
+			// If we cut our message short, abruptly end it with a-..
+			var/message_len = length(message)
+			message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
+			message = Ellipsis(message, 10, 1)
+			message_mode = MODE_WHISPER_CRIT
+			succumb(1)
+	else
+		log_say("[name]/[key] : [message]")
+
+	message = treat_message(message)
+	if(!message)
+		return
 
 	spans += get_spans()
 
@@ -145,10 +164,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
 	log_message(message, INDIVIDUAL_SAY_LOG)
 
-	var/message_range = 7
-	var/radio_return = radio(message, message_mode, spans, language)
-	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
-		return
+	var/radio_return = radio(message, message_mode, spans)
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
@@ -164,12 +180,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
 		spans |= SPAN_ITALICS
 
-	send_speech(message, message_range, src, bubble_type, spans, message_language=language)
+	send_speech(message, message_range, src, bubble_type, spans, language, message_mode)
 
-	log_say("[name]/[key] : [message]")
 	return 1
 
-/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans)
+/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(!client)
 		return
 	var/deaf_message
@@ -183,19 +198,26 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 
 	// Recompose message for AI hrefs, language incomprehension.
-	message = compose_message(speaker, message_language, raw_message, radio_freq, spans)
+	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null)
-	var/list/listening = get_hearers_in_view(message_range, source)
+/mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
+	var/list/listening = get_hearers_in_view(message_range+1, source)
+	var/list/the_dead = list()
 	for(var/mob/M in GLOB.player_list)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7 && M.z == z)) && client) // client is so that ghosts don't have to listen to mice
 			listening |= M
+			the_dead |= M
 
-	var/rendered = compose_message(src, message_language, message, , spans)
+	var/eavesdropping = stars(message)
+	var/eavesrendered = compose_message(src, message_language, eavesdropping, , spans, message_mode)
+	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
 	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, message_language, message, , spans, message_language)
+		if(get_dist(source, AM) > message_range && !(AM in the_dead))
+			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
+		else
+			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
@@ -243,6 +265,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/proc/get_message_mode(message)
 	if(copytext(message, 1, 2) == ";")
 		return MODE_HEADSET
+	else if(copytext(message, 1, 2) == "#")
+		return MODE_WHISPER
 	else if(length(message) > 2)
 		return GLOB.department_radio_keys[copytext(message, 1, 3)]
 
@@ -349,10 +373,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(binarycheck())
 				robot_talk(message)
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
-
-		if(MODE_WHISPER)
-			whisper(message)
-			return NOPASS
 	return 0
 
 /mob/living/lingcheck() //1 is ling w/ no hivemind. 2 is ling w/hivemind. 3 is ling victim being linked into hivemind.
@@ -364,12 +384,17 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return 3
 	return 0
 
-/mob/living/say_quote(input, list/spans)
+/mob/living/say_quote(input, list/spans, message_mode)
 	var/tempinput = attach_spans(input, spans)
+	if(message_mode == MODE_WHISPER)
+		return "[verb_whisper], \"[tempinput]\""
+	if(message_mode == MODE_WHISPER_CRIT)
+		return "[verb_whisper] in [p_their()] last breath, \"[tempinput]\""
 	if (stuttering)
 		return "stammers, \"[tempinput]\""
 	if (getBrainLoss() >= 60)
 		return "gibbers, \"[tempinput]\""
+
 	return ..()
 
 /mob/living/get_default_language()
@@ -383,3 +408,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/open_language_menu(mob/user)
 	language_menu.ui_interact(user)
+
+/mob/living/whisper(message as text)
+	say("#[message]")

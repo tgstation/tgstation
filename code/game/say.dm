@@ -28,22 +28,22 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		language = get_default_language()
 	send_speech(message, 7, src, , spans, message_language=language)
 
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans)
+/atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	return
 
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null)
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, message_mode)
 	var/rendered = compose_message(src, message_language, message, , spans)
-	for(var/atom/movable/AM in get_hearers_in_view(range, src))
+	for(var/atom/movable/AM in get_hearers_in_view(range, source))
 		AM.Hear(rendered, src, message_language, message, , spans)
 
 //To get robot span classes, stuff like that.
 /atom/movable/proc/get_spans()
 	return list()
 
-/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans)
+/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -52,11 +52,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//Radio freq/name display
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Speaker name
-	var/namepart =  "[speaker.GetVoice()][speaker.get_alt_name()]"
+	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
 	//End name span.
 	var/endspanpart = "</span>"
 	//Message
-	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans)]</span></span>"
+	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
 
 	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
 
-/atom/movable/proc/say_quote(input, list/spans=list())
+/atom/movable/proc/say_quote(input, list/spans=list(), message_mode)
 	if(!input)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(input, length(input))
@@ -81,23 +81,23 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	return "[verb_say], \"[input]\""
 
-/atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans)
+/atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
 	if(has_language(language))
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
 			if(AM.verb_say != speaker.verb_say || AM.verb_ask != speaker.verb_ask || AM.verb_exclaim != speaker.verb_exclaim || AM.verb_yell != speaker.verb_yell) //If the saymod was changed
-				return speaker.say_quote(raw_message, spans)
-			return AM.say_quote(raw_message, spans)
+				return speaker.say_quote(raw_message, spans, message_mode)
+			return AM.say_quote(raw_message, spans, message_mode)
 		else
-			return speaker.say_quote(raw_message, spans)
+			return speaker.say_quote(raw_message, spans, message_mode)
 	else if(language)
 		var/atom/movable/AM = speaker.GetSource()
 		var/datum/language/D = new language
 		raw_message = D.scramble(raw_message)
 		if(AM)
-			return AM.say_quote(raw_message, spans)
+			return AM.say_quote(raw_message, spans, message_mode)
 		else
-			return speaker.say_quote(raw_message, spans)
+			return speaker.say_quote(raw_message, spans, message_mode)
 	else
 		return "makes a strange sound."
 
