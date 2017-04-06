@@ -44,9 +44,9 @@
 /obj/item/toy/eightball/examine(mob/user)
 	..()
 	if(on_cooldown)
-		to_chat(user, "<span class='notify'>You should wait until shaking it again."</span>)
+		to_chat(user, "<span class='notify'>You should wait until shaking it again.</span>")
 	else
-		to_chat(user, "<span class='notify'>[src] is ready to use."</span>)
+		to_chat(user, "<span class='notify'>[src] is ready to use.</span>")
 
 /obj/item/toy/eightball/attack_self(mob/user)
 	if(shaking)
