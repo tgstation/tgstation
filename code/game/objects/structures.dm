@@ -111,7 +111,7 @@
 		if(0 to 25)
 			return  "<span class='warning'>It's falling apart!</span>"
 
-/obj/structure/extinguisher_cabinet/obj_break(damage_flag)
+/obj/structure/obj_break(damage_flag)
 	..()
 	broken = TRUE
 
