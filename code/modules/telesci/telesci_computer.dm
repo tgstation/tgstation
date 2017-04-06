@@ -11,28 +11,24 @@
 	// VARIABLES //
 	var/teles_left	// How many teleports left until it becomes uncalibrated
 	var/datum/projectile_data/last_tele_data = null
-	var/z_co = 1
 	var/power_off
 	var/rotation_off
 	//var/angle_off
 	var/last_target
 
-	var/rotation = 0
-	var/angle = 45
-	var/power = 5
+	var/target_x
+	var/target_y
+	var/target_z = 1
+	var/calibrated = FALSE
+	var/calibrating = FALSE
 
 	// Based on the power used
 	var/teleport_cooldown = 0 // every index requires a bluespace crystal
-	var/list/power_options = list(5, 10, 20, 25, 30, 40, 50, 80, 100)
 	var/teleporting = 0
 	var/starting_crystals = 3
 	var/max_crystals = 4
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
-
-/obj/machinery/computer/telescience/New()
-	recalibrate()
-	..()
 
 /obj/machinery/computer/telescience/Destroy()
 	eject()
@@ -102,29 +98,17 @@
 			t += "<span class='linkOff'>Eject GPS</span>"
 			t += "<span class='linkOff'>Set GPS memory</span>"
 		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
-		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]°</div>"
-		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]°</div>"
-		t += "<span class='linkOn'>Set Power</span>"
-		t += "<div class='statusDisplay'>"
-
-		for(var/i = 1; i <= power_options.len; i++)
-			if(crystals.len + telepad.efficiency  < i)
-				t += "<span class='linkOff'>[power_options[i]]</span>"
-				continue
-			if(power == power_options[i])
-				t += "<span class='linkOn'>[power_options[i]]</span>"
-				continue
-			t += "<A href='?src=\ref[src];setpower=[i]'>[power_options[i]]</A>"
-		t += "</div>"
-
-		t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
-		t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
+		t += "<A href='?src=\ref[src];set_x=1'>Set Parallel</A>"
+		t += "<div class='statusDisplay'>[target_x]</div>"
+		t += "<A href='?src=\ref[src];set_y=1'>Set Trasversal</A>"
+		t += "<div class='statusDisplay'>[target_y]</div>"
+		t += "<A href='?src=\ref[src];set_z=1'>Set Sector</A>"
+		t += "<div class='statusDisplay'>[target_z ? target_z : "NULL"]</div>"
 
 		t += "<BR><A href='?src=\ref[src];send=1'>Send</A>"
 		t += " <A href='?src=\ref[src];receive=1'>Receive</A>"
-		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
+		t += "<BR><A href='?src=\ref[src];calibrate=1'>Calibrate</A>"
+		t += "<BR><A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
 
 		// Information about the last teleport
 		t += "<BR><div class='statusDisplay'>"
@@ -165,14 +149,6 @@
 		return
 
 	if(telepad)
-
-		var/truePower = Clamp(power + power_off, 1, 1000)
-		var/trueRotation = rotation + rotation_off
-		var/trueAngle = Clamp(angle, 1, 90)
-
-		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
-		last_tele_data = proj_data
-
 		var/trueX = Clamp(round(proj_data.dest_x, 1), 1, world.maxx)
 		var/trueY = Clamp(round(proj_data.dest_y, 1), 1, world.maxy)
 		var/spawn_time = round(proj_data.time) * 10
@@ -367,8 +343,13 @@
 
 	updateDialog()
 
-/obj/machinery/computer/telescience/proc/recalibrate()
-	teles_left = rand(30, 40)
-	//angle_off = rand(-25, 25)
-	power_off = rand(-4, 0)
-	rotation_off = rand(-10, 10)
+/obj/machinery/computer/telescience/proc/calibrate()
+	calibrating = TRUE
+	calibrated = FALSE
+
+	var/turf/target = locate(target_x, target_y, target_z)
+	var/area/A = get_area(target)
+
+	var/dist_from_last = get_dist(target, last_target)
+	var/dist_from_pad = get_dist(get_turf(telepad), target)
+	var/effective_dist = min(dist_from_pad, dist_from_last*2)
