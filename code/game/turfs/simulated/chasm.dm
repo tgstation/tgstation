@@ -124,6 +124,7 @@
 		L.resting = TRUE
 	var/oldtransform = AM.transform
 	var/oldcolor = AM.color
+	var/oldalpha = AM.alpha
 	animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
 	for(var/i in 1 to 5)
 		//Make sure the item is still there after our sleep
@@ -144,7 +145,7 @@
 	
 	if(AM && !QDELETED(AM))	//It's indestructible
 		visible_message("<span class='boldwarning'>[src] spits out the [AM]!</span>")
-		AM.alpha = 255
+		AM.alpha = oldalpha
 		AM.color = oldcolor
 		AM.transform = oldtransform
 		AM.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1, 10),rand(1, 10))
