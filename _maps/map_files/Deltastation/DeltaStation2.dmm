@@ -96143,6 +96143,12 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/computer/rdservercontrol,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Research Division Server Room APC";
+	pixel_x = -26;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -96156,6 +96162,9 @@
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
+	},
+/obj/structure/cable/white{
+	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -96920,28 +96929,11 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/poddoor/preopen{
-	id = "rdxeno";
-	name = "Xenobiology Containment Door"
-	},
 /turf/open/floor/plating,
 /area/toxins/server{
 	name = "\improper Research Division Server Room"
 	})
 "dBt" = (
-/obj/structure/cable/white{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "rdxeno";
-	name = "Xenobiology Containment Door"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	icon_state = "intact";
@@ -96950,6 +96942,12 @@
 /obj/machinery/door/airlock/glass_command{
 	name = "Server Access";
 	req_access_txt = "30"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -96963,10 +96961,6 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/poddoor/preopen{
-	id = "rdxeno";
-	name = "Xenobiology Containment Door"
-	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	icon_state = "intact";
 	dir = 9
@@ -137316,7 +137310,7 @@ ehA
 auC
 auC
 auC
-ehH
+ehA
 azc
 aAc
 aAZ
@@ -137569,13 +137563,13 @@ aoJ
 apL
 are
 asj
-ehB
+ehA
 auD
 avP
 avP
 axP
 ehJ
-ehL
+ehA
 aAY
 ark
 aDH
@@ -137826,7 +137820,7 @@ aoK
 apM
 arf
 ask
-ehC
+ehA
 auE
 auE
 auE
@@ -138340,7 +138334,7 @@ aoK
 apO
 arh
 asm
-ehE
+ehA
 auF
 auF
 auF
@@ -138597,13 +138591,13 @@ aoL
 apP
 ari
 asn
-ehF
+ehA
 auG
 avR
 avR
 axT
-ehK
-ehM
+ehJ
+ehA
 aBd
 ark
 aDL
@@ -138854,11 +138848,11 @@ aoI
 apK
 ebP
 aso
-ehG
+ehA
 ehy
 auH
 auH
-ehI
+ehA
 azg
 aAe
 aBe

@@ -450,8 +450,13 @@
 			alert = "Blue"
 		if("Green: Centcom Official")
 			return makeOfficial()
-	var/teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
-	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
+	var/teamcheck = input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num
+	if(isnull(teamcheck))
+		return
+	var/teamsize = min(7,teamcheck)
+	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.") as null|text
+	if(!mission)
+		return
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
 	var/teamSpawned = 0
 

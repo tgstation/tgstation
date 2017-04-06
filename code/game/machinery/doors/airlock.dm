@@ -93,6 +93,7 @@ var/list/airlock_overlays = list()
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
+	var/prying_so_hard = FALSE
 
 /obj/machinery/door/airlock/Initialize()
 	..()
@@ -1222,10 +1223,13 @@ var/list/airlock_overlays = list()
 			return
 
 		var/time_to_open = 5
-		if(hasPower())
+		if(hasPower() && !prying_so_hard)
 			time_to_open = 50
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg',100,1) //is it aliens or just the CE being a dick?
-			if(do_after(user, time_to_open,target = src))
+			prying_so_hard = TRUE
+			var/result = do_after(user, time_to_open,target = src)
+			prying_so_hard = FALSE
+			if(result)
 				open(2)
 				if(density && !open(2))
 					to_chat(user, "<span class='warning'>Despite your attempts, the [src] refuses to open.</span>")

@@ -110,6 +110,7 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player)
 	Debug("GRJ Giving random job, Player: [player]")
+	. = FALSE
 	for(var/datum/job/job in shuffle(occupations))
 		if(!job)
 			continue
@@ -139,9 +140,8 @@ SUBSYSTEM_DEF(job)
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 			Debug("GRJ Random job given, Player: [player], Job: [job]")
-			AssignRole(player, job.title)
-			unassigned -= player
-			break
+			if(AssignRole(player, job.title))
+				return TRUE
 
 /datum/controller/subsystem/job/proc/ResetOccupations()
 	for(var/mob/dead/new_player/player in player_list)
@@ -187,8 +187,6 @@ SUBSYSTEM_DEF(job)
 			continue
 		var/mob/dead/new_player/candidate = pick(candidates)
 		AssignRole(candidate, command_position)
-	return
-
 
 /datum/controller/subsystem/job/proc/FillAIPosition()
 	var/ai_selected = 0
@@ -350,7 +348,8 @@ SUBSYSTEM_DEF(job)
 			RejectPlayer(player)
 
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
-		GiveRandomJob(player)
+		if(!GiveRandomJob(player))
+			AssignRole(player, "Assistant") //If everything is already filled, make them an assistant
 
 	return 1
 

@@ -12,7 +12,7 @@
 	"THE TIME HAS COME FOR OUR MASTER TO BREAK THE CHAINS OF EXILE!!", \
 	"LEND US YOUR AID! ENGINE COMES!!")
 	channel_time = 150
-	consumed_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 3)
+	consumed_components = list(BELLIGERENT_EYE = ARK_SUMMON_COST, VANGUARD_COGWHEEL = ARK_SUMMON_COST, GEIS_CAPACITOR = ARK_SUMMON_COST, REPLICANT_ALLOY = ARK_SUMMON_COST, HIEROPHANT_ANSIBLE = ARK_SUMMON_COST)
 	invokers_required = 6
 	multiple_invokers_used = TRUE
 	object_path = /obj/structure/destructible/clockwork/massive/celestial_gateway
