@@ -367,6 +367,7 @@
 			S.use(ratr)
 		else
 			qdel(used)
+	update_icon()
 
 //Stash helpers
 
@@ -455,6 +456,7 @@
 /obj/attackby(obj/item/I, mob/living/user)
 	var/datum/construction_state/ccs = current_construction_state	
 	if(ccs && user.a_intent == INTENT_HELP)
+		add_fingerprint(user)
 		var/action_type
 		var/wait
 		var/message
