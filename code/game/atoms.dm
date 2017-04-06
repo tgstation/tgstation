@@ -93,6 +93,10 @@
 	LAZYCLEARLIST(priority_overlays)
 	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
 
+	//anything not dead by this point needs to fucking not exist
+	for(var/I in src)
+		qdel(I)
+
 	return ..()
 
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
