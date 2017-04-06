@@ -59,6 +59,7 @@
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
 	var/buildable = TRUE
+	var/construct_fully = FALSE
 
 /datum/construction_state/last	//this should only contain deconstruction parameters
 	required_type_to_construct = NO_DECONSTRUCT
@@ -334,17 +335,18 @@
 
 /obj/proc/OnRepair(mob/user, obj/item/used, old_integrity)
 
-/obj/proc/Construct(mob/user, ndir)
-	if(!current_construction_state || current_construction_state.id == 1)	//already done
+/obj/proc/Construct(mob/living/user, ndir)
+	if(!current_construction_state || (current_construction_state.id == 1))	//already done
 		return FALSE
-	ClearStoredConstructionItems()
 	var/list/cached_construction_steps = SSatoms.blueprints_cache[type]
 	if(cached_construction_steps.len)
 		var/datum/construction_state/first_step = cached_construction_steps[1]
-		if(first_step.type == /datum/construction_state/first)
-			first_step = first_step.next_state
-		if(first_step)
-			first_step.OnReached(src, user, TRUE)
+		if(!first_step.construct_fully)
+			ClearStoredConstructionItems()
+			if(first_step.type == /datum/construction_state/first)
+				first_step = first_step.next_state
+			if(first_step)
+				first_step.OnReached(src, user, TRUE)
 	if(user)
 		feedback_add_details("obj_construction","[type]")
 		add_fingerprint(user)

@@ -131,7 +131,7 @@
 
 	update_icon()
 
-/obj/machinery/airalarm/Construct(mob/user, ndir)
+/obj/machinery/airalarm/Construct(mob/living/user, ndir)
 	buildstage = 0
 	panel_open = TRUE
 	pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)

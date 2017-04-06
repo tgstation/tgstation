@@ -21,7 +21,7 @@
 		showpiece = new start_showpiece_type(src)
 	update_icon()
 
-/obj/structure/displaycase/Construct()
+/obj/structure/displaycase/Construct(mob/living/user, ndir)
 	if(..())
 		open = TRUE
 		update_icon()

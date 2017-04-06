@@ -40,7 +40,7 @@
 	SetItemToReachConstructionState(WINDOOR_ELECTRONICS, electronics)
 	..()
 
-/obj/structure/windoor_assembly/Construct(mob/user, ndir)
+/obj/structure/windoor_assembly/Construct(mob/living/user, ndir)
 	..()
 	ini_dir = ndir
 	air_update_turf(1)

@@ -642,7 +642,7 @@
 	..()
 	power_change() //Checks power and initial settings
 
-/obj/machinery/turretid/Construct(mob/user, ndir)
+/obj/machinery/turretid/Construct(mob/living/user, ndir)
 	..()
 	locked = 0
 	pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)

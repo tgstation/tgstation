@@ -30,7 +30,7 @@
 			//^ Coming across this comment months/years later, I feel like there's a story behind it...
 	bulb = new /obj/item/device/assembly/flash/handheld(src)
 
-/obj/machinery/flasher/Construct(mob/user, ndir)
+/obj/machinery/flasher/Construct(mob/living/user, ndir)
 	pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
 	pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
 	QDEL_NULL(bulb)

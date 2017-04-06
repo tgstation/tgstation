@@ -562,7 +562,7 @@
 		A.ex_act(severity, target)
 		CHECK_TICK
 
-/obj/item/weapon/storage/Construct(mob/user, ndir)
+/obj/item/weapon/storage/Construct(mob/living/user, ndir)
 	..()
 	for (var/obj/item/I in src)
 		qdel(I)

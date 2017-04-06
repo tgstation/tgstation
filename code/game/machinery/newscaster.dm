@@ -205,7 +205,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		unit_no++
 	update_icon()
 
-/obj/machinery/newscaster/Construct(mob/user, ndir)
+/obj/machinery/newscaster/Construct(mob/living/user, ndir)
 	..()
 	pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
 	pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0

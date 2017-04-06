@@ -28,7 +28,7 @@
 	resistance_flags = FIRE_PROOF
 
 
-/obj/machinery/firealarm/Construct(mob/user, ndir)
+/obj/machinery/firealarm/Construct(mob/living/user, ndir)
 	..()
 	buildstage = 0
 	panel_open = 1

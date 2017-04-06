@@ -22,7 +22,7 @@
 /obj/structure/chair/Initialize()
 	..()
 	if(!GetItemUsedToReachConstructionState(CHAIR_ELECTRIC))
-		Construct()
+		current_construction_state = current_construction_state.prev_state
 		if(type == /obj/structure/chair)
 			can_electrify = TRUE
 	else

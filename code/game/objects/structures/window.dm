@@ -57,7 +57,7 @@
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
 
-/obj/structure/window/Construct(mob/user, ndir)
+/obj/structure/window/Construct(mob/living/user, ndir)
 	..()
 	ini_dir = dir
 

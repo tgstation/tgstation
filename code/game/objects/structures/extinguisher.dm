@@ -15,7 +15,7 @@
 	..()
 	SetItemToReachConstructionState(EXTINGUISHER_CABINET_FULL, new /obj/item/weapon/extinguisher(src))
 
-/obj/structure/extinguisher_cabinet/Construct(mob/user, ndir)
+/obj/structure/extinguisher_cabinet/Construct(mob/living/user, ndir)
 	..()
 	pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
 	pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
