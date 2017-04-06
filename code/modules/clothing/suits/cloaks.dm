@@ -56,6 +56,11 @@
 	desc = "Worn by the Head of Personnel. It smells faintly of bureaucracy."
 	icon_state = "hopcloak"
 
+/obj/item/clothing/neck/cloak/atmos
+	name = "elite atmosian's cloak"
+	desc = "Worn by only the most elite atmosians. Pays homage to their god."
+	icon_state = "atmoscloak"
+
 /obj/item/clothing/suit/hooded/cloak/drake
 	name = "drake armour"
 	icon_state = "dragon"
