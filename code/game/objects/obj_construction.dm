@@ -336,8 +336,6 @@
 /obj/proc/OnRepair(mob/user, obj/item/used, old_integrity)
 
 /obj/proc/Construct(mob/living/user, ndir)
-	if(!current_construction_state || (current_construction_state.id == 1))	//already done
-		return FALSE
 	var/list/cached_construction_steps = SSatoms.blueprints_cache[type]
 	if(cached_construction_steps.len)
 		var/datum/construction_state/first_step = cached_construction_steps[1]
@@ -354,7 +352,6 @@
 			ndir = user.dir
 	if(ndir)
 		setDir(ndir)
-	return TRUE
 
 /obj/proc/Repair(mob/user, obj/item/used, amount)
 	var/old_integrity = obj_integrity

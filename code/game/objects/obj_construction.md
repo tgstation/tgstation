@@ -20,7 +20,7 @@ by Cyberboss
 
 - `/obj/proc/OnRepair(mob/user, obj/item/used, old_integrity)` - Called after an object is repaired. `used` is the material object if any used for repairing and it will be deleted/deducted from on return. It is not a tool
 
-- `/obj/proc/Construct(mob/user, ndir)` - Call this after creating an obj to have it appear in it's first `datum/construction_state`. Calling this more than once has no effect. `ndir` is the direction of the new object. Set in the base proc
+- `/obj/proc/Construct(mob/user, ndir)` - Call this after creating an obj to have it appear in it's first `datum/construction_state`. Must not be called more than once. `ndir` is the direction of the new object. Set in the base proc
 	
 - `/datum/construction_state/proc/DamageDeconstruct(obj/parent)` - Call this on `current_construction_state` if you want to forcefully deconstruct an object. Will be called automatically from `obj_break`. Will only work if the previous state has `damage_reachable` set to TRUE
 
