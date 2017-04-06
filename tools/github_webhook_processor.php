@@ -106,60 +106,83 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 		die();
 }
 
-function tag_pr($payload, $opened){
+//rip bs-12
+function tag_pr($payload, $opened) {
+	global $apiKey;
+
+	//We need to reget the pull_request part of the payload to actually see the mergeable field populated
+	//http://stackoverflow.com/questions/30619549/why-does-github-api-return-an-unknown-mergeable-state-in-a-pull-request
+	$scontext = array('http' => array(
+		'method'	=> 'GET',
+		'header'	=>
+			"Content-type: application/json\r\n".
+			'Authorization: token ' . $apiKey,
+		'ignore_errors' => true,
+		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
+	));
+
+	$url = $payload['pull_request']['url'];
+	$payload['pull_request'] = json_decode(file_get_contents($url, false, stream_context_create($scontext)), true);
+	if($payload['pull_request']['mergeable'] == null) {
+		//STILL not ready. Give it a bit, then try one more time
+		sleep(10);
+		$payload['pull_request'] = json_decode(file_get_contents($url, false, stream_context_create($scontext)), true);
+	}
+
 	$tags = array();
 	$title = $payload['pull_request']['title'];
-	if($opened){	//you only have one shot on these ones so as to not annoy maintainers
+	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
 		$tags = checkchangelog($payload, true, false);
 
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
-			$tags[] = "Refactor";
+			$tags[] = 'Refactor';
 	}
 
 	$remove = array();
 
-	//rip bs-12
-	if(!$payload['pull_request']['mergeable'])
-		$remove[] = "Merge Conflict";
+	$mergeable = $payload['pull_request']['mergeable'];
+	if($mergeable == null || $mergeable)	//only look for the false value
+		$remove[] = 'Merge Conflict';
 	else
-		$tags[] = "Merge Conflict";
+		$tags[] = 'Merge Conflict';
 
-	if(has_a_map_been_edited($payload))
-		$tags[] = "Map Edit";
+	if(has_tree_been_edited($payload, '_maps'))
+		$tags[] = 'Map Edit';
 	else
-		$remove[] = "Map Edit";
+		$remove[] = 'Map Edit';
+
+	if(has_tree_been_edited($payload, 'tools'))
+		$tags[] = 'Tools';
+	else
+		$remove[] = 'Tools';
 
 	//only maintners should be able to remove these
 	if(strpos($title, '[DNM]') !== FALSE)
-		$tags[] = "Do Not Merge";
+		$tags[] = 'Do Not Merge';
 
 	if(strpos($title, '[WIP]') !== FALSE)
-		$tags[] = "Work In Progress";
+		$tags[] = 'Work In Progress';
 
-	$content = array (
-		'Label1' => 'LabelName'
-	);
-	$scontext = array('http' => array(
-		'method'	=> 'POST',
-		'header'	=>
-			"Content-type: application/json\r\n".
-			'Authorization: token ' . $apiKey,
-		'content'	=> json_encode($content),
-		'ignore_errors' => true,
-		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
-	));
-	$url = 'https://api.github.com/repos/tgstation/tgstation/issues/' . $payload['pull_request']['number'] . '/labels';
-	foreach($tags as $tag){
-		$scontext['content']['Label1'] = $tag;
-		echo file_get_contents($url, false, stream_context_create($scontext));
-	}
+	$url = $payload['pull_request']['base']['repo']['url'] . '/issues/' . $payload['pull_request']['number'] . '/labels';
 
-	//remove the others
-	$scontent['method'] = 'DELETE';
-	foreach($remove as $tag){
-		$scontext['content']['Label1'] = $tag;
-		echo file_get_contents($url, false, stream_context_create($scontext));
-	}
+	$existing_labels = file_get_contents($url, false, stream_context_create($scontext));
+	$existing_labels = json_decode($existing_labels, true);
+
+	$existing = array();
+	foreach($existing_labels as $label)
+		$existing[] = $label['name'];
+	$tags = array_merge($tags, $existing);
+	$tags = array_unique($tags);
+	$tags = array_diff($tags, $remove);
+
+	$final = array();
+	foreach($tags as $t)
+		$final[] = $t;
+
+	$scontext['http']['method'] = 'PUT';
+	$scontext['http']['content'] = json_encode($final);
+
+	echo file_get_contents($url, false, stream_context_create($scontext));
 }
 
 function handle_pr($payload) {
@@ -169,6 +192,7 @@ function handle_pr($payload) {
 			tag_pr($payload, true);
 			break;
 		case 'edited':
+		case 'synchronize':
 			tag_pr($payload, false);
 			break;
 		case 'reopened':
@@ -197,13 +221,13 @@ function handle_pr($payload) {
 
 }
 
-function has_a_map_been_edited($payload){
+function has_tree_been_edited($payload, $tree){
 	//go to the diff url
 	$url = $payload['pull_request']['diff_url'];
 	$content = file_get_contents($url);
 	//find things in the _maps/map_files tree
 	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
-	return $content !== FALSE && strpos($content, 'diff --git a/_maps/map_files');
+	return $content !== FALSE && strpos($content, 'diff --git a/' . $tree) !== FALSE;
 }
 
 function checkchangelog($payload, $merge = false, $compile = true) {
@@ -232,7 +256,9 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			$foundcltag = true;
 			$pos = strpos($line, " ");
 			if ($pos)
-				$username = substr($line, $pos+1);
+				$tmp = substr($line, $pos+1);
+				if (trim($tmp) != 'optional name here')
+					$username = $tmp;
 			continue;
 		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/🆑' || substr($line,0,6) == '/ 🆑' ) {
 			$incltag = false;
@@ -269,60 +295,84 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			case 'fix':
 			case 'fixes':
 			case 'bugfix':
-				$tags[] = "Fix";
-				$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
+				if($item != 'fixed a few things') {
+					$tags[] = 'Fix';
+					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
+				}
 				break;
 			case 'wip':
-				$currentchangelogblock[] = array('type' => 'wip', 'body' => $item);
+				if($item != 'added a few works in progress')
+					$currentchangelogblock[] = array('type' => 'wip', 'body' => $item);
 				break;
 			case 'rsctweak':
 			case 'tweaks':
 			case 'tweak':
-				$tags[] = "Tweak";
-				$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
+				if($item != 'tweaked a few things') {
+					$tags[] = 'Tweak';
+					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
+				}
 				break;
 			case 'soundadd':
-				$tags[] = "Sound";
-				$currentchangelogblock[] = array('type' => 'soundadd', 'body' => $item);
+				if($item != 'added a new sound thingy') {
+					$tags[] = 'Sound';
+					$currentchangelogblock[] = array('type' => 'soundadd', 'body' => $item);
+				}
 				break;
 			case 'sounddel':
-				$tags[] = "Sound";
-				$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
+				if($item != 'removed an old sound thingy') {
+					$tags[] = 'Sound';
+					$tags[] = 'Revert/Removal';
+					$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
+				}
 				break;
 			case 'add':
 			case 'adds':
 			case 'rscadd':
-				$tags[] = "Feature";
-				$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
+				if($item != 'Added new things' && $item != 'Added more things') {
+					$tags[] = 'Feature';
+					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
+				}
 				break;
 			case 'del':
 			case 'dels':
 			case 'rscdel':
-				$tags[] = "Revert/Removal";
-				$currentchangelogblock[] = array('type' => 'rscdel', 'body' => $item);
+				if($item != 'Removed old things') {
+					$tags[] = 'Revert/Removal';
+					$currentchangelogblock[] = array('type' => 'rscdel', 'body' => $item);
+				}
 				break;
 			case 'imageadd':
-				$tags[] = "Sprites";
-				$currentchangelogblock[] = array('type' => 'imageadd', 'body' => $item);
+				if($item != 'added some icons and images') {
+					$tags[] = 'Sprites';
+					$currentchangelogblock[] = array('type' => 'imageadd', 'body' => $item);
+				}
 				break;
 			case 'imagedel':
-				$tags[] = "Sprites";
-				$tags[] = "Revert/Removal";
-				$currentchangelogblock[] = array('type' => 'imagedel', 'body' => $item);
+				if($item != 'deleted some icons and images') {
+					$tags[] = 'Sprites';
+					$tags[] = 'Revert/Removal';
+					$currentchangelogblock[] = array('type' => 'imagedel', 'body' => $item);
+				}
 				break;
 			case 'typo':
 			case 'spellcheck':
-				$tags[] = "Grammar and Formatting";
-				$currentchangelogblock[] = array('type' => 'spellcheck', 'body' => $item);
+				if($item != 'fixed a few typos') {
+					$tags[] = 'Grammar and Formatting';
+					$currentchangelogblock[] = array('type' => 'spellcheck', 'body' => $item);
+				}
 				break;
 			case 'experimental':
 			case 'experiment':
-				$currentchangelogblock[] = array('type' => 'experiment', 'body' => $item);
+				if($item != 'added an experimental thingy')
+					$currentchangelogblock[] = array('type' => 'experiment', 'body' => $item);
 				break;
 			case 'balance':
 			case 'rebalance':
-				$tags[] = "Balance/Rebalance";
-				$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
+				if($item != 'rebalanced something'){
+					$tags[] = 'Balance/Rebalance';
+					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
+				}
+				break;
 			case 'tgs':
 				$currentchangelogblock[] = array('type' => 'tgs', 'body' => $item);
 				break;
