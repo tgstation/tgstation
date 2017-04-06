@@ -14,13 +14,12 @@
 
 	// VARIABLES //
 	var/power_off
-	var/target_point //current teleport target
-	var/last_target
+	var/turf/target_point //current teleport target
+	var/turf/last_target
 
 	var/target_x = 0
 	var/target_y = 0
 	var/target_z = 1
-	var/calibrated = FALSE
 	var/calibrating = FALSE
 	var/range = 15
 
@@ -151,24 +150,34 @@
 		var/area/A = get_area(target)
 		flick("pad-beam", telepad)
 
+		playsound(get_turf(telepad), 'sound/weapons/flash.ogg', 25, 1)
+		playsound(get_turf(target_point), 'sound/weapons/flash.ogg', 25, 1)
+		teleporting = 1
 
+		temp_msg = "Powering up bluespace crystals.<BR>Please wait."
 
-		if(spawn_time > 15) // 1.5 seconds
-			playsound(telepad.loc, 'sound/weapons/flash.ogg', 25, 1)
-			// Wait depending on the time the projectile took to get there
-			teleporting = 1
-			temp_msg = "Powering up bluespace crystals.<BR>Please wait."
+		var/turf/source = target
+		var/turf/dest = get_turf(telepad)
+		var/log_msg = ""
+		log_msg += ": [key_name(user)] has teleported "
+		if(sending)
+			source = dest
+			dest = target
 
+		new /obj/effect/overlay/telesci(source)
+		new /obj/effect/overlay/telesci/incoming(dest)
 
-		sleep(10) // in seconds
+		sleep(50)
 		if(!telepad)
+			return
+		if(!target_point)
 			return
 		if(telepad.stat & NOPOWER)
 			return
 		teleporting = FALSE
 
 		// use a lot of power
-		use_power(10)
+		use_power(1000)
 
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, get_turf(telepad))
@@ -182,17 +191,10 @@
 		y.set_up(5, 1, sparks)
 		y.start()
 
-		var/turf/source = target
-		var/turf/dest = get_turf(telepad)
-		var/log_msg = ""
-		log_msg += ": [key_name(user)] has teleported "
-
-		if(sending)
-			source = dest
-			dest = target
 
 		flick("pad-beam", telepad)
-		playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
+		playsound(get_turf(telepad), 'sound/weapons/emitter2.ogg', 45, 1, extrarange = 3, falloff = 5)
+		playsound(get_turf(target_point), 'sound/weapons/emitter2.ogg', 45, 1, extrarange = 3, falloff = 5)
 		for(var/atom/movable/ROI in source)
 			// if is anchored, don't let through
 			if(ROI.anchored)
@@ -233,7 +235,7 @@
 			log_msg = dd_limittext(log_msg, length(log_msg) - 2)
 		else
 			log_msg += "nothing"
-		log_msg += " [sending ? "to" : "from"] [trueX], [trueY], [target_z] ([A ? A.name : "null area"])"
+		log_msg += " [sending ? "to" : "from"] [target_point.x], [target_point.y], [target_z] ([A ? A.name : "null area"])"
 		investigate_log(log_msg, "telesci")
 		updateDialog()
 
@@ -245,7 +247,7 @@
 		telefail()
 		temp_msg = "ERROR! Sector is outside known time and space!"
 		return
-	if(calibrated)
+	if(target_point)
 		doteleport(user)
 	else
 		telefail()
@@ -271,13 +273,13 @@
 		var/new_x = input("Please input desired parallel.", name, target_x) as num
 		if(..()) // Check after we input a value, as they could've moved after they entered something
 			return
-		target_x = new_x
+		target_x = Clamp(new_x, 1, world.maxx)
 
 	if(href_list["set_y"])
 		var/new_y = input("Please input desired trasversal.", name, target_y) as num
 		if(..())
 			return
-		target_y = new_y
+		target_y = Clamp(new_y, 1, world.maxy)
 
 	if(href_list["set_z"])
 		var/new_z = input("Please input desired sector.", name, target_z) as num
@@ -319,7 +321,6 @@
 
 /obj/machinery/computer/telescience/proc/calibrate()
 	calibrating = TRUE
-	calibrated = FALSE
 
 	temp_msg = "Calibration in progress..."
 	updateDialog()
@@ -342,13 +343,22 @@
 	else
 		calibration_cycles = INTERSECTOR_CYCLES
 
-	var/calibration_radius = round(calibration_cycles / 60) //Radius of the visual effect
-	var/calibration_turfs = range(target, calibration_radius)
+	var/calibration_radius = round(calibration_cycles / 5) //Radius of the visual effect
+	var/list/calibration_turfs = list()
+	for(var/turf/T in range(calibration_radius, target))
+		calibration_turfs += T
 
 	for(var/i in 1 to calibration_cycles)
 		var/turf/T = pick(calibration_turfs)
 		new /obj/effect/overlay/temp/swarmer/integrate(get_turf(T))
 		sleep(calibration_time)
+
+	if(A.noteleport || !target)
+		temp_msg = "ERROR:<BR>"
+		temp_msg += "Calibration failed."
+		calibrating = FALSE
+		updateDialog()
+		return
 
 	new /obj/effect/overlay/temp/emp/pulse(get_turf(target))
 
@@ -358,6 +368,5 @@
 	target_point = target
 	last_target = target
 
-	calibrated = TRUE
 	calibrating = FALSE
 

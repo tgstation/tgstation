@@ -485,6 +485,31 @@
 	duration = 8
 	randomdir = 0
 
+/obj/effect/overlay/telesci
+	name = "outward teleport"
+	icon_state = "telepad_leaving"
+	mouse_opacity = 0
+
+/obj/effect/overlay/telesci/Initialize(mapload)
+	..()
+	QDEL_IN(src, 50)
+	INVOKE_ASYNC(src, .proc/update_color)
+
+/obj/effect/overlay/telesci/proc/update_color()
+	add_atom_colour("#19B5FF", FIXED_COLOUR_PRIORITY)
+	sleep(10)
+	add_atom_colour("#0079B2", FIXED_COLOUR_PRIORITY)
+	sleep(10)
+	add_atom_colour("#004566", FIXED_COLOUR_PRIORITY)
+	sleep(10)
+	add_atom_colour("#663901", FIXED_COLOUR_PRIORITY)
+	sleep(10)
+	add_atom_colour("#B2680D", FIXED_COLOUR_PRIORITY)
+
+/obj/effect/overlay/telesci/incoming
+	name = "inward teleport"
+	icon_state = "telepad_incoming"
+
 /obj/effect/overlay/temp/gib_animation
 	icon = 'icons/mob/mob.dmi'
 	duration = 15
