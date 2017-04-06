@@ -132,6 +132,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/message_range = 6
 
+	var/succumbed = FALSE
+
 	if(message_mode == MODE_WHISPER)
 		message_range = 1
 		spans |= SPAN_ITALICS
@@ -143,7 +145,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 			message = Ellipsis(message, 10, 1)
 			message_mode = MODE_WHISPER_CRIT
-			succumb(1)
+			succumbed = TRUE
 	else
 		log_say("[name]/[key] : [message]")
 
@@ -181,6 +183,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		spans |= SPAN_ITALICS
 
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mode)
+
+	if(succumbed)
+		succumb(1)
 
 	return 1
 
