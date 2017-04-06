@@ -65,24 +65,19 @@
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
 	var/crystal_type = /obj/item/weapon/ore/bluespace_crystal/refined
 
-/obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user) //we do this instead of a construction menu
-	break_crystal(user)
+/obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
+	to_chat(user, "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>")
 
 /obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user)
 	if(user.get_inactive_held_item() == src)
-		break_crystal(user)
-	else
-		..()
-
-/obj/item/stack/sheet/bluespace_crystal/proc/break_crystal(mob/user)
-	if(zero_amount())
+		if(zero_amount())
 		return
-	var/BC = new crystal_type(src)
-	if(user.put_in_hands(BC, TRUE))
+		var/BC = new crystal_type(src)
+		user.put_in_hands(BC)
 		use(1)
 		if(!amount)
 			to_chat(user, "<span class='notice'>You break the final crystal off.</span>")
 		else
 			to_chat(user, "<span class='notice'>You break off a crystal.</span>")
 	else
-		to_chat(user, "<span class='warning'>You need an empty hand to break off a crystal.</span>")
+		..()
