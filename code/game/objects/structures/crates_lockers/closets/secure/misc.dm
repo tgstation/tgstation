@@ -4,7 +4,7 @@
 	req_access = list(access_cent_captain)
 	icon_state = "cap"
 
-/obj/structure/closet/secure_closet/ertCom/New()
+/obj/structure/closet/secure_closet/ertCom/PopulateContents()
 	..()
 	new /obj/item/weapon/storage/firstaid/regular(src)
 	new /obj/item/weapon/storage/box/handcuffs(src)
@@ -25,7 +25,7 @@
 	req_access = list(access_cent_specops)
 	icon_state = "hos"
 
-/obj/structure/closet/secure_closet/ertSec/New()
+/obj/structure/closet/secure_closet/ertSec/PopulateContents()
 	..()
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/teargas(src)
@@ -39,7 +39,7 @@
 	req_access = list(access_cent_medical)
 	icon_state = "cmo"
 
-/obj/structure/closet/secure_closet/ertMed/New()
+/obj/structure/closet/secure_closet/ertMed/PopulateContents()
 	..()
 	new /obj/item/weapon/storage/firstaid/o2(src)
 	new /obj/item/weapon/storage/firstaid/toxin(src)
@@ -55,7 +55,7 @@
 	req_access = list(access_cent_storage)
 	icon_state = "ce"
 
-/obj/structure/closet/secure_closet/ertEngi/New()
+/obj/structure/closet/secure_closet/ertEngi/PopulateContents()
 	..()
 	new /obj/item/stack/sheet/plasteel(src, 50)
 	new /obj/item/stack/sheet/metal(src, 50)

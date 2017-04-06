@@ -41,6 +41,11 @@
 		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	..()
 	update_icon()
+	PopulateContents()
+
+//USE THIS TO FILL IT, NOT INITIALIZE OR NEW
+/obj/structure/closet/proc/PopulateContents()
+	return
 
 /obj/structure/closet/Destroy()
 	dump_contents()
