@@ -82,6 +82,11 @@
 	requires_activation = FALSE
 	..()
 
+/turf/DestroyClearContents()
+	//https://github.com/tgstation/tgstation/pull/25941
+	//nvr 5get
+	return
+
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
