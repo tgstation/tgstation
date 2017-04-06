@@ -924,7 +924,7 @@ var/datum/controller/subsystem/garbage_collector/SSgarbage
 	SearchVar(department_radio_keys)
 	SearchVar(crit_allowed_modes)
 	SearchVar(ventcrawl_machinery)
-	SearchVar(posibrain_notif_cooldown)
+	SearchVar(global_posibrain_notify_cooldown)
 	SearchVar(NO_SLIP_WHEN_WALKING)
 	SearchVar(SLIDE)
 	SearchVar(GALOSHES_DONT_HELP)
