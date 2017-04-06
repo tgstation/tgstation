@@ -137,8 +137,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(..())
 		return 1
 	if(intact && istype(C, /obj/item/weapon/crowbar))
-		pry_tile(C, user)
-		return 1
+		return pry_tile(C, user)
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
 	return 0
