@@ -80,7 +80,7 @@
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/reagent_containers))
+	if (istype(W, /obj/item/weapon/reagent_containers/blood) || istype(W, /obj/item/weapon/reagent_containers/food/drinks) || istype(W, /obj/item/weapon/reagent_containers/glass) )
 		if(!isnull(beaker))
 			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
 			return
