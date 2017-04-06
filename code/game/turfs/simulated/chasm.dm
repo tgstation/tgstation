@@ -123,6 +123,9 @@
 		L.notransform = TRUE
 		L.Stun(10)
 		L.resting = TRUE
+	var/oldtransform = AM.transform
+	var/oldcolor = AM.color
+	var/oldalpha = AM.alpha
 	animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
 	for(var/i in 1 to 5)
 		//Make sure the item is still there after our sleep
@@ -140,7 +143,14 @@
 		qdel(S.mmi)
 
 	qdel(AM)
-
+	
+	if(AM && !QDELETED(AM))	//It's indestructible
+		visible_message("<span class='boldwarning'>[src] spits out the [AM]!</span>")
+		AM.alpha = oldalpha
+		AM.color = oldcolor
+		AM.transform = oldtransform
+		AM.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1, 10),rand(1, 10))
+	
 /turf/open/chasm/straight_down/lava_land_surface/normal_air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
