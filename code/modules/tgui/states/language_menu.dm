@@ -2,7 +2,7 @@
   * tgui state: language_menu_state
   */
 
-/var/global/datum/ui_state/language_menu/language_menu_state = new()
+GLOBAL_DATUM_INIT(language_menu_state, /datum/ui_state/language_menu, new)
 
 /datum/ui_state/language_menu/can_use_topic(src_object, mob/user)
 	. = UI_CLOSE

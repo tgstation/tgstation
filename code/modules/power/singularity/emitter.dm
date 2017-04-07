@@ -8,7 +8,8 @@
 	var/icon_state_on = "emitter_+a"
 	anchored = 0
 	density = 1
-	req_access = list(access_engine_equip)
+
+	req_access = list(GLOB.access_engine_equip)
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
 	var/charge = 0

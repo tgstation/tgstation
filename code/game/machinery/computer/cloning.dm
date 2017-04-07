@@ -5,7 +5,7 @@
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/weapon/circuitboard/computer/cloning
-	req_access = list(access_heads) //Only used for record deletion right now.
+	req_access = list(GLOB.access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"

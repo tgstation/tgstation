@@ -35,7 +35,7 @@
 
 	nation += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
 
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.mind)
 			var/datum/mind/M = H.mind
 			if(M.assigned_role && !(M in SSticker.mode.traitors))

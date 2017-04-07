@@ -457,7 +457,7 @@
 		if(H && H.dna && H.dna.species && H.dna.species.species_traits)
 			species_traits = H.dna.species.species_traits
 
-		if(!(mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
+		if(!(GLOB.mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
@@ -584,7 +584,7 @@
 	//Hacks
 	var/mob/living/carbon/human/user = usr
 	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
 		if(!T || T.type != type)
 			continue
@@ -594,7 +594,7 @@
 			if(Ayy.team != Byy.team)
 				continue
 		to_chat(H, rendered)
-	for(var/mob/M in dead_mob_list)
+	for(var/mob/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, user)
 		to_chat(M, "[link] [rendered]")
 	return ""

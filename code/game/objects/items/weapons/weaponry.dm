@@ -123,7 +123,7 @@
 /obj/item/weapon/claymore/highlander/attack_self(mob/living/user)
 	var/closest_victim
 	var/closest_distance = 255
-	for(var/mob/living/carbon/human/H in player_list - user)
+	for(var/mob/living/carbon/human/H in GLOB.player_list - user)
 		if(H.client && H.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
 			closest_victim = H
 	if(!closest_victim)

@@ -87,7 +87,7 @@ Doesn't work on other aliens/AI.*/
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
 		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
-		for(var/ded in dead_mob_list)
+		for(var/ded in GLOB.dead_mob_list)
 			if(!isobserver(ded))
 				continue
 			var/follow_link_user = FOLLOW_LINK(ded, user)
