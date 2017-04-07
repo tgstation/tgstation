@@ -9,7 +9,7 @@
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
 
-/obj/structure/closet/crate/necropolis/tendril/New()
+/obj/structure/closet/crate/necropolis/tendril/Initialize()
 	..()
 	var/loot = rand(1,25)
 	switch(loot)
@@ -104,7 +104,7 @@
 		icon_state = "lantern-blue"
 		feedback_add_details("wisp_lantern","R") // returned
 
-/obj/item/device/wisp_lantern/New()
+/obj/item/device/wisp_lantern/Initialize()
 	..()
 	wisp = new(src)
 
@@ -149,7 +149,7 @@
 	desc = "A mysterious red cube."
 	icon_state = "red_cube"
 
-/obj/item/device/warp_cube/red/New()
+/obj/item/device/warp_cube/red/Initialize()
 	..()
 	if(!linked)
 		var/obj/item/device/warp_cube/blue = new(src.loc)
@@ -294,7 +294,7 @@
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 
-/obj/item/device/shared_storage/red/New()
+/obj/item/device/shared_storage/red/Initialize()
 	..()
 	if(!bag)
 		var/obj/item/weapon/storage/backpack/shared/S = new(src)
@@ -453,7 +453,7 @@
 /obj/structure/closet/crate/necropolis/dragon
 	name = "dragon chest"
 
-/obj/structure/closet/crate/necropolis/dragon/New()
+/obj/structure/closet/crate/necropolis/dragon/Initialize()
 	..()
 	var/loot = rand(1,4)
 	switch(loot)
@@ -482,7 +482,7 @@
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
 
-/obj/item/weapon/melee/ghost_sword/New()
+/obj/item/weapon/melee/ghost_sword/Initialize()
 	..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
@@ -634,7 +634,7 @@
 	var/timer = 0
 	var/banned_turfs
 
-/obj/item/weapon/lava_staff/New()
+/obj/item/weapon/lava_staff/Initialize()
 	. = ..()
 	banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
@@ -699,7 +699,7 @@
 /obj/structure/closet/crate/necropolis/bubblegum
 	name = "bubblegum chest"
 
-/obj/structure/closet/crate/necropolis/bubblegum/New()
+/obj/structure/closet/crate/necropolis/bubblegum/Initialize()
 	..()
 	var/loot = rand(1,3)
 	switch(loot)
