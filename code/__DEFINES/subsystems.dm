@@ -24,3 +24,4 @@
 
 #define INITIALIZE_HINT_NORMAL 0    //Nothing happens
 #define INITIALIZE_HINT_LATELOAD 1  //Call initialize again with mapload = FALSE, no effect if mapload != TRUE
+#define INITIALIZE_HINT_QDEL 2  //Call qdel on the atom

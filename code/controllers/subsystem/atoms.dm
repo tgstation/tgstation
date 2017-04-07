@@ -35,9 +35,8 @@ SUBSYSTEM_DEF(atoms)
 	for(var/I in thing_to_check)
 		var/atom/A = I
 		if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
-			if(QDELETED(A))
-				if(A)
-					BadInitializeCalls[A.type] |= BAD_INIT_QDEL_BEFORE
+			if(QDELING(A))
+				BadInitializeCalls[A.type] |= BAD_INIT_QDEL_BEFORE
 				continue
 			var/start_tick = world.time
 			var/result = A.Initialize(TRUE)
@@ -52,6 +51,9 @@ SUBSYSTEM_DEF(atoms)
 					if(INITIALIZE_HINT_LATELOAD)
 						if(!LateRecurse)
 							late_loaders += A
+						break
+					if(INITIALIZE_HINT_QDEL)
+						qdel(A)
 						break
 					else
 						BadInitializeCalls[A.type] |= BAD_INIT_NO_HINT
