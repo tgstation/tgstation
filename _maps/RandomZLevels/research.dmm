@@ -614,9 +614,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "bR" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "bS" = (
@@ -686,9 +684,7 @@
 /area/awaymission/research/interior/gateway)
 "bZ" = (
 /obj/machinery/gateway,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
@@ -774,9 +770,7 @@
 /area/awaymission/research/interior/gateway)
 "cj" = (
 /obj/structure/window/reinforced,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "ck" = (
@@ -785,9 +779,7 @@
 	icon_state = "right";
 	dir = 2
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "cl" = (
@@ -3299,9 +3291,7 @@
 	icon_state = "toilet00";
 	dir = 8
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -3746,9 +3736,7 @@
 "jU" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/blue,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jV" = (
@@ -4489,9 +4477,7 @@
 "lT" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/patriot,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lU" = (

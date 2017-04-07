@@ -97,8 +97,6 @@
 	icon_living = "drone_clock"
 	icon_dead = "drone_clock_dead"
 	picked = TRUE
-	languages_spoken = RATVAR
-	languages_understood = HUMAN|RATVAR
 	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
@@ -112,6 +110,8 @@
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
+	initial_languages = list(/datum/language/common, /datum/language/ratvar)
+	only_speaks_language = /datum/language/ratvar
 	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
@@ -138,6 +138,8 @@
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
 	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
+
+	grant_language(/datum/language/ratvar)
 
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()

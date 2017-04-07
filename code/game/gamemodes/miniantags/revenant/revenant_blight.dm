@@ -53,7 +53,7 @@
 				affected_mob.emote(pick("pale","shiver","cries"))
 		if(5)
 			if(!finalstage)
-				finalstage = 1
+				finalstage = TRUE
 				to_chat(affected_mob, "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>")
 				affected_mob.adjustStaminaLoss(45)
 				new /obj/effect/overlay/temp/revenant(affected_mob.loc)

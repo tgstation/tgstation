@@ -122,7 +122,7 @@
 	IgniteMob()
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src || anchored)
+	if(user == src || anchored || !isturf(user.loc))
 		return 0
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message)
@@ -172,7 +172,7 @@
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
 

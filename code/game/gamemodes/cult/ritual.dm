@@ -196,8 +196,8 @@ This file contains the arcane tome files.
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
-		if(ticker.mode.name == "cult")
-			var/datum/game_mode/cult/cult_mode = ticker.mode
+		if(SSticker.mode.name == "cult")
+			var/datum/game_mode/cult/cult_mode = SSticker.mode
 			if(!("eldergod" in cult_mode.cult_objectives))
 				to_chat(user, "<span class='warning'>Nar-Sie does not wish to be summoned!</span>")
 				return
@@ -244,6 +244,7 @@ This file contains the arcane tome files.
 		if(S && !QDELETED(S))
 			qdel(S)
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
+	R.add_mob_blood(user)
 	to_chat(user, "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>")
 	feedback_add_details("cult_runes_scribed", R.cultist_name)
 

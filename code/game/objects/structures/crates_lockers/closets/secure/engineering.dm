@@ -3,7 +3,7 @@
 	req_access = list(access_ce)
 	icon_state = "ce"
 
-/obj/structure/closet/secure_closet/engineering_chief/New()
+/obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
 	..()
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/under/rank/chief_engineer(src)
@@ -33,7 +33,7 @@
 	icon_state = "eng"
 	icon_door = "eng_elec"
 
-/obj/structure/closet/secure_closet/engineering_electrical/New()
+/obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
 	..()
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
@@ -50,7 +50,7 @@
 	icon_state = "eng"
 	icon_door = "eng_weld"
 
-/obj/structure/closet/secure_closet/engineering_welding/New()
+/obj/structure/closet/secure_closet/engineering_welding/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/welding(src)
@@ -62,7 +62,7 @@
 	req_access = list(access_engine_equip)
 	icon_state = "eng_secure"
 
-/obj/structure/closet/secure_closet/engineering_personal/New()
+/obj/structure/closet/secure_closet/engineering_personal/PopulateContents()
 	..()
 	new /obj/item/device/radio/headset/headset_eng(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
@@ -78,7 +78,7 @@
 	req_access = list(access_atmospherics)
 	icon_state = "atmos"
 
-/obj/structure/closet/secure_closet/atmospherics/New()
+/obj/structure/closet/secure_closet/atmospherics/PopulateContents()
 	..()
 	new /obj/item/device/radio/headset/headset_eng(src)
 	new /obj/item/weapon/pipe_dispenser(src)

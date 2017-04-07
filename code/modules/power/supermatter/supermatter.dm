@@ -43,9 +43,13 @@
 
 #define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
+
 #define GRAVITATIONAL_ANOMALY "gravitational_anomaly"
 #define FLUX_ANOMALY "flux_anomaly"
 #define PYRO_ANOMALY "pyro_anomaly"
+
+#define SPEAK(message) radio.talk_into(src, message, null, get_spans(), get_default_language())
+
 
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
@@ -333,28 +337,27 @@
 			var/stability = num2text(round((damage / explosion_point) * 100))
 
 			if(damage > emergency_point)
-
-				radio.talk_into(src, "[emergency_alert] Instability: [stability]%")
+				SPEAK("[emergency_alert] Instability: [stability]%")
 				lastwarning = REALTIMEOFDAY
 				if(!has_reached_emergency)
 					investigate_log("has reached the emergency point for the first time.", "supermatter")
 					message_admins("[src] has reached the emergency point <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 					has_reached_emergency = 1
 			else if(damage >= damage_archived) // The damage is still going up
-				radio.talk_into(src, "[warning_alert] Instability: [stability]%")
+				SPEAK("[warning_alert] Instability: [stability]%")
 				lastwarning = REALTIMEOFDAY - (WARNING_DELAY * 5)
 
 			else                                                 // Phew, we're safe
-				radio.talk_into(src, "[safe_alert] Instability: [stability]%")
+				SPEAK("[safe_alert] Instability: [stability]%")
 				lastwarning = REALTIMEOFDAY
 
 			if(power > POWER_PENALTY_THRESHOLD)
-				radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.")
+				SPEAK("Warning: Hyperstructure has reached dangerous power level.")
 				if(powerloss_inhibitor < 0.5)
-					radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.")
+					SPEAK("DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.")
 
 			if(combined_gas > MOLE_PENALTY_THRESHOLD)
-				radio.talk_into(src, "Warning: Critical coolant mass reached.")
+				SPEAK("Warning: Critical coolant mass reached.")
 
 		if(damage > explosion_point)
 			for(var/mob in living_mob_list)
@@ -415,6 +418,13 @@
 			B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and rapidly flashes to ash.</span>",\
 			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 			Consume(B)
+
+/obj/machinery/power/supermatter_shard/attack_tk(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		to_chat(C, "<span class='userdanger'>That was a really dumb idea.</span>")
+		var/obj/item/bodypart/head/rip_u = C.get_bodypart("head")
+		rip_u.dismember(BURN) //nice try jedi
 
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
 	return attack_hand(user)

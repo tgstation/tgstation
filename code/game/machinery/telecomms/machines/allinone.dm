@@ -39,7 +39,8 @@
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
 							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency, signal.data["spans"],
-							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
+							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"],
+							  signal.data["language"])
 
 /obj/machinery/telecomms/allinone/attackby(obj/item/P, mob/user, params)
 
