@@ -8,7 +8,7 @@
 	anchored = FALSE
 	verb_say = "states"
 	density = TRUE
-	req_access = list(access_engine)
+	req_access = list(GLOB.access_engine)
 	var/active = FALSE
 	var/list/rangers = list()
 	var/list/listeners = list()
@@ -324,7 +324,7 @@
 	set waitfor = 0
 	for(var/i = 1, i < 10, i++)
 		M.SpinAnimation(15,1)
-		M.setDir(pick(cardinal))
+		M.setDir(pick(GLOB.cardinal))
 		sleep(8)
 
 /obj/machinery/disco/proc/dance3(var/mob/living/carbon/M)
@@ -333,7 +333,7 @@
 		if (!M)
 			return
 		M.SpinAnimation(7,1)
-		M.setDir(pick(cardinal))
+		M.setDir(pick(GLOB.cardinal))
 		for (var/x in 1 to 12)
 			sleep(1)
 			if (!M)
@@ -375,7 +375,7 @@
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
-			M.setDir(pick(cardinal))
+			M.setDir(pick(GLOB.cardinal))
 			M.lay_down(TRUE)
 		 time--
 
