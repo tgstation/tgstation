@@ -30,6 +30,9 @@
 	..()
 
 	preferred_direction = dir
+	return INITIALIZE_HINT_LATELOAD	//for latejoin list
+
+/obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
 
 	var/list/new_latejoin = list()
@@ -40,9 +43,6 @@
 			console = locate(/obj/machinery/requests_console) in A
 		areas += A
 
-	return INITIALIZE_HINT_LATELOAD	//for latejoin list
-
-/obj/docking_port/mobile/arrivals/LateInitialize()
 	if(GLOB.latejoin.len)
 		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
