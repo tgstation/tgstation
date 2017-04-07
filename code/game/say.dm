@@ -3,7 +3,7 @@
 	This file has the basic atom/movable level speech procs.
 	And the base of the send_speech() proc, which is the core of saycode.
 */
-var/list/freqtospan = list(
+GLOBAL_LIST_INIT(freqtospan, list(
 	"1351" = "sciradio",
 	"1355" = "medradio",
 	"1357" = "engradio",
@@ -16,7 +16,7 @@ var/list/freqtospan = list(
 	"1337" = "centcomradio",
 	"1215" = "redteamradio",
 	"1217" = "blueteamradio"
-	)
+	))
 
 /atom/movable/proc/say(message, datum/language/language = null)
 	if(!can_speak())
@@ -102,13 +102,13 @@ var/list/freqtospan = list(
 		return "makes a strange sound."
 
 /proc/get_radio_span(freq)
-	var/returntext = freqtospan["[freq]"]
+	var/returntext = GLOB.freqtospan["[freq]"]
 	if(returntext)
 		return returntext
 	return "radio"
 
 /proc/get_radio_name(freq)
-	var/returntext = radiochannelsreverse["[freq]"]
+	var/returntext = GLOB.reverseradiochannels["[freq]"]
 	if(returntext)
 		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"

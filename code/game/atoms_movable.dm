@@ -452,7 +452,7 @@
 	if(!I)
 		return
 
-	flick_overlay(I, clients, 5) // 5 ticks/half a second
+	flick_overlay(I, GLOB.clients, 5) // 5 ticks/half a second
 
 	// And animate the attack!
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
@@ -525,8 +525,8 @@
 /atom/movable/proc/relocate()
 	var/targetturf = find_safe_turf(ZLEVEL_STATION)
 	if(!targetturf)
-		if(blobstart.len > 0)
-			targetturf = get_turf(pick(blobstart))
+		if(GLOB.blobstart.len > 0)
+			targetturf = get_turf(pick(GLOB.blobstart))
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark")
 

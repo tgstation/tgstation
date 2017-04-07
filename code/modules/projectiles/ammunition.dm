@@ -25,7 +25,7 @@
 		BB = new projectile_type(src)
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
-	setDir(pick(alldirs))
+	setDir(pick(GLOB.alldirs))
 	update_icon()
 
 /obj/item/ammo_casing/update_icon()

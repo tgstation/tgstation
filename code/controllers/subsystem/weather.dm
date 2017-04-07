@@ -1,5 +1,4 @@
 //Used for all kinds of weather, ex. lavaland ash storms.
-
 SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
@@ -13,7 +12,7 @@ SUBSYSTEM_DEF(weather)
 		var/datum/weather/W = V
 		if(W.aesthetic)
 			continue
-		for(var/mob/living/L in mob_list)
+		for(var/mob/living/L in GLOB.mob_list)
 			if(W.can_impact(L))
 				W.impact(L)
 	for(var/Z in eligible_zlevels)

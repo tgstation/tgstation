@@ -81,7 +81,7 @@
 	opacity = 0
 	anchored = 0
 	pressure_resistance = 2*ONE_ATMOSPHERE
-	req_access = list(access_engine)
+	req_access = list(GLOB.access_engine)
 	max_integrity = 100
 	obj_integrity = 100
 	var/active = 0
@@ -232,7 +232,7 @@
 	icon_state = "Shield_Gen"
 	anchored = 0
 	density = 1
-	req_access = list(access_teleporter)
+	req_access = list(GLOB.access_teleporter)
 	flags = CONDUCT
 	use_power = 0
 	obj_integrity = 300

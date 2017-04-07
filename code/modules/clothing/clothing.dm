@@ -160,10 +160,10 @@
 	if(!damaged_clothes)
 		update_clothes_damaged_state(TRUE)
 
-var/list/damaged_clothes_icons = list()
 
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "\ref[initial(icon)]-[initial(icon_state)]"
+	var/static/list/damaged_clothes_icons = list()
 	if(damaging)
 		damaged_clothes = 1
 		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
@@ -646,7 +646,7 @@ BLIND     // can't see anything
 	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
 	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
-	female_clothing_icons[index] = female_clothing_icon
+	GLOB.female_clothing_icons[index] = female_clothing_icon
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Adjust Suit Sensors"
