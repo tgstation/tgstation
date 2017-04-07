@@ -19,7 +19,7 @@
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only carbons actually whisper, everything else just talks
 
-/mob/verb/me_verb(message as text)
+/mob/verb/me_verb(message as message)
 	set name = "Me"
 	set category = "IC"
 
@@ -27,7 +27,8 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext(sanitize(message), 1, (MAX_MESSAGE_LEN * 2)))
+
 
 	usr.emote("me",1,message)
 
