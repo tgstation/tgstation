@@ -30,6 +30,12 @@
 	query_log = "[usr.ckey]([usr]) [query_log]"
 	log_game(query_log)
 	NOTICE(query_log)
+	var/list/runtime_tracker = list()
+	var/runtimes_list = ""
+	var/runtimes = 0
+	var/objs_all = 0
+	var/objs_eligible = 0
+	var/start_time = REALTIMEOFDAY
 
 	if(!query_text || length(query_text) < 1)
 		return
@@ -43,82 +49,100 @@
 
 	var/list/querys = SDQL_parse(query_list)
 
+
 	if(!querys || querys.len < 1)
 		return
 
-	try
+	for(var/list/query_tree in querys)
+		var/list/from_objs = list()
+		var/list/select_types = list()
 
-		for(var/list/query_tree in querys)
-			var/list/from_objs = list()
-			var/list/select_types = list()
+		switch(query_tree[1])
+			if("explain")
+				SDQL_testout(query_tree["explain"])
+				return
 
-			switch(query_tree[1])
-				if("explain")
-					SDQL_testout(query_tree["explain"])
+			if("call")
+				if("on" in query_tree)
+					select_types = query_tree["on"]
+				else
 					return
 
-				if("call")
-					if("on" in query_tree)
-						select_types = query_tree["on"]
-					else
-						return
+			if("select", "delete", "update")
+				select_types = query_tree[query_tree[1]]
 
-				if("select", "delete", "update")
-					select_types = query_tree[query_tree[1]]
+		from_objs = SDQL_from_objs(query_tree["from"])
 
-			from_objs = SDQL_from_objs(query_tree["from"])
+		var/list/objs = list()
 
-			var/list/objs = list()
-
-			for(var/type in select_types)
+		for(var/type in select_types)
+			try
 				objs += SDQL_get_all(type, from_objs)
-				CHECK_TICK
+			catch(var/exception/e)
+				runtime_tracker += SDQL_parse_exception(e)
+				runtimes++
+			CHECK_TICK
+		objs_all = objs.len
 
-			if("where" in query_tree)
-				var/objs_temp = objs
-				objs = list()
-				for(var/datum/d in objs_temp)
+		if("where" in query_tree)
+			var/objs_temp = objs
+			objs = list()
+			for(var/datum/d in objs_temp)
+				try
 					if(SDQL_expression(d, query_tree["where"]))
 						objs += d
+						objs_eligible++
+				catch(var/exception/e)
+					runtime_tracker += SDQL_parse_exception(e)
+					runtimes++
+				CHECK_TICK
+
+		switch(query_tree[1])
+			if("call")
+				for(var/datum/d in objs)
+					try
+						SDQL_var(d, query_tree["call"][1], source = d)
+					catch(var/exception/e)
+						runtime_tracker += SDQL_parse_exception(e)
+						runtimes++
 					CHECK_TICK
 
-			switch(query_tree[1])
-				if("call")
-					for(var/datum/d in objs)
-						SDQL_var(d, query_tree["call"][1], source = d)
-						CHECK_TICK
-
-				if("delete")
-					for(var/datum/d in objs)
+			if("delete")
+				for(var/datum/d in objs)
+					try
 						qdel(d)
-						CHECK_TICK
+					catch(var/exception/e)
+						runtime_tracker += SDQL_parse_exception(e)
+						runtimes++
+					CHECK_TICK
 
-				if("select")
-					var/text = ""
-					for(var/datum/t in objs)
+			if("select")
+				var/text = ""
+				for(var/datum/t in objs)
+					try
 						text += "<A HREF='?_src_=vars;Vars=\ref[t]'>\ref[t]</A>"
 						if(istype(t, /atom))
 							var/atom/a = t
-
 							if(a.x)
 								text += ": [t] at ([a.x], [a.y], [a.z])<br>"
 
 							else if(a.loc && a.loc.x)
 								text += ": [t] in [a.loc] at ([a.loc.x], [a.loc.y], [a.loc.z])<br>"
-
 							else
 								text += ": [t]<br>"
-
 						else
 							text += ": [t]<br>"
-						CHECK_TICK
+					catch(var/exception/e)
+						runtime_tracker += SDQL_parse_exception(e)
+						runtimes++
+					CHECK_TICK
+				usr << browse(text, "window=SDQL-result")
 
-					usr << browse(text, "window=SDQL-result")
-
-				if("update")
-					if("set" in query_tree)
-						var/list/set_list = query_tree["set"]
-						for(var/datum/d in objs)
+			if("update")
+				if("set" in query_tree)
+					var/list/set_list = query_tree["set"]
+					for(var/datum/d in objs)
+						try
 							for(var/list/sets in set_list)
 								var/datum/temp = d
 								var/i = 0
@@ -130,13 +154,28 @@
 										temp = temp.vars[v]
 									else
 										break
-							CHECK_TICK
+						catch(var/exception/e)
+							runtime_tracker += SDQL_parse_exception(e)
+							runtimes++
+						CHECK_TICK
 
-	catch(var/exception/e)
-		to_chat(usr, "<span class='boldwarning'>A runtime error has occured in your SDQL2-query.</span>")
-		to_chat(usr, "\[NAME\][e.name]")
-		to_chat(usr, "\[FILE\][e.file]")
-		to_chat(usr, "\[LINE\][e.line]")
+	var/end_time = REALTIMEOFDAY
+	end_time -= start_time
+	to_chat(usr, "<span class='admin'>SDQL query results: [query_text]</span>")
+	to_chat(usr, "<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [objs_eligible] objects executed on after WHERE filtering if applicable.</span>")
+	to_chat(usr, "<span class='admin'>SDQL query took [end_time/10] seconds to complete.</span>")
+	if(runtimes)
+		to_chat(usr, "<span class='boldwarning'>SDQL query encountered [runtimes] runtimes!</span>")
+		to_chat(usr, "<span class='boldwarning'>Opening runtime tracking window.</span>")
+		runtimes_list = runtime_tracker.Join()
+		usr << browse(runtimes_list, "window=SDQL-runtimes")
+
+/proc/SDQL_parse_exception(exception/E)
+	var/list/returning = list()
+	returning += "Runtime Error: [E.name]<BR>"
+	returning += "Occured at line [E.line] file [E.file]<BR>"
+	returning += "Description: [E.desc]<BR>"
+	return returning
 
 /proc/SDQL_callproc_global(procname,args_list)
 	set waitfor = FALSE
@@ -180,7 +219,6 @@
 		pos++
 
 	qdel(parser)
-
 	return querys
 
 

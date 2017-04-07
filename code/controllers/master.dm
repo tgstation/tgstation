@@ -6,15 +6,18 @@
   * Odds are, there is a reason
   *
  **/
-var/datum/controller/master/Master = new()
-var/MC_restart_clear = 0
-var/MC_restart_timeout = 0
-var/MC_restart_count = 0
+
+//This is the ABSOLUTE ONLY THING that should init globally like this
+GLOBAL_REAL(Master, /datum/controller/master) = new
+
+GLOBAL_VAR_INIT(MC_restart_clear, 0)
+GLOBAL_VAR_INIT(MC_restart_timeout, 0)
+GLOBAL_VAR_INIT(MC_restart_count, 0)
 
 
 //current tick limit, assigned by the queue controller before running a subsystem.
 //used by check_tick as well so that the procs subsystems call can obey that SS's tick limits
-var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 
 /datum/controller/master
 	name = "Master"
@@ -62,6 +65,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		else
 			init_subtypes(/datum/controller/subsystem, subsystems)
 		Master = src
+	
+	if(!GLOB)
+		new /datum/controller/global_vars
 
 /datum/controller/master/Destroy()
 	..()
@@ -77,14 +83,14 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 //	-1 if we encountered a runtime trying to recreate it
 /proc/Recreate_MC()
 	. = -1 //so if we runtime, things know we failed
-	if (world.time < MC_restart_timeout)
+	if (world.time < GLOB.MC_restart_timeout)
 		return 0
-	if (world.time < MC_restart_clear)
-		MC_restart_count *= 0.5
+	if (world.time < GLOB.MC_restart_clear)
+		GLOB.MC_restart_count *= 0.5
 
-	var/delay = 50 * ++MC_restart_count
-	MC_restart_timeout = world.time + delay
-	MC_restart_clear = world.time + (delay * 2)
+	var/delay = 50 * ++GLOB.MC_restart_count
+	GLOB.MC_restart_timeout = world.time + delay
+	GLOB.MC_restart_clear = world.time + (delay * 2)
 	Master.processing = 0 //stop ticking this one
 	try
 		new/datum/controller/master()
@@ -107,7 +113,25 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				else
 					msg += "\t [varname] = [varval]\n"
 	log_world(msg)
+
+	var/datum/controller/subsystem/BadBoy = Master.last_type_processed
+	var/FireHim = FALSE
+	if(istype(BadBoy))
+		msg = null
+		switch(++BadBoy.failure_strikes)
+			if(2)
+				msg = "The [BadBoy.name] subsystem was the last to fire for 2 controller restarts. It will be recovered now and disabled if it happens again."
+				FireHim = TRUE
+			if(3)
+				msg = "The [BadBoy.name] subsystem seems to be destabilizing the MC and will be offlined."
+				BadBoy.flags |= SS_NO_FIRE
+		if(msg)
+			to_chat(GLOB.admins, "<span class='boldannounce'>[msg]</span>")				
+			log_world(msg)
+
 	if (istype(Master.subsystems))
+		if(FireHim)
+			Master.subsystems += new BadBoy.type	//NEW_SS_GLOBAL will remove the old one
 		subsystems = Master.subsystems
 		StartProcessing(10)
 	else
@@ -133,13 +157,13 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	var/start_timeofday = REALTIMEOFDAY
 	// Initialize subsystems.
-	CURRENT_TICKLIMIT = config.tick_limit_mc_init
+	GLOB.CURRENT_TICKLIMIT = config.tick_limit_mc_init
 	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
 		SS.Initialize(REALTIMEOFDAY)
 		CHECK_TICK
-	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+	GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"
@@ -242,7 +266,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	while (1)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
-			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+			GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep(10)
 			continue
 
@@ -250,7 +274,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		//	because sleeps are processed in the order received, so longer sleeps are more likely to run first
 		if (world.tick_usage > TICK_LIMIT_MC)
 			sleep_delta += 2
-			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.5)
+			GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.5)
 			sleep(world.tick_lag * (processing + sleep_delta))
 			continue
 
@@ -279,7 +303,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			if (!error_level)
 				iteration++
 			error_level++
-			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+			GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep(10)
 			continue
 
@@ -291,7 +315,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				if (!error_level)
 					iteration++
 				error_level++
-				CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+				GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				sleep(10)
 				continue
 		error_level--
@@ -302,7 +326,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		iteration++
 		last_run = world.time
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
-		CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc.
+		GLOB.CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc.
 		sleep(world.tick_lag * (processing + sleep_delta))
 
 
@@ -391,7 +415,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			else
 				tick_precentage = tick_remaining
 
-			CURRENT_TICKLIMIT = world.tick_usage + tick_precentage
+			GLOB.CURRENT_TICKLIMIT = world.tick_usage + tick_precentage
 
 			if (!(queue_node_flags & SS_TICKER))
 				ran_non_ticker = TRUE

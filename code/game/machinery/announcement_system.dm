@@ -1,4 +1,4 @@
-var/list/announcement_systems = list()
+GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system
 	density = 1
@@ -27,7 +27,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/New()
 	..()
-	announcement_systems += src
+	GLOB.announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)
 
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/announcement_system(null)
@@ -62,7 +62,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/Destroy()
 	QDEL_NULL(radio)
-	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
+	GLOB.announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 
 /obj/machinery/announcement_system/power_change()

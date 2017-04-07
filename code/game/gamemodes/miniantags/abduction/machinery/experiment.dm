@@ -74,13 +74,13 @@
 		eyes.Blend("#[H.eye_color]", ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/S
-	S = hair_styles_list[H.hair_style]
+	S = GLOB.hair_styles_list[H.hair_style]
 	if(S && (HAIR in H.dna.species.species_traits))
 		var/icon/hair = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
 		hair.Blend("#[H.hair_color]", ICON_MULTIPLY)
 		eyes.Blend(hair, ICON_OVERLAY)
 
-	S = facial_hair_styles_list[H.facial_hair_style]
+	S = GLOB.facial_hair_styles_list[H.facial_hair_style]
 	if(S && (FACEHAIR in H.dna.species.species_traits))
 		var/icon/facial = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
 		facial.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
@@ -213,7 +213,7 @@
 		H.uncuff()
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	H.forceMove(pick(latejoin))
+	H.forceMove(pick(GLOB.latejoin))
 	H.uncuff()
 	return
 

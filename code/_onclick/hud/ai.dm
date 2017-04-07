@@ -53,7 +53,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
-	crewmonitor.show(AI)
+	GLOB.crewmonitor.show(AI)
 
 /obj/screen/ai/crew_manifest
 	name = "Crew Manifest"

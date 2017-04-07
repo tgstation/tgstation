@@ -19,8 +19,8 @@
 
 /obj/structure/destructible/clockwork/massive/ratvar/New()
 	..()
-	ratvar_awakens++
-	for(var/obj/O in all_clockwork_objects)
+	GLOB.ratvar_awakens++
+	for(var/obj/O in GLOB.all_clockwork_objects)
 		O.ratvar_act()
 	START_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='ratvar'>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</span>")
@@ -31,8 +31,8 @@
 	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
-	ratvar_awakens--
-	for(var/obj/O in all_clockwork_objects)
+	GLOB.ratvar_awakens--
+	for(var/obj/O in GLOB.all_clockwork_objects)
 		O.ratvar_act()
 	STOP_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>")
@@ -64,13 +64,13 @@
 	for(var/I in circleviewturfs(src, round(proselytize_range * 0.5)))
 		var/turf/T = I
 		T.ratvar_act(TRUE)
-	var/dir_to_step_in = pick(cardinal)
+	var/dir_to_step_in = pick(GLOB.cardinal)
 	var/list/meals = list()
-	for(var/mob/living/L in living_mob_list) //we want to know who's alive so we don't lose and retarget a single person
+	for(var/mob/living/L in GLOB.living_mob_list) //we want to know who's alive so we don't lose and retarget a single person
 		if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
 			meals += L
 	if(!prey)
-		for(var/obj/singularity/narsie/N in singularities)
+		for(var/obj/singularity/narsie/N in GLOB.singularities)
 			if(N.z == z)
 				prey = N
 				break
@@ -113,13 +113,13 @@
 	while(src && narsie)
 		send_to_playing_players('sound/magic/clockwork/ratvar_attack.ogg')
 		sleep(5.2)
-		for(var/mob/M in mob_list)
+		for(var/mob/M in GLOB.mob_list)
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#966400", flash_time=1)
 				shake_camera(M, 4, 3)
 		var/ratvar_chance = min(SSticker.mode.servants_of_ratvar.len, 50)
 		var/narsie_chance = SSticker.mode.cult.len
-		for(var/mob/living/simple_animal/hostile/construct/harvester/C in player_list)
+		for(var/mob/living/simple_animal/hostile/construct/harvester/C in GLOB.player_list)
 			narsie_chance++
 		ratvar_chance = rand(base_victory_chance, ratvar_chance)
 		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
@@ -129,7 +129,7 @@
 		sleep(rand(2,5))
 		send_to_playing_players('sound/magic/clockwork/narsie_attack.ogg')
 		sleep(7.4)
-		for(var/mob/M in mob_list)
+		for(var/mob/M in GLOB.mob_list)
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#C80000", flash_time=1)
 				shake_camera(M, 4, 3)

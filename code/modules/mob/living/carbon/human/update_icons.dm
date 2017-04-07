@@ -385,10 +385,10 @@ There are several things that need to be remembered:
 
 /proc/wear_female_version(t_color, icon, layer, type)
 	var/index = t_color
-	var/icon/female_clothing_icon = female_clothing_icons[index]
+	var/icon/female_clothing_icon = GLOB.female_clothing_icons[index]
 	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
 		generate_female_clothing(index,t_color,icon,type)
-	var/standing	= image("icon"=female_clothing_icons["[t_color]"], "layer"=-layer)
+	var/standing	= image("icon"=GLOB.female_clothing_icons["[t_color]"], "layer"=-layer)
 	return(standing)
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
