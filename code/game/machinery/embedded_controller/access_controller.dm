@@ -19,12 +19,12 @@
 /obj/machinery/doorButtons/proc/findObjsByTag()
 	return
 
-/obj/machinery/doorButtons/Initialize(mapload)
-	if(mapload)
-		..()
-		return TRUE
-	else
-		findObjsByTag()
+/obj/machinery/doorButtons/Initialize()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/doorButtons/LateInitialize()
+	findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
 	if(!emagged)
