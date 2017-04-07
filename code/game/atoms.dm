@@ -36,13 +36,17 @@
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 	var/do_initialize = SSatoms.initialized
+	var/mapload
 	if(do_initialize > INITIALIZATION_INSSATOMS)
-		if(QDELETED(src))
-			CRASH("Found new qdeletion in type [type]!")
-		var/mapload = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		args[1] = mapload
-		if(Initialize(arglist(args)) && mapload)
-			LAZYADD(SSatoms.late_loaders, src)
+		mapload = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		if(SSatoms.InitAtom(src, mapload))
+			//we were deleted
+			return
+	
+	if(mapload)
+		var/list/created = SSatoms.created_atoms
+		if(created)
+			created += src
 
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is being loaded. mapload = FALSE
@@ -75,6 +79,11 @@
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 	return INITIALIZE_HINT_NORMAL
 
+//called if Initialize returns INITIALIZE_HINT_LATELOAD
+//This version shouldn't be called
+/atom/proc/LateInitialize()
+	WARNING("Old style LateInitialize behaviour detected in [type]!")
+	Initialize(FALSE)
 
 /atom/Destroy()
 	if(alternate_appearances)

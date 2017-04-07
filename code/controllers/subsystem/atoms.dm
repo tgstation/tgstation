@@ -12,6 +12,7 @@ SUBSYSTEM_DEF(atoms)
 	var/old_initialized
 
 	var/list/late_loaders
+	var/list/created_atoms
 
 	var/list/BadInitializeCalls = list()
 
@@ -22,49 +23,70 @@ SUBSYSTEM_DEF(atoms)
 	InitializeAtoms()
 	return ..()
 
-/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, LateRecurse = FALSE)
+/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
-	if(!LateRecurse)
-		initialized = INITIALIZATION_INNEW_MAPLOAD
-		LAZYINITLIST(late_loaders)
+	initialized = INITIALIZATION_INNEW_MAPLOAD
+
+	LAZYINITLIST(late_loaders)
 	
-	var/thing_to_check = atoms ? atoms : world
+	var/thing_to_check
+	if(atoms)
+		thing_to_check = atoms
+		created_atoms = list()
+	else
+		thing_to_check = world
 
 	for(var/I in thing_to_check)
 		var/atom/A = I
 		if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
-			if(QDELING(A))
-				BadInitializeCalls[A.type] |= BAD_INIT_QDEL_BEFORE
-				continue
-			var/start_tick = world.time
-			var/result = A.Initialize(TRUE)
-			if(start_tick != world.time)
-				BadInitializeCalls[A.type] |= BAD_INIT_SLEPT
-
-			if(!A.initialized)
-				BadInitializeCalls[A.type] |= BAD_INIT_DIDNT_INIT
-			
-			if(result != INITIALIZE_HINT_NORMAL)
-				switch(result)
-					if(INITIALIZE_HINT_LATELOAD)
-						if(!LateRecurse)
-							late_loaders += A
-						break
-					if(INITIALIZE_HINT_QDEL)
-						qdel(A)
-						break
-					else
-						BadInitializeCalls[A.type] |= BAD_INIT_NO_HINT
-
+			if(InitAtom(A, TRUE) && atoms)
+				atoms -= A
 			CHECK_TICK
+
 	testing("Initialized [atoms ? atoms.len : world.contents.len] atoms")
 
-	if(!LateRecurse)
-		initialized = INITIALIZATION_INNEW_REGULAR
-		.(late_loaders, TRUE)
+	initialized = INITIALIZATION_INNEW_REGULAR
+
+	if(late_loaders.len)
+		for(var/I in late_loaders)
+			var/atom/A = I
+			A.LateInitialize()
+		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
+	
+	if(atoms)
+		. = created_atoms + atoms
+		created_atoms = null 
+
+/datum/controller/subsystem/atoms/proc/InitAtom(atom/A, mapload)
+	if(QDELING(A))
+		BadInitializeCalls[A.type] |= BAD_INIT_QDEL_BEFORE
+		return TRUE
+
+	var/start_tick = world.time
+
+	var/result = A.Initialize(mapload)
+
+	if(start_tick != world.time)
+		BadInitializeCalls[A.type] |= BAD_INIT_SLEPT
+
+	if(!A.initialized)
+		BadInitializeCalls[A.type] |= BAD_INIT_DIDNT_INIT
+	
+	if(result != INITIALIZE_HINT_NORMAL)
+		switch(result)
+			if(INITIALIZE_HINT_LATELOAD)
+				if(mapload)
+					late_loaders += A
+			if(INITIALIZE_HINT_QDEL)
+				qdel(A)
+				return TRUE
+			else
+				BadInitializeCalls[A.type] |= BAD_INIT_NO_HINT
+	
+	return QDELING(A)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized

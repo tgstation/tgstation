@@ -54,7 +54,7 @@
 	return new step_type
 
 /datum/surgery/proc/complete()
-	feedback_add_details("surgeries_completed", type)
+	feedback_add_details("surgeries_completed", "[type]")
 	qdel(src)
 
 
