@@ -8,7 +8,7 @@
 	var/icon_state_on = "emitter_+a"
 	anchored = 0
 	density = 1
-	req_access = list(access_engine_equip)
+	req_access = list(GLOB.access_engine_equip)
 
 	use_power = 0
 	idle_power_usage = 10

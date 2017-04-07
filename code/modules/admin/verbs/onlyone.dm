@@ -1,16 +1,16 @@
-var/highlander = FALSE
+GLOBAL_VAR_INIT(highlander, FALSE)
 /client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
 	if(!SSticker || !SSticker.mode)
 		alert("The game hasn't started yet!")
 		return
-	highlander = TRUE
+	GLOB.highlander = TRUE
 
 	send_to_playing_players("<span class='boldannounce'><font size=6>THERE CAN BE ONLY ONE</font></span>")
 
-	for(var/obj/item/weapon/disk/nuclear/N in poi_list)
+	for(var/obj/item/weapon/disk/nuclear/N in GLOB.poi_list)
 		N.relocate() //Gets it out of bags and such
 
-	for(var/mob/living/carbon/human/H in player_list)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.stat == DEAD || !(H.client))
 			continue
 		H.make_scottish()
@@ -64,7 +64,7 @@ var/highlander = FALSE
 	equip_to_slot_or_del(W, slot_wear_id)
 
 	var/obj/item/weapon/claymore/highlander/H1 = new(src)
-	if(!highlander)
+	if(!GLOB.highlander)
 		H1.admin_spawned = TRUE //To prevent announcing
 	put_in_hands(H1)
 	H1.pickup(src) //For the stun shielding
@@ -83,7 +83,7 @@ var/highlander = FALSE
 		alert("The game hasn't started yet!")
 		return
 
-	for(var/mob/living/carbon/human/H in player_list)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(is_special_character(H)) continue
 

@@ -267,7 +267,7 @@
 
 		if(M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
-				diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
+				GLOB.diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
@@ -400,7 +400,7 @@
 				if("guest_jobban")
 					guest_jobban = 1
 				if("guest_ban")
-					guests_allowed = 0
+					GLOB.guests_allowed = 0
 				if("usewhitelist")
 					usewhitelist = TRUE
 				if("allow_metadata")
@@ -430,9 +430,9 @@
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")
-					global.comms_key = value
+					GLOB.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
-						global.comms_allowed = 1
+						GLOB.comms_allowed = 1
 				if("cross_server_address")
 					cross_address = value
 					if(value != "byond:\\address:port")
@@ -446,9 +446,9 @@
 					if(value != "byond:\\address:port")
 						allow_panic_bunker_bounce = 1
 				if("medal_hub_address")
-					global.medal_hub = value
+					GLOB.medal_hub = value
 				if("medal_hub_password")
-					global.medal_pass = value
+					GLOB.medal_pass = value
 				if("show_irc_name")
 					showircname = 1
 				if("see_own_notes")
@@ -489,9 +489,9 @@
 				if("log_runtimes")
 					log_runtimes = TRUE
 					var/newlog = file("data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log")
-					if(runtime_diary != newlog)
+					if(GLOB.runtime_diary != newlog)
 						world.log << "Now logging runtimes to data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log"
-						runtime_diary = newlog
+						GLOB.runtime_diary = newlog
 				if("autoconvert_notes")
 					autoconvert_notes = 1
 				if("allow_webclient")
@@ -535,7 +535,7 @@
 				if("error_msg_delay")
 					error_msg_delay = text2num(value)
 				else
-					diary << "Unknown setting in configuration: '[name]'"
+					GLOB.diary << "Unknown setting in configuration: '[name]'"
 
 		else if(type == "game_options")
 			switch(name)
@@ -598,13 +598,13 @@
 					if(mode_name in modes)
 						continuous[mode_name] = 1
 					else
-						diary << "Unknown continuous configuration definition: [mode_name]."
+						GLOB.diary << "Unknown continuous configuration definition: [mode_name]."
 				if("midround_antag")
 					var/mode_name = lowertext(value)
 					if(mode_name in modes)
 						midround_antag[mode_name] = 1
 					else
-						diary << "Unknown midround antagonist configuration definition: [mode_name]."
+						GLOB.diary << "Unknown midround antagonist configuration definition: [mode_name]."
 				if("midround_antag_time_check")
 					midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
@@ -620,9 +620,9 @@
 						if(mode_name in modes)
 							min_pop[mode_name] = text2num(mode_value)
 						else
-							diary << "Unknown minimum population configuration definition: [mode_name]."
+							GLOB.diary << "Unknown minimum population configuration definition: [mode_name]."
 					else
-						diary << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
+						GLOB.diary << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
 				if("max_pop")
 					var/pop_pos = findtext(value, " ")
 					var/mode_name = null
@@ -634,9 +634,9 @@
 						if(mode_name in modes)
 							max_pop[mode_name] = text2num(mode_value)
 						else
-							diary << "Unknown maximum population configuration definition: [mode_name]."
+							GLOB.diary << "Unknown maximum population configuration definition: [mode_name]."
 					else
-						diary << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
+						GLOB.diary << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
 				if("shuttle_refuel_delay")
 					shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -664,9 +664,9 @@
 						if(prob_name in modes)
 							probabilities[prob_name] = text2num(prob_value)
 						else
-							diary << "Unknown game mode probability configuration definition: [prob_name]."
+							GLOB.diary << "Unknown game mode probability configuration definition: [prob_name]."
 					else
-						diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+						GLOB.diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
 
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
@@ -713,7 +713,7 @@
 					// Value is in the form "LAWID,NUMBER"
 					var/list/L = splittext(value, ",")
 					if(L.len != 2)
-						diary << "Invalid LAW_WEIGHT: " + t
+						GLOB.diary << "Invalid LAW_WEIGHT: " + t
 						continue
 					var/lawid = L[1]
 					var/weight = text2num(L[2])
@@ -725,10 +725,10 @@
 					mutant_races				= 1
 				if("roundstart_races")
 					var/race_id = lowertext(value)
-					for(var/species_id in species_list)
+					for(var/species_id in GLOB.species_list)
 						if(species_id == race_id)
-							roundstart_races += species_list[species_id]
-							roundstart_species[species_id] = species_list[species_id]
+							roundstart_races += GLOB.species_list[species_id]
+							GLOB.roundstart_species[species_id] = GLOB.species_list[species_id]
 				if("join_with_mutant_humans")
 					mutant_humans			= 1
 				if("assistant_cap")
@@ -756,17 +756,17 @@
 					if (BombCap < 4)
 						BombCap = 4
 
-					MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
-					MAX_EX_HEAVY_RANGE = round(BombCap/2)
-					MAX_EX_LIGHT_RANGE = BombCap
-					MAX_EX_FLASH_RANGE = BombCap
-					MAX_EX_FLAME_RANGE = BombCap
+					GLOB.MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
+					GLOB.MAX_EX_HEAVY_RANGE = round(BombCap/2)
+					GLOB.MAX_EX_LIGHT_RANGE = BombCap
+					GLOB.MAX_EX_FLASH_RANGE = BombCap
+					GLOB.MAX_EX_FLAME_RANGE = BombCap
 				if("arrivals_shuttle_dock_window")
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
 				if("arrivals_shuttle_require_safe_latejoin")
 					arrivals_shuttle_require_safe_latejoin = text2num(value)
 				else
-					diary << "Unknown setting in configuration: '[name]'"
+					GLOB.diary << "Unknown setting in configuration: '[name]'"
 
 	fps = round(fps)
 	if(fps <= 0)
@@ -820,7 +820,7 @@
 				maplist[currentmap.map_name] = currentmap
 				currentmap = null
 			else
-				diary << "Unknown command in map vote config: '[command]'"
+				GLOB.diary << "Unknown command in map vote config: '[command]'"
 
 
 /datum/configuration/proc/loadsql(filename)
@@ -852,19 +852,19 @@
 			if("sql_enabled")
 				sql_enabled = 1
 			if("address")
-				sqladdress = value
+				GLOB.sqladdress = value
 			if("port")
-				sqlport = value
+				GLOB.sqlport = value
 			if("feedback_database")
-				sqlfdbkdb = value
+				GLOB.sqlfdbkdb = value
 			if("feedback_login")
-				sqlfdbklogin = value
+				GLOB.sqlfdbklogin = value
 			if("feedback_password")
-				sqlfdbkpass = value
+				GLOB.sqlfdbkpass = value
 			if("feedback_tableprefix")
-				sqlfdbktableprefix = value
+				GLOB.sqlfdbktableprefix = value
 			else
-				diary << "Unknown setting in configuration: '[name]'"
+				GLOB.diary << "Unknown setting in configuration: '[name]'"
 
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up

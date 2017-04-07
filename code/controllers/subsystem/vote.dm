@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(vote)
 			greatest_votes = votes
 	//default-vote for everyone who didn't vote
 	if(!config.vote_no_default && choices.len)
-		var/list/non_voters = directory.Copy()
+		var/list/non_voters = GLOB.directory.Copy()
 		non_voters -= voted
 		for (var/non_voter_ckey in non_voters)
 			var/client/C = non_voters[non_voter_ckey]
@@ -65,10 +65,10 @@ SUBSYSTEM_DEF(vote)
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
 			else if(mode == "gamemode")
-				if(master_mode in choices)
-					choices[master_mode] += non_voters.len
-					if(choices[master_mode] >= greatest_votes)
-						greatest_votes = choices[master_mode]
+				if(GLOB.master_mode in choices)
+					choices[GLOB.master_mode] += non_voters.len
+					if(choices[GLOB.master_mode] >= greatest_votes)
+						greatest_votes = choices[GLOB.master_mode]
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -98,7 +98,7 @@ SUBSYSTEM_DEF(vote)
 			. = pick(winners)
 			text += "\n<b>Vote Result: [.]</b>"
 		else
-			text += "\n<b>Did not vote:</b> [clients.len-voted.len]"
+			text += "\n<b>Did not vote:</b> [GLOB.clients.len-voted.len]"
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
@@ -115,15 +115,15 @@ SUBSYSTEM_DEF(vote)
 				if(. == "Restart Round")
 					restart = 1
 			if("gamemode")
-				if(master_mode != .)
+				if(GLOB.master_mode != .)
 					world.save_mode(.)
 					if(SSticker && SSticker.mode)
 						restart = 1
 					else
-						master_mode = .
+						GLOB.master_mode = .
 	if(restart)
 		var/active_admins = 0
-		for(var/client/C in admins)
+		for(var/client/C in GLOB.admins)
 			if(!C.is_afk() && check_rights_for(C, R_SERVER))
 				active_admins = 1
 				break
@@ -156,7 +156,7 @@ SUBSYSTEM_DEF(vote)
 
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
-			if((admin_datums[ckey]) || (ckey in deadmins))
+			if((GLOB.admin_datums[ckey]) || (ckey in GLOB.deadmins))
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)
@@ -189,7 +189,7 @@ SUBSYSTEM_DEF(vote)
 		log_vote(text)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
-		for(var/c in clients)
+		for(var/c in GLOB.clients)
 			var/client/C = c
 			var/datum/action/vote/V = new
 			if(question)

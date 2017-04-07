@@ -40,7 +40,7 @@
 /datum/supply_pack/emergency/spacesuit
 	name = "Space Suit Crate"
 	cost = 3000
-	access = access_eva
+	access = GLOB.access_eva
 	contains = list(/obj/item/clothing/suit/space,
 					/obj/item/clothing/suit/space,
 					/obj/item/clothing/head/helmet/space,
@@ -121,7 +121,7 @@
 /datum/supply_pack/emergency/atmostank
 	name = "Firefighting Watertank"
 	cost = 1000
-	access = access_atmospherics
+	access = GLOB.access_atmospherics
 	contains = list(/obj/item/weapon/watertank/atmos)
 	crate_name = "firefighting watertank crate"
 	crate_type = /obj/structure/closet/crate/secure
@@ -144,7 +144,7 @@
 /datum/supply_pack/emergency/weedcontrol
 	name = "Weed Control Crate"
 	cost = 1500
-	access = access_hydroponics
+	access = GLOB.access_hydroponics
 	contains = list(/obj/item/weapon/scythe,
 					/obj/item/clothing/mask/gas,
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
@@ -209,7 +209,7 @@
 
 /datum/supply_pack/security
 	group = "Security"
-	access = access_security
+	access = GLOB.access_security
 	crate_type = /obj/structure/closet/crate/secure/gear
 
 /datum/supply_pack/security/supplies
@@ -290,7 +290,7 @@
 	crate_name = "forensics crate"
 
 /datum/supply_pack/security/armory
-	access = access_armory
+	access = GLOB.access_armory
 	crate_type = /obj/structure/closet/crate/secure/weapon
 
 /datum/supply_pack/security/armory/riothelmets
@@ -378,7 +378,7 @@
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
 	cost = 1500
-	access = access_heads
+	access = GLOB.access_heads
 	contains = list(/obj/item/weapon/flamethrower/full,
 					/obj/item/weapon/tank/internals/plasma,
 					/obj/item/weapon/tank/internals/plasma,
@@ -510,7 +510,7 @@
 /datum/supply_pack/science/nitrous_oxide_canister
 	name = "Nitrous Oxide Canister"
 	cost = 3000
-	access = access_atmospherics
+	access = GLOB.access_atmospherics
 	contains = list(/obj/machinery/portable_atmospherics/canister/nitrous_oxide)
 	crate_name = "nitrous oxide canister crate"
 	crate_type = /obj/structure/closet/crate/secure
@@ -620,7 +620,7 @@
 /datum/supply_pack/engineering/engine
 	name = "Emitter Crate"
 	cost = 1500
-	access = access_ce
+	access = GLOB.access_ce
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
 	crate_name = "emitter crate"
@@ -669,7 +669,7 @@
 /datum/supply_pack/engineering/engine/supermatter_shard
 	name = "Supermatter Shard Crate"
 	cost = 10000
-	access = access_ce
+	access = GLOB.access_ce
 	contains = list(/obj/machinery/power/supermatter_shard)
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
@@ -782,7 +782,7 @@
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
 	cost = 2500
-	access = access_cmo
+	access = GLOB.access_cmo
 	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/flu_virion,
 					/obj/item/weapon/reagent_containers/glass/bottle/cold,
 					/obj/item/weapon/reagent_containers/glass/bottle/epiglottis_virion,
@@ -839,7 +839,7 @@
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
 	cost = 1000
-	access = access_robotics
+	access = GLOB.access_robotics
 	contains = list(/obj/item/device/assembly/prox_sensor,
 					/obj/item/device/assembly/prox_sensor,
 					/obj/item/device/assembly/prox_sensor,
@@ -853,7 +853,7 @@
 /datum/supply_pack/science/robotics/mecha_ripley
 	name = "Circuit Crate (Ripley APLU)"
 	cost = 3000
-	access = access_robotics
+	access = GLOB.access_robotics
 	contains = list(/obj/item/weapon/book/manual/ripley_build_and_repair,
 					/obj/item/weapon/circuitboard/mecha/ripley/main,
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals)
@@ -863,7 +863,7 @@
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
 	cost = 2500
-	access = access_robotics
+	access = GLOB.access_robotics
 	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals,
 					/obj/item/weapon/circuitboard/mecha/odysseus/main)
 	crate_name = "\improper Odysseus circuit crate"
@@ -872,7 +872,7 @@
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
 	cost = 1000
-	access = access_tox_storage
+	access = GLOB.access_tox_storage
 	contains = list(/obj/item/weapon/tank/internals/plasma,
 					/obj/item/weapon/tank/internals/plasma,
 					/obj/item/weapon/tank/internals/plasma,
@@ -891,7 +891,7 @@
 /datum/supply_pack/science/shieldwalls
 	name = "Shield Generators"
 	cost = 2000
-	access = access_teleporter
+	access = GLOB.access_teleporter
 	contains = list(/obj/machinery/shieldwallgen,
 					/obj/machinery/shieldwallgen,
 					/obj/machinery/shieldwallgen,
@@ -902,7 +902,7 @@
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
 	cost = 6000
-	access = access_rd
+	access = GLOB.access_rd
 	contains = list(/obj/item/device/transfer_valve,
 					/obj/item/device/transfer_valve)
 	crate_name = "tank transfer valves crate"
@@ -912,7 +912,7 @@
 /datum/supply_pack/science/bz_canister
 	name = "BZ Canister"
 	cost = 2000
-	access_any = list(access_rd, access_atmospherics)
+	access_any = list(GLOB.access_rd, GLOB.access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "bz canister crate"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -921,7 +921,7 @@
 /datum/supply_pack/science/freon_canister
 	name = "Freon Canister"
 	cost = 6000
-	access_any = list(access_rd, access_atmospherics)
+	access_any = list(GLOB.access_rd, GLOB.access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
 	crate_name = "freon canister crate"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -930,7 +930,7 @@
 /datum/supply_pack/science/research
 	name = "Machine Prototype Crate"
 	cost = 8000
-	access = access_research
+	access = GLOB.access_research
 	contains = list(/obj/item/device/machineprototype)
 	crate_name = "machine prototype crate"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -986,7 +986,7 @@
 	contains = list(/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie)
 	crate_name = "party equipment crate"
 	contraband = TRUE
-	access = access_theatre
+	access = GLOB.access_theatre
 	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/organic/monkey
@@ -1111,7 +1111,7 @@
 /datum/supply_pack/organic/hydroponics/hydrotank
 	name = "Hydroponics Backpack Crate"
 	cost = 1000
-	access = access_hydroponics
+	access = GLOB.access_hydroponics
 	contains = list(/obj/item/weapon/watertank)
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
@@ -1284,7 +1284,7 @@
 /datum/supply_pack/misc/minerkit
 	name = "Shaft Miner Starter Kit"
 	cost = 2500
-	access = access_qm
+	access = GLOB.access_qm
 	contains = list(/obj/item/weapon/pickaxe/mini,
 			/obj/item/clothing/glasses/meson,
 			/obj/item/device/t_scanner/adv_mining_scanner/lesser,
@@ -1459,7 +1459,7 @@
 /datum/supply_pack/misc/janitor/janitank
 	name = "Janitor Backpack Crate"
 	cost = 1000
-	access = access_janitor
+	access = GLOB.access_janitor
 	contains = list(/obj/item/weapon/watertank/janitor)
 	crate_name = "janitor backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
@@ -1492,7 +1492,7 @@
 /datum/supply_pack/misc/costume
 	name = "Standard Costume Crate"
 	cost = 1000
-	access = access_theatre
+	access = GLOB.access_theatre
 	contains = list(/obj/item/weapon/storage/backpack/clown,
 					/obj/item/clothing/shoes/clown_shoes,
 					/obj/item/clothing/mask/gas/clown_hat,
@@ -1685,7 +1685,7 @@
 	crate_name = "librarian engraving/scribbling crate"
 	cost = 3000
 	contains = list(/obj/item/soapstone)
-	access = access_library
+	access = GLOB.access_library
 	crate_type = /obj/structure/closet/crate/secure
 
 
