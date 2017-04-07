@@ -6,5 +6,6 @@ SUBSYSTEM_DEF(religion)
 	var/religion
 	var/deity
 	var/bible_name
-	var/list/bible_icons = list("icon_state", "item_state")
+	var/bible_icon_state
+	var/bible_item_state
 	var/holy_weapon_type

@@ -474,9 +474,9 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	if(href_list["printbible"])
 		if(cooldown < world.time)
 			var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
-			if(SSreligion.bible_icons["icon_state"] && SSreligion.bible_icons["item_state"])
-				B.icon_state = SSreligion.bible_icons["icon_state"]
-				B.item_state = SSreligion.bible_icons["item_state"]
+			if(SSreligion.bible_icon_state && SSreligion.bible_item_state)
+				B.icon_state = SSreligion.bible_icon_state
+				B.item_state = SSreligion.bible_item_state
 				B.name = SSreligion.bible_name
 				B.deity_name = SSreligion.deity
 			cooldown = world.time + PRINTER_COOLDOWN

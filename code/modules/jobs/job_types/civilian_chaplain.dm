@@ -27,8 +27,8 @@ Chaplain
 	if(SSreligion.religion)
 		B.deity_name = SSreligion.deity
 		B.name = SSreligion.bible_name
-		B.icon_state = SSreligion.bible_icons["icon_state"]
-		B.item_state = SSreligion.bible_icons["item_state"]
+		B.icon_state = SSreligion.bible_icon_state
+		B.item_state = SSreligion.bible_item_state
 		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.deity]. Defer to the Chaplain.")
 		H.equip_to_slot_or_del(B, slot_in_backpack)
 		var/obj/item/weapon/nullrod/N = new SSreligion.holy_weapon_type(H)
