@@ -190,6 +190,14 @@
 	..(user, FALSE)
 	user.dropItemToGround(src)
 
+/obj/item/weapon/twohanded/required/attack(mob/living/M, mob/living/user)
+	var/datum/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
+	if(src.flags & NODROP || O)					//If we're a NODROP, or if there is an offhand item in the other hand, attack.
+		..()
+		return
+	..()										//One last desperate swing.
+	user.dropItemToGround(src)
+
 /*
  * Fireaxe
  */
