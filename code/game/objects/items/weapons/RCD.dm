@@ -30,7 +30,7 @@ obj/item/weapon/construction
 	var/plasteelmultiplier = 3 //Plasteel is worth 3 times more than glass or metal
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
 
-/obj/item/weapon/construction/New()
+/obj/item/weapon/construction/Initialize()
 	..()
 	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
 	spark_system = new /datum/effect_system/spark_spread
@@ -423,8 +423,8 @@ obj/item/weapon/construction
 
 /obj/item/weapon/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	range_check(A,user)
-	target_check(A,user)
-	user.Beam(A,icon_state="rped_upgrade",time=30)
+	if(target_check(A,user))
+		user.Beam(A,icon_state="rped_upgrade",time=30)
 	..()
 
 
@@ -465,9 +465,10 @@ obj/item/weapon/construction
 	..()
 	IconAmmo()
 
-/obj/item/weapon/construction/rld/proc/IconAmmo()
+/obj/item/weapon/construction/rld/update_icon()
 	icon_state = "rld-[round(matter/35)]"
-	update_icon()
+	..()
+
 
 /obj/item/weapon/construction/rld/attack_self(mob/user)
 	..()
@@ -502,7 +503,8 @@ obj/item/weapon/construction
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, decondelay, target = A))
-						if(!useResource(deconcost, user)) return 0
+						if(!useResource(deconcost, user)) 
+							return 0
 						activate()
 						qdel(A)
 						return TRUE
