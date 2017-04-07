@@ -82,7 +82,10 @@
 //called if Initialize returns INITIALIZE_HINT_LATELOAD
 //This version shouldn't be called
 /atom/proc/LateInitialize()
-	WARNING("Old style LateInitialize behaviour detected in [type]!")
+	var/static/list/warned_types = list()
+	if(!warned_types[type])
+		WARNING("Old style LateInitialize behaviour detected in [type]!")
+		warned_types[type] = TRUE
 	Initialize(FALSE)
 
 /atom/Destroy()
