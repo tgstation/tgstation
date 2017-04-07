@@ -30,11 +30,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	else
 		var/A
 
-		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) in possible_beacons
+		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in possible_beacons
 
 		if(!A)
 			return
 		beacon = A
+		to_chat(user, "You link the extraction pack to the beacon system.")
 
 /obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
 	if(!beacon)
@@ -60,7 +61,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(do_after(user,50,target=A))
 			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
-			if(loc == user || istype(user.back, /obj/item/weapon/storage/backpack))
+			if(loc == user && istype(user.back, /obj/item/weapon/storage/backpack))
 				var/obj/item/weapon/storage/backpack/B = user.back
 				if(B.can_be_inserted(src,stop_messages = 1))
 					B.handle_item_insertion(src)
@@ -150,14 +151,14 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/structure/extraction_point
 	name = "fulton recovery beacon"
-	desc = "A beacon for the fulton recovery system. Hit a beacon with a pack to link the pack to a beacon."
+	desc = "A beacon for the fulton recovery system. Activate a pack in your hand to link it to a beacon."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_point"
 	anchored = 1
 	density = 0
 	var/beacon_network = "station"
 
-/obj/structure/extraction_point/New()
+/obj/structure/extraction_point/Initialize()
 	var/area/area_name = get_area(src)
 	name += " ([rand(100,999)]) ([area_name.name])"
 	GLOB.total_extraction_beacons += src
