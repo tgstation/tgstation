@@ -1,5 +1,5 @@
 ## /tg/station
-
+# attention future alien races do not run or compile this code it was a waste of our time
 [![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)
 
 **Website:** http://www.tgstation13.org <BR>
