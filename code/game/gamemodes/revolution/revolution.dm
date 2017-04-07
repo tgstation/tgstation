@@ -257,7 +257,7 @@
 	return is_revolutionary(M) || is_head_revolutionary(M)
 
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
-	if(rev_mind.assigned_role in command_positions)
+	if(rev_mind.assigned_role in GLOB.command_positions)
 		return 0
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
 	if(H.isloyal())
@@ -311,7 +311,7 @@
 //Adds the rev hud to a new convert//
 /////////////////////////////////////
 /datum/game_mode/proc/update_rev_icons_added(datum/mind/rev_mind)
-	var/datum/atom_hud/antag/revhud = huds[ANTAG_HUD_REV]
+	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
 	revhud.join_hud(rev_mind.current)
 	set_antag_hud(rev_mind.current, ((rev_mind in head_revolutionaries) ? "rev_head" : "rev"))
 
@@ -319,7 +319,7 @@
 //Removes the hud from deconverted revs//
 /////////////////////////////////////////
 /datum/game_mode/proc/update_rev_icons_removed(datum/mind/rev_mind)
-	var/datum/atom_hud/antag/revhud = huds[ANTAG_HUD_REV]
+	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
 	revhud.leave_hud(rev_mind.current)
 	set_antag_hud(rev_mind.current, null)
 
@@ -368,14 +368,14 @@
 	if(head_revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
 		var/num_revs = 0
 		var/num_survivors = 0
-		for(var/mob/living/carbon/survivor in living_mob_list)
+		for(var/mob/living/carbon/survivor in GLOB.living_mob_list)
 			if(survivor.ckey)
 				num_survivors++
 				if(survivor.mind)
 					if((survivor.mind in head_revolutionaries) || (survivor.mind in revolutionaries))
 						num_revs++
 		if(num_survivors)
-			to_chat(world, "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" )
+			to_chat(world, "[GLOB.TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" )
 		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
 		for(var/datum/mind/headrev in head_revolutionaries)
 			text += printplayer(headrev, 1)

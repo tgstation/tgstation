@@ -14,7 +14,7 @@
 
 /datum/round_event/ghost_role/devil/spawn_role()
 	//selecting a spawn_loc
-	var/list/spawn_locs = latejoin
+	var/list/spawn_locs = GLOB.latejoin
 	var/spawn_loc = pick(spawn_locs)
 	if(!spawn_loc)
 		return MAP_ERROR

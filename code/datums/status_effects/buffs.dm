@@ -60,7 +60,7 @@
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
 		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.\
-		[ratvar_awakens ? "":"<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."]"
+		[GLOB.ratvar_awakens ? "":"<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."]"
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
@@ -90,7 +90,7 @@
 		for(var/i in owner.stun_absorption)
 			if(owner.stun_absorption[i]["end_time"] > world.time && owner.stun_absorption[i]["priority"] > vanguard["priority"])
 				otheractiveabsorptions = TRUE
-		if(!ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
+		if(!GLOB.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
 			vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
 			owner.Stun(stuns_blocked)
 			owner.Weaken(stuns_blocked)

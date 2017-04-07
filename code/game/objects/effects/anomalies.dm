@@ -19,7 +19,7 @@
 
 /obj/effect/anomaly/Initialize(mapload, new_lifespan)
 	..()
-	poi_list |= src
+	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
 
@@ -47,14 +47,14 @@
 		qdel(src)
 
 /obj/effect/anomaly/Destroy()
-	poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	STOP_PROCESSING(SSobj, src)
 	qdel(countdown)
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(movechance))
-		step(src,pick(alldirs))
+		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
 	return
@@ -198,7 +198,7 @@
 			// Calculate new position (searches through beacons in world)
 		var/obj/item/device/radio/beacon/chosen
 		var/list/possible = list()
-		for(var/obj/item/device/radio/beacon/W in teleportbeacons)
+		for(var/obj/item/device/radio/beacon/W in GLOB.teleportbeacons)
 			possible += W
 
 		if(possible.len > 0)

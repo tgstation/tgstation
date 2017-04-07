@@ -63,7 +63,7 @@
 			return
 
 		if(src.z == ZLEVEL_STATION)
-			add_overlay("overlay_[security_level]")
+			add_overlay("overlay_[GLOB.security_level]")
 		else
 			//var/green = SEC_LEVEL_GREEN
 			add_overlay("overlay_[SEC_LEVEL_GREEN]")
@@ -111,7 +111,7 @@
 	addtimer(CALLBACK(src, .proc/reset), time)
 
 /obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "firealarm", name, 300, 150, master_ui, state)

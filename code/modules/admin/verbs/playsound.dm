@@ -1,6 +1,3 @@
-
-var/sound/admin_sound
-
 /client/proc/play_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Global Sound"
@@ -24,7 +21,7 @@ var/sound/admin_sound
 	admin_sound.repeat = 0
 	admin_sound.status = SOUND_STREAM
 
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M << admin_sound
 
@@ -65,7 +62,7 @@ var/sound/admin_sound
 
 	log_admin("[key_name(src)] stopped all currently playing sounds.")
 	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.client)
 			M << sound(null)
 	feedback_add_details("admin_verb","SS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

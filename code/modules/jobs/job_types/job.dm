@@ -70,7 +70,7 @@
 	if(!visualsOnly && announce)
 		announce(H)
 
-	if(config.enforce_human_authority && (title in command_positions))
+	if(config.enforce_human_authority && (title in GLOB.command_positions))
 		H.dna.features["tail_human"] = "None"
 		H.dna.features["ears"] = "None"
 		H.regenerate_icons()
@@ -87,12 +87,12 @@
 		. = src.access.Copy()
 
 	if(config.jobs_have_maint_access & EVERYONE_HAS_MAINT_ACCESS) //Config has global maint access set
-		. |= list(access_maint_tunnels)
+		. |= list(GLOB.access_maint_tunnels)
 
 /datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	spawn(4) //to allow some initialization
-		if(H && announcement_systems.len)
-			var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+		if(H && GLOB.announcement_systems.len)
+			var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 			announcer.announce("NEWHEAD", H.real_name, H.job, channels)
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1

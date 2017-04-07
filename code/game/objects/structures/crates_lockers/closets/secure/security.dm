@@ -1,6 +1,6 @@
 /obj/structure/closet/secure_closet/captains
 	name = "\proper captain's locker"
-	req_access = list(access_captain)
+	req_access = list(GLOB.access_captain)
 	icon_state = "cap"
 
 /obj/structure/closet/secure_closet/captains/PopulateContents()
@@ -32,7 +32,7 @@
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
-	req_access = list(access_hop)
+	req_access = list(GLOB.access_hop)
 	icon_state = "hop"
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
@@ -56,7 +56,7 @@
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
-	req_access = list(access_hos)
+	req_access = list(GLOB.access_hos)
 	icon_state = "hos"
 
 /obj/structure/closet/secure_closet/hos/PopulateContents()
@@ -85,7 +85,7 @@
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "warden"
 
 /obj/structure/closet/secure_closet/warden/PopulateContents()
@@ -109,7 +109,7 @@
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)
 	icon_state = "sec"
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
@@ -157,7 +157,7 @@
 
 /obj/structure/closet/secure_closet/detective
 	name = "\proper detective's cabinet"
-	req_access = list(access_forensics_lockers)
+	req_access = list(GLOB.access_forensics_lockers)
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
 	obj_integrity = 70
@@ -185,7 +185,7 @@
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"
-	req_access = list(access_hos)
+	req_access = list(GLOB.access_hos)
 
 /obj/structure/closet/secure_closet/injection/PopulateContents()
 	..()
@@ -194,7 +194,7 @@
 
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
-	req_access = list(access_brig)
+	req_access = list(GLOB.access_brig)
 	anchored = 1
 	var/id = null
 
@@ -205,7 +205,7 @@
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "courtroom locker"
-	req_access = list(access_court)
+	req_access = list(GLOB.access_court)
 
 /obj/structure/closet/secure_closet/courtroom/PopulateContents()
 	..()
@@ -219,7 +219,7 @@
 
 /obj/structure/closet/secure_closet/armory1
 	name = "armory armor locker"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory1/PopulateContents()
@@ -234,7 +234,7 @@
 
 /obj/structure/closet/secure_closet/armory2
 	name = "armory ballistics locker"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory2/PopulateContents()
@@ -247,7 +247,7 @@
 
 /obj/structure/closet/secure_closet/armory3
 	name = "armory energy gun locker"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory3/PopulateContents()
@@ -261,7 +261,7 @@
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "tac"
 
 /obj/structure/closet/secure_closet/tac/PopulateContents()
@@ -273,7 +273,7 @@
 
 /obj/structure/closet/secure_closet/lethalshots
 	name = "shotgun lethal rounds"
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	icon_state = "tac"
 
 /obj/structure/closet/secure_closet/lethalshots/PopulateContents()

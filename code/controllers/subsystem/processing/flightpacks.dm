@@ -1,4 +1,3 @@
-
 PROCESSING_SUBSYSTEM_DEF(flightpacks)
 	name = "Flightpack Movement"
 	priority = 30
