@@ -486,14 +486,14 @@
 	..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
-	poi_list |= src
+	GLOB.poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
-		G.invisibility = observer_default_invisibility
+		G.invisibility = GLOB.observer_default_invisibility
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
-	poi_list -= src
+	GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/weapon/melee/ghost_sword/attack_self(mob/user)
@@ -537,7 +537,7 @@
 			current_spirits |= G
 
 	for(var/mob/dead/observer/G in spirits - current_spirits)
-		G.invisibility = observer_default_invisibility
+		G.invisibility = GLOB.observer_default_invisibility
 
 	spirits = current_spirits
 
@@ -722,7 +722,7 @@
 	if(used)
 		return
 	used = TRUE
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in player_list
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in GLOB.player_list
 
 	if(!(isliving(choice)))
 		to_chat(user, "[choice] is already dead!")
@@ -747,7 +747,7 @@
 			var/obj/effect/mine/pickup/bloodbath/B = new(L)
 			B.mineEffect(L)
 
-		for(var/mob/living/carbon/human/H in player_list)
+		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H == L)
 				continue
 			to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
@@ -975,7 +975,7 @@
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, user, friendly_fire_check)
-	for(var/d in cardinal)
+	for(var/d in GLOB.cardinal)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
 /obj/item/weapon/hierophant_club/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long

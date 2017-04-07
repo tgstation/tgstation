@@ -13,5 +13,5 @@
 
 /datum/language/machine/get_random_name()
 	if(prob(70))
-		return "[pick(posibrain_names)]-[rand(100, 999)]"
-	return pick(ai_names)
+		return "[pick(GLOB.posibrain_names)]-[rand(100, 999)]"
+	return pick(GLOB.ai_names)

@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(atoms)
 	var/list/late_loaders
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
-	fire_overlay.appearance_flags = RESET_COLOR
+	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
@@ -103,9 +103,9 @@ SUBSYSTEM_DEF(atoms)
 			continue
 		B.dna_block = pick_n_take(avnums)
 		if(B.quality == POSITIVE)
-			good_mutations |= B
+			GLOB.good_mutations |= B
 		else if(B.quality == NEGATIVE)
-			bad_mutations |= B
+			GLOB.bad_mutations |= B
 		else if(B.quality == MINOR_NEGATIVE)
-			not_good_mutations |= B
+			GLOB.not_good_mutations |= B
 		CHECK_TICK

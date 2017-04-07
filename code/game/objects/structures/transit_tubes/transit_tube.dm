@@ -129,7 +129,7 @@
 
 /obj/structure/transit_tube/proc/generate_tube_overlays()
 	for(var/direction in tube_dirs)
-		if(direction in diagonals)
+		if(direction in GLOB.diagonals)
 			if(direction & NORTH)
 				create_tube_overlay(direction ^ 3, NORTH)
 

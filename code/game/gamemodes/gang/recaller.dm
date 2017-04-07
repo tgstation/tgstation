@@ -47,7 +47,7 @@
 
 		var/isboss = (user.mind == gang.bosses[1])
 		dat += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
-		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/start_state.num_territories)*100, 1)]%</B><br>"
+		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
 		dat += "Gang Influence: <B>[gang.points]</B><br>"
 		dat += "Time until Influence grows: <B>[(gang.points >= 999) ? ("--:--") : (time2text(SSticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<hr>"
@@ -131,7 +131,7 @@
 		for(var/datum/mind/ganger in members)
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				to_chat(ganger.current, ping)
-		for(var/mob/M in dead_mob_list)
+		for(var/mob/M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [ping]")
 		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
@@ -195,7 +195,7 @@
 		return 0
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	if((100 *  start_state.score(end_state)) < 80) //Shuttle cannot be recalled if the station is too damaged
+	if((100 * GLOB.start_state.score(end_state)) < 80) //Shuttle cannot be recalled if the station is too damaged
 		to_chat(user, "<span class='warning'>\icon[src]Error: Station communication systems compromised. Unable to establish connection.</span>")
 		recalling = 0
 		return 0

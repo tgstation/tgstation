@@ -11,11 +11,11 @@
 	var/title = "book"
 
 /obj/item/weapon/storage/book/attack_self(mob/user)
-		to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
+	to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 
-var/global/list/biblenames      = list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon")
-var/global/list/biblestates     = list("bible", "koran", "scrapbook", "burning",       "honk1",       "honk2",        "creeper",       "white",       "holylight",   "atheist",          "tome",        "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon")
-var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",         "bible",       "bible",        "syringe_kit",   "syringe_kit", "syringe_kit", "syringe_kit",      "syringe_kit", "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon")
+GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon"))
+GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning",       "honk1",       "honk2",        "creeper",       "white",       "holylight",   "atheist",          "tome",        "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon"))
+GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",         "bible",       "bible",        "syringe_kit",   "syringe_kit", "syringe_kit", "syringe_kit",      "syringe_kit", "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon"))
 
 /obj/item/weapon/storage/book/bible
 	name = "bible"
@@ -36,9 +36,9 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
 	if(!SSreligion.bible_icon_state && H.job == "Chaplain")
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
-		for(var/i in 1 to biblestates.len)
-			var/icon/bibleicon = icon('icons/obj/storage.dmi', biblestates[i])
-			var/nicename = biblenames[i]
+		for(var/i in 1 to GLOB.biblestates.len)
+			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
+			var/nicename = GLOB.biblenames[i]
 			H << browse_rsc(bibleicon, nicename)
 			dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=\ref[src];seticon=[i]">[nicename]</a></td></tr>"}
 		dat += "</table></body></html>"
@@ -49,10 +49,10 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 		return
 	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
-		var/biblename = biblenames[iconi]
+		var/biblename = GLOB.biblenames[iconi]
 		var/obj/item/weapon/storage/book/bible/B = locate(href_list["src"])
-		B.icon_state = biblestates[iconi]
-		B.item_state = bibleitemstates[iconi]
+		B.icon_state = GLOB.biblestates[iconi]
+		B.item_state = GLOB.bibleitemstates[iconi]
 
 		if(B.icon_state == "honk1" || B.icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr

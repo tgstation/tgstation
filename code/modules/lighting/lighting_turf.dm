@@ -127,11 +127,11 @@
 		if (corners[i]) // Already have a corner on this direction.
 			continue
 
-		corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
+		corners[i] = new/datum/lighting_corner(src, GLOB.LIGHTING_CORNER_DIAGONAL[i])
 
 
 /turf/ChangeTurf(path)
-	if (!path || (!use_preloader && path == type) || !SSlighting.initialized)
+	if (!path || (!GLOB.use_preloader && path == type) || !SSlighting.initialized)
 		return ..()
 
 	var/old_opacity = opacity

@@ -16,7 +16,7 @@
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
 
-	shuttle_caller_list -= src
+	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 
 	ShutOffDoomsdayDevice()
@@ -35,7 +35,7 @@
 	if(nuking)
 		set_security_level("red")
 		nuking = FALSE
-		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+		for(var/obj/item/weapon/pinpointer/P in GLOB.pinpointer_list)
 			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
 			P.nuke_warning = FALSE
 
