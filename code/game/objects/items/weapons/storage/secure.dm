@@ -190,3 +190,6 @@
 
 /obj/item/weapon/storage/secure/safe/attack_hand(mob/user)
 	return attack_self(user)
+
+/obj/item/weapon/storage/secure/safe/HoS
+	name = "head of security's safe"
