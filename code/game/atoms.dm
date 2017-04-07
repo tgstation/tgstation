@@ -30,8 +30,8 @@
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
-	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
-		_preloader.load(src)
+	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+		GLOB._preloader.load(src)
 
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
@@ -281,7 +281,7 @@
 	if(AM && isturf(AM.loc))
 		step(AM, turn(AM.dir, 180))
 
-var/list/blood_splatter_icons = list()
+GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/blood_splatter_index()
 	return "\ref[initial(icon)]-[initial(icon_state)]"
@@ -355,13 +355,13 @@ var/list/blood_splatter_icons = list()
 	if(initial(icon) && initial(icon_state))
 		//try to find a pre-processed blood-splatter. otherwise, make a new one
 		var/index = blood_splatter_index()
-		var/icon/blood_splatter_icon = blood_splatter_icons[index]
+		var/icon/blood_splatter_icon = GLOB.blood_splatter_icons[index]
 		if(!blood_splatter_icon)
 			blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 			blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 			blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 			blood_splatter_icon = fcopy_rsc(blood_splatter_icon)
-			blood_splatter_icons[index] = blood_splatter_icon
+			GLOB.blood_splatter_icons[index] = blood_splatter_icon
 		add_overlay(blood_splatter_icon)
 
 /obj/item/clothing/gloves/add_blood(list/blood_dna)
@@ -400,12 +400,12 @@ var/list/blood_splatter_icons = list()
 	return 1
 
 /atom/proc/get_global_map_pos()
-	if(!islist(global_map) || isemptylist(global_map)) return
+	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map)) return
 	var/cur_x = null
 	var/cur_y = null
 	var/list/y_arr = null
-	for(cur_x=1,cur_x<=global_map.len,cur_x++)
-		y_arr = global_map[cur_x]
+	for(cur_x=1,cur_x<=GLOB.global_map.len,cur_x++)
+		y_arr = GLOB.global_map[cur_x]
 		cur_y = y_arr.Find(src.z)
 		if(cur_y)
 			break
@@ -565,7 +565,7 @@ var/list/blood_splatter_icons = list()
 			return
 
 /atom/vv_edit_var(var_name, var_value)
-	if(!Debug2)
+	if(!GLOB.Debug2)
 		admin_spawned = TRUE
 	. = ..()
 	switch(var_name)

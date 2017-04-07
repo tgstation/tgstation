@@ -162,7 +162,7 @@
 
 			while(R.amount>0)
 				var/obj/O = new dump_path(loc)
-				step(O, pick(alldirs)) 	//we only drop 20% of the total of each products and spread it
+				step(O, pick(GLOB.alldirs)) 	//we only drop 20% of the total of each products and spread it
 				R.amount -= 5  			//around to not fill the turf with too many objects.
 				dump_amount++
 			if(dump_amount > 15) //so we don't drop too many items (e.g. ClothesMate)

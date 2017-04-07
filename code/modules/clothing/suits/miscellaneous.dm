@@ -179,7 +179,7 @@
 			var/image/I = image(icon = 'icons/mob/robots.dmi' , icon_state = "robot", loc = H)
 			I.override = 1
 			I.add_overlay(image(icon = 'icons/mob/robots.dmi' , icon_state = "robot_e")) //gotta look realistic
-			H.add_alt_appearance("standard_borg_disguise", I, silicon_mobs+H) //you look like a robot to robots! (including yourself because you're totally a robot)
+			H.add_alt_appearance("standard_borg_disguise", I, GLOB.silicon_mobs+H) //you look like a robot to robots! (including yourself because you're totally a robot)
 
 
 /obj/item/clothing/suit/snowman

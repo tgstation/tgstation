@@ -344,7 +344,7 @@
 		open()
 
 /obj/machinery/door/window/clockwork/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		obj_integrity = max_integrity
 
 /obj/machinery/door/window/clockwork/hasPower()

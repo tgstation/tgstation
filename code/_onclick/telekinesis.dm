@@ -3,7 +3,6 @@
 
 	This needs more thinking out, but I might as well.
 */
-var/const/tk_maxrange = 15
 
 /*
 	Telekinetic attack:
@@ -136,7 +135,7 @@ var/const/tk_maxrange = 15
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)
 	var/d = get_dist(user, target)
-	if(d > tk_maxrange)
+	if(d > TK_MAXRANGE)
 		to_chat(user, "<span class ='warning'>Your mind won't reach that far.</span>")
 		return
 	return TRUE

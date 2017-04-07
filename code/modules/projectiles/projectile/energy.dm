@@ -73,7 +73,7 @@
 	..()
 	set_light(3)
 	var/obj/item/device/radio/beacon/teletarget = null
-	for(var/obj/machinery/computer/teleporter/com in machines)
+	for(var/obj/machinery/computer/teleporter/com in GLOB.machines)
 		if(com.target)
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				teletarget = com.target

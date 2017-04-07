@@ -293,13 +293,11 @@ obj/item/weapon/construction
 
 /obj/item/weapon/construction/rcd/New()
 	..()
-	rcd_list += src
-
+	GLOB.rcd_list += src
 
 /obj/item/weapon/construction/rcd/Destroy()
-	rcd_list -= src
+	GLOB.rcd_list -= src
 	. = ..()
-
 
 /obj/item/weapon/construction/rcd/attack_self(mob/user)
 	..()

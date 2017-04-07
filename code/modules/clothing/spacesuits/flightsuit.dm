@@ -617,7 +617,7 @@
 	for(var/i in 1 to knockback)
 		target = get_step(target, direction)
 	for(var/i in 1 to knockback/3)
-		target = get_step(target, pick(alldirs))
+		target = get_step(target, pick(GLOB.alldirs))
 	if(knockback)
 		victim.throw_at(target, knockback, part_manip.rating)
 	if(isobj(victim))
@@ -635,7 +635,7 @@
 		if(move)
 			while(momentum_x != 0 || momentum_y != 0)
 				sleep(2)
-				step(wearer, pick(cardinal))
+				step(wearer, pick(GLOB.cardinal))
 				momentum_decay()
 				adjust_momentum(0, 0, 10)
 		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground!</span>")
@@ -1266,13 +1266,13 @@
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/equipped(mob/living/carbon/human/wearer, slot)
 	..()
 	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = huds[hudtype]
+		var/datum/atom_hud/H = GLOB.huds[hudtype]
 		H.add_hud_to(wearer)
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/dropped(mob/living/carbon/human/wearer)
 	..()
 	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = huds[hudtype]
+		var/datum/atom_hud/H = GLOB.huds[hudtype]
 		H.remove_hud_from(wearer)
 	if(zoom)
 		toggle_zoom(wearer, TRUE)

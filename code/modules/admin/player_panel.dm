@@ -339,7 +339,7 @@
 			dat += "If limits past: <a href='?_src_=holder;toggle_noncontinuous_behavior=1'>[SSticker.mode.round_ends_with_antag_death ? "End The Round" : "Continue As Extended"]</a><BR>"
 		dat += "<a href='?_src_=holder;end_round=\ref[usr]'>End Round Now</a><br>"
 		dat += "<a href='?_src_=holder;delay_round_end=1'>[SSticker.delay_end ? "End Round Normally" : "Delay Round End"]</a>"
-		var/connected_players = clients.len
+		var/connected_players = GLOB.clients.len
 		var/lobby_players = 0
 		var/observers = 0
 		var/observers_connected = 0
@@ -350,7 +350,7 @@
 		var/other_players = 0
 		var/living_skipped = 0
 		var/drones = 0
-		for(var/mob/M in mob_list)
+		for(var/mob/M in GLOB.mob_list)
 			if(M.ckey)
 				if(isnewplayer(M))
 					lobby_players++
@@ -395,7 +395,7 @@
 					dat += "<tr><td><i><a href='?_src_=vars;Vars=\ref[N]'>[N.name]([N.key])</a> Nuclear Operative Body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
 			dat += "</table><br><table><tr><td><B>Nuclear Disk(s)</B></td></tr>"
-			for(var/obj/item/weapon/disk/nuclear/N in poi_list)
+			for(var/obj/item/weapon/disk/nuclear/N in GLOB.poi_list)
 				dat += "<tr><td>[N.name], "
 				var/atom/disk_loc = N.loc
 				while(!isturf(disk_loc))
@@ -441,7 +441,7 @@
 			dat += "</table>"
 
 		for(var/datum/gang/G in SSticker.mode.gangs)
-			dat += "<br><table cellspacing=5><tr><td><B>[G.name] Gang: <a href='?_src_=holder;gangpoints=\ref[G]'>[G.points] Influence</a> | [round((G.territory.len/start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
+			dat += "<br><table cellspacing=5><tr><td><B>[G.name] Gang: <a href='?_src_=holder;gangpoints=\ref[G]'>[G.points] Influence</a> | [round((G.territory.len/GLOB.start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
 			for(var/datum/mind/N in G.bosses)
 				var/mob/M = N.current
 				if(!M)
@@ -548,7 +548,7 @@
 					dat += "<td><A href='?priv_msg=[abductor.key]'>PM</A></td>"
 			dat += "</table>"
 			dat += "<br><table cellspacing=5><tr><td><B>Abductees</B></td><td></td><td></td></tr>"
-			for(var/obj/machinery/abductor/experiment/E in machines)
+			for(var/obj/machinery/abductor/experiment/E in GLOB.machines)
 				for(var/datum/mind/abductee in E.abductee_minds)
 					var/mob/M = abductee.current
 					if(M)
@@ -591,7 +591,7 @@
 			dat += "</table>"
 
 		var/list/blob_minds = list()
-		for(var/mob/camera/blob/B in mob_list)
+		for(var/mob/camera/blob/B in GLOB.mob_list)
 			blob_minds |= B.mind
 
 		if(istype(SSticker.mode, /datum/game_mode/blob) || blob_minds.len)
@@ -599,7 +599,7 @@
 			if(istype(SSticker.mode,/datum/game_mode/blob))
 				var/datum/game_mode/blob/mode = SSticker.mode
 				blob_minds |= mode.blob_overminds
-				dat += "<tr><td><i>Progress: [blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
+				dat += "<tr><td><i>Progress: [GLOB.blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
 
 			for(var/datum/mind/blob in blob_minds)
 				var/mob/M = blob.current

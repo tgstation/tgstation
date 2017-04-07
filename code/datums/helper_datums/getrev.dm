@@ -1,5 +1,3 @@
-var/global/datum/getrev/revdata = new()
-
 /datum/getrev
 	var/parentcommit
 	var/commit
@@ -46,7 +44,7 @@ var/global/datum/getrev/revdata = new()
 			return
 
 		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
-		valid_HTTPSGet = TRUE
+		GLOB.valid_HTTPSGet = TRUE
 		var/json = HTTPSGet(url)
 		if(!json)
 			return
@@ -75,12 +73,12 @@ var/global/datum/getrev/revdata = new()
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
-	if(revdata.parentcommit)
-		to_chat(src, "<b>Server revision compiled on:</b> [revdata.date]")
-		if(revdata.testmerge.len)
-			to_chat(src, revdata.GetTestMergeInfo())
+	if(GLOB.revdata.parentcommit)
+		to_chat(src, "<b>Server revision compiled on:</b> [GLOB.revdata.date]")
+		if(GLOB.revdata.testmerge.len)
+			to_chat(src, GLOB.revdata.GetTestMergeInfo())
 			to_chat(src, "Based off master commit:")
-		to_chat(src, "<a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>")
+		to_chat(src, "<a href='[config.githuburl]/commit/[GLOB.revdata.parentcommit]'>[GLOB.revdata.parentcommit]</a>")
 	else
 		to_chat(src, "Revision unknown")
 	to_chat(src, "<b>Current Infomational Settings:</b>")

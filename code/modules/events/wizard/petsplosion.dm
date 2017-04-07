@@ -12,6 +12,6 @@
 /datum/round_event/wizard/petsplosion/tick()
 	if(activeFor >= 30 * countdown) // 0 seconds : 2 animals | 30 seconds : 4 animals | 1 minute : 8 animals
 		countdown += 1
-		for(var/mob/living/simple_animal/F in living_mob_list) //If you cull the heard before the next replication, things will be easier for you
+		for(var/mob/living/simple_animal/F in GLOB.living_mob_list) //If you cull the heard before the next replication, things will be easier for you
 			if(!ishostile(F))
 				new F.type(F.loc)
