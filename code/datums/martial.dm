@@ -459,7 +459,7 @@
 		D.throw_at(throw_target, 1, 14, A)
 		D.apply_damage(10, BRUTE)
 		add_logs(A, D, "cqc kicked")
-	if(D.weakened && D.stat != DEAD)
+	if(D.weakened && !D.stat)
 		D.visible_message("<span class='warning'>[A] kicks [D]'s head, knocking them out!</span>", \
 					  		"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, 1, -1)
