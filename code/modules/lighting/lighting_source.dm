@@ -60,16 +60,6 @@
 
 	return ..()
 
-// Kill ourselves.
-/datum/light_source/proc/destroy()
-	destroyed = TRUE
-	force_update()
-	if (source_atom)
-		source_atom.light_sources -= src
-
-	if (top_atom)
-		top_atom.light_sources    -= src
-
 // Fuck supporting force.
 /datum/light_source/Destroy(var/force)
 	destroy()
@@ -84,9 +74,60 @@
 		lighting_update_lights += src;  \
 		needs_update            = TRUE; \
 	}
+// Macro that applies light to a new corner.
+// It is a macro in the interest of speed, yet not having to copy paste it.
+// If you're wondering what's with the backslashes, the backslashes cause BYOND to not automatically end the line.
+// As such this all gets counted as a single line.
+// The braces and semicolons are there to be able to do this on a single line.
+#define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
+#define APPLY_CORNER(C)              \
+	. = LUM_FALLOFF(C, pixel_turf); \
+                                     \
+	. *= light_power;                \
+                                     \
+	effect_str[C] = .;               \
+                                     \
+	C.update_lumcount                \
+	(                                \
+		. * applied_lum_r,           \
+		. * applied_lum_g,           \
+		. * applied_lum_b            \
+	);
+
+// I don't need to explain what this does, do I?
+#define REMOVE_CORNER(C)             \
+	. = -effect_str[C];              \
+	C.update_lumcount                \
+	(                                \
+		. * applied_lum_r,           \
+		. * applied_lum_g,           \
+		. * applied_lum_b            \
+	);
+
+// This is the define used to calculate falloff.
+/datum/light_source/proc/destroy()
+/datum/light_source/proc/update(var/atom/new_top_atom)
+/datum/light_source/proc/force_update()
+/datum/light_source/proc/vis_update()
+/datum/light_source/proc/check()
+/datum/light_source/proc/parse_light_color()
+/datum/light_source/proc/apply_lum()
+/datum/light_source/proc/remove_lum()
+/datum/light_source/proc/recalc_corner(var/datum/lighting_corner/C)
+/datum/light_source/proc/smart_vis_update()
+
+// Kill ourselves.
+/datum/light_source/destroy()
+	destroyed = TRUE
+	force_update()
+	if (source_atom)
+		source_atom.light_sources -= src
+
+	if (top_atom)
+		top_atom.light_sources    -= src
 
 // This proc will cause the light source to update the top atom, and add itself to the update queue.
-/datum/light_source/proc/update(var/atom/new_top_atom)
+/datum/light_source/update(var/atom/new_top_atom)
 	// This top atom is different.
 	if (new_top_atom && new_top_atom != top_atom)
 		if(top_atom != source_atom && top_atom.light_sources) // Remove ourselves from the light sources of that top atom.
@@ -100,19 +141,19 @@
 	EFFECT_UPDATE
 
 // Will force an update without checking if it's actually needed.
-/datum/light_source/proc/force_update()
+/datum/light_source/force_update()
 	force_update = 1
 
 	EFFECT_UPDATE
 
 // Will cause the light source to recalculate turfs that were removed or added to visibility only.
-/datum/light_source/proc/vis_update()
+/datum/light_source/vis_update()
 	vis_update = 1
 
 	EFFECT_UPDATE
 
 // Will check if we actually need to update, and update any variables that may need to be updated.
-/datum/light_source/proc/check()
+/datum/light_source/check()
 	if (!source_atom || !light_range || !light_power)
 		destroy()
 		return 1
@@ -153,7 +194,7 @@
 		. = 1
 
 // Decompile the hexadecimal colour into lumcounts of each perspective.
-/datum/light_source/proc/parse_light_color()
+/datum/light_source/parse_light_color()
 	if (light_color)
 		lum_r = GetRedPart   (light_color) / 255
 		lum_g = GetGreenPart (light_color) / 255
@@ -163,40 +204,7 @@
 		lum_g = 1
 		lum_b = 1
 
-// Macro that applies light to a new corner.
-// It is a macro in the interest of speed, yet not having to copy paste it.
-// If you're wondering what's with the backslashes, the backslashes cause BYOND to not automatically end the line.
-// As such this all gets counted as a single line.
-// The braces and semicolons are there to be able to do this on a single line.
-#define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
-#define APPLY_CORNER(C)              \
-	. = LUM_FALLOFF(C, pixel_turf); \
-                                     \
-	. *= light_power;                \
-                                     \
-	effect_str[C] = .;               \
-                                     \
-	C.update_lumcount                \
-	(                                \
-		. * applied_lum_r,           \
-		. * applied_lum_g,           \
-		. * applied_lum_b            \
-	);
-
-// I don't need to explain what this does, do I?
-#define REMOVE_CORNER(C)             \
-	. = -effect_str[C];              \
-	C.update_lumcount                \
-	(                                \
-		. * applied_lum_r,           \
-		. * applied_lum_g,           \
-		. * applied_lum_b            \
-	);
-
-// This is the define used to calculate falloff.
-
-
-/datum/light_source/proc/apply_lum()
+/datum/light_source/apply_lum()
 	var/static/update_gen = 1
 	applied = 1
 
@@ -229,7 +237,7 @@
 
 	update_gen++
 
-/datum/light_source/proc/remove_lum()
+/datum/light_source/remove_lum()
 	applied = FALSE
 	var/thing
 	for (thing in affecting_turfs)
@@ -247,13 +255,13 @@
 
 	effect_str.Cut()
 
-/datum/light_source/proc/recalc_corner(var/datum/lighting_corner/C)
+/datum/light_source/recalc_corner(var/datum/lighting_corner/C)
 	if (effect_str.Find(C)) // Already have one.
 		REMOVE_CORNER(C)
 
 	APPLY_CORNER(C)
 
-/datum/light_source/proc/smart_vis_update()
+/datum/light_source/smart_vis_update()
 	var/list/datum/lighting_corner/corners = list()
 	var/list/turf/turfs                    = list()
 	var/thing
