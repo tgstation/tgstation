@@ -36,17 +36,15 @@
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 	var/do_initialize = SSatoms.initialized
-	var/mapload
 	if(do_initialize > INITIALIZATION_INSSATOMS)
-		mapload = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		if(SSatoms.InitAtom(src, mapload))
+		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
 	
-	if(mapload)
-		var/list/created = SSatoms.created_atoms
-		if(created)
-			created += src
+	var/list/created = SSatoms.created_atoms
+	if(created)
+		created += src
 
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is being loaded. mapload = FALSE
