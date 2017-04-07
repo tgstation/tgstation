@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		return
 
 	var/obj/item/device/gps/t = ""
-	var/gps_window_height = 110 + GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
+	var/gps_window_height = 110 + GLOB.GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
 	if(emped)
 		t += "ERROR"
 	else
@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
 			gps_window_height += 20
 
-		for(var/obj/item/device/gps/G in GPS_list)
+		for(var/obj/item/device/gps/G in GLOB.GPS_list)
 			var/turf/pos = get_turf(G)
 			var/area/gps_area = get_area(G)
 			var/tracked_gpstag = G.gpstag
