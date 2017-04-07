@@ -461,10 +461,6 @@ obj/item/weapon/construction
 	else
 		..()
 
-/obj/item/weapon/construction/rld/attackby(obj/item/weapon/W, mob/user, params)
-	..()
-	IconAmmo()
-
 /obj/item/weapon/construction/rld/update_icon()
 	icon_state = "rld-[round(matter/35)]"
 	..()
