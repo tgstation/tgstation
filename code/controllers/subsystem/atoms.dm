@@ -74,9 +74,6 @@ SUBSYSTEM_DEF(atoms)
 
 	if(start_tick != world.time)
 		BadInitializeCalls[the_type] |= BAD_INIT_SLEPT
-
-	if(A && !A.initialized)	//A check because possible harddel
-		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	
 	if(result != INITIALIZE_HINT_NORMAL)
 		switch(result)
@@ -88,6 +85,11 @@ SUBSYSTEM_DEF(atoms)
 				return TRUE
 			else
 				BadInitializeCalls[the_type] |= BAD_INIT_NO_HINT
+				
+	if(!A)	//possible harddel
+		return TRUE
+	else if(!A.initialized)
+		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	
 	return QDELETED(A)
 
