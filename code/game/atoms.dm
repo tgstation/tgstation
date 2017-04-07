@@ -48,11 +48,10 @@
 
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is being loaded. mapload = FALSE
-//This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
-//Derivatives must not sleep
-//Returning TRUE while mapload is TRUE will cause the object to be initialized again with mapload = FALSE when everything else is done
-//(Useful for things that requires turfs to have air). This base may only be called once, however
+//This base must be called or derivatives must set initialized to TRUE
+//must not sleep
 //Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
+//Must return an Initialize hint. Defined in __DEFINES/subsystems.dm
 
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/Initialize
