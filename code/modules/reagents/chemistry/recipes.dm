@@ -21,9 +21,9 @@
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
-var/list/chemical_mob_spawn_meancritters = list() // list of possible hostile mobs
-var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
+	var/static/list/chemical_mob_spawn_meancritters = list() // list of possible hostile mobs
+	var/static/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 	if(holder && holder.my_atom)
 		if (chemical_mob_spawn_meancritters.len <= 0 || chemical_mob_spawn_nicecritters.len <= 0)
 			for (var/T in typesof(/mob/living/simple_animal))

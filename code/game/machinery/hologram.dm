@@ -29,9 +29,7 @@ Possible to do for anyone motivated enough:
 #define RANGE_BASED 4
 #define AREA_BASED 6
 
-var/const/HOLOPAD_MODE = RANGE_BASED
-
-var/list/holopads = list()
+#define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
 	name = "\improper AI holopad"
@@ -50,6 +48,7 @@ var/list/holopads = list()
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 	var/temp = ""
+	var/static/list/holopads = list()
 
 /obj/machinery/holopad/New()
 	..()
@@ -121,7 +120,7 @@ var/list/holopads = list()
 			temp = "You requested an AI's presence.<BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in living_mob_list)
+			for(var/mob/living/silicon/ai/AI in GLOB.living_mob_list)
 				if(!AI.client)
 					continue
 				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")

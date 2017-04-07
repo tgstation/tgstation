@@ -35,15 +35,6 @@
 	cost = 10
 	allow_duplicates = FALSE
 
-/datum/map_template/ruin/lavaland/prisoners
-	name = "Prisoner Crash"
-	id = "prisoner-crash"
-	description = "This incredibly high security shuttle clearly didn't have 'avoiding lavafilled hellscapes' as a design priority. \
-	As such, it has crashed, waking the prisoners from their cryostasis, and setting them loose on the wastes. If they live long enough, that is."
-	suffix = "lavaland_surface_prisoner_crash.dmm"
-	cost = 15
-	allow_duplicates = FALSE
-
 /datum/map_template/ruin/lavaland/seed_vault
 	name = "Seed Vault"
 	id = "seed-vault"

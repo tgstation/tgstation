@@ -23,9 +23,9 @@
 
 /obj/item/weapon/dnainjector/proc/prepare()
 	for(var/mut_key in add_mutations_static)
-		add_mutations.Add(mutations_list[mut_key])
+		add_mutations.Add(GLOB.mutations_list[mut_key])
 	for(var/mut_key in remove_mutations_static)
-		remove_mutations.Add(mutations_list[mut_key])
+		remove_mutations.Add(GLOB.mutations_list[mut_key])
 
 /obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	prepare()

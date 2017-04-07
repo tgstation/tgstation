@@ -139,23 +139,23 @@
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()
 
-	for(var/Ddir in cardinal)
+	for(var/Ddir in GLOB.cardinal)
 		if(entered_dirs & Ddir)
 			var/image/I
-			if(bloody_footprints_cache["entered-[blood_state]-[Ddir]"])
-				I = bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
+			if(GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"])
+				I = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
 			else
 				I =  image(icon,"[blood_state]1",dir = Ddir)
-				bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = I
+				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = I
 			if(I)
 				add_overlay(I)
 		if(exited_dirs & Ddir)
 			var/image/I
-			if(bloody_footprints_cache["exited-[blood_state]-[Ddir]"])
-				I = bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
+			if(GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"])
+				I = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
 			else
 				I = image(icon,"[blood_state]2",dir = Ddir)
-				bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = I
+				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = I
 			if(I)
 				add_overlay(I)
 

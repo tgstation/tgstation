@@ -2,15 +2,15 @@
 
 /proc/lizard_name(gender)
 	if(gender == MALE)
-		return "[pick(lizard_names_male)]-[pick(lizard_names_male)]"
+		return "[pick(GLOB.lizard_names_male)]-[pick(GLOB.lizard_names_male)]"
 	else
-		return "[pick(lizard_names_female)]-[pick(lizard_names_female)]"
+		return "[pick(GLOB.lizard_names_female)]-[pick(GLOB.lizard_names_female)]"
 
 /proc/plasmaman_name()
-	return "[pick(plasmaman_names)] \Roman[rand(1,99)]"
+	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1,99)]"
 
-var/church_name = null
 /proc/church_name()
+	var/static/church_name
 	if (church_name)
 		return church_name
 
@@ -26,24 +26,24 @@ var/church_name = null
 
 	return name
 
-var/command_name = null
+GLOBAL_VAR(command_name)
 /proc/command_name()
-	if (command_name)
-		return command_name
+	if (GLOB.command_name)
+		return GLOB.command_name
 
 	var/name = "Central Command"
 
-	command_name = name
+	GLOB.command_name = name
 	return name
 
 /proc/change_command_name(name)
 
-	command_name = name
+	GLOB.command_name = name
 
 	return name
 
-var/religion_name = null
 /proc/religion_name()
+	var/static/religion_name
 	if (religion_name)
 		return religion_name
 
@@ -55,20 +55,20 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/station_name()
-	if(station_name)
-		return station_name
+	if(GLOB.station_name)
+		return GLOB.station_name
 
 	if(config && config.station_name)
-		station_name = config.station_name
+		GLOB.station_name = config.station_name
 	else
-		station_name = new_station_name()
+		GLOB.station_name = new_station_name()
 
 	if(config && config.server_name)
-		world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
+		world.name = "[config.server_name][config.server_name==GLOB.station_name ? "" : ": [GLOB.station_name]"]"
 	else
-		world.name = station_name
+		world.name = GLOB.station_name
 
-	return station_name
+	return GLOB.station_name
 
 /proc/new_station_name()
 	var/random = rand(1,5)
@@ -77,7 +77,7 @@ var/religion_name = null
 
 	//Rare: Pre-Prefix
 	if (prob(10))
-		name = pick(station_prefixes)
+		name = pick(GLOB.station_prefixes)
 		new_station_name = name + " "
 		name = ""
 
@@ -89,12 +89,12 @@ var/religion_name = null
 		name = holiday.getStationPrefix()
 		//get normal name
 	if(!name)
-		name = pick(station_names)
+		name = pick(GLOB.station_names)
 	if(name)
 		new_station_name += name + " "
 
 	// Suffix
-	name = pick(station_suffixes)
+	name = pick(GLOB.station_suffixes)
 	new_station_name += name + " "
 
 	// ID Number
@@ -102,19 +102,19 @@ var/religion_name = null
 		if(1)
 			new_station_name += "[rand(1, 99)]"
 		if(2)
-			new_station_name += pick(greek_letters)
+			new_station_name += pick(GLOB.greek_letters)
 		if(3)
 			new_station_name += "\Roman[rand(1,99)]"
 		if(4)
-			new_station_name += pick(phonetic_alphabet)
+			new_station_name += pick(GLOB.phonetic_alphabet)
 		if(5)
-			new_station_name += pick(numbers_as_words)
+			new_station_name += pick(GLOB.numbers_as_words)
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
 	return new_station_name
 
-var/syndicate_name = null
 /proc/syndicate_name()
+	var/static/syndicate_name
 	if (syndicate_name)
 		return syndicate_name
 
@@ -145,8 +145,8 @@ var/syndicate_name = null
 
 
 //Traitors and traitor silicons will get these. Revs will not.
-var/syndicate_code_phrase//Code phrase for traitors.
-var/syndicate_code_response//Code response for traitors.
+GLOBAL_VAR(syndicate_code_phrase) //Code phrase for traitors.
+GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
 
 	/*
 	Should be expanded.
@@ -179,10 +179,10 @@ var/syndicate_code_response//Code response for traitors.
 	var/threats = strings(ION_FILE, "ionthreats")
 	var/foods = strings(ION_FILE, "ionfood")
 	var/drinks = strings(ION_FILE, "iondrinks")
-	var/list/locations = teleportlocs.len ? teleportlocs : drinks //if null, defaults to drinks instead.
+	var/list/locations = GLOB.teleportlocs.len ? GLOB.teleportlocs : drinks //if null, defaults to drinks instead.
 
 	var/list/names = list()
-	for(var/datum/data/record/t in data_core.general)//Picks from crew manifest.
+	for(var/datum/data/record/t in GLOB.data_core.general)//Picks from crew manifest.
 		names += t.fields["name"]
 
 	var/maxwords = words//Extra var to check for duplicates.
@@ -204,9 +204,9 @@ var/syndicate_code_response//Code response for traitors.
 							if(prob(10))
 								code_phrase += pick(lizard_name(MALE),lizard_name(FEMALE))
 							else
-								code_phrase += pick(pick(first_names_male,first_names_female))
+								code_phrase += pick(pick(GLOB.first_names_male,GLOB.first_names_female))
 								code_phrase += " "
-								code_phrase += pick(last_names)
+								code_phrase += pick(GLOB.last_names)
 					if(2)
 						code_phrase += pick(get_all_jobs())//Returns a job.
 				safety -= 1
@@ -241,4 +241,4 @@ var/syndicate_code_response//Code response for traitors.
 		world.name = "[config.server_name]: [designation]"
 	else
 		world.name = designation
-	station_name = designation
+	GLOB.station_name = designation

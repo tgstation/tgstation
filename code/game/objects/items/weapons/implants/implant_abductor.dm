@@ -39,7 +39,7 @@
 
 /obj/item/weapon/implant/abductor/proc/get_team_console(var/team)
 	var/obj/machinery/abductor/console/console
-	for(var/obj/machinery/abductor/console/c in machines)
+	for(var/obj/machinery/abductor/console/c in GLOB.machines)
 		if(c.team == team)
 			console = c
 			break

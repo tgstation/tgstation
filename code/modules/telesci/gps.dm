@@ -1,4 +1,4 @@
-var/list/GPS_list = list()
+GLOBAL_LIST_EMPTY(GPS_list)
 /obj/item/device/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016. Alt+click to toggle power."
@@ -14,12 +14,12 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/New()
 	..()
-	GPS_list.Add(src)
+	GLOB.GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
 	add_overlay("working")
 
 /obj/item/device/gps/Destroy()
-	GPS_list.Remove(src)
+	GLOB.GPS_list.Remove(src)
 	return ..()
 
 /obj/item/device/gps/emp_act(severity)
@@ -53,7 +53,7 @@ var/list/GPS_list = list()
 		return
 
 	var/obj/item/device/gps/t = ""
-	var/gps_window_height = 110 + GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
+	var/gps_window_height = 110 + GLOB.GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
 	if(emped)
 		t += "ERROR"
 	else
@@ -63,7 +63,7 @@ var/list/GPS_list = list()
 			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
 			gps_window_height += 20
 
-		for(var/obj/item/device/gps/G in GPS_list)
+		for(var/obj/item/device/gps/G in GLOB.GPS_list)
 			var/turf/pos = get_turf(G)
 			var/area/gps_area = get_area(G)
 			var/tracked_gpstag = G.gpstag

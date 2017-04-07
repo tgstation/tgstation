@@ -366,7 +366,7 @@
 
 /obj/structure/table/optable/New()
 	..()
-	for(var/dir in cardinal)
+	for(var/dir in GLOB.cardinal)
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
 		if(computer)
 			computer.table = src

@@ -88,7 +88,7 @@
 		forceMove(null)
 
 		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [timer] second fuse"
-		bombers += message
+		GLOB.bombers += message
 		message_admins(message,0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
 
