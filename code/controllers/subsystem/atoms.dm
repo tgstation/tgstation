@@ -61,8 +61,9 @@ SUBSYSTEM_DEF(atoms)
 		created_atoms = null 
 
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, mapload)
+	var/the_type = A.type
 	if(QDELING(A))
-		BadInitializeCalls[A.type] |= BAD_INIT_QDEL_BEFORE
+		BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
 		return TRUE
 
 	var/start_tick = world.time
@@ -70,10 +71,10 @@ SUBSYSTEM_DEF(atoms)
 	var/result = A.Initialize(mapload)
 
 	if(start_tick != world.time)
-		BadInitializeCalls[A.type] |= BAD_INIT_SLEPT
+		BadInitializeCalls[the_type] |= BAD_INIT_SLEPT
 
-	if(!A.initialized)
-		BadInitializeCalls[A.type] |= BAD_INIT_DIDNT_INIT
+	if(A && !A.initialized)	//A check because possible harddel
+		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	
 	if(result != INITIALIZE_HINT_NORMAL)
 		switch(result)
@@ -84,9 +85,9 @@ SUBSYSTEM_DEF(atoms)
 				qdel(A)
 				return TRUE
 			else
-				BadInitializeCalls[A.type] |= BAD_INIT_NO_HINT
+				BadInitializeCalls[the_type] |= BAD_INIT_NO_HINT
 	
-	return QDELING(A)
+	return QDELETED(A)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized
