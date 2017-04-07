@@ -126,7 +126,7 @@
 	C.update_body()
 	C.update_hair()
 	C.update_canmove()
-	if(is_psuedopart)
+	if(is_pseudopart)
 		drop_organs(C)	//Psuedoparts shouldn't have organs, but just in case
 		qdel(src)
 
