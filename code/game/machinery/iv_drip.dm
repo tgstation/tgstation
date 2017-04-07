@@ -7,11 +7,14 @@
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
+	var/list/drip_containers = list(/obj/item/weapon/reagent_containers/blood,
+											/obj/item/weapon/reagent_containers/food/drinks,
+											/obj/item/weapon/reagent_containers/glass)
 
-
-/obj/machinery/iv_drip/New()
+/obj/machinery/iv_drip/Initialize()
 	..()
 	update_icon()
+	drip_containers = typecacheof(drip_containers)
 
 /obj/machinery/iv_drip/update_icon()
 	if(attached)
@@ -80,7 +83,7 @@
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/reagent_containers/blood) || istype(W, /obj/item/weapon/reagent_containers/food/drinks) || istype(W, /obj/item/weapon/reagent_containers/glass) )
+	if (is_type_in_typecache(W, drip_containers))
 		if(!isnull(beaker))
 			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
 			return
