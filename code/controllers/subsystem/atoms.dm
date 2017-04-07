@@ -31,21 +31,23 @@ SUBSYSTEM_DEF(atoms)
 
 	LAZYINITLIST(late_loaders)
 	
-	var/thing_to_check
+	var/count
 	if(atoms)
-		thing_to_check = atoms
 		created_atoms = list()
-	else
-		thing_to_check = world
-
-	for(var/I in thing_to_check)
-		var/atom/A = I
-		if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
-			if(InitAtom(A, TRUE) && atoms)
-				atoms -= A
+		count = atoms.len
+		for(var/I in atoms)
+			if(InitAtom(I, TRUE))
+				atoms -= I
 			CHECK_TICK
+	else
+		count = 0
+		for(var/atom/A in world)
+			if(!A.initialized)
+				InitAtom(A, TRUE)
+				++count
+				CHECK_TICK
 
-	testing("Initialized [atoms ? atoms.len : world.contents.len] atoms")
+	log_world("Initialized [count] atoms")
 
 	initialized = INITIALIZATION_INNEW_REGULAR
 
