@@ -81,6 +81,8 @@ SUBSYSTEM_DEF(atoms)
 			if(INITIALIZE_HINT_LATELOAD)
 				if(arguments[1])	//mapload
 					late_loaders += A
+				else
+					A.LateInitialize()
 			if(INITIALIZE_HINT_QDEL)
 				qdel(A)
 				return TRUE
