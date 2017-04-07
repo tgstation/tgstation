@@ -159,7 +159,7 @@
 
 /obj/effect/forcefield/arena_shuttle_entrance/Bumped(mob/M as mob|obj)
 	if(!warp_points.len)
-		for(var/obj/effect/landmark/shuttle_arena_entrance/S in landmarks_list)
+		for(var/obj/effect/landmark/shuttle_arena_entrance/S in GLOB.landmarks_list)
 			warp_points |= S
 	if(!isliving(M))
 		return

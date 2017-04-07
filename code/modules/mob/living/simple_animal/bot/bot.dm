@@ -119,7 +119,7 @@
 	..()
 	access_card = new /obj/item/weapon/card/id(src)
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
-	access_card.access += access_robotics
+	access_card.access += GLOB.access_robotics
 	set_custom_texts()
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
@@ -132,7 +132,7 @@
 
 	//Adds bot to the diagnostic HUD system
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
@@ -348,7 +348,7 @@
 			Radio.talk_into(src, message, message_mode, spans, language)
 			return REDUCE_RANGE
 
-	if(message_mode in radiochannels)
+	if(message_mode in GLOB.radiochannels)
 		Radio.talk_into(src, message, message_mode, spans, language)
 		return REDUCE_RANGE
 	return 0
@@ -610,7 +610,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/get_next_patrol_target()
 	// search the beacon list for the next target in the list.
-	for(var/obj/machinery/navbeacon/NB in navbeacons["[z]"])
+	for(var/obj/machinery/navbeacon/NB in GLOB.navbeacons["[z]"])
 		if(NB.location == next_destination) //Does the Beacon location text match the destination?
 			destination = new_destination //We now know the name of where we want to go.
 			patrol_target = NB.loc //Get its location and set it as the target.
@@ -618,7 +618,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return 1
 
 /mob/living/simple_animal/bot/proc/find_nearest_beacon()
-	for(var/obj/machinery/navbeacon/NB in navbeacons["[z]"])
+	for(var/obj/machinery/navbeacon/NB in GLOB.navbeacons["[z]"])
 		var/dist = get_dist(src, NB)
 		if(nearest_beacon) //Loop though the beacon net to find the true closest beacon.
 			//Ignore the beacon if were are located on it.
@@ -925,5 +925,5 @@ Pass a positive integer as an argument to override a bot's default speed.
 //If a bot has its own HUD (for player bots), provide it.
 	if(!data_hud_type)
 		return
-	var/datum/atom_hud/datahud = huds[data_hud_type]
+	var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
 	datahud.add_hud_to(src)

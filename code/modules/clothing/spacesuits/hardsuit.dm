@@ -430,13 +430,13 @@
 		to_chat(user, ("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>"))
 	else
 		onboard_hud_enabled = 1
-		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]
+		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 		DHUD.add_hud_to(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/living/carbon/human/user)
 	..()
 	if(onboard_hud_enabled && !(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic)))
-		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]
+		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 		DHUD.remove_hud_from(user)
 
 /obj/item/clothing/suit/space/hardsuit/rd

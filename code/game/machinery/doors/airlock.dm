@@ -41,7 +41,6 @@
 #define ELECTRIFIED_PERMANENT -1
 
 
-var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock
 	name = "airlock"
@@ -95,12 +94,14 @@ var/list/airlock_overlays = list()
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
 
+	var/static/list/airlock_overlays = list()
+
 /obj/machinery/door/airlock/Initialize()
 	..()
 	wires = new /datum/wires/airlock(src)
 	if(src.closeOtherId != null)
 		spawn (5)
-			for (var/obj/machinery/door/airlock/A in airlocks)
+			for (var/obj/machinery/door/airlock/A in GLOB.airlocks)
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
@@ -115,7 +116,7 @@ var/list/airlock_overlays = list()
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
@@ -212,7 +213,7 @@ var/list/airlock_overlays = list()
 			cyclelinkedairlock.cyclelinkedairlock = null
 		cyclelinkedairlock = null
 	if(id_tag)
-		for(var/obj/machinery/doorButtons/D in machines)
+		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
 	return ..()
 
@@ -491,6 +492,9 @@ var/list/airlock_overlays = list()
 	add_overlay(damag_overlay)
 
 /proc/get_airlock_overlay(icon_state, icon_file)
+	var/obj/machinery/door/airlock/A
+	pass(A)	//suppress unused warning
+	var/list/airlock_overlays = A.airlock_overlays
 	var/iconkey = "[icon_state][icon_file]"
 	if(airlock_overlays[iconkey])
 		return airlock_overlays[iconkey]

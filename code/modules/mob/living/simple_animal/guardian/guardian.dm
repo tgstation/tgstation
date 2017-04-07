@@ -1,5 +1,5 @@
 
-var/global/list/parasites = list() //all currently existing/living guardians
+GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 #define GUARDIAN_HANDS_LAYER 1
 #define GUARDIAN_TOTAL_LAYERS 1
@@ -51,7 +51,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
-	parasites |= src
+	GLOB.parasites += src
 	setthemename(theme)
 
 	..()
@@ -72,7 +72,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			holder.icon_state = "hudhealthy"
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
-	parasites -= src
+	GLOB.parasites -= src
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/proc/setthemename(pickedtheme) //set the guardian's theme to something cool!
@@ -366,7 +366,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/list/guardians = summoner.hasparasites()
 		for(var/para in guardians)
 			to_chat(para, my_message)
-		for(var/M in dead_mob_list)
+		for(var/M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [my_message]")
 
@@ -388,7 +388,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		to_chat(G, "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" )
-	for(var/M in dead_mob_list)
+	for(var/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "[link] [my_message]")
 
@@ -449,10 +449,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/proc/hasparasites() //returns a list of guardians the mob is a summoner for
 	. = list()
-	for(var/P in parasites)
+	for(var/P in GLOB.parasites)
 		var/mob/living/simple_animal/hostile/guardian/G = P
 		if(G.summoner == src)
-			. |= G
+			. += G
 
 /mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
 	return (istype(G) && G.summoner == summoner)

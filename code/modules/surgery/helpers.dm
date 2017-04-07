@@ -20,7 +20,7 @@
 			current_surgery = S
 
 	if(!current_surgery)
-		var/list/all_surgeries = surgeries_list.Copy()
+		var/list/all_surgeries = GLOB.surgeries_list.Copy()
 		var/list/available_surgeries = list()
 
 		for(var/datum/surgery/S in all_surgeries)

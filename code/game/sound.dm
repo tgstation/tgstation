@@ -14,7 +14,7 @@
 	channel = channel || open_sound_channel()
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
-	for (var/P in player_list)
+	for (var/P in GLOB.player_list)
 		var/mob/M = P
 		if(!M || !M.client)
 			continue
@@ -137,5 +137,5 @@
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)
-	for(var/V in clients)
+	for(var/V in GLOB.clients)
 		V << sound(file, repeat, wait, channel, volume)
