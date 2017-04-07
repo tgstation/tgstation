@@ -1,4 +1,0 @@
-author: "Qbopper"
-delete-after: True
-changes: 
-  - bugfix: "Secure lockers will no longer have multiple lines about being broken."
