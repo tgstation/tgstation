@@ -926,7 +926,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	"}
 	usr << browse(dat, "window=dressup;size=550x600")
 
-/client/proc/toggle_antag_hud(silent = FALSE)
+/client/proc/toggle_antag_hud()
 	set category = "Admin"
 	set name = "Toggle AntagHUD"
 	set desc = "Toggles the Admin AntagHUD"
@@ -946,8 +946,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	to_chat(usr, "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
-	if(!silent)
-		feedback_add_details("admin_verb","TAH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","TAH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/has_antag_hud()
 	var/datum/atom_hud/A = huds[ANTAG_HUD_TRAITOR]
