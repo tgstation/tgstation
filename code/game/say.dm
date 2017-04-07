@@ -36,7 +36,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, message_mode)
 	var/rendered = compose_message(src, message_language, message, , spans)
-	for(var/atom/movable/AM in get_hearers_in_view(range, source))
+	for(var/_AM in get_hearers_in_view(range, source))
+		var/atom/movable/AM = _AM
 		AM.Hear(rendered, src, message_language, message, , spans)
 
 //To get robot span classes, stuff like that.

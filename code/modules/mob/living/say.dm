@@ -59,10 +59,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	  ":ï" = "changeling",	".ï" = "changeling"))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
-	var/static/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
-	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING,MODE_ALIEN)
+	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
+	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 
-	var/static/list/one_character_prefix = list(MODE_HEADSET,MODE_ROBOT,MODE_WHISPER)
+	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
 	if(sanitize)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/original_message = message
 	var/in_critical = InCritical()
 
-	if(message_mode in one_character_prefix)
+	if(one_character_prefix[message_mode])
 		message = copytext(message, 2)
 	else if(message_mode)
 		message = copytext(message, 3)
@@ -98,10 +98,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	if(in_critical)
-		if(!(message_mode in crit_allowed_modes))
+		if(!(crit_allowed_modes[message_mode]))
 			return
 	else if(stat == UNCONSCIOUS)
-		if(!(message_mode in unconscious_allowed_modes))
+		if(!(unconscious_allowed_modes[message_mode]))
 			return
 
 	// language comma detection.
@@ -186,6 +186,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(succumbed)
 		succumb(1)
+		to_chat(src, compose_message(src, language, message, , spans, message_mode))
 
 	return 1
 
@@ -210,16 +211,18 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
 	var/list/listening = get_hearers_in_view(message_range+1, source)
 	var/list/the_dead = list()
-	for(var/mob/M in GLOB.player_list)
+	for(var/_M in GLOB.player_list)
+		var/mob/M = _M
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7 && M.z == z)) && client) // client is so that ghosts don't have to listen to mice
 			listening |= M
-			the_dead |= M
+			the_dead[M] = TRUE
 
 	var/eavesdropping = stars(message)
 	var/eavesrendered = compose_message(src, message_language, eavesdropping, , spans, message_mode)
 	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
-	for(var/atom/movable/AM in listening)
-		if(get_dist(source, AM) > message_range && !(AM in the_dead))
+	for(var/_AM in listening)
+		var/atom/movable/AM = _AM
+		if(get_dist(source, AM) > message_range && !(the_dead[AM]))
 			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
 		else
 			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
@@ -293,7 +296,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		switch(lingcheck())
 			if(3)
 				var/msg = "<i><font color=#800040><b>[src.mind]:</b> [message]</font></i>"
-				for(var/mob/M in GLOB.mob_list)
+				for(var/_M in GLOB.mob_list)
+					var/mob/M = _M
 					if(M in GLOB.dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
 						to_chat(M, "[link] [msg]")
@@ -309,7 +313,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
-				for(var/mob/M in GLOB.mob_list)
+				for(var/_M in GLOB.mob_list)
+					var/mob/M = _M
 					if(M in GLOB.dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
 						to_chat(M, "[link] [msg]")
