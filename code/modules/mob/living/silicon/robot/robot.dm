@@ -816,6 +816,9 @@
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
 
+/mob/living/silicon/robot/syndicate/ResetModule()
+	return
+
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"
 	playstyle_string = "<span class='userdanger'>You are a Syndicate medical cyborg!</span><br>\
