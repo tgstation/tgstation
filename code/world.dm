@@ -1,3 +1,4 @@
+
 /world
 	mob = /mob/dead/new_player
 	turf = /turf/open/space/basic
