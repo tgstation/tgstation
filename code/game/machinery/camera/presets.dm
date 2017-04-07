@@ -43,9 +43,9 @@
 	var/number = 0 //camera number in area
 
 //This camera type automatically sets it's name to whatever the area that it's in is called.
-/obj/machinery/camera/autoname/Initialize(mapload)
+/obj/machinery/camera/autoname/Initialize()
 	..()
-	if(mapload)
+	spawn(10)
 		number = 1
 		var/area/A = get_area(src)
 		if(A)
