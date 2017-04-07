@@ -220,7 +220,7 @@
 		id = newid
 	update()
 
-	return INITIALIZE_HINT_LATELOAD
+	return INITIALIZE_HINT_LATELOAD //for machines list
 
 /obj/machinery/conveyor_switch/LateInitialize()
 	conveyors = list()

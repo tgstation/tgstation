@@ -22,20 +22,14 @@
 	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
-	if(mapload)
-		return TRUE	//late initialize to make sure the latejoin list is populated
-
-	preferred_direction = dir
-
 	if(SSshuttle.arrivals)
 		WARNING("More than one arrivals docking_port placed on map!")
-		qdel(src)
-		return
-
+		return INITIALIZE_HINT_QDEL
 	SSshuttle.arrivals = src
 
 	..()
 
+	preferred_direction = dir
 	areas = list()
 
 	var/list/new_latejoin = list()
@@ -46,6 +40,9 @@
 			console = locate(/obj/machinery/requests_console) in A
 		areas += A
 
+	return INITIALIZE_HINT_LATELOAD	//for latejoin list
+
+/obj/docking_port/mobile/arrivals/LateInitialize()
 	if(GLOB.latejoin.len)
 		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
