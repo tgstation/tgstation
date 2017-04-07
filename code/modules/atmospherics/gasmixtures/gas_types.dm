@@ -1,4 +1,6 @@
-var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases, which were at one time hardcoded
+var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases, which were at one time hardcoded. Don't change this
+
+var/list/all_gases = list("o2","n2","co2","plasma","water vapor","freon") //add new gases to this list
 
 /proc/meta_gas_list()
 	. = new /list
@@ -58,7 +60,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_PLASMA_VISIBLE
 
-/datum/gas/freon
+/datum/gas/freon //freon aka memejuice amirite
 	id = "freon"
 	specific_heat = 2000
 	name = "Freon"

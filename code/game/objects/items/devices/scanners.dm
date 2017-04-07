@@ -285,11 +285,12 @@ MASS SPECTROMETER
 	if(total_moles)
 		var/list/env_gases = environment.gases
 
-		environment.assert_gases(arglist(hardcoded_gases))
+		environment.assert_gases(arglist(all_gases))
 		var/o2_concentration = env_gases["o2"][MOLES]/total_moles
 		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
 		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
 		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
+		var/freon_concentration = env_gases["freon"][MOLES]/total_moles
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
@@ -312,9 +313,14 @@ MASS SPECTROMETER
 		else
 			to_chat(user, "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>")
 
+		if(freon_concentration > 0.005)
+			to_chat(user, "<span class='alert'>Freon: [round(freon_concentration*100, 0.01)] %</span>")
+		else
+			to_chat(user, "<span class='info'>Freon: [round(freon_concentration*100, 0.01)] %</span>")
+
 
 		for(var/id in env_gases)
-			if(id in hardcoded_gases)
+			if(id in all_gases)
 				continue
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
