@@ -216,6 +216,7 @@
 	slice.create_reagents(slice.volume)
 	reagents.trans_to(slice,reagents_per_slice)
 	slice.name = "slice of [src]"
+	slice.desc = "[desc]"
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/generate_trash(atom/location)
 	if(trash)
