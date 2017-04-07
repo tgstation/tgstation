@@ -135,13 +135,13 @@
     3)
     var/static/list/transforms
     if(!transforms)
-        var/matrix/M = matrix(src)
+        var/matrix/M = matrix(transform)
         M.Translate(6, 22)
-        var/matrix/M2 = matrix(src)
+        var/matrix/M2 = matrix(transform)
         M2.Translate(7,23)
-        var/matrix/M3 = matrix(src)
+        var/matrix/M3 = matrix(transform)
         M3.Translate(8,22)
-        var/matrix/M4 = matrix(src)
+        var/matrix/M4 = matrix(transform)
         M4.Translate(7,21)
         transforms = list(M,M2,M3,M4)
 
