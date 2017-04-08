@@ -80,14 +80,12 @@
 					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
 					busy = 1
-					if(!do_mob(user, target))
+					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
 						busy = 0
 						return
 					if(reagents.total_volume >= reagents.maximum_volume)
 						return
 				busy = 0
-				if(!L.can_inject(user,1)) //in case the user switched target locations
-					return
 				if(L.transfer_blood_to(src, drawn_amount))
 					user.visible_message("[user] takes a blood sample from [L].")
 				else
@@ -125,13 +123,11 @@
 				if(L != user)
 					L.visible_message("<span class='danger'>[user] is trying to inject [L]!</span>", \
 											"<span class='userdanger'>[user] is trying to inject [L]!</span>")
-					if(!do_mob(user, L))
+					if(!do_mob(user, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
 						return
 					if(!reagents.total_volume)
 						return
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
-						return
-					if(!L.can_inject(user, 1)) //in case the user switched target locations
 						return
 					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!", \
 									"<span class='userdanger'>[user] injects [L] with the syringe!")
