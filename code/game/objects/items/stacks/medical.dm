@@ -75,7 +75,7 @@
 			user.visible_message("<span class='notice'>[user] starts to apply [src] on [t_himself]...</span>", "<span class='notice'>You begin applying [src] on yourself...</span>")
 			if(!do_mob(user, M, self_delay))
 				return
-			if(!M.can_inject(user, 1))//in case they switched target locations
+			if(!M.can_inject(user, 1))//in case the user switched target locations
 				return
 			user.visible_message("<span class='green'>[user] applies [src] on [t_himself].</span>", "<span class='green'>You apply [src] on yourself.</span>")
 
