@@ -1,4 +1,4 @@
-GLOBAL_VAR(global_posibrain_notify_cooldown)
+GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/device/mmi/posibrain
 	name = "positronic brain"
