@@ -6,7 +6,6 @@ SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
 	wait = 2
 	init_order = -20
-	priority = 35
 	flags = SS_TICKER
 
 	var/initialized = FALSE
@@ -49,7 +48,9 @@ SUBSYSTEM_DEF(lighting)
 		L.force_update = FALSE
 		L.needs_update = FALSE
 
-		if (MC_TICK_CHECK)
+		if(init_tick_checks)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
 			break
 	if (i)
 		GLOB.lighting_update_lights.Cut(1, i+1)
@@ -63,7 +64,9 @@ SUBSYSTEM_DEF(lighting)
 
 		C.update_objects()
 		C.needs_update = FALSE
-		if (MC_TICK_CHECK)
+		if(init_tick_checks)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
 			break
 	if (i)
 		GLOB.lighting_update_corners.Cut(1, i+1)
@@ -81,7 +84,9 @@ SUBSYSTEM_DEF(lighting)
 
 		O.update()
 		O.needs_update = FALSE
-		if (MC_TICK_CHECK)
+		if(init_tick_checks)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
 			break
 	if (i)
 		GLOB.lighting_update_objects.Cut(1, i+1)

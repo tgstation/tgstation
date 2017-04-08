@@ -4,6 +4,9 @@
 		return 0
 
 	if(!M.client) //no cache. fallback to a DBQuery
+		if(!GLOB.dbcon.Connect())
+			return 0
+
 		var/DBQuery/query_jobban_check_ban = GLOB.dbcon.NewQuery("SELECT reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(M.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[sanitizeSQL(rank)]'")
 		if(!query_jobban_check_ban.warn_execute())
 			return
@@ -12,9 +15,12 @@
 			return reason ? reason : 1 //we don't want to return "" if there is no ban reason, as that would evaluate to false
 		else
 			return 0
+	log_admin("step 4")
 
 	if(!M.client.jobbancache)
 		jobban_buildcache(M.client)
+
+	log_admin("step 5")
 
 	if(rank in M.client.jobbancache)
 		var/reason = M.client.jobbancache[rank]
@@ -24,6 +30,10 @@
 /proc/jobban_buildcache(client/C)
 	if(C && istype(C))
 		C.jobbancache = list()
+
+		if(!GLOB.dbcon.Connect())
+			return FALSE
+
 		var/DBQuery/query_jobban_build_cache = GLOB.dbcon.NewQuery("SELECT job, reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_jobban_build_cache.warn_execute())
 			return
