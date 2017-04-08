@@ -474,11 +474,11 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(href_list["printbible"])
 		if(cooldown < world.time)
 			var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
-			if(SSreligion.Bible_icon_state && SSreligion.Bible_item_state)
-				B.icon_state = SSreligion.Bible_icon_state
-				B.item_state = SSreligion.Bible_item_state
-				B.name = SSreligion.Bible_name
-				B.deity_name = SSreligion.Bible_deity_name
+			if(SSreligion.bible_icon_state && SSreligion.bible_item_state)
+				B.icon_state = SSreligion.bible_icon_state
+				B.item_state = SSreligion.bible_item_state
+				B.name = SSreligion.bible_name
+				B.deity_name = SSreligion.deity
 			cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
