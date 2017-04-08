@@ -145,7 +145,7 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(cardinal)
+					var/anydir = pick(GLOB.cardinal)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
@@ -196,7 +196,7 @@
 		var/turf/open/ST = src.loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(arglist(hardcoded_gases))
+			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
 			var/tox = ST_gases["plasma"][MOLES]
 			var/oxy = ST_gases["o2"][MOLES]

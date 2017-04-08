@@ -8,13 +8,13 @@
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(hud_type && slot == slot_glasses)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
 	..()
 	if(hud_type && istype(user) && user.glasses == src)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.remove_hud_from(user)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
@@ -161,7 +161,7 @@
 		return
 
 	if (hud_type)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.remove_hud_from(user)
 
 	if (hud_type == DATA_HUD_MEDICAL_ADVANCED)
@@ -172,7 +172,7 @@
 		hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	if (hud_type)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/toggle/thermal

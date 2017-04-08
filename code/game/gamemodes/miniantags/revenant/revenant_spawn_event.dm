@@ -20,7 +20,7 @@
 /datum/round_event/ghost_role/revenant/spawn_role()
 	if(!ignore_mobcheck)
 		var/deadMobs = 0
-		for(var/mob/M in dead_mob_list)
+		for(var/mob/M in GLOB.dead_mob_list)
 			deadMobs++
 		if(deadMobs < REVENANT_SPAWN_THRESHOLD)
 			message_admins("Event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
@@ -34,13 +34,13 @@
 
 	var/list/spawn_locs = list()
 
-	for(var/obj/effect/landmark/L in landmarks_list)
+	for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
 			switch(L.name)
 				if("revenantspawn")
 					spawn_locs += L.loc
 	if(!spawn_locs.len) //If we can't find any revenant spawns, try the carp spawns
-		for(var/obj/effect/landmark/L in landmarks_list)
+		for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				switch(L.name)
 					if("carpspawn")

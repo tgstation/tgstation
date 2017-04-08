@@ -9,6 +9,6 @@ SUBSYSTEM_DEF(assets)
 		var/datum/asset/A = new type()
 		A.register()
 
-	for(var/client/C in clients)
+	for(var/client/C in GLOB.clients)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, cache, FALSE), 10)
 	..()

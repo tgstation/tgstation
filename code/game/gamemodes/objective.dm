@@ -26,7 +26,7 @@
 
 /datum/objective/proc/get_crewmember_minds()
 	. = list()
-	for(var/V in data_core.locked)
+	for(var/V in GLOB.data_core.locked)
 		var/datum/data/record/R = V
 		var/mob/M = R.fields["reference"]
 		if(M && M.mind)
@@ -246,7 +246,7 @@
 
 	var/area/A = SSshuttle.emergency.areaInstance
 
-	for(var/mob/living/player in player_list) //Make sure nobody else is onboard
+	for(var/mob/living/player in GLOB.player_list) //Make sure nobody else is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
 				if(issilicon(player)) //Borgs are technically dead anyways
@@ -260,7 +260,7 @@
 					if(player.real_name != owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 0
 
-	for(var/mob/living/player in player_list) //Make sure at least one of you is onboard
+	for(var/mob/living/player in GLOB.player_list) //Make sure at least one of you is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
 				if(issilicon(player)) //Borgs are technically dead anyways
@@ -288,7 +288,7 @@
 
 	var/area/A = SSshuttle.emergency.areaInstance
 
-	for(var/mob/living/player in player_list)
+	for(var/mob/living/player in GLOB.player_list)
 		if(issilicon(player))
 			continue
 		if(player.mind)
@@ -310,7 +310,7 @@
 
 	var/area/A = SSshuttle.emergency.areaInstance
 
-	for(var/mob/living/player in player_list)
+	for(var/mob/living/player in GLOB.player_list)
 		if(get_area(player) == A && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
 			if(H.dna.species.id != "human")
@@ -439,8 +439,7 @@
 		return 1
 	return 0
 
-
-var/global/list/possible_items = list()
+GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
@@ -452,12 +451,12 @@ var/global/list/possible_items = list()
 
 /datum/objective/steal/New()
 	..()
-	if(!possible_items.len)//Only need to fill the list when it's needed.
-		init_subtypes(/datum/objective_item/steal,possible_items)
+	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
+		init_subtypes(/datum/objective_item/steal,GLOB.possible_items)
 
 /datum/objective/steal/find_target()
 	var/approved_targets = list()
-	for(var/datum/objective_item/possible_item in possible_items)
+	for(var/datum/objective_item/possible_item in GLOB.possible_items)
 		if(is_unique_objective(possible_item.targetitem) && !(owner.current.mind.assigned_role in possible_item.excludefromjob))
 			approved_targets += possible_item
 	return set_target(safepick(approved_targets))
@@ -476,7 +475,7 @@ var/global/list/possible_items = list()
 		return
 
 /datum/objective/steal/proc/select_target() //For admins setting objectives manually.
-	var/list/possible_items_all = possible_items+"custom"
+	var/list/possible_items_all = GLOB.possible_items+"custom"
 	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
 	if (!new_target) return
 
@@ -522,19 +521,17 @@ var/global/list/possible_items = list()
 				H.equip_in_one_of_slots(O, slots)
 
 
-var/global/list/possible_items_special = list()
+GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal/special //ninjas are so special they get their own subtype good for them
 
 /datum/objective/steal/special/New()
 	..()
-	if(!possible_items_special.len)
-		init_subtypes(/datum/objective_item/special,possible_items_special)
-		init_subtypes(/datum/objective_item/stack,possible_items_special)
+	if(!GLOB.possible_items_special.len)
+		init_subtypes(/datum/objective_item/special,GLOB.possible_items_special)
+		init_subtypes(/datum/objective_item/stack,GLOB.possible_items_special)
 
 /datum/objective/steal/special/find_target()
-	return set_target(pick(possible_items_special))
-
-
+	return set_target(pick(GLOB.possible_items_special))
 
 /datum/objective/steal/exchange
 	dangerrating = 10
@@ -654,11 +651,11 @@ var/global/list/possible_items_special = list()
 	if (SSticker)
 		var/n_p = 1 //autowin
 		if (SSticker.current_state == GAME_STATE_SETTING_UP)
-			for(var/mob/dead/new_player/P in player_list)
+			for(var/mob/dead/new_player/P in GLOB.player_list)
 				if(P.client && P.ready && P.mind!=owner)
 					n_p ++
 		else if (SSticker.current_state == GAME_STATE_PLAYING)
-			for(var/mob/living/carbon/human/P in player_list)
+			for(var/mob/living/carbon/human/P in GLOB.player_list)
 				if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
 					n_p ++
 		target_amount = min(target_amount, n_p)
@@ -796,7 +793,7 @@ var/global/list/possible_items_special = list()
 	//So at the time of writing, rand(3,6), it's also capped by the amount of lings there are
 	//Because you can't fill 6 head roles with 3 lings
 
-	var/needed_heads = rand(min_lings,command_positions.len)
+	var/needed_heads = rand(min_lings,GLOB.command_positions.len)
 	needed_heads = min(SSticker.mode.changelings.len,needed_heads)
 
 	var/list/heads = SSticker.mode.get_living_heads()

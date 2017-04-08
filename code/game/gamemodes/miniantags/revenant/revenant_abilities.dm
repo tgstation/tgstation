@@ -106,10 +106,17 @@
 		if(!msg)
 			charge_counter = charge_max
 			return
+<<<<<<< HEAD
 		log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [russian_html2text(msg)]")
 		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[russian_html2text(msg)]</span>")
 		to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[russian_html2text(msg)]</span>")
 		for(var/ded in dead_mob_list)
+=======
+		log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
+		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
+		to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
+		for(var/ded in GLOB.dead_mob_list)
+>>>>>>> 7f8baa113196e85e45de0059e7c98ce212d712ed
 			if(!isobserver(ded))
 				continue
 			var/follow_rev = FOLLOW_LINK(ded, user)

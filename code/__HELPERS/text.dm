@@ -15,11 +15,11 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitizeSQL(t)
-	var/sqltext = dbcon.Quote("[t]");
+	var/sqltext = GLOB.dbcon.Quote("[t]");
 	return copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
 
 /proc/format_table_name(table as text)
-	return sqlfdbktableprefix + table
+	return GLOB.sqlfdbktableprefix + table
 
 /*
  * Text sanitization
@@ -37,7 +37,7 @@
 	return t
 
 //Removes a few problematic characters
-/proc/sanitize_simple(t,list/repl_chars = list("\n"="#","\t"="#","ˇ"="&#255;"))
+/proc/sanitize_simple(t,list/repl_chars = list("\n"="#","\t"="#","—è"="&#255;"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
@@ -51,10 +51,10 @@ proc/sanitize_russian(var/msg, var/html = 0)
         rep = "&#x44F;"
     else
         rep = "&#255;"
-    var/index = findtext(msg, "ˇ")
+    var/index = findtext(msg, "—è")
     while(index)
         msg = copytext(msg, 1, index) + rep + copytext(msg, index + 1)
-        index = findtext(msg, "ˇ")
+        index = findtext(msg, "—è")
     return msg
 
 proc/russian_html2text(msg)
@@ -401,6 +401,12 @@ proc/russian_text2html(msg)
 		new_text += copytext(text, i, i+1)
 	return new_text
 
+
+GLOBAL_LIST_INIT(zero_character_only, list("0"))
+GLOBAL_LIST_INIT(hex_characters, list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"))
+GLOBAL_LIST_INIT(alphabet, list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"))
+GLOBAL_LIST_INIT(binary, list("0","1"))
+
 /proc/dd_splittext(text, separator, var/list/withinList)
 	var/textlength = length(text)
 	var/separatorlength = length(separator)
@@ -440,10 +446,10 @@ var/list/binary = list("0","1")
 		. += string
 
 /proc/random_short_color()
-	return random_string(3, hex_characters)
+	return random_string(3, GLOB.hex_characters)
 
 /proc/random_color()
-	return random_string(6, hex_characters)
+	return random_string(6, GLOB.hex_characters)
 
 /proc/add_zero2(t, u)
 	var/temp1
@@ -547,7 +553,7 @@ var/list/binary = list("0","1")
 		rep = "&#x44F;"
 	else
 		rep = "&#255;"
-	var/list/c = splittext(msg, "ˇ")
+	var/list/c = splittext(msg, "—è")
 	if(c.len == 1)
 		return msg
 	var/out = ""
@@ -565,7 +571,7 @@ var/list/binary = list("0","1")
 		rep = "&#x44F;"
 	else
 		rep = "&#255;"
-	var/list/c = splittext(msg, "ˇ")
+	var/list/c = splittext(msg, "—è")
 	if(c.len == 1)
 		return msg
 	var/out = ""
@@ -618,11 +624,11 @@ var/list/binary = list("0","1")
 	return text
 
 /proc/uppertext_uni(text as text)
-	var/rep = "ﬂ"
-	var/index = findtext(text, "ˇ")
+	var/rep = "–Ø"
+	var/index = findtext(text, "—è")
 	while(index)
 		text = copytext(text, 1, index) + rep + copytext(text, index + 1)
-		index = findtext(text, "ˇ")
+		index = findtext(text, "—è")
 	var/t = ""
 	for(var/i = 1, i <= length(text), i++)
 		var/a = text2ascii(text, i)
@@ -662,10 +668,10 @@ var/list/binary = list("0","1")
 
 /proc/upperrustext(text as text)
     var/rep = "&#223;"
-    var/index = findtext(text, "ˇ")
+    var/index = findtext(text, "—è")
     while(index)
         text = copytext(text, 1, index) + rep + copytext(text, index + 1)
-        index = findtext(text, "ˇ")
+        index = findtext(text, "—è")
     var/t = ""
     for(var/i = 1, i <= length(text), i++)
         var/a = text2ascii(text, i)

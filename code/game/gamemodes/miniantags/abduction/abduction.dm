@@ -43,7 +43,7 @@
 
 /datum/game_mode/abduction/proc/make_abductor_team(team_number,preset_agent=null,preset_scientist=null)
 	//Team Name
-	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
+	team_names[team_number] = "Mothership [pick(GLOB.possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
 	//Team Objective
 	var/datum/objective/experiment/team_objective = new
 	team_objective.team = team_number
@@ -90,7 +90,7 @@
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
 	agent_landmarks.len = max_teams
 	scientist_landmarks.len = max_teams
-	for(var/obj/effect/landmark/abductor/A in landmarks_list)
+	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
 		if(istype(A,/obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
 		else if(istype(A,/obj/effect/landmark/abductor/scientist))
@@ -137,7 +137,7 @@
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
 	agent_landmarks.len = max_teams
 	scientist_landmarks.len = max_teams
-	for(var/obj/effect/landmark/abductor/A in landmarks_list)
+	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
 		if(istype(A,/obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
 		else if(istype(A,/obj/effect/landmark/abductor/scientist))
@@ -201,7 +201,7 @@
 	abductor.announce_objectives()
 
 /datum/game_mode/abduction/proc/equip_common(mob/living/carbon/human/agent,team_number)
-	var/radio_freq = SYND_FREQ
+	var/radio_freq = GLOB.SYND_FREQ
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(agent)
 	R.set_frequency(radio_freq)
@@ -212,7 +212,7 @@
 
 /datum/game_mode/abduction/proc/get_team_console(team)
 	var/obj/machinery/abductor/console/console
-	for(var/obj/machinery/abductor/console/c in machines)
+	for(var/obj/machinery/abductor/console/c in GLOB.machines)
 		if(c.team == team)
 			console = c
 			break
@@ -319,7 +319,7 @@
 			return 0
 		var/datum/species/abductor/S = H.dna.species
 		ab_team = S.team
-	for(var/obj/machinery/abductor/experiment/E in machines)
+	for(var/obj/machinery/abductor/experiment/E in GLOB.machines)
 		if(E.team == ab_team)
 			if(E.points >= target_amount)
 				return 1
@@ -328,12 +328,12 @@
 	return 0
 
 /datum/game_mode/proc/update_abductor_icons_added(datum/mind/alien_mind)
-	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_ABDUCTOR]
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_ABDUCTOR]
 	hud.join_hud(alien_mind.current)
 	set_antag_hud(alien_mind.current, ((alien_mind in abductors) ? "abductor" : "abductee"))
 
 /datum/game_mode/proc/update_abductor_icons_removed(datum/mind/alien_mind)
-	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_ABDUCTOR]
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_ABDUCTOR]
 	hud.leave_hud(alien_mind.current)
 	set_antag_hud(alien_mind.current, null)
 
@@ -428,7 +428,7 @@
 	explanation_text = "Call forth a spirit from the other side."
 
 /datum/objective/abductee/calling/New()
-	var/mob/dead/D = pick(dead_mob_list)
+	var/mob/dead/D = pick(GLOB.dead_mob_list)
 	if(D)
 		explanation_text = "You know that [D] has perished. Hold a seance to call them from the spirit realm."
 

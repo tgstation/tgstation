@@ -130,7 +130,7 @@
 	name = "\improper ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
-	req_access = list(access_syndicate)
+	req_access = list(GLOB.access_syndicate)
 
 /obj/machinery/computer/pod/old/syndicate/attack_hand(mob/user)
 	if(!allowed(user))

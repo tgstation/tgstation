@@ -87,7 +87,7 @@
 	attacktext = "shocks"
 	attack_sound = 'sound/effects/EMPulse.ogg'
 	friendly = "pinches"
-	speed = 1
+	speed = 0
 	faction = list("swarmer")
 	AIStatus = AI_OFF
 	pass_flags = PASSTABLE
@@ -120,7 +120,7 @@
 /mob/living/simple_animal/hostile/swarmer/Initialize()
 	..()
 	verbs -= /mob/living/verb/pulled
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
 
@@ -663,8 +663,8 @@
 		set_light(0)
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
-	var/rendered = "<B>Swarm communication - [src]</b> [sanitize_russian(say_quote(msg, get_spans()))]"
-	for(var/mob/M in mob_list)
+	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
+	for(var/mob/M in GLOB.mob_list)
 		if(isswarmer(M))
 			to_chat(M, rendered)
 		if(isobserver(M))

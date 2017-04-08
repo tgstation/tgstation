@@ -65,7 +65,7 @@
 	var/internal_damage = 0 //contains bitflags
 
 	var/list/operation_req_access = list()//required access level for mecha operation
-	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
+	var/list/internals_req_access = list(GLOB.access_engine,GLOB.access_robotics)//required access level to open cell compartment
 
 	var/wreckage
 
@@ -132,11 +132,11 @@
 	smoke_system.attach(src)
 	add_cell()
 	START_PROCESSING(SSobj, src)
-	poi_list |= src
+	GLOB.poi_list |= src
 	log_message("[src.name] created.")
-	mechas_list += src //global mech list
+	GLOB.mechas_list += src //global mech list
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
@@ -185,7 +185,7 @@
 		if(AI)
 			AI.gib() //No wreck, no AI to recover
 	STOP_PROCESSING(SSobj, src)
-	poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
 	internal_tank = null
@@ -200,7 +200,7 @@
 	qdel(smoke_system)
 	smoke_system = null
 
-	mechas_list -= src //global mech list
+	GLOB.mechas_list -= src //global mech list
 	return ..()
 
 ////////////////////////
@@ -1011,7 +1011,7 @@
 
 /obj/mecha/proc/log_message(message as text,red=null)
 	log.len++
-	log[log.len] = list("time"="[worldtime2text()]","date","year"="[year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"="[worldtime2text()]","date","year"="[GLOB.year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
@@ -1019,8 +1019,8 @@
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
 
-var/year = time2text(world.realtime,"YYYY")
-var/year_integer = text2num(year) // = 2013???
+GLOBAL_VAR_INIT(year, time2text(world.realtime,"YYYY"))
+GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 ///////////////////////
 ///// Power stuff /////

@@ -2,7 +2,7 @@
 /proc/hierophant_message(message, servantsonly, atom/target)
 	if(!message)
 		return FALSE
-	for(var/M in mob_list)
+	for(var/M in GLOB.mob_list)
 		if(!servantsonly && isobserver(M))
 			if(target)
 				var/link = FOLLOW_LINK(M, target)

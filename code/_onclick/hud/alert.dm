@@ -276,7 +276,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	return ..()
 
 /obj/screen/alert/clockwork/scripture_reqs/process()
-	if(clockwork_gateway_activated)
+	if(GLOB.clockwork_gateway_activated)
 		qdel(src)
 		return
 	var/current_state
@@ -288,7 +288,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "no"
 	if(!current_state)
 		name = "Current Objective"
-		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			desc = "<b>Protect the Ark at [gate_area.map_name]!</b>"
 			return
@@ -298,7 +298,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		name = "Next Tier Requirements"
 		var/validservants = 0
 		var/unconverted_ais_exist = get_unconverted_ais()
-		for(var/mob/living/L in living_mob_list)
+		for(var/mob/living/L in GLOB.living_mob_list)
 			if(is_servant_of_ratvar(L) && (ishuman(L) || issilicon(L)))
 				validservants++
 		var/req_servants = 0
@@ -328,14 +328,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			icon_state += "-servants" //in this manner, generate an icon key based on what we're missing
 		else
 			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-		textlist += "<br><b>[clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
-		if(clockwork_caches < req_caches)
+		textlist += "<br><b>[GLOB.clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
+		if(GLOB.clockwork_caches < req_caches)
 			icon_state += "-caches"
 		else
 			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
 		if(req_cv) //cv only shows up if the tier requires it
-			textlist += "<br><b>[clockwork_construction_value]/[req_cv]</b> Construction Value"
-			if(clockwork_construction_value < req_cv)
+			textlist += "<br><b>[GLOB.clockwork_construction_value]/[req_cv]</b> Construction Value"
+			if(GLOB.clockwork_construction_value < req_cv)
 				icon_state += "-cv"
 			else
 				textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
@@ -356,7 +356,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "clockinfo"
 
 /obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
 	else
 		var/servants = 0
@@ -364,7 +364,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/unconverted_ais_exist = get_unconverted_ais()
 		var/list/scripture_states = scripture_unlock_check()
 		var/list/textlist
-		for(var/mob/living/L in living_mob_list)
+		for(var/mob/living/L in GLOB.living_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
 				if(ishuman(L) || issilicon(L))
@@ -376,13 +376,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist = list("<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>")
 		else
 			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
-		textlist += "<b>[clockwork_caches ? "[clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
-		<b>[clockwork_construction_value]</b> Construction Value.<br>"
-		if(clockwork_daemons)
-			textlist += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
+		textlist += "<b>[GLOB.clockwork_caches ? "[GLOB.clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
+		<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>"
+		if(GLOB.clockwork_daemons)
+			textlist += "<b>[GLOB.clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < GLOB.clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
 			textlist += "No Tinkerer's Daemons.<br>"
-		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
 			if(G.still_needs_components())
@@ -399,10 +399,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			else
 				textlist += "<b>An unconverted AI exists!</b><br>"
 		if(scripture_states[SCRIPTURE_REVENANT])
-			var/inathneq_available = clockwork_generals_invoked["inath-neq"] <= world.time
-			var/sevtug_available = clockwork_generals_invoked["sevtug"] <= world.time
-			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
-			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
+			var/inathneq_available = GLOB.clockwork_generals_invoked["inath-neq"] <= world.time
+			var/sevtug_available = GLOB.clockwork_generals_invoked["sevtug"] <= world.time
+			var/nezbere_available = GLOB.clockwork_generals_invoked["nezbere"] <= world.time
+			var/nezcrentr_available = GLOB.clockwork_generals_invoked["nzcrentr"] <= world.time
 			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
 				textlist += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
 				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"

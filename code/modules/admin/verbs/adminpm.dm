@@ -2,7 +2,7 @@
 
 
 //allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-/client/proc/cmd_admin_pm_context(mob/M in mob_list)
+/client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
 	set category = null
 	set name = "Admin PM Mob"
 	if(!holder)
@@ -43,7 +43,7 @@
 	if(istext(whom))
 		if(cmptext(copytext(whom,1,2),"@"))
 			whom = findStealthKey(whom)
-		C = directory[whom]
+		C = GLOB.directory[whom]
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
@@ -72,7 +72,7 @@
 		if(whom == "IRCKEY")
 			irc = 1
 		else
-			C = directory[whom]
+			C = GLOB.directory[whom]
 	else if(istype(whom,/client))
 		C = whom
 	if(irc)
@@ -177,13 +177,13 @@
 
 	if(irc)
 		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
-		for(var/client/X in admins)
+		for(var/client/X in GLOB.admins)
 			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" )
 	else
 		window_flash(C, ignorepref = TRUE)
 		log_admin_private("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
 		//we don't use message_admins here because the sender/receiver might get it too
-		for(var/client/X in admins)
+		for(var/client/X in GLOB.admins)
 			if(X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
 				to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [keywordparsedmsg]</font>" )
 
@@ -192,7 +192,7 @@
 
 /proc/IrcPm(target,msg,sender)
 
-	var/client/C = directory[target]
+	var/client/C = GLOB.directory[target]
 
 	var/static/stealthkey
 	var/adminname = config.showircname ? "[sender](IRC)" : "Administrator"
@@ -229,12 +229,12 @@
 	var/i = 0
 	while(i == 0)
 		i = 1
-		for(var/P in stealthminID)
-			if(num == stealthminID[P])
+		for(var/P in GLOB.stealthminID)
+			if(num == GLOB.stealthminID[P])
 				num++
 				i = 0
 	var/stealth = "@[num2text(num)]"
-	stealthminID["IRCKEY"] = stealth
+	GLOB.stealthminID["IRCKEY"] = stealth
 	return	stealth
 
 #undef IRCREPLYCOUNT

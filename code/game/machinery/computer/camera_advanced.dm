@@ -50,7 +50,7 @@
 
 	if(!eyeobj.eye_initialized)
 		var/camera_location
-		for(var/obj/machinery/camera/C in cameranet.cameras)
+		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 			if(!C.can_use() || z_lock && C.z != z_lock)
 				continue
 			if(C.network & networks)
@@ -109,7 +109,7 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 			return
 		T = get_turf(T)
 		loc = T
-		cameranet.visibility(src)
+		GLOB.cameranet.visibility(src)
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
@@ -170,7 +170,7 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 
 	var/list/L = list()
 
-	for (var/obj/machinery/camera/cam in cameranet.cameras)
+	for (var/obj/machinery/camera/cam in GLOB.cameranet.cameras)
 		if(origin.z_lock && cam.z != origin.z_lock)
 			continue
 		L.Add(cam)

@@ -8,6 +8,8 @@
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
 
+	var/static/next_mob_id = 0
+
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
 
