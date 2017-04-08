@@ -154,6 +154,5 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 /obj/item/weapon/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."
 
-/obj/item/weapon/storage/book/bible/booze/New()
-	..()
+/obj/item/weapon/storage/book/bible/booze/PopulateContents()
 	new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
