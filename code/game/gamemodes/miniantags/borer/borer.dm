@@ -202,21 +202,16 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 	if(src && !QDELETED(src) && !QDELETED(victim))
 		var/say_string = (docile) ? "slurs" :"states"
+		input = russian_html2text(input)
 		if(victim)
-<<<<<<< HEAD
-			to_chat(victim, "<span class='changeling'><i>[truename] [say_string]:</i> [russian_html2text(input)]</span>")
-			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [russian_html2text(input)]")
-			for(var/M in dead_mob_list)
-=======
 			to_chat(victim, "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>")
 			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [input]")
 			for(var/M in GLOB.dead_mob_list)
->>>>>>> 7f8baa113196e85e45de0059e7c98ce212d712ed
 				if(isobserver(M))
-					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[truename]</b> : [russian_html2text(input)]</i>"
+					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[truename]</b> : [input]</i>"
 					var/link = FOLLOW_LINK(M, src)
 					to_chat(M, "[link] [rendered]")
-		to_chat(src, "<span class='changeling'><i>[truename] [say_string]:</i> [russian_html2text(input)]</span>")
+		to_chat(src, "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>")
 		victim.verbs += /mob/living/proc/borer_comm
 		talk_to_borer_action.Grant(victim)
 
@@ -233,16 +228,17 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	var/input = strip_html_properly(stripped_input(src, "Please enter a message to tell the borer.", "Message", null))
 	if(!input)
 		return
+	input = russian_html2text(input)
 
-	to_chat(B, "<span class='changeling'><i>[src] says:</i> [russian_html2text(input)]</span>")
+	to_chat(B, "<span class='changeling'><i>[src] says:</i> [input]</span>")
 	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [input]")
 
 	for(var/M in GLOB.dead_mob_list)
 		if(isobserver(M))
-			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src]</b> : [russian_html2text(input)]</i>"
+			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src]</b> : [input]</i>"
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [rendered]")
-	to_chat(src, "<span class='changeling'><i>[src] says:</i> [russian_html2text(input)]</span>")
+	to_chat(src, "<span class='changeling'><i>[src] says:</i> [input]</span>")
 
 /mob/living/proc/trapped_mind_comm()
 	set name = "Converse with Trapped Mind"
@@ -326,17 +322,12 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 /mob/living/simple_animal/borer/say(message)
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
-<<<<<<< HEAD
-		for(var/borer in borers)
-			to_chat(borer, "<span class='borer'>Cortical Link: [truename] sings, \"[russian_html2text(message)]\"")
-		for(var/mob/D in dead_mob_list)
-			to_chat(D, "<span class='borer'>Cortical Link: [truename] sings, \"[russian_html2text(message)]\"")
-=======
+		message = russian_html2text(message)
+		
 		for(var/borer in GLOB.borers)
 			to_chat(borer, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
 		for(var/mob/D in GLOB.dead_mob_list)
 			to_chat(D, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
->>>>>>> 7f8baa113196e85e45de0059e7c98ce212d712ed
 		return
 	if(!victim)
 		to_chat(src, "<span class='warning'>You cannot speak without a host!</span>")

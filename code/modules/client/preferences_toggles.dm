@@ -227,17 +227,10 @@ GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost",
 							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
 							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire", "catghost"))
 /client/proc/pick_form()
-<<<<<<< HEAD
 //	if(!is_content_unlocked())
 //		alert("This setting is for accounts with BYOND premium only.")
 //		return
-	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
-=======
-	if(!is_content_unlocked())
-		alert("This setting is for accounts with BYOND premium only.")
-		return
 	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_forms
->>>>>>> 7f8baa113196e85e45de0059e7c98ce212d712ed
 	if(new_form)
 		prefs.ghost_form = new_form
 		prefs.save_preferences()
@@ -248,17 +241,10 @@ GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost",
 GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON))
 
 /client/proc/pick_ghost_orbit()
-<<<<<<< HEAD
 //	if(!is_content_unlocked())
 //		alert("This setting is for accounts with BYOND premium only.")
 //		return
-	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in ghost_orbits
-=======
-	if(!is_content_unlocked())
-		alert("This setting is for accounts with BYOND premium only.")
-		return
 	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_orbits
->>>>>>> 7f8baa113196e85e45de0059e7c98ce212d712ed
 	if(new_orbit)
 		prefs.ghost_orbit = new_orbit
 		prefs.save_preferences()

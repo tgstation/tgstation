@@ -9,6 +9,7 @@
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES
+#define DEBUG
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
@@ -953,8 +954,6 @@
 #include "code\game\turfs\space\space.dm"
 #include "code\game\turfs\space\transit.dm"
 #include "code\game\verbs\reimu_hakkureis_donations.dm"
-#include "code\js\byjax.dm"
-#include "code\js\menus.dm"
 #include "code\modules\admin\admin.dm"
 #include "code\modules\admin\admin_investigate.dm"
 #include "code\modules\admin\admin_ranks.dm"
@@ -1449,6 +1448,7 @@
 #include "code\modules\mob\living\damage_procs.dm"
 #include "code\modules\mob\living\death.dm"
 #include "code\modules\mob\living\emote.dm"
+#include "code\modules\mob\living\give.dm"
 #include "code\modules\mob\living\life.dm"
 #include "code\modules\mob\living\living.dm"
 #include "code\modules\mob\living\living_defense.dm"

@@ -87,7 +87,7 @@
 	attacktext = "shocks"
 	attack_sound = 'sound/effects/EMPulse.ogg'
 	friendly = "pinches"
-	speed = 0
+	speed = 1
 	faction = list("swarmer")
 	AIStatus = AI_OFF
 	pass_flags = PASSTABLE
@@ -663,7 +663,7 @@
 		set_light(0)
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
-	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
+	var/rendered = "<B>Swarm communication - [src]</b> [sanitize_russian(say_quote(msg, get_spans()))]"
 	for(var/mob/M in GLOB.mob_list)
 		if(isswarmer(M))
 			to_chat(M, rendered)

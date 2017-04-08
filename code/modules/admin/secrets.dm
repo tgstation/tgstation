@@ -23,6 +23,7 @@
 			<A href='?src=\ref[src];secrets=list_lawchanges'>Show last [length(GLOB.lawchanges)] law changes</A><BR>
 			<A href='?src=\ref[src];secrets=showailaws'>Show AI Laws</A><BR>
 			<A href='?src=\ref[src];secrets=showgm'>Show Game Mode</A><BR>
+			<A href='?src=\ref[src];secrets=show_current_watchlist'>Show online players in the watchlist</A><BR>
 			<A href='?src=\ref[src];secrets=manifest'>Show Crew Manifest</A><BR>
 			<A href='?src=\ref[src];secrets=DNA'>List DNA (Blood)</A><BR>
 			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
@@ -100,7 +101,7 @@
 				dat += "<li>[l]</li>"
 			if(!GLOB.admin_log.len)
 				dat += "No-one has done anything this round!"
-			usr << browse(dat, "window=admin_log")
+			usr << browse(sanitize_russian(dat, 1), "window=admin_log")
 
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
@@ -119,7 +120,7 @@
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
-					dat += "[ckey] - [D.rank.name]<br>"
+					dat += "[ckey] - [D.rank] - [rights2text(D.rights," ")]<br>"
 				usr << browse(dat, "window=showadmins;size=600x500")
 
 		if("tdomereset")

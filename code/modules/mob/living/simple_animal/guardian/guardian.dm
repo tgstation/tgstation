@@ -387,13 +387,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/list/guardians = hasparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
-<<<<<<< HEAD
 		to_chat(G, "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [russian_html2text(preliminary_message)]" )
-	for(var/M in dead_mob_list)
-=======
-		to_chat(G, "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" )
 	for(var/M in GLOB.dead_mob_list)
->>>>>>> 7f8baa113196e85e45de0059e7c98ce212d712ed
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "[link] [my_message]")
 

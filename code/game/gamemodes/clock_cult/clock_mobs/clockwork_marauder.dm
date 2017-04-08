@@ -418,17 +418,10 @@
 		to_chat(owner, "<span class='warning'>Your marauder seems to have been destroyed!</span>")
 		return FALSE
 	var/name_part = "<span class='sevtug'>Servant [findtextEx(owner.name, owner.real_name) ? "[owner.name]" : "[owner.real_name] (as [owner.name])"]</span>"
-<<<<<<< HEAD
 	message = "<span class='sevtug_small'>\"[russian_html2text(message)]\"</span>" //Processed output
 	to_chat(owner, "[name_part]<span class='sevtug_small'>:</span> [russian_html2text(message)]")
 	to_chat(linked_marauder, "[name_part]<span class='sevtug_small'>:</span> [russian_html2text(message)]")
-	for(var/M in mob_list)
-=======
-	message = "<span class='sevtug_small'>\"[message]\"</span>" //Processed output
-	to_chat(owner, "[name_part]<span class='sevtug_small'>:</span> [message]")
-	to_chat(linked_marauder, "[name_part]<span class='sevtug_small'>:</span> [message]")
 	for(var/M in GLOB.mob_list)
->>>>>>> 7f8baa113196e85e45de0059e7c98ce212d712ed
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[linked_marauder] ([linked_marauder.true_name])</span><span class='sevtug_small'>):</span> [russian_html2text(message)]")

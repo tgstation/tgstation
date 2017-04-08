@@ -1,11 +1,11 @@
 
 ////////////////////////////////
 /proc/message_admins(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[sanitize_russian(msg)]</span></span>"
+	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	to_chat(GLOB.admins, msg)
 
 /proc/relay_msg_admins(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[sanitize_russian(msg)]</span></span>"
+	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
 	to_chat(GLOB.admins, msg)
 
 
@@ -466,7 +466,7 @@
 		return
 	if(new_admin_notice == "")
 		message_admins("[key_name(usr)] removed the admin notice.")
-		sanitize_russian(log_admin("[key_name(usr)] removed the admin notice:\n[GLOB.admin_notice]"))
+		log_admin("[key_name(usr)] removed the admin notice:\n[GLOB.admin_notice]")
 	else
 		message_admins("[key_name(usr)] set the admin notice.")
 		sanitize_russian(log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]"))

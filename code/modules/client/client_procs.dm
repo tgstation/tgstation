@@ -166,7 +166,7 @@ GLOBAL_LIST(external_rsc_urls)
 		if(localhost_rank)
 			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
 			localhost_holder.associate(src)*/
-/*	if(protected_config.autoadmin)
+/*	if(config.autoadmin)
 		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank
 			for(var/datum/admin_rank/R in GLOB.admin_ranks)
@@ -177,7 +177,7 @@ GLOBAL_LIST(external_rsc_urls)
 				to_chat(world, "Autoadmin rank not found")
 			else
 				var/datum/admins/D = new(autorank, ckey)
-				GLOB.admin_datums[ckey] = D
+				GLOB.admin_datums[ckey] = D*/
 	holder = GLOB.admin_datums[ckey]
 	if(holder)
 		GLOB.admins |= src

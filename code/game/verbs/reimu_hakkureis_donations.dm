@@ -158,7 +158,7 @@ var/list/datum/donator/donators = list()
 		usr << "<span class='warning'>Please wait until game setting up!</span>"
 		return 0
 
-	if((world.time-round_start_time)>DONATIONS_SPAWN_WINDOW && !istype(get_area(user), /area/shuttle/arrival))
+	if((world.time-SSticker.round_start_time)>DONATIONS_SPAWN_WINDOW && !istype(get_area(user), /area/shuttle/arrival))
 		usr << "<span class='warning'>You must be on arrival shuttle to spawn items.</span>"
 		return 0
 
@@ -209,11 +209,11 @@ var/list/datum/donator/donators = list()
 
 proc/load_donator(ckey)
 	var/DBConnection/dbcon2 = new()
-	dbcon2.doConnect("dbi:mysql:forum2:[sqladdress]:[sqlport]","[sqlfdbklogin]","[sqlfdbkpass]") //pidorasy
+	dbcon2.doConnect("dbi:mysql:forum2:[GLOB.sqladdress]:[GLOB.sqlport]","[GLOB.sqlfdbklogin]","[GLOB.sqlfdbkpass]") //pidorasy
 
 	if(!dbcon2.IsConnected())
 //		world.log << "Failed to connect to database [dbcon2.ErrorMsg()] in load_donator([ckey])."
-		diary << "Failed to connect to database in load_donator([ckey])."
+		GLOB.diary << "Failed to connect to database in load_donator([ckey])."
 		return 0
 
 	var/DBQuery/query = dbcon2.NewQuery("SELECT round(sum) FROM Z_donators WHERE byond='[ckey]'")

@@ -274,7 +274,7 @@
 		if(task == "add")
 			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null) as text|null)
 			if(!new_ckey)	return
-			if(new_ckey in admin_datums)
+			if(new_ckey in GLOB.admin_datums)
 				usr << "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>"
 				return
 			adm_ckey = new_ckey
@@ -285,18 +285,18 @@
 				usr << "<font color='red'>Error: Topic 'editrights': No valid ckey</font>"
 				return
 
-		var/datum/admins/D = admin_datums[adm_ckey]
+		var/datum/admins/D = GLOB.admin_datums[adm_ckey]
 
 		if(task == "remove")
 			if(alert("Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
 				if(!D)	return
-				admin_datums -= adm_ckey
+				GLOB.admin_datums -= adm_ckey
 				D.disassociate()
 
 				message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 				log_admin_rank_modification(adm_ckey, "Removed")
 
-		else if(task == "rank")
+/*		else if(task == "rank")
 			var/new_rank
 			if(admin_ranks.len)
 				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in (admin_ranks|"*New Rank*")
@@ -336,7 +336,7 @@
 			var/client/C = directory[adm_ckey]						//find the client with the specified ckey (if they are logged in)
 			D.associate(C)											//link up with the client and add verbs
 
-			log_admin_rank_modification(adm_ckey, new_rank)
+			log_admin_rank_modification(adm_ckey, new_rank)*/
 
 		else if(task == "permissions")
 			if(!D)	return
@@ -600,19 +600,8 @@
 				if(!reason)
 					return
 
-<<<<<<< HEAD
 		log_admin_private("[key_name(usr)] edited [banned_key]'s ban. Reason: [sanitize_russian(reason)] Duration: [duration]")
 		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [sanitize_russian(reason)] Duration: [duration]")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [sanitize_russian(reason)] Duration: [duration]</span>")
-		Banlist.cd = "/base/[banfolder]"
-		Banlist["reason"] << reason
-		Banlist["temp"] << temp
-		Banlist["minutes"] << minutes
-		Banlist["bannedby"] << usr.ckey
-		Banlist.cd = "/base"
-=======
-		log_admin_private("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
-		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
 		GLOB.Banlist.cd = "/base/[banfolder]"
 		GLOB.Banlist["reason"] << reason
@@ -620,7 +609,6 @@
 		GLOB.Banlist["minutes"] << minutes
 		GLOB.Banlist["bannedby"] << usr.ckey
 		GLOB.Banlist.cd = "/base"
->>>>>>> 7f8baa113196e85e45de0059e7c98ce212d712ed
 		feedback_inc("ban_edit",1)
 		unbanpanel()
 

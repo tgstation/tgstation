@@ -45,44 +45,46 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":–∫" = "right hand",	"#–∫" = "right hand",	".–∫" = "right hand",
-	  ":–¥" = "left hand",	"#–¥" = "left hand",		".–¥" = "left hand",
-	  ":—à" = "intercom",	"#—à" = "intercom",		".—à" = "intercom",
-	  ":—Ä" = "department",	"#—Ä" = "department",	".—Ä" = "department",
-	  ":—Å" = "Command",		"#—Å" = "Command",		".—Å" = "Command",
-	  ":—Ç" = "Science",		"#—Ç" = "Science",		".—Ç" = "Science",
-	  ":—å" = "Medical",		"#—å" = "Medical",		".—å" = "Medical",
-	  ":—É" = "Engineering",	"#—É" = "Engineering",	".—É" = "Engineering",
-	  ":—ã" = "Security",	"#—ã" = "Security",		".—ã" = "Security",
-	  ":—Ü" = "whisper",		"#—Ü" = "whisper",		".—Ü" = "whisper",
-	  ":–∏" = "binary",		"#–∏" = "binary",		".–∏" = "binary",
-	  ":—Ñ" = "alientalk",	"#—Ñ" = "alientalk",		".—Ñ" = "alientalk",
-	  ":–µ" = "Syndicate",	"#–µ" = "Syndicate",		".–µ" = "Syndicate",
-	  ":–º" = "Service",		"#–º" = "Service",		".–º" = "Service",
-	  ":—â" = "AI Private",	"#—â" = "AI Private",	".—â" = "AI Private",
-	  ":–π" = "Supply",		"#–π" = "Supply",		".–π" = "Supply",
-	  ":–ø" = "changeling",	"#–ø" = "changeling",	".–ø" = "changeling",
-	  ":–Ω" = "Centcom",		"#–Ω" = "Centcom",		".–Ω" = "Centcom",
+	  ":Í" = "right hand",	"#Í" = "right hand",	".Í" = "right hand",
+	  ":‰" = "left hand",	"#‰" = "left hand",		".‰" = "left hand",
+	  ":¯" = "intercom",	"#¯" = "intercom",		".¯" = "intercom",
+	  ":" = "department",	"#" = "department",	"." = "department",
+	  ":Ò" = "Command",		"#Ò" = "Command",		".Ò" = "Command",
+	  ":Ú" = "Science",		"#Ú" = "Science",		".Ú" = "Science",
+	  ":¸" = "Medical",		"#¸" = "Medical",		".¸" = "Medical",
+	  ":Û" = "Engineering",	"#Û" = "Engineering",	".Û" = "Engineering",
+	  ":˚" = "Security",	"#˚" = "Security",		".˚" = "Security",
+	  ":ˆ" = "whisper",		"#ˆ" = "whisper",		".ˆ" = "whisper",
+	  ":Ë" = "binary",		"#Ë" = "binary",		".Ë" = "binary",
+	  ":Ù" = "alientalk",	"#Ù" = "alientalk",		".Ù" = "alientalk",
+	  ":Â" = "Syndicate",	"#Â" = "Syndicate",		".Â" = "Syndicate",
+	  ":Ï" = "Service",		"#Ï" = "Service",		".Ï" = "Service",
+	  ":˘" = "AI Private",	"#˘" = "AI Private",	".˘" = "AI Private",
+	  ":È" = "Supply",		"#È" = "Supply",		".È" = "Supply",
+	  ":Ô" = "changeling",	"#Ô" = "changeling",	".Ô" = "changeling",
+	  ":Ì" = "Centcom",		"#Ì" = "Centcom",		".Ì" = "Centcom",
 
-	  ":–ö" = "right hand",	"#–ö" = "right hand",	".–ö" = "right hand",
-	  ":–î" = "left hand",	"#–î" = "left hand",		".–î" = "left hand",
-	  ":–®" = "intercom",	"#–®" = "intercom",		".–®" = "intercom",
-	  ":–†" = "department",	"#–†" = "department",	".–†" = "department",
-	  ":–°" = "Command",		"#–°" = "Command",		".–°" = "Command",
-	  ":–¢" = "Science",		"#–¢" = "Science",		".–¢" = "Science",
-	  ":–¨" = "Medical",		"#–¨" = "Medical",		".–¨" = "Medical",
-	  ":–£" = "Engineering",	"#–£" = "Engineering",	".–£" = "Engineering",
-	  ":–´" = "Security",	"#–´" = "Security",		".–´" = "Security",
-	  ":–¶" = "whisper",		"#–¶" = "whisper",		".–¶" = "whisper",
-	  ":–ò" = "binary",		"#–ò" = "binary",		".–ò" = "binary",
-	  ":–§" = "alientalk",	"#–§" = "alientalk",		".–§" = "alientalk",
-	  ":–ï" = "Syndicate",	"#–ï" = "Syndicate",		".–ï" = "Syndicate",
-	  ":–ú" = "Service",		"#–ú" = "Service",		".–ú" = "Service",
-	  ":–©" = "AI Private",	"#–©" = "AI Private",	".–©" = "AI Private",
-	  ":–ô" = "Supply",		"#–ô" = "Supply",		".–ô" = "Supply",
-	  ":–ü" = "changeling",	"#–ü" = "changeling",	".–ü" = "changeling",
-	  ":–ù" = "Centcom",		"#–ù" = "Centcom",		".–ù" = "Centcom"
-)
+	  ": " = "right hand",	"# " = "right hand",	". " = "right hand",
+	  ":ƒ" = "left hand",	"#ƒ" = "left hand",		".ƒ" = "left hand",
+	  ":ÿ" = "intercom",	"#ÿ" = "intercom",		".ÿ" = "intercom",
+	  ":–" = "department",	"#–" = "department",	".–" = "department",
+	  ":—" = "Command",		"#—" = "Command",		".—" = "Command",
+	  ":“" = "Science",		"#“" = "Science",		".“" = "Science",
+	  ":‹" = "Medical",		"#‹" = "Medical",		".‹" = "Medical",
+	  ":”" = "Engineering",	"#”" = "Engineering",	".”" = "Engineering",
+	  ":€" = "Security",	"#€" = "Security",		".€" = "Security",
+	  ":÷" = "whisper",		"#÷" = "whisper",		".÷" = "whisper",
+	  ":»" = "binary",		"#»" = "binary",		".»" = "binary",
+	  ":‘" = "alientalk",	"#‘" = "alientalk",		".‘" = "alientalk",
+	  ":≈" = "Syndicate",	"#≈" = "Syndicate",		".≈" = "Syndicate",
+	  ":Ã" = "Service",		"#Ã" = "Service",		".Ã" = "Service",
+	  ":Ÿ" = "AI Private",	"#Ÿ" = "AI Private",	".Ÿ" = "AI Private",
+	  ":…" = "Supply",		"#…" = "Supply",		".…" = "Supply",
+	  ":œ" = "changeling",	"#œ" = "changeling",	".œ" = "changeling",
+	  ":Õ" = "Centcom",		"#Õ" = "Centcom",		".Õ" = "Centcom"
+))
+
+var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
 	if(sanitize)
@@ -119,7 +121,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(!can_speak_basic(original_message)) //Stat is seperate so I can handle whispers properly.
 		return
-	
+
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(stat && !(message_mode in crit_allowed_modes))
 		return
