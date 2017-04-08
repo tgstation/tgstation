@@ -20,6 +20,16 @@
 		blood_DNA |= C.blood_DNA.Copy()
 	..()
 
+/obj/effect/decal/cleanable/blood/old
+	name = "dried blood"
+	desc = "Looks like it's been here a while.  Eew."
+	bloodiness = 0
+
+/obj/effect/decal/cleanable/blood/old/Initialize()
+	..()
+	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
+	blood_DNA["Non-human DNA"] = "A+"
+
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
@@ -83,12 +93,22 @@
 /obj/effect/decal/cleanable/blood/gibs/torso
 	random_icon_states = list("gibtorso")
 
-
 /obj/effect/decal/cleanable/blood/gibs/limb
 	random_icon_states = list("gibleg", "gibarm")
 
 /obj/effect/decal/cleanable/blood/gibs/core
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
+
+/obj/effect/decal/cleanable/blood/gibs/old
+	name = "old rotting gibs"
+	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
+	bloodiness = 0
+
+/obj/effect/decal/cleanable/blood/gibs/old/Initialize()
+	..()
+	setDir(pick(1,2,4,8))
+	icon_state += "-old"
+	blood_DNA["Non-human DNA"] = "A+"
 
 
 /obj/effect/decal/cleanable/blood/drip
