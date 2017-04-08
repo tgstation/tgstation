@@ -42,9 +42,7 @@
 
 /obj/structure/blob/core/Destroy()
 	GLOB.blob_cores -= src
-	if(overmind)
-		overmind.blob_core = null
-	overmind = null
+	QDEL_NULL(overmind)
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list -= src
 	return ..()
