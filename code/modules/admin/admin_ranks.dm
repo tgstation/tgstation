@@ -55,17 +55,17 @@ GLOBAL_PROTECT(admin_ranks)
 		var/DBQuery/query_load_admins = GLOB.dbcon.NewQuery("SELECT ckey, rank, flags FROM [format_table_name("admin")]")
 		if(!query_load_admins.Execute())
 			return
-		while(query.NextRow())
+		while(query_load_admins.NextRow())
 			var/ckey = ckey(query_load_admins.item[1])
 			var/rank = query_load_admins.item[2]
 			if(target && ckey != target)
 				continue
 
 			if(rank == "Removed")	continue
-			var/rights = query.item[3]
+			var/rights = query_load_admins.item[3]
 			if(istext(rights))
 				rights = text2num(rights)
-			
+
 			var/datum/admins/D = new /datum/admins(rank, rights, ckey)				//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided

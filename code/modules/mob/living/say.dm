@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	  ":É" = "Supply",		"#É" = "Supply",		".É" = "Supply",
 	  ":Ï" = "changeling",	"#Ï" = "changeling",	".Ï" = "changeling",
 	  ":Í" = "Centcom",		"#Í" = "Centcom",		".Í" = "Centcom"
-)
+))
 
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
@@ -121,7 +121,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(!can_speak_basic(original_message)) //Stat is seperate so I can handle whispers properly.
 		return
-	
+
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(stat && !(message_mode in crit_allowed_modes))
 		return
