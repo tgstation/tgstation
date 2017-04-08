@@ -22,6 +22,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	desc = "Apply to head repeatedly."
 	icon = 'icons/obj/storage.dmi'
 	icon_state ="bible"
+	storage_slots = 7
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
