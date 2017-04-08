@@ -536,3 +536,13 @@
 
 /proc/GetBluePart(const/hexa)
 	return hex2num(copytext(hexa, 6, 8))
+
+/proc/get_opposite_dir(direction) //returns the direction opposite the input direction.
+	if(NORTH & direction)
+		. += SOUTH
+	else if(SOUTH & direction)
+		. += NORTH
+	if(EAST & direction)
+		. += WEST
+	else if(WEST & direction)
+		. += EAST
