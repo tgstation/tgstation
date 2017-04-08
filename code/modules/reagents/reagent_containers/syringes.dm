@@ -86,6 +86,8 @@
 					if(reagents.total_volume >= reagents.maximum_volume)
 						return
 				busy = 0
+				if(!L.can_inject(user,1)) //in case they switched target locations
+					return
 				if(L.transfer_blood_to(src, drawn_amount))
 					user.visible_message("[user] takes a blood sample from [L].")
 				else
@@ -129,7 +131,8 @@
 						return
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
 						return
-
+					if(!L.can_inject(user, 1)) //in case they switched target locations
+						return
 					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!", \
 									"<span class='userdanger'>[user] injects [L] with the syringe!")
 
