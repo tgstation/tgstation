@@ -1,5 +1,4 @@
-// Bluespace crystals, used in telescience and when crushed it will blink you to a random turf.
-
+//Bluespace crystals, used in telescience and when crushed it will blink you to a random turf.
 /obj/item/weapon/ore/bluespace_crystal
 	name = "bluespace crystal"
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
@@ -42,19 +41,17 @@
 			blink_mob(hit_atom)
 		qdel(src)
 
-// Artifical bluespace crystal, doesn't give you much research.
-
+//Artifical bluespace crystal, doesn't give you much research.
 /obj/item/weapon/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
 	origin_tech = "bluespace=3;plasmatech=4"
 	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT / 2)
 	blink_range = 4 // Not as good as the organic stuff!
-	points = 0 // nice try
+	points = 0 //nice try
 	refined_type = null
 
-// Polycrystals, aka stacks
-
+//Polycrystals, aka stacks
 /obj/item/stack/sheet/bluespace_crystal
 	name = "bluespace polycrystal"
 	icon = 'icons/obj/telescience.dmi'
