@@ -3,10 +3,9 @@ SUBSYSTEM_DEF(religion)
 	init_order = 19
 	flags = SS_NO_FIRE|SS_NO_INIT
 
-	var/bible_deity_name
-	var/Bible_icon_state
-	var/Bible_item_state
-	var/Bible_name
-	var/Bible_deity_name
-
-	var/holy_weapon
+	var/religion
+	var/deity
+	var/bible_name
+	var/bible_icon_state
+	var/bible_item_state
+	var/holy_weapon_type

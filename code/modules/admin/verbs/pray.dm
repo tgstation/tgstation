@@ -25,8 +25,8 @@
 		cross = image('icons/obj/storage.dmi',"kingyellow")
 		font_color = "blue"
 		prayer_type = "CHAPLAIN PRAYER"
-		if(SSreligion.Bible_deity_name)
-			deity = SSreligion.Bible_deity_name
+		if(SSreligion.deity)
+			deity = SSreligion.deity
 	else if(iscultist(usr))
 		cross = image('icons/obj/storage.dmi',"tome")
 		font_color = "red"

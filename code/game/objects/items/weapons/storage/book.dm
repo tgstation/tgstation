@@ -11,7 +11,7 @@
 	var/title = "book"
 
 /obj/item/weapon/storage/book/attack_self(mob/user)
-		to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
+	to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 
 GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon"))
 GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning",       "honk1",       "honk2",        "creeper",       "white",       "holylight",   "atheist",          "tome",        "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon"))
@@ -21,7 +21,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	name = "bible"
 	desc = "Apply to head repeatedly."
 	icon = 'icons/obj/storage.dmi'
-	icon_state ="bible"
+	icon_state = "bible"
+	item_state = "bible"
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
@@ -33,10 +34,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	if(!istype(H))
 		return
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
-	if(!SSreligion.Bible_icon_state && H.job == "Chaplain")
+	if(!SSreligion.bible_icon_state && H.job == "Chaplain")
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
-		var/i
-		for(i = 1, i < GLOB.biblestates.len, i++)
+		for(var/i in 1 to GLOB.biblestates.len)
 			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
 			var/nicename = GLOB.biblenames[i]
 			H << browse_rsc(bibleicon, nicename)
@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 /obj/item/weapon/storage/book/bible/Topic(href, href_list)
 	if(!usr.canUseTopic(src))
 		return
-	if(href_list["seticon"] && SSticker && !SSreligion.Bible_icon_state)
+	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = GLOB.biblenames[iconi]
 		var/obj/item/weapon/storage/book/bible/B = locate(href_list["src"])
@@ -59,8 +59,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			H.dna.add_mutation(CLOWNMUT)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
 
-		SSreligion.Bible_icon_state = B.icon_state
-		SSreligion.Bible_item_state = B.item_state
+		SSreligion.bible_icon_state = B.icon_state
+		SSreligion.bible_item_state = B.item_state
 
 		feedback_set_details("religion_book","[biblename]")
 		usr << browse(null, "window=editicon")
