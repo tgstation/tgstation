@@ -21,7 +21,7 @@
 			return
 		T = get_turf(T)
 		loc = T
-		cameranet.visibility(src)
+		GLOB.cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
 		update_parallax_contents()

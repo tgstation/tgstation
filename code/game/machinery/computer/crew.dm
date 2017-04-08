@@ -7,27 +7,22 @@
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = /obj/item/weapon/circuitboard/computer/crew
-	var/monitor = null	//For VV debugging purposes
 
 	light_color = LIGHT_COLOR_BLUE
-
-/obj/machinery/computer/crew/New()
-	monitor = crewmonitor
-	return ..()
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	crewmonitor.show(user)
+	GLOB.crewmonitor.show(user)
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
 	if(..())
 		return
 	if(stat & (BROKEN|NOPOWER))
 		return
-	crewmonitor.show(user)
+	GLOB.crewmonitor.show(user)
 
-var/global/datum/crewmonitor/crewmonitor = new
+GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 /datum/crewmonitor
 	var/list/jobs
@@ -151,7 +146,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 			var/pos_y
 			var/life_status
 
-			for(var/mob/living/carbon/human/H in mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				// Check if their z-level is correct and if they are wearing a uniform.
 				// Accept H.z==0 as well in case the mob is inside an object.
 				if ((H.z == 0 || H.z == z) && istype(H.w_uniform, /obj/item/clothing/under))
@@ -256,13 +251,13 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 		. = ..()
 
-		if (old_z != src.z) crewmonitor.queueUpdate(old_z)
-		crewmonitor.queueUpdate(src.z)
+		if (old_z != src.z) GLOB.crewmonitor.queueUpdate(old_z)
+		GLOB.crewmonitor.queueUpdate(src.z)
 	else
 		return ..()
 
 /datum/crewmonitor/proc/queueUpdate(z)
-	addtimer(CALLBACK(crewmonitor, .proc/update, z), 5, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, .proc/update, z), 5, TIMER_UNIQUE)
 
 /datum/crewmonitor/proc/sendResources(var/client/client)
 	send_asset(client, "crewmonitor.js")

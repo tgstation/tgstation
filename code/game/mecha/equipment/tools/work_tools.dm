@@ -199,11 +199,11 @@
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 
 /obj/item/mecha_parts/mecha_equipment/rcd/New()
-	rcd_list += src
+	GLOB.rcd_list += src
 	..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
- 	rcd_list -= src
+ 	GLOB.rcd_list -= src
  	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
@@ -420,7 +420,7 @@
 
 	if(!PN)
 		PN = new()
-		powernets += PN
+		GLOB.powernets += PN
 	NC.powernet = PN
 	PN.cables += NC
 	NC.mergeConnectedNetworks(NC.d2)

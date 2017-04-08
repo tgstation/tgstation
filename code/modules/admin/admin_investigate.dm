@@ -38,8 +38,8 @@
 				return
 			src << browse(F,"window=investigate[subject];size=800x300")
 		if("hrefs")				//persistent logs and stuff
-			if(href_logfile)
-				src << browse(sanitize_russian(href_logfile, 1),"window=investigate[subject];size=800x300")
+			if(GLOB.href_logfile)
+				src << browse(sanitize_russian(GLOB.href_logfile, 1),"window=investigate[subject];size=800x300")
 			else if(!config.log_hrefs)
 				to_chat(src, "<span class='danger'>Href logging is off and no logfile was found.</span>")
 				return

@@ -149,7 +149,7 @@
 		AM.alpha = oldalpha
 		AM.color = oldcolor
 		AM.transform = oldtransform
-		AM.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1, 10),rand(1, 10))
+		AM.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
 	
 /turf/open/chasm/straight_down/lava_land_surface/normal_air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"

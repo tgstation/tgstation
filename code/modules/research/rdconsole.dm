@@ -47,7 +47,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 	var/first_use = 1	//If first_use = 1, it will try to auto-connect with nearby devices
 
-	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
+	req_access = list(GLOB.access_tox)	//Data and setting manipulation requires scientist access.
 
 	var/selected_category
 	var/list/datum/design/matching_designs = list() //for the search function
@@ -55,18 +55,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
-	if(tech_list[ID])
-		var/datum/tech/tech = tech_list[ID]
+	if(GLOB.tech_list[ID])
+		var/datum/tech/tech = GLOB.tech_list[ID]
 		return tech.name
 	return "ERROR: Report This"
 
 /proc/CallMaterialName(ID)
-	if (copytext(ID, 1, 2) == "$" && materials_list[ID])
-		var/datum/material/material = materials_list[ID]
+	if (copytext(ID, 1, 2) == "$" && GLOB.materials_list[ID])
+		var/datum/material/material = GLOB.materials_list[ID]
 		return material.name
 
-	else if(chemical_reagents_list[ID])
-		var/datum/reagent/reagent = chemical_reagents_list[ID]
+	else if(GLOB.chemical_reagents_list[ID])
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
 		return reagent.name
 	return "ERROR: Report This"
 
@@ -90,7 +90,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 //Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
 /obj/machinery/computer/rdconsole/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
+	for(var/obj/machinery/r_n_d/server/centcom/C in GLOB.machines)
 		for(var/v in files.known_tech)
 			var/datum/tech/T = files.known_tech[v]
 			C.files.AddTech2Known(T)
@@ -350,7 +350,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
 				if(src)
-					for(var/obj/machinery/r_n_d/server/S in machines)
+					for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
 						var/server_processed = 0
 						if(S.disabled)
 							continue

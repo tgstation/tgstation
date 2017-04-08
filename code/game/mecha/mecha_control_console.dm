@@ -3,7 +3,7 @@
 	desc = "Used to remotely locate or lockdown exosuits."
 	icon_screen = "mecha"
 	icon_keyboard = "tech_key"
-	req_access = list(access_robotics)
+	req_access = list(GLOB.access_robotics)
 	circuit = /obj/item/weapon/circuitboard/computer/mecha_control
 	var/list/located = list()
 	var/screen = 0
@@ -17,7 +17,7 @@
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
 		var/list/trackerlist = list()
-		for(var/obj/mecha/MC in mechas_list)
+		for(var/obj/mecha/MC in GLOB.mechas_list)
 			trackerlist += MC.trackers
 		for(var/obj/item/mecha_parts/mecha_tracking/TR in trackerlist)
 			var/answer = TR.get_mecha_info()

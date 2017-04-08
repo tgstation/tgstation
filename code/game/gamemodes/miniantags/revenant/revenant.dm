@@ -64,7 +64,7 @@
 	..()
 
 	ghostimage = image(src.icon,src,src.icon_state)
-	ghost_darkness_images |= ghostimage
+	GLOB.ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
 /mob/living/simple_animal/revenant/Login()
@@ -147,7 +147,7 @@
 		return
 	log_say("[key_name(src)] : [message]")
 	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(isrevenant(M))
 			to_chat(M, rendered)
 		else if(isobserver(M))
@@ -210,7 +210,7 @@
 	if(!revealed || stat == DEAD) //Revenants cannot die if they aren't revealed //or are already dead
 		return 0
 	..(1)
-	ghost_darkness_images -= ghostimage
+	GLOB.ghost_darkness_images -= ghostimage
 	updateallghostimages()
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = TRUE
@@ -369,7 +369,7 @@
 	loc = get_turf(src) //In case it's in a backpack or someone's hand
 	var/mob/living/simple_animal/revenant/R = new(get_turf(src))
 	if(client_to_revive)
-		for(var/mob/M in dead_mob_list)
+		for(var/mob/M in GLOB.dead_mob_list)
 			if(M.client == client_to_revive) //Only recreates the mob if the mob the client is in is dead
 				R.client = client_to_revive
 				key_of_revenant = client_to_revive.key

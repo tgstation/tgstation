@@ -1,9 +1,9 @@
-var/list/image/ghost_darkness_images = list() //this is a list of images for things ghosts should still be able to see when they toggle darkness, BUT NOT THE GHOSTS THEMSELVES!
-var/list/image/ghost_images_full = list() //this is a list of full images of the ghosts themselves
-var/list/image/ghost_images_default = list() //this is a list of the default (non-accessorized, non-dir) images of the ghosts themselves
-var/list/image/ghost_images_simple = list() //this is a list of all ghost images as the simple white ghost
+GLOBAL_LIST_EMPTY(ghost_darkness_images) //this is a list of images for things ghosts should still be able to see when they toggle darkness, BUT NOT THE GHOSTS THEMSELVES!
+GLOBAL_LIST_EMPTY(ghost_images_full) //this is a list of full images of the ghosts themselves
+GLOBAL_LIST_EMPTY(ghost_images_default) //this is a list of the default (non-accessorized, non-dir) images of the ghosts themselves
+GLOBAL_LIST_EMPTY(ghost_images_simple) //this is a list of all ghost images as the simple white ghost
 
-var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
+GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer
 	name = "ghost"
@@ -58,7 +58,7 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 	var/deadchat_name
 
 /mob/dead/observer/Initialize()
-	invisibility = observer_default_invisibility
+	invisibility = GLOB.observer_default_invisibility
 
 	verbs += /mob/dead/observer/proc/dead_tele
 
@@ -66,14 +66,14 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 		verbs += /mob/dead/observer/proc/server_hop
 
 	ghostimage = image(src.icon,src,src.icon_state)
-	if(icon_state in ghost_forms_with_directions_list)
+	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
 	else
 		ghostimage_default = image(src.icon,src,src.icon_state)
 	ghostimage_simple = image(src.icon,src,"ghost_nodir")
-	ghost_images_full |= ghostimage
-	ghost_images_default |= ghostimage_default
-	ghost_images_simple |= ghostimage_simple
+	GLOB.ghost_images_full |= ghostimage
+	GLOB.ghost_images_default |= ghostimage_default
+	GLOB.ghost_images_simple |= ghostimage_simple
 	updateallghostimages()
 
 	var/turf/T
@@ -138,15 +138,15 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/Destroy()
-	ghost_images_full -= ghostimage
+	GLOB.ghost_images_full -= ghostimage
 	qdel(ghostimage)
 	ghostimage = null
 
-	ghost_images_default -= ghostimage_default
+	GLOB.ghost_images_default -= ghostimage_default
 	qdel(ghostimage_default)
 	ghostimage_default = null
 
-	ghost_images_simple -= ghostimage_simple
+	GLOB.ghost_images_simple -= ghostimage_simple
 	qdel(ghostimage_simple)
 	ghostimage_simple = null
 
@@ -182,21 +182,21 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 	if(new_form)
 		icon_state = new_form
 		ghostimage.icon_state = new_form
-		if(icon_state in ghost_forms_with_directions_list)
+		if(icon_state in GLOB.ghost_forms_with_directions_list)
 			ghostimage_default.icon_state = new_form + "_nodir" //if this icon has dirs, the default ghostimage must use its nodir version or clients with the preference set to default sprites only will see the dirs
 		else
 			ghostimage_default.icon_state = new_form
 
-	if(ghost_accs >= GHOST_ACCS_DIR && icon_state in ghost_forms_with_directions_list) //if this icon has dirs AND the client wants to show them, we make sure we update the dir on movement
+	if(ghost_accs >= GHOST_ACCS_DIR && icon_state in GLOB.ghost_forms_with_directions_list) //if this icon has dirs AND the client wants to show them, we make sure we update the dir on movement
 		updatedir = 1
 	else
 		updatedir = 0	//stop updating the dir in case we want to show accessories with dirs on a ghost sprite without dirs
 		setDir(2 		)//reset the dir to its default so the sprites all properly align up
 
-	if(ghost_accs == GHOST_ACCS_FULL && icon_state in ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
+	if(ghost_accs == GHOST_ACCS_FULL && icon_state in GLOB.ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
 		var/datum/sprite_accessory/S
 		if(facial_hair_style)
-			S = facial_hair_styles_list[facial_hair_style]
+			S = GLOB.facial_hair_styles_list[facial_hair_style]
 			if(S)
 				facial_hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
 				if(facial_hair_color)
@@ -205,7 +205,7 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 				add_overlay(facial_hair_image)
 				ghostimage.add_overlay(facial_hair_image)
 		if(hair_style)
-			S = hair_styles_list[hair_style]
+			S = GLOB.hair_styles_list[hair_style]
 			if(S)
 				hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
 				if(hair_color)
@@ -317,7 +317,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
+					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -368,7 +368,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "Not when you're not dead!")
 		return
 	var/A
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in sortedAreas
+	A = input("Area to jump to", "BOOYEA", A) as null|anything in GLOB.sortedAreas
 	var/area/thearea = A
 	if(!thearea)
 		return
@@ -533,12 +533,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	updateghostimages()
 
 /proc/updateallghostimages()
-	listclearnulls(ghost_images_full)
-	listclearnulls(ghost_images_default)
-	listclearnulls(ghost_images_simple)
-	listclearnulls(ghost_darkness_images)
+	listclearnulls(GLOB.ghost_images_full)
+	listclearnulls(GLOB.ghost_images_default)
+	listclearnulls(GLOB.ghost_images_simple)
+	listclearnulls(GLOB.ghost_darkness_images)
 
-	for (var/mob/dead/observer/O in player_list)
+	for (var/mob/dead/observer/O in GLOB.player_list)
 		O.updateghostimages()
 
 /mob/dead/observer/proc/updateghostimages()
@@ -548,30 +548,30 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(lastsetting)
 		switch(lastsetting) //checks the setting we last came from, for a little efficiency so we don't try to delete images from the client that it doesn't have anyway
 			if(GHOST_OTHERS_THEIR_SETTING)
-				client.images -= ghost_images_full
+				client.images -= GLOB.ghost_images_full
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
-				client.images -= ghost_images_default
+				client.images -= GLOB.ghost_images_default
 			if(GHOST_OTHERS_SIMPLE)
-				client.images -= ghost_images_simple
+				client.images -= GLOB.ghost_images_simple
 
 	if ((seedarkness || !ghostvision) && client.prefs.ghost_others == GHOST_OTHERS_THEIR_SETTING)
-		client.images -= ghost_darkness_images
+		client.images -= GLOB.ghost_darkness_images
 		lastsetting = null
 	else if(ghostvision && (!seedarkness || client.prefs.ghost_others <= GHOST_OTHERS_DEFAULT_SPRITE))
 		//add images for the 60inv things ghosts can normally see when darkness is enabled so they can see them now
 		if(!lastsetting)
-			client.images |= ghost_darkness_images
+			client.images |= GLOB.ghost_darkness_images
 		switch(client.prefs.ghost_others)
 			if(GHOST_OTHERS_THEIR_SETTING)
-				client.images |= ghost_images_full
+				client.images |= GLOB.ghost_images_full
 				if (ghostimage)
 					client.images -= ghostimage //remove ourself
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
-				client.images |= ghost_images_default
+				client.images |= GLOB.ghost_images_default
 				if(ghostimage_default)
 					client.images -= ghostimage_default
 			if(GHOST_OTHERS_SIMPLE)
-				client.images |= ghost_images_simple
+				client.images |= GLOB.ghost_images_simple
 				if(ghostimage_simple)
 					client.images -= ghostimage_simple
 		lastsetting = client.prefs.ghost_others
@@ -582,8 +582,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc= "Take over the body of a mindless creature!"
 
 	var/list/possessible = list()
-	for(var/mob/living/L in living_mob_list)
-		if(!(L in player_list) && !L.mind)
+	for(var/mob/living/L in GLOB.living_mob_list)
+		if(!(L in GLOB.player_list) && !L.mind)
 			possessible += L
 
 	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in possessible
@@ -631,7 +631,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /proc/show_server_hop_transfer_screen(expected_key)
 	//only show it to incoming ghosts
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.key == expected_key)
 			if(O.client)
 				new /obj/screen/splash(O.client, TRUE)
@@ -652,7 +652,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"
-	dat += data_core.get_manifest()
+	dat += GLOB.data_core.get_manifest()
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
@@ -692,12 +692,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/show_data_huds()
 	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = huds[hudtype]
+		var/datum/atom_hud/H = GLOB.huds[hudtype]
 		H.add_hud_to(src)
 
 /mob/dead/observer/proc/remove_data_huds()
 	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = huds[hudtype]
+		var/datum/atom_hud/H = GLOB.huds[hudtype]
 		H.remove_hud_from(src)
 
 /mob/dead/observer/verb/toggle_data_huds()
@@ -827,8 +827,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /proc/set_observer_default_invisibility(amount, message=null)
-	for(var/mob/dead/observer/G in player_list)
+	for(var/mob/dead/observer/G in GLOB.player_list)
 		G.invisibility = amount
 		if(message)
 			to_chat(G, message)
-	observer_default_invisibility = amount
+	GLOB.observer_default_invisibility = amount

@@ -11,7 +11,7 @@
 	var/list/forenames = list()
 	var/list/ckeys = list()
 	var/founds = ""
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		var/list/indexing = list(M.real_name, M.name)
 		if(M.mind)
 			indexing += M.mind.name
@@ -80,7 +80,7 @@
 	set category = "Admin"
 	set name = "Adminhelp"
 
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
@@ -112,7 +112,7 @@
 
 	//send this msg to all admins
 
-	for(var/client/X in admins)
+	for(var/client/X in GLOB.admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
 		window_flash(X, ignorepref = TRUE)
@@ -132,7 +132,7 @@
 
 /proc/get_admin_counts(requiredflags = R_BAN)
 	. = list("total" = list(), "noflags" = list(), "afk" = list(), "stealth" = list(), "present" = list())
-	for(var/client/X in admins)
+	for(var/client/X in GLOB.admins)
 		.["total"] += X
 		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
 			.["noflags"] += X
@@ -172,7 +172,7 @@
 		message["message_sender"] = source
 		message["message"] = msg
 		message["source"] = "([config.cross_name])"
-		message["key"] = global.comms_key
+		message["key"] = GLOB.comms_key
 		message["crossmessage"] = type
 
 		world.Export("[config.cross_address]?[list2params(message)]")
@@ -181,7 +181,7 @@
 /proc/ircadminwho()
 	var/list/message = list("Admins: ")
 	var/list/admin_keys = list()
-	for(var/adm in admins)
+	for(var/adm in GLOB.admins)
 		var/client/C = adm
 		admin_keys += "[C][C.holder.fakekey ? "(Stealth)" : ""][C.is_afk() ? "(AFK)" : ""]"
 

@@ -187,7 +187,7 @@
 	range = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
-	for(var/mob/living/L in living_mob_list)
+	for(var/mob/living/L in GLOB.living_mob_list)
 		var/turf/T = get_turf(L.loc)
 		if(T && T in targets)
 			L.blind_eyes(4)

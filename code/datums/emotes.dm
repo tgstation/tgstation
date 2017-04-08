@@ -1,8 +1,6 @@
 #define EMOTE_VISIBLE 1
 #define EMOTE_AUDIBLE 2
 
-var/global/list/emote_list = list()
-
 /datum/emote
 	var/key = "" //What calls the emote
 	var/key_third_person = "" //This will also call the emote
@@ -21,6 +19,7 @@ var/global/list/emote_list = list()
 	var/list/mob_type_allowed_typecache = list() //Types that are allowed to use that emote
 	var/list/mob_type_blacklist_typecache = list() //Types that are NOT allowed to use that emote
 	var/stat_allowed = CONSCIOUS
+	var/static/list/emote_list = list()
 
 /datum/emote/New()
 	..()
@@ -53,7 +52,7 @@ var/global/list/emote_list = list()
 	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
 	msg = "<b>[user]</b> " + msg
 
-	for(var/mob/M in dead_mob_list)
+	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
 			continue
 		var/T = get_turf(src)

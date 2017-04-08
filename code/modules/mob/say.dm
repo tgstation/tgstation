@@ -2,7 +2,7 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	usr.say(message)
@@ -11,7 +11,7 @@
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
 	set category = "IC"
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	whisper(message)
@@ -23,7 +23,7 @@
 	set name = "Me"
 	set category = "IC"
 
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
@@ -35,7 +35,7 @@
 	var/name = real_name
 	var/alt_name = ""
 
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 

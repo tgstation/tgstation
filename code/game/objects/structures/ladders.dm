@@ -15,18 +15,18 @@
 
 /obj/structure/ladder/Initialize(mapload)
 	if(!initialized)
-		ladders += src
+		GLOB.ladders += src
 		..()
 	if(mapload)
 		return TRUE
 	update_link()
 
 /obj/structure/ladder/Destroy()
-	ladders -= src
+	GLOB.ladders -= src
 	. = ..()
 
 /obj/structure/ladder/proc/update_link()
-	for(var/obj/structure/ladder/L in ladders)
+	for(var/obj/structure/ladder/L in GLOB.ladders)
 		if(L.id == id)
 			if(L.height == (height - 1))
 				down = L

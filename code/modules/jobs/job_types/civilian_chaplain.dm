@@ -15,8 +15,8 @@ Chaplain
 
 	outfit = /datum/outfit/job/chaplain
 
-	access = list(access_morgue, access_chapel_office, access_crematorium, access_theatre)
-	minimal_access = list(access_morgue, access_chapel_office, access_crematorium, access_theatre)
+	access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
+	minimal_access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
 
 /datum/outfit/job/chaplain
 	name = "Chaplain"
