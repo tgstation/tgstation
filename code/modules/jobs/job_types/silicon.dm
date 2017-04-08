@@ -3,7 +3,7 @@ AI
 */
 /datum/job/ai
 	title = "AI"
-	flag = AI
+	flag = AI_JF
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 0
@@ -20,8 +20,8 @@ AI
 	AI.rename_self("ai", M.client)
 
 	//we may have been created after our borg
-	if(ticker.current_state == GAME_STATE_SETTING_UP)
-		for(var/mob/living/silicon/robot/R in silicon_mobs)
+	if(SSticker.current_state == GAME_STATE_SETTING_UP)
+		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 			if(!R.connected_ai)
 				R.TryConnectToAI()
 

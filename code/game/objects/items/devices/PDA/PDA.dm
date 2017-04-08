@@ -1,7 +1,7 @@
 
 //The advanced pea-green monochrome lcd of tomorrow.
 
-var/global/list/obj/item/device/pda/PDAs = list()
+GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/device/pda
@@ -62,7 +62,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(fon)
 		set_light(f_lum)
 
-	PDAs += src
+	GLOB.PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
 	inserted_item =	new /obj/item/weapon/pen(src)
@@ -138,7 +138,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
 				dat += "[worldtime2text()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
-				dat += "[time2text(world.realtime, "MMM DD")] [year_integer+540]"
+				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]"
 
 				dat += "<br><br>"
 
@@ -474,7 +474,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if("Toggle Door")
 				if(cartridge && cartridge.access_remote_door)
-					for(var/obj/machinery/door/poddoor/M in machines)
+					for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 						if(M.id == cartridge.remote_door_id)
 							if(M.density)
 								M.open()
@@ -636,7 +636,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	add_overlay(image(icon, icon_alert))
 
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
@@ -646,8 +646,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return null
 
 	var/obj/machinery/message_server/useMS = null
-	if(message_servers)
-		for (var/obj/machinery/message_server/MS in message_servers)
+	if(GLOB.message_servers)
+		for (var/obj/machinery/message_server/MS in GLOB.message_servers)
 		//PDAs are now dependant on the Message Server.
 			if(MS.active)
 				useMS = MS
@@ -895,7 +895,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 /obj/item/device/pda/Destroy()
-	PDAs -= src
+	GLOB.PDAs -= src
 	if(id)
 		qdel(id)
 		id = null
@@ -1004,7 +1004,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /proc/get_viewable_pdas()
 	. = list()
 	// Returns a list of PDAs which can be viewed from another PDA/message monitor.
-	for(var/obj/item/device/pda/P in PDAs)
+	for(var/obj/item/device/pda/P in GLOB.PDAs)
 		if(!P.owner || P.toff || P.hidden) continue
 		. += P
 	return .

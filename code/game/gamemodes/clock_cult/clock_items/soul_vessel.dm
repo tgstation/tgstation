@@ -28,10 +28,10 @@
 	radio.on = FALSE
 	laws = new /datum/ai_laws/ratvar()
 	braintype = picked_name
-	all_clockwork_objects += src
+	GLOB.all_clockwork_objects += src
 
 /obj/item/device/mmi/posibrain/soul_vessel/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	return ..()
 
 /obj/item/device/mmi/posibrain/soul_vessel/examine(mob/user)

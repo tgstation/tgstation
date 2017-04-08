@@ -145,7 +145,7 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(cardinal)
+					var/anydir = pick(GLOB.cardinal)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
@@ -196,7 +196,7 @@
 		var/turf/open/ST = src.loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(arglist(hardcoded_gases))
+			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
 			var/tox = ST_gases["plasma"][MOLES]
 			var/oxy = ST_gases["o2"][MOLES]
@@ -347,7 +347,7 @@
 		. = 1
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
+	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || SSticker.current_state != GAME_STATE_PLAYING)
 		return
 	next_scan_time = world.time + 400
 	var/alone = 1

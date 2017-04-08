@@ -1,6 +1,3 @@
-
-var/sound/admin_sound
-
 /client/proc/play_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Global Sound"
@@ -11,7 +8,7 @@ var/sound/admin_sound
 	message_admins("[key_name_admin(src)] played sound [S]")
 
 	var/freq = 1
-	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
 		to_chat(src, "You feel the Honkmother messing with your song...")
 
@@ -24,7 +21,7 @@ var/sound/admin_sound
 	admin_sound.repeat = 0
 	admin_sound.status = SOUND_STREAM
 
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M << admin_sound
 
@@ -48,8 +45,8 @@ var/sound/admin_sound
 	if(!check_rights(R_SOUNDS))
 		return
 
-	if(ticker)
-		ticker.round_end_sound = fcopy_rsc(S)
+	if(SSticker)
+		SSticker.round_end_sound = fcopy_rsc(S)
 	else
 		return
 
@@ -65,7 +62,7 @@ var/sound/admin_sound
 
 	log_admin("[key_name(src)] stopped all currently playing sounds.")
 	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.client)
 			M << sound(null)
 	feedback_add_details("admin_verb","SS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

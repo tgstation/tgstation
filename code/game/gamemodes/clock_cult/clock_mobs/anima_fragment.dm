@@ -28,7 +28,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment/Life()
 	..()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		adjustHealth(-5)
 	else if(movement_delay_time > world.time)
 		adjustHealth(-0.2)
@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment/Stat()
 	..()
-	if(statpanel("Status") && movement_delay_time > world.time && !ratvar_awakens)
+	if(statpanel("Status") && movement_delay_time > world.time && !GLOB.ratvar_awakens)
 		stat(null, "Movement delay(seconds): [max(round((movement_delay_time - world.time)*0.1, 0.1), 0)]")
 
 /mob/living/simple_animal/hostile/clockwork/fragment/death(gibbed)
@@ -59,7 +59,7 @@
 		UnarmedAttack(L)
 		attacktext = previousattacktext
 		changeNext_move(CLICK_CD_MELEE)
-		if(!ratvar_awakens)
+		if(!GLOB.ratvar_awakens)
 			adjustHealth(4)
 			adjust_movement_delay(10) //with the above damage, total of 20 movement delay plus speed = 0 due to damage
 
@@ -68,7 +68,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment/movement_delay()
 	. = ..()
-	if(movement_delay_time > world.time && !ratvar_awakens)
+	if(movement_delay_time > world.time && !GLOB.ratvar_awakens)
 		. += min((movement_delay_time - world.time) * 0.1, 10) //the more delay we have, the slower we go
 
 /mob/living/simple_animal/hostile/clockwork/fragment/adjustHealth(amount)
@@ -77,7 +77,7 @@
 		adjust_movement_delay(amount*2.5)
 
 /mob/living/simple_animal/hostile/clockwork/fragment/proc/adjust_movement_delay(amount)
-	if(ratvar_awakens) //if ratvar is up we ignore movement delay
+	if(GLOB.ratvar_awakens) //if ratvar is up we ignore movement delay
 		movement_delay_time = 0
 	else if(movement_delay_time > world.time)
 		movement_delay_time = movement_delay_time + amount

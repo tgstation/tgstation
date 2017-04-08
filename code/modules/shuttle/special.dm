@@ -151,7 +151,7 @@
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.access |= access_cent_bar
+	access_card.access |= GLOB.access_cent_bar
 	grant_all_languages(omnitongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
@@ -169,7 +169,7 @@
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
-	access_card.access |= access_cent_bar
+	access_card.access |= GLOB.access_cent_bar
 	access_card.flags |= NODROP
 
 	grant_all_languages(omnitongue=TRUE)
@@ -212,13 +212,13 @@
 			return TRUE
 
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
-	if(ID && (access_cent_bar in ID.access))
+	if(ID && (GLOB.access_cent_bar in ID.access))
 		return TRUE
 
 //Luxury Shuttle Blockers
 
 /obj/effect/forcefield/luxury_shuttle
-	var/threshhold = 500
+	var/threshold = 500
 	var/static/list/approved_passengers = list()
 
 /obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target, height=0)
@@ -234,15 +234,15 @@
 	for(var/obj/item/weapon/coin/C in mover.GetAllContents())
 		total_cash += C.value
 		counted_money += C
-		if(total_cash >= threshhold)
+		if(total_cash >= threshold)
 			break
 	for(var/obj/item/stack/spacecash/S in mover.GetAllContents())
 		total_cash += S.value * S.amount
 		counted_money += S
-		if(total_cash >= threshhold)
+		if(total_cash >= threshold)
 			break
 
-	if(total_cash >= threshhold)
+	if(total_cash >= threshold)
 		for(var/obj/I in counted_money)
 			qdel(I)
 

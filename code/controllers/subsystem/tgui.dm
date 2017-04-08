@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/tgui/SStgui
-
-/datum/controller/subsystem/tgui
+SUBSYSTEM_DEF(tgui)
 	name = "tgui"
 	wait = 9
 	init_order = 16
@@ -12,10 +10,8 @@ var/datum/controller/subsystem/tgui/SStgui
 	var/list/processing_uis = list() // A list of processing UIs, ungrouped.
 	var/basehtml // The HTML base used for all UIs.
 
-/datum/controller/subsystem/tgui/New()
+/datum/controller/subsystem/tgui/PreInit()
 	basehtml = file2text('tgui/tgui.html') // Read the HTML from disk.
-
-	NEW_SS_GLOBAL(SStgui)
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()

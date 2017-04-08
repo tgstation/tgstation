@@ -1,4 +1,4 @@
-var/list/blacklisted_cargo_types = typecacheof(list(
+GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/mob/living,
 		/obj/structure/blob,
 		/obj/effect/rune,
@@ -18,7 +18,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		/obj/effect/clockwork/spatial_gateway,
 		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
 		/obj/item/device/warp_cube
-	))
+	)))
 
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
@@ -49,7 +49,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 	for(var/trf in areaInstance)
 		var/turf/T = trf
 		for(var/a in T.GetAllContents())
-			if(is_type_in_typecache(a, blacklisted_cargo_types))
+			if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
 				return FALSE
 	return TRUE
 
@@ -102,7 +102,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 /obj/docking_port/mobile/supply/proc/sell()
 	var/presale_points = SSshuttle.points
 
-	if(!exports_list.len) // No exports list? Generate it!
+	if(!GLOB.exports_list.len) // No exports list? Generate it!
 		setupExports()
 
 	var/msg = ""
@@ -116,7 +116,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 	if(sold_atoms)
 		sold_atoms += "."
 
-	for(var/a in exports_list)
+	for(var/a in GLOB.exports_list)
 		var/datum/export/E = a
 		var/export_text = E.total_printout()
 		if(!export_text)

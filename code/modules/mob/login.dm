@@ -1,5 +1,5 @@
 /mob/Login()
-	player_list |= src
+	GLOB.player_list |= src
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
 	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
@@ -28,7 +28,7 @@
 
 	reload_fullscreen() // Reload any fullscreen overlays this mob has.
 
-	if(ckey in deadmins)
+	if(ckey in GLOB.deadmins)
 		verbs += /client/proc/readmin
 
 	add_click_catcher()

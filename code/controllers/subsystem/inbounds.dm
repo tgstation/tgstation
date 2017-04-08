@@ -1,5 +1,4 @@
-var/datum/controller/subsystem/inbounds/SSinbounds
-/datum/controller/subsystem/inbounds
+SUBSYSTEM_DEF(inbounds)
 	name = "Inbounds"
 	priority = 40
 	flags = SS_NO_INIT
@@ -7,8 +6,6 @@ var/datum/controller/subsystem/inbounds/SSinbounds
 	var/list/processing = list()
 	var/list/currentrun = list()
 
-/datum/controller/subsystem/inbounds/New()
-	NEW_SS_GLOBAL(SSinbounds)
 /datum/controller/subsystem/inbounds/stat_entry()
 	..("P:[processing.len]")
 

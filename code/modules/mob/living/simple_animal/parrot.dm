@@ -170,7 +170,7 @@
 				ears.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
-	if(message_mode in radiochannels)
+	if(message_mode in GLOB.radiochannels)
 		if(ears)
 			ears.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
@@ -215,7 +215,7 @@
 						ears.loc = src.loc
 						ears = null
 						for(var/possible_phrase in speak)
-							if(copytext(possible_phrase,1,3) in department_radio_keys)
+							if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
 								possible_phrase = copytext(possible_phrase,3)
 					else
 						to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")
@@ -424,7 +424,7 @@
 						if(prob(50))
 							useradio = 1
 
-						if(copytext(possible_phrase,1,3) in department_radio_keys)
+						if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
 							possible_phrase = "[useradio?pick(available_channels):""][copytext(possible_phrase,3)]" //crop out the channel prefix
 						else
 							possible_phrase = "[useradio?pick(available_channels):""][possible_phrase]"
@@ -433,7 +433,7 @@
 
 				else //If we have no headset or channels to use, dont try to use any!
 					for(var/possible_phrase in speak)
-						if(copytext(possible_phrase,1,3) in department_radio_keys)
+						if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
 							possible_phrase = "[copytext(possible_phrase,3,length(possible_phrase)+1)]" //crop out the channel prefix
 						newspeak.Add(possible_phrase)
 				speak = newspeak
@@ -455,7 +455,7 @@
 		//Wander around aimlessly. This will help keep the loops from searches down
 		//and possibly move the mob into a new are in view of something they can use
 		if(prob(90))
-			step(src, pick(cardinal))
+			step(src, pick(GLOB.cardinal))
 			return
 
 		if(!held_item && !parrot_perch) //If we've got nothing to do.. look for something to do.
@@ -898,7 +898,7 @@
 	..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
-	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		rounds_survived = max(++rounds_survived,1)
 		if(rounds_survived > longest_survival)
 			longest_survival = rounds_survived

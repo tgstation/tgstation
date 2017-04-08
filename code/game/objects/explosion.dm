@@ -1,5 +1,3 @@
-var/explosionid = 1
-
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0, smoke = 1)
 	set waitfor = 0
 	src = null //so we don't abort once src is deleted
@@ -14,11 +12,11 @@ var/explosionid = 1
 
 	if(!ignorecap && epicenter.z != ZLEVEL_MINING)
 		//Clamp all values to MAX_EXPLOSION_RANGE
-		devastation_range = min(MAX_EX_DEVESTATION_RANGE, devastation_range)
-		heavy_impact_range = min(MAX_EX_HEAVY_RANGE, heavy_impact_range)
-		light_impact_range = min(MAX_EX_LIGHT_RANGE, light_impact_range)
-		flash_range = min(MAX_EX_FLASH_RANGE, flash_range)
-		flame_range = min(MAX_EX_FLAME_RANGE, flame_range)
+		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE, devastation_range)
+		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE, heavy_impact_range)
+		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE, light_impact_range)
+		flash_range = min(GLOB.MAX_EX_FLASH_RANGE, flash_range)
+		flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
 
 	//DO NOT REMOVE THIS SLEEP, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
@@ -29,6 +27,7 @@ var/explosionid = 1
 	//and somethings expect us to ex_act them so they can qdel()
 	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
 
+	var/static/explosionid = 1
 	var/id = explosionid++
 	var/start = world.timeofday
 
@@ -52,7 +51,7 @@ var/explosionid = 1
 	if(!silent)
 		var/frequency = get_rand_frequency()
 		var/ex_sound = get_sfx("explosion")
-		for(var/mob/M in player_list)
+		for(var/mob/M in GLOB.player_list)
 			// Double check for client
 			if(M && M.client)
 				var/turf/M_turf = get_turf(M)
@@ -70,7 +69,7 @@ var/explosionid = 1
 	//postpone processing for a bit
 	var/postponeCycles = max(round(devastation_range/8),1)
 	SSlighting.postpone(postponeCycles)
-	SSmachine.postpone(postponeCycles)
+	SSmachines.postpone(postponeCycles)
 
 	if(heavy_impact_range > 1)
 		if(smoke)
@@ -180,11 +179,11 @@ var/explosionid = 1
 
 	var/took = (world.timeofday-start)/10
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
-	if(Debug2)
+	if(GLOB.Debug2)
 		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
 
 	//Machines which report explosions.
-	for(var/array in doppler_arrays)
+	for(var/array in GLOB.doppler_arrays)
 		var/obj/machinery/doppler_array/A = array
 		A.sense_explosion(epicenter,devastation_range,heavy_impact_range,light_impact_range,took,orig_dev_range,orig_heavy_range,orig_light_range)
 
@@ -278,7 +277,7 @@ var/explosionid = 1
 	if(!power)
 		return
 	var/range = 0
-	range = round((2 * power)**DYN_EX_SCALE)
+	range = round((2 * power)**GLOB.DYN_EX_SCALE)
 	explosion(epicenter, round(range * 0.25), round(range * 0.5), round(range), flash_range*range, adminlog, ignorecap, flame_range*range, silent, smoke)
 
 // Using default dyn_ex scale:

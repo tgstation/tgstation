@@ -70,8 +70,8 @@
 			return
 
 	//Logs all hrefs
-	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	if(config && config.log_hrefs && GLOB.href_logfile)
+		GLOB.href_logfile << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -138,8 +138,7 @@
 	//CONNECT//
 	///////////
 #if (PRELOAD_RSC == 0)
-var/list/external_rsc_urls
-var/next_external_rsc = 0
+GLOBAL_LIST(external_rsc_urls)
 #endif
 
 
@@ -151,13 +150,14 @@ var/next_external_rsc = 0
 		return null
 
 #if (PRELOAD_RSC == 0)
+	var/static/next_external_rsc = 0
 	if(external_rsc_urls && external_rsc_urls.len)
 		next_external_rsc = Wrap(next_external_rsc+1, 1, external_rsc_urls.len+1)
 		preload_rsc = external_rsc_urls[next_external_rsc]
 #endif
 
-	clients += src
-	directory[ckey] = src
+	GLOB.clients += src
+	GLOB.directory[ckey] = src
 
 	//Admin Authorisation
 	var/localhost_addresses = list("127.0.0.1", "::1")
@@ -167,9 +167,9 @@ var/next_external_rsc = 0
 			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
 			localhost_holder.associate(src)
 	if(config.autoadmin)
-		if(!admin_datums[ckey])
+		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank
-			for(var/datum/admin_rank/R in admin_ranks)
+			for(var/datum/admin_rank/R in GLOB.admin_ranks)
 				if(R.name == config.autoadmin_rank)
 					autorank = R
 					break
@@ -177,17 +177,17 @@ var/next_external_rsc = 0
 				to_chat(world, "Autoadmin rank not found")
 			else
 				var/datum/admins/D = new(autorank, ckey)
-				admin_datums[ckey] = D
-	holder = admin_datums[ckey]
+				GLOB.admin_datums[ckey] = D
+	holder = GLOB.admin_datums[ckey]
 	if(holder)
-		admins |= src
+		GLOB.admins |= src
 		holder.owner = src
 
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
-	prefs = preferences_datums[ckey]
+	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
 		prefs = new /datum/preferences(src)
-		preferences_datums[ckey] = prefs
+		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
@@ -197,7 +197,7 @@ var/next_external_rsc = 0
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
 	if(config.log_access)
-		for(var/I in clients)
+		for(var/I in GLOB.clients)
 			if(I == src)
 				continue
 			var/client/C = I
@@ -256,22 +256,22 @@ var/next_external_rsc = 0
 			qdel(src)
 			return 0
 
-	if( (world.address == address || !address) && !host )
-		host = key
+	if( (world.address == address || !address) && !GLOB.host )
+		GLOB.host = key
 		world.update_status()
 
 	if(holder)
 		add_admin_verbs()
 		to_chat(src, get_message_output("memo"))
 		adminGreet()
-		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
+		if((GLOB.comms_key == "default_pwd" || length(GLOB.comms_key) <= 6) && GLOB.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
 
 	add_verbs_from_config()
 	set_client_age_from_db()
 
 	if (isnum(player_age) && player_age == -1) //first connection
-		if (config.panic_bunker && !holder && !(ckey in deadmins))
+		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
@@ -292,7 +292,7 @@ var/next_external_rsc = 0
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
 
-	if(!IsGuestKey(key) && dbcon.IsConnected())
+	if(!IsGuestKey(key) && GLOB.dbcon.IsConnected())
 		findJoinDate()
 
 	sync_client_with_db(tdata)
@@ -306,17 +306,17 @@ var/next_external_rsc = 0
 
 	screen += void
 
-	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
+	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		if(config.aggressive_changelog)
 			changelog()
 		else
 			winset(src, "infowindow.changelog", "font-style=bold")
 
-	if(ckey in clientmessages)
-		for(var/message in clientmessages[ckey])
+	if(ckey in GLOB.clientmessages)
+		for(var/message in GLOB.clientmessages[ckey])
 			to_chat(src, message)
-		clientmessages.Remove(ckey)
+		GLOB.clientmessages.Remove(ckey)
 
 	if(config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
@@ -339,9 +339,9 @@ var/next_external_rsc = 0
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
-		admins -= src
-	directory -= ckey
-	clients -= src
+		GLOB.admins -= src
+	GLOB.directory -= ckey
+	GLOB.clients -= src
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
@@ -354,12 +354,12 @@ var/next_external_rsc = 0
 	if (IsGuestKey(src.key))
 		return
 
-	if(!dbcon.Connect())
+	if(!GLOB.dbcon.Connect())
 		return
 
 	var/sql_ckey = sanitizeSQL(src.ckey)
 
-	var/DBQuery/query_get_client_age = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query_get_client_age = GLOB.dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())
 		return
 
@@ -375,18 +375,18 @@ var/next_external_rsc = 0
 	if (IsGuestKey(src.key))
 		return
 
-	if (!dbcon.Connect())
+	if (!GLOB.dbcon.Connect())
 		return
 
 	var/sql_ckey = sanitizeSQL(ckey)
 
-	var/DBQuery/query_get_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
+	var/DBQuery/query_get_ip = GLOB.dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
 	query_get_ip.Execute()
 	related_accounts_ip = ""
 	while(query_get_ip.NextRow())
 		related_accounts_ip += "[query_get_ip.item[1]], "
 
-	var/DBQuery/query_get_cid = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
+	var/DBQuery/query_get_cid = GLOB.dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
 	if(!query_get_cid.Execute())
 		return
 	related_accounts_cid = ""
@@ -405,13 +405,13 @@ var/next_external_rsc = 0
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 
-	var/DBQuery/query_log_player = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
+	var/DBQuery/query_log_player = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
 	if(!query_log_player.Execute())
 		return
 
 	//Logging player access
 
-	var/DBQuery/query_log_connection = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/DBQuery/query_log_connection = GLOB.dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 
 /client/proc/check_randomizer(topic)
@@ -467,7 +467,7 @@ var/next_external_rsc = 0
 			cidcheck -= ckey
 	else
 		var/sql_ckey = sanitizeSQL(ckey)
-		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+		var/DBQuery/query_cidcheck = GLOB.dbcon.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 		query_cidcheck.Execute()
 
 		var/lastcid
@@ -495,13 +495,13 @@ var/next_external_rsc = 0
 	var/const/adminckey = "CID-Error"
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
+	var/DBQuery/query_get_notes = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
 	if(!query_get_notes.Execute())
 		return
 	if(query_get_notes.NextRow())
 		return
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
-	query_get_notes = dbcon.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' ORDER BY timestamp DESC LIMIT 1")
+	query_get_notes = GLOB.dbcon.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' ORDER BY timestamp DESC LIMIT 1")
 	if(!query_get_notes.Execute())
 		return
 	if(query_get_notes.NextRow())
@@ -559,7 +559,7 @@ var/next_external_rsc = 0
 		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+		getFilesSlow(src, SSassets.cache, register_asset = FALSE)
 
 
 //Hook, override it to run code when dir changes

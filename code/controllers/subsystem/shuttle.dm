@@ -1,9 +1,7 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
 
-var/datum/controller/subsystem/shuttle/SSshuttle
-
-/datum/controller/subsystem/shuttle
-	name = "Shuttles"
+SUBSYSTEM_DEF(shuttle)
+	name = "Shuttle"
 	wait = 10
 	init_order = 3
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
@@ -47,9 +45,6 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-/datum/controller/subsystem/shuttle/New()
-	NEW_SS_GLOBAL(SSshuttle)
-
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
@@ -76,12 +71,12 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 	..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
-	if(transit_markers.len == 0)
+	if(GLOB.transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
 	// transit zone
-	var/turf/A = get_turf(transit_markers[1])
-	var/turf/B = get_turf(transit_markers[2])
+	var/turf/A = get_turf(GLOB.transit_markers[1])
+	var/turf/B = get_turf(GLOB.transit_markers[2])
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
@@ -90,11 +85,11 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
-	if(transit_markers.len == 0)
+	if(GLOB.transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
-	var/turf/A = get_turf(transit_markers[1])
-	var/turf/B = get_turf(transit_markers[2])
+	var/turf/A = get_turf(GLOB.transit_markers[1])
+	var/turf/B = get_turf(GLOB.transit_markers[2])
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
@@ -179,8 +174,8 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 			return
 		emergency = backup_shuttle
 
-	if(world.time - round_start_time < config.shuttle_refuel_delay)
-		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
+	if(world.time - SSticker.round_start_time < config.shuttle_refuel_delay)
+		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - SSticker.round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
 		return
 
 	switch(emergency.mode)
@@ -240,7 +235,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 /datum/controller/subsystem/shuttle/proc/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL)
 		return
-	if(ticker.mode.name == "meteor")
+	if(SSticker.mode.name == "meteor")
 		return
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)
@@ -258,7 +253,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 /datum/controller/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1
 
-	for(var/thing in shuttle_caller_list)
+	for(var/thing in GLOB.shuttle_caller_list)
 		if(isAI(thing))
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.stat || !AI.client)

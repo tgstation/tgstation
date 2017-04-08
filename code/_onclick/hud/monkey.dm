@@ -69,8 +69,7 @@
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
-	inv_box.icon_full = "template_small"
-	inv_box.screen_loc = ui_back
+	inv_box.screen_loc = ui_monkey_back
 	inv_box.slot_id = slot_back
 	static_inventory += inv_box
 
@@ -123,7 +122,7 @@
 
 	if(hud_shown)
 		if(M.back)
-			M.back.screen_loc = ui_back
+			M.back.screen_loc = ui_monkey_back
 			M.client.screen += M.back
 		if(M.wear_mask)
 			M.wear_mask.screen_loc = ui_monkey_mask

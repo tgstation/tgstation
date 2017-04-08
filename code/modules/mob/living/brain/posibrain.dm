@@ -1,4 +1,4 @@
-var/global/global_posibrain_notify_cooldown = 0
+GLOBAL_VAR(global_posibrain_notify_cooldown)
 
 /obj/item/device/mmi/posibrain
 	name = "positronic brain"
@@ -11,7 +11,7 @@ var/global/global_posibrain_notify_cooldown = 0
 	var/askDelay = 600 //one minute
 	var/searching = FALSE
 	brainmob = null
-	req_access = list(access_robotics)
+	req_access = list(GLOB.access_robotics)
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
 	var/autoping = TRUE //if it pings on creation immediately
@@ -35,10 +35,10 @@ var/global/global_posibrain_notify_cooldown = 0
 			activate(ghost)
 
 /obj/item/device/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
-	if(newlymade || global_posibrain_notify_cooldown <= world.time)
+	if(newlymade || GLOB.posibrain_notify_cooldown <= world.time)
 		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
 		if(!newlymade)
-			global_posibrain_notify_cooldown = world.time + askDelay
+			GLOB.posibrain_notify_cooldown = world.time + askDelay
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
 	if(!brainmob || brainmob.key)
@@ -109,8 +109,8 @@ var/global/global_posibrain_notify_cooldown = 0
 	to_chat(brainmob, welcome_message)
 	brainmob.mind.assigned_role = new_role
 	brainmob.stat = CONSCIOUS
-	dead_mob_list -= brainmob
-	living_mob_list += brainmob
+	GLOB.dead_mob_list -= brainmob
+	GLOB.living_mob_list += brainmob
 
 	visible_message(new_mob_message)
 	update_icon()
@@ -137,7 +137,7 @@ var/global/global_posibrain_notify_cooldown = 0
 	brainmob = new(src)
 	var/new_name
 	if(!LAZYLEN(possible_names))
-		new_name = pick(posibrain_names)
+		new_name = pick(GLOB.posibrain_names)
 	else
 		new_name = pick(possible_names)
 	brainmob.name = "[new_name]-[rand(100, 999)]"

@@ -2,7 +2,7 @@
 	. = ..()
 	generateStaticOverlay()
 	if(staticOverlays.len)
-		for(var/mob/living/simple_animal/drone/D in player_list)
+		for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
 			if(D && D.seeStatic)
 				if(D.staticChoice in staticOverlays)
 					D.staticOverlays |= staticOverlays[D.staticChoice]
@@ -13,7 +13,7 @@
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
-	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
+	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
 	faction += "\ref[src]"
 
@@ -35,7 +35,7 @@
 		buckled.unbuckle_mob(src,force=1)
 	QDEL_NULL(riding_datum)
 
-	for(var/mob/living/simple_animal/drone/D in player_list)
+	for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
 		for(var/image/I in staticOverlays)
 			D.staticOverlays.Remove(I)
 			D.client.images.Remove(I)
@@ -346,8 +346,8 @@
 	if(full_heal)
 		fully_heal(admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
-		dead_mob_list -= src
-		living_mob_list += src
+		GLOB.dead_mob_list -= src
+		GLOB.living_mob_list += src
 		suiciding = 0
 		stat = UNCONSCIOUS //the mob starts unconscious,
 		blind_eyes(1)
@@ -484,7 +484,7 @@
 						newdir = NORTH
 					else if(newdir == 12) //E + W
 						newdir = EAST
-				if((newdir in cardinal) && (prob(50)))
+				if((newdir in GLOB.cardinal) && (prob(50)))
 					newdir = turn(get_dir(T, src.loc), 180)
 				if(!blood_exists)
 					new /obj/effect/decal/cleanable/trail_holder(src.loc)
@@ -599,7 +599,7 @@
 	return name
 
 /mob/living/update_gravity(has_gravity,override = 0)
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		return
 	if(has_gravity)
 		clear_alert("weightless")
@@ -669,7 +669,8 @@
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
 					if(where_list)
-						who.put_in_hand(what, where_list[2])
+						if(!who.put_in_hand(what, where_list[2]))
+							what.forceMove(get_turf(who))
 					else
 						who.equip_to_slot(what, where, TRUE)
 
@@ -726,14 +727,14 @@
 	..()
 
 	if(statpanel("Status"))
-		if(ticker && ticker.mode)
-			for(var/datum/gang/G in ticker.mode.gangs)
+		if(SSticker && SSticker.mode)
+			for(var/datum/gang/G in SSticker.mode.gangs)
 				if(G.is_dominating)
 					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
-			if(istype(ticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/B = ticker.mode
+			if(istype(SSticker.mode, /datum/game_mode/blob))
+				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
+					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
 
 /mob/living/cancel_camera()
 	..()

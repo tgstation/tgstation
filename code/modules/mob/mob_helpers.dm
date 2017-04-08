@@ -269,14 +269,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/findname(msg)
 	if(!istext(msg))
 		msg = "[msg]"
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(M.real_name == msg)
 			return M
 	return 0
 
-var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
-
 /mob/proc/first_name()
+	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
 	firstname.Find(real_name)
 	return firstname.match
 
@@ -327,7 +326,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 	return 0
 
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		return 0
 	if(!istype(M))
 		return 0
@@ -347,30 +346,30 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 				return 1
 		return 0
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
-		switch(ticker.mode.config_tag)
+		switch(SSticker.mode.config_tag)
 			if("revolution")
-				if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
+				if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
 					return 2
 			if("cult")
-				if(M.mind in ticker.mode.cult)
+				if(M.mind in SSticker.mode.cult)
 					return 2
 			if("nuclear")
-				if(M.mind in ticker.mode.syndicates)
+				if(M.mind in SSticker.mode.syndicates)
 					return 2
 			if("changeling")
-				if(M.mind in ticker.mode.changelings)
+				if(M.mind in SSticker.mode.changelings)
 					return 2
 			if("wizard")
-				if(M.mind in ticker.mode.wizards)
+				if(M.mind in SSticker.mode.wizards)
 					return 2
 			if("apprentice")
-				if(M.mind in ticker.mode.apprentices)
+				if(M.mind in SSticker.mode.apprentices)
 					return 2
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
 			if("abductor")
-				if(M.mind in ticker.mode.abductors)
+				if(M.mind in SSticker.mode.abductors)
 					return 2
 		return 1
 	return 0
@@ -381,7 +380,7 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 /proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
 	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.client)
 			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
 			if(ghost_sound)

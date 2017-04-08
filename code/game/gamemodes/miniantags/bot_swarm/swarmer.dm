@@ -120,7 +120,7 @@
 /mob/living/simple_animal/hostile/swarmer/Initialize()
 	..()
 	verbs -= /mob/living/verb/pulled
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
 
@@ -664,7 +664,7 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
 	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(isswarmer(M))
 			to_chat(M, rendered)
 		if(isobserver(M))

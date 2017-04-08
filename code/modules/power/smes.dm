@@ -53,7 +53,7 @@
 
 	spawn(5)
 		dir_loop:
-			for(var/d in cardinal)
+			for(var/d in GLOB.cardinal)
 				var/turf/T = get_step(src, d)
 				for(var/obj/machinery/power/terminal/term in T)
 					if(term && term.dir == turn(d, 180))
@@ -196,7 +196,7 @@
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 		log_game("SMES deleted at ([area.name])")
@@ -354,7 +354,7 @@
 		terminal.powernet.load += amount
 
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)

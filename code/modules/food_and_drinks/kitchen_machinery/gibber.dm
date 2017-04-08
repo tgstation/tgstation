@@ -22,7 +22,7 @@
 /obj/machinery/gibber/autogibber/New()
 	..()
 	spawn(5)
-		for(var/i in cardinal)
+		for(var/i in GLOB.cardinal)
 			var/obj/machinery/mineral/input/input_obj = locate( /obj/machinery/mineral/input, get_step(src.loc, i) )
 			if(input_obj)
 				if(isturf(input_obj.loc))
@@ -31,7 +31,7 @@
 					break
 
 		if(!input_plate)
-			diary << "a [src] didn't find an input plate."
+			GLOB.diary << "a [src] didn't find an input plate."
 			return
 
 /obj/machinery/gibber/autogibber/Bumped(atom/A)

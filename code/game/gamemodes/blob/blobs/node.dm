@@ -11,7 +11,7 @@
 
 
 /obj/structure/blob/node/New(loc)
-	blob_nodes += src
+	GLOB.blob_nodes += src
 	START_PROCESSING(SSobj, src)
 	..()
 
@@ -29,7 +29,7 @@
 	add_overlay(C)
 
 /obj/structure/blob/node/Destroy()
-	blob_nodes -= src
+	GLOB.blob_nodes -= src
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 

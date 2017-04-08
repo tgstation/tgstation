@@ -1,10 +1,8 @@
-var/datum/controller/subsystem/atoms/SSatoms
-
 #define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
 #define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
 
-/datum/controller/subsystem/atoms
+SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = 11
 	flags = SS_NO_FIRE
@@ -14,11 +12,8 @@ var/datum/controller/subsystem/atoms/SSatoms
 
 	var/list/late_loaders
 
-/datum/controller/subsystem/atoms/New()
-	NEW_SS_GLOBAL(SSatoms)
-
 /datum/controller/subsystem/atoms/Initialize(timeofday)
-	fire_overlay.appearance_flags = RESET_COLOR
+	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
@@ -108,9 +103,9 @@ var/datum/controller/subsystem/atoms/SSatoms
 			continue
 		B.dna_block = pick_n_take(avnums)
 		if(B.quality == POSITIVE)
-			good_mutations |= B
+			GLOB.good_mutations |= B
 		else if(B.quality == NEGATIVE)
-			bad_mutations |= B
+			GLOB.bad_mutations |= B
 		else if(B.quality == MINOR_NEGATIVE)
-			not_good_mutations |= B
+			GLOB.not_good_mutations |= B
 		CHECK_TICK

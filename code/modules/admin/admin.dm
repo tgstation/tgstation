@@ -1,19 +1,17 @@
 
-var/global/BSACooldown = 0
-
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(admins, msg)
+	to_chat(GLOB.admins, msg)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(admins, msg)
+	to_chat(GLOB.admins, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
-/datum/admins/proc/show_player_panel(mob/M in mob_list)
+/datum/admins/proc/show_player_panel(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
@@ -189,14 +187,14 @@ var/global/BSACooldown = 0
 			dat += "Welcome to the admin newscaster.<BR> Here you can add, edit and censor every newspiece on the network."
 			dat += "<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units."
 			dat += "<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>"
-			if(news_network.wanted_issue.active)
+			if(GLOB.news_network.wanted_issue.active)
 				dat+= "<HR><A href='?src=\ref[src];ac_view_wanted=1'>Read Wanted Issue</A>"
 			dat+= "<HR><BR><A href='?src=\ref[src];ac_create_channel=1'>Create Feed Channel</A>"
 			dat+= "<BR><A href='?src=\ref[src];ac_view=1'>View Feed Channels</A>"
 			dat+= "<BR><A href='?src=\ref[src];ac_create_feed_story=1'>Submit new Feed story</A>"
 			dat+= "<BR><BR><A href='?src=\ref[usr];mach_close=newscaster_main'>Exit</A>"
 			var/wanted_already = 0
-			if(news_network.wanted_issue.active)
+			if(GLOB.news_network.wanted_issue.active)
 				wanted_already = 1
 			dat+="<HR><B>Feed Security functions:</B><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
@@ -205,10 +203,10 @@ var/global/BSACooldown = 0
 			dat+="<BR><HR><A href='?src=\ref[src];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admin_signature]</FONT></A>"
 		if(1)
 			dat+= "Station Feed Channels<HR>"
-			if( isemptylist(news_network.network_channels) )
+			if( isemptylist(GLOB.news_network.network_channels) )
 				dat+="<I>No active channels found...</I>"
 			else
-				for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 					if(CHANNEL.is_admin_channel)
 						dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen'><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 					else
@@ -245,7 +243,7 @@ var/global/BSACooldown = 0
 			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
 				dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
 			var/check = 0
-			for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 					check = 1
 					break
@@ -280,10 +278,10 @@ var/global/BSACooldown = 0
 			dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
 			dat+="Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>"
 			dat+="<HR>Select Feed channel to get Stories from:<BR>"
-			if(isemptylist(news_network.network_channels))
+			if(isemptylist(GLOB.news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
-				for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 					dat+="<A href='?src=\ref[src];ac_pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A>"
 		if(11)
@@ -291,10 +289,10 @@ var/global/BSACooldown = 0
 			dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
 			dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
 			dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
-			if(isemptylist(news_network.network_channels))
+			if(isemptylist(GLOB.news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
-				for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 					dat+="<A href='?src=\ref[src];ac_pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A>"
@@ -329,7 +327,7 @@ var/global/BSACooldown = 0
 			dat+="<B>Wanted Issue Handler:</B>"
 			var/wanted_already = 0
 			var/end_param = 1
-			if(news_network.wanted_issue.active)
+			if(GLOB.news_network.wanted_issue.active)
 				wanted_already = 1
 				end_param = 2
 			if(wanted_already)
@@ -338,7 +336,7 @@ var/global/BSACooldown = 0
 			dat+="<A href='?src=\ref[src];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_wanted_message.criminal] <BR>"
 			dat+="<A href='?src=\ref[src];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_wanted_message.body] <BR>"
 			if(wanted_already)
-				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[news_network.wanted_issue.scannedUser]</FONT><BR>"
+				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[GLOB.news_network.wanted_issue.scannedUser]</FONT><BR>"
 			else
 				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
@@ -359,12 +357,12 @@ var/global/BSACooldown = 0
 			dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(18)
-			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.scannedUser]</FONT>\]</FONT><HR>"
-			dat+="<B>Criminal</B>: [news_network.wanted_issue.criminal]<BR>"
-			dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
+			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[GLOB.news_network.wanted_issue.scannedUser]</FONT>\]</FONT><HR>"
+			dat+="<B>Criminal</B>: [GLOB.news_network.wanted_issue.criminal]<BR>"
+			dat+="<B>Description</B>: [GLOB.news_network.wanted_issue.body]<BR>"
 			dat+="<B>Photo:</B>: "
-			if(news_network.wanted_issue.img)
-				usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
+			if(GLOB.news_network.wanted_issue.img)
+				usr << browse_rsc(GLOB.news_network.wanted_issue.img, "tmp_photow.png")
 				dat+="<BR><img src='tmp_photow.png' width = '180'>"
 			else
 				dat+="None"
@@ -389,7 +387,7 @@ var/global/BSACooldown = 0
 		<center><B>Game Panel</B></center><hr>\n
 		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
-	if(master_mode == "secret")
+	if(GLOB.master_mode == "secret")
 		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
 
 	dat += {"
@@ -420,7 +418,7 @@ var/global/BSACooldown = 0
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		ticker.delay_end = 0
+		SSticker.delay_end = 0
 		feedback_add_details("admin_verb","R") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_error", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 
@@ -435,7 +433,7 @@ var/global/BSACooldown = 0
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		ticker.force_ending = 1
+		SSticker.force_ending = 1
 		feedback_add_details("admin_verb","ER") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -461,20 +459,20 @@ var/global/BSACooldown = 0
 	if(!check_rights(0))
 		return
 
-	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as message|null
+	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",GLOB.admin_notice) as message|null
 	if(new_admin_notice == null)
 		return
-	if(new_admin_notice == admin_notice)
+	if(new_admin_notice == GLOB.admin_notice)
 		return
 	if(new_admin_notice == "")
 		message_admins("[key_name(usr)] removed the admin notice.")
-		log_admin("[key_name(usr)] removed the admin notice:\n[admin_notice]")
+		log_admin("[key_name(usr)] removed the admin notice:\n[GLOB.admin_notice]")
 	else
 		message_admins("[key_name(usr)] set the admin notice.")
 		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
 		to_chat(world, "<span class ='adminnotice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>")
 	feedback_add_details("admin_verb","SAN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	admin_notice = new_admin_notice
+	GLOB.admin_notice = new_admin_notice
 	return
 
 /datum/admins/proc/toggleooc()
@@ -490,7 +488,7 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle Dead OOC"
-	dooc_allowed = !( dooc_allowed )
+	GLOB.dooc_allowed = !( GLOB.dooc_allowed )
 
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
@@ -509,11 +507,11 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
-	if(ticker.current_state == GAME_STATE_PREGAME || ticker.current_state == GAME_STATE_STARTUP)
-		ticker.start_immediately = TRUE
+	if(SSticker.current_state == GAME_STATE_PREGAME || SSticker.current_state == GAME_STATE_STARTUP)
+		SSticker.start_immediately = TRUE
 		log_admin("[usr.key] has started the game.")
 		var/msg = ""
-		if(ticker.current_state == GAME_STATE_STARTUP)
+		if(SSticker.current_state == GAME_STATE_STARTUP)
 			msg = " (The server is still setting up, but the round will be \
 				started as soon as possible.)"
 		message_admins("<font color='blue'>\
@@ -529,8 +527,8 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="People can't enter"
 	set name="Toggle Entering"
-	enter_allowed = !( enter_allowed )
-	if (!( enter_allowed ))
+	GLOB.enter_allowed = !( GLOB.enter_allowed )
+	if (!( GLOB.enter_allowed ))
 		to_chat(world, "<B>New players may no longer enter the game.</B>")
 	else
 		to_chat(world, "<B>New players may now enter the game.</B>")
@@ -556,13 +554,13 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
-	abandon_allowed = !( abandon_allowed )
-	if (abandon_allowed)
+	GLOB.abandon_allowed = !( GLOB.abandon_allowed )
+	if (GLOB.abandon_allowed)
 		to_chat(world, "<B>You may now respawn.</B>")
 	else
 		to_chat(world, "<B>You may no longer respawn :(</B>")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>")
-	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [GLOB.abandon_allowed ? "On" : "Off"].</span>")
+	log_admin("[key_name(usr)] toggled respawn to [GLOB.abandon_allowed ? "On" : "Off"].")
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -571,11 +569,11 @@ var/global/BSACooldown = 0
 	set desc="Delay the game start"
 	set name="Delay pre-game"
 
-	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(ticker.GetTimeLeft()/10)) as num|null
-	if(ticker.current_state > GAME_STATE_PREGAME)
+	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.GetTimeLeft()/10)) as num|null
+	if(SSticker.current_state > GAME_STATE_PREGAME)
 		return alert("Too late... The game has already started!")
 	if(newtime)
-		ticker.SetTimeLeft(newtime * 10)
+		SSticker.SetTimeLeft(newtime * 10)
 		if(newtime < 0)
 			to_chat(world, "<b>The game start has been delayed.</b>")
 			log_admin("[key_name(usr)] delayed the round start.")
@@ -585,11 +583,11 @@ var/global/BSACooldown = 0
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
 		feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/unprison(mob/M in mob_list)
+/datum/admins/proc/unprison(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Unprison"
 	if (M.z == ZLEVEL_CENTCOM)
-		M.loc = pick(latejoin)
+		M.loc = pick(GLOB.latejoin)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
@@ -638,7 +636,7 @@ var/global/BSACooldown = 0
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/datum/admins/proc/show_traitor_panel(mob/M in mob_list)
+/datum/admins/proc/show_traitor_panel(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
@@ -658,8 +656,8 @@ var/global/BSACooldown = 0
 	set category = "Debug"
 	set desc="Reduces view range when wearing welding helmets"
 	set name="Toggle tinted welding helmes"
-	tinted_weldhelh = !( tinted_weldhelh )
-	if (tinted_weldhelh)
+	GLOB.tinted_weldhelh = !( GLOB.tinted_weldhelh )
+	if (GLOB.tinted_weldhelh)
 		to_chat(world, "<B>The tinted_weldhelh has been enabled!</B>")
 	else
 		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
@@ -671,18 +669,18 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="Guests can't enter"
 	set name="Toggle guests"
-	guests_allowed = !( guests_allowed )
-	if (!( guests_allowed ))
+	GLOB.guests_allowed = !( GLOB.guests_allowed )
+	if (!( GLOB.guests_allowed ))
 		to_chat(world, "<B>Guests may no longer enter the game.</B>")
 	else
 		to_chat(world, "<B>Guests may now enter the game.</B>")
-	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.</span>")
+	log_admin("[key_name(usr)] toggled guests game entering [GLOB.guests_allowed?"":"dis"]allowed.")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [GLOB.guests_allowed?"":"dis"]allowed.</span>")
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in mob_list)
+	for(var/mob/living/silicon/S in GLOB.mob_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
@@ -703,15 +701,15 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/output_all_devil_info()
 	var/devil_number = 0
-	for(var/D in ticker.mode.devils)
+	for(var/D in SSticker.mode.devils)
 		devil_number++
-		to_chat(usr, "Devil #[devil_number]:<br><br>" + ticker.mode.printdevilinfo(D))
+		to_chat(usr, "Devil #[devil_number]:<br><br>" + SSticker.mode.printdevilinfo(D))
 	if(!devil_number)
 		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
 	if(istype(M) && M.mind && M.mind.devilinfo)
-		to_chat(usr, ticker.mode.printdevilinfo(M.mind))
+		to_chat(usr, SSticker.mode.printdevilinfo(M.mind))
 	else
 		to_chat(usr, "<b>[M] is not a devil.")
 
@@ -721,7 +719,7 @@ var/global/BSACooldown = 0
 	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
 	var/count = 0
 
-	if(ticker && !ticker.mode)
+	if(SSticker && !SSticker.mode)
 		alert(usr, "You cannot manage jobs before the round starts!")
 		return
 
@@ -770,7 +768,7 @@ var/global/BSACooldown = 0
 //returns a list of ckeys of the kicked clients
 /proc/kick_clients_in_lobby(message, kick_only_afk = 0)
 	var/list/kicked_client_names = list()
-	for(var/client/C in clients)
+	for(var/client/C in GLOB.clients)
 		if(isnewplayer(C.mob))
 			if(kick_only_afk && !C.is_afk()) //Ignore clients who are not afk
 				continue
@@ -815,7 +813,7 @@ var/global/BSACooldown = 0
 	return 1
 
 /client/proc/adminGreet(logout)
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
 		var/string
 		if(logout && config && config.announce_admin_logout)
 			string = pick(

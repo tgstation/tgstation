@@ -40,7 +40,7 @@
 		layer = OPEN_DOOR_LAYER //Under all objects if opened. 2.7 due to tables being at 2.6
 	update_freelook_sight()
 	air_update_turf(1)
-	airlocks += src
+	GLOB.airlocks += src
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 
@@ -50,7 +50,7 @@
 	density = 0
 	air_update_turf(1)
 	update_freelook_sight()
-	airlocks -= src
+	GLOB.airlocks -= src
 	if(spark_system)
 		qdel(spark_system)
 		spark_system = null
@@ -229,7 +229,7 @@
 		return 1
 	if(operating)
 		return
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		return 0
 	operating = 1
 	do_animate("opening")
@@ -314,8 +314,8 @@
 	return !(stat & NOPOWER)
 
 /obj/machinery/door/proc/update_freelook_sight()
-	if(!glass && cameranet)
-		cameranet.updateVisibility(src, 0)
+	if(!glass && GLOB.cameranet)
+		GLOB.cameranet.updateVisibility(src, 0)
 
 /obj/machinery/door/BlockSuperconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)

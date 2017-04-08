@@ -270,12 +270,6 @@
 	See RemieRichards on irc.rizon.net #coderbus
 */
 
-var/global/list/limb_icon_cache = list()
-
-/mob/living/carbon
-	var/icon_render_key = ""
-
-
 //produces a key based on the mob's limbs
 
 /mob/living/carbon/proc/generate_icon_render_key()

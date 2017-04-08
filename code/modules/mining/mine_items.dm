@@ -37,7 +37,7 @@
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
 	icon_state = "mining"
-	req_access = list(access_mining)
+	req_access = list(GLOB.access_mining)
 
 /obj/structure/closet/secure_closet/miner/New()
 	..()
@@ -68,7 +68,7 @@
 	var/global/list/dumb_rev_heads = list()
 
 /obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
-	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in ticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
+	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in SSticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
 		to_chat(user, "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>")
 		dumb_rev_heads += user.mind
 		return
