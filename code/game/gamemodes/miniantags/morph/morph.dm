@@ -25,6 +25,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	idle_vision_range = 1 // Only attack when target is close
 	wander = 0
 	attacktext = "glomps"
@@ -41,13 +42,6 @@
 							less damage. In addition, anyone within three tiles will note an uncanny wrongness if examining you. \
 							You can attack any item or dead creature to consume it - creatures will fully restore your health. \
 							Finally, you can restore yourself to your original form while morphed by shift-clicking yourself.</b>"
-
-/mob/living/simple_animal/hostile/morph/Login()
-	. = ..()
-	if (hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(morphed)

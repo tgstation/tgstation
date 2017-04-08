@@ -57,6 +57,7 @@
 		return TRUE
 
 /obj/item/clothing/glasses/wraith_spectacles/proc/set_vision_vars(update_vision)
+	lighting_alpha = null
 	tint = 0
 	vision_flags = NONE
 	darkness_view = 2

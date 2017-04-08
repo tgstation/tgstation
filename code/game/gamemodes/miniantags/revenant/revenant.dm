@@ -23,6 +23,7 @@
 	sight = SEE_SELF
 
 	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	response_help   = "passes through"
 	response_disarm = "swings through"
 	response_harm   = "punches through"
@@ -90,10 +91,6 @@
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
-	if (hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/simple_animal/revenant/Life()

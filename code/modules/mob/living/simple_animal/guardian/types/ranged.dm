@@ -62,24 +62,19 @@
 			P.color = namedatum.colour
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
-	if(!hud_used)
-		return
-	var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-	if (!L)
-		return
 	var/msg
-	switch(L.alpha)
+	switch(lighting_alpha)
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 			msg = "You activate your night vision."
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 			msg = "You increase your night vision."
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			L.alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 			msg = "You maximize your night vision."
 		else
-			L.alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 			msg = "You deactivate your night vision."
 
 	to_chat(src, "<span class='notice'>[msg]</span>")

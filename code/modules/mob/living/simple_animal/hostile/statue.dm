@@ -35,6 +35,7 @@
 	hud_possible = list(ANTAG_HUD)
 
 	see_in_dark = 13
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	vision_range = 12
 	aggro_vision_range = 12
 	idle_vision_range = 12
@@ -63,13 +64,6 @@
 	// Set creator
 	if(creator)
 		src.creator = creator
-
-/mob/living/simple_animal/hostile/statue/Login()
-	. = ..()
-	if (hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
 /mob/living/simple_animal/hostile/statue/med_hud_set_health()
 	return //we're a statue we're invincible
@@ -213,26 +207,20 @@
 
 /obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets, mob/user = usr)
 	for(var/mob/living/target in targets)
-		if (iscarbon(target)) //Carbons should be toggling their vision via organ, this spell is used as a power for simple mobs
-			continue
-		if(!target.hud_used)
-			continue
-		var/obj/screen/plane_master/lighting/L = target.hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (!L)
-			continue
-		switch(L.alpha)
+		switch(target.lighting_alpha)
 			if (LIGHTING_PLANE_ALPHA_VISIBLE)
-				L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+				target.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 				name = "Toggle Nightvision \[More]"
 			if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-				L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+				target.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 				name = "Toggle Nightvision \[Full]"
 			if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-				L.alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+				target.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 				name = "Toggle Nightvision \[OFF]"
 			else
-				L.alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+				target.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 				name = "Toggle Nightvision \[ON]"
+			target.update_sight()
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"

@@ -30,6 +30,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	var/list/consumed_mobs = list()
@@ -40,13 +41,6 @@
 /mob/living/simple_animal/imp/Initialize()
 	..()
 	boost = world.time + 30
-
-/mob/living/simple_animal/imp/Login()
-	. = ..()
-	if (hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /mob/living/simple_animal/imp/Life()
 	..()

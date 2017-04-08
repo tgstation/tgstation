@@ -12,7 +12,7 @@
 
 	pass_flags = PASSBLOB
 	faction = list("blob")
-
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
@@ -87,10 +87,6 @@
 	blob_help()
 	update_health_hud()
 	add_points(0)
-	if (hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /mob/camera/blob/examine(mob/user)
 	..()

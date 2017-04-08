@@ -32,6 +32,7 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	var/playstyle_string = "<B><font size=3 color='red'>You are a slaughter demon,</font> a terrible creature from another realm. You have a single desire: To kill.  \
@@ -51,13 +52,6 @@
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
 		bloodspell.phased = 1
-
-/mob/living/simple_animal/slaughter/Login()
-	. = ..()
-	if (hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /mob/living/simple_animal/slaughter/Life()
 	..()

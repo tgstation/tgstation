@@ -219,14 +219,8 @@
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
 	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/independent = FALSE
-
-/mob/living/simple_animal/hostile/blob/blobbernaut/Login()
-	. = ..()
-	if (hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
 	..()

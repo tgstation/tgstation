@@ -30,18 +30,11 @@
 	status_flags = CANPUSH
 	minbodytemp = 0
 	see_in_dark = 8
-
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	unique_name = 1
 	gold_core_spawnable = 0
 	death_sound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
-
-/mob/living/simple_animal/hostile/alien/Login()
-	. = ..()
-	if (hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

@@ -28,7 +28,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/image/ghostimage_default = null //this mobs ghost image without accessories and dirs
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
-	var/seedarkness = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
@@ -499,32 +498,27 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts"
 	set category = "Ghost"
 	ghostvision = !(ghostvision)
-	updateghostsight()
+	update_sight()
 	to_chat(usr, "You [(ghostvision?"now":"no longer")] have ghost vision.")
 
 /mob/dead/observer/verb/toggle_darkness()
 	set name = "Toggle Darkness"
 	set category = "Ghost"
-	switch(seedarkness)
+	switch(lighting_alpha)
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			seedarkness = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			seedarkness = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			seedarkness = LIGHTING_PLANE_ALPHA_INVISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		else
-			seedarkness = LIGHTING_PLANE_ALPHA_VISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
-	updateghostsight()
+	update_sight()
 
-/mob/dead/observer/proc/updateghostsight()
+/mob/dead/observer/update_sight()
 	if(client)
 		ghost_others = client.prefs.ghost_others //A quick update just in case this setting was changed right before calling the proc
-	if (hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = seedarkness
-
 
 	if (!ghostvision)
 		see_invisible = SEE_INVISIBLE_LIVING
@@ -533,6 +527,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 	updateghostimages()
+	..()
 
 /proc/updateallghostimages()
 	listclearnulls(GLOB.ghost_images_default)
