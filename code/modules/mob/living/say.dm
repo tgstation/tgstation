@@ -103,7 +103,26 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(stat && !(message_mode in crit_allowed_modes))
 		return
 
-	if(handle_inherent_channels(message, message_mode)) //Hiveminds, binary chat & holopad.
+	// language comma detection.
+	var/datum/language/message_language = get_message_language(message)
+	if(message_language)
+		// No, you cannot speak in xenocommon just because you know the key
+		if(can_speak_in_language(message_language))
+			language = message_language
+		message = copytext(message, 3)
+
+		// Trim the space if they said ",0 I LOVE LANGUAGES"
+		if(findtext(message, " ", 1, 2))
+			message = copytext(message, 2)
+
+	if(!language)
+		language = get_default_language()
+
+	// Detection of language needs to be before inherent channels, because
+	// AIs use inherent channels for the holopad. Most inherent channels
+	// ignore the language argument however.
+
+	if(handle_inherent_channels(message, message_mode, language)) //Hiveminds, binary chat & holopad.
 		return
 
 	if(!can_speak_vocal(message))
@@ -112,13 +131,16 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
 		message = treat_message(message)
-		if(!message)
-			return
 
 	spans += get_spans()
 
-	if(!language)
-		language = get_default_language()
+	if(language)
+		var/datum/language/L = language_datums[language]
+		if(!istype(L))
+			L = new language
+			language_datums[language] = L
+
+		spans |= L.spans
 
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
 	log_message(message, INDIVIDUAL_SAY_LOG)
@@ -291,9 +313,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 /mob/living/proc/treat_message(message)
 	if(getBrainLoss() >= 60)
 		message = derpspeech(message, stuttering)
-
-	if(lisp)
-		message = lisp(message, lisp)
 
 	if(stuttering)
 		message = stutter(message)
