@@ -50,7 +50,6 @@
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 
-	var/special_mut_color = ""
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
 	// species flags. these can be found in flags.dm
@@ -71,6 +70,7 @@
 
 	//Eyes
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
+	var/eye_style = "human" //human_face.dmi
 	///////////
 	// PROCS //
 	///////////
@@ -321,7 +321,7 @@
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD && has_eyes)
-			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
+			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_[eye_style]", "layer" = -BODY_LAYER)
 			img_eyes.color = "#" + H.eye_color
 			img_eyes.pixel_y += face_y_offset
 			standing	+= img_eyes
@@ -508,13 +508,10 @@
 				icon_string = "m_[bodypart]_[S.icon_state]_[layertext]"
 
 			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
-
 			if(S.center)
 				I = center_image(I,S.dimension_x,S.dimension_y)
-			if(special_mut_color)
-				I.color = "#[special_mut_color]"
 			if(!(H.disabilities & HUSK))
-				if(!forced_colour && !special_mut_color)
+				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
 							if(fixed_mut_color)

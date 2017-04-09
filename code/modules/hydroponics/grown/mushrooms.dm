@@ -309,3 +309,24 @@
 		message_admins("Shadowshroom planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(user)]",0,1)
 		investigate_log("was planted by [key_name(user)] at [COORD(user)]", "botany")
 
+//Mushroomman Cap
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/mushroomman
+	name = "mushroom cap"
+	desc = "Plump, soft, fungal fun."
+	icon_state = "mushcaphat"
+	list_reagents = list("doctorsdelight" = 3)
+	slot_flags = SLOT_HEAD
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/mushroomman/attack_hand(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(src == C.back)
+			to_chat(user, "<span class='warning'>You need help picking this off!</span>")
+			return
+	..()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/mushroomman/process()
+	var/mob/living/carbon/human/H = loc
+	if(istype(H) && !H.stat)
+		H.nutrition -= 15
