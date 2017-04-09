@@ -19,8 +19,6 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
-	languages_spoken = ALL
-	languages_understood = ALL
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
@@ -123,6 +121,8 @@ var/global/static/observer_default_invisibility = INVISIBILITY_OBSERVER
 		verbs -= /mob/dead/observer/verb/possess
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
+
+	grant_all_languages()
 	..()
 
 /mob/dead/observer/narsie_act()

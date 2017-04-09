@@ -464,17 +464,6 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
 
-//toggles the talk wheel
-/mob/verb/toggle_talk_wheel()
-	set name = "talk-wheel"
-	set hidden = 1
-
-	if(isliving(src))
-		var/mob/living/L = src
-		if(L.hud_used)
-			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
-				TW.Click()
-
 /mob/proc/is_flying(mob/M = src)
 	if(M.movement_type & FLYING)
 		return 1
