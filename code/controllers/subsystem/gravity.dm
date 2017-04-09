@@ -1,6 +1,5 @@
-var/datum/controller/subsystem/gravity/SSgravity
 
-/datum/controller/subsystem/gravity
+SUBSYSTEM_DEF(gravity)
 	name = "Gravity"
 	priority = 75
 	wait = 1
