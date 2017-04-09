@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(!can_speak_basic(original_message)) //Stat is seperate so I can handle whispers properly.
 		return
-	
+
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(stat && !(message_mode in crit_allowed_modes))
 		return
@@ -245,19 +245,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return MODE_HEADSET
 	else if(length(message) > 2)
 		return GLOB.department_radio_keys[copytext(message, 1, 3)]
-
-/mob/living/proc/get_message_language(message)
-	var/static/list/langlist
-	if(!langlist)
-		langlist = subtypesof(/datum/language)
-
-	if(copytext(message, 1, 2) == ",")
-		var/key = copytext(message, 2, 3)
-		for(var/ld in langlist)
-			var/datum/language/LD = ld
-			if(initial(LD.key) == key)
-				return LD
-	return null
 
 /mob/living/proc/get_message_language(message)
 	var/static/list/langlist

@@ -152,8 +152,6 @@
 	var/planet_atmos = planetary_atmos
 	if (planet_atmos)
 		adjacent_turfs_length++
-	
-	var/datum/gas_mixture/our_air = air
 
 	var/datum/gas_mixture/our_air = air
 

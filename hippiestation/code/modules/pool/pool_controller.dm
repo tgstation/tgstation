@@ -47,7 +47,7 @@
 		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 		sparks.set_up(1, 1, src)
 		sparks.start()
-		if(adminlog)
+		if(GLOB.adminlog)
 			log_say("[key_name(user)] emagged the poolcontroller")
 			message_admins("[key_name_admin(user)] emagged the poolcontroller")
 
@@ -69,7 +69,7 @@
 			updateUsrDialog()
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
 				cur_reagent = "[R.name]"
-				if(adminlog)
+				if(GLOB.adminlog)
 					log_say("[key_name(user)] has changed the pool's chems to [R.name]")
 					message_admins("[key_name_admin(user)] has changed the pool's chems to [R.name].")
 			timer = 15
@@ -78,7 +78,7 @@
 		else
 			to_chat(user, "<span class='notice'>This machine only accepts full large beakers of one reagent.</span>")
 		return
-		
+
 	if (istype(W,/obj/item/weapon/screwdriver))
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
@@ -248,7 +248,7 @@
 	update_icon()
 
 /obj/machinery/poolcontroller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "poolcontrol", name, 420, 405, master_ui, state)
@@ -266,7 +266,7 @@
 	data["chemical"] = cur_reagent
 	data["beaker"] = beaker
 	data["timer"] = timer
-	
+
 	return data
 
 /obj/machinery/poolcontroller/ui_act(action, params)

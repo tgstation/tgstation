@@ -32,7 +32,7 @@
 	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
 	var/processing = 0
-	
+
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
 									"sodiumchloride", "sugar", "orangejuice",
