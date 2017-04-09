@@ -125,7 +125,7 @@
 /obj/item/weapon/paper/talisman/teleport/invoke(mob/living/user, successfuluse = 1)
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
-	for(var/R in teleport_runes)
+	for(var/R in GLOB.teleport_runes)
 		var/obj/effect/rune/teleport/T = R
 		potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 

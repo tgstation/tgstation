@@ -1,4 +1,4 @@
-/client/proc/jumptoarea(area/A in sortedAreas)
+/client/proc/jumptoarea(area/A in GLOB.sortedAreas)
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
@@ -38,7 +38,7 @@
 	feedback_add_details("admin_verb","JT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/client/proc/jumptomob(mob/M in mob_list)
+/client/proc/jumptomob(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Jump to Mob"
 
@@ -82,7 +82,7 @@
 		return
 
 	var/list/keys = list()
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		keys += M.client
 	var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 	if(!selection)
@@ -96,7 +96,7 @@
 
 	feedback_add_details("admin_verb","JK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/Getmob(mob/M in mob_list)
+/client/proc/Getmob(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
@@ -119,7 +119,7 @@
 		return
 
 	var/list/keys = list()
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		keys += M.client
 	var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 	if(!selection)
@@ -141,7 +141,7 @@
 	if(!src.holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in sortedAreas|null
+	var/area/A = input(usr, "Pick an area.", "Pick an area") in GLOB.sortedAreas|null
 	if(A && istype(A))
 		if(M.forceMove(safepick(get_area_turfs(A))))
 

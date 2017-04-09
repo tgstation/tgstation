@@ -28,7 +28,7 @@
 	desc = "A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade."
 
 /obj/item/clothing/under/color/grey/glorf/hit_reaction(mob/living/carbon/human/owner)
-	owner.forcesay(hit_appends)
+	owner.forcesay(GLOB.hit_appends)
 	return 0
 
 /obj/item/clothing/under/color/blue

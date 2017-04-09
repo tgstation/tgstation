@@ -496,7 +496,7 @@
 	return
 
 /mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
-	var/datum/reagent/R  = chemical_reagents_list[reagent_id]
+	var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
 	if(!R.overdose_threshold) //Some chems do not have an OD threshold
 		return 0
 	var/current_volume = patient.reagents.get_reagent_amount(reagent_id)
@@ -545,4 +545,4 @@
 		declare_cooldown = 0
 
 /obj/machinery/bot_core/medbot
-	req_one_access =list(access_medical, access_robotics)
+	req_one_access =list(GLOB.access_medical, GLOB.access_robotics)

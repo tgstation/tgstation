@@ -57,7 +57,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
 		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
 
 	if(suiciding)
@@ -205,7 +205,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
 		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=0)//we don't want to keep the race block active
 		O.domutcheck()
 
@@ -311,21 +311,21 @@
 		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 	var/turf/loc_landmark
-	for(var/obj/effect/landmark/start/sloc in landmarks_list)
+	for(var/obj/effect/landmark/start/sloc in GLOB.landmarks_list)
 		if(sloc.name != "AI")
 			continue
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
 			continue
 		loc_landmark = sloc.loc
 	if(!loc_landmark)
-		for(var/obj/effect/landmark/tripai in landmarks_list)
+		for(var/obj/effect/landmark/tripai in GLOB.landmarks_list)
 			if(tripai.name == "tripai")
 				if(locate(/mob/living/silicon/ai) in tripai.loc)
 					continue
 				loc_landmark = tripai.loc
 	if(!loc_landmark)
 		to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
+		for(var/obj/effect/landmark/start/sloc in GLOB.landmarks_list)
 			if (sloc.name == "AI")
 				loc_landmark = sloc.loc
 

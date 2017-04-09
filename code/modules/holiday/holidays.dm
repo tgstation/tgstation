@@ -144,7 +144,7 @@
 /datum/holiday/april_fools/celebrate()
 	if(SSticker)
 		SSticker.login_music = 'sound/ambience/clown.ogg'
-		for(var/mob/dead/new_player/P in mob_list)
+		for(var/mob/dead/new_player/P in GLOB.mob_list)
 			if(P.client)
 				P.client.playtitlemusic()
 
@@ -330,7 +330,7 @@
 	end_day = 31
 
 /datum/holiday/festive_season/celebrate()
-	for(var/obj/effect/landmark/xmastree/XT in landmarks_list)
+	for(var/obj/effect/landmark/xmastree/XT in GLOB.landmarks_list)
 		new XT.tree(get_turf(XT))
 		qdel(XT)
 

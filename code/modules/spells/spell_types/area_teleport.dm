@@ -24,12 +24,12 @@
 	var/A = null
 
 	if(!randomise_selection)
-		A = input("Area to teleport to", "Teleport", A) as null|anything in teleportlocs
+		A = input("Area to teleport to", "Teleport", A) as null|anything in GLOB.teleportlocs
 	else
-		A = pick(teleportlocs)
+		A = pick(GLOB.teleportlocs)
 	if(!A)
 		return
-	var/area/thearea = teleportlocs[A]
+	var/area/thearea = GLOB.teleportlocs[A]
 
 	return thearea
 

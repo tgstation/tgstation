@@ -1,4 +1,4 @@
-/var/list/all_lighting_objects = list() // Global list of lighting objects.
+GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 
 /atom/movable/lighting_object
 	name          = ""
@@ -19,7 +19,7 @@
 /atom/movable/lighting_object/Initialize(mapload, var/no_update = FALSE)
 	. = ..()
 	verbs.Cut()
-	global.all_lighting_objects += src
+	GLOB.all_lighting_objects += src
 
 	var/turf/T         = loc // If this runtimes atleast we'll know what's creating overlays in things that aren't turfs.
 	T.lighting_object = src
@@ -35,8 +35,8 @@
 
 /atom/movable/lighting_object/Destroy(var/force)
 	if (force)
-		global.all_lighting_objects        -= src
-		global.lighting_update_objects     -= src
+		GLOB.all_lighting_objects        -= src
+		GLOB.lighting_update_objects     -= src
 
 		var/turf/T   = loc
 		if (istype(T))
@@ -68,6 +68,7 @@
 	// Including with these comments.
 
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
+	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 	var/datum/lighting_corner/cr  = T.corners[3] || dummy_lighting_corner
 	var/datum/lighting_corner/cg  = T.corners[2] || dummy_lighting_corner
 	var/datum/lighting_corner/cb  = T.corners[4] || dummy_lighting_corner
@@ -94,7 +95,7 @@
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
 	#else
-	// Because of floating points™?, it won't even be a flat 0.
+	// Because of floating pointsï¿½?, it won't even be a flat 0.
 	// This number is mostly arbitrary.
 	var/set_luminosity = max > 1e-6
 	#endif

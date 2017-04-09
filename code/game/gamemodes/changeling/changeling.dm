@@ -2,10 +2,10 @@
 #define LING_DEAD_GENETICDAMAGE_HEAL_CAP	50	//The lowest value of geneticdamage handle_changeling() can take it to while dead.
 #define LING_ABSORB_RECENT_SPEECH			8	//The amount of recent spoken lines to gain on absorbing a mob
 
-var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
-var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
-var/list/slot2slot = list("head" = slot_head, "wear_mask" = slot_wear_mask, "neck" = slot_neck, "back" = slot_back, "wear_suit" = slot_wear_suit, "w_uniform" = slot_w_uniform, "shoes" = slot_shoes, "belt" = slot_belt, "gloves" = slot_gloves, "glasses" = slot_glasses, "ears" = slot_ears, "wear_id" = slot_wear_id, "s_store" = slot_s_store)
-var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mask" = /obj/item/clothing/mask/changeling, "back" = /obj/item/changeling, "wear_suit" = /obj/item/clothing/suit/changeling, "w_uniform" = /obj/item/clothing/under/changeling, "shoes" = /obj/item/clothing/shoes/changeling, "belt" = /obj/item/changeling, "gloves" = /obj/item/clothing/gloves/changeling, "glasses" = /obj/item/clothing/glasses/changeling, "ears" = /obj/item/changeling, "wear_id" = /obj/item/changeling, "s_store" = /obj/item/changeling)
+GLOBAL_LIST_INIT(possible_changeling_IDs, list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega"))
+GLOBAL_LIST_INIT(slots, list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store"))
+GLOBAL_LIST_INIT(slot2slot, list("head" = slot_head, "wear_mask" = slot_wear_mask, "neck" = slot_neck, "back" = slot_back, "wear_suit" = slot_wear_suit, "w_uniform" = slot_w_uniform, "shoes" = slot_shoes, "belt" = slot_belt, "gloves" = slot_gloves, "glasses" = slot_glasses, "ears" = slot_ears, "wear_id" = slot_wear_id, "s_store" = slot_s_store))
+GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "wear_mask" = /obj/item/clothing/mask/changeling, "back" = /obj/item/changeling, "wear_suit" = /obj/item/clothing/suit/changeling, "w_uniform" = /obj/item/clothing/under/changeling, "shoes" = /obj/item/clothing/shoes/changeling, "belt" = /obj/item/changeling, "gloves" = /obj/item/clothing/gloves/changeling, "glasses" = /obj/item/clothing/glasses/changeling, "ears" = /obj/item/changeling, "wear_id" = /obj/item/changeling, "s_store" = /obj/item/changeling))
 
 
 /datum/game_mode
@@ -101,7 +101,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	..()
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
-	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(joined_player_list.len/config.changeling_scaling_coeff) )
+	var/changelingcap = min( round(GLOB.joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(GLOB.joined_player_list.len/config.changeling_scaling_coeff) )
 	if(SSticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
 	if(SSticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
@@ -136,7 +136,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		changeling.objectives += steal_objective
 
 	var/list/active_ais = active_ais()
-	if(active_ais.len && prob(100/joined_player_list.len))
+	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 		var/datum/objective/destroy/destroy_objective = new
 		destroy_objective.owner = changeling
 		destroy_objective.find_target()
@@ -307,9 +307,9 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		honorific = "Ms."
 	else
 		honorific = "Mr."
-	if(possible_changeling_IDs.len)
-		changelingID = pick(possible_changeling_IDs)
-		possible_changeling_IDs -= changelingID
+	if(GLOB.possible_changeling_IDs.len)
+		changelingID = pick(GLOB.possible_changeling_IDs)
+		GLOB.possible_changeling_IDs -= changelingID
 		changelingID = "[honorific] [changelingID]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
@@ -450,22 +450,22 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	user.domutcheck()
 
 	//vars hackery. not pretty, but better than the alternative.
-	for(var/slot in slots)
-		if(istype(user.vars[slot], slot2type[slot]) && !(chosen_prof.exists_list[slot])) //remove unnecessary flesh items
+	for(var/slot in GLOB.slots)
+		if(istype(user.vars[slot], GLOB.slot2type[slot]) && !(chosen_prof.exists_list[slot])) //remove unnecessary flesh items
 			qdel(user.vars[slot])
 			continue
 
-		if((user.vars[slot] && !istype(user.vars[slot], slot2type[slot])) || !(chosen_prof.exists_list[slot]))
+		if((user.vars[slot] && !istype(user.vars[slot], GLOB.slot2type[slot])) || !(chosen_prof.exists_list[slot]))
 			continue
 
 		var/obj/item/C
 		var/equip = 0
 		if(!user.vars[slot])
-			var/thetype = slot2type[slot]
+			var/thetype = GLOB.slot2type[slot]
 			equip = 1
 			C = new thetype(user)
 
-		else if(istype(user.vars[slot], slot2type[slot]))
+		else if(istype(user.vars[slot], GLOB.slot2type[slot]))
 			C = user.vars[slot]
 
 		C.appearance = chosen_prof.appearance_list[slot]
@@ -474,7 +474,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		C.item_color = chosen_prof.item_color_list[slot]
 		C.item_state = chosen_prof.item_state_list[slot]
 		if(equip)
-			user.equip_to_slot_or_del(C, slot2slot[slot])
+			user.equip_to_slot_or_del(C, GLOB.slot2slot[slot])
 
 	user.regenerate_icons()
 
@@ -515,11 +515,11 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	newprofile.socks = socks
 
 /datum/game_mode/proc/update_changeling_icons_added(datum/mind/changling_mind)
-	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
 	hud.join_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, "changling")
 
 /datum/game_mode/proc/update_changeling_icons_removed(datum/mind/changling_mind)
-	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
 	hud.leave_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, null)

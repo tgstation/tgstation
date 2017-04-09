@@ -62,7 +62,7 @@
 /obj/machinery/computer/camera_advanced/base_construction/CreateEye()
 
 	var/spawn_spot
-	for(var/obj/machinery/computer/auxillary_base/ABC in machines)
+	for(var/obj/machinery/computer/auxillary_base/ABC in GLOB.machines)
 		if(istype(get_area(ABC), /area/shuttle/auxillary_base))
 			found_aux_console = ABC
 			break

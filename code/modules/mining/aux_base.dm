@@ -19,7 +19,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/launch_warning = TRUE
 	var/list/turrets = list() //List of connected turrets
 
-	req_one_access = list(access_cargo, access_construction, access_heads, access_research)
+	req_one_access = list(GLOB.access_cargo, GLOB.access_construction, GLOB.access_heads, GLOB.access_research)
 	var/possible_destinations
 	clockwork = TRUE
 	var/obj/item/device/gps/internal/base/locator
@@ -199,7 +199,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/turf/T = get_turf(user)
 	var/obj/machinery/computer/auxillary_base/AB
 
-	for (var/obj/machinery/computer/auxillary_base/A in machines)
+	for (var/obj/machinery/computer/auxillary_base/A in GLOB.machines)
 		if(A.z == ZLEVEL_STATION)
 			AB = A
 			break
@@ -274,7 +274,7 @@ obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 		to_chat(user, "<span class='warning'>This device is only to be used in a mining zone.</span>")
 		return
 	var/obj/machinery/computer/auxillary_base/aux_base_console
-	for(var/obj/machinery/computer/auxillary_base/ABC in machines)
+	for(var/obj/machinery/computer/auxillary_base/ABC in GLOB.machines)
 		if(get_dist(landing_spot, ABC) <= console_range)
 			aux_base_console = ABC
 			break
