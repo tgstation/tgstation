@@ -720,6 +720,11 @@
 		if(reagents)
 			reagents.addiction_list = list()
 	..()
+	// heal ears after healing disabilities, since ears check DEAF disability
+	// when healing.
+	var/obj/item/organ/ears/E = getorgan(/obj/item/organ/ears)
+	if(E)
+		E.fully_heal()
 
 /mob/living/carbon/can_be_revived()
 	. = ..()

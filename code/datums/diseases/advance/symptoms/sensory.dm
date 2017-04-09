@@ -28,7 +28,11 @@ Bonus
 	..()
 	var/mob/living/M = A.affected_mob
 	if(A.stage >= 2)
-		M.setEarDamage(0,0)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			var/obj/item/organ/ears/ears = C.getorgan(/obj/item/organ/ears)
+			if(ears)
+				ears.fully_heal()
 
 	if(A.stage >= 3)
 		M.dizziness = 0

@@ -11,7 +11,11 @@
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
 			if(!M.mind || !M.mind.changeling)
-				M.adjustEarDamage(0,30)
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					var/obj/item/organ/ears/ears = C.getorgan(/obj/item/organ/ears)
+					if(ears)
+						ears.ear_damage += 30
 				M.confused += 25
 				M.Jitter(50)
 			else

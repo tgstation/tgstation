@@ -33,12 +33,16 @@ Bonus
 			if(3, 4)
 				to_chat(M, "<span class='warning'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>")
 			if(5)
-				if(!(M.ear_deaf))
+				var/obj/item/organ/ears/ears = M.getorganslot("ears")
+				if(ears && !ears.deaf)
 					to_chat(M, "<span class='userdanger'>Your ears pop and begin ringing loudly!</span>")
-					M.setEarDamage(-1,INFINITY) //Shall be enough
-					addtimer(CALLBACK(src, .proc/Undeafen, M), 200)
+					var/old_deaf = ears.deaf
+					ears.deaf = INFINITY
+					addtimer(CALLBACK(src, .proc/Undeafen, M, old_deaf), 200)
 
-/datum/symptom/deafness/proc/Undeafen(mob/living/M)
+/datum/symptom/deafness/proc/Undeafen(mob/living/M, old_deaf)
 	if(M)
 		to_chat(M, "<span class='warning'>The ringing in your ears fades...</span>")
-		M.setEarDamage(-1,0)
+		var/obj/item/organ/ears/ears = M.getorganslot("ears")
+		if(istype(ears))
+			ears.deaf = old_deaf

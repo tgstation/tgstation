@@ -123,14 +123,6 @@
 		if(client && !eye_blurry)
 			clear_fullscreen("blurry")
 
-	//Ears
-	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
-		setEarDamage(-1, max(ear_deaf, 1))
-	else
-		// deafness heals slowly over time, unless ear_damage is over 100
-		if(ear_damage < 100)
-			adjustEarDamage(-0.05,-1)
-
 /mob/living/proc/update_damage_hud()
 	return
 

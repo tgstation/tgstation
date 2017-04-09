@@ -17,10 +17,10 @@
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
-	
+
 	var/face_y_offset = 0
 	var/hair_y_offset = 0
-	
+
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 
@@ -69,9 +69,13 @@
 
 	//Eyes
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
-	///////////
-	// PROCS //
-	///////////
+
+	//Ears
+	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
+
+///////////
+// PROCS //
+///////////
 
 
 /datum/species/New()
@@ -122,6 +126,7 @@
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
 	var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
+	var/obj/item/organ/ears/ears = C.getorganslot("ears")
 
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
@@ -138,6 +143,11 @@
 		qdel(eyes)
 		eyes = new mutanteyes
 		eyes.Insert(C)
+
+	if(ears)
+		qdel(ears)
+		ears = new mutantears
+		ears.Insert(C)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
