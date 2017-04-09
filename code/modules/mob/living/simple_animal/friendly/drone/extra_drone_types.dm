@@ -144,7 +144,7 @@
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
+	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
@@ -169,12 +169,12 @@
 		..()
 
 /mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
-	if(!ratvar_awakens)
+	if(!GLOB.ratvar_awakens)
 		changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
 	return TRUE
 
 /mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		return 1
 	return ..()
 

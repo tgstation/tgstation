@@ -17,15 +17,15 @@
 	teeth_type = /obj/item/stack/teeth/cat
 
 /datum/species/tarajan/qualifies_for_rank(rank, list/features)
-	if(rank in command_positions) //even if you turn off humans only
+	if(rank in GLOB.command_positions) //even if you turn off humans only
 		return 0
-	if(rank in security_positions) //This list does not include lawyers.
+	if(rank in GLOB.security_positions) //This list does not include lawyers.
 		return 0
-	if(rank in science_positions)
+	if(rank in GLOB.science_positions)
 		return 0
-	if(rank in medical_positions)
+	if(rank in GLOB.medical_positions)
 		return 0
-	if(rank in engineering_positions)
+	if(rank in GLOB.engineering_positions)
 		return 0
 	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
 		return 0

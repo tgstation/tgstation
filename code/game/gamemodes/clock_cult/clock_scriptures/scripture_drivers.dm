@@ -74,13 +74,13 @@
 	quickbind_desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
-	if(!ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
+	if(!GLOB.ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
 		to_chat(invoker, "<span class='warning'>You are already shielded by a Vanguard!</span>")
 		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		for(var/mob/living/L in view(7, get_turf(invoker)))
 			if(L.stat != DEAD && is_servant_of_ratvar(L))
 				L.apply_status_effect(STATUS_EFFECT_VANGUARD)
@@ -134,8 +134,8 @@
 
 /datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
 	var/servants = 0
-	if(!ratvar_awakens)
-		for(var/mob/living/M in all_clockwork_mobs)
+	if(!GLOB.ratvar_awakens)
+		for(var/mob/living/M in GLOB.all_clockwork_mobs)
 			if(ishuman(M) || issilicon(M))
 				servants++
 	if(servants > SCRIPT_SERVANT_REQ)
@@ -165,8 +165,8 @@
 
 /datum/clockwork_scripture/geis/run_scripture()
 	var/servants = 0
-	if(!ratvar_awakens)
-		for(var/mob/living/M in all_clockwork_mobs)
+	if(!GLOB.ratvar_awakens)
+		for(var/mob/living/M in GLOB.all_clockwork_mobs)
 			if(ishuman(M) || issilicon(M))
 				servants++
 	if(target.buckled)
@@ -272,7 +272,7 @@
 	var/static/prev_cost = 0
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
-	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
+	var/cache_cost_increase = min(round(GLOB.clockwork_caches*0.25), 5)
 	if(cache_cost_increase != prev_cost)
 		prev_cost = cache_cost_increase
 		consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)

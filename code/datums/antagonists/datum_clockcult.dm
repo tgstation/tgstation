@@ -68,7 +68,7 @@
 		C.present_tasks(owner) //Memorize the objectives
 
 /datum/antagonist/clockcultist/apply_innate_effects()
-	all_clockwork_mobs += owner
+	GLOB.all_clockwork_mobs += owner
 	owner.faction |= "ratvar"
 	owner.grant_language(/datum/language/ratvar)
 	owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
@@ -84,7 +84,7 @@
 			A.can_be_carded = FALSE
 			A.requires_power = POWER_REQ_CLOCKCULT
 			var/list/AI_frame = list(image('icons/mob/clockwork_mobs.dmi', A, "aiframe")) //make the AI's cool frame
-			for(var/d in cardinal)
+			for(var/d in GLOB.cardinal)
 				AI_frame += image('icons/mob/clockwork_mobs.dmi', A, "eye[rand(1, 10)]", dir = d) //the eyes are randomly fast or slow
 			A.add_overlay(AI_frame)
 			if(!A.lacks_power())
@@ -117,12 +117,12 @@
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
 	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
-	if(!clockwork_gateway_activated)
+	if(!GLOB.clockwork_gateway_activated)
 		owner.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
 	..()
 
 /datum/antagonist/clockcultist/remove_innate_effects()
-	all_clockwork_mobs -= owner
+	GLOB.all_clockwork_mobs -= owner
 	owner.faction -= "ratvar"
 	owner.remove_language(/datum/language/ratvar)
 	owner.clear_alert("clockinfo")

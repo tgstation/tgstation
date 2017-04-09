@@ -7,7 +7,7 @@
 
 /datum/round_event/wizard/greentext/start()
 
-	var/list/holder_canadates = player_list.Copy()
+	var/list/holder_canadates = GLOB.player_list.Copy()
 	for(var/mob/M in holder_canadates)
 		if(!ishuman(M))
 			holder_canadates -= M
@@ -33,7 +33,7 @@
 
 /obj/item/weapon/greentext/New()
 	..()
-	poi_list |= src
+	GLOB.poi_list |= src
 
 /obj/item/weapon/greentext/equipped(mob/living/user as mob)
 	to_chat(user, "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>")
@@ -82,8 +82,8 @@
 		return QDEL_HINT_LETMELIVE
 
 	. = ..()
-	poi_list.Remove(src)
-	for(var/mob/M in mob_list)
+	GLOB.poi_list.Remove(src)
+	for(var/mob/M in GLOB.mob_list)
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
 		if(M in color_altered_mobs)
 			message += " and you're finally able to forgive yourself"

@@ -144,7 +144,7 @@
 					new /mob/living/simple_animal/hostile/shark/kawaii(src.loc)
 				else
 					new /mob/living/simple_animal/hostile/shark/laser(src.loc)
-		if(adminlog)
+		if(GLOB.adminlog)
 			log_say("[key_name(user)] emagged the pool filter and probably spawned sharks")
 			message_admins("[key_name_admin(user)] emagged the pool filter and probably spawned sharks")
 

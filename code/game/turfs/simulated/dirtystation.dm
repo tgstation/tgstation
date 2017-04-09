@@ -5,39 +5,6 @@
 
 //This file was made not awful by Xhuis on September 13, 2016
 
-/obj/effect/decal/cleanable/blood/old
-	name = "dried blood"
-	desc = "Looks like it's been here a while.  Eew."
-	bloodiness = 0
-
-/obj/effect/decal/cleanable/blood/old/New()
-	..()
-	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
-	blood_DNA["Non-human DNA"] = "A+"
-
-/obj/effect/decal/cleanable/blood/gibs/old
-	name = "old rotting gibs"
-	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
-	bloodiness = 0
-
-/obj/effect/decal/cleanable/blood/gibs/old/New()
-	..()
-	setDir(pick(1,2,4,8))
-	icon_state += "-old"
-	blood_DNA["Non-human DNA"] = "A+"
-
-/obj/effect/decal/cleanable/vomit/old
-	name = "crusty dried vomit"
-	desc = "You try not to look at the chunks, and fail."
-
-/obj/effect/decal/cleanable/vomit/old/New()
-	..()
-	icon_state += "-old"
-
-/obj/effect/decal/cleanable/robot_debris/old
-	name = "dusty robot debris"
-	desc = "Looks like nobody has touched this in a while."
-
 //Making the station dirty, one tile at a time. Called by master controller's setup_objects
 
 /turf/open/floor/proc/MakeDirty()

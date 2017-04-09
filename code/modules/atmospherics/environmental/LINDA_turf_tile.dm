@@ -152,7 +152,7 @@
 	var/planet_atmos = planetary_atmos
 	if (planet_atmos)
 		adjacent_turfs_length++
-	
+
 	var/datum/gas_mixture/our_air = air
 
 	for(var/t in adjacent_turfs)
@@ -229,27 +229,18 @@
 			our_air.share(G, adjacent_turfs_length)
 			LAST_SHARE_CHECK
 
-	our_air.react()
+	our_air.react(src)
 
 	update_visuals()
 
-	var/our_temperature = our_air.temperature
-
 	var/remove = TRUE
-	if(our_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		hotspot_expose(our_temperature, CELL_VOLUME)
-		for(var/I in src)
-			var/atom/movable/item = I
-			item.temperature_expose(our_air, our_temperature, CELL_VOLUME)
-		temperature_expose(our_air, our_temperature, CELL_VOLUME)
-
-		if(our_temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
-			if(consider_superconductivity(starting = 1))
-				remove = FALSE
+	if(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
+		if(consider_superconductivity(starting = 1))
+			remove = FALSE
 
 	if ((!our_excited_group && remove) || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
 		SSair.remove_from_active(src)
-	
+
 	atmos_cooldown = cached_atmos_cooldown
 
 //////////////////////////SPACEWIND/////////////////////////////
@@ -373,7 +364,7 @@
 /turf/open/conductivity_directions()
 	if(blocks_air)
 		return ..()
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinal)
 		var/turf/T = get_step(src, direction)
 		if(!(T in atmos_adjacent_turfs) && !(atmos_supeconductivity & direction))
 			. |= direction
@@ -402,7 +393,7 @@
 
 	if(conductivity_directions)
 		//Conduct with tiles around me
-		for(var/direction in cardinal)
+		for(var/direction in GLOB.cardinal)
 			if(conductivity_directions & direction)
 				var/turf/neighbor = get_step(src,direction)
 

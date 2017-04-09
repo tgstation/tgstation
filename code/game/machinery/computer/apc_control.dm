@@ -3,7 +3,7 @@
 	desc = "Used to remotely control the flow of power to different parts of the station."
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
-	req_access = list(access_engine)
+	req_access = list(GLOB.access_engine)
 	circuit = /obj/item/weapon/circuitboard/computer/apc_control
 	light_color = LIGHT_COLOR_YELLOW
 	var/list/apcs //APCs the computer has access to
@@ -22,7 +22,7 @@
 
 /obj/machinery/computer/apc_control/process()
 	apcs = list() //Clear the list every tick
-	for(var/V in apcs_list)
+	for(var/V in GLOB.apcs_list)
 		var/obj/machinery/power/apc/APC = V
 		if(check_apc(APC))
 			apcs[APC.name] = APC
@@ -122,7 +122,7 @@
 		LAZYADD(logs, "<b>-=- Logging restored to full functionality at this point -=-</b>")
 	if(href_list["access_apc"])
 		playsound(src, "terminal_type", 50, 0)
-		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in apcs_list
+		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in GLOB.apcs_list
 		if(!APC || APC.aidisabled || APC.panel_open || QDELETED(APC))
 			to_chat(usr, "<span class='robot danger'>\icon[I] APC does not return interface request. Remote access may be disabled.</span>")
 			return
@@ -136,7 +136,7 @@
 			active_apc = null
 		to_chat(usr, "<span class='robot notice'>\icon[I] Connected to APC in [get_area(APC)]. Interface request sent.</span>")
 		log_activity("remotely accessed APC in [get_area(APC)]")
-		APC.interact(usr, not_incapacitated_state)
+		APC.interact(usr, GLOB.not_incapacitated_state)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		message_admins("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
 		log_game("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")

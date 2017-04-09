@@ -40,14 +40,6 @@ SUBSYSTEM_DEF(title)
 
 		if(splash_turf)
 			splash_turf.icon = icon
-			
-/datum/controller/subsystem/title/vv_edit_var(var_name, var_value)
-	. = ..()
-	if(.)
-		switch(var_name)
-			if("icon")
-				if(splash_turf)
-					splash_turf.icon = icon
 
 /datum/controller/subsystem/title/vv_edit_var(var_name, var_value)
 	. = ..()

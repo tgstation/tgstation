@@ -128,7 +128,7 @@ Class Procs:
 	if (!armor)
 		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	..()
-	machines += src
+	GLOB.machines += src
 	if(!speed_process)
 		START_PROCESSING(SSmachines, src)
 	else
@@ -136,7 +136,7 @@ Class Procs:
 	power_change()
 
 /obj/machinery/Destroy()
-	machines.Remove(src)
+	GLOB.machines.Remove(src)
 	if(!speed_process)
 		STOP_PROCESSING(SSmachines, src)
 	else

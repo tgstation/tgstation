@@ -328,7 +328,7 @@
 		return
 	if(!iscultist(user))
 		user.dropItemToGround(src, TRUE)
-		step(src, pick(alldirs))
+		step(src, pick(GLOB.alldirs))
 		to_chat(user, "<span class='warning'>\The [src] flickers out of your hands, your connection to this dimension is too strong!</span>")
 		return
 

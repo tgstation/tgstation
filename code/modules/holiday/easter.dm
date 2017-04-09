@@ -26,7 +26,7 @@
 
 
 /datum/round_event/rabbitrelease/start()
-	for(var/obj/effect/landmark/R in landmarks_list)
+	for(var/obj/effect/landmark/R in GLOB.landmarks_list)
 		if(R.name != "blobspawn")
 			if(prob(35))
 				if(isspaceturf(R.loc))

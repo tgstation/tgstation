@@ -281,7 +281,7 @@
 
 //Specifically for record datums in a list.
 /proc/sortRecord(list/L, field = "name", order = 1)
-	cmp_field = field
+	GLOB.cmp_field = field
 	return sortTim(L, order >= 0 ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
 
 //any value in a list

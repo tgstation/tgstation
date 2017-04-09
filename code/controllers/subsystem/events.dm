@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(events)
 	/area/engine/chiefs_office)
 
 	//Need to locate() as it's just a list of paths.
-	return locate(pick((the_station_areas - safe_areas) + danger_areas))
+	return locate(pick((GLOB.the_station_areas - safe_areas) + danger_areas))
 
 
 //allows a client to trigger an event

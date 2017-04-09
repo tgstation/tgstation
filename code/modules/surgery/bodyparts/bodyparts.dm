@@ -20,6 +20,7 @@
 	var/max_damage = 0
 	var/list/embedded_objects = list()
 	var/held_index = 0 //are we a hand? if so, which one!
+	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""

@@ -1,4 +1,4 @@
-var/list/GPS_list = list()
+GLOBAL_LIST_EMPTY(GPS_list)
 /obj/item/device/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016. Alt+click to toggle power."
@@ -8,25 +8,25 @@ var/list/GPS_list = list()
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;magnets=1;bluespace=2"
 	var/gpstag = "COM0"
-	var/emped = 0
+	var/emped = FALSE
 	var/turf/locked_location
 	var/tracking = TRUE
 
-/obj/item/device/gps/New()
+/obj/item/device/gps/Initialize()
 	..()
-	GPS_list.Add(src)
+	GLOB.GPS_list += src
 	name = "global positioning system ([gpstag])"
 	add_overlay("working")
 
 /obj/item/device/gps/Destroy()
-	GPS_list.Remove(src)
+	GLOB.GPS_list -= src
 	return ..()
 
 /obj/item/device/gps/emp_act(severity)
 	emped = TRUE
 	cut_overlay("working")
 	add_overlay("emp")
-	addtimer(CALLBACK(src, .proc/reboot), 300)
+	addtimer(CALLBACK(src, .proc/reboot), 300, TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
 
 /obj/item/device/gps/proc/reboot()
 	emped = FALSE
@@ -38,6 +38,7 @@ var/list/GPS_list = list()
 		return //user not valid to use gps
 	if(emped)
 		to_chat(user, "It's busted!")
+		return
 	if(tracking)
 		cut_overlay("working")
 		to_chat(user, "[src] is no longer tracking, or visible to other GPS devices.")
@@ -53,7 +54,7 @@ var/list/GPS_list = list()
 		return
 
 	var/obj/item/device/gps/t = ""
-	var/gps_window_height = 110 + GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
+	var/gps_window_height = 110 + GLOB.GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
 	if(emped)
 		t += "ERROR"
 	else
@@ -63,7 +64,7 @@ var/list/GPS_list = list()
 			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
 			gps_window_height += 20
 
-		for(var/obj/item/device/gps/G in GPS_list)
+		for(var/obj/item/device/gps/G in GLOB.GPS_list)
 			var/turf/pos = get_turf(G)
 			var/area/gps_area = get_area(G)
 			var/tracked_gpstag = G.gpstag
@@ -131,10 +132,10 @@ var/list/GPS_list = list()
 		for marking the area around the transition edges."
 	var/list/turf/tagged
 
-/obj/item/device/gps/visible_debug/New()
+/obj/item/device/gps/visible_debug/Initialize()
 	. = ..()
 	tagged = list()
-	SSfastprocess.processing += src
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/device/gps/visible_debug/process()
 	var/turf/T = get_turf(src)
@@ -155,5 +156,5 @@ var/list/GPS_list = list()
 	if(tagged)
 		clear()
 	tagged = null
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()

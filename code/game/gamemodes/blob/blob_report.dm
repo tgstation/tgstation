@@ -17,7 +17,7 @@
 			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 		if(2)
 			var/nukecode = random_nukecode()
-			for(var/obj/machinery/nuclearbomb/bomb in machines)
+			for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 				if(bomb && bomb.r_code)
 					if(bomb.z == ZLEVEL_STATION)
 						bomb.r_code = nukecode
@@ -31,7 +31,7 @@
 			intercepttext += "Nuclear Authentication Code: [nukecode] <BR>"
 			print_command_report(text=intercepttext,announce=TRUE)
 
-			for(var/mob/living/silicon/ai/aiPlayer in player_list)
+			for(var/mob/living/silicon/ai/aiPlayer in GLOB.player_list)
 				if (aiPlayer.client)
 					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 					aiPlayer.set_zeroth_law(law)

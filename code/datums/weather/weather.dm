@@ -63,7 +63,7 @@
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	update_areas()
-	for(var/V in player_list)
+	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		if(M.z == target_z)
 			if(telegraph_message)
@@ -77,7 +77,7 @@
 		return
 	stage = MAIN_STAGE
 	update_areas()
-	for(var/V in player_list)
+	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		if(M.z == target_z)
 			if(weather_message)
@@ -92,7 +92,7 @@
 		return
 	stage = WIND_DOWN_STAGE
 	update_areas()
-	for(var/V in player_list)
+	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		if(M.z == target_z)
 			if(end_message)

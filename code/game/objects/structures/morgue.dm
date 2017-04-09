@@ -147,7 +147,7 @@
 /*
  * Crematorium
  */
-var/global/list/crematoriums = new/list()
+GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbeque nights."
@@ -160,14 +160,14 @@ var/global/list/crematoriums = new/list()
 	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
-	crematoriums.Remove(src)
+	GLOB.crematoriums.Remove(src)
 	return ..()
 
 /obj/structure/bodycontainer/crematorium/New()
 	connected = new/obj/structure/tray/c_tray(src)
 	connected.connected = src
 
-	crematoriums.Add(src)
+	GLOB.crematoriums.Add(src)
 	..()
 
 /obj/structure/bodycontainer/crematorium/update_icon()

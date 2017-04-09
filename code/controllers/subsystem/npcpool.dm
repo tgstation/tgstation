@@ -1,5 +1,3 @@
-var/datum/controller/subsystem/npcpool/SSnpc
-
 #define PROCESSING_NPCS 0
 #define PROCESSING_DELEGATES 1
 #define PROCESSING_ASSISTANTS 2
@@ -16,9 +14,6 @@ SUBSYSTEM_DEF(npcpool)
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/stage
-
-/datum/controller/subsystem/npcpool/New()
-	NEW_SS_GLOBAL(SSnpc)
 
 /datum/controller/subsystem/npcpool/stat_entry()
 	..("NPCS:[processing.len]|D:[needsDelegate.len]|A:[needsAssistant.len]|U:[canBeUsed.len]")
@@ -128,4 +123,4 @@ SUBSYSTEM_DEF(npcpool)
 			return
 
 /datum/controller/subsystem/npcpool/Recover()
-	processing = SSnpc.processing
+	processing = SSnpcpool.processing

@@ -315,7 +315,7 @@
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "canister", name, 420, 405, master_ui, state)
@@ -364,7 +364,7 @@
 		if("restricted")
 			restricted = !restricted
 			if(restricted)
-				req_access = list(access_engine)
+				req_access = list(GLOB.access_engine)
 			else
 				req_access = list()
 				. = TRUE
@@ -440,11 +440,13 @@
 					. = TRUE
 				if("toggle_timer")
 					set_active()
-				if("eject")
-					if(holding)
-						if(valve_open)
-							investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
-						holding.loc = get_turf(src)
-						holding = null
-						. = TRUE
+		if("eject")
+			if(holding)
+				if(valve_open)
+					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
+				holding.forceMove(get_turf(src))
+				holding = null
+				. = TRUE
 	update_icon()
+
+

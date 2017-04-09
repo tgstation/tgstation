@@ -106,14 +106,14 @@
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
 
-/obj/effect/mob_spawn/human/golem/New(loc, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
+/obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
 	..()
 	if(species)
 		name += " ([initial(species.prefix)])"
 		mob_species = species
 	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("\A [initial(species.id)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+	if(!mapload && A)
+		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 	if(has_owner && creator)
 		flavour_text = "You are a golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
 		Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost."

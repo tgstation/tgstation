@@ -151,7 +151,7 @@
 	staticOverlays.len = 0
 
 	if(seeStatic)
-		for(var/mob/living/L in mob_list)
+		for(var/mob/living/L in GLOB.mob_list)
 			if(isdrone(L))
 				continue
 			var/image/chosen

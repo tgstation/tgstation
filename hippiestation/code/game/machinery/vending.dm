@@ -27,7 +27,7 @@
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/list/display_records
-	
+
 	var/vendsound = 'hippiestation/sound/misc/vend.ogg'
 
 	// To be filled out at compile time
@@ -158,7 +158,7 @@
 
 			while(R.amount>0)
 				var/obj/O = new dump_path(loc)
-				step(O, pick(alldirs)) 	//we only drop 20% of the total of each products and spread it
+				step(O, pick(GLOB.alldirs)) 	//we only drop 20% of the total of each products and spread it
 				R.amount -= 5  			//around to not fill the turf with too many objects.
 				dump_amount++
 			if(dump_amount > 15) //so we don't drop too many items (e.g. ClothesMate)
@@ -316,7 +316,7 @@
 			LAZYADD(product_records, R)
 
 /obj/machinery/vending/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "vending", name, width, height, master_ui, state)
@@ -344,7 +344,7 @@
 		data["coin"] = src.coin.name
 	data["coinslot"] = premium.len
 	data["canvend"] = vend_ready
-	
+
 	return data
 
 /obj/machinery/vending/proc/togglevend()

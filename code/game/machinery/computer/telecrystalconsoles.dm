@@ -1,6 +1,6 @@
 #define NUKESCALINGMODIFIER 1
 
-var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
+GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner"))
 
 /obj/machinery/computer/telecrystals
 	name = "\improper Telecrystal assignment station"
@@ -24,7 +24,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/uplinker/Initialize()
 	..()
 
-	var/ID = pick_n_take(possible_uplinker_IDs)
+	var/ID = pick_n_take(GLOB.possible_uplinker_IDs)
 	if(!ID)
 		ID = rand(1,999)
 	name = "[name] [ID]"
@@ -144,8 +144,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
-	var/danger
-	danger = joined_player_list.len - SSticker.mode.syndicates.len
+	var/danger = GLOB.joined_player_list.len - SSticker.mode.syndicates.len
 	danger = Ceiling(danger, 10)
 	scaleTC(danger)
 
