@@ -375,18 +375,13 @@
 		if("dispense")
 			if(!state_open)
 				return
-			switch(params["item"])
-				if("helmet")
-					helmet.loc = loc
-					helmet = null
-				if("suit")
-					suit.loc = loc
-					suit = null
-				if("mask")
-					mask.loc = loc
-					mask = null
-				if("storage")
-					storage.loc = loc
-					storage = null
+			
+			var/static/list/valid_items = list("helmet", "suit", "mask", "storage")
+			var/item_name = params["item"]
+			if(item_name in valid_items)
+				var/obj/item/I = vars[item_name]
+				vars[item_name] = null
+				if(I)
+					I.forceMove(loc)
 			. = TRUE
 	update_icon()

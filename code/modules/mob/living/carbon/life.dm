@@ -130,7 +130,7 @@
 		if(prob(20))
 			emote("gasp")
 		if(O2_partialpressure > 0)
-			var/ratio = safe_oxy_min/O2_partialpressure
+			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
 			oxygen_used = breath_gases["o2"][MOLES]*ratio
