@@ -102,6 +102,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
+	var/exp
+
 /datum/preferences/New(client/C)
 	parent = C
 	custom_names["ai"] = pick(GLOB.ai_names)
@@ -528,6 +530,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			lastJob = job
 			if(jobban_isbanned(user, rank))
 				HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
+				continue
+			var/available_in_playtime = job.available_in_playtime(user.client)
+			if(available_in_playtime)
+				HTML += "<font color=red>[rank]<//font></td><td><font color=red> \[ " + get_exp_format(available_in_playtime) + " as " + job.get_exp_req_type()  + "\] </font></td></tr>"
 				continue
 			if(!job.player_old_enough(user.client))
 				var/available_in_days = job.available_in_days(user.client)

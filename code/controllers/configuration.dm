@@ -104,6 +104,13 @@
 	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
+	var/use_exp_tracking = 0
+	var/use_exp_restrictions_heads = 0
+	var/use_exp_restrictions_heads_hours = 0
+	var/use_exp_restrictions_heads_department = 0
+	var/use_exp_restrictions_other = 0
+	var/use_exp_restrictions_admin_bypass = 0
+
 	//Population cap vars
 	var/soft_popcap				= 0
 	var/hard_popcap				= 0
@@ -314,6 +321,18 @@
 					config.use_age_restriction_for_jobs = 1
 				if("use_account_age_for_jobs")
 					config.use_account_age_for_jobs = 1
+				if("use_exp_tracking")
+					config.use_exp_tracking = 1
+				if("use_exp_restrictions_heads")
+					config.use_exp_restrictions_heads = 1
+				if("use_exp_restrictions_heads_hours")
+					config.use_exp_restrictions_heads_hours = text2num(value)
+				if("use_exp_restrictions_heads_department")
+					config.use_exp_restrictions_heads_department = 1
+				if("use_exp_restrictions_other")
+					config.use_exp_restrictions_other = 1
+				if("use_exp_restrictions_admin_bypass")
+					config.use_exp_restrictions_admin_bypass = 1
 				if("lobby_countdown")
 					config.lobby_countdown = text2num(value)
 				if("round_end_countdown")

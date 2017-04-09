@@ -1,4 +1,5 @@
 /mob/dead/new_player/Login()
+	client.update_exp_client(0, 0)
 	if(!mind)
 		mind = new /datum/mind(key)
 		mind.active = 1

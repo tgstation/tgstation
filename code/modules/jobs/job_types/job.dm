@@ -43,6 +43,11 @@
 
 	var/outfit = null
 
+	var/exp_requirements = 0
+
+	var/exp_type = ""
+	var/exp_type_department = ""
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M)
