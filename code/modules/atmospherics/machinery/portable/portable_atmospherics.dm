@@ -22,7 +22,6 @@
 	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	air_contents.holder = src
 
 	return 1
 

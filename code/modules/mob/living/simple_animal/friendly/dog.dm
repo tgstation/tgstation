@@ -309,7 +309,7 @@
 		turns_per_move = 20
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
-	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(0)
 	..()
 

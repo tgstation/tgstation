@@ -76,11 +76,14 @@
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/space/attackby(obj/item/C, mob/user, params, area/area_restriction)
+/turf/open/space/proc/CanBuildHere()
+	return TRUE
+
+/turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
+	if(!CanBuildHere())
+		return
 	if(istype(C, /obj/item/stack/rods))
-		if(istype(area_restriction) && !istype(get_area(src), area_restriction))
-			return
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
@@ -150,22 +153,22 @@
 	cur_y = cur_pos["y"]
 
 	if(src.x <= 1)
-		next_x = (--cur_x||global_map.len)
-		y_arr = global_map[next_x]
+		next_x = (--cur_x||GLOB.global_map.len)
+		y_arr = GLOB.global_map[next_x]
 		target_z = y_arr[cur_y]
 		next_x = world.maxx - 2
 	else if (src.x >= world.maxx)
-		next_x = (++cur_x > global_map.len ? 1 : cur_x)
-		y_arr = global_map[next_x]
+		next_x = (++cur_x > GLOB.global_map.len ? 1 : cur_x)
+		y_arr = GLOB.global_map[next_x]
 		target_z = y_arr[cur_y]
 		next_x = 3
 	else if (src.y <= 1)
-		y_arr = global_map[cur_x]
+		y_arr = GLOB.global_map[cur_x]
 		next_y = (--cur_y||y_arr.len)
 		target_z = y_arr[next_y]
 		next_y = world.maxy - 2
 	else if (src.y >= world.maxy)
-		y_arr = global_map[cur_x]
+		y_arr = GLOB.global_map[cur_x]
 		next_y = (++cur_y > y_arr.len ? 1 : cur_y)
 		target_z = y_arr[next_y]
 		next_y = 3
@@ -194,6 +197,8 @@
 
 
 /turf/open/space/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	if(!CanBuildHere())
+		return FALSE
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)

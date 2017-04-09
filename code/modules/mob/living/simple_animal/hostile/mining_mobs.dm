@@ -165,7 +165,7 @@
 	if(istype(target, /obj/item/weapon/ore))
 		EatOre(target)
 		return
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
@@ -233,6 +233,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
+	return TRUE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	mouse_opacity = 1
@@ -360,8 +361,8 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/AttackingTarget()
-	..()
-	if(iscarbon(target))
+	. = ..()
+	if(. && iscarbon(target))
 		transfer_reagents(target, 1)
 
 
@@ -501,7 +502,7 @@
 	for(var/obj/effect/goliath_tentacle/original/O in loc)//No more GG NO RE from 2+ goliaths simultaneously tentacling you
 		if(O != src)
 			qdel(src)
-	var/list/directions = cardinal.Copy()
+	var/list/directions = GLOB.cardinal.Copy()
 	var/counter
 	for(counter = 1, counter <= 3, counter++)
 		var/spawndir = pick(directions)
@@ -924,7 +925,7 @@
 		regenerate_icons()
 		visible_message("<span class='notice'>[src] slurps up [target].</span>")
 		qdel(target)
-	..()
+	return ..()
 
 
 /obj/item/udder/gutlunch
@@ -1008,12 +1009,12 @@
 #define MEDAL_PREFIX "Tendril"
 /mob/living/simple_animal/hostile/spawner/lavaland/death()
 	var/last_tendril = TRUE
-	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in mob_list)
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_list)
 		if(other != src)
 			last_tendril = FALSE
 			break
 	if(last_tendril && !admin_spawned)
-		if(global.medal_hub && global.medal_pass && global.medals_enabled)
+		if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
 			for(var/mob/living/L in view(7,src))
 				if(L.stat)
 					continue

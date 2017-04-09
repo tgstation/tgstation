@@ -11,9 +11,10 @@
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
 
-/datum/hud/proc/create_parallax()
-	var/client/C = mymob.client
-	if (!apply_parallax_pref())
+/datum/hud/proc/create_parallax(mob/viewmob)
+	var/mob/screenmob = viewmob || mymob
+	var/client/C = screenmob.client
+	if (!apply_parallax_pref(viewmob)) //don't want shit computers to crash when specing someone with insane parallax, so use the viewer's pref
 		return
 
 	if(!length(C.parallax_layers_cached))
@@ -27,7 +28,10 @@
 		C.parallax_layers.len = C.parallax_layers_max
 
 	C.screen |= (C.parallax_layers)
-	var/obj/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
+	var/obj/screen/plane_master/PM = screenmob.hud_used.plane_masters["[PLANE_SPACE]"]
+	if(screenmob != mymob)
+		C.screen -= locate(/obj/screen/plane_master/parallax_white) in C.screen
+		C.screen += PM
 	PM.color = list(
 		0, 0, 0, 0,
 		0, 0, 0, 0,
@@ -37,15 +41,20 @@
 		)
 
 
-/datum/hud/proc/remove_parallax()
-	var/client/C = mymob.client
+/datum/hud/proc/remove_parallax(mob/viewmob)
+	var/mob/screenmob = viewmob || mymob
+	var/client/C = screenmob.client
 	C.screen -= (C.parallax_layers_cached)
-	var/obj/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
+	var/obj/screen/plane_master/PM = screenmob.hud_used.plane_masters["[PLANE_SPACE]"]
+	if(screenmob != mymob)
+		C.screen -= locate(/obj/screen/plane_master/parallax_white) in C.screen
+		C.screen += PM
 	PM.color = initial(PM.color)
 	C.parallax_layers = null
 
-/datum/hud/proc/apply_parallax_pref()
-	var/client/C = mymob.client
+/datum/hud/proc/apply_parallax_pref(mob/viewmob)
+	var/mob/screenmob = viewmob || mymob
+	var/client/C = screenmob.client
 	if(C.prefs)
 		var/pref = C.prefs.parallax
 		if (isnull(pref))
@@ -75,9 +84,9 @@
 	C.parallax_layers_max = 3
 	return TRUE
 
-/datum/hud/proc/update_parallax_pref()
-	remove_parallax()
-	create_parallax()
+/datum/hud/proc/update_parallax_pref(mob/viewmob)
+	remove_parallax(viewmob)
+	create_parallax(viewmob)
 
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)
 /datum/hud/proc/set_parallax_movedir(new_parallax_movedir, skip_windups)

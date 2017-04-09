@@ -10,7 +10,6 @@
 #define NUKE_ON_TIMING		2
 #define NUKE_ON_EXPLODING	3
 
-var/bomb_set
 
 /obj/machinery/nuclearbomb
 	name = "nuclear fission explosive"
@@ -41,15 +40,16 @@ var/bomb_set
 	var/image/lights = null
 	var/image/interior = null
 	var/obj/effect/countdown/nuclearbomb/countdown
+	var/static/bomb_set
 
 /obj/machinery/nuclearbomb/New()
 	..()
 	countdown = new(src)
-	nuke_list += src
+	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	STOP_PROCESSING(SSobj, core)
 	update_icon()
-	poi_list |= src
+	GLOB.poi_list |= src
 	previous_level = get_security_level()
 
 /obj/machinery/nuclearbomb/Destroy()
@@ -57,8 +57,8 @@ var/bomb_set
 	if(!exploding)
 		// If we're not exploding, set the alert level back to normal
 		set_safety()
-	poi_list -= src
-	nuke_list -= src
+	GLOB.poi_list -= src
+	GLOB.nuke_list -= src
 	if(countdown)
 		qdel(countdown)
 	countdown = null
@@ -239,7 +239,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=default_state)
+/obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "nuclear_bomb", name, 500, 600, master_ui, state)
@@ -361,7 +361,7 @@ var/bomb_set
 	if(safety)
 		if(timing)
 			set_security_level(previous_level)
-			for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+			for(var/obj/item/weapon/pinpointer/syndicate/S in GLOB.pinpointer_list)
 				S.switch_mode_to(initial(S.mode))
 				S.nuke_warning = FALSE
 		timing = FALSE
@@ -380,14 +380,14 @@ var/bomb_set
 		bomb_set = TRUE
 		set_security_level("delta")
 		detonation_timer = world.time + (timer_set * 10)
-		for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+		for(var/obj/item/weapon/pinpointer/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
 	else
 		bomb_set = FALSE
 		detonation_timer = null
 		set_security_level(previous_level)
-		for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+		for(var/obj/item/weapon/pinpointer/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(initial(S.mode))
 			S.nuke_warning = FALSE
 		countdown.stop()
@@ -419,18 +419,18 @@ var/bomb_set
 	yes_code = FALSE
 	safety = TRUE
 	update_icon()
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		M << 'sound/machines/Alarm.ogg'
-	if(ticker && ticker.mode)
-		ticker.mode.explosion_in_progress = 1
+	if(SSticker && SSticker.mode)
+		SSticker.mode.explosion_in_progress = 1
 	sleep(100)
 
 	if(!core)
-		ticker.station_explosion_cinematic(3,"no_core",src)
-		ticker.mode.explosion_in_progress = 0
+		SSticker.station_explosion_cinematic(3,"no_core",src)
+		SSticker.mode.explosion_in_progress = 0
 		return
 
-	enter_allowed = 0
+	GLOB.enter_allowed = 0
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
@@ -445,18 +445,18 @@ var/bomb_set
 	else
 		off_station = NUKE_NEAR_MISS
 
-	if(istype(ticker.mode, /datum/game_mode/nuclear))
+	if(istype(SSticker.mode, /datum/game_mode/nuclear))
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-		var/datum/game_mode/nuclear/NM = ticker.mode
+		var/datum/game_mode/nuclear/NM = SSticker.mode
 		NM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
 		NM.nuke_off_station = off_station
 
-	ticker.station_explosion_cinematic(off_station,null,src)
-	if(ticker.mode)
-		if(istype(ticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/NM = ticker.mode
+	SSticker.station_explosion_cinematic(off_station,null,src)
+	if(SSticker.mode)
+		if(istype(SSticker.mode, /datum/game_mode/nuclear))
+			var/datum/game_mode/nuclear/NM = SSticker.mode
 			NM.nukes_left --
-		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
+		if(!SSticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
 			spawn()
 				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
 
@@ -501,7 +501,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
-	poi_list |= src
+	GLOB.poi_list |= src
 	set_stationloving(TRUE, inform_admins=TRUE)
 
 /obj/item/weapon/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
@@ -521,7 +521,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear/Destroy(force=FALSE)
 	// respawning is handled in /obj/Destroy()
 	if(force)
-		poi_list -= src
+		GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/weapon/disk/nuclear/suicide_act(mob/user)

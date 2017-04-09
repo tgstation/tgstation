@@ -35,7 +35,7 @@
 	return ..()
 
 /obj/machinery/mineral/labor_claim_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "labor_claim_console", name, 450, 475, master_ui, state)
@@ -104,8 +104,8 @@
 						to_chat(usr, "<span class='notice'>No permission to dock could be granted.</span>")
 					else
 						if(!emagged)
-							Radio.set_frequency(SEC_FREQ)
-							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", SEC_FREQ)
+							Radio.set_frequency(GLOB.SEC_FREQ)
+							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", GLOB.SEC_FREQ, get_spans(), get_default_language())
 						to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
 
 /obj/machinery/mineral/labor_claim_console/proc/check_auth()

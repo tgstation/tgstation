@@ -5,10 +5,10 @@
 
 	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<i><span class='alien'>Hivemind, <span class='name'>[shown_name]</span> <span class='message'>[message_a]</span></span></i>"
-	for(var/mob/S in player_list)
+	for(var/mob/S in GLOB.player_list)
 		if(!S.stat && S.hivecheck())
 			to_chat(S, rendered)
-		if(S in dead_mob_list)
+		if(S in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(S, src)
 			to_chat(S, "[link] [rendered]")
 

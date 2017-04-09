@@ -130,13 +130,13 @@
 	if(istype(target, /obj/item/weapon/ore) && mode ==  MINEDRONE_COLLECT)
 		CollectOre()
 		return
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
 	var/obj/item/weapon/ore/O
 	for(O in src.loc)
 		O.loc = src
-	for(var/dir in alldirs)
+	for(var/dir in GLOB.alldirs)
 		var/turf/T = get_step(src,dir)
 		for(O in T)
 			O.loc = src

@@ -8,7 +8,7 @@
 	var/icon_state_on = "emitter_+a"
 	anchored = 0
 	density = 1
-	req_access = list(access_engine_equip)
+	req_access = list(GLOB.access_engine_equip)
 
 	use_power = 0
 	idle_power_usage = 10
@@ -88,7 +88,7 @@
 		connect_to_network()
 
 /obj/machinery/power/emitter/Destroy()
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Emitter deleted at ([x],[y],[z])")
 		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]","singulo")

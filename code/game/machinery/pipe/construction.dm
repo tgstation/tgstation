@@ -23,7 +23,7 @@ Buildable meters
 	var/is_bent = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
-	var/global/list/pipe_types = list(
+	var/static/list/pipe_types = list(
 		PIPE_SIMPLE, \
 		PIPE_LAYER_MANIFOLD, \
 		PIPE_MANIFOLD, \
@@ -76,7 +76,7 @@ Buildable meters
 		src.pipe_type = pipe_type
 		src.setDir(dir)
 
-	if(src.dir in diagonals)
+	if(src.dir in GLOB.diagonals)
 		is_bent = 1
 
 	update()
@@ -94,7 +94,7 @@ Buildable meters
 		layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 //update the name and icon of the pipe item depending on the type
-var/global/list/pipeID2State = list(
+GLOBAL_LIST_INIT(pipeID2State, list(
 	"[PIPE_SIMPLE]"			 = "simple", \
 	"[PIPE_MANIFOLD]"		 = "manifold", \
 	"[PIPE_LAYER_MANIFOLD]"	 = "layer_manifold", \
@@ -117,7 +117,7 @@ var/global/list/pipeID2State = list(
 	\
 	"[PIPE_GAS_FILTER]"		 = "filter", \
 	"[PIPE_GAS_MIXER]"		 = "mixer", \
-)
+))
 
 /obj/item/pipe/proc/update()
 	var/list/nlist = list(\
@@ -148,7 +148,7 @@ var/global/list/pipeID2State = list(
 		)
 	//fix_pipe_type()
 	name = nlist["[pipe_type][is_bent ? "_b" : ""]"] + " fitting"
-	icon_state = pipeID2State["[pipe_type]"]
+	icon_state = GLOB.pipeID2State["[pipe_type]"]
 
 // rotate the pipe item clockwise
 
@@ -201,7 +201,7 @@ var/global/list/pipeID2State = list(
 	setDir(old_dir )//pipes changing direction when moved is just annoying and buggy
 
 /obj/item/pipe/proc/unflip(direction)
-	if(direction in diagonals)
+	if(direction in GLOB.diagonals)
 		return turn(direction, 45)
 
 	return direction

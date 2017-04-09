@@ -13,14 +13,14 @@
 		. = is_convertable_to_cult(new_body)
 
 /datum/antagonist/cultist/on_gain()
-	if(ticker && ticker.mode && owner.mind)
-		ticker.mode.cult += owner.mind
-		ticker.mode.update_cult_icons_added(owner.mind)
-		if(istype(ticker.mode, /datum/game_mode/cult))
-			var/datum/game_mode/cult/C = ticker.mode
+	if(SSticker && SSticker.mode && owner.mind)
+		SSticker.mode.cult += owner.mind
+		SSticker.mode.update_cult_icons_added(owner.mind)
+		if(istype(SSticker.mode, /datum/game_mode/cult))
+			var/datum/game_mode/cult/C = SSticker.mode
 			C.memorize_cult_objectives(owner.mind)
 		if(jobban_isbanned(owner, ROLE_CULTIST))
-			INVOKE_ASYNC(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST)
+			INVOKE_ASYNC(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST)
 	if(owner.mind)
 		owner.mind.special_role = "Cultist"
 	owner.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
@@ -40,9 +40,9 @@
 /datum/antagonist/cultist/on_remove()
 	if(owner.mind)
 		owner.mind.wipe_memory()
-		if(ticker && ticker.mode)
-			ticker.mode.cult -= owner.mind
-			ticker.mode.update_cult_icons_removed(owner.mind)
+		if(SSticker && SSticker.mode)
+			SSticker.mode.cult -= owner.mind
+			SSticker.mode.update_cult_icons_removed(owner.mind)
 	to_chat(owner, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>")
 	owner.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(!silent_update)

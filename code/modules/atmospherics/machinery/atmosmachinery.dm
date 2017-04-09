@@ -76,7 +76,7 @@ Pipelines + Other Objects -> Pipe network
 		node_connects.len = device_type
 
 		for(DEVICE_TYPE_LOOP)
-			for(var/D in cardinal)
+			for(var/D in GLOB.cardinal)
 				if(D & GetInitDirections())
 					if(D in node_connects)
 						continue
@@ -205,7 +205,7 @@ Pipelines + Other Objects -> Pipe network
 
 	var/fuck_you_dir = get_dir(src, user) // Because fuck you...
 	if(!fuck_you_dir)
-		fuck_you_dir = pick(cardinal)
+		fuck_you_dir = pick(GLOB.cardinal)
 	var/turf/target = get_edge_target_turf(user, fuck_you_dir)
 	var/range = pressures/250
 	var/speed = range/5
@@ -248,7 +248,7 @@ Pipelines + Other Objects -> Pipe network
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
 	setPipingLayer(set_layer)
-	var/turf/T = loc
+	var/turf/T = get_turf(src)
 	level = T.intact ? 2 : 1
 	atmosinit()
 	var/list/nodes = pipeline_expansion()
@@ -278,7 +278,7 @@ Pipelines + Other Objects -> Pipe network
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction, user.ventcrawl_layer)
 	if(target_move)
 		if(target_move.can_crawl_through())
-			if(is_type_in_list(target_move, ventcrawl_machinery))
+			if(is_type_in_list(target_move, GLOB.ventcrawl_machinery))
 				user.forceMove(target_move.loc) //handle entering and so on.
 				user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 			else
@@ -291,7 +291,7 @@ Pipelines + Other Objects -> Pipe network
 					user.last_played_vent = world.time
 					playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
 	else
-		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
+		if((direction & initialize_directions) || is_type_in_list(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
 			user.forceMove(src.loc)
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 	user.canmove = 0
@@ -300,7 +300,7 @@ Pipelines + Other Objects -> Pipe network
 
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(is_type_in_list(src, ventcrawl_machinery))
+	if(is_type_in_list(src, GLOB.ventcrawl_machinery))
 		L.handle_ventcrawl(src)
 		return
 	..()

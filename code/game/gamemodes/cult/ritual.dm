@@ -15,11 +15,12 @@ This file contains the arcane tome files.
 
 /obj/item/weapon/tome/New()
 	..()
-	if(!LAZYLEN(rune_types))
-		rune_types = list()
+	if(!LAZYLEN(GLOB.rune_types))
+		GLOB.rune_types = list()
+		var/static/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		for(var/i_can_do_loops_now_thanks_remie in non_revealed_runes)
 			var/obj/effect/rune/R = i_can_do_loops_now_thanks_remie
-			rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
+			GLOB.rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
 
 /obj/item/weapon/tome/examine(mob/user)
 	..()
@@ -180,10 +181,10 @@ This file contains the arcane tome files.
 
 	if(!check_rune_turf(Turf, user))
 		return
-	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in rune_types
+	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in GLOB.rune_types
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
-	rune_to_scribe = rune_types[entered_rune_name]
+	rune_to_scribe = GLOB.rune_types[entered_rune_name]
 	if(!rune_to_scribe)
 		return
 	if(initial(rune_to_scribe.req_keyword))
@@ -196,12 +197,12 @@ This file contains the arcane tome files.
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
-		if(ticker.mode.name == "cult")
-			var/datum/game_mode/cult/cult_mode = ticker.mode
+		if(SSticker.mode.name == "cult")
+			var/datum/game_mode/cult/cult_mode = SSticker.mode
 			if(!("eldergod" in cult_mode.cult_objectives))
 				to_chat(user, "<span class='warning'>Nar-Sie does not wish to be summoned!</span>")
 				return
-			if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
+			if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in GLOB.sacrificed))
 				to_chat(user, "<span class='warning'>The sacrifice is not complete. The portal would lack the power to open if you tried!</span>")
 				return
 			if(!cult_mode.eldergod)
@@ -244,6 +245,7 @@ This file contains the arcane tome files.
 		if(S && !QDELETED(S))
 			qdel(S)
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
+	R.add_mob_blood(user)
 	to_chat(user, "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>")
 	feedback_add_details("cult_runes_scribed", R.cultist_name)
 

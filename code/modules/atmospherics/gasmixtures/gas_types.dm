@@ -1,4 +1,4 @@
-var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases, which were at one time hardcoded
+GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main four gases, which were at one time hardcoded
 
 /proc/meta_gas_list()
 	. = new /list
