@@ -830,8 +830,8 @@
 		return
 	return 1
 
-/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans)
-	raw_message = lang_treat(speaker, message_language, raw_message, spans)
+/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	raw_message = lang_treat(speaker, message_language, raw_message, spans, message_mode)
 	var/name_used = speaker.GetVoice()
 	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
 	show_message(rendered, 2)
