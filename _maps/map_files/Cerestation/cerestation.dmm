@@ -85398,6 +85398,20 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/entry)
+"cWH" = (
+/obj/structure/sign/poster/official/pda_ad{
+	pixel_x = -32
+	},
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/heads)
+"cWI" = (
+/obj/machinery/pdapainter,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/heads)
 
 (1,1,1) = {"
 aaa
@@ -114508,7 +114522,7 @@ aGO
 aHT
 aJc
 aKf
-aLh
+cWH
 aLT
 aHS
 aOe
@@ -115280,7 +115294,7 @@ aHT
 aJf
 aKi
 aLh
-aLh
+cWI
 aNb
 aOf
 aPe
