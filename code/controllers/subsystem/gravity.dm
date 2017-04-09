@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(gravity)
 	currentrun = list()
 	currentrun_manual = list()
 	var/tempcost = REALTIMEOFDAY
-	for(var/I in sortedAreas)
+	for(var/I in GLOB.sortedAreas)
 		var/area/A = I
 		if(!A.has_gravity && !A.gravity_generator && !A.gravity_overriding)
 			continue
