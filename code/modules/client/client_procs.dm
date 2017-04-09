@@ -371,7 +371,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)
-		admin_rank = src.holder.rank.name
+		admin_rank = src.holder.rank
 	else
 		if (check_randomizer(connectiontopic))
 			return
