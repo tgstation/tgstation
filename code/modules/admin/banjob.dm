@@ -15,12 +15,9 @@
 			return reason ? reason : 1 //we don't want to return "" if there is no ban reason, as that would evaluate to false
 		else
 			return 0
-	log_admin("step 4")
 
 	if(!M.client.jobbancache)
 		jobban_buildcache(M.client)
-
-	log_admin("step 5")
 
 	if(rank in M.client.jobbancache)
 		var/reason = M.client.jobbancache[rank]
