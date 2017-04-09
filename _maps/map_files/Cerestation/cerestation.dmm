@@ -41507,6 +41507,9 @@
 	density = 0;
 	pixel_x = 30
 	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 5
+	},
 /turf/open/floor/plasteel/whitegreen/side{
 	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
@@ -47979,6 +47982,10 @@
 /area/medical/chemistry)
 "bFZ" = (
 /obj/structure/table/reinforced,
+/obj/machinery/door/window/eastleft{
+	name = "Chemistry Desk";
+	req_access_txt = "33"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -73313,22 +73320,16 @@
 /turf/open/space,
 /area/hallway/secondary/entry)
 "czh" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
 	},
-/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plasteel/whitepurple/side{
-	tag = "icon-whitepurple (WEST)";
-	icon_state = "whitepurple";
-	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
 "czi" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
-	},
-/turf/open/floor/plasteel/white{
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/whitepurple/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
@@ -73344,7 +73345,6 @@
 	},
 /area/toxins/mixing)
 "czk" = (
-/obj/structure/closet/bombcloset,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -73356,7 +73356,6 @@
 	},
 /area/toxins/mixing)
 "czl" = (
-/obj/structure/closet/bombcloset,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -73882,19 +73881,6 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/arrival)
 "czZ" = (
-/obj/structure/closet/wardrobe/science_white,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel/whitepurple/side{
-	tag = "icon-whitepurple (WEST)";
-	icon_state = "whitepurple";
-	dir = 8;
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cAa" = (
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 4;
@@ -73908,7 +73894,25 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cAa" = (
+/obj/structure/disposalpipe/junction{
+	icon_state = "pipe-j1";
+	dir = 8
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/closet/bombcloset,
+/turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
@@ -73938,11 +73942,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/whitepurple/side{
+	tag = "icon-whitepurple (WEST)";
+	icon_state = "whitepurple";
+	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
@@ -74692,24 +74701,19 @@
 	},
 /area/hallway/secondary/entry)
 "cAU" = (
-/obj/structure/closet/l3closet/scientist{
-	pixel_x = -2
-	},
-/turf/open/floor/plasteel/whitepurple/side{
-	tag = "icon-whitepurple (SOUTHWEST)";
-	icon_state = "whitepurple";
-	dir = 10;
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cAV" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/whitepurple/side{
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cAV" = (
+/obj/structure/closet/bombcloset,
+/turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
@@ -74731,7 +74735,13 @@
 	pixel_y = -2
 	},
 /obj/structure/table/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/whitepurple/side{
+	tag = "icon-whitepurple (SOUTHWEST)";
+	icon_state = "whitepurple";
+	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
@@ -75639,21 +75649,6 @@
 	name = "Aft Asteroid Maintenance"
 	})
 "cCD" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Toxins Lab APC";
-	pixel_x = 0;
-	pixel_y = 25
-	},
-/obj/structure/cable/orange{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/open/floor/plating/astplate{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cCE" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -75669,12 +75664,32 @@
 	icon_state = "ast_warn";
 	dir = 1
 	},
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
+"cCE" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Toxins Lab APC";
+	pixel_x = 0;
+	pixel_y = 25
+	},
+/obj/structure/cable/orange{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
 "cCF" = (
 /obj/machinery/r_n_d/server/core,
 /turf/open/floor/circuit{
@@ -78156,10 +78171,7 @@
 	name = "Aft Asteroid Maintenance"
 	})
 "cGV" = (
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/effect/decal/remains/xeno = 49, /obj/structure/alien/egg = 1);
-	name = "2% chance xeno egg spawner"
-	},
+/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -85412,6 +85424,75 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/heads)
+"cWJ" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cWK" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cWL" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister,
+/turf/open/floor/plasteel/whitepurple/side{
+	tag = "icon-whitepurple (SOUTHWEST)";
+	icon_state = "whitepurple";
+	dir = 10;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cWM" = (
+/turf/open/floor/plasteel/whitepurple/corner{
+	tag = "icon-whitepurplecorner (WEST)";
+	icon_state = "whitepurplecorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cWN" = (
+/obj/structure/closet/wardrobe/science_white,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cWO" = (
+/obj/structure/closet/l3closet/scientist{
+	pixel_x = -2
+	},
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cWP" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Aft Asteroid Maintenance";
+	req_access_txt = "47"
+	},
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
 
 (1,1,1) = {"
 aaa
@@ -94866,7 +94947,7 @@ aaa
 aaa
 aaa
 aaa
-cgS
+aaa
 cgS
 cgS
 cgS
@@ -95123,7 +95204,7 @@ aaa
 aaa
 aaa
 aaa
-cgS
+aaa
 cgS
 cgS
 cgS
@@ -95379,8 +95460,8 @@ aaa
 aaa
 aaa
 aaa
-cgS
-cgS
+aaa
+aaa
 cgS
 cgS
 cgS
@@ -95636,9 +95717,9 @@ aaa
 aaa
 aaa
 cgS
-cgS
-cuP
-cuP
+aaa
+aaa
+aaa
 cgS
 cgN
 cgS
@@ -95892,16 +95973,16 @@ aaa
 aaa
 aaa
 cgS
-cgS
-cuP
-cuP
-cuP
-cgS
+ctW
+cuQ
+cuQ
+cuQ
+ctW
 cgN
 cgN
-cgS
-cgS
-cgS
+cgN
+cgN
+cgN
 cgS
 cgS
 cgS
@@ -96150,14 +96231,14 @@ aaa
 aaa
 cgS
 ctW
-cuQ
-cuQ
-cuQ
+cuR
+cvR
+cvR
 ctW
-cgN
-cgN
-cgN
-cgN
+cgR
+cgR
+cgR
+cgR
 cgN
 cjU
 cCB
@@ -96407,16 +96488,16 @@ aaa
 aaa
 cgS
 ctW
-cuR
+cuS
 cvR
-cvR
+cwO
 ctW
-cgR
-cgR
-cgR
-cgR
-cgN
-cjU
+ctW
+ctW
+ctW
+ctW
+ctW
+ctW
 cCC
 cjU
 chc
@@ -96664,15 +96745,15 @@ aaa
 aaa
 cgS
 ctW
-cuS
-cvR
-cwO
+cuT
+cvS
+cuT
 ctW
-ctW
-ctW
-ctW
-ctW
-ctW
+cxY
+cyN
+cWL
+cWN
+cWO
 ctW
 cCB
 cjU
@@ -96921,21 +97002,21 @@ aaa
 aaa
 cgN
 ctW
-cuT
-cvS
-cuT
+cuU
+cvT
+cwP
 ctW
-cxY
-cyN
+cxZ
+cyO
 czh
 czZ
 cAU
-ctW
+cWP
 cCD
-cDu
-cgL
-cgL
-cgL
+cDv
+cDv
+cEQ
+cFb
 cmA
 cgu
 cgu
@@ -97178,21 +97259,21 @@ aaa
 aaa
 cgN
 ctW
-cuU
-cvT
-cwP
-ctW
-cxZ
-cyO
+cuT
+cvU
+cuT
+cxu
+cya
+cyP
 czi
 cAa
 cAV
-cBP
+ctW
 cCE
-cDv
-cDv
-cEQ
-cFb
+cgL
+cgL
+cgL
+cFc
 ckH
 cgu
 cgu
@@ -97435,13 +97516,13 @@ aaa
 aaa
 cgN
 ctW
-cuT
-cvU
-cuT
-cxu
-cya
-cyP
-cyP
+cuV
+cvV
+cwQ
+cvV
+cyb
+cvW
+cWM
 cAb
 cAW
 ctW
@@ -97692,11 +97773,11 @@ aaa
 aaa
 cgN
 ctW
-cuV
-cvV
-cwQ
-cvV
-cyb
+cWJ
+cvW
+cWK
+cvW
+cvW
 cvW
 cvW
 cAc
