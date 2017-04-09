@@ -665,7 +665,8 @@
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
 					if(where_list)
-						who.put_in_hand(what, where_list[2])
+						if(!who.put_in_hand(what, where_list[2]))
+							what.forceMove(get_turf(who))
 					else
 						who.equip_to_slot(what, where, TRUE)
 

@@ -90,7 +90,6 @@
 #include "code\__HELPERS\sorts\InsertSort.dm"
 #include "code\__HELPERS\sorts\MergeSort.dm"
 #include "code\__HELPERS\sorts\TimSort.dm"
-#include "code\__PATH_COMPATIBILITY\path_compatibility.dm"
 #include "code\_globalvars\configuration.dm"
 #include "code\_globalvars\database.dm"
 #include "code\_globalvars\game_modes.dm"

@@ -42,6 +42,8 @@ SUBSYSTEM_DEF(ticker)
 	var/timeLeft						//pregame timer
 	var/start_at
 
+	var/gametime_offset = 432000 // equal to 12 hours, making gametime at roundstart 12:00:00
+
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
 
