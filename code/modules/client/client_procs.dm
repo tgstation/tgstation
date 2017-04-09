@@ -98,11 +98,11 @@
 
 	..()	//redirect to hsrc.Topic()
 
-//client/proc/is_content_unlocked()
-//	if(!prefs.unlock_content)
-//		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>.")
-//		return 0
-//	return 1
+/client/proc/is_content_unlocked()
+	if(!prefs.unlock_content)
+		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>.")
+		return 0
+	return 1
 
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
@@ -162,9 +162,11 @@ GLOBAL_LIST(external_rsc_urls)
 	//Admin Authorisation
 	var/localhost_addresses = list("127.0.0.1", "::1")
 	if(address && (address in localhost_addresses))
-		var/datum/admins/localhost_holder = new("!localhost!", 65535, ckey)
-		localhost_holder.associate(src)
-/*	if(config.autoadmin)
+		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
+		if(localhost_rank)
+			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
+			localhost_holder.associate(src)
+	if(config.autoadmin)
 		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank
 			for(var/datum/admin_rank/R in GLOB.admin_ranks)
@@ -175,7 +177,7 @@ GLOBAL_LIST(external_rsc_urls)
 				to_chat(world, "Autoadmin rank not found")
 			else
 				var/datum/admins/D = new(autorank, ckey)
-				GLOB.admin_datums[ckey] = D*/
+				GLOB.admin_datums[ckey] = D
 	holder = GLOB.admin_datums[ckey]
 	if(holder)
 		GLOB.admins |= src
@@ -393,7 +395,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)
-		admin_rank = src.holder.rank
+		admin_rank = src.holder.rank.name
 	else
 		if (check_randomizer(connectiontopic))
 			return
