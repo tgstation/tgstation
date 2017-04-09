@@ -547,7 +547,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		CHECK_TICK
 
 /proc/reset_all_area_gravity()
-	for(var/I in sortedAreas)
+	for(var/I in GLOB.sortedAreas)
 		var/area/A = I
 		A.gravity_generator = FALSE
 		A.gravity_overriding = FALSE
@@ -558,14 +558,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /proc/resync_gravgen_areas()
 	if(!SSgravity)
 		return "NO GRAVITY SUBSYSTEM!"
-	for(var/I in sortedAreas)
+	for(var/I in GLOB.sortedAreas)
 		var/area/A = I
 		A.gravity_generator = FALSE
 		CHECK_TICK
 	for(var/I in SSgravity.gravgens)
 		var/obj/machinery/gravity_generator/main/GG = I
 		if(GG.on)
-			for(var/S in sortedAreas)
+			for(var/S in GLOB.sortedAreas)
 				var/area/A = S
 				if(A.z == GG.z)
 					if(A.ignores_gravgens)
@@ -574,7 +574,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 					A.gravity_direction = GG.current_grav_dir
 				CHECK_TICK
 		CHECK_TICK
-	for(var/I in sortedAreas)
+	for(var/I in GLOB.sortedAreas)
 		var/area/A = I
 		A.update_all_gravity()
 		CHECK_TICK
