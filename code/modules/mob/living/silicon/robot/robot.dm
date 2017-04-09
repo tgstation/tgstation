@@ -1063,7 +1063,7 @@
 
 /mob/living/silicon/robot/proc/undeploy()
 
-	if(!deployed || !mainframe)
+	if(!deployed || !mind || !mainframe)
 		return
 	mainframe.redeploy_action.Grant(mainframe)
 	mainframe.redeploy_action.last_used_shell = src
