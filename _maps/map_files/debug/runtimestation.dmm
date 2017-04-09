@@ -139,7 +139,7 @@
 "cI" = (/obj/structure/table,/obj/item/weapon/storage/fancy/donut_box,/turf/open/floor/plasteel/arrival{dir = 8},/area/hallway/secondary/entry)
 "cJ" = (/obj/structure/table,/obj/item/weapon/storage/fancy/donut_box,/turf/open/floor/plasteel/arrival{dir = 10},/area/hallway/secondary/entry)
 "cK" = (/obj/structure/table,/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/rods{amount = 50},/obj/machinery/light,/turf/open/floor/plasteel/arrival,/area/hallway/secondary/entry)
-"cL" = (/obj/structure/table,/obj/item/weapon/paper_bin{pixel_x = -3;pixel_y = 7},/obj/item/weapon/pen,/turf/open/floor/plasteel/arrival,/area/hallway/secondary/entry)
+"cL" = (/obj/structure/table,/obj/item/weapon/paper_bin{pixel_x = -3;pixel_y = 7},/turf/open/floor/plasteel/arrival,/area/hallway/secondary/entry)
 "cM" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/firstaid/regular,/obj/item/device/healthanalyzer,/turf/open/floor/plasteel/arrival,/area/hallway/secondary/entry)
 "cN" = (/turf/closed/wall/r_wall,/area/construction)
 "cO" = (/obj/structure/cable{d1 = 1;d2 = 2;icon_state = "1-2"},/turf/closed/wall/r_wall,/area/construction)

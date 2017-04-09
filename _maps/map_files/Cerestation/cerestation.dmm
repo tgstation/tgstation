@@ -4050,7 +4050,6 @@
 "ahX" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	dir = 2;
@@ -6017,7 +6016,6 @@
 "alU" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/item/weapon/stamp/captain,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -9932,7 +9930,6 @@
 "ato" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/item/weapon/stamp/cmo,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -9992,7 +9989,6 @@
 "atw" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/item/weapon/stamp/ce,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -10341,7 +10337,6 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/weapon/pen,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -12929,7 +12924,6 @@
 "ayU" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/item/weapon/stamp/hos,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -13045,7 +13039,6 @@
 "azh" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/item/weapon/stamp/rd,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -13317,7 +13310,6 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/weapon/pen,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -14981,7 +14973,6 @@
 "aCH" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/machinery/light,
 /turf/open/floor/plasteel/darkblue/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -16788,7 +16779,6 @@
 "aFE" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/item/weapon/stamp/qm,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -20261,7 +20251,6 @@
 "aLQ" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -20313,7 +20302,6 @@
 "aLW" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/item/weapon/stamp/hop,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -57068,7 +57056,6 @@
 "bVW" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75772,7 +75759,6 @@
 "cCR" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /turf/open/floor/plasteel/red/side{
 	tag = "icon-red (NORTHWEST)";
 	icon_state = "red";
