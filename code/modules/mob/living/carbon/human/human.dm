@@ -38,6 +38,9 @@
 	martial_art = default_martial_art
 
 	handcrafting = new()
+	
+	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
+
 	update_teeth()
 
 	..()
