@@ -421,9 +421,9 @@
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")
-					GLOB.comms_key = value
+					SENSITIVE.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
-						GLOB.comms_allowed = 1
+						SENSITIVE.comms_allowed = 1
 				if("cross_server_address")
 					cross_address = value
 					if(value != "byond:\\address:port")
@@ -437,9 +437,9 @@
 					if(value != "byond:\\address:port")
 						allow_panic_bunker_bounce = 1
 				if("medal_hub_address")
-					GLOB.medal_hub = value
+					SENSITIVE.medal_hub = value
 				if("medal_hub_password")
-					GLOB.medal_pass = value
+					SENSITIVE.medal_pass = value
 				if("show_irc_name")
 					config.showircname = 1
 				if("see_own_notes")
@@ -843,17 +843,17 @@
 			if("sql_enabled")
 				config.sql_enabled = 1
 			if("address")
-				GLOB.sqladdress = value
+				SENSITIVE.sqladdress = value
 			if("port")
-				GLOB.sqlport = value
+				SENSITIVE.sqlport = value
 			if("feedback_database")
-				GLOB.sqlfdbkdb = value
+				SENSITIVE.sqlfdbkdb = value
 			if("feedback_login")
-				GLOB.sqlfdbklogin = value
+				SENSITIVE.sqlfdbklogin = value
 			if("feedback_password")
-				GLOB.sqlfdbkpass = value
+				SENSITIVE.sqlfdbkpass = value
 			if("feedback_tableprefix")
-				GLOB.sqlfdbktableprefix = value
+				SENSITIVE.sqlfdbktableprefix = value
 			else
 				GLOB.diary << "Unknown setting in configuration: '[name]'"
 
