@@ -13,20 +13,32 @@
 	desc = "An extremely sturdy metal ladder."
 
 
-/obj/structure/ladder/New()
-	spawn(8)
-		for(var/obj/structure/ladder/L in world)
-			if(L.id == id)
-				if(L.height == (height - 1))
-					down = L
-					continue
-				if(L.height == (height + 1))
-					up = L
-					continue
+/obj/structure/ladder/Initialize(mapload)
+	if(!initialized)
+		ladders += src
+		..()
+	if(mapload)
+		return TRUE
+	update_link()
 
-			if(up && down)	//if both our connections are filled
-				break
-		update_icon()
+/obj/structure/ladder/Destroy()
+	ladders -= src
+	. = ..()
+
+/obj/structure/ladder/proc/update_link()
+	for(var/obj/structure/ladder/L in ladders)
+		if(L.id == id)
+			if(L.height == (height - 1))
+				down = L
+				continue
+			if(L.height == (height + 1))
+				up = L
+				continue
+
+		if(up && down)	//if both our connections are filled
+			break
+	update_icon()
+
 
 /obj/structure/ladder/update_icon()
 	if(up && down)

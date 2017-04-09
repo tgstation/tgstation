@@ -28,3 +28,4 @@ var/global/list/pinpointer_list = list()			//list of all pinpointers. Used to ch
 var/global/list/zombie_infection_list = list() 		// A list of all zombie_infection organs, for any mass "animation"
 var/global/list/meteor_list = list()				// List of all meteors.
 var/global/list/active_jammers = list()             // List of active radio jammers
+var/global/list/ladders = list()                    // List of ladders
