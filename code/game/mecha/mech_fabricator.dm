@@ -448,7 +448,8 @@
 				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
 				add_overlay(mat_overlay)
 				sleep(10)
-				cut_overlay(mat_overlay) //No matter what the overlay shall still be deleted
+				if(!QDELETED(src))
+					cut_overlay(mat_overlay) //No matter what the overlay shall still be deleted
 
 		updateUsrDialog()
 
@@ -470,7 +471,8 @@
 				var/mat_overlay = "fab-load-bluespace"
 				add_overlay(mat_overlay)
 				sleep(10)
-				cut_overlay(mat_overlay)
+				if(!QDELETED(src))
+					cut_overlay(mat_overlay)
 
 		updateUsrDialog()
 
