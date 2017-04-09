@@ -103,18 +103,18 @@
 	update_look(user, picked_item)
 
 /datum/action/item_action/chameleon/change/proc/random_look(mob/user)
-	var/picked_item = pick(chameleon_list)
+	var/picked_name = pick(chameleon_list)
 	// If a user is provided, then this item is in use, and we
 	// need to update our icons and stuff
 
 	if(user)
-		update_look(user, picked_item)
+		update_look(user, chameleon_list[picked_name])
 
 	// Otherwise, it's likely a random initialisation, so we
 	// don't have to worry
 
 	else
-		update_item(picked_item)
+		update_item(chameleon_list[picked_name])
 
 /datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
 	if(istype(target, /obj/item/weapon/gun/energy/laser/chameleon))
