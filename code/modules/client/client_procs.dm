@@ -159,31 +159,6 @@ GLOBAL_LIST(external_rsc_urls)
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 
-	//Admin Authorisation
-	var/localhost_addresses = list("127.0.0.1", "::1")
-	if(address && (address in localhost_addresses))
-		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
-		localhost_holder.associate(src)
-	/*	if(localhost_rank)
-			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
-			localhost_holder.associate(src)
-	if(config.autoadmin)
-		if(!GLOB.admin_datums[ckey])
-			var/datum/admin_rank/autorank
-			for(var/datum/admin_rank/R in GLOB.admin_ranks)
-				if(R.name == config.autoadmin_rank)
-					autorank = R
-					break
-			if(!autorank)
-				to_chat(world, "Autoadmin rank not found")
-			else
-				var/datum/admins/D = new(autorank, ckey)
-				GLOB.admin_datums[ckey] = D	*/
-	holder = GLOB.admin_datums[ckey]
-	if(holder)
-		GLOB.admins |= src
-		holder.owner = src
-
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
