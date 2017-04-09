@@ -1,0 +1,4 @@
+author: "Penguaro"
+delete-after: True
+changes: 
+  - rscadd: "[Box] A fire alarm has been added to the Lawyer's office."
