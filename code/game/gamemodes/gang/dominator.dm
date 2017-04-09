@@ -22,7 +22,7 @@
 /obj/machinery/dominator/New()
 	..()
 	set_light(2)
-	poi_list |= src
+	GLOB.poi_list |= src
 	spark_system = new
 	spark_system.set_up(5, 1, src)
 	countdown = new(src)
@@ -54,12 +54,12 @@
 				warned = 1
 				var/area/domloc = get_area(loc)
 				gang.message_gangtools("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!")
-				for(var/datum/gang/G in ticker.mode.gangs)
+				for(var/datum/gang/G in SSticker.mode.gangs)
 					if(G != gang)
 						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 
 	if(!.)
-		STOP_PROCESSING(SSmachine, src)
+		STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -102,7 +102,7 @@
 		gang.is_dominating = FALSE
 
 		var/takeover_in_progress = 0
-		for(var/datum/gang/G in ticker.mode.gangs)
+		for(var/datum/gang/G in SSticker.mode.gangs)
 			if(G.is_dominating)
 				takeover_in_progress = 1
 				break
@@ -122,17 +122,17 @@
 	cut_overlays()
 	operating = 0
 	stat |= BROKEN
-	STOP_PROCESSING(SSmachine, src)
+	STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
 		set_broken()
-	poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	gang = null
 	qdel(spark_system)
 	qdel(countdown)
 	countdown = null
-	STOP_PROCESSING(SSmachine, src)
+	STOP_PROCESSING(SSmachines, src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
@@ -146,7 +146,7 @@
 
 	var/datum/gang/tempgang
 
-	if(user.mind in ticker.mode.get_all_gangsters())
+	if(user.mind in SSticker.mode.get_all_gangsters())
 		tempgang = user.mind.gang_datum
 	else
 		examine(user)
@@ -161,7 +161,7 @@
 		return
 
 	var/time = round(determine_domination_time(tempgang)/60,0.1)
-	if(alert(user,"With [round((tempgang.territory.len/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
+	if(alert(user,"With [round((tempgang.territory.len/GLOB.start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
 		if((tempgang.is_dominating) || !tempgang.dom_attempts || !in_range(src, user) || !isturf(loc))
 			return 0
 
@@ -181,9 +181,9 @@
 		countdown.start()
 
 		set_light(3)
-		START_PROCESSING(SSmachine, src)
+		START_PROCESSING(SSmachines, src)
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
-		for(var/datum/gang/G in ticker.mode.gangs)
+		for(var/datum/gang/G in SSticker.mode.gangs)
 			if(G != gang)
 				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)

@@ -104,7 +104,7 @@
 			C.client.images -= chunk.obscured
 	C.remote_control = null
 	C.unset_machine()
-	src.Remove(C)
+	Remove(C)
 
 
 /datum/action/innate/slime_place
@@ -118,7 +118,7 @@
 	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
-	if(cameranet.checkTurfVis(remote_eye.loc))
+	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
 			S.loc = remote_eye.loc
 			S.visible_message("[S] warps in!")
@@ -137,7 +137,7 @@
 	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
-	if(cameranet.checkTurfVis(remote_eye.loc))
+	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
 			if(X.stored_slimes.len >= X.max_slimes)
 				break
@@ -162,7 +162,7 @@
 	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
-	if(cameranet.checkTurfVis(remote_eye.loc))
+	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
 			food.LAssailant = C
@@ -183,7 +183,7 @@
 	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
-	if(cameranet.checkTurfVis(remote_eye.loc))
+	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
 				M.visible_message("[M] vanishes as they are reclaimed for recycling!")

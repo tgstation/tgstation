@@ -126,7 +126,7 @@
 		if(status != BODYPART_ROBOTIC) //having a robotic head hides certain features.
 			//facial hair
 			if(facial_hair_style)
-				S = facial_hair_styles_list[facial_hair_style]
+				S = GLOB.facial_hair_styles_list[facial_hair_style]
 				if(S)
 					var/image/img_facial = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 					img_facial.color = "#" + facial_hair_color
@@ -143,7 +143,7 @@
 					standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 			else
 				if(hair_style)
-					S = hair_styles_list[hair_style]
+					S = GLOB.hair_styles_list[hair_style]
 					if(S)
 						var/image/img_hair = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 						img_hair.color = "#" + hair_color

@@ -22,8 +22,7 @@
 	var/spawn_type = null
 	var/fancy_open = FALSE
 
-/obj/item/weapon/storage/fancy/New()
-	..()
+/obj/item/weapon/storage/fancy/PopulateContents()
 	for(var/i = 1 to storage_slots)
 		new spawn_type(src)
 
@@ -111,7 +110,8 @@
 //CIG PACK//
 ////////////
 /obj/item/weapon/storage/fancy/cigarettes
-	name = "Space Cigarettes"
+	name = "cigarettes packet"
+	var/brand = "Space Cigarettes"
 	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
@@ -124,13 +124,14 @@
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette
 
-/obj/item/weapon/storage/fancy/cigarettes/New()
+/obj/item/weapon/storage/fancy/cigarettes/PopulateContents()
 	..()
 	create_reagents(15 * storage_slots)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
 	reagents.set_reacting(FALSE)
-	for(var/obj/item/clothing/mask/cigarette/cig in src)
-		cig.desc = "\An [name] brand [cig.name]."
-	name = "\improper [name] packet"
+	if(brand)
+		for(var/obj/item/clothing/mask/cigarette/cig in src)
+			cig.desc = "\An [brand] brand [cig.name]."
+		name = "\improper [brand] packet"
 
 /obj/item/weapon/storage/fancy/cigarettes/AltClick(mob/user)
 	if(user.get_active_held_item())
@@ -184,41 +185,41 @@
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
-	name = "DromedaryCo"
+	brand = "DromedaryCo"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "dromedary"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift
-	name = "Uplift Smooth"
+	brand = "Uplift Smooth"
 	desc = "Your favorite brand, now menthol flavored."
 	icon_state = "uplift"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robust
-	name = "Robust"
+	brand = "Robust"
 	desc = "Smoked by the robust."
 	icon_state = "robust"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold
-	name = "Robust Gold"
+	brand = "Robust Gold"
 	desc = "Smoked by the truly robust."
 	icon_state = "robustg"
 
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold/New()
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold/PopulateContents()
 	..()
 	for(var/i = 1 to storage_slots)
 		reagents.add_reagent("gold",1)
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_carp
-	name = "Carp Classic"
+	brand = "Carp Classic"
 	desc = "Since 2313."
 	icon_state = "carp"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
-	name = "unknown"
+	brand = "unknown"
 	desc = "An obscure brand of cigarettes."
 	icon_state = "syndie"
 
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/New()
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/PopulateContents()
 	..()
 	for(var/i = 1 to storage_slots)
 		reagents.add_reagent("omnizine",15)
@@ -226,17 +227,17 @@
 
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_midori
-	name = "Midori Tabako"
+	brand = "Midori Tabako"
 	desc = "You can't understand the runes, but the packet smells funny."
 	icon_state = "midori"
 	spawn_type = /obj/item/clothing/mask/cigarette/rollie
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims
-	name ="Shady Jim's Super Slims"
+	brand = "Shady Jim's Super Slims"
 	desc = "Is your weight slowing you down? Having trouble running away from gravitational singularities? Can't stop stuffing your mouth? Smoke Shady Jim's Super Slims and watch all that fat burn away. Guaranteed results!"
 	icon_state = "shadyjim"
 
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims/New()
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims/PopulateContents()
 	..()
 	for(var/i = 1 to storage_slots)
 		reagents.add_reagent("lipolicide",4)
@@ -266,6 +267,7 @@
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars
 	name = "\improper premium cigar case"
+	brand = null
 	desc = "A case of premium cigars. Very expensive."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarcase"

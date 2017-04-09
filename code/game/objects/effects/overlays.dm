@@ -34,7 +34,7 @@
 /obj/effect/overlay/temp/New()
 	..()
 	if(randomdir)
-		setDir(pick(cardinal))
+		setDir(pick(GLOB.cardinal))
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 
 	timerid = QDEL_IN(src, duration)
@@ -58,7 +58,7 @@
 	var/splatter_type = "splatter"
 
 /obj/effect/overlay/temp/dir_setting/bloodsplatter/New(loc, set_dir)
-	if(set_dir in diagonals)
+	if(set_dir in GLOB.diagonals)
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
 		icon_state = "[splatter_type][pick(3, 4, 5)]"
@@ -506,6 +506,11 @@
 /obj/effect/overlay/temp/dust_animation/New(loc, dust_icon)
 	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
 	..()
+
+/obj/effect/overlay/temp/mummy_animation
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "mummy_revive"
+	duration = 20
 
 /obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
 	name = "healing glow"

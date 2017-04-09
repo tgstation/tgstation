@@ -20,6 +20,7 @@
 	var/max_damage = 0
 	var/list/embedded_objects = list()
 	var/held_index = 0 //are we a hand? if so, which one!
+	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -320,9 +321,9 @@
 				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 	else
 		if(should_draw_gender)
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[initial(icon_state)]_[icon_gender]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"= icon, "icon_state"="[body_zone]_[icon_gender]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[initial(icon_state)]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"= icon, "icon_state"="[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		standing += I
 		return standing
 

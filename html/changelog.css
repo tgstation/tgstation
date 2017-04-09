@@ -20,6 +20,7 @@ a img {border:none;}
 .imagedel {background-image:url(image-minus.png)}
 .spellcheck {background-image:url(spell-check.png)}
 .experiment {background-image:url(burn-exclamation.png)}
+.balance {background-image:url(scales.png)}
 .sansserif {font-family:Tahoma,sans-serif;font-size:12px;}
 .commit {margin-bottom:20px;font-size:100%;font-weight:normal;}
 .changes {list-style:none;margin:5px 0;padding:0 0 0 25px;font-size:0.8em;}

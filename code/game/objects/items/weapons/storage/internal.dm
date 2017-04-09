@@ -70,6 +70,5 @@
 /obj/item/weapon/storage/internal/pocket/small/detective
 	priority = TRUE // so the detectives would discover pockets in their hats
 
-/obj/item/weapon/storage/internal/pocket/small/detective/New()
-	..()
+/obj/item/weapon/storage/internal/pocket/small/detective/PopulateContents()
 	new /obj/item/weapon/reagent_containers/food/drinks/flask/det(src)

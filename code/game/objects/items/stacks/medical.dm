@@ -118,6 +118,7 @@
 	icon_state = "gauze"
 	stop_bleeding = 1800
 	self_delay = 20
+	max_amount = 12
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"

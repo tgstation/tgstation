@@ -8,11 +8,11 @@ Contents:
 
 
 //ADMIN CREATE NINJA (From Player)
-/client/proc/cmd_admin_ninjafy(mob/living/carbon/human/H in player_list)
+/client/proc/cmd_admin_ninjafy(mob/living/carbon/human/H in GLOB.player_list)
 	set category = null
 	set name = "Make Space Ninja"
 
-	if (!ticker.mode)
+	if (!SSticker.mode)
 		alert("Wait until the game starts")
 		return
 
@@ -30,7 +30,7 @@ Contents:
 		H.wear_suit:randomize_param()
 		spawn(0)
 			H.wear_suit:ninitialize(10,H)
-	ticker.mode.update_ninja_icons_added(H)
+	SSticker.mode.update_ninja_icons_added(H)
 
 
 //ADMIN CREATE NINJA (From Ghost)
@@ -43,13 +43,13 @@ Contents:
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	if(!ticker.mode)
+	if(!SSticker.mode)
 		alert("The game hasn't started yet!")
 		return
 	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")
 		return
 
-	var/client/C = input("Pick character to spawn as the Space Ninja", "Key", "") as null|anything in clients
+	var/client/C = input("Pick character to spawn as the Space Ninja", "Key", "") as null|anything in GLOB.clients
 	if(!C)
 		return
 

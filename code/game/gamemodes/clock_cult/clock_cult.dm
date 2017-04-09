@@ -84,7 +84,6 @@ Credit where due:
 
 /datum/game_mode
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
-	var/clockwork_objective = CLOCKCULT_GATEWAY //The objective that the servants must fulfill
 	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 
 /datum/game_mode/clockwork_cult
@@ -126,7 +125,6 @@ Credit where due:
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
-	forge_clock_objectives()
 	for(var/S in servants_to_serve)
 		var/datum/mind/servant = S
 		log_game("[servant.key] was made an initial servant of Ratvar")
@@ -135,16 +133,6 @@ Credit where due:
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
 	..()
-	return 1
-
-/datum/game_mode/clockwork_cult/proc/forge_clock_objectives() //Determine what objective that Ratvar's servants will fulfill
-	var/list/possible_objectives = list(CLOCKCULT_ESCAPE, CLOCKCULT_GATEWAY)
-	clockwork_objective = pick(possible_objectives)
-	switch(clockwork_objective)
-		if(CLOCKCULT_ESCAPE)
-			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and proselytize the entire station."
-		if(CLOCKCULT_GATEWAY)
-			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
@@ -182,21 +170,18 @@ Credit where due:
 	if(!L || !istype(L) || !L.mind)
 		return 0
 	var/datum/mind/M = L.mind
-	to_chat(M.current, "<b>This is Ratvar's will:</b> [clockwork_explanation]")
-	M.memory += "<b>Ratvar's will:</b> [clockwork_explanation]<br>"
+	to_chat(M.current, "<b>This is Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]")
+	M.memory += "<b>Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]<br>"
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
-	switch(clockwork_objective)
-		if(CLOCKCULT_ESCAPE)
-			if(clockwork_gateway_activated)
-				ticker.news_report = CLOCK_PROSELYTIZATION
-				return TRUE
-		if(CLOCKCULT_GATEWAY)
-			if(ratvar_awakens)
-				ticker.news_report = CLOCK_SUMMON
-				return TRUE
-	ticker.news_report = CULT_FAILURE
+	if(GLOB.clockwork_gateway_activated)
+		SSticker.news_report = CLOCK_PROSELYTIZATION //failure, technically, but we have the station
+		if(GLOB.ratvar_awakens)
+			SSticker.news_report = CLOCK_SUMMON
+			return TRUE
+	else
+		SSticker.news_report = CULT_FAILURE
 	return FALSE
 
 /datum/game_mode/clockwork_cult/declare_completion()
@@ -205,26 +190,26 @@ Credit where due:
 
 /datum/game_mode/proc/auto_declare_completion_clockwork_cult()
 	var/text = ""
-	if(istype(ticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
-		var/datum/game_mode/clockwork_cult/C = ticker.mode
+	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
+		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		if(C.check_clockwork_victory())
 			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
-			feedback_set_details("round_end_result", "win - servants completed their objective ([clockwork_objective])")
+			feedback_set_details("round_end_result", "win - servants completed their objective (summon ratvar)")
 		else
 			var/half_victory = FALSE
-			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
 			if(G)
 				half_victory = TRUE
 			if(half_victory)
-				text += "<span class='large_brass'><b>The crew escaped before [clockwork_objective == CLOCKCULT_GATEWAY ? "Ratvar could rise":"the station could be proselytized"], but the gateway \
+				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway \
 				was successfully constructed!</b></span>"
-				feedback_set_details("round_end_result", "halfwin - servants constructed the gateway but their objective was not completed ([clockwork_objective])")
+				feedback_set_details("round_end_result", "halfwin - servants constructed the gateway but their objective was not completed (summon ratvar)")
 			else
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
-		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]"
-		text += "<br>Ratvar's servants had <b>[clockwork_caches]</b> Tinkerer's Caches."
-		text += "<br><b>Construction Value(CV)</b> was: <b>[clockwork_construction_value]</b>"
+				feedback_set_details("round_end_result", "loss - servants failed their objective (summon ratvar)")
+		text += "<br><b>The servants' objective was:</b> <br>[CLOCKCULT_OBJECTIVE]"
+		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
+		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
 		var/list/scripture_states = scripture_unlock_check()
 		for(var/i in scripture_states)
 			if(i != SCRIPTURE_DRIVER)
@@ -236,11 +221,11 @@ Credit where due:
 	to_chat(world, text)
 
 /datum/game_mode/proc/update_servant_icons_added(datum/mind/M)
-	var/datum/atom_hud/antag/A = huds[ANTAG_HUD_CLOCKWORK]
+	var/datum/atom_hud/antag/A = GLOB.huds[ANTAG_HUD_CLOCKWORK]
 	A.join_hud(M.current)
 	set_antag_hud(M.current, "clockwork")
 
 /datum/game_mode/proc/update_servant_icons_removed(datum/mind/M)
-	var/datum/atom_hud/antag/A = huds[ANTAG_HUD_CLOCKWORK]
+	var/datum/atom_hud/antag/A = GLOB.huds[ANTAG_HUD_CLOCKWORK]
 	A.leave_hud(M.current)
 	set_antag_hud(M.current, null)

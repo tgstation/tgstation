@@ -251,7 +251,7 @@
 
 					else if(ptype == DISP_END_BIN)
 						var/obj/machinery/disposal/bin/B = new /obj/machinery/disposal/bin(loc,src)
-						B.mode = 0 // start with pump off
+						B.pressure_charging = FALSE // start with pump off
 						transfer_fingerprints_to(B)
 
 					else if(ptype == DISP_END_OUTLET)

@@ -16,7 +16,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /*-----------------------------------------------------------------------------*/
 
-/area/engine
+/area/engine/supermatter
+	name = "Supermatter Engine"
+	icon_state = "engine_sm"
 
 /area/ai_monitored	//stub defined ai_monitored.dm
 
@@ -1000,7 +1002,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 */
 
 //SPACE STATION 13
-var/list/the_station_areas = list (
+GLOBAL_LIST_INIT(the_station_areas, list (
 	/area/atmos,
 	/area/maintenance,
 	/area/hallway,
@@ -1029,4 +1031,4 @@ var/list/the_station_areas = list (
 	/area/ai_monitored/turret_protected/ai_upload, //do not try to simplify to "/area/ai_monitored/turret_protected" --rastaf0
 	/area/ai_monitored/turret_protected/ai_upload_foyer,
 	/area/ai_monitored/turret_protected/ai,
-)
+))

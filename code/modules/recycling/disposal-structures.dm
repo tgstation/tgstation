@@ -329,7 +329,7 @@
 				stored.anchored = 1
 				stored.update_icon()
 		else
-			for(var/D in cardinal)
+			for(var/D in GLOB.cardinal)
 				if(D & dpdir)
 					var/obj/structure/disposalpipe/broken/P = new(src.loc)
 					P.setDir(D)
@@ -425,7 +425,7 @@
 	if(sortTypes.len>0)
 		to_chat(user, "It is tagged with the following tags:")
 		for(var/t in sortTypes)
-			to_chat(user, TAGGERLOCATIONS[t])
+			to_chat(user, GLOB.TAGGERLOCATIONS[t])
 	else
 		to_chat(user, "It has no sorting tags set.")
 
@@ -467,10 +467,10 @@
 		if(O.currTag > 0)// Tag set
 			if(O.currTag in sortTypes)
 				sortTypes -= O.currTag
-				to_chat(user, "<span class='notice'>Removed \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
+				to_chat(user, "<span class='notice'>Removed \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
 			else
 				sortTypes |= O.currTag
-				to_chat(user, "<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
+				to_chat(user, "<span class='notice'>Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 	else
 		return ..()
@@ -731,7 +731,7 @@
 	if(direction)
 		dirs = list( direction, turn(direction, -45), turn(direction, 45))
 	else
-		dirs = alldirs.Copy()
+		dirs = GLOB.alldirs.Copy()
 
 	src.streak(dirs)
 
@@ -740,6 +740,6 @@
 	if(direction)
 		dirs = list( direction, turn(direction, -45), turn(direction, 45))
 	else
-		dirs = alldirs.Copy()
+		dirs = GLOB.alldirs.Copy()
 
 	src.streak(dirs)

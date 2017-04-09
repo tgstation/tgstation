@@ -34,7 +34,6 @@
 		/obj/item/toy/redbutton									= 2,
 		/obj/item/toy/talking/owl								= 2,
 		/obj/item/toy/talking/griffin							= 2,
-		/obj/item/toy/talking/skeleton							= 2,
 		/obj/item/weapon/coin/antagtoken						= 2,
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/stack/tile/fakepit/loaded						= 2,
@@ -990,9 +989,9 @@
 		newcrew = specific
 	else
 		if(prob(50))
-			newcrew = pick(first_names_male)
+			newcrew = pick(GLOB.first_names_male)
 		else
-			newcrew = pick(first_names_female)
+			newcrew = pick(GLOB.first_names_female)
 	if(newcrew)
 		settlers += newcrew
 		alive++
@@ -1059,7 +1058,7 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Officer"
-	id_access_list = list(access_syndicate)
+	id_access_list = list(GLOB.access_syndicate)
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"
