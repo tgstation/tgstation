@@ -50,6 +50,7 @@
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
+		msg = strip_html_properly(msg) // Admins are allowed to use HTML in OOC, unlike users.
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
 	mob.log_message("[key]: [raw_msg]", INDIVIDUAL_OOC_LOG)
