@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where getting caught between two shield generators as they activated wouldn't cause you to gib and die."
