@@ -17,15 +17,16 @@
 	if(mapload)
 		for(var/obj/item/I in loc.contents)
 			if(istype(I, gun_category))
-				I.loc = src
+				I.forceMove(src)
 			if(contents.len >= capacity)
 				break
 	update_icon()
 
 /obj/structure/guncase/update_icon()
 	cut_overlays()
-	for(var/i = contents.len, i >= 1, i--)
-		add_overlay(image(icon = src.icon, icon_state = "[case_type]", pixel_x = 4 * (i -1) ))
+	if(case_type && LAZYLEN(contents))
+		for(var/i in 1 to contents.len)
+			add_overlay(image(icon = src.icon, icon_state = "[case_type]", pixel_x = 3 * (i - 1) ))
 	if(open)
 		add_overlay("[icon_state]_open")
 	else
@@ -34,14 +35,16 @@
 /obj/structure/guncase/attackby(obj/item/I, mob/user, params)
 	if(iscyborg(user) || isalien(user))
 		return
-	if(istype(I, gun_category))
-		if(contents.len < capacity && open)
+	if(istype(I, gun_category) && open)
+		if(LAZYLEN(contents) < capacity)
 			if(!user.drop_item())
 				return
-			contents += I
+			I.forceMove(src)
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()
-			return
+		else
+			to_chat(user, "<span class='warning'>[src] is full.</span>")
+		return
 
 	else if(user.a_intent != INTENT_HARM)
 		open = !open
@@ -62,9 +65,10 @@
 	var/dat = {"<div class='block'>
 				<h3>Stored Guns</h3>
 				<table align='center'>"}
-	for(var/i = contents.len, i >= 1, i--)
-		var/obj/item/I = contents[i]
-		dat += "<tr><A href='?src=\ref[src];retrieve=\ref[I]'>[I.name]</A><br>"
+	if(LAZYLEN(contents))
+		for(var/i in 1 to contents.len)
+			var/obj/item/I = contents[i]
+			dat += "<tr><A href='?src=\ref[src];retrieve=\ref[I]'>[I.name]</A><br>"
 	dat += "</table></div>"
 
 	var/datum/browser/popup = new(user, "gunlocker", "<div align='center'>[name]</div>", 350, 300)
@@ -76,7 +80,7 @@
 		var/obj/item/O = locate(href_list["retrieve"]) in contents
 		if(!O || !istype(O))
 			return
-		if(!usr.canUseTopic(src))
+		if(!usr.canUseTopic(src) || !open)
 			return
 		if(ishuman(usr))
 			if(!usr.put_in_hands(O))
