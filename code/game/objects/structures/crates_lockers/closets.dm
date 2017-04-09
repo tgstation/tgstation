@@ -33,6 +33,7 @@
 	var/material_drop = /obj/item/stack/sheet/metal
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
+	var/anchorable = TRUE
 
 
 /obj/structure/closet/Initialize(mapload)
@@ -240,7 +241,7 @@
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/weapon/wrench) && anchorable)
 		if(isinspace() && !anchored)
 			return
 		anchored = !anchored
