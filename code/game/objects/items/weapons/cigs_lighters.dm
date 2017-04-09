@@ -105,6 +105,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	var/lit = FALSE
+	var/starts_lit = FALSE
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/weapon/cigbutt
@@ -124,6 +125,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
+	if(starts_lit)
+		light()
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -298,11 +301,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie/trippy
 	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
-
-/obj/item/clothing/mask/cigarette/rollie/Initialize(mapload)
-	..()
-	light()
-
+	starts_lit = TRUE
 
 /obj/item/weapon/cigbutt/roach
 	name = "roach"
