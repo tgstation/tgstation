@@ -484,6 +484,7 @@
 	category = "Rituals"
 	refundable = 0
 	buy_word = "Cast"
+	cost = 2
 	var/active = 0
 
 /datum/spellbook_entry/summon/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
@@ -505,6 +506,7 @@
 	name = "Summon Ghosts"
 	desc = "Spook the crew out by making them see dead people. Be warned, ghosts are capricious and occasionally vindicative, and some will use their incredibly minor abilties to frustrate you."
 	log_name = "SGH"
+	cost = 0
 
 /datum/spellbook_entry/summon/ghosts/IsAvailible()
 	if(!SSticker.mode)
