@@ -1,0 +1,4 @@
+author: "octareenroon91"
+delete-after: True
+changes: 
+  - bugfix: "Hackable wires should work as intended again."
