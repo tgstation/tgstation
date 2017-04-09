@@ -18,8 +18,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
-/datum/controller/subsystem/mapping/New()
-	NEW_SS_GLOBAL(SSmapping)
+/datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
 		config = new(FORCE_MAP)

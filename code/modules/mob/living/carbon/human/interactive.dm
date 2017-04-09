@@ -518,7 +518,7 @@
 	return get_dist(get_turf(towhere), get_turf(src))
 
 /mob/living/carbon/human/interactive/proc/InteractiveProcess()
-	if(ticker.current_state == GAME_STATE_FINISHED)
+	if(SSticker.current_state == GAME_STATE_FINISHED)
 		saveVoice()
 	doProcess()
 

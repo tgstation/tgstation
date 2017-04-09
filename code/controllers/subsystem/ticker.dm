@@ -58,9 +58,6 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/round_start_events
 
-/datum/controller/subsystem/ticker/New()
-	NEW_SS_GLOBAL(ticker)
-
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)

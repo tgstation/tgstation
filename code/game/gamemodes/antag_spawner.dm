@@ -178,7 +178,7 @@
 	if(nuke)
 		code = nuke.r_code
 	M.mind.make_Nuke(null, code, 0, FALSE)
-	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
+	var/newname = M.dna.species.random_name(M.gender,0,SSticker.mode.nukeops_lastname)
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname

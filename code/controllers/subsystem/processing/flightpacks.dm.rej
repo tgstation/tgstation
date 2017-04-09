@@ -1,8 +1,0 @@
-diff a/code/controllers/subsystem/processing/flightpacks.dm b/code/controllers/subsystem/processing/flightpacks.dm	(rejected hunks)
-@@ -1,5 +1,5 @@
- 
--PROCESSING_SUBSYSTEM(flightpacks)
-+PROCESSING_SUBSYSTEM_DEF(flightpacks)
- 	name = "Flightpack Movement"
- 	priority = 30
- 	wait = 2

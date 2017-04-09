@@ -1,6 +1,4 @@
-
-var/datum/controller/subsystem/processing/flightpacks/SSflightpacks
-/datum/controller/subsystem/processing/flightpacks
+PROCESSING_SUBSYSTEM_DEF(flightpacks)
 	name = "Flightpack Movement"
 	priority = 30
 	wait = 2

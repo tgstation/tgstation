@@ -18,8 +18,8 @@
 
 /obj/item/device/gangtool/Initialize() //Initialize supply point income if it hasn't already been started
 	..()
-	if(!ticker.mode.gang_points)
-		ticker.mode.gang_points = new /datum/gang_points(ticker.mode)
+	if(!SSticker.mode.gang_points)
+		SSticker.mode.gang_points = new /datum/gang_points(SSticker.mode)
 
 /obj/item/device/gangtool/attack_self(mob/user)
 	if (!can_use(user))
