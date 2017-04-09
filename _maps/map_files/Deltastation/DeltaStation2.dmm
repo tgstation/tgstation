@@ -23913,7 +23913,6 @@
 /area/quartermaster/qm)
 "aTT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/mining/eva,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -35266,7 +35265,6 @@
 /turf/open/floor/plasteel,
 /area/security/hos)
 "bpH" = (
-/obj/machinery/suit_storage_unit/hos,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -94277,7 +94275,6 @@
 	})
 "dww" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/rd,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -97921,7 +97918,6 @@
 	},
 /area/medical/morgue)
 "dDh" = (
-/obj/machinery/suit_storage_unit/cmo,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},

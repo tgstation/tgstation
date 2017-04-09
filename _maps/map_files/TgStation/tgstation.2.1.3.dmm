@@ -875,7 +875,6 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
-/obj/machinery/suit_storage_unit/hos,
 /turf/open/floor/carpet,
 /area/security/hos)
 "ack" = (
@@ -14813,7 +14812,6 @@
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
 "aGs" = (
-/obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/hor)
 "aGt" = (
@@ -105221,7 +105219,7 @@ bun
 bvr
 bzo
 bon
-aFa
+bCY
 bCY
 bEh
 bCW
