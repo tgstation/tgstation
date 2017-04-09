@@ -20,6 +20,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	initial_languages = list(/datum/language/common, /datum/language/machine)
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon" , "turret")
@@ -139,6 +140,9 @@
 
 	//Gives a HUD view to player bots that use a HUD.
 	activate_data_hud()
+
+	grant_language(/datum/language/common)
+	grant_language(/datum/language/machine)
 
 
 /mob/living/simple_animal/bot/update_canmove()
@@ -323,30 +327,29 @@
 	if((!on) || (!message))
 		return
 	if(channel && Radio.channels[channel])// Use radio if we have channel key
-		Radio.talk_into(src, message, channel, get_spans())
+		Radio.talk_into(src, message, channel, get_spans(), get_default_language())
 	else
 		say(message)
-	return
 
 /mob/living/simple_animal/bot/get_spans()
 	return ..() | SPAN_ROBOT
 
-/mob/living/simple_animal/bot/radio(message, message_mode, list/spans)
+/mob/living/simple_animal/bot/radio(message, message_mode, list/spans, language)
 	. = ..()
 	if(. != 0)
 		return .
 
 	switch(message_mode)
 		if(MODE_HEADSET)
-			Radio.talk_into(src, message, , spans)
+			Radio.talk_into(src, message, , spans, language)
 			return REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
-			Radio.talk_into(src, message, message_mode, spans)
+			Radio.talk_into(src, message, message_mode, spans, language)
 			return REDUCE_RANGE
 
 	if(message_mode in radiochannels)
-		Radio.talk_into(src, message, message_mode, spans)
+		Radio.talk_into(src, message, message_mode, spans, language)
 		return REDUCE_RANGE
 	return 0
 

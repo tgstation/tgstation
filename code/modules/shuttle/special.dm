@@ -65,9 +65,10 @@
 	var/never_spoken = TRUE
 	flags = NODECONSTRUCT
 
-/obj/structure/table/abductor/wabbajack/New()
+/obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	grant_language(/datum/language/common)
 
 /obj/structure/table/abductor/wabbajack/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -145,14 +146,13 @@
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
-	languages_spoken = ALL
-	languages_understood = ALL
 	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
 	access_card.access |= access_cent_bar
+	grant_all_languages(omnitongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = 0
@@ -160,8 +160,6 @@
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
 	status_flags = GODMODE
-	languages_spoken = ALL
-	languages_understood = ALL
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
@@ -173,6 +171,8 @@
 	access_card.access = C.get_access()
 	access_card.access |= access_cent_bar
 	access_card.flags |= NODROP
+
+	grant_all_languages(omnitongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)

@@ -95,6 +95,9 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 
+	// goats bray, cows go moo, and the fox says Geckers
+	grant_language(/datum/language/common)
+
 /mob/living/simple_animal/Login()
 	if(src && src.client)
 		src.client.screen = list()
