@@ -34,9 +34,6 @@ SUBSYSTEM_DEF(gravity)
 	var/inited_areas = 0
 	var/init_state = 0
 
-/datum/controller/subsystem/gravity/New()
-	NEW_SS_GLOBAL(SSgravity)
-
 /datum/controller/subsystem/gravity/proc/init_lists(full = FALSE)
 	gravgens = list()
 	purging_atoms = list()
