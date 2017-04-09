@@ -70,10 +70,7 @@
 	var/infect_range = 5
 
 /datum/action/innate/mushroom/infect/Activate()
-	for(var/I in range(src, 5))
-		if(ishuman(I))
-			var/mob/living/carbon/human/H = I
-			if(!(istype(H.dna.species, /datum/species/mush)))
-				H.equip_to_slot_or_del(new/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/mushroomman(null), slot_head)
-
-
+	for(var/mob/living/carbon/human/H in view(src, 5))
+		if(!(istype(H.dna.species, /datum/species/mush)))
+			world << "lmao equip fired"
+			H.equip_to_slot_or_del(new/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/mushroomman(null), slot_head)
