@@ -1,9 +1,9 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector
-	icon_state = "inje_map"
-	use_power = 1
-
 	name = "air injector"
 	desc = "Has a valve and pump attached to it"
+	icon_state = "inje_map"
+	use_power = 1
+	can_unwrench = TRUE
 
 	var/on = 0
 	var/injecting = 0
@@ -25,6 +25,10 @@
 	on = 1
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
+	cut_overlays()
+	if(showpipe)
+		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
+
 	if(!NODE1 || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "inje_off"
 		return
@@ -42,7 +46,7 @@
 	..()
 	injecting = 0
 
-	if(!on || stat & NOPOWER)
+	if(!on || stat & (NOPOWER|BROKEN))
 		return 0
 
 	var/datum/gas_mixture/air_contents = AIR1
@@ -60,7 +64,7 @@
 	return 1
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
-	if(on || injecting)
+	if(on || injecting || stat & (NOPOWER|BROKEN))
 		return 0
 
 	var/datum/gas_mixture/air_contents = AIR1
@@ -139,3 +143,21 @@
 	spawn(2)
 		broadcast_status()
 	update_icon()
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		on = !on
+		to_chat(user, "<span class='notice'>You turn [src] [on ? "on" :"off"].</span>")
+		update_icon()
+		broadcast_status()
+		return 0
+	else
+		return ..()
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
+	if(..())
+		if (!(stat & NOPOWER|BROKEN) && on)
+			to_chat(user, "<span class='warning'> [src], turn it off first!</span>")
+		else
+			return 1
+
