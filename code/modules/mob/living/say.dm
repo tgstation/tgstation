@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
 
-	var/message_range = 6
+	var/message_range = 7
 
 	var/succumbed = FALSE
 
@@ -209,7 +209,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return message
 
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
-	var/list/listening = get_hearers_in_view(message_range+1, source)
+	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
+	var/eavesdrop_range = 0
+	if(eavesdropping_modes[message_mode])
+		eavesdrop_range = EAVESDROP_EXTRA_RANGE
+	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
@@ -217,12 +221,16 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			listening |= M
 			the_dead[M] = TRUE
 
-	var/eavesdropping = stars(message)
-	var/eavesrendered = compose_message(src, message_language, eavesdropping, , spans, message_mode)
+	var/eavesdropping
+	var/eavesrendered
+	if(eavesdrop_range)
+		eavesdropping = stars(message)
+		eavesrendered = compose_message(src, message_language, eavesdropping, , spans, message_mode)
+
 	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
 	for(var/_AM in listening)
 		var/atom/movable/AM = _AM
-		if(get_dist(source, AM) > message_range && !(the_dead[AM]))
+		if(eavesdrop_range && get_dist(source, AM) > message_range && !(the_dead[AM]))
 			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
 		else
 			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
