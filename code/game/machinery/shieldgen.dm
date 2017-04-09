@@ -27,8 +27,10 @@
 	move_update_air(T)
 
 /obj/structure/emergency_shield/CanPass(atom/movable/mover, turf/target, height)
-	if(!height) return 0
-	else return ..()
+	if(!height)
+		return FALSE
+	else
+		return ..()
 
 /obj/structure/emergency_shield/emp_act(severity)
 	switch(severity)
@@ -446,7 +448,7 @@
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
-		return 1
+		return FALSE
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(20)
@@ -454,4 +456,4 @@
 		if(istype(mover, /obj/item/projectile))
 			return prob(10)
 		else
-			return !src.density
+			return !density
