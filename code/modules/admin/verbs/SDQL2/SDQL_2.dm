@@ -433,7 +433,10 @@
 			return null
 		start++
 	else if((!long || expression[start + 1] == ".") && (expression[start] in object.vars))
-		v = object.vars[expression[start]]
+		if(object.can_vv_get(expression[start]))
+			v = object.vars[expression[start]]
+		else
+			v = "SECRET"
 	else if(long && expression[start + 1] == ":" && hascall(object, expression[start]))
 		v = expression[start]
 	else if(!long || expression[start + 1] == ".")
