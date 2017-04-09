@@ -1,18 +1,13 @@
-var/datum/controller/subsystem/squeak/SSsqueak
-
 // The Squeak
 // because this is about placement of mice mobs, and nothing to do with
 // mice - the computer peripheral
 
-/datum/controller/subsystem/squeak
+SUBSYSTEM_DEF(squeak)
 	name = "Squeak"
 	priority = 40
 	flags = SS_NO_FIRE
 
 	var/list/exposed_wires = list()
-
-/datum/controller/subsystem/squeak/New()
-	NEW_SS_GLOBAL(SSsqueak)
 
 /datum/controller/subsystem/squeak/Initialize(timeofday)
 	trigger_migration()

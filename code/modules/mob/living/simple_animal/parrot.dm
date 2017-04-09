@@ -898,7 +898,7 @@
 	..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
-	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		rounds_survived = max(++rounds_survived,1)
 		if(rounds_survived > longest_survival)
 			longest_survival = rounds_survived

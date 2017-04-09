@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/icon_smooth/SSicon_smooth
-
-/datum/controller/subsystem/icon_smooth
+SUBSYSTEM_DEF(icon_smooth)
 	name = "Icon Smoothing"
 	init_order = -5
 	wait = 1
@@ -8,9 +6,6 @@ var/datum/controller/subsystem/icon_smooth/SSicon_smooth
 	flags = SS_TICKER
 
 	var/list/smooth_queue = list()
-
-/datum/controller/subsystem/icon_smooth/New()
-	NEW_SS_GLOBAL(SSicon_smooth)
 
 /datum/controller/subsystem/icon_smooth/fire()
 	while(smooth_queue.len)

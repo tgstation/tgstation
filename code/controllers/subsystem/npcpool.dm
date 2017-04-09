@@ -4,7 +4,7 @@ var/datum/controller/subsystem/npcpool/SSnpc
 #define PROCESSING_DELEGATES 1
 #define PROCESSING_ASSISTANTS 2
 
-/datum/controller/subsystem/npcpool
+SUBSYSTEM_DEF(npcpool)
 	name = "NPC Pool"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
 	priority = 20
