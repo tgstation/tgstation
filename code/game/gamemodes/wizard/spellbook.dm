@@ -435,7 +435,6 @@
 	category = "Rituals"
 	refundable = 0
 	buy_word = "Cast"
-	cost = 2
 	var/active = 0
 
 /datum/spellbook_entry/summon/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
@@ -509,7 +508,6 @@
 /datum/spellbook_entry/summon/events
 	name = "Summon Events"
 	desc = "Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events."
-	cost = 2
 	var/times = 0
 
 /datum/spellbook_entry/summon/events/IsAvailible()
