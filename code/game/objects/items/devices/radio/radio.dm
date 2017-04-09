@@ -444,7 +444,7 @@
 						  filter_type, signal.data["compression"], list(position.z), freq, spans,
 						  verb_say, verb_ask, verb_exclaim, verb_yell, language)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(radio_freq)
 		return
 	if(broadcasting)
