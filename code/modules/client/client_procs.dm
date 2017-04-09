@@ -160,12 +160,10 @@ GLOBAL_LIST(external_rsc_urls)
 	GLOB.directory[ckey] = src
 
 	//Admin Authorisation
-/*	var/localhost_addresses = list("127.0.0.1", "::1")
+	var/localhost_addresses = list("127.0.0.1", "::1")
 	if(address && (address in localhost_addresses))
-		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
-		if(localhost_rank)
-			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
-			localhost_holder.associate(src)*/
+		var/datum/admins/localhost_holder = new("!localhost!", 65535, ckey)
+		localhost_holder.associate(src)
 /*	if(config.autoadmin)
 		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank
