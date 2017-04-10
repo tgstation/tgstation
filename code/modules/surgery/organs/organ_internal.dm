@@ -937,8 +937,8 @@
 		if(HAS_SECONDARY_FLAG(C.ears, HEALS_EARS))
 			deaf = max(deaf - 1, 1) // earmuffs do not cure genetic deafness.
 			ear_damage = max(ear_damage - 0.10, 0)
-		// if higher than 100, no natural healing occurs.
-		if(ear_damage < 100)
+		// if higher than UNHEALING_EAR_DAMAGE, no natural healing occurs.
+		if(ear_damage < UNHEALING_EAR_DAMAGE)
 			ear_damage = max(ear_damage - 0.05, 0)
 			deaf = max(deaf - 1, 0)
 
