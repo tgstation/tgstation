@@ -65,8 +65,7 @@
 		if(!S.dna_cost)
 			if(!mind.changeling.has_sting(S))
 				mind.changeling.purchasedpowers+=S
-			if(!is_respec)
-				S.on_purchase(src)
+			S.on_purchase(src, is_respec)
 	if(is_respec)
 		feedback_add_details("changeling_power_purchase","Readapt")
 

@@ -6,7 +6,7 @@
 	dna_cost = 0
 	chemical_cost = -1
 
-/obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(var/mob/user)
+/obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
 	..()
 	var/datum/changeling/changeling=user.mind.changeling
 	changeling.changeling_speak = 1
@@ -17,7 +17,6 @@
 	var/obj/effect/proc_holder/changeling/hivemind_download/S2 = new
 	if(!changeling.has_sting(S2))
 		changeling.purchasedpowers+=S2
-	return
 
 // HIVE MIND UPLOAD/DOWNLOAD DNA
 GLOBAL_LIST_EMPTY(hivemind_bank)

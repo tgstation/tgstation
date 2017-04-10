@@ -19,8 +19,9 @@
 	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
 
 
-/obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
-	feedback_add_details("changeling_power_purchase","[name]")
+/obj/effect/proc_holder/changeling/proc/on_purchase(mob/user, is_respec)
+	if(!is_respec)
+		feedback_add_details("changeling_power_purchase","[name]")
 
 /obj/effect/proc_holder/changeling/proc/on_refund(mob/user)
 	return
