@@ -255,10 +255,11 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			$incltag = true;
 			$foundcltag = true;
 			$pos = strpos($line, " ");
-			if ($pos)
+			if ($pos) {
 				$tmp = substr($line, $pos+1);
 				if (trim($tmp) != 'optional name here')
 					$username = $tmp;
+			}
 			continue;
 		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/🆑' || substr($line,0,6) == '/ 🆑' ) {
 			$incltag = false;
