@@ -6,9 +6,16 @@
 
 /datum/chemical_reaction/slime/proc/delete_extract(datum/reagents/holder)
 	var/obj/item/slime_extract/M = holder.my_atom
+	var/obj/item/weapon/storage/container
+	if(istype(M.loc, /obj/item/weapon/storage))
+		container = M.loc
 	if(M.Uses <= 0)
-		if (!results.len) //if the slime doesn't output chemicals
+		if(!results.len) //if the slime doesn't output chemicals
 			qdel(M)
+	if(container)
+		for(var/mob/MB in container.can_see_contents())
+			container.orient2hud(MB)
+			container.show_to(MB)
 
 //Grey
 /datum/chemical_reaction/slime/slimespawn
