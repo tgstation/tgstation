@@ -1,4 +1,4 @@
-
+#define WELDER_FUEL_BURN_INTERVAL 13
 
 /* Tools!
  * Note: Multitools are /obj/item/device
@@ -338,6 +338,7 @@
 	var/change_icons = 1
 	var/can_off_process = 0
 	var/light_intensity = 2 //how powerful the emitted light is when used.
+	var/burned_fuel_for = 0	//when fuel was last removed
 	heat = 3800
 	toolspeed = 1
 
@@ -383,7 +384,8 @@
 		if(1)
 			force = 15
 			damtype = "fire"
-			if(prob(5))
+			++burned_fuel_for
+			if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
 				remove_fuel(1)
 			update_icon()
 
@@ -457,6 +459,8 @@
 /obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/living/M = null)
 	if(!welding || !check_fuel())
 		return 0
+	if(amount)
+		burned_fuel_for = 0
 	if(get_fuel() >= amount)
 		reagents.remove_reagent("welding_fuel", amount)
 		check_fuel()
@@ -729,3 +733,5 @@
 	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(cutjaws)
+
+#undef WELDER_FUEL_BURN_INTERVAL
