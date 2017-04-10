@@ -8,7 +8,7 @@
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/list/drip_containers = list(/obj/item/weapon/reagent_containers/blood,
-											/obj/item/weapon/reagent_containers/food/drinks,
+											/obj/item/weapon/reagent_containers/food,
 											/obj/item/weapon/reagent_containers/glass)
 
 /obj/machinery/iv_drip/Initialize()
