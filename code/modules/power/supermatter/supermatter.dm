@@ -493,7 +493,7 @@
 		matter_power += 200
 	else if(istype(AM, /obj/singularity))
 		var/obj/singularity/S = AM
-		S.Consume(src)
+		S.consume(src)
 		return
 	else if(isobj(AM) && !istype(AM, /obj/effect))
 		investigate_log("has consumed [AM].", "supermatter")
