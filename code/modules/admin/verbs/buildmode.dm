@@ -185,7 +185,7 @@
 				if("number")
 					valueholder = input(user,"Enter variable value:" ,"Value", 123) as num
 				if("mob-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value") as mob in mob_list
+					valueholder = input(user,"Enter variable value:" ,"Value") as mob in GLOB.mob_list
 				if("obj-reference")
 					valueholder = input(user,"Enter variable value:" ,"Value") as obj in world
 				if("turf-reference")
@@ -218,7 +218,7 @@
 	cornerA = null
 	cornerB = null
 
-/proc/togglebuildmode(mob/M in player_list)
+/proc/togglebuildmode(mob/M in GLOB.player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
 	if(M.client)

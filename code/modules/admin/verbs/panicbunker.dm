@@ -9,7 +9,7 @@
 
 	log_admin("[key_name(usr)] has toggled the Panic Bunker, it is now [(config.panic_bunker?"on":"off")]")
 	message_admins("[key_name_admin(usr)] has toggled the Panic Bunker, it is now [(config.panic_bunker?"enabled":"disabled")].")
-	if (config.panic_bunker && (!dbcon || !dbcon.IsConnected()))
+	if (config.panic_bunker && (!GLOB.dbcon || !GLOB.dbcon.IsConnected()))
 		message_admins("The Database is not connected! Panic bunker will not work until the connection is reestablished.")
 	feedback_add_details("admin_verb","PANIC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

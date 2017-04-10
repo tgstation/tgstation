@@ -2,7 +2,7 @@
 	set category = "IC"
 	set name = "Pray"
 
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
@@ -25,8 +25,8 @@
 		cross = image('icons/obj/storage.dmi',"kingyellow")
 		font_color = "blue"
 		prayer_type = "CHAPLAIN PRAYER"
-		if(SSreligion.Bible_deity_name)
-			deity = SSreligion.Bible_deity_name
+		if(SSreligion.deity)
+			deity = SSreligion.deity
 	else if(iscultist(usr))
 		cross = image('icons/obj/storage.dmi',"tome")
 		font_color = "red"
@@ -35,7 +35,7 @@
 
 	msg = "<span class='adminnotice'>\icon[cross]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)] [ADMIN_SMITE(src)]:</b> [msg]</span>"
 
-	for(var/client/C in admins)
+	for(var/client/C in GLOB.admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
 			to_chat(C, msg)
 			if(C.prefs.toggles & SOUND_PRAYERS)
@@ -49,20 +49,20 @@
 /proc/Centcomm_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=orange>CENTCOM:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_SMITE(Sender)] [ADMIN_CENTCOM_REPLY(Sender)]:</b> [msg]</span>"
-	to_chat(admins, msg)
-	for(var/obj/machinery/computer/communications/C in machines)
+	to_chat(GLOB.admins, msg)
+	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()
 
 /proc/Syndicate_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=crimson>SYNDICATE:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_SMITE(Sender)] [ADMIN_SYNDICATE_REPLY(Sender)]:</b> [msg]</span>"
-	to_chat(admins, msg)
-	for(var/obj/machinery/computer/communications/C in machines)
+	to_chat(GLOB.admins, msg)
+	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()
 
 /proc/Nuke_request(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=orange>NUKE CODE REQUEST:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_SMITE(Sender)] [ADMIN_CENTCOM_REPLY(Sender)] [ADMIN_SET_SD_CODE]:</b> [msg]</span>"
-	to_chat(admins, msg)
-	for(var/obj/machinery/computer/communications/C in machines)
+	to_chat(GLOB.admins, msg)
+	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()

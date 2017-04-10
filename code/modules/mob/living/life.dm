@@ -9,7 +9,7 @@
 		return
 	if(!loc)
 		if(client)
-			for(var/obj/effect/landmark/error/E in landmarks_list)
+			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
 				loc = E.loc
 				break
 			message_admins("[key_name_admin(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished.")
@@ -67,7 +67,7 @@
 	if(!digitaldisguise)
 		src.digitaldisguise = image(loc = src)
 	src.digitaldisguise.override = 1
-	for(var/mob/living/silicon/ai/AI in player_list)
+	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		AI.client.images |= src.digitaldisguise
 
 

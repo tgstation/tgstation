@@ -1,6 +1,6 @@
 /mob/dead/observer/Logout()
 	if (client)
-		client.images -= ghost_darkness_images
+		client.images -= GLOB.ghost_darkness_images
 	if(observetarget)
 		if(ismob(observetarget))
 			var/mob/target = observetarget

@@ -195,7 +195,7 @@
 		var/list/A_gases = A.gases
 		var/trace_gases
 		for(var/id in A_gases)
-			if(id in hardcoded_gases)
+			if(id in GLOB.hardcoded_gases)
 				continue
 			trace_gases = TRUE
 			break

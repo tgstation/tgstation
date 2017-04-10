@@ -8,10 +8,10 @@
 /*
  * Glass sheets
  */
-var/global/list/datum/stack_recipe/glass_recipes = list ( \
+GLOBAL_LIST_INIT(glass_recipes, list ( \
 	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
-)
+))
 
 /obj/item/stack/sheet/glass
 	name = "glass"
@@ -66,10 +66,10 @@ var/global/list/datum/stack_recipe/glass_recipes = list ( \
 /*
  * Reinforced glass sheets
  */
-var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
+GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
-)
+))
 
 
 /obj/item/stack/sheet/rglass

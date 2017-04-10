@@ -122,12 +122,6 @@
 		to_chat(user, "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>")
 
 
-var/list/blacklisted_pylon_turfs = typecacheof(list(
-	/turf/closed,
-	/turf/open/floor/engine/cult,
-	/turf/open/space,
-	/turf/open/floor/plating/lava,
-	/turf/open/chasm))
 
 /obj/structure/destructible/cult/pylon
 	name = "pylon"
@@ -177,6 +171,12 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 			if(istype(T, /turf/open/floor/engine/cult))
 				cultturfs |= T
 				continue
+			var/static/list/blacklisted_pylon_turfs = typecacheof(list(
+				/turf/closed,
+				/turf/open/floor/engine/cult,
+				/turf/open/space,
+				/turf/open/floor/plating/lava,
+				/turf/open/chasm))
 			if(is_type_in_typecache(T, blacklisted_pylon_turfs))
 				continue
 			else

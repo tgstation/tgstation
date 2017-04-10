@@ -76,7 +76,7 @@
 
 /proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
 	var/area/our_area = get_area(the_area)
-	for(var/C in living_mob_list)
+	for(var/C in GLOB.living_mob_list)
 		if(!istype(C, check_type))
 			continue
 		if(C == must_be_alone)
@@ -301,12 +301,12 @@
 
 /proc/try_move_adjacent(atom/movable/AM)
 	var/turf/T = get_turf(AM)
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinal)
 		if(AM.Move(get_step(T, direction)))
 			break
 
 /proc/get_mob_by_key(key)
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
@@ -317,7 +317,7 @@
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/dead/observer/G in GLOB.player_list)
 			if(G.client != null)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 					if(!G.client.is_afk(afk_bracket) && (be_special_type in G.client.prefs.be_special))
@@ -358,8 +358,8 @@
 /proc/get_active_player_count(var/alive_check = 0, var/afk_check = 0, var/human_check = 0)
 	// Get active players who are playing in the round
 	var/active_players = 0
-	for(var/i = 1; i <= player_list.len; i++)
-		var/mob/M = player_list[i]
+	for(var/i = 1; i <= GLOB.player_list.len; i++)
+		var/mob/M = GLOB.player_list[i]
 		if(M && M.client)
 			if(alive_check && M.stat)
 				continue
@@ -431,10 +431,10 @@
 		if(2)
 			to_chat(G, "<span class='danger'>Choice registered: No.</span>")
 		if(3)
-			var/list/L = poll_ignore[ignore_category]
+			var/list/L = GLOB.poll_ignore[ignore_category]
 			if(!L)
-				poll_ignore[ignore_category] = list()
-			poll_ignore[ignore_category] += G.ckey
+				GLOB.poll_ignore[ignore_category] = list()
+			GLOB.poll_ignore[ignore_category] += G.ckey
 			to_chat(G, "<span class='danger'>Choice registered: Never for this round.</span>")
 
 /proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null, flashwindow = TRUE)
@@ -443,8 +443,8 @@
 	if (!Question)
 		Question = "Would you like to be a special role?"
 
-	for(var/mob/dead/observer/G in player_list)
-		if(!G.key || !G.client || (ignore_category && poll_ignore[ignore_category] && G.ckey in poll_ignore[ignore_category]))
+	for(var/mob/dead/observer/G in GLOB.player_list)
+		if(!G.key || !G.client || (ignore_category && GLOB.poll_ignore[ignore_category] && G.ckey in GLOB.poll_ignore[ignore_category]))
 			continue
 		if(be_special_flag)
 			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
@@ -490,7 +490,7 @@
 		return
 
 	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
+	var/mob/living/carbon/human/new_character = new(pick(GLOB.latejoin))//The mob being spawned.
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()
@@ -499,7 +499,7 @@
 	return new_character
 
 /proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of to_chat(world, where needed)
-	for(var/M in player_list)
+	for(var/M in GLOB.player_list)
 		if(M && !isnewplayer(M))
 			to_chat(M, thing)
 
@@ -520,12 +520,12 @@
 		[character.real_name]</span> ([rank]) has arrived at the station at \
 		<span class='name'>[A.name]</span>.</span>"
 	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
-	if((!announcement_systems.len) || (!character.mind))
+	if((!GLOB.announcement_systems.len) || (!character.mind))
 		return
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
 		return
 
-	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 /proc/GetRedPart(const/hexa)

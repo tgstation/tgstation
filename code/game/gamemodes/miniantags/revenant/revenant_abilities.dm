@@ -109,7 +109,7 @@
 		log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
 		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
 		to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
-		for(var/ded in dead_mob_list)
+		for(var/ded in GLOB.dead_mob_list)
 			if(!isobserver(ded))
 				continue
 			var/follow_rev = FOLLOW_LINK(ded, user)

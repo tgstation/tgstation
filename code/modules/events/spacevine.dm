@@ -434,14 +434,14 @@
 	var/list/growth_queue = list()
 	var/spread_multiplier = 5
 	var/spread_cap = 30
-	var/list/mutations_list = list()
+	var/list/GLOB.mutations_list = list()
 	var/mutativeness = 1
 
 /obj/effect/spacevine_controller/New(loc, list/muts, potency, production)
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	spawn_spacevine_piece(loc, , muts)
 	START_PROCESSING(SSobj, src)
-	init_subtypes(/datum/spacevine_mutation/, mutations_list)
+	init_subtypes(/datum/spacevine_mutation/, GLOB.mutations_list)
 	if(potency != null)
 		mutativeness = potency / 10
 	if(production != null)
@@ -476,7 +476,7 @@
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
 		SV.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
-			var/datum/spacevine_mutation/randmut = pick(mutations_list - SV.mutations)
+			var/datum/spacevine_mutation/randmut = pick(GLOB.mutations_list - SV.mutations)
 			randmut.add_mutation_to_vinepiece(SV)
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
@@ -547,7 +547,7 @@
 		buckle_mob(V, 1)
 
 /obj/structure/spacevine/proc/spread()
-	var/direction = pick(cardinal)
+	var/direction = pick(GLOB.cardinal)
 	var/turf/stepturf = get_step(src,direction)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_spread(src, stepturf)

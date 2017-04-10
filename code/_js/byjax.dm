@@ -1,5 +1,5 @@
 //this function places received data into element with specified id.
-var/const/js_byjax = {"
+#define js_byjax {"
 
 function replaceContent() {
 	var args = Array.prototype.slice.call(arguments);

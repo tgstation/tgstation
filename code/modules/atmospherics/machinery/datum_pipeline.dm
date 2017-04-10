@@ -29,8 +29,6 @@
 		reconcile_air()
 	update = air.react()
 
-var/pipenetwarnings = 10
-
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
 	var/volume = 0
 	if(istype(base, /obj/machinery/atmospherics/pipe))
@@ -57,6 +55,7 @@ var/pipenetwarnings = 10
 						if(!members.Find(item))
 
 							if(item.parent)
+								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
 									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1

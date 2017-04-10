@@ -1,10 +1,10 @@
 /mob/Logout()
 	SStgui.on_logout(src)
 	unset_machine()
-	player_list -= src
-	if(admin_datums[src.ckey])
+	GLOB.player_list -= src
+	if(GLOB.admin_datums[src.ckey])
 		if (SSticker && SSticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
-			var/admins_number = admins.len
+			var/admins_number = GLOB.admins.len
 			if(admins_number == 0) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
 				var/cheesy_message = pick( list(  \
 					"I have no admins online!",\

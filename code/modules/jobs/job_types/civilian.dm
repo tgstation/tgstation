@@ -14,8 +14,8 @@ Clown
 
 	outfit = /datum/outfit/job/clown
 
-	access = list(access_theatre)
-	minimal_access = list(access_theatre)
+	access = list(GLOB.access_theatre)
+	minimal_access = list(GLOB.access_theatre)
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.rename_self("clown", M.client)
@@ -52,7 +52,7 @@ Clown
 	if(visualsOnly)
 		return
 
-	H.fully_replace_character_name(H.real_name, pick(clown_names))
+	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names))
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -77,8 +77,8 @@ Mime
 
 	outfit = /datum/outfit/job/mime
 
-	access = list(access_theatre)
-	minimal_access = list(access_theatre)
+	access = list(GLOB.access_theatre)
+	minimal_access = list(GLOB.access_theatre)
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.rename_self("mime", M.client)
@@ -127,8 +127,8 @@ Librarian
 
 	outfit = /datum/outfit/job/librarian
 
-	access = list(access_library)
-	minimal_access = list(access_library)
+	access = list(GLOB.access_library)
+	minimal_access = list(GLOB.access_library)
 
 /datum/outfit/job/librarian
 	name = "Librarian"
@@ -160,8 +160,8 @@ Lawyer
 
 	outfit = /datum/outfit/job/lawyer
 
-	access = list(access_lawyer, access_court, access_sec_doors)
-	minimal_access = list(access_lawyer, access_court, access_sec_doors)
+	access = list(GLOB.access_lawyer, GLOB.access_court, GLOB.access_sec_doors)
+	minimal_access = list(GLOB.access_lawyer, GLOB.access_court, GLOB.access_sec_doors)
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"

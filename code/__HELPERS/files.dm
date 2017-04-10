@@ -51,11 +51,11 @@
 
 	PLEASE USE RESPONSIBLY, Some log files can reach sizes of 4MB!	*/
 /client/proc/file_spam_check()
-	var/time_to_wait = fileaccess_timer - world.time
+	var/time_to_wait = GLOB.fileaccess_timer - world.time
 	if(time_to_wait > 0)
 		to_chat(src, "<font color='red'>Error: file_spam_check(): Spam. Please wait [round(time_to_wait/10)] seconds.</font>")
 		return 1
-	fileaccess_timer = world.time + FTPDELAY
+	GLOB.fileaccess_timer = world.time + FTPDELAY
 	return 0
 #undef FTPDELAY
 

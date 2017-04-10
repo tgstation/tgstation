@@ -98,8 +98,8 @@
 			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
 
 	equip_antag(M)
-	var/wizard_name_first = pick(wizard_first)
-	var/wizard_name_second = pick(wizard_second)
+	var/wizard_name_first = pick(GLOB.wizard_first)
+	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	if(usr)
 		var/datum/objective/protect/new_objective = new /datum/objective/protect
@@ -174,7 +174,7 @@
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/code = "BOMB-NOT-FOUND"
-	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
 	if(nuke)
 		code = nuke.r_code
 	M.mind.make_Nuke(null, code, 0, FALSE)
@@ -206,10 +206,10 @@
 		else
 			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
 
-	var/brainfirstname = pick(first_names_male)
+	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
-		brainfirstname = pick(first_names_female)
-	var/brainopslastname = pick(last_names)
+		brainfirstname = pick(GLOB.first_names_female)
+	var/brainopslastname = pick(GLOB.last_names)
 	if(SSticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
 		brainopslastname = SSticker.mode.nukeops_lastname
 	var/brainopsname = "[brainfirstname] [brainopslastname]"

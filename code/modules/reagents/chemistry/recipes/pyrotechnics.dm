@@ -61,8 +61,8 @@
 		strengthdiv = 8
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
 			var/deity
-			if(SSreligion.Bible_deity_name)
-				deity = SSreligion.Bible_deity_name
+			if(SSreligion.deity)
+				deity = SSreligion.deity
 			else
 				deity = "Christ"
 			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")

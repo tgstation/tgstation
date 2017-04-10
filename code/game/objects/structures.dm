@@ -18,11 +18,11 @@
 		queue_smooth_neighbors(src)
 		icon_state = ""
 	if(SSticker)
-		cameranet.updateVisibility(src)
+		GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy()
 	if(SSticker)
-		cameranet.updateVisibility(src)
+		GLOB.cameranet.updateVisibility(src)
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()
@@ -96,7 +96,7 @@
 		if(resistance_flags & ON_FIRE)
 			to_chat(user, "<span class='warning'>It's on fire!</span>")
 		if(broken)
-			to_chat(user, "<span class='notice'>It looks broken.</span>")
+			to_chat(user, "<span class='notice'>It appears to be broken.</span>")
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			to_chat(user, examine_status)
