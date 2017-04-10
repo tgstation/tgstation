@@ -4,7 +4,9 @@ Modified table 'player' adding the column 'exp'
 
 ALTER TABLE player ADD exp mediumtext NOT NULL DEFAULT '';
 
-UPDATE player SET exp='Exempt=1'
+UPDATE player SET exp="{\"exempt\":true}"
+
+This will grandfather everyone in the db in the exp system
 
 ----------------------------------------------------
 
