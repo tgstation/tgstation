@@ -23,11 +23,11 @@
 			user.Weaken(3)
 			user.emote("gasp")
 
-	INVOKE_ASYNC(src, .proc/muscle_loop)
+	INVOKE_ASYNC(src, .proc/muscle_loop, user)
 
 	return TRUE
 
-/obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop()
+/obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	while(active)
 		user.status_flags |= GOTTAGOFAST
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
