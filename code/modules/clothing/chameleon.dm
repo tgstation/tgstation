@@ -455,7 +455,7 @@
 		if(v in blacklisted_vars)
 			continue
 		vars[v] = initial(vars[v])
-	if(chambered.BB)
+	if(chambered && chambered.BB)
 		qdel(chambered.BB)
 	chambered.newshot()
 
