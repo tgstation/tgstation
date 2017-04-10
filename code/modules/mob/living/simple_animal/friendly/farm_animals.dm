@@ -235,6 +235,7 @@
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = 2
 	var/static/chicken_count = 0
+	var/amount_grown = 0
 
 /mob/living/simple_animal/chicken/Initialize()
 	..()
@@ -279,7 +280,6 @@
 			if(chicken_count < MAX_CHICKENS && prob(25))
 				START_PROCESSING(SSobj, E)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
 	if(isturf(loc))
 		amount_grown += rand(1,2)
