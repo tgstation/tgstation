@@ -78,8 +78,9 @@
 	var/list/stamp_types
 	var/list/stamp_names
 
-/obj/item/weapon/stamp/chameleon/New()
-	stamp_types = typesof(/obj/item/weapon/stamp) - src.type // Get all stamp types except our own
+/obj/item/weapon/stamp/chameleon/Initialize()
+	. = ..()
+	stamp_types = typesof(/obj/item/weapon/stamp) - type // Get all stamp types except our own
 
 	stamp_names = list()
 	// Generate them into a list
