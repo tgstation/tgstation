@@ -44,9 +44,9 @@
 			saved_appearance = temp.appearance
 
 /obj/item/device/chameleon/proc/check_sprite(atom/target)
-	if(target.icon_state == "" || isnull(target.icon_state))
-		return FALSE
-	return TRUE
+	if(target.icon_state in icon_states(target.icon))
+		return TRUE
+	return FALSE
 
 /obj/item/device/chameleon/proc/toggle()
 	if(!can_use || !saved_appearance) return
