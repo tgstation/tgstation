@@ -36,7 +36,7 @@
 		return 0
 	if(config.use_exp_restrictions_admin_bypass && check_rights(R_ADMIN, 0, C.mob))
 		return 0
-	var/list/play_records = params2list(C.prefs.exp)
+	var/list/play_records = json_decode(C.prefs.exp)
 	var/isexempt = text2num(play_records[EXP_TYPE_EXEMPT])
 	if(isexempt)
 		return 0
@@ -75,10 +75,10 @@
 /client/proc/get_exp_report()
 	if(!config.use_exp_tracking)
 		return "Tracking is disabled in the server configuration file."
-	var/list/play_records = params2list(prefs.exp)
+	var/list/play_records = json_decode(prefs.exp)
 	if(!play_records.len)
 		update_exp_client(0, 0)
-		play_records = params2list(prefs.exp)
+		play_records = json_decode(prefs.exp)
 		if(!play_records.len)
 			return "[key] has no records."
 	var/return_text = "<UL>"
@@ -123,7 +123,7 @@
 
 
 /client/proc/get_exp_living()
-	var/list/play_records = params2list(prefs.exp)
+	var/list/play_records = json_decode(prefs.exp)
 	var/exp_living = text2num(play_records[EXP_TYPE_LIVING])
 	return get_exp_format(exp_living)
 
@@ -158,7 +158,7 @@
 	var/list/read_records = list()
 	var/hasread = 0
 	while(exp_read.NextRow())
-		read_records = params2list(exp_read.item[1])
+		read_records = json_decode(exp_read.item[1])
 		hasread = 1
 	if(!hasread)
 		return
@@ -188,7 +188,7 @@
 			to_chat(mob,"<span class='notice'>You got: [minutes] Ghost EXP!")
 	else if(minutes != 0)	//Let "refresh" checks go through
 		return
-	var/new_exp = list2params(play_records)
+	var/new_exp = json_encode(play_records)
 	prefs.exp = new_exp
 	new_exp = sanitizeSQL(new_exp)
 	var/DBQuery/update_query = GLOB.dbcon.NewQuery("UPDATE [format_table_name("player")] SET exp = '[new_exp]' WHERE ckey='[ckey]'")
