@@ -212,6 +212,11 @@
 	if(..())
 		return
 	. = TRUE
+	
+	if(!allowed(usr))
+		say("Access denied.")
+		return FALSE
+
 	switch(action)
 		if("time")
 			var/value = text2num(params["adjust"])
