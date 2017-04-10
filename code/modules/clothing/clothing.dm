@@ -119,6 +119,8 @@
 
 /obj/item/clothing/dropped(mob/user)
 	..()
+	if(!istype(user))
+		return
 	if(user_vars_remembered && user_vars_remembered.len)
 		for(var/variable in user_vars_remembered)
 			if(variable in user.vars)
