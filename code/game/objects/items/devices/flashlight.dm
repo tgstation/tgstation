@@ -366,7 +366,8 @@
 		activate()
 
 /obj/item/device/flashlight/glowstick/proc/activate()
-	if(on)
+	if(!on)
+		on = TRUE
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/glowstick/red
