@@ -525,6 +525,7 @@
 /obj/item/weapon/twohanded/required/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
+	flags = NODROP
 	armour_penetration = 100
 	force_on = 30
 
