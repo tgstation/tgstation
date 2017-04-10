@@ -242,7 +242,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 			return
 
 	pickup(user)
-	add_fingerprint(user)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 
@@ -264,7 +263,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 			return
 
 	pickup(user)
-	add_fingerprint(user)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 
@@ -454,7 +452,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 	playsound(loc, src.hitsound, 30, 1, -1)
 

@@ -18,7 +18,6 @@
 /obj/item/bodybag/proc/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)
 	R.open(user)
-	R.add_fingerprint(user)
 	qdel(src)
 
 
@@ -52,7 +51,6 @@
 		if(isliving(A))
 			to_chat(A, "<span class='notice'>You suddenly feel air around you! You're free!</span>")
 	R.open(user)
-	R.add_fingerprint(user)
 	qdel(src)
 
 /obj/item/bodybag/bluespace/container_resist(mob/living/user)

@@ -200,7 +200,6 @@
 /obj/machinery/shower/attack_hand(mob/M)
 	on = !on
 	update_icon()
-	add_fingerprint(M)
 	if(on)
 		wash_turf()
 		for(var/atom/movable/G in loc)

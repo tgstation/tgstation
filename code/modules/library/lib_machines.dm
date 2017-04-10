@@ -106,7 +106,7 @@
 	if(href_list["back"])
 		screenstate = 0
 
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
 
@@ -542,7 +542,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(href_list["eject"])
 		for(var/obj/item/weapon/book/B in contents)
 			B.loc = src.loc
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
 

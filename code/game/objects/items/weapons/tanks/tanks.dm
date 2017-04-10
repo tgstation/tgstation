@@ -133,7 +133,6 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
-	add_fingerprint(user)
 	if((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
 

@@ -103,7 +103,7 @@
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
 

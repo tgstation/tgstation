@@ -19,7 +19,6 @@
 /obj/machinery/computer/shuttle/attack_hand(mob/user)
 	if(..(user))
 		return
-	src.add_fingerprint(usr)
 
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
@@ -49,7 +48,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(!allowed(usr))
 		to_chat(usr, "<span class='danger'>Access denied.</span>")
 		return

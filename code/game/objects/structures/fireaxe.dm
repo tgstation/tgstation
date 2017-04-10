@@ -112,7 +112,6 @@
 			user.put_in_hands(fireaxe)
 			fireaxe = null
 			to_chat(user, "<span class='caution'>You take the fire axe from the [name].</span>")
-			src.add_fingerprint(user)
 			update_icon()
 			return
 	if(locked)

@@ -29,7 +29,6 @@
 
 /obj/structure/attack_hand(mob/user)
 	. = ..()
-	add_fingerprint(user)
 	if(structureclimber && structureclimber != user)
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
@@ -69,7 +68,7 @@
 		density = 1
 
 /obj/structure/proc/climb_structure(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
 								"<span class='notice'>You start climbing onto [src]...</span>")
 	var/adjusted_climb_time = climb_time

@@ -77,7 +77,6 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 /obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user)
 	if(..())
 		return
-	src.add_fingerprint(user)
 	user.set_machine(src)
 
 	var/dat = ""
@@ -156,7 +155,6 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 /obj/machinery/computer/telecrystals/boss/attack_hand(mob/user)
 	if(..())
 		return
-	src.add_fingerprint(user)
 	user.set_machine(src)
 
 

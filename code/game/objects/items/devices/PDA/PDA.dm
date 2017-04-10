@@ -811,7 +811,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if(1)
 				C.visible_message("<span class='alert'>[user] has analyzed [C]'s vitals!</span>")
 				healthscan(user, C, 1)
-				add_fingerprint(user)
 
 			if(2)
 				// Unused

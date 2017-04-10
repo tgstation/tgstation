@@ -84,8 +84,6 @@
 	if(!istype(C))
 		return ..()
 
-	add_fingerprint(user)
-
 	if(user.zone_selected != "head")
 		return ..()
 

@@ -109,19 +109,14 @@
 
 
 	if(W == A)
-		W.attack_self(src)
+		W.do_attack_self(src)
 		update_inv_hands()
 		return
 
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
 	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
 		// No adjacency needed
-		if(W)
-			melee_item_attack_chain(src, W, A, params)
-		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A)
+		MeleeClick(W, A, params, FALSE)
 		return
 
 	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
@@ -130,18 +125,21 @@
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
 		if(Adjacent(A) || (W && CheckReach(src, A, W.reach))) //Adjacent or reaching attacks
-			if(W)
-				melee_item_attack_chain(src, W, A, params)
-			else
-				if(ismob(A))
-					changeNext_move(CLICK_CD_MELEE)
-				UnarmedAttack(A, 1)
-			return
+			MeleeClick(W, A, params, TRUE)
 		else // non-adjacent click
 			if(W)
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
+
+/mob/proc/MeleeClick(obj/item/W, atom/A, params, proximity_flag)
+	A.add_fingerprint(src)
+	if(W)
+		melee_item_attack_chain(src, W, A, params)
+	else
+		if(ismob(A))
+			changeNext_move(CLICK_CD_MELEE)
+		UnarmedAttack(A)
 
 /proc/CheckReach(atom/movable/here, atom/movable/there, reach)
 	if(!here || !there)

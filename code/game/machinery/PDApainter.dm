@@ -109,8 +109,6 @@
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
 	if(!..())
-		add_fingerprint(user)
-
 		if(storedpda)
 			var/obj/item/device/pda/P
 			P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist

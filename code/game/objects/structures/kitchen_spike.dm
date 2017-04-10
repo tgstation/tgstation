@@ -12,7 +12,6 @@
 	max_integrity = 200
 
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user, params)
-	add_fingerprint(user)
 	if(default_unfasten_wrench(user, I))
 		return
 	else if(istype(I, /obj/item/stack/rods))

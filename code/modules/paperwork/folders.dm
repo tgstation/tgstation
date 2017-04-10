@@ -49,8 +49,6 @@
 		dat += "<A href='?src=\ref[src];remove=\ref[I]'>Remove</A> - <A href='?src=\ref[src];read=\ref[I]'>[I.name]</A><BR>"
 	user << browse(dat, "window=folder")
 	onclose(user, "folder")
-	add_fingerprint(usr)
-
 
 /obj/item/weapon/folder/Topic(href, href_list)
 	..()

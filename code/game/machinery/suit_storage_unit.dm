@@ -190,10 +190,13 @@
 		to_chat(user, "<span class='warning'>It's too cluttered inside to fit in!</span>")
 		return
 
+	add_fingerprint(user)
+
 	if(target == user)
 		user.visible_message("<span class='warning'>[user] starts squeezing into [src]!</span>", "<span class='notice'>You start working your way into [src]...</span>")
 	else
 		target.visible_message("<span class='warning'>[user] starts shoving [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
+		add_fingerprint(target)
 
 	if(do_mob(user, target, 30))
 		if(occupant || helmet || suit || storage)
@@ -203,7 +206,6 @@
 		else
 			target.visible_message("<span class='warning'>[user] pushes [target] into [src] and shuts its door!<span>", "<span class='userdanger'>[user] shoves you into [src] and shuts the door!</span>")
 		close_machine(target)
-		add_fingerprint(user)
 
 /obj/machinery/suit_storage_unit/proc/cook()
 	if(uv_cycles)
@@ -261,7 +263,6 @@
 	container_resist(user)
 
 /obj/machinery/suit_storage_unit/container_resist(mob/living/user)
-	add_fingerprint(user)
 	if(locked)
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
 		addtimer(CALLBACK(src, .proc/resist_open, user), 300)

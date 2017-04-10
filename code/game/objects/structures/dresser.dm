@@ -31,5 +31,4 @@
 				if(new_socks)
 					H.socks= new_socks
 
-		add_fingerprint(H)
 		H.update_body()

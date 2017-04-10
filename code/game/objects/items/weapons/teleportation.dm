@@ -181,4 +181,3 @@ Frequency:
 	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(src), T, src)
 	try_move_adjacent(P)
 	active_portals++
-	add_fingerprint(user)

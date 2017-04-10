@@ -81,7 +81,6 @@
 	if(!on)
 		return ..()
 
-	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Weaken(3 * force)
@@ -112,7 +111,6 @@
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
 			target.Weaken(3)
 			add_logs(user, target, "stunned", src)
-			src.add_fingerprint(user)
 			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
 				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
 			if(!iscarbon(user))
@@ -142,7 +140,6 @@
 		src.attack_self(user)
 	else
 		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
-		add_fingerprint(user)
 	sleep(3)
 	if (H && !QDELETED(H))
 		if (B && !QDELETED(B))
@@ -170,7 +167,6 @@
 		attack_verb = list("hit", "poked")
 
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
-	add_fingerprint(user)
 
 /obj/item/weapon/melee/supermatter_sword
 	name = "supermatter sword"

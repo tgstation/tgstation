@@ -252,7 +252,6 @@
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
-	add_fingerprint(user)
 	if(position == 0)
 		if(convdir)   //is it a oneway switch
 			position = convdir

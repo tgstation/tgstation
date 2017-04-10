@@ -87,7 +87,6 @@
 
 /obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, params)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
-	add_fingerprint(user)
 	switch(state)
 		if("01")
 			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )

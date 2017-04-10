@@ -131,7 +131,6 @@ Pipelines + Other Objects -> Pipe network
 				return 1
 			var/datum/gas_mixture/int_air = return_air()
 			var/datum/gas_mixture/env_air = loc.return_air()
-			add_fingerprint(user)
 
 			var/unsafe_wrenching = FALSE
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()

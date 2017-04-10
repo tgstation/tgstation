@@ -50,7 +50,6 @@
 		A.part2 = src
 
 		user.put_in_hands(A)
-		A.add_fingerprint(user)
 		if(src.flags & NODROP)
 			A.flags |= NODROP
 	else

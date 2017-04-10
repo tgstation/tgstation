@@ -458,7 +458,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		usr << browse(null, "window=pipedispenser")
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["screen"])
 		screen = text2num(href_list["screen"])
 		show_menu(usr)

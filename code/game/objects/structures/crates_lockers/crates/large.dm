@@ -7,7 +7,6 @@
 	delivery_icon = "deliverybox"
 
 /obj/structure/closet/crate/large/attack_hand(mob/user)
-	add_fingerprint(user)
 	if(manifest)
 		tear_manifest(user)
 	else

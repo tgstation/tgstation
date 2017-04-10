@@ -297,7 +297,6 @@
 	var/turf/T = src.loc
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
-	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(can_be_deconstructed(user))
@@ -690,7 +689,6 @@
 	return
 
 /obj/structure/disposaloutlet/attackby(obj/item/I, mob/user, params)
-	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(mode==0)
 			mode=1

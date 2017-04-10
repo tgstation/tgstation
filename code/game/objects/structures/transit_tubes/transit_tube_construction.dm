@@ -65,7 +65,6 @@
 /obj/structure/c_transit_tube/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
-		add_fingerprint(user)
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 40*I.toolspeed, target = src))
 			if(QDELETED(src))

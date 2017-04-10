@@ -47,7 +47,6 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	return
 
 /obj/machinery/atmospherics/components/binary/valve/attack_hand(mob/user)
-	add_fingerprint(usr)
 	update_icon_nopipes(1)
 	sleep(10)
 	if(open)

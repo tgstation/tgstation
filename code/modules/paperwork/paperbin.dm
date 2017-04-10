@@ -98,9 +98,6 @@
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
-	add_fingerprint(user)
-
-
 /obj/item/weapon/paper_bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))
 		var/obj/item/weapon/paper/P = I

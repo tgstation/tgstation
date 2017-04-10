@@ -72,8 +72,6 @@ field_generator power level display
 					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
-
-				add_fingerprint(user)
 	else
 		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>")
 

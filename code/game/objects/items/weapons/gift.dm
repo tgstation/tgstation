@@ -78,4 +78,3 @@
 	qdel(src)
 	var/obj/item/I = new gift_type(M)
 	M.put_in_hands(I)
-	I.add_fingerprint(M)

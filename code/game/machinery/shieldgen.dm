@@ -357,7 +357,6 @@
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 
 	else
-		add_fingerprint(user)
 		return ..()
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
@@ -383,7 +382,6 @@
 			"<span class='italics'>You hear heavy droning.</span>")
 		active = ACTIVE_SETUPFIELDS
 		update_activity()
-	add_fingerprint(user)
 
 
 //////////////Containment Field START

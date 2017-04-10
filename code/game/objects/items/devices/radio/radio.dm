@@ -514,7 +514,6 @@
 		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
-	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		b_stat = !b_stat
 		if(b_stat)

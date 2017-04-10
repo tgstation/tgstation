@@ -80,9 +80,6 @@
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
 
-	add_fingerprint(user)
-
-
 /obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 

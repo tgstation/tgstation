@@ -109,7 +109,6 @@
 			return
 
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
-		src.add_fingerprint(user)
 		if(do_after(user, gibtime, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")

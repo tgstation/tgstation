@@ -962,7 +962,6 @@
 		if(src.isElectrified())
 			if(src.shock(user, 75))
 				return
-	add_fingerprint(user)
 
 	if(panel_open)
 		switch(security_level)
@@ -1445,7 +1444,6 @@
 		loseBackupPower()
 
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user)
-	add_fingerprint(user)
 	if(isElectrified())
 		shock(user, 100) //Mmm, fried xeno!
 		return
