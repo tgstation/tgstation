@@ -826,6 +826,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(isobserver(user) && check_rights(R_SPAWN))
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
+/mob/dead/observer/examine(mob/user)
+	..()
+	if(!invisibility)
+		to_chat(user, "It seems extremely obvious.")
+
 /proc/set_observer_default_invisibility(amount, message=null)
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		G.invisibility = amount
