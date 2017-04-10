@@ -387,9 +387,8 @@
 	if(user.incapacitated() || !istype(user))
 		return
 	for(var/atom/movable/A in get_turf(src))
-		if(A.density)
-			if(A != src && A != M)
-				return
+		if(A.density && (A != src && A != M))
+			return
 	M.loc = get_turf(src)
 	..()
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
@@ -406,7 +405,7 @@
 	var/mob/living/carbon/U
 
 
-/datum/action/innate/protoemitter/Grant(mob/living/L, obj/machinery/power/emitter/prototype/proto)
+/datum/action/innate/protoemitter/Grant(mob/living/carbon/L, obj/machinery/power/emitter/prototype/proto)
 	PE = proto
 	U = L
 	..()
@@ -417,7 +416,7 @@
 	button_icon_state = "mech_zoom_on"
 
 /datum/action/innate/protoemitter/firing/Activate()
-	if(PE.manual == TRUE)
+	if(PE.manual)
 		playsound(PE,'sound/mecha/mechmove01.ogg', 50, 1)
 		PE.manual = FALSE
 		name = "Switch to Manual Firing"
@@ -428,7 +427,7 @@
 				qdel(I)
 		UpdateButtonIcon()
 		return
-	if(PE.manual == FALSE)
+	else
 		playsound(PE,'sound/mecha/mechmove01.ogg', 50, 1)
 		name = "Switch to Automatic Firing"
 		desc = "Emitters will switch to periodic firing at your last target"
