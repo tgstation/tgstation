@@ -44,8 +44,12 @@
 
 //This camera type automatically sets it's name to whatever the area that it's in is called.
 /obj/machinery/camera/autoname/Initialize(mapload)
-	..()
 	if(mapload)
+		..()
+		return TRUE
+	else
+		if(!initialized)
+			..()
 		number = 1
 		var/area/A = get_area(src)
 		if(A)
@@ -56,7 +60,6 @@
 					if(C.number)
 						number = max(number, C.number+1)
 			c_tag = "[A.name] #[number]"
-
 
 // CHECKS
 
