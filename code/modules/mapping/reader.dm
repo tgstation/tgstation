@@ -276,8 +276,13 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	if(members[index] != /area/template_noop)
 		var/atom/instance
 		GLOB._preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
-
-		instance = locate(members[index])
+		var/atype = members[index]
+		for(var/area/A in world)
+			if(A.type == atype)
+				instance = A
+				break
+		if(!instance)
+			instance = new atype(null)
 		if(crds)
 			instance.contents.Add(crds)
 
