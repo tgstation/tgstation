@@ -19,8 +19,8 @@ Chaplain
 	minimal_access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
-	if(M.mind)
-		M.mind.isholy = TRUE
+	if(H.mind)
+		H.mind.isholy = TRUE
 
 	var/obj/item/weapon/storage/book/bible/booze/B = new
 
