@@ -284,4 +284,4 @@
 		C = H.client
 	if(C)
 		P = C.prefs
-	return get_flat_human_icon(null,J.outfit,P)
+	return get_flat_human_icon(null, J, P)
