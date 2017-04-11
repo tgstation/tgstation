@@ -1,75 +1,3 @@
-/proc/keywords_lookup(msg,irc)
-
-	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
-	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
-
-	//explode the input msg into a list
-	var/list/msglist = splittext(msg, " ")
-
-	//generate keywords lookup
-	var/list/surnames = list()
-	var/list/forenames = list()
-	var/list/ckeys = list()
-	var/founds = ""
-	for(var/mob/M in GLOB.mob_list)
-		var/list/indexing = list(M.real_name, M.name)
-		if(M.mind)
-			indexing += M.mind.name
-
-		for(var/string in indexing)
-			var/list/L = splittext(string, " ")
-			var/surname_found = 0
-			//surnames
-			for(var/i=L.len, i>=1, i--)
-				var/word = ckey(L[i])
-				if(word)
-					surnames[word] = M
-					surname_found = i
-					break
-			//forenames
-			for(var/i=1, i<surname_found, i++)
-				var/word = ckey(L[i])
-				if(word)
-					forenames[word] = M
-			//ckeys
-			ckeys[M.ckey] = M
-
-	var/ai_found = 0
-	msg = ""
-	var/list/mobs_found = list()
-	for(var/original_word in msglist)
-		var/word = ckey(original_word)
-		if(word)
-			if(!(word in adminhelp_ignored_words))
-				if(word == "ai")
-					ai_found = 1
-				else
-					var/mob/found = ckeys[word]
-					if(!found)
-						found = surnames[word]
-						if(!found)
-							found = forenames[word]
-					if(found)
-						if(!(found in mobs_found))
-							mobs_found += found
-							if(!ai_found && isAI(found))
-								ai_found = 1
-							var/is_antag = 0
-							if(found.mind && found.mind.special_role)
-								is_antag = 1
-							founds += "Name: [found.name]([found.real_name]) Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
-							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
-							continue
-		msg += "[original_word] "
-	if(irc)
-		if(founds == "")
-			return "Search Failed"
-		else
-			return founds
-
-	return msg
-
-
 /client/var/adminhelptimerid = 0
 /client/var/datum/admin_help/current_ticket
 
@@ -499,3 +427,74 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(istype(C) && C.current_ticket)
 		C.current_ticket.interactions += message
 		return C.current_ticket
+
+/proc/keywords_lookup(msg,irc)
+
+	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
+	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
+
+	//explode the input msg into a list
+	var/list/msglist = splittext(msg, " ")
+
+	//generate keywords lookup
+	var/list/surnames = list()
+	var/list/forenames = list()
+	var/list/ckeys = list()
+	var/founds = ""
+	for(var/mob/M in GLOB.mob_list)
+		var/list/indexing = list(M.real_name, M.name)
+		if(M.mind)
+			indexing += M.mind.name
+
+		for(var/string in indexing)
+			var/list/L = splittext(string, " ")
+			var/surname_found = 0
+			//surnames
+			for(var/i=L.len, i>=1, i--)
+				var/word = ckey(L[i])
+				if(word)
+					surnames[word] = M
+					surname_found = i
+					break
+			//forenames
+			for(var/i=1, i<surname_found, i++)
+				var/word = ckey(L[i])
+				if(word)
+					forenames[word] = M
+			//ckeys
+			ckeys[M.ckey] = M
+
+	var/ai_found = 0
+	msg = ""
+	var/list/mobs_found = list()
+	for(var/original_word in msglist)
+		var/word = ckey(original_word)
+		if(word)
+			if(!(word in adminhelp_ignored_words))
+				if(word == "ai")
+					ai_found = 1
+				else
+					var/mob/found = ckeys[word]
+					if(!found)
+						found = surnames[word]
+						if(!found)
+							found = forenames[word]
+					if(found)
+						if(!(found in mobs_found))
+							mobs_found += found
+							if(!ai_found && isAI(found))
+								ai_found = 1
+							var/is_antag = 0
+							if(found.mind && found.mind.special_role)
+								is_antag = 1
+							founds += "Name: [found.name]([found.real_name]) Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
+							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
+							continue
+		msg += "[original_word] "
+	if(irc)
+		if(founds == "")
+			return "Search Failed"
+		else
+			return founds
+
+	return msg
