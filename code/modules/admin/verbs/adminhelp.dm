@@ -262,7 +262,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			dat += "<font color='red'>OPEN</font>"
 		if(AHELP_RESOLVED)
 			dat += "<font color='green'>RESOLVED</font>"
-		if(AHELP_ACTIVE)
+		if(AHELP_CLOSED)
 			dat += "CLOSED"
 		else
 			dat += "UNKNOWN"
