@@ -736,19 +736,18 @@
 
 /mob/living/carbon/regenerate_organs()
 	var/breathes = TRUE
-	var/bleeds = TRUE
+	var/blooded = TRUE
 	if(dna && dna.species)
 		if(NOBREATH in dna.species.species_traits)
 			breathes = FALSE
-		if(NOBLEED in dna.species.species_traits)
-			bleeds = FALSE
-	var/breathes = dna && dna.species && !(NOBREATH in dna.species.species_traits)
+		if(NOBLOOD in dna.species.species_traits)
+			blooded = FALSE
 
 	if(breathes && !getorganslot("lungs"))
 		var/obj/item/organ/lungs/L = new()
 		L.Insert(src)
 
-	if(bleeds && !getorganslot("heart"))
+	if(blooded && !getorganslot("heart"))
 		var/obj/item/organ/heart/H = new()
 		H.Insert(src)
 
