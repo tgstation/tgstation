@@ -195,7 +195,7 @@ function handle_pr($payload) {
 	switch ($payload["action"]) {
 		case 'opened':
 			tag_pr($payload, true);
-			return;
+			break;
 		case 'edited':
 		case 'synchronize':
 			tag_pr($payload, false);
