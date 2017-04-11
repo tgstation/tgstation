@@ -22,6 +22,10 @@
 
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user)
+	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
+	if (istype(src, /obj/item/weapon/reagent_containers/spray/chemsprayer) && A.loc == usr)
+		return
+
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
 
@@ -61,7 +65,7 @@
 
 
 /obj/item/weapon/reagent_containers/spray/proc/spray(atom/A)
-	var/range = max(min(spray_range, get_dist(src, A)), 1)
+	var/range = max(min(current_range, get_dist(src, A)), 1)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
 	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
