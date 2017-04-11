@@ -30,7 +30,7 @@
 	status_flags = CANPUSH
 	minbodytemp = 0
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	unique_name = 1
 	gold_core_spawnable = 0
 	death_sound = 'sound/voice/hiss6.ogg'

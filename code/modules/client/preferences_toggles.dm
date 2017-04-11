@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		prefs.save_preferences()
 		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
-			O.updateghostsight()
+			O.update_sight()
 
 /client/verb/toggle_intent_style()
 	set name = "Toggle Intent Selection Style"

@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(ghost_darkness_images) //this is a list of images for things ghosts should still be able to see when they toggle darkness, BUT NOT THE GHOSTS THEMSELVES!
-GLOBAL_LIST_EMPTY(ghost_images_full) //this is a list of full images of the ghosts themselves
 GLOBAL_LIST_EMPTY(ghost_images_default) //this is a list of the default (non-accessorized, non-dir) images of the ghosts themselves
 GLOBAL_LIST_EMPTY(ghost_images_simple) //this is a list of all ghost images as the simple white ghost
 
@@ -27,11 +25,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/atom/movable/following = null
 	var/fun_verbs = 0
-	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
 	var/image/ghostimage_default = null //this mobs ghost image without accessories and dirs
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
-	var/seedarkness = 1
 	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
@@ -65,15 +61,17 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(config.cross_allowed)
 		verbs += /mob/dead/observer/proc/server_hop
 
-	ghostimage = image(src.icon,src,src.icon_state)
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
 	else
 		ghostimage_default = image(src.icon,src,src.icon_state)
-	ghostimage_simple = image(src.icon,src,"ghost_nodir")
-	GLOB.ghost_images_full |= ghostimage
+	ghostimage_default.override = TRUE
 	GLOB.ghost_images_default |= ghostimage_default
+
+	ghostimage_simple = image(src.icon,src,"ghost_nodir")
+	ghostimage_simple.override = TRUE
 	GLOB.ghost_images_simple |= ghostimage_simple
+
 	updateallghostimages()
 
 	var/turf/T
@@ -137,11 +135,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	animate(src, color = old_color, time = 10)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
-/mob/dead/observer/Destroy()
-	GLOB.ghost_images_full -= ghostimage
-	qdel(ghostimage)
-	ghostimage = null
-
 	GLOB.ghost_images_default -= ghostimage_default
 	qdel(ghostimage_default)
 	ghostimage_default = null
@@ -170,18 +163,15 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	if(hair_image)
 		cut_overlay(hair_image)
-		ghostimage.add_overlay(hair_image)
 		hair_image = null
 
 	if(facial_hair_image)
 		cut_overlay(facial_hair_image)
-		ghostimage.add_overlay(facial_hair_image)
 		facial_hair_image = null
 
 
 	if(new_form)
 		icon_state = new_form
-		ghostimage.icon_state = new_form
 		if(icon_state in GLOB.ghost_forms_with_directions_list)
 			ghostimage_default.icon_state = new_form + "_nodir" //if this icon has dirs, the default ghostimage must use its nodir version or clients with the preference set to default sprites only will see the dirs
 		else
@@ -203,7 +193,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 					facial_hair_image.color = "#" + facial_hair_color
 				facial_hair_image.alpha = 200
 				add_overlay(facial_hair_image)
-				ghostimage.add_overlay(facial_hair_image)
 		if(hair_style)
 			S = GLOB.hair_styles_list[hair_style]
 			if(S)
@@ -212,7 +201,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 					hair_image.color = "#" + hair_color
 				hair_image.alpha = 200
 				add_overlay(hair_image)
-				ghostimage.add_overlay(hair_image)
 
 /*
  * Increase the brightness of a color by calculating the average distance between the R, G and B values,
@@ -510,33 +498,40 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts"
 	set category = "Ghost"
 	ghostvision = !(ghostvision)
-	updateghostsight()
+	update_sight()
 	to_chat(usr, "You [(ghostvision?"now":"no longer")] have ghost vision.")
 
 /mob/dead/observer/verb/toggle_darkness()
 	set name = "Toggle Darkness"
 	set category = "Ghost"
-	seedarkness = !(seedarkness)
-	updateghostsight()
+	switch(lighting_alpha)
+		if (LIGHTING_PLANE_ALPHA_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		else
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
-/mob/dead/observer/proc/updateghostsight()
+	update_sight()
+
+/mob/dead/observer/update_sight()
 	if(client)
 		ghost_others = client.prefs.ghost_others //A quick update just in case this setting was changed right before calling the proc
 
-	if (seedarkness)
-		see_invisible = SEE_INVISIBLE_OBSERVER
-		if (!ghostvision || ghost_others <= GHOST_OTHERS_DEFAULT_SPRITE)
-			see_invisible = SEE_INVISIBLE_LIVING
+	if (!ghostvision)
+		see_invisible = SEE_INVISIBLE_LIVING
 	else
-		see_invisible = SEE_INVISIBLE_NOLIGHTING
+		see_invisible = SEE_INVISIBLE_OBSERVER
+
 
 	updateghostimages()
+	..()
 
 /proc/updateallghostimages()
-	listclearnulls(GLOB.ghost_images_full)
 	listclearnulls(GLOB.ghost_images_default)
 	listclearnulls(GLOB.ghost_images_simple)
-	listclearnulls(GLOB.ghost_darkness_images)
 
 	for (var/mob/dead/observer/O in GLOB.player_list)
 		O.updateghostimages()
@@ -547,34 +542,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(lastsetting)
 		switch(lastsetting) //checks the setting we last came from, for a little efficiency so we don't try to delete images from the client that it doesn't have anyway
-			if(GHOST_OTHERS_THEIR_SETTING)
-				client.images -= GLOB.ghost_images_full
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
 				client.images -= GLOB.ghost_images_default
 			if(GHOST_OTHERS_SIMPLE)
 				client.images -= GLOB.ghost_images_simple
-
-	if ((seedarkness || !ghostvision) && client.prefs.ghost_others == GHOST_OTHERS_THEIR_SETTING)
-		client.images -= GLOB.ghost_darkness_images
-		lastsetting = null
-	else if(ghostvision && (!seedarkness || client.prefs.ghost_others <= GHOST_OTHERS_DEFAULT_SPRITE))
-		//add images for the 60inv things ghosts can normally see when darkness is enabled so they can see them now
-		if(!lastsetting)
-			client.images |= GLOB.ghost_darkness_images
+	lastsetting = client.prefs.ghost_others
+	if(!ghostvision)
+		return
+	if(client.prefs.ghost_others != GHOST_OTHERS_THEIR_SETTING)
 		switch(client.prefs.ghost_others)
-			if(GHOST_OTHERS_THEIR_SETTING)
-				client.images |= GLOB.ghost_images_full
-				if (ghostimage)
-					client.images -= ghostimage //remove ourself
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
-				client.images |= GLOB.ghost_images_default
-				if(ghostimage_default)
-					client.images -= ghostimage_default
+				client.images |= (GLOB.ghost_images_default-ghostimage_default)
 			if(GHOST_OTHERS_SIMPLE)
-				client.images |= GLOB.ghost_images_simple
-				if(ghostimage_simple)
-					client.images -= ghostimage_simple
-		lastsetting = client.prefs.ghost_others
+				client.images |= (GLOB.ghost_images_simple-ghostimage_simple)
 
 /mob/dead/observer/verb/possess()
 	set category = "Ghost"
@@ -754,11 +734,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	. = ..()
 	switch(var_name)
 		if("icon")
-			ghostimage.icon = icon
 			ghostimage_default.icon = icon
 			ghostimage_simple.icon = icon
 		if("icon_state")
-			ghostimage.icon_state = icon_state
 			ghostimage_default.icon_state = icon_state
 			ghostimage_simple.icon_state = icon_state
 		if("fun_verbs")

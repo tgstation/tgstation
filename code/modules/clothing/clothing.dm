@@ -149,7 +149,7 @@
 		if(pockets.priority)
 			how_cool_are_your_threads += "Your [src]'s storage opens when clicked.\n"
 		else
-			how_cool_are_your_threads += "Your [src]'s storage opens when dragged to yourself.\n" 
+			how_cool_are_your_threads += "Your [src]'s storage opens when dragged to yourself.\n"
 		how_cool_are_your_threads += "Your [src] can store [pockets.storage_slots] item[pockets.storage_slots > 1 ? "s" : ""].\n"
 		how_cool_are_your_threads += "Your [src] can store items that are [weightclass2text(pockets.max_w_class)] or smaller.\n"
 		if(pockets.quickdraw)
@@ -214,6 +214,7 @@
 	var/darkness_view = 2//Base human is 2
 	var/invis_view = SEE_INVISIBLE_LIVING
 	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
+	var/lighting_alpha
 	var/emagged = 0
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
