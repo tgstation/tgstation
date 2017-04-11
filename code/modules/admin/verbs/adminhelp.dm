@@ -179,7 +179,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/New(msg, client/C, is_bwoink)
 	//clean the input msg
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg || !C.mob)
+	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
 
