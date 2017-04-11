@@ -99,12 +99,14 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			title = "Resolved Tickets"
 	if(!l2b)
 		return
-	var/dat = "<html><head><title>[title]</title></head>"
+	var/list/dat = list()
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
 		dat += "<span class='adminnotice'><b><font color=red>Ticket #[AH.id]</font>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[key_name(AH.initiator)]: [AH.original_message]</A></span>"
 		
-	usr << browse(dat, "window=ahelp_list[state];size=600x480")
+	var/datum/browser/popup = new(usr, "ahelp_list[state]", title, 600, 480)
+	popup.set_content(dat.Join())
+	popup.open()
 
 /datum/admin_help_tickets/Destroy()
 	for(var/I in active_tickets)
@@ -144,6 +146,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/closed_at
 
 	var/client/initiator
+	var/initiator_key_name
 
 	var/original_message
 	var/parsed_message
@@ -168,6 +171,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	initiator = C
+	initiator_key_name = key_name_admin(initiator)
 	initiator.current_ticket = src
 	initiator.verbs -= /client/verb/adminhelp
 	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
@@ -196,13 +200,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	. = ADMIN_FULLMONTY_NONAME(initiator.mob)
 	if(state == AHELP_ACTIVE)
 		. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=reject'>REJT</A>)"
-		. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=icissue'>IC</A>) (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=close'>CLOSE</A>)"\
+		. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=icissue'>IC</A>) (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=close'>CLOSE</A>)"
 		. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=resolve'>RSLVE</A>)"
 
 /datum/admin_help/proc/LinkedReplyName(ref_src)
 	if(!ref_src)
 		ref_src = "\ref[src]"
-	return "</font><A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=reply'>[key_name(initiator)]</A>"
+	return "</font><A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
 
 /datum/admin_help/proc/TicketHref(msg, ref_src)
 	if(!ref_src)
@@ -260,14 +264,19 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	log_admin_private("Ticket #[id] resolved by [key_name(usr)].")
 
 /datum/admin_help/proc/TicketPanel()
-	var/dat = "<html><head><title>Ticket #[id]</title></head>"
-	dat += "<h3>Admin Help Ticket #[id]: [key_name(initiator)]</h3>"
-	dat += "<b>Actions:</b> [FullMonty()]<br>"
+	var/list/dat = list("<h3>Admin Help Ticket #[id]: [LinkedReplyName()]</h3>")
+	if(initiator)
+		dat += "<b>Actions:</b> [FullMonty()]<br>"
+	else
+		dat += "<b>DISCONNECTED</b>"
 	dat += "<br>[TicketHref("Refresh")]<br>"
 	dat += "<br><b>Log:</b><br><br>"
 	for(var/I in interactions)
 		dat += "[I]<br>"
-	usr << browse(dat, "window=ahelp[id];size=600x480")
+
+	var/datum/browser/popup = new(usr, "ahelp[id]", "Ticket #[id]", 600, 480)
+	popup.set_content(dat.Join())
+	popup.open()
 
 /datum/admin_help/proc/Reject()
 	var/cd = usr.client.holder.spamcooldown
