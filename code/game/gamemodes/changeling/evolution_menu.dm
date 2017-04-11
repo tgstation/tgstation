@@ -6,6 +6,7 @@
 		var/obj/effect/proc_holder/changeling/S = path
 		if(initial(S.name) == sting_name)
 			thepower = new path()
+			break
 
 	if(!thepower)
 		to_chat(user, "This is awkward. Changeling power purchase failed, please report this bug to a coder!")
