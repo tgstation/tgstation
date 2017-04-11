@@ -68,6 +68,10 @@
 		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 
+	if(!holder && !current_ticket)	//ticket closed
+		to_chat(src, "<font color='red'>Error: Admin-PM: You can no longer PM the admins. Please ahelp again if necessary.</font>")
+		return
+
 	var/client/recipient
 	var/irc = 0
 	if(istext(whom))
@@ -98,10 +102,8 @@
 		if(!recipient)
 			if(holder)
 				to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
-			else if(current_ticket)
-				current_ticket.MessageNoRecipient(msg)
 			else
-				adminhelp(msg)	//admin we are replying to left. adminhelp instead
+				current_ticket.MessageNoRecipient(msg)
 			return
 
 		//get message text, limit it's length.and clean/escape html
@@ -118,10 +120,8 @@
 			if(!recipient)
 				if(holder)
 					to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
-				else if(current_ticket)
-					current_ticket.MessageNoRecipient(msg)
 				else
-					adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
+					current_ticket.MessageNoRecipient(msg)
 				return
 
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
@@ -169,6 +169,9 @@
 
 		else
 			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
+				if(!recipient.current_ticket)
+					new /datum/admin_help(msg, recipient, TRUE)
+
 				to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
 				to_chat(recipient, "<font color='red'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: [msg]</font>")
 				to_chat(recipient, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")

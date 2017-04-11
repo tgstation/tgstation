@@ -42,15 +42,10 @@
 				to_chat(M, "<i>You hear a voice in your head... <b>[msg]</i></b>")
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
-<<<<<<< HEAD
 	msg = "<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	feedback_add_details("admin_verb","SMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-=======
-	message_admins("<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>")
 	feedback_add_details("admin_verb","Subtle Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
->>>>>>> 2c59734307a391ee27e783bf996f4e622feed347
 
 /client/proc/cmd_admin_world_narrate()
 	set category = "Special Verbs"
@@ -90,15 +85,10 @@
 
 	to_chat(M, msg)
 	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
-<<<<<<< HEAD
 	msg = "<span class='adminnotice'><b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [msg]<BR></span>"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-=======
-	message_admins("<span class='adminnotice'><b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [msg]<BR></span>")
 	feedback_add_details("admin_verb","Direct Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
->>>>>>> 2c59734307a391ee27e783bf996f4e622feed347
 
 /client/proc/cmd_admin_local_narrate(atom/A)
 	set category = "Special Verbs"
@@ -132,15 +122,10 @@
 	to_chat(usr, "<span class='adminnotice'>Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]</span>")
 
 	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
-<<<<<<< HEAD
 	var/msg = "[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-=======
-	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
 	feedback_add_details("admin_toggle","Godmode|[M.status_flags & GODMODE]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
->>>>>>> 2c59734307a391ee27e783bf996f4e622feed347
 
 
 /proc/cmd_admin_mute(whom, mute_type, automute = 0)
@@ -477,15 +462,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	M.revive(full_heal = 1, admin_revive = 1)
 
 	log_admin("[key_name(usr)] healed / revived [key_name(M)]")
-<<<<<<< HEAD
 	var/msg = "<span class='danger'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!</span>"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	feedback_add_details("admin_verb","REJU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-=======
-	message_admins("<span class='danger'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!</span>")
 	feedback_add_details("admin_verb","Rejuvinate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
->>>>>>> 2c59734307a391ee27e783bf996f4e622feed347
 
 /client/proc/cmd_admin_create_centcom_report()
 	set category = "Special Verbs"

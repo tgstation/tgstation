@@ -149,7 +149,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/initiator_key_name
 
 	var/original_message
-	var/parsed_message
 
 	var/list/interactions
 
@@ -157,7 +156,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	var/static/ticket_counter = 0
 
-/datum/admin_help/New(msg, client/C)
+/datum/admin_help/New(msg, client/C, is_bwoink)
 	//clean the input msg
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg || !C.mob)
@@ -172,25 +171,33 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	initiator = C
 	initiator_key_name = key_name_admin(initiator)
+	if(initiator.current_ticket)
+		stack_trace("Multiple ahelp current_tickets")
+		initiator.current_ticket.interactions += "Ticket erroneously left open by code"
+		initiator.current_ticket.Close()
 	initiator.current_ticket = src
 	initiator.verbs -= /client/verb/adminhelp
 	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
 
-	parsed_message = keywords_lookup(msg)
-	interactions = list("<font color='red'>[LinkedReplyName()]: [parsed_message]</font>")
+	var/parsed_message = keywords_lookup(msg)
 
 	statclick = new(null, src)
 
-	MessageNoRecipient(parsed_message)
+	if(is_bwoink)
+		interactions = list("<font color='blue'>[key_name_admin(usr)] bwoinked [LinkedReplyName()]</font>")
+		message_admins("<font color='red'>Ticket [TicketHref("#[id]")] created</font>")
+	else
+		interactions = list("<font color='red'>[LinkedReplyName()]: [parsed_message]</font>")
+		MessageNoRecipient(parsed_message)
 
-	//show it to the person adminhelping too
-	to_chat(C, "<span class='adminnotice'>PM to-<b>Admins</b>: [original_message]</span>")
+		//show it to the person adminhelping too
+		to_chat(C, "<span class='adminnotice'>PM to-<b>Admins</b>: [original_message]</span>")
 
-	//send it to irc if nobody is on and tell us how many were on
-	var/admin_number_present = send2irc_adminless_only(initiator.ckey,original_message)
-	log_admin_private("HELP: [key_name(initiator)]: [original_message] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-	if(admin_number_present <= 0)
-		to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
+		//send it to irc if nobody is on and tell us how many were on
+		var/admin_number_present = send2irc_adminless_only(initiator.ckey,original_message)
+		log_admin_private("HELP: [key_name(initiator)]: [original_message] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+		if(admin_number_present <= 0)
+			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
 
 	GLOB.ahelp_tickets.active_tickets += src
 
@@ -216,7 +223,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //message from the initiator without a target
 /datum/admin_help/proc/MessageNoRecipient(msg)
 	var/ref_src = "\ref[src]"
-	var/chat_msg = "<span class='adminnotice'><b><font color=red>Ticket [TicketHref("#[id]", ref_src)]: [LinkedReplyName(ref_src)] [FullMonty(ref_src)] :</b> [parsed_message]</span>"
+	var/chat_msg = "<span class='adminnotice'><b><font color=red>Ticket [TicketHref("#[id]", ref_src)]: [LinkedReplyName(ref_src)] [FullMonty(ref_src)] :</b> [msg]</span>"
 
 	//send this msg to all admins
 
@@ -379,7 +386,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		current_ticket.interactions += "[key_name_admin(usr)] opened a new ticket."
 		current_ticket.Close()
 
-	new /datum/admin_help(msg, src)
+	new /datum/admin_help(msg, src, FALSE)
 
 /proc/get_admin_counts(requiredflags = R_BAN)
 	. = list("total" = list(), "noflags" = list(), "afk" = list(), "stealth" = list(), "present" = list())
