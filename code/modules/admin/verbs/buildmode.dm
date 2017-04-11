@@ -313,7 +313,7 @@
 					to_chat(user, "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>")
 			if(right_click)
 				if(object.vars.Find(varholder))
-					if(object.vv_edit_var(varholder, initial(object.vars[varholder]))
+					if(object.vv_edit_var(varholder, initial(object.vars[varholder])))
 						log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
 					else
 						to_chat(user, "<span class='warning'>Varedit rejected</span>")
