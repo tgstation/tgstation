@@ -296,10 +296,10 @@
 				message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 				log_admin_rank_modification(adm_ckey, "Removed")
 
-/*		else if(task == "rank")
+		else if(task == "rank")
 			var/new_rank
-			if(admin_ranks.len)
-				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in (admin_ranks|"*New Rank*")
+			if(GLOB.admin_ranks.len)
+				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in (GLOB.admin_ranks|"*New Rank*")
 			else
 				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in list("Judge","Architect", "Executor", "Hound", "*New Rank*")
 
@@ -316,15 +316,15 @@
 						usr << "<font color='red'>Error: Topic 'editrights': Invalid rank</font>"
 						return
 					if(config.admin_legacy_system)
-						if(admin_ranks.len)
-							if(new_rank in admin_ranks)
-								rights = admin_ranks[new_rank]		//we typed a rank which already exists, use its rights
+						if(GLOB.admin_ranks.len)
+							if(new_rank in GLOB.admin_ranks)
+								rights = GLOB.admin_ranks[new_rank]		//we typed a rank which already exists, use its rights
 							else
-								admin_ranks[new_rank] = 0			//add the new rank to admin_ranks
+								GLOB.admin_ranks[new_rank] = 0			//add the new rank to admin_ranks
 				else
 					if(config.admin_legacy_system)
 						new_rank = ckeyEx(new_rank)
-						rights = admin_ranks[new_rank]				//we input an existing rank, use its rights
+						rights = GLOB.admin_ranks[new_rank]				//we input an existing rank, use its rights
 
 			if(D)
 				D.disassociate()								//remove adminverbs and unlink from client
@@ -333,10 +333,10 @@
 			else
 				D = new /datum/admins(new_rank, rights, adm_ckey)
 
-			var/client/C = directory[adm_ckey]						//find the client with the specified ckey (if they are logged in)
+			var/client/C = GLOB.directory[adm_ckey]						//find the client with the specified ckey (if they are logged in)
 			D.associate(C)											//link up with the client and add verbs
 
-			log_admin_rank_modification(adm_ckey, new_rank)*/
+			log_admin_rank_modification(adm_ckey, new_rank)
 
 		else if(task == "permissions")
 			if(!D)	return

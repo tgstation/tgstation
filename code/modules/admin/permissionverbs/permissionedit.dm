@@ -102,7 +102,7 @@
 		return
 	if(!usr.client)
 		return
-	if(check_rights(R_PERMISSIONS))
+	if(!check_rights(R_PERMISSIONS))
 		return
 
 	if(!GLOB.dbcon.Connect())
