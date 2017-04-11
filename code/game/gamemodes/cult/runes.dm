@@ -144,7 +144,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
 	sleep(5)
-	animate(transform = oldtransform, alpha = 255, time = 0)
+	animate(src, transform = oldtransform, alpha = 255, time = 0)
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
