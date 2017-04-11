@@ -50,7 +50,7 @@
 
 /obj/item/projectile/bullet/pellet/weak/on_range()
 	do_sparks(1, TRUE, src)
- 	..()
+	..()
 
 /obj/item/projectile/bullet/pellet/overload
 	damage = 3
@@ -64,9 +64,9 @@
  	explosion(target, 0, 0, 2)
 
 /obj/item/projectile/bullet/pellet/overload/on_range()
- 	explosion(src, 0, 0, 2)
+	explosion(src, 0, 0, 2)
 	do_sparks(3, TRUE, src)
- 	..()
+	..()
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20

@@ -195,7 +195,7 @@
 			// use a lot of power
 			use_power(power * 10)
 
-			do_sparks(5, TRUE, get_turf(telepad)
+			do_sparks(5, TRUE, get_turf(telepad))
 
 			temp_msg = "Teleport successful.<BR>"
 			if(teles_left < 10)
