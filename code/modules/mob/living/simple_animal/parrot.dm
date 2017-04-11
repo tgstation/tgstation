@@ -638,7 +638,7 @@
 					item = I
 					break
 		if(item)
-			if(!AStar(src, get_turf(item), /turf/proc/Distance_cardinal))
+			if(!trace_pathfind(src, get_turf(item), /turf/proc/Distance_cardinal))
 				item = null
 				continue
 			return item
