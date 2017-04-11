@@ -923,6 +923,15 @@
 /mob/proc/update_health_hud()
 	return
 
+/mob/proc/update_sight()
+	sync_lighting_plane_alpha()
+
+/mob/proc/sync_lighting_plane_alpha()
+	if(hud_used)
+		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
+		if (L)
+			L.alpha = lighting_alpha
+
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if("stat")
@@ -956,6 +965,8 @@
 			updatehealth()
 		if("resize")
 			update_transform()
+		if("lighting_alpha")
+			sync_lighting_plane_alpha()
 
 
 /mob/proc/is_literate()

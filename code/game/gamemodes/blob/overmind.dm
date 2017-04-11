@@ -7,13 +7,12 @@
 	mouse_opacity = 1
 	move_on_shuttle = 1
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
 
 	pass_flags = PASSBLOB
 	faction = list("blob")
-
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
@@ -21,7 +20,6 @@
 	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
 	var/list/blob_mobs = list()
 	var/list/resource_blobs = list()
-	var/ghostimage = null
 	var/free_chem_rerolls = 1 //one free chemical reroll
 	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
 	var/placed = 0
@@ -52,9 +50,6 @@
 	if(blob_core)
 		blob_core.update_icon()
 
-	ghostimage = image(src.icon,src,src.icon_state)
-	GLOB.ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
-	updateallghostimages()
 	..()
 
 /mob/camera/blob/Life()
@@ -82,11 +77,7 @@
 			BM.overmind = null
 			BM.update_icons()
 	GLOB.overminds -= src
-	if(ghostimage)
-		GLOB.ghost_darkness_images -= ghostimage
-		qdel(ghostimage)
-		ghostimage = null
-		updateallghostimages()
+
 	return ..()
 
 /mob/camera/blob/Login()

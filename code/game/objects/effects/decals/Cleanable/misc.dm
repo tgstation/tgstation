@@ -171,7 +171,7 @@
 
 /obj/effect/decal/cleanable/glitter
 	name = "generic glitter pile"
-	desc = "the herpes of arts and crafts"
+	desc = "The herpes of arts and crafts."
 	icon = 'icons/effects/tile_effects.dmi'
 	gender = NEUTER
 
