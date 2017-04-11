@@ -128,6 +128,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	stat("Closed Tickets:", cstatclick.update("[closed_tickets.len]"))
 	stat("Resolved Tickets:", rstatclick.update("[resolved_tickets.len]"))
 
+/datum/admin_help_tickets/proc/ClientLogin(client/C)
+	for(var/I in active_tickets)
+		var/datum/admin_help/AH = I
+		if(AH.initiator_ckey == C.ckey)
+			AH.initiator = C
+			break
+
+/datum/admin_help_tickets/proc/ClientLogout(client/C)
+	for(var/I in active_tickets)
+		var/datum/admin_help/AH = I
+		if(AH.initiator == C)
+			AH.initiator = null	//makes the del easier
+			break
+
 /obj/effect/statclick/ticket_list
 	var/current_state
 
@@ -146,6 +160,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/closed_at
 
 	var/client/initiator
+	var/initiator_ckey
 	var/initiator_key_name
 
 	var/original_message
@@ -170,6 +185,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	initiator = C
+	initiator_ckey = initiator.ckey
 	initiator_key_name = key_name_admin(initiator)
 	if(initiator.current_ticket)
 		stack_trace("Multiple ahelp current_tickets")
@@ -194,13 +210,14 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		to_chat(C, "<span class='adminnotice'>PM to-<b>Admins</b>: [original_message]</span>")
 
 		//send it to irc if nobody is on and tell us how many were on
-		var/admin_number_present = send2irc_adminless_only(initiator.ckey,original_message)
+		var/admin_number_present = send2irc_adminless_only(initiator_ckey,original_message)
 		log_admin_private("HELP: [key_name(initiator)]: [original_message] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 		if(admin_number_present <= 0)
 			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
 
 	GLOB.ahelp_tickets.active_tickets += src
 
+//initiator must not be null
 /datum/admin_help/proc/FullMonty(ref_src)
 	if(!ref_src)
 		ref_src = "\ref[src]"
