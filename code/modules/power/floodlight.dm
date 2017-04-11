@@ -85,6 +85,7 @@
 /obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, O, time = 20)
+		change_setting(1)
 		if(anchored)
 			connect_to_network()
 		else

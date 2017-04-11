@@ -52,7 +52,7 @@
 	var/revealed = FALSE //If the revenant can take damage from normal sources.
 	var/unreveal_time = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
 	var/unstun_time = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
-	var/inhibited = TRUE //If the revenant's abilities are blocked by a chaplain's power.
+	var/inhibited = FALSE //If the revenant's abilities are blocked by a chaplain's power.
 	var/essence_drained = 0 //How much essence the revenant will drain from the corpse it's feasting on.
 	var/draining = FALSE //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice

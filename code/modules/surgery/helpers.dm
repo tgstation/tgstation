@@ -31,6 +31,8 @@
 					continue
 				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
 					continue
+				if(S.requires_real_bodypart && affecting.is_pseudopart)
+					continue
 			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
 				continue
 			if(!S.can_start(user, M))

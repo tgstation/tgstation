@@ -816,6 +816,9 @@
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
 
+/mob/living/silicon/robot/syndicate/ResetModule()
+	return
+
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"
 	playstyle_string = "<span class='userdanger'>You are a Syndicate medical cyborg!</span><br>\
@@ -1060,7 +1063,7 @@
 
 /mob/living/silicon/robot/proc/undeploy()
 
-	if(!deployed || !mainframe)
+	if(!deployed || !mind || !mainframe)
 		return
 	mainframe.redeploy_action.Grant(mainframe)
 	mainframe.redeploy_action.last_used_shell = src
