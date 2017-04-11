@@ -468,7 +468,6 @@
 /mob/living/carbon/proc/danceyhelper()
 	if (src)
 		animate(src, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-		initial_matrix = matrix(transform)
 	sleep (70)
 	if (src)
 		animate(src, transform = null, time = 1, loop = 0)
