@@ -306,7 +306,7 @@
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
 			i.on_write(src,usr)
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;'><A href='?src=\ref[src];help=1'>Paper Help</A></div></HTML>", "window=[name]") // Update the window
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]") // Update the window
 			update_icon()
 
 
@@ -321,7 +321,7 @@
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;'><A href='?src=\ref[src];help=1'>Paper Help</A></div></HTML>", "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]")
 			return
 		else
 			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
