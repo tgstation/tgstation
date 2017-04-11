@@ -11,11 +11,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
-/datum/admins/proc/show_player_panel(mob/M in GLOB.mob_list)
-	set category = "Admin"
-	set name = "Show Player Panel"
-	set desc="Edit player (respawn, ban, heal, etc)"
-
+/datum/admins/proc/show_player_panel(mob/M)
 	if(!check_rights())
 		return
 
