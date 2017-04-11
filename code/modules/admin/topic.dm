@@ -16,6 +16,9 @@
 		else
 			to_chat(usr, "Ticket [ahelp_ref] has been deleted!")
 
+	else if(href_list["ahelp_tickets"])
+		GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
+
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
 

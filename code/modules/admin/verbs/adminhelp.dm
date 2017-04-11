@@ -99,7 +99,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			title = "Resolved Tickets"
 	if(!l2b)
 		return
-	var/list/dat = list()
+	var/list/dat = list("<A HREF='?_src_=holder;ahelp_tickets=[state]>Refresh</A><br>'")
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
 		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[key_name(AH.initiator)]: [AH.original_message]</A></span>"
