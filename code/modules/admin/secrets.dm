@@ -424,6 +424,14 @@
 		if("anime")
 			if(!check_rights(R_FUN))
 				return
+			var/animetype = alert("Would you like to have the clothes be changed?",,"Yes","No","Cancel")
+
+			var/droptype
+			if(animetype =="Yes")
+				droptype = alert("Make the uniforms Nodrop?",,"Yes","No","Cancel")
+
+			if(animetype == "Cancel" || droptype == "Cancel")
+				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","CC")
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
@@ -434,16 +442,21 @@
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 						H.dna.features["tail_human"] = "Cat"
 						H.dna.features["ears"] = "Cat"
-					var/seifuku = pick(typesof(/obj/item/clothing/under/schoolgirl))
-					var/obj/item/clothing/under/schoolgirl/I = new seifuku
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
 					var/forename = names.len > 1 ? names[2] : names[1]
 					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
-					H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE)
-					H.equip_to_slot_or_del(I, slot_w_uniform)
-					I.flags |= NODROP
+					H.update_mutant_bodyparts()
+					if(animetype == "Yes")
+						var/seifuku = pick(typesof(/obj/item/clothing/under/schoolgirl))
+						var/obj/item/clothing/under/schoolgirl/I = new seifuku
+						var/olduniform = H.w_uniform
+						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
+						H.equip_to_slot_or_del(I, slot_w_uniform)
+						qdel(olduniform)
+						if(droptype == "Yes")
+							I.flags |= NODROP
 				else
 					to_chat(H, "You're not kawaii enough for this.")
 
