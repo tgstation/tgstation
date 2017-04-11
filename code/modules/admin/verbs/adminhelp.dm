@@ -369,7 +369,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 /obj/effect/statclick/ahelp/New(loc, datum/admin_help/AH)
 	ahelp_datum = AH
-	..(loc, AH.interactions[1])
+	..(loc, AH.original_message)
 
 /obj/effect/statclick/ahelp/Click()
 	ahelp_datum.TicketPanel()
