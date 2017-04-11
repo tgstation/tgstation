@@ -195,11 +195,11 @@ function handle_pr($payload) {
 	switch ($payload["action"]) {
 		case 'opened':
 			tag_pr($payload, true);
-			break;
+			return;
 		case 'edited':
 		case 'synchronize':
 			tag_pr($payload, false);
-			break;
+			return;
 		case 'reopened':
 			$action = $payload['action'];
 			break;
