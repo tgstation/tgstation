@@ -280,6 +280,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	RemoveActive()
 	GLOB.ahelp_tickets.closed_tickets += src
 	state = AHELP_CLOSED
+	feedback_inc("ahelp_close")
 	interactions += "Closed by [key_name_admin(usr)]."
 	message_admins("Ticket #[id] closed by [key_name(usr)]")
 	log_admin_private("Ticket #[id] closed by [key_name_admin(usr)].")
@@ -294,12 +295,25 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		initiator.giveadminhelpverb()	//only practical difference between resolved and closed
 
 	state = AHELP_RESOLVED
+	feedback_inc("ahelp_resolve")
 	interactions += "Resolved by [key_name_admin(usr)]."
 	message_admins("Ticket #[id] resolved by [key_name_admin(usr)]")
 	log_admin_private("Ticket #[id] resolved by [key_name(usr)].")
 
 /datum/admin_help/proc/TicketPanel()
 	var/list/dat = list("<h3>Admin Help Ticket #[id]: [LinkedReplyName()]</h3>")
+	dat += "<br><b>State: "
+	switch(state)
+		if(AHELP_ACTIVE)
+			dat += "<font color='red'>OPEN</font>"
+		if(AHELP_RESOLVED)
+			dat += "<font color='gree'>RESOLVED</font>"
+		if(AHELP_ACTIVE)
+			dat += "CLOSED"
+		else
+			dat += "UNKNOWN"
+	dat += "</b>"
+	dat += "<br>Opened at: [gameTimeStamp(opened_at)][closed_at ? "<br>Closed at: [gameTimeStamp(closed_at)]" : ""]<br>"
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty()]<br>"
 	else
@@ -314,9 +328,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	popup.open()
 
 /datum/admin_help/proc/Reject()
-	var/cd = usr.client.holder.spamcooldown
-	if(world.time && cd > world.time)
-		to_chat(usr, "Please wait [max(round((cd - world.time)*0.1, 0.1), 0)] seconds.")
+	if(state != AHELP_ACTIVE)
 		return
 	
 	if(!initiator)
@@ -330,16 +342,14 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
 	to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
 
-	message_admins("[key_name_admin(usr)] Rejected [initiator.key]'s admin help. [initiator.key]'s Adminhelp verb has been returned to them.")
-	log_admin_private("[key_name(usr)] Rejected [initiator.key]'s admin help.")
-	usr.client.holder.spamcooldown = world.time + 150 // 15 seconds
+	feedback_inc("ahelp_reject")
+	message_admins("[key_name_admin(usr)] Rejected [initiator_key_name]'s admin help. [initiator_key_name]'s Adminhelp verb has been returned to them.")
+	log_admin_private("[key_name(usr)] Rejected [initiator_key_name]'s admin help.")
 	interactions += "Rejected by [key_name_admin(usr)]."
 	Close()
 
 /datum/admin_help/proc/ICIssue()
-	var/cd = usr.client.holder.spamcooldown
-	if(world.time && cd > world.time)
-		to_chat(usr, "Please wait [max(round((cd - world.time)*0.1, 0.1), 0)] seconds.")
+	if(state != AHELP_ACTIVE)
 		return
 
 	var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
@@ -348,10 +358,11 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	to_chat(initiator, msg)
 
-	message_admins("[key_name_admin(usr)] marked [initiator.key]'s admin help as an IC issue.")
+	feedback_inc("ahelp_icissue")
+	message_admins("[key_name_admin(usr)] marked [initiator_key_name]'s admin help as an IC issue.")
 	interactions += "Marked as IC issue by [key_name_admin(usr)]"
-	log_admin_private("[key_name(usr)] marked [initiator.key]'s admin help as an IC issue.")
-	usr.client.holder.spamcooldown = world.time + 150 // 15 seconds
+	log_admin_private("[key_name(usr)] marked [initiator_key_name]'s admin help as an IC issue.")
+	Close()
 
 /datum/admin_help/proc/Action(action)
 	testing("Ahelp action: [action]")
