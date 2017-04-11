@@ -71,9 +71,277 @@
 
 
 /client/var/adminhelptimerid = 0
+/client/var/datum/admin_help/current_ticket
+
+GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
+
+/datum/admin_help_tickets
+	var/list/active_tickets = list()
+	var/list/closed_tickets = list()
+	var/list/resolved_tickets = list()
+
+	var/obj/effect/statclick/ticket_list/astatclick = new(null, null, AHELP_ACTIVE)
+	var/obj/effect/statclick/ticket_list/cstatclick = new(null, null, AHELP_CLOSED)
+	var/obj/effect/statclick/ticket_list/rstatclick = new(null, null, AHELP_RESOLVED)
+
+/datum/admin_help_tickets/proc/BrowseTickets(state)
+	var/list/l2b
+	var/title
+	switch(state)
+		if(AHELP_ACTIVE)
+			l2b = active_tickets
+			title = "Active Tickets"
+		if(AHELP_CLOSED)
+			l2b = closed_tickets
+			title = "Closed Tickets"
+		if(AHELP_RESOLVED)
+			l2b = resolved_tickets
+			title = "Resolved Tickets"
+	if(!l2b)
+		return
+	var/dat = "<html><head><title>[title]</title></head>"
+	for(var/I in l2b)
+		var/datum/admin_help/AH = I
+		dat += "<span class='adminnotice'><b><font color=red>Ticket #[AH.id]</font>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[key_name(AH.initiator)]: [AH.original_message]</A></span>"
+		
+	usr << browse(dat, "window=ahelp_list[state];size=600x480")
+
+/datum/admin_help_tickets/Destroy()
+	for(var/I in active_tickets)
+		qdel(I)
+	for(var/I in closed_tickets)
+		qdel(I)
+	for(var/I in resolved_tickets)
+		qdel(I)
+	QDEL_NULL(astatclick)
+	QDEL_NULL(cstatclick)
+	QDEL_NULL(rstatclick)
+	return ..()
+
+/datum/admin_help_tickets/proc/stat_entry()
+	stat("Active Tickets:", astatclick.update("[active_tickets.len]"))
+	for(var/I in active_tickets)
+		var/datum/admin_help/AH = I
+		stat("Ticket #[AH.id]:", AH.statclick)
+	stat("Closed Tickets:", cstatclick.update("[closed_tickets.len]"))
+	stat("Resolved Tickets:", rstatclick.update("[resolved_tickets.len]"))
+
+/obj/effect/statclick/ticket_list
+	var/current_state
+
+/obj/effect/statclick/ticket_list/New(loc, name, state)
+	current_state = state
+	..()
+
+/obj/effect/statclick/ticket_list/Click()
+	GLOB.ahelp_tickets.BrowseTickets(current_state)
+
+/datum/admin_help
+	var/id
+	var/state = AHELP_ACTIVE
+
+	var/opened_at
+	var/closed_at
+
+	var/client/initiator
+
+	var/original_message
+	var/parsed_message
+
+	var/list/interactions
+
+	var/obj/effect/statclick/ahelp/statclick
+
+	var/static/ticket_counter = 0
+
+/datum/admin_help/New(msg, client/C)
+	//clean the input msg
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	if(!msg || !C.mob)
+		qdel(src)
+		return
+
+	id = ++ticket_counter
+	opened_at = world.time
+
+	original_message = msg
+
+	//remove our adminhelp verb temporarily to prevent spamming of admins.
+	initiator = C
+	initiator.current_ticket = src
+	initiator.verbs -= /client/verb/adminhelp
+	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
+
+	parsed_message = keywords_lookup(msg)
+	interactions = list("<font color='red'>[LinkedReplyName()]: [parsed_message]</font>")
+
+	statclick = new(null, src)
+
+	MessageNoRecipient(parsed_message)
+
+	//show it to the person adminhelping too
+	to_chat(C, "<span class='adminnotice'>PM to-<b>Admins</b>: [original_message]</span>")
+
+	//send it to irc if nobody is on and tell us how many were on
+	var/admin_number_present = send2irc_adminless_only(initiator.ckey,original_message)
+	log_admin_private("HELP: [key_name(initiator)]: [original_message] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+	if(admin_number_present <= 0)
+		to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
+
+	GLOB.ahelp_tickets.active_tickets += src
+
+/datum/admin_help/proc/FullMonty(ref_src)
+	if(!ref_src)
+		ref_src = "\ref[src]"
+	. = ADMIN_FULLMONTY_NONAME(initiator.mob)
+	if(state == AHELP_ACTIVE)
+		. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=reject'>REJT</A>)"
+		. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=icissue'>IC</A>) (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=close'>CLOSE</A>)"\
+		. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=resolve'>RSLVE</A>)"
+
+/datum/admin_help/proc/LinkedReplyName(ref_src)
+	if(!ref_src)
+		ref_src = "\ref[src]"
+	return "</font><A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=reply'>[key_name(initiator)]</A>"
+
+/datum/admin_help/proc/TicketHref(msg, ref_src)
+	if(!ref_src)
+		ref_src = "\ref[src]"
+	return "<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=ticket'>[msg]</A>"
+
+//message from the initiator without a target
+/datum/admin_help/proc/MessageNoRecipient(msg)
+	var/ref_src = "\ref[src]"
+	var/chat_msg = "<span class='adminnotice'><b><font color=red>Ticket [TicketHref("#[id]", ref_src)]: [LinkedReplyName(ref_src)] [FullMonty(ref_src)] :</b> [parsed_message]</span>"
+
+	//send this msg to all admins
+
+	for(var/client/X in GLOB.admins)
+		if(X.prefs.toggles & SOUND_ADMINHELP)
+			X << 'sound/effects/adminhelp.ogg'
+		window_flash(X, ignorepref = TRUE)
+		to_chat(X, chat_msg)
+
+/datum/admin_help/Destroy()
+	RemoveActive()
+	GLOB.ahelp_tickets.closed_tickets -= src
+	GLOB.ahelp_tickets.resolved_tickets -= src
+	return ..()
+
+/datum/admin_help/proc/RemoveActive()
+	closed_at = world.time
+	QDEL_NULL(statclick)
+	GLOB.ahelp_tickets.active_tickets -= src
+	if(initiator && initiator.current_ticket == src)
+		initiator.current_ticket = null
+
+/datum/admin_help/proc/Close()
+	if(state != AHELP_ACTIVE)
+		return
+	RemoveActive()
+	GLOB.ahelp_tickets.closed_tickets += src
+	state = AHELP_CLOSED
+	interactions += "Closed by [key_name_admin(usr)]."
+	message_admins("Ticket #[id] closed by [key_name(usr)]")
+	log_admin_private("Ticket #[id] closed by [key_name_admin(usr)].")
+
+/datum/admin_help/proc/Resolve()
+	if(state != AHELP_ACTIVE)
+		return
+	RemoveActive()
+	GLOB.ahelp_tickets.resolved_tickets += src
+	
+	if(initiator)
+		initiator.giveadminhelpverb()	//only practical difference between resolved and closed
+
+	state = AHELP_RESOLVED
+	interactions += "Resolved by [key_name_admin(usr)]."
+	message_admins("Ticket #[id] resolved by [key_name_admin(usr)]")
+	log_admin_private("Ticket #[id] resolved by [key_name(usr)].")
+
+/datum/admin_help/proc/TicketPanel()
+	var/dat = "<html><head><title>Ticket #[id]</title></head>"
+	dat += "<h3>Admin Help Ticket #[id]: [key_name(initiator)]</h3>"
+	dat += "<b>Actions:</b> [FullMonty()]<br>"
+	dat += "<br>[TicketHref("Refresh")]<br>"
+	dat += "<br><b>Log:</b><br><br>"
+	for(var/I in interactions)
+		dat += "[I]<br>"
+	usr << browse(dat, "window=ahelp[id];size=600x480")
+
+/datum/admin_help/proc/Reject()
+	var/cd = usr.client.holder.spamcooldown
+	if(world.time && cd > world.time)
+		to_chat(usr, "Please wait [max(round((cd - world.time)*0.1, 0.1), 0)] seconds.")
+		return
+	
+	if(!initiator)
+		return
+
+	initiator.giveadminhelpverb()
+
+	initiator << 'sound/effects/adminhelp.ogg'
+
+	to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
+	to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
+	to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
+
+	message_admins("[key_name_admin(usr)] Rejected [initiator.key]'s admin help. [initiator.key]'s Adminhelp verb has been returned to them.")
+	log_admin_private("[key_name(usr)] Rejected [initiator.key]'s admin help.")
+	usr.client.holder.spamcooldown = world.time + 150 // 15 seconds
+	interactions += "Rejected by [key_name_admin(usr)]."
+	Close()
+
+/datum/admin_help/proc/ICIssue()
+	var/cd = usr.client.holder.spamcooldown
+	if(world.time && cd > world.time)
+		to_chat(usr, "Please wait [max(round((cd - world.time)*0.1, 0.1), 0)] seconds.")
+		return
+
+	var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
+	msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
+	msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
+
+	to_chat(initiator, msg)
+
+	message_admins("[key_name_admin(usr)] marked [initiator.key]'s admin help as an IC issue.")
+	interactions += "Marked as IC issue by [key_name_admin(usr)]"
+	log_admin_private("[key_name(usr)] marked [initiator.key]'s admin help as an IC issue.")
+	usr.client.holder.spamcooldown = world.time + 150 // 15 seconds
+
+/datum/admin_help/proc/Action(action)
+	testing("Ahelp action: [action]")
+	switch(action)
+		if("ticket")
+			TicketPanel()
+		if("reject")
+			Reject()
+		if("reply")
+			usr.client.cmd_ahelp_reply(initiator)
+		if("icissue")
+			ICIssue()
+		if("close")
+			Close()
+		if("resolve")
+			Resolve()
+
+/obj/effect/statclick/ahelp
+	var/datum/admin_help/ahelp_datum
+
+/obj/effect/statclick/ahelp/New(loc, datum/admin_help/AH)
+	ahelp_datum = AH
+	..(loc, AH.interactions[1])
+
+/obj/effect/statclick/ahelp/Click()
+	ahelp_datum.TicketPanel()
+
+/obj/effect/statclick/ahelp/Destroy()
+	ahelp_datum = null
+	return ..()
 
 /client/proc/giveadminhelpverb()
 	src.verbs |= /client/verb/adminhelp
+	deltimer(adminhelptimerid)
 	adminhelptimerid = 0
 
 /client/verb/adminhelp(msg as text)
@@ -88,47 +356,14 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src, "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>")
 		return
-	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-	//clean the input msg
 	if(!msg)
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
-	var/original_msg = msg
 
-	//remove our adminhelp verb temporarily to prevent spamming of admins.
-	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
-
-	msg = keywords_lookup(msg)
-
-	if(!mob)
-		return						//this doesn't happen
-
-	var/ref_client = "\ref[src]"
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_FULLMONTY_NONAME(mob)] [ADMIN_SMITE(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>):</b> [msg]</span>"
-
-	//send this msg to all admins
-
-	for(var/client/X in GLOB.admins)
-		if(X.prefs.toggles & SOUND_ADMINHELP)
-			X << 'sound/effects/adminhelp.ogg'
-		window_flash(X, ignorepref = TRUE)
-		to_chat(X, msg)
-
-
-	//show it to the person adminhelping too
-	to_chat(src, "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>")
-
-	//send it to irc if nobody is on and tell us how many were on
-	var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
-	log_admin_private("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-	if(admin_number_present <= 0)
-		to_chat(src, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
+	new /datum/admin_help(msg, src)
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
 
 /proc/get_admin_counts(requiredflags = R_BAN)
 	. = list("total" = list(), "noflags" = list(), "afk" = list(), "stealth" = list(), "present" = list())
@@ -192,3 +427,12 @@
 			message += "[admin]"
 
 	return jointext(message, "")
+
+/proc/admin_ticket_log(what, message)
+	var/client/C = what
+	var/mob/Mob = what
+	if(istype(Mob))
+		C = Mob.client
+	if(istype(C) && C.current_ticket)
+		C.current_ticket.interactions += message
+		
