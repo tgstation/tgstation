@@ -94,6 +94,9 @@
 		return 0
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
+	// Make it so the bioterror spray doesn't spray yourself when you click your belt item
+	if (target.loc == usr)
+		return
 	//TODO; Add support for reagents in water.
 	if(refilling)
 		refilling = FALSE
