@@ -339,9 +339,12 @@
 	var/list/cached_construction_steps = SSatoms.blueprints_cache[type]
 	if(cached_construction_steps.len)
 		var/datum/construction_state/first_step = cached_construction_steps[1]
-		if(!first_step.construct_fully)
+		var/datum/construction_state/first/very_first_step = first_step
+		if(!istype(very_first_step))
+			very_first_step = null
+		if(!(very_first_step && very_first_step.construct_fully))
 			ClearStoredConstructionItems()
-			if(first_step.type == /datum/construction_state/first)
+			if(very_first_step)
 				first_step = first_step.next_state
 			if(first_step)
 				first_step.OnReached(src, user, TRUE)
