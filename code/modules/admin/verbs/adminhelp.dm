@@ -267,7 +267,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		else
 			dat += "UNKNOWN"
 	dat += "</b>[GLOB.TAB][TicketHref("Refresh")]<br>"
-	dat += "<br>Opened at: [gameTimestamp(opened_at)][closed_at ? "<br>Closed at: [gameTimestamp(closed_at)]" : ""]<br><br>"
+	dat += "<br>Opened at: [gameTimestamp(wtime = opened_at)][closed_at ? "<br>Closed at: [gameTimestamp(wtime = closed_at)]" : ""]<br><br>"
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty()]<br>"
 	else
