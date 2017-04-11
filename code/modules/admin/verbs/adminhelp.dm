@@ -256,7 +256,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/TicketPanel()
 	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
 	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName()]</h4>"
-	dat += "<br><b>State: "
+	dat += "<b>State: "
 	switch(state)
 		if(AHELP_ACTIVE)
 			dat += "<font color='red'>OPEN</font>"
@@ -266,13 +266,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			dat += "CLOSED"
 		else
 			dat += "UNKNOWN"
-	dat += "</b>"
-	dat += "<br>Opened at: [gameTimestamp(opened_at)][closed_at ? "<br>Closed at: [gameTimestamp(closed_at)]" : ""]<br>"
+	dat += "</b>[GLOB.TAB][TicketHref("Refresh")]<br>"
+	dat += "<br>Opened at: [gameTimestamp(opened_at)][closed_at ? "<br>Closed at: [gameTimestamp(closed_at)]" : ""]<br><br>"
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty()]<br>"
 	else
-		dat += "<b>DISCONNECTED</b>"
-	dat += "<br>[TicketHref("Refresh")]<br>"
+		dat += "<b>DISCONNECTED</b><br>"
 	dat += "<br><b>Log:</b><br><br>"
 	for(var/I in interactions)
 		dat += "[I]<br>"
