@@ -362,8 +362,15 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(!msg)
 		return
 
-	new /datum/admin_help(msg, src)
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(current_ticket)
+		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "Yes")
+			current_ticket.MessageNoRecipient(msg)
+			return
+		current_ticket.interactions += "[key_name_admin(usr)] opened a new ticket."
+		current_ticket.Close()
+
+	new /datum/admin_help(msg, src)
 
 /proc/get_admin_counts(requiredflags = R_BAN)
 	. = list("total" = list(), "noflags" = list(), "afk" = list(), "stealth" = list(), "present" = list())
