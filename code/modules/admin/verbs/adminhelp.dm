@@ -126,7 +126,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in active_tickets)
 		var/datum/admin_help/AH = I
 		if(AH.initiator)
-			stat("Ticket #[AH.id]:", AH.statclick)
+			stat("#[AH.id]. [AH.initiator_key_name]:", AH.statclick)
 		else
 			++num_disconnected
 	if(num_disconnected)
@@ -139,14 +139,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		var/datum/admin_help/AH = I
 		if(AH.initiator_ckey == C.ckey)
 			AH.initiator = C
+			C.current_ticket = AH
 			break
 
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
-	for(var/I in active_tickets)
-		var/datum/admin_help/AH = I
-		if(AH.initiator == C)
-			AH.initiator = null	//makes the del easier
-			break
+	if(C.current_ticket)
+		C.current_ticket.initiator = null
+		C.current_ticket = null
 
 /obj/effect/statclick/ticket_list
 	var/current_state
@@ -165,7 +164,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/opened_at
 	var/closed_at
 
-	var/client/initiator
+	var/client/initiator	//semi-misnomer, it's the person who ahelped/was bwoinked
 	var/initiator_ckey
 	var/initiator_key_name
 
@@ -192,21 +191,21 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	initiator = C
 	initiator_ckey = initiator.ckey
-	initiator_key_name = key_name_admin(initiator)
+	initiator_key_name = key_name(initiator, FALSE, TRUE)
 	if(initiator.current_ticket)
 		stack_trace("Multiple ahelp current_tickets")
 		initiator.current_ticket.interactions += "Ticket erroneously left open by code"
 		initiator.current_ticket.Close()
 	initiator.current_ticket = src
-	initiator.verbs -= /client/verb/adminhelp
-	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
+
+	TimeoutVerb()
 
 	var/parsed_message = keywords_lookup(msg)
 
 	statclick = new(null, src)
 
 	if(is_bwoink)
-		interactions = list("<font color='blue'>[key_name_admin(usr)] bwoinked [LinkedReplyName()]</font>")
+		interactions = list("<span class='adminnotice'>[key_name_admin(usr)] bwoinked [LinkedReplyName()]</span>")
 		message_admins("<span class='adminhelp'>Ticket [TicketHref("#[id]")] created</span>")
 	else
 		interactions = list("<span class='adminhelp'>[LinkedReplyName()]: [parsed_message]</span>")
@@ -223,6 +222,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	GLOB.ahelp_tickets.active_tickets += src
 
+/datum/admin_help/proc/TimeoutVerb()
+	initiator.verbs -= /client/verb/adminhelp
+	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
+
 //initiator must not be null
 /datum/admin_help/proc/FullMonty(ref_src)
 	if(!ref_src)
@@ -236,7 +239,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/LinkedReplyName(ref_src)
 	if(!ref_src)
 		ref_src = "\ref[src]"
-	return "</font><A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
+	return "<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
 
 /datum/admin_help/proc/TicketHref(msg, ref_src)
 	if(!ref_src)
@@ -246,7 +249,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //message from the initiator without a target
 /datum/admin_help/proc/MessageNoRecipient(msg)
 	var/ref_src = "\ref[src]"
-	var/chat_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]: [LinkedReplyName(ref_src)] [FullMonty(ref_src)] :</span> [msg]</span>"
+	var/chat_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]:</span> [LinkedReplyName(ref_src)] [FullMonty(ref_src)]: [msg]</span>"
 
 	//send this msg to all admins
 
@@ -263,6 +266,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	return ..()
 
 /datum/admin_help/proc/RemoveActive()
+	if(state != AHELP_ACTIVE)
+		return
 	closed_at = world.time
 	QDEL_NULL(statclick)
 	GLOB.ahelp_tickets.active_tickets -= src
@@ -405,6 +410,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(current_ticket)
 		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "Yes")
 			current_ticket.MessageNoRecipient(msg)
+			current_ticket.TimeoutVerb()
 			return
 		current_ticket.interactions += "[key_name_admin(usr)] opened a new ticket."
 		current_ticket.Close()
