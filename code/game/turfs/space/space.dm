@@ -211,3 +211,13 @@
 			ChangeTurf(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
+	
+/turf/open/space/ReplaceWithLattice()
+	var/dest_x = destination_x
+	var/dest_y = destination_y
+	var/dest_z = destination_z
+	..()
+	destination_x = dest_x
+	destination_y = dest_y
+	destination_z = dest_z
+	
