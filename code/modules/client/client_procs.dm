@@ -233,7 +233,7 @@ GLOBAL_LIST(external_rsc_urls)
 		to_chat(src, config.client_error_message)
 		to_chat(src, "Your version: [byond_version]")
 		to_chat(src, "Required version: [config.client_error_version] or later")
-		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
+		to_chat(src, "Visit http://www.byond.com/download/ to get the latest beta version of byond.")
 		if (holder)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
