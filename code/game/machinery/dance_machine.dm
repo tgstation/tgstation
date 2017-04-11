@@ -1,7 +1,7 @@
 // DISCO DANCE MACHINE - For engineering power optimization incentive nurturing test system (POINTS)
 
 /obj/machinery/disco
-	name = "Radiant Dance Machine Mark IV"
+	name = "radiant dance machine mark IV"
 	desc = "The first three prototypes were discontinued after mass casualty incidents."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "disco0"
@@ -60,6 +60,13 @@
 			return
 	return ..()
 
+/obj/machinery/disco/update_icon()
+	if(active)
+		icon_state = "disco1"
+	else
+		icon_state = "disco0"
+	..()
+	
 
 /obj/machinery/disco/interact(mob/user)
 	if (!anchored)
@@ -108,7 +115,7 @@
 					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 					return
 				active = TRUE
-				icon_state = "disco1"
+				update_icon()
 				dance_setup()
 				START_PROCESSING(SSobj, src)
 				lights_spin()
@@ -116,7 +123,7 @@
 			else if(active)
 				active = FALSE
 				STOP_PROCESSING(SSobj, src)
-				icon_state = "disco0"
+				update_icon()
 				dance_over()
 				stop = world.time + 300
 				updateUsrDialog()
@@ -303,7 +310,7 @@
 				glow.light_range = glow.range * 0.85
 				glow.update_light()
 				continue
-		if(prob(2))
+		if(prob(2))  // Unique effects for the dance floor that show up randomly to mix things up
 			INVOKE_ASYNC(src, .proc/hierofunk)
 		sleep(selection.song_beat)
 
@@ -380,15 +387,9 @@
 		 time--
 
 /obj/machinery/disco/proc/dance5(var/mob/living/carbon/M)
+	INVOKE_ASYNC(M, .proc/dance5helper)
 	var/matrix/initial_matrix = matrix(M.transform)
-	spawn (0)
-		if (M)
-			animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-			initial_matrix = matrix(M.transform)
-		sleep (70)
-		if (M)
-			animate(M, transform = null, time = 1, loop = 0)
-	for (var/i = 0, i < 60, i++)
+	for (var/i in 1 to 60)
 		if (!M)
 			return
 		if (i<31)
@@ -420,16 +421,17 @@
 		sleep (1)
 	animate(M, transform = null, time = 1, loop = 0)
 
-/mob/living/carbon/proc/dancey()
+/obj/machinery/disco/proc/dance5helper(var/mob/living/carbon/M)
+	if (M)
+		animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
+	sleep (70)
+	if (M)
+		animate(M, transform = null, time = 1, loop = 0)
+
+/mob/living/carbon/proc/dancey() // Dance5 except independent of the machine if admins want to meme it up
+	INVOKE_ASYNC(src, .proc/danceyhelper)
 	var/matrix/initial_matrix = matrix(transform)
-	spawn (0)
-		if (src)
-			animate(src, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-			initial_matrix = matrix(transform)
-		sleep (70)
-		if (src)
-			animate(src, transform = null, time = 1, loop = 0)
-	for (var/i = 0, i < 60, i++)
+	for (var/i in 1 to 60)
 		if (!src)
 			return
 		if (i<31)
@@ -463,6 +465,14 @@
 		sleep (1)
 	animate(src, transform = null, time = 1, loop = 0)
 
+/mob/living/carbon/proc/danceyhelper()
+	if (src)
+		animate(src, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
+		initial_matrix = matrix(transform)
+	sleep (70)
+	if (src)
+		animate(src, transform = null, time = 1, loop = 0)
+
 
 /obj/machinery/disco/proc/dance_over()
 	for(var/obj/item/device/flashlight/spotlight/SL in spotlights)
@@ -486,9 +496,9 @@
 		rangers = list()
 		for(var/mob/living/M in range(9,src))
 			rangers += M
-			if(!(M in listeners))
+			if(!(listeners[M]))
 				M.playsound_local(get_turf(M), selection.song_path, 100, channel = CHANNEL_JUKEBOX)
-				listeners += M
+				listeners[M] = TRUE
 			if(prob(5+(allowed(M)*4)))
 				dance(M)
 		for(var/mob/living/L in listeners)
