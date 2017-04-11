@@ -112,7 +112,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/lastHolder = null
 	var/smoketime = 300
 	var/chem_volume = 30
-	var/list_reagents = list("nicotine" = 15)
+	var/list/list_reagents = list("nicotine" = 15)
 	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
