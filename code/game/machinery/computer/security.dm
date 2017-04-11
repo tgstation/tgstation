@@ -441,7 +441,7 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
-								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, strip_html_properly(russian_html2text(info)))
+								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, strip_html_properly(info))
 							printing = 0
 
 //RECORD DELETE
@@ -462,7 +462,7 @@ What a mess.*/
 				if(!( istype(active2, /datum/data/record) ))
 					return
 				var/a2 = active2
-				var/t1 = strip_html_properly(sanitize_russian(stripped_multiline_input("Add Comment:", "Secure. records", null, null)))
+				var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
 				if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 					return
 				var/counter = 1
@@ -566,7 +566,7 @@ What a mess.*/
 								active2.fields["name"] = t1
 					if("id")
 						if(istype(active2,/datum/data/record) || istype(active1,/datum/data/record))
-							var/t1 = strip_html_properly(stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null))
+							var/t1 = stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1,/datum/data/record))
@@ -575,7 +575,7 @@ What a mess.*/
 								active2.fields["id"] = t1
 					if("fingerprint")
 						if(istype(active1, /datum/data/record))
-							var/t1 = strip_html_properly(stripped_input(usr, "Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null))
+							var/t1 = stripped_input(usr, "Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["fingerprint"] = t1
@@ -619,8 +619,8 @@ What a mess.*/
 							active1.fields["photo_side"] = photo
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
-							var/t1 = strip_html_properly(sanitize_russian(stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)))
-							var/t2 = strip_html_properly(sanitize_russian(stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null)))
+							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
+							var/t2 = stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
@@ -633,8 +633,8 @@ What a mess.*/
 								GLOB.data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"])
 					if("ma_crim_add")
 						if(istype(active1, /datum/data/record))
-							var/t1 = strip_html_properly(sanitize_russian(stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)))
-							var/t2 = strip_html_properly(sanitize_russian(stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null)))
+							var/t1 = stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)
+							var/t2 = stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
@@ -647,7 +647,7 @@ What a mess.*/
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
-							var/t1 = strip_html_properly(sanitize_russian(stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)))
+							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							active2.fields["notes"] = t1

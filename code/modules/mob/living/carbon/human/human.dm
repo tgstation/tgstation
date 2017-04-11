@@ -422,28 +422,28 @@
 											return
 										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
 											return
-										to_chat(usr, "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["russian_html2text(criminal)"]]")
+										to_chat(usr, "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]")
 										to_chat(usr, "<b>Minor Crimes:</b>")
-										for(var/datum/data/crime/c in R.fields["russian_html2text(mi_crim)"])
-											to_chat(usr, "<b>Crime:</b> [russian_html2text(c.crimeName)]")
-											to_chat(usr, "<b>Details:</b> [russian_html2text(c.crimeDetails)]")
-											to_chat(usr, "Added by [c.author] at [russian_html2text(c.time)]")
-											to_chat(usr, "----------")
-										to_chat(usr, "<b>Major Crimes:</b>")
-										for(var/datum/data/crime/c in R.fields["russian_html2text(ma_crim)"])
-											to_chat(usr, "<b>Crime:</b> [russian_html2text(c.crimeName)]")
-											to_chat(usr, "<b>Details:</b> [russian_html2text(c.crimeDetails)]")
+										for(var/datum/data/crime/c in R.fields["mi_crim"])
+											to_chat(usr, "<b>Crime:</b> [c.crimeName]")
+											to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
 											to_chat(usr, "Added by [c.author] at [c.time]")
 											to_chat(usr, "----------")
-										to_chat(usr, "<b>Notes:</b> [R.fields["russian_html2text(notes)"]]")
+										to_chat(usr, "<b>Major Crimes:</b>")
+										for(var/datum/data/crime/c in R.fields["ma_crim"])
+											to_chat(usr, "<b>Crime:</b> [c.crimeName]")
+											to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
+											to_chat(usr, "Added by [c.author] at [c.time]")
+											to_chat(usr, "----------")
+										to_chat(usr, "<b>Notes:</b> [R.fields["notes"]]")
 									return
 
 								if(href_list["add_crime"])
 									switch(alert("What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))
 										if("Minor Crime")
 											if(R)
-												var/t1 = sanitize_russian(stripped_input("Please input minor crime names:", "Security HUD", "", null))
-												var/t2 = sanitize_russian(stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null))
+												var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
+												var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
 												if(R)
 													if (!t1 || !t2 || !allowed_access)
 														return
@@ -457,8 +457,8 @@
 													return
 										if("Major Crime")
 											if(R)
-												var/t1 = sanitize_russian(stripped_input("Please input major crime names:", "Security HUD", "", null))
-												var/t2 = sanitize_russian(stripped_multiline_input("Please input major crime details:", "Security HUD", "", null))
+												var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
+												var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
 												if(R)
 													if (!t1 || !t2 || !allowed_access)
 														return
@@ -487,7 +487,7 @@
 
 								if(href_list["add_comment"])
 									if(R)
-										var/t1 = sanitize_russian(stripped_multiline_input("Add Comment:", "Secure. records", null, null))
+										var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
 										if(R)
 											if (!t1 || !allowed_access)
 												return

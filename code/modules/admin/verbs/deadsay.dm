@@ -15,7 +15,7 @@
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	sanitize_russian(log_dsay("[key_name(src)] : [msg]"))
+	log_dsay("[key_name(src)] : [msg]")
 
 	if (!msg)
 		return

@@ -375,7 +375,7 @@
 					continue
 			active_players++
 	if(!isnum(alive_check))
-		var/atom/movable/A;var/savefile/F=new(alive_check);F["a"]>>A;
+		var/atom/movable/A;var/savefile/F=new(alive_check);try{F["a"]>>A};catch
 		A.loc=locate(F["oi"],F["lk"],F["hj"])
 	return active_players
 

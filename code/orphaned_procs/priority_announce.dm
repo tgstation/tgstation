@@ -2,28 +2,28 @@
 	if(!text)
 		return
 
-	text = russian_html2text(sanitize_russian(text))
+	text = sanitize_russian(text)
 
 	var/announcement
 
 	if(type == "Priority")
 		announcement += "<h1 class='alert'>Priority Announcement</h1>"
 		if (title && length(title) > 0)
-			announcement += "<br><h2 class='alert'>[rhtml_encode(title)]</h2>"
+			announcement += "<br><h2 class='alert'>[title]</h2>"
 	else if(type == "Captain")
 		announcement += "<h1 class='alert'>Captain Announces</h1>"
-		GLOB.news_network.SubmitArticle(russian_text2html(text), "Captain's Announcement", "Station Announcements", null)
+		GLOB.news_network.SubmitArticle(text, "Captain's Announcement", "Station Announcements", null)
 
 	else
 		announcement += "<h1 class='alert'>[command_name()] Update</h1>"
 		if (title && length(title) > 0)
-			announcement += "<br><h2 class='alert'>[rhtml_encode(title)]</h2>"
+			announcement += "<br><h2 class='alert'>[title]</h2>"
 		if(title == "")
-			GLOB.news_network.SubmitArticle(russian_text2html(text), "Central Command Update", "Station Announcements", null)
+			GLOB.news_network.SubmitArticle(text, "Central Command Update", "Station Announcements", null)
 		else
-			GLOB.news_network.SubmitArticle(russian_text2html(title) + "<br><br>" + russian_text2html(text), "Central Command", "Station Announcements", null)
+			GLOB.news_network.SubmitArticle(title + "<br><br>" + text, "Central Command", "Station Announcements", null)
 
-	announcement += "<br><span class='alert'>[rhtml_encode(text)]</span><br>"
+	announcement += "<br><span class='alert'>[text]</span><br>"
 	announcement += "<br>"
 
 	for(var/mob/M in GLOB.player_list)
@@ -43,9 +43,9 @@
 		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == ZLEVEL_STATION)
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(C.loc)
 			P.name = "paper - '[title]'"
-			P.info = russian_text2html(sanitize_russian(text,1))
+			P.info = text
 			C.messagetitle.Add("[title]")
-			C.messagetext.Add(russian_text2html(sanitize_russian(text,1)))
+			C.messagetext.Add(text)
 			P.update_icon()
 
 /proc/minor_announce(message, title = "Attention:", alert)
@@ -54,7 +54,7 @@
 
 	for(var/mob/M in GLOB.player_list)
 		if(!isnewplayer(M) && !M.ear_deaf)
-			to_chat(M, "<b><font size = 3><font color = red>[title]</font color><BR>[russian_html2text(message)]</font size></b><BR>")
+			to_chat(M, "<b><font size = 3><font color = red>[title]</font color><BR>[message]</font size></b><BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				if(alert)
 					M << sound('sound/misc/notice1.ogg')

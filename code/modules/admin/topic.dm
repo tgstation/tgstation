@@ -600,8 +600,8 @@
 				if(!reason)
 					return
 
-		log_admin_private("[key_name(usr)] edited [banned_key]'s ban. Reason: [sanitize_russian(reason)] Duration: [duration]")
-		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [sanitize_russian(reason)] Duration: [duration]")
+		log_admin_private("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
+		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
 		GLOB.Banlist.cd = "/base/[banfolder]"
 		GLOB.Banlist["reason"] << reason
@@ -640,7 +640,7 @@
 
 		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
-				var/reason = input(usr,"Please State Reason.","Reason") as message|null
+				var/reason = sanitize_russian(input(usr,"Please State Reason.","Reason") as message|null)
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, "appearance"))
@@ -648,13 +648,13 @@
 					return
 				if(M.client)
 					jobban_buildcache(M.client)
-				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [sanitize_russian(reason)]")
-				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [sanitize_russian(reason)]")
+				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
+				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
 				feedback_inc("ban_appearance",1)
-				create_message("note", M.ckey, null, "Appearance banned - [sanitize_russian(reason)]", null, null, 0, 0)
+				create_message("note", M.ckey, null, "Appearance banned - [reason]", null, null, 0, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>")
-				to_chat(M, "<span class='boldannounce'>The reason is: [sanitize_russian(reason)]</span>")
+				to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
 				to_chat(M, "<span class='danger'>Appearance ban can be lifted only upon request.</span>")
 				if(config.banappeals)
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
@@ -1022,7 +1022,7 @@
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
-					var/reason = input(usr,"Please State Reason.","Reason") as message|null
+					var/reason = sanitize_russian(input(usr,"Please State Reason.","Reason") as message|null)
 					if(!reason)
 						return
 
@@ -1033,7 +1033,7 @@
 							return
 						if(M.client)
 							jobban_buildcache(M.client)
-						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [sanitize_russian(reason)]")
+						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
 						log_admin_private("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes.")
 						feedback_inc("ban_job_tmp",1)
 						feedback_add_details("ban_job_tmp","- [job]")
@@ -1041,15 +1041,15 @@
 							msg = job
 						else
 							msg += ", [job]"
-					create_message("note", M.ckey, null, "Banned  from [msg] - [sanitize_russian(reason)]", null, null, 0, 0)
+					create_message("note", M.ckey, null, "Banned  from [msg] - [reason]", null, null, 0, 0)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes.</span>")
 					to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>")
-					to_chat(M, "<span class='boldannounce'>The reason is: [sanitize_russian(reason)]</span>")
+					to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
 					to_chat(M, "<span class='danger'>This jobban will be lifted in [mins] minutes.</span>")
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = input(usr,"Please State Reason","Reason") as message|null
+					var/reason = sanitize_russian(input(usr,"Please State Reason","Reason") as message|null)
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1058,7 +1058,7 @@
 								return
 							if(M.client)
 								jobban_buildcache(M.client)
-							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [sanitize_russian(reason)]")
+							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
 							log_admin_private("[key_name(usr)] perma-banned [key_name(M)] from [job]")
 							feedback_inc("ban_job",1)
 							feedback_add_details("ban_job","- [job]")
@@ -1066,10 +1066,10 @@
 								msg = job
 							else
 								msg += ", [job]"
-						create_message("note", M.ckey, null, "Banned  from [msg] - [sanitize_russian(reason)]", null, null, 0, 0)
+						create_message("note", M.ckey, null, "Banned  from [msg] - [reason]", null, null, 0, 0)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg].</span>")
 						to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>")
-						to_chat(M, "<span class='boldannounce'>The reason is: [sanitize_russian(reason)]</span>")
+						to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
 						to_chat(M, "<span class='danger'>Jobban can be lifted only upon request.</span>")
 						href_list["jobban2"] = 1 // lets it fall through and refresh
 						return 1
@@ -1816,14 +1816,14 @@
 			return
 
 		message_admins("[src.owner] has started answering [key_name(H)]'s Centcomm request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
+		var/input = rhtml_encode(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", ""))
 		if(!input)
 			message_admins("[src.owner] decided not to answer [key_name(H)]'s Centcomm request.")
 			return
 
-		to_chat(src.owner, "You sent [sanitize_russian(input)] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Centcom message with the message [sanitize_russian(input)].")
-		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[sanitize_russian(input)]\"")
+		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
+		log_admin("[src.owner] replied to [key_name(H)]'s Centcom message with the message [input].")
+		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
 		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\"")
 
 	else if(href_list["SyndicateReply"])
@@ -1836,14 +1836,14 @@
 			return
 
 		message_admins("[src.owner] has started answering [key_name(H)]'s syndicate request.")
-		var/input = strip_html_properly(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
+		var/input = rhtml_encode(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
 		if(!input)
 			message_admins("[src.owner] decided not to answer [key_name(H)]'s syndicate request.")
 			return
 
-		to_chat(src.owner, "You sent [sanitize_russian(input)] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [sanitize_russian(input)].")
-		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[sanitize_russian(input)]\"")
+		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
+		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
+		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
 		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\"")
 
 	else if(href_list["reject_custom_name"])

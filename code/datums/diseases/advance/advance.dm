@@ -32,7 +32,7 @@
 	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
 	var/processing = 0
-	
+
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
 									"sodiumchloride", "sugar", "orangejuice",
@@ -392,7 +392,7 @@
 		var/new_name = stripped_input(user, "Name your new disease.", "New Name")
 		if(!new_name)
 			return
-		D.AssignName(russian_html2text(new_name))
+		D.AssignName(new_name)
 		D.Refresh()
 
 		for(var/datum/disease/advance/AD in SSdisease.processing)

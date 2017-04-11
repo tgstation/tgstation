@@ -375,7 +375,7 @@
 
 	//to_chat(world, "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]")
 	//to_chat(world, "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]")
-	usr << browse(sanitize_russian(dat, 1), "window=admincaster_main;size=400x600")
+	usr << browse(sanitize_russian(dat), "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
 
@@ -401,7 +401,7 @@
 	if(marked_datum && istype(marked_datum, /atom))
 		dat += "<A href='?src=\ref[src];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
 
-	usr << browse(sanitize_russian(dat, 1), "window=admin2;size=210x180")
+	usr << browse(sanitize_russian(dat), "window=admin2;size=210x180")
 	return
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
@@ -449,7 +449,7 @@
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
 		to_chat(world, "<span class='adminnotice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b></span>\n \t [message]")
-		sanitize_russian(log_admin("Announce: [key_name(usr)] : [message]"))
+		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/set_admin_notice()
@@ -469,7 +469,7 @@
 		log_admin("[key_name(usr)] removed the admin notice:\n[GLOB.admin_notice]")
 	else
 		message_admins("[key_name(usr)] set the admin notice.")
-		sanitize_russian(log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]"))
+		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
 		to_chat(world, "<span class ='adminnotice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>")
 	feedback_add_details("admin_verb","SAN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	GLOB.admin_notice = new_admin_notice

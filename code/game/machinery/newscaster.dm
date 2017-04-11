@@ -119,9 +119,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 /datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, obj/item/weapon/photo/photo, adminMessage = 0, allow_comments = 1)
 	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
 	newMsg.author = author
-	newMsg.body = sanitize_russian(msg,1)
+	newMsg.body = sanitize_russian(msg)
 	newMsg.time_stamp = "[worldtime2text()]"
-	newMsg.is_admin_message = sanitize_russian(adminMessage,1)
+	newMsg.is_admin_message = sanitize_russian(adminMessage)
 	newMsg.locked = !allow_comments
 	if(photo)
 		newMsg.img = photo.img
@@ -509,7 +509,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		usr.set_machine(src)
 		scan_user(usr)
 		if(href_list["set_channel_name"])
-			src.channel_name = sanitize_russian(stripped_input(usr, "Provide a Feed Channel Name", "Network Channel Handler", "", MAX_NAME_LEN), 1)
+			src.channel_name = stripped_input(usr, "Provide a Feed Channel Name", "Network Channel Handler", "", MAX_NAME_LEN)
 			while (findtext(channel_name," ") == 1)
 				channel_name = copytext(channel_name,2,lentext(channel_name)+1)
 			updateUsrDialog()
@@ -546,7 +546,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
 			updateUsrDialog()
 		else if(href_list["set_new_message"])
-			var/temp_message = trim(sanitize_russian(stripped_multiline_input(usr, "Write your Feed story", "Network Channel Handler", msg), 1))
+			var/temp_message = stripped_multiline_input(usr, "Write your Feed story", "Network Channel Handler", msg)
 			if(temp_message)
 				msg = temp_message
 				updateUsrDialog()
@@ -597,7 +597,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			channel_name = trim(stripped_input(usr, "Provide the name of the Wanted person", "Network Security Handler"))
 			updateUsrDialog()
 		else if(href_list["set_wanted_desc"])
-			src.msg = trim(sanitize_russian(stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler"), 1))
+			src.msg = stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler")
 			updateUsrDialog()
 		else if(href_list["submit_wanted"])
 			var/input_param = text2num(href_list["submit_wanted"])
@@ -686,7 +686,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			updateUsrDialog()
 		else if(href_list["new_comment"])
 			var/datum/newscaster/feed_message/FM = locate(href_list["new_comment"])
-			var/cominput = copytext(sanitize_russian(stripped_input(usr, "Write your message:", "New comment", null), 1),1,141)
+			var/cominput = copytext(stripped_input(usr, "Write your message:", "New comment", null),1,141)
 			if(cominput)
 				scan_user(usr)
 				var/datum/newscaster/feed_comment/FC = new/datum/newscaster/feed_comment
@@ -866,7 +866,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/machinery/newscaster/proc/newsAlert(channel)
 	if(channel)
-		say("Breaking news from [russian_html2text(channel)]!")
+		say("Breaking news from [channel]!")
 		alert ++
 		update_icon()
 		spawn(alert_delay)
@@ -984,7 +984,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
 		dat+="<BR><HR><div align='center'>[curr_page+1]</div>"
-		human_user << browse(sanitize_russian(dat, 1), "window=newspaper_main;size=300x400")
+		human_user << browse(sanitize_russian(dat), "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
 	else
 		to_chat(user, "The paper is full of unintelligible symbols!")
@@ -1036,7 +1036,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		if(scribble_page == curr_page)
 			to_chat(user, "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>")
 		else
-			var/s = sanitize_russian(stripped_input(user, "Write something", "Newspaper"), 1)
+			var/s = stripped_input(user, "Write something", "Newspaper")
 			if (!s)
 				return
 			if (!in_range(src, usr) && loc != usr)

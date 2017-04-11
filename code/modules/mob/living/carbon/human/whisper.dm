@@ -17,11 +17,10 @@
 		return
 
 
-	message = sanitize_russian(trim(strip_html_properly(message)),1)
+	message = trim(rhtml_encode(message))
 	if(!can_speak(message))
 		return
 
-	message = "[russian_html2text(message)]"
 	log_whisper("[src.name]/[src.key] : [message]")
 
 	if (src.client)

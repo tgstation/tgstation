@@ -390,20 +390,20 @@
 	for (var/index = 1, index <= ion.len, index++)
 		var/law = ion[index]
 		var/num = ionnum()
-		to_chat(who, "[num]. [russian_html2text(law)]")
+		to_chat(who, "[num]. [law]")
 
 	var/number = 1
 	for (var/index = 1, index <= inherent.len, index++)
 		var/law = inherent[index]
 
 		if (length(law) > 0)
-			to_chat(who, "[number]. [russian_html2text(law)]")
+			to_chat(who, "[number]. [law]")
 			number++
 
 	for (var/index = 1, index <= supplied.len, index++)
 		var/law = supplied[index]
 		if (length(law) > 0)
-			to_chat(who, "[number]. [russian_html2text(law)]")
+			to_chat(who, "[number]. [law]")
 			number++
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1

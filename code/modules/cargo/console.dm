@@ -8,7 +8,7 @@
 	var/safety_warning = "For safety reasons the automated supply shuttle \
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
-	
+
 	light_color = "#E2853D"//orange
 
 /obj/machinery/computer/cargo/request
@@ -85,7 +85,7 @@
 			"object" = SO.pack.name,
 			"cost" = SO.pack.cost,
 			"orderer" = SO.orderer,
-			"reason" = "error", // Ugly fix for requests console breaking on russian letters.
+			"reason" = russian_text2unicode(SO.reason),
 			"id" = SO.id
 		))
 

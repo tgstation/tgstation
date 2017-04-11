@@ -237,7 +237,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "\icon[src] That's [russian_html2text(f_name)]")
+	to_chat(user, "\icon[src] That's [f_name]")
 
 	if(desc)
 		to_chat(user, desc)

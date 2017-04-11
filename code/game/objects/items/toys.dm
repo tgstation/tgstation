@@ -1303,7 +1303,7 @@
 	if(!new_name)
 		return
 	doll_name = russian_html2text(new_name)
-	to_chat(user, "You name the dummy as \"[russian_html2text(doll_name)]\"")
+	to_chat(user, "You name the dummy as \"[doll_name]\"")
 	name = "[initial(name)] - [doll_name]"
 
 /obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)

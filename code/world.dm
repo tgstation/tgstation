@@ -137,7 +137,7 @@
 #define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
 			for(var/client/C in GLOB.clients)
 				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-					to_chat(C, "<span class='announce'>PR: [input["sanitize_russian(announce)"]]</span>")
+					to_chat(C, "<span class='announce'>PR: [input["announce"]]</span>")
 #undef CHAT_PULLR
 
 	else if("crossmessage" in input)

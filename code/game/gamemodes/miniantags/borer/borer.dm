@@ -21,14 +21,14 @@
 			return say_dead(message)
 
 		var/mob/living/simple_animal/borer/B = loc
-		to_chat(src, "<i><span class='alien'>You whisper silently, \"[russian_html2text(message)]\"</span></i>")
-		to_chat(B.victim, "<i><span class='alien'>The captive mind of [src] whispers, \"[russian_html2text(message)]\"</span></i>")
+		to_chat(src, "<i><span class='alien'>You whisper silently, \"[message]\"</span></i>")
+		to_chat(B.victim, "<i><span class='alien'>The captive mind of [src] whispers, \"[message]\"</span></i>")
 
 		for (var/mob/M in GLOB.player_list)
 			if(isnewplayer(M))
 				continue
 			else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
-				to_chat(M, "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [russian_html2text(message)]</i>")
+				to_chat(M, "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [message]</i>")
 
 /mob/living/captive_brain/emote(var/message)
 	return
@@ -138,7 +138,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 	host_brain = null
 	victim = null
-	
+
 	QDEL_NULL(talk_to_host_action)
 	QDEL_NULL(infest_host_action)
 	QDEL_NULL(toggle_hide_action)
@@ -152,7 +152,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	QDEL_NULL(freeze_victim_action)
 	QDEL_NULL(punish_victim_action)
 	QDEL_NULL(jumpstart_host_action)
-	
+
 	return ..()
 
 /mob/living/simple_animal/borer/Topic(href, href_list)//not entirely sure if this is even required
@@ -196,13 +196,12 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
-	var/input = strip_html_properly(stripped_input(src, "Please enter a message to tell your host.", "Borer", null))
+	var/input = stripped_input(src, "Please enter a message to tell your host.", "Borer", null)
 	if(!input)
 		return
 
 	if(src && !QDELETED(src) && !QDELETED(victim))
 		var/say_string = (docile) ? "slurs" :"states"
-		input = russian_html2text(input)
 		if(victim)
 			to_chat(victim, "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>")
 			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [input]")
@@ -225,10 +224,9 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	if(!B)
 		return
 
-	var/input = strip_html_properly(stripped_input(src, "Please enter a message to tell the borer.", "Message", null))
+	var/input = stripped_input(src, "Please enter a message to tell the borer.", "Message", null)
 	if(!input)
 		return
-	input = russian_html2text(input)
 
 	to_chat(B, "<span class='changeling'><i>[src] says:</i> [input]</span>")
 	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [input]")
@@ -250,19 +248,19 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	if(!B || !B.host_brain)
 		return
 	var/mob/living/captive_brain/CB = B.host_brain
-	var/input = strip_html_properly(stripped_input(src, "Please enter a message to tell the trapped mind.", "Message", null))
+	var/input = stripped_input(src, "Please enter a message to tell the trapped mind.", "Message", null)
 	if(!input)
 		return
 
-	to_chat(CB, "<span class='changeling'><i>[B.truename] says:</i> [russian_html2text(input)]</span>")
+	to_chat(CB, "<span class='changeling'><i>[B.truename] says:</i> [input]</span>")
 	log_say("Borer Communication: [key_name(B)] -> [key_name(CB)] : [input]")
 
 	for(var/M in GLOB.dead_mob_list)
 		if(isobserver(M))
-			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[B]</b> : [russian_html2text(input)]</i>"
+			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[B]</b> : [input]</i>"
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [rendered]")
-	to_chat(src, "<span class='changeling'><i>[B.truename] says:</i> [russian_html2text(input)]</span>")
+	to_chat(src, "<span class='changeling'><i>[B.truename] says:</i> [input]</span>")
 
 /mob/living/simple_animal/borer/Life()
 
@@ -322,8 +320,8 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 /mob/living/simple_animal/borer/say(message)
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
-		message = russian_html2text(message)
-		
+		message = rhtml_encode(message)
+
 		for(var/borer in GLOB.borers)
 			to_chat(borer, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
 		for(var/mob/D in GLOB.dead_mob_list)
@@ -492,7 +490,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
 			choices += C
-			
+
 	if(!choices.len)
 		return
 	var/mob/living/carbon/M = choices.len > 1 ? input(src,"Who do you wish to dominate?") in null|choices : choices[1]

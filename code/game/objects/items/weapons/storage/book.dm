@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			H << browse_rsc(bibleicon, nicename)
 			dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=\ref[src];seticon=[i]">[nicename]</a></td></tr>"}
 		dat += "</table></body></html>"
-		H << browse(sanitize_russian(dat, 1), "window=editicon;can_close=0;can_minimize=0;size=250x650")
+		H << browse(sanitize_russian(dat), "window=editicon;can_close=0;can_minimize=0;size=250x650")
 
 /obj/item/weapon/storage/book/bible/Topic(href, href_list)
 	if(!usr.canUseTopic(src))

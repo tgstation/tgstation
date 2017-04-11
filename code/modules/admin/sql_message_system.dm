@@ -274,7 +274,7 @@
 	else if(!type && !target_ckey && !index)
 		output += "<center></a> <a href='?_src_=holder;addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;addnoteempty=1'>\[Add note\]</a></center>"
 		output += ruler
-	usr << browse(sanitize_russian(output, 1), "window=browse_messages;size=900x500")
+	usr << browse(sanitize_russian(output), "window=browse_messages;size=900x500")
 
 proc/get_message_output(type, target_ckey)
 	if(!GLOB.dbcon.Connect())

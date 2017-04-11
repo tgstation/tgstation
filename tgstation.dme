@@ -86,6 +86,7 @@
 #include "code\__HELPERS\radio.dm"
 #include "code\__HELPERS\sanitize_values.dm"
 #include "code\__HELPERS\text.dm"
+#include "code\__HELPERS\text_rus.dm"
 #include "code\__HELPERS\time.dm"
 #include "code\__HELPERS\type2type.dm"
 #include "code\__HELPERS\unsorted.dm"

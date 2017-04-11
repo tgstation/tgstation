@@ -102,13 +102,11 @@
 
 /obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	for(var/mob/living/M in targets)
-		var/msg = strip_html_properly(stripped_input(usr, "What do you wish to tell [M]?", null, ""))
+		var/msg = stripped_input(usr, "What do you wish to tell [M]?", null, "")
 		if(!msg)
 			charge_counter = charge_max
 			return
-		
-		msg = russian_html2text(msg)
-		
+
 		log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
 		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
 		to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")

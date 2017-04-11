@@ -40,7 +40,7 @@
 	return ..()
 
 /datum/action/innate/hierophant/Activate()
-	var/input = strip_html_properly(sanitize_russian(input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "") as text|null))
+	var/input = stripped_input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "")
 	if(!input || !IsAvailable())
 		return
 

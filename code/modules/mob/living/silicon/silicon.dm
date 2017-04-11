@@ -218,7 +218,7 @@
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (force || src.ioncheck[index] == "Yes")
-				src.say("[radiomod] [num]. [russian_html2text(law)]")
+				src.say("[radiomod] [num]. [law]")
 				sleep(10)
 
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
@@ -226,7 +226,7 @@
 
 		if (length(law) > 0)
 			if (force || src.lawcheck[index+1] == "Yes")
-				src.say("[radiomod] [number]. [russian_html2text(law)]")
+				src.say("[radiomod] [number]. [law]")
 				number++
 				sleep(10)
 
@@ -236,7 +236,7 @@
 		if (length(law) > 0)
 			if(src.lawcheck.len >= number+1)
 				if (force || src.lawcheck[number+1] == "Yes")
-					src.say("[radiomod] [number]. [russian_html2text(law)]")
+					src.say("[radiomod] [number]. [law]")
 					number++
 					sleep(10)
 

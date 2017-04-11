@@ -46,7 +46,7 @@
 	var/dat = "<title>[name]</title>"
 
 	for(var/obj/item/I in src)
-		dat += sanitize_russian("<A href='?src=\ref[src];remove=\ref[I]'>Remove</A> - <A href='?src=\ref[src];read=\ref[I]'>[I.name]</A><BR>", 1)
+		dat += sanitize_russian("<A href='?src=\ref[src];remove=\ref[I]'>Remove</A> - <A href='?src=\ref[src];read=\ref[I]'>[I.name]</A><BR>")
 	user << browse(dat, "window=folder")
 	onclose(user, "folder")
 	add_fingerprint(usr)

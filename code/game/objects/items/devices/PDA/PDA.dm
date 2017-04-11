@@ -216,7 +216,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<a href='byond://?src=\ref[src];choice=Edit'>Edit</a><br>"
 				if(notescanned)
 					dat += "(This is a scanned image, editing it may cause some text formatting to change.)<br>"
-				dat += "<HR><font face=\"[PEN_FONT]\">[(!notehtml ? sanitize_russian(note,1) : sanitize_russian(notehtml,1))]</font>"
+				dat += "<HR><font face=\"[PEN_FONT]\">[sanitize_russian(!notehtml ? note : notehtml)]</font>"
 
 			if (2)
 				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
@@ -262,7 +262,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 				dat += "<h4><img src=pda_mail.png> Messages</h4>"
 
-				dat += sanitize_russian(russian_text2html(tnote),1)
+				dat += tnote
 				dat += "<br>"
 
 			if (3)
@@ -402,10 +402,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 //NOTEKEEPER FUNCTIONS===================================
 
 			if ("Edit")
-				var/n = sanitize_russian(stripped_multiline_input(U, "Please enter message", name, note),1)
+				var/n = stripped_multiline_input(U, "Please enter message", name, note)
 				if (in_range(src, U) && loc == U)
 					if (mode == 1 && n)
-						note = sanitize_russian(n, 0)
+						note = sanitize_russian(n)
 						notehtml = parsepencode(n, U, SIGNFONT)
 						notescanned = 0
 				else
@@ -630,7 +630,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
-		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[russian_html2text(msg.message)]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
+		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	update_icon()
 	add_overlay(image(icon, icon_alert))
@@ -639,7 +639,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	for(var/mob/M in GLOB.player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			var/link = FOLLOW_LINK(M, user)
-			to_chat(M, russian_html2text("[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>"))
+			to_chat(M, "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
 	if(!P || QDELETED(P) || P.toff)

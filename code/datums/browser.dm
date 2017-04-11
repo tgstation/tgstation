@@ -99,7 +99,7 @@
 		send_asset_list(user, stylesheets, verify=FALSE)
 	if (scripts.len)
 		send_asset_list(user, scripts, verify=FALSE)
-	user << browse(sanitize_russian(get_content(), 1), "window=[window_id];[window_size][window_options]")
+	user << browse(russian_text2html(get_content()), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
 		setup_onclose()
 

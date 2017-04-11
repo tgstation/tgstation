@@ -101,7 +101,7 @@
 				dat += "<li>[l]</li>"
 			if(!GLOB.admin_log.len)
 				dat += "No-one has done anything this round!"
-			usr << browse(sanitize_russian(dat, 1), "window=admin_log")
+			usr << browse(sanitize_russian(dat), "window=admin_log")
 
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
@@ -221,7 +221,7 @@
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
 				message_admins("[key_name_admin(usr)] moved the centcom ferry")
 				log_admin("[key_name(usr)] moved the centcom ferry")
-			
+
 		if("togglearrivals")
 			if(!check_rights(R_ADMIN))
 				return

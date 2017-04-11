@@ -38,13 +38,13 @@
 
 	if(custom_threat == "Yes")
 		declaring_war = TRUE
-		war_declaration = strip_html_properly(stripped_input(user, "Insert your custom declaration", "Declaration"))
+		war_declaration = stripped_input(user, "Insert your custom declaration", "Declaration")
 		declaring_war = FALSE
 
 	if(!check_allowed(user) || !war_declaration)
 		return
 
-	priority_announce(russian_html2text(war_declaration), title = "Declaration of War", sound = 'sound/machines/Alarm.ogg')
+	priority_announce(war_declaration, title = "Declaration of War", sound = 'sound/machines/Alarm.ogg')
 
 	to_chat(user, "You've attracted the attention of powerful forces within the syndicate. A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission.")
 

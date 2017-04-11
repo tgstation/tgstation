@@ -105,7 +105,7 @@
 /obj/item/device/gangtool/proc/ping_gang(mob/user)
 	if(!user)
 		return
-	var/message = strip_html_properly(stripped_input(user,"Discreetly send a gang-wide message.","Send Message"))
+	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message")
 	if(!message || !can_use(user))
 		return
 	if(user.z > 2)
@@ -127,14 +127,14 @@
 				gang_rank = "3rd Lieutenant"
 			else
 				gang_rank = "[gang_rank - 1]th Lieutenant"
-		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank]</i>: [russian_html2text(message)]</B></span>"
+		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				to_chat(ganger.current, ping)
 		for(var/mob/M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [ping]")
-		log_game("[key_name(user)] Messaged [gang.name] Gang: [russian_html2text(message)].")
+		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
 
 
 /obj/item/device/gangtool/proc/register_device(mob/user)

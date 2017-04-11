@@ -96,7 +96,7 @@
 		return
 	msg = strip_html_properly(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
 	if(!msg)	return
-	var/original_msg = strip_html_simple(sanitize_russian(msg))
+	var/original_msg = rhtml_encode(msg)
 
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	src.verbs -= /client/verb/adminhelp
@@ -124,7 +124,7 @@
 
 	//send it to irc if nobody is on and tell us how many were on
 	var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
-	sanitize_russian(log_admin_private("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN."))
+	log_admin_private("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
 		to_chat(src, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
