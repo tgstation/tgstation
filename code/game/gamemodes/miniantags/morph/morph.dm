@@ -25,7 +25,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	idle_vision_range = 1 // Only attack when target is close
 	wander = 0
 	attacktext = "glomps"
