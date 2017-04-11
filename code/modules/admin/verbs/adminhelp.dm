@@ -102,7 +102,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/list/dat = list()
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
-		dat += "<span class='adminnotice'><b><font color=red>Ticket #[AH.id]</font>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[key_name(AH.initiator)]: [AH.original_message]</A></span>"
+		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[key_name(AH.initiator)]: [AH.original_message]</A></span>"
 		
 	var/datum/browser/popup = new(usr, "ahelp_list[state]", title, 600, 480)
 	popup.set_content(dat.Join())
@@ -185,9 +185,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	if(is_bwoink)
 		interactions = list("<font color='blue'>[key_name_admin(usr)] bwoinked [LinkedReplyName()]</font>")
-		message_admins("<font color='red'>Ticket [TicketHref("#[id]")] created</font>")
+		message_admins("<span class='adminhelp'>Ticket [TicketHref("#[id]")] created</span>")
 	else
-		interactions = list("<font color='red'>[LinkedReplyName()]: [parsed_message]</font>")
+		interactions = list("<span class='adminhelp'>[LinkedReplyName()]: [parsed_message]</span>")
 		MessageNoRecipient(parsed_message)
 
 		//show it to the person adminhelping too
@@ -223,7 +223,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //message from the initiator without a target
 /datum/admin_help/proc/MessageNoRecipient(msg)
 	var/ref_src = "\ref[src]"
-	var/chat_msg = "<span class='adminnotice'><b><font color=red>Ticket [TicketHref("#[id]", ref_src)]: [LinkedReplyName(ref_src)] [FullMonty(ref_src)] :</b> [msg]</span>"
+	var/chat_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]: [LinkedReplyName(ref_src)] [FullMonty(ref_src)] :</span> [msg]</span>"
 
 	//send this msg to all admins
 
