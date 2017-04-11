@@ -277,7 +277,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in interactions)
 		dat += "[I]<br>"
 
-	usr << browse(dat.Join(), "window=ahelp[id];size=600x480")
+	usr << browse(dat.Join(), "window=ahelp[id];size=620x480")
 
 //Close and return ahelp verb, use if ticket is incoherent
 /datum/admin_help/proc/Reject()
