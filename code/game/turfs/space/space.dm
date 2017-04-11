@@ -139,43 +139,6 @@
 		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
 
-/turf/open/space/proc/Sandbox_Spacemove(atom/movable/A)
-	var/cur_x
-	var/cur_y
-	var/next_x = src.x
-	var/next_y = src.y
-	var/target_z
-	var/list/y_arr
-	var/list/cur_pos = src.get_global_map_pos()
-	if(!cur_pos)
-		return
-	cur_x = cur_pos["x"]
-	cur_y = cur_pos["y"]
-
-	if(src.x <= 1)
-		next_x = (--cur_x||GLOB.global_map.len)
-		y_arr = GLOB.global_map[next_x]
-		target_z = y_arr[cur_y]
-		next_x = world.maxx - 2
-	else if (src.x >= world.maxx)
-		next_x = (++cur_x > GLOB.global_map.len ? 1 : cur_x)
-		y_arr = GLOB.global_map[next_x]
-		target_z = y_arr[cur_y]
-		next_x = 3
-	else if (src.y <= 1)
-		y_arr = GLOB.global_map[cur_x]
-		next_y = (--cur_y||y_arr.len)
-		target_z = y_arr[next_y]
-		next_y = world.maxy - 2
-	else if (src.y >= world.maxy)
-		y_arr = GLOB.global_map[cur_x]
-		next_y = (++cur_y > y_arr.len ? 1 : cur_y)
-		target_z = y_arr[next_y]
-		next_y = 3
-
-	var/turf/T = locate(next_x, next_y, target_z)
-	A.Move(T)
-
 /turf/open/space/handle_slip()
 	return
 
