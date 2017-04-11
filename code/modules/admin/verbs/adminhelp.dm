@@ -44,14 +44,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			title = "Resolved Tickets"
 	if(!l2b)
 		return
-	var/list/dat = list("<A HREF='?_src_=holder;ahelp_tickets=[state]>Refresh</A><br>'")
+	var/list/dat = list("<html><head><title>[title]</title></head>")
+	dat += "<A HREF='?_src_=holder;ahelp_tickets=[state]>Refresh</A><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
 		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[key_name(AH.initiator)]: [AH.original_message]</A></span>"
 		
-	var/datum/browser/popup = new(usr, "ahelp_list[state]", title, 600, 480)
-	popup.set_content(dat.Join())
-	popup.open()
+	usr << browse(dat.Join(), "window=ahelp_list[state];size=600x480")
 
 //Tickets statpanel
 /datum/admin_help_tickets/proc/stat_entry()
@@ -255,19 +254,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
-	var/list/dat = list("<h3>Admin Help Ticket #[id]: [LinkedReplyName()]</h3>")
+	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
+	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName()]</h4>"
 	dat += "<br><b>State: "
 	switch(state)
 		if(AHELP_ACTIVE)
 			dat += "<font color='red'>OPEN</font>"
 		if(AHELP_RESOLVED)
-			dat += "<font color='gree'>RESOLVED</font>"
+			dat += "<font color='green'>RESOLVED</font>"
 		if(AHELP_ACTIVE)
 			dat += "CLOSED"
 		else
 			dat += "UNKNOWN"
 	dat += "</b>"
-	dat += "<br>Opened at: [gameTimeStamp(opened_at)][closed_at ? "<br>Closed at: [gameTimeStamp(closed_at)]" : ""]<br>"
+	dat += "<br>Opened at: [gameTimestamp(opened_at)][closed_at ? "<br>Closed at: [gameTimestamp(closed_at)]" : ""]<br>"
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty()]<br>"
 	else
@@ -277,9 +277,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in interactions)
 		dat += "[I]<br>"
 
-	var/datum/browser/popup = new(usr, "ahelp[id]", "Ticket #[id]", 600, 480)
-	popup.set_content(dat.Join())
-	popup.open()
+	usr << browse(dat.Join(), "window=ahelp[id];size=600x480")
 
 //Close and return ahelp verb, use if ticket is incoherent
 /datum/admin_help/proc/Reject()
