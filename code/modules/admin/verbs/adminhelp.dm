@@ -204,7 +204,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //won't bug irc
 /datum/admin_help/proc/MessageNoRecipient(msg)
 	var/ref_src = "\ref[src]"
-	var/chat_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]:</span> [LinkedReplyName(ref_src)] [FullMonty(ref_src)]: [msg]</span>"
+	var/chat_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</span>  [msg]</span>"
 
 	//send this msg to all admins
 
