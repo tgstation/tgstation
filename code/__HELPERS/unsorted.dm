@@ -1280,6 +1280,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
 #define QDEL_NULL(item) qdel(item); item = null
 #define QDEL_LIST(L) for(var/I in L) qdel(I); L.Cut()
+#define QDEL_LIST_ASSOC(L) for(var/I in L) qdel(L[I]); L.Cut()
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
