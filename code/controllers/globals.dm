@@ -43,7 +43,7 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 
 /datum/controller/global_vars/vv_get_var(var_name)
 	if(var_name in gvars_datum_protected_varlist)
-		return debug_variable(var_name, "SECRET", 0, src)
+		return null
 	return ..()
 
 /datum/controller/global_vars/vv_edit_var(var_name, var_value)
