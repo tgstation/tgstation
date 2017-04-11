@@ -1,4 +1,0 @@
-author: "Shadowlight213"
-delete-after: True
-changes: 
-  - bugfix: "The anime admin button will no longer cause equipped items to drop."
