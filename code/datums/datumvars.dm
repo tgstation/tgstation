@@ -2,6 +2,9 @@
 	var/var_edited = FALSE //Warrenty void if seal is broken
 	var/fingerprintslast = null
 
+/datum/proc/can_vv_get(var_name)
+	return TRUE
+
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
 	switch(var_name)
 		if ("vars")
@@ -155,7 +158,8 @@
 
 		names = sortList(names)
 		for (var/V in names)
-			variable_html += D.vv_get_var(V)
+			if(D.can_vv_get(V))
+				variable_html += D.vv_get_var(V)
 
 	var/html = {"
 <html>
