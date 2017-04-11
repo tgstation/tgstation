@@ -735,23 +735,31 @@
 	return 0
 
 /mob/living/carbon/regenerate_organs()
-	CHECK_DNA_AND_SPECIES(src)
+	var/breathes = TRUE
+	var/bleeds = TRUE
+	if(dna && dna.species)
+		if(NOBREATH in dna.species.species_traits)
+			breathes = FALSE
+		if(NOBLEED in dna.species.species_traits)
+			bleeds = FALSE
+	var/breathes = dna && dna.species && !(NOBREATH in dna.species.species_traits)
 
-	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
+	if(breathes && !getorganslot("lungs"))
 		var/obj/item/organ/lungs/L = new()
 		L.Insert(src)
 
-	if(!(NOBLOOD in dna.species.species_traits) && !getorganslot("heart"))
+	if(bleeds && !getorganslot("heart"))
 		var/obj/item/organ/heart/H = new()
 		H.Insert(src)
 
 	if(!getorganslot("tongue"))
 		var/obj/item/organ/tongue/T
 
-		for(var/tongue_type in dna.species.mutant_organs)
-			if(ispath(tongue_type, /obj/item/organ/tongue))
-				T = new tongue_type()
-				T.Insert(src)
+		if(dna && dna.species)
+			for(var/tongue_type in dna.species.mutant_organs)
+				if(ispath(tongue_type, /obj/item/organ/tongue))
+					T = new tongue_type()
+					T.Insert(src)
 
 		// if they have no mutant tongues, give them a regular one
 		if(!T)
