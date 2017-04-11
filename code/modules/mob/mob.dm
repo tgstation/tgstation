@@ -550,6 +550,7 @@
 
 /mob/Stat()
 	..()
+	var/is_admin = client && client.holder
 
 	if(statpanel("Status"))
 		if (client)
@@ -565,9 +566,13 @@
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
+		
+		if(is_admin)
+			stat(null)
+			stat(null)
+			GLOB.ahelp_tickets.stat_entry()
 
-
-	if(client && client.holder)
+	if(is_admin)
 		if(statpanel("MC"))
 			stat("Location:", "([x], [y], [z])")
 			stat("CPU:", "[world.cpu]")
@@ -588,8 +593,6 @@
 				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
 			GLOB.cameranet.stat_entry()
-		if(statpanel("Tickets"))
-			GLOB.ahelp_tickets.stat_entry()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
