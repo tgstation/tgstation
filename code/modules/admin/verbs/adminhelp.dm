@@ -121,10 +121,16 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	return ..()
 
 /datum/admin_help_tickets/proc/stat_entry()
+	var/num_disconnected = 0
 	stat("Active Tickets:", astatclick.update("[active_tickets.len]"))
 	for(var/I in active_tickets)
 		var/datum/admin_help/AH = I
-		stat("Ticket #[AH.id]:", AH.statclick)
+		if(AH.initiator)
+			stat("Ticket #[AH.id]:", AH.statclick)
+		else
+			++num_disconnected
+	if(num_disconnected)
+		stat("Disconnected:", "[num_disconnected]")
 	stat("Closed Tickets:", cstatclick.update("[closed_tickets.len]"))
 	stat("Resolved Tickets:", rstatclick.update("[resolved_tickets.len]"))
 
