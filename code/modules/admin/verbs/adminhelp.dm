@@ -458,4 +458,4 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		C = Mob.client
 	if(istype(C) && C.current_ticket)
 		C.current_ticket.interactions += message
-		
+		return C.current_ticket
