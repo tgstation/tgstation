@@ -12090,17 +12090,10 @@
 /turf/closed/indestructible/riveted,
 /area/tdome/arena)
 "DF" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome Gear Room";
-	opacity = 1;
-	req_access_txt = "101"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
+/turf/closed/indestructible/riveted,
 /area/tdome/tdomeobserve)
 "DG" = (
 /obj/machinery/igniter,
