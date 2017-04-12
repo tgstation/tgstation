@@ -247,6 +247,19 @@
 	var/obj/structure/cable/attached		// the attached cable
 	var/storedpower = 0
 
+/obj/machinery/shieldwallgen/science		//Use for xenobiology on maps where you have shield wall generators in xeno.
+	name = "shield wall generator"
+	desc = "A shield generator."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "Shield_Gen"
+	anchored = 0
+	density = 1
+	req_access = list(access_xenobiology)
+	flags = CONDUCT
+	use_power = 0
+	obj_integrity = 300
+	max_integrity = 300
+
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
 		power = 0

@@ -75496,13 +75496,13 @@
 	},
 /area/toxins/xenobiology)
 "cMK" = (
-/obj/machinery/shieldwallgen,
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/shieldwallgen/science,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "cML" = (
@@ -81002,13 +81002,13 @@
 	},
 /area/toxins/xenobiology)
 "cWP" = (
-/obj/machinery/shieldwallgen,
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/shieldwallgen/science,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "cWQ" = (

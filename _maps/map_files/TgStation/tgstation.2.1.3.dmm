@@ -39959,9 +39959,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/shieldwallgen{
-	req_access_txt = "55"
-	},
+/obj/machinery/shieldwallgen/science,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "bJI" = (

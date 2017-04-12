@@ -77224,13 +77224,11 @@
 	},
 /area/toxins/misc_lab)
 "cFm" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
 /obj/structure/cable/orange{
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/shieldwallgen/science,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -78165,10 +78163,8 @@
 	},
 /area/toxins/misc_lab)
 "cGW" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
 /obj/structure/cable/orange,
+/obj/machinery/shieldwallgen/science,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
