@@ -416,7 +416,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/gender/on_reaction(datum/reagents/holder)
-	 new /obj/item/slimepotion/genderchange(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/genderchange(get_turf(holder.my_atom))
 	..()
 
 //Black
