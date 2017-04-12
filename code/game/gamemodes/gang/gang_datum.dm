@@ -30,6 +30,8 @@
 		/datum/gang_item/weapon/switchblade,
 		/datum/gang_item/weapon/pistol,
 		/datum/gang_item/weapon/ammo/pistol_ammo,
+		/datum/gang_item/weapon/g17,
+		/datum/gang_item/weapon/ammo/g17_ammo,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/spraycan,
