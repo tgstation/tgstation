@@ -1,7 +1,29 @@
-//Fire
-/mob/living/simple_animal/hostile/sutando/fire
-	playstyle_string = "<span class='holoparasite'>As a <b>chaos</b> type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will cause human targets to see everyone as you.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Wizard, bringer of endless chaos!</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Crowd control modules activated. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.</span>"
-	abilities = list(/datum/sutando_abilities/fire)
+//magician's fried chicken
+
+/datum/sutando_abilities/fire
+	id = "fire"
+	name = "Controlled Combustion"
+	value = 7
+
+
+/datum/sutando_abilities/fire/handle_stats()
+	stand.melee_damage_lower += 4.5
+	stand.melee_damage_upper += 4.5
+	stand.attack_sound = 'sound/items/Welder.ogg'
+	for(var/i in stand.damage_coeff)
+		stand.damage_coeff[i] -= 0.3
+	stand.range += 4.5
+	stand.a_intent = INTENT_HELP
+
+/datum/sutando_abilities/fire/bump_reaction(AM as mob|obj)
+	if(isliving(AM))
+		var/mob/living/M = AM
+		if(!stand.hasmatchingsummoner(M) && M != user && M.fire_stacks < 7)
+			M.fire_stacks = 7
+			M.IgniteMob()
+
+/datum/sutando_abilities/fire/life_act()
+	if(user)
+		user.ExtinguishMob()
+		user.adjust_fire_stacks(-20)
+

@@ -1,7 +1,25 @@
-//Standard
-/mob/living/simple_animal/hostile/sutando/punch
-	playstyle_string = "<span class='holoparasite'>As a <b>standard</b> type you have no special abilities, but have a high damage resistance and a powerful attack capable of smashing through walls.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Assistant, faceless and generic, but never to be underestimated.</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Standard combat modules loaded. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! It's really boring and standard. Better punch some walls to ease the tension.</span>"
-	abilities = list(/datum/sutando_abilities/punch)
+//ORA ORA ORA
+
+/datum/sutando_abilities/punch
+	id = "punch"
+	name = "Close-Range Combat"
+	value = 5
+
+
+/datum/sutando_abilities/punch/handle_stats()
+	. = ..()
+	stand.melee_damage_lower += 10
+	stand.melee_damage_upper += 10
+	stand.obj_damage += 80
+	stand.next_move_modifier -= 0.2 //attacks 20% faster
+	stand.environment_smash = 2
+
+
+/datum/sutando_abilities/punch/ability_act()
+	if(isliving(stand.target))
+		stand.attack_sound = pick('sound/magic/sutandopunch.ogg', 'sound/magic/sutandopunch1.ogg', 'sound/magic/sutandopunch2.ogg')
+		stand.say("[battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry]!!")
+		playsound(stand.loc, stand.attack_sound, 50, 1, 1)
+		playsound(stand.loc, stand.attack_sound, 50, 1, 1)
+		playsound(stand.loc, stand.attack_sound, 50, 1, 1)
+		playsound(stand.loc, stand.attack_sound, 50, 1, 1)

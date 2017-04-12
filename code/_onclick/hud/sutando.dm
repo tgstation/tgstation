@@ -37,7 +37,7 @@
 /datum/hud/dextrous/sutando/New(mob/living/simple_animal/hostile/sutando/owner, ui_style = 'icons/mob/screen_midnight.dmi') //for a dextrous sutando
 	..()
 	var/obj/screen/using
-	if(istype(owner, /mob/living/simple_animal/hostile/sutando/dextrous))
+	if(owner.dextrous)
 		var/obj/screen/inventory/inv_box
 
 		inv_box = new /obj/screen/inventory()
@@ -80,16 +80,17 @@
 /datum/hud/dextrous/sutando/persistent_inventory_update()
 	if(!mymob)
 		return
-	if(istype(mymob, /mob/living/simple_animal/hostile/sutando/dextrous))
-		var/mob/living/simple_animal/hostile/sutando/dextrous/D = mymob
+	if(istype(mymob, /mob/living/simple_animal/hostile/sutando))
+		var/mob/living/simple_animal/hostile/sutando/D = mymob
 
-		if(hud_shown)
-			if(D.internal_storage)
-				D.internal_storage.screen_loc = ui_id
-				D.client.screen += D.internal_storage
-		else
-			if(D.internal_storage)
-				D.internal_storage.screen_loc = null
+		if(D.dextrous)
+			if(hud_shown)
+				if(D.internal_storage)
+					D.internal_storage.screen_loc = ui_id
+					D.client.screen += D.internal_storage
+			else
+				if(D.internal_storage)
+					D.internal_storage.screen_loc = null
 
 	..()
 
