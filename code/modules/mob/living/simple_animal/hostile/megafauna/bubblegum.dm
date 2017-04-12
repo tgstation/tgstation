@@ -326,7 +326,7 @@ Difficulty: Hard
 	pools_to_remove = get_pools(get_turf(target), 1)
 	pools -= pools_to_remove
 	if(pools.len)
-		shuffle(pools)
+		shuffle_inplace(pools)
 		found_bloodpool = pick(pools)
 	if(found_bloodpool)
 		visible_message("<span class='danger'>[src] sinks into the blood...</span>")
