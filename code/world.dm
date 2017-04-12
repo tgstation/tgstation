@@ -48,7 +48,7 @@
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	if(config.sql_enabled)
-		if(!GLOB.dbcon.Connect())
+		if(!SSdbcore.Connect())
 			log_world("Your server failed to establish a connection with the database.")
 		else
 			log_world("Database connection established.")
