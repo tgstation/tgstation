@@ -610,6 +610,8 @@
 /obj/effect/timestop/wizard
 	duration = 100
 
+/obj/effect/timestop/sepia
+	duration = 70
 
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"
