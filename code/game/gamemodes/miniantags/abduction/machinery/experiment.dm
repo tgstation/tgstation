@@ -111,12 +111,13 @@
 	else
 		dat += "<span class='linkOff'>Experiment </span>"
 
-	if(!occupant)
+	if(!isliving(occupant))
 		dat += "<h3>Machine Unoccupied</h3>"
 	else
 		dat += "<h3>Subject Status : </h3>"
 		dat += "[occupant.name] => "
-		switch(occupant.stat)
+		var/mob/living/mob_occupant = occupant
+		switch(mob_occupant.stat)
 			if(0)
 				dat += "<span class='good'>Conscious</span>"
 			if(1)
@@ -146,9 +147,11 @@
 	if(href_list["close"])
 		close_machine()
 		return
-	if(occupant && occupant.stat != DEAD)
-		if(href_list["experiment"])
-			flash = Experiment(occupant,href_list["experiment"])
+	if(isliving(occupant))
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant.stat != DEAD)
+			if(href_list["experiment"])
+				flash = Experiment(occupant,href_list["experiment"])
 	updateUsrDialog()
 	add_fingerprint(usr)
 

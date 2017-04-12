@@ -189,14 +189,15 @@
 				dat += "<h3>Scanner Functions</h3>"
 
 				dat += "<div class='statusDisplay'>"
-				if (!src.scanner.occupant)
+				if (!isliving(scanner.occupant))
 					dat += "Scanner Unoccupied"
 				else if(loading)
 					dat += "[src.scanner.occupant] => Scanning..."
 				else
-					if (src.scanner.occupant.ckey != scantemp_ckey)
+					var/mob/living/mob_occupant = scanner.occupant
+					if (mob_occupant.ckey != scantemp_ckey)
 						scantemp = "Ready to Scan"
-						scantemp_ckey = src.scanner.occupant.ckey
+						scantemp_ckey = mob_occupant.ckey
 					dat += "[src.scanner.occupant] => [scantemp]"
 				dat += "</div>"
 

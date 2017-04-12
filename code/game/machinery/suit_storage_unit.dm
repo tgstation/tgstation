@@ -211,13 +211,13 @@
 		uv = TRUE
 		locked = TRUE
 		update_icon()
-		if(occupant)
+		if(isliving(occupant))
+			var/mob/living/mob_occupant = occupant
 			if(uv_super)
-				occupant.adjustFireLoss(rand(20, 36))
+				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
-				occupant.adjustFireLoss(rand(10, 16))
-			if(iscarbon(occupant))
-				occupant.emote("scream")
+				mob_occupant.adjustFireLoss(rand(10, 16))
+			mob_occupant.emote("scream")
 		addtimer(CALLBACK(src, .proc/cook), 50)
 	else
 		uv_cycles = initial(uv_cycles)
@@ -368,14 +368,15 @@
 			else if(!helmet && !mask && !suit && !storage && !occupant)
 				return
 			else
-				if(occupant)
-					to_chat(occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>")
+				if(isliving(occupant))
+					var/mob/living/mob_occupant = occupant
+					to_chat(mob_occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!</span>")
 				cook()
 				. = TRUE
 		if("dispense")
 			if(!state_open)
 				return
-			
+
 			var/static/list/valid_items = list("helmet", "suit", "mask", "storage")
 			var/item_name = params["item"]
 			if(item_name in valid_items)
