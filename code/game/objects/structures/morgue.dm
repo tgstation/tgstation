@@ -200,7 +200,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		update_icon()
 
 		if (!isnull(contents) && contents.len > 0)
-			cremateLoop(contents)
+			cremateLoop(user, contents)
 
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
@@ -210,17 +210,17 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
 // A recursive proc is needed for checking contents of contents, else bodies won't creamte in body bags
-/obj/structure/bodycontainer/crematorium/proc/cremateLoop(list/conts)
+/obj/structure/bodycontainer/crematorium/proc/cremateLoop(mob/user, list/conts)
 	for(var/atom/A in conts)
 		if (!isnull(A.contents) && A.contents.len > 0) // Those darn body bags with bodies in them!
-			cremateLoop(A.contents)
+			cremateLoop(user, A.contents)
 		if (istype(A, /mob/living))
 			var/mob/living/M = A
 			if (M.stat != DEAD)
 				M.emote("scream")
-			if(usr)
-				usr.log_message("Cremated <b>[M]/[M.ckey]</b>", INDIVIDUAL_ATTACK_LOG)
-				log_attack("\[[time_stamp()]\] <b>[usr]/[usr.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+			if(user)
+				user.log_message("Cremated <b>[M]/[M.ckey]</b>", INDIVIDUAL_ATTACK_LOG)
+				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
 			else
 				log_attack("\[[time_stamp()]\] <b>UNKNOWN</b> cremated <b>[M]/[M.ckey]</b>")
 			M.death(1)
