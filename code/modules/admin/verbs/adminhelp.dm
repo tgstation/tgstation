@@ -90,18 +90,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Reassociate still open ticket if one exists
 /datum/admin_help_tickets/proc/ClientLogin(client/C)
-	for(var/I in active_tickets)
-		var/datum/admin_help/AH = I
-		if(AH.initiator_ckey == C.ckey)
-			AH.initiator = C
-			C.current_ticket = AH
-			break
+	C.current_ticket = CKey2ActiveTicket(C.ckey)
 
 //Dissasociate ticket
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
 	if(C.current_ticket)
 		C.current_ticket.initiator = null
 		C.current_ticket = null
+
+//Get a ticket given a ckey
+/datum/admin_help_tickets/proc/CKey2ActiveTicket(ckey)
+	for(var/I in active_tickets)
+		var/datum/admin_help/AH = I
+		if(AH.initiator_ckey == C.ckey)
+			return AH
 
 //
 //TICKET LIST STATCLICK
@@ -182,7 +184,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 		//send it to irc if nobody is on and tell us how many were on
 		var/admin_number_present = send2irc_adminless_only(initiator_ckey,original_message)
-		log_admin_private("HELP: [key_name(initiator)]: [original_message] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+		log_admin_private("Ticket #[id]: [key_name(initiator)]: [original_message] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 		if(admin_number_present <= 0)
 			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
 
@@ -251,19 +253,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		initiator.current_ticket = null
 
 //Mark open ticket as closed/meme
-/datum/admin_help/proc/Close()
+/datum/admin_help/proc/Close(key_name = key_name_admin(usr), silent = FALSE)
 	if(state != AHELP_ACTIVE)
 		return
 	RemoveActive()
 	state = AHELP_CLOSED
 	GLOB.ahelp_tickets.ListInsert(src)
-	feedback_inc("ahelp_close")
-	interactions += "Closed by [key_name_admin(usr)]."
-	message_admins("Ticket #[id] closed by [key_name(usr)]")
-	log_admin_private("Ticket #[id] closed by [key_name_admin(usr)].")
+	interactions += "Closed by [key_name]."
+	if(!silent)
+		feedback_inc("ahelp_close")
+		message_admins("Ticket #[id] closed by [key_name]")
+		log_admin_private("Ticket #[id] closed by [key_name].")
 
 //Mark open ticket as resolved/legitimate, returns ahelp verb
-/datum/admin_help/proc/Resolve()
+/datum/admin_help/proc/Resolve(key_name = key_name_admin(usr), silent = FALSE)
 	if(state != AHELP_ACTIVE)
 		return
 	RemoveActive()
@@ -273,10 +276,49 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		initiator.giveadminhelpverb()
 
-	feedback_inc("ahelp_resolve")
-	interactions += "Resolved by [key_name_admin(usr)]."
-	message_admins("Ticket #[id] resolved by [key_name_admin(usr)]")
-	log_admin_private("Ticket #[id] resolved by [key_name(usr)].")
+	interactions += "Resolved by [key_name]."
+	if(!silent)
+		feedback_inc("ahelp_resolve")
+		message_admins("Ticket #[id] resolved by [key_name]")
+		log_admin_private("Ticket #[id] resolved by [key_name].")
+
+//Close and return ahelp verb, use if ticket is incoherent
+/datum/admin_help/proc/Reject(key_name = key_name_admin(usr))
+	if(state != AHELP_ACTIVE)
+		return
+	
+	if(initiator)
+		initiator.giveadminhelpverb()
+
+		initiator << 'sound/effects/adminhelp.ogg'
+
+		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
+		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
+		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
+
+	feedback_inc("ahelp_reject")
+	message_admins("[key_name] Rejected [initiator_key_name]'s admin help. [initiator_key_name]'s Adminhelp verb has been returned to them.")
+	log_admin_private("[key_name] Rejected [initiator_key_name]'s admin help.")
+	interactions += "Rejected by [key_name]."
+	Close(silent = TRUE)
+
+//Resolve ticket with IC Issue message
+/datum/admin_help/proc/ICIssue(key_name = key_name_admin(usr))
+	if(state != AHELP_ACTIVE)
+		return
+
+	var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
+	msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
+	msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
+
+	if(initiator)
+		to_chat(initiator, msg)
+
+	feedback_inc("ahelp_icissue")
+	message_admins("[key_name] marked [initiator_key_name]'s admin help as an IC issue.")
+	interactions += "Marked as IC issue by [key_name]"
+	log_admin_private("[key_name] marked [initiator_key_name]'s admin help as an IC issue.")
+	Resolve(silent = TRUE)
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
@@ -303,43 +345,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		dat += "[I]<br>"
 
 	usr << browse(dat.Join(), "window=ahelp[id];size=620x480")
-
-//Close and return ahelp verb, use if ticket is incoherent
-/datum/admin_help/proc/Reject()
-	if(state != AHELP_ACTIVE)
-		return
-	
-	if(initiator)
-		initiator.giveadminhelpverb()
-
-		initiator << 'sound/effects/adminhelp.ogg'
-
-		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
-		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
-		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
-
-	feedback_inc("ahelp_reject")
-	message_admins("[key_name_admin(usr)] Rejected [initiator_key_name]'s admin help. [initiator_key_name]'s Adminhelp verb has been returned to them.")
-	log_admin_private("[key_name(usr)] Rejected [initiator_key_name]'s admin help.")
-	interactions += "Rejected by [key_name_admin(usr)]."
-	Close()
-
-//Resolve ticket with IC Issue message
-/datum/admin_help/proc/ICIssue()
-	if(state != AHELP_ACTIVE)
-		return
-
-	var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
-	msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
-	msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
-
-	to_chat(initiator, msg)
-
-	feedback_inc("ahelp_icissue")
-	message_admins("[key_name_admin(usr)] marked [initiator_key_name]'s admin help as an IC issue.")
-	interactions += "Marked as IC issue by [key_name_admin(usr)]"
-	log_admin_private("[key_name(usr)] marked [initiator_key_name]'s admin help as an IC issue.")
-	Resolve()
 
 //Forwarded action from admin/Topic
 /datum/admin_help/proc/Action(action)
@@ -429,11 +434,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		C.current_ticket.interactions += message
 		return C.current_ticket
 	if(istext(what))	//ckey
-		for(var/I in GLOB.ahelp_tickets.active_tickets)
-			var/datum/admin_help/AH = I
-			if(AH.initiator_ckey == what)
-				AH.interactions += message
-				return AH
+		var/datum/admin_help/AH = GLOB.ahelp_tickets.CKey2ActiveTicket(what)
+		if(AH)
+			AH.interactions += message
+			return AH
 
 //
 // HELPER PROCS

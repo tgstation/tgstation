@@ -221,11 +221,36 @@
 
 
 /proc/IrcPm(target,msg,sender)
-
 	var/client/C = GLOB.directory[target]
 
+	var/datum/admin_help/ticket = C ? C.current_ticket : GLOB.ahelp_tickets.CKey2ActiveTicket(target)
+	var/compliant_msg = trim(lowertext(msg))
+	var/unhandled = FALSE
+	var/irc_tagged = "[sender](IRC)"
+	switch(compliant_msg)
+		if("ticket close")
+			if(ticket)
+				ticket.Close(irc_tagged)
+				return "Ticket #[ticket.id] successfully closed"
+		if("ticket resolve")
+			if(ticket)
+				ticket.Resolve(irc_tagged)
+				return "Ticket #[ticket.id] successfully resolved"
+		if("ticket ic")
+			if(ticket)
+				ticket.ICIssue(irc_tagged)
+				return "Ticket #[ticket.id] successfully marked as IC issue"
+		if("ticket reject")
+			if(ticket)
+				ticket.Reject(irc_tagged)
+				return "Ticket #[ticket.id] successfully rejected"
+		else
+			unhandled = TRUE
+	if(!unhandled)
+		return "Ticket could not be found"
+
 	var/static/stealthkey
-	var/adminname = config.showircname ? "[sender](IRC)" : "Administrator"
+	var/adminname = config.showircname ? irc_tagged : "Administrator"
 
 	if(!C)
 		return "No client"
@@ -245,7 +270,7 @@
 	to_chat(C, "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>")
 	to_chat(C, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")
 
-	admin_ticket_log(C, "<font color='blue'>PM From [adminname](IRC): [msg]</font>")
+	admin_ticket_log(C, "<font color='blue'>PM From [irc_tagged]: [msg]</font>")
 
 	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound
