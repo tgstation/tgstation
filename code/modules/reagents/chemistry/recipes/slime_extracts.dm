@@ -597,7 +597,7 @@
 
 /datum/chemical_reaction/slime/slimepaint/on_reaction(datum/reagents/holder)
 	var/chosen = pick(subtypesof(/obj/item/weapon/paint))
-	var/obj/P = new chosen(get_turf(holder.my_atom))
+	new chosen(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimecrayon
