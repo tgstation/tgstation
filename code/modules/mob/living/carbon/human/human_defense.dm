@@ -160,7 +160,7 @@
 	return ..()
 
 // BROKEN
-// This supposed to be the code for devoring monkeys but it became broken
+// This supposed to be the code for devouring monkeys but it became broken
 // /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
 // 	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (disabilities & FAT) && ismonkey(pulling))
 // 		devour_mob(pulling)
