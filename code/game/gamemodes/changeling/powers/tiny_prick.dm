@@ -101,10 +101,9 @@
 			C.take_bodypart_damage(20, 0) //The process is extremely painful
 
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
-	feedback_add_details("changeling_powers","TS")
 	. = TRUE
+	sleep(10)
 	if(istype(C))
-		sleep(10)
 		C.real_name = NewDNA.real_name
 		NewDNA.transfer_identity(C, transfer_SE=1)
 		C.updateappearance(mutcolor_update=1)
@@ -152,9 +151,7 @@
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
 	addtimer(CALLBACK(src, .proc/remove_fake, target, blade), 600)
-
-	feedback_add_details("changeling_powers","AS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
@@ -182,8 +179,7 @@
 	add_logs(user, target, "stung", "extraction sting")
 	if(!(user.mind.changeling.has_dna(target.dna)))
 		user.mind.changeling.add_new_profile(target, user)
-	feedback_add_details("changeling_powers","ED")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/mute
 	name = "Mute Sting"
@@ -196,8 +192,7 @@
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "mute sting")
 	target.silent += 30
-	feedback_add_details("changeling_powers","MS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/blind
 	name = "Blind Sting"
@@ -213,8 +208,7 @@
 	target.become_nearsighted()
 	target.blind_eyes(20)
 	target.blur_eyes(40)
-	feedback_add_details("changeling_powers","BS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucination Sting"
@@ -227,8 +221,7 @@
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
 	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(300,600))
-	feedback_add_details("changeling_powers","HS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/LSD/proc/hallucination_time(mob/living/carbon/target)
 	if(target)
@@ -246,5 +239,4 @@
 	add_logs(user, target, "stung", "cryo sting")
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)
-	feedback_add_details("changeling_powers","CS")
-	return 1
+	return TRUE

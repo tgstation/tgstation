@@ -25,8 +25,8 @@
 		cross = image('icons/obj/storage.dmi',"kingyellow")
 		font_color = "blue"
 		prayer_type = "CHAPLAIN PRAYER"
-		if(SSreligion.Bible_deity_name)
-			deity = SSreligion.Bible_deity_name
+		if(SSreligion.deity)
+			deity = SSreligion.deity
 	else if(iscultist(usr))
 		cross = image('icons/obj/storage.dmi',"tome")
 		font_color = "red"
@@ -43,7 +43,7 @@
 					C << 'sound/effects/pray.ogg'
 	to_chat(usr, "Your prayers have been received by the gods.")
 
-	feedback_add_details("admin_verb","PR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
 /proc/Centcomm_announce(text , mob/Sender)

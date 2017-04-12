@@ -4,7 +4,8 @@
 	/datum/surgery_step/incise, /datum/surgery_step/manipulate_organs)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest", "head")
-	requires_organic_bodypart = 0
+	requires_organic_bodypart = FALSE
+	requires_real_bodypart = TRUE
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")

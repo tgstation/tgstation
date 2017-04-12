@@ -12,6 +12,7 @@
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
+	var/verb_whisper = "whispers"
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc

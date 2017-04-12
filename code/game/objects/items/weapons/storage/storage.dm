@@ -498,7 +498,7 @@
 		remove_from_storage(I, T)
 
 
-/obj/item/weapon/storage/New()
+/obj/item/weapon/storage/Initialize(mapload)
 	..()
 
 	can_hold = typecacheof(can_hold)
@@ -527,6 +527,8 @@
 	closer.layer = ABOVE_HUD_LAYER
 	closer.plane = ABOVE_HUD_PLANE
 	orient2hud()
+
+	PopulateContents()
 
 
 /obj/item/weapon/storage/Destroy()
@@ -561,3 +563,7 @@
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
 		CHECK_TICK
+
+//Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
+
+/obj/item/weapon/storage/proc/PopulateContents()

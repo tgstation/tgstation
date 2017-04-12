@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the incorrectly named Brig APC on Box Station="

@@ -845,7 +845,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
-			if(id in GLOB.hardcoded_gases || gas_concentration > 0.001) //ensures the four primary gases are always shown.
+			if((id in GLOB.hardcoded_gases) || gas_concentration > 0.001) //ensures the four primary gases are always shown.
 				to_chat(user, "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 
 		to_chat(user, "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>")
