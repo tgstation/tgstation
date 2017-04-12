@@ -10,6 +10,10 @@
 //This is the ABSOLUTE ONLY THING that should init globally like this
 GLOBAL_REAL(Master, /datum/controller/master) = new
 
+//THIS IS THE INIT ORDER
+//Master -> SSPreInit -> GLOB -> world -> config -> SSInit -> Failsafe
+//GOT IT MEMORIZED?
+
 GLOBAL_VAR_INIT(MC_restart_clear, 0)
 GLOBAL_VAR_INIT(MC_restart_timeout, 0)
 GLOBAL_VAR_INIT(MC_restart_count, 0)
