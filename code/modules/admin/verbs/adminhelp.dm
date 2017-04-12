@@ -398,7 +398,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //
 
 //Use this proc when an admin takes action that may be related to an open ticket on what
-//what can be a client or mob
+//what can be a client, ckey, or mob
 /proc/admin_ticket_log(what, message)
 	var/client/C = what
 	var/mob/Mob = what
@@ -407,6 +407,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(istype(C) && C.current_ticket)
 		C.current_ticket.interactions += message
 		return C.current_ticket
+	if(istext(what))	//ckey
+		for(var/I in ahelp_tickets.active_tickets)
+			var/datum/admin_help/AH = I
+			if(AH.initiator_ckey == what)
+				AH.interactions += message
+				return AH
 
 //
 // HELPER PROCS

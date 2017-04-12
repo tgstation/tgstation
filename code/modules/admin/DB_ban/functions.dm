@@ -132,7 +132,7 @@
 	to_chat(usr, "<span class='adminnotice'>Ban saved to database.</span>")
 	var/msg = "[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database."
 	message_admins(msg,1)
-	var/datum/admin_help/AH = admin_ticket_log(banned_mob, msg)
+	var/datum/admin_help/AH = admin_ticket_log(ckey, msg)
 
 	if(announceinirc)
 		send2irc("BAN ALERT","[a_ckey] applied a [bantype_str] on [ckey]")
