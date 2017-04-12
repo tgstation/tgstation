@@ -65,9 +65,6 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		else
 			init_subtypes(/datum/controller/subsystem, subsystems)
 		Master = src
-	
-	if(!config)
-		config = new
 
 	if(!GLOB)
 		new /datum/controller/global_vars
