@@ -39,6 +39,12 @@
 			apply_damage(damage, BRUTE, affecting)
 			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
+/mob/living/carbon/monkey/grabbedby(mob/living/carbon/human/M, supress_message = 0)
+	if(M.pulling && !anchored && M.grab_state >= GRAB_AGGRESSIVE && (M.disabilities & FAT))
+		M.devour_mob(M.pulling)
+	else
+		..()
+
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if(..())	//To allow surgery to return properly.
 		return
