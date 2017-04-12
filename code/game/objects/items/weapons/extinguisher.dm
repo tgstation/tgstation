@@ -94,7 +94,6 @@
 		return 0
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	//TODO; Add support for reagents in water.
 	if(refilling)
 		refilling = FALSE
 		return
@@ -113,28 +112,11 @@
 		var/direction = get_dir(src,target)
 
 		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
-			spawn(0)
-				var/obj/B = user.buckled
-				var/movementdirection = turn(direction,180)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(2)
-				step(B, movementdirection)
-				sleep(2)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-
-		else user.newtonian_move(turn(direction, 180))
+			var/obj/B = user.buckled
+			var/movementdirection = turn(direction,180)
+			new /datum/forced_movement(B, get_step_away(B, movementdirection, 9), 1)
+		else
+			user.newtonian_move(turn(direction, 180))
 
 		var/turf/T = get_turf(target)
 		var/turf/T1 = get_step(T,turn(direction, 90))
@@ -145,30 +127,24 @@
 			var/turf/T4 = get_step(T2,turn(direction, -90))
 			the_targets = list(T,T1,T2,T3,T4)
 
-		for(var/a=0, a<5, a++)
-			spawn(0)
-				var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
-				var/turf/my_target = pick(the_targets)
-				if(precision)
-					the_targets -= my_target
-				var/datum/reagents/R = new/datum/reagents(5)
-				if(!W) return
-				W.reagents = R
-				R.my_atom = W
-				if(!W || !src) return
-				src.reagents.trans_to(W,1)
-				for(var/b=0, b<power, b++)
-					step_towards(W,my_target)
-					if(!W || !W.reagents) return
-					W.reagents.reaction(get_turf(W))
-					for(var/A in get_turf(W))
-						if(!W) return
-						W.reagents.reaction(A)
-					if(W.loc == my_target) break
-					sleep(2)
-
+		for(var/I in 1 to 5)
+			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
+			var/turf/my_target = pick(the_targets)
+			if(precision)
+				the_targets -= my_target
+			W.create_reagents(5)
+			reagents.trans_to(W, 1)
+			new /datum/forced_movement(W, my_target, 0.5, TRUE, CALLBACK(GLOBAL_PROC, /proc/WaterStepCallback))
 	else
 		return ..()
+
+/proc/WaterStepCallback(datum/forced_movement/FM)
+	var/obj/effect/particle_effect/water/W = FM.victim
+	var/turf/T = get_turf(W)
+	W.reagents.reaction(T)
+	for(var/A in T)
+		if(A != W)
+			W.reagents.reaction(A)
 
 /obj/item/weapon/extinguisher/AltClick(mob/user)
 	EmptyExtinguisher(user)
