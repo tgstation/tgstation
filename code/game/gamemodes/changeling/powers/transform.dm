@@ -107,9 +107,7 @@
 		return
 
 	changeling_transform(user, chosen_prof)
-
-	feedback_add_details("changeling_powers","TR")
-	return 1
+	return TRUE
 
 /datum/changeling/proc/select_dna(var/prompt, var/title, var/mob/living/carbon/user)
 	var/list/names = list("Drop Flesh Disguise")

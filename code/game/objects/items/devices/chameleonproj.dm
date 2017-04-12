@@ -31,6 +31,8 @@
 
 /obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
 	if(!proximity) return
+	if(!check_sprite(target))
+		return
 	if(!active_dummy)
 		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
@@ -40,6 +42,11 @@
 			temp.layer = initial(target.layer) // scanning things in your inventory
 			temp.plane = initial(target.plane)
 			saved_appearance = temp.appearance
+
+/obj/item/device/chameleon/proc/check_sprite(atom/target)
+	if(target.icon_state in icon_states(target.icon))
+		return TRUE
+	return FALSE
 
 /obj/item/device/chameleon/proc/toggle()
 	if(!can_use || !saved_appearance) return

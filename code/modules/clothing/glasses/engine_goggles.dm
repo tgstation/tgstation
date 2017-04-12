@@ -24,7 +24,7 @@
 		STOP_PROCESSING(SSobj, src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
-		invis_view = SEE_INVISIBLE_MINIMUM
+		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		to_chat(loc, "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>")
 		invis_update()
 

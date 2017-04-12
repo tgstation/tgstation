@@ -15,7 +15,7 @@
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	mob_size = MOB_SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
@@ -1014,7 +1014,7 @@
 			last_tendril = FALSE
 			break
 	if(last_tendril && !admin_spawned)
-		if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
+		if(global.medal_hub && global.medal_pass && global.medals_enabled)
 			for(var/mob/living/L in view(7,src))
 				if(L.stat)
 					continue

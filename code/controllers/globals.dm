@@ -41,9 +41,9 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 		num_globals = vars.len - gvars_datum_in_built_vars.len
 	stat("Globals:", statclick.update("Count: [num_globals]"))
 
-/datum/controller/global_vars/vv_get_var(var_name)
+/datum/controller/global_vars/can_vv_get(var_name)
 	if(var_name in gvars_datum_protected_varlist)
-		return debug_variable(var_name, "SECRET", 0, src)
+		return FALSE
 	return ..()
 
 /datum/controller/global_vars/vv_edit_var(var_name, var_value)

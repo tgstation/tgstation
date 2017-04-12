@@ -804,9 +804,6 @@
 			setStaminaLoss(health - 2)
 	update_health_hud()
 
-/mob/proc/update_sight()
-	return
-
 /mob/living/proc/owns_soul()
 	if(mind)
 		return mind.soulOwner == mind

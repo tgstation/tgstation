@@ -295,9 +295,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if(isliving(target) && message)
 			to_chat(target, text("[message]"))
 		if(sparks_spread)
-			var/datum/effect_system/spark_spread/sparks = new
-			sparks.set_up(sparks_amt, 0, location) //no idea what the 0 is
-			sparks.start()
+			do_sparks(sparks_amt, FALSE, location)
 		if(smoke_spread)
 			if(smoke_spread == 1)
 				var/datum/effect_system/smoke_spread/smoke = new
@@ -329,6 +327,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			adjust_var(user, holder_var_type, -holder_var_amount)
 
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
+	if (!istype(target))
+		return
 	switch(type)
 		if("bruteloss")
 			target.adjustBruteLoss(amount)

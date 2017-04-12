@@ -194,7 +194,7 @@ function handle_pr($payload) {
 		case 'edited':
 		case 'synchronize':
 			tag_pr($payload, false);
-			break;
+			return;
 		case 'reopened':
 			$action = $payload['action'];
 			break;
@@ -241,24 +241,31 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 		return;
 	}
 	$body = $payload['pull_request']['body'];
+
+	$tags = array();
+
+	if(preg_match('/(?i)(fix|fixes|fixed|resolve|resolves|resolved)\s*#[0-9]+/',$body))	//github autoclose syntax
+		$tags[] = 'Fix';
+
 	$body = str_replace("\r\n", "\n", $body);
 	$body = explode("\n", $body);
+
 	$username = $payload['pull_request']['user']['login'];
 	$incltag = false;
 	$changelogbody = array();
 	$currentchangelogblock = array();
 	$foundcltag = false;
-	$tags = array();
 	foreach ($body as $line) {
 		$line = trim($line);
 		if (substr($line,0,4) == ':cl:' || substr($line,0,4) == '🆑') {
 			$incltag = true;
 			$foundcltag = true;
 			$pos = strpos($line, " ");
-			if ($pos)
+			if ($pos) {
 				$tmp = substr($line, $pos+1);
 				if (trim($tmp) != 'optional name here')
 					$username = $tmp;
+			}
 			continue;
 		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/🆑' || substr($line,0,6) == '/ 🆑' ) {
 			$incltag = false;

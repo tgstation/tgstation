@@ -1,0 +1,7 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Cigarette branding has been fixed."
+  - rscadd: "Uplift Smooth brand cigarettes now taste minty as advertised."
+  - rscdel: "You can no longer inject cigarette packets to inject all cigarettes
+simultaneously."
