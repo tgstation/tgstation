@@ -172,7 +172,7 @@
 		message["message_sender"] = source
 		message["message"] = msg
 		message["source"] = "([config.cross_name])"
-		message["key"] = GLOB.comms_key
+		message["key"] = global.comms_key
 		message["crossmessage"] = type
 
 		world.Export("[config.cross_address]?[list2params(message)]")
