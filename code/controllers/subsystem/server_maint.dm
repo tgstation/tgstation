@@ -18,5 +18,3 @@ SUBSYSTEM_DEF(server_maint)
 					to_chat(C, "<span class='danger'>You have been inactive for more than 10 minutes and have been disconnected.</span>")
 					qdel(C)
 
-	if(config.sql_enabled)
-		sql_poll_population()

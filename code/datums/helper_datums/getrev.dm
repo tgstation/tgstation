@@ -25,7 +25,7 @@
 		for(var/line in testmerge)
 			if(line)
 				log_world("Test merge active of PR #[line]")
-				feedback_add_details("testmerged_prs","[line]")
+				SSblackbox.add_details("testmerged_prs","[line]")
 		log_world("Based off master commit [parentcommit]")
 	else
 		log_world(parentcommit)

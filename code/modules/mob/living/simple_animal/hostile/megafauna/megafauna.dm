@@ -53,7 +53,7 @@
 		return
 	else
 		if(!admin_spawned)
-			feedback_set_details("megafauna_kills","[initial(name)]")
+			SSblackbox.set_details("megafauna_kills","[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type,score_type)
 		..()

@@ -266,7 +266,7 @@
 
 	if(user)
 		user.update_inv_hands()
-	feedback_add_details("gun_fired","[src.type]")
+	SSblackbox.add_details("gun_fired","[src.type]")
 	return 1
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)

@@ -483,7 +483,7 @@ SUBSYSTEM_DEF(job)
 			else level4++ //not selected
 
 		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
-		feedback_add_details("job_preferences",tmp_str)
+		SSblackbox.add_details("job_preferences",tmp_str)
 
 /datum/controller/subsystem/job/proc/PopcapReached()
 	if(config.hard_popcap || config.extreme_popcap)

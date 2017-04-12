@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		SSreligion.bible_icon_state = B.icon_state
 		SSreligion.bible_item_state = B.item_state
 
-		feedback_set_details("religion_book","[biblename]")
+		SSblackbox.set_details("religion_book","[biblename]")
 		usr << browse(null, "window=editicon")
 
 /obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
