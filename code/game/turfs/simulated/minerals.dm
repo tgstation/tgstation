@@ -44,7 +44,6 @@
 
 
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
-
 	if (!user.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -67,18 +66,16 @@
 				feedback_add_details("pick_used_mining","[P.type]")
 	else
 		return attack_hand(user)
-	return
 
 /turf/closed/mineral/proc/gets_drilled()
 	if (mineralType && (src.mineralAmt > 0) && (src.mineralAmt < 11))
 		var/i
-		for (i=0;i<mineralAmt;i++)
+		for(i in 1 to mineralAmt)
 			new mineralType(src)
-		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
+			feedback_add_details("ore_mined",mineralType)
 	ChangeTurf(turf_type, defer_change)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
-	return
 
 /turf/closed/mineral/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash >= 2)
