@@ -4,6 +4,7 @@
 	icon_state = "x"
 	var/btemp1 = 1500
 	var/btemp2 = 1000	// tank temperatures
+	var/assembly_type
 
 /obj/effect/spawner/newbomb/Initialize()
 	..()
@@ -19,40 +20,27 @@
 	PT.master = V
 	OT.master = V
 	
-	setup_assembly(V)
+	if(assembly_type)
+		var/obj/item/device/assembly/A = new assembly_type(V)
+		V.attached_device = A
+		A.holder = V
+		A.toggle_secure()
 
 	V.update_icon()
 	
 	qdel(src)
 
-/obj/effect/spawner/newbomb/proc/setup_assembly(obj/item/device/transfer_valve/V)
-	return
-
 /obj/effect/spawner/newbomb/timer
-
-/obj/effect/spawner/newbomb/timer/setup_assembly(obj/item/device/transfer_valve/V)
-	var/obj/item/device/assembly/timer/T = new(V)
-	V.attached_device = T
-	T.holder = V
-	T.toggle_secure()
-	T.time = 30
+	assembly_type = /obj/item/device/assembly/timer
 
 /obj/effect/spawner/newbomb/timer/syndicate
 	btemp1 = 150
 	btemp2 = 20
 
 /obj/effect/spawner/newbomb/proximity
-
-/obj/effect/spawner/newbomb/proximity/setup_assembly(obj/item/device/transfer_valve/V)
-	var/obj/item/device/assembly/signaler/S = new(V)
-	V.attached_device = S
-	S.holder = V
-	S.toggle_secure()
+	assembly_type = /obj/item/device/assembly/prox_sensor
 
 /obj/effect/spawner/newbomb/radio
+	assembly_type = /obj/item/device/assembly/signaler
+	
 
-/obj/effect/spawner/newbomb/radio/setup_assembly(obj/item/device/transfer_valve/V)
-	var/obj/item/device/assembly/prox_sensor/P = new(V)
-	V.attached_device = P
-	P.holder = V
-	P.toggle_secure()
