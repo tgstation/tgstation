@@ -110,7 +110,7 @@
 	..()
 	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
-/datum/chemical_reaction/slime/slimemobspawn/proc/summon_mobs(turf/T)
+/datum/chemical_reaction/slime/slimemobspawn/proc/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
 	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 5, "Gold Slime"), 50)
 
@@ -119,7 +119,7 @@
 	id = "m_tele3"
 	required_reagents = list("blood" = 1)
 
-/datum/chemical_reaction/slime/slimemobspawn/lesser/summon_mobs(turf/T)
+/datum/chemical_reaction/slime/slimemobspawn/lesser/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
 	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 3, "Lesser Gold Slime", "neutral"), 50)
 
@@ -128,7 +128,7 @@
 	id = "m_tele5"
 	required_reagents = list("water" = 1)
 
-/datum/chemical_reaction/slime/slimemobspawn/friendly/summon_mobs(turf/T)
+/datum/chemical_reaction/slime/slimemobspawn/friendly/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
 	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Friendly Gold Slime", "neutral"), 50)
 
@@ -405,7 +405,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/docility/on_reaction(datum/reagents/holder)
-	var/obj/item/slimepotion/docility/P = new /obj/item/slimepotion/docility(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/docility(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/gender
@@ -475,9 +475,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimepotion2/on_reaction(datum/reagents/holder)
-	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/slimepotion/sentience/P = new /obj/item/slimepotion/sentience
-	P.loc = get_turf(holder.my_atom)
+	new /obj/item/slimepotion/sentience
 	..()
 
 //Adamantine
@@ -489,10 +487,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimegolem/on_reaction(datum/reagents/holder)
-	feedback_add_details("slime_cores_used","[type]")
-	var/obj/effect/golemrune/Z = new /obj/effect/golemrune
-	Z.loc = get_turf(holder.my_atom)
-	notify_ghosts("Golem rune created in [get_area(Z)].", 'sound/effects/ghost2.ogg', source = Z)
+	new /obj/effect/golemrune(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimegolem2
@@ -503,9 +498,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimegolem2/on_reaction(datum/reagents/holder)
-	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/golem_shell/artificial/Z = new /obj/item/golem_shell/artificial
-	Z.loc = get_turf(holder.my_atom)
+	new /obj/item/golem_shell/artificial(get_turf(holder.my_atom))
 	..()
 
 //Bluespace
