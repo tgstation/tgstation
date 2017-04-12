@@ -247,7 +247,7 @@
 	var/armed = 0
 	var/trap_damage = 20
 
-/obj/item/weapon/restraints/legcuffs/beartrap/New()
+/obj/item/weapon/restraints/legcuffs/beartrap/Initialize()
 	..()
 	icon_state = "[initial(icon_state)][armed]"
 
@@ -307,9 +307,7 @@
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/proc/dissipate()
 	if(!istype(loc, /mob))
-		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-		sparks.set_up(1, 1, src)
-		sparks.start()
+		do_sparks(1, TRUE, src)
 		qdel(src)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
