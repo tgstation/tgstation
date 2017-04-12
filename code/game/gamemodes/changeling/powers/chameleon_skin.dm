@@ -18,9 +18,7 @@
 		HM.force_lose(H)
 	else
 		HM.force_give(H)
-
-	feedback_add_details("changeling_powers","CS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/chameleon_skin/on_refund(mob/user)
 	if(user.has_dna())
