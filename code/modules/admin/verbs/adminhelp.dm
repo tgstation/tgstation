@@ -39,12 +39,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		if(AHELP_RESOLVED)
 			ticket_list = resolved_tickets
 		else
-			CRASH("Invalid ticket state: [ticket_state]")
+			CRASH("Invalid ticket state: [new_ticket.state]")
 	var/num_closed = ticket_list.len
 	if(num_closed)
 		for(var/I in 1 to num_closed)
 			var/datum/admin_help/AH = I
-			if(I.id > new_ticket.id)
+			if(AH.id > new_ticket.id)
 				ticket_list.Insert(new_ticket, I)
 	else
 		ticket_list += src
@@ -256,7 +256,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	RemoveActive()
 	state = AHELP_CLOSED
-	ahelp_tickets.ListInsert(src)
+	GLOB.ahelp_tickets.ListInsert(src)
 	feedback_inc("ahelp_close")
 	interactions += "Closed by [key_name_admin(usr)]."
 	message_admins("Ticket #[id] closed by [key_name(usr)]")
@@ -268,7 +268,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	RemoveActive()
 	state = AHELP_RESOLVED
-	ahelp_tickets.ListInsert(src)
+	GLOB.ahelp_tickets.ListInsert(src)
 	
 	if(initiator)
 		initiator.giveadminhelpverb()
@@ -297,7 +297,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty()]<br>"
 	else
-		dat += "<b>DISCONNECTED</b>[GLOB.TAB][ClosureLinks(ref_src)]<br>"
+		dat += "<b>DISCONNECTED</b>[GLOB.TAB][ClosureLinks()]<br>"
 	dat += "<br><b>Log:</b><br><br>"
 	for(var/I in interactions)
 		dat += "[I]<br>"
@@ -429,7 +429,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		C.current_ticket.interactions += message
 		return C.current_ticket
 	if(istext(what))	//ckey
-		for(var/I in ahelp_tickets.active_tickets)
+		for(var/I in GLOB.ahelp_tickets.active_tickets)
 			var/datum/admin_help/AH = I
 			if(AH.initiator_ckey == what)
 				AH.interactions += message
