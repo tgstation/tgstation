@@ -528,6 +528,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 		variable = input("Which var?","Var") as null|anything in names
 		if(!variable)
 			return
+	
+	if(!O.can_vv_get(variable))
+		return
 
 	var_value = O.vars[variable]
 

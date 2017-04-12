@@ -126,7 +126,7 @@
 
 	var/datum/changeling/changeling = user.mind.changeling
 	changeling.chem_recharge_slowdown += recharge_slowdown
-	return 1
+	return TRUE
 
 
 //fancy headers yo
@@ -395,7 +395,7 @@
 
 	var/obj/item/weapon/shield/changeling/S = ..(user)
 	S.remaining_uses = round(changeling.absorbedcount * 3)
-	return 1
+	return TRUE
 
 /obj/item/weapon/shield/changeling
 	name = "shield-like mass"

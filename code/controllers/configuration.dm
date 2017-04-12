@@ -5,10 +5,10 @@
 #define SECURITY_HAS_MAINT_ACCESS 2
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
-/datum/configuration/vv_get_var(var_name)
-	var/static/list/banned_views = list("autoadmin", "autoadmin_rank")
-	if(var_name in banned_views)
-		return debug_variable(var_name, "SECRET", 0, src)
+/datum/configuration/can_vv_get(var_name)
+	var/static/list/banned_gets = list("autoadmin", "autoadmin_rank")
+	if (var_name in banned_gets)
+		return FALSE
 	return ..()
 
 /datum/configuration/vv_edit_var(var_name, var_value)
