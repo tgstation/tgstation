@@ -2090,6 +2090,7 @@
 #include "hippiestation\code\game\objects\items\meat.dm"
 #include "hippiestation\code\game\objects\items\staples.dm"
 #include "hippiestation\code\game\objects\items\weapons\cigs_lighters.dm"
+#include "hippiestation\code\game\objects\structures\beds_chairs\chair.dm"
 #include "hippiestation\code\interface\skin.dmf"
 #include "hippiestation\code\modules\admin\verbs\aooc.dm"
 #include "hippiestation\code\modules\admin\verbs\fillbreach.dm"
