@@ -112,8 +112,8 @@
 	var/player_mp = 10
 	var/enemy_hp = 45 //Enemy health/attack points
 	var/enemy_mp = 20
-	var/gameover = 0
-	var/blocked = 0 //Player cannot attack/heal while set
+	var/gameover = FALSE
+	var/blocked = FALSE //Player cannot attack/heal while set
 	var/turtle = 0
 
 /obj/machinery/computer/arcade/battle/Reset()
@@ -159,7 +159,7 @@
 
 	if (!blocked && !gameover)
 		if (href_list["attack"])
-			blocked = 1
+			blocked = TRUE
 			var/attackamt = rand(2,6)
 			temp = "You attack for [attackamt] damage!"
 			playsound(loc, 'sound/arcade/Hit.ogg', 50, 1, extrarange = -3, falloff = 10)
@@ -172,7 +172,7 @@
 			arcade_action()
 
 		else if (href_list["heal"])
-			blocked = 1
+			blocked = TRUE
 			var/pointamt = rand(1,3)
 			var/healamt = rand(6,8)
 			temp = "You use [pointamt] magic to heal for [healamt] damage!"
@@ -183,7 +183,7 @@
 			sleep(10)
 			player_mp -= pointamt
 			player_hp += healamt
-			blocked = 1
+			blocked = TRUE
 			updateUsrDialog()
 			arcade_action()
 
@@ -210,7 +210,7 @@
 		player_mp = 10
 		enemy_hp = 45
 		enemy_mp = 20
-		gameover = 0
+		gameover = FALSE
 		turtle = 0
 
 		if(emagged)
@@ -224,7 +224,7 @@
 /obj/machinery/computer/arcade/battle/proc/arcade_action()
 	if ((enemy_mp <= 0) || (enemy_hp <= 0))
 		if(!gameover)
-			gameover = 1
+			gameover = TRUE
 			temp = "[enemy_name] has fallen! Rejoice!"
 			playsound(loc, 'sound/arcade/Win.ogg', 50, 1, extrarange = -3, falloff = 10)
 
@@ -254,7 +254,7 @@
 		updateUsrDialog()
 
 		if (player_mp <= 0)
-			gameover = 1
+			gameover = TRUE
 			sleep(10)
 			temp = "You have been drained! GAME OVER"
 			playsound(loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
@@ -277,7 +277,7 @@
 		player_hp -= attackamt
 
 	if ((player_mp <= 0) || (player_hp <= 0))
-		gameover = 1
+		gameover = TRUE
 		temp = "You have been crushed! GAME OVER"
 		playsound(loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		if(emagged)
@@ -286,7 +286,7 @@
 		else
 			feedback_inc("arcade_loss_hp_normal")
 
-	blocked = 0
+	blocked = FALSE
 	return
 
 
@@ -297,10 +297,10 @@
 		player_mp = 10
 		enemy_hp = 45
 		enemy_mp = 20
-		gameover = 0
-		blocked = 0
+		gameover = FALSE
+		blocked = FALSE
 
-		emagged = 1
+		emagged = TRUE
 
 		enemy_name = "Cuban Pete"
 		name = "Outbomb Cuban Pete"
