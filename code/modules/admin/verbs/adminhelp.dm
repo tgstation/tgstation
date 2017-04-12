@@ -28,6 +28,27 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	QDEL_NULL(rstatclick)
 	return ..()
 
+//private
+/datum/admin_help_tickets/proc/ListInsert(datum/admin_help/new_ticket)
+	var/list/ticket_list
+	switch(new_ticket.state)
+		if(AHELP_ACTIVE)
+			ticket_list = active_tickets
+		if(AHELP_CLOSED)
+			ticket_list = closed_tickets
+		if(AHELP_RESOLVED)
+			ticket_list = resolved_tickets
+		else
+			CRASH("Invalid ticket state: [ticket_state]")
+	var/num_closed = ticket_list.len
+	if(num_closed)
+		for(var/I in 1 to num_closed)
+			var/datum/admin_help/AH = I
+			if(I.id > new_ticket.id)
+				ticket_list.Insert(new_ticket, I)
+	else
+		ticket_list += src
+
 //opens the ticket listings for one of the 3 states
 /datum/admin_help_tickets/proc/BrowseTickets(state)
 	var/list/l2b
@@ -234,8 +255,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(state != AHELP_ACTIVE)
 		return
 	RemoveActive()
-	GLOB.ahelp_tickets.closed_tickets += src
 	state = AHELP_CLOSED
+	ahelp_tickets.ListInsert(src)
 	feedback_inc("ahelp_close")
 	interactions += "Closed by [key_name_admin(usr)]."
 	message_admins("Ticket #[id] closed by [key_name(usr)]")
@@ -246,12 +267,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(state != AHELP_ACTIVE)
 		return
 	RemoveActive()
-	GLOB.ahelp_tickets.resolved_tickets += src
+	state = AHELP_RESOLVED
+	ahelp_tickets.ListInsert(src)
 	
 	if(initiator)
 		initiator.giveadminhelpverb()
 
-	state = AHELP_RESOLVED
 	feedback_inc("ahelp_resolve")
 	interactions += "Resolved by [key_name_admin(usr)]."
 	message_admins("Ticket #[id] resolved by [key_name_admin(usr)]")
