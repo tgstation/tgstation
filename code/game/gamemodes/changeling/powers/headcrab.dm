@@ -26,7 +26,6 @@
 		S.Weaken(3)
 	var/turf = get_turf(user)
 	user.gib()
-	feedback_add_details("changeling_powers","LR")
 	. = TRUE
 	sleep(5) // So it's not killed in explosion
 	var/mob/living/simple_animal/hostile/headcrab/crab = new(turf)
