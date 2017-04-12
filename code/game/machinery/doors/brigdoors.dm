@@ -214,7 +214,7 @@
 	. = TRUE
 	
 	if(!allowed(usr))
-		say("Access denied.")
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE
 
 	switch(action)
