@@ -28,6 +28,8 @@
 
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 
+	var/datum/effect_system/spark_spread/sparks
+
 /obj/machinery/power/emitter/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
@@ -87,11 +89,15 @@
 	if(state == 2 && anchored)
 		connect_to_network()
 
+	sparks = new
+	sparks.set_up(5, TRUE, src)
+
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Emitter deleted at ([x],[y],[z])")
 		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]","singulo")
+	QDEL_NULL(sparks)
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
@@ -198,9 +204,7 @@
 	A.setDir(src.dir)
 	playsound(src.loc, projectile_sound, 25, 1)
 	if(prob(35))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
+		sparks.start()
 	switch(dir)
 		if(NORTH)
 			A.yo = 20
