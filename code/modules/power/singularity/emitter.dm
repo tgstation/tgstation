@@ -8,7 +8,7 @@
 	var/icon_state_on = "emitter_+a"
 	anchored = 0
 	density = 1
-	req_access = list(access_engine_equip)
+	req_access = list(GLOB.access_engine_equip)
 
 	use_power = 0
 	idle_power_usage = 10
@@ -27,6 +27,8 @@
 	var/projectile_type = /obj/item/projectile/beam/emitter
 
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
+
+	var/datum/effect_system/spark_spread/sparks
 
 /obj/machinery/power/emitter/New()
 	..()
@@ -87,11 +89,15 @@
 	if(state == 2 && anchored)
 		connect_to_network()
 
+	sparks = new
+	sparks.set_up(5, TRUE, src)
+
 /obj/machinery/power/emitter/Destroy()
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Emitter deleted at ([x],[y],[z])")
 		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]","singulo")
+	QDEL_NULL(sparks)
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
@@ -198,9 +204,7 @@
 	A.setDir(src.dir)
 	playsound(src.loc, projectile_sound, 25, 1)
 	if(prob(35))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
+		sparks.start()
 	switch(dir)
 		if(NORTH)
 			A.yo = 20

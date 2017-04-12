@@ -4554,7 +4554,7 @@
 "ajy" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Labor Shuttle Dock APC";
+	name = "Brig APC";
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -8331,6 +8331,10 @@
 	dir = 4
 	},
 /obj/structure/filingcabinet/employment,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "arW" = (
@@ -29169,13 +29173,11 @@
 	},
 /area/hallway/primary/central)
 "bnO" = (
-/obj/structure/table,
 /obj/machinery/newscaster/security_unit{
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/obj/item/weapon/hand_labeler,
-/obj/item/stack/packageWrap,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "bnP" = (
@@ -31004,7 +31006,7 @@
 "bry" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Experimentation Lab Maintenance";
-	req_access_txt = "7"
+	req_access_txt = "47"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -31072,7 +31074,8 @@
 /area/toxins/explab)
 "brE" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = "0";
+	req_one_access_txt = "8;12"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -31259,7 +31262,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/vending/cart,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "brX" = (
@@ -31593,7 +31596,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
 	name = "Experimentation Lab";
-	req_access_txt = "7"
+	req_access_txt = "47"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -33388,7 +33391,11 @@
 /area/crew_quarters/heads)
 "bwk" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/hand_labeler,
+/obj/item/stack/packageWrap{
+	pixel_x = -1;
+	pixel_y = -1
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "bwl" = (
@@ -34011,7 +34018,8 @@
 	id = "telelab";
 	name = "Test Chamber Blast Doors";
 	pixel_x = 25;
-	pixel_y = 0
+	pixel_y = 0;
+	req_access_txt = "47"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -38035,7 +38043,8 @@
 /area/toxins/mixing)
 "bFY" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = "0";
+	req_one_access_txt = "8;12"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -38308,7 +38317,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
 	name = "Toxins Launch Room Access";
-	req_access_txt = "8"
+	req_access_txt = "7"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38658,7 +38667,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
 	name = "Toxins Lab";
-	req_access_txt = "8"
+	req_access_txt = "7"
 	},
 /turf/open/floor/plasteel/white,
 /area/toxins/mixing)
@@ -39551,7 +39560,7 @@
 "bIS" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Launch Room";
-	req_access_txt = "8"
+	req_access_txt = "7"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4

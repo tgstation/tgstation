@@ -5,9 +5,8 @@
 #define SSAIR_HIGHPRESSURE 5
 #define SSAIR_HOTSPOTS 6
 #define SSAIR_SUPERCONDUCTIVITY 7
-var/datum/controller/subsystem/air/SSair
 
-/datum/controller/subsystem/air
+SUBSYSTEM_DEF(air)
 	name = "Air"
 	init_order = -1
 	priority = 20
@@ -41,9 +40,6 @@ var/datum/controller/subsystem/air/SSair
 	var/map_loading = TRUE
 	var/list/queued_for_activation
 
-/datum/controller/subsystem/air/New()
-	NEW_SS_GLOBAL(SSair)
-
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "AT:[round(cost_turfs,1)]|"
@@ -69,6 +65,7 @@ var/datum/controller/subsystem/air/SSair
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
+	gas_reactions = init_gas_reactions()
 	..()
 
 
@@ -302,7 +299,7 @@ var/datum/controller/subsystem/air/SSair
 		var/timer = world.timeofday
 		warning("There are [starting_ats] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
 		for(var/turf/T in active_turfs)
-			active_turfs_startlist += text("[T.x], [T.y], [T.z]\n")
+			GLOB.active_turfs_startlist += text("[T.x], [T.y], [T.z]\n")
 
 		//now lets clear out these active turfs
 		var/list/turfs_to_check = active_turfs.Copy()

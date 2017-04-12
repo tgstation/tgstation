@@ -53,7 +53,7 @@
 		A.holder = src
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 
-		bombers += "[key_name(user)] attached a [item] to a transfer valve."
+		GLOB.bombers += "[key_name(user)] attached a [item] to a transfer valve."
 		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
 		log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
 		attacher = user
@@ -189,7 +189,7 @@
 
 		var/bomb_message = "[log_str1] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a>  [log_str2][log_attacher] [log_str3][last_touch_info]"
 
-		bombers += bomb_message
+		GLOB.bombers += bomb_message
 
 		message_admins(bomb_message, 0, 1)
 		log_game("[log_str1] [A.name]([A.x],[A.y],[A.z]) [log_str2] [log_str3]")

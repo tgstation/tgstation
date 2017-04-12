@@ -14,14 +14,14 @@
 
 /datum/round_event/valentines/start()
 	..()
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		H.put_in_hands(new /obj/item/weapon/valentine)
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/reagent_containers/food/snacks/candyheart(b)
 
 
 	var/list/valentines = list()
-	for(var/mob/living/M in player_list)
+	for(var/mob/living/M in GLOB.player_list)
 		if(!M.stat && M.client && M.mind)
 			valentines |= M
 
@@ -45,12 +45,12 @@
 			to_chat(L, "<span class='warning'><B>You didn't get a date! They're all having fun without you! you'll show them though...</B></span>")
 			var/datum/objective/martyr/normiesgetout = new
 			normiesgetout.owner = L.mind
-			ticker.mode.traitors |= L.mind
+			SSticker.mode.traitors |= L.mind
 			L.mind.objectives += normiesgetout
 
 /proc/forge_valentines_objective(mob/living/lover,mob/living/date)
 
-	ticker.mode.traitors |= lover.mind
+	SSticker.mode.traitors |= lover.mind
 	lover.mind.special_role = "valentine"
 
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect

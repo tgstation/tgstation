@@ -2,6 +2,9 @@
 	var/var_edited = FALSE //Warrenty void if seal is broken
 	var/fingerprintslast = null
 
+/datum/proc/can_vv_get(var_name)
+	return TRUE
+
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
 	switch(var_name)
 		if ("vars")
@@ -155,7 +158,8 @@
 
 		names = sortList(names)
 		for (var/V in names)
-			variable_html += D.vv_get_var(V)
+			if(D.can_vv_get(V))
+				variable_html += D.vv_get_var(V)
 
 	var/html = {"
 <html>
@@ -850,7 +854,7 @@
 
 			if(A.reagents)
 				var/chosen_id
-				var/list/reagent_options = sortList(chemical_reagents_list)
+				var/list/reagent_options = sortList(GLOB.chemical_reagents_list)
 				switch(alert(usr, "Choose a method.", "Add Reagents", "Enter ID", "Choose ID"))
 					if("Enter ID")
 						var/valid_id
@@ -1031,14 +1035,14 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 				return
 
-			var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
+			var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
 
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")
 				return
 
 			if(result)
-				var/newtype = species_list[result]
+				var/newtype = GLOB.species_list[result]
 				H.set_species(newtype)
 
 		else if(href_list["editbodypart"])

@@ -57,7 +57,7 @@
 
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
-/obj/machinery/vending/New()
+/obj/machinery/vending/Initialize()
 	..()
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
@@ -162,7 +162,7 @@
 
 			while(R.amount>0)
 				var/obj/O = new dump_path(loc)
-				step(O, pick(alldirs)) 	//we only drop 20% of the total of each products and spread it
+				step(O, pick(GLOB.alldirs)) 	//we only drop 20% of the total of each products and spread it
 				R.amount -= 5  			//around to not fill the turf with too many objects.
 				dump_amount++
 			if(dump_amount > 15) //so we don't drop too many items (e.g. ClothesMate)
@@ -706,7 +706,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	name = "\improper Random Snackies"
 	desc = "Uh oh!"
 
-/obj/machinery/vending/snack/random/New()
+/obj/machinery/vending/snack/random/Initialize()
     ..()
     var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
     new T(get_turf(src))
@@ -758,7 +758,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	name = "\improper Random Drinkies"
 	desc = "Uh oh!"
 
-/obj/machinery/vending/cola/random/New()
+/obj/machinery/vending/cola/random/Initialize()
     ..()
     var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
     new T(get_turf(src))

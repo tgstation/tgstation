@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/mapping/SSmapping
-
-/datum/controller/subsystem/mapping
+SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = 12
 	flags = SS_NO_FIRE
@@ -20,8 +18,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
-/datum/controller/subsystem/mapping/New()
-	NEW_SS_GLOBAL(SSmapping)
+/datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
 		config = new(FORCE_MAP)
@@ -136,11 +133,11 @@ var/datum/controller/subsystem/mapping/SSmapping
 #undef INIT_ANNOUNCE
 
 /datum/controller/subsystem/mapping/proc/maprotate()
-	var/players = clients.len
+	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
 	//count votes
 	if(global.config.allow_map_voting)
-		for (var/client/c in clients)
+		for (var/client/c in GLOB.clients)
 			var/vote = c.prefs.preferred_map
 			if (!vote)
 				if (global.config.defaultmap)

@@ -1,7 +1,7 @@
 //like orange but only checks north/south/east/west for one step
 /proc/cardinalrange(var/center)
 	var/list/things = list()
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinal)
 		var/turf/T = get_step(center, direction)
 		if(!T) continue
 		things += T.contents
@@ -52,7 +52,7 @@
 			break
 
 	if(!control_unit)//No other guys nearby look for a control unit
-		for(var/direction in cardinal)
+		for(var/direction in GLOB.cardinal)
 		for(var/obj/machinery/power/am_control_unit/AMC in cardinalrange(src))
 			if(AMC.add_shielding(src))
 				break
@@ -110,7 +110,7 @@
 	dirs = 0
 	coredirs = 0
 	cut_overlays()
-	for(var/direction in alldirs)
+	for(var/direction in GLOB.alldirs)
 		var/turf/T = get_step(loc, direction)
 		for(var/obj/machinery/machine in T)
 			if(istype(machine, /obj/machinery/am_shielding))
@@ -118,11 +118,11 @@
 				if(shield.control_unit == control_unit)
 					if(shield.processing)
 						coredirs |= direction
-					if(direction in cardinal)
+					if(direction in GLOB.cardinal)
 						dirs |= direction
 
 			else
-				if(istype(machine, /obj/machinery/power/am_control_unit) && (direction in cardinal))
+				if(istype(machine, /obj/machinery/power/am_control_unit) && (direction in GLOB.cardinal))
 					var/obj/machinery/power/am_control_unit/control = machine
 					if(control == control_unit)
 						dirs |= direction
@@ -175,7 +175,7 @@
 
 //Scans cards for shields or the control unit and if all there it
 /obj/machinery/am_shielding/proc/core_check()
-	for(var/direction in alldirs)
+	for(var/direction in GLOB.alldirs)
 		var/found_am_device=0
 		for(var/obj/machinery/machine in get_step(loc, direction))
 		//var/machine = locate(/obj/machinery, get_step(loc, direction))
@@ -191,8 +191,8 @@
 
 /obj/machinery/am_shielding/proc/setup_core()
 	processing = 1
-	machines |= src
-	START_PROCESSING(SSmachine, src)
+	GLOB.machines |= src
+	START_PROCESSING(SSmachines, src)
 	if(!control_unit)
 		return
 	control_unit.linked_cores.Add(src)

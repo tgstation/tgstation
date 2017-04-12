@@ -66,7 +66,7 @@
 /mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
 	var/spanned_message = say_quote(msg, get_spans())
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
-	for(var/M in mob_list)
+	for(var/M in GLOB.mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			to_chat(M, rendered)
 		if(isobserver(M))
@@ -136,9 +136,9 @@
 	icon_state = "zombie"
 	H.hair_style = null
 	H.update_hair()
-	update_icons()
 	H.forceMove(src)
 	oldguy = H
+	update_icons()
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
@@ -218,8 +218,8 @@
 	force_threshold = 10
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()

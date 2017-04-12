@@ -1,7 +1,5 @@
 //Used for all kinds of weather, ex. lavaland ash storms.
-
-var/datum/controller/subsystem/weather/SSweather
-/datum/controller/subsystem/weather
+SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
 	wait = 10
@@ -9,15 +7,12 @@ var/datum/controller/subsystem/weather/SSweather
 	var/list/existing_weather = list()
 	var/list/eligible_zlevels = list(ZLEVEL_LAVALAND)
 
-/datum/controller/subsystem/weather/New()
-	NEW_SS_GLOBAL(SSweather)
-
 /datum/controller/subsystem/weather/fire()
 	for(var/V in processing)
 		var/datum/weather/W = V
 		if(W.aesthetic)
 			continue
-		for(var/mob/living/L in mob_list)
+		for(var/mob/living/L in GLOB.mob_list)
 			if(W.can_impact(L))
 				W.impact(L)
 	for(var/Z in eligible_zlevels)

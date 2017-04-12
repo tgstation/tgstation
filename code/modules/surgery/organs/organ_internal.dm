@@ -230,7 +230,7 @@
 	colour = "red"
 
 #define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30)
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 #define HEAT_GAS_DAMAGE_LEVEL_1 2
 #define HEAT_GAS_DAMAGE_LEVEL_2 4
 #define HEAT_GAS_DAMAGE_LEVEL_3 8
@@ -457,7 +457,7 @@
 		if(H && H.dna && H.dna.species && H.dna.species.species_traits)
 			species_traits = H.dna.species.species_traits
 
-		if(!(mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
+		if(!(GLOB.mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
@@ -512,8 +512,17 @@
 	zone = "mouth"
 	slot = "tongue"
 	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
+	var/list/languages_possible
 	var/say_mod = null
 	var/taste_sensitivity = 15 // lower is more sensitive.
+
+/obj/item/organ/tongue/Initialize(mapload)
+	..()
+	languages_possible = typecacheof(list(
+		/datum/language/common,
+		/datum/language/monkey,
+		/datum/language/ratvar
+	))
 
 /obj/item/organ/tongue/get_spans()
 	return list()
@@ -530,6 +539,9 @@
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
+
+/obj/item/organ/tongue/can_speak_in_language(datum/language/dt)
+	. = is_type_in_typecache(dt, languages_possible)
 
 /obj/item/organ/tongue/lizard
 	name = "forked tongue"
@@ -572,7 +584,7 @@
 	//Hacks
 	var/mob/living/carbon/human/user = usr
 	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
 		if(!T || T.type != type)
 			continue
@@ -582,7 +594,7 @@
 			if(Ayy.team != Byy.team)
 				continue
 		to_chat(H, rendered)
-	for(var/mob/M in dead_mob_list)
+	for(var/mob/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, user)
 		to_chat(M, "[link] [rendered]")
 	return ""
@@ -616,6 +628,14 @@
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
+
+/obj/item/organ/tongue/alien/Initialize(mapload)
+	..()
+	languages_possible = typecacheof(list(
+		/datum/language/xenocommon,
+		/datum/language/common,
+		/datum/language/ratvar,
+		/datum/language/monkey))
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)
@@ -663,6 +683,17 @@
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
 	taste_sensitivity = 25 // not as good as an organic tongue
+
+/obj/item/organ/tongue/robot/Initialize(mapload)
+	..()
+	languages_possible = typecacheof(list(
+		/datum/language/xenocommon,
+		/datum/language/common,
+		/datum/language/ratvar,
+		/datum/language/monkey,
+		/datum/language/drone,
+		/datum/language/machine,
+		/datum/language/swarmer))
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT
@@ -753,6 +784,7 @@
 	var/old_eye_color = "fff"
 	var/flash_protect = 0
 	var/see_invisible = SEE_INVISIBLE_LIVING
+	var/lighting_alpha
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -780,26 +812,27 @@
 	name = "shadow eyes"
 	desc = "A spooky set of eyes that can see in the dark."
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/night_vision = TRUE
 
 /obj/item/organ/eyes/night_vision/ui_action_click()
-	if(night_vision)
-		see_in_dark = 4
-		see_invisible = SEE_INVISIBLE_LIVING
-		night_vision = FALSE
-	else
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-		night_vision = TRUE
+	switch(lighting_alpha)
+		if (LIGHTING_PLANE_ALPHA_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		else
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	owner.update_sight()
 
 /obj/item/organ/eyes/night_vision/alien
 	name = "alien eyes"
 	desc = "It turned out they had them after all!"
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	sight_flags = SEE_MOBS
 
 
@@ -833,7 +866,7 @@
 	eye_color = "FC0"
 	origin_tech = "materials=5;programming=4;biotech=4;magnets=4;syndicate=1"
 	sight_flags = SEE_MOBS
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = -1
 	see_in_dark = 8
 
