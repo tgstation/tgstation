@@ -45,10 +45,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(!l2b)
 		return
 	var/list/dat = list("<html><head><title>[title]</title></head>")
-	dat += "<A HREF='?_src_=holder;ahelp_tickets=[state]>Refresh</A><br>"
+	dat += "<A HREF='?_src_=holder;ahelp_tickets=[state]'>Refresh</A><br><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
-		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[key_name(AH.initiator)]: [AH.original_message]</A></span>"
+		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[key_name(AH.initiator)]: [AH.original_message]</A></span><br>"
 		
 	usr << browse(dat.Join(), "window=ahelp_list[state];size=600x480")
 
@@ -379,7 +379,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	feedback_add_details("admin_verb","Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(current_ticket)
-		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "Yes")
+		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
 			current_ticket.MessageNoRecipient(msg)
 			current_ticket.TimeoutVerb()
 			return
