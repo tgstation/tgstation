@@ -75,18 +75,18 @@
 
 /datum/sutando_abilities/ranged/light_switch()
 	var/msg
-	switch(lighting_alpha)
+	switch(stand.lighting_alpha)
 		if(LIGHTING_PLANE_ALPHA_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			stand.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 			msg = "You activate your night vision."
 		if(LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			stand.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 			msg = "You increase your night vision."
 		if(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+			stand.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 			msg = "You maximize your night vision."
 		else
-			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			stand.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 			msg = "You deactivate your night vision."
 
 	to_chat(stand, "<span class='notice'>[msg]</span>")
