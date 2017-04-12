@@ -210,14 +210,6 @@
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-#ifdef dellogging
-	var/log = file("data/logs/del.log")
-	log << time2text(world.realtime)
-	for(var/index in del_counter)
-		var/count = del_counter[index]
-		if(count > 10)
-			log << "#[count]\t[index]"
-#endif
 	if(GLOB.blackbox)
 		GLOB.blackbox.save_all_data_to_sql()
 	Master.Shutdown()	//run SS shutdowns
