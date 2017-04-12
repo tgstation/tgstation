@@ -210,6 +210,7 @@
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
+	feedback_set("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
 #ifdef dellogging
 	var/log = file("data/logs/del.log")
 	log << time2text(world.realtime)
