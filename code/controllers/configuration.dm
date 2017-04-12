@@ -258,6 +258,8 @@
 	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
 	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
 
+	var/shuttle_buy_allowed = TRUE	//Allow the captain to purchase shuttles?
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -756,6 +758,8 @@
 					config.arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
 				if("arrivals_shuttle_require_safe_latejoin")
 					config.arrivals_shuttle_require_safe_latejoin = text2num(value)
+				if("shuttle_buy_allowed")
+					config.shuttle_buy_allowed = text2num(value)
 				else
 					GLOB.diary << "Unknown setting in configuration: '[name]'"
 

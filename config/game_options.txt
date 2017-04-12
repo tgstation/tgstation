@@ -484,3 +484,6 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 #Set this to 1 to prevent late join players from spawning if the arrivals shuttle is depressurized
 ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN 0
+
+#Set the to 0 to prevent the captain from being able to purchase shuttles from the communications console
+SHUTTLE_BUY_ALLOWED 1
