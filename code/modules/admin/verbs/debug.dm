@@ -758,7 +758,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	global.medals_enabled = !global.medals_enabled
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
-	feedback_add_details("admin_verb","TMH") // If...
+	feedback_add_details("admin_verb","Toggle Medal Disable") // If...
 	log_admin("[key_name(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
 /client/proc/view_runtimes()
