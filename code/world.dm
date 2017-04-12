@@ -35,7 +35,7 @@
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-	load_configuration()
+	config = new
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
@@ -271,18 +271,6 @@
 
 /world/proc/load_motd()
 	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
-
-/world/proc/load_configuration()
-	config = new /datum/configuration()
-	config.load("config/config.txt")
-	config.load("config/game_options.txt","game_options")
-	config.loadsql("config/dbconfig.txt")
-	if (config.maprotation)
-		config.loadmaplist("config/maps.txt")
-
-	// apply some settings from config..
-	GLOB.abandon_allowed = config.respawn
-
 
 /world/proc/update_status()
 	var/s = ""
