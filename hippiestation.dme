@@ -2079,6 +2079,7 @@
 #include "hippiestation\code\_DEFINES\DNA.dm"
 #include "hippiestation\code\_DEFINES\grindables.dm"
 #include "hippiestation\code\datums\mutations.dm"
+#include "hippiestation\code\datums\riding.dm"
 #include "hippiestation\code\game\area\areas\misc.dm"
 #include "hippiestation\code\game\gamemodes\gang\gang_items.dm"
 #include "hippiestation\code\game\machinery\cryo.dm"
@@ -2127,6 +2128,7 @@
 #include "hippiestation\code\modules\teeth\misc.dm"
 #include "hippiestation\code\modules\teeth\teeth.dm"
 #include "hippiestation\code\modules\uplink\uplink_item.dm"
+#include "hippiestation\code\modules\vehicles\pimpin_ride.dm"
 #include "interface\interface.dm"
 #include "interface\stylesheet.dm"
 // END_INCLUDE
