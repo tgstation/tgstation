@@ -276,6 +276,22 @@ H.gib()
 however DM also has a dot variable, accessed just as ```.``` on it's own, defaulting to a value of null, now what's special about the dot operator is that it is automatically returned (as in the ```return``` statment) at the end of a proc, provided the proc does not already manually return (```return count``` for example). Why is this special? well the ```return``` statement should ideally be free from overhead (functionally free, of course nothing's free) but DM fails to fulfill this,  DM's return statement is actually fairly costly for what it does and for what it's used for.
 With ```.``` being everpresent in every proc can we use it as a temporary variable? Of course we can! However the ```.``` operator cannot replace a typecasted variable, it can hold data any other var in DM can, it just can't be accessed as one, however the ```.``` operator is compatible with a few operators that look weird but work perfectly fine, such as: ```.++``` for incrementing ```.'s``` value, or ```.[1]``` for accessing the first element of ```.``` (provided it's a list).
 
+## Globals versus Static
+
+Byond has a var keyword, called global. This var keyword is for vars inside of types. IE:
+
+```
+mob
+    var
+        global
+            thing = 1
+```
+It DOES NOT mean that you can access it everywhere like a global var, instead It means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs, ie its shared across everything in it's type. (much more like the keyword static in other languages like php/c++/c#/java)
+
+Isn't that confusing? 
+
+There is also an undocumented keyword static, that has the same behaviour as global but more correctly describes byond's behaviour. Therefore we always use static instead of global where we need it as it reduces suprise when reading byond code.
+
 ## Pull Request Process
 
 There is no strict process when it comes to merging pull requests, pull requests will sometimes take a while before they are looked at by a maintainer, the bigger the change the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be nice. Here are some helpful ways to make it easier for you and for the maintainer when making a pull request.
