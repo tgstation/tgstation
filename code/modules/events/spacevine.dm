@@ -19,7 +19,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+		new /datum/spacevine_controller(T) //spawn a controller at turf
 
 
 /datum/spacevine_mutation
@@ -324,10 +324,10 @@
 	obj_integrity = 50
 	max_integrity = 50
 	var/energy = 0
-	var/obj/effect/spacevine_controller/master = null
+	var/datum/spacevine_controller/master = null
 	var/list/mutations = list()
 
-/obj/structure/spacevine/New()
+/obj/structure/spacevine/Initialize()
 	..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
