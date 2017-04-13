@@ -70,9 +70,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return
 		log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		GLOB.AdminProcCall = TRUE
 		returnval = WrapAdminProcCall(target, procname, lst) // Pass the lst as an argument list to the proc
-		GLOB.AdminProcCall = FALSE
 	else
 		//this currently has no hascall protection. wasn't able to get it working.
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
