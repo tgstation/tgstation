@@ -42,7 +42,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		for(var/I in 1 to num_closed)
 			var/datum/admin_help/AH = ticket_list[I]
 			if(AH.id > new_ticket.id)
-				ticket_list.Insert(new_ticket, I)
+				ticket_list.Insert(I, new_ticket)
 	else
 		ticket_list += new_ticket
 
