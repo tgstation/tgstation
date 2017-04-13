@@ -8,7 +8,7 @@
 	var/icon_state_on = "emitter_+a"
 	anchored = 0
 	density = 1
-	req_access = list(access_engine_equip)
+	req_access = list(GLOB.access_engine_equip)
 
 	use_power = 0
 	idle_power_usage = 10
@@ -281,7 +281,7 @@
 			else
 				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is online!</span>")
 		else
-			to_chat(user, "<span class='danger'>Access denied.</span>")
+			to_chat(user, "<span class='danger'> denied.</span>")
 		return
 
 	if(is_wire_tool(W) && panel_open)
