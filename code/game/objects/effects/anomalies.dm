@@ -17,9 +17,9 @@
 	var/countdown_colour
 	var/obj/effect/countdown/anomaly/countdown
 
-/obj/effect/anomaly/New()
+/obj/effect/anomaly/Initialize(mapload, new_lifespan)
 	..()
-	poi_list |= src
+	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
 
@@ -31,6 +31,8 @@
 	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
+	if(new_lifespan)
+		lifespan = new_lifespan
 	death_time = world.time + lifespan
 	countdown = new(src)
 	if(countdown_colour)
@@ -45,14 +47,14 @@
 		qdel(src)
 
 /obj/effect/anomaly/Destroy()
-	poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	STOP_PROCESSING(SSobj, src)
 	qdel(countdown)
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(movechance))
-		step(src,pick(alldirs))
+		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
 	return
@@ -126,7 +128,7 @@
 	density = 1
 	var/canshock = 0
 	var/shockdamage = 20
-	var/explosive = 1
+	var/explosive = TRUE
 
 /obj/effect/anomaly/flux/New()
 	..()
@@ -196,7 +198,7 @@
 			// Calculate new position (searches through beacons in world)
 		var/obj/item/device/radio/beacon/chosen
 		var/list/possible = list()
-		for(var/obj/item/device/radio/beacon/W in teleportbeacons)
+		for(var/obj/item/device/radio/beacon/W in GLOB.teleportbeacons)
 			possible += W
 
 		if(possible.len > 0)

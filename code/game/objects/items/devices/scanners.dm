@@ -195,7 +195,7 @@ MASS SPECTROMETER
 			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
 			var/blood_type = C.dna.blood_type
 			if(blood_id != "blood")//special blood substance
-				var/datum/reagent/R = chemical_reagents_list[blood_id]
+				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
 				if(R)
 					blood_type = R.name
 				else
@@ -285,7 +285,7 @@ MASS SPECTROMETER
 	if(total_moles)
 		var/list/env_gases = environment.gases
 
-		environment.assert_gases(arglist(hardcoded_gases))
+		environment.assert_gases(arglist(GLOB.hardcoded_gases))
 		var/o2_concentration = env_gases["o2"][MOLES]/total_moles
 		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
 		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
@@ -314,7 +314,7 @@ MASS SPECTROMETER
 
 
 		for(var/id in env_gases)
-			if(id in hardcoded_gases)
+			if(id in GLOB.hardcoded_gases)
 				continue
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
@@ -368,7 +368,7 @@ MASS SPECTROMETER
 			dat += "<br>None"
 		else
 			for(var/R in blood_traces)
-				dat += "<br>[chemical_reagents_list[R]]"
+				dat += "<br>[GLOB.chemical_reagents_list[R]]"
 				if(details)
 					dat += " ([blood_traces[R]] units)"
 		dat += "</i>"

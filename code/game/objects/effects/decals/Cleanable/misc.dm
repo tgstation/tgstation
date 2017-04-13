@@ -11,7 +11,7 @@
 	icon_state = "ash"
 	mergeable_decal = 0
 
-/obj/effect/decal/cleanable/ash/New()
+/obj/effect/decal/cleanable/ash/Initialize()
 	..()
 	reagents.add_reagent("ash", 30)
 	pixel_x = rand(-5, 5)
@@ -21,7 +21,7 @@
 	name = "large pile of ashes"
 	icon_state = "big_ash"
 
-/obj/effect/decal/cleanable/ash/large/New()
+/obj/effect/decal/cleanable/ash/large/Initialize()
 	..()
 	reagents.add_reagent("ash", 30) //double the amount of ash.
 
@@ -104,6 +104,14 @@
 	viruses = null
 	return ..()
 
+/obj/effect/decal/cleanable/vomit/old
+	name = "crusty dried vomit"
+	desc = "You try not to look at the chunks, and fail."
+
+/obj/effect/decal/cleanable/vomit/old/Initialize()
+	..()
+	icon_state += "-old"
+
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"
 	desc = "It's red."
@@ -149,7 +157,7 @@
 	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
 		qdel(src)
 
-/obj/effect/decal/cleanable/shreds/New()
+/obj/effect/decal/cleanable/shreds/Initialize()
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
 	..()
@@ -163,7 +171,7 @@
 
 /obj/effect/decal/cleanable/glitter
 	name = "generic glitter pile"
-	desc = "the herpes of arts and crafts"
+	desc = "The herpes of arts and crafts."
 	icon = 'icons/effects/tile_effects.dmi'
 	gender = NEUTER
 

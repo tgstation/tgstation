@@ -17,6 +17,9 @@
 		args[1] = FALSE
 		Initialize(arglist(args))
 
+/mob/living/carbon/human/dummy/Life()
+	return
+
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -38,6 +41,8 @@
 	martial_art = default_martial_art
 
 	handcrafting = new()
+
+	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
 
 	..()
 
@@ -226,11 +231,12 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-
 		if(href_list["embedded_object"])
-			var/obj/item/I = locate(href_list["embedded_object"])
-			var/obj/item/bodypart/L = locate(href_list["embedded_limb"])
-			if(!I || !L || I.loc != src || !(I in L.embedded_objects)) //no item, no limb, or item is not in limb or in the person anymore
+			var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
+			if(!L)
+				return
+			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
+			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
 			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [time_taken/10] seconds.)</span>")
@@ -297,7 +303,7 @@
 			var/mob/living/carbon/human/H = usr
 			var/perpname = get_face_name(get_id_name(""))
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud) || istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud))
-				var/datum/data/record/R = find_record("name", perpname, data_core.general)
+				var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.general)
 				if(href_list["photo_front"] || href_list["photo_side"])
 					if(R)
 						if(!H.canUseHUD())
@@ -387,7 +393,7 @@
 						if (!G.emagged)
 							if(H.wear_id)
 								var/list/access = H.wear_id.GetAccess()
-								if(access_sec_doors in access)
+								if(GLOB.access_sec_doors in access)
 									allowed_access = H.get_authentification_name()
 						else
 							allowed_access = "@%&ERROR_%$*"
@@ -398,7 +404,7 @@
 							return
 
 						if(perpname)
-							R = find_record("name", perpname, data_core.security)
+							R = find_record("name", perpname, GLOB.data_core.security)
 							if(R)
 								if(href_list["status"])
 									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
@@ -446,8 +452,8 @@
 														return
 													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
 														return
-													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
-													data_core.addMinorCrime(R.fields["id"], crime)
+													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+													GLOB.data_core.addMinorCrime(R.fields["id"], crime)
 													to_chat(usr, "<span class='notice'>Successfully added a minor crime.</span>")
 													return
 										if("Major Crime")
@@ -461,8 +467,8 @@
 														return
 													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
 														return
-													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
-													data_core.addMajorCrime(R.fields["id"], crime)
+													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+													GLOB.data_core.addMajorCrime(R.fields["id"], crime)
 													to_chat(usr, "<span class='notice'>Successfully added a major crime.</span>")
 									return
 
@@ -493,7 +499,7 @@
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
-											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1)
+											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 											to_chat(usr, "<span class='notice'>Successfully added comment.</span>")
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
@@ -580,7 +586,7 @@
 
 	//Check for weapons
 	if(judgebot.weaponscheck)
-		if(!idcard || !(access_weapons in idcard.access))
+		if(!idcard || !(GLOB.access_weapons in idcard.access))
 			for(var/obj/item/I in held_items)
 				if(judgebot.check_for_weapons(I))
 					threatcount += 4
@@ -590,7 +596,7 @@
 	//Check for arrest warrant
 	if(judgebot.check_records)
 		var/perpname = get_face_name(get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(R && R.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")
@@ -763,7 +769,7 @@
 		..()
 
 /mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
-	for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
+	for(var/list/L in list(GLOB.data_core.general,GLOB.data_core.medical,GLOB.data_core.security,GLOB.data_core.locked))
 		var/datum/data/record/R = find_record("name", oldname, L)
 		if(R)
 			R.fields["name"] = newname
@@ -853,7 +859,7 @@
 		if(7) // Pride
 			log_game("[src] was influenced by the sin of pride.")
 			O = new /datum/objective/sintouched/pride
-	ticker.mode.sintouched += src.mind
+	SSticker.mode.sintouched += src.mind
 	src.mind.objectives += O
 	src.mind.announce_objectives()
 

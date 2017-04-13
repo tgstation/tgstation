@@ -579,18 +579,14 @@
 	},
 /area/awaymission/snowdin/base)
 "bw" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
 	},
 /area/awaymission/snowdin/base)
 "bx" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -608,9 +604,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -710,9 +704,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -724,9 +716,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -739,9 +729,7 @@
 /area/awaymission/snowdin/base)
 "bK" = (
 /obj/item/trash/pistachios,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -753,9 +741,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -780,9 +766,7 @@
 "bP" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1164,9 +1148,7 @@
 	},
 /area/awaymission/snowdin/igloo)
 "cU" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plating{
 	temperature = 220
 	},
@@ -2021,9 +2003,7 @@
 	},
 /area/awaymission/snowdin/post)
 "ft" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4222,9 +4202,7 @@
 "lf" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -4442,9 +4420,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},

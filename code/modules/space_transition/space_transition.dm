@@ -5,8 +5,7 @@
 #define Z_LEVEL_EAST 		"4"
 #define Z_LEVEL_WEST 		"8"
 
-
-var/list/z_levels_list = list()
+GLOBAL_LIST_EMPTY(z_levels_list)
 
 /datum/space_level
 	var/name = "Your config settings failed, you need to fix this for the datum space levels to work"
@@ -86,7 +85,7 @@ var/list/z_levels_list = list()
 		D.name = A
 		D.z_value = k
 		if(D.linked != CROSSLINKED)
-			z_levels_list["[D.z_value]"] = D
+			GLOB.z_levels_list["[D.z_value]"] = D
 		else
 			SLS.Add(D)
 		k++
@@ -116,8 +115,8 @@ var/list/z_levels_list = list()
 		P = pick(possible_points)
 		grid["[D.z_value]"] = D
 
-	for(var/A in z_levels_list)
-		grid[A] = z_levels_list[A]
+	for(var/A in GLOB.z_levels_list)
+		grid[A] = GLOB.z_levels_list[A]
 
 	//Lists below are pre-calculated values arranged in the list in such a way to be easily accessable in the loop by the counter
 	//Its either this or madness with lotsa math
@@ -157,7 +156,7 @@ var/list/z_levels_list = list()
 				//S.maptext = "[zdestination]" // for debugging
 
 	for(var/A in grid)
-		z_levels_list[A] = grid[A]
+		GLOB.z_levels_list[A] = grid[A]
 
 #undef Z_LEVEL_NORTH
 #undef Z_LEVEL_SOUTH

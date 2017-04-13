@@ -25,7 +25,7 @@
 
 		//handle facial hair (if necessary)
 		if(H.gender == MALE)
-			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
+			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
 			if(userloc != H.loc)
 				return	//no tele-grooming
 			if(new_style)
@@ -34,7 +34,7 @@
 			H.facial_hair_style = "Shaved"
 
 		//handle normal hair
-		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
+		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in GLOB.hair_styles_list
 		if(userloc != H.loc)
 			return	//no tele-grooming
 		if(new_style)
@@ -90,7 +90,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombie")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -102,7 +102,7 @@
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
-	choosable_races = roundstart_species
+	choosable_races = GLOB.roundstart_species
 	..()
 
 /obj/structure/mirror/magic/badmin/New()
@@ -140,7 +140,7 @@
 		if("race")
 			var/newrace
 			var/racechoice = input(H, "What are we again?", "Race change") as null|anything in choosable_races
-			newrace = species_list[racechoice]
+			newrace = GLOB.species_list[racechoice]
 
 			if(!newrace)
 				return
@@ -149,7 +149,7 @@
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in skin_tones
+				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
 
 				if(new_s_tone)
 					H.skin_tone = new_s_tone

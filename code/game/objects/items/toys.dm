@@ -532,10 +532,10 @@
 	var/datum/devilinfo/devil = randomDevilInfo()
 	var/list/messages = list()
 	messages += "Some fun facts about: [devil.truename]"
-	messages += "[lawlorify[LORE][devil.bane]]"
-	messages += "[lawlorify[LORE][devil.obligation]]"
-	messages += "[lawlorify[LORE][devil.ban]]"
-	messages += "[lawlorify[LORE][devil.banish]]"
+	messages += "[GLOB.lawlorify[LORE][devil.bane]]"
+	messages += "[GLOB.lawlorify[LORE][devil.obligation]]"
+	messages += "[GLOB.lawlorify[LORE][devil.ban]]"
+	messages += "[GLOB.lawlorify[LORE][devil.banish]]"
 	return messages
 
 /obj/item/toy/talking/owl
@@ -1306,9 +1306,9 @@
 	to_chat(user, "You name the dummy as \"[doll_name]\"")
 	name = "[initial(name)] - [doll_name]"
 
-/obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans)
+/obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
 	log_say("[key_name(M)] : through dummy : [message]")
-	say(message)
+	say(message, language)
 	return NOPASS
 
 /obj/item/toy/dummy/GetVoice()

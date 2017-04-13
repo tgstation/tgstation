@@ -45,7 +45,7 @@ Bonus
 	return
 
 /datum/symptom/fire/proc/Firestacks_stage_4(mob/living/M, datum/disease/advance/A)
-	var/get_stacks = (sqrt(20+A.totalStageSpeed()*2))-(sqrt(16+A.totalStealth()))
+	var/get_stacks = (sqrt(20+A.totalStageSpeed()*2))-(sqrt(max(0, 16+A.totalStealth())))
 	M.adjust_fire_stacks(get_stacks)
 	M.adjustFireLoss(get_stacks/2)
 	return 1

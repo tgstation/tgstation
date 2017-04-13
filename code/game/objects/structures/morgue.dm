@@ -147,7 +147,7 @@
 /*
  * Crematorium
  */
-var/global/list/crematoriums = new/list()
+GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbeque nights."
@@ -160,14 +160,14 @@ var/global/list/crematoriums = new/list()
 	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
-	crematoriums.Remove(src)
+	GLOB.crematoriums.Remove(src)
 	return ..()
 
 /obj/structure/bodycontainer/crematorium/New()
 	connected = new/obj/structure/tray/c_tray(src)
 	connected.connected = src
 
-	crematoriums.Add(src)
+	GLOB.crematoriums.Add(src)
 	..()
 
 /obj/structure/bodycontainer/crematorium/update_icon()
@@ -188,8 +188,10 @@ var/global/list/crematoriums = new/list()
 /obj/structure/bodycontainer/crematorium/proc/cremate(mob/user)
 	if(locked)
 		return //don't let you cremate something twice or w/e
+	// Make sure we don't delete the actual morgue and its tray
+	var/list/conts = GetAllContents() - src - connected
 
-	if(contents.len <= 1)
+	if(conts.len <= 1)
 		audible_message("<span class='italics'>You hear a hollow crackle.</span>")
 		return
 
@@ -199,7 +201,7 @@ var/global/list/crematoriums = new/list()
 		locked = 1
 		update_icon()
 
-		for(var/mob/living/M in contents)
+		for(var/mob/living/M in conts)
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
@@ -212,7 +214,7 @@ var/global/list/crematoriums = new/list()
 				M.ghostize()
 				qdel(M)
 
-		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
+		for(var/obj/O in conts) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
 			if(O != connected) //Creamtorium does not burn hot enough to destroy the tray
 				qdel(O)
 

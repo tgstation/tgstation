@@ -284,7 +284,7 @@
 	var/list/turfs = list()
 	for(var/turf/T in range(1, target))
 		if(T in seen)
-			if(isAi && !cameranet.checkTurfVis(T))
+			if(isAi && !GLOB.cameranet.checkTurfVis(T))
 				continue
 			else
 				turfs += T
