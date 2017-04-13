@@ -222,10 +222,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	return "<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
 
 //private
-/datum/admin_help/proc/TicketHref(msg, ref_src)
+/datum/admin_help/proc/TicketHref(msg, ref_src, action = "ticket")
 	if(!ref_src)
 		ref_src = "\ref[src]"
-	return "<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=ticket'>[msg]</A>"
+	return "<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=[action]'>[msg]</A>"
 
 //message from the initiator without a target, all admins will see this
 //won't bug irc
@@ -333,7 +333,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			dat += "CLOSED"
 		else
 			dat += "UNKNOWN"
-	dat += "</b>[GLOB.TAB][TicketHref("Refresh")]<br>"
+	dat += "</b>[GLOB.TAB][TicketHref("Refresh")][GLOB.TAB][TicketHref("Re-title", null, "retitle")]<br>"
 	dat += "<br>Opened at: [gameTimestamp(wtime = opened_at)][closed_at ? "<br>Closed at: [gameTimestamp(wtime = closed_at)]" : ""]<br><br>"
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty()]<br>"
@@ -345,12 +345,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	usr << browse(dat.Join(), "window=ahelp[id];size=620x480")
 
+/datum/admin_help/proc/Retitle()
+	var/new_title = input(usr, "Enter a title for the ticket", "Rename Ticket", original_message) as text|null
+	if(new_title)
+		original_message = new_title
+	TicketPanel()	//we have to be here to do this
+
 //Forwarded action from admin/Topic
 /datum/admin_help/proc/Action(action)
 	testing("Ahelp action: [action]")
 	switch(action)
 		if("ticket")
 			TicketPanel()
+		if("retitle")
+			Retitle()
 		if("reject")
 			Reject()
 		if("reply")
