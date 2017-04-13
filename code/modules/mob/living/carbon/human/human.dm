@@ -926,7 +926,7 @@
 			M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
 			return
 		if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
-			M.visible_message("<span class='warning'>[M] can't climb onto [src] because [M.p_their()]!</span>")
+			M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
 			return
 	. = ..(M, force, check_loc)
 	stop_pulling()
