@@ -43,14 +43,11 @@
 	var/quality = rpg_loot_datum.quality
 
 	if(can_backfire && (quality > 9 && prob((quality - 9)*10)))
-		to_chat(user, "<span class='danger'>[target] catches fire!</span>")
-		if(target.resistance_flags & (LAVA_PROOF|FIRE_PROOF))
-			target.resistance_flags &= ~(LAVA_PROOF|FIRE_PROOF)
-			target.resistance_flags |= FLAMMABLE
-		target.fire_act()
+		to_chat(user, "<span class='danger'>[target] violently glows blue for a while, then evaporates.</span>")
+		qdel(target)
 	else
-		rpg_loot_datum.modify(upgrade_amount)
 		to_chat(user, "<span class='notice'>[target] glows blue and seems vaguely \"better\"!</span>")
+		rpg_loot_datum.modify(upgrade_amount)
 
 	if(one_use)
 		qdel(src)
@@ -90,7 +87,7 @@
 	negative_prefix = pick(prefixesnegative)
 
 	if(prob(50))
-		quality = -quality
+		new_quality = -new_quality
 
 	modify(new_quality)
 
