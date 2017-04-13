@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - bugfix: "Photocopied papers will now retain their stamps"
