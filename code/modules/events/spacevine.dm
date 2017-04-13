@@ -80,12 +80,7 @@
 /datum/spacevine_mutation/space_covering/New()
 	. = ..()
 	if(!coverable_turfs)
-		coverable_turfs = typecacheof(list(
-			/turf/open/space
-		))
-		coverable_turfs -= typecacheof(list(
-			/turf/open/space/transit
-		))
+		coverable_turfs = typecacheof(list(/turf/open/space)) - /turf/open/space/transit
 
 /datum/spacevine_mutation/space_covering/on_grow(obj/structure/spacevine/holder)
 	process_mutation(holder)
