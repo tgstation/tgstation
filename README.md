@@ -1,6 +1,6 @@
-## /tg/station
+## /tg/station (Animus White Server)
 
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)
+[![Build Status](https://travis-ci.org/animusdev/white.svg?branch=master)](https://travis-ci.org/animusdev/white)
 
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/tgstation <BR>
