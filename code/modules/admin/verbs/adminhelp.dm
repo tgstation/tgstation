@@ -169,10 +169,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	statclick = new(null, src)
 
 	if(is_bwoink)
-		interactions = list("<span class='adminnotice'>[key_name_admin(usr)] bwoinked [LinkedReplyName()]</span>")
-		message_admins("<span class='adminhelp'>Ticket [TicketHref("#[id]")] created</span>")
+		interactions = list("<font color='blue'>[key_name_admin(usr)] bwoinked [LinkedReplyName()]</font>")
+		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 	else
-		interactions = list("<span class='adminhelp'>[LinkedReplyName()]: [parsed_message]</span>")
+		interactions = list("<font color='red'>[LinkedReplyName()]: [parsed_message]</font>")
 		MessageNoRecipient(parsed_message)
 
 		//show it to the person adminhelping too
@@ -260,8 +260,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	interactions += "<font color='red'>Closed by [key_name].</font>"
 	if(!silent)
 		feedback_inc("ahelp_close")
-		message_admins("Ticket #[id] closed by [key_name]")
-		log_admin_private("Ticket #[id] closed by [key_name].")
+		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
+		message_admins(msg)
+		log_admin_private(msg)
 
 //Mark open ticket as resolved/legitimate, returns ahelp verb
 /datum/admin_help/proc/Resolve(key_name = key_name_admin(usr), silent = FALSE)
@@ -277,8 +278,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	interactions += "<font color='green'>Resolved by [key_name].</font>"
 	if(!silent)
 		feedback_inc("ahelp_resolve")
-		message_admins("Ticket #[id] resolved by [key_name]")
-		log_admin_private("Ticket #[id] resolved by [key_name].")
+		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
+		message_admins(msg)
+		log_admin_private(msg)
 
 //Close and return ahelp verb, use if ticket is incoherent
 /datum/admin_help/proc/Reject(key_name = key_name_admin(usr))
@@ -348,6 +350,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/new_title = input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null
 	if(new_title)
 		name = new_title
+		//not saying the original name cause it could be a long ass message
+		var/msg = "Ticket [TicketHref("#[id]")] titled [name] by [key_name_admin(usr)]"
+		message_admins(msg)
+		log_admin_private(msg)
 	TicketPanel()	//we have to be here to do this
 
 //Forwarded action from admin/Topic
@@ -381,7 +387,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	..(loc)
 
 /obj/effect/statclick/ahelp/update()
-	..(ahelp_datum.name)
+	return ..(ahelp_datum.name)
 
 /obj/effect/statclick/ahelp/Click()
 	ahelp_datum.TicketPanel()
