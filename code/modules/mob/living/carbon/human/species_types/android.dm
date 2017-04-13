@@ -18,4 +18,4 @@
 	. = ..()
 	for(var/X in C.bodyparts)
 		var/obj/item/bodypart/O = X
-		O.change_bodypart_status(BODYPART_ORGANIC, 0, 1)
+		O.change_bodypart_status(BODYPART_ORGANIC,FALSE, TRUE)
