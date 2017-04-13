@@ -1,0 +1,4 @@
+author: "MrSavage/PoopLicker/Davidj361"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the shift+middle-click pointing shortcut to work for cyborgs as the functionality wasn't even there"
