@@ -16,6 +16,7 @@
 		qdel(cc)
 	client_colours = null
 	ghostize()
+	client_images.Cut()	//above line will remove the images from the client
 	..()
 	return QDEL_HINT_HARDDEL
 
