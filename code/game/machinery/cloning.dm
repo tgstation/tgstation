@@ -130,7 +130,7 @@
 	// We want to simulate the clone not being in contact with
 	// the atmosphere, so we'll put them in a constant pressure
 	// nitrogen. They'll breathe through the chemicals we pump into them.
-	var/global/datum/gas_mixture/immutable/cloner/GM //global so that there's only one instance made for all cloning pods
+	var/static/datum/gas_mixture/immutable/cloner/GM //global so that there's only one instance made for all cloning pods
 	if(!GM)
 		GM = new
 	return GM
