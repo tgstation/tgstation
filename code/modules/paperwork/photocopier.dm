@@ -89,6 +89,10 @@
 							c.fields = copy.fields
 							c.update_icon()
 							c.updateinfolinks()
+							c.stamps = copy.stamps
+							if(copy.stamped)
+								c.stamped = copy.stamped.Copy()
+							c.copy_overlays(copy, TRUE)
 							toner--
 					busy = 1
 					sleep(15)

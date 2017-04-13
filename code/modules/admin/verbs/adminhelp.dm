@@ -127,7 +127,7 @@
 	log_admin_private("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
 		to_chat(src, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
-	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /proc/get_admin_counts(requiredflags = R_BAN)
@@ -172,7 +172,7 @@
 		message["message_sender"] = source
 		message["message"] = msg
 		message["source"] = "([config.cross_name])"
-		message["key"] = GLOB.comms_key
+		message["key"] = global.comms_key
 		message["crossmessage"] = type
 
 		world.Export("[config.cross_address]?[list2params(message)]")

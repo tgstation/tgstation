@@ -305,14 +305,18 @@
 		if(VAR_BUILDMODE)
 			if(left_click) //I cant believe this shit actually compiles.
 				if(object.vars.Find(varholder))
-					log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
-					object.vars[varholder] = valueholder
+					if(object.vv_edit_var(varholder, valueholder))
+						log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
+					else
+						to_chat(user, "<span class='warning'>Varedit rejected</span>")
 				else
 					to_chat(user, "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>")
 			if(right_click)
 				if(object.vars.Find(varholder))
-					log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
-					object.vars[varholder] = initial(object.vars[varholder])
+					if(object.vv_edit_var(varholder, initial(object.vars[varholder])))
+						log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
+					else
+						to_chat(user, "<span class='warning'>Varedit rejected</span>")
 				else
 					to_chat(user, "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>")
 

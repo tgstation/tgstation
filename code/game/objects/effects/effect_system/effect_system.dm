@@ -23,7 +23,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /datum/effect_system
 	var/number = 3
-	var/cardinals = 0
+	var/cardinals = FALSE
 	var/turf/location
 	var/atom/holder
 	var/effect_type
@@ -34,7 +34,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	location = null
 	return ..()
 
-/datum/effect_system/proc/set_up(n = 3, c = 0, loca)
+/datum/effect_system/proc/set_up(n = 3, c = FALSE, loca)
 	if(n > 10)
 		n = 10
 	number = n

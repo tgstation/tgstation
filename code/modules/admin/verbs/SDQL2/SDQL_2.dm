@@ -419,10 +419,9 @@
 
 /proc/SDQL_var(datum/object, list/expression, start = 1, source)
 	var/v
-	var/static/list/exclude = list("usr", "src", "marked", "global")
 	var/long = start < expression.len
 	if(object == world && long && expression[start + 1] == ".")
-		to_chat(usr, "Sorry, but global variables are not supported at the moment.")
+		to_chat(usr, "Sorry, but world variables are not supported at the moment.")
 		return null
 	else if(expression [start] == "{" && long)
 		if(lowertext(copytext(expression[start + 1], 1, 3)) != "0x")
@@ -434,7 +433,10 @@
 			return null
 		start++
 	else if((!long || expression[start + 1] == ".") && (expression[start] in object.vars))
-		v = object.vars[expression[start]]
+		if(object.can_vv_get(expression[start]))
+			v = object.vars[expression[start]]
+		else
+			v = "SECRET"
 	else if(long && expression[start + 1] == ":" && hascall(object, expression[start]))
 		v = expression[start]
 	else if(!long || expression[start + 1] == ".")
@@ -448,8 +450,10 @@
 					v = usr.client.holder.marked_datum
 				else
 					return null
-			if("global")
+			if("world")
 				v = world
+			if("global")
+				v = GLOB
 			else
 				return null
 	else if(object == world) // Shitty ass hack kill me.

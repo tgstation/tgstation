@@ -78,7 +78,7 @@
 		triggering = FALSE
 		message_admins("[key_name_admin(usr)] cancelled event [name].")
 		log_admin_private("[key_name(usr)] cancelled event [name].")
-		feedback_add_details("admin_verb","CancelEvent: [typepath]")
+		feedback_add_details("event_admin_cancelled","[typepath]")
 
 /datum/round_event_control/proc/runEvent(random)
 	var/datum/round_event/E = new typepath()

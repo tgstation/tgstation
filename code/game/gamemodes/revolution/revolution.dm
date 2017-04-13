@@ -292,20 +292,15 @@
 		rev_mind.current.log_message("<font color='red'>Has renounced the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
 
 		if(beingborged)
-			to_chat(rev_mind.current, "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>")
+			rev_mind.current.visible_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.",\
+				"<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>")
 			message_admins("[ADMIN_LOOKUPFLW(rev_mind.current)] has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 
 		else
 			rev_mind.current.Paralyse(5)
-			to_chat(rev_mind.current, "<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
-
+			rev_mind.current.visible_message("[rev_mind.current] looks like they just remembered their real allegiance!",\
+				"<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
 		update_rev_icons_removed(rev_mind)
-		for(var/mob/living/M in view(rev_mind.current))
-			if(beingborged)
-				to_chat(M, "The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.")
-
-			else
-				to_chat(M, "[rev_mind.current] looks like they just remembered their real allegiance!")
 
 /////////////////////////////////////
 //Adds the rev hud to a new convert//
