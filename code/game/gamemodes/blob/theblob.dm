@@ -21,14 +21,14 @@
 	var/mob/camera/blob/overmind
 
 
-/obj/structure/blob/New(loc)
+/obj/structure/blob/Initialize()
 	var/area/Ablob = get_area(loc)
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		GLOB.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinal))
 	update_icon()
-	..()
+	.= ..()
 	ConsumeTile()
 	if(atmosblock)
 		CanAtmosPass = ATMOS_PASS_NO
