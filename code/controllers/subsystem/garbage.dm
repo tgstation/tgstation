@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(garbage)
 /datum/controller/subsystem/garbage/Shutdown()
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	if(didntgc.len || sleptDestroy.len)
-		var/dellog = ""
+		var/list/dellog = list()
 		for(var/path in didntgc)
 			dellog += "Path : [path] \n"
 			dellog += "Failures : [didntgc[path]] \n"
@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(garbage)
 		for(var/path in sleptDestroy)
 			dellog += "Path : [path] \n"
 			dellog += "Sleeps : [sleptDestroy[path]] \n"
-		log_world(dellog)
+		log_world(dellog.Join())
 
 /datum/controller/subsystem/garbage/fire()
 	HandleToBeQueued()
