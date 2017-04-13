@@ -198,6 +198,8 @@
 		fire_beam()
 
 /obj/machinery/power/emitter/proc/fire_beam(atom/targeted_atom, mob/user)
+	if(targeted_atom == user|| targeted_atom == targets_from)
+		return
 	var/turf/targets_from = get_turf(src)
 	var/obj/item/projectile/P = new projectile_type(targets_from)
 	playsound(src.loc, projectile_sound, 50, 1)
@@ -228,6 +230,13 @@
 		else // Any other
 			P.yo = -20
 			P.xo = 0
+	if(target)
+		P.yo = targeted_atom.y - targets_from.y
+		P.xo = targeted_atom.x - targets_from.x
+		P.current = targets_from
+		P.starting = targets_from
+		P.firer = src
+		P.original = targeted_atom
 	if(!manual)
 		src.last_shot = world.time
 		if(src.shot_number < 3)
@@ -239,31 +248,11 @@
 		if(!target)
 			P.setDir(src.dir)
 			P.starting = loc
-			P.fire()
 		else
 			if(QDELETED(target))
 				target = null
-				P.fire()
-				return P
-			P.yo = targeted_atom.y - targets_from.y
-			P.xo = targeted_atom.x - targets_from.x
-			P.current = targets_from
-			P.starting = targets_from
-			P.firer = src
-			P.original = target
-			P.fire()
-			return P
-	else
-		if(targeted_atom == user|| targeted_atom == targets_from)
-			return
-		P.yo = targeted_atom.y - targets_from.y
-		P.xo = targeted_atom.x - targets_from.x
-		P.current = targets_from
-		P.starting = targets_from
-		P.firer = src
-		P.original = targeted_atom
-		P.fire()
-		return P
+	P.fire()
+	return P
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
 	if(state == EM_WELDED)
@@ -458,8 +447,8 @@
 /obj/item/weapon/turret_control/afterattack(atom/targeted_atom, mob/user)
 	..()
 	var/obj/machinery/power/emitter/E = user.buckled
-	E.dir = get_dir(E,targeted_atom)
-	user.dir = E.dir
+	E.setDir(get_dir(E,targeted_atom))
+	user.setDir(E.dir)
 	switch(E.dir)
 		if(NORTH)
 			E.layer = 3.9
