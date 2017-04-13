@@ -183,13 +183,20 @@
 
 
 //Change organ status
-/obj/item/bodypart/proc/change_bodypart_status(new_limb_status, heal_limb)
+/obj/item/bodypart/proc/change_bodypart_status(new_limb_status, heal_limb, change_icon_to_default)
 	status = new_limb_status
 	if(heal_limb)
 		burn_dam = 0
 		brute_dam = 0
 		brutestate = 0
 		burnstate = 0
+
+	if(change_icon_to_default)
+		if(status == BODYPART_ORGANIC)
+			icon = DEFAULT_BODYPART_ICON_ORGANIC
+		else if(status == BODYPART_ROBOTIC)
+			icon = DEFAULT_BODYPART_ICON_ROBOTIC
+
 	if(owner)
 		owner.updatehealth()
 		owner.update_body() //if our head becomes robotic, we remove the lizard horns and human hair.
