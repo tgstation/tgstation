@@ -431,7 +431,6 @@
 	var/mutativeness = 1
 
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production)
-	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	spawn_spacevine_piece(location, null, muts)
 	START_PROCESSING(SSobj, src)
 	vines = list()
@@ -490,7 +489,7 @@
 	growth_queue -= S
 	if(!vines.len)
 		var/obj/item/seeds/kudzu/KZ = new(S.loc)
-		KZ.mutations |= mutations
+		KZ.mutations |= S.mutations
 		KZ.set_potency(mutativeness * 10)
 		KZ.set_production((spread_cap / initial(spread_cap)) * 5)
 		qdel(src)
