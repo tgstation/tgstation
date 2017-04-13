@@ -35,6 +35,10 @@
 				S.handle_item_insertion(scroll,1)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
 			upgrade_scroll_chance += 25
+			
+		if(istype(I,/obj/item/weapon/storage/belt/utility))
+			I.name = "4 strength 4 stam leather belt"
+			I.desc = "Aaaugh. Ugggh."
 
 /obj/item/upgradescroll
 	name = "Item Fortification Scroll"
@@ -60,4 +64,7 @@
 	for(var/value in target.armor)
 		target.armor[value] += 1
 	to_chat(user, "<span class='notice'>[target] glows blue and seems vaguely \"better\"!</span>")
+	if(istype(target,/obj/item/weapon/storage/belt/utility))
+		target.name = "4 strength 4 stam leather belt"
+		target.desc = "Aaaugh. Ugggh."
 	qdel(src)
