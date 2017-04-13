@@ -39,8 +39,7 @@ obj/item/weapon/construction
 
 
 /obj/item/weapon/construction/Destroy()
-	qdel(spark_system)
-	spark_system = null
+	QDEL_NULL(spark_system)
 	. = ..()
 
 /obj/item/weapon/construction/attackby(obj/item/weapon/W, mob/user, params)
@@ -457,7 +456,7 @@ obj/item/weapon/construction
 
 /obj/item/weapon/construction/rld/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
-		color_choice = input(usr,"Choose Color") as color
+		color_choice = input(user,"Choose Color") as color
 	else
 		..()
 
@@ -560,8 +559,10 @@ obj/item/weapon/construction
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(do_after(user, floordelay, target = A))
-						if(!istype(F)) return 0
-						if(!useResource(floorcost, user)) return 0
+						if(!istype(F)) 
+							return 0
+						if(!useResource(floorcost, user)) 
+							return 0
 						activate()
 						var/destination = get_turf(A)
 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)
