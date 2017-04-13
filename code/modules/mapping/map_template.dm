@@ -46,7 +46,7 @@
 	var/x = round(world.maxx/2)
 	var/y = round(world.maxy/2)
 
-	var/list/bounds = maploader.load_map(get_file(), x, y)
+	var/list/bounds = maploader.load_map(file(mappath), x, y)
 	if(!bounds)
 		return FALSE
 
@@ -67,7 +67,7 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE)
 	if(!bounds)
 		return
 
@@ -76,13 +76,6 @@
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	return TRUE
-
-/datum/map_template/proc/get_file()
-	if(mappath)
-		. = file(mappath)
-
-	if(!.)
-		world.log << "The file of [src] ([mappath]) appears to be empty/non-existent."
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T

@@ -5,6 +5,17 @@
 // will always spawn at the items location.
 /////////////////////////////////////////////
 
+/proc/do_sparks(n, c, source)
+	// n - number of sparks
+	// c - cardinals, bool, do the sparks only move in cardinal directions?
+	// source - source of the sparks.
+
+	var/datum/effect_system/spark_spread/sparks = new
+	sparks.set_up(n, c, source)
+	sparks.start()
+	qdel(sparks)
+
+
 /obj/effect/particle_effect/sparks
 	name = "sparks"
 	icon_state = "sparks"

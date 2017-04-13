@@ -23,20 +23,6 @@ GLOBAL_VAR_INIT(tinted_weldhelh, TRUE)
 GLOBAL_VAR_INIT(Debug, FALSE)	// global debug switch
 GLOBAL_VAR_INIT(Debug2, FALSE)
 
-//Server API key
-GLOBAL_VAR_INIT(comms_key, "default_pwd")
-GLOBAL_PROTECT(comms_key)
-GLOBAL_VAR_INIT(comms_allowed, FALSE) //By default, the server does not allow messages to be sent to it, unless the key is strong enough (this is to prevent misconfigured servers from becoming vulnerable)
-GLOBAL_PROTECT(comms_allowed)
-
-GLOBAL_VAR(medal_hub)
-GLOBAL_PROTECT(medal_hub)
-GLOBAL_VAR_INIT(medal_pass, " ")
-GLOBAL_PROTECT(medal_pass)
-GLOBAL_VAR_INIT(medals_enabled, TRUE)	//will be auto set to false if the game fails contacting the medal hub to prevent unneeded calls.
-GLOBAL_PROTECT(medals_enabled)
-
-
 //This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
 GLOBAL_VAR_INIT(MAX_EX_DEVESTATION_RANGE, 3)
 GLOBAL_VAR_INIT(MAX_EX_HEAVY_RANGE, 7)

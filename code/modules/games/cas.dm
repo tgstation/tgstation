@@ -51,7 +51,7 @@
 		P.name = "Blank Card"
 		P.card_icon = "cas_white"
 		cards += P
-	shuffle(cards) // distribute blank cards throughout deck
+	shuffle_inplace(cards) // distribute blank cards throughout deck
 	..()
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
