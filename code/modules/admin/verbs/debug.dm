@@ -95,7 +95,7 @@ GLOBAL_PROTECT(AdminProcCall)
 			. = call(procname)(arglist(arguments))
 		else
 			. = call(procname)(arglist(arguments))
-	catch(var/exception/E)
+	catch()
 		//intentionally left blank
 	GLOB.AdminProcCall = null
 
