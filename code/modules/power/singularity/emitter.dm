@@ -370,8 +370,7 @@
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
 			buckled_mob.client.change_view(world.view)
-	for(var/datum/action/innate/protoemitter/H in buckled_mob.actions)
-		qdel(H)
+	auto.Remove(buckled_mob)
 	. = ..()
 
 /obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/M, mob/living/carbon/user)
