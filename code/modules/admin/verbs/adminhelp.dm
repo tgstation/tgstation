@@ -43,7 +43,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/num_closed = ticket_list.len
 	if(num_closed)
 		for(var/I in 1 to num_closed)
-			var/datum/admin_help/AH = I
+			var/datum/admin_help/AH = ticket_list[I]
 			if(AH.id > new_ticket.id)
 				ticket_list.Insert(new_ticket, I)
 	else
