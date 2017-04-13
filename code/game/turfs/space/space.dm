@@ -12,7 +12,7 @@
 	var/destination_x
 	var/destination_y
 
-	var/global/datum/gas_mixture/space/space_gas = new
+	var/global/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED

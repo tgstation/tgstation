@@ -1,58 +1,65 @@
-//"immutable" gas mixture used for space calculations
+//"immutable" gas mixture used for immutable calculations
 //it can be changed, but any changes will ultimately be undone before they can have any effect
 
-/datum/gas_mixture/space
+/datum/gas_mixture/immutable
+	var/initial_temperature
 
-/datum/gas_mixture/space/New()
+/datum/gas_mixture/immutable/proc/reset_gas_mix()
+	temperature = initial_temperature
+	temperature_archived = initial_temperature
+
+/datum/gas_mixture/immutable/New()
 	..()
-	temperature = TCMB
-	temperature_archived = TCMB
+	reset_gas_mix()
 
-/datum/gas_mixture/space/garbage_collect()
-	gases.Cut() //clever way of ensuring we always are empty.
-
-/datum/gas_mixture/space/archive()
+/datum/gas_mixture/immutable/archive()
 	return 1 //nothing changes, so we do nothing and the archive is successful
 
-/datum/gas_mixture/space/merge()
+/datum/gas_mixture/immutable/merge()
 	return 0 //we're immutable.
 
-/datum/gas_mixture/space/heat_capacity()
-	. = 7000
+/datum/gas_mixture/immutable/heat_capacity_archived()
+	return heat_capacity()
 
-/datum/gas_mixture/space/heat_capacity_archived()
-	. = heat_capacity()
-
-/datum/gas_mixture/space/remove()
-	return copy() //we're immutable, so we can just return a copy.
-
-/datum/gas_mixture/space/remove_ratio()
-	return copy() //we're immutable, so we can just return a copy.
-
-/datum/gas_mixture/space/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
+/datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
-	temperature = TCMB
-	gases.Cut()
+	reset_gas_mix()
 
-/datum/gas_mixture/space/after_share()
-	temperature = TCMB
-	gases.Cut()
+/datum/gas_mixture/immutable/after_share()
+	temperature = initial_temperature
+	reset_gas_mix()
 
-/datum/gas_mixture/space/react()
+/datum/gas_mixture/immutable/react()
 	return 0 //we're immutable.
 
-/datum/gas_mixture/space/copy()
-	return new /datum/gas_mixture/space //we're immutable, so we can just return a new instance.
+/datum/gas_mixture/immutable/copy()
+	return new type //we're immutable, so we can just return a new instance.
 
-/datum/gas_mixture/space/copy_from()
+/datum/gas_mixture/immutable/copy_from()
 	return 0 //we're immutable.
 
-/datum/gas_mixture/space/copy_from_turf()
+/datum/gas_mixture/immutable/copy_from_turf()
 	return 0 //we're immutable.
 
-/datum/gas_mixture/space/parse_gas_string()
+/datum/gas_mixture/immutable/parse_gas_string()
 	return 0 //we're immutable.
 
-/datum/gas_mixture/space/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
+/datum/gas_mixture/immutable/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
 	. = ..()
-	temperature = TCMB
+	temperature = initial_temperature
+
+//used by space tiles
+/datum/gas_mixture/immutable/space
+	initial_temperature = TCMB
+
+/datum/gas_mixture/immutable/space/garbage_collect()
+	gases.Cut() //clever way of ensuring we always are empty.
+
+/datum/gas_mixture/immutable/space/heat_capacity()
+	return 7000
+
+/datum/gas_mixture/immutable/space/remove()
+	return copy() //we're always empty, so we can just return a copy.
+
+/datum/gas_mixture/immutable/space/remove_ratio()
+	return copy() //we're always empty, so we can just return a copy.
