@@ -386,7 +386,8 @@
 	layer = 4.1
 	if(M.client)
 		M.client.change_view(view_range)
-	auto = new()
+	if(!auto)
+		auto = new()
 	auto.Grant(M, src)
 
 /datum/action/innate/protoemitter
