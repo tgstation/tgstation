@@ -103,7 +103,7 @@
 
 ///Allows rounds to basically be "rerolled" should the initial premise fall through. Also known as mulligan antags.
 /datum/game_mode/proc/convert_roundtype()
-	set waitfor = FALSEs
+	set waitfor = FALSE
 	var/list/living_crew = list()
 
 	for(var/mob/Player in GLOB.mob_list)
