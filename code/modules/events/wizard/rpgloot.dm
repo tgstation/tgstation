@@ -44,7 +44,7 @@
 
 	if(can_backfire && (quality > 9 && prob((quality - 9)*10)))
 		to_chat(user, "<span class='danger'>[target] violently glows blue for a while, then evaporates.</span>")
-		qdel(target)
+		target.burn()
 	else
 		to_chat(user, "<span class='notice'>[target] glows blue and seems vaguely \"better\"!</span>")
 		rpg_loot_datum.modify(upgrade_amount)
@@ -76,9 +76,9 @@
 	attached = null
 
 /datum/rpg_loot/proc/randomise()
-	var/list/prefixespositive 	= list("greater", "major", "blessed", "superior", "enpowered", "honed", "true", "glorious", "robust")
-	var/list/prefixesnegative 	= list("lesser", "minor", "blighted", "inferior", "enfeebled", "rusted", "unsteady", "tragic", "gimped")
-	var/list/suffixes			= list("orc slaying", "elf slaying", "corgi slaying", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "the forest", "the hills", "the plains", "the sea", "the sun", "the moon", "the void", "the world", "the fool", "many secrets", "many tales", "many colors", "rending", "sundering", "the night", "the day")
+	var/statis/list/prefixespositive = list("greater", "major", "blessed", "superior", "enpowered", "honed", "true", "glorious", "robust")
+	var/static/list/prefixesnegative = list("lesser", "minor", "blighted", "inferior", "enfeebled", "rusted", "unsteady", "tragic", "gimped")
+	var/static/list/suffixes = list("orc slaying", "elf slaying", "corgi slaying", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "the forest", "the hills", "the plains", "the sea", "the sun", "the moon", "the void", "the world", "the fool", "many secrets", "many tales", "many colors", "rending", "sundering", "the night", "the day")
 
 	var/new_quality = pick(1;15, 2;14, 2;13, 2;12, 3;11, 3;10, 3;9, 4;8, 4;7, 4;6, 5;5, 5;4, 5;3, 6;2, 6;1, 6;0)
 
@@ -106,8 +106,8 @@
 	var/obj/item/I = attached
 	quality += quality_mod
 
-	I.force 		= max(0,I.force + quality_mod)
-	I.throwforce	= max(0,I.throwforce + quality_mod)
+	I.force = max(0,I.force + quality_mod)
+	I.throwforce = max(0,I.throwforce + quality_mod)
 
 	for(var/value in I.armor)
 		I.armor[value] += quality
