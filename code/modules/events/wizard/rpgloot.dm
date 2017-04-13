@@ -64,4 +64,7 @@
 	for(var/value in target.armor)
 		target.armor[value] += 1
 	to_chat(user, "<span class='notice'>[target] glows blue and seems vaguely \"better\"!</span>")
+	if(istype(target,/obj/item/weapon/storage/belt/utility))
+		target.name = "4 strength 4 stam leather belt"
+		target.desc = "Aaaugh. Ugggh."
 	qdel(src)
