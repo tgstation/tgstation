@@ -47,6 +47,21 @@ SUBSYSTEM_DEF(garbage)
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
 	..(msg)
 
+/datum/controller/subsystem/garbage/Shutdown()
+	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
+	if(didntgc.len || sleptDestroy.len)
+		var/list/dellog = list()
+		for(var/path in didntgc)
+			dellog += "Path : [path] \n"
+			dellog += "Failures : [didntgc[path]] \n"
+			if(path in sleptDestroy)
+				dellog += "Sleeps : [sleptDestroy[path]] \n"
+				sleptDestroy -= path
+		for(var/path in sleptDestroy)
+			dellog += "Path : [path] \n"
+			dellog += "Sleeps : [sleptDestroy[path]] \n"
+		log_world(dellog.Join())
+
 /datum/controller/subsystem/garbage/fire()
 	HandleToBeQueued()
 	if(state == SS_RUNNING)
