@@ -170,13 +170,7 @@
 		else
 			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
 				if(!recipient.current_ticket)
-					var/ticket_title = input(usr, "A new ticket will be created. Enter a name for it here.", "New Ticket", msg) as null|text
-					if(!ticket_title)
-						return
-					if(!recipient.current_ticket)
-						new /datum/admin_help(ticket_title, recipient, TRUE)
-					else
-						to_chat(usr, "<span class='adminnotice'>A ticket was created already!</span>")
+					new /datum/admin_help(ticket_title, msg, TRUE)
 
 				to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
 				to_chat(recipient, "<font color='red'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: [msg]</font>")
