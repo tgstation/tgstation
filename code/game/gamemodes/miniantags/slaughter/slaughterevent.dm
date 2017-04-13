@@ -23,7 +23,7 @@
 	player_mind.active = 1
 
 	var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/L in landmarks_list)
+	for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
 			switch(L.name)
 				if("carpspawn")

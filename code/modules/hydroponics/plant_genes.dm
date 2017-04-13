@@ -107,7 +107,7 @@
 	reagent_id = reag_id
 	name = "UNKNOWN"
 
-	var/datum/reagent/R = chemical_reagents_list[reag_id]
+	var/datum/reagent/R = GLOB.chemical_reagents_list[reag_id]
 	if(R && R.id == reagent_id)
 		name = R.name
 

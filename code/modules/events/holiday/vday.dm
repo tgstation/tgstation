@@ -14,14 +14,14 @@
 
 /datum/round_event/valentines/start()
 	..()
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		H.put_in_hands(new /obj/item/weapon/valentine)
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/reagent_containers/food/snacks/candyheart(b)
 
 
 	var/list/valentines = list()
-	for(var/mob/living/M in player_list)
+	for(var/mob/living/M in GLOB.player_list)
 		if(!M.stat && M.client && M.mind)
 			valentines |= M
 

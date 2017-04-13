@@ -61,8 +61,8 @@
 		strengthdiv = 8
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
 			var/deity
-			if(SSreligion.Bible_deity_name)
-				deity = SSreligion.Bible_deity_name
+			if(SSreligion.deity)
+				deity = SSreligion.deity
 			else
 				deity = "Christ"
 			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")
@@ -216,9 +216,7 @@
 	if(holder.has_reagent("stabilizing_agent"))
 		return
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(2, 1, location)
-	s.start()
+	do_sparks(2, TRUE, location)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
@@ -235,9 +233,7 @@
 
 /datum/chemical_reaction/flash_powder_flash/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(2, 1, location)
-	s.start()
+	do_sparks(2, TRUE, location)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)

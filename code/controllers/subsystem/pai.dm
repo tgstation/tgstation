@@ -1,4 +1,3 @@
-var/list/obj/item/device/paicard/pai_card_list = list()
 SUBSYSTEM_DEF(pai)
 	name = "pAI"
 
@@ -7,6 +6,7 @@ SUBSYSTEM_DEF(pai)
 	var/list/candidates = list()
 	var/ghost_spam = FALSE
 	var/spam_delay = 100
+	var/list/pai_card_list = list()
 
 /datum/controller/subsystem/pai/Topic(href, href_list[])
 	if(href_list["download"])
@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(pai)
 				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)
 			if(!candidate.name)
-				pai.name = pick(ninja_names)
+				pai.name = pick(GLOB.ninja_names)
 			else
 				pai.name = candidate.name
 			pai.real_name = pai.name
@@ -136,7 +136,7 @@ SUBSYSTEM_DEF(pai)
 /datum/controller/subsystem/pai/proc/check_ready(var/datum/paiCandidate/C)
 	if(!C.ready)
 		return FALSE
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.key == C.key)
 			return C
 	return FALSE
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(pai)
 /datum/controller/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
 	if(!ghost_spam)
 		ghost_spam = TRUE
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/dead/observer/G in GLOB.player_list)
 			if(!G.key || !G.client)
 				continue
 			if(!(ROLE_PAI in G.client.prefs.be_special))

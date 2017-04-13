@@ -1,0 +1,4 @@
+author: "RemieRichards"
+delete-after: True
+changes: 
+  - bugfix: "Constructing lattice no longer prevents space transitions."

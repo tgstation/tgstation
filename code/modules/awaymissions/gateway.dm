@@ -1,4 +1,4 @@
-var/obj/machinery/gateway/centerstation/the_gateway = null
+GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 /obj/machinery/gateway
 	name = "gateway"
@@ -16,7 +16,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/can_link = FALSE	//Is this the centerpiece?
 
 /obj/machinery/gateway/Initialize()
-	randomspawns = awaydestinations
+	randomspawns = GLOB.awaydestinations
 	update_icon()
 	if(!istype(src, /obj/machinery/gateway/centerstation) && !istype(src, /obj/machinery/gateway/centeraway))
 		switch(dir)
@@ -38,7 +38,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/turf/T = loc
 	var/ready = FALSE
 
-	for(var/i in alldirs)
+	for(var/i in GLOB.alldirs)
 		T = get_step(loc, i)
 		var/obj/machinery/gateway/G = locate(/obj/machinery/gateway) in T
 		if(G)
@@ -77,12 +77,12 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 /obj/machinery/gateway/centerstation/New()
 	..()
-	if(!the_gateway)
-		the_gateway = src
+	if(!GLOB.the_gateway)
+		GLOB.the_gateway = src
 
 /obj/machinery/gateway/centerstation/Destroy()
-	if(the_gateway == src)
-		the_gateway = null
+	if(GLOB.the_gateway == src)
+		GLOB.the_gateway = null
 	return ..()
 
 //this is da important part wot makes things go

@@ -17,7 +17,7 @@
 /obj/item/device/assembly/control/activate()
 	cooldown = 1
 	var/openclose
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if(M.id == src.id)
 			if(openclose == null)
 				openclose = M.density
@@ -49,7 +49,7 @@
 	cooldown = 1
 	var/doors_need_closing = FALSE
 	var/list/obj/machinery/door/airlock/open_or_close = list()
-	for(var/obj/machinery/door/airlock/D in airlocks)
+	for(var/obj/machinery/door/airlock/D in GLOB.airlocks)
 		if(D.id_tag == src.id)
 			if(specialfunctions & OPEN)
 				open_or_close += D
@@ -84,20 +84,20 @@
 
 /obj/item/device/assembly/control/massdriver/activate()
 	cooldown = 1
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.open()
 
 	sleep(10)
 
-	for(var/obj/machinery/mass_driver/M in machines)
+	for(var/obj/machinery/mass_driver/M in GLOB.machines)
 		if(M.id == src.id)
 			M.drive()
 
 	sleep(60)
 
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.close()
@@ -112,12 +112,12 @@
 
 /obj/item/device/assembly/control/igniter/activate()
 	cooldown = 1
-	for(var/obj/machinery/sparker/M in machines)
+	for(var/obj/machinery/sparker/M in GLOB.machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.ignite()
 
-	for(var/obj/machinery/igniter/M in machines)
+	for(var/obj/machinery/igniter/M in GLOB.machines)
 		if(M.id == src.id)
 			M.use_power(50)
 			M.on = !M.on
@@ -133,7 +133,7 @@
 
 /obj/item/device/assembly/control/flasher/activate()
 	cooldown = 1
-	for(var/obj/machinery/flasher/M in machines)
+	for(var/obj/machinery/flasher/M in GLOB.machines)
 		if(M.id == src.id)
 			spawn(0)
 				M.flash()
@@ -148,7 +148,7 @@
 
 /obj/item/device/assembly/control/crematorium/activate()
 	cooldown = 1
-	for (var/obj/structure/bodycontainer/crematorium/C in crematoriums)
+	for (var/obj/structure/bodycontainer/crematorium/C in GLOB.crematoriums)
 		if (C.id == id)
 			C.cremate(usr)
 

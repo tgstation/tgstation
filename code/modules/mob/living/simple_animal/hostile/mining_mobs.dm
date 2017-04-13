@@ -15,7 +15,7 @@
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	mob_size = MOB_SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
@@ -502,7 +502,7 @@
 	for(var/obj/effect/goliath_tentacle/original/O in loc)//No more GG NO RE from 2+ goliaths simultaneously tentacling you
 		if(O != src)
 			qdel(src)
-	var/list/directions = cardinal.Copy()
+	var/list/directions = GLOB.cardinal.Copy()
 	var/counter
 	for(counter = 1, counter <= 3, counter++)
 		var/spawndir = pick(directions)
@@ -1009,7 +1009,7 @@
 #define MEDAL_PREFIX "Tendril"
 /mob/living/simple_animal/hostile/spawner/lavaland/death()
 	var/last_tendril = TRUE
-	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in mob_list)
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_list)
 		if(other != src)
 			last_tendril = FALSE
 			break
