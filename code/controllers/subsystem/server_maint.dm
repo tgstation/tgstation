@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(server_maint)
 			if(C.is_afk(config.afk_period))
 				if(!(istype(C.mob, /mob/dead/observer) || (istype(/mob/dead) && C.holder)))
 					log_access("AFK: [key_name(C)]")
-					to_chat(C, "<span class='danger'>You have been inactive for more than 10 minutes and have been disconnected.</span>")
+					to_chat(C, "<span class='danger'>You have been inactive for more than [config.afk_period / 60] minutes and have been disconnected.</span>")
 					qdel(C)
 
 	if(config.sql_enabled)

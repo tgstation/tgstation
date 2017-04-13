@@ -66,8 +66,8 @@
 	var/respawn = 1
 	var/guest_jobban = 1
 	var/usewhitelist = 0
-	var/inactivity_period = 600			//time in seconds until a player is considered inactive
-	var/afk_period = 300				//time in seconds until a player is considered afk and kickable
+	var/inactivity_period = 600	0		//time in ds until a player is considered inactive
+	var/afk_period = 3000				//time in ds until a player is considered afk and kickable
 	var/kick_inactive = FALSE			//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
@@ -413,9 +413,9 @@
 				if("inactivity_period")
 					inactivity_period = text2num(value)
 				if("afk_period")
-					afk_period = text2num(value)
+					afk_period = text2num(value) * 10 //documented as seconds in config.txt
 				if("kick_inactive")
-					kick_inactive = text2num(value)
+					kick_inactive = text2num(value) * 10 // ^^^
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
 				if("forbid_singulo_possession")
