@@ -198,9 +198,9 @@
 		fire_beam()
 
 /obj/machinery/power/emitter/proc/fire_beam(atom/targeted_atom, mob/user)
+	var/turf/targets_from = get_turf(src)
 	if(targeted_atom == user|| targeted_atom == targets_from)
 		return
-	var/turf/targets_from = get_turf(src)
 	var/obj/item/projectile/P = new projectile_type(targets_from)
 	playsound(src.loc, projectile_sound, 50, 1)
 	if(prob(35))
@@ -355,7 +355,7 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	var/view_range = 12
-	var/datum/riding/riding_datum = null
+	var/datum/action/innate/protoemitter/firing/auto
 
 //BUCKLE HOOKS
 
@@ -386,7 +386,7 @@
 	layer = 4.1
 	if(M.client)
 		M.client.change_view(view_range)
-	var/datum/action/innate/protoemitter/firing/auto = new()
+	auto = new()
 	auto.Grant(M, src)
 
 /datum/action/innate/protoemitter
