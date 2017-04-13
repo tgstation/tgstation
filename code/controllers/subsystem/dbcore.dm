@@ -51,11 +51,11 @@ SUBSYSTEM_DEF(dbcore)
 	if(!config.sql_enabled)
 		return FALSE
 
-	var/user = GLOB.sqlfdbklogin
-	var/pass = GLOB.sqlfdbkpass
-	var/db = GLOB.sqlfdbkdb
-	var/address = GLOB.sqladdress
-	var/port = GLOB.sqlport
+	var/user = global.sqlfdbklogin
+	var/pass = global.sqlfdbkpass
+	var/db = global.sqlfdbkdb
+	var/address = global.sqladdress
+	var/port = global.sqlport
 
 	doConnect("dbi:mysql:[db]:[address]:[port]", user, pass)
 	. = IsConnected()

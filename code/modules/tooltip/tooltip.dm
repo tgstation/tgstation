@@ -34,7 +34,6 @@ Notes:
 /datum/tooltip
 	var/client/owner
 	var/control = "mainwindow.tooltip"
-	var/file = 'code/modules/tooltip/tooltip.html'
 	var/showing = 0
 	var/queueHide = 0
 	var/init = 0
@@ -43,7 +42,7 @@ Notes:
 /datum/tooltip/New(client/C)
 	if (C)
 		src.owner = C
-		src.owner << browse(file2text(src.file), "window=[src.control]")
+		src.owner << browse(file2text('code/modules/tooltip/tooltip.html'), "window=[src.control]")
 
 	..()
 

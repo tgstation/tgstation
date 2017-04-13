@@ -109,7 +109,6 @@ Admin:
 
 
 /mob/proc/hotkey_help()
-	//h = talk-wheel has a nonsense tag in it because \th is an escape sequence in BYOND.
 	var/hotkey_mode = {"<font color='purple'>
 Hotkey-Mode: (hotkey-mode must be on)
 \tTAB = toggle hotkey-mode
@@ -122,7 +121,6 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tr = throw
 \tm = me
 \tt = say
-\t<B></B>h = talk-wheel
 \to = OOC
 \tb = resist
 \tx = swap-hand
@@ -147,7 +145,6 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+e = equip
 \tCtrl+r = throw
 \tCtrl+b = resist
-\tCtrl+h = talk-wheel
 \tCtrl+o = OOC
 \tCtrl+x = swap-hand
 \tCtrl+z = activate held object (or Ctrl+y)
