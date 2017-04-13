@@ -1,4 +1,4 @@
-var/global/list/uplinks = list()
+GLOBAL_LIST_EMPTY(uplinks)
 
 /**
  * Uplinks
@@ -22,7 +22,7 @@ var/global/list/uplinks = list()
 
 /obj/item/device/uplink/New()
 	..()
-	uplinks += src
+	GLOB.uplinks += src
 	uplink_items = get_uplink_items(gamemode)
 
 /obj/item/device/uplink/proc/set_gamemode(gamemode)
@@ -30,7 +30,7 @@ var/global/list/uplinks = list()
 	uplink_items = get_uplink_items(gamemode)
 
 /obj/item/device/uplink/Destroy()
-	uplinks -= src
+	GLOB.uplinks -= src
 	return ..()
 
 /obj/item/device/uplink/attackby(obj/item/I, mob/user, params)
@@ -60,7 +60,7 @@ var/global/list/uplinks = list()
 	ui_interact(user)
 
 /obj/item/device/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = inventory_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "uplink", name, 450, 750, master_ui, state)

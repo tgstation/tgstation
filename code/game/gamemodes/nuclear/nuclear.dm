@@ -46,12 +46,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/update_synd_icons_added(datum/mind/synd_mind)
-	var/datum/atom_hud/antag/opshud = huds[ANTAG_HUD_OPS]
+	var/datum/atom_hud/antag/opshud = GLOB.huds[ANTAG_HUD_OPS]
 	opshud.join_hud(synd_mind.current)
 	set_antag_hud(synd_mind.current, "synd")
 
 /datum/game_mode/proc/update_synd_icons_removed(datum/mind/synd_mind)
-	var/datum/atom_hud/antag/opshud = huds[ANTAG_HUD_OPS]
+	var/datum/atom_hud/antag/opshud = GLOB.huds[ANTAG_HUD_OPS]
 	opshud.leave_hud(synd_mind.current)
 	set_antag_hud(synd_mind.current, null)
 
@@ -62,7 +62,7 @@
 
 	var/list/turf/synd_spawn = list()
 
-	for(var/obj/effect/landmark/A in landmarks_list)
+	for(var/obj/effect/landmark/A in GLOB.landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
 			continue
@@ -93,7 +93,7 @@
 			agent_number++
 		spawnpos++
 		update_synd_icons_added(synd_mind)
-	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
 	if(nuke)
 		nuke.r_code = nuke_code
 	return ..()
@@ -116,7 +116,7 @@
 	if(foundIDs.len)
 		for(var/obj/item/weapon/card/id/ID in foundIDs)
 			ID.name = "lead agent card"
-			ID.access += access_syndicate_leader
+			ID.access += GLOB.access_syndicate_leader
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
 
@@ -176,13 +176,15 @@
 	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
 		return 1
 	if(are_operatives_dead())
-		if(bomb_set) //snaaaaaaaaaake! It's not over yet!
-			return 0
+		var/obj/machinery/nuclearbomb/N
+		pass(N)	//suppress unused warning
+		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
+			return 0	//its a static var btw
 	..()
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
-	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
+	for(var/obj/item/weapon/disk/nuclear/D in GLOB.poi_list)
 		if(!D.onCentcom())
 			disk_rescued = 0
 			break
@@ -277,7 +279,7 @@
 		var/TC_uses = 0
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayer(syndicate)
-			for(var/obj/item/device/uplink/H in uplinks)
+			for(var/obj/item/device/uplink/H in GLOB.uplinks)
 				if(H && H.owner && H.owner == syndicate.key)
 					TC_uses += H.spent_telecrystals
 					purchases += H.purchase_log
@@ -290,7 +292,7 @@
 
 
 /proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(last_names)
+	var/randomname = pick(GLOB.last_names)
 	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
 
 	if (!newname)
@@ -334,7 +336,7 @@
 
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(SYND_FREQ)
+	R.set_frequency(GLOB.SYND_FREQ)
 	R.freqlock = 1
 
 	if(tc)

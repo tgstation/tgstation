@@ -1,26 +1,26 @@
 /* HUD DATUMS */
 
 //GLOBAL HUD LIST
-var/datum/atom_hud/huds = list( \
-	DATA_HUD_SECURITY_BASIC = new/datum/atom_hud/data/human/security/basic(), \
-	DATA_HUD_SECURITY_ADVANCED = new/datum/atom_hud/data/human/security/advanced(), \
-	DATA_HUD_MEDICAL_BASIC = new/datum/atom_hud/data/human/medical/basic(), \
-	DATA_HUD_MEDICAL_ADVANCED = new/datum/atom_hud/data/human/medical/advanced(), \
-	DATA_HUD_DIAGNOSTIC = new/datum/atom_hud/data/diagnostic(), \
-	ANTAG_HUD_CULT = new/datum/atom_hud/antag(), \
-	ANTAG_HUD_REV = new/datum/atom_hud/antag(), \
-	ANTAG_HUD_OPS = new/datum/atom_hud/antag(), \
-	ANTAG_HUD_WIZ = new/datum/atom_hud/antag(), \
-	ANTAG_HUD_SHADOW = new/datum/atom_hud/antag(), \
-	ANTAG_HUD_TRAITOR = new/datum/atom_hud/antag/hidden(),\
-	ANTAG_HUD_NINJA = new/datum/atom_hud/antag/hidden(),\
-	ANTAG_HUD_CHANGELING = new/datum/atom_hud/antag/hidden(),\
-	ANTAG_HUD_ABDUCTOR = new/datum/atom_hud/antag/hidden(),\
-	ANTAG_HUD_DEVIL = new/datum/atom_hud/antag(),\
-	ANTAG_HUD_SINTOUCHED = new/datum/atom_hud/antag/hidden(),\
-	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),\
-	ANTAG_HUD_CLOCKWORK = new/datum/atom_hud/antag(),\
-	)
+GLOBAL_LIST_INIT(huds, list(
+	DATA_HUD_SECURITY_BASIC = new/datum/atom_hud/data/human/security/basic(),
+	DATA_HUD_SECURITY_ADVANCED = new/datum/atom_hud/data/human/security/advanced(),
+	DATA_HUD_MEDICAL_BASIC = new/datum/atom_hud/data/human/medical/basic(),
+	DATA_HUD_MEDICAL_ADVANCED = new/datum/atom_hud/data/human/medical/advanced(),
+	DATA_HUD_DIAGNOSTIC = new/datum/atom_hud/data/diagnostic(),
+	ANTAG_HUD_CULT = new/datum/atom_hud/antag(),
+	ANTAG_HUD_REV = new/datum/atom_hud/antag(),
+	ANTAG_HUD_OPS = new/datum/atom_hud/antag(),
+	ANTAG_HUD_WIZ = new/datum/atom_hud/antag(),
+	ANTAG_HUD_SHADOW = new/datum/atom_hud/antag(),
+	ANTAG_HUD_TRAITOR = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_NINJA = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_CHANGELING = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_ABDUCTOR = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_DEVIL = new/datum/atom_hud/antag(),
+	ANTAG_HUD_SINTOUCHED = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_CLOCKWORK = new/datum/atom_hud/antag(),
+	))
 
 /datum/atom_hud
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud
@@ -77,7 +77,7 @@ var/datum/atom_hud/huds = list( \
 		for(var/datum/gang/G in SSticker.mode.gangs)
 			gang_huds += G.ganghud
 
-	for(var/datum/atom_hud/hud in (huds|gang_huds))
+	for(var/datum/atom_hud/hud in (GLOB.huds|gang_huds))
 		if(src in hud.hudusers)
 			hud.add_hud_to(src)
 

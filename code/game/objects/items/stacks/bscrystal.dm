@@ -1,5 +1,4 @@
-// Bluespace crystals, used in telescience and when crushed it will blink you to a random turf.
-
+//Bluespace crystals, used in telescience and when crushed it will blink you to a random turf.
 /obj/item/weapon/ore/bluespace_crystal
 	name = "bluespace crystal"
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
@@ -42,19 +41,17 @@
 			blink_mob(hit_atom)
 		qdel(src)
 
-// Artifical bluespace crystal, doesn't give you much research.
-
+//Artifical bluespace crystal, doesn't give you much research.
 /obj/item/weapon/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
 	origin_tech = "bluespace=3;plasmatech=4"
 	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT / 2)
 	blink_range = 4 // Not as good as the organic stuff!
-	points = 0 // nice try
+	points = 0 //nice try
 	refined_type = null
 
-// Polycrystals, aka stacks
-
+//Polycrystals, aka stacks
 /obj/item/stack/sheet/bluespace_crystal
 	name = "bluespace polycrystal"
 	icon = 'icons/obj/telescience.dmi'
@@ -65,21 +62,19 @@
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
 	var/crystal_type = /obj/item/weapon/ore/bluespace_crystal/refined
 
-/obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user) // to prevent the construction menu from ever happening
+/obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
 	to_chat(user, "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>")
-	return
 
 /obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user)
-	if (user.get_inactive_held_item() == src)
-		if(zero_amount()) // in this case, a sanity check
+	if(user.get_inactive_held_item() == src)
+		if(zero_amount())
 			return
 		var/BC = new crystal_type(src)
 		user.put_in_hands(BC)
-		amount--
-		if (amount == 0)
-			qdel(src)
+		use(1)
+		if(!amount)
 			to_chat(user, "<span class='notice'>You break the final crystal off.</span>")
-		else to_chat(user, "<span class='notice'>You break off a crystal.</span>")
+		else
+			to_chat(user, "<span class='notice'>You break off a crystal.</span>")
 	else
 		..()
-	return

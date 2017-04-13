@@ -72,7 +72,7 @@
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	log_message("Attack by simple animal. Attacker - [user].",1)
 	if(!user.melee_damage_upper && !user.obj_damage)
-		user.emote("custom", message = "[user.friendly] [src]")
+		user.emote("custom", message = "[user.friendly] [src].")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -312,7 +312,7 @@
 			L.narsie_act()
 
 /obj/mecha/ratvar_act()
-	if((ratvar_awakens || clockwork_gateway_activated) && occupant)
+	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)
 		if(is_servant_of_ratvar(occupant)) //reward the minion that got a mech by repairing it
 			full_repair(TRUE)
 		else

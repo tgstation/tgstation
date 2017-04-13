@@ -23,6 +23,11 @@
 			user.Weaken(3)
 			user.emote("gasp")
 
+	INVOKE_ASYNC(src, .proc/muscle_loop, user)
+
+	return TRUE
+
+/obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	while(active)
 		user.status_flags |= GOTTAGOFAST
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
@@ -41,10 +46,6 @@
 
 		sleep(40)
 
-	while(!active) //Damage stacks decrease fairly rapidly while not in sanic mode
-		if(stacks >= 1)
-			stacks--
+	while(!active && stacks) //Damage stacks decrease fairly rapidly while not in sanic mode
+		stacks--
 		sleep(20)
-
-	feedback_add_details("changeling_powers","SANIC")
-	return 1

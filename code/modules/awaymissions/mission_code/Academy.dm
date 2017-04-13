@@ -47,7 +47,7 @@
 /obj/structure/academy_wizard_spawner/process()
 	if(next_check < world.time)
 		if(!current_wizard)
-			for(var/mob/living/L in player_list)
+			for(var/mob/living/L in GLOB.player_list)
 				if(L.z == src.z && L.stat != DEAD && !(faction in L.faction))
 					summon_wizard()
 					break
@@ -160,7 +160,7 @@
 			user.death()
 		if(3)
 			//Swarm of creatures
-			for(var/direction in alldirs)
+			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_turf(src)
 				new /mob/living/simple_animal/hostile/creature(get_step(T,direction))
 		if(4)
@@ -180,7 +180,7 @@
 			//Throw
 			user.Stun(3)
 			user.adjustBruteLoss(50)
-			var/throw_dir = pick(cardinal)
+			var/throw_dir = pick(GLOB.cardinal)
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
 			user.throw_at(throw_target, 200, 4)
 		if(8)
@@ -203,7 +203,7 @@
 		if(13)
 			//Mad Dosh
 			var/turf/Start = get_turf(src)
-			for(var/direction in alldirs)
+			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_step(Start,direction)
 				if(rand(0,1))
 					new /obj/item/stack/spacecash/c1000(T)
@@ -284,7 +284,7 @@
 	if(!target_mob)
 		return
 	var/turf/Start = get_turf(user)
-	for(var/direction in alldirs)
+	for(var/direction in GLOB.alldirs)
 		var/turf/T = get_step(Start,direction)
 		if(!T.density)
 			target_mob.Move(T)

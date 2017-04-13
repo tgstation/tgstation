@@ -107,7 +107,7 @@
 	reagent_id = reag_id
 	name = "UNKNOWN"
 
-	var/datum/reagent/R = chemical_reagents_list[reag_id]
+	var/datum/reagent/R = GLOB.chemical_reagents_list[reag_id]
 	if(R && R.id == reagent_id)
 		name = R.name
 
@@ -374,7 +374,7 @@
 			if(CG) // 10x charge for deafult cell charge gene - 20 000 with 100 potency.
 				pocell.maxcharge *= CG.rate*1000
 			pocell.charge = pocell.maxcharge
-			pocell.name = "[G] battery"
+			pocell.name = "[G.name] battery"
 			pocell.desc = "A rechargable plant based power cell. This one has a power rating of [pocell.maxcharge], and you should not swallow it."
 
 			if(G.reagents.has_reagent("plasma", 2))

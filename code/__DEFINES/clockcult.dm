@@ -5,17 +5,17 @@
 #define REPLICANT_ALLOY "replicant_alloy"
 #define HIEROPHANT_ANSIBLE "hierophant_ansible"
 
-var/global/clockwork_construction_value = 0 //The total value of all structures built by the clockwork cult
-var/global/clockwork_caches = 0 //How many clockwork caches exist in the world (not each individual)
-var/global/clockwork_daemons = 0 //How many daemons exist in the world
-var/global/list/clockwork_generals_invoked = list("nezbere" = FALSE, "sevtug" = FALSE, "nzcrentr" = FALSE, "inath-neq" = FALSE) //How many generals have been recently invoked
-var/global/list/all_clockwork_objects = list() //All clockwork items, structures, and effects in existence
-var/global/list/all_clockwork_mobs = list() //All clockwork SERVANTS (not creatures) in existence
-var/global/list/clockwork_component_cache = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //The pool of components that caches draw from
-var/global/ratvar_awakens = 0 //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
-var/global/nezbere_invoked = 0 //If Nezbere has been invoked; not a boolean, for proper handling of multiple Nezberes
-var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial derelict has ever been successfully activated
-var/global/list/all_scripture = list() //a list containing scripture instances; not used to track existing scripture
+GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
+GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
+GLOBAL_VAR_INIT(clockwork_daemons, 0) //How many daemons exist in the world
+GLOBAL_LIST_INIT(clockwork_generals_invoked, list("nezbere" = FALSE, "sevtug" = FALSE, "nzcrentr" = FALSE, "inath-neq" = FALSE)) //How many generals have been recently invoked
+GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
+GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
+GLOBAL_LIST_INIT(clockwork_component_cache, list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)) //The pool of components that caches draw from
+GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
+GLOBAL_VAR_INIT(nezbere_invoked, 0) //If Nezbere has been invoked; not a boolean, for proper handling of multiple Nezberes
+GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
+GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
 
 //Scripture tiers and requirements; peripherals should never be used
 #define SCRIPTURE_PERIPHERAL "Peripheral"

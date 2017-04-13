@@ -253,7 +253,7 @@
 						dna.previous.Remove("blood_type")
 					dna.temporary_mutations.Remove(mut)
 					continue
-				HM = mutations_list[mut]
+				HM = GLOB.mutations_list[mut]
 				HM.force_lose(src)
 				dna.temporary_mutations.Remove(mut)
 

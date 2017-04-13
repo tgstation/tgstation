@@ -428,7 +428,7 @@
 	return ripple_turfs
 
 /obj/docking_port/mobile/proc/check_poddoors()
-	for(var/obj/machinery/door/poddoor/shuttledock/pod in airlocks)
+	for(var/obj/machinery/door/poddoor/shuttledock/pod in GLOB.airlocks)
 		pod.check()
 
 //this is the main proc. It instantly moves our mobile port to stationary port S1
@@ -503,6 +503,8 @@
 			//move mobile to new location
 			for(var/atom/movable/AM in T0)
 				AM.onShuttleMove(T1, rotation)
+			
+			T1.onShuttleMove(T0)
 
 		if(rotation)
 			T1.shuttleRotate(rotation)
