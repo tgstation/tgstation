@@ -1,0 +1,14 @@
+diff a/code/game/objects/items/weapons/RCD.dm b/code/game/objects/items/weapons/RCD.dm	(rejected hunks)
+@@ -560,8 +559,10 @@ obj/item/weapon/construction
+ 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+ 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
+ 					if(do_after(user, floordelay, target = A))
+-						if(!istype(F)) return 0
+-						if(!useResource(floorcost, user)) return 0
++						if(!istype(F)) 
++							return 0
++						if(!useResource(floorcost, user)) 
++							return 0
+ 						activate()
+ 						var/destination = get_turf(A)
+ 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)

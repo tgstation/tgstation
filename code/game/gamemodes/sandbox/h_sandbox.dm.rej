@@ -1,0 +1,10 @@
+diff a/code/game/gamemodes/sandbox/h_sandbox.dm b/code/game/gamemodes/sandbox/h_sandbox.dm	(rejected hunks)
+@@ -218,7 +218,7 @@ var/hsboxspawn = 1
+ 			if("hsbrcd")
+ 				if(!hsboxspawn) return
+ 
+-				new/obj/item/weapon/rcd/combat(usr.loc)
++				new/obj/item/weapon/construction/rcd/combat(usr.loc)
+ 
+ 			//
+ 			// New sandbox airlock maker

@@ -18,7 +18,7 @@
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
 
-/obj/structure/grille/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/obj/structure/grille/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
@@ -26,7 +26,7 @@
 			return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 10)
 	return FALSE
 
-/obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd, passed_mode)
+/obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the grille.</span>")

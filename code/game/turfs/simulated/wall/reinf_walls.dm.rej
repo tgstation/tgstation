@@ -1,0 +1,13 @@
+diff a/code/game/turfs/simulated/wall/reinf_walls.dm b/code/game/turfs/simulated/wall/reinf_walls.dm	(rejected hunks)
+@@ -249,8 +249,8 @@
+ 		if(prob(30))
+ 			dismantle_wall()
+ 
+-/turf/closed/wall/r_vall/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
++/turf/closed/wall/r_vall/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+ 	return FALSE
+ 
+-/turf/closed/wall/r_vall/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
++/turf/closed/wall/r_vall/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+ 	return FALSE
+\ No newline at end of file
