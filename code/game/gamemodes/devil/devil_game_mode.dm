@@ -55,7 +55,7 @@
 	..()
 	return 1
 
-/datum/game_mode/devil/post_setup_finalize(datum/mind/devil)
+/datum/game_mode/devil/proc/post_setup_finalize(datum/mind/devil)
 	set waitfor = FALSE
 	sleep(rand(10,100))
 	finalize_devil(devil, TRUE)
