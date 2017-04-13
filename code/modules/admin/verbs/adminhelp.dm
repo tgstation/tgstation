@@ -258,7 +258,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	RemoveActive()
 	state = AHELP_CLOSED
 	GLOB.ahelp_tickets.ListInsert(src)
-	interactions += "Closed by [key_name]."
+	interactions += "<font color='red'>Closed by [key_name].</font>"
 	if(!silent)
 		feedback_inc("ahelp_close")
 		message_admins("Ticket #[id] closed by [key_name]")
@@ -275,7 +275,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		initiator.giveadminhelpverb()
 
-	interactions += "Resolved by [key_name]."
+	interactions += "<font color='green'>Resolved by [key_name].</font>"
 	if(!silent)
 		feedback_inc("ahelp_resolve")
 		message_admins("Ticket #[id] resolved by [key_name]")
