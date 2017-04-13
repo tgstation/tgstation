@@ -218,7 +218,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			if("hsbrcd")
 				if(!GLOB.hsboxspawn) return
 
-				new/obj/item/weapon/rcd/combat(usr.loc)
+				new/obj/item/weapon/construction/rcd/combat(usr.loc)
 
 			//
 			// New sandbox airlock maker
