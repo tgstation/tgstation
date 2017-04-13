@@ -86,18 +86,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 GLOBAL_VAR_INIT(AdminProcCall, null)
 GLOBAL_PROTECT(AdminProcCall)
 
-/client/proc/WrapAdminProcCall(target, procname, list/arguments)
+/proc/WrapAdminProcCall(target, procname, list/arguments)
 	if(GLOB.AdminProcCall)
 		to_chat(usr, "<span class='adminnotice'>Another admin called proc is still running, your proc will be run after theirs finishes</span>")
 		UNTIL(!GLOB.AdminProcCall)
 		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
-	GLOB.AdminProcCall = ckey
-	if(target == GLOBAL_PROC)
-		try
+	GLOB.AdminProcCall = usr.client.ckey	//if this runtimes, too bad for you
+	try
+		if(target == GLOBAL_PROC)
 			. = call(procname)(arglist(arguments))
-		catch(exception/E)
-	else
-		. = call(procname)(arglist(arguments))
+		else
+			. = call(procname)(arglist(arguments))
+	catch(exception/E)
 	GLOB.AdminProcCall = null
 
 /proc/IsAdminAdvancedProcCall()
