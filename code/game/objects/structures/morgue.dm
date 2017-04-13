@@ -199,23 +199,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		locked = 1
 		update_icon()
 
-		if (!isnull(contents) && contents.len > 0)
-			cremateLoop(user, contents)
-
-		new /obj/effect/decal/cleanable/ash(src)
-		sleep(30)
-		if(!QDELETED(src))
-			locked = 0
-			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
-
-// A recursive proc is needed for checking contents of contents, else bodies won't creamte in body bags
-/obj/structure/bodycontainer/crematorium/proc/cremateLoop(mob/user, list/conts)
-	for(var/atom/A in conts)
-		if (!isnull(A.contents) && A.contents.len > 0) // Those darn body bags with bodies in them!
-			cremateLoop(user, A.contents)
-		if (istype(A, /mob/living))
-			var/mob/living/M = A
+		for(var/mob/living/M in contents)
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
@@ -227,11 +211,17 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()
 				qdel(M)
-		else if(istype(A,/obj))
-			var/obj/O = A
+
+		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
 			if(O != connected) //Creamtorium does not burn hot enough to destroy the tray
 				qdel(O)
 
+		new /obj/effect/decal/cleanable/ash(src)
+		sleep(30)
+		if(!QDELETED(src))
+			locked = 0
+			update_icon()
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
 
 /*
