@@ -291,7 +291,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else if((direct & WEST) && x > 1)
 			x--
 
-	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
+	for(var/obj/effect/step_trigger/S in get_turf(src))
 		S.Crossed(src)
 
 	Moved(oldloc, direct)
