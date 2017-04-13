@@ -485,6 +485,7 @@
 		SM.on_birth(SV)
 
 /datum/spacevine_controller/proc/VineDestroyed(obj/structure/spacevine/S)
+	S.master = null
 	vines -= S
 	growth_queue -= S
 	if(!vines.len)
