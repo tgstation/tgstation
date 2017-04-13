@@ -348,7 +348,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/Retitle()
 	var/new_title = input(usr, "Enter a title for the ticket", "Rename Ticket", original_message) as text|null
 	if(new_title)
-		if(status != AHELP_ACTIVE)
+		if(state != AHELP_ACTIVE)
 			to_chat(usr, "<span class='warning'>Ticket has been closed. You cannot re-title it</span>")
 			return
 		statclick.name = new_title
