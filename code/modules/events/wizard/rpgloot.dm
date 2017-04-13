@@ -57,7 +57,7 @@
 
 /obj/item/upgradescroll/unlimited
 	name = "unlimited foolproof item fortification scroll"
-	desc = "Somehow, this piece of paper can be applied to items to make them \"better\". This scroll is made from the tongues of dead paper wizards, and can be used an unlimited number of times, with no drawbacks.</i>"
+	desc = "Somehow, this piece of paper can be applied to items to make them \"better\". This scroll is made from the tongues of dead paper wizards, and can be used an unlimited number of times, with no drawbacks."
 	one_use = FALSE
 	can_backfire = FALSE
 
