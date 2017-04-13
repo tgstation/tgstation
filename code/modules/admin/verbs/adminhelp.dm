@@ -44,7 +44,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			if(AH.id > new_ticket.id)
 				ticket_list.Insert(new_ticket, I)
 	else
-		ticket_list += src
+		ticket_list += new_ticket
 
 //opens the ticket listings for one of the 3 states
 /datum/admin_help_tickets/proc/BrowseTickets(state)
