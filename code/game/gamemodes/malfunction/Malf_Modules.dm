@@ -197,8 +197,8 @@
 		return
 
 	for(var/I in GLOB.rcd_list)
-		if(!istype(I, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
-			var/obj/item/weapon/rcd/RCD = I
+		if(!istype(I, /obj/item/weapon/construction/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			var/obj/item/weapon/construction/rcd/RCD = I
 			RCD.detonate_pulse()
 
 	to_chat(src, "<span class='warning'>RCD detonation pulse emitted.</span>")
