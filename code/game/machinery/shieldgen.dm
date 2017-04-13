@@ -254,7 +254,7 @@
 	icon_state = "Shield_Gen"
 	anchored = 0
 	density = 1
-	req_access = list(access_xenobiology)
+	req_access = list(GLOB.access_xenobiology)
 	flags = CONDUCT
 	use_power = 0
 	obj_integrity = 300
