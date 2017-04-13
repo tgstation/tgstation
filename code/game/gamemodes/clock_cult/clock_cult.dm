@@ -60,7 +60,7 @@ Credit where due:
 		return FALSE
 	if(iscultist(M) || isconstruct(M) || M.isloyal() || ispAI(M))
 		return FALSE
-	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+	if(ishuman(M) || isbrain(M) || issutando(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
 		return TRUE
 	return FALSE
 

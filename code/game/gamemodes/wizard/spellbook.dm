@@ -366,17 +366,17 @@
 	item_path = /obj/item/weapon/antag_spawner/contract
 	category = "Assistance"
 
-/datum/spellbook_entry/item/guardian
-	name = "Guardian Deck"
-	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
+/datum/spellbook_entry/item/sutando
+	name = "Stand Deck"
+	desc = "A deck of stand tarot cards, capable of binding a personal guardian to your body. There are multiple types of stands available, but all of them will transfer some amount of damage to you. \
 	It would be wise to avoid buying these with anything capable of causing you to swap bodies with others."
-	item_path = /obj/item/weapon/guardiancreator/choose/wizard
+	item_path = /obj/item/weapon/sutandocreator/choose/wizard
 	category = "Assistance"
 
 /datum/spellbook_entry/item/guardian/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/weapon/paper/guardian/wizard(get_turf(user))
+		new /obj/item/weapon/paper/sutando/wizard(get_turf(user))
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
