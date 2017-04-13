@@ -482,8 +482,9 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = TURF_LAYER
 
-/obj/effect/golemrune/New()
+/obj/effect/golemrune/Initialize()
 	..()
+	poi_list += src
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/golemrune/process()
