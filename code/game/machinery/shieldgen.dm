@@ -245,17 +245,9 @@
 	return ..()
 
 /obj/machinery/shieldwallgen/science		//Use for xenobiology on maps where you have shield wall generators in xeno.
-	name = "shield wall generator"
-	desc = "A shield generator."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "Shield_Gen"
-	anchored = 0
-	density = 1
+	name = "xenobiology shield wall generator"
+	desc = "A shield generator intended for xenobiologists to use to contain alien lifeforms."
 	req_access = list(GLOB.access_xenobiology)
-	flags = CONDUCT
-	use_power = 0
-	obj_integrity = 300
-	max_integrity = 300
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
