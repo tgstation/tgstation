@@ -347,13 +347,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_death(src)
 	if(master)
-		master.vines -= src
-		master.growth_queue -= src
-		if(!master.vines.len)
-			var/obj/item/seeds/kudzu/KZ = new(loc)
-			KZ.mutations |= mutations
-			KZ.set_potency(master.mutativeness * 10)
-			KZ.set_production((master.spread_cap / initial(master.spread_cap)) * 5)
+		master.VineDestroyed(src)
 	mutations = list()
 	set_opacity(0)
 	if(has_buckled_mobs())
@@ -428,41 +422,50 @@
 /obj/structure/spacevine/attack_alien(mob/living/user)
 	eat(user)
 
-/obj/effect/spacevine_controller
-	invisibility = INVISIBILITY_ABSTRACT
-	var/list/obj/structure/spacevine/vines = list()
-	var/list/growth_queue = list()
+/datum/spacevine_controller
+	var/list/obj/structure/spacevine/vines
+	var/list/growth_queue
 	var/spread_multiplier = 5
 	var/spread_cap = 30
-	var/list/GLOB.mutations_list = list()
+	var/list/sv_mutations_list
 	var/mutativeness = 1
 
-/obj/effect/spacevine_controller/New(loc, list/muts, potency, production)
+/datum/spacevine_controller/New(turf/location, list/muts, potency, production)
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
-	spawn_spacevine_piece(loc, , muts)
+	spawn_spacevine_piece(location, null, muts)
 	START_PROCESSING(SSobj, src)
-	init_subtypes(/datum/spacevine_mutation/, GLOB.mutations_list)
+	vines = list()
+	growth_queue = list()
+	sv_mutations_list = list()
+	init_subtypes(/datum/spacevine_mutation, sv_mutations_list)
 	if(potency != null)
 		mutativeness = potency / 10
 	if(production != null)
 		spread_cap *= production / 5
 		spread_multiplier /= production / 5
-	..()
 
-/obj/effect/spacevine_controller/ex_act() //only killing all vines will end this suffering
-	return
+/datum/spacevine_controller/vv_drop_down/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Delete Vines"] = "?_src_=\ref[src];purge_vines=1"
 
-/obj/effect/spacevine_controller/singularity_act()
-	return
+/datum/spacevine_controller/Topic(href, href_list)
+	if(..() || !check_rights(R_ADMIN, FALSE))
+		return
+	
+	if(href_list["purge_vines"])
+		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") != "Yes")
+			return
+		DeleteVines()
 
-/obj/effect/spacevine_controller/singularity_pull()
-	return
+/datum/spacevine_controller/proc/DeleteVines()	//this is kill
+	QDEL_LIST(vines)	//this will also qdel us
 
-/obj/effect/spacevine_controller/Destroy()
+/datum/spacevine_controller/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/effect/spacevine_controller/proc/spawn_spacevine_piece(turf/location, obj/structure/spacevine/parent, list/muts)
+/datum/spacevine_controller/proc/spawn_spacevine_piece(turf/location, obj/structure/spacevine/parent, list/muts)
 	var/obj/structure/spacevine/SV = new(location)
 	growth_queue += SV
 	vines += SV
@@ -476,17 +479,27 @@
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
 		SV.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
-			var/datum/spacevine_mutation/randmut = pick(GLOB.mutations_list - SV.mutations)
+			var/datum/spacevine_mutation/randmut = pick(sv_mutations_list - SV.mutations)
 			randmut.add_mutation_to_vinepiece(SV)
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
 		SM.on_birth(SV)
 
-/obj/effect/spacevine_controller/process()
-	if(!vines)
+/datum/spacevine_controller/proc/VineDestroyed(obj/structure/spacevine/S)
+	vines -= S
+	growth_queue -= S
+	if(!vines.len)
+		var/obj/item/seeds/kudzu/KZ = new(S.loc)
+		KZ.mutations |= mutations
+		KZ.set_potency(mutativeness * 10)
+		KZ.set_production((spread_cap / initial(spread_cap)) * 5)
+		qdel(src)
+
+/datum/spacevine_controller/process()
+	if(!LAZYLEN(vines))
 		qdel(src) //space vines exterminated. Remove the controller
 		return
-	if(!growth_queue)
+	if(!LAZYLEN(growth_queue))
 		qdel(src) //Sanity check
 		return
 
