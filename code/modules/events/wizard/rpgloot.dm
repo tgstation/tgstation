@@ -38,7 +38,7 @@
 
 	var/datum/rpg_loot/rpg_loot_datum = target.rpg_loot
 	if(!istype(rpg_loot_datum))
-		new rpg_loot_datum(target)
+		rpg_loot_datum = new /datum/rpg_loot(target)
 
 	var/quality = rpg_loot_datum.quality
 
