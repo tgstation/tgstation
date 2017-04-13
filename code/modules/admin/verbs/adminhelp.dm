@@ -66,7 +66,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	dat += "<A HREF='?_src_=holder;ahelp_tickets=[state]'>Refresh</A><br><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
-		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.original_message]</A></span><br>"
+		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.name]</A></span><br>"
 		
 	usr << browse(dat.Join(), "window=ahelp_list[state];size=600x480")
 
@@ -77,7 +77,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in active_tickets)
 		var/datum/admin_help/AH = I
 		if(AH.initiator)
-			stat("#[AH.id]. [AH.initiator_key_name]:", AH.statclick)
+			stat("#[AH.id]. [AH.initiator_key_name]:", AH.statclick.update())
 		else
 			++num_disconnected
 	if(num_disconnected)
@@ -122,6 +122,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 /datum/admin_help
 	var/id
+	var/name
 	var/state = AHELP_ACTIVE
 
 	var/opened_at
@@ -130,8 +131,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/client/initiator	//semi-misnomer, it's the person who ahelped/was bwoinked
 	var/initiator_ckey
 	var/initiator_key_name
-
-	var/original_message
 
 	var/list/interactions
 
@@ -152,7 +151,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	id = ++ticket_counter
 	opened_at = world.time
 
-	original_message = msg
+	name = msg
 
 	initiator = C
 	initiator_ckey = initiator.ckey
@@ -177,11 +176,11 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		MessageNoRecipient(parsed_message)
 
 		//show it to the person adminhelping too
-		to_chat(C, "<span class='adminnotice'>PM to-<b>Admins</b>: [original_message]</span>")
+		to_chat(C, "<span class='adminnotice'>PM to-<b>Admins</b>: [name]</span>")
 
 		//send it to irc if nobody is on and tell us how many were on
-		var/admin_number_present = send2irc_adminless_only(initiator_ckey,original_message)
-		log_admin_private("Ticket #[id]: [key_name(initiator)]: [original_message] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+		var/admin_number_present = send2irc_adminless_only(initiator_ckey, name)
+		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 		if(admin_number_present <= 0)
 			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
 
@@ -346,12 +345,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	usr << browse(dat.Join(), "window=ahelp[id];size=620x480")
 
 /datum/admin_help/proc/Retitle()
-	var/new_title = input(usr, "Enter a title for the ticket", "Rename Ticket", original_message) as text|null
+	var/new_title = input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null
 	if(new_title)
-		if(state != AHELP_ACTIVE)
-			to_chat(usr, "<span class='warning'>Ticket is no longer active. You cannot re-title it</span>")
-			return
-		statclick.name = new_title
+		name = new_title
 	TicketPanel()	//we have to be here to do this
 
 //Forwarded action from admin/Topic
@@ -382,7 +378,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 /obj/effect/statclick/ahelp/New(loc, datum/admin_help/AH)
 	ahelp_datum = AH
-	..(loc, AH.original_message)
+	..(loc)
+
+/obj/effect/statclick/ahelp/update()
+	..(ahelp_datum.name)
 
 /obj/effect/statclick/ahelp/Click()
 	ahelp_datum.TicketPanel()
