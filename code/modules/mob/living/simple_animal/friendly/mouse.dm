@@ -61,7 +61,7 @@
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
-	if(Debug2)
+	if(GLOB.Debug2)
 		return
 	if(prob(chew_probability))
 		var/turf/open/floor/F = get_turf(src)
