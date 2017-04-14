@@ -6,6 +6,7 @@
 CONTAINS:
 RCD
 ARCD
+RLD
 */
 
 obj/item/weapon/construction
@@ -106,9 +107,10 @@ obj/item/weapon/construction
 		return FALSE
 
 /obj/item/weapon/construction/proc/prox_check(proximity)
-	if(!proximity)
-		return
-
+	if(proximity)
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/weapon/construction/rcd
 	name = "rapid-construction-device (RCD)"
@@ -321,7 +323,8 @@ obj/item/weapon/construction
 		return FALSE
 
 /obj/item/weapon/construction/rcd/afterattack(atom/A, mob/user, proximity)
-	prox_check()
+	if(prox_check())
+		return
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
