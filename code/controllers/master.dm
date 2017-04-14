@@ -80,6 +80,8 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 
 /datum/controller/master/Shutdown()
 	processing = FALSE
+	sortTim(subsystems, /proc/cmp_subsystem_init)
+	subsystems = reverselist(subsystems)
 	for(var/datum/controller/subsystem/ss in subsystems)
 		ss.Shutdown()
 
