@@ -13,15 +13,16 @@ Buildable meters
 	var/pipe_type = 0
 	var/pipename
 	force = 7
+	throwforce = 7
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	level = 2
 	var/flipped = 0
 	var/is_bent = 0
 
-	var/global/list/pipe_types = list(
+	var/static/list/pipe_types = list(
 		PIPE_SIMPLE, \
 		PIPE_MANIFOLD, \
 		PIPE_4WAYMANIFOLD, \
@@ -47,14 +48,14 @@ Buildable meters
 
 /obj/item/pipe/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	..()
 	if(make_from)
-		src.dir = make_from.dir
+		src.setDir(make_from.dir)
 		src.pipename = make_from.name
-		src.color = make_from.color
+		add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
 
 		if(make_from.type in pipe_types)
 			src.pipe_type = make_from.type
@@ -67,12 +68,12 @@ Buildable meters
 		var/obj/machinery/atmospherics/components/trinary/triP = make_from
 		if(istype(triP) && triP.flipped)
 			src.flipped = 1
-			src.dir = turn(src.dir, -45)
+			src.setDir(turn(src.dir, -45))
 	else
 		src.pipe_type = pipe_type
-		src.dir = dir
+		src.setDir(dir)
 
-	if(src.dir in diagonals)
+	if(src.dir in GLOB.diagonals)
 		is_bent = 1
 
 	update()
@@ -80,7 +81,7 @@ Buildable meters
 	src.pixel_y = rand(-5, 5)
 
 //update the name and icon of the pipe item depending on the type
-var/global/list/pipeID2State = list(
+GLOBAL_LIST_INIT(pipeID2State, list(
 	"[PIPE_SIMPLE]"			 = "simple", \
 	"[PIPE_MANIFOLD]"		 = "manifold", \
 	"[PIPE_4WAYMANIFOLD]"	 = "manifold4w", \
@@ -102,7 +103,7 @@ var/global/list/pipeID2State = list(
 	\
 	"[PIPE_GAS_FILTER]"		 = "filter", \
 	"[PIPE_GAS_MIXER]"		 = "mixer", \
-)
+))
 
 /obj/item/pipe/proc/update()
 	var/list/nlist = list(\
@@ -132,7 +133,7 @@ var/global/list/pipeID2State = list(
 		)
 	//fix_pipe_type()
 	name = nlist["[pipe_type][is_bent ? "_b" : ""]"] + " fitting"
-	icon_state = pipeID2State["[pipe_type]"]
+	icon_state = GLOB.pipeID2State["[pipe_type]"]
 
 // rotate the pipe item clockwise
 
@@ -144,7 +145,7 @@ var/global/list/pipeID2State = list(
 	if ( usr.stat || usr.restrained() || !usr.canmove )
 		return
 
-	src.dir = turn(src.dir, -90)
+	src.setDir(turn(src.dir, -90))
 
 	fixdir()
 
@@ -159,11 +160,11 @@ var/global/list/pipeID2State = list(
 		return
 
 	if (pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER))
-		src.dir = turn(src.dir, flipped ? 45 : -45)
+		src.setDir(turn(src.dir, flipped )? 45 : -45)
 		flipped = !flipped
 		return
 
-	src.dir = turn(src.dir, -180)
+	src.setDir(turn(src.dir, -180))
 
 	fixdir()
 
@@ -172,7 +173,7 @@ var/global/list/pipeID2State = list(
 /obj/item/pipe/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -180,16 +181,12 @@ var/global/list/pipeID2State = list(
 		rotate()
 
 /obj/item/pipe/Move()
+	var/old_dir = dir
 	..()
-	if ((pipe_type in list (PIPE_SIMPLE, PIPE_HE)) && is_bent \
-		&& (src.dir in cardinal))
-		src.dir = src.dir|turn(src.dir, 90)
-	else if ((pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER)) && flipped)
-		src.dir = turn(src.dir, 45+90)
-	fixdir()
+	setDir(old_dir )//pipes changing direction when moved is just annoying and buggy
 
 /obj/item/pipe/proc/unflip(direction)
-	if(direction in diagonals)
+	if(direction in GLOB.diagonals)
 		return turn(direction, 45)
 
 	return direction
@@ -198,9 +195,9 @@ var/global/list/pipeID2State = list(
 /obj/item/pipe/proc/fixdir()
 	if((pipe_type in list (PIPE_SIMPLE, PIPE_HE, PIPE_MVALVE, PIPE_DVALVE)) && !is_bent)
 		if(dir==SOUTH)
-			dir = NORTH
+			setDir(NORTH)
 		else if(dir==WEST)
-			dir = EAST
+			setDir(EAST)
 
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
@@ -213,17 +210,17 @@ var/global/list/pipeID2State = list(
 
 	fixdir()
 	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
-		dir = unflip(dir)
+		setDir(unflip(dir))
 
 	var/obj/machinery/atmospherics/A = new pipe_type(src.loc)
-	A.dir = src.dir
+	A.setDir(src.dir)
 	A.SetInitDirections()
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
 		if(M == A) //we don't want to check to see if it interferes with itself
 			continue
 		if(M.GetInitDirections() & A.GetInitDirections())	// matches at least one direction on either type of pipe
-			user << "<span class='warning'>There is already a pipe at that location!</span>"
+			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
 			qdel(A)
 			return 1
 	// no conflicts found
@@ -234,9 +231,9 @@ var/global/list/pipeID2State = list(
 	var/obj/machinery/atmospherics/components/trinary/T = A
 	if(istype(T))
 		T.flipped = flipped
-	A.construction(pipe_type, color)
+	A.on_construction(pipe_type, color)
 
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(src.loc, W.usesound, 50, 1)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
@@ -244,13 +241,26 @@ var/global/list/pipeID2State = list(
 
 	qdel(src)
 
+/obj/item/pipe/suicide_act(mob/user)
+	if(pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
+		user.visible_message("<span class='suicide'>[user] shoves the [src] in [user.p_their()] mouth and turns it on!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		if(istype(user, /mob/living/carbon))
+			var/mob/living/carbon/C = user
+			for(var/i=1 to 20)
+				C.vomit(0,1,0,4,0)
+				sleep(5)
+			C.blood_volume = 0
+		return(OXYLOSS|BRUTELOSS)
+	else
+		return ..()
+
 /obj/item/pipe_meter
 	name = "meter"
 	desc = "A meter that can be laid on pipes"
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user, params)
 	..()
@@ -258,9 +268,9 @@ var/global/list/pipeID2State = list(
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
-		user << "<span class='warning'>You need to fasten it to a pipe!</span>"
+		to_chat(user, "<span class='warning'>You need to fasten it to a pipe!</span>")
 		return 1
 	new/obj/machinery/meter( src.loc )
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You fasten the meter to the pipe.</span>"
+	playsound(src.loc, W.usesound, 50, 1)
+	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)

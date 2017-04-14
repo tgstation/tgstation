@@ -1,0 +1,522 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/space,
+/area/space)
+"b" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
+"c" = (
+/obj/structure/lattice,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"d" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"e" = (
+/obj/structure/lattice,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"f" = (
+/turf/closed/wall,
+/area/ruin/powered/aesthetic)
+"g" = (
+/turf/closed/wall/rust,
+/area/ruin/powered/aesthetic)
+"h" = (
+/obj/effect/overlay/palmtree_r,
+/turf/open/floor/holofloor/beach,
+/area/ruin/powered/aesthetic)
+"i" = (
+/obj/structure/piano,
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"j" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"k" = (
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"l" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"m" = (
+/obj/structure/table/reinforced,
+/obj/item/device/taperecorder,
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"n" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"o" = (
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"p" = (
+/obj/effect/overlay/palmtree_l,
+/turf/open/floor/holofloor/beach,
+/area/ruin/powered/aesthetic)
+"q" = (
+/turf/open/floor/holofloor/beach,
+/area/ruin/powered/aesthetic)
+"r" = (
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"s" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/sunglasses/big{
+	name = "aesthetic sunglasses"
+	},
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"t" = (
+/obj/item/device/instrument/eguitar,
+/turf/open/floor/holofloor/beach,
+/area/ruin/powered/aesthetic)
+"u" = (
+/turf/open/floor/holofloor/beach/coast_t,
+/area/ruin/powered/aesthetic)
+"v" = (
+/obj/item/weapon/statuebust,
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"w" = (
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"x" = (
+/obj/structure/closet/crate/bin,
+/obj/item/device/tape/random,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"y" = (
+/turf/open/floor/holofloor/beach/coast_b,
+/area/ruin/powered/aesthetic)
+"z" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/pod/dark,
+/area/ruin/powered/aesthetic)
+"A" = (
+/obj/effect/decal/sandeffect,
+/turf/open/floor/plating/astplate{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered/no_grav)
+"B" = (
+/turf/open/floor/plating/astplate{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered/no_grav)
+"C" = (
+/obj/structure/statue/sandstone/venus{
+	desc = "Ugh, this is merely an ugly amateurish replica of the other statue! The letters RIPGOAT are scribbled onto the base.";
+	dir = 8
+	},
+/turf/open/floor/plating/astplate{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered/no_grav)
+"D" = (
+/turf/open/floor/plasteel/airless/asteroid{
+	tag = "icon-recharge_floor_asteroid";
+	icon_state = "recharge_floor_asteroid"
+	},
+/area/ruin/unpowered/no_grav)
+"E" = (
+/turf/open/floor/plasteel/airless/asteroid,
+/area/ruin/unpowered/no_grav)
+"F" = (
+/obj/structure/statue/sandstone/venus{
+	dir = 4
+	},
+/turf/open/floor/plating/astplate{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered/no_grav)
+"G" = (
+/turf/open/floor/plating/astplate{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/obj/effect/turf_decal/stripes/asteroid/line,
+/area/ruin/unpowered/no_grav)
+"H" = (
+/obj/effect/overlay/palmtree_l,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"I" = (
+/turf/open/space,
+/obj/effect/decal/sandeffect,
+/turf/open/floor/plasteel/airless/asteroid{
+	tag = "icon-platingsandeffect";
+	icon_state = "platingsandeffect"
+	},
+/area/ruin/unpowered/no_grav)
+"J" = (
+/turf/open/floor/plasteel/airless/asteroid{
+	tag = "icon-stairs-l";
+	icon_state = "stairs-l"
+	},
+/area/ruin/unpowered/no_grav)
+"K" = (
+/turf/open/floor/plasteel/airless/asteroid{
+	tag = "icon-stairs-m";
+	icon_state = "stairs-m"
+	},
+/area/ruin/unpowered/no_grav)
+"L" = (
+/turf/open/floor/plasteel/airless/asteroid{
+	tag = "icon-stairs-r";
+	icon_state = "stairs-r"
+	},
+/area/ruin/unpowered/no_grav)
+"M" = (
+/obj/effect/overlay/palmtree_r,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"N" = (
+/obj/effect/decal/sandeffect,
+/turf/open/floor/plasteel/airless/asteroid,
+/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+d
+c
+d
+a
+b
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+d
+d
+c
+d
+d
+c
+d
+d
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+d
+d
+d
+e
+c
+d
+e
+d
+d
+d
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+d
+f
+f
+g
+g
+g
+f
+g
+A
+d
+d
+a
+"}
+(6,1,1) = {"
+a
+a
+c
+d
+f
+h
+q
+h
+u
+y
+f
+B
+d
+d
+a
+"}
+(7,1,1) = {"
+a
+b
+c
+e
+g
+i
+r
+r
+r
+r
+f
+B
+H
+d
+d
+"}
+(8,1,1) = {"
+a
+a
+d
+d
+f
+j
+k
+k
+v
+k
+f
+C
+I
+A
+d
+"}
+(9,1,1) = {"
+a
+a
+d
+d
+f
+k
+k
+k
+k
+k
+f
+D
+J
+N
+d
+"}
+(10,1,1) = {"
+a
+a
+d
+c
+f
+l
+l
+k
+k
+k
+z
+E
+K
+E
+N
+"}
+(11,1,1) = {"
+a
+a
+d
+c
+g
+m
+s
+k
+k
+k
+f
+D
+L
+E
+N
+"}
+(12,1,1) = {"
+a
+a
+d
+c
+g
+n
+n
+k
+w
+k
+g
+F
+I
+A
+A
+"}
+(13,1,1) = {"
+b
+b
+c
+e
+f
+o
+o
+o
+o
+o
+f
+G
+M
+d
+d
+"}
+(14,1,1) = {"
+a
+a
+d
+d
+g
+p
+t
+p
+u
+y
+g
+B
+d
+d
+a
+"}
+(15,1,1) = {"
+a
+a
+d
+d
+f
+f
+g
+f
+g
+g
+g
+A
+d
+d
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+d
+d
+d
+e
+c
+x
+e
+d
+d
+d
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+d
+c
+d
+d
+c
+d
+d
+d
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+a
+a
+b
+d
+d
+d
+d
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}

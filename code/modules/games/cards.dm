@@ -9,26 +9,29 @@
 /obj/item/weapon/deck
 	name = "deck of cards"
 	desc = "A simple deck of playing cards."
-	icon = 'playing_cards.dmi'
+	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "deck"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
+	flags = NOBLUDGEON
 
 	var/list/cards = list()
 
 /obj/item/weapon/deck/New()
 	. = ..()
 
-	var/color
+	var/cardcolor
 	var/datum/playingcard/card
 
 	for (var/suit in list("spades", "clubs", "diamonds", "hearts"))
-		if (suit == "spades" || suit == "clubs") color = "black_"
-		else                                     color = "red_"
+		if (suit == "spades" || suit == "clubs")
+			cardcolor = "black_"
+		else
+			cardcolor = "red_"
 
 		for (var/number in list("ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"))
 			card               = new()
 			card.name          = "[number] of [suit]"
-			card.card_icon     = "[color]num"
+			card.card_icon     = "[cardcolor]num"
 			card.suit          = suit
 			card.number        = number
 
@@ -37,7 +40,7 @@
 		for (var/number in list("jack", "queen", "king"))
 			card               = new()
 			card.name          = "[number] of [suit]"
-			card.card_icon     = "[color]col"
+			card.card_icon     = "[cardcolor]col"
 			card.suit          = suit
 			card.number        = number
 
@@ -77,17 +80,22 @@
 	user.visible_message("\The [user] shuffles [src].")
 
 /obj/item/weapon/deck/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
-	if(flag)	return //It's adjacent, is the user, or is on the user's person
+	if(flag)
+		return //It's adjacent, is the user, or is on the user's person
 
-	if (istype(A, /mob/living)) src.dealTo(A, user)
-	else return ..()
+	if(isliving(A))
+		src.dealTo(A, user)
+	else
+		return ..()
 
 /obj/item/weapon/deck/attack(mob/living/M, mob/living/user, def_zone)
-	if (istype(M)) src.dealTo(M, user)
-	else return ..()
+	if (istype(M))
+		src.dealTo(M, user)
+	else
+		return ..()
 
 /obj/item/weapon/deck/proc/dealTo(mob/living/target, mob/living/source)
-	if (!src.cards.len)
+	if (!cards.len)
 		source.show_message("There are no cards in the deck.")
 		return
 
@@ -111,13 +119,15 @@
 /obj/item/weapon/hand
 	name           = "hand of cards"
 	desc           = "Some playing cards."
-	icon           = 'playing_cards.dmi'
+	icon = 'icons/obj/playing_cards.dmi'
 	icon_state     = "empty"
-	w_class        = 1
+	w_class        = WEIGHT_CLASS_TINY
 
 	var/concealed  = 0
+	var/blank = 0
 	var/list/cards = list()
 	var/datum/html_interface/hi
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/hand/New(loc)
 	. = ..()
@@ -126,12 +136,23 @@
 	src.update_conceal()
 
 /obj/item/weapon/hand/Destroy()
-	if (src.hi) qdel(src.hi)
+	if (src.hi)
+		qdel(src.hi)
 
 	return ..()
 
 /obj/item/weapon/hand/attackby(obj/O, mob/user)
-	if(istype(O,/obj/item/weapon/hand))
+	if(cards.len == 1 && istype(O, /obj/item/weapon/pen))
+		var/datum/playingcard/P = cards[1]
+		if(!blank)
+			to_chat(user, "You cannot write on that card.")
+			return
+		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Writing") as text|null, 50)
+		if(!cardtext)
+			return
+		P.name = cardtext
+		blank = 0
+	else if(istype(O,/obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 
 		for(var/datum/playingcard/P in src.cards) H.cards.Add(P)
@@ -139,14 +160,16 @@
 		H.update_icon()
 
 		qdel(src)
-	else return ..()
+	else
+		return ..()
 
 /obj/item/weapon/hand/verb/discard(datum/playingcard/card in cards)
 	set category = "Object"
 	set name     = "Discard"
 	set desc     = "Place a card from your hand in front of you."
 
-	if (!card)   return
+	if (!card)
+		return
 
 	var/obj/item/weapon/hand/H = new(src.loc)
 
@@ -185,17 +208,20 @@
 	. = ..()
 
 	if((!concealed || src.loc == usr) && cards.len)
-		usr.show_message("It contains: ")
+		usr.show_message("It contains: ", 1)
 
 		for (var/datum/playingcard/card in cards)
-			usr.show_message("The [card.name].")
+			usr.show_message("The [card.name].", 1)
 
 /obj/item/weapon/hand/proc/update_conceal()
-	if (src.concealed) src.hi.updateContent("headbar", "You are currently concealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Reveal your hand.</a>")
-	else               src.hi.updateContent("headbar", "You are currently revealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Conceal your hand.</a>")
+	if (src.concealed)
+		src.hi.updateContent("headbar", "You are currently concealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Reveal your hand.</a>")
+	else
+		src.hi.updateContent("headbar", "You are currently revealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Conceal your hand.</a>")
 
 /obj/item/weapon/hand/update_icon()
-	if (!cards.len) qdel (src)
+	if (!cards.len)
+		qdel (src)
 	else
 		if(cards.len > 1)
 			name = "hand of cards"
@@ -204,7 +230,7 @@
 			name = "a playing card"
 			desc = "A playing card."
 
-		overlays.len = 0
+		cut_overlays()
 
 		if (cards.len == 1)
 			var/datum/playingcard/P = cards[1]
@@ -213,7 +239,7 @@
 			I.pixel_x               = I.pixel_x + (-5 + rand(10))
 			I.pixel_y               = I.pixel_y + (-5 + rand(10))
 
-			overlays.Add(I)
+			add_overlay(I)
 		else
 			var/origin              = -12
 			var/offset              = round(32 / cards.len)
@@ -225,7 +251,7 @@
 				I                   = new(src.icon, (concealed ? "card_back" : "[P.card_icon]") )
 				I.pixel_x           = origin + (offset * i)
 
-				overlays.Add(I)
+				add_overlay(I)
 
 				i                   = i + 1
 
@@ -240,9 +266,8 @@
 	if (istype(hclient))
 		switch (href_list["action"])
 			if ("play_card")
-				var/datum/playingcard/card = locate(href_list["card"])
-
-				if (card in src.cards)
+				var/datum/playingcard/card = locate(href_list["card"]) in cards
+				if (card && istype(card))
 					src.discard(card)
 			if ("toggle_conceal")
 				src.toggle_conceal()

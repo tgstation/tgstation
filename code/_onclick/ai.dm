@@ -10,9 +10,9 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(var/atom/A, params)
-	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
-		build_click(src, client.buildmode, params, A)
-		return
+	if(client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return
 
 	if(control_disabled || stat) return
 
@@ -27,12 +27,28 @@
 		return
 	next_click = world.time + 1
 
-	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
-		build_click(src, client.buildmode, params, A)
-		return
+	if(client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return
 
 	if(control_disabled || stat)
 		return
+
+	var/turf/pixel_turf = get_turf_pixel(A)
+	var/turf_visible
+	if(pixel_turf)
+		turf_visible = GLOB.cameranet.checkTurfVis(pixel_turf)
+		if(!turf_visible)
+			if(istype(loc, /obj/item/device/aicard) && (pixel_turf in view(client.view, loc)))
+				turf_visible = TRUE
+			else
+				if (pixel_turf.obscured)
+					log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)])")
+					message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
+					if(REALTIMEOFDAY >= chnotify + 9000)
+						chnotify = REALTIMEOFDAY
+						send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)]))")
+				return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
@@ -40,7 +56,7 @@
 		return
 	if(modifiers["middle"])
 		if(controlled_mech) //Are we piloting a mech? Placed here so the modifiers are not overridden.
-			controlled_mech.click_action(A, src) //Override AI normal click behavior.
+			controlled_mech.click_action(A, src, params) //Override AI normal click behavior.
 		return
 
 		return
@@ -57,13 +73,13 @@
 	if(world.time <= next_move)
 		return
 
-	if(aicamera.in_camera_mode)
+	if(aicamera.in_camera_mode && pixel_turf && turf_visible)
 		aicamera.camera_mode_off()
-		aicamera.captureimage(A, usr)
+		aicamera.captureimage(pixel_turf, usr)
 		return
 	if(waypoint_mode)
-		set_waypoint(A)
 		waypoint_mode = 0
+		set_waypoint(A)
 		return
 
 	/*
@@ -128,7 +144,7 @@
 		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
 	else
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
-	return
+
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
 	if(emagged)
 		return
@@ -138,7 +154,7 @@
 	else
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
-	return
+
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
 	if(emagged)
 		return
@@ -146,7 +162,7 @@
 		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
 	else
 		Topic("aiDisable=7", list("aiDisable"="7"), 1)
-	return
+
 /obj/machinery/door/airlock/AICtrlShiftClick()  // Sets/Unsets Emergency Access Override
 	if(emagged)
 		return
@@ -154,21 +170,19 @@
 		Topic("aiEnable=11", list("aiEnable"="11"), 1) // 1 meaning no window (consistency!)
 	else
 		Topic("aiDisable=11", list("aiDisable"="11"), 1)
-	return
 
 /* APC */
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
-	toggle_breaker()
-	add_fingerprint(usr)
+	if(can_use(usr, 1))
+		toggle_breaker()
+		add_fingerprint(usr)
 
 /* AI Turrets */
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
-	if(can_be_used_by(usr))
-		toggle_lethal()
+	toggle_lethal()
 	add_fingerprint(usr)
 /obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
-	if(can_be_used_by(usr))
-		toggle_on()
+	toggle_on()
 	add_fingerprint(usr)
 
 //
@@ -176,4 +190,4 @@
 //
 
 /mob/living/silicon/ai/TurfAdjacent(var/turf/T)
-	return (cameranet && cameranet.checkTurfVis(T))
+	return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(T))

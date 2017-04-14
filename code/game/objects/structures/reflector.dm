@@ -5,9 +5,13 @@
 	desc = "An angled mirror for reflecting lasers. This one does so at a 90 degree angle."
 	anchored = 0
 	density = 1
-	layer = 2
+	layer = BELOW_OBJ_LAYER
 	var/finished = 0
-
+	var/admin = 0 //Can't be rotated or deconstructed
+	var/framebuildstacktype = /obj/item/stack/sheet/metal
+	var/framebuildstackamount = 5
+	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstackamount = 0
 
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
 	var/turf/reflector_turf = get_turf(src)
@@ -29,20 +33,24 @@
 	P.current = reflector_turf
 	P.yo = reflect_turf.y - reflector_turf.y
 	P.xo = reflect_turf.x - reflector_turf.x
-	P.kill_count = 50 //Keep the projectile healthy as long as its bouncing off things
+	P.range = initial(P.range) //Keep the projectile healthy as long as its bouncing off things
 	new_dir = 0
 	return - 1
 
 
 /obj/structure/reflector/attackby(obj/item/weapon/W, mob/user, params)
+	if(admin)
+		return
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
-			user << "Unweld the [src] first!"
-		if(do_after(user, 80, target = src))
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "You dismantle the [src]."
+			to_chat(user, "Unweld the [src] first!")
+		if(do_after(user, 80*W.toolspeed, target = src))
+			playsound(src.loc, W.usesound, 50, 1)
+			to_chat(user, "You dismantle the [src].")
+			new framebuildstacktype(loc, framebuildstackamount)
+			new buildstacktype(loc, buildstackamount)
 			qdel(src)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(anchored)
 			if(0)
@@ -51,30 +59,30 @@
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20, target = src))
+					if (do_after(user,20*W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
 						anchored = 1
-						user << "<span class='notice'>You weld \the [src] to the floor.</span>"
+						to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 			if(1)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20, target = src))
+					if (do_after(user,20*W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
 						anchored  = 0
-						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
+						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 	//Finishing the frame
-	if(istype(W,/obj/item/stack/sheet))
+	else if(istype(W,/obj/item/stack/sheet))
 		if(finished)
 			return
 		var/obj/item/stack/sheet/S = W
 		if(istype(W, /obj/item/stack/sheet/glass))
 			if(S.get_amount() < 5)
-				user << "<span class='warning'>You need five sheets of glass to create a reflector!</span>"
+				to_chat(user, "<span class='warning'>You need five sheets of glass to create a reflector!</span>")
 				return
 			else
 				S.use(5)
@@ -82,7 +90,7 @@
 				qdel (src)
 		if(istype(W,/obj/item/stack/sheet/rglass))
 			if(S.get_amount() < 10)
-				user << "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>"
+				to_chat(user, "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>")
 				return
 			else
 				S.use(10)
@@ -93,6 +101,8 @@
 				S.use(1)
 				new /obj/structure/reflector/box (src.loc)
 				qdel(src)
+	else
+		return ..()
 
 /obj/structure/reflector/proc/get_reflection(srcdir,pdir)
 	return 0
@@ -106,18 +116,16 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (src.anchored)
-		usr << "<span class='warning'>It is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.setDir(turn(src.dir, 270))
 	return 1
 
 
 /obj/structure/reflector/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
-		user << "<span class='warning'>You can't do that right now!</span>"
-		return
-	if(!in_range(src, user))
+	if(!user.canUseTopic(src, be_close=TRUE))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else
 		rotate()
@@ -137,10 +145,16 @@
 "[EAST]" = list("[SOUTH]" = EAST, "[WEST]" = NORTH),
 "[SOUTH]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH),
 "[WEST]" = list("[NORTH]" = WEST, "[EAST]" = SOUTH) )
+	buildstacktype = /obj/item/stack/sheet/glass
+	buildstackamount = 5
 
 /obj/structure/reflector/single/get_reflection(srcdir,pdir)
 	var/new_dir = rotations["[srcdir]"]["[pdir]"]
 	return new_dir
+
+/obj/structure/reflector/single/mapping
+	admin = 1
+	anchored = 1
 
 //DOUBLE
 
@@ -154,10 +168,16 @@
 "[EAST]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH, "[SOUTH]" = WEST, "[EAST]" = NORTH),
 "[SOUTH]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH, "[SOUTH]" = WEST, "[EAST]" = NORTH),
 "[WEST]" = list("[NORTH]" = WEST, "[EAST]" = SOUTH, "[SOUTH]" = EAST, "[WEST]" = NORTH) )
+	buildstacktype = /obj/item/stack/sheet/rglass
+	buildstackamount = 10
 
 /obj/structure/reflector/double/get_reflection(srcdir,pdir)
 	var/new_dir = double_rotations["[srcdir]"]["[pdir]"]
 	return new_dir
+
+/obj/structure/reflector/double/mapping
+	admin = 1
+	anchored = 1
 
 //BOX
 
@@ -171,7 +191,27 @@
 "[EAST]" = list("[SOUTH]" = EAST, "[EAST]" = EAST, "[WEST]" = EAST, "[NORTH]" = EAST),
 "[SOUTH]" = list("[SOUTH]" = SOUTH, "[EAST]" = SOUTH, "[WEST]" = SOUTH, "[NORTH]" = SOUTH),
 "[WEST]" = list("[SOUTH]" = WEST, "[EAST]" = WEST, "[WEST]" = WEST, "[NORTH]" = WEST) )
+	buildstacktype = /obj/item/stack/sheet/mineral/diamond
+	buildstackamount = 1
 
 /obj/structure/reflector/box/get_reflection(srcdir,pdir)
 	var/new_dir = box_rotations["[srcdir]"]["[pdir]"]
 	return new_dir
+
+
+/obj/structure/reflector/box/mapping
+	admin = 1
+	anchored = 1
+
+/obj/structure/reflector/ex_act()
+	if(admin)
+		return
+	else
+		..()
+
+
+/obj/structure/reflector/singularity_act()
+	if(admin)
+		return
+	else
+		..()

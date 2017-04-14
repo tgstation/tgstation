@@ -1,48 +1,6 @@
 /mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = 0)
 	return dna.species.can_equip(I, slot, disable_warning, src)
 
-/mob/living/carbon/human/verb/quick_equip()
-	set name = "quick-equip"
-	set hidden = 1
-
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		var/obj/item/I = H.get_active_hand()
-		var/obj/item/weapon/storage/S = H.get_inactive_hand()
-		if(!I)
-			H << "<span class='warning'>You are not holding anything to equip!</span>"
-			return
-		if(H.equip_to_appropriate_slot(I))
-			if(hand)
-				update_inv_l_hand()
-			else
-				update_inv_r_hand()
-		else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
-			s_active.handle_item_insertion(I)
-		else if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))	//see if we have box in other hand
-			S.handle_item_insertion(I)
-		else
-			S = H.get_item_by_slot(slot_belt)
-			if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))		//else we put in belt
-				S.handle_item_insertion(I)
-			else
-				S = H.get_item_by_slot(slot_back)	//else we put in backpack
-				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))
-					S.handle_item_insertion(I)
-					playsound(src.loc, "rustle", 50, 1, -5)
-				else
-					H << "<span class='warning'>You are unable to equip that!</span>"
-
-
-/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
-	for(var/slot in slots)
-		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0))
-			return slot
-	if(qdel_on_fail)
-		qdel(I)
-	return null
-
-
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)
@@ -50,14 +8,12 @@
 			return back
 		if(slot_wear_mask)
 			return wear_mask
+		if(slot_neck)
+			return wear_neck
 		if(slot_handcuffed)
 			return handcuffed
 		if(slot_legcuffed)
 			return legcuffed
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 		if(slot_belt)
 			return belt
 		if(slot_wear_id)
@@ -84,11 +40,48 @@
 			return s_store
 	return null
 
+/mob/living/carbon/human/proc/get_all_slots()
+	. = get_head_slots() | get_body_slots()
+
+/mob/living/carbon/human/proc/get_body_slots()
+	return list(
+		back,
+		s_store,
+		handcuffed,
+		legcuffed,
+		wear_suit,
+		gloves,
+		shoes,
+		belt,
+		wear_id,
+		l_store,
+		r_store,
+		w_uniform
+		)
+
+/mob/living/carbon/human/proc/get_head_slots()
+	return list(
+		head,
+		wear_mask,
+		glasses,
+		ears,
+		)
+
+/mob/living/carbon/human/proc/get_storage_slots()
+	return list(
+		back,
+		belt,
+		l_store,
+		r_store,
+		s_store,
+		)
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 /mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
 	if(!..()) //a check failed or the item has already found its slot
 		return
+
+	var/not_handled = FALSE //Added in case we make this type path deeper one day
 	switch(slot)
 		if(slot_belt)
 			belt = I
@@ -102,6 +95,15 @@
 			update_inv_ears()
 		if(slot_glasses)
 			glasses = I
+			var/obj/item/clothing/glasses/G = I
+			if(G.glass_colour_type)
+				update_glasses_color(G, 1)
+			if(G.tint)
+				update_tint()
+			if(G.vision_correction)
+				clear_fullscreen("nearsighted")
+			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
+				update_sight()
 			update_inv_glasses()
 		if(slot_gloves)
 			gloves = I
@@ -113,6 +115,9 @@
 			wear_suit = I
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
+			if(wear_suit.breakouttime) //when equipping a straightjacket
+				stop_pulling() //can't pull if restrained
+				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
 		if(slot_w_uniform)
 			w_uniform = I
@@ -128,37 +133,56 @@
 			s_store = I
 			update_inv_s_store()
 		else
-			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 
-/mob/living/carbon/human/unEquip(obj/item/I)
+	//Item is handled and in slot, valid to call callback, for this proc should always be true
+	if(!not_handled)
+		I.equipped(src, slot)
+
+	return not_handled //For future deeper overrides
+
+/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
 
 	if(I == wear_suit)
-		if(s_store)
-			unEquip(s_store, 1) //It makes no sense for your suit storage to stay on you if you drop your suit.
+		if(s_store && invdrop)
+			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
+		if(wear_suit.breakouttime) //when unequipping a straightjacket
+			update_action_buttons_icon() //certain action buttons may be usable again.
 		wear_suit = null
 		if(I.flags_inv & HIDEJUMPSUIT)
 			update_inv_w_uniform()
 		update_inv_wear_suit()
 	else if(I == w_uniform)
-		if(r_store)
-			unEquip(r_store, 1) //Again, makes sense for pockets to drop.
-		if(l_store)
-			unEquip(l_store, 1)
-		if(wear_id)
-			unEquip(wear_id)
-		if(belt)
-			unEquip(belt)
+		if(invdrop)
+			if(r_store)
+				dropItemToGround(r_store, TRUE) //Again, makes sense for pockets to drop.
+			if(l_store)
+				dropItemToGround(l_store, TRUE)
+			if(wear_id)
+				dropItemToGround(wear_id)
+			if(belt)
+				dropItemToGround(belt)
 		w_uniform = null
 		update_suit_sensors()
-		update_inv_w_uniform()
+		update_inv_w_uniform(invdrop)
 	else if(I == gloves)
 		gloves = null
 		update_inv_gloves()
 	else if(I == glasses)
 		glasses = null
+		var/obj/item/clothing/glasses/G = I
+		if(G.glass_colour_type)
+			update_glasses_color(G, 0)
+		if(G.tint)
+			update_tint()
+		if(G.vision_correction)
+			if(disabilities & NEARSIGHT)
+				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
+			update_sight()
 		update_inv_glasses()
 	else if(I == ears)
 		ears = null
@@ -183,113 +207,28 @@
 		s_store = null
 		update_inv_s_store()
 
-/mob/living/carbon/human/wear_mask_update(obj/item/I, unequip = 1)
-	if(I.flags & BLOCKHAIR)
+/mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
+	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_hair()
-	if(unequip && internal)
-		if(internals)
-			internals.icon_state = "internal0"
+	if(toggle_off && internal && !getorganslot("breathing_tube"))
+		update_internals_hud_icon(0)
 		internal = null
+	if(C.flags_inv & HIDEEYES)
+		update_inv_glasses()
 	sec_hud_set_security_status()
 	..()
 
-/mob/living/carbon/human/head_update(obj/item/I)
-	if(I.flags & BLOCKHAIR)
+/mob/living/carbon/human/head_update(obj/item/I, forced)
+	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
 		update_hair()
-	if(I.flags_inv & HIDEEYES)
+	if(I.flags_inv & HIDEEYES || forced)
 		update_inv_glasses()
-	if(I.flags_inv & HIDEEARS)
+	if(I.flags_inv & HIDEEARS || forced)
 		update_body()
 	sec_hud_set_security_status()
 	..()
 
-
-
-
-//Cycles through all clothing slots and tests them for destruction
-/mob/living/carbon/human/proc/shred_clothing(bomb,shock)
-	var/covered_parts = 0	//The body parts that are protected by exterior clothing/armor
-	var/head_absorbed = 0	//How much of the shock the headgear absorbs when it is shredded. -1=it survives
-	var/suit_absorbed = 0	//How much of the shock the exosuit absorbs when it is shredded. -1=it survives
-
-	//Backpacks can never be protected but are annoying as fuck to lose, so they get a lower chance to be shredded
-	if(back)
-		back.shred(bomb,shock-20,src)
-
-	if(head)
-		covered_parts |= head.flags_inv
-		head_absorbed = head.shred(bomb,shock,src)
-	if(wear_mask)
-		var/absorbed = ((covered_parts & HIDEMASK) ? head_absorbed : 0) //Check if clothing covering this part absorbed any of the shock
-		if(absorbed >= 0)
-			//Masks can be used to shield other parts, but are simplified to simply add their absorbsion to the head armor if it covers the face
-			var/mask_absorbed = wear_mask.shred(bomb,shock-absorbed,src)
-			if(wear_mask.flags_inv & HIDEFACE)
-				covered_parts |= wear_mask.flags_inv
-				if(mask_absorbed < 0) //If the mask didn't get shredded, everything else on the head is protected
-					head_absorbed = -1
-				else
-					head_absorbed += mask_absorbed
-	if(ears)
-		var/absorbed = ((covered_parts & HIDEEARS) ? head_absorbed : 0)
-		if(absorbed >= 0)
-			ears.shred(bomb,shock-absorbed,src)
-	if(glasses)
-		var/absorbed = ((covered_parts & HIDEEYES) ? head_absorbed : 0)
-		if(absorbed >= 0)
-			glasses.shred(bomb,shock-absorbed,src)
-
-	if(wear_suit)
-		covered_parts |= wear_suit.flags_inv
-		suit_absorbed = wear_suit.shred(bomb,shock,src)
-	if(gloves)
-		var/absorbed = ((covered_parts & HIDEGLOVES) ? suit_absorbed : 0)
-		if(absorbed >= 0)
-			gloves.shred(bomb,shock-absorbed,src)
-	if(shoes)
-		var/absorbed = ((covered_parts & HIDESHOES) ? suit_absorbed : 0)
-		if(absorbed >= 0)
-			shoes.shred(bomb,shock-absorbed,src)
-	if(w_uniform)
-		var/absorbed = ((covered_parts & HIDEJUMPSUIT) ? suit_absorbed : 0)
-		if(absorbed >= 0)
-			w_uniform.shred(bomb,shock-20-absorbed,src)	//Uniforms are also annoying to get shredded
-
-/obj/item/proc/shred(bomb,shock,mob/living/carbon/human/Human)
-	if(flags & ABSTRACT)
-		return -1
-
-	var/shredded
-
-	if(!bomb)
-		if(burn_state != -1)
-			shredded = 1 //No heat protection, it burns
-		else
-			shredded = -1 //Heat protection = Fireproof
-
-	else if(shock > 0)
-		if(prob(max(shock-armor["bomb"],0)))
-			shredded = armor["bomb"] + 10 //It gets shredded, but it also absorbs the shock the clothes underneath would recieve by this amount
-		else
-			shredded = -1 //It survives explosion
-
-	if(shredded > 0)
-		if(Human) //Unequip if equipped
-			Human.unEquip(src)
-
-		if(bomb)
-			for(var/obj/item/Item in contents) //Empty out the contents
-				Item.loc = src.loc
-			spawn(1) //so the shreds aren't instantly deleted by the explosion
-				var/obj/effect/decal/cleanable/shreds/Shreds = new(loc)
-				Shreds.desc = "The sad remains of what used to be [src.name]."
-				qdel(src)
-		else
-			burn()
-
-	return shredded
-
-/mob/living/carbon/human/proc/equipOutfit(outfit)
+/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null
 
 	if(ispath(outfit))
@@ -301,4 +240,4 @@
 	if(!O)
 		return 0
 
-	return O.equip(src)
+	return O.equip(src, visualsOnly)

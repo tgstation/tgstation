@@ -3,12 +3,10 @@
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
 	item_state = "balaclava"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
-	visor_flags_inv = HIDEFACE
-	w_class = 2
-	action_button_name = "Adjust Balaclava"
-	ignore_maskadjust = 0
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/balaclava/attack_self(mob/user)
 	adjustmask(user)
@@ -18,15 +16,14 @@
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
 	icon_state = "luchag"
 	item_state = "luchag"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
-	w_class = 2
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/mask/luchador/speechModification(message)
 	if(copytext(message, 1, 2) != "*")
-		message = replacetext(message, "captain", "CAPIT¡N")
-		message = replacetext(message, "station", "ESTACI”N")
-		message = replacetext(message, "sir", "SE—OR")
+		message = replacetext(message, "captain", "CAPIT√ÅN")
+		message = replacetext(message, "station", "ESTACI√ìN")
+		message = replacetext(message, "sir", "SE√ëOR")
 		message = replacetext(message, "the ", "el ")
 		message = replacetext(message, "my ", "mi ")
 		message = replacetext(message, "is ", "es ")

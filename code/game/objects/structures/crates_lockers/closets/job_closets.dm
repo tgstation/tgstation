@@ -5,7 +5,7 @@
 	desc = "It's a storage unit for formal clothing."
 	icon_door = "black"
 
-/obj/structure/closet/gmcloset/New()
+/obj/structure/closet/gmcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
@@ -23,13 +23,17 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/weapon/reagent_containers/glass/rag(src)
 	new /obj/item/weapon/reagent_containers/glass/rag(src)
+	new /obj/item/weapon/storage/box/beanbag(src)
+	new /obj/item/clothing/suit/armor/vest/alt(src)
+	new /obj/item/clothing/glasses/sunglasses/reagent(src)
+	new /obj/item/weapon/storage/belt/bandolier(src)
 
 /obj/structure/closet/chefcloset
 	name = "\proper chef's closet"
 	desc = "It's a storage unit for foodservice garments and mouse traps."
 	icon_door = "black"
 
-/obj/structure/closet/chefcloset/New()
+/obj/structure/closet/chefcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/waiter(src)
 	new /obj/item/clothing/under/waiter(src)
@@ -37,9 +41,8 @@
 	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/clothing/tie/waistcoat(src)
 	new /obj/item/clothing/tie/waistcoat(src)
-	new /obj/item/clothing/suit/apron/chef(src)
-	new /obj/item/clothing/suit/apron/chef(src)
-	new /obj/item/clothing/suit/apron/chef(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/apron/chef(src)
 	new /obj/item/clothing/head/soft/mime(src)
 	new /obj/item/clothing/head/soft/mime(src)
 	new /obj/item/weapon/storage/box/mousetraps(src)
@@ -54,16 +57,16 @@
 	desc = "It's a storage unit for janitorial clothes and gear."
 	icon_door = "mixed"
 
-/obj/structure/closet/jcloset/New()
+/obj/structure/closet/jcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/rank/janitor(src)
 	new /obj/item/weapon/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
+	new /obj/item/weapon/paint/paint_remover(src)
 	new /obj/item/device/flashlight(src)
-	new /obj/item/weapon/caution(src)
-	new /obj/item/weapon/caution(src)
-	new /obj/item/weapon/caution(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/caution(src)
 	new /obj/item/weapon/holosign_creator(src)
 	new /obj/item/device/lightreplacer(src)
 	new /obj/item/weapon/soap(src)
@@ -78,7 +81,7 @@
 	desc = "It's a storage unit for courtroom apparel and items."
 	icon_door = "blue"
 
-/obj/structure/closet/lawcloset/New()
+/obj/structure/closet/lawcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/lawyer/female(src)
 	new /obj/item/clothing/under/lawyer/black(src)
@@ -91,22 +94,28 @@
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/tie/lawyers_badge(src)
+	new /obj/item/clothing/tie/lawyers_badge(src)
 
 /obj/structure/closet/wardrobe/chaplain_black
 	name = "chapel wardrobe"
 	desc = "It's a storage unit for Nanotrasen-approved religious attire."
 	icon_door = "black"
 
-/obj/structure/closet/wardrobe/chaplain_black/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/chaplain_black/PopulateContents()
 	new /obj/item/clothing/under/rank/chaplain(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/suit/nun(src)
 	new /obj/item/clothing/head/nun_hood(src)
+	new /obj/item/clothing/suit/studentuni(src)
+	new /obj/item/clothing/head/cage(src)
+	new /obj/item/clothing/suit/witchhunter(src)
+	new /obj/item/clothing/head/witchunter_hat(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
 	new /obj/item/weapon/storage/backpack/cultpack (src)
+	new /obj/item/clothing/head/helmet/knight/templar(src)
+	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
 	new /obj/item/weapon/storage/fancy/candle_box(src)
 	new /obj/item/weapon/storage/fancy/candle_box(src)
 	return
@@ -115,33 +124,32 @@
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
-	burn_state = 0 //Burnable
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
+	horizontal = TRUE
+	delivery_icon = "deliverycrate"
+	material_drop = /obj/item/stack/sheet/mineral/wood
+	material_drop_amount = 5
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"
 	icon_door = "red"
 
-/obj/structure/closet/wardrobe/red/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/red/PopulateContents()
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/weapon/storage/backpack/security(src)
-	new /obj/item/weapon/storage/backpack/satchel_sec(src)
+	new /obj/item/weapon/storage/backpack/satchel/sec(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/head/beret/sec(src)
-	new /obj/item/clothing/head/beret/sec(src)
-	new /obj/item/clothing/head/beret/sec(src)
-	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/head/soft/sec(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/security(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/shoes/jackboots(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/head/beret/sec(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/mask/bandana/red(src)
 	return
@@ -151,107 +159,83 @@
 	name = "cargo wardrobe"
 	icon_door = "orange"
 
-/obj/structure/closet/wardrobe/cargotech/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/cargotech/PopulateContents()
 	new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
-	new /obj/item/clothing/under/rank/cargotech(src)
-	new /obj/item/clothing/under/rank/cargotech(src)
-	new /obj/item/clothing/under/rank/cargotech(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/head/soft(src)
-	new /obj/item/clothing/head/soft(src)
-	new /obj/item/clothing/head/soft(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/cargotech(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/shoes/sneakers/black(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/gloves/fingerless(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/head/soft(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 
 /obj/structure/closet/wardrobe/atmospherics_yellow
 	name = "atmospherics wardrobe"
 	icon_door = "atmos_wardrobe"
 
-/obj/structure/closet/wardrobe/atmospherics_yellow/New()
-	..()
-	contents = list()
-	new /obj/item/weapon/storage/backpack/dufflebag(src)
-	new /obj/item/weapon/storage/backpack/satchel_norm(src)
-	new /obj/item/weapon/storage/backpack(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
-	new /obj/item/clothing/under/rank/atmospheric_technician(src)
-	new /obj/item/clothing/under/rank/atmospheric_technician(src)
-	new /obj/item/clothing/under/rank/atmospheric_technician(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
+/obj/structure/closet/wardrobe/atmospherics_yellow/PopulateContents()
+	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
+	new /obj/item/weapon/storage/backpack/satchel/eng(src)
+	new /obj/item/weapon/storage/backpack/industrial(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/atmospheric_technician(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/shoes/sneakers/black(src)
 	return
 
 /obj/structure/closet/wardrobe/engineering_yellow
 	name = "engineering wardrobe"
 	icon_door = "yellow"
 
-/obj/structure/closet/wardrobe/engineering_yellow/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/engineering_yellow/PopulateContents()
 	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
 	new /obj/item/weapon/storage/backpack/industrial(src)
-	new /obj/item/weapon/storage/backpack/satchel_eng(src)
+	new /obj/item/weapon/storage/backpack/satchel/eng(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
-	new /obj/item/clothing/under/rank/engineer(src)
-	new /obj/item/clothing/under/rank/engineer(src)
-	new /obj/item/clothing/under/rank/engineer(src)
-	new /obj/item/clothing/suit/hazardvest(src)
-	new /obj/item/clothing/suit/hazardvest(src)
-	new /obj/item/clothing/suit/hazardvest(src)
-	new /obj/item/clothing/shoes/workboots(src)
-	new /obj/item/clothing/shoes/workboots(src)
-	new /obj/item/clothing/shoes/workboots(src)
-	new /obj/item/clothing/head/hardhat(src)
-	new /obj/item/clothing/head/hardhat(src)
-	new /obj/item/clothing/head/hardhat(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/engineer(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/hazardvest(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/shoes/workboots(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/head/hardhat(src)
 	return
 
 /obj/structure/closet/wardrobe/white/medical
 	name = "medical doctor's wardrobe"
 
-/obj/structure/closet/wardrobe/white/medical/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/white/medical/PopulateContents()
 	new /obj/item/weapon/storage/backpack/dufflebag/med(src)
 	new /obj/item/weapon/storage/backpack/medic(src)
-	new /obj/item/weapon/storage/backpack/satchel_med(src)
+	new /obj/item/weapon/storage/backpack/satchel/med(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
 	new /obj/item/clothing/under/rank/nursesuit (src)
 	new /obj/item/clothing/head/nursehat (src)
 	new /obj/item/clothing/under/rank/medical/blue(src)
 	new /obj/item/clothing/under/rank/medical/green(src)
 	new /obj/item/clothing/under/rank/medical/purple(src)
-	new /obj/item/clothing/under/rank/medical(src)
-	new /obj/item/clothing/under/rank/medical(src)
-	new /obj/item/clothing/under/rank/medical(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/medical(src)
 	new /obj/item/clothing/suit/toggle/labcoat(src)
 	new /obj/item/clothing/suit/toggle/labcoat(src)
 	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
 	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
-	new /obj/item/clothing/shoes/sneakers/white(src)
-	new /obj/item/clothing/shoes/sneakers/white(src)
-	new /obj/item/clothing/shoes/sneakers/white(src)
-	new /obj/item/clothing/head/soft/emt(src)
-	new /obj/item/clothing/head/soft/emt(src)
-	new /obj/item/clothing/head/soft/emt(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/shoes/sneakers/white(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/head/soft/emt(src)
 	return
 
 /obj/structure/closet/wardrobe/robotics_black
 	name = "robotics wardrobe"
 	icon_door = "black"
 
-/obj/structure/closet/wardrobe/robotics_black/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/robotics_black/PopulateContents()
 	new /obj/item/clothing/glasses/hud/diagnostic(src)
 	new /obj/item/clothing/glasses/hud/diagnostic(src)
 	new /obj/item/clothing/under/rank/roboticist(src)
@@ -275,9 +259,7 @@
 	name = "chemistry wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/chemistry_white/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/chemistry_white/PopulateContents()
 	new /obj/item/clothing/under/rank/chemist(src)
 	new /obj/item/clothing/under/rank/chemist(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
@@ -286,8 +268,8 @@
 	new /obj/item/clothing/suit/toggle/labcoat/chemist(src)
 	new /obj/item/weapon/storage/backpack/chemistry(src)
 	new /obj/item/weapon/storage/backpack/chemistry(src)
-	new /obj/item/weapon/storage/backpack/satchel_chem(src)
-	new /obj/item/weapon/storage/backpack/satchel_chem(src)
+	new /obj/item/weapon/storage/backpack/satchel/chem(src)
+	new /obj/item/weapon/storage/backpack/satchel/chem(src)
 	new /obj/item/weapon/storage/bag/chemistry(src)
 	new /obj/item/weapon/storage/bag/chemistry(src)
 	return
@@ -297,9 +279,7 @@
 	name = "genetics wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/genetics_white/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/genetics_white/PopulateContents()
 	new /obj/item/clothing/under/rank/geneticist(src)
 	new /obj/item/clothing/under/rank/geneticist(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
@@ -308,8 +288,8 @@
 	new /obj/item/clothing/suit/toggle/labcoat/genetics(src)
 	new /obj/item/weapon/storage/backpack/genetics(src)
 	new /obj/item/weapon/storage/backpack/genetics(src)
-	new /obj/item/weapon/storage/backpack/satchel_gen(src)
-	new /obj/item/weapon/storage/backpack/satchel_gen(src)
+	new /obj/item/weapon/storage/backpack/satchel/gen(src)
+	new /obj/item/weapon/storage/backpack/satchel/gen(src)
 	return
 
 
@@ -317,9 +297,7 @@
 	name = "virology wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/virology_white/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/virology_white/PopulateContents()
 	new /obj/item/clothing/under/rank/virologist(src)
 	new /obj/item/clothing/under/rank/virologist(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
@@ -330,57 +308,47 @@
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/weapon/storage/backpack/virology(src)
 	new /obj/item/weapon/storage/backpack/virology(src)
-	new /obj/item/weapon/storage/backpack/satchel_vir(src)
-	new /obj/item/weapon/storage/backpack/satchel_vir(src)
+	new /obj/item/weapon/storage/backpack/satchel/vir(src)
+	new /obj/item/weapon/storage/backpack/satchel/vir(src)
 	return
 
 /obj/structure/closet/wardrobe/science_white
 	name = "science wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/science_white/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/science_white/PopulateContents()
 	new /obj/item/weapon/storage/backpack/science(src)
 	new /obj/item/weapon/storage/backpack/science(src)
-	new /obj/item/weapon/storage/backpack/satchel_tox(src)
-	new /obj/item/weapon/storage/backpack/satchel_tox(src)
+	new /obj/item/weapon/storage/backpack/satchel/tox(src)
+	new /obj/item/weapon/storage/backpack/satchel/tox(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/science(src)
-	new /obj/item/clothing/under/rank/scientist(src)
-	new /obj/item/clothing/under/rank/scientist(src)
-	new /obj/item/clothing/under/rank/scientist(src)
-	new /obj/item/clothing/suit/toggle/labcoat/science(src)
-	new /obj/item/clothing/suit/toggle/labcoat/science(src)
-	new /obj/item/clothing/suit/toggle/labcoat/science(src)
-	new /obj/item/clothing/shoes/sneakers/white(src)
-	new /obj/item/clothing/shoes/sneakers/white(src)
-	new /obj/item/clothing/shoes/sneakers/white(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/scientist(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/toggle/labcoat/science(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/device/radio/headset/headset_sci(src)
 	new /obj/item/device/radio/headset/headset_sci(src)
-	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/clothing/mask/gas(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/mask/gas(src)
 	return
 
 /obj/structure/closet/wardrobe/botanist
 	name = "botanist wardrobe"
 	icon_door = "green"
 
-/obj/structure/closet/wardrobe/botanist/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/botanist/PopulateContents()
 	new /obj/item/weapon/storage/backpack/botany(src)
 	new /obj/item/weapon/storage/backpack/botany(src)
-	new /obj/item/weapon/storage/backpack/satchel_hyd(src)
-	new /obj/item/weapon/storage/backpack/satchel_hyd(src)
+	new /obj/item/weapon/storage/backpack/satchel/hyd(src)
+	new /obj/item/weapon/storage/backpack/satchel/hyd(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/hydro(src)
 	new /obj/item/clothing/suit/apron(src)
 	new /obj/item/clothing/suit/apron(src)
 	new /obj/item/clothing/suit/apron/overalls(src)
 	new /obj/item/clothing/suit/apron/overalls(src)
-	new /obj/item/clothing/under/rank/hydroponics(src)
-	new /obj/item/clothing/under/rank/hydroponics(src)
-	new /obj/item/clothing/under/rank/hydroponics(src)
-	new /obj/item/clothing/mask/bandana(src)
-	new /obj/item/clothing/mask/bandana(src)
-	new /obj/item/clothing/mask/bandana(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/hydroponics(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/mask/bandana(src)

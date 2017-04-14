@@ -1,24 +1,32 @@
 //Hoods for winter coats and chaplain hoodie etc
 
 /obj/item/clothing/suit/hooded
-	var/obj/item/clothing/head/hood
-	var/hoodtype = /obj/item/clothing/head/winterhood //so the chaplain hoodie or other hoodies can override this
+	actions_types = list(/datum/action/item_action/toggle_hood)
+	var/obj/item/clothing/head/hooded/hood
+	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
+	hooded = 1
 
 /obj/item/clothing/suit/hooded/New()
 	MakeHood()
 	..()
 
 /obj/item/clothing/suit/hooded/Destroy()
+	. = ..()
 	qdel(hood)
-	return ..()
+	hood = null
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
-		var/obj/item/clothing/head/W = new hoodtype(src)
+		var/obj/item/clothing/head/hooded/W = new hoodtype(src)
+		W.suit = src
 		hood = W
 
 /obj/item/clothing/suit/hooded/ui_action_click()
 	ToggleHood()
+
+/obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
+	if(slot == slot_wear_suit)
+		return 1
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
 	if(slot != slot_wear_suit)
@@ -30,11 +38,16 @@
 	suittoggled = 0
 	if(ishuman(hood.loc))
 		var/mob/living/carbon/H = hood.loc
-		H.unEquip(hood, 1)
+		H.transferItemToLoc(hood, src, TRUE)
 		H.update_inv_wear_suit()
-	hood.loc = src
+	else
+		hood.forceMove(src)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/hooded/dropped()
+	..()
 	RemoveHood()
 
 /obj/item/clothing/suit/hooded/proc/ToggleHood()
@@ -42,27 +55,47 @@
 		if(ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			if(H.wear_suit != src)
-				H << "<span class='warning'>You must be wearing [src] to put up the hood!</span>"
+				to_chat(H, "<span class='warning'>You must be wearing [src] to put up the hood!</span>")
 				return
 			if(H.head)
-				H << "<span class='warning'>You're already wearing something on your head!</span>"
+				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
-			else
-				H.equip_to_slot_if_possible(hood,slot_head,0,0,1)
+			else if(H.equip_to_slot_if_possible(hood,slot_head,0,0,1))
 				suittoggled = 1
 				src.icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
+				for(var/X in actions)
+					var/datum/action/A = X
+					A.UpdateButtonIcon()
 	else
 		RemoveHood()
+
+/obj/item/clothing/head/hooded
+	var/obj/item/clothing/suit/hooded/suit
+
+/obj/item/clothing/head/hooded/Destroy()
+	suit = null
+	return ..()
+
+/obj/item/clothing/head/hooded/dropped()
+	..()
+	if(suit)
+		suit.RemoveHood()
+
+/obj/item/clothing/head/hooded/equipped(mob/user, slot)
+	..()
+	if(slot != slot_head)
+		if(suit)
+			suit.RemoveHood()
+		else
+			qdel(src)
 
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 
 /obj/item/clothing/suit/toggle/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
-		user << "<span class='warning'>You can't do that right now!</span>"
-		return
-	if(!in_range(src, user))
+	if(!user.canUseTopic(src, be_close=TRUE))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else
 		suit_toggle(user)
@@ -76,7 +109,7 @@
 	if(!can_use(usr))
 		return 0
 
-	usr << "<span class='notice'>You toggle [src]'s [togglename].</span>"
+	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
 	if(src.suittoggled)
 		src.icon_state = "[initial(icon_state)]"
 		src.suittoggled = 0
@@ -84,18 +117,19 @@
 		src.icon_state = "[initial(icon_state)]_t"
 		src.suittoggled = 1
 	usr.update_inv_wear_suit()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
 	..()
-	user << "Alt-click on [src] to toggle the [togglename]."
+	to_chat(user, "Alt-click on [src] to toggle the [togglename].")
 
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
-	if(!jetpack)
-		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack
-		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets
 	..()
+
 /obj/item/clothing/suit/space/hardsuit/Destroy()
 	if(helmet)
 		helmet.suit = null
@@ -135,11 +169,15 @@
 		var/mob/living/carbon/H = helmet.loc
 		if(helmet.on)
 			helmet.attack_self(H)
-		H.unEquip(helmet, 1)
+		H.transferItemToLoc(helmet, src, TRUE)
 		H.update_inv_wear_suit()
-	helmet.loc = src
+		to_chat(H, "<span class='notice'>The helmet on the hardsuit disengages.</span>")
+		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	else
+		helmet.forceMove(src)
 
 /obj/item/clothing/suit/space/hardsuit/dropped()
+	..()
 	RemoveHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
@@ -151,18 +189,15 @@
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			if(H.wear_suit != src)
-				H << "<span class='warning'>You must be wearing [src] to engage the helmet!</span>"
+				to_chat(H, "<span class='warning'>You must be wearing [src] to engage the helmet!</span>")
 				return
 			if(H.head)
-				H << "<span class='warning'>You're already wearing something on your head!</span>"
+				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
-			else
-				H << "<span class='notice'>You engage the helmet on the hardsuit.</span>"
-				H.equip_to_slot_if_possible(helmet,slot_head,0,0,1)
+			else if(H.equip_to_slot_if_possible(helmet,slot_head,0,0,1))
+				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = 1
 				H.update_inv_wear_suit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	else
-		H << "<span class='notice'>You disengage the helmet on the hardsuit.</span>"
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 		RemoveHelmet()

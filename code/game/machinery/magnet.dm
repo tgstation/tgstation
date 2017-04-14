@@ -11,7 +11,7 @@
 	name = "electromagnetic generator"
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
-	layer = 2.5
+	layer = LOW_OBJ_LAYER
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 50
@@ -36,21 +36,21 @@
 	center = T
 
 	spawn(10)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, freq, RADIO_MAGNETS)
+		if(SSradio)
+			SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
 
 	spawn()
 		magnetic_process()
 
 /obj/machinery/magnetic_module/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, freq)
+	if(SSradio)
+		SSradio.remove_object(src, freq)
 	. = ..()
 	center = null
 
 // update the invisibility and icon
 /obj/machinery/magnetic_module/hide(intact)
-	invisibility = intact ? 101 : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
 	updateicon()
 
 // update the icon_state
@@ -82,9 +82,11 @@
 	if(command)
 		switch(command)
 			if("set-electriclevel")
-				if(modifier)	electricity_level = modifier
+				if(modifier)
+					electricity_level = modifier
 			if("set-magneticfield")
-				if(modifier)	magnetic_field = modifier
+				if(modifier)
+					magnetic_field = modifier
 
 			if("add-elec")
 				electricity_level++
@@ -104,9 +106,11 @@
 					magnetic_field = 1
 
 			if("set-x")
-				if(modifier)	center_x = modifier
+				if(modifier)
+					center_x = modifier
 			if("set-y")
-				if(modifier)	center_y = modifier
+				if(modifier)
+					center_y = modifier
 
 			if("N") // NORTH
 				center_y++
@@ -124,13 +128,13 @@
 				center_y = rand(-max_dist, max_dist)
 
 			if("set-code")
-				if(modifier)	code = modifier
+				if(modifier)
+					code = modifier
 			if("toggle-power")
 				on = !on
 
 				if(on)
-					spawn()
-						magnetic_process()
+					INVOKE_ASYNC(src, .proc/magnetic_process)
 
 
 
@@ -188,7 +192,8 @@
 					step_towards(M, center)
 
 			for(var/mob/living/silicon/S in orange(magnetic_field, center))
-				if(istype(S, /mob/living/silicon/ai)) continue
+				if(isAI(S))
+					continue
 				step_towards(S, center)
 
 		use_power(electricity_level * 5)
@@ -228,29 +233,29 @@
 	..()
 
 	if(autolink)
-		for(var/obj/machinery/magnetic_module/M in machines)
+		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
 
 	spawn(45)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_connection = radio_controller.add_object(src, frequency, RADIO_MAGNETS)
+		if(SSradio)
+			radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
 
 
 	if(path) // check for default path
 		filter_path() // renders rpath
 
 /obj/machinery/magnetic_controller/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
 	. = ..()
 	magnets = null
 	rpath = null
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)
-		for(var/obj/machinery/magnetic_module/M in machines)
+		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
@@ -318,7 +323,7 @@
 
 		// Broadcast the signal
 
-		radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
+		radio_connection.post_signal(src, signal, filter = GLOB.RADIO_MAGNETS)
 
 		spawn(1)
 			updateUsrDialog() // pretty sure this increases responsiveness
@@ -385,7 +390,7 @@
 
 		// Broadcast the signal
 		spawn()
-			radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
+			radio_connection.post_signal(src, signal, filter = GLOB.RADIO_MAGNETS)
 
 		if(speed == 10)
 			sleep(1)

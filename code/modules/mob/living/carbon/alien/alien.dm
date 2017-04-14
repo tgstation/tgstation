@@ -2,16 +2,20 @@
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
+
 /mob/living/carbon/alien
 	name = "alien"
 	voice_name = "alien"
 	icon = 'icons/mob/alien.dmi'
-	gender = NEUTER
+	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list("alien")
-	ventcrawler = 2
-	languages = ALIEN
+	ventcrawler = VENTCRAWLER_ALWAYS
+	sight = SEE_MOBS
+	see_in_dark = 4
 	verb_say = "hisses"
+	initial_languages = list(/datum/language/xenocommon)
+	bubble_icon = "alien"
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	var/nightvision = 1
 
@@ -26,33 +30,27 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
 
-/mob/living/carbon/alien/New()
+	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
+
+/mob/living/carbon/alien/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	internal_organs += new /obj/item/organ/internal/brain/alien
-	internal_organs += new /obj/item/organ/internal/alien/hivenode
-	for(var/obj/item/organ/internal/I in internal_organs)
-		I.Insert(src)
+	create_bodyparts() //initialize bodyparts
 
-	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
+	create_internal_organs()
+
 	..()
 
-/mob/living/carbon/alien/adjustToxLoss(amount)
-	return
+/mob/living/carbon/alien/create_internal_organs()
+	internal_organs += new /obj/item/organ/brain/alien
+	internal_organs += new /obj/item/organ/alien/hivenode
+	internal_organs += new /obj/item/organ/tongue/alien
+	internal_organs += new /obj/item/organ/eyes/night_vision/alien
+	..()
 
-/mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
-	if(amount > 0)
-		..(amount * 2)
-	else
-		..(amount)
-	return
-
-/mob/living/carbon/alien/check_eye_prot()
-	return ..() + 2
-
-/mob/living/carbon/alien/getToxLoss()
-	return 0
+/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+	return -10
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
@@ -88,35 +86,6 @@
 	else
 		clear_alert("alien_fire")
 
-
-/mob/living/carbon/alien/ex_act(severity, target)
-	..()
-
-	switch (severity)
-		if (1)
-			gib()
-			return
-
-		if (2)
-			adjustBruteLoss(60)
-			adjustFireLoss(60)
-			adjustEarDamage(30,120)
-
-		if(3)
-			adjustBruteLoss(30)
-			if (prob(50))
-				Paralyse(1)
-			adjustEarDamage(15,60)
-
-	updatehealth()
-
-
-/mob/living/carbon/alien/handle_fire()//Aliens on fire code
-	if(..())
-		return
-	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
-	return
-
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0
 
@@ -129,14 +98,6 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 
-/mob/living/carbon/alien/Stun(amount)
-	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-	else
-		// add some movement delay
-		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
-	return
-
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)
 		return pick (list("xltrails_1", "xltrails2"))
@@ -148,9 +109,9 @@ Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
-		for (var/mob/living/C in mob_list)
+		for (var/mob/living/C in GLOB.mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/obj/item/organ/internal/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
+				var/obj/item/organ/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 					client.images += I
@@ -174,7 +135,20 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
 
+/mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
+	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
+	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	new_xeno.setDir(dir)
+	if(!alien_name_regex.Find(name))
+		new_xeno.name = name
+		new_xeno.real_name = real_name
+	if(mind)
+		mind.transfer_to(new_xeno)
+	qdel(src)
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2
 #undef HEAT_DAMAGE_LEVEL_3
+
+/mob/living/carbon/alien/can_hold_items()
+	return has_fine_manipulation

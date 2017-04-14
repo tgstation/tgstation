@@ -3,8 +3,8 @@
 	desc = "It can hold a few small and personal things."
 	storage_slots = 4
 	icon_state = "wallet"
-	w_class = 2
-	burn_state = 0 //Burnable
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FLAMMABLE
 	can_hold = list(
 		/obj/item/stack/spacecash,
 		/obj/item/weapon/card,
@@ -30,53 +30,49 @@
 	slot_flags = SLOT_ID
 
 	var/obj/item/weapon/card/id/front_id = null
+	var/list/combined_access = list()
 
 
 /obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W, atom/new_location)
 	. = ..(W, new_location)
 	if(.)
-		if(W == front_id)
-			front_id = null
+		if(istype(W, /obj/item/weapon/card/id))
+			if(W == front_id)
+				front_id = null
+			refreshID()
 			update_icon()
+
+/obj/item/weapon/storage/wallet/proc/refreshID()
+	combined_access.Cut()
+	for(var/obj/item/weapon/card/id/I in contents)
+		if(!front_id)
+			front_id = I
+			update_icon()
+		combined_access |= I.access
 
 /obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W, prevent_warning = 0)
-	. = ..(W, prevent_warning)
+	. = ..()
 	if(.)
-		if(!front_id && istype(W, /obj/item/weapon/card/id))
-			front_id = W
-			update_icon()
+		if(istype(W, /obj/item/weapon/card/id))
+			refreshID()
 
 /obj/item/weapon/storage/wallet/update_icon()
-
-	if(front_id)
-		switch(front_id.icon_state)
-			if("id")
-				icon_state = "walletid"
-				return
-			if("silver")
-				icon_state = "walletid_silver"
-				return
-			if("gold")
-				icon_state = "walletid_gold"
-				return
-			if("centcom")
-				icon_state = "walletid_centcom"
-				return
 	icon_state = "wallet"
+	if(front_id)
+		icon_state = "wallet_[front_id.icon_state]"
+
 
 
 /obj/item/weapon/storage/wallet/GetID()
 	return front_id
 
 /obj/item/weapon/storage/wallet/GetAccess()
-	var/obj/item/I = GetID()
-	if(I)
-		return I.GetAccess()
+	if(combined_access.len)
+		return combined_access
 	else
 		return ..()
 
-/obj/item/weapon/storage/wallet/random/New()
-	..()
+/obj/item/weapon/storage/wallet/random/PopulateContents()
 	var/item1_type = pick( /obj/item/stack/spacecash/c10,/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c20,/obj/item/stack/spacecash/c200,/obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
 	var/item2_type
 	if(prob(50))

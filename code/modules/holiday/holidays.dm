@@ -86,15 +86,24 @@
 	var/game_age = text2num(time2text(world.timeofday, "YY")) - 3
 	var/Fact
 	switch(game_age)
-		if(16)	Fact = " SS13 is now old enough to drive!"
-		if(18)	Fact = " SS13 is now legal!"
-		if(21)	Fact = " SS13 can now drink!"
-		if(26)	Fact = " SS13 can now rent a car!"
-		if(30)	Fact = " SS13 can now go home and be a family man!"
-		if(40)	Fact = " SS13 can now suffer a midlife crisis!"
-		if(50)	Fact = " Happy golden anniversary!"
-		if(65)	Fact = " SS13 can now start thinking about retirement!"
-		if(96)	Fact = " Please send a time machine back to pick me up, I need to update the time formatting for this feature!" //See you later suckers
+		if(16)
+			Fact = " SS13 is now old enough to drive!"
+		if(18)
+			Fact = " SS13 is now legal!"
+		if(21)
+			Fact = " SS13 can now drink!"
+		if(26)
+			Fact = " SS13 can now rent a car!"
+		if(30)
+			Fact = " SS13 can now go home and be a family man!"
+		if(40)
+			Fact = " SS13 can now suffer a midlife crisis!"
+		if(50)
+			Fact = " Happy golden anniversary!"
+		if(65)
+			Fact = " SS13 can now start thinking about retirement!"
+		if(96)
+			Fact = " Please send a time machine back to pick me up, I need to update the time formatting for this feature!" //See you later suckers
 	if(!Fact)
 		Fact = " SS13 is now [game_age] years old!"
 
@@ -131,6 +140,13 @@
 	begin_day = 1
 	end_day = 2
 	begin_month = APRIL
+
+/datum/holiday/april_fools/celebrate()
+	if(SSticker)
+		SSticker.login_music = 'sound/ambience/clown.ogg'
+		for(var/mob/dead/new_player/P in GLOB.mob_list)
+			if(P.client)
+				P.client.playtitlemusic()
 
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"
@@ -293,6 +309,11 @@
 	begin_day = 14
 	begin_month = DECEMBER
 
+/datum/holiday/doomsday
+	name = "Mayan Doomsday Anniversary"
+	begin_day = 21
+	begin_month = DECEMBER
+
 /datum/holiday/xmas
 	name = CHRISTMAS
 	begin_day = 23
@@ -301,6 +322,20 @@
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
+
+/datum/holiday/festive_season
+	name = FESTIVE_SEASON
+	begin_day = 1
+	begin_month = DECEMBER
+	end_day = 31
+
+/datum/holiday/festive_season/celebrate()
+	for(var/obj/effect/landmark/xmastree/XT in GLOB.landmarks_list)
+		new XT.tree(get_turf(XT))
+		qdel(XT)
+
+/datum/holiday/festive_season/greet()
+	return "Have a nice festive season!"
 
 /datum/holiday/boxing
 	name = "Boxing Day"
@@ -385,5 +420,5 @@
 				begin_day += 31
 				begin_month-- //begins in march, ends in april
 
-//	world << "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]"
+//	to_chat(world, "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]")
 	return ..()

@@ -1,48 +1,42 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/datum/game_mode/blob/send_intercept(report = 1)
+
+/datum/game_mode/blob/send_intercept(report = 0)
 	var/intercepttext = ""
 	switch(report)
-		if(0)
-			..()
-			return
-/*		if(1) // Report is temporarily unused. see comment on stage 0 in blob.dm
-			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
+		if(1)
+			intercepttext += "<FONT size = 3><b>NanoTrasen Update</b>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
-			intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>"
-			intercepttext += "NanoTrasen has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.<BR>"
-			intercepttext += "Orders for all [station_name()] personnel follows:<BR>"
-			intercepttext += " 1. Do not leave the quarantine area.<BR>"
-			intercepttext += " 2. Locate any outbreaks of the organism on the station.<BR>"
-			intercepttext += " 3. If found, use any neccesary means to contain the organism.<BR>"
-			intercepttext += " 4. Avoid damage to the capital infrastructure of the station.<BR>"
-			intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12.<BR>"
-			intercepttext += "Message ends."*/
+			intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. The origin of the biohazard is unknown.<BR>"
+			intercepttext += "<b>Biohazard Response Procedure 5-6</b> has been issued for [station_name()].<BR>"
+			intercepttext += "Orders for all [station_name()] personnel are as follows:<BR>"
+			intercepttext += " 1. Locate any outbreaks of the organism on the station.<BR>"
+			intercepttext += " 2. If found, use any neccesary means to contain and destroy the organism.<BR>"
+			intercepttext += " 3. Avoid damage to the capital infrastructure of the station.<BR>"
+			intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, <b>Biohazard Response Procedure 5-12</b> may be issued.<BR>"
+			print_command_report(text=intercepttext,title="Level 5-6 Biohazard Response Procedures",announce=FALSE)
+			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 		if(2)
-			var/nukecode = rand(10000, 99999)
-			for(var/obj/machinery/nuclearbomb/bomb in machines)
+			var/nukecode = random_nukecode()
+			for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 				if(bomb && bomb.r_code)
 					if(bomb.z == ZLEVEL_STATION)
 						bomb.r_code = nukecode
 
-			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
-			intercepttext += "Directive 7-12 has been issued for [station_name()].<BR>"
-			intercepttext += "The biohazard has grown out of control and will soon reach critical mass.<BR>"
-			intercepttext += "Your orders are as follows:<BR>"
+			intercepttext += "<FONT size = 3><b>NanoTrasen Update</b>: Biohazard Alert.</FONT><HR>"
+			intercepttext += "Reports indicate that the biohazard has grown out of control and will soon reach critical mass.<BR>"
+			intercepttext += "<b>Biohazard Response Procedure 5-12</b> has been issued for [station_name()].<BR>"
+			intercepttext += "Orders for all [station_name()] personnel are as follows:<BR>"
 			intercepttext += "1. Secure the Nuclear Authentication Disk.<BR>"
-			intercepttext += "2. Detonate the Nuke located in the Station's Vault.<BR>"
+			intercepttext += "2. Detonate the Nuke located in the vault.<BR>"
 			intercepttext += "Nuclear Authentication Code: [nukecode] <BR>"
-			intercepttext += "Message ends."
+			print_command_report(text=intercepttext,announce=TRUE)
 
-			for (var/mob/living/silicon/ai/aiPlayer in player_list)
+			for(var/mob/living/silicon/ai/aiPlayer in GLOB.player_list)
 				if (aiPlayer.client)
 					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 					aiPlayer.set_zeroth_law(law)
-					aiPlayer << "Laws Updated: [law]"
-
-	print_command_report(intercepttext,"Classified [command_name()] Update")
-	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg');
-	return
+		else
+			..()
 
 
 
@@ -60,20 +54,23 @@
 /datum/station_state/proc/count(count_territories)
 	for(var/turf/T in block(locate(1,1,1), locate(world.maxx,world.maxy,1)))
 
-		if(istype(T,/turf/simulated/floor))
-			if(!(T:burnt))
+		if(isfloorturf(T))
+			var/turf/open/floor/TF = T
+			if(!(TF.burnt))
 				src.floor += 12
 			else
 				src.floor += 1
 
-		if(istype(T, /turf/simulated/wall))
-			if(T:intact)
+		if(iswallturf(T))
+			var/turf/closed/wall/TW = T
+			if(TW.intact)
 				src.wall += 2
 			else
 				src.wall += 1
 
-		if(istype(T, /turf/simulated/wall/r_wall))
-			if(T:intact)
+		if(istype(T, /turf/closed/wall/r_wall))
+			var/turf/closed/wall/r_wall/TRW = T
+			if(TRW.intact)
 				src.r_wall += 2
 			else
 				src.r_wall += 1
@@ -82,8 +79,10 @@
 		for(var/obj/O in T.contents)
 			if(istype(O, /obj/structure/window))
 				src.window += 1
-			else if(istype(O, /obj/structure/grille) && (!O:destroyed))
-				src.grille += 1
+			else if(istype(O, /obj/structure/grille))
+				var/obj/structure/grille/GR = O
+				if(!GR.broken)
+					src.grille += 1
 			else if(istype(O, /obj/machinery/door))
 				src.door += 1
 			else if(istype(O, /obj/machinery))
@@ -98,10 +97,11 @@
 		if(valid_territories.len)
 			num_territories = valid_territories.len //Add them all up to make the total number of area types
 		else
-			world << "ERROR: NO VALID TERRITORIES"
+			to_chat(world, "ERROR: NO VALID TERRITORIES")
 
 /datum/station_state/proc/score(datum/station_state/result)
-	if(!result)	return 0
+	if(!result)
+		return 0
 	var/output = 0
 	output += (result.floor / max(floor,1))
 	output += (result.r_wall/ max(r_wall,1))

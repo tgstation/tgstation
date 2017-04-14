@@ -1,14 +1,13 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/effect/accelerated_particle
 	name = "Accelerated Particles"
 	desc = "Small things moving very fast."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
-	icon_state = "particle"//Need a new icon for this
+	icon_state = "particle"
 	anchored = 1
-	density = 1
+	density = 0
 	var/movement_range = 10
 	var/energy = 10
+	var/speed = 1
 
 /obj/effect/accelerated_particle/weak
 	movement_range = 8
@@ -23,52 +22,41 @@
 	energy = 50
 
 
-/obj/effect/accelerated_particle/New(loc, dir = 2)
-	src.loc = loc
-	src.dir = dir
+/obj/effect/accelerated_particle/New(loc)
+	..()
 
-	if(movement_range > 20)
-		movement_range = 20
-	spawn(0)
-		move(1)
-	return
+	addtimer(CALLBACK(src, .proc/move), 1)
 
 
 /obj/effect/accelerated_particle/Bump(atom/A)
-	if (A)
-		if(ismob(A))
+	if(A)
+		if(isliving(A))
 			toxmob(A)
-		if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/singularity/)))
-			A:energy += energy
-	return
+		else if(istype(A, /obj/machinery/the_singularitygen))
+			var/obj/machinery/the_singularitygen/S = A
+			S.energy += energy
+		else if(istype(A, /obj/singularity))
+			var/obj/singularity/S = A
+			S.energy += energy
 
 
-/obj/effect/accelerated_particle/Bumped(atom/A)
-	if(ismob(A))
-		Bump(A)
-	return
+/obj/effect/accelerated_particle/Crossed(atom/A)
+	if(isliving(A))
+		toxmob(A)
 
 
 /obj/effect/accelerated_particle/ex_act(severity, target)
-	loc = null
-	return
-
-
+	qdel(src)
 
 /obj/effect/accelerated_particle/proc/toxmob(mob/living/M)
 	M.rad_act(energy*6)
-	M.updatehealth()
-	return
 
-
-/obj/effect/accelerated_particle/proc/move(lag)
-	if(loc == null)
-		return
+/obj/effect/accelerated_particle/proc/move()
 	if(!step(src,dir))
-		src.loc = get_step(src,dir)
+		forceMove(get_step(src,dir))
 	movement_range--
-	if(movement_range <= 0)
-		loc = null
+	if(movement_range == 0)
+		qdel(src)
 	else
-		sleep(lag)
-		move(lag)
+		sleep(speed)
+		move()

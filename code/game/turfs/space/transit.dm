@@ -1,17 +1,41 @@
-/turf/space/transit
+/turf/open/space/transit
 	icon_state = "black"
 	dir = SOUTH
+	baseturf = /turf/open/space/transit
+	flags = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 
-/turf/space/transit/horizontal
+/turf/open/space/transit/south
+	dir = SOUTH
+
+/turf/open/space/transit/north
+	dir = NORTH
+
+/turf/open/space/transit/horizontal
 	dir = WEST
 
-/turf/space/transit/Entered(atom/movable/AM, atom/OldLoc)
-	if(!AM)
+/turf/open/space/transit/west
+	dir = WEST
+
+/turf/open/space/transit/east
+	dir = EAST
+
+/turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
+	throw_atom(AM)
+
+/turf/open/space/transit/proc/throw_atom(atom/movable/AM)
+	if(!AM || istype(AM, /obj/docking_port))
 		return
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 
-	var/_z = rand(ZLEVEL_SPACEMIN,ZLEVEL_SPACEMAX)	//select a random space zlevel
+	var/list/possible_transtitons = list()
+	var/k = 1
+	var/list/config_list = SSmapping.config.transition_config
+	for(var/a in config_list)
+		if(config_list[a] == CROSSLINKED) // Only pick z-levels connected to station space
+			possible_transtitons += k
+		k++
+	var/_z = pick(possible_transtitons)
 
 	//now select coordinates for a border turf
 	var/_x
@@ -34,18 +58,16 @@
 	AM.loc = T
 	AM.newtonian_move(dir)
 
+/turf/open/space/transit/CanBuildHere()
+	return istype(get_area(src), /area/shuttle)
 
-
-
-//Overwrite because we dont want people building rods in space.
-/turf/space/transit/attackby()
-	return
-
-/turf/space/transit/New()
-	update_icon()
+/turf/open/space/transit/Initialize()
 	..()
+	update_icon()
+	for(var/atom/movable/AM in src)
+		throw_atom(AM)
 
-/turf/space/transit/proc/update_icon()
+/turf/open/space/transit/proc/update_icon()
 	var/p = 9
 	var/angle = 0
 	var/state = 1

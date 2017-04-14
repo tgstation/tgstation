@@ -1,119 +1,97 @@
-var/datum/subsystem/lighting/SSlighting
+GLOBAL_LIST_EMPTY(lighting_update_lights) // List of lighting sources  queued for update.
+GLOBAL_LIST_EMPTY(lighting_update_corners) // List of lighting corners  queued for update.
+GLOBAL_LIST_EMPTY(lighting_update_objects) // List of lighting objects queued for update.
 
-#define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
-
-/datum/subsystem/lighting
+SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
-	wait = 5
-	priority = 1
-	dynamic_wait = 1
-	dwait_delta = 3
+	wait = 2
+	init_order = -20
+	flags = SS_TICKER
 
-	var/list/changed_lights = list()		//list of all datum/light_source that need updating
-	var/changed_lights_workload = 0			//stats on the largest number of lights (max changed_lights.len)
-	var/list/changed_turfs = list()			//list of all turfs which may have a different light level
-	var/changed_turfs_workload = 0			//stats on the largest number of turfs changed (max changed_turfs.len)
+	var/initialized = FALSE
 
-
-/datum/subsystem/lighting/New()
-	NEW_SS_GLOBAL(SSlighting)
-
-	return ..()
+/datum/controller/subsystem/lighting/stat_entry()
+	..("L:[GLOB.lighting_update_lights.len]|C:[GLOB.lighting_update_corners.len]|O:[GLOB.lighting_update_objects.len]")
 
 
-/datum/subsystem/lighting/stat_entry()
-	..("L:[round(changed_lights_workload,1)]|T:[round(changed_turfs_workload,1)]")
+/datum/controller/subsystem/lighting/Initialize(timeofday)
+	if (config.starlight)
+		for(var/area/A in world)
+			if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+				A.luminosity = 0
 
-
-//Workhorse of lighting. It cycles through each light that needs updating. It updates their
-//effects and then processes every turf in the queue, updating their lighting object's appearance
-//Any light that returns 1 in check() deletes itself
-//By using queues we are ensuring we don't perform more updates than are necessary
-/datum/subsystem/lighting/fire()
-	changed_lights_workload = MC_AVERAGE(changed_lights_workload, changed_lights.len)
-
-	for(var/thing in changed_lights)
-		var/datum/light_source/LS = thing
-		LS.check()
-	changed_lights.Cut()
-
-	changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
-	for(var/thing in changed_turfs)
-		var/turf/T = thing
-		if(T.lighting_changed)
-			T.redraw_lighting()
-	changed_turfs.Cut()
-
-//same as above except it attempts to shift ALL turfs in the world regardless of lighting_changed status
-//Does not loop. Should be run prior to process() being called for the first time.
-//Note: if we get additional z-levels at runtime (e.g. if the gateway thin ever gets finished) we can initialize specific
-//z-levels with the z_level argument
-/datum/subsystem/lighting/Initialize(timeofday, z_level)
-	for(var/area/A in world)
-		if (A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT)
-			if (config.starlight)
-				A.SetDynamicLighting()
-
-
-	for(var/thing in changed_lights)
-		var/datum/light_source/LS = thing
-		LS.check()
-	changed_lights.Cut()
-
-	var/z_start = 1
-	var/z_finish = world.maxz
-	if(z_level >= 1 && z_level <= world.maxz)
-		z_level = round(z_level)
-		z_start = z_level
-		z_finish = z_level
-
-	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
-
-	for(var/thing in turfs_to_init)
-		var/turf/T = thing
-		T.init_lighting()
-
-	if(z_level)
-		//we need to loop through to clear only shifted turfs from the list. or we will cause errors
-		for(var/thing in changed_turfs)
-			var/turf/T = thing
-			if(T.z in z_start to z_finish)
-				continue
-			changed_turfs.Remove(thing)
-	else
-		changed_turfs.Cut()
+	create_all_lighting_objects()
+	initialized = TRUE
+	
+	fire(FALSE, TRUE)
 
 	..()
 
-//Used to strip valid information from an existing instance and transfer it to the replacement. i.e. when a crash occurs
-//It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfered but the loop
-//does not crash
-/datum/subsystem/lighting/Recover()
-	if(!istype(SSlighting.changed_turfs))
-		SSlighting.changed_turfs = list()
-	if(!istype(SSlighting.changed_lights))
-		SSlighting.changed_lights = list()
+/datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
+	var/real_tick_limit
+	if(!init_tick_checks)
+		real_tick_limit = GLOB.CURRENT_TICKLIMIT
+		GLOB.CURRENT_TICKLIMIT = ((real_tick_limit - world.tick_usage) / 3) + world.tick_usage
+	var/i = 0
+	for (i in 1 to GLOB.lighting_update_lights.len)
+		var/datum/light_source/L = GLOB.lighting_update_lights[i]
 
-	for(var/thing in SSlighting.changed_lights)
-		var/datum/light_source/LS = thing
-		spawn(-1)			//so we don't crash the loop (inefficient)
-			LS.check()
+		if (L.check() || L.destroyed || L.force_update)
+			L.remove_lum()
+			if (!L.destroyed)
+				L.apply_lum()
 
-	for(var/thing in changed_turfs)
-		var/turf/T = thing
-		if(T.lighting_changed)
-			spawn(-1)
-				T.redraw_lighting()
+		else if (L.vis_update) //We smartly update only tiles that became (in) visible to use.
+			L.smart_vis_update()
 
-	var/msg = "## DEBUG: [time2text(world.timeofday)] [name] subsystem restarted. Reports:\n"
-	for(var/varname in SSlighting.vars)
-		switch(varname)
-			if("tag","bestF","type","parent_type","vars")	continue
-			else
-				var/varval1 = SSlighting.vars[varname]
-				var/varval2 = vars[varname]
-				if(istype(varval1,/list))
-					varval1 = "/list([length(varval1)])"
-					varval2 = "/list([length(varval2)])"
-				msg += "\t [varname] = [varval1] -> [varval2]\n"
-	world.log << msg
+		L.vis_update   = FALSE
+		L.force_update = FALSE
+		L.needs_update = FALSE
+		
+		if(init_tick_checks)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			break
+	if (i)
+		GLOB.lighting_update_lights.Cut(1, i+1)
+		i = 0
+
+	if(!init_tick_checks)
+		GLOB.CURRENT_TICKLIMIT = ((real_tick_limit - world.tick_usage)/2)+world.tick_usage
+
+	for (i in 1 to GLOB.lighting_update_corners.len)
+		var/datum/lighting_corner/C = GLOB.lighting_update_corners[i]
+
+		C.update_objects()
+		C.needs_update = FALSE
+		if(init_tick_checks)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			break
+	if (i)
+		GLOB.lighting_update_corners.Cut(1, i+1)
+		i = 0
+
+
+	if(!init_tick_checks)
+		GLOB.CURRENT_TICKLIMIT = real_tick_limit
+
+	for (i in 1 to GLOB.lighting_update_objects.len)
+		var/atom/movable/lighting_object/O = GLOB.lighting_update_objects[i]
+
+		if (QDELETED(O))
+			continue
+
+		O.update()
+		O.needs_update = FALSE
+		if(init_tick_checks)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			break
+	if (i)
+		GLOB.lighting_update_objects.Cut(1, i+1)
+
+
+/datum/controller/subsystem/lighting/Recover()
+	initialized = SSlighting.initialized
+	..()

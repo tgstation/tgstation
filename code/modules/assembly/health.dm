@@ -11,20 +11,23 @@
 	var/health_scan
 	var/alarm_health = 0
 
-
+/obj/item/device/assembly/health/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Use a multitool to swap between \"detect death\" mode and \"detect critical state\" mode.</span>")
 
 /obj/item/device/assembly/health/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())
+		return 0//Cooldown check
 	toggle_scan()
 	return 0
 
 /obj/item/device/assembly/health/toggle_secure()
 	secured = !secured
 	if(secured && scanning)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		scanning = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return secured
 
@@ -62,19 +65,20 @@
 	return
 
 /obj/item/device/assembly/health/proc/toggle_scan()
-	if(!secured)	return 0
+	if(!secured)
+		return 0
 	scanning = !scanning
 	if(scanning)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	return
 
 /obj/item/device/assembly/health/interact(mob/user as mob)//TODO: Change this to the wires thingy
 	if(!secured)
 		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
 		return 0
-	var/dat = text("<TT><B>Health Sensor</B> <A href='?src=\ref[src];scanning=1'>[scanning?"On":"Off"]</A>")
+	var/dat = "<TT><B>Health Sensor</B> <A href='?src=\ref[src];scanning=1'>[scanning?"On":"Off"]</A>"
 	if(scanning && health_scan)
 		dat += "<BR>Health: [health_scan]"
 	user << browse(dat, "window=hscan")
@@ -89,7 +93,7 @@
 
 	var/mob/user = usr
 
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src))
 		usr << browse(null, "window=hscan")
 		onclose(usr, "hscan")
 		return

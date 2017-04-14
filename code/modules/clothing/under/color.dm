@@ -3,20 +3,18 @@
 
 /obj/item/clothing/under/color/random/New()
 	..()
-	var/list/excluded = list(/obj/item/clothing/under/color/random, /obj/item/clothing/under/color)
-	var/obj/item/clothing/under/color/C = pick(typesof(/obj/item/clothing/under/color) - excluded)
+	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
 	name = initial(C.name)
 	icon_state = initial(C.icon_state)
 	item_state = initial(C.item_state)
 	item_color = initial(C.item_color)
-	suit_color = initial(C.item_color)
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	burn_state = -1 //Won't burn in fires
+	resistance_flags = 0
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
@@ -24,6 +22,14 @@
 	icon_state = "grey"
 	item_state = "gy_suit"
 	item_color = "grey"
+
+/obj/item/clothing/under/color/grey/glorf
+	name = "ancient jumpsuit"
+	desc = "A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade."
+
+/obj/item/clothing/under/color/grey/glorf/hit_reaction(mob/living/carbon/human/owner)
+	owner.forcesay(GLOB.hit_appends)
+	return 0
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
@@ -69,35 +75,29 @@
 	item_state = "y_suit"
 	item_color = "yellow"
 
-/obj/item/clothing/under/color/lightblue
-	name = "lightblue jumpsuit"
-	icon_state = "lightblue"
+/obj/item/clothing/under/color/darkblue
+	name = "darkblue jumpsuit"
+	icon_state = "darkblue"
 	item_state = "b_suit"
-	item_color = "lightblue"
+	item_color = "darkblue"
 
-/obj/item/clothing/under/color/aqua
-	name = "aqua jumpsuit"
-	icon_state = "aqua"
+/obj/item/clothing/under/color/teal
+	name = "teal jumpsuit"
+	icon_state = "teal"
 	item_state = "b_suit"
-	item_color = "aqua"
-
-/obj/item/clothing/under/color/purple
-	name = "purple jumpsuit"
-	icon_state = "purple"
-	item_state = "p_suit"
-	item_color = "purple"
+	item_color = "teal"
 
 /obj/item/clothing/under/color/lightpurple
-	name = "lightpurple jumpsuit"
+	name = "purple jumpsuit"
 	icon_state = "lightpurple"
 	item_state = "p_suit"
 	item_color = "lightpurple"
 
-/obj/item/clothing/under/color/lightgreen
-	name = "lightgreen jumpsuit"
-	icon_state = "lightgreen"
+/obj/item/clothing/under/color/darkgreen
+	name = "darkgreen jumpsuit"
+	icon_state = "darkgreen"
 	item_state = "g_suit"
-	item_color = "lightgreen"
+	item_color = "darkgreen"
 
 /obj/item/clothing/under/color/lightbrown
 	name = "lightbrown jumpsuit"
@@ -110,30 +110,6 @@
 	icon_state = "brown"
 	item_state = "lb_suit"
 	item_color = "brown"
-
-/obj/item/clothing/under/color/yellowgreen
-	name = "yellowgreen jumpsuit"
-	icon_state = "yellowgreen"
-	item_state = "y_suit"
-	item_color = "yellowgreen"
-
-/obj/item/clothing/under/color/darkblue
-	name = "darkblue jumpsuit"
-	icon_state = "darkblue"
-	item_state = "b_suit"
-	item_color = "darkblue"
-
-/obj/item/clothing/under/color/lightred
-	name = "lightred jumpsuit"
-	icon_state = "lightred"
-	item_state = "r_suit"
-	item_color = "lightred"
-
-/obj/item/clothing/under/color/darkred
-	name = "darkred jumpsuit"
-	icon_state = "darkred"
-	item_state = "r_suit"
-	item_color = "darkred"
 
 /obj/item/clothing/under/color/maroon
 	name = "maroon jumpsuit"

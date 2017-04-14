@@ -3,30 +3,28 @@
 /obj/effect/decal/cleanable/robot_debris
 	name = "robot debris"
 	desc = "It's a useless heap of junk... <i>or is it?</i>"
-	gender = PLURAL
-	density = 0
-	anchored = 1
-	layer = 2
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
+	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = MAX_SHOE_BLOODINESS
+	mergeable_decal = 0
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
-	spawn (0)
-		var/direction = pick(directions)
-		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-			sleep(3)
-			if (i > 0)
-				if (prob(40))
-					new /obj/effect/decal/cleanable/oil/streak(src.loc)
-				else if (prob(10))
-					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-					s.set_up(3, 1, src)
-					s.start()
-			if (step_to(src, get_step(src, direction), 0))
-				break
+	set waitfor = 0
+	var/direction = pick(directions)
+	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
+		sleep(2)
+		if (i > 0)
+			if (prob(40))
+				new /obj/effect/decal/cleanable/oil/streak(src.loc)
+			else if (prob(10))
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+				s.set_up(3, 1, src)
+				s.start()
+		if (!step_to(src, get_step(src, direction), 0))
+			break
 
 /obj/effect/decal/cleanable/robot_debris/ex_act()
 	return
@@ -43,10 +41,6 @@
 /obj/effect/decal/cleanable/oil
 	name = "motor oil"
 	desc = "It's black and greasy. Looks like Beepsky made another mess."
-	gender = PLURAL
-	density = 0
-	anchored = 1
-	layer = 2
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "floor1"
 	var/viruses = list()
@@ -54,7 +48,7 @@
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = MAX_SHOE_BLOODINESS
 
-/obj/effect/decal/cleanable/oil/New()
+/obj/effect/decal/cleanable/oil/Initialize()
 	..()
 	reagents.add_reagent("oil", 30)
 

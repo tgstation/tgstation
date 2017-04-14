@@ -4,11 +4,12 @@
 	icon = 'icons/obj/items.dmi'
 	amount = 6
 	max_amount = 6
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	burn_state = 0 //Burnable
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 40
+	max_integrity = 40
 	var/heal_brute = 0
 	var/heal_burn = 0
 	var/stop_bleeding = 0
@@ -22,22 +23,30 @@
 			t_him = "him"
 		else if(M.gender == FEMALE)
 			t_him = "her"
-		user << "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>"
+		to_chat(user, "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>")
 		return
 
 	if(!istype(M, /mob/living/carbon) && !istype(M, /mob/living/simple_animal))
-		user << "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>"
+		to_chat(user, "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>")
 		return 1
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(stop_bleeding)
-			if(H.bleedsuppress)
-				user << "<span class='warning'>[H]'s bleeding is already bandaged!</span>"
-				return
-			else if(!H.blood_max)
-				user << "<span class='warning'>[H] isn't bleeding!</span>"
-				return
+	var/obj/item/bodypart/affecting
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		affecting = C.get_bodypart(check_zone(user.zone_selected))
+		if(!affecting) //Missing limb?
+			to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
+			return
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(stop_bleeding)
+				if(H.bleedsuppress)
+					to_chat(user, "<span class='warning'>[H]'s bleeding is already bandaged!</span>")
+					return
+				else if(!H.bleed_rate)
+					to_chat(user, "<span class='warning'>[H] isn't bleeding!</span>")
+					return
+
 
 	if(isliving(M))
 		if(!M.can_inject(user, 1))
@@ -48,13 +57,13 @@
 			if (istype(M, /mob/living/simple_animal))
 				var/mob/living/simple_animal/critter = M
 				if (!(critter.healable))
-					user << "<span class='notice'> You cannot use [src] on [M]!</span>"
+					to_chat(user, "<span class='notice'> You cannot use [src] on [M]!</span>")
 					return
 				else if (critter.health == critter.maxHealth)
-					user << "<span class='notice'> [M] is at full health.</span>"
+					to_chat(user, "<span class='notice'> [M] is at full health.</span>")
 					return
 				else if(src.heal_brute < 1)
-					user << "<span class='notice'> [src] won't help [M] at all.</span>"
+					to_chat(user, "<span class='notice'> [src] won't help [M] at all.</span>")
 					return
 			user.visible_message("<span class='green'>[user] applies [src] on [M].</span>", "<span class='green'>You apply [src] on [M].</span>")
 		else
@@ -64,26 +73,29 @@
 			else if(user.gender == FEMALE)
 				t_himself = "herself"
 			user.visible_message("<span class='notice'>[user] starts to apply [src] on [t_himself]...</span>", "<span class='notice'>You begin applying [src] on yourself...</span>")
-			if(!do_mob(user, M, self_delay))	return
+			if(!do_mob(user, M, self_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject,user,1)))
+				return
 			user.visible_message("<span class='green'>[user] applies [src] on [t_himself].</span>", "<span class='green'>You apply [src] on yourself.</span>")
 
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
-		if(stop_bleeding)
-			if(!H.bleedsuppress) //so you can't stack bleed suppression
-				H.suppress_bloodloss(stop_bleeding)
-		if(affecting.status == ORGAN_ORGANIC) //Limb must be organic to be healed - RR
-			if(affecting.heal_damage(src.heal_brute, src.heal_burn, 0))
-				H.update_damage_overlays(0)
-
-			M.updatehealth()
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		affecting = C.get_bodypart(check_zone(user.zone_selected))
+		if(!affecting) //Missing limb?
+			to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
+			return
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(stop_bleeding)
+				if(!H.bleedsuppress) //so you can't stack bleed suppression
+					H.suppress_bloodloss(stop_bleeding)
+		if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
+			if(affecting.heal_damage(heal_brute, heal_burn))
+				C.update_damage_overlays()
 		else
-			user << "<span class='notice'>Medicine won't work on a robotic limb!</span>"
+			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 	else
-		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
-
+		M.heal_bodypart_damage((src.heal_brute/2), (src.heal_burn/2))
 
 	use(1)
 
@@ -95,7 +107,8 @@
 	desc = "A theraputic gel pack and bandages designed to treat blunt-force trauma."
 	icon_state = "brutepack"
 	heal_brute = 40
-	origin_tech = "biotech=1"
+	origin_tech = "biotech=2"
+	self_delay = 20
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
@@ -104,7 +117,8 @@
 	singular_name = "medical gauze"
 	icon_state = "gauze"
 	stop_bleeding = 1800
-	self_delay = 80
+	self_delay = 20
+	max_amount = 12
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
@@ -112,7 +126,7 @@
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
 	stop_bleeding = 900
 
-/obj/item/stack/medical/gauze/cyborg/
+/obj/item/stack/medical/gauze/cyborg
 	materials = list()
 	is_cyborg = 1
 	cost = 250
@@ -124,4 +138,5 @@
 	singular_name = "ointment"
 	icon_state = "ointment"
 	heal_burn = 40
-	origin_tech = "biotech=1"
+	origin_tech = "biotech=2"
+	self_delay = 20

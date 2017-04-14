@@ -3,7 +3,7 @@
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
-	circuit = /obj/item/weapon/circuitboard/telesci_console
+	circuit = /obj/item/weapon/circuitboard/computer/telesci_console
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
@@ -31,8 +31,8 @@
 	var/obj/item/device/gps/inserted_gps
 
 /obj/machinery/computer/telescience/New()
-	..()
 	recalibrate()
+	..()
 
 /obj/machinery/computer/telescience/Destroy()
 	eject()
@@ -43,21 +43,22 @@
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	..()
-	user << "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots."
+	to_chat(user, "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots.")
 
-/obj/machinery/computer/telescience/initialize()
+/obj/machinery/computer/telescience/Initialize(mapload)
 	..()
-	for(var/i = 1; i <= starting_crystals; i++)
-		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
+	if(mapload)
+		for(var/i = 1; i <= starting_crystals; i++)
+			crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
-	user << "<span class='warning'>You are too primitive to use this computer!</span>"
+	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")
 	return
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/bluespace_crystal))
+	if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
 		if(crystals.len >= max_crystals)
-			user << "<span class='warning'>There are not enough crystal slots.</span>"
+			to_chat(user, "<span class='warning'>There are not enough crystal slots.</span>")
 			return
 		if(!user.drop_item())
 			return
@@ -67,18 +68,18 @@
 		updateDialog()
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
+			if(!user.transferItemToLoc(W, src))
+				return
 			inserted_gps = W
-			user.unEquip(W)
-			W.loc = src
 			user.visible_message("[user] inserts [W] into \the [src]'s GPS device slot.", "<span class='notice'>You insert [W] into \the [src]'s GPS device slot.</span>")
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			telepad = M.buffer
 			M.buffer = null
-			user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
+			to_chat(user, "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/telescience/attack_ai(mob/user)
 	src.attack_hand(user)
@@ -102,9 +103,9 @@
 			t += "<span class='linkOff'>Set GPS memory</span>"
 		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
 		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]°</div>"
+		t += "<div class='statusDisplay'>[rotation]Â°</div>"
 		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]°</div>"
+		t += "<div class='statusDisplay'>[angle]Â°</div>"
 		t += "<span class='linkOn'>Set Power</span>"
 		t += "<div class='statusDisplay'>"
 
@@ -138,20 +139,14 @@
 	var/datum/browser/popup = new(user, "telesci", name, 300, 500)
 	popup.set_content(t)
 	popup.open()
-	return
 
 /obj/machinery/computer/telescience/proc/sparks()
 	if(telepad)
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, get_turf(telepad))
-		s.start()
-	else
-		return
+		do_sparks(5, TRUE, get_turf(telepad))
 
 /obj/machinery/computer/telescience/proc/telefail()
 	sparks()
 	visible_message("<span class='warning'>The telepad weakly fizzles.</span>")
-	return
 
 /obj/machinery/computer/telescience/proc/doteleport(mob/user)
 
@@ -200,9 +195,7 @@
 			// use a lot of power
 			use_power(power * 10)
 
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(5, 1, get_turf(telepad))
-			s.start()
+			do_sparks(5, TRUE, get_turf(telepad))
 
 			temp_msg = "Teleport successful.<BR>"
 			if(teles_left < 10)
@@ -210,10 +203,7 @@
 			else
 				temp_msg += "Data printed below."
 
-			var/sparks = get_turf(target)
-			var/datum/effect_system/spark_spread/y = new /datum/effect_system/spark_spread
-			y.set_up(5, 1, sparks)
-			y.start()
+			do_sparks(5, TRUE, get_turf(target))
 
 			var/turf/source = target
 			var/turf/dest = get_turf(telepad)
@@ -282,9 +272,9 @@
 		telefail()
 		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
-	if(z_co == 2 || z_co < 1 || z_co > 6)
+	if(z_co == ZLEVEL_CENTCOM || z_co < 1 || z_co > ZLEVEL_SPACEMAX)
 		telefail()
-		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 6, or equal to 2."
+		temp_msg = "ERROR! Sector is outside known time and space!"
 		return
 	if(teles_left > 0)
 		doteleport(user)

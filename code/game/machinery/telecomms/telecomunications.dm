@@ -12,7 +12,7 @@
 	Look at radio.dm for the prequel to this code.
 */
 
-var/global/list/obj/machinery/telecomms/telecomms_list = list()
+GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms
 	icon = 'icons/obj/machines/telecomms.dmi'
@@ -29,9 +29,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/toggled = 1 	// Is it toggled on
 	var/on = 1
 	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
-	var/circuitboard = null // string pointing to a circuitboard type
 	var/hide = 0				// Is it a hidden machine?
 	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
+	critical_machine = TRUE
 
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
@@ -86,7 +86,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"verb_say" = signal.data["verb_say"],
 			"verb_ask" = signal.data["verb_ask"],
 			"verb_exclaim" = signal.data["verb_exclaim"],
-			"verb_yell" = signal.data["verb_yell"]
+			"verb_yell" = signal.data["verb_yell"],
+			"language" = signal.data["language"]
 			)
 
 			// Keep the "original" signal constant
@@ -133,7 +134,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 
 /obj/machinery/telecomms/New()
-	telecomms_list += src
+	GLOB.telecomms_list += src
 	..()
 
 	//Set the listening_level if there's none.
@@ -142,20 +143,26 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		var/turf/position = get_turf(src)
 		listening_level = position.z
 
-/obj/machinery/telecomms/initialize()
-	if(autolinkers.len)
+/obj/machinery/telecomms/onShuttleMove(turf/T1, rotation)
+	. = ..()
+	if(. && T1) // Update listening Z, just in case you have telecomm relay on a shuttle
+		listening_level = T1.z
+
+/obj/machinery/telecomms/Initialize(mapload)
+	..()
+	if(mapload && autolinkers.len)
 		// Links nearby machines
 		if(!long_range_link)
-			for(var/obj/machinery/telecomms/T in ultra_range(20, src, 1))
+			for(var/obj/machinery/telecomms/T in urange(20, src, 1))
 				add_link(T)
 		else
-			for(var/obj/machinery/telecomms/T in telecomms_list)
+			for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
 				add_link(T)
 
 
 /obj/machinery/telecomms/Destroy()
-	telecomms_list -= src
-	for(var/obj/machinery/telecomms/comm in telecomms_list)
+	GLOB.telecomms_list -= src
+	for(var/obj/machinery/telecomms/comm in GLOB.telecomms_list)
 		comm.links -= src
 	links = list()
 	return ..()

@@ -4,17 +4,17 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	var/uses = 4
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "paper"
 	throw_speed = 3
 	throw_range = 7
-	origin_tech = "bluespace=4"
-	burn_state = 0 //Burnable
+	origin_tech = "bluespace=6"
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
 	uses = 1
-	origin_tech = "bluespace=2"
+	origin_tech = "bluespace=5"
 
 
 
@@ -34,13 +34,13 @@
 	..()
 	if (usr.stat || usr.restrained() || src.loc != usr)
 		return
-	var/mob/living/carbon/human/H = usr
-	if (!( istype(H, /mob/living/carbon/human)))
+	if (!ishuman(usr))
 		return 1
-	if ((usr == src.loc || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.set_machine(src)
+	var/mob/living/carbon/human/H = usr
+	if(H.is_holding(src))
+		H.set_machine(src)
 		if (href_list["spell_teleport"])
-			if (src.uses >= 1)
+			if(uses)
 				teleportscroll(H)
 	if(H)
 		attack_self(H)
@@ -50,13 +50,10 @@
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
-	var/area/thearea = teleportlocs[A]
-
-	if (!user || user.stat || user.restrained() || uses <= 0)
+	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs
+	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
 		return
-	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
-		return
+	var/area/thearea = GLOB.teleportlocs[A]
 
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(2, user.loc)
@@ -64,36 +61,14 @@
 	smoke.start()
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density)
-			var/clear = 1
-			for(var/obj/O in T)
-				if(O.density)
-					clear = 0
-					break
-			if(clear)
-				L+=T
+		if(!is_blocked_turf(T))
+			L += T
 
 	if(!L.len)
-		user <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
+		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 		return
 
-	if(user && user.buckled)
-		user.buckled.unbuckle_mob()
-
-	var/list/tempL = L.Copy()
-	var/attempt = null
-	var/success = 0
-	while(tempL.len)
-		attempt = pick(tempL)
-		user.Move(attempt)
-		if(get_turf(user) == attempt)
-			success = 1
-			break
-		else
-			tempL.Remove(attempt)
-
-	if(!success)
-		user.loc = pick(L)
+	user.forceMove(pick(L))
 
 	smoke.start()
-	src.uses -= 1
+	uses--

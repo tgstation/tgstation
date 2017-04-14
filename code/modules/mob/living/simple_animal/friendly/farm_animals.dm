@@ -21,19 +21,21 @@
 	attacktext = "kicks"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 40
+	maxHealth = 40
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	environment_smash = 0
 	stop_automated_movement_when_pulled = 1
-	var/obj/udder/udder = null
+	blood_volume = BLOOD_VOLUME_NORMAL
+	var/obj/item/udder/udder = null
 
-/mob/living/simple_animal/hostile/retaliate/goat/New()
+/mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
 	..()
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
 	qdel(udder)
 	udder = null
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
 	. = ..()
@@ -48,32 +50,33 @@
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
-		if(locate(/obj/effect/spacevine) in loc)
-			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
+		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+		if(SV)
 			SV.eat(src)
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
 				var/step = get_step(src, direction)
 				if(step)
-					if(locate(/obj/effect/spacevine) in step)
+					if(locate(/obj/structure/spacevine) in step)
 						Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
-	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in \his eye.</span>")
+	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in [p_their()] eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
 	if(!stat)
-		if(locate(/obj/effect/spacevine) in loc)
-			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
+		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+		if(SV)
 			SV.eat(src)
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
 		udder.milkAnimal(O, user)
+		return 1
 	else
-		..()
+		return ..()
 
 //cow
 /mob/living/simple_animal/cow
@@ -83,6 +86,7 @@
 	icon_living = "cow"
 	icon_dead = "cow_dead"
 	icon_gib = "cow_gib"
+	gender = FEMALE
 	speak = list("moo?","moo","MOOOOOO")
 	speak_emote = list("moos","moos hauntingly")
 	emote_hear = list("brays.")
@@ -97,23 +101,26 @@
 	attacktext = "kicks"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 50
-	var/obj/udder/udder = null
+	maxHealth = 50
+	var/obj/item/udder/udder = null
 	gold_core_spawnable = 2
+	blood_volume = BLOOD_VOLUME_NORMAL
 
-/mob/living/simple_animal/cow/New()
+/mob/living/simple_animal/cow/Initialize()
 	udder = new()
 	..()
 
 /mob/living/simple_animal/cow/Destroy()
 	qdel(udder)
 	udder = null
-	..()
+	return ..()
 
 /mob/living/simple_animal/cow/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
 		udder.milkAnimal(O, user)
+		return 1
 	else
-		..()
+		return ..()
 
 /mob/living/simple_animal/cow/Life()
 	. = ..()
@@ -121,18 +128,28 @@
 		udder.generateMilk()
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
-		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
+	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
+		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
+			"<span class='notice'>You tip over [src].</span>")
+		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
 		Weaken(30)
 		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat && M)
 				icon_state = icon_living
-				var/list/responses = list(	"[src] looks at you imploringly.",
-											"[src] looks at you pleadingly",
-											"[src] looks at you with a resigned expression.",
-											"[src] seems resigned to its fate.")
-				M << pick(responses)
+				var/external
+				var/internal
+				switch(pick(1,2,3,4))
+					if(1,2,3)
+						var/text = pick("imploringly.", "pleadingly.",
+							"with a resigned expression.")
+						external = "[src] looks at [M] [text]"
+						internal = "You look at [M] [text]"
+					if(4)
+						external = "[src] seems resigned to its fate."
+						internal = "You resign yourself to your fate."
+				visible_message("<span class='notice'>[external]</span>",
+					"<span class='revennotice'>[internal]</span>")
 	else
 		..()
 
@@ -143,6 +160,7 @@
 	icon_living = "chick"
 	icon_dead = "chick_dead"
 	icon_gib = "chick_gib"
+	gender = FEMALE
 	speak = list("Cherp.","Cherp?","Chirrup.","Cheep!")
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps.")
@@ -155,14 +173,15 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	attacktext = "kicks"
-	health = 1
-	ventcrawler = 2
+	health = 3
+	maxHealth = 3
+	ventcrawler = VENTCRAWLER_ALWAYS
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 2
 
-/mob/living/simple_animal/chick/New()
+/mob/living/simple_animal/chick/Initialize()
 	..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
@@ -177,15 +196,17 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-var/const/MAX_CHICKENS = 50
-var/global/chicken_count = 0
+/mob/living/simple_animal/chick/holo/Life()
+	..()
+	amount_grown = 0
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
-	icon_state = "chicken"
-	icon_living = "chicken"
-	icon_dead = "chicken_dead"
+	gender = FEMALE
+	icon_state = "chicken_brown"
+	icon_living = "chicken_brown"
+	icon_dead = "chicken_brown_dead"
 	speak = list("Cluck!","BWAAAAARK BWAK BWAK BWAK!","Bwaak bwak.")
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks.")
@@ -200,8 +221,9 @@ var/global/chicken_count = 0
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	attacktext = "kicks"
-	health = 10
-	ventcrawler = 2
+	health = 15
+	maxHealth = 15
+	ventcrawler = VENTCRAWLER_ALWAYS
 	var/eggsleft = 0
 	var/eggsFertile = TRUE
 	var/body_color
@@ -212,8 +234,9 @@ var/global/chicken_count = 0
 	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = 2
+	var/static/chicken_count = 0
 
-/mob/living/simple_animal/chicken/New()
+/mob/living/simple_animal/chicken/Initialize()
 	..()
 	if(!body_color)
 		body_color = pick(validColors)
@@ -222,11 +245,11 @@ var/global/chicken_count = 0
 	icon_dead = "[icon_prefix]_[body_color]_dead"
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
-	chicken_count += 1
+	++chicken_count
 
-/mob/living/simple_animal/chicken/death(gibbed)
-	..(gibbed)
-	chicken_count -= 1
+/mob/living/simple_animal/chicken/Destroy()
+	--chicken_count
+	return ..()
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
 	if(istype(O, food_type)) //feedin' dem chickens
@@ -236,9 +259,9 @@ var/global/chicken_count = 0
 			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
-			//world << eggsleft
+			//to_chat(world, eggsleft)
 		else
-			user << "<span class='warning'>[name] doesn't seem hungry!</span>"
+			to_chat(user, "<span class='warning'>[name] doesn't seem hungry!</span>")
 	else
 		..()
 
@@ -246,7 +269,7 @@ var/global/chicken_count = 0
 	. =..()
 	if(!.)
 		return
-	if(!stat && prob(3) && eggsleft > 0)
+	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("[src] [pick(layMessage)]")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
@@ -254,7 +277,7 @@ var/global/chicken_count = 0
 		E.pixel_y = rand(-6,6)
 		if(eggsFertile)
 			if(chicken_count < MAX_CHICKENS && prob(25))
-				SSobj.processing |= E
+				START_PROCESSING(SSobj, E)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
@@ -263,33 +286,32 @@ var/global/chicken_count = 0
 		if(amount_grown >= 100)
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 			qdel(src)
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
-/obj/udder
 
-/obj/udder/New()
+/obj/item/udder
+	name = "udder"
+
+/obj/item/udder/Initialize()
 	reagents = new(50)
 	reagents.my_atom = src
 	reagents.add_reagent("milk", 20)
+	..()
 
-/obj/udder/proc/generateMilk()
+/obj/item/udder/proc/generateMilk()
 	if(prob(5))
 		reagents.add_reagent("milk", rand(5, 10))
 
-/obj/udder/proc/milkAnimal(obj/O, mob/user)
+/obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/weapon/reagent_containers/glass/G = O
 	if(G.reagents.total_volume >= G.volume)
-		user << "<span class='danger'>[O] is full.</span>"
+		to_chat(user, "<span class='danger'>[O] is full.</span>")
 		return
-	var/transfered = reagents.trans_id_to(G, "milk", rand(5,10))
+	var/transfered = reagents.trans_to(O, rand(5,10))
 	if(transfered)
 		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
-		user << "<span class='danger'>The udder is dry. Wait a bit longer...</span>"
-
-/obj/udder/Destroy()
-	qdel(reagents)
-	..()
+		to_chat(user, "<span class='danger'>The udder is dry. Wait a bit longer...</span>")

@@ -1,69 +1,83 @@
-/mob/living/gib(animation = 1)
+/mob/living/gib(no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying
+	if(stat != DEAD)
+		death(1)
+
+	if(!prev_lying)
+		gib_animation()
+
+	spill_organs(no_brain, no_organs, no_bodyparts)
+
+	if(!no_bodyparts)
+		spread_bodyparts(no_brain, no_organs)
+
+	spawn_gibs(no_bodyparts)
+	qdel(src)
+
+/mob/living/proc/gib_animation()
+	return
+
+/mob/living/proc/spawn_gibs()
+	new /obj/effect/gibspawner/generic(loc, viruses)
+
+/mob/living/proc/spill_organs()
+	return
+
+/mob/living/proc/spread_bodyparts()
+	return
+
+/mob/living/dust(just_ash = FALSE)
 	death(1)
 
 	if(buckled)
-		buckled.unbuckle_mob() //to update alien nest overlay.
+		buckled.unbuckle_mob(src,force=1)
 
-	var/atom/movable/overlay/animate = setup_animation(animation, prev_lying)
-	if(animate)
-		gib_animation(animate)
+	dust_animation()
+	spawn_dust(just_ash)
+	qdel(src)
 
-	spawn_gibs()
+/mob/living/proc/dust_animation()
+	return
 
-	end_animation(animate) // Will qdel(src)
-
-/mob/living/proc/spawn_gibs()
-	gibs(loc, viruses)
-
-/mob/living/proc/gib_animation(animate, flick_name = "gibbed")
-	flick(flick_name, animate)
-
-/mob/living/dust(animation = 0)
-	death(1)
-	var/atom/movable/overlay/animate = setup_animation(animation, 0)
-	if(animate)
-		dust_animation(animate)
-
-	spawn_dust()
-	end_animation(animate)
-
-/mob/living/proc/spawn_dust()
+/mob/living/proc/spawn_dust(just_ash = FALSE)
 	new /obj/effect/decal/cleanable/ash(loc)
 
-/mob/living/proc/dust_animation(animate, flick_name = "")
-	flick(flick_name, animate)
 
 /mob/living/death(gibbed)
-	eye_blind = max(eye_blind, 1)
+	stat = DEAD
+	unset_machine()
 	timeofdeath = world.time
-
-	living_mob_list -= src
+	tod = worldtime2text()
+	var/turf/T = get_turf(src)
+	if(mind && mind.name && mind.active && (!(T.flags & NO_DEATHRATTLE)))
+		var/area/A = get_area(T)
+		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[A.name]</b>.</span>"
+		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
+	if(mind)
+		mind.store_memory("Time of death: [tod]", 0)
+	GLOB.living_mob_list -= src
 	if(!gibbed)
-		dead_mob_list += src
-	else if(buckled)
-		buckled.unbuckle_mob()
+		GLOB.dead_mob_list += src
+	paralysis = 0
+	stunned = 0
+	weakened = 0
+	set_drugginess(0)
+	SetSleeping(0, 0)
+	blind_eyes(1)
+	reset_perspective(null)
+	reload_fullscreen()
+	update_action_buttons_icon()
+	update_damage_hud()
+	update_health_hud()
+	update_canmove()
+	med_hud_set_health()
+	med_hud_set_status()
 
+	for(var/s in ownedSoullinks)
+		var/datum/soullink/S = s
+		S.ownerDies(gibbed)
+	for(var/s in sharedSoullinks)
+		var/datum/soullink/S = s
+		S.sharerDies(gibbed)
 
-/mob/living/proc/setup_animation(animation, prev_lying)
-	var/atom/movable/overlay/animate = null
-	notransform = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-	alpha = 0
-
-	if(!prev_lying && animation)
-		animate = new(loc)
-		animate.icon_state = "blank"
-		animate.icon = 'icons/mob/mob.dmi'
-		animate.master = src
-	return animate
-
-/mob/living/proc/end_animation(animate)
-	if(!animate)
-		qdel(src)
-	else
-		spawn(15)
-			if(animate)		qdel(animate)
-			if(src)			qdel(src)
+	return TRUE

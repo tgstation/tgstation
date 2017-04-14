@@ -1,22 +1,29 @@
-var/datum/subsystem/mobs/SSmob
-
-/datum/subsystem/mobs
+SUBSYSTEM_DEF(mobs)
 	name = "Mobs"
-	priority = 4
+	init_order = 4
+	priority = 100
+	flags = SS_KEEP_TIMING|SS_NO_INIT
+
+	var/list/currentrun = list()
+
+/datum/controller/subsystem/mobs/stat_entry()
+	..("P:[GLOB.mob_list.len]")
 
 
-/datum/subsystem/mobs/New()
-	NEW_SS_GLOBAL(SSmob)
-
-
-/datum/subsystem/mobs/stat_entry()
-	..("P:[mob_list.len]")
-
-
-/datum/subsystem/mobs/fire()
+/datum/controller/subsystem/mobs/fire(resumed = 0)
 	var/seconds = wait * 0.1
-	for(var/thing in mob_list)
-		if(thing)
-			thing:Life(seconds)
-			continue
-		mob_list.Remove(thing)
+	if (!resumed)
+		src.currentrun = GLOB.mob_list.Copy()
+
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+
+	while(currentrun.len)
+		var/mob/M = currentrun[currentrun.len]
+		currentrun.len--
+		if(M)
+			M.Life(seconds)
+		else
+			GLOB.mob_list.Remove(M)
+		if (MC_TICK_CHECK)
+			return

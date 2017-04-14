@@ -1,4 +1,4 @@
-var/list/doppler_arrays = list()
+GLOBAL_LIST_EMPTY(doppler_arrays)
 
 /obj/machinery/doppler_array
 	name = "tachyon-doppler array"
@@ -13,10 +13,10 @@ var/list/doppler_arrays = list()
 
 /obj/machinery/doppler_array/New()
 	..()
-	doppler_arrays += src
+	GLOB.doppler_arrays += src
 
 /obj/machinery/doppler_array/Destroy()
-	doppler_arrays -= src
+	GLOB.doppler_arrays -= src
 	return ..()
 
 /obj/machinery/doppler_array/process()
@@ -27,14 +27,14 @@ var/list/doppler_arrays = list()
 		if(!anchored && !isinspace())
 			anchored = 1
 			power_change()
-			user << "<span class='notice'>You fasten [src].</span>"
+			to_chat(user, "<span class='notice'>You fasten [src].</span>")
 		else if(anchored)
 			anchored = 0
 			power_change()
-			user << "<span class='notice'>You unfasten [src].</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
+		playsound(loc, O.usesound, 50, 1)
 	else
-		..()
+		return ..()
 
 /obj/machinery/doppler_array/verb/rotate()
 	set name = "Rotate Tachyon-doppler Dish"
@@ -45,13 +45,12 @@ var/list/doppler_arrays = list()
 		return
 	if(usr.stat || usr.restrained() || !usr.canmove)
 		return
-	src.dir = turn(src.dir, 90)
+	src.setDir(turn(src.dir, 90))
 	return
 
-/obj/machinery/doppler_array/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+/obj/machinery/doppler_array/AltClick(mob/living/user)
+	if(!istype(user) || user.incapacitated())
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -68,7 +67,7 @@ var/list/doppler_arrays = list()
 		return
 
 	var/distance = get_dist(epicenter, zone)
-	var/direct = get_dir(epicenter, zone)
+	var/direct = get_dir(zone, epicenter)
 
 	if(distance > max_dist)
 		return

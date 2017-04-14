@@ -15,69 +15,28 @@
 	anchored = 1
 	can_buckle = 1
 	buckle_lying = 1
-	burn_state = 0 //Burnable
-	burntime = 30
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
+	integrity_failure = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
-	var/foldabletype //to fold into an item (e.g. roller bed item)
 
-/obj/structure/bed/alien
-	name = "resting contraption"
-	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
-	icon_state = "abed"
+/obj/structure/bed/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+	..()
 
 /obj/structure/bed/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/structure/bed/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
-	if(M.environment_smash)
-		new /obj/item/stack/sheet/metal(src.loc)
-		qdel(src)
-
-/obj/structure/bed/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-			return
-		if(2)
-			if(prob(70))
-				if(buildstacktype)
-					new buildstacktype(loc, buildstackamount)
-				qdel(src)
-				return
-		if(3)
-			if(prob(50))
-				if(buildstacktype)
-					new buildstacktype(loc, buildstackamount)
-				qdel(src)
-				return
-
-/obj/structure/bed/blob_act()
-	if(prob(75))
-		if(buildstacktype)
-			new buildstacktype(loc, buildstackamount)
-		qdel(src)
+	return attack_hand(user)
 
 /obj/structure/bed/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(buildstacktype)
-			new buildstacktype(loc, buildstackamount)
-		qdel(src)
-
-/obj/structure/bed/MouseDrop(over_object, src_location, over_location)
-	. = ..()
-	if(foldabletype)
-		if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
-			if(!ishuman(usr))
-				return
-			if(buckled_mob)
-				return 0
-			usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
-			new foldabletype(get_turf(src))
-			qdel(src)
-
-
+	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		playsound(src.loc, W.usesound, 50, 1)
+		deconstruct(TRUE)
+	else
+		return ..()
 
 /*
  * Roller beds
@@ -87,11 +46,47 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	burn_state = -1 //Not Burnable
-	foldabletype = /obj/item/roller
+	resistance_flags = 0
+	var/foldabletype = /obj/item/roller
+
+/obj/structure/bed/roller/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W,/obj/item/roller/robo))
+		var/obj/item/roller/robo/R = W
+		if(R.loaded)
+			to_chat(user, "<span class='warning'>You already have a roller bed docked!</span>")
+			return
+
+		if(has_buckled_mobs())
+			if(buckled_mobs.len > 1)
+				unbuckle_all_mobs()
+				user.visible_message("<span class='notice'>[user] unbuckles all creatures from [src].</span>")
+			else
+				user_unbuckle_mob(buckled_mobs[1],user)
+		else
+			R.loaded = src
+			forceMove(R)
+			user.visible_message("[user] collects [src].", "<span class='notice'>You collect [src].</span>")
+		return 1
+	else
+		return ..()
+
+/obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
+	. = ..()
+	if(over_object == usr && Adjacent(usr))
+		if(!ishuman(usr))
+			return 0
+		if(has_buckled_mobs())
+			return 0
+		if(usr.incapacitated())
+			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
+			return 0
+		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
+		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
+		usr.put_in_hands(B)
+		qdel(src)
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob)
+	if(M in buckled_mobs)
 		density = 1
 		icon_state = "up"
 		M.pixel_y = initial(M.pixel_y)
@@ -107,11 +102,31 @@
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	w_class = 4 // Can't be put in backpacks.
+	w_class = WEIGHT_CLASS_BULKY // Can't be put in backpacks.
 
+/obj/item/roller/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/roller/robo))
+		var/obj/item/roller/robo/R = I
+		if(R.loaded)
+			to_chat(user, "<span class='warning'>[R] already has a roller bed loaded!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] loads [src].</span>", "<span class='notice'>You load [src] into [R].</span>")
+		R.loaded = new/obj/structure/bed/roller(R)
+		qdel(src) //"Load"
+		return
+	else return ..()
 
 /obj/item/roller/attack_self(mob/user)
-	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
+	deploy_roller(user, user.loc)
+
+/obj/item/roller/afterattack(obj/target, mob/user , proximity)
+	if(!proximity)
+		return
+	if(isopenturf(target))
+		deploy_roller(user, target)
+
+/obj/item/roller/proc/deploy_roller(mob/user, atom/location)
+	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(location)
 	R.add_fingerprint(user)
 	qdel(src)
 
@@ -126,34 +141,16 @@
 
 /obj/item/roller/robo/examine(mob/user)
 	..()
-	user << "The dock is [loaded ? "loaded" : "empty"]"
+	to_chat(user, "The dock is [loaded ? "loaded" : "empty"]")
 
-/obj/item/roller/robo/attack_self(mob/user)
+/obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)
 		var/obj/structure/bed/roller/R = loaded
-		R.loc = user.loc
+		R.loc = location
 		user.visible_message("[user] deploys [loaded].", "<span class='notice'>You deploy [loaded].</span>")
 		loaded = null
 	else
-		user << "<span class='warning'>The dock is empty!</span>"
-
-/obj/item/roller/robo/afterattack(obj/target, mob/user , proximity)
-	if(istype(target,/obj/structure/bed/roller))
-		if(!proximity)
-			return
-		if(loaded)
-			user << "<span class='warning'>You already have a roller bed docked!</span>"
-			return
-
-		var/obj/structure/bed/roller/R = target
-		if(R.buckled_mob)
-			R.user_unbuckle_mob(user)
-
-		loaded = target
-		target.loc = src
-		user.visible_message("[user] collects [loaded].", "<span class='notice'>You collect [loaded].</span>")
-	..()
-
+		to_chat(user, "<span class='warning'>The dock is empty!</span>")
 
 //Dog bed
 
@@ -166,13 +163,7 @@
 	buildstackamount = 10
 
 
-//Stool
-
-/obj/structure/bed/stool
-	name = "stool"
-	desc = "Apply butt."
-	icon_state = "stool"
-	can_buckle = 0
-	buildstackamount = 1
-
-
+/obj/structure/bed/alien
+	name = "resting contraption"
+	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
+	icon_state = "abed"

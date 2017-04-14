@@ -1,82 +1,48 @@
-/datum/hud/proc/drone_hud(ui_style = 'icons/mob/screen_midnight.dmi')
-	adding = list()
-
-	var/obj/screen/using
+/datum/hud/dextrous/drone/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+	..()
 	var/obj/screen/inventory/inv_box
-
-	using = new /obj/screen/drop()
-	using.icon = ui_style
-	using.screen_loc = ui_drone_drop
-	adding += using
-
-	mymob.pullin = new /obj/screen/pull()
-	mymob.pullin.icon = ui_style
-	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_drone_pull
-	adding += mymob.pullin
-
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "r_hand"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_r_inactive"
-	if(mymob && !mymob.hand) //Hand being true means the LEFT hand is active
-		inv_box.icon_state = "hand_r_active"
-	inv_box.screen_loc = ui_rhand
-	inv_box.slot_id = slot_r_hand
-	inv_box.layer = 19
-	r_hand_hud_object = inv_box
-	adding += inv_box
-
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "l_hand"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_l_inactive"
-	if(mymob && mymob.hand) //Hand being true means the LEFT hand is active
-		inv_box.icon_state = "hand_l_active"
-	inv_box.screen_loc = ui_lhand
-	inv_box.slot_id = slot_l_hand
-	inv_box.layer = 19
-	l_hand_hud_object = inv_box
-	adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "internal storage"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suit_storage"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_drone_storage
-	inv_box.slot_id = "drone_storage_slot"
-	inv_box.layer = 19
-	adding += inv_box
+	inv_box.slot_id = slot_generic_dextrous_storage
+	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "head/mask"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_drone_head
 	inv_box.slot_id = slot_head
-	inv_box.layer = 19
-	adding += inv_box
+	static_inventory += inv_box
 
-	using = new /obj/screen/inventory()
-	using.name = "hand"
-	using.icon = ui_style
-	using.icon_state = "swap_1_m"
-	using.screen_loc = ui_swaphand1
-	using.layer = 19
-	adding += using
+	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
+		if(inv.slot_id)
+			inv.hud = src
+			inv_slots[inv.slot_id] = inv
+			inv.update_icon()
 
-	using = new /obj/screen/inventory()
-	using.name = "hand"
-	using.icon = ui_style
-	using.icon_state = "swap_2"
-	using.screen_loc = ui_swaphand2
-	using.layer = 19
-	adding += using
 
-	mymob.zone_sel = new /obj/screen/zone_sel()
-	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.update_icon()
+/datum/hud/dextrous/drone/persistent_inventory_update()
+	if(!mymob)
+		return
+	var/mob/living/simple_animal/drone/D = mymob
 
-	mymob.client.screen = list()
-	mymob.client.screen += mymob.client.void
-	mymob.client.screen += adding
+	if(hud_shown)
+		if(D.internal_storage)
+			D.internal_storage.screen_loc = ui_drone_storage
+			D.client.screen += D.internal_storage
+		if(D.head)
+			D.head.screen_loc = ui_drone_head
+			D.client.screen += D.head
+	else
+		if(D.internal_storage)
+			D.internal_storage.screen_loc = null
+		if(D.head)
+			D.head.screen_loc = null
+
+	..()

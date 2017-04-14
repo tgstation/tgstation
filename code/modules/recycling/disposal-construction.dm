@@ -11,6 +11,8 @@
 	density = 0
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	level = 2
+	obj_integrity = 200
+	max_integrity = 200
 	var/ptype = 0
 
 	var/dpdir = 0	// directions as disposalpipe
@@ -18,18 +20,16 @@
 
 /obj/structure/disposalconstruct/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/disposalconstruct/New(var/loc, var/pipe_type, var/direction = 1)
 	..(loc)
 	if(pipe_type)
 		ptype = pipe_type
-		if(!is_pipe())    // bins/chutes/outlets are dense
-			density = 1
-	dir = direction
+	setDir(direction)
 
 // update iconstate and dpdir due to dir and type
-/obj/structure/disposalconstruct/proc/update()
+/obj/structure/disposalconstruct/update_icon()
 	var/flip = turn(dir, 180)
 	var/left = turn(dir, 90)
 	var/right = turn(dir, -90)
@@ -88,8 +88,8 @@
 // hide called by levelupdate if turf intact status changes
 // change visibility status and force update of icon
 /obj/structure/disposalconstruct/hide(var/intact)
-	invisibility = (intact && level==1) ? 101: 0	// hide if floor is intact
-	update()
+	invisibility = (intact && level==1) ? INVISIBILITY_MAXIMUM: 0	// hide if floor is intact
+	update_icon()
 
 
 // flip and rotate verbs
@@ -102,16 +102,16 @@
 		return
 
 	if(anchored)
-		usr << "<span class='warning'>You must unfasten the pipe before rotating it!</span>"
+		to_chat(usr, "<span class='warning'>You must unfasten the pipe before rotating it!</span>")
 		return
 
-	dir = turn(dir, -90)
-	update()
+	setDir(turn(dir, -90))
+	update_icon()
 
 /obj/structure/disposalconstruct/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -126,10 +126,10 @@
 		return
 
 	if(anchored)
-		usr << "<span class='warning'>You must unfasten the pipe before flipping it!</span>"
+		to_chat(usr, "<span class='warning'>You must unfasten the pipe before flipping it!</span>")
 		return
 
-	dir = turn(dir, 180)
+	setDir(turn(dir, 180))
 	switch(ptype)
 		if(DISP_JUNCTION)
 			ptype = DISP_JUNCTION_FLIP
@@ -140,7 +140,7 @@
 		if(DISP_SORTJUNCTION_FLIP)
 			ptype = DISP_SORTJUNCTION
 
-	update()
+	update_icon()
 
 // returns the type path of disposalpipe corresponding to this item dtype
 /obj/structure/disposalconstruct/proc/dpipetype()
@@ -184,12 +184,12 @@
 			nicetype = "pipe"
 
 	var/turf/T = loc
-	if(T.intact && istype(T, /turf/simulated/floor))
-		user << "<span class='warning'>You can only attach the [nicetype] if the floor plating is removed!</span>"
+	if(T.intact && isfloorturf(T))
+		to_chat(user, "<span class='warning'>You can only attach the [nicetype] if the floor plating is removed!</span>")
 		return
 
-	if(!ispipe && istype(T, /turf/simulated/wall))
-		user << "<span class='warning'>You can't build [nicetype]s on walls, only disposal pipes!</span>"
+	if(!ispipe && iswallturf(T))
+		to_chat(user, "<span class='warning'>You can't build [nicetype]s on walls, only disposal pipes!</span>")
 		return
 
 	var/obj/structure/disposalpipe/CP = locate() in T
@@ -199,49 +199,45 @@
 			anchored = 0
 			if(ispipe)
 				level = 2
-				density = 0
-			else
-				density = 1
-			user << "<span class='notice'>You detach the [nicetype] from the underfloor.</span>"
+			density = 0
+			to_chat(user, "<span class='notice'>You detach the [nicetype] from the underfloor.</span>")
 		else
 			if(!is_pipe()) // Disposal or outlet
 				if(CP) // There's something there
 					if(!istype(CP,/obj/structure/disposalpipe/trunk))
-						user << "<span class='warning'>The [nicetype] requires a trunk underneath it in order to work!</span>"
+						to_chat(user, "<span class='warning'>The [nicetype] requires a trunk underneath it in order to work!</span>")
 						return
 				else // Nothing under, fuck.
-					user << "<span class='warning'>The [nicetype] requires a trunk underneath it in order to work!</span>"
+					to_chat(user, "<span class='warning'>The [nicetype] requires a trunk underneath it in order to work!</span>")
 					return
 			else
 				if(CP)
-					update()
+					update_icon()
 					var/pdir = CP.dpdir
 					if(istype(CP, /obj/structure/disposalpipe/broken))
 						pdir = CP.dir
 					if(pdir & dpdir)
-						user << "<span class='warning'>There is already a [nicetype] at that location!</span>"
+						to_chat(user, "<span class='warning'>There is already a [nicetype] at that location!</span>")
 						return
 			anchored = 1
 			if(ispipe)
 				level = 1 // We don't want disposal bins to disappear under the floors
-				density = 0
-			else
-				density = 1 // We don't want disposal bins or outlets to go density 0
-			user << "<span class='notice'>You attach the [nicetype] to the underfloor.</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-		update()
+			density = 0
+			to_chat(user, "<span class='notice'>You attach the [nicetype] to the underfloor.</span>")
+		playsound(loc, I.usesound, 100, 1)
+		update_icon()
 
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		if(anchored)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "<span class='notice'>You start welding the [nicetype] in place...</span>"
-				if(do_after(user, 20, target = src))
+				to_chat(user, "<span class='notice'>You start welding the [nicetype] in place...</span>")
+				if(do_after(user, 8*I.toolspeed, target = src))
 					if(!loc || !W.isOn())
 						return
-					user << "<span class='notice'>The [nicetype] has been welded in place.</span>"
-					update() // TODO: Make this neat
+					to_chat(user, "<span class='notice'>The [nicetype] has been welded in place.</span>")
+					update_icon() // TODO: Make this neat
 
 					if(ispipe)
 						var/pipetype = dpipetype()
@@ -255,7 +251,7 @@
 
 					else if(ptype == DISP_END_BIN)
 						var/obj/machinery/disposal/bin/B = new /obj/machinery/disposal/bin(loc,src)
-						B.mode = 0 // start with pump off
+						B.pressure_charging = FALSE // start with pump off
 						transfer_fingerprints_to(B)
 
 					else if(ptype == DISP_END_OUTLET)
@@ -268,7 +264,7 @@
 
 					return
 		else
-			user << "<span class='warning'>You need to attach it to the plating first!</span>"
+			to_chat(user, "<span class='warning'>You need to attach it to the plating first!</span>")
 			return
 
 /obj/structure/disposalconstruct/proc/is_pipe()

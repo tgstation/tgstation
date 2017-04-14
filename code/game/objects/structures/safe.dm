@@ -12,6 +12,7 @@ FLOOR SAFES
 	icon_state = "safe"
 	anchored = 1
 	density = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/open = 0		//is the safe open?
 	var/tumbler_1_pos	//the tumbler position- from 0 to 72
 	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
@@ -23,6 +24,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/New()
+	..()
 	tumbler_1_pos = rand(0, 71)
 	tumbler_1_open = rand(0, 71)
 
@@ -30,7 +32,12 @@ FLOOR SAFES
 	tumbler_2_open = rand(0, 71)
 
 
-/obj/structure/safe/initialize()
+/obj/structure/safe/Initialize(mapload)
+	..()
+
+	if(!mapload)
+		return
+
 	for(var/obj/item/I in loc)
 		if(space >= maxspace)
 			return
@@ -42,9 +49,9 @@ FLOOR SAFES
 /obj/structure/safe/proc/check_unlocked(mob/user, canhear)
 	if(user && canhear)
 		if(tumbler_1_pos == tumbler_1_open)
-			user << "<span class='italics'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>"
+			to_chat(user, "<span class='italics'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>")
 		if(tumbler_2_pos == tumbler_2_open)
-			user << "<span class='italics'>You hear a [pick("tink", "krink", "plink")] from [src].</span>"
+			to_chat(user, "<span class='italics'>You hear a [pick("tink", "krink", "plink")] from [src].</span>")
 	if(tumbler_1_pos == tumbler_1_open && tumbler_2_pos == tumbler_2_open)
 		if(user) visible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
 		return 1
@@ -86,22 +93,23 @@ FLOOR SAFES
 
 
 /obj/structure/safe/Topic(href, href_list)
-	if(!ishuman(usr))	return
+	if(!ishuman(usr))
+		return
 	var/mob/living/carbon/human/user = usr
 
 	var/canhear = 0
-	if(istype(user.l_hand, /obj/item/clothing/tie/stethoscope) || istype(user.r_hand, /obj/item/clothing/tie/stethoscope))
+	if(user.is_holding_item_of_type(/obj/item/clothing/neck/stethoscope))
 		canhear = 1
 
 	if(href_list["open"])
 		if(check_unlocked())
-			user << "<span class='notice'>You [open ? "close" : "open"] [src].</span>"
+			to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
 			open = !open
 			update_icon()
 			updateUsrDialog()
 			return
 		else
-			user << "<span class='warning'>You can't [open ? "close" : "open"] [src], the lock is engaged!</span>"
+			to_chat(user, "<span class='warning'>You can't [open ? "close" : "open"] [src], the lock is engaged!</span>")
 			return
 
 	if(href_list["decrement"])
@@ -109,11 +117,11 @@ FLOOR SAFES
 		if(dial == tumbler_1_pos + 1 || dial == tumbler_1_pos - 71)
 			tumbler_1_pos = decrement(tumbler_1_pos)
 			if(canhear)
-				user << "<span class='italics'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>"
+				to_chat(user, "<span class='italics'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>")
 			if(tumbler_1_pos == tumbler_2_pos + 37 || tumbler_1_pos == tumbler_2_pos - 35)
 				tumbler_2_pos = decrement(tumbler_2_pos)
 				if(canhear)
-					user << "<span class='italics'>You hear a [pick("click", "chink", "clink")] from [src].</span>"
+					to_chat(user, "<span class='italics'>You hear a [pick("click", "chink", "clink")] from [src].</span>")
 			check_unlocked(user, canhear)
 		updateUsrDialog()
 		return
@@ -123,11 +131,11 @@ FLOOR SAFES
 		if(dial == tumbler_1_pos - 1 || dial == tumbler_1_pos + 71)
 			tumbler_1_pos = increment(tumbler_1_pos)
 			if(canhear)
-				user << "<span class='italics'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>"
+				to_chat(user, "<span class='italics'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>")
 			if(tumbler_1_pos == tumbler_2_pos - 37 || tumbler_1_pos == tumbler_2_pos + 35)
 				tumbler_2_pos = increment(tumbler_2_pos)
 				if(canhear)
-					user << "<span class='italics'>You hear a [pick("click", "chink", "clink")] from [src].</span>"
+					to_chat(user, "<span class='italics'>You hear a [pick("click", "chink", "clink")] from [src].</span>")
 			check_unlocked(user, canhear)
 		updateUsrDialog()
 		return
@@ -139,33 +147,38 @@ FLOOR SAFES
 		if(open)
 			if(P && in_range(src, user))
 				user.put_in_hands(P)
+				space -= P.w_class
 				updateUsrDialog()
 
 
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
+		. = 1 //no afterattack
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
 			if(!user.drop_item())
-				user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>"
+				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>")
 				return
-			I.loc = src
-			user << "<span class='notice'>You put [I] in [src].</span>"
+			I.forceMove(src)
+			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 			updateUsrDialog()
 			return
 		else
-			user << "<span class='notice'>[I] won't fit in [src].</span>"
+			to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
 			return
+	else if(istype(I, /obj/item/clothing/neck/stethoscope))
+		to_chat(user, "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>")
 	else
-		if(istype(I, /obj/item/clothing/tie/stethoscope))
-			user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
-			return
+		return ..()
 
 
-obj/structure/safe/blob_act()
+/obj/structure/safe/handle_atom_del(atom/A)
+	updateUsrDialog()
+
+/obj/structure/safe/blob_act(obj/structure/blob/B)
 	return
 
-obj/structure/safe/ex_act(severity, target)
+/obj/structure/safe/ex_act(severity, target)
 	return
 
 
@@ -175,14 +188,15 @@ obj/structure/safe/ex_act(severity, target)
 	icon_state = "floorsafe"
 	density = 0
 	level = 1	//underfloor
-	layer = 2.5
+	layer = LOW_OBJ_LAYER
 
 
-/obj/structure/safe/floor/initialize()
+/obj/structure/safe/floor/Initialize(mapload)
 	..()
-	var/turf/T = loc
-	hide(T.intact)
+	if(mapload)
+		var/turf/T = loc
+		hide(T.intact)
 
 
 /obj/structure/safe/floor/hide(var/intact)
-	invisibility = intact ? 101 : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : 0

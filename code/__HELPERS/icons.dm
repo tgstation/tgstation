@@ -15,7 +15,7 @@ CHANGING ICONS
 Several new procs have been added to the /icon datum to simplify working with icons. To use them,
 remember you first need to setup an /icon var like so:
 
-var/icon/my_icon = new('iconfile.dmi')
+GLOBAL_DATUM_INIT(my_icon, /icon, new('iconfile.dmi'))
 
 icon/ChangeOpacity(amount = 1)
     A very common operation in DM is to try to make an icon more or less transparent. Making an icon more
@@ -132,27 +132,27 @@ mob
 		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = -32)
 
 		// Testing image overlays
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32)
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32))
 
 		// Testing icon file overlays (defaults to mob's state)
-		overlays += '_flat_demoIcons2.dmi'
+		add_overlay('_flat_demoIcons2.dmi')
 
 		// Testing icon_state overlays (defaults to mob's icon)
-		overlays += "white"
+		add_overlay("white")
 
 		// Testing dynamic icon overlays
 		var/icon/I = icon('old_or_unused.dmi', icon_state="aqua")
 		I.Shift(NORTH,16,1)
-		overlays+=I
+		add_overlay(I)
 
 		// Testing dynamic image overlays
 		I=image(icon=I,pixel_x = -32, pixel_y = 32)
-		overlays+=I
+		add_overlay(I)
 
 		// Testing object types (and layers)
-		overlays+=/obj/effect/overlayTest
+		add_overlay(/obj/effect/overlayTest)
 
 		loc = locate (10,10,1)
 	verb
@@ -167,7 +167,7 @@ mob
 
 		Output_Icon()
 			set name = "2. Output Icon"
-			src<<"Icon is: \icon[getFlatIcon(src)]"
+			to_chat(src, "Icon is: \icon[getFlatIcon(src)]")
 
 		Label_Icon()
 			set name = "3. Label Icon"
@@ -182,7 +182,7 @@ mob
 
 		Add_Overlay()
 			set name = "4. Add Overlay"
-			overlays += image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
+			add_overlay(image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
 
 		Stress_Test()
 			set name = "5. Stress Test"
@@ -199,7 +199,7 @@ mob
 				getFlatIcon(src)
 			Browse_Icon()
 
-obj/effect/overlayTest
+/obj/effect/overlayTest
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
 	pixel_x = -24
@@ -783,7 +783,8 @@ The _flatIcons list is a cache for generated icon files.
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
 	for(var/I in A.overlays)//For every image in overlays. var/image/I will not work, don't try it.
-		if(I:layer>A.layer)	continue//If layer is greater than what we need, skip it.
+		if(I:layer>A.layer)
+			continue//If layer is greater than what we need, skip it.
 		var/icon/image_overlay = new(I:icon,I:icon_state)//Blend only works with icon objects.
 		//Also, icons cannot directly set icon_state. Slower than changing variables but whatever.
 		alpha_mask.Blend(image_overlay,ICON_OR)//OR so they are lumped together in a nice overlay.
@@ -799,11 +800,15 @@ The _flatIcons list is a cache for generated icon files.
 	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
 		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
-			if(1)	I.pixel_x--
-			if(2)	I.pixel_x++
-			if(3)	I.pixel_y--
-			if(4)	I.pixel_y++
-		overlays += I//And finally add the overlay.
+			if(1)
+				I.pixel_x--
+			if(2)
+				I.pixel_x++
+			if(3)
+				I.pixel_y--
+			if(4)
+				I.pixel_y++
+		add_overlay(I)//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
@@ -864,9 +869,33 @@ The _flatIcons list is a cache for generated icon files.
 	text_image.color = AverageColour(atom_icon)
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
-	del(atom_icon)
+	qdel(atom_icon)
 	return text_image
 
+GLOBAL_LIST_EMPTY(friendly_animal_types)
+
+// Pick a random animal instead of the icon, and use that instead
+/proc/getRandomAnimalImage(atom/A)
+	if(!GLOB.friendly_animal_types.len)
+		for(var/T in typesof(/mob/living/simple_animal))
+			var/mob/living/simple_animal/SA = T
+			if(initial(SA.gold_core_spawnable) == 2)
+				GLOB.friendly_animal_types += SA
+
+
+	var/mob/living/simple_animal/SA = pick(GLOB.friendly_animal_types)
+
+	var/icon = initial(SA.icon)
+	var/icon_state = initial(SA.icon_state)
+
+	var/image/final_image = image(icon, icon_state=icon_state, loc = A)
+
+	if(ispath(SA, /mob/living/simple_animal/butterfly))
+		final_image.color = rgb(rand(0,255), rand(0,255), rand(0,255))
+
+	// For debugging
+	final_image.text = initial(SA.name)
+	return final_image
 
 //Find's the average colour of the icon
 //By vg's ComicIronic
@@ -914,5 +943,75 @@ The _flatIcons list is a cache for generated icon files.
 		return J
 	return 0
 
+//For creating consistent icons for human looking simple animals
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs)
+	var/static/list/humanoid_icon_cache = list()
+	if(!icon_id || !humanoid_icon_cache[icon_id])
+		var/mob/living/carbon/human/dummy/body = new()
+
+		if(prefs)
+			prefs.copy_to(body)
+		if(J)
+			J.equip(body, TRUE, FALSE)
+
+		SSoverlays.Flush()
+
+		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
+
+		body.setDir(NORTH)
+		var/icon/partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=NORTH)
+
+		body.setDir(SOUTH)
+		partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=SOUTH)
+
+		body.setDir(WEST)
+		partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=WEST)
+
+		body.setDir(EAST)
+		partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=EAST)
+
+		qdel(body)
+
+		humanoid_icon_cache[icon_id] = out_icon
+		return out_icon
+	else
+		return humanoid_icon_cache[icon_id]
 
 
+//Hook, override to run code on- wait this is images
+//Images have dir without being an atom, so they get their own definition.
+//Lame.
+/image/proc/setDir(newdir)
+	dir = newdir
+
+/atom/proc/freeze_icon_index()
+	return "\ref[initial(icon)]-[initial(icon_state)]"
+
+/obj/proc/make_frozen_visual()
+	// Used to make the frozen item visuals for Freon.
+	var/static/list/freeze_item_icons = list()
+	if(!HAS_SECONDARY_FLAG(src, FROZEN) && (initial(icon) && initial(icon_state)))
+		var/index = freeze_icon_index()
+		var/icon/IC
+		var/icon/P = freeze_item_icons[index]
+		if(!P)
+			P = new /icon
+			for(var/iconstate in icon_states(icon))
+				var/icon/O = new('icons/effects/freeze.dmi', "ice_cube")
+				IC = new(icon, iconstate)
+				O.Blend(IC, ICON_ADD)
+				P.Insert(O, iconstate)
+			freeze_item_icons[index] = P
+		icon = P
+		name = "frozen [name]"
+		SET_SECONDARY_FLAG(src, FROZEN)
+
+//Assumes already frozed
+obj/proc/make_unfrozen()
+	icon = initial(icon)
+	name = replacetext(name, "frozen ", "")
+	CLEAR_SECONDARY_FLAG(src, FROZEN)

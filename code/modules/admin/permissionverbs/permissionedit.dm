@@ -2,11 +2,13 @@
 	set category = "Admin"
 	set name = "Permissions Panel"
 	set desc = "Edit admin permissions"
-	if(!check_rights(R_PERMISSIONS))	return
+	if(!check_rights(R_PERMISSIONS))
+		return
 	usr.client.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions()
-	if(!check_rights(R_PERMISSIONS))	return
+	if(!check_rights(R_PERMISSIONS))
+		return
 
 	var/output = {"<!DOCTYPE html>
 <html>
@@ -25,9 +27,10 @@
 </tr>
 "}
 
-	for(var/adm_ckey in admin_datums)
-		var/datum/admins/D = admin_datums[adm_ckey]
-		if(!D)	continue
+	for(var/adm_ckey in GLOB.admin_datums)
+		var/datum/admins/D = GLOB.admin_datums[adm_ckey]
+		if(!D)
+			continue
 
 		var/rights = rights2text(D.rank.rights," ")
 		if(!rights)	rights = "*none*"
@@ -48,7 +51,8 @@
 	usr << browse(output,"window=editrights;size=900x650")
 
 /datum/admins/proc/log_admin_rank_modification(adm_ckey, new_rank)
-	if(config.admin_legacy_system)	return
+	if(config.admin_legacy_system)
+		return
 
 	if(!usr.client)
 		return
@@ -56,10 +60,8 @@
 	if (!check_rights(R_PERMISSIONS))
 		return
 
-	establish_db_connection()
-
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+	if(!GLOB.dbcon.Connect())
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
 	if(!adm_ckey || !new_rank)
@@ -73,53 +75,63 @@
 	if(!istext(adm_ckey) || !istext(new_rank))
 		return
 
-	var/DBQuery/select_query = dbcon.NewQuery("SELECT id FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
-	select_query.Execute()
+	var/DBQuery/query_get_admin = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
+	if(!query_get_admin.warn_execute())
+		return
 
 	var/new_admin = 1
 	var/admin_id
-	while(select_query.NextRow())
+	while(query_get_admin.NextRow())
 		new_admin = 0
-		admin_id = text2num(select_query.item[1])
+		admin_id = text2num(query_get_admin.item[1])
 
 	if(new_admin)
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `[format_table_name("admin")]` (`id`, `ckey`, `rank`, `level`, `flags`) VALUES (null, '[adm_ckey]', '[new_rank]', -1, 0)")
-		insert_query.Execute()
-		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');")
-		log_query.Execute()
-		usr << "<span class='adminnotice'>New admin added.</span>"
+		var/DBQuery/query_add_admin = GLOB.dbcon.NewQuery("INSERT INTO `[format_table_name("admin")]` (`id`, `ckey`, `rank`, `level`, `flags`) VALUES (null, '[adm_ckey]', '[new_rank]', -1, 0)")
+		if(!query_add_admin.warn_execute())
+			return
+		var/DBQuery/query_add_admin_log = GLOB.dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');")
+		if(!query_add_admin_log.warn_execute())
+			return
+		to_chat(usr, "<span class='adminnotice'>New admin added.</span>")
 	else
 		if(!isnull(admin_id) && isnum(admin_id))
-			var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `[format_table_name("admin")]` SET rank = '[new_rank]' WHERE id = [admin_id]")
-			insert_query.Execute()
-			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
-			log_query.Execute()
-			usr << "<span class='adminnnotice'>Admin rank changed.</span>"
+			var/DBQuery/query_change_admin = GLOB.dbcon.NewQuery("UPDATE `[format_table_name("admin")]` SET rank = '[new_rank]' WHERE id = [admin_id]")
+			if(!query_change_admin.warn_execute())
+				return
+			var/DBQuery/query_change_admin_log = GLOB.dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
+			if(!query_change_admin_log.warn_execute())
+				return
+			to_chat(usr, "<span class='adminnnotice'>Admin rank changed.</span>")
 
 
 /datum/admins/proc/log_admin_permission_modification(adm_ckey, new_permission)
-	if(config.admin_legacy_system)	return
-	if(!usr.client)					return
-	if(check_rights(R_PERMISSIONS))	return
+	if(config.admin_legacy_system)
+		return
+	if(!usr.client)
+		return
+	if(check_rights(R_PERMISSIONS))
+		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+	if(!GLOB.dbcon.Connect())
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
 	if(!adm_ckey || !istext(adm_ckey) || !isnum(new_permission))
 		return
 
-	var/DBQuery/select_query = dbcon.NewQuery("SELECT id, flags FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
-	select_query.Execute()
+	var/DBQuery/query_get_perms = GLOB.dbcon.NewQuery("SELECT id, flags FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
+	if(!query_get_perms.warn_execute())
+		return
 
 	var/admin_id
-	while(select_query.NextRow())
-		admin_id = text2num(select_query.item[1])
+	while(query_get_perms.NextRow())
+		admin_id = text2num(query_get_perms.item[1])
 
-	if(!admin_id)	return
+	if(!admin_id)
+		return
 
-	var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `[format_table_name("admin")]` SET flags = [new_permission] WHERE id = [admin_id]")
-	insert_query.Execute()
-	var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edit permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');")
-	log_query.Execute()
+	var/DBQuery/query_change_perms = GLOB.dbcon.NewQuery("UPDATE `[format_table_name("admin")]` SET flags = [new_permission] WHERE id = [admin_id]")
+	if(!query_change_perms.warn_execute())
+		return
+	var/DBQuery/query_change_perms_log = GLOB.dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edit permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');")
+	query_change_perms_log.warn_execute()

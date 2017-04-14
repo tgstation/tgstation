@@ -3,10 +3,14 @@
 	desc = "A bar sign with no writing on it"
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
-	req_access = list(access_bar)
+	req_access = list(GLOB.access_bar)
+	obj_integrity = 500
+	max_integrity = 500
+	integrity_failure = 250
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	buildable_sign = 0
 	var/list/barsigns=list()
 	var/list/hiddensigns
-	var/broken = 0
 	var/emagged = 0
 	var/state = 0
 	var/prev_sign = ""
@@ -20,7 +24,7 @@
 
 
 //filling the barsigns list
-	for(var/bartype in typesof(/datum/barsign) - /datum/barsign)
+	for(var/bartype in subtypesof(/datum/barsign))
 		var/datum/barsign/signinfo = new bartype
 		if(!signinfo.hidden)
 			barsigns += signinfo
@@ -43,6 +47,22 @@
 
 
 
+/obj/structure/sign/barsign/obj_break(damage_flag)
+	if(!broken && !(flags & NODECONSTRUCT))
+		broken = 1
+
+/obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 2)
+	new /obj/item/stack/cable_coil (loc, 2)
+	qdel(src)
+
+/obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		if(BURN)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+
 /obj/structure/sign/barsign/attack_ai(mob/user)
 	return src.attack_hand(user)
 
@@ -50,10 +70,10 @@
 
 /obj/structure/sign/barsign/attack_hand(mob/user)
 	if (!src.allowed(user))
-		user << "<span class='info'>Access denied.</span>"
+		to_chat(user, "<span class='info'>Access denied.</span>")
 		return
 	if (broken)
-		user << "<span class ='danger'>The controls seem unresponsive.</span>"
+		to_chat(user, "<span class ='danger'>The controls seem unresponsive.</span>")
 		return
 	pick_sign()
 
@@ -61,16 +81,16 @@
 
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
-	if(!allowed(user))
-		user << "<span class='info'>Access denied.</span>"
-		return
-	if( istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(!allowed(user))
+			to_chat(user, "<span class='info'>Access denied.</span>")
+			return
 		if(!panel_open)
-			user << "<span class='notice'>You open the maintenance panel.</span>"
+			to_chat(user, "<span class='notice'>You open the maintenance panel.</span>")
 			set_sign(new /datum/barsign/hiddensigns/signoff)
 			panel_open = 1
 		else
-			user << "<span class='notice'>You close the maintenance panel.</span>"
+			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
 			if(!broken && !emagged)
 				set_sign(pick(barsigns))
 			else if(emagged)
@@ -79,21 +99,22 @@
 				set_sign(new /datum/barsign/hiddensigns/empbarsign)
 			panel_open = 0
 
-	if(istype(I, /obj/item/stack/cable_coil) && panel_open)
+	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
 		if(emagged) //Emagged, not broken by EMP
-			user << "<span class='warning'>Sign has been damaged beyond repair!</span>"
+			to_chat(user, "<span class='warning'>Sign has been damaged beyond repair!</span>")
 			return
 		else if(!broken)
-			user << "<span class='warning'>This sign is functioning properly!</span>"
+			to_chat(user, "<span class='warning'>This sign is functioning properly!</span>")
 			return
 
 		if(C.use(2))
-			user << "<span class='notice'>You replace the burnt wiring.</span>"
+			to_chat(user, "<span class='notice'>You replace the burnt wiring.</span>")
 			broken = 0
 		else
-			user << "<span class='warning'>You need at least two lengths of cable!</span>"
-
+			to_chat(user, "<span class='warning'>You need at least two lengths of cable!</span>")
+	else
+		return ..()
 
 
 /obj/structure/sign/barsign/emp_act(severity)
@@ -105,13 +126,13 @@
 
 /obj/structure/sign/barsign/emag_act(mob/user)
 	if(broken || emagged)
-		user << "<span class='warning'>Nothing interesting happens!</span>"
+		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
-	user << "<span class='notice'>You emag the barsign. Takeover in progress...</span>"
+	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
 	sleep(100) //10 seconds
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	emagged = 1
-	req_access = list(access_syndicate)
+	req_access = list(GLOB.access_syndicate)
 
 
 
@@ -277,6 +298,11 @@
 	name = "The Net"
 	icon = "thenet"
 	desc = "You just seem to get caught up in it for hours."
+
+/datum/barsign/maidcafe
+	name = "Maid Cafe"
+	icon = "maidcafe"
+	desc = "Welcome back, master!"
 
 
 /datum/barsign/hiddensigns

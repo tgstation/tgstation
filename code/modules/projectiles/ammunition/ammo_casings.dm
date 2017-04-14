@@ -3,6 +3,15 @@
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet
 
+/obj/item/ammo_casing/a762
+	desc = "A 7.62 bullet casing."
+	icon_state = "762-casing"
+	caliber = "a762"
+	projectile_type = /obj/item/projectile/bullet
+
+/obj/item/ammo_casing/a762/enchanted
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
 /obj/item/ammo_casing/a50
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
@@ -17,6 +26,15 @@
 	desc = "A 10mm bullet casing."
 	caliber = "10mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet3
+
+/obj/item/ammo_casing/c10mm/ap
+	projectile_type = /obj/item/projectile/bullet/midbullet3/ap
+
+/obj/item/ammo_casing/c10mm/fire
+	projectile_type = /obj/item/projectile/bullet/midbullet3/fire
+
+/obj/item/ammo_casing/c10mm/hp
+	projectile_type = /obj/item/projectile/bullet/midbullet3/hp
 
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
@@ -63,6 +81,88 @@
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/midbullet
 
+/obj/item/ammo_casing/c45nostamina
+	desc = "A .45 bullet casing."
+	caliber = ".45"
+	projectile_type = /obj/item/projectile/bullet/midbullet3
+
+/obj/item/ammo_casing/n762
+	desc = "A 7.62x38mmR bullet casing."
+	caliber = "n762"
+	projectile_type = /obj/item/projectile/bullet
+
+/obj/item/ammo_casing/a556
+	desc = "A 5.56mm bullet casing."
+	caliber = "a556"
+	projectile_type = /obj/item/projectile/bullet/heavybullet
+
+/obj/item/ammo_casing/a40mm
+	name = "40mm HE shell"
+	desc = "A cased high explosive grenade that can only be activated once fired out of a grenade launcher."
+	caliber = "40mm"
+	icon_state = "40mmHE"
+	projectile_type = /obj/item/projectile/bullet/a40mm
+
+
+
+/////SNIPER ROUNDS
+
+/obj/item/ammo_casing/point50
+	desc = "A .50 bullet casing."
+	caliber = ".50"
+	projectile_type = /obj/item/projectile/bullet/sniper
+	icon_state = ".50"
+
+/obj/item/ammo_casing/soporific
+	desc = "A .50 bullet casing, specialised in sending the target to sleep, instead of hell."
+	caliber = ".50"
+	projectile_type = /obj/item/projectile/bullet/sniper/soporific
+	icon_state = ".50"
+
+/obj/item/ammo_casing/haemorrhage
+	desc = "A .50 bullet casing, specialised in causing massive bloodloss"
+	caliber = ".50"
+	projectile_type = /obj/item/projectile/bullet/sniper/haemorrhage
+	icon_state = ".50"
+
+/obj/item/ammo_casing/penetrator
+	desc = "A .50 caliber penetrator round casing."
+	caliber = ".50"
+	projectile_type = /obj/item/projectile/bullet/sniper/penetrator
+	icon_state = ".50"
+
+
+
+/// SAW ROUNDS
+
+/obj/item/ammo_casing/mm556x45
+	desc = "A 556x45mm bullet casing."
+	icon_state = "762-casing"
+	caliber = "mm55645"
+	projectile_type = /obj/item/projectile/bullet/saw
+
+/obj/item/ammo_casing/mm556x45/bleeding
+	desc = "A 556x45mm bullet casing with specialized inner-casing, that when it makes contact with a target, release tiny shrapnel to induce internal bleeding."
+	icon_state = "762-casing"
+	projectile_type = /obj/item/projectile/bullet/saw/bleeding
+
+/obj/item/ammo_casing/mm556x45/hollow
+	desc = "A 556x45mm bullet casing designed to cause more damage to unarmored targets."
+	projectile_type = /obj/item/projectile/bullet/saw/hollow
+
+/obj/item/ammo_casing/mm556x45/ap
+	desc = "A 556x45mm bullet casing designed with a hardened-tipped core to help penetrate armored targets."
+	projectile_type = /obj/item/projectile/bullet/saw/ap
+
+/obj/item/ammo_casing/mm556x45/incen
+	desc = "A 556x45mm bullet casing designed with a chemical-filled capsule on the tip that when bursted, reacts with the atmosphere to produce a fireball, engulfing the target in flames. "
+	projectile_type = /obj/item/projectile/bullet/saw/incen
+
+
+
+
+//SHOTGUN ROUNDS
+
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
 	desc = "A 12 gauge lead slug."
@@ -77,16 +177,16 @@
 	desc = "A 12 gauge buckshot shell."
 	icon_state = "gshell"
 	projectile_type = /obj/item/projectile/bullet/pellet
-	pellets = 5
-	variance = 0.8
+	pellets = 6
+	variance = 25
 
 /obj/item/ammo_casing/shotgun/rubbershot
 	name = "rubber shot"
 	desc = "A shotgun casing filled with densely-packed rubber balls, used to incapacitate crowds from a distance."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/rpellet
-	pellets = 5
-	variance = 0.8
+	pellets = 6
+	variance = 25
 	materials = list(MAT_METAL=4000)
 
 
@@ -104,8 +204,8 @@
 	icon_state = "improvshell"
 	projectile_type = /obj/item/projectile/bullet/pellet/weak
 	materials = list(MAT_METAL=250)
-	pellets = 5
-	variance = 0.8
+	pellets = 10
+	variance = 25
 
 
 /obj/item/ammo_casing/shotgun/improvised/overload
@@ -113,14 +213,10 @@
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards. This one has been packed with even more \
 	propellant. It's like playing russian roulette, with a shotgun."
 	icon_state = "improvshell"
-	projectile_type = /obj/item/projectile/bullet/pellet/random
+	projectile_type = /obj/item/projectile/bullet/pellet/overload
 	materials = list(MAT_METAL=250)
-	pellets = 5
-	variance = 1
-
-/obj/item/ammo_casing/shotgun/improvised/overload/New()
-	..()
-	pellets = rand(3, 8)
+	pellets = 4
+	variance = 40
 
 
 /obj/item/ammo_casing/shotgun/stunslug
@@ -136,6 +232,12 @@
 	desc = "A shotgun shell rigged with CMC technology, which launches a massive slug when fired."
 	icon_state = "mshell"
 	projectile_type = /obj/item/projectile/bullet/meteorshot
+
+/obj/item/ammo_casing/shotgun/breaching
+	name = "breaching shell"
+	desc = "An economic version of the meteorshot, utilizing similar technologies. Great for busting down doors."
+	icon_state = "mshell"
+	projectile_type = /obj/item/projectile/bullet/meteorshot/weak
 
 /obj/item/ammo_casing/shotgun/pulseslug
 	name = "pulse slug"
@@ -163,7 +265,7 @@
 	icon_state = "ishell2"
 	projectile_type = /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
 	pellets = 4
-	variance = 0.9
+	variance = 35
 
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
@@ -172,13 +274,13 @@
 	icon_state = "ionshell"
 	projectile_type = /obj/item/projectile/ion/weak
 	pellets = 4
-	variance = 0.9
+	variance = 35
 
 /obj/item/ammo_casing/shotgun/laserslug
 	name = "laser slug"
 	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
@@ -194,9 +296,9 @@
 
 /obj/item/ammo_casing/shotgun/dart/New()
 	..()
-	flags |= NOREACT
-	flags |= OPENCONTAINER
+	container_type |= OPENCONTAINER
 	create_reagents(30)
+	reagents.set_reacting(FALSE)
 
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return
@@ -211,89 +313,3 @@
 	reagents.add_reagent("mutetoxin", 6) //;HELP OPS IN MAINT
 	reagents.add_reagent("coniine", 6)
 	reagents.add_reagent("sodium_thiopental", 6)
-
-/obj/item/ammo_casing/a762
-	desc = "A 7.62mm bullet casing."
-	icon_state = "762-casing"
-	caliber = "a762"
-	projectile_type = /obj/item/projectile/bullet
-
-/obj/item/ammo_casing/a556
-	desc = "A 5.56mm bullet casing."
-	caliber = "a556"
-	projectile_type = /obj/item/projectile/bullet/heavybullet
-
-/obj/item/ammo_casing/caseless
-	desc = "A caseless bullet casing."
-
-
-/obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet)
-	if (..())
-		loc = null
-		return 1
-	else
-		return 0
-
-/obj/item/ammo_casing/caseless/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]"
-
-/obj/item/ammo_casing/caseless/a75
-	desc = "A .75 bullet casing."
-	caliber = "75"
-	icon_state = "s-casing-live"
-	projectile_type = /obj/item/projectile/bullet/gyro
-
-/obj/item/ammo_casing/a40mm
-	name = "40mm HE shell"
-	desc = "A cased high explosive grenade that can only be activated once fired out of a grenade launcher."
-	caliber = "40mm"
-	icon_state = "40mmHE"
-	projectile_type = /obj/item/projectile/bullet/a40mm
-
-/obj/item/ammo_casing/caseless/magspear
-	name = "magnetic spear"
-	desc = "A reusable spear that is typically loaded into kinetic spearguns."
-	projectile_type = /obj/item/projectile/bullet/reusable/magspear
-	caliber = "speargun"
-	icon_state = "magspear"
-	throwforce = 15 //still deadly when thrown
-	throw_speed = 3
-
-/obj/item/ammo_casing/caseless/foam_dart
-	name = "foam dart"
-	desc = "Its nerf or nothing! Ages 8 and up."
-	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart
-	caliber = "foam_force"
-	icon = 'icons/obj/guns/toy.dmi'
-	icon_state = "foamdart"
-	var/modified = 0
-
-/obj/item/ammo_casing/caseless/foam_dart/update_icon()
-	..()
-	if (modified)
-		icon_state = "foamdart_empty"
-		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
-
-/obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
-	..()
-	if (istype(A, /obj/item/weapon/screwdriver) && !modified)
-		modified = 1
-		BB.damage_type = BRUTE
-		icon_state = "foamdart_empty"
-		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
-		user << "<span class='notice'>You pop the safety cap off of [src].</span>"
-	else if ((istype(A, /obj/item/weapon/pen)) && modified && !BB.contents.len)
-		if(!user.unEquip(A))
-			return
-		A.loc = BB
-		BB.damage = 5
-		BB.nodamage = 0
-		user << "<span class='notice'>You insert [A] into [src].</span>"
-	return
-
-/obj/item/ammo_casing/caseless/foam_dart/riot
-	name = "riot foam dart"
-	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
-	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
-	icon_state = "foamdart_riot"

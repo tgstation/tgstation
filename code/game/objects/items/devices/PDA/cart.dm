@@ -4,7 +4,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 	var/obj/item/radio/integrated/radio = null
 	var/access_security = 0
@@ -23,7 +23,9 @@
 	var/access_status_display = 0
 	var/access_quartermaster = 0
 	var/access_hydroponics = 0
+	var/access_dronephone = 0
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/mode = null
 	var/menu
@@ -37,19 +39,21 @@
 	var/list/stored_data = list()
 	var/current_channel
 
-	var/obj/machinery/bot/active_bot
+	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
 
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
 	access_engine = 1
+	access_dronephone = 1
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
 	access_atmos = 1
+	access_dronephone = 1
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/medical
@@ -83,12 +87,14 @@
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
 	access_janitor = 1
+	access_dronephone = 1
 	bot_access_flags = CLEAN_BOT
 
 /obj/item/weapon/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-s"
 	access_security = 1
+	spam_enabled = 1
 
 /obj/item/weapon/cartridge/clown
 	name = "\improper Honkworks 5.0 cartridge"
@@ -118,6 +124,7 @@
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty triple-bot interlink!"
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
+	access_dronephone = 1
 
 /obj/item/weapon/cartridge/signal
 	name = "generic signaler cartridge"
@@ -159,6 +166,7 @@
 	access_security = 1
 	access_newscaster = 1
 	access_quartermaster = 1
+	access_dronephone = 1
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
@@ -176,6 +184,7 @@
 	access_status_display = 1
 	access_engine = 1
 	access_atmos = 1
+	access_dronephone = 1
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/cmo
@@ -194,6 +203,7 @@
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_atmos = 1
+	access_dronephone = 1
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
 
 /obj/item/weapon/cartridge/rd/New()
@@ -214,7 +224,9 @@
 	access_newscaster = 1
 	access_quartermaster = 1
 	access_janitor = 1
+	access_dronephone = 1
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	spam_enabled = 1
 
 /obj/item/weapon/cartridge/captain/New()
 	..()
@@ -238,17 +250,18 @@
 /obj/item/weapon/cartridge/proc/print_to_host(text)
 	if (!istype(loc, /obj/item/device/pda))
 		return
-	loc:cart = text
+	var/obj/item/device/pda/P = loc
+	P.cart = text
 
 	for (var/mob/M in viewers(1, loc.loc))
 		if (M.client && M.machine == loc)
-			loc:attack_self(M)
+			P.attack_self(M)
 
 	return
 
 /obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
 
 	if(!frequency) return
 
@@ -270,6 +283,7 @@
 /obj/item/weapon/cartridge/proc/generate_menu(mob/user)
 	switch(mode)
 		if(40) //signaller
+			var/obj/item/radio/integrated/signal/S = radio
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
 
 			menu += {"
@@ -277,22 +291,22 @@
 Frequency:
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
-[format_frequency(radio:frequency)]
+[format_frequency(S.frequency)]
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
 <br>
 Code:
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
-[radio:code]
+[S.code]
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
 
 			menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 			menu += "Entries cannot be modified from this terminal.<br><br>"
-			if(data_core.general)
-				for (var/datum/data/record/t in sortRecord(data_core.general))
+			if(GLOB.data_core.general)
+				for (var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 					menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
 			menu += "<br>"
 
@@ -318,7 +332,7 @@ Code:
 
 
 
-			for(var/obj/machinery/computer/monitor/pMon in machines)
+			for(var/obj/machinery/computer/monitor/pMon in GLOB.machines)
 				if(!(pMon.stat & (NOPOWER|BROKEN)) )
 					powercount++
 					powermonitors += pMon
@@ -342,12 +356,12 @@ Code:
 				menu += "<span class='danger'>No connection<BR></span>"
 			else
 				var/list/L = list()
-				for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)
+				for(var/obj/machinery/power/terminal/term in powmonitor.attached.powernet.nodes)
 					if(istype(term.master, /obj/machinery/power/apc))
 						var/obj/machinery/power/apc/A = term.master
 						L += A
 
-				menu += "<PRE>Total power: [powmonitor.powernet.avail] W<BR>Total load:  [num2text(powmonitor.powernet.viewload,10)] W<BR>"
+				menu += "<PRE>Total power: [powmonitor.attached.powernet.viewavail] W<BR>Total load:  [num2text(powmonitor.attached.powernet.viewload,10)] W<BR>"
 
 				menu += "<FONT SIZE=-1>"
 
@@ -365,14 +379,14 @@ Code:
 
 		if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
 			menu = "<h4><img src=pda_medical.png> Medical Record List</h4>"
-			if(data_core.general)
-				for(var/datum/data/record/R in sortRecord(data_core.general))
+			if(GLOB.data_core.general)
+				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
 					menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 			menu += "<br>"
 		if(441)
 			menu = "<h4><img src=pda_medical.png> Medical Record</h4>"
 
-			if(active1 in data_core.general)
+			if(active1 in GLOB.data_core.general)
 				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 				menu += "Sex: [active1.fields["sex"]]<br>"
 				menu += "Age: [active1.fields["age"]]<br>"
@@ -386,7 +400,7 @@ Code:
 			menu += "<br>"
 
 			menu += "<h4><img src=pda_medical.png> Medical Data</h4>"
-			if(active2 in data_core.medical)
+			if(active2 in GLOB.data_core.medical)
 				menu += "Blood Type: [active2.fields["blood_type"]]<br><br>"
 
 				menu += "Minor Disabilities: [active2.fields["mi_dis"]]<br>"
@@ -408,15 +422,15 @@ Code:
 			menu += "<br>"
 		if (45) //security records
 			menu = "<h4><img src=pda_cuffs.png> Security Record List</h4>"
-			if(data_core.general)
-				for (var/datum/data/record/R in sortRecord(data_core.general))
+			if(GLOB.data_core.general)
+				for (var/datum/data/record/R in sortRecord(GLOB.data_core.general))
 					menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 
 			menu += "<br>"
 		if(451)
 			menu = "<h4><img src=pda_cuffs.png> Security Record</h4>"
 
-			if(active1 in data_core.general)
+			if(active1 in GLOB.data_core.general)
 				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 				menu += "Sex: [active1.fields["sex"]]<br>"
 				menu += "Age: [active1.fields["age"]]<br>"
@@ -430,7 +444,7 @@ Code:
 			menu += "<br>"
 
 			menu += "<h4><img src=pda_cuffs.png> Security Data</h4>"
-			if(active3 in data_core.security)
+			if(active3 in GLOB.data_core.security)
 				menu += "Criminal Status: [active3.fields["criminal"]]<br>"
 
 				menu += text("<BR>\nMinor Crimes:")
@@ -496,13 +510,13 @@ Code:
 			menu += "<BR>Current approved orders: <BR><ol>"
 			for(var/S in SSshuttle.shoppinglist)
 				var/datum/supply_order/SO = S
-				menu += "<li>#[SO.ordernum] - [SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]</li>"
+				menu += "<li>#[SO.id] - [SO.pack.name] approved by [SO.orderer] [SO.reason ? "([SO.reason])":""]</li>"
 			menu += "</ol>"
 
 			menu += "Current requests: <BR><ol>"
 			for(var/S in SSshuttle.requestlist)
 				var/datum/supply_order/SO = S
-				menu += "<li>#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]</li>"
+				menu += "<li>#[SO.id] - [SO.pack.name] requested by [SO.orderer]</li>"
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
 
 		if (49) //janitorial locator
@@ -549,7 +563,7 @@ Code:
 				menu += "<h4>Located Cleanbots:</h4>"
 
 				ldat = null
-				for (var/obj/machinery/bot/cleanbot/B in SSbot.processing)
+				for (var/mob/living/simple_animal/bot/cleanbot/B in GLOB.living_mob_list)
 					var/turf/bl = get_turf(B)
 
 					if(bl)
@@ -571,7 +585,7 @@ Code:
 			menu = "<h4><img src=pda_notes.png> Newscaster Access</h4>"
 			menu += "<br> Current Newsfeed: <A href='byond://?src=\ref[src];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
 			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(!current)
@@ -605,37 +619,40 @@ Code:
 
 	switch(href_list["choice"])
 		if("Medical Records")
-			active1 = find_record("id", href_list["target"], data_core.general)
+			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
-				active2 = find_record("id", href_list["target"], data_core.medical)
-			loc:mode = 441
+				active2 = find_record("id", href_list["target"], GLOB.data_core.medical)
+			pda.mode = 441
 			mode = 441
 			if(!active2)
 				active1 = null
 
 		if("Security Records")
-			active1 = find_record("id", href_list["target"], data_core.general)
+			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
-				active3 = find_record("id", href_list["target"], data_core.security)
-			loc:mode = 451
+				active3 = find_record("id", href_list["target"], GLOB.data_core.security)
+			pda.mode = 451
 			mode = 451
 			if(!active3)
 				active1 = null
 
 		if("Send Signal")
 			spawn( 0 )
-				radio:send_signal("ACTIVATE")
+				var/obj/item/radio/integrated/signal/S = radio
+				S.send_signal("ACTIVATE")
 				return
 
 		if("Signal Frequency")
-			var/new_frequency = sanitize_frequency(radio:frequency + text2num(href_list["sfreq"]))
-			radio:set_frequency(new_frequency)
+			var/obj/item/radio/integrated/signal/S = radio
+			var/new_frequency = sanitize_frequency(S.frequency + text2num(href_list["sfreq"]))
+			S.set_frequency(new_frequency)
 
 		if("Signal Code")
-			radio:code += text2num(href_list["scode"])
-			radio:code = round(radio:code)
-			radio:code = min(100, radio:code)
-			radio:code = max(1, radio:code)
+			var/obj/item/radio/integrated/signal/S = radio
+			S.code += text2num(href_list["scode"])
+			S.code = round(S.code)
+			S.code = min(100, S.code)
+			S.code = max(1, S.code)
 
 		if("Status")
 			switch(href_list["statdisp"])
@@ -654,7 +671,7 @@ Code:
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
 			powmonitor = powermonitors[pnum]
-			loc:mode = 433
+			pda.mode = 433
 			mode = 433
 
 		if("Supply Orders")
@@ -668,14 +685,14 @@ Code:
 			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
 			var/message = pda.msg_input()
 			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != pda_owner_name)
 				pda.cart += "<h5> ERROR : NOT AUTHORIZED [pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
 				pda.Topic(null,list("choice"="Refresh"))
 				return
-			news_network.SubmitArticle(message,pda.owner,current_channel)
+			GLOB.news_network.SubmitArticle(message,pda.owner,current_channel)
 			pda.Topic(null,list("choice"=num2text(mode)))
 			return
 
@@ -696,7 +713,7 @@ Code:
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
 				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= pda.GetAccess())
 			else //Forward all other bot commands to the bot itself!
-				active_bot.bot_control(command= href_list["op"])
+				active_bot.bot_control(command= href_list["op"], user= usr)
 
 	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
 
@@ -710,7 +727,7 @@ Code:
 /obj/item/weapon/cartridge/proc/bot_control()
 
 
-	var/obj/machinery/bot/Bot
+	var/mob/living/simple_animal/bot/Bot
 
 //	if(!SC)
 //		menu = "Interlink Error - Please reinsert cartridge."
@@ -720,10 +737,18 @@ Code:
 		menu += "Model: [active_bot.model]<BR>"
 		menu += "Location: [get_area(active_bot)]<BR>"
 		menu += "Mode: [active_bot.get_mode()]"
+		if(active_bot.allow_pai)
+			menu += "<BR>pAI: "
+			if(active_bot.paicard && active_bot.paicard.pai)
+				menu += "[active_bot.paicard.pai.name]"
+				if(active_bot.bot_core.allowed(usr))
+					menu += " (<A href='byond://?src=\ref[src];op=ejectpai'><i>eject</i></A>)"
+			else
+				menu += "<i>none</i>"
 
 		//MULEs!
 		if(active_bot.bot_type == MULE_BOT)
-			var/obj/machinery/bot/mulebot/MULE = active_bot
+			var/mob/living/simple_animal/bot/mulebot/MULE = active_bot
 			var/atom/Load = MULE.load
 			menu += "<BR>Current Load: [ !Load ? "<i>none</i>" : "[Load.name] (<A href='byond://?src=\ref[src];mule=unload'><i>unload</i></A>)" ]<BR>"
 			menu += "Destination: [MULE.destination ? MULE.destination : "<i>None</i>"] (<A href='byond://?src=\ref[src];mule=destination'><i>set</i></A>)<BR>"
@@ -750,7 +775,7 @@ Code:
 		var/turf/current_turf = get_turf(src)
 		var/zlevel = current_turf.z
 		var/botcount = 0
-		for(Bot in SSbot.processing) //Git da botz
+		for(Bot in GLOB.living_mob_list) //Git da botz
 			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
 				continue //Also, the PDA must have access to the bot type.
 			menu += "<A href='byond://?src=\ref[src];op=control;bot=\ref[Bot]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"

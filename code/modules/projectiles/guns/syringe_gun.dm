@@ -3,11 +3,12 @@
 	desc = "A spring loaded rifle designed to fit syringes, used to incapacitate unruly patients from a distance."
 	icon_state = "syringegun"
 	item_state = "syringegun"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
 	force = 4
 	materials = list(MAT_METAL=2000)
+	origin_tech = "combat=2;biotech=3"
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/list/syringes = list()
@@ -17,37 +18,25 @@
 	..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
 
-/obj/item/weapon/gun/syringe/proc/newshot()
-	if(!syringes.len) return
+/obj/item/weapon/gun/syringe/recharge_newshot()
+	if(!syringes.len)
+		return
+	chambered.newshot()
 
-	var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-
-	if(!S) return
-
-	chambered.BB = new /obj/item/projectile/bullet/dart/syringe(src)
-	S.reagents.trans_to(chambered.BB, S.reagents.total_volume)
-	chambered.BB.name = S.name
-	syringes.Remove(S)
-
-	qdel(S)
-	return
+/obj/item/weapon/gun/syringe/can_shoot()
+	return syringes.len
 
 /obj/item/weapon/gun/syringe/process_chamber()
-	return
-
-/obj/item/weapon/gun/syringe/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
-	if(target == loc)
-		return
-	newshot()
-	..()
+	if(chambered && !chambered.BB) //we just fired
+		recharge_newshot()
 
 /obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
-	user << "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
+	to_chat(user, "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining.")
 
 /obj/item/weapon/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return 0
 
 	var/obj/item/weapon/reagent_containers/syringe/S = syringes[syringes.len]
@@ -56,21 +45,21 @@
 	S.loc = user.loc
 
 	syringes.Remove(S)
-	user << "<span class='notice'>You unload [S] from \the [src].</span>"
+	to_chat(user, "<span class='notice'>You unload [S] from \the [src].</span>")
 
 	return 1
 
 /obj/item/weapon/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = 1)
 	if(istype(A, /obj/item/weapon/reagent_containers/syringe))
 		if(syringes.len < max_syringes)
-			if(!user.unEquip(A))
+			if(!user.transferItemToLoc(A, src))
 				return
-			user << "<span class='notice'>You load [A] into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load [A] into \the [src].</span>")
 			syringes.Add(A)
-			A.loc = src
+			recharge_newshot()
 			return 1
 		else
-			usr << "<span class='warning'>[src] cannot hold more syringes!</span>"
+			to_chat(usr, "<span class='warning'>[src] cannot hold more syringes!</span>")
 	return 0
 
 /obj/item/weapon/gun/syringe/rapidsyringe
@@ -84,8 +73,8 @@
 	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
 	icon_state = "syringe_pistol"
 	item_state = "gun" //Smaller inhand
-	w_class = 2
-	origin_tech = "combat=2;syndicate=2"
+	w_class = WEIGHT_CLASS_SMALL
+	origin_tech = "combat=2;syndicate=2;biotech=3"
 	force = 2 //Also very weak because it's smaller
 	suppressed = 1 //Softer fire sound
 	can_unsuppress = 0 //Permanently silenced

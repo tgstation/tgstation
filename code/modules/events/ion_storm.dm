@@ -1,24 +1,29 @@
 #define ION_RANDOM 0
 #define ION_ANNOUNCE 1
-
+#define ION_FILE "ion_laws.json"
 /datum/round_event_control/ion_storm
 	name = "Ion Storm"
 	typepath = /datum/round_event/ion_storm
 	weight = 15
+	min_players = 2
 
 /datum/round_event/ion_storm
+	var/replaceLawsetChance = 25 //chance the AI's lawset is completely replaced with something else per config weights
+	var/removeRandomLawChance = 10 //chance the AI has one random supplied or inherent law removed
+	var/removeDontImproveChance = 10 //chance the randomly created law replaces a random law instead of simply being added
+	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
 	var/botEmagChance = 10
 	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
 	var/ionMessage = null
 	var/ionAnnounceChance = 33
 	announceWhen	= 1
 
-/datum/round_event/ion_storm/New(var/botEmagChance = 10, var/announceEvent = ION_RANDOM, var/ionMessage = null, var/ionAnnounceChance = 33)
-	src.botEmagChance = botEmagChance
-	src.announceEvent = announceEvent
-	src.ionMessage = ionMessage
-	src.ionAnnounceChance = ionAnnounceChance
-	..()
+/datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
+	replaceLawsetChance = 0
+	removeRandomLawChance = 0
+	removeDontImproveChance = 0
+	shuffleLawsChance = 0
+	botEmagChance = 0
 
 /datum/round_event/ion_storm/announce()
 	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)))
@@ -27,72 +32,86 @@
 
 /datum/round_event/ion_storm/start()
 	//AI laws
-	for(var/mob/living/silicon/ai/M in living_mob_list)
+	for(var/mob/living/silicon/ai/M in GLOB.living_mob_list)
+		M.laws_sanity_check()
 		if(M.stat != 2 && M.see_in_dark != 0)
+			if(prob(replaceLawsetChance))
+				M.laws.pick_weighted_lawset()
+
+			if(prob(removeRandomLawChance))
+				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
+
 			var/message = generate_ion_law(ionMessage)
 			if(message)
-				M.add_ion_law(message)
-				M << "<br>"
-				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
-				M << "<br>"
+				if(prob(removeDontImproveChance))
+					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+				else
+					M.add_ion_law(message)
+
+			if(prob(shuffleLawsChance))
+				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+
+			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
+			M.post_lawchange()
 
 	if(botEmagChance)
-		for(var/obj/machinery/bot/bot in machines)
+		for(var/mob/living/simple_animal/bot/bot in GLOB.living_mob_list)
 			if(prob(botEmagChance))
-				bot.Emag()
+				bot.emag_act()
 
 /proc/generate_ion_law(ionMessage)
 	if(ionMessage)
 		return ionMessage
 
 	//Threats are generally bad things, silly or otherwise. Plural.
-	var/ionthreats = pick_list("ion_laws.txt", "ionthreats")
+	var/ionthreats = pick_list(ION_FILE, "ionthreats")
 	//Objects are anything that can be found on the station or elsewhere, plural.
-	var/ionobjects = pick_list("ion_laws.txt", "ionobjects")
+	var/ionobjects = pick_list(ION_FILE, "ionobjects")
 	//Crew is any specific job. Specific crewmembers aren't used because of capitalization
 	//issues. There are two crew listings for laws that require two different crew members
 	//and I can't figure out how to do it better.
-	var/ioncrew1 = pick_list("ion_laws.txt", "ioncrew")
-	var/ioncrew2 = pick_list("ion_laws.txt", "ioncrew")
+	var/ioncrew1 = pick_list(ION_FILE, "ioncrew")
+	var/ioncrew2 = pick_list(ION_FILE, "ioncrew")
 	//Adjectives are adjectives. Duh. Half should only appear sometimes. Make sure both
 	//lists are identical! Also, half needs a space at the end for nicer blank calls.
-	var/ionadjectives = pick_list("ion_laws.txt", "ionadjectives")
-	var/ionadjectiveshalf = pick("", 400;(pick_list("ion_laws.txt", "ionadjectives") + " "))
+	var/ionadjectives = pick_list(ION_FILE, "ionadjectives")
+	var/ionadjectiveshalf = pick("", 400;(pick_list(ION_FILE, "ionadjectives") + " "))
 	//Verbs are verbs
-	var/ionverb = pick_list("ion_laws.txt", "ionverb")
+	var/ionverb = pick_list(ION_FILE, "ionverb")
 	//Number base and number modifier are combined. Basehalf and mod are unused currently.
 	//Half should only appear sometimes. Make sure both lists are identical! Also, half
 	//needs a space at the end to make it look nice and neat when it calls a blank.
-	var/ionnumberbase = pick_list("ion_laws.txt", "ionnumberbase")
-	//var/ionnumbermod = pick_list("ion_laws.txt", "ionnumbermod")
-	var/ionnumbermodhalf = pick(900;"",(pick_list("ion_laws.txt", "ionnumbermod") + " "))
+	var/ionnumberbase = pick_list(ION_FILE, "ionnumberbase")
+	//var/ionnumbermod = pick_list(ION_FILE, "ionnumbermod")
+	var/ionnumbermodhalf = pick(900;"",(pick_list(ION_FILE, "ionnumbermod") + " "))
 	//Areas are specific places, on the station or otherwise.
-	var/ionarea = pick_list("ion_laws.txt", "ionarea")
+	var/ionarea = pick_list(ION_FILE, "ionarea")
 	//Thinksof is a bit weird, but generally means what X feels towards Y.
-	var/ionthinksof = pick_list("ion_laws.txt", "ionthinksof")
+	var/ionthinksof = pick_list(ION_FILE, "ionthinksof")
 	//Musts are funny things the AI or crew has to do.
-	var/ionmust = pick_list("ion_laws.txt", "ionmust")
+	var/ionmust = pick_list(ION_FILE, "ionmust")
 	//Require are basically all dumb internet memes.
-	var/ionrequire = pick_list("ion_laws.txt", "ionrequire")
+	var/ionrequire = pick_list(ION_FILE, "ionrequire")
 	//Things are NOT objects; instead, they're specific things that either harm humans or
 	//must be done to not harm humans. Make sure they're plural and "not" can be tacked
 	//onto the front of them.
-	var/ionthings = pick_list("ion_laws.txt", "ionthings")
+	var/ionthings = pick_list(ION_FILE, "ionthings")
 	//Allergies should be broad and appear somewhere on the station for maximum fun. Severity
 	//is how bad the allergy is.
-	var/ionallergy = pick_list("ion_laws.txt", "ionallergy")
-	var/ionallergysev = pick_list("ion_laws.txt", "ionallergysev")
+	var/ionallergy = pick_list(ION_FILE, "ionallergy")
+	var/ionallergysev = pick_list(ION_FILE, "ionallergysev")
 	//Species, for when the AI has to commit genocide. Plural.
-	var/ionspecies = pick_list("ion_laws.txt", "ionspecies")
+	var/ionspecies = pick_list(ION_FILE, "ionspecies")
 	//Abstract concepts for the AI to decide on it's own definition of.
-	var/ionabstract = pick_list("ion_laws.txt", "ionabstract")
+	var/ionabstract = pick_list(ION_FILE, "ionabstract")
 	//Foods. Drinks aren't included due to grammar; if you want to add drinks, make a new set
 	//of possible laws for best effect. Unless you want the crew having to drink hamburgers.
-	var/ionfood = pick_list("ion_laws.txt", "ionfood")
+	var/ionfood = pick_list(ION_FILE, "ionfood")
+	var/iondrinks = pick_list(ION_FILE, "iondrinks")
 
 	var/message = ""
 
-	switch(rand(1,39))
+	switch(rand(1,41))
 		if(1 to 3) //There are # X on the station
 			switch(rand(1,3)) //What is X?
 				if(1) //X is a threat
@@ -309,15 +328,17 @@
 		if(24 to 26) //The AI must always
 			message = "YOU MUST ALWAYS [ionmust]"
 
-		if(27 to 28) //Humans must eat X to survive
-			switch(rand(1,4)) //What is X?
+		if(27 to 28) //Humans must consume X to survive
+			switch(rand(1,5)) //What is X?
 				if(1) //X is a food
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ionfood] TO SURVIVE"
-				if(2) //X is an object
+				if(2) //X is a drink
+					message = "HUMANS MUST DRINK [ionadjectiveshalf][iondrinks] TO SURVIVE"
+				if(3) //X is an object
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ionobjects] TO SURVIVE"
-				if(3) //X is a threat
+				if(4) //X is a threat
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ionthreats] TO SURVIVE"
-				if(4) //X is a job
+				if(5) //X is a job
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ioncrew1] TO SURVIVE"
 
 		if(29 to 31) //Change jobs or ranks
@@ -489,6 +510,60 @@
 							message = "[ionabstract] IS [ionverb] THE [ionadjectiveshalf][ionthreats]"
 						if(3) //X is Ying an abstract
 							message = "THE [ionabstract] IS [ionverb] THE [ionadjectiveshalf][ionobjects]"
+		if(40 to 41)// the X is now named Y
+			switch(rand(1,5)) //What is being renamed?
+				if(1)//Areas
+					switch(rand(1,4))//What is the area being renamed to?
+						if(1)
+							message = "[ionarea] IS NOW NAMED [ioncrew1]."
+						if(2)
+							message = "[ionarea] IS NOW NAMED [ionspecies]."
+						if(3)
+							message = "[ionarea] IS NOW NAMED [ionobjects]."
+						if(4)
+							message = "[ionarea] IS NOW NAMED [ionthreats]."
+				if(2)//Crew
+					switch(rand(1,5))//What is the crew being renamed to?
+						if(1)
+							message = "ALL [ioncrew1] ARE NOW NAMED [ionarea]."
+						if(2)
+							message = "ALL [ioncrew1] ARE NOW NAMED [ioncrew2]."
+						if(3)
+							message = "ALL [ioncrew1] ARE NOW NAMED [ionspecies]."
+						if(4)
+							message = "ALL [ioncrew1] ARE NOW NAMED [ionobjects]."
+						if(5)
+							message = "ALL [ioncrew1] ARE NOW NAMED [ionthreats]."
+				if(3)//Races
+					switch(rand(1,4))//What is the race being renamed to?
+						if(1)
+							message = "ALL [ionspecies] ARE NOW NAMED [ionarea]."
+						if(2)
+							message = "ALL [ionspecies] ARE NOW NAMED [ioncrew1]."
+						if(3)
+							message = "ALL [ionspecies] ARE NOW NAMED [ionobjects]."
+						if(4)
+							message = "ALL [ionspecies] ARE NOW NAMED [ionthreats]."
+				if(4)//Objects
+					switch(rand(1,4))//What is the object being renamed to?
+						if(1)
+							message = "ALL [ionobjects] ARE NOW NAMED [ionarea]."
+						if(2)
+							message = "ALL [ionobjects] ARE NOW NAMED [ioncrew1]."
+						if(3)
+							message = "ALL [ionobjects] ARE NOW NAMED [ionspecies]."
+						if(4)
+							message = "ALL [ionobjects] ARE NOW NAMED [ionthreats]."
+				if(5)//Threats
+					switch(rand(1,4))//What is the object being renamed to?
+						if(1)
+							message = "ALL [ionthreats] ARE NOW NAMED [ionarea]."
+						if(2)
+							message = "ALL [ionthreats] ARE NOW NAMED [ioncrew1]."
+						if(3)
+							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
+						if(4)
+							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
 
 	return message
 

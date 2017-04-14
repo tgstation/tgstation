@@ -1,11 +1,41 @@
+// How much "space" we give the edge of the map
+GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "config/awaymissionconfig.txt"))
+
 /proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+	if(GLOB.awaydestinations.len)	//crude, but it saves another var!
 		return
 
-	var/list/potentialRandomZlevels = list()
-	world << "<span class='boldannounce'>Searching for away missions...</span>"
-	var/list/Lines = file2list("config/awaymissionconfig.txt")
-	if(!Lines.len)	return
+	if(GLOB.potentialRandomZlevels && GLOB.potentialRandomZlevels.len)
+		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
+		var/map = pick(GLOB.potentialRandomZlevels)
+		load_new_z_level(map)
+		to_chat(world, "<span class='boldannounce'>Away mission loaded.</span>")
+
+/proc/reset_gateway_spawns(reset = FALSE)
+	for(var/obj/machinery/gateway/G in world)
+		if(reset)
+			G.randomspawns = GLOB.awaydestinations
+		else
+			G.randomspawns.Add(GLOB.awaydestinations)
+
+/obj/effect/landmark/awaystart
+	name = "away mission spawn"
+	desc = "Randomly picked away mission spawn points"
+
+/obj/effect/landmark/awaystart/New()
+	GLOB.awaydestinations += src
+	..()
+
+/obj/effect/landmark/awaystart/Destroy()
+	GLOB.awaydestinations -= src
+	return ..()
+
+/proc/generateMapList(filename)
+	var/list/potentialMaps = list()
+	var/list/Lines = file2list(filename)
+
+	if(!Lines.len)
+		return
 	for (var/t in Lines)
 		if (!t)
 			continue
@@ -18,38 +48,16 @@
 
 		var/pos = findtext(t, " ")
 		var/name = null
-	//	var/value = null
 
 		if (pos)
 			name = lowertext(copytext(t, 1, pos))
-		//	value = copytext(t, pos + 1)
+
 		else
 			name = lowertext(t)
 
 		if (!name)
 			continue
 
-		potentialRandomZlevels.Add(t)
+		potentialMaps.Add(t)
 
-
-	if(potentialRandomZlevels.len)
-		world << "<span class='boldannounce'>Loading away mission...</span>"
-
-		var/map = pick(potentialRandomZlevels)
-		var/file = file(map)
-		if(isfile(file))
-			maploader.load_map(file)
-			world.log << "away mission loaded: [map]"
-
-		map_transition_config.Add(AWAY_MISSION_LIST)
-
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
-				continue
-			awaydestinations.Add(L)
-
-		world << "<span class='boldannounce'>Away mission loaded.</span>"
-
-	else
-		world << "<span class='boldannounce'>No away missions found.</span>"
-		return
+	return potentialMaps

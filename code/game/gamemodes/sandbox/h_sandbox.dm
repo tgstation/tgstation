@@ -1,16 +1,15 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-var/hsboxspawn = 1
+
+GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /mob
 	var/datum/hSB/sandbox = null
 /mob/proc/CanBuild()
-	if(master_mode == "sandbox")
-		sandbox = new/datum/hSB
-		sandbox.owner = src.ckey
-		if(src.client.holder)
-			sandbox.admin = 1
-		verbs += new/mob/proc/sandbox_panel
+	sandbox = new/datum/hSB
+	sandbox.owner = src.ckey
+	if(src.client.holder)
+		sandbox.admin = 1
+	verbs += new/mob/proc/sandbox_panel
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
 	if(sandbox)
@@ -27,9 +26,9 @@ var/hsboxspawn = 1
 	var/hsbinfo = null
 	//items that shouldn't spawn on the floor because they would bug or act weird
 	var/global/list/spawn_forbidden = list(
-		/obj/item/weapon/grab, /obj/item/tk_grab, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
+		/obj/item/tk_grab, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly,/obj/item/device/onetankbomb, /obj/item/radio, /obj/item/device/pda/ai,
-		/obj/item/device/uplink/hidden, /obj/item/smallDelivery, /obj/item/missile,/obj/item/projectile,
+		/obj/item/device/uplink, /obj/item/smallDelivery, /obj/item/projectile,
 		/obj/item/borg/sight,/obj/item/borg/stun,/obj/item/weapon/robot_module)
 
 /datum/hSB/proc/update()
@@ -65,9 +64,9 @@ var/hsboxspawn = 1
 			"Spawn Water Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
 
 			"Bots",
-			"Spawn Cleanbot"					= "hsbspawn&path=[/obj/machinery/bot/cleanbot]",
-			"Spawn Floorbot"					= "hsbspawn&path=[/obj/machinery/bot/floorbot]",
-			"Spawn Medbot"						= "hsbspawn&path=[/obj/machinery/bot/medbot]",
+			"Spawn Cleanbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/cleanbot]",
+			"Spawn Floorbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/floorbot]",
+			"Spawn Medbot"						= "hsbspawn&path=[/mob/living/simple_animal/bot/medbot]",
 
 			"Canisters",
 			"Spawn O2 Canister" 				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/oxygen]",
@@ -84,7 +83,7 @@ var/hsboxspawn = 1
 			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/toxins]'>Spawn Plasma Canister</a><br>"
 			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/carbon_dioxide]'>Spawn CO2 Canister</a><br>"
 			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrogen]'>Spawn Nitrogen Canister</a><br>"
-			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/sleeping_agent]'>Spawn N2O Canister</a><hr>"
+			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrous_oxide]'>Spawn N2O Canister</a><hr>"
 		else
 			hsbinfo += "<i>Some item spawning may be disabled by the administrators.</i><br>"
 			hsbinfo += "<i>Only administrators may spawn dangerous canisters.</i><br>"
@@ -114,13 +113,13 @@ var/hsboxspawn = 1
 			//
 			if("hsbtobj")
 				if(!admin) return
-				if(hsboxspawn)
-					world << "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>"
-					hsboxspawn = 0
+				if(GLOB.hsboxspawn)
+					to_chat(world, "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>")
+					GLOB.hsboxspawn = FALSE
 					return
 				else
-					world << "<span class='boldnotice'>Sandbox:</span> <b>\black[usr.key] has enabled object spawning!</b>"
-					hsboxspawn = 1
+					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black[usr.key] has enabled object spawning!</b>")
+					GLOB.hsboxspawn = TRUE
 					return
 			//
 			// Admin: Toggle auto-close
@@ -128,10 +127,10 @@ var/hsboxspawn = 1
 			if("hsbtac")
 				if(!admin) return
 				if(config.sandbox_autoclose)
-					world << "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>"
+					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
 					config.sandbox_autoclose = 0
 				else
-					world << "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>"
+					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
 					config.sandbox_autoclose = 1
 				return
 			//
@@ -143,34 +142,41 @@ var/hsboxspawn = 1
 				if(P.wear_suit)
 					P.wear_suit.loc = P.loc
 					P.wear_suit.layer = initial(P.wear_suit.layer)
+					P.wear_suit.plane = initial(P.wear_suit.plane)
 					P.wear_suit = null
 				P.wear_suit = new/obj/item/clothing/suit/space(P)
-				P.wear_suit.layer = 20
+				P.wear_suit.layer = ABOVE_HUD_LAYER
+				P.wear_suit.plane = ABOVE_HUD_PLANE
 				P.update_inv_wear_suit()
 				if(P.head)
 					P.head.loc = P.loc
 					P.head.layer = initial(P.head.layer)
+					P.head.plane = initial(P.head.plane)
 					P.head = null
 				P.head = new/obj/item/clothing/head/helmet/space(P)
-				P.head.layer = 20
+				P.head.layer = ABOVE_HUD_LAYER
+				P.head.plane = ABOVE_HUD_PLANE
 				P.update_inv_head()
 				if(P.wear_mask)
 					P.wear_mask.loc = P.loc
 					P.wear_mask.layer = initial(P.wear_mask.layer)
+					P.wear_mask.plane = initial(P.wear_mask.plane)
 					P.wear_mask = null
 				P.wear_mask = new/obj/item/clothing/mask/gas(P)
-				P.wear_mask.layer = 20
+				P.wear_mask.layer = ABOVE_HUD_LAYER
+				P.wear_mask.plane = ABOVE_HUD_PLANE
 				P.update_inv_wear_mask()
 				if(P.back)
 					P.back.loc = P.loc
 					P.back.layer = initial(P.back.layer)
+					P.back.plane = initial(P.back.plane)
 					P.back = null
 				P.back = new/obj/item/weapon/tank/jetpack/oxygen(P)
-				P.back.layer = 20
+				P.back.layer = ABOVE_HUD_LAYER
+				P.back.plane = ABOVE_HUD_PLANE
 				P.update_inv_back()
 				P.internal = P.back
-				if(P.internals)
-					P.internals.icon_state = "internal1"
+				P.update_internals_hud_icon(1)
 
 			if("hsbscrubber") // This is beyond its normal capability but this is sandbox and you spawned one, I assume you need it
 				var/obj/hsb = new/obj/machinery/portable_atmospherics/scrubber{volume_rate=50*ONE_ATMOSPHERE;on=1}(usr.loc)
@@ -210,9 +216,9 @@ var/hsboxspawn = 1
 			// Spawn check due to grief potential (destroying floors, walls, etc)
 			//
 			if("hsbrcd")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
-				new/obj/item/weapon/rcd/combat(usr.loc)
+				new/obj/item/weapon/construction/rcd/combat(usr.loc)
 
 			//
 			// New sandbox airlock maker
@@ -226,11 +232,11 @@ var/hsboxspawn = 1
 
 			// Clothing
 			if("hsbcloth")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
 				if(!clothinfo)
 					clothinfo = "<b>Clothing</b> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
-					var/list/all_items = typesof(/obj/item/clothing) - /obj/item/clothing
+					var/list/all_items = subtypesof(/obj/item/clothing)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 					for(var/O in reverseRange(all_items))
@@ -240,11 +246,11 @@ var/hsboxspawn = 1
 
 			// Reagent containers
 			if("hsbreag")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
 				if(!reaginfo)
 					reaginfo = "<b>Reagent Containers</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
-					var/list/all_items = typesof(/obj/item/weapon/reagent_containers) - /obj/item/weapon/reagent_containers
+					var/list/all_items = subtypesof(/obj/item/weapon/reagent_containers)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 					for(var/O in reverseRange(all_items))
@@ -254,11 +260,11 @@ var/hsboxspawn = 1
 
 			// Other items
 			if("hsbobj")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
 				if(!objinfo)
 					objinfo = "<b>Other Items</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
-					var/list/all_items = typesof(/obj/item/) - typesof(/obj/item/clothing) - typesof(/obj/item/weapon/reagent_containers) - /obj/item
+					var/list/all_items = subtypesof(/obj/item/) - typesof(/obj/item/clothing) - typesof(/obj/item/weapon/reagent_containers)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 
@@ -271,13 +277,13 @@ var/hsboxspawn = 1
 			// Safespawn checks to see if spawning is disabled.
 			//
 			if("hsb_safespawn")
-				if(!hsboxspawn)
+				if(!GLOB.hsboxspawn)
 					usr << browse(null,"window=sandbox")
 					return
 
 				var/typepath = text2path(href_list["path"])
 				if(!typepath)
-					usr << "Bad path: \"[href_list["path"]]\""
+					to_chat(usr, "Bad path: \"[href_list["path"]]\"")
 					return
 				new typepath(usr.loc)
 
@@ -289,7 +295,7 @@ var/hsboxspawn = 1
 			if("hsbspawn")
 				var/typepath = text2path(href_list["path"])
 				if(!typepath)
-					usr << "Bad path: \"[href_list["path"]]\""
+					to_chat(usr, "Bad path: \"[href_list["path"]]\"")
 					return
 				new typepath(usr.loc)
 

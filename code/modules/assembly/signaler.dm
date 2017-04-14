@@ -1,10 +1,10 @@
 /obj/item/device/assembly/signaler
 	name = "remote signaling device"
-	desc = "Used to remotely activate devices."
+	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another."
 	icon_state = "signaller"
 	item_state = "signaler"
 	materials = list(MAT_METAL=400, MAT_GLASS=120)
-	origin_tech = "magnets=1"
+	origin_tech = "magnets=1;bluespace=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = 1
 
@@ -17,21 +17,18 @@
 	..()
 	spawn(40)
 		set_frequency(frequency)
-	return
+
 
 /obj/item/device/assembly/signaler/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
-	if(cooldown > 0)	return 0
-	cooldown = 2
-	spawn(10)
-		process_cooldown()
-
+	if(!..())//cooldown processing
+		return FALSE
 	signal()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/signaler/update_icon()
 	if(holder)
@@ -99,6 +96,15 @@ Code:
 
 	return
 
+/obj/item/device/assembly/signaler/attackby(obj/item/weapon/W, mob/user, params)
+	if(issignaler(W))
+		var/obj/item/device/assembly/signaler/signaler2 = W
+		if(secured && signaler2.secured)
+			code = signaler2.code
+			frequency = signaler2.frequency
+			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
+	else
+		..()
 
 /obj/item/device/assembly/signaler/proc/signal()
 	if(!radio_connection) return
@@ -112,36 +118,42 @@ Code:
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 	if(usr)
-		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+		GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
 
 	return
 /*
 		for(var/obj/item/device/assembly/signaler/S in world)
-			if(!S)	continue
-			if(S == src)	continue
+			if(!S)
+				continue
+			if(S == src)
+				continue
 			if((S.frequency == src.frequency) && (S.code == src.code))
 				spawn(0)
-					if(S)	S.pulse(0)
+					if(S)
+						S.pulse(0)
 		return 0*/
 
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
-	if(!signal)	return 0
-	if(signal.encryption != code)	return 0
-	if(!(src.wires & WIRE_RADIO_RECEIVE))	return 0
+	if(!signal)
+		return 0
+	if(signal.encryption != code)
+		return 0
+	if(!(src.wires & WIRE_RADIO_RECEIVE))
+		return 0
 	pulse(1)
 	audible_message("\icon[src] *beep* *beep*", null, 1)
 	return
 
 
 /obj/item/device/assembly/signaler/proc/set_frequency(new_frequency)
-	if(!radio_controller)
+	if(!SSradio)
 		sleep(20)
-	if(!radio_controller)
+	if(!SSradio)
 		return
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 	return
 
 // Embedded signaller used in grenade construction.
@@ -181,4 +193,10 @@ Code:
 		A.anomalyNeutralize()
 
 /obj/item/device/assembly/signaler/anomaly/attack_self()
+	return
+
+/obj/item/device/assembly/signaler/cyborg
+	origin_tech = null
+
+/obj/item/device/assembly/signaler/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return

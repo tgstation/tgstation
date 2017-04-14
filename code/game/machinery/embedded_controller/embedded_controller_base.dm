@@ -27,8 +27,6 @@
 	var/on = 1
 
 /obj/machinery/embedded_controller/interact(mob/user)
-	//user << browse(return_text(), "window=computer")
-	//onclose(user, "computer")
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "computer", name) // Set up the popup browser window
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -58,10 +56,10 @@
 
 	if(program)
 		program.receive_user_command(href_list["command"])
-		spawn(5) program.process()
+		addtimer(CALLBACK(program, /datum/computer/file/embedded_program.proc/process), 5)
 
 	usr.set_machine(src)
-	spawn(5) src.updateDialog()
+	addtimer(CALLBACK(src, .proc/updateDialog), 5)
 
 /obj/machinery/embedded_controller/process()
 	if(program)
@@ -75,11 +73,12 @@
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/embedded_controller/radio/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
 	return ..()
 
-/obj/machinery/embedded_controller/radio/initialize()
+/obj/machinery/embedded_controller/radio/Initialize()
+	..()
 	set_frequency(frequency)
 
 /obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal)
@@ -90,6 +89,6 @@
 		signal = null
 
 /obj/machinery/embedded_controller/radio/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency)
+	radio_connection = SSradio.add_object(src, frequency)

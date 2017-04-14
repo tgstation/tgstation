@@ -8,8 +8,11 @@
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
-	layer = 2.5
+	layer = LOW_OBJ_LAYER
 	anchored = 1
+	obj_integrity = 500
+	max_integrity = 500
+	armor = list(melee = 70, bullet = 70, laser = 70, energy = 70, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked
@@ -18,7 +21,7 @@
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_access = list(access_engine, access_robotics)
+	req_access = list(GLOB.access_engine, GLOB.access_robotics)
 
 /obj/machinery/navbeacon/New()
 	..()
@@ -28,14 +31,16 @@
 	var/turf/T = loc
 	hide(T.intact)
 	if(codes["patrol"])
-		navbeacons += src //Register with the patrol list!
+		if(!GLOB.navbeacons["[z]"])
+			GLOB.navbeacons["[z]"] = list()
+		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
 	if(codes["delivery"])
-		deliverybeacons += src
-		deliverybeacontags += location
+		GLOB.deliverybeacons += src
+		GLOB.deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	navbeacons &= src //Remove from beacon list, if in one.
-	deliverybeacons &= src
+	GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	GLOB.deliverybeacons -= src
 	return ..()
 
 // set the transponder codes assoc list from codes_txt
@@ -45,7 +50,7 @@
 
 	codes = new()
 
-	var/list/entries = text2list(codes_txt, ";")	// entries are separated by semicolons
+	var/list/entries = splittext(codes_txt, ";")	// entries are separated by semicolons
 
 	for(var/e in entries)
 		var/index = findtext(e, "=")		// format is "key=value"
@@ -60,7 +65,7 @@
 // called when turf state changes
 // hide the object if turf is intact
 /obj/machinery/navbeacon/hide(intact)
-	invisibility = intact ? 101 : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
 	updateicon()
 
 // update the icon_state
@@ -89,13 +94,14 @@
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked
-				user << "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>"
+				to_chat(user, "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>")
 			else
-				user << "<span class='danger'>Access denied.</span>"
+				to_chat(user, "<span class='danger'>Access denied.</span>")
 			updateDialog()
 		else
-			user << "<span class='warning'>You must open the cover first!</span>"
-	return
+			to_chat(user, "<span class='warning'>You must open the cover first!</span>")
+	else
+		return ..()
 
 /obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user, 1)
@@ -112,7 +118,7 @@
 		return		// prevent intraction when T-scanner revealed
 
 	if(!open && !ai)	// can't alter controls if not open, unless you're an AI
-		user << "<span class='warning'>The beacon's control cover is closed!</span>"
+		to_chat(user, "<span class='warning'>The beacon's control cover is closed!</span>")
 		return
 
 

@@ -1,16 +1,22 @@
 /mob/living/carbon/alien/larva/death(gibbed)
-	if(stat == DEAD)	return
-	if(healths)			healths.icon_state = "health6"
-	stat = DEAD
-	icon_state = "larva_dead"
+	if(stat == DEAD)
+		return
 
-	if(!gibbed)
-		visible_message("<span class='name'>[src]</span> lets out a waning high-pitched cry.")
-		update_canmove()
-		if(client)	blind.layer = 0
+	. = ..()
 
-	tod = worldtime2text() //weasellos time of death patch
-	if(mind)	mind.store_memory("Time of death: [tod]", 0)
-	living_mob_list -= src
+	update_icons()
 
-	return ..(gibbed)
+/mob/living/carbon/alien/larva/spawn_gibs(with_bodyparts)
+	if(with_bodyparts)
+		new /obj/effect/gibspawner/larva(loc,viruses)
+	else
+		new /obj/effect/gibspawner/larvabodypartless(loc,viruses)
+
+/mob/living/carbon/alien/larva/gib_animation()
+	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-l")
+
+/mob/living/carbon/alien/larva/spawn_dust()
+	new /obj/effect/decal/remains/xeno(loc)
+
+/mob/living/carbon/alien/larva/dust_animation()
+	new /obj/effect/overlay/temp/dust_animation(loc, "dust-l")

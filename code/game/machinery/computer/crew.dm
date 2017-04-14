@@ -6,29 +6,28 @@
 	use_power = 1
 	idle_power_usage = 250
 	active_power_usage = 500
-	circuit = "/obj/item/weapon/circuitboard/crew"
+	circuit = /obj/item/weapon/circuitboard/computer/crew
+
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	crewmonitor.show(user)
+	GLOB.crewmonitor.show(user)
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
 	if(..())
 		return
 	if(stat & (BROKEN|NOPOWER))
 		return
-	crewmonitor.show(user)
+	GLOB.crewmonitor.show(user)
 
-var/global/datum/crewmonitor/crewmonitor = new
+GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 /datum/crewmonitor
 	var/list/jobs
 	var/list/interfaces
 	var/list/data
-	var/const/MAX_ICON_DIMENSION = 1024
-	var/const/ICON_SIZE = 4
-	var/initialized = FALSE
 
 /datum/crewmonitor/New()
 	. = ..()
@@ -77,6 +76,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 	src.jobs = jobs
 	src.interfaces = list()
 	src.data = list()
+	register_asset("crewmonitor.js",'crew.js')
+	register_asset("crewmonitor.css",'crew.css')
 
 /datum/crewmonitor/Destroy()
 	if (src.interfaces)
@@ -87,6 +88,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 	return ..()
 
 /datum/crewmonitor/proc/show(mob/mob, z)
+	if (mob.client)
+		sendResources(mob.client)
 	if (!z) z = mob.z
 
 	if (z > 0 && src.interfaces)
@@ -102,6 +105,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 			src.update(z, TRUE)
 		else
 			hi = src.interfaces["[z]"]
+			src.update(z,TRUE)
 
 		// Debugging purposes
 		mob << browse_rsc(file("code/game/machinery/computer/crew.js"), "crew.js")
@@ -142,7 +146,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 			var/pos_y
 			var/life_status
 
-			for(var/mob/living/carbon/human/H in mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				// Check if their z-level is correct and if they are wearing a uniform.
 				// Accept H.z==0 as well in case the mob is inside an object.
 				if ((H.z == 0 || H.z == z) && istype(H.w_uniform, /obj/item/clothing/under))
@@ -203,9 +207,12 @@ var/global/datum/crewmonitor/crewmonitor = new
 	for (z in src.interfaces)
 		if (src.interfaces[z] == hi) break
 
+	if(hclient.client.mob && IsAdminGhost(hclient.client.mob))
+		return TRUE
+
 	if (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z))
 		if (isAI(hclient.client.mob)) return TRUE
-		else if (isrobot(hclient.client.mob))
+		else if (iscyborg(hclient.client.mob))
 			return (locate(/obj/machinery/computer/crew, range(world.view, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
 		else
 			return (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
@@ -228,15 +235,15 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 					var/obj/machinery/camera/C = locate(/obj/machinery/camera) in range(5, tile)
 
-					if (!C) C = locate(/obj/machinery/camera) in ultra_range(10, tile)
-					if (!C) C = locate(/obj/machinery/camera) in ultra_range(15, tile)
+					if (!C) C = locate(/obj/machinery/camera) in urange(10, tile)
+					if (!C) C = locate(/obj/machinery/camera) in urange(15, tile)
 
 					if (C)
-						var/turf/current_loc = AI.eyeobj.loc
+						addtimer(CALLBACK(src, .proc/update_ai, AI, C, AI.eyeobj.loc), min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
 
-						spawn(min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
-							if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
-								AI.switchCamera(C)
+/datum/crewmonitor/proc/update_ai(mob/living/silicon/ai/AI, obj/machinery/camera/C, turf/current_loc)
+	if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
+		AI.switchCamera(C)
 
 /mob/living/carbon/human/Move()
 	if (src.w_uniform)
@@ -244,180 +251,15 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 		. = ..()
 
-		if (old_z != src.z) crewmonitor.queueUpdate(old_z)
-		crewmonitor.queueUpdate(src.z)
+		if (old_z != src.z) GLOB.crewmonitor.queueUpdate(old_z)
+		GLOB.crewmonitor.queueUpdate(src.z)
 	else
 		return ..()
 
 /datum/crewmonitor/proc/queueUpdate(z)
-	procqueue.schedule(50, crewmonitor, "update", z)
+	addtimer(CALLBACK(src, .proc/update, z), 5, TIMER_UNIQUE)
 
-/datum/crewmonitor/proc/generateMiniMaps()
-	for(var/z = 1 to world.maxz)
-		generateMiniMap(z)
-	world << "<span class='boldannounce'>All minimaps have been generated."
-	for(var/client/C in clients)
-		sendResources(C)
-	initialized = TRUE
-
-/datum/crewmonitor/proc/sendResources(client/C)
-	C << browse_rsc('crew.js', "crewmonitor.js")
-	C << browse_rsc('crew.css', "crewmonitor.css")
-	for (var/z = 1 to world.maxz) C << browse_rsc(file("[getMinimapFile(z)].png"), "minimap_[z].png")
-
-/datum/crewmonitor/proc/getMinimapFile(z)
-	return "data/minimaps/map_[z]"
-
-// Activate this to debug tile mismatches in the minimap.
-// This will store the full information on each tile and compare it the next time you run the minimap.
-// It can be used to find out what's changed since the last iteration.
-// Only activate this when you need it - this should never be active on a live server!
-// #define MINIMAP_DEBUG
-
-/datum/crewmonitor/proc/generateMiniMap(z, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
-	var/result_path = "[src.getMinimapFile(z)].png"
-	var/hash_path = "[src.getMinimapFile(z)].md5"
-	var/list/tiles = block(locate(x1, y1, z), locate(x2, y2, z))
-	var/hash = ""
-	var/temp
-	var/obj/obj
-
-	#ifdef MINIMAP_DEBUG
-	var/tiledata_path = "data/minimaps/debug_tiledata_[z].sav"
-	var/savefile/F = new/savefile(tiledata_path)
-	#endif
-
-	// Note for future developer: If you have tiles on the map with random or dynamic icons this hash check will fail
-	// every time. You'll have to modify this code to generate a unique hash for your object.
-	// Don't forget to modify the minimap generation code to use a default icon (or skip generation altogether).
-	for (var/turf/tile in tiles)
-		if      (istype(tile.loc, /area/asteroid) || istype(tile.loc, /area/mine/unexplored) || istype(tile, /turf/simulated/mineral) || (istype(tile.loc, /area/space) && istype(tile, /turf/simulated/floor/plating/asteroid)))
-			temp = "/area/asteroid"
-		else if (istype(tile.loc, /area/mine) && istype(tile, /turf/simulated/floor/plating/asteroid))
-			temp = "/area/mine/explored"
-		else if (tile.loc.type == /area/start || (tile.type == /turf/space && !(locate(/obj/structure/lattice) in tile)) || istype(tile, /turf/space/transit))
-			temp = "/turf/space"
-			if (locate(/obj/structure/lattice/catwalk) in tile)
-
-			else
-		else if (tile.type == /turf/space)
-			if (locate(/obj/structure/lattice/catwalk) in tile)
-				temp = "/obj/structure/lattice/catwalk"
-			else
-				temp = "/obj/structure/lattice"
-		else if (tile.type == /turf/simulated/floor/plating/abductor)
-			temp = "/turf/simulated/floor/plating/abductor"
-		else if (tile.type == /turf/simulated/floor/plating && (locate(/obj/structure/window/shuttle) in tile))
-			temp = "/obj/structure/window/shuttle"
-		else
-			temp = "[tile.icon][tile.icon_state][tile.dir]"
-
-		obj = locate(/obj/structure/transit_tube) in tile
-
-		if (obj) temp = "[temp]/obj/structure/transit_tube[obj.icon_state][obj.dir]"
-
-		#ifdef MINIMAP_DEBUG
-		if (F["/[tile.y]/[tile.x]"] && F["/[tile.y]/[tile.x]"] != temp)
-			CRASH("Mismatch: [tile.type] at [tile.x],[tile.y],[tile.z] ([tile.icon], [tile.icon_state], [tile.dir])")
-		else
-			F["/[tile.y]/[tile.x]"] << temp
-		#endif
-
-		hash = md5("[hash][temp]")
-
-	if (fexists(result_path))
-		if (!fexists(hash_path) || trim(file2text(hash_path)) != hash)
-			fdel(result_path)
-			fdel(hash_path)
-
-	if (!fexists(result_path))
-		ASSERT(x1 > 0)
-		ASSERT(y1 > 0)
-		ASSERT(x2 <= world.maxx)
-		ASSERT(y2 <= world.maxy)
-
-		var/icon/map_icon = new/icon('html/mapbase1024.png')
-
-		// map_icon is fine and contains only 1 direction at this point.
-
-		ASSERT(map_icon.Width() == MAX_ICON_DIMENSION && map_icon.Height() == MAX_ICON_DIMENSION)
-
-
-		var/i = 0
-		var/icon/turf_icon
-		var/icon/obj_icon
-		var/old_icon
-		var/old_icon_state
-		var/old_dir
-		var/new_icon
-		var/new_icon_state
-		var/new_dir
-
-		for (var/turf/tile in tiles)
-			if (tile.loc.type != /area/start && (tile.type != /turf/space || (locate(/obj/structure/lattice) in tile) || (locate(/obj/structure/transit_tube) in tile)) && !istype(tile, /turf/space/transit))
-				if (istype(tile.loc, /area/asteroid) || istype(tile.loc, /area/mine/unexplored) || istype(tile, /turf/simulated/mineral) || (istype(tile.loc, /area/space) && istype(tile, /turf/simulated/floor/plating/asteroid)))
-					new_icon = 'icons/turf/mining.dmi'
-					new_icon_state = "rock"
-					new_dir = 2
-				else if (istype(tile.loc, /area/mine) && istype(tile, /turf/simulated/floor/plating/asteroid))
-					new_icon = 'icons/turf/floors.dmi'
-					new_icon_state = "asteroid"
-					new_dir = 2
-				else if (tile.type == /turf/simulated/floor/plating/abductor)
-					new_icon = 'icons/turf/floors.dmi'
-					new_icon_state = "alienpod1"
-					new_dir = 2
-				else if (tile.type == /turf/space)
-					obj = locate(/obj/structure/lattice) in tile
-
-					if (!obj) obj = locate(/obj/structure/transit_tube) in tile
-
-					ASSERT(obj != null)
-
-					if (obj)
-						new_icon = obj.icon
-						new_dir = obj.dir
-						new_icon_state = obj.icon_state
-				else if (tile.type == /turf/simulated/floor/plating && (locate(/obj/structure/window/shuttle) in tile))
-					new_icon = 'icons/obj/structures.dmi'
-					new_dir = 2
-					new_icon_state = "swindow"
-				else
-					new_icon = tile.icon
-					new_icon_state = tile.icon_state
-					new_dir = tile.dir
-
-				if (new_icon != old_icon || new_icon_state != old_icon_state || new_dir != old_dir)
-					old_icon = new_icon
-					old_icon_state = new_icon_state
-					old_dir = new_dir
-
-					turf_icon = new/icon(new_icon, new_icon_state, new_dir, 1, 0)
-					turf_icon.Scale(ICON_SIZE, ICON_SIZE)
-
-				if (tile.type != /turf/space || (locate(/obj/structure/lattice) in tile))
-					obj = locate(/obj/structure/transit_tube) in tile
-
-					if (obj)
-						obj_icon = new/icon(obj.icon, obj.icon_state, obj.dir, 1, 0)
-						obj_icon.Scale(ICON_SIZE, ICON_SIZE)
-						turf_icon.Blend(obj_icon, ICON_OVERLAY)
-
-				map_icon.Blend(turf_icon, ICON_OVERLAY, ((tile.x - 1) * ICON_SIZE), ((tile.y - 1) * ICON_SIZE))
-
-				if ((++i) % 512 == 0) sleep(1) // deliberate delay to avoid lag spikes
-
-			else
-				sleep(-1) // avoid sleeping if possible: prioritize pending procs
-
-		// BYOND BUG: map_icon now contains 4 directions? Create a new icon with only a single state.
-		var/icon/result_icon = new/icon()
-
-		result_icon.Insert(map_icon, "", SOUTH, 1, 0)
-
-		fcopy(result_icon, result_path)
-		text2file(hash, hash_path)
-
-#ifdef MINIMAP_DEBUG
-#undef MINIMAP_DEBUG
-#endif
+/datum/crewmonitor/proc/sendResources(var/client/client)
+	send_asset(client, "crewmonitor.js")
+	send_asset(client, "crewmonitor.css")
+	SSminimap.send(client)

@@ -7,33 +7,39 @@
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = list()
-	flags = OPENCONTAINER
+	resistance_flags = ACID_PROOF
+	container_type = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	var/ignore_flags = 0
+	var/infinite = FALSE
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 	if(!iscarbon(M))
 		return
 
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
-		M << "<span class='warning'>You feel a tiny prick!</span>"
-		user << "<span class='notice'>You inject [M] with [src].</span>"
+		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
+		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
 
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-		reagents.reaction(M, INGEST, fraction)
+		reagents.reaction(M, INJECT, fraction)
 		if(M.reagents)
 			var/list/injected = list()
 			for(var/datum/reagent/R in reagents.reagent_list)
 				injected += R.name
+			var/trans = 0
+			if(!infinite)
+				trans = reagents.trans_to(M, amount_per_transfer_from_this)
+			else
+				trans = reagents.copy_to(M, amount_per_transfer_from_this)
 
-			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>"
+			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
 
 			var/contained = english_list(injected)
 
@@ -41,6 +47,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/CMO
 	list_reagents = list("omnizine" = 30)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
@@ -71,12 +78,15 @@
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
 	if(!reagents.total_volume)
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 	..()
+	if(!iscyborg(user))
+		reagents.maximum_volume = 0 //Makes them useless afterwards
+		container_type = 0
 	update_icon()
 	spawn(80)
-		if(isrobot(user) && !reagents.total_volume)
+		if(iscyborg(user) && !reagents.total_volume)
 			var/mob/living/silicon/robot/R = user
 			if(R.cell.use(100))
 				reagents.add_reagent_list(list_reagents)
@@ -92,9 +102,9 @@
 /obj/item/weapon/reagent_containers/hypospray/medipen/examine()
 	..()
 	if(reagents && reagents.reagent_list.len)
-		usr << "<span class='notice'>It is currently loaded.</span>"
+		to_chat(usr, "<span class='notice'>It is currently loaded.</span>")
 	else
-		usr << "<span class='notice'>It is spent.</span>"
+		to_chat(usr, "<span class='notice'>It is spent.</span>")
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
@@ -112,3 +122,27 @@
 	name = "morphine medipen"
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	list_reagents = list("morphine" = 10)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
+	name = "BVAK autoinjector"
+	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
+	icon_state = "stimpen"
+	volume = 60
+	amount_per_transfer_from_this = 30
+	list_reagents = list("atropine" = 10, "epinephrine" = 10, "salbutamol" = 20, "spaceacillin" = 20)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/survival
+	name = "survival medipen"
+	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
+	icon_state = "stimpen"
+	volume = 57
+	amount_per_transfer_from_this = 57
+	list_reagents = list("salbutamol" = 10, "leporazine" = 15, "tricordrazine" = 15, "epinephrine" = 10, "miningnanites" = 2, "omnizine" = 5)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/species_mutator
+	name = "species mutator medipen"
+	desc = "Embark on a whirlwind tour of racial insensitivity by \
+		literally appropriating other races."
+	volume = 1
+	amount_per_transfer_from_this = 1
+	list_reagents = list("unstablemutationtoxin" = 1)

@@ -1,4 +1,4 @@
-var/list/announcement_systems = list()
+GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system
 	density = 1
@@ -12,8 +12,6 @@ var/list/announcement_systems = list()
 	verb_say = "coldly states"
 	verb_ask = "queries"
 	verb_exclaim = "alarms"
-
-	var/broken = 0
 
 	idle_power_usage = 20
 	active_power_usage = 50
@@ -29,16 +27,21 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/New()
 	..()
-	announcement_systems += src
+	GLOB.announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)
 
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/announcement_system(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 2)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/announcement_system(null)
+	B.apply_default_parts(src)
 
 	update_icon()
+
+/obj/item/weapon/circuitboard/machine/announcement_system
+	name = "Announcement System (Machine Board)"
+	build_path = /obj/machinery/announcement_system
+	origin_tech = "programming=3;bluespace=3;magnets=2"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/announcement_system/update_icon()
 	if(is_operational())
@@ -47,24 +50,19 @@ var/list/announcement_systems = list()
 		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
 
 
-	overlays.Cut()
+	cut_overlays()
 	if(arrivalToggle)
-		overlays |= greenlight
-	else
-		overlays -= greenlight
+		add_overlay(greenlight)
 
 	if(newheadToggle)
-		overlays |= pinklight
-	else
-		overlays -= pinklight
+		add_overlay(pinklight)
 
-	if(broken)
-		overlays |= errorlight
-	else
-		overlays -= errorlight
+	if(stat & BROKEN)
+		add_overlay(errorlight)
 
 /obj/machinery/announcement_system/Destroy()
-	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
+	QDEL_NULL(radio)
+	GLOB.announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 
 /obj/machinery/announcement_system/power_change()
@@ -73,30 +71,18 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/screwdriver))
-		if(!panel_open)
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
-			panel_open = 1
-		else
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
-			panel_open = 0
+		playsound(src.loc, P.usesound, 50, 1)
+		panel_open = !panel_open
+		to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
 		update_icon()
+	else if(default_deconstruction_crowbar(P))
 		return
-
-	if(panel_open)
-		default_deconstruction_crowbar(P)
-		if(istype(P, /obj/item/device/multitool) && broken)
-			user << "<span class='notice'>You reset [src]'s firmware.</span>"
-			broken = 0
-			update_icon()
-			return
-
-	return ..()
-
-/obj/machinery/announcement_system/attack_hand(mob/user)
-	if(can_be_used_by(user))
-		Interact(user)
+	else if(istype(P, /obj/item/device/multitool) && panel_open && (stat & BROKEN))
+		to_chat(user, "<span class='notice'>You reset [src]'s firmware.</span>")
+		stat &= ~BROKEN
+		update_icon()
+	else
+		return ..()
 
 /obj/machinery/announcement_system/proc/CompileText(str, user, rank) //replaces user-given variables with actual thingies.
 	str = replacetext(str, "%PERSON", "[user]")
@@ -111,23 +97,21 @@ var/list/announcement_systems = list()
 
 	if(message_type == "ARRIVAL" && arrivalToggle)
 		message = CompileText(arrival, user, rank)
-
 	else if(message_type == "NEWHEAD" && newheadToggle)
 		message = CompileText(newhead, user, rank)
+	else if(message_type == "ARRIVALS_BROKEN")
+		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
 	if(channels.len == 0)
-		radio.talk_into(src, message, null, list(SPAN_ROBOT))
+		radio.talk_into(src, message, null, list(SPAN_ROBOT), get_default_language())
 	else
 		for(var/channel in channels)
-			radio.talk_into(src, message, channel, list(SPAN_ROBOT))
+			radio.talk_into(src, message, channel, list(SPAN_ROBOT), get_default_language())
 
 //config stuff
 
-/obj/machinery/announcement_system/proc/Interact(mob/user)
-	if(!can_be_used_by(user))
-		return
-
-	if(broken)
+/obj/machinery/announcement_system/interact(mob/user)
+	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
@@ -141,22 +125,20 @@ var/list/announcement_systems = list()
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
-	if(!can_be_used_by(usr) || usr.lying || usr.stat || usr.stunned)
-		return
-	if(broken)
+	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
 
 	if(href_list["ArrivalTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival)
-		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
 			return
 		if(NewMessage)
 			arrival = NewMessage
 	else if(href_list["NewheadTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
-		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
 			return
 		if(NewMessage)
 			newhead = NewMessage
@@ -169,19 +151,21 @@ var/list/announcement_systems = list()
 		update_icon()
 
 	add_fingerprint(usr)
-	Interact(usr)
-	return
+	interact(usr)
 
-/obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
-	if(!isAI(user))
+/obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
+	. = attack_ai(user)
+
+/obj/machinery/announcement_system/attack_ai(mob/user)
+	if(!issilicon(user) && !IsAdminGhost(user))
 		return
-	if(broken)
-		user << "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>"
+	if(stat & BROKEN)
+		to_chat(user, "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")
 		return
-	Interact(user)
+	interact(user)
 
 /obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
-	broken = 1
+	stat |= BROKEN
 	update_icon()
 
 	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")

@@ -15,10 +15,13 @@
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/genetic_damage = 0 // genetic damage caused by using the sting. Nothing to do with cloneloss.
 	var/max_genetic_damage = 100 // hard counter for spamming abilities. Not used/balanced much yet.
+	var/always_keep = 0 // important for abilities like revive that screw you if you lose them.
+	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
 
 
-/obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
-	return
+/obj/effect/proc_holder/changeling/proc/on_purchase(mob/user, is_respec)
+	if(!is_respec)
+		feedback_add_details("changeling_power_purchase",name)
 
 /obj/effect/proc_holder/changeling/proc/on_refund(mob/user)
 	return
@@ -34,6 +37,7 @@
 		return
 	var/datum/changeling/c = user.mind.changeling
 	if(sting_action(user, target))
+		feedback_add_details("changeling_powers",name)
 		sting_feedback(user, target)
 		take_chemical_cost(c)
 
@@ -52,28 +56,30 @@
 	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
 		return 0
 	if(req_human && !ishuman(user))
-		user << "<span class='warning'>We cannot do that in this form!</span>"
+		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
 		return 0
 	var/datum/changeling/c = user.mind.changeling
-	if(c.chem_charges<chemical_cost)
-		user << "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>"
+	if(c.chem_charges < chemical_cost)
+		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
 		return 0
-	if(c.absorbedcount<req_dna)
-		user << "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>"
+	if(c.absorbedcount < req_dna)
+		to_chat(user, "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>")
 		return 0
 	if(req_stat < user.stat)
-		user << "<span class='warning'>We are incapacitated.</span>"
+		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
-	if((user.status_flags & FAKEDEATH) && name != "Regenerate")
-		user << "<span class='warning'>We are incapacitated.</span>"
+	if((user.status_flags & FAKEDEATH) && (!ignores_fakedeath))
+		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
 	if(c.geneticdamage > max_genetic_damage)
-		user << "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>"
+		to_chat(user, "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>")
 		return 0
 	return 1
 
 //used in /mob/Stat()
 /obj/effect/proc_holder/changeling/proc/can_be_used_by(mob/user)
+	if(!user || QDELETED(user))
+		return 0
 	if(!ishuman(user) && !ismonkey(user))
 		return 0
 	if(req_human && !ishuman(user))

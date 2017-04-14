@@ -7,9 +7,6 @@
 /mob/proc/update_icons()
 	return
 
-/mob/proc/update_hud()
-	return
-
 /mob/proc/update_transform()
 	return
 
@@ -22,13 +19,13 @@
 /mob/proc/update_inv_back()
 	return
 
-/mob/proc/update_inv_l_hand()
-	return
-
-/mob/proc/update_inv_r_hand()
+/mob/proc/update_inv_hands()
 	return
 
 /mob/proc/update_inv_wear_mask()
+	return
+
+/mob/proc/update_inv_neck()
 	return
 
 /mob/proc/update_inv_wear_suit()
@@ -43,7 +40,13 @@
 /mob/proc/update_inv_head()
 	return
 
+/mob/proc/update_body()
+	return
+
 /mob/proc/update_hair()
+	return
+
+/mob/proc/update_fire()
 	return
 
 /mob/proc/update_inv_gloves()

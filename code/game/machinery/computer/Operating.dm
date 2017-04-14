@@ -3,22 +3,19 @@
 	desc = "Used to monitor the vitals of a patient during surgery."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
-	circuit = /obj/item/weapon/circuitboard/operating
+	circuit = /obj/item/weapon/circuitboard/computer/operating
 	var/mob/living/carbon/human/patient = null
-	var/obj/structure/optable/table = null
+	var/obj/structure/table/optable/table = null
 
+	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/operating/New()
+/obj/machinery/computer/operating/Initialize()
 	..()
-	if(ticker)
-		find_table()
-
-/obj/machinery/computer/operating/initialize()
 	find_table()
 
 /obj/machinery/computer/operating/proc/find_table()
-	for(var/dir in cardinal)
-		table = locate(/obj/structure/optable, get_step(src, dir))
+	for(var/dir in GLOB.cardinal)
+		table = locate(/obj/structure/table/optable, get_step(src, dir))
 		if(table)
 			table.computer = src
 			break

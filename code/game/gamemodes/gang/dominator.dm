@@ -5,230 +5,184 @@
 	icon_state = "dominator"
 	density = 1
 	anchored = 1
-	layer = 3.6
-	var/maxhealth = 200
-	var/health = 200
+	layer = HIGH_OBJ_LAYER
+	max_integrity = 300
+	obj_integrity = 300
+	integrity_failure = 100
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 70)
 	var/datum/gang/gang
-	var/operating = 0	//-1=broken, 0=standby, 1=takeover
+	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
+	var/datum/effect_system/spark_spread/spark_system
+	var/obj/effect/countdown/dominator/countdown
+
+/obj/machinery/dominator/tesla_act()
+	qdel(src)
 
 /obj/machinery/dominator/New()
 	..()
-	SetLuminosity(2)
+	set_light(2)
+	GLOB.poi_list |= src
+	spark_system = new
+	spark_system.set_up(5, TRUE, src)
+	countdown = new(src)
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
-	if(operating == -1)
-		user << "<span class='danger'>It looks completely busted.</span>"
+	if(stat & BROKEN)
 		return
 
 	var/time
-	if(gang && isnum(gang.dom_timer))
-		time = max(gang.dom_timer, 0)
+	if(gang && gang.is_dominating)
+		time = gang.domination_time_remaining()
 		if(time > 0)
-			user << "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>"
+			to_chat(user, "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>")
 		else
-			user << "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>"
+			to_chat(user, "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>")
 	else
-		user << "<span class='notice'>System on standby.</span>"
-	user << "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>"
+		to_chat(user, "<span class='notice'>System on standby.</span>")
+	to_chat(user, "<span class='danger'>System Integrity: [round((obj_integrity/max_integrity)*100,1)]%</span>")
 
 /obj/machinery/dominator/process()
 	..()
-	if(gang && isnum(gang.dom_timer))
-		if(gang.dom_timer > 0)
+	if(gang && gang.is_dominating)
+		var/time_remaining = gang.domination_time_remaining()
+		if(time_remaining > 0)
+			. = TRUE
 			playsound(loc, 'sound/items/timer.ogg', 10, 0)
-			if(!warned && (gang.dom_timer < 180))
+			if(!warned && (time_remaining < 180))
 				warned = 1
 				var/area/domloc = get_area(loc)
-				gang.message_gangtools("Less than 3 minutes remain in hostile takeover. Defend your dominator at [initial(domloc.name)]!")
-				for(var/datum/gang/G in ticker.mode.gangs)
+				gang.message_gangtools("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!")
+				for(var/datum/gang/G in SSticker.mode.gangs)
 					if(G != gang)
-						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [initial(domloc.name)] must be destroyed!",1,1)
-		else
-			SSmachine.processing -= src
+						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 
-/obj/machinery/dominator/proc/healthcheck(damage)
-	var/iconname = "dominator"
-	if(gang)
-		iconname += "-[gang.color]"
-		SetLuminosity(3)
+	if(!.)
+		STOP_PROCESSING(SSmachines, src)
 
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+/obj/machinery/dominator/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src, 'sound/effects/bang.ogg', 50, 1)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-	health -= damage
+/obj/machinery/dominator/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
+	if(.)
+		if(obj_integrity/max_integrity > 0.66)
+			if(prob(damage_amount*2))
+				spark_system.start()
+		else if(!(stat & BROKEN))
+			spark_system.start()
+			cut_overlays()
+			add_overlay("damage")
 
-	if(health > (maxhealth/2))
-		if(prob(damage*2))
-			sparks.set_up(5, 1, src)
-			sparks.start()
-	else if(operating >= 0)
-		sparks.set_up(5, 1, src)
-		sparks.start()
-		overlays += "damage"
+/obj/machinery/dominator/obj_break(damage_flag)
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+		set_broken()
 
-	if(operating != -1)
-		if(health <= 0)
+/obj/machinery/dominator/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
 			set_broken()
-		else
-			icon_state = iconname
-
-	if(health <= -100)
 		new /obj/item/stack/sheet/plasteel(src.loc)
-		qdel(src)
+	qdel(src)
+
+/obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
+	add_fingerprint(user)
+	..()
 
 /obj/machinery/dominator/proc/set_broken()
 	if(gang)
-		gang.dom_timer = "OFFLINE"
+		gang.is_dominating = FALSE
 
 		var/takeover_in_progress = 0
-		for(var/datum/gang/G in ticker.mode.gangs)
-			if(isnum(G.dom_timer))
+		for(var/datum/gang/G in SSticker.mode.gangs)
+			if(G.is_dominating)
 				takeover_in_progress = 1
 				break
 		if(!takeover_in_progress)
-			SSshuttle.emergencyNoEscape = 0
-			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-				SSshuttle.emergency.mode = SHUTTLE_DOCKED
-				SSshuttle.emergency.timer = world.time
-				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-			else
-				priority_announce("All hostile activity within station systems have ceased.","Network Alert")
+			var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
+			SSshuttle.clearHostileEnvironment(src)
+			if(!was_stranded)
+				priority_announce("All hostile activity within station systems has ceased.","Network Alert")
 
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
 		gang.message_gangtools("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]",1,1)
 
-	SetLuminosity(0)
+	set_light(0)
 	icon_state = "dominator-broken"
-	overlays.Cut()
-	operating = -1
-	SSmachine.processing -= src
+	cut_overlays()
+	operating = 0
+	stat |= BROKEN
+	STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/Destroy()
-	if(operating != -1)
+	if(!(stat & BROKEN))
 		set_broken()
+	GLOB.poi_list.Remove(src)
+	gang = null
+	QDEL_NULL(spark_system)
+	QDEL_NULL(countdown)
+	STOP_PROCESSING(SSmachines, src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
-	healthcheck(100)
+	take_damage(100, BURN, "energy", 0)
 	..()
-
-/obj/machinery/dominator/ex_act(severity, target)
-	if(target == src)
-		qdel(src)
-		return
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			healthcheck(120)
-		if(3)
-			healthcheck(30)
-	return
-
-/obj/machinery/dominator/bullet_act(obj/item/projectile/Proj)
-	if(Proj.damage)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			var/damage = Proj.damage
-			if(Proj.forcedodge)
-				damage *= 0.5
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-			visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
-			healthcheck(damage)
-	..()
-
-/obj/machinery/dominator/blob_act()
-	healthcheck(110)
-
-/obj/machinery/dominator/attackby(obj/I, mob/user, params)
-
-	return
 
 /obj/machinery/dominator/attack_hand(mob/user)
-	if(operating)
+	if(operating || (stat & BROKEN))
 		examine(user)
 		return
 
 	var/datum/gang/tempgang
 
-	if(user.mind in ticker.mode.get_all_gangsters())
+	if(user.mind in SSticker.mode.get_all_gangsters())
 		tempgang = user.mind.gang_datum
 	else
 		examine(user)
 		return
 
-	if(isnum(tempgang.dom_timer))
-		user << "<span class='warning'>Error: Hostile Takeover is already in progress.</span>"
+	if(tempgang.is_dominating)
+		to_chat(user, "<span class='warning'>Error: Hostile Takeover is already in progress.</span>")
 		return
 
 	if(!tempgang.dom_attempts)
-		user << "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>"
+		to_chat(user, "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>")
 		return
 
-	var/time = round(get_domination_time(tempgang)/60,0.1)
-	if(alert(user,"With [round((tempgang.territory.len/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
-		if (isnum(tempgang.dom_timer) || !tempgang.dom_attempts || !in_range(src, user) || !istype(src.loc, /turf))
+	var/time = round(determine_domination_time(tempgang)/60,0.1)
+	if(alert(user,"With [round((tempgang.territory.len/GLOB.start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
+		if((tempgang.is_dominating) || !tempgang.dom_attempts || !in_range(src, user) || !isturf(loc))
 			return 0
 
 		var/area/A = get_area(loc)
-		var/locname = initial(A.name)
+		var/locname = A.map_name
 
 		gang = tempgang
 		gang.dom_attempts --
 		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
 		gang.domination()
+		SSshuttle.registerHostileEnvironment(src)
 		src.name = "[gang.name] Gang [src.name]"
-		healthcheck(0)
 		operating = 1
-		SSmachine.processing += src
+		icon_state = "dominator-[gang.color]"
+
+		countdown.color = gang.color_hex
+		countdown.start()
+
+		set_light(3)
+		START_PROCESSING(SSmachines, src)
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
-		for(var/datum/gang/G in ticker.mode.gangs)
+		for(var/datum/gang/G in SSticker.mode.gangs)
 			if(G != gang)
 				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
-
-/obj/machinery/dominator/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
-	user.visible_message("<span class='danger'>[user] smashes against [src] with its claws.</span>",\
-	"<span class='danger'>You smash against [src] with your claws.</span>",\
-	"<span class='italics'>You hear metal scraping.</span>")
-	healthcheck(15)
-
-/obj/machinery/dominator/attack_animal(mob/living/user)
-	if(!isanimal(user))
-		return
-	var/mob/living/simple_animal/M = user
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0)
-		return
-	healthcheck(M.melee_damage_upper)
-
-/obj/machinery/dominator/mech_melee_attack(obj/mecha/M)
-	if(M.damtype == "brute")
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-		healthcheck(M.force)
-	return
-
-/obj/machinery/dominator/attack_hulk(mob/user)
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
-	user.visible_message("<span class='danger'>[user] smashes [src].</span>",\
-	"<span class='danger'>You punch [src].</span>",\
-	"<span class='italics'>You hear metal being slammed.</span>")
-	healthcheck(5)
-
-/obj/machinery/dominator/attackby(obj/item/weapon/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon))
-		add_fingerprint(user)
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		if( (I.flags&NOBLUDGEON) || !I.force )
-			return
-		playsound(src, 'sound/weapons/smash.ogg', 50, 1)
-		visible_message("<span class='danger'>[user] has hit \the [src] with [I].</span>")
-		if(I.damtype == BURN || I.damtype == BRUTE)
-			healthcheck(I.force)
-		return

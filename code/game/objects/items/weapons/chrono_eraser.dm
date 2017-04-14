@@ -6,10 +6,10 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronobackpack"
 	item_state = "backpack"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	slowdown = 1
-	action_button_name = "Equip/Unequip TED Gun"
+	actions_types = list(/datum/action/item_action/equip_unequip_TED_Gun)
 	var/obj/item/weapon/gun/energy/chrono_gun/PA = null
 	var/list/erased_minds = list() //a collection of minds from the dead
 
@@ -17,6 +17,7 @@
 	erased_minds += M
 
 /obj/item/weapon/chrono_eraser/dropped()
+	..()
 	if(PA)
 		qdel(PA)
 
@@ -24,16 +25,19 @@
 	dropped()
 	return ..()
 
-/obj/item/weapon/chrono_eraser/ui_action_click()
-	var/mob/living/carbon/user = src.loc
-	if(iscarbon(user) && (user.back == src))
-		if(PA)
-			qdel(PA)
-		else
-			PA = new(src)
-			user.put_in_hands(PA)
+/obj/item/weapon/chrono_eraser/ui_action_click(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.back == src)
+			if(PA)
+				qdel(PA)
+			else
+				PA = new(src)
+				user.put_in_hands(PA)
 
-
+/obj/item/weapon/chrono_eraser/item_action_slot_check(slot, mob/user)
+	if(slot == slot_back)
+		return 1
 
 /obj/item/weapon/gun/energy/chrono_gun
 	name = "T.E.D. Projection Apparatus"
@@ -41,8 +45,8 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
-	w_class = 3
-	flags = NODROP
+	w_class = WEIGHT_CLASS_NORMAL
+	flags = NODROP | DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = 0
 	fire_delay = 50
@@ -57,9 +61,6 @@
 	else //admin must have spawned it
 		TED = new(src.loc)
 		qdel(src)
-
-/obj/item/weapon/gun/energy/chrono_gun/dropped()
-	qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/update_icon()
 	return
@@ -81,14 +82,14 @@
 	var/mob/living/user = src.loc
 	if(F.gun)
 		if(isliving(user) && F.captured)
-			user << "<span class='alert'><b>FAIL: <i>[F.captured]</i> already has an existing connection.</b></span>"
+			to_chat(user, "<span class='alert'><b>FAIL: <i>[F.captured]</i> already has an existing connection.</b></span>")
 		src.field_disconnect(F)
 	else
 		startpos = get_turf(src)
 		field = F
 		F.gun = src
 		if(isliving(user) && F.captured)
-			user << "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>"
+			to_chat(user, "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>")
 
 
 /obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(obj/effect/chrono_field/F)
@@ -97,7 +98,7 @@
 		if(F.gun == src)
 			F.gun = null
 		if(isliving(user) && F.captured)
-			user << "<span class='alert'>Disconnected from target: <b>[F.captured]</b></span>"
+			to_chat(user, "<span class='alert'>Disconnected from target: <b>[F.captured]</b></span>")
 	field = null
 	startpos = null
 
@@ -120,12 +121,11 @@
 	name = "eradication beam"
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
-	color = null
 	nodamage = 1
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
 
 /obj/item/projectile/energy/chrono_beam/fire()
-	gun = firer.get_active_hand()
+	gun = firer.get_active_held_item()
 	if(istype(gun))
 		return ..()
 	else
@@ -151,7 +151,6 @@
 	icon_state = "chronofield"
 	density = 0
 	anchored = 1
-	unacidable = 1
 	blend_mode = BLEND_MULTIPLY
 	var/mob/living/captured = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
@@ -177,7 +176,7 @@
 		update_icon()
 
 		desc = initial(desc) + "<br><span class='info'>It appears to contain [target.name].</span>"
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/chrono_field/Destroy()
 	if(gun && gun.field_check(src))
@@ -200,7 +199,7 @@
 				AM.loc = loc
 			qdel(src)
 		else if(tickstokill <= 0)
-			captured << "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>"
+			to_chat(captured, "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>")
 			var/mob/dead/observer/ghost = captured.ghostize(1)
 			if(captured.mind)
 				if(ghost)
@@ -239,8 +238,9 @@
 
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new
-	GM.oxygen = MOLES_O2STANDARD
-	GM.nitrogen = MOLES_N2STANDARD
+	GM.assert_gases("o2","n2")
+	GM.gases["o2"][MOLES] = MOLES_O2STANDARD
+	GM.gases["n2"][MOLES] = MOLES_N2STANDARD
 	GM.temperature = T20C
 	return GM
 
@@ -253,7 +253,7 @@
 /obj/effect/chrono_field/ex_act()
 	return
 
-/obj/effect/chrono_field/blob_act()
+/obj/effect/chrono_field/blob_act(obj/structure/blob/B)
 	return
 
 

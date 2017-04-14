@@ -3,59 +3,78 @@
 	desc = "Dissolves restraints or other objects preventing free movement."
 	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets."
 	chemical_cost = 30 //High cost to prevent spam
-	dna_cost = 1
+	dna_cost = 2
 	req_human = 1
+	genetic_damage = 10
+	max_genetic_damage = 0
 
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
-	var/used = 0
-	if(!user.restrained() && !istype(user.loc, /obj/structure/closet))
-		user << "<span class='warning'>We are already free!</span>"
+	var/used = FALSE // only one form of shackles removed per use
+	if(!user.restrained() && istype(user.loc, /turf/open))
+		to_chat(user, "<span class='warning'>We are already free!</span>")
 		return 0
 
 	if(user.handcuffed)
-		used = 1
 		var/obj/O = user.get_item_by_slot(slot_handcuffed)
-		if(!O || !istype(O))
+		if(!istype(O))
 			return 0
-		user.visible_message("<span class='warning'>[user] vomits a glob of acid on \his [O]!</span>", \
-							 "<span class='warning'>We vomit acidic ooze onto our restraints!</span>")
-		spawn(30)
-			if(O && user.handcuffed == O)
-				user.unEquip(O)
-				O.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
-				O.loc = get_turf(user)
-				qdel(O)
+		user.visible_message("<span class='warning'>[user] vomits a glob of acid on [user.p_their()] [O]!</span>", \
+			"<span class='warning'>We vomit acidic ooze onto our restraints!</span>")
 
-	if(istype(user.wear_suit, /obj/item/clothing/suit/straight_jacket) && !used)
-		used = 1
-		var/obj/item/clothing/suit/straight_jacket/SJ = user.get_item_by_slot(slot_wear_suit)
-		if(!SJ || !istype(SJ))
+		addtimer(CALLBACK(src, .proc/dissolve_handcuffs, user, O), 30)
+		used = TRUE
+
+	if(user.wear_suit && user.wear_suit.breakouttime && !used)
+		var/obj/item/clothing/suit/S = user.get_item_by_slot(slot_wear_suit)
+		if(!istype(S))
 			return 0
-		user.visible_message("<span class='warning'>[user] vomits a glob of acid across the front of \his [SJ]!</span>", \
-							 "<span class='warning'>We vomit acidic ooze onto our straight jacket!</span>")
-		spawn(30)
-			if(SJ && user.wear_suit == SJ)
-				user.unEquip(SJ)
-				SJ.visible_message("<span class='warning'>[SJ] dissolves into a puddle of sizzling goop.</span>")
-				SJ.loc = get_turf(user)
-				qdel(SJ)
+		user.visible_message("<span class='warning'>[user] vomits a glob of acid across the front of [user.p_their()] [S]!</span>", \
+			"<span class='warning'>We vomit acidic ooze onto our straight jacket!</span>")
+		addtimer(CALLBACK(src, .proc/dissolve_straightjacket, user, S), 30)
+		used = TRUE
+
 
 	if(istype(user.loc, /obj/structure/closet) && !used)
-		used = 1
 		var/obj/structure/closet/C = user.loc
-		if(!C || !istype(C)) //The !C check slightly scares me, but...
+		if(!istype(C))
 			return 0
 		C.visible_message("<span class='warning'>[C]'s hinges suddenly begin to melt and run!</span>")
-		user << "<span class='warning'>We vomit acidic goop onto the interior of [C]!</span>"
-		spawn(70)
-			if(C && user.loc == C)
-				C.visible_message("<span class='warning'>[C]'s door breaks and opens!</span>")
-				C.welded = 0
-				C.locked = 0
-				C.broken = 1
-				C.open()
-				user << "<span class='warning'>We open the container restraining us!</span>"
+		to_chat(user, "<span class='warning'>We vomit acidic goop onto the interior of [C]!</span>")
+		addtimer(CALLBACK(src, .proc/open_closet, user, C), 70)
+		used = TRUE
 
-	feedback_add_details("changeling_powers","BD")
-	return 1
+	if(istype(user.loc, /obj/structure/spider/cocoon) && !used)
+		var/obj/structure/spider/cocoon/C = user.loc
+		if(!istype(C))
+			return 0
+		C.visible_message("<span class='warning'>[src] shifts and starts to fall apart!</span>")
+		to_chat(user, "<span class='warning'>We secrete acidic enzymes from our skin and begin melting our cocoon...</span>")
+		addtimer(CALLBACK(src, .proc/dissolve_cocoon, user, C), 25) //Very short because it's just webs
+		used = TRUE
+
+	return used
+
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/O)
+	if(O && user.handcuffed == O)
+		visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
+		qdel(O)
+
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_straightjacket(mob/living/carbon/human/user, obj/S)
+	if(S && user.wear_suit == S)
+		visible_message("<span class='warning'>[S] dissolves into a puddle of sizzling goop.</span>")
+		qdel(S)
+
+/obj/effect/proc_holder/changeling/biodegrade/proc/open_closet(mob/living/carbon/human/user, obj/structure/closet/C)
+	if(C && user.loc == C)
+		C.visible_message("<span class='warning'>[C]'s door breaks and opens!</span>")
+		C.welded = FALSE
+		C.locked = FALSE
+		C.broken = TRUE
+		C.open()
+		to_chat(user, "<span class='warning'>We open the container restraining us!</span>")
+
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/structure/spider/cocoon/C)
+	if(C && user.loc == C)
+		qdel(C) //The cocoon's destroy will move the changeling outside of it without interference
+		to_chat(user, "<span class='warning'>We dissolve the cocoon!</span>")

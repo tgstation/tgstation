@@ -14,16 +14,16 @@
 	return
 
 /obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
-	user << "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>"
+	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")
 	user.mind.changeling.chosen_sting = src
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
 	user.hud_used.lingstingdisplay.invisibility = 0
 
 /obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
-	user << "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>"
+	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
 	user.mind.changeling.chosen_sting = null
 	user.hud_used.lingstingdisplay.icon_state = null
-	user.hud_used.lingstingdisplay.invisibility = 101
+	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind && mind.changeling && mind.changeling.chosen_sting)
@@ -33,12 +33,12 @@
 	if(!..())
 		return
 	if(!user.mind.changeling.chosen_sting)
-		user << "We haven't prepared our sting yet!"
+		to_chat(user, "We haven't prepared our sting yet!")
 	if(!iscarbon(target))
 		return
 	if(!isturf(user.loc))
 		return
-	if(!AStar(user.loc, target.loc, null, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = 0))
+	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = 0))
 		return
 	if(target.mind && target.mind.changeling)
 		sting_feedback(user,target)
@@ -49,9 +49,9 @@
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
 	if(!target)
 		return
-	user << "<span class='notice'>We stealthily sting [target.name].</span>"
+	to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	if(target.mind && target.mind.changeling)
-		target << "<span class='warning'>You feel a tiny prick.</span>"
+		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
 	return 1
 
 
@@ -74,36 +74,40 @@
 	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 	if(!selected_dna)
 		return
+	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
+		to_chat(user, "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!")
+		return
 	..()
 
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
 	if(!..())
 		return
 	if((target.disabilities & HUSK) || !target.has_dna())
-		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
+		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
+	set waitfor = FALSE
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
-		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
+		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
 
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
+	var/mob/living/carbon/C = target
+	if(istype(C))
 		if(C.status_flags & CANWEAKEN)
 			C.do_jitter_animation(500)
-			C.take_organ_damage(20, 0) //The process is extremely painful
+			C.take_bodypart_damage(20, 0) //The process is extremely painful
 
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
-		spawn(10)
-			user.real_name = NewDNA.real_name
-			NewDNA.transfer_identity(C, transfer_SE=1)
-			C.updateappearance(mutcolor_update=1)
-			C.domutcheck()
-	feedback_add_details("changeling_powers","TS")
-	return 1
+	. = TRUE
+	sleep(10)
+	if(istype(C))
+		C.real_name = NewDNA.real_name
+		NewDNA.transfer_identity(C, transfer_SE=1)
+		C.updateappearance(mutcolor_update=1)
+		C.domutcheck()
 
 
 /obj/effect/proc_holder/changeling/sting/false_armblade
@@ -127,7 +131,7 @@
 	if(!..())
 		return
 	if((target.disabilities & HUSK) || !target.has_dna())
-		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
+		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
 
@@ -135,27 +139,29 @@
 	add_logs(user, target, "stung", object="falso armblade sting")
 
 	if(!target.drop_item())
-		user << "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow a false armblade over it!</span>"
+		to_chat(user, "<span class='warning'>The [target.get_active_held_item()] is stuck to their hand, you cannot grow a false armblade over it!</span>")
 		return
 
 	if(ismonkey(target))
-		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
+		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
 
 	var/obj/item/weapon/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
-	spawn(600)
-		playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
-		target.visible_message("<span class='warning'>With a sickening crunch, [target] reforms their [blade.name] into an arm!</span>", "<span class='warning'>[blade] reforms back to normal.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
-		qdel(blade)
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+	addtimer(CALLBACK(src, .proc/remove_fake, target, blade), 600)
+	return TRUE
 
-	feedback_add_details("changeling_powers","AS")
-	return 1
+/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
+	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
+	target.visible_message("<span class='warning'>With a sickening crunch, \
+	[target] reforms their [blade.name] into an arm!</span>",
+	"<span class='warning'>[blade] reforms back to normal.</span>",
+	"<span class='italics>You hear organic matter ripping and tearing!</span>")
 
+	qdel(blade)
+	target.update_inv_hands()
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -172,9 +178,8 @@
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	add_logs(user, target, "stung", "extraction sting")
 	if(!(user.mind.changeling.has_dna(target.dna)))
-		user.mind.changeling.add_profile(target, user)
-	feedback_add_details("changeling_powers","ED")
-	return 1
+		user.mind.changeling.add_new_profile(target, user)
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/mute
 	name = "Mute Sting"
@@ -187,8 +192,7 @@
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "mute sting")
 	target.silent += 30
-	feedback_add_details("changeling_powers","MS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/blind
 	name = "Blind Sting"
@@ -198,14 +202,13 @@
 	chemical_cost = 25
 	dna_cost = 1
 
-/obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "blind sting")
-	target << "<span class='danger'>Your eyes burn horrifically!</span>"
-	target.disabilities |= NEARSIGHT
-	target.eye_blind = 20
-	target.eye_blurry = 40
-	feedback_add_details("changeling_powers","BS")
-	return 1
+	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
+	target.become_nearsighted()
+	target.blind_eyes(20)
+	target.blur_eyes(40)
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucination Sting"
@@ -217,11 +220,12 @@
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
-	spawn(rand(300,600))
-		if(target)
-			target.hallucination = max(400, target.hallucination)
-	feedback_add_details("changeling_powers","HS")
-	return 1
+	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(300,600))
+	return TRUE
+
+/obj/effect/proc_holder/changeling/sting/LSD/proc/hallucination_time(mob/living/carbon/target)
+	if(target)
+		target.hallucination = max(400, target.hallucination)
 
 /obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"
@@ -235,5 +239,4 @@
 	add_logs(user, target, "stung", "cryo sting")
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)
-	feedback_add_details("changeling_powers","CS")
-	return 1
+	return TRUE

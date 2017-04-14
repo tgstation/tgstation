@@ -2,6 +2,7 @@
 	name = "Disease Outbreak"
 	typepath = /datum/round_event/disease_outbreak
 	max_occurrences = 1
+	min_players = 10
 	weight = 5
 
 /datum/round_event/disease_outbreak
@@ -20,7 +21,7 @@
 	if(!virus_type)
 		virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 
-	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
+	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue

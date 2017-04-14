@@ -13,7 +13,14 @@
 		who = world
 	else
 		who = src
-	who << "<b>Obey these laws:</b>"
+	to_chat(who, "<b>Obey these laws:</b>")
 
 	src.laws_sanity_check()
 	src.laws.show_laws(who)
+	if(!everyone)
+		for(var/mob/living/silicon/robot/R in connected_robots)
+			if(R.lawupdate)
+				R.lawsync()
+				R.show_laws()
+				R.law_change_counter++
+

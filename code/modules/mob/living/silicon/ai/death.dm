@@ -1,27 +1,25 @@
 /mob/living/silicon/ai/death(gibbed)
 	if(stat == DEAD)
 		return
-	if(!gibbed)
-		emote("me", 1, "sparks and its screen flickers, its systems slowly coming to a halt.")
-	stat = DEAD
 
+	. = ..()
 
 	if("[icon_state]_dead" in icon_states(src.icon,1))
 		icon_state = "[icon_state]_dead"
 	else
 		icon_state = "ai_dead"
 
+	cameraFollow = null
+
 	anchored = 0 //unbolt floorbolts
 	update_canmove()
-	if(src.eyeobj)
-		src.eyeobj.setLoc(get_turf(src))
-	if(blind)	blind.layer = 0
-	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	if(eyeobj)
+		eyeobj.setLoc(get_turf(src))
 
-	shuttle_caller_list -= src
+	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
+
+	ShutOffDoomsdayDevice()
 
 	if(explosive)
 		spawn(10)
@@ -29,12 +27,19 @@
 
 	for(var/obj/machinery/ai_status_display/O in world) //change status
 		if(src.key)
-			spawn( 0 )
 			O.mode = 2
-			if (istype(loc, /obj/item/device/aicard))
+			if(istype(loc, /obj/item/device/aicard))
 				loc.icon_state = "aicard-404"
 
-	tod = worldtime2text() //weasellos time of death patch
-	if(mind)	mind.store_memory("Time of death: [tod]", 0)
+/mob/living/silicon/ai/proc/ShutOffDoomsdayDevice()
+	if(nuking)
+		set_security_level("red")
+		nuking = FALSE
+		for(var/obj/item/weapon/pinpointer/P in GLOB.pinpointer_list)
+			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
+			P.nuke_warning = FALSE
 
-	return ..(gibbed)
+	if(doomsday_device)
+		doomsday_device.timing = FALSE
+		SSshuttle.clearHostileEnvironment(doomsday_device)
+		qdel(doomsday_device)
