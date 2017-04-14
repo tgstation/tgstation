@@ -105,6 +105,8 @@ obj/item/weapon/construction
 	if(!(A in view(7, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the [src] blinks red.</span>")
 		return FALSE
+	else
+		return TRUE
 
 /obj/item/weapon/construction/proc/prox_check(proximity)
 	if(proximity)
@@ -428,7 +430,8 @@ obj/item/weapon/construction
 	item_state = "rcd"
 
 /obj/item/weapon/construction/rcd/arcd/afterattack(atom/A, mob/user)
-	range_check(A,user)
+	if(!range_check(A,user))
+		return
 	if(target_check(A,user))
 		user.Beam(A,icon_state="rped_upgrade",time=30)
 	rcd_create(A,user)
@@ -495,7 +498,8 @@ obj/item/weapon/construction
 
 
 /obj/item/weapon/construction/rld/afterattack(atom/A, mob/user)
-	range_check(A,user)
+	if(!range_check(A,user))
+		return
 	var/turf/start = get_turf(src)
 	switch(mode)
 		if(REMOVE_MODE)
