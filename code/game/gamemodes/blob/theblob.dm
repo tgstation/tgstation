@@ -99,7 +99,7 @@
 	var/list/blobs_to_affect = list()
 	for(var/obj/structure/blob/B in urange(claim_range, src, 1))
 		blobs_to_affect += B
-	shuffle(blobs_to_affect)
+	shuffle_inplace(blobs_to_affect)
 	for(var/L in blobs_to_affect)
 		var/obj/structure/blob/B = L
 		if(!B.overmind && !istype(B, /obj/structure/blob/core) && prob(30))

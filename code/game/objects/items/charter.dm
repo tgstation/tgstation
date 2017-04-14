@@ -86,7 +86,7 @@
 	name = "station charter for [station_name()]"
 	desc = "An official document entrusting the governance of \
 		[station_name()] and surrounding space to Captain [uname]."
-
+	feedback_set_details("station_renames","[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE
 

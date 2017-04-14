@@ -350,9 +350,7 @@
 		else
 			to_chat(user, "<span class='userdanger'>You stick \the [W] into the light socket!</span>")
 			if(has_power() && (W.flags & CONDUCT))
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(3, 1, src)
-				s.start()
+				do_sparks(3, TRUE, src)
 				if (prob(75))
 					electrocute_mob(user, get_area(src), src, rand(0.7,1.0), TRUE)
 	else
@@ -523,9 +521,7 @@
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
 			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(on)
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(3, 1, src)
-			s.start()
+			do_sparks(3, TRUE, src)
 	status = LIGHT_BROKEN
 	update()
 

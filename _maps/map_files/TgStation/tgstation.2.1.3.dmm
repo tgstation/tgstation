@@ -4554,7 +4554,7 @@
 "ajy" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Labor Shuttle Dock APC";
+	name = "Brig APC";
 	pixel_y = 24
 	},
 /obj/structure/cable{

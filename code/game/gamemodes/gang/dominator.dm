@@ -24,7 +24,7 @@
 	set_light(2)
 	GLOB.poi_list |= src
 	spark_system = new
-	spark_system.set_up(5, 1, src)
+	spark_system.set_up(5, TRUE, src)
 	countdown = new(src)
 
 /obj/machinery/dominator/examine(mob/user)
@@ -129,9 +129,8 @@
 		set_broken()
 	GLOB.poi_list.Remove(src)
 	gang = null
-	qdel(spark_system)
-	qdel(countdown)
-	countdown = null
+	QDEL_NULL(spark_system)
+	QDEL_NULL(countdown)
 	STOP_PROCESSING(SSmachines, src)
 	return ..()
 

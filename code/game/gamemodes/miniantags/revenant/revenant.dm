@@ -21,8 +21,9 @@
 	layer = GHOST_LAYER
 	healable = FALSE
 	sight = SEE_SELF
-	see_invisible = SEE_INVISIBLE_NOLIGHTING
+
 	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	response_help   = "passes through"
 	response_disarm = "swings through"
 	response_harm   = "punches through"
@@ -57,15 +58,7 @@
 	var/draining = FALSE //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
-	var/image/ghostimage = null //Visible to ghost with darkness off
 	var/generated_objectives_and_spells = FALSE
-
-/mob/living/simple_animal/revenant/Initialize()
-	..()
-
-	ghostimage = image(src.icon,src,src.icon_state)
-	GLOB.ghost_darkness_images |= ghostimage
-	updateallghostimages()
 
 /mob/living/simple_animal/revenant/Login()
 	..()
@@ -210,8 +203,6 @@
 	if(!revealed || stat == DEAD) //Revenants cannot die if they aren't revealed //or are already dead
 		return 0
 	..(1)
-	GLOB.ghost_darkness_images -= ghostimage
-	updateallghostimages()
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = TRUE
 	revealed = TRUE
@@ -274,9 +265,6 @@
 			icon_state = icon_reveal
 	else
 		icon_state = icon_idle
-	if(ghostimage)
-		ghostimage.icon_state = src.icon_state
-		updateallghostimages()
 
 /mob/living/simple_animal/revenant/proc/castcheck(essence_cost)
 	if(!src)

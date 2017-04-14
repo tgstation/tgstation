@@ -43,9 +43,9 @@
 	switch(controller)
 		if("Master")
 			Recreate_MC()
-			feedback_add_details("admin_verb","RMC")
+			feedback_add_details("admin_verb","Restart Master Controller")
 		if("Failsafe")
 			new /datum/controller/failsafe()
-			feedback_add_details("admin_verb","RFailsafe")
+			feedback_add_details("admin_verb","Restart Failsafe Controller")
 
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
