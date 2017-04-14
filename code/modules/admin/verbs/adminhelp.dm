@@ -262,6 +262,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].</span>"
 	message_admins(msg)
 	log_admin_private(msg)
+	TicketPanel()	//can only be done from here, so refresh it
 
 //private
 /datum/admin_help/proc/RemoveActive()
