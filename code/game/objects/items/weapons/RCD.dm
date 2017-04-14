@@ -93,6 +93,7 @@ obj/item/weapon/construction
 		return 0
 	matter -= amount
 	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
+	update_icon()
 	return 1
 
 /obj/item/weapon/construction/proc/checkResource(amount, mob/user)
