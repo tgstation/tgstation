@@ -12,6 +12,9 @@
 	..()
 	reset_gas_mix()
 
+/datum/gas_mixture/immutable/garbage_collect()
+	reset_gas_mix()
+
 /datum/gas_mixture/immutable/archive()
 	return 1 //nothing changes, so we do nothing and the archive is successful
 
@@ -63,3 +66,16 @@
 
 /datum/gas_mixture/immutable/space/remove_ratio()
 	return copy() //we're always empty, so we can just return a copy.
+
+
+//used by cloners
+/datum/gas_mixture/immutable/cloner
+	initial_temperature = T20C
+
+/datum/gas_mixture/immutable/cloner/reset_gas_mix()
+	assert_gas("n2")
+	gases["n2"][MOLES] = MOLES_O2STANDARD + MOLES_N2STANDARD
+	..()
+
+/datum/gas_mixture/immutable/cloner/heat_capacity()
+	return (MOLES_O2STANDARD + MOLES_N2STANDARD)*20 //specific heat of nitrogen is 20
