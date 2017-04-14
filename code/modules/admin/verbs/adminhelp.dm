@@ -195,7 +195,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/TimeoutVerb()
 	initiator.verbs -= /client/verb/adminhelp
-	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_UNIQUE) //2 minute cooldown of admin helps
+	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
 
 //private
 /datum/admin_help/proc/FullMonty(ref_src)
