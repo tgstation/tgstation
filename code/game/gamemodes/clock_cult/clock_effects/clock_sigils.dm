@@ -128,7 +128,7 @@
 		var/mob/living/carbon/C = L
 		C.silent += 5
 	var/message = "[sigil_name] in [get_area(src)] <span class='sevtug'>[is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]</span>"
-	for(var/M in mob_list)
+	for(var/M in GLOB.mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, L)
 			to_chat(M,  "[link] <span class='heavy_brass'>[message] [L.real_name]!</span>")
@@ -198,7 +198,7 @@
 		var/structure_number = 0
 		for(var/obj/structure/destructible/clockwork/powered/P in range(SIGIL_ACCESS_RANGE, src))
 			structure_number++
-		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power, \
+		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power, \
 		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? "":"s"] [structure_number == 1 ? "is":"are"] in range.</span>")
 		if(iscyborg(user))
 			to_chat(user, "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>")
@@ -248,7 +248,7 @@
 	update_glow()
 
 /obj/effect/clockwork/sigil/transmission/proc/modify_charge(amount)
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		update_glow()
 		return TRUE
 	if(power_charge - amount < 0)
@@ -258,7 +258,7 @@
 	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/proc/update_glow()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		alpha = 255
 	else
 		alpha = min(initial(alpha) + power_charge*0.02, 255)
@@ -289,8 +289,8 @@
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='[vitality ? "inathneq_small":"alloy"]'>It has access to <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>")
-		if(ratvar_awakens)
+		to_chat(user, "<span class='[vitality ? "inathneq_small":"alloy"]'>It has access to <b>[GLOB.ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>")
+		if(GLOB.ratvar_awakens)
 			to_chat(user, "<span class='inathneq_small'>It can revive Servants at no cost!</span>")
 		else
 			to_chat(user, "<span class='inathneq_small'>It can revive Servants at a cost of <b>[base_revive_cost]</b> vitality plus vitality equal to the non-oxygen damage they have, in addition to being destroyed in the process.</span>")
@@ -303,7 +303,7 @@
 	addtimer(CALLBACK(src, .proc/update_alpha), 10)
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
-	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (ratvar_awakens || vitality))) && get_turf(L) == get_turf(src))
+	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || vitality))) && get_turf(L) == get_turf(src))
 		sigil_active = TRUE
 		if(animation_number >= 4)
 			new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
@@ -323,7 +323,7 @@
 						qdel(W)
 				L.dust()
 			else
-				if(!ratvar_awakens && L.stat == CONSCIOUS)
+				if(!GLOB.ratvar_awakens && L.stat == CONSCIOUS)
 					vitality_drained = L.adjustToxLoss(1)
 				else
 					vitality_drained = L.adjustToxLoss(1.5)
@@ -334,7 +334,7 @@
 		else
 			if(L.stat == DEAD)
 				var/revival_cost = base_revive_cost + L.getCloneLoss() + L.getToxLoss() + L.getFireLoss() + L.getBruteLoss() //ignores oxygen damage
-				if(ratvar_awakens)
+				if(GLOB.ratvar_awakens)
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
 				if(vitality >= revival_cost && (ghost || (L.mind && L.mind.active)))
@@ -344,14 +344,14 @@
 					var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
 					animate(V, alpha = 0, transform = matrix()*2, time = 8)
 					playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
-					L.visible_message("<span class='warning'>[L] suddenly gets back up, [ratvar_awakens ? "[L.p_their()] body dripping blue ichor":"even as [src] scatters into blue sparks around [L.p_them()]"]!</span>", \
+					L.visible_message("<span class='warning'>[L] suddenly gets back up, [GLOB.ratvar_awakens ? "[L.p_their()] body dripping blue ichor":"even as [src] scatters into blue sparks around [L.p_them()]"]!</span>", \
 					"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 					vitality -= revival_cost
-					if(!ratvar_awakens)
+					if(!GLOB.ratvar_awakens)
 						qdel(src)
 				break
 			var/vitality_for_cycle = 3
-			if(!ratvar_awakens)
+			if(!GLOB.ratvar_awakens)
 				if(L.stat == CONSCIOUS)
 					vitality_for_cycle = 2
 				vitality_for_cycle = min(vitality, vitality_for_cycle)
@@ -360,7 +360,7 @@
 			if(!vitality_used)
 				break
 
-			if(!ratvar_awakens)
+			if(!GLOB.ratvar_awakens)
 				vitality -= vitality_used
 
 		sleep(2)

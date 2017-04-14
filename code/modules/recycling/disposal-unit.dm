@@ -285,7 +285,7 @@
 // handle machine interaction
 
 /obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(stat & BROKEN)
 		return
 	if(user.loc == src)
@@ -340,11 +340,11 @@
 		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(75))
-			I.loc = src
-			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
+			I.forceMove(src)
+			visible_message("<span class='notice'>[I] lands in [src].</span>")
 			update_icon()
 		else
-			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")
+			visible_message("<span class='notice'>[I] bounces off of [src]'s rim!</span>")
 		return 0
 	else
 		return ..(mover, target, height)

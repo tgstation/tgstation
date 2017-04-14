@@ -2,8 +2,6 @@
 //This file contains their code, plus code for applying and removing them.
 //When making a new status effect, add a define to status_effects.dm in __DEFINES for ease of use!
 
-var/global/list/all_status_effects = list() //a list of all status effects, if for some reason you need to remove all of them
-
 /datum/status_effect
 	var/id = "effect" //Used for screen alerts.
 	var/duration = -1 //How long the status effect lasts in DECISECONDS. Enter -1 for an effect that never ends unless removed through some means.
@@ -17,7 +15,6 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 		owner = new_owner
 	if(owner)
 		LAZYADD(owner.status_effects, src)
-	all_status_effects += src
 	addtimer(CALLBACK(src, .proc/start_ticking), 1) //Give us time to set any variables
 
 /datum/status_effect/Destroy()
@@ -26,7 +23,6 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 		owner.clear_alert(id)
 		on_remove()
 		LAZYREMOVE(owner.status_effects, src)
-	all_status_effects -= src
 	return ..()
 
 /datum/status_effect/proc/start_ticking()

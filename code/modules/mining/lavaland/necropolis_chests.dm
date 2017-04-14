@@ -9,7 +9,7 @@
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
 
-/obj/structure/closet/crate/necropolis/tendril/New()
+/obj/structure/closet/crate/necropolis/tendril/Initialize()
 	..()
 	var/loot = rand(1,25)
 	switch(loot)
@@ -87,7 +87,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
-		feedback_add_details("wisp_lantern","F") // freed
+		feedback_add_details("wisp_lantern","Freed") // freed
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
@@ -102,9 +102,9 @@
 		wisp.stop_orbit()
 		wisp.loc = src
 		icon_state = "lantern-blue"
-		feedback_add_details("wisp_lantern","R") // returned
+		feedback_add_details("wisp_lantern","Returned") // returned
 
-/obj/item/device/wisp_lantern/New()
+/obj/item/device/wisp_lantern/Initialize()
 	..()
 	wisp = new(src)
 
@@ -149,7 +149,7 @@
 	desc = "A mysterious red cube."
 	icon_state = "red_cube"
 
-/obj/item/device/warp_cube/red/New()
+/obj/item/device/warp_cube/red/Initialize()
 	..()
 	if(!linked)
 		var/obj/item/device/warp_cube/blue = new(src.loc)
@@ -229,7 +229,7 @@
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
-		feedback_add_details("immortality_talisman","U") // usage
+		feedback_add_details("immortality_talisman","Activated") // usage
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
@@ -294,7 +294,7 @@
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 
-/obj/item/device/shared_storage/red/New()
+/obj/item/device/shared_storage/red/Initialize()
 	..()
 	if(!bag)
 		var/obj/item/weapon/storage/backpack/shared/S = new(src)
@@ -359,7 +359,7 @@
 	name = "oar"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "oar"
-	item_state = "rods"
+	item_state = "oar"
 	desc = "Not to be confused with the kind Research hassles you for."
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
@@ -453,7 +453,7 @@
 /obj/structure/closet/crate/necropolis/dragon
 	name = "dragon chest"
 
-/obj/structure/closet/crate/necropolis/dragon/New()
+/obj/structure/closet/crate/necropolis/dragon/Initialize()
 	..()
 	var/loot = rand(1,4)
 	switch(loot)
@@ -482,18 +482,18 @@
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
 
-/obj/item/weapon/melee/ghost_sword/New()
+/obj/item/weapon/melee/ghost_sword/Initialize()
 	..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
-	poi_list |= src
+	GLOB.poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
-		G.invisibility = observer_default_invisibility
+		G.invisibility = GLOB.observer_default_invisibility
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
-	poi_list -= src
+	GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/weapon/melee/ghost_sword/attack_self(mob/user)
@@ -537,7 +537,7 @@
 			current_spirits |= G
 
 	for(var/mob/dead/observer/G in spirits - current_spirits)
-		G.invisibility = observer_default_invisibility
+		G.invisibility = GLOB.observer_default_invisibility
 
 	spirits = current_spirits
 
@@ -634,7 +634,7 @@
 	var/timer = 0
 	var/banned_turfs
 
-/obj/item/weapon/lava_staff/New()
+/obj/item/weapon/lava_staff/Initialize()
 	. = ..()
 	banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
@@ -699,7 +699,7 @@
 /obj/structure/closet/crate/necropolis/bubblegum
 	name = "bubblegum chest"
 
-/obj/structure/closet/crate/necropolis/bubblegum/New()
+/obj/structure/closet/crate/necropolis/bubblegum/Initialize()
 	..()
 	var/loot = rand(1,3)
 	switch(loot)
@@ -722,7 +722,7 @@
 	if(used)
 		return
 	used = TRUE
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in player_list
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in GLOB.player_list
 
 	if(!(isliving(choice)))
 		to_chat(user, "[choice] is already dead!")
@@ -747,7 +747,7 @@
 			var/obj/effect/mine/pickup/bloodbath/B = new(L)
 			B.mineEffect(L)
 
-		for(var/mob/living/carbon/human/H in player_list)
+		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H == L)
 				continue
 			to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
@@ -975,7 +975,7 @@
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, user, friendly_fire_check)
-	for(var/d in cardinal)
+	for(var/d in GLOB.cardinal)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
 /obj/item/weapon/hierophant_club/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long

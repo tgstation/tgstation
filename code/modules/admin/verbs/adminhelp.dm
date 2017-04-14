@@ -11,7 +11,7 @@
 	var/list/forenames = list()
 	var/list/ckeys = list()
 	var/founds = ""
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		var/list/indexing = list(M.real_name, M.name)
 		if(M.mind)
 			indexing += M.mind.name
@@ -80,7 +80,7 @@
 	set category = "Admin"
 	set name = "Adminhelp"
 
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
@@ -112,7 +112,7 @@
 
 	//send this msg to all admins
 
-	for(var/client/X in admins)
+	for(var/client/X in GLOB.admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
 		window_flash(X, ignorepref = TRUE)
@@ -127,12 +127,12 @@
 	log_admin_private("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
 		to_chat(src, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
-	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /proc/get_admin_counts(requiredflags = R_BAN)
 	. = list("total" = list(), "noflags" = list(), "afk" = list(), "stealth" = list(), "present" = list())
-	for(var/client/X in admins)
+	for(var/client/X in GLOB.admins)
 		.["total"] += X
 		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
 			.["noflags"] += X
@@ -181,7 +181,7 @@
 /proc/ircadminwho()
 	var/list/message = list("Admins: ")
 	var/list/admin_keys = list()
-	for(var/adm in admins)
+	for(var/adm in GLOB.admins)
 		var/client/C = adm
 		admin_keys += "[C][C.holder.fakekey ? "(Stealth)" : ""][C.is_afk() ? "(AFK)" : ""]"
 

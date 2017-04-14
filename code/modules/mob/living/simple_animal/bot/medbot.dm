@@ -338,7 +338,7 @@
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
-	if(C.stat == 2)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		return 0 //welp too late for them!
 
 	if(C.suiciding)
@@ -404,7 +404,7 @@
 		soft_reset()
 		return
 
-	if(C.stat == 2)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/mno.ogg',"Live, damnit! LIVE!" = 'sound/voice/mlive.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/mlost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
@@ -496,7 +496,7 @@
 	return
 
 /mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
-	var/datum/reagent/R  = chemical_reagents_list[reagent_id]
+	var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
 	if(!R.overdose_threshold) //Some chems do not have an OD threshold
 		return 0
 	var/current_volume = patient.reagents.get_reagent_amount(reagent_id)
@@ -545,4 +545,4 @@
 		declare_cooldown = 0
 
 /obj/machinery/bot_core/medbot
-	req_one_access =list(access_medical, access_robotics)
+	req_one_access =list(GLOB.access_medical, GLOB.access_robotics)

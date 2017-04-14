@@ -37,7 +37,7 @@
 	origin_tech = "magnets=1;engineering=2"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/meson/night
@@ -47,6 +47,7 @@
 	item_state = "nvgmeson"
 	origin_tech = "magnets=4;engineering=5;plasmatech=4"
 	darkness_view = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/meson/gar
@@ -84,7 +85,7 @@
 	item_state = "glasses"
 	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
 	darkness_view = 8
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/eyepatch
@@ -322,7 +323,7 @@
 	darkness_view = 8
 	scan_reagents = 1
 	flags = NODROP
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)

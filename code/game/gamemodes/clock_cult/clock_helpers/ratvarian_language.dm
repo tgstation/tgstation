@@ -101,14 +101,11 @@ List of nuances:
 /proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
 	var/list/spans = list(SPAN_ROBOT)
 
-	var/old_languages_spoken = AM.languages_spoken
-	AM.languages_spoken = HUMAN //anyone who can understand HUMAN will hear weird shitty ratvar speak, otherwise it'll get starred out
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!whisper)
-			L.say(message, "clock", spans)
+			L.say(message, "clock", spans, language=/datum/language/common)
 		else
 			L.whisper(message)
 	else
-		AM.say(message)
-	AM.languages_spoken = old_languages_spoken
+		AM.say(message, language=/datum/language/common)

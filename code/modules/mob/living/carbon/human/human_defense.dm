@@ -302,13 +302,14 @@
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(check_shields(damage, "the [M.name]", null, MELEE_ATTACK, M.armour_penetration))
-			return 0
+			return FALSE
 		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
-			return 1
+			return TRUE
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart("chest")
@@ -684,7 +685,7 @@
 				to_chat(src, "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status].")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>")
+					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
 				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")

@@ -200,9 +200,6 @@
 	..()
 	amount_grown = 0
 
-var/const/MAX_CHICKENS = 50
-var/global/chicken_count = 0
-
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
@@ -237,6 +234,7 @@ var/global/chicken_count = 0
 	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = 2
+	var/static/chicken_count = 0
 
 /mob/living/simple_animal/chicken/Initialize()
 	..()
@@ -247,11 +245,11 @@ var/global/chicken_count = 0
 	icon_dead = "[icon_prefix]_[body_color]_dead"
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
-	chicken_count += 1
+	++chicken_count
 
-/mob/living/simple_animal/chicken/death(gibbed)
-	..(gibbed)
-	chicken_count -= 1
+/mob/living/simple_animal/chicken/Destroy()
+	--chicken_count
+	return ..()
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
 	if(istype(O, food_type)) //feedin' dem chickens
