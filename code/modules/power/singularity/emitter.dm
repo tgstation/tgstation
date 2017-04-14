@@ -281,7 +281,7 @@
 			else
 				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is online!</span>")
 		else
-			to_chat(user, "<span class='danger'> denied.</span>")
+			to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 
 	if(is_wire_tool(W) && panel_open)
