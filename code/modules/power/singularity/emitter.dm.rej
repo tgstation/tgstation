@@ -1,0 +1,21 @@
+diff a/code/modules/power/singularity/emitter.dm b/code/modules/power/singularity/emitter.dm	(rejected hunks)
+@@ -238,13 +238,13 @@
+ 		P.firer = src
+ 		P.original = targeted_atom
+ 	if(!manual)
+-		src.last_shot = world.time
+-		if(src.shot_number < 3)
+-			src.fire_delay = 20
+-			src.shot_number ++
++		last_shot = world.time
++		if(shot_number < 3)
++			fire_delay = 20
++			shot_number ++
+ 		else
+-			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+-			src.shot_number = 0
++			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
++			shot_number = 0
+ 		if(!target)
+ 			P.setDir(src.dir)
+ 			P.starting = loc
