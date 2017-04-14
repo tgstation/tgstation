@@ -277,8 +277,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(NewLoc)
 		loc = NewLoc
-		for(var/obj/effect/step_trigger/S in NewLoc)
-			S.Crossed(src)
 		update_parallax_contents()
 	else
 		loc = get_turf(src) //Get out of closets and such as a ghost
@@ -290,9 +288,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			x++
 		else if((direct & WEST) && x > 1)
 			x--
-
-	for(var/obj/effect/step_trigger/S in get_turf(src))
-		S.Crossed(src)
 
 	Moved(oldloc, direct)
 
