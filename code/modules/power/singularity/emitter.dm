@@ -177,7 +177,7 @@
 				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
 			return
-		if(src.charge <=80)
+		if(charge <=80)
 			charge+=5
 		if(!check_delay() || manual == TRUE)
 			return FALSE
@@ -238,13 +238,13 @@
 		P.firer = src
 		P.original = targeted_atom
 	if(!manual)
-		src.last_shot = world.time
-		if(src.shot_number < 3)
-			src.fire_delay = 20
-			src.shot_number ++
+		last_shot = world.time
+		if(shot_number < 3)
+			fire_delay = 20
+			shot_number ++
 		else
-			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
-			src.shot_number = 0
+			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+			shot_number = 0
 		if(!target)
 			P.setDir(src.dir)
 			P.starting = loc
@@ -379,7 +379,7 @@
 	for(var/atom/movable/A in get_turf(src))
 		if(A.density && (A != src && A != M))
 			return
-	M.loc = get_turf(src)
+	M.forceMove(get_turf(src))
 	..()
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
 	M.pixel_y = 14
@@ -399,7 +399,7 @@
 /datum/action/innate/protoemitter/Grant(mob/living/carbon/L, obj/machinery/power/emitter/prototype/proto)
 	PE = proto
 	U = L
-	..()
+	. = ..()
 
 /datum/action/innate/protoemitter/firing
 	name = "Switch to Manual Firing"
