@@ -81,7 +81,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		else
 			++num_disconnected
 	if(num_disconnected)
-		stat("Disconnected:", "[num_disconnected]")
+		stat("Disconnected:", astatclick.update("[num_disconnected]"))
 	stat("Closed Tickets:", cstatclick.update("[closed_tickets.len]"))
 	stat("Resolved Tickets:", rstatclick.update("[resolved_tickets.len]"))
 
@@ -240,6 +240,29 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		window_flash(X, ignorepref = TRUE)
 		to_chat(X, chat_msg)
 
+//Reopen a closed ticket
+/datum/admin_help/proc/Reopen()
+	if(state == AHELP_ACTIVE)
+		to_chat(usr, "<span class='warning'>This ticket is already open.</span>")
+		return
+	
+	if(GLOB.ahelp_tickets.CKey2ActiveTicket(initiator_ckey))
+		to_chat(usr, "<span class='warning'>This user already has an active ticket, cannot reopen this one.</span>")
+		return
+
+	statclick = new(null, src)
+	GLOB.ahelp_tickets.active_tickets += src
+	GLOB.ahelp_tickets.closed_tickets -= src
+	GLOB.ahelp_tickets.resolved_tickets -= src
+	state = AHELP_ACTIVE
+	if(initiator)
+		initiator.current_ticket = src
+
+	interactions += "<font color='purple'>Reopened by [key_name_admin(usr)]</font>"
+	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].</span>"
+	message_admins(msg)
+	log_admin_private(msg)
+
 //private
 /datum/admin_help/proc/RemoveActive()
 	if(state != AHELP_ACTIVE)
@@ -323,7 +346,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
 	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
-	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName()]</h4>"
+	var/ref_src = "\ref[src]"
+	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
 	dat += "<b>State: "
 	switch(state)
 		if(AHELP_ACTIVE)
@@ -334,12 +358,14 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			dat += "CLOSED"
 		else
 			dat += "UNKNOWN"
-	dat += "</b>[GLOB.TAB][TicketHref("Refresh")][GLOB.TAB][TicketHref("Re-title", null, "retitle")]<br>"
-	dat += "<br>Opened at: [gameTimestamp(wtime = opened_at)][closed_at ? "<br>Closed at: [gameTimestamp(wtime = closed_at)]" : ""]<br><br>"
+	dat += "</b>[GLOB.TAB][TicketHref("Refresh", ref_src)][GLOB.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
+	if(state != AHELP_ACTIVE)
+		dat += "[GLOB.TAB][TicketHref("Reopen", ref_src, "reopen")]"
+	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)][closed_at ? "<br>Closed at: [gameTimestamp(wtime = closed_at)]" : ""]<br><br>"
 	if(initiator)
-		dat += "<b>Actions:</b> [FullMonty()]<br>"
+		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
 	else
-		dat += "<b>DISCONNECTED</b>[GLOB.TAB][ClosureLinks()]<br>"
+		dat += "<b>DISCONNECTED</b>[GLOB.TAB][ClosureLinks(ref_src)]<br>"
 	dat += "<br><b>Log:</b><br><br>"
 	for(var/I in interactions)
 		dat += "[I]<br>"
@@ -374,6 +400,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			Close()
 		if("resolve")
 			Resolve()
+		if("reopen")
+			Reopen()
 
 //
 // TICKET STATCLICK
