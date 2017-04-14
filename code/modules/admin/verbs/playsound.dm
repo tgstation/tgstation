@@ -20,6 +20,10 @@
 	admin_sound.wait = 1
 	admin_sound.repeat = 0
 	admin_sound.status = SOUND_STREAM
+	
+	
+	if(alert(usr, "Show the title of this song to the players?",,"Yes","No") == "Yes")
+		to_chat(world, "An admin played: [S]")
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
