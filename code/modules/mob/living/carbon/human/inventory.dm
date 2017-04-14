@@ -141,7 +141,7 @@
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop)
+/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return

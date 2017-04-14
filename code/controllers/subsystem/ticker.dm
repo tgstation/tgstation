@@ -590,22 +590,6 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
-	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
-	if(SSgarbage.didntgc.len || SSgarbage.sleptDestroy.len)
-		var/dellog = ""
-		for(var/path in SSgarbage.didntgc)
-			dellog += "Path : [path] \n"
-			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
-			if(path in SSgarbage.sleptDestroy)
-				dellog += "Sleeps : [SSgarbage.sleptDestroy[path]] \n"
-				SSgarbage.sleptDestroy -= path
-		for(var/path in SSgarbage.sleptDestroy)
-			dellog += "Path : [path] \n"
-			dellog += "Sleeps : [SSgarbage.sleptDestroy[path]] \n"
-		log_world(dellog)
-
-	CHECK_TICK
-
 	//Collects persistence features
 	SSpersistence.CollectData()
 

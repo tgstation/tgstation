@@ -68,7 +68,7 @@
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
-	feedback_add_details("jaunter", "U") // user activated
+	feedback_add_details("jaunter", "User") // user activated
 	activate(user)
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
@@ -124,13 +124,13 @@
 
 	if(triggered)
 		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
-		feedback_add_details("jaunter","E") // EMP accidental activation
+		feedback_add_details("jaunter","EMP") // EMP accidental activation
 		activate(usr)
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
 		to_chat(user, "Your [src] activates, saving you from the chasm!</span>")
-		feedback_add_details("jaunter","C") // chasm automatic activation
+		feedback_add_details("jaunter","Chasm") // chasm automatic activation
 		activate(user)
 	else
 		to_chat(user, "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
