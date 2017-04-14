@@ -203,7 +203,7 @@
 	anchored = 1
 	},
 /obj/structure/light_construct,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aI" = (
 /turf/closed/wall/shuttle{
@@ -545,7 +545,7 @@ aa
 aC
 aj
 aj
-bp
+bk
 aC
 aa
 aa
@@ -786,7 +786,7 @@ bl
 aj
 aj
 aj
-br
+bk
 aC
 aC
 aC
@@ -955,7 +955,7 @@ aN
 aj
 bq
 aj
-af
+aW
 aj
 aj
 aW
@@ -980,7 +980,7 @@ aj
 aV
 aY
 aC
-bs
+bl
 aj
 aC
 aj
@@ -998,7 +998,7 @@ aj
 aG
 aC
 aj
-af
+aW
 aj
 bn
 aj
@@ -1096,7 +1096,7 @@ aC
 aC
 aC
 aL
-aR
+be
 aL
 aC
 aC
