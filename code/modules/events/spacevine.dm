@@ -422,7 +422,7 @@
 	var/list/growth_queue
 	var/spread_multiplier = 5
 	var/spread_cap = 30
-	var/list/sv_mutations_list
+	var/list/vine_mutations_list
 	var/mutativeness = 1
 
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production)
@@ -430,8 +430,8 @@
 	START_PROCESSING(SSobj, src)
 	vines = list()
 	growth_queue = list()
-	sv_mutations_list = list()
-	init_subtypes(/datum/spacevine_mutation, sv_mutations_list)
+	vine_mutations_list = list()
+	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
 	if(potency != null)
 		mutativeness = potency / 10
 	if(production != null)
@@ -473,7 +473,7 @@
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
 		SV.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
-			var/datum/spacevine_mutation/randmut = pick(sv_mutations_list - SV.mutations)
+			var/datum/spacevine_mutation/randmut = pick(vine_mutations_list - SV.mutations)
 			randmut.add_mutation_to_vinepiece(SV)
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
