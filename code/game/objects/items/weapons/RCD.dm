@@ -106,8 +106,10 @@ obj/item/weapon/construction
 		return FALSE
 
 /obj/item/weapon/construction/proc/prox_check(proximity)
-	if(!proximity)
-		return
+	if(proximity)
+		return TRUE
+	else
+		return FALSE
 
 
 /obj/item/weapon/construction/rcd
@@ -290,6 +292,18 @@ obj/item/weapon/construction
 			airlock_type = /obj/machinery/door/airlock
 
 
+/obj/item/weapon/construction/rcd/proc/rcd_create(atom/A, mob/user)
+	var/list/rcd_results = A.rcd_vals(user, src)
+	if(!rcd_results)
+		return FALSE
+	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
+		if(checkResource(rcd_results["cost"], user))
+			if(A.rcd_act(user, src, rcd_results["mode"]))
+				useResource(rcd_results["cost"], user)
+				activate()
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				return TRUE
+
 /obj/item/weapon/construction/rcd/New()
 	..()
 	GLOB.rcd_list += src
@@ -321,18 +335,9 @@ obj/item/weapon/construction
 		return FALSE
 
 /obj/item/weapon/construction/rcd/afterattack(atom/A, mob/user, proximity)
-	prox_check()
-	var/list/rcd_results = A.rcd_vals(user, src)
-	if(!rcd_results)
-		return FALSE
-	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
-		if(checkResource(rcd_results["cost"], user))
-			if(A.rcd_act(user, src, rcd_results["mode"]))
-				useResource(rcd_results["cost"], user)
-				activate()
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-				return TRUE
-
+	if(!prox_check(proximity))
+		return
+	rcd_create(A, user)
 
 /obj/item/weapon/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
@@ -424,7 +429,7 @@ obj/item/weapon/construction
 	range_check(A,user)
 	if(target_check(A,user))
 		user.Beam(A,icon_state="rped_upgrade",time=30)
-	..()
+	rcd_create(A,user)
 
 
 
@@ -498,7 +503,7 @@ obj/item/weapon/construction
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, decondelay, target = A))
-						if(!useResource(deconcost, user)) 
+						if(!useResource(deconcost, user))
 							return 0
 						activate()
 						qdel(A)
@@ -559,9 +564,9 @@ obj/item/weapon/construction
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(do_after(user, floordelay, target = A))
-						if(!istype(F)) 
+						if(!istype(F))
 							return 0
-						if(!useResource(floorcost, user)) 
+						if(!useResource(floorcost, user))
 							return 0
 						activate()
 						var/destination = get_turf(A)
