@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
-	init_order = 9
 	flags = SS_KEEP_TIMING
 	var/list/processing = list()
 	var/list/currentrun = list()

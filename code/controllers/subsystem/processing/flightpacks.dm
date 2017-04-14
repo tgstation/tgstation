@@ -3,7 +3,7 @@ PROCESSING_SUBSYSTEM_DEF(flightpacks)
 	priority = 30
 	wait = 2
 	stat_tag = "FM"
-	flags = SS_NO_INIT|SS_TICKER|SS_KEEP_TIMING
+	flags = SS_TICKER|SS_KEEP_TIMING
 
 	var/flightsuit_processing = FLIGHTSUIT_PROCESSING_FULL
 

@@ -67,7 +67,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			Recover()
 			qdel(Master)
 		else
-			init_subtypes(/datum/controller/subsystem, subsystems)
+			PreInitSubsystems()
 		Master = src
 
 	if(!GLOB)
@@ -142,6 +142,30 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		to_chat(world, "<span class='boldannounce'>The Master Controller is having some issues, we will need to re-initialize EVERYTHING</span>")
 		Initialize(20, TRUE)
 
+/datum/controller/master/proc/PreInitSubsystems()
+	if(!islist(subsystem_init_order))	//first time here
+		//This list starts out as one massive string, so lets format it properly
+		var/blob = trim(subsystem_init_order)
+		var/list/type_names = splittext(blob, ",")
+		//Trim more fat and format
+		var/prepend = "/datum/controller/subsystem/"
+		subsystem_init_order = list()
+		for(var/I in 1 to type_names.len)
+			var/trimmed = trim(type_names[I])
+			var/path = text2path(prepend + trimmed)
+			if(path)
+				subsystem_init_order += path
+
+	//subsystems with init order
+	for(var/I in 1 to subsystem_init_order.len)
+		var/path = subsystem_init_order[I]
+		var/datum/controller/subsystem/SS = new path
+		SS.initialize_order = I
+		subsystems += SS
+
+	//We will preinit subsystems that don't initialize last
+	for(var/I in subtypesof(/datum/controller/subsystem) - subsystem_init_order)
+		subsystems += new I
 
 // Please don't stuff random bullshit here,
 // 	Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
@@ -163,7 +187,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	// Initialize subsystems.
 	GLOB.CURRENT_TICKLIMIT = config.tick_limit_mc_init
 	for (var/datum/controller/subsystem/SS in subsystems)
-		if (SS.flags & SS_NO_INIT)
+		if (!SS.initialize_order)
 			continue
 		SS.Initialize(REALTIMEOFDAY)
 		CHECK_TICK

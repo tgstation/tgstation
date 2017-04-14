@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
-	init_order = 12
 	flags = SS_NO_FIRE
 
 	var/list/nuke_tiles = list()
@@ -17,6 +16,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
+	var/static/initialized = FALSE
 
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
@@ -29,6 +29,8 @@ SUBSYSTEM_DEF(mapping)
 
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
+	if(initialized)
+		return
 	if(config.defaulted)
 		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
 	loadWorld()
@@ -57,6 +59,7 @@ SUBSYSTEM_DEF(mapping)
 
 	// Set up Z-level transistions.
 	setup_map_transitions()
+	initialized = TRUE
 	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
@@ -81,7 +84,6 @@ SUBSYSTEM_DEF(mapping)
 		C.update_icon()
 
 /datum/controller/subsystem/mapping/Recover()
-	flags |= SS_NO_INIT
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates
 	space_ruins_templates = SSmapping.space_ruins_templates

@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 10
 
-	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING|SS_NO_INIT
+	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
 
 	var/initiator = null
 	var/started_time = null

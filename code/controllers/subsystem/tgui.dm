@@ -1,8 +1,7 @@
 SUBSYSTEM_DEF(tgui)
 	name = "tgui"
 	wait = 9
-	init_order = 16
-	flags = SS_NO_INIT|SS_FIRE_IN_LOBBY
+	flags = SS_FIRE_IN_LOBBY
 	priority = 110
 
 	var/list/currentrun = list()

@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(orbit)
 	name = "Orbits"
 	priority = 35
 	wait = 2
-	flags = SS_NO_INIT|SS_TICKER
+	flags = SS_TICKER
 
 	var/list/currentrun = list()
 	var/list/processing = list()

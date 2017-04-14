@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(squeak)
 
 /datum/controller/subsystem/squeak/Initialize(timeofday)
 	trigger_migration()
+	..()
 
 /datum/controller/subsystem/squeak/proc/trigger_migration(num_mice=10)
 	find_exposed_wires()

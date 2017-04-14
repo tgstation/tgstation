@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(inbounds)
 	name = "Inbounds"
 	priority = 40
-	flags = SS_NO_INIT
 
 	var/list/processing = list()
 	var/list/currentrun = list()

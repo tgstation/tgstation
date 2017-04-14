@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(religion)
 	name = "Religion"
-	init_order = 19
-	flags = SS_NO_FIRE|SS_NO_INIT
+	flags = SS_NO_FIRE
 
 	var/religion
 	var/deity

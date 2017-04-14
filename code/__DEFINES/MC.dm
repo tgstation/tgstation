@@ -13,8 +13,8 @@
 //subsystem should fire during pre-game lobby.
 #define SS_FIRE_IN_LOBBY 1
 
-//subsystem does not initialize.
-#define SS_NO_INIT 2
+//deprecated, can be replaced
+//#define SS_NO_INIT 2
 
 //subsystem does not fire.
 //	(like can_fire = 0, but keeps it from getting added to the processing subsystems list)
@@ -65,3 +65,5 @@
     PreInit();\
 }\
 /datum/controller/subsystem/processing/##X
+
+#define SUBSYSTEM_INIT_ORDER(X...) /datum/controller/master/var/static/list/subsystem_init_order = #X
