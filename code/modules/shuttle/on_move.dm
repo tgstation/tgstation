@@ -1,6 +1,3 @@
-/turf/proc/onShuttleMove(turf/oldturf)
-	addtimer(CALLBACK(lighting_object, /atom/movable/lighting_object/proc/update), 0)
-
 /atom/movable/proc/onShuttleMove(turf/T1, rotation)
 	if(rotation)
 		shuttleRotate(rotation)
@@ -80,7 +77,3 @@
 			var/oldPY = pixel_y
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
-
-// Nope nope nope!
-/atom/movable/lighting_object/onShuttleMove(turf/T1, rotation)
-	return FALSE

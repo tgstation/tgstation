@@ -339,7 +339,7 @@
 									target="_parent._top"
 									onmouseclick="this.focus()"
 									style="background-color:#ffffff">
-									<option value>Select option</option>
+									<option value selected>Select option</option>
 									[dropdownoptions_html.Join()]
 								</select>
 							</form>
