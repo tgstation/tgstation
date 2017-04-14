@@ -92,6 +92,7 @@ obj/item/weapon/construction
 		return 0
 	matter -= amount
 	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
+	update_icon()
 	return 1
 
 /obj/item/weapon/construction/proc/checkResource(amount, mob/user)
@@ -424,6 +425,7 @@ obj/item/weapon/construction
 	delay_mod = 0.6
 	ranged = TRUE
 	icon_state = "arcd"
+	item_state = "rcd"
 
 /obj/item/weapon/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	range_check(A,user)
