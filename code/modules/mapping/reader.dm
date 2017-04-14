@@ -339,7 +339,8 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 		SSatoms.map_loader_stop()
 		stoplag()
 		SSatoms.map_loader_begin()
-/dmm_suite/proc/create_atom(path, ccrds)
+
+/dmm_suite/proc/create_atom(path, crds)
 	set waitfor = FALSE
 	. = new path (crds)
 	
