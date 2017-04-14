@@ -423,6 +423,7 @@ obj/item/weapon/construction
 	delay_mod = 0.6
 	ranged = TRUE
 	icon_state = "arcd"
+	item_state = "rcd"
 
 /obj/item/weapon/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	range_check(A,user)
