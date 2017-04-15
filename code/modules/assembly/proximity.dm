@@ -68,10 +68,6 @@
 			toggle_scan(1)
 			time = initial(time)
 
-/obj/item/device/assembly/prox_sensor/Destroy()
-	QDEL_NULL(proximity_monitor)
-	return ..()
-
 /obj/item/device/assembly/prox_sensor/toggle_scan(scan)
 	if(!secured)
 		return 0

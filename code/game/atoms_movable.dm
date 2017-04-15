@@ -175,6 +175,8 @@
 
 	if(stationloving && force)
 		STOP_PROCESSING(SSinbounds, src)
+	
+	QDEL_NULL(proximity_monitor)
 
 	. = ..()
 	if(loc)

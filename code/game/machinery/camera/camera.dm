@@ -62,7 +62,6 @@
 
 /obj/machinery/camera/Destroy()
 	toggle_cam(null, 0) //kick anyone viewing out
-	QDEL_NULL(proximity_monitor)
 	if(assembly)
 		qdel(assembly)
 		assembly = null

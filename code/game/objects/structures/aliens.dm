@@ -238,10 +238,6 @@
 	if(status == BURST)
 		obj_integrity = integrity_failure
 
-/obj/structure/alien/egg/Destroy()
-	QDEL_NULL(proximity_monitor)
-	. = ..()
-
 /obj/structure/alien/egg/update_icon()
 	..()
 	switch(status)

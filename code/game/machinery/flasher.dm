@@ -158,10 +158,6 @@
 	. = ..()
 	proximity_monitor = new(src, 0)
 
-/obj/machinery/flasher/portable/Destroy()
-	QDEL_NULL(proximity_monitor)
-	return ..()
-
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
 	if (last_flash && world.time < last_flash + 150)
 		return
