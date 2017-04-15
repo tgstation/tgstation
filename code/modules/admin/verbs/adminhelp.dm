@@ -321,8 +321,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
 
 	feedback_inc("ahelp_reject")
-	message_admins("[key_name] Rejected [initiator_key_name]'s admin help. [initiator_key_name]'s Adminhelp verb has been returned to them.")
-	log_admin_private("[key_name] Rejected [initiator_key_name]'s admin help.")
+	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
+	message_admins(msg)
+	log_admin_private(msg)
 	interactions += "Rejected by [key_name]."
 	Close(silent = TRUE)
 
@@ -339,9 +340,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		to_chat(initiator, msg)
 
 	feedback_inc("ahelp_icissue")
-	message_admins("[key_name] marked [initiator_key_name]'s admin help as an IC issue.")
+	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
+	message_admins(msg)
+	log_admin_private(msg)
 	interactions += "Marked as IC issue by [key_name]"
-	log_admin_private("[key_name] marked [initiator_key_name]'s admin help as an IC issue.")
 	Resolve(silent = TRUE)
 
 //Show the ticket panel
