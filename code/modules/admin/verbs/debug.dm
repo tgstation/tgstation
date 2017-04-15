@@ -70,16 +70,38 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return
 		log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
+		returnval = WrapAdminProcCall(target, procname, lst) // Pass the lst as an argument list to the proc
 	else
 		//this currently has no hascall protection. wasn't able to get it working.
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
+		returnval = WrapAdminProcCall(GLOBAL_PROC, procname, lst) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
 		to_chat(usr, .)
 	feedback_add_details("admin_verb","Advanced ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+GLOBAL_VAR_INIT(AdminProcCall, null)
+GLOBAL_PROTECT(AdminProcCall)
+
+/proc/WrapAdminProcCall(target, procname, list/arguments)
+	if(GLOB.AdminProcCall)
+		to_chat(usr, "<span class='adminnotice'>Another admin called proc is still running, your proc will be run after theirs finishes</span>")
+		UNTIL(!GLOB.AdminProcCall)
+		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
+	GLOB.AdminProcCall = usr.client.ckey	//if this runtimes, too bad for you
+	world.WrapAdminProcCall(target, procname, arguments)
+	GLOB.AdminProcCall = null
+
+//adv proc call this, ya nerds
+/world/proc/WrapAdminProcCall(target, procname, list/arguments)
+	if(target == GLOBAL_PROC)
+		return call(procname)(arglist(arguments))
+	else
+		return call(procname)(arglist(arguments))
+
+/proc/IsAdminAdvancedProcCall()
+	return usr && usr.client && GLOB.AdminProcCall == usr.client.ckey
 
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
 	set category = "Debug"
@@ -106,7 +128,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 	feedback_add_details("admin_verb","Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	var/returnval = call(A,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
+	var/returnval = WrapAdminProcCall(A, procname, lst) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval,procname)
 	if(.)
 		to_chat(usr, .)
