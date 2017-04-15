@@ -31,7 +31,7 @@
 /obj/item/weapon/implant/explosive/activate(cause)
 	if(!cause || !imp_in || active)
 		return 0
-	if(cause == "action_button" || !popup)
+	if(cause == "action_button" && !popup)
 		popup = TRUE
 		var/response = alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", "Yes", "No")
 		popup = FALSE
