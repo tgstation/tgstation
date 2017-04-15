@@ -20,14 +20,14 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
 	tag = "mob_[next_mob_id++]"
-	mob_list += src
+	GLOB.mob_list += src
 
 	if(client && SSticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
 
-	if(length(newplayer_start))
-		loc = pick(newplayer_start)
+	if(length(GLOB.newplayer_start))
+		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
 
@@ -48,11 +48,11 @@
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
 	if(!IsGuestKey(src.key))
-		if (dbcon.Connect())
+		if (GLOB.dbcon.Connect())
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
-			var/DBQuery/query_get_new_polls = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
+			var/DBQuery/query_get_new_polls = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
 			if(!query_get_new_polls.Execute())
 				return
 			var/newpoll = 0
@@ -77,7 +77,7 @@
 	..()
 
 	if(statpanel("Lobby"))
-		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[GLOB.master_mode]")
 		stat("Map:", SSmapping.config.map_name)
 
 		if(SSticker.current_state == GAME_STATE_PREGAME)
@@ -156,7 +156,7 @@
 			LateChoices()
 			return
 
-		if(SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
+		if(SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in GLOB.admin_datums)))
 			to_chat(usr, "<span class='danger'>[config.hard_popcap_message]</span>")
 
 			var/queue_position = SSticker.queued_players.Find(usr)
@@ -175,11 +175,11 @@
 
 	if(href_list["SelectedJob"])
 
-		if(!enter_allowed)
+		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
-		if(SSticker.queued_players.len && !(ckey(key) in admin_datums))
+		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
 			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
 				to_chat(usr, "<span class='warning'>Server is full.</span>")
 				return
@@ -325,8 +325,8 @@
 		character = equip
 
 	var/D
-	if(latejoin.len)
-		D = get_turf(pick(latejoin))
+	if(GLOB.latejoin.len)
+		D = get_turf(pick(GLOB.latejoin))
 	if(!D)
 		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
 			if(!T.density)
@@ -353,17 +353,17 @@
 		humanc = character	//Let's retypecast the var to be human,
 
 	if(humanc)	//These procs all expect humans
-		data_core.manifest_inject(humanc)
+		GLOB.data_core.manifest_inject(humanc)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
 			AnnounceArrival(humanc, rank)
 		AddEmploymentContract(humanc)
-		if(highlander)
+		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
-	joined_player_list += character.ckey
+	GLOB.joined_player_list += character.ckey
 
 	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
@@ -378,14 +378,14 @@
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
 	sleep(30)
-	for(var/C in employmentCabinets)
+	for(var/C in GLOB.employmentCabinets)
 		var/obj/structure/filingcabinet/employment/employmentCabinet = C
 		if(!employmentCabinet.virgin)
 			employmentCabinet.addFile(employee)
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/mills = world.time - round_start_time // 1/10 of a second, not real milliseconds but whatever
+	var/mills = world.time - SSticker.round_start_time // 1/10 of a second, not real milliseconds but whatever
 	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
 	var/mins = (mills % 36000) / 600
 	var/hours = mills / 36000
@@ -425,7 +425,7 @@
 			if (job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"
 			var/position_class = "otherPosition"
-			if (job.title in command_positions)
+			if (job.title in GLOB.command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 	if(!job_count) //if there's nowhere to go, assistant opens up.
@@ -476,7 +476,7 @@
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"
 	dat += "<h4>Crew Manifest</h4>"
-	dat += data_core.get_manifest(OOC = 1)
+	dat += GLOB.data_core.get_manifest(OOC = 1)
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 

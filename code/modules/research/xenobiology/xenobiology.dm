@@ -482,9 +482,14 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = TURF_LAYER
 
-/obj/effect/golemrune/New()
-	..()
+/obj/effect/golemrune/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
+	notify_ghosts("Golem rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
+
+/obj/effect/golemrune/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
@@ -556,7 +561,7 @@
 
 /obj/effect/timestop/New()
 	..()
-	for(var/mob/living/M in player_list)
+	for(var/mob/living/M in GLOB.player_list)
 		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
 			immune |= M
 	timestop()

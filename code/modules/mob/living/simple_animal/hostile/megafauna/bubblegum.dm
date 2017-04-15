@@ -63,9 +63,9 @@ Difficulty: Hard
 	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))
-			step(B, pick(cardinal))
+			step(B, pick(GLOB.cardinal))
 		else
-			B.setDir(pick(cardinal))
+			B.setDir(pick(GLOB.cardinal))
 
 /obj/effect/decal/cleanable/blood/gibs/bubblegum
 	name = "thick blood"
@@ -105,7 +105,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	..()
-	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in mob_list)
+	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_list)
 		if(B != src)
 			qdel(src) //There can be only one
 			return
@@ -326,7 +326,7 @@ Difficulty: Hard
 	pools_to_remove = get_pools(get_turf(target), 1)
 	pools -= pools_to_remove
 	if(pools.len)
-		shuffle(pools)
+		shuffle_inplace(pools)
 		found_bloodpool = pick(pools)
 	if(found_bloodpool)
 		visible_message("<span class='danger'>[src] sinks into the blood...</span>")

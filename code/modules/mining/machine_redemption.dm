@@ -10,8 +10,8 @@
 	anchored = 1
 	input_dir = NORTH
 	output_dir = SOUTH
-	req_access = list(access_mineral_storeroom)
-	var/req_access_reclaim = access_mining_station
+	req_access = list(GLOB.access_mineral_storeroom)
+	var/req_access_reclaim = GLOB.access_mining_station
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list = list() //Key: Type.  Value: Instance of type.
@@ -85,7 +85,7 @@
 		var/obj/item/stack/sheet/sheet = stack_list[s]
 		msg += "[capitalize(sheet.name)]: [sheet.amount] sheets<br>"
 
-	for(var/obj/machinery/requests_console/D in allConsoles)
+	for(var/obj/machinery/requests_console/D in GLOB.allConsoles)
 		if(D.receive_ore_updates)
 			D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 

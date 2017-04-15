@@ -1,11 +1,11 @@
-/var/global/list/mutations_list = list()
+GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation
 
 	var/name
 
 /datum/mutation/New()
-	mutations_list[name] = src
+	GLOB.mutations_list[name] = src
 
 /datum/mutation/human
 
@@ -536,9 +536,9 @@
 	if(message)
 		message = replacetext(message,"w","v")
 		message = replacetext(message,"j","y")
-		message = replacetext(message,"a",pick("å","ä","æ","a"))
+		message = replacetext(message,"a",pick("ï¿½","ï¿½","ï¿½","a"))
 		message = replacetext(message,"bo","bjo")
-		message = replacetext(message,"o",pick("ö","ø","o"))
+		message = replacetext(message,"o",pick("ï¿½","ï¿½","o"))
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
 	return message

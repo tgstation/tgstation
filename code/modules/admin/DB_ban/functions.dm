@@ -6,7 +6,7 @@
 	if(!check_rights(R_BAN))
 		return
 
-	if(!dbcon.Connect())
+	if(!GLOB.dbcon.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
@@ -71,7 +71,7 @@
 		computerid = bancid
 		ip = banip
 
-	var/DBQuery/query_add_ban_get_id = dbcon.NewQuery("SELECT id FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
+	var/DBQuery/query_add_ban_get_id = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
 	if(!query_add_ban_get_id.warn_execute())
 		return
 	var/validckey = 0
@@ -97,14 +97,14 @@
 			return
 
 	var/who
-	for(var/client/C in clients)
+	for(var/client/C in GLOB.clients)
 		if(!who)
 			who = "[C]"
 		else
 			who += ", [C]"
 
 	var/adminwho
-	for(var/client/C in admins)
+	for(var/client/C in GLOB.admins)
 		if(!adminwho)
 			adminwho = "[C]"
 		else
@@ -113,7 +113,7 @@
 	reason = sanitizeSQL(reason)
 
 	if(maxadminbancheck)
-		var/DBQuery/query_check_adminban_amt = dbcon.NewQuery("SELECT count(id) AS num FROM [format_table_name("ban")] WHERE (a_ckey = '[a_ckey]') AND (bantype = 'ADMIN_PERMABAN'  OR (bantype = 'ADMIN_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query_check_adminban_amt = GLOB.dbcon.NewQuery("SELECT count(id) AS num FROM [format_table_name("ban")] WHERE (a_ckey = '[a_ckey]') AND (bantype = 'ADMIN_PERMABAN'  OR (bantype = 'ADMIN_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_check_adminban_amt.warn_execute())
 			return
 		if(query_check_adminban_amt.NextRow())
@@ -126,7 +126,7 @@
 	if(!ip)
 		ip = "0.0.0.0"
 	var/sql = "INSERT INTO [format_table_name("ban")] (`bantime`,`server_ip`,`server_port`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), INET_ATON('[world.internet_address]'), '[world.port]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', INET_ATON('[ip]'), '[a_ckey]', '[a_computerid]', INET_ATON('[a_ip]'), '[who]', '[adminwho]')"
-	var/DBQuery/query_add_ban = dbcon.NewQuery(sql)
+	var/DBQuery/query_add_ban = GLOB.dbcon.NewQuery(sql)
 	if(!query_add_ban.warn_execute())
 		return
 	to_chat(usr, "<span class='adminnotice'>Ban saved to database.</span>")
@@ -187,13 +187,13 @@
 	if(job)
 		sql += " AND job = '[job]'"
 
-	if(!dbcon.Connect())
+	if(!GLOB.dbcon.Connect())
 		return
 
 	var/ban_id
 	var/ban_number = 0 //failsafe
 
-	var/DBQuery/query_unban_get_id = dbcon.NewQuery(sql)
+	var/DBQuery/query_unban_get_id = GLOB.dbcon.NewQuery(sql)
 	if(!query_unban_get_id.warn_execute())
 		return
 	while(query_unban_get_id.NextRow())
@@ -225,7 +225,7 @@
 		to_chat(usr, "Cancelled")
 		return
 
-	var/DBQuery/query_edit_ban_get_details = dbcon.NewQuery("SELECT ckey, duration, reason FROM [format_table_name("ban")] WHERE id = [banid]")
+	var/DBQuery/query_edit_ban_get_details = GLOB.dbcon.NewQuery("SELECT ckey, duration, reason FROM [format_table_name("ban")] WHERE id = [banid]")
 	if(!query_edit_ban_get_details.warn_execute())
 		return
 
@@ -254,7 +254,7 @@
 					to_chat(usr, "Cancelled")
 					return
 
-			var/DBQuery/query_edit_ban_reason = dbcon.NewQuery("UPDATE [format_table_name("ban")] SET reason = '[value]', edits = CONCAT(edits,'- [eckey] changed ban reason from <cite><b>\\\"[reason]\\\"</b></cite> to <cite><b>\\\"[value]\\\"</b></cite><BR>') WHERE id = [banid]")
+			var/DBQuery/query_edit_ban_reason = GLOB.dbcon.NewQuery("UPDATE [format_table_name("ban")] SET reason = '[value]', edits = CONCAT(edits,'- [eckey] changed ban reason from <cite><b>\\\"[reason]\\\"</b></cite> to <cite><b>\\\"[value]\\\"</b></cite><BR>') WHERE id = [banid]")
 			if(!query_edit_ban_reason.warn_execute())
 				return
 			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [reason] to [value]",1)
@@ -265,7 +265,7 @@
 					to_chat(usr, "Cancelled")
 					return
 
-			var/DBQuery/query_edit_ban_duration = dbcon.NewQuery("UPDATE [format_table_name("ban")] SET duration = [value], edits = CONCAT(edits,'- [eckey] changed ban duration from [duration] to [value]<br>'), expiration_time = DATE_ADD(bantime, INTERVAL [value] MINUTE) WHERE id = [banid]")
+			var/DBQuery/query_edit_ban_duration = GLOB.dbcon.NewQuery("UPDATE [format_table_name("ban")] SET duration = [value], edits = CONCAT(edits,'- [eckey] changed ban duration from [duration] to [value]<br>'), expiration_time = DATE_ADD(bantime, INTERVAL [value] MINUTE) WHERE id = [banid]")
 			if(!query_edit_ban_duration.warn_execute())
 				return
 			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s duration from [duration] to [value]",1)
@@ -287,13 +287,13 @@
 
 	var/sql = "SELECT ckey FROM [format_table_name("ban")] WHERE id = [id]"
 
-	if(!dbcon.Connect())
+	if(!GLOB.dbcon.Connect())
 		return
 
 	var/ban_number = 0 //failsafe
 
 	var/pckey
-	var/DBQuery/query_unban_get_ckey = dbcon.NewQuery(sql)
+	var/DBQuery/query_unban_get_ckey = GLOB.dbcon.NewQuery(sql)
 	if(!query_unban_get_ckey.warn_execute())
 		return
 	while(query_unban_get_ckey.NextRow())
@@ -316,7 +316,7 @@
 	var/unban_ip = src.owner:address
 
 	var/sql_update = "UPDATE [format_table_name("ban")] SET unbanned = 1, unbanned_datetime = Now(), unbanned_ckey = '[unban_ckey]', unbanned_computerid = '[unban_computerid]', unbanned_ip = INET_ATON('[unban_ip]') WHERE id = [id]"
-	var/DBQuery/query_unban = dbcon.NewQuery(sql_update)
+	var/DBQuery/query_unban = GLOB.dbcon.NewQuery(sql_update)
 	if(!query_unban.warn_execute())
 		return
 	message_admins("[key_name_admin(usr)] has lifted [pckey]'s ban.",1)
@@ -339,7 +339,7 @@
 	if(!check_rights(R_BAN))
 		return
 
-	if(!dbcon.Connect())
+	if(!GLOB.dbcon.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 
@@ -371,7 +371,7 @@
 	output += "<option value=''>--</option>"
 	for(var/j in get_all_jobs())
 		output += "<option value='[j]'>[j]</option>"
-	for(var/j in nonhuman_positions)
+	for(var/j in GLOB.nonhuman_positions)
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in list("traitor","changeling","operative","revolutionary", "gangster","cultist","wizard"))
 		output += "<option value='[j]'>[j]</option>"
@@ -405,7 +405,7 @@
 		var/bansperpage = 15
 		var/pagecount = 0
 		page = text2num(page)
-		var/DBQuery/query_count_bans = dbcon.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch]")
+		var/DBQuery/query_count_bans = GLOB.dbcon.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch]")
 		if(!query_count_bans.warn_execute())
 			return
 		if(query_count_bans.NextRow())
@@ -431,7 +431,7 @@
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
 		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
-		var/DBQuery/query_search_bans = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
+		var/DBQuery/query_search_bans = GLOB.dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
 			return
 

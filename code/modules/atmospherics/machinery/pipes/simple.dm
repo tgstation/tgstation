@@ -16,7 +16,7 @@ The regular pipe you see everywhere, including bent ones.
 	device_type = BINARY
 
 /obj/machinery/atmospherics/pipe/simple/SetInitDirections()
-	if(dir in diagonals)
+	if(dir in GLOB.diagonals)
 		initialize_directions = dir
 	switch(dir)
 		if(NORTH,SOUTH)

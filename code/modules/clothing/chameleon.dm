@@ -476,7 +476,7 @@
 	if(!istype(P))
 		CRASH("[P] is not /obj/item/projectile!")
 		return FALSE
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
+	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser", "nodamage" = TRUE)
 	for(var/V in projectile_copy_vars)
 		if(P.vars[V])
 			chameleon_projectile_vars[V] = P.vars[V]

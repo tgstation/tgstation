@@ -30,7 +30,7 @@
 
 /obj/effect/portal/New(loc, turf/target, creator=null, lifespan=300)
 	..()
-	portals += src
+	GLOB.portals += src
 	src.target = target
 	src.creator = creator
 
@@ -42,7 +42,7 @@
 		QDEL_IN(src, lifespan)
 
 /obj/effect/portal/Destroy()
-	portals -= src
+	GLOB.portals -= src
 	if(istype(creator, /obj/item/weapon/hand_tele))
 		var/obj/item/weapon/hand_tele/O = creator
 		O.active_portals--

@@ -1,25 +1,25 @@
-var/list/uplink_items = list() // Global list so we only initialize this once.
+GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /proc/initialize_global_uplink_items()
-	uplink_items = list()
+	GLOB.uplink_items = list()
 	for(var/item in subtypesof(/datum/uplink_item))
 		var/datum/uplink_item/I = new item()
 		if(!I.item)
 			continue
-		if(!uplink_items[I.category])
-			uplink_items[I.category] = list()
-		uplink_items[I.category][I.name] = I
+		if(!GLOB.uplink_items[I.category])
+			GLOB.uplink_items[I.category] = list()
+		GLOB.uplink_items[I.category][I.name] = I
 
 /proc/get_uplink_items(var/datum/game_mode/gamemode = null)
-	if(!uplink_items.len)
+	if(!GLOB.uplink_items.len)
 		initialize_global_uplink_items()
 
 	var/list/filtered_uplink_items = list()
 	var/list/sale_items = list()
 
-	for(var/category in uplink_items)
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/I = uplink_items[category][item]
+	for(var/category in GLOB.uplink_items)
+		for(var/item in GLOB.uplink_items[category])
+			var/datum/uplink_item/I = GLOB.uplink_items[category][item]
 			if(!istype(I))
 				continue
 			if(I.include_modes.len)
@@ -32,7 +32,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 					continue
 				if(gamemode && (gamemode in I.exclude_modes))
 					continue
-			if(I.player_minimum && I.player_minimum > joined_player_list.len)
+			if(I.player_minimum && I.player_minimum > GLOB.joined_player_list.len)
 				continue
 
 			if(!filtered_uplink_items[category])
@@ -88,7 +88,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		feedback_add_details("traitor_uplink_items_bought", "[item]")
+		feedback_add_details("traitor_uplink_items_bought", "[name]|[cost]")
 		return new item(loc)
 
 /datum/uplink_item/proc/buy(mob/user, obj/item/device/uplink/U)
@@ -124,10 +124,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	return 1
 
 /datum/uplink_item/Destroy()
-	if(src in uplink_items)
-		uplink_items -= src	//Take us out instead of leaving a null!
+	if(src in GLOB.uplink_items)
+		GLOB.uplink_items -= src	//Take us out instead of leaving a null!
 	return ..()
-	
+
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = "Discounted Gear"
@@ -1158,6 +1158,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
 		if(istype(item, /obj/item/organ))
+			feedback_add_details("traitor_uplink_items_bought", "[item]|[cost]")
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
@@ -1325,12 +1326,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		new I.item(C)
 		U.purchase_log += "<big>\icon[I.item]</big>"
 
+	feedback_add_details("traitor_uplink_items_bought", "[name]|[cost]")
 	return C
 
 /datum/uplink_item/badass/random
 	name = "Random Item"
-	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't \
-			decided on a strategy yet."
+	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't decided on a strategy yet."
 	item = /obj/item/weapon/paper
 	cost = 0
 	cant_discount = TRUE
@@ -1351,5 +1352,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
 		U.spent_telecrystals += I.cost
-		feedback_add_details("traitor_uplink_items_bought","RN")
+		feedback_add_details("traitor_uplink_items_bought","[name]|[I.cost]")
+		feedback_add_details("traitor_random_uplink_items_gotten","[I.name]")
 		return new I.item(loc)

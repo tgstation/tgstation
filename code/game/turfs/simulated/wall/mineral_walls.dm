@@ -174,7 +174,7 @@
 	icon_state = "map-shuttle"
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater)
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
 
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smooth = SMOOTH_MORE
@@ -211,6 +211,20 @@
 /turf/closed/wall/mineral/titanium/copyTurf(turf/T)
 	. = ..()
 	T.transform = transform
+
+/turf/closed/wall/mineral/titanium/survival
+	name = "pod wall"
+	desc = "An easily-compressable wall used for temporary shelter."
+	icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "smooth"
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod, /obj/structure/shuttle/engine)
+
+/turf/closed/wall/mineral/titanium/survival/nodiagonal
+	smooth = SMOOTH_MORE
+
+/turf/closed/wall/mineral/titanium/survival/pod
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
 /turf/closed/wall/mineral/plastitanium
 	name = "wall"

@@ -73,7 +73,7 @@
 				valid_items += rand(1,max(2,35-probWeight))
 				valid_items += I
 
-		if(ispath(I,/obj/item/weapon/rcd) || ispath(I,/obj/item/weapon/grenade) || ispath(I,/obj/item/device/aicard) || ispath(I,/obj/item/weapon/storage/backpack/holding) || ispath(I,/obj/item/slime_extract) || ispath(I,/obj/item/device/onetankbomb) || ispath(I,/obj/item/device/transfer_valve))
+		if(ispath(I,/obj/item/weapon/construction/rcd) || ispath(I,/obj/item/weapon/grenade) || ispath(I,/obj/item/device/aicard) || ispath(I,/obj/item/weapon/storage/backpack/holding) || ispath(I,/obj/item/slime_extract) || ispath(I,/obj/item/device/onetankbomb) || ispath(I,/obj/item/device/transfer_valve))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null)
 				critical_items += I
@@ -84,8 +84,8 @@
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/experimentor(null)
 	B.apply_default_parts(src)
 
-	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in mob_list
-	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in mob_list
+	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_list
+	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_list
 	SetTypeReactions()
 
 /obj/item/weapon/circuitboard/machine/experimentor

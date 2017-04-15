@@ -4,7 +4,7 @@
 	speech_verb = "tones"
 	ask_verb = "tones inquisitively"
 	exclaim_verb = "tones loudly"
-	spans = list(SPAN_ROBOT)
+	spans = list(SPAN_ROBOT, "swarmer")
 	key = "s"
 	flags = NO_STUTTER
 	space_chance = 100

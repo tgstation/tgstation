@@ -104,7 +104,7 @@
 		var/list/possible_targets = get_unconvertables()
 		if(!possible_targets.len)
 			message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
-			for(var/mob/living/carbon/human/player in player_list)
+			for(var/mob/living/carbon/human/player in GLOB.player_list)
 				if(player.mind && !(player.mind in cultists_to_cult))
 					possible_targets += player.mind
 		if(possible_targets.len > 0)
@@ -175,18 +175,18 @@
 		return TRUE
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
+	var/datum/atom_hud/antag/culthud = GLOB.huds[ANTAG_HUD_CULT]
 	culthud.join_hud(cult_mind.current)
 	set_antag_hud(cult_mind.current, "cult")
 
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
+	var/datum/atom_hud/antag/culthud = GLOB.huds[ANTAG_HUD_CULT]
 	culthud.leave_hud(cult_mind.current)
 	set_antag_hud(cult_mind.current, null)
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
-	for(var/mob/living/carbon/human/player in player_list)
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
 		if(player.mind && !is_convertable_to_cult(player) && !(player.mind in cultists_to_cult))
 			ucs += player.mind
 	return ucs
@@ -198,7 +198,7 @@
 	if(cult_objectives.Find("eldergod"))
 		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
 	if(cult_objectives.Find("sacrifice"))
-		if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
+		if(sacrifice_target && !GLOB.sacrificed.Find(sacrifice_target)) //if the target has been GLOB.sacrificed, ignore this step. otherwise, add 1 to cult_fail
 			cult_fail++
 	return cult_fail //if any objectives aren't met, failure
 
@@ -244,7 +244,7 @@
 						SSticker.news_report = CULT_FAILURE
 				if("sacrifice")
 					if(sacrifice_target)
-						if(sacrifice_target in sacrificed)
+						if(sacrifice_target in GLOB.sacrificed)
 							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span class='greenannounce'>Success!</span>"
 							feedback_add_details("cult_objective","cult_sacrifice|SUCCESS")
 						else if(sacrifice_target && sacrifice_target.current)

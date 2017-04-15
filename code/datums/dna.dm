@@ -41,15 +41,15 @@
 	new_dna.mutations = mutations.Copy()
 
 /datum/dna/proc/add_mutation(mutation_name)
-	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
 	HM.on_acquiring(holder)
 
 /datum/dna/proc/remove_mutation(mutation_name)
-	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
 	HM.on_losing(holder)
 
 /datum/dna/proc/check_mutation(mutation_name)
-	var/datum/mutation/human/HM = mutations_list[mutation_name]
+	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
 	return mutations.Find(HM)
 
 /datum/dna/proc/remove_all_mutations()
@@ -68,28 +68,28 @@
 	L[DNA_GENDER_BLOCK] = construct_block((holder.gender!=MALE)+1, 2)
 	if(ishuman(holder))
 		var/mob/living/carbon/human/H = holder
-		if(!hair_styles_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hair_styles_list, hair_styles_male_list, hair_styles_female_list)
-		L[DNA_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len)
+		if(!GLOB.hair_styles_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/hair,GLOB.hair_styles_list, GLOB.hair_styles_male_list, GLOB.hair_styles_female_list)
+		L[DNA_HAIR_STYLE_BLOCK] = construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len)
 		L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
-		if(!facial_hair_styles_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hair_styles_list, facial_hair_styles_male_list, facial_hair_styles_female_list)
-		L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
+		if(!GLOB.facial_hair_styles_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, GLOB.facial_hair_styles_list, GLOB.facial_hair_styles_male_list, GLOB.facial_hair_styles_female_list)
+		L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len)
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
-		L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
+		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
 
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])
 			. += L[i]
 		else
-			. += random_string(DNA_BLOCK_SIZE,hex_characters)
+			. += random_string(DNA_BLOCK_SIZE,GLOB.hex_characters)
 	return .
 
 /datum/dna/proc/generate_struc_enzymes()
 	var/list/sorting = new /list(DNA_STRUC_ENZYMES_BLOCKS)
 	var/result = ""
-	for(var/datum/mutation/human/A in good_mutations + bad_mutations + not_good_mutations)
+	for(var/datum/mutation/human/A in GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations)
 		if(A.name == RACEMUT && ismonkey(holder))
 			sorting[A.dna_block] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
 			mutations |= A
@@ -106,7 +106,7 @@
 		real_name = holder.real_name
 		. += md5(holder.real_name)
 	else
-		. += random_string(DNA_UNIQUE_ENZYMES_LEN, hex_characters)
+		. += random_string(DNA_UNIQUE_ENZYMES_LEN, GLOB.hex_characters)
 	return .
 
 /datum/dna/proc/update_ui_block(blocknumber)
@@ -119,15 +119,15 @@
 		if(DNA_FACIAL_HAIR_COLOR_BLOCK)
 			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.facial_hair_color))
 		if(DNA_SKIN_TONE_BLOCK)
-			setblock(uni_identity, blocknumber, construct_block(skin_tones.Find(H.skin_tone), skin_tones.len))
+			setblock(uni_identity, blocknumber, construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len))
 		if(DNA_EYE_COLOR_BLOCK)
 			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.eye_color))
 		if(DNA_GENDER_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block((H.gender!=MALE)+1, 2))
 		if(DNA_FACIAL_HAIR_STYLE_BLOCK)
-			setblock(uni_identity, blocknumber, construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len))
+			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len))
 		if(DNA_HAIR_STYLE_BLOCK)
-			setblock(uni_identity, blocknumber, construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len))
+			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
 
 /datum/dna/proc/mutations_say_mods(message)
 	if(message)
@@ -271,10 +271,10 @@
 	var/structure = dna.uni_identity
 	hair_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
 	facial_hair_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
-	skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
+	skin_tone = GLOB.skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
 	eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
-	facial_hair_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
-	hair_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
+	facial_hair_style = GLOB.facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), GLOB.facial_hair_styles_list.len)]
+	hair_style = GLOB.hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), GLOB.hair_styles_list.len)]
 	if(icon_update)
 		update_body()
 		update_hair()
@@ -291,7 +291,7 @@
 	if(!has_dna())
 		return
 
-	for(var/datum/mutation/human/A in good_mutations | bad_mutations | not_good_mutations)
+	for(var/datum/mutation/human/A in GLOB.good_mutations | GLOB.bad_mutations | GLOB.not_good_mutations)
 		if(ismob(A.check_block(src, force_powers)))
 			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
 
@@ -325,26 +325,26 @@
 /mob/living/carbon/proc/randmutb()
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick((bad_mutations | not_good_mutations) - mutations_list[RACEMUT])
+	var/datum/mutation/human/HM = pick((GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT])
 	. = HM.force_give(src)
 
 /mob/living/carbon/proc/randmutg()
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick(good_mutations)
+	var/datum/mutation/human/HM = pick(GLOB.good_mutations)
 	. = HM.force_give(src)
 
 /mob/living/carbon/proc/randmutvg()
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick((good_mutations) - mutations_list[HULK] - mutations_list[DWARFISM])
+	var/datum/mutation/human/HM = pick((GLOB.good_mutations) - GLOB.mutations_list[HULK] - GLOB.mutations_list[DWARFISM])
 	. = HM.force_give(src)
 
 /mob/living/carbon/proc/randmuti()
 	if(!has_dna())
 		return
 	var/num = rand(1, DNA_UNI_IDENTITY_BLOCKS)
-	var/newdna = setblock(dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, hex_characters))
+	var/newdna = setblock(dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 	dna.uni_identity = newdna
 	updateappearance(mutations_overlay_update=1)
 
@@ -363,12 +363,12 @@
 	if(se)
 		for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 			if(prob(probability))
-				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, random_string(DNA_BLOCK_SIZE, hex_characters))
+				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 		M.domutcheck()
 	if(ui)
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 			if(prob(probability))
-				M.dna.uni_identity = setblock(M.dna.uni_identity, i, random_string(DNA_BLOCK_SIZE, hex_characters))
+				M.dna.uni_identity = setblock(M.dna.uni_identity, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 		M.updateappearance(mutations_overlay_update=1)
 	return 1
 

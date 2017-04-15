@@ -27,7 +27,7 @@
 		to_chat(src, "<font color='red'>Only Admins may use this command.</font>")
 		return
 
-	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in clients
+	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in GLOB.clients
 	if(!istype(target,/client))
 		to_chat(src, "<font color='red'>Error: giveruntimelog(): Client not found.</font>")
 		return
@@ -85,12 +85,12 @@
 	set name = "Show Server Log"
 	set desc = "Shows today's server log."
 
-	if(fexists("[diary]"))
-		src << ftp(diary)
+	if(fexists("[GLOB.diary]"))
+		src << ftp(GLOB.diary)
 	else
 		to_chat(src, "<font color='red'>Server log not found, try using .getserverlog.</font>")
 		return
-	feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","Show Server Log") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 //Shows today's attack log
@@ -99,10 +99,10 @@
 	set name = "Show Server Attack Log"
 	set desc = "Shows today's server attack log."
 
-	if(fexists("[diaryofmeanpeople]"))
-		src << ftp(diaryofmeanpeople)
+	if(fexists("[GLOB.diaryofmeanpeople]"))
+		src << ftp(GLOB.diaryofmeanpeople)
 	else
 		to_chat(src, "<font color='red'>Server attack log not found, try using .getserverlog.</font>")
 		return
-	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","Show Server Attack log") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
