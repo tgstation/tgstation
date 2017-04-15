@@ -4,7 +4,7 @@
 	speech_verb = "chitters"
 	ask_verb = "chitters inquisitively"
 	exclaim_verb = "chitters loudly"
-	spans = list(SPAN_ROBOT, "drone")
+	spans = list(SPAN_ROBOT)
 	key = "d"
 	flags = NO_STUTTER
 	syllables = list(".", "|")
