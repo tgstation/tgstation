@@ -113,7 +113,7 @@ SUBSYSTEM_DEF(garbage)
 			var/time = world.timeofday
 			var/tick = world.tick_usage
 			var/ticktime = world.time
-			del(A)
+			HardDelete(A)
 			tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
 
 			if (tick > highest_del_tickusage)
@@ -140,10 +140,10 @@ SUBSYSTEM_DEF(garbage)
 		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
 /datum/controller/subsystem/garbage/proc/Queue(datum/A)
-	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
+	if (!isnull(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
 		return
 	if (A.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
-		del(A)
+		HardDelete(A)
 		return
 	var/gctime = world.time
 	var/refid = "\ref[A]"
@@ -154,6 +154,10 @@ SUBSYSTEM_DEF(garbage)
 		queue -= refid // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 
 	queue[refid] = gctime
+
+//this is purely to seperate things profile wise.
+/datum/controller/subsystem/garbage/proc/HardDelete(datum/A)
+	del(A)
 
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
