@@ -7,7 +7,7 @@
 	anchored = 0
 	density = 1
 	req_access = list(GLOB.access_engine_equip)
-  
+
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
 	var/charge = 0
@@ -199,8 +199,6 @@
 
 /obj/machinery/power/emitter/proc/fire_beam(atom/targeted_atom, mob/user)
 	var/turf/targets_from = get_turf(src)
-	if(targeted_atom == user|| targeted_atom == targets_from)
-		return
 	var/obj/item/projectile/P = new projectile_type(targets_from)
 	playsound(src.loc, projectile_sound, 50, 1)
 	if(prob(35))
@@ -231,6 +229,9 @@
 			P.yo = -20
 			P.xo = 0
 	if(target)
+		if(targeted_atom == user || targeted_atom == targets_from || targeted_atom == src)
+			qdel(P)
+			return
 		P.yo = targeted_atom.y - targets_from.y
 		P.xo = targeted_atom.x - targets_from.x
 		P.current = targets_from
