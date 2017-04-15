@@ -88,10 +88,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //Reassociate still open ticket if one exists
 /datum/admin_help_tickets/proc/ClientLogin(client/C)
 	C.current_ticket = CKey2ActiveTicket(C.ckey)
+	if(C.current_ticket)
+		C.current_ticket.interactions += "Client reconnected."
 
 //Dissasociate ticket
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
 	if(C.current_ticket)
+		C.current_ticket.interactions += "Client disconnected."
 		C.current_ticket.initiator = null
 		C.current_ticket = null
 
