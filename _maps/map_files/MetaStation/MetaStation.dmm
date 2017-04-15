@@ -82483,9 +82483,6 @@
 /area/chapel/office)
 "cMa" = (
 /obj/structure/table/wood,
-/obj/item/weapon/spellbook/oneuse/smoke{
-	name = "mysterious old book of "
-	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
 	name = "flask of holy water";
 	pixel_x = -2;
@@ -127468,9 +127465,9 @@ cRi
 cRi
 cRi
 dlU
-dlZ
-dmd
-dmg
+dlU
+dlU
+dlU
 aaf
 aaa
 aaa
@@ -127727,15 +127724,15 @@ cRi
 dlV
 dma
 cTp
-dmh
-dmk
-dmm
-dmo
-dmq
-dmt
-dmw
-dmE
-dmM
+dlU
+dlU
+dlU
+dlU
+dlU
+dlU
+dlU
+dlU
+dlU
 aaa
 aaa
 aai
@@ -127992,7 +127989,7 @@ cTC
 cTC
 dmx
 bIx
-dmN
+dlU
 aaf
 aaf
 aag
@@ -128505,7 +128502,7 @@ daF
 daJ
 cRi
 bvT
-dmF
+dlU
 cRi
 cRi
 cRi
@@ -128762,7 +128759,7 @@ cSn
 cSn
 cRi
 dmy
-dmG
+dlU
 cZv
 cZv
 cRi
@@ -129790,7 +129787,7 @@ cSn
 daN
 cRi
 dmz
-dmH
+dlU
 cZv
 dbw
 cRi
@@ -130046,8 +130043,8 @@ daE
 daI
 daM
 cRi
-dmA
-dmI
+dlW
+dlU
 cRi
 cRi
 cRi
@@ -130303,8 +130300,8 @@ cRi
 cRi
 cRi
 cRi
-dmB
-dmJ
+dlW
+dlU
 aaf
 aaa
 aaa
@@ -130558,10 +130555,10 @@ ddt
 ddt
 ddt
 ddw
-dmr
-dmu
+dlW
+dlW
 dmC
-dmK
+dlU
 aaf
 aaf
 aaa
@@ -130811,14 +130808,14 @@ cRi
 ddi
 dmb
 dme
-dmi
-dml
-dmn
-dmp
-dms
-dmv
-dmD
-dmL
+dlU
+dlU
+dlU
+dlU
+dlU
+dlU
+dlU
+dlU
 aaf
 aaa
 aaa
@@ -131065,10 +131062,10 @@ cRi
 cRi
 cRi
 cRi
-dlY
-dmc
-dmf
-dmj
+dlU
+dlU
+dlU
+dlU
 aaa
 aaf
 aaf
