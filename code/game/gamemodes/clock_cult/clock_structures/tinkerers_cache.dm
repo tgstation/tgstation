@@ -15,8 +15,8 @@
 	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
 	var/static/linked_caches = 0 //how many caches are linked to walls; affects how fast components are produced
 
-/obj/structure/destructible/clockwork/cache/New()
-	..()
+/obj/structure/destructible/clockwork/cache/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.clockwork_caches++
 	update_slab_info()

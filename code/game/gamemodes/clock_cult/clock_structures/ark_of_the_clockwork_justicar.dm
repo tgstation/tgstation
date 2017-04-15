@@ -23,8 +23,8 @@
 	var/obj/effect/countdown/clockworkgate/countdown
 	var/list/required_components = list(BELLIGERENT_EYE = ARK_CONSUME_COST, VANGUARD_COGWHEEL = ARK_CONSUME_COST, GEIS_CAPACITOR = ARK_CONSUME_COST, REPLICANT_ALLOY = ARK_CONSUME_COST, HIEROPHANT_ANSIBLE = ARK_CONSUME_COST)
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/New()
-	..()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
+	. = ..()
 	INVOKE_ASYNC(src, .proc/spawn_animation)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
@@ -291,7 +291,3 @@
 	light_range = 2
 	light_power = 4
 	light_color = "#6A4D2F"
-
-/obj/effect/clockwork/overlay/gateway_glow/New()
-	..()
-	update_light()

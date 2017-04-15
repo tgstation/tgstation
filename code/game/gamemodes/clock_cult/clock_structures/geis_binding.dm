@@ -5,6 +5,8 @@
 	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
 	max_integrity = 25
 	obj_integrity = 25
+	light_range = 2
+	light_power = 0.5
 	light_color = "#AF0AAF"
 	density = FALSE
 	immune_to_servant_attacks = TRUE
@@ -19,10 +21,6 @@
 	var/resisting = FALSE
 	var/can_resist = FALSE
 	var/mob_layer = MOB_LAYER
-
-/obj/structure/destructible/clockwork/geis_binding/New()
-	..()
-	set_light(2, 0.5)
 
 /obj/structure/destructible/clockwork/geis_binding/examine(mob/user)
 	icon_state = "geisbinding_full"
