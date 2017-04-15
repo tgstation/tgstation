@@ -92,6 +92,5 @@
 	if(!M.current_range)
 		return
 	var/atom/H = M.host
-	if(!QDELETED(H))
-		testing("HasProx: [H] -> [AM]")
-		H.HasProximity(AM)
+	testing("HasProx: [H] -> [AM]")
+	H.HasProximity(AM)
