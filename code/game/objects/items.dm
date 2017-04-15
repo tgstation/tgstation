@@ -108,7 +108,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
-	..()
+	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
