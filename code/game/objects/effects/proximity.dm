@@ -5,7 +5,7 @@
 	var/current_range
 	var/ignore_if_not_on_turf	//don't check turfs in range if the host's loc isn't a turf
 
-/datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/callback/_on_proximity = null)
+/datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	host = _host
 	last_host_loc = _host.loc
 	ignore_if_not_on_turf = _ignore_if_not_on_turf
