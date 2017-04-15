@@ -30544,13 +30544,11 @@
 	},
 /area/toxins/xenobiology)
 "bjI" = (
-/obj/machinery/shieldwallgen{
-	req_access_txt = "55"
-	},
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "bjJ" = (
@@ -30641,9 +30639,6 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "bjO" = (
-/obj/machinery/shieldwallgen{
-	req_access_txt = "55"
-	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
@@ -30653,6 +30648,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "bjP" = (

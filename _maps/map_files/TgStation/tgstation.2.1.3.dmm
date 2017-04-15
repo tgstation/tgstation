@@ -39965,9 +39965,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/shieldwallgen{
-	req_access_txt = "55"
-	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "bJI" = (
@@ -93201,11 +93199,11 @@ cpy
 cDv
 cDD
 cqU
-cMF
+cMD
 cEu
 cMI
-cMJ
-cML
+cMI
+cMD
 cFL
 cGf
 cGw
@@ -93457,12 +93455,12 @@ chV
 cDq
 cqf
 cqD
-cME
+cMD
 crs
 cEv
 cEv
 cFe
-cMM
+cMD
 cFM
 czE
 cGx
@@ -93975,7 +93973,7 @@ cqZ
 crt
 cMH
 cAm
-cMK
+cMH
 cMN
 cFO
 csC
@@ -94490,7 +94488,7 @@ crv
 cEy
 cEy
 cFh
-cMO
+cMD
 cFQ
 czE
 cGx
@@ -94743,11 +94741,11 @@ cDr
 cDw
 cDE
 cEa
-cMG
+cMD
 cEz
 cEz
 cEz
-cMP
+cMD
 cFR
 cGf
 cGz
