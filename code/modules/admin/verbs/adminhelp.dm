@@ -235,7 +235,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/ref_src = "\ref[src]"
 	var/chat_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [msg]</span>"
 
-	interactions = list("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
+	interactions += "<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>"
 	//send this msg to all admins
 
 	for(var/client/X in GLOB.admins)
