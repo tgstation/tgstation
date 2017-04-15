@@ -85164,10 +85164,6 @@
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
 "deT" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
-	},
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
@@ -85179,6 +85175,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
 "deU" = (
