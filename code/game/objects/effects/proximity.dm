@@ -17,11 +17,15 @@
 	return ..()
 
 /datum/proximity_monitor/proc/HandleMove()
-	var/atom/new_host_loc = host.loc
+	var/atom/_host = host
+	var/atom/new_host_loc = _host.loc
 	if(last_host_loc != new_host_loc)
 		last_host_loc = new_host_loc	//hopefully this won't cause GC issues with containers
-		SetRange(current_range, TRUE)
-		host.HasProximity(host)	//if we are processing, we're guaranteed to be a movable
+		var/curr_range = current_range
+		SetRange(curr_range, TRUE)
+		if(curr_range)
+			testing("HasProx: [host] -> [host]")
+			_host.HasProximity(host)	//if we are processing, we're guaranteed to be a movable
 
 /datum/proximity_monitor/proc/SetRange(range, force_rebuild = FALSE)
 	if(range == current_range && !force_rebuild)
@@ -84,6 +88,10 @@
 
 /obj/effect/abstract/proximity_checker/Crossed(atom/movable/AM)
 	set waitfor = FALSE
-	var/atom/H = monitor.host
+	var/datum/proximity_monitor/M = monitor
+	if(!M.current_range)
+		return
+	var/atom/H = M.host
 	if(!QDELETED(H))
+		testing("HasProx: [H] -> [AM]")
 		H.HasProximity(AM)
