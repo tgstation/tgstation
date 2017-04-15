@@ -7,6 +7,7 @@
 	height = 15
 	dir = WEST
 	port_angle = 180
+	preferred_direction = WEST
 
 	callTime = INFINITY
 	ignitionTime = 50
