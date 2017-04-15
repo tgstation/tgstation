@@ -6,6 +6,7 @@
 CONTAINS:
 RCD
 ARCD
+RLD
 */
 
 obj/item/weapon/construction
@@ -92,6 +93,7 @@ obj/item/weapon/construction
 		return 0
 	matter -= amount
 	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
+	update_icon()
 	return 1
 
 /obj/item/weapon/construction/proc/checkResource(amount, mob/user)
@@ -106,9 +108,10 @@ obj/item/weapon/construction
 		return FALSE
 
 /obj/item/weapon/construction/proc/prox_check(proximity)
-	if(!proximity)
-		return
-
+	if(proximity)
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/weapon/construction/rcd
 	name = "rapid-construction-device (RCD)"
@@ -321,7 +324,8 @@ obj/item/weapon/construction
 		return FALSE
 
 /obj/item/weapon/construction/rcd/afterattack(atom/A, mob/user, proximity)
-	prox_check()
+	if(prox_check())
+		return
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
@@ -419,6 +423,7 @@ obj/item/weapon/construction
 	delay_mod = 0.6
 	ranged = TRUE
 	icon_state = "arcd"
+	item_state = "rcd"
 
 /obj/item/weapon/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	range_check(A,user)
