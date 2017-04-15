@@ -10,7 +10,6 @@
 	var/timing = 0
 	var/time = 10
 	var/sensitivity = 1
-	var/datum/proximity_monitor/proximity_monitor
 
 /obj/item/device/assembly/prox_sensor/proc/toggle_scan()
 

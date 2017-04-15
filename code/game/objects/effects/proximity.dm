@@ -9,21 +9,14 @@
 	host = _host
 	last_host_loc = _host.loc
 	ignore_if_not_on_turf = _ignore_if_not_on_turf
-	if(istype(host, /atom/movable))	//no need for this on turfs
-		START_PROCESSING(SSobj, src)
 	SetRange(range)
 
 /datum/proximity_monitor/Destroy()
 	host = null
 	QDEL_LIST(checkers)
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/datum/proximity_monitor/process()
-	if(QDELETED(host))
-		qdel(src)
-		return
-
+/datum/proximity_monitor/proc/HandleMove()
 	var/atom/new_host_loc = host.loc
 	if(last_host_loc != new_host_loc)
 		last_host_loc = new_host_loc	//hopefully this won't cause GC issues with containers

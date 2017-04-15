@@ -27,7 +27,6 @@
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/structure/camera_assembly/assembly = null
-	var/datum/proximity_monitor/proximity_monitor
 
 	//OTHER
 

@@ -69,7 +69,6 @@
 	var/stack_amt = 50; //ammount to stack before releassing
 	input_dir = EAST
 	output_dir = WEST
-	var/datum/proximity_monitor/proximity_monitor
 
 /obj/machinery/mineral/stacking_machine/Initialize()
 	. = ..()
