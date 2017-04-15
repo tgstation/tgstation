@@ -52,7 +52,7 @@
 			checkers = list(pc)	//only check the host's loc
 		return
 
-	var/list/turfs = spiral_range_turfs(range, loc_to_use)
+	var/list/turfs = RANGE_TURFS(range, loc_to_use)
 	var/old_checkers_used = min(turfs.len, old_checkers_len)
 
 	//reuse what we can
