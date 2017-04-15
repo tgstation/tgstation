@@ -307,7 +307,7 @@
 // Glowsticks, in the uncomfortable range of similar to flares,
 // but not similar enough to make it worth a refactor
 /obj/item/device/flashlight/glowstick
-	name = "green glowstick"
+	name = "glowstick"
 	desc = "A military-grade glowstick."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 4
@@ -363,6 +363,11 @@
 	. = ..()
 	if(.)
 		user.visible_message("<span class='notice'>[user] cracks and shakes [src].</span>", "<span class='notice'>You crack and shake [src], turning it on!</span>")
+		activate()
+
+/obj/item/device/flashlight/glowstick/proc/activate()
+	if(!on)
+		on = TRUE
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/glowstick/red
@@ -401,6 +406,20 @@
 	name = initial(glowtype.name)
 	color = initial(glowtype.color)
 	. = ..()
+
+/obj/item/device/flashlight/spotlight //invisible lighting source
+	name = "disco lighting"
+	icon_state = null
+	light_color = null
+	brightness_on = 0
+	light_range = 0
+	light_power = 10
+	alpha = 0
+	layer = 0
+	on = TRUE
+	anchored = TRUE
+	var/range = null
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/device/flashlight/flashdark
 	name = "flashdark"
