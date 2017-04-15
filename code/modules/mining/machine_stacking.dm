@@ -10,14 +10,13 @@
 	var/machinedir = SOUTHEAST
 	speed_process = 1
 
-/obj/machinery/mineral/stacking_unit_console/New()
-	..()
-	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
-		if (machine)
-			machine.CONSOLE = src
-		else
-			qdel(src)
+/obj/machinery/mineral/stacking_unit_console/Initialize()
+	. = ..()
+	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
+	if (machine)
+		machine.CONSOLE = src
+	else
+		qdel(src)
 
 /obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
 
