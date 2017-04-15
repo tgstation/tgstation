@@ -244,6 +244,11 @@
 		cleanup_field(d)
 	return ..()
 
+/obj/machinery/shieldwallgen/science		//Use for xenobiology on maps where you have shield wall generators in xeno.
+	name = "xenobiology shield wall generator"
+	desc = "A shield generator intended for xenobiologists to use to contain alien lifeforms."
+	req_access = list(GLOB.access_xenobiology)
+
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
 		power = 0

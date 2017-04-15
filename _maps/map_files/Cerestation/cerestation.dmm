@@ -4050,6 +4050,7 @@
 "ahX" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	dir = 2;
@@ -6016,6 +6017,7 @@
 "alU" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /obj/item/weapon/stamp/captain,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -9930,6 +9932,7 @@
 "ato" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /obj/item/weapon/stamp/cmo,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -9989,6 +9992,7 @@
 "atw" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /obj/item/weapon/stamp/ce,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -10337,6 +10341,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
+/obj/item/weapon/pen,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -12924,6 +12929,7 @@
 "ayU" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /obj/item/weapon/stamp/hos,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -13039,6 +13045,7 @@
 "azh" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /obj/item/weapon/stamp/rd,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -13310,6 +13317,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
+/obj/item/weapon/pen,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -14973,6 +14981,7 @@
 "aCH" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /obj/machinery/light,
 /turf/open/floor/plasteel/darkblue/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -16779,6 +16788,7 @@
 "aFE" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /obj/item/weapon/stamp/qm,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -20251,6 +20261,7 @@
 "aLQ" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -20302,6 +20313,7 @@
 "aLW" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /obj/item/weapon/stamp/hop,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -36162,7 +36174,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bmt" = (
 /obj/machinery/power/emitter{
 	state = 2
@@ -36180,7 +36192,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bmu" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -36191,7 +36203,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bmv" = (
 /obj/machinery/power/emitter{
 	state = 2
@@ -36209,7 +36221,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bmw" = (
 /obj/machinery/power/emitter{
 	state = 2
@@ -36221,7 +36233,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bmx" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -36608,7 +36620,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bni" = (
 /obj/machinery/light,
 /obj/structure/cable{
@@ -36620,7 +36632,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bnj" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -36630,7 +36642,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bnk" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -36641,7 +36653,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bnm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment{
@@ -37464,7 +37476,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bow" = (
 /obj/structure/reflector/single{
 	anchored = 1;
@@ -37475,7 +37487,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "box" = (
 /obj/structure/reflector/box{
 	anchored = 1
@@ -37483,7 +37495,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "boy" = (
 /obj/structure/reflector/single{
 	anchored = 1;
@@ -37494,7 +37506,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "boz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -38364,7 +38376,7 @@
 	dir = 1
 	},
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bpR" = (
 /obj/machinery/door/airlock/glass_engineering{
 	name = "Laser Room";
@@ -38379,7 +38391,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bpS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -38396,7 +38408,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bpU" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -39124,21 +39136,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Supermatter Containment Room APC";
-	pixel_x = -23;
-	pixel_y = 2
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "brf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -39153,7 +39155,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "brg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -39171,7 +39173,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "brh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -39183,7 +39185,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bri" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -39195,7 +39197,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "brj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -39207,7 +39209,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "brk" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -39216,7 +39218,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "brl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -39228,13 +39230,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "brm" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "brn" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -39974,7 +39976,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsw" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -39984,7 +39986,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsx" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
@@ -39998,7 +40000,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsy" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -40009,7 +40011,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
@@ -40023,7 +40025,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -40042,7 +40044,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -40055,7 +40057,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsC" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
@@ -40069,7 +40071,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsD" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
@@ -40083,7 +40085,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsE" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -40095,7 +40097,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -40107,13 +40109,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsG" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsH" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8;
@@ -40122,7 +40124,7 @@
 	pixel_y = 1
 	},
 /turf/open/floor/plating/airless,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bsI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -41019,7 +41021,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "buh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -41033,14 +41035,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bui" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "buj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -41050,7 +41052,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "buk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -41059,7 +41061,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bul" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -41505,9 +41507,6 @@
 	density = 0;
 	pixel_x = 30
 	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
 /turf/open/floor/plasteel/whitegreen/side{
 	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
@@ -41755,7 +41754,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvA" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -41763,7 +41762,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -41783,7 +41782,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -41801,7 +41800,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvD" = (
 /obj/effect/turf_decal/stripes/end{
 	tag = "icon-warn_end (EAST)";
@@ -41820,7 +41819,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvE" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -41833,7 +41832,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -41845,7 +41844,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -41856,13 +41855,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvH" = (
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
@@ -41872,7 +41871,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvJ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -41883,7 +41882,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvK" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -41896,7 +41895,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvL" = (
 /obj/effect/turf_decal/stripes/end{
 	tag = "icon-warn_end (WEST)";
@@ -41915,7 +41914,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -41932,7 +41931,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -41946,7 +41945,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvO" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
@@ -41954,7 +41953,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvP" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	icon_state = "connector_map";
@@ -41970,7 +41969,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bvQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -42788,13 +42787,13 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxh" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -42812,7 +42811,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -42832,7 +42831,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxk" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -42843,14 +42842,14 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxl" = (
 /obj/machinery/power/supermatter_shard/crystal,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxm" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -42862,7 +42861,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxn" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -42876,7 +42875,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -42896,7 +42895,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxp" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -42905,7 +42904,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxq" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
@@ -42916,7 +42915,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bxr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -43670,7 +43669,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "byG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -43686,7 +43685,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "byH" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
@@ -43700,7 +43699,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "byI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -43722,7 +43721,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "byJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -43736,13 +43735,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "byK" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "byL" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
@@ -43750,7 +43749,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "byM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -44410,14 +44409,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bzS" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
 /obj/machinery/meter,
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bzT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/glass_engineering{
@@ -44429,7 +44428,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bzU" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	icon_state = "intact";
@@ -44437,13 +44436,13 @@
 	},
 /obj/machinery/meter,
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bzV" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bzW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -44464,7 +44463,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bzX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -44477,13 +44476,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bzY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bzZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -44956,7 +44955,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bAV" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister,
@@ -44964,7 +44963,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bAW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -44976,14 +44975,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bAX" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bAY" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -44994,7 +44993,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bAZ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -45003,7 +45002,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bBa" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -45018,11 +45017,11 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bBb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bBc" = (
 /obj/machinery/light{
 	dir = 8
@@ -45501,7 +45500,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bBW" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -45510,11 +45509,11 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bBX" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bBY" = (
 /obj/machinery/door/airlock/glass_engineering{
 	heat_proof = 1;
@@ -45525,14 +45524,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bBZ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bCa" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
@@ -46273,7 +46272,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDm" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -46297,7 +46296,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -46315,7 +46314,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -46335,7 +46334,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -46356,7 +46355,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -46368,16 +46367,11 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23
-	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDr" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -46397,7 +46391,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -46407,7 +46401,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -46423,7 +46417,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDu" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -46438,7 +46432,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -46453,7 +46447,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bDw" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -47038,7 +47032,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bEr" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/yellow{
@@ -47050,7 +47044,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bEs" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -47065,7 +47059,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bEt" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -47077,7 +47071,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bEu" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -47095,7 +47089,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bEv" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -47112,7 +47106,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bEw" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable/yellow{
@@ -47125,7 +47119,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bEx" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/yellow{
@@ -47138,7 +47132,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bEy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -47152,7 +47146,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bEz" = (
 /obj/machinery/status_display{
 	density = 0;
@@ -47700,13 +47694,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFz" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -47716,7 +47710,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFB" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/closet/radiation,
@@ -47724,7 +47718,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFC" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light,
@@ -47732,14 +47726,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFD" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFE" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable{
@@ -47758,7 +47752,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFF" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/yellow{
@@ -47770,7 +47764,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -47780,7 +47774,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFH" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	tag = "icon-intact (SOUTHEAST)";
@@ -47788,13 +47782,13 @@
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFI" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bFJ" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -47985,10 +47979,6 @@
 /area/medical/chemistry)
 "bFZ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/eastleft{
-	name = "Chemistry Desk";
-	req_access_txt = "33"
-	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -48405,7 +48395,7 @@
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "bGS" = (
 /obj/machinery/door/airlock/glass_engineering{
 	name = "Supermatter Engine Room";
@@ -48417,7 +48407,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bGT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -48439,7 +48429,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bGU" = (
 /obj/machinery/door/airlock/glass_engineering{
 	name = "Supermatter Engine Room";
@@ -48456,7 +48446,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/engine/supermatter)
+/area/engine/engineering)
 "bGV" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel{
@@ -57078,6 +57068,7 @@
 "bVW" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -73322,16 +73313,22 @@
 /turf/open/space,
 /area/hallway/secondary/entry)
 "czh" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plasteel/whitepurple/side{
+	tag = "icon-whitepurple (WEST)";
+	icon_state = "whitepurple";
+	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
 "czi" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
@@ -73347,6 +73344,7 @@
 	},
 /area/toxins/mixing)
 "czk" = (
+/obj/structure/closet/bombcloset,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -73358,6 +73356,7 @@
 	},
 /area/toxins/mixing)
 "czl" = (
+/obj/structure/closet/bombcloset,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -73883,6 +73882,19 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/arrival)
 "czZ" = (
+/obj/structure/closet/wardrobe/science_white,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	tag = "icon-whitepurple (WEST)";
+	icon_state = "whitepurple";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cAa" = (
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 4;
@@ -73896,25 +73908,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plasteel/neutral{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cAa" = (
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
-	dir = 8
-	},
-/obj/structure/cable/orange{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/closet/bombcloset,
-/turf/open/floor/plasteel/neutral{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
@@ -73944,16 +73938,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
+/obj/structure/disposalpipe/junction{
+	icon_state = "pipe-j1";
 	dir = 8
 	},
-/turf/open/floor/plasteel/whitepurple/side{
-	tag = "icon-whitepurple (WEST)";
-	icon_state = "whitepurple";
-	dir = 8;
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
@@ -74703,19 +74692,24 @@
 	},
 /area/hallway/secondary/entry)
 "cAU" = (
+/obj/structure/closet/l3closet/scientist{
+	pixel_x = -2
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	tag = "icon-whitepurple (SOUTHWEST)";
+	icon_state = "whitepurple";
+	dir = 10;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cAV" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/neutral{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cAV" = (
-/obj/structure/closet/bombcloset,
-/turf/open/floor/plasteel/neutral{
+/turf/open/floor/plasteel/whitepurple/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
@@ -74737,13 +74731,7 @@
 	pixel_y = -2
 	},
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /turf/open/floor/plasteel/whitepurple/side{
-	tag = "icon-whitepurple (SOUTHWEST)";
-	icon_state = "whitepurple";
-	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
@@ -75651,6 +75639,21 @@
 	name = "Aft Asteroid Maintenance"
 	})
 "cCD" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Toxins Lab APC";
+	pixel_x = 0;
+	pixel_y = 25
+	},
+/obj/structure/cable/orange{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/mixing)
+"cCE" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -75666,32 +75669,12 @@
 	icon_state = "ast_warn";
 	dir = 1
 	},
-/obj/structure/cable/orange{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"cCE" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Toxins Lab APC";
-	pixel_x = 0;
-	pixel_y = 25
-	},
-/obj/structure/cable/orange{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating/astplate{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
 "cCF" = (
 /obj/machinery/r_n_d/server/core,
 /turf/open/floor/circuit{
@@ -75789,6 +75772,7 @@
 "cCR" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /turf/open/floor/plasteel/red/side{
 	tag = "icon-red (NORTHWEST)";
 	icon_state = "red";
@@ -78172,7 +78156,10 @@
 	name = "Aft Asteroid Maintenance"
 	})
 "cGV" = (
-/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/obj/effect/spawner/lootdrop{
+	loot = list(/obj/effect/decal/remains/xeno = 49, /obj/structure/alien/egg = 1);
+	name = "2% chance xeno egg spawner"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -80042,11 +80029,11 @@
 	layer = 4
 	},
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "cKE" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "cKF" = (
 /turf/open/space/basic,
 /area/space)
@@ -80155,7 +80142,7 @@
 	},
 /obj/machinery/ai_status_display,
 /turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/area/engine/engineering)
 "cKW" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -85411,337 +85398,6 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/entry)
-"cWH" = (
-/obj/structure/sign/poster/official/pda_ad{
-	pixel_x = -32
-	},
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/heads)
-"cWI" = (
-/obj/machinery/pdapainter,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/heads)
-"cWJ" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWK" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWL" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWM" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWN" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWO" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWP" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWQ" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWR" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWS" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWT" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWU" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWV" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWW" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cWX" = (
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/engine/supermatter)
-"cWY" = (
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/engine/supermatter)
-"cWZ" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXa" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXb" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXc" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXd" = (
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/engine/supermatter)
-"cXe" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXf" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXg" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXh" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXi" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/engine/supermatter)
-"cXj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/engine/supermatter)
-"cXk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/engine/supermatter)
-"cXl" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXm" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXn" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXo" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXp" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXq" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 1
-	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23
-	},
-/turf/open/floor/engine{
-	baseturf = /turf/open/floor/plating/asteroid/airless;
-	name = "reinforced floor"
-	},
-/area/engine/supermatter)
-"cXr" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXs" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXt" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXu" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXv" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXw" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXx" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXy" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXz" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXA" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXB" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXC" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXD" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXE" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXF" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXG" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXH" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXI" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXJ" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXK" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXL" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXM" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXN" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXO" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXP" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXQ" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXR" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXS" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXT" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXU" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXV" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cXW" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cXX" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cXY" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister,
-/turf/open/floor/plasteel/whitepurple/side{
-	tag = "icon-whitepurple (SOUTHWEST)";
-	icon_state = "whitepurple";
-	dir = 10;
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cXZ" = (
-/turf/open/floor/plasteel/whitepurple/corner{
-	tag = "icon-whitepurplecorner (WEST)";
-	icon_state = "whitepurplecorner";
-	dir = 8;
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cYa" = (
-/obj/structure/closet/wardrobe/science_white,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cYb" = (
-/obj/structure/closet/l3closet/scientist{
-	pixel_x = -2
-	},
-/turf/open/floor/plasteel/neutral{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
-"cYc" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Aft Asteroid Maintenance";
-	req_access_txt = "47"
-	},
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/mixing)
 
 (1,1,1) = {"
 aaa
@@ -95196,7 +94852,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cgS
 cgS
 cgS
 cgS
@@ -95453,7 +95109,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cgS
 cgS
 cgS
 cgS
@@ -95709,8 +95365,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+cgS
+cgS
 cgS
 cgS
 cgS
@@ -95966,9 +95622,9 @@ aaa
 aaa
 aaa
 cgS
-aaa
-aaa
-aaa
+cgS
+cuP
+cuP
 cgS
 cgN
 cgS
@@ -96222,16 +95878,16 @@ aaa
 aaa
 aaa
 cgS
-ctW
-cuQ
-cuQ
-cuQ
-ctW
+cgS
+cuP
+cuP
+cuP
+cgS
 cgN
 cgN
-cgN
-cgN
-cgN
+cgS
+cgS
+cgS
 cgS
 cgS
 cgS
@@ -96480,14 +96136,14 @@ aaa
 aaa
 cgS
 ctW
-cuR
-cvR
-cvR
+cuQ
+cuQ
+cuQ
 ctW
-cgR
-cgR
-cgR
-cgR
+cgN
+cgN
+cgN
+cgN
 cgN
 cjU
 cCB
@@ -96737,16 +96393,16 @@ aaa
 aaa
 cgS
 ctW
-cuS
+cuR
 cvR
-cwO
+cvR
 ctW
-ctW
-ctW
-ctW
-ctW
-ctW
-ctW
+cgR
+cgR
+cgR
+cgR
+cgN
+cjU
 cCC
 cjU
 chc
@@ -96994,15 +96650,15 @@ aaa
 aaa
 cgS
 ctW
-cuT
-cvS
-cuT
+cuS
+cvR
+cwO
 ctW
-cxY
-cyN
-cXY
-cYa
-cYb
+ctW
+ctW
+ctW
+ctW
+ctW
 ctW
 cCB
 cjU
@@ -97251,21 +96907,21 @@ aaa
 aaa
 cgN
 ctW
-cuU
-cvT
-cwP
+cuT
+cvS
+cuT
 ctW
-cxZ
-cyO
+cxY
+cyN
 czh
 czZ
 cAU
-cYc
+ctW
 cCD
-cDv
-cDv
-cEQ
-cFb
+cDu
+cgL
+cgL
+cgL
 cmA
 cgu
 cgu
@@ -97508,21 +97164,21 @@ aaa
 aaa
 cgN
 ctW
-cuT
-cvU
-cuT
-cxu
-cya
-cyP
+cuU
+cvT
+cwP
+ctW
+cxZ
+cyO
 czi
 cAa
 cAV
-ctW
+cBP
 cCE
-cgL
-cgL
-cgL
-cFc
+cDv
+cDv
+cEQ
+cFb
 ckH
 cgu
 cgu
@@ -97765,13 +97421,13 @@ aaa
 aaa
 cgN
 ctW
-cuV
-cvV
-cwQ
-cvV
-cyb
-cvW
-cXZ
+cuT
+cvU
+cuT
+cxu
+cya
+cyP
+cyP
 cAb
 cAW
 ctW
@@ -98022,11 +97678,11 @@ aaa
 aaa
 cgN
 ctW
-cXW
-cvW
-cXX
-cvW
-cvW
+cuV
+cvV
+cwQ
+cvV
+cyb
 cvW
 cvW
 cAc
@@ -114852,7 +114508,7 @@ aGO
 aHT
 aJc
 aKf
-cWH
+aLh
 aLT
 aHS
 aOe
@@ -115624,7 +115280,7 @@ aHT
 aJf
 aKi
 aLh
-cWI
+aLh
 aNb
 aOf
 aPe
@@ -117740,7 +117396,7 @@ bpQ
 bvz
 bxg
 byF
-cXB
+blr
 abC
 abC
 abC
@@ -117990,19 +117646,19 @@ blq
 bkw
 blq
 abC
-cXf
-cXp
-cXr
+blr
+blr
+blr
 cKE
 bvA
 bxh
 bms
-cXC
-cXI
-cXL
-cXO
-cXP
-cXQ
+blr
+blr
+blr
+blr
+blr
+bFx
 bGP
 bIa
 bJJ
@@ -118500,11 +118156,11 @@ bhM
 biO
 bjD
 bkx
-cWJ
-cWU
-cWW
-cXa
-cXg
+blr
+blr
+blr
+blr
+blr
 brf
 bsw
 buh
@@ -118757,24 +118413,24 @@ bhM
 biO
 bjD
 bkx
-cWK
+blr
 bms
 bnh
 bov
 bpR
 brg
 bsx
-cXs
+blr
 bvD
 bvD
 bvD
-cXD
+blr
 bAV
 bBV
 bDn
 bEs
 bFA
-cXR
+bFx
 bId
 cMz
 bLo
@@ -119014,24 +118670,24 @@ bhM
 biO
 bjD
 bkx
-cWL
+blr
 bms
 bni
-cXb
+blr
 cKD
 brh
 bsy
-cXt
+blr
 bvE
 bvE
 byH
-cXE
+blr
 bAV
 bBW
 bDo
 bEt
 bFB
-cXS
+bFx
 bIe
 bJK
 bLo
@@ -119271,20 +118927,20 @@ bhM
 biO
 bjD
 bkx
-cWM
+blr
 bmt
 bnj
 bow
-cXh
+blr
 bri
 bsz
-cXu
+blr
 bvF
 bxk
 bxk
 bsG
-cXJ
-cXM
+blr
+blr
 bDp
 bEt
 bFC
@@ -119528,14 +119184,14 @@ bhM
 biO
 bjD
 bkx
-cWN
+blr
 bmu
 bms
 bms
-cXi
+bpS
 brj
 bsA
-cXv
+blr
 bvG
 bvG
 bvG
@@ -119785,11 +119441,11 @@ bhN
 cKx
 bjD
 bkx
-cWO
+blr
 bmv
 bms
 box
-cXj
+bpS
 brk
 brk
 bui
@@ -120042,14 +119698,14 @@ bhO
 biO
 bjD
 bkx
-cWP
+blr
 bmu
 bms
 bms
-cXk
+bpS
 brl
 bsB
-cXw
+blr
 bvI
 bvI
 bvI
@@ -120299,24 +119955,24 @@ bhP
 biO
 bjD
 bkx
-cWQ
+blr
 bmw
-cWX
+bnk
 boy
-cXl
-cXq
+blr
+bri
 bsC
-cXx
+blr
 bvJ
 bxm
 bxm
 bzV
-cXK
-cXN
+blr
+blr
 bDt
 bEt
 bFC
-cXT
+bFx
 bIh
 bJO
 bLq
@@ -120556,24 +120212,24 @@ bhP
 biO
 bjD
 bkx
-cWR
+blr
 bms
 bnl
-cXc
+blr
 cKE
 brh
 bsy
-cXy
+blr
 bvK
 bxn
 bvK
-cXF
+blr
 bAZ
 bBZ
 bDs
 bEt
 bFB
-cXU
+bFx
 bIi
 bJK
 bLo
@@ -120813,24 +120469,24 @@ bhP
 biO
 bjD
 bkx
-cWS
+blr
 bms
-cWY
-cXd
+bnk
+bnk
 bpT
 bri
 bsD
-cXz
+blr
 bvL
 bvL
 bvL
-cXG
+blr
 bAZ
 bBZ
 bDs
 bEw
 bFG
-cXV
+bFx
 bIj
 bJP
 bLr
@@ -121070,11 +120726,11 @@ bhP
 biO
 bjD
 bkx
-cWT
-cWV
-cWZ
-cXe
-cXm
+blr
+blr
+blr
+blr
+blr
 brh
 bsE
 buj
@@ -121331,7 +120987,7 @@ bkw
 blq
 bkw
 blq
-cXn
+blr
 brj
 bsF
 buk
@@ -121588,7 +121244,7 @@ bls
 bky
 bls
 bkx
-cXo
+blr
 brm
 bsG
 cKD
@@ -121848,11 +121504,11 @@ bls
 abC
 abC
 bsH
-cXA
+blr
 bvP
 bxq
 byL
-cXH
+blr
 abC
 abC
 abC
