@@ -62,7 +62,8 @@
 			pc.loc = turfs[I]
 		else
 			qdel(old_checkers[I])	//delete the leftovers
-	old_checkers.Cut()
+
+	LAZYCLEARLIST(old_checkers)
 
 	//create what we lack
 	var/list/checkers_local = list()
