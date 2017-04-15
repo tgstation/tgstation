@@ -954,7 +954,6 @@
 #include "code\game\turfs\simulated\wall\mineral_walls.dm"
 #include "code\game\turfs\simulated\wall\misc_walls.dm"
 #include "code\game\turfs\simulated\wall\reinf_walls.dm"
-#include "code\game\turfs\simulated\wall\shuttle_walls.dm"
 #include "code\game\turfs\space\space.dm"
 #include "code\game\turfs\space\transit.dm"
 #include "code\modules\admin\admin.dm"

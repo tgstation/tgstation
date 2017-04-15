@@ -26127,7 +26127,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "baF" = (
-/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/start{
+	name = "Assistant"
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	external_pressure_bound = 101.325;
@@ -26599,7 +26601,9 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "bbt" = (
-/obj/effect/landmark/observer_start,
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "bbu" = (
@@ -50235,7 +50239,9 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/latejoin,
+/obj/effect/landmark{
+	name = "JoinLate"
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
 	pixel_y = 0
