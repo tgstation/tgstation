@@ -38239,7 +38239,7 @@
 	name = "Arrivals"
 	})
 "bkA" = (
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "bkB" = (
 /obj/structure/chair{

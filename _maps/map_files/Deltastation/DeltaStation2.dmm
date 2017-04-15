@@ -1530,7 +1530,7 @@
 	name = "Arrivals"
 	})
 "acX" = (
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "acY" = (
 /obj/machinery/vending/cola/random,

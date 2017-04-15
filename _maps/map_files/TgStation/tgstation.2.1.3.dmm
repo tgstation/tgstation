@@ -59483,11 +59483,11 @@
 /area/engine/engineering)
 "czi" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czj" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czk" = (
 /obj/machinery/door/airlock/external{
