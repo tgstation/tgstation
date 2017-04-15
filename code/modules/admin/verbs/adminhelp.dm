@@ -175,7 +175,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		interactions = list("<font color='blue'>[key_name_admin(usr)] bwoinked [LinkedReplyName()]</font>")
 		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 	else
-		interactions = list("<font color='red'>[LinkedReplyName()]: [parsed_message]</font>")
+		interactions = list()
 		MessageNoRecipient(parsed_message)
 
 		//show it to the person adminhelping too
@@ -235,6 +235,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/ref_src = "\ref[src]"
 	var/chat_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [msg]</span>"
 
+	interactions = list("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 	//send this msg to all admins
 
 	for(var/client/X in GLOB.admins)
