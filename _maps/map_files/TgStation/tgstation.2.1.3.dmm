@@ -58142,6 +58142,11 @@
 	pixel_y = 0;
 	req_access_txt = "11"
 	},
+/obj/machinery/camera{
+	c_tag = "Engineering SouthWest";
+	dir = 8;
+	name = "engineering camera"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cwL" = (
@@ -58205,6 +58210,11 @@
 	pixel_x = -26;
 	pixel_y = 0;
 	req_access_txt = "11"
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering SouthEast";
+	dir = 4;
+	name = "engineering camera"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -58523,11 +58533,6 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/head/cone,
-/obj/machinery/camera{
-	c_tag = "Engineering SouthWest";
-	dir = 8;
-	name = "engineering camera"
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cxG" = (
@@ -58565,11 +58570,6 @@
 	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
-	},
-/obj/machinery/camera{
-	c_tag = "Engineering SouthEast";
-	dir = 4;
-	name = "engineering camera"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -59250,6 +59250,7 @@
 	dir = 2;
 	network = list("Singularity")
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
 "czc" = (
@@ -59268,6 +59269,7 @@
 	dir = 2;
 	network = list("Singularity")
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
 "cze" = (
@@ -62163,6 +62165,34 @@
 	},
 /turf/closed/wall,
 /area/engine/engineering)
+"cEz" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/grounding_rod{
+	anchored = 1
+	},
+/turf/open/space/basic,
+/area/space)
+"cEA" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/grounding_rod{
+	anchored = 1
+	},
+/turf/open/space/basic,
+/area/space)
+"cEB" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/grounding_rod{
+	anchored = 1
+	},
+/turf/open/space/basic,
+/area/space)
+"cEC" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/grounding_rod{
+	anchored = 1
+	},
+/turf/open/space/basic,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -88070,8 +88100,8 @@ abV
 abV
 abV
 abV
+abV
 cCu
-aaa
 aaa
 aaa
 aaa
@@ -88326,10 +88356,10 @@ cir
 cir
 cir
 cir
+cir
 cxo
 cxo
 cxo
-aaa
 aaa
 aaa
 aaa
@@ -88571,6 +88601,7 @@ cyz
 cir
 cyY
 czj
+czj
 czA
 czj
 cAb
@@ -88586,7 +88617,6 @@ cir
 cir
 cir
 cir
-aaa
 aaa
 aaa
 aaa
@@ -88828,6 +88858,7 @@ cyA
 cyQ
 cyZ
 czk
+czk
 czB
 czO
 czg
@@ -88843,7 +88874,6 @@ cir
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -89086,6 +89116,7 @@ cir
 cza
 czl
 czl
+czl
 czP
 cAc
 cAc
@@ -89100,7 +89131,6 @@ cxo
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -89341,6 +89371,7 @@ cye
 cyB
 cir
 czb
+aaa
 cxo
 aaa
 cxo
@@ -89357,7 +89388,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -89597,7 +89627,8 @@ cxD
 cyf
 cyC
 cyR
-cxo
+cEz
+czF
 czm
 czC
 czQ
@@ -89614,7 +89645,6 @@ cBS
 cir
 cir
 cir
-aaa
 aaa
 aaa
 aaa
@@ -89854,6 +89884,7 @@ cxE
 cyg
 cyC
 cyR
+czF
 aaa
 czn
 czD
@@ -89871,7 +89902,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -90111,7 +90141,8 @@ cxF
 cyh
 cyC
 cyR
-cxo
+cEA
+czF
 czo
 czE
 cxo
@@ -90128,7 +90159,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -90369,6 +90399,7 @@ cyi
 cxY
 cxY
 cxY
+czF
 czo
 cxo
 aaa
@@ -90385,7 +90416,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -90626,6 +90656,7 @@ cxh
 cxh
 cyS
 cxY
+czF
 czo
 cxo
 aaa
@@ -90642,7 +90673,6 @@ cxo
 cir
 cir
 cir
-aaa
 aaa
 aaa
 aaa
@@ -90883,6 +90913,7 @@ cyj
 cyD
 cyT
 cxY
+czF
 czo
 czF
 czF
@@ -90899,7 +90930,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 abU
 aaa
 aaa
@@ -91140,6 +91170,7 @@ cyk
 cyE
 cyT
 cxY
+czF
 czo
 aaa
 cxo
@@ -91156,7 +91187,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -91397,6 +91427,7 @@ cyl
 cyF
 cyT
 cxY
+czF
 czo
 czG
 czF
@@ -91413,7 +91444,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -91654,6 +91684,7 @@ cym
 cyG
 cyU
 czc
+czC
 czp
 cxo
 aaa
@@ -91670,7 +91701,6 @@ cxo
 cir
 cir
 cir
-aaa
 aaa
 aaa
 aaa
@@ -91911,6 +91941,7 @@ cyi
 cxY
 cxY
 cxY
+czF
 czo
 cxo
 aaa
@@ -91927,7 +91958,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -92167,7 +92197,8 @@ cxK
 cyf
 cyC
 cyR
-cxo
+cEB
+czF
 czo
 czH
 cxo
@@ -92184,7 +92215,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -92424,6 +92454,7 @@ cxL
 cyg
 cyC
 cyR
+czF
 aaa
 czq
 czI
@@ -92441,7 +92472,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -92681,7 +92711,8 @@ cxD
 cyh
 cyH
 cyR
-cxo
+cEC
+czF
 czr
 czC
 czT
@@ -92698,7 +92729,6 @@ cBT
 cir
 cir
 cir
-aaa
 aaa
 aaa
 aaa
@@ -92939,6 +92969,7 @@ cye
 cyI
 cir
 czd
+aaa
 cxo
 aaa
 cxo
@@ -92955,7 +92986,6 @@ aaa
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -93198,6 +93228,7 @@ cir
 cze
 czk
 czk
+czk
 czU
 cAd
 cAd
@@ -93212,7 +93243,6 @@ cxo
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -93454,6 +93484,7 @@ cyJ
 cyV
 czf
 czl
+czl
 czJ
 czV
 cyY
@@ -93469,7 +93500,6 @@ cir
 cCg
 cir
 cCg
-aaa
 aaa
 aaa
 aaa
@@ -93711,6 +93741,7 @@ cyK
 cyW
 czg
 czj
+czj
 czK
 czj
 cAe
@@ -93726,7 +93757,6 @@ cir
 cir
 cir
 cir
-aaa
 aaa
 aaa
 aaa
@@ -93980,10 +94010,10 @@ cir
 cir
 cir
 cir
+cir
 cxo
 cxo
 cxo
-aaa
 aaa
 aaa
 aaa
