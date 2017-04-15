@@ -70,6 +70,19 @@
 	var/stack_amt = 50; //ammount to stack before releassing
 	input_dir = EAST
 	output_dir = WEST
+	var/datum/proximity_monitor/proximity_monitor
+
+/obj/machinery/mineral/stacking_machine/Initialize()
+	. = ..()
+	proximity_monitor = new(src, 1)
+
+/obj/machinery/mineral/stacking_machine/Destroy()
+	QDEL_NULL(proximity_monitor)
+	return ..()
+
+/obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/AM)
+	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
+		process_sheet(AM)
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
 	if(!(inp.type in stack_list)) //It's the first of this sheet added
@@ -84,9 +97,3 @@
 		out.amount = stack_amt
 		unload_mineral(out)
 		storage.amount -= stack_amt
-
-/obj/machinery/mineral/stacking_machine/process()
-	var/turf/T = get_step(src, input_dir)
-	if(T)
-		for(var/obj/item/stack/sheet/S in T)
-			process_sheet(S)
