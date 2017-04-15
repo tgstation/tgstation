@@ -37,7 +37,7 @@
 /area/shuttle/abandoned)
 "af" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ag" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -230,7 +230,7 @@
 "aM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aN" = (
 /obj/machinery/door/window,
@@ -256,7 +256,7 @@
 /area/shuttle/abandoned)
 "aR" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aS" = (
 /obj/structure/chair{
