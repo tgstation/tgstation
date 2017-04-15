@@ -192,6 +192,7 @@
 	set category = "Malfunction"
 	set name = "Destroy RCDs"
 	set desc = "Detonate all RCDs on the station, while sparing onboard cyborg RCDs."
+	set waitfor = FALSE
 
 	if(!canUseTopic() || malf_cooldown)
 		return
@@ -202,9 +203,9 @@
 			RCD.detonate_pulse()
 
 	to_chat(src, "<span class='warning'>RCD detonation pulse emitted.</span>")
-	malf_cooldown = 1
-	spawn(100)
-		malf_cooldown = 0
+	malf_cooldown = TRUE
+	sleep(100)
+	malf_cooldown = FALSE
 
 /datum/AI_Module/large/mecha_domination
 	module_name = "Viral Mech Domination"
