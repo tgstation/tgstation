@@ -19,7 +19,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+		new /datum/spacevine_controller(T) //spawn a controller at turf
 
 
 /datum/spacevine_mutation
@@ -80,12 +80,7 @@
 /datum/spacevine_mutation/space_covering/New()
 	. = ..()
 	if(!coverable_turfs)
-		coverable_turfs = typecacheof(list(
-			/turf/open/space
-		))
-		coverable_turfs -= typecacheof(list(
-			/turf/open/space/transit
-		))
+		coverable_turfs = typecacheof(list(/turf/open/space)) - /turf/open/space/transit
 
 /datum/spacevine_mutation/space_covering/on_grow(obj/structure/spacevine/holder)
 	process_mutation(holder)
@@ -324,10 +319,10 @@
 	obj_integrity = 50
 	max_integrity = 50
 	var/energy = 0
-	var/obj/effect/spacevine_controller/master = null
+	var/datum/spacevine_controller/master = null
 	var/list/mutations = list()
 
-/obj/structure/spacevine/New()
+/obj/structure/spacevine/Initialize()
 	..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
@@ -347,13 +342,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_death(src)
 	if(master)
-		master.vines -= src
-		master.growth_queue -= src
-		if(!master.vines.len)
-			var/obj/item/seeds/kudzu/KZ = new(loc)
-			KZ.mutations |= mutations
-			KZ.set_potency(master.mutativeness * 10)
-			KZ.set_production((master.spread_cap / initial(master.spread_cap)) * 5)
+		master.VineDestroyed(src)
 	mutations = list()
 	set_opacity(0)
 	if(has_buckled_mobs())
