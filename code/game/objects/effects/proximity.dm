@@ -28,7 +28,7 @@
 			_host.HasProximity(host)	//if we are processing, we're guaranteed to be a movable
 
 /datum/proximity_monitor/proc/SetRange(range, force_rebuild = FALSE)
-	if(range == current_range && !force_rebuild)
+	if(!force_rebuild && range == current_range)
 		return FALSE
 	. = TRUE
 	
