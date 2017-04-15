@@ -4,6 +4,7 @@
 #if DM_VERSION >= 512
 #error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
 #endif
+#endif
 
 /atom/movable
 	layer = OBJ_LAYER
