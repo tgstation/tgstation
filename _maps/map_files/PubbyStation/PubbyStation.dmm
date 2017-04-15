@@ -3779,7 +3779,6 @@
 	},
 /area/security/main)
 "ahT" = (
-/obj/machinery/suit_storage_unit/hos,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -52615,7 +52614,6 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/office)
 "ccK" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel/black,
 /area/chapel/office)
 "ccL" = (
@@ -85071,7 +85069,7 @@ bnl
 bor
 bYc
 bqU
-bsd
+bsY
 bsY
 btW
 bva

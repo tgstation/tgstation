@@ -51,11 +51,6 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 
-/obj/machinery/suit_storage_unit/hos
-	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
-	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/weapon/tank/internals/oxygen
-
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	mask_type = /obj/item/clothing/mask/gas
@@ -67,10 +62,6 @@
 
 /obj/machinery/suit_storage_unit/mining/eva
 	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
-	mask_type = /obj/item/clothing/mask/breath
-
-/obj/machinery/suit_storage_unit/cmo
-	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
 	mask_type = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/rd
@@ -375,7 +366,7 @@
 		if("dispense")
 			if(!state_open)
 				return
-			
+
 			var/static/list/valid_items = list("helmet", "suit", "mask", "storage")
 			var/item_name = params["item"]
 			if(item_name in valid_items)

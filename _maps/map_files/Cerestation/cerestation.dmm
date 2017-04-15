@@ -1978,7 +1978,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/suit_storage_unit/hos,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -54183,11 +54182,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor/northright{
-	name = "Chief Medical Officer's Hardsuit";
-	req_access_txt = "40"
-	},
-/obj/machinery/suit_storage_unit/cmo,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -76695,11 +76689,6 @@
 "cEv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
-	},
-/obj/machinery/suit_storage_unit/rd,
-/obj/machinery/door/window/brigdoor/northleft{
-	name = "Research Director's Hardsuit";
-	req_access_txt = "30"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
