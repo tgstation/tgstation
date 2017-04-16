@@ -310,6 +310,7 @@
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
 	small_img.Scale(8, 8)
 	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+	ic.Insert(ic,"photo",frame=1,moving=0) // Prevents the photo's icon from being animated.
 	P.icon = ic
 	P.img = temp
 	P.desc = mobs
