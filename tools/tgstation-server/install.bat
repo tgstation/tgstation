@@ -59,6 +59,10 @@ mklink /d gamecode\b\config ..\..\gamedata\config
 
 mklink /d gamefolder gamecode\a
 
+echo prepping python (if installed)
+pip install PyYaml
+pip install beautifulsoup4
+
 echo Compiling for the first time.
 
 echo Compiling change log.
