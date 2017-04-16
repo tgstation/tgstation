@@ -97,5 +97,15 @@ You can clear all active test merges using `Reset and Recompile.bat` (explained 
 1. Setup something to run OnServerBoot.bat on login (setting up a link/shortcut to this file in the startup folder of the start menu works, creating a scheduled task in windows administrative tools also works)
 1. OnServerBoot.bat does not update, but it does re-compile and reinitialize the A/B folders.
 	
+### Updating byond after this is all setup
+1. Download installer from byond website
+1. Close watch dog/start server script
+1. Wait for current round to end
+1. Exit DreamDeamon
+1. Run installer
+1. After installing, run recompile.bat (or update if you want)
+1. Run start server.bat
+
+
 
 	
