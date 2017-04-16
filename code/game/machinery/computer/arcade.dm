@@ -60,6 +60,11 @@
 		new CB.build_path(loc, CB)
 		qdel(src)
 
+/obj/machinery/computer/arcade/Initialize()
+	. = ..()
+	Reset()
+
+
 #define PULSE_MEDAL "Jackpot"
 
 /obj/machinery/computer/arcade/proc/prizevend()

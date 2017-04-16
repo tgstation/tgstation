@@ -147,5 +147,7 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 .memoedit				{text-align: center;	font-size: 2;}
 .abductor				{color: #800080; font-style: italic;}
 .slime					{color: #00CED1;}
-
+.drone					{color: #848482;}
+.monkey					{color: #975032;}
+.swarmer				{color: #2C75FF;}
 </style>"}

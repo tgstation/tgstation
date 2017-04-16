@@ -87,7 +87,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
-		SSblackbox.add_details("wisp_lantern","F") // freed
+		SSblackbox.add_details("wisp_lantern","Freed") // freed
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
@@ -102,7 +102,7 @@
 		wisp.stop_orbit()
 		wisp.loc = src
 		icon_state = "lantern-blue"
-		SSblackbox.add_details("wisp_lantern","R") // returned
+		SSblackbox.add_details("wisp_lantern","Returned") // returned
 
 /obj/item/device/wisp_lantern/Initialize()
 	..()
@@ -229,7 +229,7 @@
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
-		SSblackbox.add_details("immortality_talisman","U") // usage
+		SSblackbox.add_details("immortality_talisman","Activated") // usage
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))

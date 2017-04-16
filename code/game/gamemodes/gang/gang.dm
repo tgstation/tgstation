@@ -73,15 +73,16 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 
 
 /datum/game_mode/gang/post_setup()
-	spawn(rand(10,100))
-		for(var/datum/gang/G in gangs)
-			for(var/datum/mind/boss_mind in G.bosses)
-				G.add_gang_hud(boss_mind)
-				forge_gang_objectives(boss_mind)
-				greet_gang(boss_mind)
-				equip_gang(boss_mind.current,G)
-				modePlayer += boss_mind
+	set waitfor = FALSE
 	..()
+	sleep(rand(10,100))
+	for(var/datum/gang/G in gangs)
+		for(var/datum/mind/boss_mind in G.bosses)
+			G.add_gang_hud(boss_mind)
+			forge_gang_objectives(boss_mind)
+			greet_gang(boss_mind)
+			equip_gang(boss_mind.current,G)
+			modePlayer += boss_mind
 
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)

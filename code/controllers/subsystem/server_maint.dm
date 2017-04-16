@@ -13,20 +13,21 @@ SUBSYSTEM_DEF(server_maint)
 	..()
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = GLOB.clients.Copy()
-
-	var/round_started = Master.round_started
+	
 	var/list/currentrun = src.currentrun
-	while (length(currentrun))
-		var/client/C = currentrun[currentrun.len]
-		currentrun.len--
+	var/round_started = Master.round_started
 
-		if(config.kick_inactive)
-			if(round_started && C.is_afk(INACTIVITY_KICK))
-				if(!istype(C.mob, /mob/dead))
+	for(var/I in currentrun)
+		var/client/C = I
+		//handle kicking inactive players
+		if(round_started && config.kick_inactive)
+			if(C.is_afk(config.afk_period))
+				var/cmob = C.mob
+				if(!(istype(cmob, /mob/dead/observer) || (istype(cmob, /mob/dead) && C.holder)))
 					log_access("AFK: [key_name(C)]")
-					to_chat(C, "<span class='danger'>You have been inactive for more than 10 minutes and have been disconnected.</span>")
+					to_chat(C, "<span class='danger'>You have been inactive for more than [config.afk_period / 600] minutes and have been disconnected.</span>")
 					qdel(C)
 
 		if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
