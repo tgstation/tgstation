@@ -119,9 +119,11 @@
 		if(W)
 			melee_item_attack_chain(src, W, A, params)
 		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
+
+		//If we click on a mob make sure we add cooldown
+		if(ismob(A))
+			changeNext_move(CLICK_CD_MELEE)
 		return
 
 	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
@@ -133,9 +135,10 @@
 			if(W)
 				melee_item_attack_chain(src, W, A, params)
 			else
-				if(ismob(A))
-					changeNext_move(CLICK_CD_MELEE)
 				UnarmedAttack(A, 1)
+
+			if(ismob(A))
+				changeNext_move(CLICK_CD_MELEE)
 			return
 		else // non-adjacent click
 			if(W)
