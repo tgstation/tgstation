@@ -32,8 +32,8 @@
 
 /obj/item/device/assault_pod/attack_self(mob/living/user)
 	var/target_area
-	target_area = input("Area to land", "Select a Landing Zone", target_area) in teleportlocs
-	var/area/picked_area = teleportlocs[target_area]
+	target_area = input("Area to land", "Select a Landing Zone", target_area) in GLOB.teleportlocs
+	var/area/picked_area = GLOB.teleportlocs[target_area]
 	if(!src || QDELETED(src))
 		return
 
@@ -49,7 +49,7 @@
 	landing_zone.height = height
 	landing_zone.setDir(lz_dir)
 
-	for(var/obj/machinery/computer/shuttle/S in machines)
+	for(var/obj/machinery/computer/shuttle/S in GLOB.machines)
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 

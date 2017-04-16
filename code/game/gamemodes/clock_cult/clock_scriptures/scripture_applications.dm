@@ -86,7 +86,7 @@
 		return TRUE
 	if(is_type_in_typecache(I, ratvarian_armor_typecache))
 		return FALSE
-	if(!ratvar_awakens && is_type_in_typecache(I, better_armor_typecache))
+	if(!GLOB.ratvar_awakens && is_type_in_typecache(I, better_armor_typecache))
 		return FALSE
 	return user.dropItemToGround(I)
 
@@ -106,7 +106,7 @@
 	sort_priority = 3
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
-	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in all_clockwork_mobs)
+	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in GLOB.all_clockwork_mobs)
 		if(M.host == invoker)
 			to_chat(invoker, "<span class='warning'>You can only house one marauder at a time!</span>")
 			return FALSE
@@ -135,7 +135,7 @@
 	if(!check_special_requirements())
 		return FALSE
 	to_chat(invoker, "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>")
-	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50)
+	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50, POLL_IGNORE_CLOCKWORK_MARAUDER)
 	if(!check_special_requirements())
 		return FALSE
 	if(!marauder_candidates.len)
@@ -214,7 +214,7 @@
 	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
 
 
-//Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures and consume power or replicant alloy.
+//Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures at a power cost
 /datum/clockwork_scripture/create_object/mending_motor
 	descname = "Powered Structure, Repairs Other Structures"
 	name = "Mending Motor"
@@ -281,13 +281,13 @@
 
 /datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
 	var/servants = 0
-	for(var/mob/living/L in living_mob_list)
+	for(var/mob/living/L in GLOB.living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
-	if(servants * 0.2 < clockwork_daemons)
+	if(servants * 0.2 < GLOB.clockwork_daemons)
 		to_chat(invoker, "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>")
 		return FALSE
-	if(servants * 0.2 < clockwork_daemons+1)
+	if(servants * 0.2 < GLOB.clockwork_daemons+1)
 		to_chat(invoker, "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>")
 		return FALSE
 	return ..()

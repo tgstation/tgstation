@@ -164,7 +164,7 @@
 		M.emote("scream")
 
 /datum/reagent/blob/blazing_oil/extinguish_reaction(obj/structure/blob/B)
-	B.take_damage(rand(1, 3), BURN, "energy")
+	B.take_damage(1.5, BURN, "energy")
 
 /datum/reagent/blob/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BURN && damage_flag != "energy")
@@ -261,7 +261,6 @@
 	color = "#EFD65A"
 	complementary_color = "#00E5B1"
 	message_living = ", and you feel a horrible tingling sensation"
-	var/datum/effect_system/spark_spread/spark_system = new/datum/effect_system/spark_spread()
 
 /datum/reagent/blob/energized_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
@@ -272,8 +271,7 @@
 
 /datum/reagent/blob/energized_jelly/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.obj_integrity - damage <= 0 && prob(10))
-		spark_system.set_up(rand(2, 4), 0, B)
-		spark_system.start()
+		do_sparks(rand(2, 4), FALSE, B)
 	return ..()
 
 /datum/reagent/blob/energized_jelly/tesla_reaction(obj/structure/blob/B, power)

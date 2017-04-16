@@ -532,10 +532,10 @@
 	var/datum/devilinfo/devil = randomDevilInfo()
 	var/list/messages = list()
 	messages += "Some fun facts about: [devil.truename]"
-	messages += "[lawlorify[LORE][devil.bane]]"
-	messages += "[lawlorify[LORE][devil.obligation]]"
-	messages += "[lawlorify[LORE][devil.ban]]"
-	messages += "[lawlorify[LORE][devil.banish]]"
+	messages += "[GLOB.lawlorify[LORE][devil.bane]]"
+	messages += "[GLOB.lawlorify[LORE][devil.obligation]]"
+	messages += "[GLOB.lawlorify[LORE][devil.ban]]"
+	messages += "[GLOB.lawlorify[LORE][devil.banish]]"
 	return messages
 
 /obj/item/toy/talking/owl
@@ -553,81 +553,6 @@
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 	chattering = TRUE
 	phomeme = "griffin"
-
-/obj/item/toy/talking/skeleton
-	name = "skeleton action figure"
-	desc = "An action figure modeled after 'Oh-cee', the original content \
-		skeleton.\nNot suitable for infants or assistants under 36 months \
-		of age."
-	icon_state = "skeletonprize"
-	attack_verb = list("boned", "dunked on", "worked down to the bone")
-	chattering = TRUE
-
-	var/list/regular_messages = list(
-		"Why was the skeleton such a bad liar? \
-			Because you can see right through him!",
-		"When does a skeleton laugh? When something tickles his funny bone!",
-		"Why couldn't the skeleton win the beauty contest? \
-			 Because he had no body!",
-		"What do you call a skeleton in the winter? A numbskull!",
-		"What did the skeleton say before eating? Bone appetit!",
-		"What type of art do skeletons like? Skulltures!",
-		"What instrument do skeletons play? The trom-bone!",
-		"Why are skeletons always so calm? \
-			Because nothing gets under their skin!",
-		"How did the skeleton know it was going to rain? \
-			He could feel it in his bones.",
-		"Why did the skeleton go to the hospital? \
-			To get his ghoul stones removed.",
-		"Why can't skeletons play music in churches? \
-			Because they have no organs.",
-		"There's a skeleton inside everyone! Except slime people I guess...",
-		"The birds are too busy to notice me acting in the shadows!",
-		"Giraffes have the same number of bones in their necks as humans. \
-			You should never trust a giraffe.",
-		"When I meet a dog in the street, I always offer it a bone!",
-		"In corsetry, a bone is one of the rigid parts of a corset that \
-			forms its frame and gives it rigidity.",
-		"A person who plays the trombone is called a trombonist or \
-			trombone player.",
-		"Remember, compromise is for those without backbones!",
-		"If you go up to the captain and say the word 'bone' repeatedly, \
-			eventually he'll brig you.",
-		"Yo ho ho, shiver me bones!",
-		"So what you're saying is, you only love me for my legs?",
-		"You will never again find socks that match!",
-		"BONES! BONES! BONES!",
-		"Bones absorb x-rays, which is why radiation gives you superpowers.",
-		"Oh-cee! The ORIGINAL CONTENT SKELETON. Suitable for ages 36 months \
-			and up.",
-		"I just don't have the heart to judge you.",
-		"I don't have the stomach for this.",
-		"I'm a fighter, not a liver.",
-		"How can I see without eyeballs?",
-		"Ask your parents about 'boning', before you get pregnant.",
-		"Remember, a dog is for life, not just for christmas.")
-
-/obj/item/toy/talking/skeleton/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is trying to commit suicide with [src].</span>")
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.set_species(/datum/species/skeleton)
-
-	toy_talk(user, "RATTLE ME BONES")
-
-	user.Stun(5)
-	sleep(20)
-	return OXYLOSS
-
-/obj/item/toy/talking/skeleton/generate_messages()
-	return list(pick(regular_messages))
-
-/obj/item/toy/talking/skeleton/toy_talk(user, message)
-	phomeme = pick("sans", "papyrus")
-
-	span = "danger [phomeme]"
-	..()
 
 /*
 || A Deck of Cards for playing various games of chance ||
@@ -1381,9 +1306,9 @@
 	to_chat(user, "You name the dummy as \"[doll_name]\"")
 	name = "[initial(name)] - [doll_name]"
 
-/obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans)
+/obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
 	log_say("[key_name(M)] : through dummy : [message]")
-	say(message)
+	say(message, language)
 	return NOPASS
 
 /obj/item/toy/dummy/GetVoice()

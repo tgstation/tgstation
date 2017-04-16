@@ -16,7 +16,7 @@
 	sort_priority = 2
 
 /datum/clockwork_scripture/invoke_inathneq/check_special_requirements()
-	if(!slab.no_cost && clockwork_generals_invoked["inath-neq"] > world.time)
+	if(!slab.no_cost && GLOB.clockwork_generals_invoked["inath-neq"] > world.time)
 		to_chat(invoker, "<span class='inathneq'>\"[text2ratvar("I cannot lend you my aid yet, champion. Please be careful.")]\"</span>\n\
 		<span class='warning'>Inath-neq has already been invoked recently! You must wait several minutes before calling upon the Resonant Cogwheel.</span>")
 		return FALSE
@@ -25,7 +25,7 @@
 /datum/clockwork_scripture/invoke_inathneq/scripture_effects()
 	new/obj/effect/clockwork/general_marker/inathneq(get_turf(invoker))
 	hierophant_message("<span class='inathneq_large'>[text2ratvar("Vanguard: \"I lend you my aid, champions! Let glory guide your blows!")]\"</span>", FALSE, invoker)
-	clockwork_generals_invoked["inath-neq"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
+	GLOB.clockwork_generals_invoked["inath-neq"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	if(invoker.real_name == "Lucio")
 		clockwork_say(invoker, text2ratvar("Aww, let's break it DOWN!!"))
@@ -56,11 +56,11 @@
 	"\"What a waste of my power.\"", "\"I'm sure I could just control these minds instead, but they never ask.\"")
 
 /datum/clockwork_scripture/invoke_sevtug/check_special_requirements()
-	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
+	if(!slab.no_cost && GLOB.clockwork_generals_invoked["sevtug"] > world.time)
 		to_chat(invoker, "<span class='sevtug'>\"[text2ratvar("Is it really so hard - even for a simpleton like you - to grasp the concept of waiting?")]\"</span>\n\
 		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>")
 		return FALSE
-	if(!slab.no_cost && ratvar_awakens)
+	if(!slab.no_cost && GLOB.ratvar_awakens)
 		to_chat(invoker, "<span class='sevtug'>\"[text2ratvar("Do you really think anything I can do right now will compare to Engine's power?")]\"</span>\n\
 		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>")
 		return FALSE
@@ -69,11 +69,11 @@
 /datum/clockwork_scripture/invoke_sevtug/scripture_effects()
 	new/obj/effect/clockwork/general_marker/sevtug(get_turf(invoker))
 	hierophant_message("<span class='sevtug_large'>[text2ratvar("Fright: \"I heed your call, idiots. Get going and use this chance while it lasts!")]\"</span>", FALSE, invoker)
-	clockwork_generals_invoked["sevtug"] = world.time + GLOBAL_CLOCKWORK_GENERAL_COOLDOWN
+	GLOB.clockwork_generals_invoked["sevtug"] = world.time + GLOBAL_CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 	var/turf/T = get_turf(invoker)
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		if(H.z == invoker.z && !is_servant_of_ratvar(H))
 			var/distance = 0
 			distance += get_dist(T, get_turf(H))
@@ -118,11 +118,11 @@
 	multiple_invokers_used = TRUE
 
 /datum/clockwork_scripture/invoke_nezbere/check_special_requirements()
-	if(!slab.no_cost && clockwork_generals_invoked["nezbere"] > world.time)
+	if(!slab.no_cost && GLOB.clockwork_generals_invoked["nezbere"] > world.time)
 		to_chat(invoker, "<span class='nezbere'>\"[text2ratvar("Not just yet, friend. Patience is a virtue.")]\"</span>\n\
 		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>")
 		return FALSE
-	if(!slab.no_cost && ratvar_awakens)
+	if(!slab.no_cost && GLOB.ratvar_awakens)
 		to_chat(invoker, "<span class='nezbere'>\"[text2ratvar("Our master is here already. You do not require my help, friend.")]\"</span>\n\
 		<span class='warning'>There is no need for Nezbere's assistance while Ratvar is risen!</span>")
 		return FALSE
@@ -131,16 +131,18 @@
 /datum/clockwork_scripture/invoke_nezbere/scripture_effects()
 	new/obj/effect/clockwork/general_marker/nezbere(get_turf(invoker))
 	hierophant_message("<span class='nezbere_large'>[text2ratvar("Armorer: \"I heed your call, champions. May your artifacts bring ruin upon the heathens that oppose our master!")]\"</span>", FALSE, invoker)
-	clockwork_generals_invoked["nezbere"] = world.time + GLOBAL_CLOCKWORK_GENERAL_COOLDOWN
+	GLOB.clockwork_generals_invoked["nezbere"] = world.time + GLOBAL_CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
-	nezbere_invoked++
-	for(var/obj/O in all_clockwork_objects)
+	GLOB.nezbere_invoked++
+	for(var/obj/O in GLOB.all_clockwork_objects)
 		O.ratvar_act()
-	spawn(600)
-		nezbere_invoked--
-		for(var/obj/O in all_clockwork_objects)
-			O.ratvar_act()
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/reset_nezbere_invocation), 600)
 	return TRUE
+
+/proc/reset_nezbere_invocation()
+	GLOB.nezbere_invoked--
+	for(var/obj/O in GLOB.all_clockwork_objects)
+		O.ratvar_act()
 
 
 //Invoke Nzcrentr, the Eternal Thunderbolt: Imbues an immense amount of energy into the invoker. After several seconds, everyone near the invoker will be hit with a devastating lightning blast.
@@ -158,7 +160,7 @@
 	sort_priority = 5
 
 /datum/clockwork_scripture/invoke_nzcrentr/check_special_requirements()
-	if(!slab.no_cost && clockwork_generals_invoked["nzcrentr"] > world.time)
+	if(!slab.no_cost && GLOB.clockwork_generals_invoked["nzcrentr"] > world.time)
 		to_chat(invoker, "<span class='nzcrentr'>\"[text2ratvar("The boss says you have to wait. Hey, do you think he would mind if I killed you? ...He would? Ok.")]\"</span>\n\
 		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Eternal Thunderbolt.</span>")
 		return FALSE
@@ -166,7 +168,7 @@
 
 /datum/clockwork_scripture/invoke_nzcrentr/scripture_effects()
 	new/obj/effect/clockwork/general_marker/nzcrentr(get_turf(invoker))
-	clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
+	GLOB.clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	hierophant_message("<span class='nzcrentr_large'>[text2ratvar("Amperage: \"[invoker.real_name] has called forth my power. Hope [invoker.p_they()] [invoker.p_do()] not shatter under it!")]\"</span>", FALSE, invoker)
 	invoker.visible_message("<span class='warning'>[invoker] begins to radiate a blinding light!</span>", \
 	"<span class='nzcrentr'>\"[text2ratvar("The boss says it's okay to do this. Don't blame me if you die from it.")]\"</span>\n\

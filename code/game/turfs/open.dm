@@ -57,11 +57,9 @@
 	current_cycle = times_fired
 
 	//cache some vars
-	var/datum/gas_mixture/air = src.air
-	air.holder = src
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinal)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
 			if (atmos_adjacent_turfs)
@@ -109,19 +107,17 @@
 	air.temperature += temp
 	air_update_turf()
 
-/turf/open/freon_gas_act()
+/turf/open/proc/freon_gas_act()
 	for(var/obj/I in contents)
 		if(!HAS_SECONDARY_FLAG(I, FROZEN)) //let it go
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
-		if(L.bodytemperature >= 10)
-			L.bodytemperature -= 10
 		if(L.bodytemperature <= 50)
 			L.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 5)
 	return 1
 
-/turf/open/water_vapor_gas_act()
+/turf/open/proc/water_vapor_gas_act()
 	MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 
 	for(var/mob/living/simple_animal/slime/M in src)

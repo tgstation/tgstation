@@ -102,7 +102,7 @@
 				update_tint()
 			if(G.vision_correction)
 				clear_fullscreen("nearsighted")
-			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view)
+			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 				update_sight()
 			update_inv_glasses()
 		if(slot_gloves)
@@ -141,13 +141,13 @@
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/human/doUnEquip(obj/item/I, force)
+/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
 
 	if(I == wear_suit)
-		if(s_store)
+		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		if(wear_suit.breakouttime) //when unequipping a straightjacket
 			update_action_buttons_icon() //certain action buttons may be usable again.
@@ -156,17 +156,18 @@
 			update_inv_w_uniform()
 		update_inv_wear_suit()
 	else if(I == w_uniform)
-		if(r_store)
-			dropItemToGround(r_store, TRUE) //Again, makes sense for pockets to drop.
-		if(l_store)
-			dropItemToGround(l_store, TRUE)
-		if(wear_id)
-			dropItemToGround(wear_id)
-		if(belt)
-			dropItemToGround(belt)
+		if(invdrop)
+			if(r_store)
+				dropItemToGround(r_store, TRUE) //Again, makes sense for pockets to drop.
+			if(l_store)
+				dropItemToGround(l_store, TRUE)
+			if(wear_id)
+				dropItemToGround(wear_id)
+			if(belt)
+				dropItemToGround(belt)
 		w_uniform = null
 		update_suit_sensors()
-		update_inv_w_uniform()
+		update_inv_w_uniform(invdrop)
 	else if(I == gloves)
 		gloves = null
 		update_inv_gloves()
@@ -180,7 +181,7 @@
 		if(G.vision_correction)
 			if(disabilities & NEARSIGHT)
 				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view)
+		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
 		update_inv_glasses()
 	else if(I == ears)

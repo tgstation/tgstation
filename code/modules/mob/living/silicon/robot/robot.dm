@@ -16,6 +16,10 @@
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/mmi/mmi = null
 
+	var/shell = FALSE
+	var/deployed = FALSE
+	var/mob/living/silicon/ai/mainframe = null
+	var/datum/action/innate/undeployment/undeployment_action = new
 
 //Hud stuff
 
@@ -47,7 +51,7 @@
 
 	var/ident = 0
 	var/locked = 1
-	var/list/req_access = list(access_robotics)
+	var/list/req_access = list(GLOB.access_robotics)
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 
@@ -73,7 +77,7 @@
 
 	var/sight_mode = 0
 	var/updating = 0 //portable camera camerachunk update
-	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD)
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
 
 	var/list/upgrades = list()
 
@@ -129,8 +133,12 @@
 	update_icons()
 	..()
 
+	//If this body is meant to be a borg controlled by the AI player
+	if(shell)
+		make_shell()
+
 	//MMI stuff. Held togheter by magic. ~Miauw
-	if(!mmi || !mmi.brainmob)
+	else if(!mmi || !mmi.brainmob)
 		mmi = new (src)
 		mmi.brain = new /obj/item/organ/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
@@ -159,8 +167,8 @@
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.stat = CONSCIOUS
-				dead_mob_list -= mmi.brainmob
-				living_mob_list += mmi.brainmob
+				GLOB.dead_mob_list -= mmi.brainmob
+				GLOB.living_mob_list += mmi.brainmob
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else
@@ -170,6 +178,8 @@
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
+	if(shell)
+		GLOB.available_ai_shells -= src
 	qdel(wires)
 	qdel(module)
 	qdel(eye_lights)
@@ -204,6 +214,8 @@
 
 
 /mob/living/silicon/robot/proc/updatename()
+	if(shell)
+		return
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
@@ -424,7 +436,9 @@
 		update_icons()
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
-		if(radio)
+		if(shell)
+			to_chat(user, "You cannot seem to open the radio compartment")	//Prevent AI radio key theft
+		else if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
@@ -452,6 +466,9 @@
 			return
 		if(!cell)
 			to_chat(user, "<span class='warning'>You need to install a power cell to do that!</span>")
+			return
+		if(shell) //AI shells always have the laws of the AI
+			to_chat(user, "<span class='warning'>[src] is controlled remotely! You cannot upload new laws this way!</span>")
 			return
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
@@ -594,7 +611,7 @@
 
 /mob/living/silicon/robot/proc/do_camera_update(oldLoc)
 	if(oldLoc != src.loc)
-		cameranet.updatePortableCamera(src.camera)
+		GLOB.cameranet.updatePortableCamera(src.camera)
 	updating = 0
 
 /mob/living/silicon/robot/Move(a, b, flag)
@@ -606,36 +623,6 @@
 				updating = 1
 				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
 	if(module)
-		if(istype(module, /obj/item/weapon/robot_module/janitor))
-			var/turf/tile = loc
-			if(isturf(tile))
-				tile.clean_blood()
-				for(var/A in tile)
-					if(is_cleanable(A))
-						qdel(A)
-					else if(istype(A, /obj/item))
-						var/obj/item/cleaned_item = A
-						cleaned_item.clean_blood()
-					else if(ishuman(A))
-						var/mob/living/carbon/human/cleaned_human = A
-						if(cleaned_human.lying)
-							if(cleaned_human.head)
-								cleaned_human.head.clean_blood()
-								cleaned_human.update_inv_head()
-							if(cleaned_human.wear_suit)
-								cleaned_human.wear_suit.clean_blood()
-								cleaned_human.update_inv_wear_suit()
-							else if(cleaned_human.w_uniform)
-								cleaned_human.w_uniform.clean_blood()
-								cleaned_human.update_inv_w_uniform()
-							if(cleaned_human.shoes)
-								cleaned_human.shoes.clean_blood()
-								cleaned_human.update_inv_shoes()
-							cleaned_human.clean_blood()
-							cleaned_human.wash_cream()
-							to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
-			return
-
 		if(istype(module, /obj/item/weapon/robot_module/miner))
 			if(istype(loc, /turf/open/floor/plating/asteroid))
 				for(var/obj/item/I in held_items)
@@ -806,7 +793,7 @@
 	icon_state = "syndie_bloodhound"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
-	req_access = list(access_syndicate)
+	req_access = list(GLOB.access_syndicate)
 	lawupdate = FALSE
 	scrambledcodes = TRUE // These are rogue borgs.
 	ionpulse = TRUE
@@ -829,6 +816,9 @@
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
 
+/mob/living/silicon/robot/syndicate/ResetModule()
+	return
+
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"
 	playstyle_string = "<span class='userdanger'>You are a Syndicate medical cyborg!</span><br>\
@@ -843,12 +833,14 @@
 	if(!connected_ai)
 		return
 	switch(notifytype)
-		if(1) //New Cyborg
+		if(NEW_BORG) //New Cyborg
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='?src=\ref[connected_ai];track=[html_encode(name)]'>[name]</a></span><br>")
-		if(2) //New Module
+		if(NEW_MODULE) //New Module
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>")
-		if(3) //New Name
+		if(RENAME) //New Name
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>")
+		if(AI_SHELL) //New Shell
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg shell detected: <a href='?src=\ref[connected_ai];track=[html_encode(name)]'>[name]</a></span><br>")
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat || lockcharge || low_power_mode)
@@ -889,12 +881,12 @@
 
 	if(sight_mode & BORGMESON)
 		sight |= SEE_TURFS
-		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGMATERIAL)
 		sight |= SEE_OBJS
-		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGXRAY)
@@ -909,6 +901,7 @@
 
 	if(see_override)
 		see_invisible = see_override
+	sync_lighting_plane_alpha()
 
 /mob/living/silicon/robot/update_stat()
 	if(status_flags & GODMODE)
@@ -931,6 +924,7 @@
 				update_headlamp()
 	diag_hud_set_status()
 	diag_hud_set_health()
+	diag_hud_set_aishell()
 	update_health_hud()
 
 /mob/living/silicon/robot/revive(full_heal = 0, admin_revive = 0)
@@ -940,13 +934,13 @@
 		update_headlamp()
 		if(admin_revive)
 			locked = 1
-		notify_ai(1)
+		notify_ai(NEW_BORG)
 		. = 1
 
 /mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
 	..()
 	if(oldname != real_name)
-		notify_ai(3, oldname, newname)
+		notify_ai(RENAME, oldname, newname)
 	if(camera)
 		camera.c_tag = real_name
 	custom_name = newname
@@ -967,6 +961,7 @@
 
 	speed = 0
 	ionpulse = FALSE
+	revert_shell()
 
 	return 1
 
@@ -985,6 +980,11 @@
 	else
 		status_flags &= ~CANPUSH
 
+	if(module.clean_on_move)
+		flags |= CLEAN_ON_MOVE
+	else
+		flags &= ~CLEAN_ON_MOVE
+
 	hat_offset = module.hat_offset
 
 	magpulse = module.magpulsing
@@ -997,6 +997,97 @@
 	hat = new_hat
 	new_hat.forceMove(src)
 	update_icons()
+
+/mob/living/silicon/robot/proc/make_shell(var/obj/item/borg/upgrade/ai/board)
+	if(!board)
+		upgrades |= new /obj/item/borg/upgrade/ai(src)
+	shell = TRUE
+	braintype = "AI Shell"
+	name = "[designation] AI Shell [rand(100,999)]"
+	real_name = name
+	GLOB.available_ai_shells |= src
+	if(camera)
+		camera.c_tag = real_name	//update the camera name too
+	diag_hud_set_aishell()
+	notify_ai(AI_SHELL)
+
+/mob/living/silicon/robot/proc/revert_shell()
+	if(!shell)
+		return
+	undeploy()
+	for(var/obj/item/borg/upgrade/ai/boris in src)
+	//A player forced reset of a borg would drop the module before this is called, so this is for catching edge cases
+		qdel(boris)
+	shell = FALSE
+	GLOB.available_ai_shells -= src
+	name = "Unformatted Cyborg [rand(100,999)]"
+	real_name = name
+	if(camera)
+		camera.c_tag = real_name
+	diag_hud_set_aishell()
+
+/mob/living/silicon/robot/proc/deploy_init(var/mob/living/silicon/ai/AI)
+	real_name = "[AI.real_name] shell [rand(100, 999)] - [designation]"	//Randomizing the name so it shows up seperately in the shells list
+	name = real_name
+	if(camera)
+		camera.c_tag = real_name	//update the camera name too
+	mainframe = AI
+	deployed = TRUE
+	connected_ai = mainframe
+	mainframe.connected_robots |= src
+	lawupdate = TRUE
+	lawsync()
+	if(radio && AI.radio) //AI keeps all channels, including Syndie if it is a Traitor
+		if(AI.radio.syndie)
+			radio.make_syndie()
+		radio.subspace_transmission = TRUE
+		radio.channels = AI.radio.channels
+		for(var/chan in radio.channels)
+			radio.secure_radio_connections[chan] = add_radio(radio, GLOB.radiochannels[chan])
+
+	diag_hud_set_aishell()
+	undeployment_action.Grant(src)
+
+/datum/action/innate/undeployment
+ 	name = "Disconnect from shell"
+ 	desc = "Stop controlling your shell and resume normal core operations."
+ 	button_icon_state = "ai_core"
+
+/datum/action/innate/undeployment/Trigger()
+	if(!..())
+		return FALSE
+	var/mob/living/silicon/robot/R = owner
+
+	R.undeploy()
+	return TRUE
+
+
+/mob/living/silicon/robot/proc/undeploy()
+
+	if(!deployed || !mind || !mainframe)
+		return
+	mainframe.redeploy_action.Grant(mainframe)
+	mainframe.redeploy_action.last_used_shell = src
+	mind.transfer_to(mainframe)
+	deployed = FALSE
+	mainframe.deployed_shell = null
+	undeployment_action.Remove(src)
+	if(radio) //Return radio to normal
+		radio.recalculateChannels()
+	if(camera)
+		camera.c_tag = real_name	//update the camera name too
+	diag_hud_set_aishell()
+	mainframe.diag_hud_set_deployed()
+	mainframe.show_laws() //Always remind the AI when switching
+	mainframe = null
+
+/mob/living/silicon/robot/attack_ai(mob/user)
+	if(shell && (!connected_ai || connected_ai == user))
+		var/mob/living/silicon/ai/AI = user
+		AI.deploy_to_shell(src)
+
+/mob/living/silicon/robot/shell
+	shell = TRUE
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()

@@ -8,10 +8,10 @@
 /* DATA HUD DATUMS */
 
 /atom/proc/add_to_all_human_data_huds()
-	for(var/datum/atom_hud/data/human/hud in huds) hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/human/hud in GLOB.huds) hud.add_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
-	for(var/datum/atom_hud/data/hud in huds) hud.remove_from_hud(src)
+	for(var/datum/atom_hud/data/hud in GLOB.huds) hud.remove_from_hud(src)
 
 /datum/atom_hud/data
 
@@ -127,11 +127,11 @@
 
 //called when a human changes suit sensors
 /mob/living/carbon/proc/update_suit_sensors()
-	var/datum/atom_hud/data/human/medical/basic/B = huds[DATA_HUD_MEDICAL_BASIC]
+	var/datum/atom_hud/data/human/medical/basic/B = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
 	B.update_suit_sensors(src)
 
 	var/turf/T = get_turf(src)
-	if (T) crewmonitor.queueUpdate(T.z)
+	if (T) GLOB.crewmonitor.queueUpdate(T.z)
 
 //called when a living mob changes health
 /mob/living/proc/med_hud_set_health()
@@ -146,7 +146,7 @@
 
 	var/turf/T = get_turf(src)
 	if(T)
-		crewmonitor.queueUpdate(T.z)
+		GLOB.crewmonitor.queueUpdate(T.z)
 
 //called when a carbon changes stat, virus or XENO_HOST
 /mob/living/proc/med_hud_set_status()
@@ -194,7 +194,7 @@
 	sec_hud_set_security_status()
 
 	var/turf/T = get_turf(src)
-	if (T) crewmonitor.queueUpdate(T.z)
+	if (T) GLOB.crewmonitor.queueUpdate(T.z)
 
 /mob/living/carbon/human/proc/sec_hud_set_implants()
 	var/image/holder
@@ -223,8 +223,8 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	var/perpname = get_face_name(get_id_name(""))
-	if(perpname && data_core)
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+	if(perpname && GLOB.data_core)
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(R)
 			switch(R.fields["criminal"])
 				if("*Arrest*")
@@ -296,6 +296,28 @@
 		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
 	else
 		holder.icon_state = "hudnobatt"
+
+//borg-AI shell tracking
+/mob/living/silicon/robot/proc/diag_hud_set_aishell() //Shows tracking beacons on the mech
+	var/image/holder = hud_list[DIAG_TRACK_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(!shell) //Not an AI shell
+		holder.icon_state = null
+	else if(deployed) //AI shell in use by an AI
+		holder.icon_state = "hudtrackingai"
+	else	//Empty AI shell
+		holder.icon_state = "hudtracking"
+
+//AI side tracking of AI shell control
+/mob/living/silicon/ai/proc/diag_hud_set_deployed() //Shows tracking beacons on the mech
+	var/image/holder = hud_list[DIAG_TRACK_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(!deployed_shell)
+		holder.icon_state = null
+	else //AI is currently controlling a shell
+		holder.icon_state = "hudtrackingai"
 
 /*~~~~~~~~~~~~~~~~~~~~
 	BIG STOMPY MECHS

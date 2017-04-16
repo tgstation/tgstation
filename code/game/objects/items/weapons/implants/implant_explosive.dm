@@ -3,10 +3,14 @@
 	desc = "And boom goes the weasel."
 	icon_state = "explosive"
 	origin_tech = "materials=2;combat=3;biotech=4;syndicate=4"
+	actions_types = list(/datum/action/item_action/explosive_implant)
+	// Explosive implant action is always availible.
 	var/weak = 2
 	var/medium = 0.8
 	var/heavy = 0.4
 	var/delay = 7
+	var/popup = FALSE // is the DOUWANNABLOWUP window open?
+	var/active = FALSE
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -25,14 +29,19 @@
 		activate("death")
 
 /obj/item/weapon/implant/explosive/activate(cause)
-	if(!cause || !imp_in)
+	if(!cause || !imp_in || active)
 		return 0
-	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", "Yes", "No") != "Yes")
-		return 0
+	if(cause == "action_button" && !popup)
+		popup = TRUE
+		var/response = alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", "Yes", "No")
+		popup = FALSE
+		if(response == "No")
+			return 0
 	heavy = round(heavy)
 	medium = round(medium)
 	weak = round(weak)
 	to_chat(imp_in, "<span class='notice'>You activate your [name].</span>")
+	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
 	var/area/A = get_area(boomturf)
 	message_admins("[key_name_admin(imp_in)]<A HREF='?_src_=holder;adminmoreinfo=\ref[imp_in]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[imp_in]'>FLW</A>) has activated their [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[imp_in.x];Y=[imp_in.y];Z=[imp_in.z]'>[A.name] (JMP)</a>.")

@@ -39,6 +39,8 @@ em						{font-style: normal;	font-weight: bold;}
 .syndradio				{color: #6d3f40;}
 .centcomradio			{color: #686868;}
 .aiprivradio			{color: #ff00ff;}
+.redteamradio           {color: #ff0000;}
+.blueteamradio          {color: #0000ff;}
 
 .yell					{					font-weight: bold;}
 
@@ -144,5 +146,8 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 .memo					{color: #638500;	text-align: center;}
 .memoedit				{text-align: center;	font-size: 2;}
 .abductor				{color: #800080; font-style: italic;}
-
+.slime					{color: #00CED1;}
+.drone					{color: #848482;}
+.monkey					{color: #975032;}
+.swarmer				{color: #2C75FF;}
 </style>"}

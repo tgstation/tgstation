@@ -18,6 +18,14 @@
 		. = is_eligible_servant(new_body)
 
 /datum/antagonist/clockcultist/give_to_body(mob/living/new_body)
+	if(iscyborg(new_body))
+		var/mob/living/silicon/robot/R = new_body
+		if(R.deployed)
+			var/mob/living/silicon/ai/AI = R.mainframe
+			R.undeploy()
+			var/converted = add_servant_of_ratvar(AI, silent_update)
+			to_chat(AI, "<span class='userdanger'>Anomaly Detected. Returned to core!</span>")	//The AI needs to be in its core to properly be converted
+			return converted
 	if(!silent_update)
 		if(issilicon(new_body))
 			to_chat(new_body, "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, \
@@ -36,11 +44,11 @@
 			to_chat(new_body, "<span class='userdanger'>And yet, you somehow push it all away.</span>")
 
 /datum/antagonist/clockcultist/on_gain()
-	if(ticker && ticker.mode && owner.mind)
-		ticker.mode.servants_of_ratvar += owner.mind
-		ticker.mode.update_servant_icons_added(owner.mind)
+	if(SSticker && SSticker.mode && owner.mind)
+		SSticker.mode.servants_of_ratvar += owner.mind
+		SSticker.mode.update_servant_icons_added(owner.mind)
 		if(jobban_isbanned(owner, ROLE_SERVANT_OF_RATVAR))
-			INVOKE_ASYNC(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
+			INVOKE_ASYNC(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
 	if(owner.mind)
 		owner.mind.special_role = "Servant of Ratvar"
 	owner.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
@@ -55,29 +63,28 @@
 	else if(isbrain(owner) || isclockmob(owner))
 		to_chat(owner, "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>")
 	..()
-	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
-		var/datum/game_mode/clockwork_cult/C = ticker.mode
+	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult))
+		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		C.present_tasks(owner) //Memorize the objectives
 
 /datum/antagonist/clockcultist/apply_innate_effects()
-	all_clockwork_mobs += owner
+	GLOB.all_clockwork_mobs += owner
 	owner.faction |= "ratvar"
-	owner.languages_spoken |= RATVAR
-	owner.languages_understood |= RATVAR
+	owner.grant_language(/datum/language/ratvar)
 	owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
 		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			R.UnlinkSelf()
+			if(!R.shell)
+				R.UnlinkSelf()
 			R.module.rebuild_modules()
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
 			A.can_be_carded = FALSE
 			A.requires_power = POWER_REQ_CLOCKCULT
-			A.languages_spoken &= ~HUMAN
 			var/list/AI_frame = list(image('icons/mob/clockwork_mobs.dmi', A, "aiframe")) //make the AI's cool frame
-			for(var/d in cardinal)
+			for(var/d in GLOB.cardinal)
 				AI_frame += image('icons/mob/clockwork_mobs.dmi', A, "eye[rand(1, 10)]", dir = d) //the eyes are randomly fast or slow
 			A.add_overlay(AI_frame)
 			if(!A.lacks_power())
@@ -110,16 +117,14 @@
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
 	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
-	if(!clockwork_gateway_activated)
+	if(!GLOB.clockwork_gateway_activated)
 		owner.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
-	update_slab_info()
 	..()
 
 /datum/antagonist/clockcultist/remove_innate_effects()
-	all_clockwork_mobs -= owner
+	GLOB.all_clockwork_mobs -= owner
 	owner.faction -= "ratvar"
-	owner.languages_spoken &= ~RATVAR
-	owner.languages_understood &= ~RATVAR
+	owner.remove_language(/datum/language/ratvar)
 	owner.clear_alert("clockinfo")
 	owner.clear_alert("scripturereq")
 	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
@@ -130,7 +135,6 @@
 			var/mob/living/silicon/ai/A = S
 			A.can_be_carded = initial(A.can_be_carded)
 			A.requires_power = initial(A.requires_power)
-			A.languages_spoken |= HUMAN
 			A.cut_overlays()
 		S.make_laws()
 		S.update_icons()
@@ -142,15 +146,14 @@
 		R.module.rebuild_modules()
 	if(temp_owner)
 		temp_owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
-	update_slab_info()
 
 /datum/antagonist/clockcultist/on_remove()
 	if(!silent_update)
 		owner.visible_message("<span class='big'>[owner] seems to have remembered their true allegiance!</span>", \
 		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
-	if(ticker && ticker.mode && owner.mind)
-		ticker.mode.servants_of_ratvar -= owner.mind
-		ticker.mode.update_servant_icons_removed(owner.mind)
+	if(SSticker && SSticker.mode && owner.mind)
+		SSticker.mode.servants_of_ratvar -= owner.mind
+		SSticker.mode.update_servant_icons_removed(owner.mind)
 	if(owner.mind)
 		owner.mind.wipe_memory()
 		owner.mind.special_role = null

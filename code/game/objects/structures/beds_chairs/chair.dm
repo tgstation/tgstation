@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	latejoin -= src	//These may be here due to the arrivals shuttle
+	GLOB.latejoin -= src	//These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -61,7 +61,7 @@
 		return ..()
 
 /obj/structure/chair/attack_tk(mob/user)
-	if(has_buckled_mobs())
+	if(!anchored || has_buckled_mobs())
 		..()
 	else
 		rotate()

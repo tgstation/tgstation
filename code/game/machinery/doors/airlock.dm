@@ -37,8 +37,10 @@
 #define AIRLOCK_DAMAGE_DEFLECTION_N  20  // Normal airlock damage deflection
 #define AIRLOCK_DAMAGE_DEFLECTION_R  30  // Reinforced airlock damage deflection
 
+#define NOT_ELECTRIFIED 0
+#define ELECTRIFIED_PERMANENT -1
 
-var/list/airlock_overlays = list()
+
 
 /obj/machinery/door/airlock
 	name = "airlock"
@@ -90,13 +92,16 @@ var/list/airlock_overlays = list()
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
+	var/prying_so_hard = FALSE
+
+	var/static/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/Initialize()
 	..()
 	wires = new /datum/wires/airlock(src)
 	if(src.closeOtherId != null)
 		spawn (5)
-			for (var/obj/machinery/door/airlock/A in airlocks)
+			for (var/obj/machinery/door/airlock/A in GLOB.airlocks)
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
@@ -111,7 +116,7 @@ var/list/airlock_overlays = list()
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
@@ -208,7 +213,7 @@ var/list/airlock_overlays = list()
 			cyclelinkedairlock.cyclelinkedairlock = null
 		cyclelinkedairlock = null
 	if(id_tag)
-		for(var/obj/machinery/doorButtons/D in machines)
+		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
 	return ..()
 
@@ -264,7 +269,7 @@ var/list/airlock_overlays = list()
 	user.Weaken(3)
 
 /obj/machinery/door/airlock/proc/isElectrified()
-	if(src.secondsElectrified != 0)
+	if(src.secondsElectrified != NOT_ELECTRIFIED)
 		return 1
 	return 0
 
@@ -334,9 +339,7 @@ var/list/airlock_overlays = list()
 		return FALSE	//Already shocked someone recently?
 	if(!prob(prb))
 		return FALSE //you lucked out, no shock for you
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start() //sparks always.
+	do_sparks(5, TRUE, src)
 	var/tmp/check_range = TRUE
 	if(electrocute_mob(user, get_area(src), src, 1, check_range))
 		hasShocked = TRUE
@@ -487,6 +490,9 @@ var/list/airlock_overlays = list()
 	add_overlay(damag_overlay)
 
 /proc/get_airlock_overlay(icon_state, icon_file)
+	var/obj/machinery/door/airlock/A
+	pass(A)	//suppress unused warning
+	var/list/airlock_overlays = A.airlock_overlays
 	var/iconkey = "[icon_state][icon_file]"
 	if(airlock_overlays[iconkey])
 		return airlock_overlays[iconkey]
@@ -617,10 +623,10 @@ var/list/airlock_overlays = list()
 
 	if(wires.is_cut(WIRE_SHOCK))
 		t1 += text("Electrification wire is cut.<br>\n")
-	if(src.secondsElectrified==-1)
+	if(secondsElectrified==ELECTRIFIED_PERMANENT)
 		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src)
-	else if(src.secondsElectrified>0)
-		t1 += text("Door is electrified temporarily ([] seconds). <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src.secondsElectrified, src)
+	else if(secondsElectrified>NOT_ELECTRIFIED)
+		t1 += text("Door is electrified temporarily ([] seconds). <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", secondsElectrified, src)
 	else
 		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify it for 30 seconds?</a> Or, <A href='?src=\ref[];aiEnable=6'>Electrify it indefinitely until someone cancels the electrification?</a><br>\n", src, src)
 
@@ -792,9 +798,7 @@ var/list/airlock_overlays = list()
 					//un-electrify door
 					if(wires.is_cut(WIRE_SHOCK))
 						to_chat(usr, text("Can't un-electrify the airlock - The electrification wire is cut."))
-					else if(secondsElectrified==-1)
-						set_electrified(0)
-					else if(secondsElectrified>0)
+					else if(isElectrified())
 						set_electrified(0)
 
 				if(8)
@@ -871,33 +875,33 @@ var/list/airlock_overlays = list()
 					//electrify door for 30 seconds
 					if(wires.is_cut(WIRE_SHOCK))
 						to_chat(usr, text("The electrification wire has been cut.<br>\n"))
-					else if(src.secondsElectrified==-1)
+					else if(secondsElectrified==ELECTRIFIED_PERMANENT)
 						to_chat(usr, text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br>\n"))
-					else if(src.secondsElectrified!=0)
+					else if(isElectrified())
 						to_chat(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n"))
 					else
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						add_logs(usr, src, "electrified")
 						set_electrified(30)
 						spawn(10)
-							while (src.secondsElectrified>0)
-								src.secondsElectrified-=1
-								if(src.secondsElectrified<0)
-									set_electrified(0)
-								src.updateUsrDialog()
+							while (secondsElectrified > 0)
+								secondsElectrified--
+								if(secondsElectrified <= 0)
+									set_electrified(NOT_ELECTRIFIED)
+								updateUsrDialog()
 								sleep(10)
 				if(6)
 					//electrify door indefinitely
 					if(wires.is_cut(WIRE_SHOCK))
 						to_chat(usr, text("The electrification wire has been cut.<br>\n"))
-					else if(src.secondsElectrified==-1)
+					else if(secondsElectrified==ELECTRIFIED_PERMANENT)
 						to_chat(usr, text("The door is already indefinitely electrified.<br>\n"))
-					else if(src.secondsElectrified!=0)
+					else if(isElectrified())
 						to_chat(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n"))
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						add_logs(usr, src, "electrified")
-						set_electrified(-1)
+						set_electrified(ELECTRIFIED_PERMANENT)
 
 				if (8) // Not in order >.>
 					// Safeties!  Maybe we do need some stinking safeties!
@@ -1221,10 +1225,13 @@ var/list/airlock_overlays = list()
 			return
 
 		var/time_to_open = 5
-		if(hasPower())
+		if(hasPower() && !prying_so_hard)
 			time_to_open = 50
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg',100,1) //is it aliens or just the CE being a dick?
-			if(do_after(user, time_to_open,target = src))
+			prying_so_hard = TRUE
+			var/result = do_after(user, time_to_open,target = src)
+			prying_so_hard = FALSE
+			if(result)
 				open(2)
 				if(density && !open(2))
 					to_chat(user, "<span class='warning'>Despite your attempts, the [src] refuses to open.</span>")
@@ -1274,7 +1281,7 @@ var/list/airlock_overlays = list()
 
 	if(!density)
 		return 1
-	if(!ticker || !ticker.mode)
+	if(!SSticker || !SSticker.mode)
 		return 0
 	operating = 1
 	update_icon(AIRLOCK_OPENING, 1)
@@ -1465,7 +1472,7 @@ var/list/airlock_overlays = list()
 		safe = FALSE //DOOR CRUSH
 		close()
 		bolt() //Bolt it!
-		set_electrified(-1)  //Shock it!
+		set_electrified(ELECTRIFIED_PERMANENT)  //Shock it!
 		if(origin)
 			shockedby += "\[[time_stamp()]\][origin](ckey:[origin.ckey])"
 
@@ -1474,7 +1481,7 @@ var/list/airlock_overlays = list()
 	// Must be powered and have working AI wire.
 	if(canAIControl(src) && !stat)
 		unbolt()
-		set_electrified(0)
+		set_electrified(NOT_ELECTRIFIED)
 		open()
 		safe = TRUE
 
@@ -1533,16 +1540,39 @@ var/list/airlock_overlays = list()
 				ae.loc = src.loc
 	qdel(src)
 
-/obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
 	return FALSE
 
-/obj/machinery/door/airlock/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/obj/machinery/door/airlock/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the airlock.</span>")
 			qdel(src)
 			return TRUE
 	return FALSE
+
+#undef AIRLOCK_CLOSED
+#undef AIRLOCK_CLOSING
+#undef AIRLOCK_OPEN
+#undef AIRLOCK_OPENING
+#undef AIRLOCK_DENY
+#undef AIRLOCK_EMAG
+
+#undef AIRLOCK_SECURITY_NONE
+#undef AIRLOCK_SECURITY_METAL
+#undef AIRLOCK_SECURITY_PLASTEEL_I_S
+#undef AIRLOCK_SECURITY_PLASTEEL_I
+#undef AIRLOCK_SECURITY_PLASTEEL_O_S
+#undef AIRLOCK_SECURITY_PLASTEEL_O
+#undef AIRLOCK_SECURITY_PLASTEEL
+
+#undef AIRLOCK_INTEGRITY_N
+#undef AIRLOCK_INTEGRITY_MULTIPLIER
+#undef AIRLOCK_DAMAGE_DEFLECTION_N
+#undef AIRLOCK_DAMAGE_DEFLECTION_R
+
+#undef NOT_ELECTRIFIED
+#undef ELECTRIFIED_PERMANENT

@@ -39,23 +39,23 @@
 	areas = list()
 
 	var/list/new_latejoin = list()
-	for(var/area/shuttle/arrival/A in sortedAreas)
+	for(var/area/shuttle/arrival/A in GLOB.sortedAreas)
 		for(var/obj/structure/chair/C in A)
 			new_latejoin += C
 		if(!console)
 			console = locate(/obj/machinery/requests_console) in A
 		areas += A
 
-	if(latejoin.len)
+	if(GLOB.latejoin.len)
 		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
 	if(!new_latejoin.len)
 		WARNING("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
-		if(!latejoin.len)
+		if(!GLOB.latejoin.len)
 			WARNING("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
 		return
 
-	latejoin = new_latejoin
+	GLOB.latejoin = new_latejoin
 
 /obj/docking_port/mobile/arrivals/dockRoundstart()
 	SSshuttle.generate_transit_dock(src)
@@ -66,12 +66,12 @@
 
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()
-	
+
 	if(perma_docked)
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE
-		else		
+		else
 			SendToStation()
 		return
 
@@ -79,7 +79,7 @@
 		if(!CheckTurfsPressure())
 			damaged = FALSE
 			if(console)
-				console.say("Repairs complete, launching soon.") 
+				console.say("Repairs complete, launching soon.")
 		return
 
 //If this proc is high on the profiler add a cooldown to the stuff after this line
@@ -88,12 +88,12 @@
 		damaged = TRUE
 		if(console)
 			console.say("Alert, hull breach detected!")
-		var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 		announcer.announce("ARRIVALS_BROKEN", channels = list())
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE
-		else		
+		else
 			SendToStation()
 		return
 
@@ -112,7 +112,7 @@
 		Launch(FALSE)
 
 /obj/docking_port/mobile/arrivals/proc/CheckTurfsPressure()
-	for(var/I in latejoin)
+	for(var/I in GLOB.latejoin)
 		var/turf/open/T = get_turf(I)
 		var/pressure = T.air.return_pressure()
 		if(pressure < HAZARD_LOW_PRESSURE || pressure > HAZARD_HIGH_PRESSURE)	//simple safety check
@@ -120,7 +120,7 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/M in (living_mob_list & player_list))
+	for(var/M in (GLOB.living_mob_list & GLOB.player_list))
 		var/mob/living/L = M
 		if((get_area(M) in areas) && L.stat != DEAD)
 			return TRUE
@@ -130,7 +130,7 @@
 	var/dockTime = config.arrivals_shuttle_dock_window
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
 		if(console)
-			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [SSmapping.config.map_name].")
+			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [station_name()].")
 		hyperspace_sound(HYPERSPACE_LAUNCH, areas)	//for the new guy
 		setTimer(dockTime)
 
@@ -174,7 +174,7 @@
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(mode == SHUTTLE_CALL || damaged)
 		return
-	
+
 	Launch(TRUE)
 
 	user << "<span class='notice'>Calling your shuttle. One moment...</span>"

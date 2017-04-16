@@ -8,10 +8,10 @@
 /*
  * Glass sheets
  */
-var/global/list/datum/stack_recipe/glass_recipes = list ( \
+GLOBAL_LIST_INIT(glass_recipes, list ( \
 	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
-)
+))
 
 /obj/item/stack/sheet/glass
 	name = "glass"
@@ -32,8 +32,8 @@ var/global/list/datum/stack_recipe/glass_recipes = list ( \
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
 
-/obj/item/stack/sheet/glass/New(loc, amount)
-	recipes = glass_recipes
+/obj/item/stack/sheet/glass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.glass_recipes
 	..()
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
@@ -70,12 +70,12 @@ var/global/list/datum/stack_recipe/glass_recipes = list ( \
 /*
  * Reinforced glass sheets
  */
-var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
+GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	null, \
 	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
-)
+))
 
 
 /obj/item/stack/sheet/rglass
@@ -106,8 +106,8 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 	source.add_charge(amount * metcost)
 	glasource.add_charge(amount * glacost)
 
-/obj/item/stack/sheet/rglass/New(loc, amount)
-	recipes = reinforced_glass_recipes
+/obj/item/stack/sheet/rglass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.reinforced_glass_recipes
 	..()
 
 
@@ -135,7 +135,8 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 	return (BRUTELOSS)
 
 
-/obj/item/weapon/shard/New()
+/obj/item/weapon/shard/Initialize()
+	. = ..()
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
 		if("small")

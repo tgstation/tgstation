@@ -19,8 +19,9 @@
 	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
 
 
-/obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
-	return
+/obj/effect/proc_holder/changeling/proc/on_purchase(mob/user, is_respec)
+	if(!is_respec)
+		feedback_add_details("changeling_power_purchase",name)
 
 /obj/effect/proc_holder/changeling/proc/on_refund(mob/user)
 	return
@@ -36,6 +37,7 @@
 		return
 	var/datum/changeling/c = user.mind.changeling
 	if(sting_action(user, target))
+		feedback_add_details("changeling_powers",name)
 		sting_feedback(user, target)
 		take_chemical_cost(c)
 

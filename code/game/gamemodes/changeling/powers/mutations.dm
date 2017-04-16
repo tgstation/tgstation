@@ -5,6 +5,7 @@
 		Space Suit
 		Shield
 		Armor
+		Tentacles
 */
 
 
@@ -125,7 +126,7 @@
 
 	var/datum/changeling/changeling = user.mind.changeling
 	changeling.chem_recharge_slowdown += recharge_slowdown
-	return 1
+	return TRUE
 
 
 //fancy headers yo
@@ -161,8 +162,8 @@
 	sharpness = IS_SHARP
 	var/can_drop = FALSE
 
-/obj/item/weapon/melee/arm_blade/New(location,silent,synthetic)
-	..()
+/obj/item/weapon/melee/arm_blade/Initialize(mapload,silent,synthetic)
+	. = ..()
 	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	if(synthetic)
@@ -228,7 +229,7 @@
 	desc = "A fleshy tentacle that can stretch out and grab things or people."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "tentacle"
-	item_state = null
+	item_state = "tentacle"
 	flags = ABSTRACT | NODROP | DROPDEL | NOBLUDGEON
 	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = /obj/item/ammo_casing/magic/tentacle
@@ -239,8 +240,8 @@
 	throw_range = 0
 	throw_speed = 0
 
-/obj/item/weapon/gun/magic/tentacle/New(location,silent)
-	..()
+/obj/item/weapon/gun/magic/tentacle/Initialize(mapload, silent)
+	. = ..()
 	if(ismob(loc))
 		if(!silent)
 			loc.visible_message("<span class='warning'>[loc.name]\'s arm starts stretching inhumanly!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a tentacle.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
@@ -251,6 +252,11 @@
 /obj/item/weapon/gun/magic/tentacle/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>The [name] is not ready yet.<span>")
 
+/obj/item/weapon/gun/magic/tentacle/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] coils [src] tightly around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (OXYLOSS)
+
+
 /obj/item/ammo_casing/magic/tentacle
 	name = "tentacle"
 	desc = "a tentacle."
@@ -260,9 +266,9 @@
 	firing_effect_type = null
 	var/obj/item/weapon/gun/magic/tentacle/gun //the item that shot it
 
-/obj/item/ammo_casing/magic/tentacle/New(obj/item/weapon/gun/magic/tentacle/tentacle_gun)
-	gun = tentacle_gun
-	..()
+/obj/item/ammo_casing/magic/tentacle/Initialize()
+	gun = loc
+	. = ..()
 
 /obj/item/ammo_casing/magic/tentacle/Destroy()
 	gun = null
@@ -279,9 +285,9 @@
 	var/chain
 	var/obj/item/ammo_casing/magic/tentacle/source //the item that shot it
 
-/obj/item/projectile/tentacle/New(obj/item/ammo_casing/magic/tentacle/tentacle_casing)
-	source = tentacle_casing
-	..()
+/obj/item/projectile/tentacle/Initialize()
+	source = loc
+	. = ..()
 
 /obj/item/projectile/tentacle/fire(setAngle)
 	if(firer)
@@ -336,11 +342,11 @@
 						var/obj/item/I = C.get_active_held_item()
 						if(I)
 							if(C.drop_item())
-								C.visible_message("<span class='danger'>[I] is yanked off of [C]'s hand by [src]!</span>","<span class='userdanger'>A tentacle pulls [I] away from you!</span>")
+								C.visible_message("<span class='danger'>[I] is yanked off [C]'s hand by [src]!</span>","<span class='userdanger'>A tentacle pulls [I] away from you!</span>")
 								on_hit(I) //grab the item as if you had hit it directly with the tentacle
 								return 1
 							else
-								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off of [C]'s hands!<span>")
+								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off [C]'s hands!<span>")
 								return 0
 						else
 							to_chat(firer, "<span class='danger'>[C] has nothing in hand to disarm!<span>")
@@ -389,7 +395,7 @@
 
 	var/obj/item/weapon/shield/changeling/S = ..(user)
 	S.remaining_uses = round(changeling.absorbedcount * 3)
-	return 1
+	return TRUE
 
 /obj/item/weapon/shield/changeling
 	name = "shield-like mass"
@@ -401,8 +407,8 @@
 
 	var/remaining_uses //Set by the changeling ability.
 
-/obj/item/weapon/shield/changeling/New()
-	..()
+/obj/item/weapon/shield/changeling/Initialize()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
@@ -446,8 +452,8 @@
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/tank/internals/oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90) //No armor at all.
 
-/obj/item/clothing/suit/space/changeling/New()
-	..()
+/obj/item/clothing/suit/space/changeling/Initialize()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
@@ -495,8 +501,8 @@
 	cold_protection = 0
 	heat_protection = 0
 
-/obj/item/clothing/suit/armor/changeling/New()
-	..()
+/obj/item/clothing/suit/armor/changeling/Initialize()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 

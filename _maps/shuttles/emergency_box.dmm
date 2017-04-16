@@ -22,7 +22,7 @@
 /area/shuttle/escape)
 "af" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/machinery/recharger,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ag" = (
@@ -42,11 +42,12 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/crowbar,
+/obj/item/weapon/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
-/turf/open/floor/plasteel/shuttle/white,
-/turf/closed/wall/shuttle/interior{
+/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/titanium/interior{
 	icon_state = "swall_f5"
 	},
 /area/shuttle/escape)
