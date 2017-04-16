@@ -2,7 +2,9 @@
 This is a toolset to manage a production server of /tg/Station13 (and its forks). It includes an update script that is able to update the server without having to stop or shutdown the server (the update will take effect next round) and a script to start the server and restart it if it crashes (optional, requires registry tweaks to disable the Windows crash dialog system wide) as well as systems for fixing errors and merging GitHub Pull Requests locally.
   
 Generally, updates force a live tracking of the configured git repo, resetting local modifications. If you plan to make modifications, set up a new git repo to store your version of the code in, and point this script to that in the config (explained below). This can be on github or a local repo using file:/// urls.
-	
+
+These tools require UAC to be disabled. (There has been limited luck getting it to work under UAC on windows 10 using run as admin, but in other versions of windows, running as admin resets the current directory and this breaks things)
+(Note: There is no security risk to disabling UAC because UAC is not a security boundary, there exists active unpatched exploits against it that have been around since vista and work up to windows 10)
 
 ## Install:
 1. Move this folder to where you want your server to run from (you may also rename this folder if you wish)
