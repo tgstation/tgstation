@@ -1,4 +1,0 @@
-author: "Davidj361"
-delete-after: True
-changes: 
-  - bugfix: "Monkeys won't pickup items or rob you while they are in your stomach, neither walk out of your stomach."

@@ -530,10 +530,10 @@ GLOBAL_LIST(external_rsc_urls)
 
 //checks if a client is afk
 //3000 frames = 5 minutes
-/client/proc/is_afk(duration=3000)
+/client/proc/is_afk(duration = config.inactivity_period)
 	if(inactivity > duration)
 		return inactivity
-	return 0
+	return FALSE
 
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.

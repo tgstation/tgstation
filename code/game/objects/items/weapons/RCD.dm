@@ -92,6 +92,7 @@ obj/item/weapon/construction
 		return 0
 	matter -= amount
 	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
+	update_icon()
 	return 1
 
 /obj/item/weapon/construction/proc/checkResource(amount, mob/user)
@@ -104,10 +105,14 @@ obj/item/weapon/construction
 	if(!(A in view(7, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the [src] blinks red.</span>")
 		return FALSE
+	else
+		return TRUE
 
 /obj/item/weapon/construction/proc/prox_check(proximity)
-	if(!proximity)
-		return
+	if(proximity)
+		return TRUE
+	else
+		return FALSE
 
 
 /obj/item/weapon/construction/rcd
@@ -290,6 +295,18 @@ obj/item/weapon/construction
 			airlock_type = /obj/machinery/door/airlock
 
 
+/obj/item/weapon/construction/rcd/proc/rcd_create(atom/A, mob/user)
+	var/list/rcd_results = A.rcd_vals(user, src)
+	if(!rcd_results)
+		return FALSE
+	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
+		if(checkResource(rcd_results["cost"], user))
+			if(A.rcd_act(user, src, rcd_results["mode"]))
+				useResource(rcd_results["cost"], user)
+				activate()
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				return TRUE
+
 /obj/item/weapon/construction/rcd/New()
 	..()
 	GLOB.rcd_list += src
@@ -321,18 +338,9 @@ obj/item/weapon/construction
 		return FALSE
 
 /obj/item/weapon/construction/rcd/afterattack(atom/A, mob/user, proximity)
-	prox_check()
-	var/list/rcd_results = A.rcd_vals(user, src)
-	if(!rcd_results)
-		return FALSE
-	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
-		if(checkResource(rcd_results["cost"], user))
-			if(A.rcd_act(user, src, rcd_results["mode"]))
-				useResource(rcd_results["cost"], user)
-				activate()
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-				return TRUE
-
+	if(!prox_check(proximity))
+		return
+	rcd_create(A, user)
 
 /obj/item/weapon/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
@@ -419,12 +427,14 @@ obj/item/weapon/construction
 	delay_mod = 0.6
 	ranged = TRUE
 	icon_state = "arcd"
+	item_state = "rcd"
 
 /obj/item/weapon/construction/rcd/arcd/afterattack(atom/A, mob/user)
-	range_check(A,user)
+	if(!range_check(A,user))
+		return
 	if(target_check(A,user))
 		user.Beam(A,icon_state="rped_upgrade",time=30)
-	..()
+	rcd_create(A,user)
 
 
 
@@ -488,7 +498,8 @@ obj/item/weapon/construction
 
 
 /obj/item/weapon/construction/rld/afterattack(atom/A, mob/user)
-	range_check(A,user)
+	if(!range_check(A,user))
+		return
 	var/turf/start = get_turf(src)
 	switch(mode)
 		if(REMOVE_MODE)
@@ -498,7 +509,7 @@ obj/item/weapon/construction
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, decondelay, target = A))
-						if(!useResource(deconcost, user)) 
+						if(!useResource(deconcost, user))
 							return 0
 						activate()
 						qdel(A)
@@ -559,9 +570,9 @@ obj/item/weapon/construction
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(do_after(user, floordelay, target = A))
-						if(!istype(F)) 
+						if(!istype(F))
 							return 0
-						if(!useResource(floorcost, user)) 
+						if(!useResource(floorcost, user))
 							return 0
 						activate()
 						var/destination = get_turf(A)

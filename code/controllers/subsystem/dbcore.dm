@@ -84,6 +84,8 @@ SUBSYSTEM_DEF(dbcore)
 	return _dm_db_error_msg(_db_con)
 
 /datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, cursor_handler = Default_Cursor)
+	if(IsAdminAdvancedProcCall())
+		log_admin_private("WARNING: Advanced admin proc call DB query created!: [sql_query]") 
 	return new /datum/DBQuery(sql_query, src, cursor_handler)
 
 
