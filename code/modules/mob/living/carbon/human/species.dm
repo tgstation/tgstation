@@ -303,14 +303,6 @@
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
-
-	// eyes
-	var/has_eyes = TRUE
-
-	if(!H.getorgan(/obj/item/organ/eyes) && HD)
-		standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "eyes_missing", "layer" = -BODY_LAYER)
-		has_eyes = FALSE
-
 	if(!(H.disabilities & HUSK))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits) && HD)
@@ -320,7 +312,7 @@
 			standing	+= lips
 
 		// eyes
-		if((EYECOLOR in species_traits) && HD && has_eyes)
+		if((EYECOLOR in species_traits) && HD)
 			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
 			img_eyes.color = "#" + H.eye_color
 			img_eyes.pixel_y += face_y_offset
