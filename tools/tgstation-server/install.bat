@@ -70,6 +70,9 @@ echo Compiling change log.
 cd gamecode\a
 call python tools\ss13_genchangelog.py html/changelog.html html/changelogs
 cd ..\..
+echo Compiling tgui.
+call bin\tgui.bat
+if %TGUI_EXIT% neq 0 echo TGUI dependency installation/compile failed.
 echo Compiling game.
 call bin\build.bat
 if %DM_EXIT% neq 0 echo DM compile failed.
