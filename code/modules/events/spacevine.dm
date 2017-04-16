@@ -427,9 +427,9 @@
 
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production)
 	vines = list()
+	growth_queue = list()
 	spawn_spacevine_piece(location, null, muts)
 	START_PROCESSING(SSobj, src)
-	growth_queue = list()
 	vine_mutations_list = list()
 	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
 	if(potency != null)
