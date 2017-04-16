@@ -97,7 +97,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if(user.stat || !is_operational())
 		return
 	user.set_machine(src)
 	var/dat
@@ -112,7 +112,7 @@ Possible to do for anyone motivated enough:
 	popup.open()
 
 /obj/machinery/holopad/Topic(href, href_list)
-	if(..())
+	if(..() || !is_operational())
 		return
 	if (href_list["AIrequest"])
 		if(last_request + 200 < world.time)
