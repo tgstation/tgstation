@@ -40,8 +40,8 @@ To draw a rune, use an arcane tome.
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
 
-/obj/effect/rune/New(loc, set_keyword)
-	..()
+/obj/effect/rune/Initialize(mapload, set_keyword)
+	. = ..()
 	if(set_keyword)
 		keyword = set_keyword
 
@@ -161,8 +161,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "a senseless rune written in gibberish. No good can come from invoking this."
 	invocation = "Ra'sha yoka!"
 
-/obj/effect/rune/malformed/New()
-	..()
+/obj/effect/rune/malformed/Initialize(mapload, set_keyword)
+	. = ..()
 	icon_state = "[rand(1,7)]"
 	color = rgb(rand(0,255), rand(0,255), rand(0,255))
 
@@ -253,8 +253,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	req_keyword = 1
 	var/listkey
 
-/obj/effect/rune/teleport/New(loc, set_keyword)
-	..()
+/obj/effect/rune/teleport/Initialize(mapload, set_keyword)
+	. = ..()
 	var/area/A = get_area(src)
 	var/locname = initial(A.name)
 	listkey = set_keyword ? "[set_keyword] [locname]":"[locname]"
@@ -453,7 +453,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/used
 	var/ignore_gamemode = FALSE
 
-/obj/effect/rune/narsie/New()
+/obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
 	GLOB.poi_list |= src
 
@@ -715,8 +715,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/density_timer
 	var/recharging = FALSE
 
-/obj/effect/rune/wall/New()
-	..()
+/obj/effect/rune/wall/Initialize(mapload, set_keyword)
+	. = ..()
 	GLOB.wall_runes += src
 
 /obj/effect/rune/wall/examine(mob/user)
