@@ -37973,6 +37973,12 @@
 	},
 /area/medical/cmo)
 "boW" = (
+/obj/machinery/camera{
+	c_tag = "Chief Medical Officer's Office";
+	dir = 1;
+	icon_state = "camera";
+	network = list("SS13")
+	},
 /mob/living/simple_animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/barber{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -56919,6 +56925,12 @@
 /area/engine/engine_smes)
 "bUS" = (
 /obj/machinery/light,
+/obj/machinery/camera{
+	c_tag = "Engineering Power Storage 2";
+	dir = 1;
+	icon_state = "camera";
+	network = list("SS13","CE")
+	},
 /turf/open/floor/plasteel/yellow/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -77761,6 +77773,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/hor)
 "cFl" = (
@@ -90406,6 +90419,14 @@
 	name = "Starboard Asteroid Maintenance"
 	})
 "dfN" = (
+/obj/structure/window/reinforced,
+/obj/machinery/camera{
+	c_tag = "Medbay-Engineering Bridge 2";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/space)
+"dfO" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/astplate{
@@ -90414,7 +90435,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dfO" = (
+"dfP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -90424,14 +90445,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/medbay)
-"dfP" = (
+"dfQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/medbay)
-"dfQ" = (
+"dfR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -90441,7 +90462,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dfR" = (
+"dfS" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90449,7 +90470,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dfS" = (
+"dfT" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -90462,7 +90483,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dfT" = (
+"dfU" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90470,14 +90491,14 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dfU" = (
+"dfV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/medbay)
-"dfV" = (
+"dfW" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
 	req_access_txt = "0";
@@ -90490,7 +90511,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/morgue)
-"dfW" = (
+"dfX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
@@ -90500,7 +90521,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/morgue)
-"dfX" = (
+"dfY" = (
 /obj/structure/table,
 /obj/item/weapon/folder,
 /obj/machinery/camera{
@@ -90513,7 +90534,7 @@
 	dir = 5
 	},
 /area/medical/morgue)
-"dfY" = (
+"dfZ" = (
 /obj/structure/cable/orange{
 	d2 = 2;
 	icon_state = "0-2"
@@ -90531,14 +90552,14 @@
 	dir = 5
 	},
 /area/medical/morgue)
-"dfZ" = (
+"dga" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dga" = (
+"dgb" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90546,7 +90567,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dgb" = (
+"dgc" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -90559,14 +90580,14 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dgc" = (
+"dgd" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/central)
-"dgd" = (
+"dge" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90574,14 +90595,14 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dge" = (
+"dgf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/medbay)
-"dgf" = (
+"dgg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -90589,7 +90610,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/genetics_cloning)
-"dgg" = (
+"dgh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -90597,14 +90618,6 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/genetics_cloning)
-"dgh" = (
-/obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
-/turf/open/floor/plasteel/vault{
-	baseturf = /turf/open/floor/plating/asteroid/airless;
-	dir = 5
-	},
-/area/medical/morgue)
 "dgi" = (
 /obj/structure/bodycontainer/morgue,
 /obj/effect/landmark/revenantspawn,
@@ -90614,6 +90627,14 @@
 	},
 /area/medical/morgue)
 "dgj" = (
+/obj/structure/bodycontainer/morgue,
+/obj/effect/landmark/revenantspawn,
+/turf/open/floor/plasteel/vault{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	dir = 5
+	},
+/area/medical/morgue)
+"dgk" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -90630,7 +90651,7 @@
 	dir = 5
 	},
 /area/medical/morgue)
-"dgk" = (
+"dgl" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90638,7 +90659,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dgl" = (
+"dgm" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -90651,7 +90672,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dgm" = (
+"dgn" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -90661,13 +90682,13 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dgn" = (
+"dgo" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/morgue)
-"dgo" = (
+"dgp" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -90682,7 +90703,7 @@
 	dir = 5
 	},
 /area/medical/morgue)
-"dgp" = (
+"dgq" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90690,7 +90711,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dgq" = (
+"dgr" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -90703,7 +90724,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dgr" = (
+"dgs" = (
 /obj/structure/bodycontainer/morgue,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/vault{
@@ -90711,7 +90732,7 @@
 	dir = 5
 	},
 /area/medical/morgue)
-"dgs" = (
+"dgt" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -90721,16 +90742,6 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/morgue)
-"dgt" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/port{
-	name = "Port Asteroid Maintenance"
-	})
 "dgu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -90783,6 +90794,16 @@
 	})
 "dgz" = (
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/port{
+	name = "Port Asteroid Maintenance"
+	})
+"dgA" = (
+/obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
@@ -90792,7 +90813,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dgA" = (
+"dgB" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -90805,14 +90826,14 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dgB" = (
+"dgC" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dgC" = (
+"dgD" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90820,7 +90841,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dgD" = (
+"dgE" = (
 /obj/structure/closet,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90828,7 +90849,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dgE" = (
+"dgF" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -90846,19 +90867,11 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/genetics_cloning)
-"dgF" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/medical/morgue)
 "dgG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
+/turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/morgue)
@@ -90871,6 +90884,14 @@
 	},
 /area/medical/morgue)
 "dgI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/medical/morgue)
+"dgJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	layer = 2.4;
@@ -90880,7 +90901,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/morgue)
-"dgJ" = (
+"dgK" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -90890,21 +90911,6 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/morgue)
-"dgK" = (
-/obj/structure/cable/orange{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/port{
-	name = "Port Asteroid Maintenance"
-	})
 "dgL" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -90951,6 +90957,21 @@
 	name = "Port Asteroid Maintenance"
 	})
 "dgO" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/port{
+	name = "Port Asteroid Maintenance"
+	})
+"dgP" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90958,7 +90979,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dgP" = (
+"dgQ" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating{
@@ -90967,7 +90988,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dgQ" = (
+"dgR" = (
 /obj/structure/bodycontainer/morgue,
 /obj/machinery/camera{
 	c_tag = "Morgue South";
@@ -90981,7 +91002,7 @@
 	dir = 5
 	},
 /area/medical/morgue)
-"dgR" = (
+"dgS" = (
 /obj/machinery/airalarm{
 	dir = 1;
 	icon_state = "alarm0";
@@ -90989,14 +91010,6 @@
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/medical/morgue)
-"dgS" = (
-/obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
-/turf/open/floor/plasteel/vault{
-	baseturf = /turf/open/floor/plating/asteroid/airless;
-	dir = 5
 	},
 /area/medical/morgue)
 "dgT" = (
@@ -91008,6 +91021,14 @@
 	},
 /area/medical/morgue)
 "dgU" = (
+/obj/structure/bodycontainer/morgue,
+/obj/effect/landmark/revenantspawn,
+/turf/open/floor/plasteel/vault{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	dir = 5
+	},
+/area/medical/morgue)
+"dgV" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -91017,13 +91038,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/morgue)
-"dgV" = (
+"dgW" = (
 /obj/structure/closet,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dgW" = (
+"dgX" = (
 /obj/structure/girder,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91031,7 +91052,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dgX" = (
+"dgY" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -91040,7 +91061,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dgY" = (
+"dgZ" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91048,7 +91069,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dgZ" = (
+"dha" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Morgue";
 	req_access_txt = "5"
@@ -91062,7 +91083,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/morgue)
-"dha" = (
+"dhb" = (
 /obj/machinery/light{
 	dir = 1
 	},
@@ -91071,13 +91092,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
-"dhb" = (
+"dhc" = (
 /obj/structure/rack,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dhc" = (
+"dhd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -91086,7 +91107,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
-"dhd" = (
+"dhe" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -91100,14 +91121,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
-"dhe" = (
+"dhf" = (
 /obj/structure/grille/broken,
 /obj/item/stack/rods,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dhf" = (
+"dhg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -91118,7 +91139,7 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dhg" = (
+"dhh" = (
 /obj/structure/girder,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91126,7 +91147,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dhh" = (
+"dhi" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -91140,7 +91161,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dhi" = (
+"dhj" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91148,7 +91169,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dhj" = (
+"dhk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -91160,7 +91181,7 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dhk" = (
+"dhl" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -91173,7 +91194,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dhl" = (
+"dhm" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91181,13 +91202,6 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dhm" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/engine/engineering)
 "dhn" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -91196,6 +91210,13 @@
 	},
 /area/engine/engineering)
 "dho" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/engine/engineering)
+"dhp" = (
 /obj/effect/landmark/start/station_engineer,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -91204,14 +91225,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
-"dhp" = (
+"dhq" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dhq" = (
+"dhr" = (
 /obj/structure/grille,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91219,7 +91240,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dhr" = (
+"dhs" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -91229,7 +91250,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dhs" = (
+"dht" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -91239,7 +91260,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dht" = (
+"dhu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -91249,7 +91270,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
-"dhu" = (
+"dhv" = (
 /obj/structure/sign/enginesafety{
 	pixel_y = -32
 	},
@@ -91261,7 +91282,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
-"dhv" = (
+"dhw" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -91282,7 +91303,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
-"dhw" = (
+"dhx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -91291,18 +91312,10 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
-"dhx" = (
+"dhy" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/maintenance/starboard{
-	name = "Starboard Asteroid Maintenance"
-	})
-"dhy" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
@@ -91315,6 +91328,14 @@
 	name = "Starboard Asteroid Maintenance"
 	})
 "dhA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard{
+	name = "Starboard Asteroid Maintenance"
+	})
+"dhB" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -91327,7 +91348,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dhB" = (
+"dhC" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91335,16 +91356,16 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dhC" = (
+"dhD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"dhD" = (
+"dhE" = (
 /turf/closed/wall,
 /area/crew_quarters/chief)
-"dhE" = (
+"dhF" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -91365,10 +91386,10 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"dhF" = (
+"dhG" = (
 /turf/closed/wall,
 /area/crew_quarters/chief)
-"dhG" = (
+"dhH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -91377,14 +91398,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
-"dhH" = (
+"dhI" = (
 /obj/structure/grille/broken,
 /obj/item/stack/rods,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dhI" = (
+"dhJ" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -91392,7 +91413,7 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dhJ" = (
+"dhK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -91400,7 +91421,7 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dhK" = (
+"dhL" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -91413,7 +91434,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dhL" = (
+"dhM" = (
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91421,7 +91442,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dhM" = (
+"dhN" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -91431,7 +91452,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dhN" = (
+"dhO" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating{
@@ -91440,14 +91461,9 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dhO" = (
+"dhP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/chief)
-"dhP" = (
-/turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
@@ -91457,6 +91473,11 @@
 	},
 /area/crew_quarters/chief)
 "dhR" = (
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/chief)
+"dhS" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/weapon/paper/monitorkey,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -91465,7 +91486,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"dhS" = (
+"dhT" = (
 /obj/item/weapon/cartridge/engineering{
 	pixel_x = 4;
 	pixel_y = 5
@@ -91487,17 +91508,17 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"dhT" = (
+"dhU" = (
 /turf/closed/wall,
 /area/crew_quarters/chief)
-"dhU" = (
+"dhV" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dhV" = (
+"dhW" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
@@ -91506,7 +91527,7 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dhW" = (
+"dhX" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -91517,7 +91538,7 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dhX" = (
+"dhY" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -91531,7 +91552,7 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"dhY" = (
+"dhZ" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91539,19 +91560,19 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dhZ" = (
+"dia" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"dia" = (
+"dib" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"dib" = (
+"dic" = (
 /obj/structure/chair/office/light{
 	dir = 4
 	},
@@ -91559,7 +91580,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"dic" = (
+"did" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
 /obj/item/clothing/glasses/meson{
@@ -91569,7 +91590,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"did" = (
+"die" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -91583,7 +91604,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"die" = (
+"dif" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	on = 1
@@ -91592,7 +91613,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"dif" = (
+"dig" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -91601,16 +91622,9 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"dig" = (
+"dih" = (
 /turf/closed/wall,
 /area/crew_quarters/chief)
-"dih" = (
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/starboard{
-	name = "Starboard Asteroid Maintenance"
-	})
 "dii" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91619,7 +91633,6 @@
 	name = "Starboard Asteroid Maintenance"
 	})
 "dij" = (
-/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -91627,6 +91640,7 @@
 	name = "Starboard Asteroid Maintenance"
 	})
 "dik" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -91634,7 +91648,6 @@
 	name = "Starboard Asteroid Maintenance"
 	})
 "dil" = (
-/obj/structure/girder,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -91642,6 +91655,7 @@
 	name = "Starboard Asteroid Maintenance"
 	})
 "dim" = (
+/obj/structure/girder,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -91663,6 +91677,13 @@
 	name = "Starboard Asteroid Maintenance"
 	})
 "dip" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/starboard{
+	name = "Starboard Asteroid Maintenance"
+	})
+"diq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -91673,7 +91694,7 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"diq" = (
+"dir" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/astplate{
@@ -91682,7 +91703,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"dir" = (
+"dis" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91690,7 +91711,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dis" = (
+"dit" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91698,13 +91719,13 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dit" = (
+"diu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"diu" = (
+"div" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
 	pixel_x = -3;
@@ -91717,7 +91738,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"div" = (
+"diw" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -91732,10 +91753,10 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
-"diw" = (
+"dix" = (
 /turf/closed/wall,
 /area/crew_quarters/chief)
-"dix" = (
+"diy" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -91743,21 +91764,6 @@
 /turf/open/floor/plating/asteroid,
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
-	})
-"diy" = (
-/obj/structure/cable/orange{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/starboard{
-	name = "Starboard Asteroid Maintenance"
 	})
 "diz" = (
 /obj/structure/cable/orange{
@@ -91895,6 +91901,21 @@
 	name = "Starboard Asteroid Maintenance"
 	})
 "diI" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/starboard{
+	name = "Starboard Asteroid Maintenance"
+	})
+"diJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -91907,7 +91928,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"diJ" = (
+"diK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -91918,14 +91939,14 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"diK" = (
+"diL" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"diL" = (
+"diM" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating{
@@ -91934,15 +91955,8 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"diM" = (
-/obj/effect/spawner/lootdrop/grille_or_trash,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/starboard{
-	name = "Starboard Asteroid Maintenance"
-	})
 "diN" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -91957,6 +91971,13 @@
 	name = "Starboard Asteroid Maintenance"
 	})
 "diP" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/starboard{
+	name = "Starboard Asteroid Maintenance"
+	})
+"diQ" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91964,7 +91985,7 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"diQ" = (
+"diR" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -91977,7 +91998,7 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"diR" = (
+"diS" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91985,7 +92006,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"diS" = (
+"diT" = (
 /obj/structure/girder,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91993,7 +92014,7 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"diT" = (
+"diU" = (
 /obj/structure/grille,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92001,7 +92022,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"diU" = (
+"diV" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92009,7 +92030,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"diV" = (
+"diW" = (
 /obj/structure/closet/emcloset,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
@@ -92018,7 +92039,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"diW" = (
+"diX" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
@@ -92027,7 +92048,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"diX" = (
+"diY" = (
 /obj/structure/girder,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
@@ -92036,13 +92057,13 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"diY" = (
+"diZ" = (
 /obj/structure/rack,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
-"diZ" = (
+"dja" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/astplate{
@@ -92051,7 +92072,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dja" = (
+"djb" = (
 /obj/structure/grille/broken,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
@@ -92060,16 +92081,8 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djb" = (
-/obj/effect/spawner/lootdrop/grille_or_trash,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/maintcentral{
-	name = "Central Asteroid Maintenance"
-	})
 "djc" = (
-/obj/structure/grille,
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92077,17 +92090,17 @@
 	name = "Central Asteroid Maintenance"
 	})
 "djd" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating/astplate{
+/obj/structure/grille,
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
 "dje" = (
-/obj/effect/spawner/lootdrop/grille_or_trash,
-/turf/open/floor/plating{
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/maintenance/maintcentral{
@@ -92098,11 +92111,11 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/maintenance/port{
-	name = "Port Asteroid Maintenance"
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
 	})
 "djg" = (
-/obj/machinery/light/small,
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92110,6 +92123,14 @@
 	name = "Port Asteroid Maintenance"
 	})
 "djh" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/port{
+	name = "Port Asteroid Maintenance"
+	})
+"dji" = (
 /obj/machinery/door/airlock/glass_external{
 	cyclelinkeddir = 8
 	},
@@ -92119,17 +92140,9 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"dji" = (
-/obj/structure/girder,
-/obj/item/stack/sheet/metal,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/maintcentral{
-	name = "Central Asteroid Maintenance"
-	})
 "djj" = (
 /obj/structure/girder,
+/obj/item/stack/sheet/metal,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92138,13 +92151,21 @@
 	})
 "djk" = (
 /obj/structure/girder,
-/turf/open/floor/plating/astplate{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
 "djl" = (
+/obj/structure/girder,
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"djm" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92152,7 +92173,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djm" = (
+"djn" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92160,7 +92181,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djn" = (
+"djo" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92168,14 +92189,14 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djo" = (
+"djp" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djp" = (
+"djq" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/astplate{
@@ -92184,7 +92205,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djq" = (
+"djr" = (
 /obj/structure/girder,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92192,17 +92213,9 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"djr" = (
+"djs" = (
 /obj/structure/girder,
 /obj/structure/grille,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/maintcentral{
-	name = "Central Asteroid Maintenance"
-	})
-"djs" = (
-/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92218,6 +92231,14 @@
 	name = "Central Asteroid Maintenance"
 	})
 "dju" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"djv" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92225,7 +92246,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djv" = (
+"djw" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/astplate{
@@ -92234,7 +92255,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djw" = (
+"djx" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92242,18 +92263,10 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djx" = (
+"djy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/maintcentral{
-	name = "Central Asteroid Maintenance"
-	})
-"djy" = (
-/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92261,6 +92274,14 @@
 	name = "Central Asteroid Maintenance"
 	})
 "djz" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"djA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -92270,7 +92291,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djA" = (
+"djB" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92278,7 +92299,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djB" = (
+"djC" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92286,7 +92307,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djC" = (
+"djD" = (
 /obj/structure/grille/broken,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
@@ -92295,7 +92316,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djD" = (
+"djE" = (
 /obj/structure/girder,
 /obj/structure/grille,
 /turf/open/floor/plating{
@@ -92304,7 +92325,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djE" = (
+"djF" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92312,7 +92333,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djF" = (
+"djG" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92320,7 +92341,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djG" = (
+"djH" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92328,7 +92349,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djH" = (
+"djI" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92336,7 +92357,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djI" = (
+"djJ" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92344,7 +92365,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djJ" = (
+"djK" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating{
@@ -92353,7 +92374,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djK" = (
+"djL" = (
 /obj/structure/grille,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92361,7 +92382,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djL" = (
+"djM" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92369,7 +92390,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djM" = (
+"djN" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92377,7 +92398,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djN" = (
+"djO" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/syringe/charcoal,
 /turf/open/floor/plating{
@@ -92386,7 +92407,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djO" = (
+"djP" = (
 /obj/structure/table,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/sunglasses/blindfold,
@@ -92396,7 +92417,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djP" = (
+"djQ" = (
 /obj/structure/closet,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92404,7 +92425,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djQ" = (
+"djR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -92414,7 +92435,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djR" = (
+"djS" = (
 /obj/structure/girder,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92422,7 +92443,7 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djS" = (
+"djT" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92430,15 +92451,19 @@
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
-"djT" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating/asteroid,
-/area/maintenance/port{
-	name = "Port Asteroid Maintenance"
-	})
 "djU" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/camera{
+	c_tag = "Docking-Medbay Bridge 2";
+	dir = 8;
+	network = list("SS13")
+	},
+/turf/open/floor/engine,
+/area/space)
+"djV" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -92446,20 +92471,28 @@
 /area/maintenance/port{
 	name = "Port Asteroid Maintenance"
 	})
-"djV" = (
+"djW" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port{
+	name = "Port Asteroid Maintenance"
+	})
+"djX" = (
 /turf/closed/wall/rust{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/theatre{
 	name = "Top Secret Clown HQ"
 	})
-"djW" = (
+"djY" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/neutral{
 	dir = 2
 	},
 /area/space)
-"djX" = (
+"djZ" = (
 /obj/machinery/light{
 	dir = 1
 	},
@@ -92471,12 +92504,12 @@
 	dir = 2
 	},
 /area/space)
-"djY" = (
+"dka" = (
 /turf/open/floor/plasteel/neutral{
 	dir = 2
 	},
 /area/space)
-"djZ" = (
+"dkb" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -92488,7 +92521,7 @@
 	dir = 2
 	},
 /area/space)
-"dka" = (
+"dkc" = (
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 4;
@@ -92516,21 +92549,21 @@
 	dir = 2
 	},
 /area/space)
-"dkb" = (
-/turf/closed/wall/rust{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/theatre{
-	name = "Top Secret Clown HQ"
-	})
-"dkc" = (
-/turf/closed/wall/rust{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/theatre{
-	name = "Top Secret Clown HQ"
-	})
 "dkd" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/theatre{
+	name = "Top Secret Clown HQ"
+	})
+"dke" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/theatre{
+	name = "Top Secret Clown HQ"
+	})
+"dkf" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Chief Engineer's Desk";
@@ -92544,12 +92577,12 @@
 	dir = 2
 	},
 /area/space)
-"dke" = (
+"dkg" = (
 /turf/open/floor/plasteel/neutral{
 	dir = 2
 	},
 /area/space)
-"dkf" = (
+"dkh" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/lighter,
@@ -92562,7 +92595,7 @@
 	dir = 2
 	},
 /area/space)
-"dkg" = (
+"dki" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -92579,7 +92612,7 @@
 	dir = 2
 	},
 /area/space)
-"dkh" = (
+"dkj" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -92594,21 +92627,21 @@
 	dir = 2
 	},
 /area/space)
-"dki" = (
-/turf/closed/wall/rust{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/theatre{
-	name = "Top Secret Clown HQ"
-	})
-"dkj" = (
-/turf/closed/wall/rust{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/theatre{
-	name = "Top Secret Clown HQ"
-	})
 "dkk" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/theatre{
+	name = "Top Secret Clown HQ"
+	})
+"dkl" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/theatre{
+	name = "Top Secret Clown HQ"
+	})
+"dkm" = (
 /obj/machinery/computer/station_alert,
 /obj/machinery/button/door{
 	desc = "A remote control-switch for the engineering security doors.";
@@ -92637,7 +92670,7 @@
 	dir = 2
 	},
 /area/space)
-"dkl" = (
+"dkn" = (
 /obj/structure/chair/office/light{
 	dir = 4
 	},
@@ -92646,7 +92679,7 @@
 	dir = 2
 	},
 /area/space)
-"dkm" = (
+"dko" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/paper/monitorkey,
@@ -92655,7 +92688,7 @@
 	dir = 2
 	},
 /area/space)
-"dkn" = (
+"dkp" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -92672,7 +92705,7 @@
 	dir = 2
 	},
 /area/space)
-"dko" = (
+"dkq" = (
 /obj/structure/closet/secure_closet/engineering_chief{
 	req_access_txt = "0"
 	},
@@ -92680,14 +92713,14 @@
 	dir = 2
 	},
 /area/space)
-"dkp" = (
+"dkr" = (
 /turf/closed/wall/rust{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/theatre{
 	name = "Top Secret Clown HQ"
 	})
-"dkq" = (
+"dks" = (
 /obj/machinery/camera{
 	c_tag = "Chief Engineer's Office";
 	dir = 4;
@@ -92703,12 +92736,12 @@
 	dir = 2
 	},
 /area/space)
-"dkr" = (
+"dkt" = (
 /turf/open/floor/plasteel/neutral{
 	dir = 2
 	},
 /area/space)
-"dks" = (
+"dku" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
 	pixel_x = -3;
@@ -92720,7 +92753,7 @@
 	dir = 2
 	},
 /area/space)
-"dkt" = (
+"dkv" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -92731,7 +92764,7 @@
 	dir = 2
 	},
 /area/space)
-"dku" = (
+"dkw" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
@@ -92743,21 +92776,21 @@
 	dir = 2
 	},
 /area/space)
-"dkv" = (
-/turf/closed/wall/rust{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/theatre{
-	name = "Top Secret Clown HQ"
-	})
-"dkw" = (
-/turf/closed/wall/rust{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/theatre{
-	name = "Top Secret Clown HQ"
-	})
 "dkx" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/theatre{
+	name = "Top Secret Clown HQ"
+	})
+"dky" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/theatre{
+	name = "Top Secret Clown HQ"
+	})
+"dkz" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -92766,23 +92799,23 @@
 	dir = 2
 	},
 /area/space)
-"dky" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral{
-	dir = 2
-	},
-/area/space)
-"dkz" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral{
-	dir = 2
-	},
-/area/space)
 "dkA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral{
+	dir = 2
+	},
+/area/space)
+"dkB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral{
+	dir = 2
+	},
+/area/space)
+"dkC" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -92796,7 +92829,7 @@
 	dir = 2
 	},
 /area/space)
-"dkB" = (
+"dkD" = (
 /obj/item/weapon/cartridge/engineering{
 	pixel_x = 4;
 	pixel_y = 5
@@ -92817,21 +92850,21 @@
 	dir = 2
 	},
 /area/space)
-"dkC" = (
-/turf/closed/wall/rust{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/theatre{
-	name = "Top Secret Clown HQ"
-	})
-"dkD" = (
-/turf/closed/wall/rust{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/theatre{
-	name = "Top Secret Clown HQ"
-	})
 "dkE" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/theatre{
+	name = "Top Secret Clown HQ"
+	})
+"dkF" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/theatre{
+	name = "Top Secret Clown HQ"
+	})
+"dkG" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92839,7 +92872,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dkF" = (
+"dkH" = (
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 8;
@@ -92851,7 +92884,18 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dkG" = (
+"dkI" = (
+/obj/machinery/camera{
+	c_tag = "Aux Base Construction North";
+	dir = 1;
+	icon_state = "camera";
+	network = list("SS13")
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/shuttle/auxillary_base)
+"dkJ" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -92863,7 +92907,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dkH" = (
+"dkK" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -92876,36 +92920,10 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dkI" = (
+"dkL" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dkJ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/floorgrime{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dkK" = (
-/obj/structure/closet/firecloset/full,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dkL" = (
-/obj/structure/closet/firecloset/full,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92916,13 +92934,39 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating/astplate{
+/turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
 "dkN" = (
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dkO" = (
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dkP" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dkQ" = (
 /obj/structure/grille,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92930,7 +92974,17 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dkO" = (
+"dkR" = (
+/obj/machinery/camera{
+	c_tag = "Aux Base Construction South";
+	dir = 6;
+	icon_state = "camera"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/shuttle/auxillary_base)
+"dkS" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 4;
@@ -92942,7 +92996,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dkP" = (
+"dkT" = (
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 8;
@@ -92954,7 +93008,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dkQ" = (
+"dkU" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -92967,7 +93021,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dkR" = (
+"dkV" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -92980,54 +93034,13 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dkS" = (
+"dkW" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/effect/spawner/lootdrop/grille_or_trash,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dkT" = (
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dkU" = (
-/obj/structure/closet,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dkV" = (
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dkW" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -93047,10 +93060,10 @@
 	name = "Aft Asteroid Maintenance"
 	})
 "dkY" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating/asteroid,
+/obj/structure/closet,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
@@ -93067,8 +93080,7 @@
 	name = "Aft Asteroid Maintenance"
 	})
 "dla" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -93077,56 +93089,6 @@
 	name = "Aft Asteroid Maintenance"
 	})
 "dlb" = (
-/obj/structure/cable/orange{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dlc" = (
-/obj/structure/cable/orange{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dld" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dle" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dlf" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -93138,15 +93100,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlg" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating/astplate{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/maintenance/aft{
-	name = "Aft Asteroid Maintenance"
-	})
-"dlh" = (
+"dlc" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -93154,7 +93108,107 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
+"dld" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dle" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dlf" = (
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dlg" = (
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dlh" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
 "dli" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dlj" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dlk" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dll" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/aft{
+	name = "Aft Asteroid Maintenance"
+	})
+"dlm" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 4;
@@ -93167,7 +93221,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlj" = (
+"dln" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -93181,7 +93235,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlk" = (
+"dlo" = (
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 8;
@@ -93193,7 +93247,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dll" = (
+"dlp" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -93205,7 +93259,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlm" = (
+"dlq" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -93221,7 +93275,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dln" = (
+"dlr" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -93234,14 +93288,14 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlo" = (
+"dls" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlp" = (
+"dlt" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -93254,7 +93308,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlq" = (
+"dlu" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 8;
@@ -93267,7 +93321,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlr" = (
+"dlv" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -93275,7 +93329,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dls" = (
+"dlw" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -93287,7 +93341,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlt" = (
+"dlx" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -93295,7 +93349,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlu" = (
+"dly" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -93303,14 +93357,40 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlv" = (
+"dlz" = (
+/obj/structure/window/reinforced,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Research-Docking Bridge 5";
+	dir = 1;
+	icon_state = "camera";
+	network = list("SS13")
+	},
+/turf/open/floor/engine,
+/area/space)
+"dlA" = (
+/obj/structure/window/reinforced,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Research-Docking Bridge 4";
+	dir = 1;
+	icon_state = "camera";
+	network = list("SS13")
+	},
+/turf/open/floor/engine,
+/area/space)
+"dlB" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlw" = (
+"dlC" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -93318,7 +93398,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlx" = (
+"dlD" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -93331,13 +93411,13 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dly" = (
+"dlE" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlz" = (
+"dlF" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
@@ -93346,7 +93426,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlA" = (
+"dlG" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating{
@@ -93355,7 +93435,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlB" = (
+"dlH" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -93365,7 +93445,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/aft)
-"dlC" = (
+"dlI" = (
 /obj/structure/grille,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -93373,7 +93453,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlD" = (
+"dlJ" = (
 /obj/structure/grille,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -93381,7 +93461,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlE" = (
+"dlK" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 4;
@@ -93393,7 +93473,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlF" = (
+"dlL" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -93403,7 +93483,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlG" = (
+"dlM" = (
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 8;
@@ -93413,21 +93493,21 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlH" = (
+"dlN" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlI" = (
+"dlO" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlJ" = (
+"dlP" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/power/apc{
@@ -93444,14 +93524,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlK" = (
+"dlQ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlL" = (
+"dlR" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 4;
@@ -93463,7 +93543,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dlM" = (
+"dlS" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/light{
@@ -93474,14 +93554,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlN" = (
+"dlT" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlO" = (
+"dlU" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/cable/orange{
@@ -93493,14 +93573,14 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlP" = (
+"dlV" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlQ" = (
+"dlW" = (
 /obj/machinery/airalarm{
 	dir = 4;
 	icon_state = "alarm0";
@@ -93510,7 +93590,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlR" = (
+"dlX" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -93520,7 +93600,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlS" = (
+"dlY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
@@ -93538,7 +93618,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlT" = (
+"dlZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -93546,7 +93626,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlU" = (
+"dma" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -93554,7 +93634,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
-"dlV" = (
+"dmb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -93562,7 +93642,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/mixing)
-"dlW" = (
+"dmc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -93570,7 +93650,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlX" = (
+"dmd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -93583,7 +93663,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlY" = (
+"dme" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -93596,7 +93676,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dlZ" = (
+"dmf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -93609,7 +93689,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dma" = (
+"dmg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -93626,73 +93706,73 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/toxins/storage)
-"dmb" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/storage)
-"dmc" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/storage)
-"dmd" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/storage)
-"dme" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/storage)
-"dmf" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/toxins/storage)
-"dmg" = (
-/turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/hor)
 "dmh" = (
-/turf/closed/wall/r_wall{
+/obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/hor)
+/area/toxins/storage)
 "dmi" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/storage)
+"dmj" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/storage)
+"dmk" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/storage)
+"dml" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/toxins/storage)
+"dmm" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmj" = (
+"dmn" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/hor)
+"dmo" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/hor)
+"dmp" = (
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmk" = (
+"dmq" = (
 /obj/structure/displaycase/labcage,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dml" = (
+"dmr" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmm" = (
+"dms" = (
 /obj/machinery/button/door{
 	id = "researchlockdown";
 	name = "Research Emergency Lockdown";
@@ -93708,7 +93788,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmn" = (
+"dmt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
@@ -93716,13 +93796,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmo" = (
+"dmu" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmp" = (
+"dmv" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 4;
@@ -93736,7 +93816,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmq" = (
+"dmw" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/astplate{
@@ -93745,7 +93825,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmr" = (
+"dmx" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -93759,18 +93839,18 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dms" = (
+"dmy" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmt" = (
+"dmz" = (
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmu" = (
+"dmA" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
 	pixel_x = 1;
@@ -93786,19 +93866,19 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmv" = (
+"dmB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/hor)
-"dmw" = (
+"dmC" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmx" = (
+"dmD" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Research Director's Desk";
@@ -93811,7 +93891,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmy" = (
+"dmE" = (
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
@@ -93819,13 +93899,13 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmz" = (
+"dmF" = (
 /obj/machinery/computer/mecha,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmA" = (
+"dmG" = (
 /obj/structure/rack,
 /obj/item/device/paicard{
 	pixel_x = 4
@@ -93838,7 +93918,7 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/hor)
-"dmB" = (
+"dmH" = (
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 4;
@@ -93850,7 +93930,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmC" = (
+"dmI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -93865,7 +93945,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmD" = (
+"dmJ" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -93881,7 +93961,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmE" = (
+"dmK" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -93896,7 +93976,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmF" = (
+"dmL" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -93912,12 +93992,12 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmG" = (
+"dmM" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmH" = (
+"dmN" = (
 /obj/effect/landmark/xmastree/rdrod,
 /obj/machinery/airalarm{
 	dir = 4;
@@ -93928,7 +94008,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmI" = (
+"dmO" = (
 /obj/structure/rack,
 /obj/item/device/aicard,
 /obj/effect/turf_decal/stripes/line{
@@ -93936,12 +94016,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/hor)
-"dmJ" = (
+"dmP" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
-"dmK" = (
+"dmQ" = (
 /obj/structure/grille,
 /turf/closed/wall/rust{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -93949,42 +94029,42 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmL" = (
-/turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/hor)
-"dmM" = (
-/turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/hor)
-"dmN" = (
-/turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/hor)
-"dmO" = (
-/turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/hor)
-"dmP" = (
-/turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/hor)
-"dmQ" = (
-/turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/crew_quarters/hor)
 "dmR" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
 "dmS" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/hor)
+"dmT" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/hor)
+"dmU" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/hor)
+"dmV" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/hor)
+"dmW" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/hor)
+"dmX" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/hor)
+"dmY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -93994,7 +94074,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmT" = (
+"dmZ" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -94002,7 +94082,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmU" = (
+"dna" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -94017,7 +94097,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmV" = (
+"dnb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/grille,
 /turf/open/floor/plating{
@@ -94026,7 +94106,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmW" = (
+"dnc" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 4;
@@ -94043,7 +94123,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmX" = (
+"dnd" = (
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 8;
@@ -94059,14 +94139,14 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmY" = (
+"dne" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dmZ" = (
+"dnf" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -94079,7 +94159,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dna" = (
+"dng" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -94092,7 +94172,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnb" = (
+"dnh" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -94105,7 +94185,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnc" = (
+"dni" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -94118,7 +94198,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnd" = (
+"dnj" = (
 /obj/structure/grille,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -94126,7 +94206,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dne" = (
+"dnk" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
@@ -94140,7 +94220,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnf" = (
+"dnl" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -94153,7 +94233,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dng" = (
+"dnm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -94163,7 +94243,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnh" = (
+"dnn" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plating{
@@ -94172,7 +94252,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dni" = (
+"dno" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -94185,7 +94265,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnj" = (
+"dnp" = (
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -94193,7 +94273,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnk" = (
+"dnq" = (
 /obj/machinery/light/small,
 /obj/structure/chair{
 	dir = 4
@@ -94204,7 +94284,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnl" = (
+"dnr" = (
 /obj/structure/table,
 /obj/item/weapon/wrench,
 /turf/open/floor/plating{
@@ -94213,7 +94293,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnm" = (
+"dns" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 4;
@@ -94229,7 +94309,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnn" = (
+"dnt" = (
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -94245,7 +94325,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dno" = (
+"dnu" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -94256,7 +94336,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnp" = (
+"dnv" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/astplate{
@@ -94265,7 +94345,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnq" = (
+"dnw" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -94273,7 +94353,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dnr" = (
+"dnx" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating{
@@ -94282,7 +94362,7 @@
 /area/maintenance/aft{
 	name = "Aft Asteroid Maintenance"
 	})
-"dns" = (
+"dny" = (
 /obj/structure/girder,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -101395,7 +101475,7 @@ cdn
 aZA
 aZy
 ceq
-djT
+djV
 aZo
 aZn
 aYT
@@ -101652,7 +101732,7 @@ cdo
 aZA
 cdY
 bCF
-djU
+djW
 aZo
 aZo
 aYT
@@ -101900,7 +101980,7 @@ aYT
 aYT
 aYT
 aZo
-djq
+djr
 aZm
 aYX
 aZn
@@ -102669,7 +102749,7 @@ bXp
 aZn
 aYX
 aZm
-djf
+djg
 beC
 bCF
 blT
@@ -102939,11 +103019,11 @@ aZA
 bec
 aZm
 aZn
-dkb
-dki
+dkd
+dkk
 cea
 cea
-dkC
+dkE
 aZn
 cgm
 aZA
@@ -103166,7 +103246,7 @@ aZn
 aZm
 aZn
 aYX
-dhg
+dhh
 aZm
 aZm
 aZn
@@ -103714,7 +103794,7 @@ cfv
 cfF
 cfE
 cfE
-dkD
+dkF
 aZn
 aZn
 cgj
@@ -103932,21 +104012,21 @@ bsd
 bsc
 bsc
 bsc
-dgt
+dgu
 bEd
 bnT
 bnT
 bnT
-dhh
-dhk
+dhi
+dhl
 bnT
 bnT
 bOv
-dhK
+dhL
 bQY
 bPW
-diI
-diQ
+diJ
+diR
 bVl
 aYX
 aZA
@@ -103966,7 +104046,7 @@ aZo
 aZo
 aZn
 aZn
-djV
+djX
 cea
 cfE
 cfE
@@ -104004,11 +104084,11 @@ aaa
 aaa
 cgS
 cBU
-dlH
-dlM
-dlQ
+dlN
+dlS
+dlW
 cCO
-dmb
+dmh
 cBU
 cgS
 cgS
@@ -104189,19 +104269,19 @@ bty
 bzs
 bty
 bsd
-dgu
-dgK
+dgv
+dgL
 aYX
 aZm
 aYX
-dhi
+dhj
 aZm
 cfg
 beC
-dhA
+dhB
 aZn
 aZm
-diq
+dir
 aYX
 aZm
 aZm
@@ -104224,7 +104304,7 @@ aZn
 cdZ
 cdZ
 cdZ
-dkc
+dke
 cfG
 cfE
 cfZ
@@ -104261,11 +104341,11 @@ aaa
 aaa
 aaa
 cBU
-dlI
-dlN
+dlO
+dlT
 cDE
-dlW
 dmc
+dmi
 cBU
 cgS
 cgS
@@ -104446,17 +104526,17 @@ byg
 bzt
 bAy
 bsd
-dgv
-dgL
+dgw
+dgM
 aYX
 bGn
 bHz
 beC
 aZm
 aZm
-dhq
+dhr
 bfr
-dhL
+dhM
 aYX
 aZn
 aZo
@@ -104484,7 +104564,7 @@ cev
 cfw
 cev
 cev
-dkv
+dkx
 cea
 aZn
 cgo
@@ -104518,11 +104598,11 @@ aaa
 aaa
 aaa
 cBU
-dlJ
-dlO
-dlR
+dlP
+dlU
 dlX
 dmd
+dmj
 cBU
 cgS
 cgS
@@ -104703,15 +104783,15 @@ byh
 bzu
 bAz
 bsd
-dgw
-dgM
+dgx
+dgN
 aYX
 aYX
 aZm
 aZn
 aZn
 aZn
-dhr
+dhs
 bfr
 beC
 aYX
@@ -104739,9 +104819,9 @@ cet
 ceu
 cdZ
 cea
-dkj
-dkp
-dkw
+dkl
+dkr
+dky
 aYP
 aZn
 aZn
@@ -104775,11 +104855,11 @@ cuQ
 cuQ
 cuQ
 ctW
-dlK
-dlP
+dlQ
+dlV
 cDE
-dlY
 dme
+dmk
 cBU
 cgS
 cgS
@@ -104960,9 +105040,9 @@ byi
 bzv
 bAA
 bsc
-dgx
-dgN
-dgW
+dgy
+dgO
+dgX
 aZn
 aZn
 aZn
@@ -104970,7 +105050,7 @@ aZn
 aZn
 aZn
 bOw
-dhM
+dhN
 aZn
 aZn
 bHA
@@ -105034,9 +105114,9 @@ cvR
 ctW
 cCQ
 cCQ
-dlS
-dlZ
+dlY
 dmf
+dml
 cBU
 cCB
 cjU
@@ -105291,8 +105371,8 @@ cwO
 ctW
 cBU
 cBU
-dlT
-dma
+dlZ
+dmg
 ctW
 ctW
 cCC
@@ -105727,11 +105807,11 @@ aZm
 aZn
 bvg
 bwD
-dfQ
+dfR
 bzx
 aZn
 aZn
-dgy
+dgz
 blW
 aYX
 aZm
@@ -105811,7 +105891,7 @@ cAU
 cYc
 cCD
 cDv
-dmr
+dmx
 cEQ
 cFb
 cmA
@@ -105984,13 +106064,13 @@ dfL
 bbf
 bbf
 bbf
-dfR
-dga
-dgk
-dgp
-dgz
+dfS
+dgb
+dgl
+dgq
+dgA
 blW
-dgX
+dgY
 aYX
 bHA
 bHA
@@ -106071,7 +106151,7 @@ cgL
 cgL
 cxT
 cFc
-dmK
+dmQ
 cjU
 cjV
 cgR
@@ -106241,11 +106321,11 @@ bse
 bnT
 bvh
 bwE
-dfS
-dgb
-dgl
-dgq
-dgA
+dfT
+dgc
+dgm
+dgr
+dgB
 bEe
 aZz
 bec
@@ -106327,7 +106407,7 @@ ckH
 ckz
 cjV
 cgu
-dmC
+dmI
 cjU
 cFH
 cjU
@@ -106496,7 +106576,7 @@ aZX
 bqE
 aZm
 aZm
-dfN
+dfO
 aZm
 bmO
 bmO
@@ -106576,7 +106656,7 @@ cXW
 cvW
 cvW
 cvW
-dlU
+dma
 cAc
 cAX
 ctW
@@ -106584,9 +106664,9 @@ cBR
 cBR
 cBR
 cBR
-dmD
+dmJ
 coJ
-dmS
+dmY
 cjV
 cgR
 cgR
@@ -106833,7 +106913,7 @@ cwR
 cxv
 cyc
 cvW
-dlV
+dmb
 cAd
 cAY
 ctW
@@ -106841,9 +106921,9 @@ cCF
 cDw
 cEf
 cBR
-dmE
+dmK
 cjU
-dmT
+dmZ
 cjU
 cgu
 cgu
@@ -107355,10 +107435,10 @@ cCH
 cDx
 cCH
 cBR
-dmF
+dmL
 cFu
 cFI
-dmV
+dnb
 cFu
 cFu
 cGU
@@ -107614,12 +107694,12 @@ cEg
 cBR
 cFf
 cDv
-dmU
+dna
 cDv
 cDv
-dnb
-dnf
-dni
+dnh
+dnl
+dno
 cDv
 cHK
 cHZ
@@ -109406,13 +109486,13 @@ cyS
 czr
 cAk
 cBf
-dmg
-dmi
-dml
-dms
-dmw
-dmG
-dmL
+dmm
+dmo
+dmr
+dmy
+dmC
+dmM
+dmR
 cFd
 cxT
 cjV
@@ -109665,11 +109745,11 @@ cAj
 cBg
 cBV
 cCM
-dmm
-dmt
-dmx
-dmH
-dmM
+dms
+dmz
+dmD
+dmN
+dmS
 cFd
 cCC
 cjU
@@ -109922,13 +110002,13 @@ cAl
 cBh
 cBW
 cCN
-dmn
-dmu
-dmy
+dmt
+dmA
+dmE
 cFi
-dmN
+dmT
 cFJ
-dmW
+dnc
 coJ
 clV
 cjV
@@ -110178,12 +110258,12 @@ czt
 cAm
 cBi
 cBX
-dmj
-dmo
+dmp
+dmu
 cEj
-dmz
+dmF
 cFj
-dmO
+dmU
 chc
 cFe
 cjU
@@ -110437,10 +110517,10 @@ cBj
 cBY
 cCP
 cCP
-dmv
+dmB
 cES
 cFk
-dmP
+dmV
 chc
 cFd
 cll
@@ -110448,7 +110528,7 @@ cll
 cll
 cll
 cll
-dno
+dnu
 chc
 cgN
 cgN
@@ -110691,20 +110771,20 @@ cta
 czv
 cAj
 cBk
-dmh
-dmk
+dmn
+dmq
 cDF
 cEk
-dmA
-dmI
-dmQ
+dmG
+dmO
+dmW
 chc
-dmX
-dmZ
-dnc
+dnd
+dnf
+dni
 cGv
 cHi
-dnm
+dns
 cHM
 cjV
 cgN
@@ -110953,8 +111033,8 @@ cWn
 cWn
 cWn
 cWq
-dmJ
-dmR
+dmP
+dmX
 chc
 chc
 chc
@@ -111220,7 +111300,7 @@ cET
 cET
 cFe
 cll
-dnq
+dnw
 chc
 cgN
 aaa
@@ -111991,7 +112071,7 @@ cFl
 cET
 cFd
 cll
-dnr
+dnx
 chc
 cgN
 aaa
@@ -112246,7 +112326,7 @@ cFl
 cGG
 cFl
 cET
-dnn
+dnt
 cIc
 cgu
 chc
@@ -112720,12 +112800,12 @@ cgS
 cgS
 cgS
 chM
-cih
+cig
 ciH
 ciH
-ciH
+dkI
 ckq
-ciH
+dkR
 ciH
 ciH
 cmQ
@@ -114047,7 +114127,7 @@ cGY
 cCc
 cHt
 cll
-dns
+dny
 cgR
 cgN
 aaa
@@ -114796,7 +114876,7 @@ cte
 cUn
 cvv
 cwq
-dlB
+dlH
 cxO
 cyD
 cue
@@ -115005,7 +115085,7 @@ aZo
 aZo
 aZo
 aZm
-djg
+djh
 aZm
 aYP
 cbO
@@ -115070,11 +115150,11 @@ cCc
 cFO
 cLN
 cxT
-dnd
+dnj
 cln
 cxT
 cxT
-dnp
+dnv
 chc
 cgN
 cgN
@@ -115327,7 +115407,7 @@ cxo
 cxo
 cjU
 cnL
-dne
+dnk
 coD
 cgL
 chc
@@ -116097,10 +116177,10 @@ cyH
 cFD
 cxo
 cjU
-dna
-coJ
 dng
-dnj
+coJ
+dnm
+dnp
 cjU
 cgR
 cgN
@@ -116337,7 +116417,7 @@ cjG
 cte
 cUn
 ckB
-dlx
+dlD
 cxo
 cxo
 cxo
@@ -116357,7 +116437,7 @@ chc
 cln
 cjU
 cll
-dnk
+dnq
 cjU
 cgR
 cgN
@@ -116613,8 +116693,8 @@ cxo
 chb
 cln
 cjU
-dnh
-dnl
+dnn
+dnr
 cjU
 cgN
 cgN
@@ -117364,7 +117444,7 @@ crD
 cjG
 cte
 cUn
-dlv
+dlB
 cln
 cxo
 cxo
@@ -117621,7 +117701,7 @@ crC
 cjG
 cte
 cUn
-dlw
+dlC
 clo
 cxo
 cxQ
@@ -117638,7 +117718,7 @@ cxQ
 cyF
 cyY
 cxo
-dmY
+dne
 cln
 cgL
 cjU
@@ -119935,7 +120015,7 @@ csu
 ctw
 cUn
 cjX
-dly
+dlE
 cln
 cll
 cxT
@@ -120194,7 +120274,7 @@ cUn
 chc
 cxT
 cjt
-dlE
+dlK
 cyK
 chc
 czT
@@ -120392,7 +120472,7 @@ byS
 cMH
 byS
 bxu
-dir
+dis
 bAe
 bAd
 cMH
@@ -120450,8 +120530,8 @@ ctv
 cUn
 cjU
 ckB
-dlC
-dlF
+dlI
+dlL
 chc
 cjU
 czT
@@ -120641,25 +120721,25 @@ bAd
 byS
 bFo
 byQ
-dhb
+dhc
 byS
 cMH
 cMH
 cbr
-dhB
-dhN
-dhY
+dhC
+dhO
+dhZ
 cbr
 cbr
 cbr
-diT
-diW
+diU
+diX
 bWU
 byS
 bAd
 byS
 byS
-djh
+dji
 cMH
 aZH
 aZt
@@ -120707,9 +120787,9 @@ ctx
 cUn
 cjU
 cll
-dlD
-dlG
-dlL
+dlJ
+dlM
+dlR
 cjU
 cjU
 chc
@@ -120900,22 +120980,22 @@ byP
 byP
 byP
 byO
-dhl
+dhm
 bvU
-dhs
+dht
 cbr
 cbr
 cbr
-dis
+dit
 cbr
 cbr
-diU
+diV
 cbr
 cbr
 cbr
 cbr
-djb
-dje
+djc
+djf
 caf
 bBN
 bBN
@@ -120963,7 +121043,7 @@ cjG
 ctv
 cUn
 cjU
-dlz
+dlF
 chc
 chb
 cjt
@@ -120973,9 +121053,9 @@ cjT
 cBH
 cCt
 cjT
-dmp
+dmv
 cEK
-dmB
+dmH
 cjT
 coD
 cgL
@@ -121165,13 +121245,13 @@ bAd
 cMH
 byS
 bAd
-diR
-diV
-diX
+diS
+diW
+diY
 cbr
 cbr
-dja
-djc
+djb
+djd
 cbr
 cbr
 cbr
@@ -121220,7 +121300,7 @@ cjG
 ctv
 cUn
 cgN
-dlA
+dlG
 cjU
 ckz
 cgL
@@ -121430,8 +121510,8 @@ bOM
 bOM
 bOM
 bOM
-dji
-djl
+djj
+djm
 byS
 bAd
 bBN
@@ -121744,7 +121824,7 @@ cjU
 cjU
 cjU
 chc
-dmq
+dmw
 cjU
 cjU
 cjU
@@ -121945,12 +122025,12 @@ bYq
 bXG
 bOM
 byS
-djm
+djn
 cbr
 cbr
 byS
 cbr
-djG
+djH
 cdB
 bLA
 cdB
@@ -122202,11 +122282,11 @@ bYr
 bZb
 bOM
 bAd
-djn
-djr
+djo
 djs
+djt
 bvU
-djx
+djy
 cbr
 cMH
 cMH
@@ -122245,7 +122325,7 @@ arw
 cqC
 aQS
 arz
-cUy
+dlz
 cuk
 cgN
 cgN
@@ -122463,7 +122543,7 @@ cMH
 cMH
 byS
 cMH
-djy
+djz
 cbr
 byS
 byS
@@ -122722,7 +122802,7 @@ cbr
 byS
 cbr
 cbr
-djL
+djM
 bAd
 aZt
 aZt
@@ -122951,7 +123031,7 @@ aZt
 bAd
 cMH
 byQ
-dgO
+dgP
 bFp
 bGF
 bHM
@@ -122975,11 +123055,11 @@ bXJ
 bGE
 cMP
 cbr
-djt
+dju
 cNc
-djz
+djA
 cbr
-djM
+djN
 byS
 aZH
 aZt
@@ -123207,7 +123287,7 @@ bal
 aZt
 bAd
 bAd
-dgB
+dgC
 byP
 bFq
 bGG
@@ -123236,8 +123316,8 @@ cbr
 cMH
 bAd
 cbr
-djN
-djR
+djO
+djS
 aZH
 aZt
 aaa
@@ -123493,7 +123573,7 @@ bOM
 bOM
 byS
 cbr
-djO
+djP
 cMH
 aZH
 aZt
@@ -123748,7 +123828,7 @@ caA
 cbi
 cbi
 bOM
-djA
+djB
 cbr
 bAe
 byS
@@ -124005,7 +124085,7 @@ caB
 cbj
 cbP
 bOM
-djB
+djC
 cbr
 bBN
 bBN
@@ -124489,7 +124569,7 @@ bua
 bvx
 bxc
 bcp
-dgc
+dgd
 bco
 bal
 bDf
@@ -124519,7 +124599,7 @@ bOM
 bOM
 bOM
 bOM
-djC
+djD
 cbr
 cMH
 aZH
@@ -124777,7 +124857,7 @@ cbk
 cbk
 bOM
 cbr
-djH
+djI
 cMH
 aZt
 aZt
@@ -125291,7 +125371,7 @@ cbk
 cbk
 bOM
 cbr
-djI
+djJ
 bAd
 aZH
 aZH
@@ -125804,9 +125884,9 @@ caG
 cbm
 cbm
 bOM
-djD
+djE
 cbr
-djP
+djQ
 byS
 aZH
 aZt
@@ -126043,10 +126123,10 @@ bJH
 bpS
 bGJ
 bNF
-dhC
-dhO
-dhZ
-dit
+dhD
+dhP
+dia
+diu
 bTL
 bUI
 bVJ
@@ -126061,9 +126141,9 @@ caH
 cbn
 cbR
 bOM
-djE
+djF
 cbr
-djQ
+djR
 cMH
 aZH
 aZt
@@ -126294,13 +126374,13 @@ abC
 abC
 abC
 bFx
-dha
-dhc
+dhb
+dhd
 bJI
 bLk
 bME
 bOW
-dhD
+dhE
 bQx
 bnk
 bSJ
@@ -126319,7 +126399,7 @@ cbm
 cbm
 bOM
 bAd
-djJ
+djK
 bvU
 bBN
 aZH
@@ -126552,14 +126632,14 @@ cWJ
 cWJ
 cXQ
 bGP
-dhd
+dhe
 bJJ
-dhm
 dhn
-dht
+dho
+dhu
 bOX
 bQy
-dia
+dib
 bSK
 bTM
 bUK
@@ -126576,7 +126656,7 @@ bOM
 bOM
 bOM
 cbr
-djK
+djL
 caf
 byS
 aZH
@@ -126815,8 +126895,8 @@ bLm
 bMF
 bPa
 bOY
-dhP
-dib
+dhQ
+dic
 bSL
 bTM
 bUL
@@ -126832,7 +126912,7 @@ caJ
 cbo
 cbo
 bOM
-djF
+djG
 bAd
 cbr
 bBN
@@ -127072,9 +127152,9 @@ bLn
 bMG
 bNG
 bOZ
-dhQ
-dic
-diu
+dhR
+did
+div
 bTM
 bUM
 bVM
@@ -127328,10 +127408,10 @@ cMz
 bLo
 bMH
 bPa
-dhE
+dhF
 bQz
-did
-div
+die
+diw
 bTM
 bUN
 bJx
@@ -127583,11 +127663,11 @@ cXQ
 bIe
 bJK
 bLo
-dho
+dhp
 bNH
 bPb
-dhR
-die
+dhS
+dif
 bSM
 bTM
 bUO
@@ -127841,10 +127921,10 @@ bIf
 bJK
 bMI
 bNI
-dhu
+dhv
 bPc
-dhS
-dif
+dhT
+dig
 bSN
 bTN
 bUP
@@ -128099,10 +128179,10 @@ bJK
 bLo
 bNJ
 bPd
-dhF
-dhT
-dig
-diw
+dhG
+dhU
+dih
+dix
 bTO
 bUQ
 bVP
@@ -128115,12 +128195,12 @@ bGE
 bGE
 byS
 bAd
-dju
+djv
 byS
 bPt
 byP
 cbr
-djS
+djT
 aZH
 aZt
 aaa
@@ -128355,7 +128435,7 @@ bIa
 bJN
 bLp
 bMJ
-dhv
+dhw
 bPe
 bQA
 bRB
@@ -128373,7 +128453,7 @@ cMV
 cbr
 cbr
 cbr
-djv
+djw
 byP
 byP
 cbr
@@ -128381,11 +128461,11 @@ cMH
 aZH
 aZt
 aaa
-djW
-dkd
-dkk
-dkq
-dkx
+djY
+dkf
+dkm
+dks
+dkz
 aaa
 aaa
 aaa
@@ -128612,8 +128692,8 @@ bIg
 bJK
 bLo
 bLo
-dhw
-dhG
+dhx
+dhH
 bQB
 bRC
 bSP
@@ -128626,7 +128706,7 @@ bQH
 bQH
 byS
 bAe
-djj
+djk
 cbr
 byP
 byP
@@ -128638,11 +128718,11 @@ byS
 aZH
 aaa
 aaa
-djX
-dke
-dkl
-dkr
-dky
+djZ
+dkg
+dkn
+dkt
+dkA
 aaa
 aaa
 aaa
@@ -128895,11 +128975,11 @@ bAd
 aZt
 aaa
 aaa
-djY
-dkf
-dkm
-dks
-dkz
+dka
+dkh
+dko
+dku
+dkB
 aaa
 aaa
 aaa
@@ -129152,11 +129232,11 @@ byS
 aZt
 aaa
 aaa
-djZ
-dkg
-dkn
-dkt
-dkA
+dkb
+dki
+dkp
+dkv
+dkC
 aaa
 aaa
 aaa
@@ -129409,11 +129489,11 @@ bAd
 aZt
 aaa
 aaa
-dka
-dkh
-dko
-dku
-dkB
+dkc
+dkj
+dkq
+dkw
+dkD
 aaa
 aaa
 aaa
@@ -129658,7 +129738,7 @@ bAd
 byS
 byQ
 byP
-djw
+djx
 cMH
 aZt
 aZt
@@ -130426,7 +130506,7 @@ bQH
 bAd
 bAd
 cMH
-djo
+djp
 byP
 byS
 bBN
@@ -130668,7 +130748,7 @@ bIn
 bJU
 bpS
 biO
-bNL
+biO
 biO
 bQH
 bRK
@@ -131197,7 +131277,7 @@ byS
 bDc
 byQ
 byP
-djp
+djq
 byS
 bBN
 aZH
@@ -131453,7 +131533,7 @@ bAd
 cMH
 byQ
 byP
-djk
+djl
 bZS
 cMH
 cMH
@@ -132198,7 +132278,7 @@ cSv
 buq
 bvT
 bxv
-dfT
+dfU
 bAd
 cTr
 bCe
@@ -132736,7 +132816,7 @@ bAd
 bVA
 byQ
 byP
-djd
+dje
 cMH
 cal
 caP
@@ -133039,7 +133119,7 @@ arw
 cqC
 aQS
 arz
-cUy
+dlA
 cuk
 aaa
 aXR
@@ -133484,7 +133564,7 @@ bhP
 bal
 bxA
 cMH
-dgd
+dge
 cbr
 bBN
 bBN
@@ -133742,11 +133822,11 @@ bal
 bxz
 byS
 bAd
-dgm
+dgn
 cbr
 cbr
-dgP
-dgY
+dgQ
+dgZ
 byP
 bDa
 byQ
@@ -134001,7 +134081,7 @@ aZt
 bAd
 byS
 cbr
-dgC
+dgD
 bvU
 bDd
 byP
@@ -134010,10 +134090,10 @@ byP
 byP
 byO
 byQ
-dhH
+dhI
 byS
 bAd
-dix
+diy
 bUa
 byS
 byQ
@@ -134258,7 +134338,7 @@ aZt
 aZt
 bAd
 byS
-dgD
+dgE
 byS
 byQ
 bBg
@@ -134268,14 +134348,14 @@ byQ
 byP
 byP
 byQ
-dhU
+dhV
 byQ
 byQ
 byQ
 bDa
 byQ
 byP
-diZ
+dja
 cMH
 aZH
 aZH
@@ -135022,7 +135102,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+buu
 bvW
 arw
 aaa
@@ -135338,10 +135418,10 @@ chF
 chV
 cir
 chq
-dkF
-dkG
 dkH
-dkO
+dkJ
+dkK
+dkS
 cHM
 cjV
 cmZ
@@ -135597,9 +135677,9 @@ chr
 chr
 cjU
 cgu
-dkI
-dkP
+dkL
 dkT
+dkX
 cms
 cnb
 cmA
@@ -135856,9 +135936,9 @@ cgu
 cgu
 cjV
 cjU
-dkU
+dkY
 cmt
-dkZ
+dld
 cjT
 coC
 cBH
@@ -135952,7 +136032,7 @@ aax
 aax
 aax
 aaw
-aaw
+acL
 cJi
 aal
 aal
@@ -136050,7 +136130,7 @@ arw
 bpW
 aQS
 cSC
-buu
+aSQ
 bvW
 arw
 aaa
@@ -136116,7 +136196,7 @@ cgu
 cjU
 cjV
 cjV
-dlb
+dlf
 coD
 cgL
 cpZ
@@ -136375,7 +136455,7 @@ cfJ
 chc
 cnM
 cgL
-dlo
+dls
 cjU
 cqD
 crY
@@ -136888,7 +136968,7 @@ clQ
 cmu
 ckG
 cln
-dlh
+dll
 chc
 chc
 cqD
@@ -137078,7 +137158,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+dfN
 bvW
 arw
 aaa
@@ -137396,7 +137476,7 @@ cgi
 cgi
 cfJ
 cjV
-dkJ
+dkM
 clj
 clS
 cmw
@@ -137915,8 +137995,8 @@ cll
 clU
 cmy
 cnc
-dlc
-dli
+dlg
+dlm
 cpm
 cqc
 cqL
@@ -138173,7 +138253,7 @@ cll
 cjU
 cnd
 cnO
-dlj
+dln
 cpm
 cqd
 cqM
@@ -139457,7 +139537,7 @@ cgi
 cfJ
 cfJ
 chc
-dld
+dlh
 clj
 cqf
 cqf
@@ -139714,8 +139794,8 @@ cgi
 cfJ
 cfJ
 cjV
-dle
-dlk
+dli
+dlo
 cUh
 cqf
 cqQ
@@ -139972,7 +140052,7 @@ baS
 cgi
 cjV
 cnQ
-dll
+dlp
 clj
 cqf
 cqR
@@ -140230,7 +140310,7 @@ cgi
 cjU
 cjV
 coF
-dlp
+dlt
 cqf
 cqS
 cse
@@ -140486,7 +140566,7 @@ baS
 cgi
 cgu
 cIa
-dlm
+dlq
 cpo
 cqf
 cqT
@@ -141478,15 +141558,15 @@ arA
 arA
 arA
 arA
-arA
-arA
-arA
-arA
 cdj
 arA
 arA
 arA
 arA
+arA
+arA
+arA
+djU
 arA
 arA
 arA
@@ -142025,7 +142105,7 @@ cjU
 cjU
 cll
 cJf
-dkW
+dla
 cll
 cHM
 coK
@@ -142279,14 +142359,14 @@ cgi
 cgi
 cgu
 cjV
-dkK
+dkN
 clm
-dkV
-dkX
+dkZ
+dlb
 cng
-dlf
+dlj
 coL
-dlq
+dlu
 cjU
 chc
 chc
@@ -142536,7 +142616,7 @@ cgi
 cgi
 cgu
 cjU
-dkL
+dkO
 clj
 clW
 clW
@@ -142794,7 +142874,7 @@ cgi
 cgu
 cjV
 cll
-dkQ
+dkU
 clW
 cmB
 cnh
@@ -143308,7 +143388,7 @@ cgi
 cgu
 chc
 cll
-dkR
+dkV
 clW
 cmD
 cnj
@@ -143775,7 +143855,7 @@ bIz
 bKd
 bLJ
 bEK
-dhx
+dhy
 bPG
 bQN
 bRT
@@ -144034,9 +144114,9 @@ bLK
 bEK
 bNY
 bNZ
-dhV
-dih
-diy
+dhW
+dii
+diz
 bgr
 bbq
 bbo
@@ -144292,8 +144372,8 @@ bEK
 cKY
 bNZ
 bNZ
-dii
-diz
+dij
+diA
 bgp
 bbq
 bbq
@@ -144336,7 +144416,7 @@ ciS
 cjw
 cjw
 cxT
-dkS
+dkW
 clW
 cmE
 cnl
@@ -144532,10 +144612,10 @@ bqf
 brF
 bsV
 buJ
-dfO
 dfP
-dfU
-dge
+dfQ
+dfV
+dgf
 bBq
 bCt
 bDO
@@ -144549,8 +144629,8 @@ bMS
 bLP
 bPH
 bNZ
-dij
-diA
+dik
+diB
 bgp
 bbq
 bbq
@@ -144592,7 +144672,7 @@ cxT
 ciS
 cjw
 cjV
-dkM
+dkP
 clj
 clW
 clW
@@ -144806,7 +144886,7 @@ bMT
 bOb
 bPI
 bNZ
-dik
+dil
 bTc
 bgr
 bbo
@@ -144839,7 +144919,7 @@ cgi
 cgu
 cgu
 cgM
-dkE
+dkG
 cgL
 cgL
 cxT
@@ -144849,7 +144929,7 @@ cit
 chc
 chc
 cjU
-dkN
+dkQ
 clj
 cjU
 cjV
@@ -145063,8 +145143,8 @@ bMU
 bOc
 bPJ
 bNZ
-dil
-diB
+dim
+diC
 bgp
 bbq
 bbq
@@ -145110,10 +145190,10 @@ cjU
 clq
 cll
 cjU
-dla
-dlg
+dle
+dlk
 cjU
-dlr
+dlv
 cjU
 cjV
 cjV
@@ -145369,9 +145449,9 @@ cjT
 cjT
 cnm
 cjT
-dln
+dlr
 cjT
-dls
+dlw
 cng
 csm
 csV
@@ -145577,8 +145657,8 @@ cMD
 bOd
 bPL
 bNZ
-dim
-diC
+din
+diD
 bgp
 bgp
 bbq
@@ -145628,10 +145708,10 @@ cln
 chb
 cgL
 cxT
-dlt
+dlx
 cIc
 cHM
-dlu
+dly
 coJ
 cuF
 csC
@@ -145834,7 +145914,7 @@ bLP
 bOc
 bPM
 bNZ
-din
+dio
 bTe
 bMb
 bgs
@@ -145880,7 +145960,7 @@ cgu
 cgu
 chc
 cjU
-dkY
+dlc
 cnn
 ckz
 chc
@@ -146864,7 +146944,7 @@ bLP
 bNZ
 bgq
 bTi
-diJ
+diK
 bgq
 bbo
 bbq
@@ -147120,8 +147200,8 @@ bIE
 bNZ
 bNZ
 bgq
-diD
-diK
+diE
+diL
 bgq
 bbo
 bbq
@@ -147635,7 +147715,7 @@ bGk
 bgq
 bRW
 bTe
-diL
+diM
 bgs
 bbo
 bbq
@@ -147890,9 +147970,9 @@ bNb
 bOj
 bGk
 bQQ
-dio
-diE
-diM
+dip
+diF
+diN
 bgs
 bbo
 bbo
@@ -148133,7 +148213,7 @@ buN
 bwm
 bya
 bzm
-dgf
+dgg
 bAt
 bCB
 bDY
@@ -148149,7 +148229,7 @@ bPP
 bQR
 bRX
 bTj
-diN
+diO
 bgr
 bbo
 bbo
@@ -148390,10 +148470,10 @@ buO
 bwn
 bya
 bzn
-dgg
+dgh
 bBw
 bAu
-dgE
+dgF
 bEX
 bGk
 bHt
@@ -148403,9 +148483,9 @@ bLV
 bII
 bOl
 cKZ
-dhW
+dhX
 bIO
-diF
+diG
 bMb
 bgs
 bbo
@@ -148661,9 +148741,9 @@ bIJ
 cWD
 bGk
 bgq
-dip
+diq
 bTd
-diO
+diP
 bgq
 bbo
 bbq
@@ -148903,11 +148983,11 @@ bjY
 buQ
 bwp
 byb
-dfV
+dfW
 bkC
 bkB
 bkB
-dgF
+dgG
 bkB
 bGk
 bHv
@@ -148919,7 +148999,7 @@ bHv
 bGk
 bgq
 bIO
-diG
+diH
 bUg
 bgr
 bbo
@@ -149161,11 +149241,11 @@ buR
 bwq
 bjY
 boU
-dgh
+dgi
 bmz
 bCD
-dgG
-dgQ
+dgH
+dgR
 bGk
 cWy
 bHv
@@ -149178,7 +149258,7 @@ bgq
 bIO
 bTb
 bhb
-diS
+diT
 bbo
 bbq
 bbq
@@ -149421,8 +149501,8 @@ boU
 bmz
 bmz
 bmz
-dgH
-dgR
+dgI
+dgS
 bGk
 cWz
 bHv
@@ -149434,7 +149514,7 @@ bGk
 bgp
 bOn
 bTb
-diP
+diQ
 bgr
 bbo
 bbo
@@ -149675,11 +149755,11 @@ bqp
 bpr
 bjY
 boU
-dgi
-dgn
-dgr
-dgI
-dgS
+dgj
+dgo
+dgs
+dgJ
+dgT
 bGk
 bGk
 bHv
@@ -149690,7 +149770,7 @@ bGk
 bGk
 bjg
 bPS
-diH
+diI
 bhd
 bgr
 bgq
@@ -149931,7 +150011,7 @@ btk
 buS
 bwr
 bjY
-dfW
+dfX
 bmz
 bmz
 bmz
@@ -149944,7 +150024,7 @@ bGk
 bGk
 bGk
 bGk
-dhI
+dhJ
 bhd
 bOn
 bTb
@@ -150188,18 +150268,18 @@ bjY
 buQ
 bws
 bjY
-dfX
+dfY
 bmz
 bmz
 bmz
 bmz
-dgT
+dgU
 bkB
 bhg
 bhd
 bKu
 bhc
-dhp
+dhq
 bhd
 bPQ
 bQT
@@ -150445,13 +150525,13 @@ bnM
 buT
 bwt
 bjY
-dfY
-dgj
-dgo
-dgs
-dgJ
-dgU
-dgZ
+dfZ
+dgk
+dgp
+dgt
+dgK
+dgV
+dha
 bHw
 bjZ
 bjZ
@@ -150459,7 +150539,7 @@ bjZ
 bjZ
 bOm
 bPR
-dhX
+dhY
 bQU
 bTl
 bjZ
@@ -150710,7 +150790,7 @@ bkB
 bkB
 bkB
 blR
-dhe
+dhf
 bgr
 bgs
 bhd
@@ -150971,7 +151051,7 @@ bgs
 bgr
 bgr
 bgs
-dhy
+dhz
 bOn
 bgq
 bgs
@@ -150979,7 +151059,7 @@ bgq
 bgq
 bgr
 bhd
-diY
+diZ
 bgr
 bgs
 bgs
@@ -151485,8 +151565,8 @@ bgs
 bgq
 bgq
 bgs
-dhz
-dhJ
+dhA
+dhK
 bgp
 bbq
 bbq
@@ -152253,7 +152333,7 @@ bhd
 bip
 bgs
 bIL
-dhj
+dhk
 bLY
 bNd
 bOr
@@ -153023,7 +153103,7 @@ bgr
 bhd
 bip
 bgr
-dhf
+dhg
 bKx
 bMb
 bgr
@@ -153272,7 +153352,7 @@ bjY
 bgq
 bjg
 bye
-dfZ
+dga
 bgs
 bgr
 bgs
@@ -153791,7 +153871,7 @@ bjZ
 bjZ
 bjZ
 bEb
-dgV
+dgW
 bgs
 bgs
 bIR
