@@ -25,7 +25,7 @@ if not defined UPDATE_LOG_CHANNEL set UPDATE_LOG_CHANNEL="UPDATER"
 call python bot\nudge.py %UPDATE_LOG_CHANNEL% "Reset local changes job started" >nul 2>nul
 
 cd gitrepo
-git reset -hard
+git reset --hard
 git clean -df
 cd ..
 echo ##################################
