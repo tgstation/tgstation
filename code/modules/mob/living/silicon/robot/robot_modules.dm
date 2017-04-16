@@ -287,7 +287,7 @@
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/borg/sight/meson,
-		/obj/item/weapon/rcd/borg,
+		/obj/item/weapon/construction/rcd/borg,
 		/obj/item/weapon/pipe_dispenser,
 		/obj/item/weapon/extinguisher,
 		/obj/item/weapon/weldingtool/largetank/cyborg,

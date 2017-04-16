@@ -124,7 +124,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(allow_excess_invokers)
 				chanters += invokers
 			else
-				shuffle(invokers)
+				shuffle_inplace(invokers)
 				for(var/i in 1 to req_cultists)
 					var/L = pick_n_take(invokers)
 					if(L)

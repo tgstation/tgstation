@@ -73865,7 +73865,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/arrival)
 "czW" = (
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "czX" = (
 /obj/structure/chair/comfy{
@@ -73873,7 +73873,7 @@
 	icon_state = "comfychair";
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "czY" = (
 /obj/machinery/light{
@@ -74603,7 +74603,7 @@
 /obj/machinery/door/airlock/shuttle{
 	name = "Cockpit"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "cAO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -75173,16 +75173,16 @@
 /area/hallway/secondary/entry)
 "cBJ" = (
 /obj/machinery/computer/arcade,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "cBK" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "cBL" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "cBM" = (
 /obj/machinery/vending/cola,
@@ -75598,7 +75598,7 @@
 "cCu" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/structure/fans/tiny,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "cCv" = (
 /obj/machinery/vending/cigarette,
@@ -77851,7 +77851,7 @@
 /area/hallway/secondary/entry)
 "cGm" = (
 /obj/structure/closet/wardrobe/mixed,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "cGn" = (
 /obj/effect/turf_decal/stripes/line{

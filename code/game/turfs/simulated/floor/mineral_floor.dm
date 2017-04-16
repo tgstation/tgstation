@@ -114,6 +114,9 @@
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 	icons = list("shuttlefloor4","shuttlefloor4_dam")
 
+/turf/open/floor/mineral/plastitanium/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/mineral/plastitanium/brig
 	name = "Brig floor"
 

@@ -35,7 +35,7 @@
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-	load_configuration()
+	config = new
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
@@ -210,14 +210,6 @@
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-#ifdef dellogging
-	var/log = file("data/logs/del.log")
-	log << time2text(world.realtime)
-	for(var/index in del_counter)
-		var/count = del_counter[index]
-		if(count > 10)
-			log << "#[count]\t[index]"
-#endif
 	if(GLOB.blackbox)
 		GLOB.blackbox.save_all_data_to_sql()
 	Master.Shutdown()	//run SS shutdowns
@@ -271,18 +263,6 @@
 
 /world/proc/load_motd()
 	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
-
-/world/proc/load_configuration()
-	config = new /datum/configuration()
-	config.load("config/config.txt")
-	config.load("config/game_options.txt","game_options")
-	config.loadsql("config/dbconfig.txt")
-	if (config.maprotation)
-		config.loadmaplist("config/maps.txt")
-
-	// apply some settings from config..
-	GLOB.abandon_allowed = config.respawn
-
 
 /world/proc/update_status()
 	var/s = ""

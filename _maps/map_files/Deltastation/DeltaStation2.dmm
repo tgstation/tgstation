@@ -1530,7 +1530,7 @@
 	name = "Arrivals"
 	})
 "acX" = (
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "acY" = (
 /obj/machinery/vending/cola/random,
@@ -1736,7 +1736,7 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "adu" = (
 /obj/machinery/light{
@@ -2050,7 +2050,9 @@
 	name = "Arrivals"
 	})
 "aeb" = (
-/obj/effect/landmark/observer_start,
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/arrival)
 "aec" = (
@@ -10252,6 +10254,11 @@
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Supermatter Chamber";
+	name = "atmospherics camera";
+	network = list("Engine")
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
@@ -34879,19 +34886,19 @@
 	pixel_x = -31;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "bpb" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "bpc" = (
 /obj/item/weapon/folder/red,
 /obj/item/weapon/restraints/handcuffs,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "bpd" = (
 /obj/structure/cable/white{
@@ -35657,7 +35664,7 @@
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "bqy" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "bqz" = (
 /obj/machinery/button/flasher{
@@ -35668,7 +35675,7 @@
 	req_access_txt = "1"
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "bqA" = (
 /obj/machinery/mineral/labor_claim_console{
@@ -35676,7 +35683,7 @@
 	pixel_x = 30;
 	pixel_y = 30
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "bqB" = (
 /obj/machinery/door/airlock/shuttle{
@@ -103807,11 +103814,11 @@
 	})
 "dOQ" = (
 /obj/machinery/ai_status_display,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "dOR" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "dOS" = (
 /obj/effect/turf_decal/delivery,
@@ -104501,7 +104508,7 @@
 	})
 "dQp" = (
 /obj/structure/extinguisher_cabinet,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "dQq" = (
 /obj/structure/bed/roller,
@@ -106671,7 +106678,7 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "dUJ" = (
 /obj/machinery/door/airlock/shuttle{
@@ -107960,7 +107967,7 @@
 	name = "Holding Area";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "dXm" = (
 /obj/machinery/door/airlock/glass_command{
@@ -108398,16 +108405,16 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "dXU" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "dXV" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "dXW" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "dXX" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -108751,7 +108758,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "dYG" = (
 /turf/open/floor/plasteel/red/corner{
@@ -109150,18 +109157,18 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "dZu" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "dZv" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/lockbox/loyalty,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "dZw" = (
 /obj/structure/table/reinforced,
@@ -109376,7 +109383,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "dZW" = (
 /obj/structure/table/reinforced,
@@ -109386,7 +109393,7 @@
 	pixel_x = 0;
 	pixel_y = -26
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "dZX" = (
 /obj/structure/table/reinforced,
@@ -112110,7 +112117,7 @@
 	name = "Arrivals Shuttle console";
 	pixel_y = 0
 	},
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "ehk" = (
 /obj/machinery/light{
@@ -112225,7 +112232,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "ehx" = (
 /obj/effect/turf_decal/bot,
@@ -112233,6 +112240,29 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ehy" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehz" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehA" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/supermatter)
+"ehC" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehD" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehE" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"ehF" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
 	},
@@ -112240,44 +112270,17 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Supermatter Chamber";
-	name = "atmospherics camera";
-	network = list("Engine")
-	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
-"ehz" = (
-/obj/structure/chair/office/dark{
-	dir = 8
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/neutral,
-/area/atmos)
-"ehA" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"ehB" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"ehC" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"ehD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/supermatter)
-"ehE" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"ehF" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "ehG" = (
-/turf/closed/wall/r_wall,
+/obj/machinery/power/rad_collector{
+	anchored = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "ehH" = (
 /turf/closed/wall/r_wall,
@@ -112299,6 +112302,15 @@
 "ehM" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"ehN" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/atmos)
 
 (1,1,1) = {"
 aaa
@@ -137306,11 +137318,11 @@ aoI
 apK
 ard
 asi
-ehA
+ehy
 auC
 auC
 auC
-ehA
+ehH
 azc
 aAc
 aAZ
@@ -137563,13 +137575,13 @@ aoJ
 apL
 are
 asj
-ehA
+ehz
 auD
 avP
 avP
 axP
 ehJ
-ehA
+ehL
 aAY
 ark
 aDH
@@ -138077,7 +138089,7 @@ aoK
 apN
 arg
 asl
-ehD
+ehB
 ebG
 avQ
 ebG
@@ -138334,7 +138346,7 @@ aoK
 apO
 arh
 asm
-ehA
+ehC
 auF
 auF
 auF
@@ -138591,13 +138603,13 @@ aoL
 apP
 ari
 asn
-ehA
+ehD
 auG
 avR
 avR
 axT
-ehJ
-ehA
+ehK
+ehM
 aBd
 ark
 aDL
@@ -138848,11 +138860,11 @@ aoI
 apK
 ebP
 aso
-ehA
-ehy
+ehE
 auH
-auH
-ehA
+ehF
+ehG
+ehI
 azg
 aAe
 aBe
@@ -139142,7 +139154,7 @@ bqf
 brq
 bsD
 aZq
-ehz
+ehN
 bvu
 byX
 aIZ
