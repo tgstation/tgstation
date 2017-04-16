@@ -269,7 +269,7 @@
 			buckled_mob.setDir(ridden.dir)
 			ridden.pixel_x = -48
 			ridden.pixel_y = -48
-			if(buckled_mob = ridden.buckled_mobs[1])
+			if(buckled_mob = (ridden.buckled_mobs[1]))
 				switch(ridden.dir)
 					if(NORTH)
 						buckled_mob.pixel_x = -10
@@ -284,7 +284,7 @@
 						buckled_mob.pixel_x = 4
 						buckled_mob.pixel_y = -3
 
-			if(buckled_mob = ridden.buckled_mobs[2])
+			if(buckled_mob = (ridden.buckled_mobs[2]))
 				switch(ridden.dir)
 					if(NORTH)
 						buckled_mob.pixel_x = 19
@@ -303,7 +303,7 @@
 						buckled_mob.pixel_y = 28
 						buckled_mob.layer = 3.9
 
-			if(buckled_mob = ridden.buckled_mobs[3])
+			if(buckled_mob = (ridden.buckled_mobs[3]))
 				switch(ridden.dir)
 					if(NORTH)
 						buckled_mob.pixel_x = -10
@@ -321,7 +321,7 @@
 						buckled_mob.pixel_y = -3
 						buckled_mob.layer = 4.1
 
-			if(buckled_mob = ridden.buckled_mobs[4])
+			if(buckled_mob = (ridden.buckled_mobs[4]))
 				switch(ridden.dir)
 					if(NORTH)
 						buckled_mob.pixel_x = 19
