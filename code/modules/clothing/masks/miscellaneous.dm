@@ -8,6 +8,12 @@
 	gas_transfer_coefficient = 0.90
 	put_on_delay = 20
 
+/obj/item/clothing/mask/muzzle/gag
+	name = "gag"
+	desc = "Stick this in their mouth to stop the noise."
+	icon_state = "gag"
+	w_class = 1
+
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
