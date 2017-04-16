@@ -1428,7 +1428,7 @@ GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
 #define UNTIL(X) while(!(X)) stoplag()
 
 /proc/to_chat(target, message)
-	target << russian_html2text(message)
+	target << russian_html2text(sanitize_russian(message))
 
 /proc/pass()
 	return

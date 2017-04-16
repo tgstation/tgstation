@@ -621,7 +621,7 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	usr << browse(russian_text2html(out), "window=edit_memory[src];size=500x600")
+	usr << browse(sanitize_russian(out), "window=edit_memory[src];size=500x600")
 
 
 /datum/mind/Topic(href, href_list)

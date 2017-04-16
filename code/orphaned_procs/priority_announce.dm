@@ -2,8 +2,6 @@
 	if(!text)
 		return
 
-	text = sanitize_russian(text)
-
 	var/announcement
 
 	if(type == "Priority")

@@ -417,7 +417,7 @@
 	set category = "IC"
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-	msg = sanitize_russian(msg, 1)
+	msg = sanitize_russian(msg)
 
 	if(mind)
 		mind.store_memory(msg)

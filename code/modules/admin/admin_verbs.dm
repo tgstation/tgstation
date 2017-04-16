@@ -618,7 +618,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 	set category = "Special Verbs"
 	set name = "OSay"
 	set desc = "Makes an object say something."
-	var/message = sanitize_russian(input(usr, "What do you want the message to be?", "Make Sound") as text | null)
+	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
 	if(!message)
 		return
 	O.say(message)

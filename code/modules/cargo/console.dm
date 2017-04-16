@@ -85,7 +85,7 @@
 			"object" = SO.pack.name,
 			"cost" = SO.pack.cost,
 			"orderer" = SO.orderer,
-			"reason" = russian_text2unicode(SO.reason),
+			"reason" = SO.reason,
 			"id" = SO.id
 		))
 

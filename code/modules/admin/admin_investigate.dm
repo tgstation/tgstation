@@ -36,7 +36,7 @@
 			if(!F)
 				to_chat(src, "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>")
 				return
-			src << browse(F,"window=investigate[subject];size=800x300")
+			src << browse(sanitize_russian(F),"window=investigate[subject];size=800x300")
 		if("hrefs")				//persistent logs and stuff
 			if(GLOB.href_logfile)
 				src << browse(sanitize_russian(GLOB.href_logfile),"window=investigate[subject];size=800x300")

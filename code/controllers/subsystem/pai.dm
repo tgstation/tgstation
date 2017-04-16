@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(pai)
 	dat += "<a href='byond://?src=\ref[src];option=save;new=1;candidate=\ref[candidate]'>Save Personality</a><br>"
 	dat += "<a href='byond://?src=\ref[src];option=load;new=1;candidate=\ref[candidate]'>Load Personality</a><br>"
 
-	M << browse(russian_text2html(dat), "window=paiRecruit")
+	M << browse(sanitize_russian(dat), "window=paiRecruit")
 
 /datum/controller/subsystem/pai/proc/spam_again()
 	ghost_spam = FALSE
@@ -188,7 +188,7 @@ SUBSYSTEM_DEF(pai)
 
 	dat += "</table>"
 
-	user << browse(russian_text2html(dat), "window=findPai")
+	user << browse(sanitize_russian(dat), "window=findPai")
 
 /datum/paiCandidate
 	var/name

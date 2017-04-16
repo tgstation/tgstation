@@ -303,7 +303,7 @@
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
 			i.on_write(src,usr)
-			usr << browse(russian_text2html("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>"), "window=[name]") // Update the window
+			usr << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>"), "window=[name]") // Update the window
 			update_icon()
 
 
