@@ -36,7 +36,6 @@ echo Copying things around....
 echo (1/3)
 xcopy gitrepo\data gamedata\data /Y /X /K /R /H /I /C /V /E /Q >nul
 xcopy gitrepo\config gamedata\config /Y /X /K /R /H /I /C /V /E /Q >nul
-xcopy gitrepo\cfg gamedata\cfg /Y /X /K /R /H /I /C /V /E /Q >nul
 xcopy gitrepo\bot bot /Y /X /K /R /H /I /C /V /E /Q >nul
 copy gitrepo\libmysql.dll gamedata\libmysql.dll /D /V /Y >nul
 echo (2/3)
