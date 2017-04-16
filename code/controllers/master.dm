@@ -216,7 +216,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	//	local vars rock
 
 	// Schedule the first run of the Subsystems.
-	local_round_started = SSticker.HasRoundStarted()
+	local_round_started = world.has_round_started()
 	//all this shit is here so that flag edits can be refreshed by restarting the MC. (and for speed)
 	var/list/tickersubsystems = list()
 	var/list/normalsubsystems = list()
