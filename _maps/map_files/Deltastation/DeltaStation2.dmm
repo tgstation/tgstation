@@ -75503,13 +75503,13 @@
 	},
 /area/toxins/xenobiology)
 "cMK" = (
-/obj/machinery/shieldwallgen,
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "cML" = (
@@ -81009,13 +81009,13 @@
 	},
 /area/toxins/xenobiology)
 "cWP" = (
-/obj/machinery/shieldwallgen,
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "cWQ" = (
@@ -137319,7 +137319,7 @@ ehy
 auC
 auC
 auC
-ehH
+ehy
 azc
 aAc
 aAZ
@@ -137572,13 +137572,13 @@ aoJ
 apL
 are
 asj
-ehz
+ehy
 auD
 avP
 avP
 axP
 ehJ
-ehL
+ehy
 aAY
 ark
 aDH
@@ -137829,7 +137829,7 @@ aoK
 apM
 arf
 ask
-ehA
+ehy
 auE
 auE
 auE
@@ -138343,7 +138343,7 @@ aoK
 apO
 arh
 asm
-ehC
+ehy
 auF
 auF
 auF
@@ -138600,13 +138600,13 @@ aoL
 apP
 ari
 asn
-ehD
+ehy
 auG
 avR
 avR
 axT
-ehK
-ehM
+ehJ
+ehy
 aBd
 ark
 aDL
@@ -138857,11 +138857,11 @@ aoI
 apK
 ebP
 aso
-ehE
+ehy
 auH
 ehF
-ehG
-ehI
+ehF
+ehy
 azg
 aAe
 aBe

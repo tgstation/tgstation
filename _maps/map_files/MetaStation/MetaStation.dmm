@@ -86618,10 +86618,8 @@
 	name = "Xeno Maintenance"
 	})
 "cTD" = (
-/obj/machinery/shieldwallgen{
-	req_access_txt = "55"
-	},
 /obj/structure/cable/yellow,
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "cTE" = (
@@ -127413,9 +127411,9 @@ cRi
 cRi
 cRi
 dlV
-dlX
-dlZ
-dmb
+dlV
+dlV
+dlV
 aaf
 aaa
 aaa
@@ -127672,15 +127670,15 @@ cRi
 dde
 ddj
 cTp
-dmc
-dmf
-dmh
-dmj
-dml
-dmn
-dmp
-dmt
-dmB
+dlV
+dlV
+dlV
+dlV
+dlV
+dlV
+dlV
+dlV
+dlV
 aaa
 aaa
 aai
@@ -127937,7 +127935,7 @@ cTC
 cTC
 daO
 bIx
-dmC
+dlV
 aaf
 aaf
 aag
@@ -128450,7 +128448,7 @@ daF
 daJ
 cRi
 bvT
-dmu
+dlV
 cRi
 cRi
 cRi
@@ -128707,7 +128705,7 @@ cSn
 cSn
 cRi
 dmq
-dmv
+dlV
 cZv
 cZv
 cRi
@@ -129735,7 +129733,7 @@ cSn
 daN
 cRi
 dmr
-dmw
+dlV
 cZv
 dbw
 cRi
@@ -129992,7 +129990,7 @@ daI
 daM
 cRi
 cTA
-dmx
+dlV
 cRi
 cRi
 cRi
@@ -130249,7 +130247,7 @@ cRi
 cRi
 cRi
 cTA
-dmy
+dlV
 aaf
 aaa
 aaa
@@ -130506,7 +130504,7 @@ ddw
 cTA
 cTA
 ddy
-dmz
+dlV
 aaf
 aaf
 aaa
@@ -130756,14 +130754,14 @@ cRi
 ddi
 ddr
 cTB
-dmd
-dmg
-dmi
-dmk
-dmm
-dmo
-dms
-dmA
+dlV
+dlV
+dlV
+dlV
+dlV
+dlV
+dlV
+dlV
 aaf
 aaa
 aaa
@@ -131010,10 +131008,10 @@ cRi
 cRi
 cRi
 cRi
-dlW
-dlY
-dma
-dme
+dlV
+dlV
+dlV
+dlV
 aaa
 aaf
 aaf
@@ -137584,11 +137582,11 @@ aEr
 aFC
 aGZ
 aGZ
-dlK
+dlI
 aKG
 aMj
 aKG
-dlO
+dlI
 aQe
 aRv
 dfD
@@ -137841,11 +137839,11 @@ dej
 aFC
 deC
 deC
-dlL
+dlI
 aKH
 aMk
 aNu
-dlP
+dlI
 dfp
 dfp
 dfE
@@ -138103,7 +138101,7 @@ aKI
 aMj
 dfb
 dfj
-dlR
+dlI
 deD
 dfF
 aTN
@@ -138874,7 +138872,7 @@ dbb
 aMk
 aNv
 dfm
-dlT
+dlS
 djt
 dbg
 dfR
@@ -139125,13 +139123,13 @@ aCY
 dem
 aFD
 deD
-dlJ
-dlM
+dlI
+dlI
 deV
 dlN
 dfc
-dlQ
-dlU
+dlI
+dlI
 deD
 dfI
 dfS
