@@ -40,7 +40,7 @@
 	// Upgrades bitflag
 	var/upgrades = 0
 
-/obj/machinery/camera/Initialize()
+/obj/machinery/camera/Initialize(mapload)
 	. = ..()
 	assembly = new(src)
 	assembly.state = 4
