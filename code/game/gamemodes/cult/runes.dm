@@ -545,7 +545,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 	if(!GLOB.sacrificed.len || GLOB.sacrificed.len <= revives_used)
-		to_chat(user, "<span class='warning'>You have GLOB.sacrificed too few people to revive a cultist!</span>")
+		to_chat(user, "<span class='warning'>You have sacrificed too few people to revive a cultist!</span>")
 		fail_invoke()
 		return
 	if(potential_revive_mobs.len > 1)
