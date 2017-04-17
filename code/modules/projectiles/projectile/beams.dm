@@ -92,7 +92,6 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
-	legacy = 1
 	animate_movement = SLIDE_STEPS
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN

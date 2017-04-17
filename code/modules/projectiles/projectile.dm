@@ -26,7 +26,6 @@
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
 	var/spread = 0			//amount (in degrees) of projectile spread
-	var/legacy = 0			//legacy projectile system
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
 
 	var/damage = 10
@@ -179,82 +178,66 @@
 		return
 	if(setAngle)
 		Angle = setAngle
-	if(!legacy) //new projectiles
-		set waitfor = 0
-		var/next_run = world.time
-		while(loc)
-			if(paused)
-				next_run = world.time
-				sleep(1)
-				continue
+	set waitfor = 0
+	var/next_run = world.time
+	while(loc)
+		if(paused)
+			next_run = world.time
+			sleep(1)
+			continue
 
-			if((!( current ) || loc == current))
-				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+		if((!( current ) || loc == current))
+			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 
-			if(!Angle)
-				Angle=round(Get_Angle(src,current))
-			if(spread)
-				Angle += (rand() - 0.5) * spread
-			var/matrix/M = new
-			M.Turn(Angle)
-			transform = M
+		if(!Angle)
+			Angle=round(Get_Angle(src,current))
+		if(spread)
+			Angle += (rand() - 0.5) * spread
+		var/matrix/M = new
+		M.Turn(Angle)
+		transform = M
 
-			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
-			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
-			var/pixel_x_offset = pixel_x + Pixel_x
-			var/pixel_y_offset = pixel_y + Pixel_y
-			var/new_x = x
-			var/new_y = y
+		var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
+		var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
+		var/pixel_x_offset = pixel_x + Pixel_x
+		var/pixel_y_offset = pixel_y + Pixel_y
+		var/new_x = x
+		var/new_y = y
 
-			while(pixel_x_offset > 16)
-				pixel_x_offset -= 32
-				pixel_x -= 32
-				new_x++// x++
-			while(pixel_x_offset < -16)
-				pixel_x_offset += 32
-				pixel_x += 32
-				new_x--
+		while(pixel_x_offset > 16)
+			pixel_x_offset -= 32
+			pixel_x -= 32
+			new_x++// x++
+		while(pixel_x_offset < -16)
+			pixel_x_offset += 32
+			pixel_x += 32
+			new_x--
 
-			while(pixel_y_offset > 16)
-				pixel_y_offset -= 32
-				pixel_y -= 32
-				new_y++
-			while(pixel_y_offset < -16)
-				pixel_y_offset += 32
-				pixel_y += 32
-				new_y--
+		while(pixel_y_offset > 16)
+			pixel_y_offset -= 32
+			pixel_y -= 32
+			new_y++
+		while(pixel_y_offset < -16)
+			pixel_y_offset += 32
+			pixel_y += 32
+			new_y--
 
-			step_towards(src, locate(new_x, new_y, z))
-			next_run += max(world.tick_lag, speed)
-			var/delay = next_run - world.time
-			if(delay <= world.tick_lag*2)
-				pixel_x = pixel_x_offset
-				pixel_y = pixel_y_offset
-			else
-				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
+		step_towards(src, locate(new_x, new_y, z))
+		next_run += max(world.tick_lag, speed)
+		var/delay = next_run - world.time
+		if(delay <= world.tick_lag*2)
+			pixel_x = pixel_x_offset
+			pixel_y = pixel_y_offset
+		else
+			animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
 
-			if(original && (original.layer>=2.75) || ismob(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original, 1)
-			Range()
-			if (delay > 0)
-				sleep(delay)
-
-	else //old projectile system
-		set waitfor = 0
-		while(loc)
-			if(!paused)
-				if((!( current ) || loc == current))
-					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-				step_towards(src, current)
-				if(original && (original.layer>=2.75) || ismob(original))
-					if(loc == get_turf(original))
-						if(!(original in permutated))
-							Bump(original, 1)
-				Range()
-			sleep(config.run_speed * 0.9)
-
+		if(original && (original.layer>=2.75) || ismob(original))
+			if(loc == get_turf(original))
+				if(!(original in permutated))
+					Bump(original, 1)
+		Range()
+		if (delay > 0)
+			sleep(delay)
 
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
