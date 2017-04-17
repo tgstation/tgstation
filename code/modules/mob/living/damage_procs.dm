@@ -10,7 +10,7 @@
 */
 /mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
 	var/hit_percent = (100-blocked)/100
-	if(!damage || (hit_percent <= 0) || !src)
+	if(!damage || (hit_percent <= 0) || !QDELETED(src))
 		return 0
 	switch(damagetype)
 		if(BRUTE)
