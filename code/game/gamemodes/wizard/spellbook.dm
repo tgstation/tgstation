@@ -287,6 +287,7 @@
 	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
 	item_path = /obj/item/weapon/gun/magic/staff/animate
 	category = "Assistance"
+	cost = 3
 
 /datum/spellbook_entry/item/staffchaos
 	name = "Staff of Chaos"
