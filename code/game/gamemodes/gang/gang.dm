@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	gangster_mind.special_role = "[G.name] Gangster"
 
 	G.add_gang_hud(gangster_mind)
-	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
+	if(jobban_isbanned(gangster_mind.current, ROLE_GANG) || jobban_isbanned(gangster_mind.current, CATBAN) || jobban_isbanned(gangster_mind.current, CLUWNEBAN))
 		INVOKE_ASYNC(src, /datum/game_mode.proc/replace_jobbaned_player, gangster_mind.current, ROLE_GANG, ROLE_GANG)
 	return 2
 ////////////////////////////////////////////////////////////////////

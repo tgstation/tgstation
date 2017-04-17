@@ -29,6 +29,11 @@
 	if (notransform)
 		return
 
+	if(jobban_isbanned(src, CATBAN) && src.dna.species.name != "Catbeast")
+		set_species(/datum/species/tarajan, icon_update=1)
+	if(jobban_isbanned(src, CLUWNEBAN) && !dna.check_mutation(CLUWNEMUT))
+		dna.add_mutation(CLUWNEMUT)
+
 	if(..()) //not dead
 		for(var/datum/mutation/human/HM in dna.mutations)
 			HM.on_life(src)

@@ -246,6 +246,11 @@ SUBSYSTEM_DEF(job)
 	unassigned = shuffle(unassigned)
 
 	HandleFeedbackGathering()
+	
+	for(var/i in unassigned)
+		var/mob/dead/new_player/player = i
+		if(jobban_isbanned(player, CATBAN) || jobban_isbanned(player, CLUWNEBAN))
+			AssignRole(player, "Assistant")
 
 	//People who wants to be assistants, sure, go on.
 	Debug("DO, Running Assistant Check 1")
