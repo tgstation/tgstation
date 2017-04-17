@@ -28,6 +28,8 @@
 	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
 	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
 
+	var/datum/proximity_monitor/proximity_monitor
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -455,10 +457,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /atom/proc/ratvar_act()
 	return
 
-/atom/proc/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/atom/proc/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	return FALSE
 
-/atom/proc/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/atom/proc/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
@@ -472,15 +474,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	for(var/a in src)
 		var/atom/A = a
 		A.HandleTurfChange(T)
-
-// Byond seemingly calls stat, each tick.
-// Calling things each tick can get expensive real quick.
-// So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/atom/Stat()
-	. = ..()
-	sleep(1)
-	stoplag()
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
 /atom/proc/get_remote_view_fullscreens(mob/user)

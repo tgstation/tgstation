@@ -119,8 +119,8 @@
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
 
-/obj/mecha/New()
-	..()
+/obj/mecha/Initialize()
+	. = ..()
 	events = new
 	icon_state += "-open"
 	add_radio()

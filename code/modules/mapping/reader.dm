@@ -329,7 +329,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 		if(!no_changeturf && ispath(path, /turf))
 			. = crds.ChangeTurf(path, TRUE)
 		else
-			. = new path (crds)//first preloader pass
+			. = create_atom(path, crds)//first preloader pass
 
 	if(GLOB.use_preloader && .)//second preloader pass, for those atoms that don't ..() in New()
 		GLOB._preloader.load(.)
@@ -340,6 +340,10 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 		stoplag()
 		SSatoms.map_loader_begin()
 
+/dmm_suite/proc/create_atom(path, crds)
+	set waitfor = FALSE
+	. = new path (crds)
+	
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
 /dmm_suite/proc/trim_text(what as text,trim_quotes=0)

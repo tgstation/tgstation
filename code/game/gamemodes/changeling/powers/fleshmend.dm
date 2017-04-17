@@ -11,8 +11,8 @@
 	// divided by healing_ticks to get heal/tick
 	var/total_healing = 100
 
-/obj/effect/proc_holder/changeling/fleshmend/New()
-	..()
+/obj/effect/proc_holder/changeling/fleshmend/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/proc_holder/changeling/fleshmend/Destroy()

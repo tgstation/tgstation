@@ -26127,7 +26127,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "baF" = (
-/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/start{
+	name = "Assistant"
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	external_pressure_bound = 101.325;
@@ -26599,7 +26601,9 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "bbt" = (
-/obj/effect/landmark/observer_start,
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "bbu" = (
@@ -30540,13 +30544,11 @@
 	},
 /area/toxins/xenobiology)
 "bjI" = (
-/obj/machinery/shieldwallgen{
-	req_access_txt = "55"
-	},
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "bjJ" = (
@@ -30637,9 +30639,6 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "bjO" = (
-/obj/machinery/shieldwallgen{
-	req_access_txt = "55"
-	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
@@ -30649,6 +30648,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "bjP" = (
@@ -50235,7 +50235,9 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/latejoin,
+/obj/effect/landmark{
+	name = "JoinLate"
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
 	pixel_y = 0

@@ -92,6 +92,12 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	var/eye_initialized = 0
 	var/visible_icon = 0
 	var/image/user_image = null
+	
+/mob/camera/aiEye/remote/update_remote_sight(mob/living/user)
+	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
+	user.sight = 0
+	user.see_in_dark = 2
+	return 1
 
 /mob/camera/aiEye/remote/Destroy()
 	eye_user = null
