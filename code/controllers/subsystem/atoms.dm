@@ -37,9 +37,10 @@ SUBSYSTEM_DEF(atoms)
 		created_atoms = list()
 		count = atoms.len
 		for(var/I in atoms)
-			if(InitAtom(I, mapload_arg))
-				atoms -= I
-			CHECK_TICK
+			if(!A.initialized)
+				if(InitAtom(I, mapload_arg))
+					atoms -= I
+				CHECK_TICK
 	else
 		count = 0
 		for(var/atom/A in world)
