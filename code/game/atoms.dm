@@ -232,7 +232,7 @@
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
-	if(src.blood_DNA && !istype(src, /obj/effect/decal))
+	if(src.blood_DNA.len && !istype(src, /obj/effect/decal))
 		if(gender == PLURAL)
 			f_name = "some "
 		else
