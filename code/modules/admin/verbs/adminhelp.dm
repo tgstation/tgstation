@@ -261,6 +261,11 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.active_tickets += src
 	GLOB.ahelp_tickets.closed_tickets -= src
 	GLOB.ahelp_tickets.resolved_tickets -= src
+	switch(state)
+		if(AHELP_CLOSED)
+			feedback_dec("ahelp_close")
+		if(AHELP_RESOLVED)
+			feedback_dec("ahelp_resolve")
 	state = AHELP_ACTIVE
 	closed_at = null
 	if(initiator)
