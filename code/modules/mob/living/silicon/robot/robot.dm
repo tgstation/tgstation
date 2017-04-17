@@ -816,6 +816,9 @@
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
 
+/mob/living/silicon/robot/syndicate/ResetModule()
+	return
+
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"
 	playstyle_string = "<span class='userdanger'>You are a Syndicate medical cyborg!</span><br>\
@@ -878,12 +881,12 @@
 
 	if(sight_mode & BORGMESON)
 		sight |= SEE_TURFS
-		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGMATERIAL)
 		sight |= SEE_OBJS
-		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGXRAY)
@@ -898,6 +901,7 @@
 
 	if(see_override)
 		see_invisible = see_override
+	sync_lighting_plane_alpha()
 
 /mob/living/silicon/robot/update_stat()
 	if(status_flags & GODMODE)
@@ -1060,7 +1064,7 @@
 
 /mob/living/silicon/robot/proc/undeploy()
 
-	if(!deployed || !mainframe)
+	if(!deployed || !mind || !mainframe)
 		return
 	mainframe.redeploy_action.Grant(mainframe)
 	mainframe.redeploy_action.last_used_shell = src

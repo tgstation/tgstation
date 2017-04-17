@@ -104,6 +104,14 @@
 	viruses = null
 	return ..()
 
+/obj/effect/decal/cleanable/vomit/old
+	name = "crusty dried vomit"
+	desc = "You try not to look at the chunks, and fail."
+
+/obj/effect/decal/cleanable/vomit/old/Initialize()
+	..()
+	icon_state += "-old"
+
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"
 	desc = "It's red."
@@ -163,7 +171,7 @@
 
 /obj/effect/decal/cleanable/glitter
 	name = "generic glitter pile"
-	desc = "the herpes of arts and crafts"
+	desc = "The herpes of arts and crafts."
 	icon = 'icons/effects/tile_effects.dmi'
 	gender = NEUTER
 

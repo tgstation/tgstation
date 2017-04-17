@@ -1,0 +1,4 @@
+author: "BeeSting12"
+delete-after: True
+changes: 
+  - bugfix: "The shield wall generators in xenobiology on Deltastation, Boxstation, Metastation, and Pubbystation can now be locked and unlocked by scientists."

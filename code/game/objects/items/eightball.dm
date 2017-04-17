@@ -54,7 +54,7 @@
 	shaking = TRUE
 
 	start_shaking(user)
-	if(do_after(user, shake_time, needhand=TRUE, target=src, progress=TRUE))
+	if(do_after(user, shake_time, needhand=TRUE, target=user, progress=TRUE))
 		var/answer = get_answer()
 		say(answer)
 
@@ -110,7 +110,7 @@
 		return
 	interact(user)
 
-/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	last_message = raw_message
 
 /obj/item/toy/eightball/haunted/start_shaking(mob/user)

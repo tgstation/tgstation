@@ -12,8 +12,8 @@
 	visor_vars_to_toggle = NONE //we don't actually toggle anything we just set it
 	tint = 3 //this'll get reset, but it won't handle vision updates properly otherwise
 
-/obj/item/clothing/glasses/wraith_spectacles/New()
-	..()
+/obj/item/clothing/glasses/wraith_spectacles/Initialize()
+	. = ..()
 	GLOB.all_clockwork_objects += src
 
 /obj/item/clothing/glasses/wraith_spectacles/Destroy()
@@ -57,13 +57,13 @@
 		return TRUE
 
 /obj/item/clothing/glasses/wraith_spectacles/proc/set_vision_vars(update_vision)
-	invis_view = SEE_INVISIBLE_LIVING
+	lighting_alpha = null
 	tint = 0
 	vision_flags = NONE
 	darkness_view = 2
 	if(!up)
 		if(is_servant_of_ratvar(loc))
-			invis_view = SEE_INVISIBLE_NOLIGHTING
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 			vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
 			darkness_view = 3
 		else

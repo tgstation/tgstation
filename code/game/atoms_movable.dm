@@ -1,3 +1,11 @@
+
+#ifndef PIXEL_SCALE
+#define PIXEL_SCALE 0
+#if DM_VERSION >= 512
+#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
+#endif
+#endif
+
 /atom/movable
 	layer = OBJ_LAYER
 	var/is_affected_by_gravity = FALSE	//Set to FALSE if this item should never be moved by gravity no matter what. Don't varedit before it has initialized!
@@ -13,6 +21,7 @@
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
+	var/verb_whisper = "whispers"
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
@@ -24,7 +33,7 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 	var/gravity_direction = FALSE
 	var/gravity_strength = 1
@@ -215,6 +224,10 @@
 		forced_gravity_by_turf.reset_forced_gravity_atom(src)
 	if(flags & CLEAN_ON_MOVE)
 		clean_on_move()
+	
+	var/datum/proximity_monitor/pc = proximity_monitor
+	if(pc)
+		pc.HandleMove()
 	return 1
 
 /atom/movable/proc/clean_on_move()
@@ -265,6 +278,8 @@
 
 	if(stationloving && force)
 		STOP_PROCESSING(SSinbounds, src)
+	
+	QDEL_NULL(proximity_monitor)
 
 	. = ..()
 	if(loc)

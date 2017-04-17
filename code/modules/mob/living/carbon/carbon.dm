@@ -233,8 +233,8 @@
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
 			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>", \
-								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>")
+				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
+								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
 					if(internal)
 						internal = null
@@ -244,8 +244,8 @@
 							internal = ITEM
 							update_internals_hud_icon(1)
 
-					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
-									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
+					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
+									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
 
 
 /mob/living/carbon/fall(forced)
@@ -536,6 +536,7 @@
 		return
 
 	sight = initial(sight)
+	lighting_alpha = initial(lighting_alpha)
 	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
 	if(!E)
 		update_tint()
@@ -543,6 +544,8 @@
 		see_invisible = E.see_invisible
 		see_in_dark = E.see_in_dark
 		sight |= E.sight_flags
+		if(!isnull(E.lighting_alpha))
+			lighting_alpha = E.lighting_alpha
 
 	if(client.eye != src)
 		var/atom/A = client.eye
@@ -557,6 +560,8 @@
 			see_invisible = G.invis_override
 		else
 			see_invisible = min(G.invis_view, see_invisible)
+		if(!isnull(G.lighting_alpha))
+			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 	if(dna)
 		for(var/X in dna.mutations)
 			var/datum/mutation/M = X
@@ -566,6 +571,7 @@
 
 	if(see_override)
 		see_invisible = see_override
+	. = ..()
 
 
 //to recalculate and update the mob's total tint from tinted equipment it's wearing.

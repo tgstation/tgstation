@@ -166,7 +166,7 @@
 
 /obj/item/clothing/mask/gas/tiki_mask
 	name = "tiki mask"
-	desc = "A creepy wooden mask. Surprisingly expresive for a poorly carved bit of wood."
+	desc = "A creepy wooden mask. Surprisingly expressive for a poorly carved bit of wood."
 	icon_state = "tiki_eyebrow"
 	item_state = "tiki_eyebrow"
 	resistance_flags = FLAMMABLE

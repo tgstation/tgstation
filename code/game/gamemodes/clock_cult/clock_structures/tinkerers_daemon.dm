@@ -20,8 +20,8 @@
 	var/production_time = 0 //last time we produced a component
 	var/production_cooldown = 120
 
-/obj/structure/destructible/clockwork/powered/tinkerers_daemon/New()
-	..()
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/Initialize()
+	. = ..()
 	GLOB.clockwork_daemons++
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/Destroy()

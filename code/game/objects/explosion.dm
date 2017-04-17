@@ -164,7 +164,7 @@
 
 		if(TICK_CHECK)
 			stoplag()
-			var/circumference = (PI * init_dist * 2) + 8 //+8 to prevent shit gaps
+			var/circumference = (PI * (init_dist + 4) * 2) //+4 to radius to prevent shit gaps
 			if(exploded_this_tick.len > circumference)	//only do this every revolution
 				for(var/Unexplode in exploded_this_tick)
 					var/turf/UnexplodeT = Unexplode

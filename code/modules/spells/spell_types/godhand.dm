@@ -50,9 +50,7 @@
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
 		return
 	var/mob/M = target
-	var/datum/effect_system/spark_spread/sparks = new
-	sparks.set_up(4, 0, M.loc) //no idea what the 0 is
-	sparks.start()
+	do_sparks(4, FALSE, M.loc)
 	M.gib()
 	..()
 

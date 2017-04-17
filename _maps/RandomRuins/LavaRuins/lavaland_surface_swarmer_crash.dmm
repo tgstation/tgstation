@@ -11,9 +11,8 @@
 	},
 /area/ruin/unpowered)
 "d" = (
-/turf/open/floor/mineral/plastitanium/brig{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/turf/open/floor/mineral/plastitanium{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "e" = (
@@ -25,9 +24,8 @@
 /area/ruin/unpowered)
 "f" = (
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
-/turf/open/floor/mineral/plastitanium/brig{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/turf/open/floor/mineral/plastitanium{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 

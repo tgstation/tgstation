@@ -266,8 +266,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "no-servants-caches"
 	var/static/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 
-/obj/screen/alert/clockwork/scripture_reqs/New()
-	..()
+/obj/screen/alert/clockwork/scripture_reqs/Initialize()
+	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	process()
 

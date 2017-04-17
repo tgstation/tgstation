@@ -845,7 +845,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
-			if(id in GLOB.hardcoded_gases || gas_concentration > 0.001) //ensures the four primary gases are always shown.
+			if((id in GLOB.hardcoded_gases) || gas_concentration > 0.001) //ensures the four primary gases are always shown.
 				to_chat(user, "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 
 		to_chat(user, "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>")
@@ -1137,46 +1137,6 @@ B --><-- A
 		if(location == src)
 			return 1
 
-/proc/add_to_proximity_list(atom/A, range)
-	var/turf/T = get_turf(A)
-	if(!T || !A.loc)
-		throw EXCEPTION("Someone adding a prox sensor in nullspace")
-	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
-	for(var/B in L)
-		var/turf/C = B
-		LAZYINITLIST(C.proximity_checkers)
-		C.proximity_checkers[A] = TRUE
-	return L
-
-/proc/remove_from_proximity_list(atom/A, range, oldloc = null)
-	var/turf/T = get_turf(oldloc ? oldloc : A)
-	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
-	for(var/B in L)
-		var/turf/C = B
-		if (!C.proximity_checkers)
-			continue
-		C.proximity_checkers.Remove(A)
-
-/proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
-	var/turf/T = get_turf(A)
-	var/turf/Q = get_turf(B)
-	if(T == Q && range == newrange)
-		return 0
-	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
-	var/list/M = block(locate(Q.x - newrange, Q.y - newrange, Q.z), locate(Q.x + newrange, Q.y + newrange, Q.z))
-	var/list/N = L - M
-	var/list/O = M - L
-	for(var/C in N)
-		var/turf/D = C
-		if (!D.proximity_checkers)
-			continue
-		D.proximity_checkers.Remove(checker)
-	for(var/E in O)
-		var/turf/F = E
-		LAZYINITLIST(F.proximity_checkers)
-		F.proximity_checkers[checker] = TRUE
-	return 1
-
 /proc/flick_overlay_static(image/I, atom/A, duration)
 	set waitfor = 0
 	if(!A || !I)
@@ -1279,6 +1239,9 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
 #define QDEL_NULL(item) qdel(item); item = null
+#define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
+#define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) { qdel(L[I]); qdel(I); } L.Cut(); }
+#define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qel(L[I]); L.Cut(); }
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)

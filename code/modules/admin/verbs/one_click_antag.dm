@@ -224,7 +224,7 @@
 		var/agentcount = 0
 
 		for(var/i = 0, i<numagents,i++)
-			shuffle(candidates) //More shuffles means more randoms
+			shuffle_inplace(candidates) //More shuffles means more randoms
 			for(var/mob/j in candidates)
 				if(!j || !j.client)
 					candidates.Remove(j)
