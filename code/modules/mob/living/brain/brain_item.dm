@@ -37,7 +37,7 @@
 		if(C.has_brain_worms())
 			var/mob/living/simple_animal/borer/B = C.has_brain_worms()
 			B.leave_victim() //Should remove borer if the brain is removed - RR
-		transfer_identity(C)
+	transfer_identity(C)
 	C.update_hair()
 
 /obj/item/organ/brain/prepare_eat()
@@ -54,7 +54,7 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-	if(L.mind && L.mind.current && (L.mind.current.stat == DEAD))
+	if(L.mind && L.mind.current)
 		L.mind.transfer_to(brainmob)
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
 
