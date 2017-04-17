@@ -7,7 +7,8 @@
 
 /datum/round_event/wizard/rpgloot/start()
 	var/upgrade_scroll_chance = 0
-	for(var/obj/item/I in world)
+	for(var/i in shuffle(GLOB.all_items_list))
+		var/obj/item/I = i
 		if(!istype(I.rpg_loot))
 			I.rpg_loot = new(I)
 
