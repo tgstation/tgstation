@@ -9,9 +9,8 @@
 
 /datum/chemical_reaction/slime/proc/delete_extract(datum/reagents/holder)
 	var/obj/item/slime_extract/M = holder.my_atom
-	if(M.Uses <= 0)
-		if (!results.len) //if the slime doesn't output chemicals
-			qdel(M)
+	if(M.Uses <= 0 && !results.len) //if the slime doesn't output chemicals
+		qdel(M)
 
 //Grey
 /datum/chemical_reaction/slime/slimespawn
@@ -22,8 +21,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimespawn/on_reaction(datum/reagents/holder)
-	var/mob/living/simple_animal/slime/S
-	S = new(get_turf(holder.my_atom), "grey")
+	var/mob/living/simple_animal/slime/S = new(get_turf(holder.my_atom), "grey")
 	S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!</span>")
 	..()
 
@@ -223,6 +221,7 @@
 	required_reagents = list("plasma" = 1)
 	required_container = /obj/item/slime_extract/darkblue
 	required_other = 1
+	deletes_extract = FALSE
 
 /datum/chemical_reaction/slime/slimefreeze/on_reaction(datum/reagents/holder)
 	var/turf/T = get_turf(holder.my_atom)
@@ -360,7 +359,6 @@
 	..()
 
 //Red
-
 /datum/chemical_reaction/slime/slimemutator
 	name = "Slime Mutator"
 	id = "m_slimemutator"
