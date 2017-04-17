@@ -104,11 +104,12 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	log_admin("[key_name(usr)] teleported [key_name(M)]")
-	var/msg = "[key_name_admin(usr)] teleported [key_name_admin(M)]"
+	var/loc = get_turf(usr)
+	log_admin("[key_name(usr)] teleported [key_name(M)] to [COORD(loc)]")
+	var/msg = "[key_name_admin(usr)] teleported [key_name_admin(M)] to [ADMIN_COORDJMP(loc)]"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	M.forceMove(get_turf(usr))
+	M.forceMove(loc)
 	feedback_add_details("admin_verb","Get Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/Getkey()
