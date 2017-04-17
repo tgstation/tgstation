@@ -331,10 +331,10 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	if(message == "")
 		return
 
-/mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
-	healthscan(usr, M)
-	chemscan(usr, M)
-	return
+/mob/living/simple_animal/borer/UnarmedAttack(atom/A)
+	if(isliving(A))
+		healthscan(usr, A)
+		chemscan(usr, A)
 
 /mob/living/simple_animal/borer/ex_act()
 	if(victim)

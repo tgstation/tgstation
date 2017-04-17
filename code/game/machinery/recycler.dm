@@ -109,9 +109,12 @@
 		eat(AM)
 
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
-	var/list/to_eat = list(AM0)
+	var/list/to_eat
 	if(istype(AM0, /obj/item))
-		to_eat += AM0.GetAllContents()
+		to_eat = AM0.GetAllContents()
+	else
+		to_eat = list(AM0)
+
 	var/items_recycled = 0
 
 	for(var/i in to_eat)

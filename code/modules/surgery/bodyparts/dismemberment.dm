@@ -86,6 +86,7 @@
 	var/mob/living/carbon/C = owner
 	update_limb(1)
 	C.bodyparts -= src
+
 	if(held_index)
 		C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
 		C.hand_bodyparts[held_index] = null
@@ -125,6 +126,9 @@
 	C.update_body()
 	C.update_hair()
 	C.update_canmove()
+	if(is_pseudopart)
+		drop_organs(C)	//Psuedoparts shouldn't have organs, but just in case
+		qdel(src)
 
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb

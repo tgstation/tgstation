@@ -247,6 +247,7 @@
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.copy_to(M)
+	M.set_species(/datum/species/synth)
 	M.key = new_team_member.key
 	M.faction += team
 	M.equipOutfit(ctf_gear)
