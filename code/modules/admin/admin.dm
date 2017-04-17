@@ -82,7 +82,6 @@
 	body += "<A href='?_src_=holder;traitor=\ref[M]'>Traitor panel</A> | "
 	body += "<A href='?_src_=holder;narrateto=\ref[M]'>Narrate to</A> | "
 	body += "<A href='?_src_=holder;subtlemessage=\ref[M]'>Subtle message</A> | "
-	body += "<A href='?_src_=holder;individuallog=\ref[M]'>Individual Round Logs</A> | "
 	body += "<A href='?_src_=holder;languagemenu=\ref[M]'>Language Menu</A>"
 
 	if (M.client)
