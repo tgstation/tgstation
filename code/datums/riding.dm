@@ -328,55 +328,6 @@
 	else
 		to_chat(user, "<span class='notice'>You'll need something  to guide the [ridden.name].</span>")
 
-///////Humans. Yes, I said humans. No, this won't end well...//////////
-/datum/riding/human
-	keytype = null
-
-/datum/riding/human/ride_check(mob/living/M)
-	var/mob/living/carbon/human/H = ridden	//IF this runtimes I'm blaming the admins.
-	if(M.incapacitated(FALSE, TRUE) || H.incapacitated(FALSE, TRUE))
-		M.visible_message("<span class='warning'>[M] falls off [ridden]!</span>")
-		Unbuckle(M)
-		return FALSE
-	if(M.restrained(TRUE))
-		M.visible_message("<span class='warning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
-		Unbuckle(M)
-		return FALSE
-	if(H.pulling == M)
-		H.stop_pulling()
-
-/datum/riding/human/handle_vehicle_offsets()
-	for(var/mob/living/M in ridden.buckled_mobs)
-		M.setDir(ridden.dir)
-		switch(ridden.dir)
-			if(NORTH)
-				M.pixel_x = 0
-				M.pixel_y = 6
-			if(SOUTH)
-				M.pixel_x = 0
-				M.pixel_y = 6
-			if(EAST)
-				M.pixel_x = -6
-				M.pixel_y = 4
-			if(WEST)
-				M.pixel_x = 6
-				M.pixel_y = 4
-
-/datum/riding/human/handle_vehicle_layer()
-	if(ridden.buckled_mobs && ridden.buckled_mobs.len)
-		if(ridden.dir == SOUTH)
-			ridden.layer = ABOVE_MOB_LAYER
-		else
-			ridden.layer = OBJ_LAYER
-	else
-		ridden.layer = MOB_LAYER
-
-/datum/riding/human/force_dismount(mob/living/user)
-	ridden.unbuckle_mob(user)
-	user.Weaken(3)
-	user.Stun(3)
-	user.visible_message("<span class='warning'>[ridden] pushes [user] off of them!</span>")
-
 /datum/riding/cyborg
 	keytype = null
 
