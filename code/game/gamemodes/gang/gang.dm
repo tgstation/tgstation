@@ -26,8 +26,9 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 2
-	recommended_enemies = 2
+	recommended_enemies = 3
 	enemy_minimum_age = 14
+	var/gangs_to_create = 3
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
@@ -43,11 +44,6 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-
-	//Spawn more bosses depending on server population
-	var/gangs_to_create = 2
-	if(prob(num_players() * 2))
-		gangs_to_create ++
 
 	for(var/i=1 to gangs_to_create)
 		if(!antag_candidates.len)
