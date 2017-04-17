@@ -1148,7 +1148,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!holder)
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1168,6 +1168,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			target.gib(FALSE)
 		if(ADMIN_PUNISHMENT_BSA)
 			bluespace_artillery(target)
+		if(ADMIN_PUNISHMENT_FIREBALL)
+			new /obj/effect/overlay/temp/target(get_turf(target))
 
 	message_admins("[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment].")
 	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")

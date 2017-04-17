@@ -62,3 +62,4 @@
 #define ADMIN_PUNISHMENT_BRAINDAMAGE "Brain damage"
 #define ADMIN_PUNISHMENT_GIB "Gib"
 #define ADMIN_PUNISHMENT_BSA "Bluespace Artillery Device"
+#define ADMIN_PUNISHMENT_FIREBALL "Fireball"
