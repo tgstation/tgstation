@@ -11,14 +11,14 @@
 	appearance_flags = 0
 	light_power = 0.7
 	light_range = 15
-	light_color = rgb(190, 135, 0)
+	light_color = "#BE8700"
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
 	dangerous_possession = TRUE
 
-/obj/structure/destructible/clockwork/massive/ratvar/New()
-	..()
+/obj/structure/destructible/clockwork/massive/ratvar/Initialize()
+	. = ..()
 	GLOB.ratvar_awakens++
 	for(var/obj/O in GLOB.all_clockwork_objects)
 		O.ratvar_act()

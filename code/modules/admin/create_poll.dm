@@ -3,16 +3,16 @@
 	set category = "Special Verbs"
 	if(!check_rights(R_PERMISSIONS))
 		return
-	if(!GLOB.dbcon.IsConnected())
+	if(!SSdbcore.IsConnected())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/returned = create_poll_function()
 	if(returned)
-		var/DBQuery/query_check_option = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("poll_option")] WHERE pollid = [returned]")
+		var/datum/DBQuery/query_check_option = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_option")] WHERE pollid = [returned]")
 		if(!query_check_option.warn_execute())
 			return
 		if(query_check_option.NextRow())
-			var/DBQuery/query_log_get = GLOB.dbcon.NewQuery("SELECT polltype, question, adminonly FROM [format_table_name("poll_question")] WHERE id = [returned]")
+			var/datum/DBQuery/query_log_get = SSdbcore.NewQuery("SELECT polltype, question, adminonly FROM [format_table_name("poll_question")] WHERE id = [returned]")
 			if(!query_log_get.warn_execute())
 				return
 			if(query_log_get.NextRow())
@@ -23,7 +23,7 @@
 				message_admins("[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]")
 		else
 			to_chat(src, "Poll question created without any options, poll will be deleted.")
-			var/DBQuery/query_del_poll = GLOB.dbcon.NewQuery("DELETE FROM [format_table_name("poll_question")] WHERE id = [returned]")
+			var/datum/DBQuery/query_del_poll = SSdbcore.NewQuery("DELETE FROM [format_table_name("poll_question")] WHERE id = [returned]")
 			if(!query_del_poll.warn_execute())
 				return
 
@@ -51,7 +51,7 @@
 	if(!endtime)
 		return
 	endtime = sanitizeSQL(endtime)
-	var/DBQuery/query_validate_time = GLOB.dbcon.NewQuery("SELECT STR_TO_DATE('[endtime]','%Y-%c-%d %T')")
+	var/datum/DBQuery/query_validate_time = SSdbcore.NewQuery("SELECT STR_TO_DATE('[endtime]','%Y-%c-%d %T')")
 	if(!query_validate_time.warn_execute())
 		return
 	if(query_validate_time.NextRow())
@@ -59,7 +59,7 @@
 		if(!endtime)
 			to_chat(src, "Datetime entered is invalid.")
 			return
-	var/DBQuery/query_time_later = GLOB.dbcon.NewQuery("SELECT TIMESTAMP('[endtime]') < NOW()")
+	var/datum/DBQuery/query_time_later = SSdbcore.NewQuery("SELECT TIMESTAMP('[endtime]') < NOW()")
 	if(!query_time_later.warn_execute())
 		return
 	if(query_time_later.NextRow())
@@ -88,7 +88,7 @@
 	if(!question)
 		return
 	question = sanitizeSQL(question)
-	var/DBQuery/query_polladd_question = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("poll_question")] (polltype, starttime, endtime, question, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow) VALUES ('[polltype]', '[starttime]', '[endtime]', '[question]', '[adminonly]', '[choice_amount]', '[sql_ckey]', INET_ATON('[address]'), '[dontshow]')")
+	var/datum/DBQuery/query_polladd_question = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_question")] (polltype, starttime, endtime, question, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow) VALUES ('[polltype]', '[starttime]', '[endtime]', '[question]', '[adminonly]', '[choice_amount]', '[sql_ckey]', INET_ATON('[address]'), '[dontshow]')")
 	if(!query_polladd_question.warn_execute())
 		return
 	if(polltype == POLLTYPE_TEXT)
@@ -96,7 +96,7 @@
 		message_admins("[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]")
 		return
 	var/pollid = 0
-	var/DBQuery/query_get_id = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE question = '[question]' AND starttime = '[starttime]' AND endtime = '[endtime]' AND createdby_ckey = '[sql_ckey]' AND createdby_ip = INET_ATON('[address]')")
+	var/datum/DBQuery/query_get_id = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE question = '[question]' AND starttime = '[starttime]' AND endtime = '[endtime]' AND createdby_ckey = '[sql_ckey]' AND createdby_ip = INET_ATON('[address]')")
 	if(!query_get_id.warn_execute())
 		return
 	if(query_get_id.NextRow())
@@ -146,7 +146,7 @@
 				descmax = sanitizeSQL(descmax)
 			else if(descmax == null)
 				return pollid
-		var/DBQuery/query_polladd_option = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("poll_option")] (pollid, text, percentagecalc, minval, maxval, descmin, descmid, descmax) VALUES ('[pollid]', '[option]', '[percentagecalc]', '[minval]', '[maxval]', '[descmin]', '[descmid]', '[descmax]')")
+		var/datum/DBQuery/query_polladd_option = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_option")] (pollid, text, percentagecalc, minval, maxval, descmin, descmid, descmax) VALUES ('[pollid]', '[option]', '[percentagecalc]', '[minval]', '[maxval]', '[descmin]', '[descmid]', '[descmax]')")
 		if(!query_polladd_option.warn_execute())
 			return pollid
 		switch(alert(" ",,"Add option","Finish", "Cancel"))

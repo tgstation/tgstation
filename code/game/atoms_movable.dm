@@ -121,6 +121,10 @@
 
 	if(flags & CLEAN_ON_MOVE)
 		clean_on_move()
+	
+	var/datum/proximity_monitor/pc = proximity_monitor
+	if(pc)
+		pc.HandleMove()
 	return 1
 
 /atom/movable/proc/clean_on_move()
@@ -171,6 +175,8 @@
 
 	if(stationloving && force)
 		STOP_PROCESSING(SSinbounds, src)
+	
+	QDEL_NULL(proximity_monitor)
 
 	. = ..()
 	if(loc)

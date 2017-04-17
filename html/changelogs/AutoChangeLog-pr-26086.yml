@@ -1,0 +1,5 @@
+author: "BeeSting12"
+delete-after: True
+changes: 
+  - bugfix: "Cerestation's shuttle now has a recharger."
+  - rscdel: "Centcomm's thunderdome airlocks have been removed due to contestants breaking out."

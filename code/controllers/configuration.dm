@@ -66,7 +66,9 @@
 	var/respawn = 1
 	var/guest_jobban = 1
 	var/usewhitelist = 0
-	var/kick_inactive = 0				//force disconnect for inactive players
+	var/inactivity_period = 3000		//time in ds until a player is considered inactive
+	var/afk_period = 6000				//time in ds until a player is considered afk and kickable
+	var/kick_inactive = FALSE			//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/minimal_access_threshold = 0	//If the number of players is larger than this threshold, minimal access will be turned on.
@@ -258,6 +260,8 @@
 	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
 	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
 
+	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -408,10 +412,12 @@
 					usewhitelist = TRUE
 				if("allow_metadata")
 					allow_Metadata = 1
+				if("inactivity_period")
+					inactivity_period = text2num(value) * 10 //documented as seconds in config.txt
+				if("afk_period")
+					afk_period = text2num(value) * 10 // ^^^
 				if("kick_inactive")
-					if(value < 1)
-						value = INACTIVITY_KICK
-					kick_inactive = value
+					kick_inactive = TRUE
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
 				if("forbid_singulo_possession")
@@ -768,6 +774,8 @@
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
 				if("arrivals_shuttle_require_safe_latejoin")
 					arrivals_shuttle_require_safe_latejoin = text2num(value)
+				if("mice_roundstart")
+					mice_roundstart = text2num(value)
 				else
 					GLOB.diary << "Unknown setting in configuration: '[name]'"
 
