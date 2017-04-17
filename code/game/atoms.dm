@@ -498,6 +498,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /atom/proc/mech_melee_attack(obj/mecha/M)
 	return
 
+//If a mob logouts/logins in side of an object you can use this proc
+/atom/proc/on_log(in)
+	if(loc)
+		loc.on_log(in)
 
 
 /*
