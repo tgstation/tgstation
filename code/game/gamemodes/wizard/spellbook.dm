@@ -111,6 +111,7 @@
 	name = "Rod Form"
 	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
 	log_name = "RF"
+	cost = 3
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
