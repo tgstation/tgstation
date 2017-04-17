@@ -38,29 +38,26 @@
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == INTENT_HELP)
 			var/body_part = parse_zone(user.zone_selected)
-			if(body_part != "chest")
-				to_chat(user, "<span class='warning'>Stethoscopes only work on the chest!</span>")
-				return
-			else
-				var/heart_strength = "<span class='warning'>no</span>"
-				var/lung_strength = "<span class='warning'>no</span>"
 
-				var/obj/item/organ/heart/heart = M.getorganslot("heart")
-				var/obj/item/organ/lungs/lungs = M.getorganslot("lungs")
-				if(!(M.stat == DEAD || (M.status_flags&FAKEDEATH)))
-					if(heart && istype(heart))
-						heart_strength = "<span class='warning'>an unstable</span>"
-						if(heart.beating)
-							heart_strength = "a healthy"
-					if(lungs && istype(lungs))
-						lung_strength = "<span class='warning'>strained</span>"
-						if(!(M.failed_last_breath || M.losebreath))
-							lung_strength = "healthy"
+			var/heart_strength = "<span class='danger'>no</span>"
+			var/lung_strength = "<span class='danger'>no</span>"
 
-				user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "<span class='notice'>You place [src] against [M]'s [body_part]. You hear [heart_strength] pulse and [lung_strength] respiration.</span>")
-				if(M.getorganslot("parasite_egg"))
-					to_chat(user, "<span class='danger'>You hear a strange, alien pulse in [M]!</span>")
-				return
+			var/obj/item/organ/heart/heart = M.getorganslot("heart")
+			var/obj/item/organ/lungs/lungs = M.getorganslot("lungs")
+
+			if(!(M.stat == DEAD || (M.status_flags&FAKEDEATH)))
+				if(heart && istype(heart))
+					heart_strength = "<span class='danger'>an unstable</span>"
+					if(heart.beating)
+						heart_strength = "a healthy"
+				if(lungs && istype(lungs))
+					lung_strength = "<span class='danger'>strained</span>"
+					if(!(M.failed_last_breath || M.losebreath))
+						lung_strength = "healthy"
+
+			var/diagnosis = (body_part == "chest" ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
+			user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "<span class='notice'>You place [src] against [M]'s [body_part]. [diagnosis]</span>")
+			return
 	return ..(M,user)
 
 ///////////
