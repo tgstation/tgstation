@@ -80,8 +80,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Asteroid - Artifact"
 	icon_state = "cave"
 
-/area/asteroid/artifactroom/New()
-	..()
+/area/asteroid/artifactroom/Initialize()
+	. = ..()
 	set_dynamic_lighting()
 
 /area/planet/clown

@@ -1,4 +1,0 @@
-author: "powergaming research director"
-delete-after: True
-changes: 
-  - bugfix: "woops i dropped the emp protection module when i made your cns rebooters today, guess they're vulnerable again!"

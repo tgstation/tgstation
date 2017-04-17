@@ -21,8 +21,8 @@
 	if(!mobs)
 		return
 
-	shuffle(moblocs)
-	shuffle(mobs)
+	shuffle_inplace(moblocs)
+	shuffle_inplace(mobs)
 
 	for(var/mob/living/carbon/human/H in mobs)
 		if(!moblocs)
@@ -55,8 +55,8 @@
 	if(!mobs)
 		return
 
-	shuffle(mobnames)
-	shuffle(mobs)
+	shuffle_inplace(mobnames)
+	shuffle_inplace(mobs)
 
 	for(var/mob/living/carbon/human/H in mobs)
 		if(!mobnames)
@@ -89,7 +89,7 @@
 	if(!mobs)
 		return
 
-	shuffle(mobs)
+	shuffle_inplace(mobs)
 
 	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new /obj/effect/proc_holder/spell/targeted/mind_transfer
 	while(mobs.len > 1)

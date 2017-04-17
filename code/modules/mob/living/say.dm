@@ -1,62 +1,73 @@
+GLOBAL_LIST_INIT(department_radio_prefixes, list(":", "."))
+
 GLOBAL_LIST_INIT(department_radio_keys, list(
-	  ":r" = "right hand",	".r" = "right hand",
-	  ":l" = "left hand",	".l" = "left hand",
-	  ":i" = "intercom",	".i" = "intercom",
-	  ":h" = "department",	".h" = "department",
-	  ":c" = "Command",		".c" = "Command",
-	  ":n" = "Science",		".n" = "Science",
-	  ":m" = "Medical",		".m" = "Medical",
-	  ":e" = "Engineering", ".e" = "Engineering",
-	  ":s" = "Security",	".s" = "Security",
-	  ":b" = "binary",		".b" = "binary",
-	  ":a" = "alientalk",	".a" = "alientalk",
-	  ":t" = "Syndicate",	".t" = "Syndicate",
-	  ":u" = "Supply",		".u" = "Supply",
-	  ":v" = "Service",		".v" = "Service",
-	  ":o" = "AI Private",	".o" = "AI Private",
-	  ":g" = "changeling",	".g" = "changeling",
-	  ":y" = "Centcom",		".y" = "Centcom",
-	  ":x" = "cords",		".x" = "cords",
-	  ":p" = "admin",		".p" = "admin",
-	  ":d" = "deadmin",		".d" = "deadmin",
+	// Location
+	"r" = "right hand",
+	"l" = "left hand",
+	"i" = "intercom",
 
-	  ":R" = "right hand",	".R" = "right hand",
-	  ":L" = "left hand",	".L" = "left hand",
-	  ":I" = "intercom",	".I" = "intercom",
-	  ":H" = "department",	".H" = "department",
-	  ":C" = "Command",		".C" = "Command",
-	  ":N" = "Science",		".N" = "Science",
-	  ":M" = "Medical",		".M" = "Medical",
-	  ":E" = "Engineering",	".E" = "Engineering",
-	  ":S" = "Security",	".S" = "Security",
-	  ":B" = "binary",		".B" = "binary",
-	  ":A" = "alientalk",	".A" = "alientalk",
-	  ":T" = "Syndicate",	".T" = "Syndicate",
-	  ":U" = "Supply",		".U" = "Supply",
-	  ":V" = "Service",		".V" = "Service",
-	  ":O" = "AI Private",	".O" = "AI Private",
-	  ":G" = "changeling",	".G" = "changeling",
-	  ":Y" = "Centcom",		".Y" = "Centcom",
-	  ":X" = "cords",		".X" = "cords",
-	  ":P" = "admin",		".P" = "admin",
-	  ":D" = "deadmin",		".D" = "deadmin",
+	// Department
+	"h" = "department",
+	"c" = "Command",
+	"n" = "Science",
+	"m" = "Medical",
+	"e" = "Engineering",
+	"s" = "Security",
+	"u" = "Supply",
+	"v" = "Service",
 
-	  //kinda localization -- rastaf0
-	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":Ãª" = "right hand",	".Ãª" = "right hand",
-	  ":Ã¤" = "left hand",	".Ã¤" = "left hand",
-	  ":Ã¸" = "intercom",	".Ã¸" = "intercom",
-	  ":Ã°" = "department",	".Ã°" = "department",
-	  ":Ã±" = "Command",		".Ã±" = "Command",
-	  ":Ã²" = "Science",		".Ã²" = "Science",
-	  ":Ã¼" = "Medical",		".Ã¼" = "Medical",
-	  ":Ã³" = "Engineering",	".Ã³" = "Engineering",
-	  ":Ã»" = "Security",	".Ã»" = "Security",
-	  ":Ã¨" = "binary",		".Ã¨" = "binary",
-	  ":Ã´" = "alientalk",	".Ã´" = "alientalk",
-	  ":Ã¥" = "Syndicate",	".Ã¥" = "Syndicate",
-	  ":Ã©" = "Supply",		".Ã©" = "Supply",
-	  ":Ã¯" = "changeling",	".Ã¯" = "changeling"))
+	// Faction
+	"t" = "Syndicate",
+	"y" = "Centcom",
+
+	// Species
+	"b" = "binary",
+	"g" = "changeling",
+	"a" = "alientalk",
+
+	// Admin
+	"p" = "admin",
+	"d" = "deadmin",
+
+	// Misc
+	"o" = "AI Private", // AI Upload channel
+	"x" = "cords",		// vocal cords, used by Voice of God
+
+
+	//kinda localization -- rastaf0
+	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
+	// Location
+	"ê" = "right hand",
+	"ä" = "left hand",
+	"ø" = "intercom",
+
+	// Department
+	"ð" = "department",
+	"ñ" = "Command",
+	"ò" = "Science",
+	"ü" = "Medical",
+	"ó" = "Engineering",
+	"û" = "Security",
+	"ã" = "Supply",
+	"ì" = "Service",
+
+	// Faction
+	"å" = "Syndicate",
+	"í" = "Centcom",
+
+	// Species
+	"è" = "binary",
+	"ï" = "changeling",
+	"ô" = "alientalk",
+
+	// Admin
+	"ç" = "admin",
+	"â" = "deadmin",
+
+	// Misc
+	"ù" = "AI Private",
+	"÷" = "cords"
+))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
@@ -279,12 +290,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return 1
 
 /mob/living/proc/get_message_mode(message)
-	if(copytext(message, 1, 2) == ";")
+	var/key = copytext(message, 1, 2)
+	if(key == ";")
 		return MODE_HEADSET
-	else if(copytext(message, 1, 2) == "#")
+	else if(key == "#")
 		return MODE_WHISPER
-	else if(length(message) > 2)
-		return GLOB.department_radio_keys[copytext(message, 1, 3)]
+	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
+		var/key_symbol = lowertext(copytext(message, 2, 3))
+		return GLOB.department_radio_keys[key_symbol]
 
 /mob/living/proc/get_message_language(message)
 	var/static/list/langlist

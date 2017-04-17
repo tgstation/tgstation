@@ -162,9 +162,7 @@
 		used = 1
 		var/mob/dead/observer/theghost = pick(nuke_candidates)
 		spawn_antag(theghost.client, get_turf(src), "syndieborg")
-		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
-		S.set_up(4, 1, src)
-		S.start()
+		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
 		to_chat(user, "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")

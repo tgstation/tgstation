@@ -24,7 +24,7 @@
 	force_replace_ai_name = TRUE
 
 /obj/item/device/mmi/posibrain/soul_vessel/Initialize()
-	..()
+	. = ..()
 	radio.on = FALSE
 	laws = new /datum/ai_laws/ratvar()
 	braintype = picked_name

@@ -194,7 +194,7 @@ function handle_pr($payload) {
 		case 'edited':
 		case 'synchronize':
 			tag_pr($payload, false);
-			break;
+			return;
 		case 'reopened':
 			$action = $payload['action'];
 			break;
@@ -241,14 +241,20 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 		return;
 	}
 	$body = $payload['pull_request']['body'];
+
+	$tags = array();
+
+	if(preg_match('/(?i)(fix|fixes|fixed|resolve|resolves|resolved)\s*#[0-9]+/',$body))	//github autoclose syntax
+		$tags[] = 'Fix';
+
 	$body = str_replace("\r\n", "\n", $body);
 	$body = explode("\n", $body);
+
 	$username = $payload['pull_request']['user']['login'];
 	$incltag = false;
 	$changelogbody = array();
 	$currentchangelogblock = array();
 	$foundcltag = false;
-	$tags = array();
 	foreach ($body as $line) {
 		$line = trim($line);
 		if (substr($line,0,4) == ':cl:' || substr($line,0,4) == '🆑') {
@@ -417,13 +423,13 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 
 function sendtoallservers($str, $payload = null) {
 	global $servers;
-	
+	if (!empty($payload))
+		$str .= '&payload='.urlencode(json_encode($payload));
 	foreach ($servers as $serverid => $server) {
+		$msg = $str;
 		if (isset($server['comskey']))
-			$str .= '&key='.urlencode($server['comskey']);
-		if (!empty($payload))
-			$str .= '&payload='.urlencode(json_encode($payload));
-		$rtn = export($server['address'], $server['port'], $str);
+			$msg .= '&key='.urlencode($server['comskey']);
+		$rtn = export($server['address'], $server['port'], $msg);
 		echo "Server Number $serverid replied: $rtn\n";
 	}
 }
@@ -431,7 +437,6 @@ function sendtoallservers($str, $payload = null) {
 
 
 function export($addr, $port, $str) {
-	global $error;
 	// All queries must begin with a question mark (ie "?players")
 	if($str{0} != '?') $str = ('?' . $str);
 	
@@ -442,8 +447,7 @@ function export($addr, $port, $str) {
 	$server = socket_create(AF_INET,SOCK_STREAM,SOL_TCP) or exit("ERROR");
 	socket_set_option($server, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 2, 'usec' => 0)); //sets connect and send timeout to 2 seconds
 	if(!socket_connect($server,$addr,$port)) {
-		$error = true;
-		return "ERROR";
+		return "ERROR: Connection failed";
 	}
 
 	
@@ -454,7 +458,8 @@ function export($addr, $port, $str) {
 		//echo $bytessent.'<br>';
 		$result = socket_write($server,substr($query,$bytessent),$bytestosend-$bytessent);
 		//echo 'Sent '.$result.' bytes<br>';
-		if ($result===FALSE) die(socket_strerror(socket_last_error()));
+		if ($result===FALSE) 
+			return "ERROR: " . socket_strerror(socket_last_error());
 		$bytessent += $result;
 	}
 	
@@ -485,9 +490,7 @@ function export($addr, $port, $str) {
 				return $unpackstr;
 			}
 		}
-	}	
-	//if we get to this point, something went wrong;
-	$error = true;
-	return "ERROR";
+	}
+	return "";
 }
 ?>
