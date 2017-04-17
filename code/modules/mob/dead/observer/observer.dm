@@ -11,6 +11,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	layer = GHOST_LAYER
 	stat = DEAD
 	density = 0
+	mouse_opacity = 0
 	canmove = 0
 	anchored = 1	//  don't get pushed around
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
