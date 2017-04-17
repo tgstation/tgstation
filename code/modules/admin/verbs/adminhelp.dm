@@ -259,6 +259,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.closed_tickets -= src
 	GLOB.ahelp_tickets.resolved_tickets -= src
 	state = AHELP_ACTIVE
+	closed_at = null
 	if(initiator)
 		initiator.current_ticket = src
 
@@ -369,7 +370,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	dat += "</b>[GLOB.TAB][TicketHref("Refresh", ref_src)][GLOB.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
 	if(state != AHELP_ACTIVE)
 		dat += "[GLOB.TAB][TicketHref("Reopen", ref_src, "reopen")]"
-	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)][closed_at ? "<br>Closed at: [gameTimestamp(wtime = closed_at)]" : ""]<br><br>"
+	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)] (Approx [(world.time - opened_at) / 600] minutes ago)"\
+			"[closed_at ? "<br>Closed at: [gameTimestamp(wtime = closed_at)] (Approx [(world.time - closed_at) / 600] minutes ago" : ""]<br><br>"
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
 	else
