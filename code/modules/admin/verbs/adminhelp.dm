@@ -89,12 +89,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help_tickets/proc/ClientLogin(client/C)
 	C.current_ticket = CKey2ActiveTicket(C.ckey)
 	if(C.current_ticket)
-		C.current_ticket.interactions += "Client reconnected."
+		C.current_ticket.AddInteraction("Client reconnected.")
 
 //Dissasociate ticket
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
 	if(C.current_ticket)
-		C.current_ticket.interactions += "Client disconnected."
+		C.current_ticket.AddInteraction("Client disconnected.")
 		C.current_ticket.initiator = null
 		C.current_ticket = null
 
@@ -135,7 +135,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/initiator_ckey
 	var/initiator_key_name
 
-	var/list/interactions
+	var/list/_interactions	//use AddInteraction() or, preferably, admin_ticket_log()
 
 	var/obj/effect/statclick/ahelp/statclick
 
@@ -161,7 +161,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	initiator_key_name = key_name(initiator, FALSE, TRUE)
 	if(initiator.current_ticket)	//This is a bug
 		stack_trace("Multiple ahelp current_tickets")
-		initiator.current_ticket.interactions += "Ticket erroneously left open by code"
+		initiator.current_ticket.AddInteraction("Ticket erroneously left open by code")
 		initiator.current_ticket.Close()
 	initiator.current_ticket = src
 
@@ -170,12 +170,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/parsed_message = keywords_lookup(msg)
 
 	statclick = new(null, src)
+	_interactions = list()
 
 	if(is_bwoink)
-		interactions = list("<font color='blue'>[key_name_admin(usr)] bwoinked [LinkedReplyName()]</font>")
+		AddInteraction("<font color='blue'>[key_name_admin(usr)] bwoinked [LinkedReplyName()]</font>")
 		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 	else
-		interactions = list()
 		MessageNoRecipient(parsed_message)
 
 		//show it to the person adminhelping too
@@ -194,6 +194,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.closed_tickets -= src
 	GLOB.ahelp_tickets.resolved_tickets -= src
 	return ..()
+
+/datum/admin_help/proc/AddInteraction(formatted_message)
+	_interactions += "[gameTimestamp()]: [formatted_message]"
 
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/TimeoutVerb()
@@ -235,7 +238,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/ref_src = "\ref[src]"
 	var/chat_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [msg]</span>"
 
-	interactions += "<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>"
+	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 	//send this msg to all admins
 
 	for(var/client/X in GLOB.admins)
@@ -263,7 +266,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		initiator.current_ticket = src
 
-	interactions += "<font color='purple'>Reopened by [key_name_admin(usr)]</font>"
+	AddInteraction("<font color='purple'>Reopened by [key_name_admin(usr)]</font>")
 	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].</span>"
 	message_admins(msg)
 	log_admin_private(msg)
@@ -287,7 +290,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	RemoveActive()
 	state = AHELP_CLOSED
 	GLOB.ahelp_tickets.ListInsert(src)
-	interactions += "<font color='red'>Closed by [key_name].</font>"
+	AddInteraction("<font color='red'>Closed by [key_name].</font>")
 	if(!silent)
 		feedback_inc("ahelp_close")
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
@@ -305,7 +308,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		initiator.giveadminhelpverb()
 
-	interactions += "<font color='green'>Resolved by [key_name].</font>"
+	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
 	if(!silent)
 		feedback_inc("ahelp_resolve")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
@@ -330,7 +333,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	interactions += "Rejected by [key_name]."
+	AddInteraction("Rejected by [key_name].")
 	Close(silent = TRUE)
 
 //Resolve ticket with IC Issue message
@@ -349,7 +352,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	interactions += "Marked as IC issue by [key_name]"
+	AddInteraction("Marked as IC issue by [key_name]")
 	Resolve(silent = TRUE)
 
 //Show the ticket panel
@@ -370,14 +373,16 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	dat += "</b>[GLOB.TAB][TicketHref("Refresh", ref_src)][GLOB.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
 	if(state != AHELP_ACTIVE)
 		dat += "[GLOB.TAB][TicketHref("Reopen", ref_src, "reopen")]"
-	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)] (Approx [(world.time - opened_at) / 600] minutes ago)"\
-			"[closed_at ? "<br>Closed at: [gameTimestamp(wtime = closed_at)] (Approx [(world.time - closed_at) / 600] minutes ago" : ""]<br><br>"
+	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)] (Approx [(world.time - opened_at) / 600] minutes ago)"
+	if(closed_at)
+		dat += "<br>Closed at: [gameTimestamp(wtime = closed_at)] (Approx [(world.time - closed_at) / 600] minutes ago)"
+	dat += "<br><br>"
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
 	else
 		dat += "<b>DISCONNECTED</b>[GLOB.TAB][ClosureLinks(ref_src)]<br>"
 	dat += "<br><b>Log:</b><br><br>"
-	for(var/I in interactions)
+	for(var/I in _interactions)
 		dat += "[I]<br>"
 
 	usr << browse(dat.Join(), "window=ahelp[id];size=620x480")
@@ -471,7 +476,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			else 
 				to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>")
 		else
-			current_ticket.interactions += "[key_name_admin(usr)] opened a new ticket."
+			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
 			current_ticket.Close()
 
 	new /datum/admin_help(msg, src, FALSE)
@@ -505,17 +510,19 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //Use this proc when an admin takes action that may be related to an open ticket on what
 //what can be a client, ckey, or mob
 /proc/admin_ticket_log(what, message)
-	var/client/C = what
+	var/client/C
 	var/mob/Mob = what
 	if(istype(Mob))
 		C = Mob.client
+	else
+		C = what
 	if(istype(C) && C.current_ticket)
-		C.current_ticket.interactions += message
+		C.current_ticket.AddInteraction(message)
 		return C.current_ticket
 	if(istext(what))	//ckey
 		var/datum/admin_help/AH = GLOB.ahelp_tickets.CKey2ActiveTicket(what)
 		if(AH)
-			AH.interactions += message
+			AH.AddInteraction(message)
 			return AH
 
 //
