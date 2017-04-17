@@ -77,6 +77,8 @@ SUBSYSTEM_DEF(atoms)
 	if(start_tick != world.time)
 		BadInitializeCalls[the_type] |= BAD_INIT_SLEPT
 	
+	var/qdeleted = FALSE
+
 	if(result != INITIALIZE_HINT_NORMAL)
 		switch(result)
 			if(INITIALIZE_HINT_LATELOAD)
@@ -86,16 +88,16 @@ SUBSYSTEM_DEF(atoms)
 					A.LateInitialize()
 			if(INITIALIZE_HINT_QDEL)
 				qdel(A)
-				return TRUE
+				qdeleted = TRUE
 			else
 				BadInitializeCalls[the_type] |= BAD_INIT_NO_HINT
 				
 	if(!A)	//possible harddel
-		return TRUE
+		qdeleted = TRUE
 	else if(!A.initialized)
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	
-	return QDELETED(A)
+	return qdeleted || QDELETED(A)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized
