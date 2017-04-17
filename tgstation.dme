@@ -152,6 +152,7 @@
 #include "code\controllers\controller.dm"
 #include "code\controllers\failsafe.dm"
 #include "code\controllers\globals.dm"
+#include "code\controllers\init_order.dm"
 #include "code\controllers\master.dm"
 #include "code\controllers\subsystem.dm"
 #include "code\controllers\subsystem\acid.dm"

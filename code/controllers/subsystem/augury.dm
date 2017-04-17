@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(augury)
 	name = "Augury"
-	flags = SS_NO_INIT
 
 	var/list/watchers = list()
 	var/list/doombringers = list()

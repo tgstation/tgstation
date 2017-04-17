@@ -5,7 +5,6 @@ GLOBAL_LIST_EMPTY(lighting_update_objects) // List of lighting objects queued fo
 SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
 	wait = 2
-	init_order = -20
 	flags = SS_TICKER
 
 	var/initialized = FALSE

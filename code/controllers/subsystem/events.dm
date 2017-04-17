@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
-	init_order = 6
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event

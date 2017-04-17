@@ -8,7 +8,6 @@
 
 SUBSYSTEM_DEF(air)
 	name = "Air"
-	init_order = -1
 	priority = 20
 	wait = 5
 	flags = SS_BACKGROUND

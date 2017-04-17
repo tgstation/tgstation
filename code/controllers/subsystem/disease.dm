@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(disease)
 	name = "Disease"
-	flags = SS_KEEP_TIMING|SS_NO_INIT
+	flags = SS_KEEP_TIMING
 
 	var/list/currentrun = list()
 	var/list/processing = list()

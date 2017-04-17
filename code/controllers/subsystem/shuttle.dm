@@ -3,7 +3,6 @@
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
 	wait = 10
-	init_order = 3
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 
 	var/list/mobile = list()
