@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/list/the_dead = list()
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
-		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7 && M.z == z)) && client) // client is so that ghosts don't have to listen to mice
+		if(M.stat == DEAD && M.client && client && (((M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER) && eavesdropping_modes[message_mode]) || (M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7 && M.z == z))) // client is so that ghosts don't have to listen to mice
 			listening |= M
 			the_dead[M] = TRUE
 
