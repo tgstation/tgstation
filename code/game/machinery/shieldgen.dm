@@ -88,6 +88,8 @@
 	var/list/deployed_shields = list()
 	var/locked = 0
 	var/shield_range = 4
+	light_color = null
+	light_range = null
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/structure/emergency_shield/ES in deployed_shields)
@@ -102,6 +104,8 @@
 
 	active = 1
 	update_icon()
+	light_color = LIGHT_COLOR_CYAN
+	light_range = 2
 
 	for(var/turf/target_tile in range(shield_range, src))
 		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
@@ -114,6 +118,8 @@
 
 	active = 0
 	update_icon()
+	light_color = null
+	light_range = null
 
 	for(var/obj/structure/emergency_shield/ES in deployed_shields)
 		qdel(ES)

@@ -25,6 +25,8 @@
 	)
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
+	light_color = LIGHT_COLOR_CYAN
+	light_range = 2
 
 /obj/machinery/sleeper/New()
 	..()
