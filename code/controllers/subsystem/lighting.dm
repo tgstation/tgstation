@@ -37,9 +37,9 @@ SUBSYSTEM_DEF(lighting)
 	for (i in 1 to GLOB.lighting_update_lights.len)
 		var/datum/light_source/L = GLOB.lighting_update_lights[i]
 
-		if (L.check() || L.destroyed || L.force_update)
+		if (L.check() || QDELETED(L) || L.force_update)
 			L.remove_lum()
-			if (!L.destroyed)
+			if (!QDELETED(L))
 				L.apply_lum()
 
 		else if (L.vis_update) //We smartly update only tiles that became (in) visible to use.
