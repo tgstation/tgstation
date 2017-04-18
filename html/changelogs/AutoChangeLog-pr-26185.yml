@@ -1,4 +1,0 @@
-author: "Davidj361"
-delete-after: True
-changes: 
-  - bugfix: "Spawned humans no longer spawn eyeless (sprite)"
