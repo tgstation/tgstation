@@ -32,7 +32,7 @@
 	..()
 	buildstage = 0
 	panel_open = 1
-	pixel_x = (dir & VERITCAL) ? 0 : (dir == EAST ? -24 : 24)
+	pixel_x = (dir & VERTICAL) ? 0 : (dir == EAST ? -24 : 24)
 	pixel_y = (dir & VERTICAL) ? (dir == NORTH ? -24 : 24) : 0
 	update_icon()
 
