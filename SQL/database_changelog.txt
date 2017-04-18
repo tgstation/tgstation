@@ -1,3 +1,10 @@
+18 April 2017, by oranges
+Modified table 'player', adding the column 'byondaccountdate'
+
+ALTER TABLE `feedback`.`SS13_player` ADD COLUMN `byondaccountdate` datetime AFTER `lastadminrank`;
+
+removed the non prefix schema for tgstation, if someone actually needs this, they can maintain it themselves
+
 10 March 2017, by Jordie0608
 
 Modified table 'death', adding the columns 'toxloss', 'cloneloss', and 'staminaloss' and table 'legacy_population', adding the columns 'server_ip' and 'server_port'.

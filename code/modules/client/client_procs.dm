@@ -269,6 +269,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 	add_verbs_from_config()
 	set_client_age_from_db()
+	set_byond_account_age()
 
 	if (isnum(player_age) && player_age == -1) //first connection
 		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
@@ -292,12 +293,22 @@ GLOBAL_LIST(external_rsc_urls)
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
 
-	if(!IsGuestKey(key) && SSdbcore.IsConnected())
-		findJoinDate()
-
 	sync_client_with_db(tdata)
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
+
+	//Use the byond account age for jobs, instead of time on the server itself if it was found
+	//otherwise fall back to the player age which should be less anyway
+	if(config.use_account_age_for_jobs && byond_age >= 0)
+		player_age = byond_age
+
+	if(byond_age > 0 && byond_age < config.notify_new_player_byond_age)
+		message_admins("New user: [key_name_admin(src)] just connected with a byond account [byond_age] day[(byond_age==1?"":"s")] old, created on [byond_age_datestamp]")
+		if (config.irc_first_connection_alert)
+			send2irc_adminless_only("new_byond_user", "[key_name(src)] byond account is [byond_age] day[(byond_age==1?"":"s")] old, created on [byond_age_datestamp]!")
+
+	else //We failed to get an age for this user, let admins know they need to keep an eye on them
+		message_admins("Failed to get byond age for [key_name_admin(src)]")
 
 	send_resources()
 
@@ -405,7 +416,7 @@ GLOBAL_LIST(external_rsc_urls)
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 
-	var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
+	var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, byondaccountdate) VALUES (null, '[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', '[byond_age_datestamp]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank), byondaccountdate = VALUES(byondaccountdate)")
 	if(!query_log_player.Execute())
 		return
 
@@ -582,3 +593,49 @@ GLOBAL_LIST(external_rsc_urls)
 		CRASH("change_view called without argument.")
 
 	view = new_size
+
+/client/proc/set_byond_account_age()
+	byond_age = -1 //User has no day count of their age yet
+	byond_age_datestamp = null //Actual timestamp of their age
+
+	if(IsGuestKey(key))
+		return FALSE
+	if(!SSdbcore.IsConnected())
+		return FALSE
+
+	var/sqlckey = sanitizeSQL(ckey)
+	var/datum/DBQuery/datediff_stamp = SSdbcore.NewQuery("SELECT DATEDIFF(NOW(), byondaccountdate), DATE_FORMAT(byondaccountdate, '%Y %m %d') AS accountdate FROM [format_table_name("player")] WHERE ckey = [sqlckey] AND byondaccountdate IS NOT NULL")
+	if(datediff_stamp.Execute() && datediff_stamp.NextRow())
+		var/diff = text2num(datediff_stamp.item[1])
+		byond_age_datestamp = datediff_stamp.item[2]
+		byond_age = max(0, diff) //So job code soesn't freak out if they are time traveling.
+		return TRUE
+
+	else //Try to fetch the users byond account creation date from their website
+		var/datestamp = fetch_byond_account_datestamp()
+		if(datestamp)
+			var/datum/DBQuery/datediff = SSdbcore.NewQuery("SELECT DATEDIFF(NOW(), [datestamp])")
+			if(datediff.Execute() && datediff.NextRow())
+				var/diff = text2num(datediff.item[1])
+				byond_age_datestamp = datestamp
+				byond_age = max(0, diff)
+				return TRUE
+
+	return FALSE
+
+/client/proc/fetch_byond_account_datestamp()
+	var/http[] = world.Export("http://byond.com/members/[src.ckey]?format=text")
+	if(!http)
+		log_world("Failed to connect to byond age check for [src.ckey]")
+		return null
+
+	var/F = file2text(http["CONTENT"])
+	if(F)
+		var/regex/R = regex("joined = \"(\\d{4})-(\\d{2})-(\\d{2})\"")
+		if(!R.Find(F))
+			CRASH("Age check regex failed")
+		var/y = R.group[1]
+		var/m = R.group[2]
+		var/d = R.group[3]
+		return "[y] [m] [d]"
+
