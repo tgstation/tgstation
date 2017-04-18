@@ -34,7 +34,7 @@ CREATE TABLE `SS13_admin` (
 -- Table structure for table `SS13_admin_log`
 --
 
-DROP TABLE IF EXISTS `SS13_dmin_log`;
+DROP TABLE IF EXISTS `SS13_admin_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_admin_log` (
@@ -268,6 +268,7 @@ CREATE TABLE `SS13_player` (
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
+  `byondaccountdate` datetime,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ckey` (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
