@@ -50,10 +50,12 @@ echo done.
 
 echo Setting up symbolic links.
 mklink gamecode\a\nudge.py ..\..\bot\nudge.py
+mklink gamecode\a\libmysql.dll ..\..\gamedata\libmysql.dll
 mklink /d gamecode\a\data ..\..\gamedata\data
 mklink /d gamecode\a\config ..\..\gamedata\config
 
 mklink gamecode\b\nudge.py ..\..\bot\nudge.py
+mklink gamecode\b\libmysql.dll ..\..\gamedata\libmysql.dll
 mklink /d gamecode\b\data ..\..\gamedata\data
 mklink /d gamecode\b\config ..\..\gamedata\config
 
