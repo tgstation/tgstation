@@ -1364,7 +1364,7 @@ GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
 			| \____(      )___) )___
 			\______(_______;;; __;;;
 		*/
-	var/temp_file = "HTTPSGetOutput.txt"
+	var/temp_file = "data/HTTPSGetOutput.txt"
 	var/command
 	if(world.system_type == MS_WINDOWS)
 		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""

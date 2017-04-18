@@ -438,7 +438,7 @@
 		spread_cap *= production / 5
 		spread_multiplier /= production / 5
 
-/datum/spacevine_controller/vv_drop_down/vv_get_dropdown()
+/datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
 	. += "---"
 	.["Delete Vines"] = "?_src_=\ref[src];purge_vines=1"

@@ -1,4 +1,3 @@
-@echo off
 REM check if git is already in path
 git --version >nul 2>nul && goto :eof
 
