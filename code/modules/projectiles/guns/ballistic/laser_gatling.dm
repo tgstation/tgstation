@@ -15,12 +15,13 @@
 	var/overheat_max = 40
 	var/heat_diffusion = 1
 
-/obj/item/weapon/minigunpack/New()
+/obj/item/weapon/minigunpack/Initialize()
+	. = ..()
 	gun = new(src)
 	START_PROCESSING(SSobj, src)
-	..()
 
 /obj/item/weapon/minigunpack/Destroy()
+	QDEL_NULL(gun)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -111,15 +112,18 @@
 	var/obj/item/weapon/minigunpack/ammo_pack
 
 /obj/item/weapon/gun/ballistic/minigun/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 
 	if(!ammo_pack)
-		if(istype(loc,/obj/item/weapon/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
+		if(istype(loc, /obj/item/weapon/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
 			ammo_pack = loc
-			..()
 		else
 			qdel(src)//No pack, no gun
+
+/obj/item/weapon/gun/ballistic/minigun/Destroy()
+	ammo_pack = null
+	return ..()
 
 /obj/item/weapon/gun/ballistic/minigun/attack_self(mob/living/user)
 	return
