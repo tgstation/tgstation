@@ -245,9 +245,7 @@
 /turf/closed/mineral/clown,
 /area/ruin/unpowered/no_grav)
 "L" = (
-/turf/closed/wall/shuttle{
-	icon_state = "wall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered/no_grav)
 "M" = (
 /turf/open/floor/plating/airless,

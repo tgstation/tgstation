@@ -139,7 +139,7 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/weapon/gun/energy/e_gun=1,\
-		/obj/item/weapon/rcd/loaded=1)
+		/obj/item/weapon/construction/rcd/loaded=1)
 
 /datum/outfit/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -158,7 +158,7 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1,\
-		/obj/item/weapon/rcd/combat=1)
+		/obj/item/weapon/construction/rcd/combat=1)
 
 
 /datum/outfit/centcom_official

@@ -237,16 +237,16 @@
 /obj/structure/chair,
 /obj/item/weapon/shard,
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aQ" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aR" = (
 /obj/item/weapon/shard,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aS" = (
 /turf/open/floor/plating/airless{
@@ -274,11 +274,11 @@
 	icon_state = "singular"
 	},
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aW" = (
 /obj/effect/gibspawner/human,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aX" = (
 /turf/open/space,
@@ -319,7 +319,7 @@
 	},
 /obj/item/stack/rods,
 /obj/effect/gibspawner/human,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "bd" = (
 /obj/structure/chair{
@@ -328,10 +328,10 @@
 /obj/item/weapon/shard,
 /obj/item/stack/sheet/metal,
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "be" = (
-/turf/open/floor/plasteel/airless/shuttle/red,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "bf" = (
 /obj/item/stack/sheet/metal,

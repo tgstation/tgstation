@@ -42,6 +42,9 @@
 // those restrictions.
 #define OMNITONGUE "omnitongue"
 
+// TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
+#define TESLA_IGNORE "tesla_ignore"
+
 //turf-only flags
 #define NOJAUNT		1
 #define UNUSED_TRANSIT_TURF 2

@@ -16031,11 +16031,11 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "azd" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aze" = (
 /obj/structure/chair{
@@ -16046,7 +16046,7 @@
 	pixel_x = 0;
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "azf" = (
 /obj/structure/table/reinforced,
@@ -16530,10 +16530,10 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aAb" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aAc" = (
 /obj/machinery/door/airlock/command{
@@ -17220,7 +17220,7 @@
 "aBk" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aBl" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -17847,7 +17847,7 @@
 	name = "Holding Area";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aCp" = (
 /obj/machinery/ai_status_display,
@@ -19612,7 +19612,7 @@
 	})
 "aFo" = (
 /obj/structure/extinguisher_cabinet,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aFp" = (
 /obj/machinery/vending/wallmed{
@@ -19622,7 +19622,7 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aFq" = (
 /obj/machinery/power/emitter,
@@ -24299,6 +24299,12 @@
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Chamber";
+	dir = 2;
+	network = list("SS13","Engine");
+	pixel_x = 23
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
@@ -38231,7 +38237,7 @@
 	name = "Arrivals"
 	})
 "bkA" = (
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "bkB" = (
 /obj/structure/chair{
@@ -38278,7 +38284,7 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "bkG" = (
 /obj/structure/sign/nanotrasen,
@@ -38322,7 +38328,9 @@
 	},
 /area/shuttle/arrival)
 "bkL" = (
-/obj/effect/landmark/observer_start,
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/arrival)
 "bkM" = (
@@ -41498,7 +41506,7 @@
 	name = "Arrivals Shuttle console";
 	pixel_y = 0
 	},
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "buB" = (
 /obj/machinery/light{
@@ -41678,22 +41686,6 @@
 	},
 /area/tcommsat/server)
 "buV" = (
-/obj/machinery/power/rad_collector{
-	anchored = 1
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/camera{
-	c_tag = "Engineering Supermatter Chamber";
-	dir = 2;
-	network = list("SS13","Engine");
-	pixel_x = 23
-	},
-/turf/open/floor/circuit/green,
-/area/engine/supermatter)
-"buW" = (
 /obj/structure/cable/white{
 	tag = "icon-0-2";
 	icon_state = "0-2"
@@ -41703,6 +41695,9 @@
 	dir = 5
 	},
 /area/bridge)
+"buW" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
 "buX" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
@@ -41710,23 +41705,40 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "buZ" = (
-/turf/closed/wall/r_wall,
+/obj/machinery/power/rad_collector{
+	anchored = 1
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "bva" = (
-/turf/closed/wall/r_wall,
+/obj/machinery/power/rad_collector{
+	anchored = 1
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "bvb" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "bvc" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"bvd" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/supermatter)
-"bvd" = (
+"bve" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
-"bve" = (
+"bvf" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 
@@ -72431,11 +72443,11 @@ aHl
 aIi
 aJs
 aKz
-buY
-buV
+buX
 aMR
-aMR
+buZ
 bva
+bvb
 aQL
 aRI
 aSS
@@ -72687,12 +72699,12 @@ aGj
 aHm
 aIj
 aJt
-buX
+buW
 aLP
 aMS
 aMS
 aOC
-bvb
+bvc
 aQM
 aRJ
 aST
@@ -73206,7 +73218,7 @@ aLR
 aMU
 aOa
 aMU
-bvc
+bvd
 aQO
 aRL
 aSV
@@ -73720,7 +73732,7 @@ aLT
 aMW
 aMW
 aOD
-bvd
+bve
 aQQ
 aRN
 aSX
@@ -73973,11 +73985,11 @@ aHr
 aIo
 aJw
 aKE
-buZ
+buY
 aMX
 aMX
 aMX
-bve
+bvf
 aQR
 aRO
 aSY
@@ -83956,7 +83968,7 @@ aav
 aaH
 aaQ
 abb
-buW
+buV
 abF
 ack
 adc

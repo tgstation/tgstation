@@ -24,7 +24,7 @@ Captain
 
 /datum/job/captain/announce(mob/living/carbon/human/H)
 	..()
-	minor_announce("Captain [H.real_name] on deck!")
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.real_name] on deck!"))
 
 /datum/outfit/job/captain
 	name = "Captain"

@@ -7809,11 +7809,7 @@
 /area/shuttle/assault_pod)
 "tm" = (
 /obj/machinery/computer/shuttle/syndicate/drop_pod,
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3";
-	icon_state = "wall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "tn" = (
 /obj/structure/grille,
@@ -12088,17 +12084,10 @@
 /turf/closed/indestructible/riveted,
 /area/tdome/arena)
 "DF" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome Gear Room";
-	opacity = 1;
-	req_access_txt = "101"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
+/turf/closed/indestructible/riveted,
 /area/tdome/tdomeobserve)
 "DG" = (
 /obj/machinery/igniter,
@@ -54931,7 +54920,7 @@ AG
 AM
 AG
 Bc
-DF
+zH
 DO
 Eh
 Eh
@@ -61613,7 +61602,7 @@ AL
 AF
 AL
 Bd
-DF
+zH
 Eb
 Eq
 Eq

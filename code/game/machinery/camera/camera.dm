@@ -46,7 +46,8 @@
 	assembly.state = 4
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
-	add_to_proximity_list(src, 1) //1 was default of everything
+	proximity_monitor = new(src, 1)
+
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network
@@ -59,13 +60,8 @@
 	if(mapload && z == 1 && prob(3) && !start_active)
 		toggle_cam()
 
-/obj/machinery/camera/Move()
-	remove_from_proximity_list(src, 1)
-	return ..()
-
 /obj/machinery/camera/Destroy()
 	toggle_cam(null, 0) //kick anyone viewing out
-	remove_from_proximity_list(src, 1)
 	if(assembly)
 		qdel(assembly)
 		assembly = null
