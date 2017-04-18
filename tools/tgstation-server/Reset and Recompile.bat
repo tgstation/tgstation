@@ -4,6 +4,7 @@ set HOME = %USERPROFILE%
 
 call config.bat
 call bin\getcurdate.bat
+call bin\findgit.bat
 
 echo This will handle resetting the git repo, recompiling the server, and applying the new version.
 echo Ready?
