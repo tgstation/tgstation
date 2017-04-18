@@ -17,4 +17,4 @@ rmdir /q gamecode\%AB%\data >nul 2>nul
 rmdir /s /q gamecode\%AB%\data >nul 2>nul
 mklink /d gamecode\%AB%\data ..\..\gamedata\data >nul
 mklink /d gamecode\%AB%\config ..\..\gamedata\config >nul
-mklink /d gamecode\%AB%\libmysql.dll ..\..\gamedata\libmysql.dll >nul
+mklink gamecode\%AB%\libmysql.dll ..\..\gamedata\libmysql.dll >nul
