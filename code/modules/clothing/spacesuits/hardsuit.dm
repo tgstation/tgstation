@@ -149,6 +149,11 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
 	resistance_flags = FIRE_PROOF
 
+
+/obj/item/clothing/suit/space/hardsuit/engine/New()
+	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
+	..()
+
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
 	name = "atmospherics hardsuit helmet"
