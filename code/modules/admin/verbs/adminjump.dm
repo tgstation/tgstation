@@ -104,7 +104,7 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/loc = get_turf(usr)
+	var/atom/loc = get_turf(usr)
 	log_admin("[key_name(usr)] teleported [key_name(M)] to [COORD(loc)]")
 	var/msg = "[key_name_admin(usr)] teleported [key_name_admin(M)] to [ADMIN_COORDJMP(loc)]"
 	message_admins(msg)
