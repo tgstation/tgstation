@@ -499,9 +499,9 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return
 
 //If a mob logouts/logins in side of an object you can use this proc
-/atom/proc/on_log(in)
+/atom/proc/on_log(login)
 	if(loc)
-		loc.on_log(in)
+		loc.on_log(iloginn)
 
 
 /*

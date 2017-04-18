@@ -31,7 +31,7 @@
 		connected = null
 	return ..()
 
-/obj/structure/bodycontainer/on_log(in)
+/obj/structure/bodycontainer/on_log(login)
 	..()
 	update_icon()
 
