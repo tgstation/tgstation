@@ -74,6 +74,11 @@
 	if(ishuman(C))
 		var/datum/changelingprofile/prof = mind.changeling.add_new_profile(C, src)
 		mind.changeling.first_prof = prof
+
+		var/obj/item/organ/brain/B = C.getorganslot("brain")
+		if(B)
+			B.vital = FALSE
+			B.decoy_override = TRUE
 	return 1
 
 /datum/changeling/proc/reset()
