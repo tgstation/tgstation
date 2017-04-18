@@ -21,14 +21,15 @@
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0)
 	..()
 
-	if(C.mind && C.mind.changeling && C.stat)	//congrats, you're trapped in a body you don't control
+	name = "brain"
+
+	if(C.mind && C.mind.changeling)	//congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 			to_chat(brainmob, "<span class = danger>You can't feel your body! You're still just a brain!</span>")
 		loc = C
 		C.update_hair()
 		return
 
-	name = "brain"
 	if(brainmob)
 		if(C.key)
 			C.ghostize()
@@ -38,7 +39,7 @@
 		else
 			C.key = brainmob.key
 
-		qdel(brainmob)
+		QDEL_NULL(brainmob)
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
