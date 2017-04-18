@@ -14,7 +14,7 @@ REM What branch of the repo to use.
 set REPO_BRANCH=master
 
 
-REM Override Map (This disabled map roation and forces the selected map to always be loaded)
+REM Override Map (This disables map roation and forces the selected map to always be loaded)
 REM set MAPFILE=tgstation2
 REM set MAPFILE=metastation
 
