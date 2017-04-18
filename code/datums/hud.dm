@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(huds, list(
 /datum/atom_hud/proc/add_hud_to(mob/M)
 	if(!M)
 		return
-	hudusers |= M
+	hudusers[M] = TRUE
 	for(var/atom/A in hudatoms)
 		add_to_single_hud(M, A)
 
@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(huds, list(
 			gang_huds += G.ganghud
 
 	for(var/datum/atom_hud/hud in (GLOB.huds|gang_huds|GLOB.active_alternate_appearances))
-		if(src in hud.hudusers)
+		if(hud.hudusers[src])
 			hud.add_hud_to(src)
 
 /mob/dead/new_player/reload_huds()
