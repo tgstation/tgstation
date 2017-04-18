@@ -106,9 +106,11 @@
 		return
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]_thrown"
-		spawn(15)
-			if(icon_state == "[initial(icon_state)]_thrown")
-				icon_state = "[initial(icon_state)]"
+		addtimer(CALLBACK(src, .proc/clear_throw_icon_state), 15)
+
+/obj/item/clothing/mask/facehugger/proc/clear_throw_icon_state()
+	if(icon_state == "[initial(icon_state)]_thrown")
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom)
 	..()
@@ -171,8 +173,7 @@
 	// early returns and validity checks done: attach.
 	attached++
 	//ensure we detach once we no longer need to be attached
-	spawn(MAX_IMPREGNATION_TIME)
-		attached = 0
+	addtimer(CALLBACK(src, .proc/detach), MAX_IMPREGNATION_TIME)
 
 	if (iscorgi(M))
 		var/mob/living/simple_animal/pet/dog/corgi/C = M
@@ -186,10 +187,12 @@
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
-	spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
-		Impregnate(M)
+	addtimer(CALLBACK(src, .proc/Impregnate, M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
 	return TRUE // time for a smoke
+
+/obj/item/clothing/mask/facehugger/proc/detach()
+	attached = 0
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
 	if(!target || target.stat == DEAD) //was taken off or something
@@ -234,9 +237,7 @@
 	stat = UNCONSCIOUS
 	icon_state = "[initial(icon_state)]_inactive"
 
-	spawn(rand(MIN_ACTIVE_TIME,MAX_ACTIVE_TIME))
-		GoActive()
-	return
+	addtimer(CALLBACK(src, .proc/GoActive), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/Die()
 	if(stat == DEAD)
@@ -266,3 +267,9 @@
 			return 0
 		return 1
 	return 0
+
+#undef MIN_ACTIVE_TIME
+#undef MAX_ACTIVE_TIME
+
+#undef MIN_IMPREGNATION_TIME
+#undef MAX_IMPREGNATION_TIME

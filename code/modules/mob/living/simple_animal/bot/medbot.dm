@@ -89,13 +89,13 @@
 	..()
 	update_icon()
 
-	spawn(4)
-		if(skin)
-			add_overlay(image('icons/mob/aibots.dmi', "medskin_[skin]"))
+	if(skin)
+		add_overlay(image('icons/mob/aibots.dmi', "medskin_[skin]"))
 
-		var/datum/job/doctor/J = new/datum/job/doctor
-		access_card.access += J.get_access()
-		prev_access = access_card.access
+	var/datum/job/doctor/J = new /datum/job/doctor
+	access_card.access += J.get_access()
+	prev_access = access_card.access
+	qdel(J)
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -536,13 +536,11 @@
 	..()
 
 /mob/living/simple_animal/bot/medbot/proc/declare(crit_patient)
-	if(declare_cooldown)
+	if(declare_cooldown > world.time)
 		return
 	var/area/location = get_area(src)
 	speak("Medical emergency! [crit_patient ? "<b>[crit_patient]</b>" : "A patient"] is in critical condition at [location]!",radio_channel)
-	declare_cooldown = 1
-	spawn(200) //Twenty seconds
-		declare_cooldown = 0
+	declare_cooldown = world.time + 200
 
 /obj/machinery/bot_core/medbot
 	req_one_access =list(GLOB.access_medical, GLOB.access_robotics)
