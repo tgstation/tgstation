@@ -5,6 +5,7 @@ set HOME = %USERPROFILE%
 
 call config.bat
 call bin\getcurdate.bat
+call bin\findgit.bat
 
 echo This will update the server without resetting local changes like test merges.
 echo Note: This doesn't update the changelog like a normal update does.
