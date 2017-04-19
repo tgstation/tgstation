@@ -63151,7 +63151,7 @@
 /area/shuttle/escape)
 "chy" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/machinery/recharger,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "chz" = (
@@ -63171,6 +63171,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/crowbar,
+/obj/item/weapon/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "chC" = (
