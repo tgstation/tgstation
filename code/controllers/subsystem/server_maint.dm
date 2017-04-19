@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(server_maint)
 	priority = 10
 	var/list/currentrun
 
-/datum/controller/subsystem/server_maint/Initialize()
+/datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (config.hub)
 		world.visibility = 1
 	..()
