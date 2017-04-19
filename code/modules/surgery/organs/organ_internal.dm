@@ -884,11 +884,11 @@
 
 /obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
 	..()
-	set_light(15)
+	M.set_light(M.light_range + 15, M.light_power + 1)
 
 
 /obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
-	set_light(-15)
+	M.set_light(M.light_range -15, M.light_power - 1)
 	..()
 
 // Welding shield implant
