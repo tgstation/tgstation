@@ -130,9 +130,8 @@
 		traitor.objectives += survive_objective
 
 	else
-		var/is_hijacker = prob(10)
 		var/martyr_chance = prob(20)
-		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
+		var/objective_count = 0
 		if(!exchange_blue && traitors.len >= 8) 	//Set up an exchange if there are enough traitors
 			if(!exchange_red)
 				exchange_red = traitor
@@ -164,14 +163,6 @@
 				steal_objective.owner = traitor
 				steal_objective.find_target()
 				traitor.objectives += steal_objective
-
-		if(is_hijacker && objective_count <= config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
-			if (!(locate(/datum/objective/hijack) in traitor.objectives))
-				var/datum/objective/hijack/hijack_objective = new
-				hijack_objective.owner = traitor
-				traitor.objectives += hijack_objective
-				return
-
 
 		var/martyr_compatibility = 1 //You can't succeed in stealing if you're dead.
 		for(var/datum/objective/O in traitor.objectives)
