@@ -243,7 +243,7 @@
 	volume = 20
 	origin_tech = "materials=3;engineering=3"
 
-/obj/item/weapon/reagent_containers/syringe/noreact/NInitialize()
+/obj/item/weapon/reagent_containers/syringe/noreact/Initialize()
 	. = ..()
 	reagents.set_reacting(FALSE)
 
