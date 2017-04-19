@@ -116,7 +116,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(GLOB.rpg_loot_items)
 		rpg_loot = new(src)
 
-	GLOB.all_items_list[src] = TRUE
+	GLOB.all_items_list += src
 
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
