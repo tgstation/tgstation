@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "The shuttle's arrival can no longer be delayed after Nar-Sie's
+arrival. The End cannot be delayed."
