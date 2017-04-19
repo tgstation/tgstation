@@ -44083,6 +44083,7 @@
 	dir = 2;
 	network = list("SS13")
 	},
+/mob/living/simple_animal/parrot/Poly,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
