@@ -312,7 +312,7 @@
 			return
 		else
 			connected_message("Authorized Ejection")
-			SPEAK("An authorized ejection [occupant ? "of [occupant.real_name] " : ""]has occurred.")
+			SPEAK("An authorized ejection of [clonemind.name] has occurred.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
 	else
@@ -338,9 +338,13 @@
 /obj/machinery/clonepod/proc/go_out()
 	countdown.stop()
 
+	var/turf/T = get_turf(src)
+
 	if(mess) //Clean that mess and dump those gibs!
 		mess = FALSE
-		new /obj/effect/gibspawner/generic(loc)
+		for(var/obj/A in contents)
+			if(istype(A, /obj/item/organ) || istype(A, /obj/effect/decal/cleanable/blood/gibs))
+				A.forceMove(T)
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		icon_state = "pod_0"
 		return
@@ -353,7 +357,6 @@
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		occupant.flash_act()
 
-	var/turf/T = get_turf(src)
 	occupant.forceMove(T)
 	icon_state = "pod_0"
 	occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
@@ -365,6 +368,8 @@
 		SPEAK("Critical error! Please contact a Thinktronic Systems \
 			technician, as your warranty may be affected.")
 		mess = TRUE
+		for(var/obj/item/O in unattached_flesh)
+			qdel(O)
 		icon_state = "pod_g"
 		if(occupant.mind != clonemind)
 			clonemind.transfer_to(occupant)
@@ -373,16 +378,19 @@
 		to_chat(occupant, "<span class='warning'><b>Agony blazes across your consciousness as your body is torn apart.</b><br><i>Is this what dying is like? Yes it is.</i></span>")
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
-		QDEL_IN(occupant, 40)
+		var/obj/item/organ/brain/B = occupant.getorganslot("brain")
+		B.Remove(occupant)
+		B.forceMove(src)
+		occupant.gib(TRUE, TRUE, TRUE)
 
 /obj/machinery/clonepod/relaymove(mob/user)
 	if(user.stat == CONSCIOUS)
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
-	if(prob(100/(severity*efficiency)))
+	if((occupant || mess) && prob(100/(severity*efficiency)))
 		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
-		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [occupant.real_name] prematurely." ,0))
+		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [clonemind.name] prematurely." ,0))
 		go_out()
 	..()
 
