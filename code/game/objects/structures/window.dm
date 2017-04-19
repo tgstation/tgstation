@@ -27,7 +27,23 @@
 
 /obj/structure/window/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
+	if(reinf)
+		if(anchored && state == WINDOW_SCREWED_TO_FRAME)
+			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the frame.</span>")
+		else if(anchored && state == WINDOW_IN_FRAME)
+			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> but <b>pried</b> into the frame.</span>")
+		else if(anchored && state == WINDOW_OUT_OF_FRAME)
+			to_chat(user, "<span class='notice'>The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to the floor.</span>")
+		else if(!anchored)
+			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+	else
+		if(anchored)
+			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the floor.</span>")
+		else
+			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+
+	if(!anchored)
+		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/Initialize(mapload, direct)
 	..()
