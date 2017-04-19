@@ -96,7 +96,6 @@ Note: Must be placed west/left of and R&D console to function.
 		var/sheet_material = materials.get_item_material_amount(O)
 		if(!sheet_material)
 			return
-
 		if(!materials.has_space(sheet_material))
 			to_chat(user, "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>")
 			return 1
@@ -106,6 +105,8 @@ Note: Must be placed west/left of and R&D console to function.
 		if(!in_range(src, stack) || !user.Adjacent(src))
 			return
 		var/amount_inserted = materials.insert_stack(O,amount)
+		if (amount_inserted <= 0)
+			return
 		if(!amount_inserted)
 			return 1
 		else
