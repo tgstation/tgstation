@@ -134,7 +134,6 @@
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 		STOP_PROCESSING(SSobj, src)
 		set_light(0)
-	add_fingerprint(user)
 
 /obj/item/weapon/melee/energy/is_hot()
 	return active * heat

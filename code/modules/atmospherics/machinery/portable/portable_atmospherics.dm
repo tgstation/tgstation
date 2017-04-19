@@ -121,5 +121,4 @@
 		take_damage(0)
 	else
 		investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
-		add_fingerprint(user)
 		..()

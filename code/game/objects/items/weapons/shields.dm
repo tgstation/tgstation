@@ -93,7 +93,6 @@
 		w_class = WEIGHT_CLASS_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
-	add_fingerprint(user)
 
 /obj/item/weapon/shield/riot/tele
 	name = "telescopic shield"
@@ -133,4 +132,3 @@
 		w_class = WEIGHT_CLASS_NORMAL
 		slot_flags = null
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
-	add_fingerprint(user)

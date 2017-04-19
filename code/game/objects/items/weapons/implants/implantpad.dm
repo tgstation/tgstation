@@ -26,7 +26,6 @@
 		case.add_fingerprint(user)
 		case = null
 
-		add_fingerprint(user)
 		update_icon()
 	else
 		return ..()

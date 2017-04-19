@@ -85,7 +85,6 @@
 		return
 
 	toggle_open()
-	add_fingerprint(user)
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(state_open)

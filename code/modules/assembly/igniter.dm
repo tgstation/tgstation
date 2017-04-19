@@ -28,7 +28,6 @@
 
 /obj/item/device/assembly/igniter/attack_self(mob/user)
 	activate()
-	add_fingerprint(user)
 
 /obj/item/device/assembly/igniter/ignition_effect(atom/A, mob/user)
 	. = "<span class='notice'>[user] fiddles with [src], and manages to \

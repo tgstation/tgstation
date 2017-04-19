@@ -108,6 +108,8 @@
 		return 0
 
 	add_fingerprint(user)
+	if(M != user)
+		add_fingerprint(M)
 
 	if(buckle_mob(M, check_loc = check_loc))
 		if(M == user)
@@ -126,7 +128,9 @@
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)
+		add_fingerprint(user)
 		if(M != user)
+			add_fingerprint(M)
 			M.visible_message(\
 				"<span class='notice'>[user] unbuckles [M] from [src].</span>",\
 				"<span class='notice'>[user] unbuckles you from [src].</span>",\
@@ -136,7 +140,6 @@
 				"<span class='notice'>[M] unbuckles [M.p_them()]self from [src].</span>",\
 				"<span class='notice'>You unbuckle yourself from [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
-		add_fingerprint(user)
 	return M
 
 

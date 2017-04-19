@@ -57,7 +57,6 @@
 			dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> <A href='?src=\ref[src];top=\ref[P]'>Move to top</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR>"
 	user << browse(dat, "window=clipboard")
 	onclose(user, "clipboard")
-	add_fingerprint(usr)
 
 
 /obj/item/weapon/clipboard/Topic(href, href_list)

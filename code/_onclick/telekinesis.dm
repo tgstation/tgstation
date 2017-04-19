@@ -44,7 +44,7 @@
 	return
 
 /obj/item/attack_self_tk(mob/user)
-	attack_self(user)
+	do_attack_self(user)
 
 
 /*

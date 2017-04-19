@@ -49,7 +49,6 @@
 			active = 1
 			cut_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled"), TRUE)	//this line make no sense
 			icon_state = initial(icon_state) + "_active"
-			add_fingerprint(user)
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
 

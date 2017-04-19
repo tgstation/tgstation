@@ -105,8 +105,6 @@ MASS SPECTROMETER
 	else if(scanmode == 1)
 		chemscan(user, M)
 
-	add_fingerprint(user)
-
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/living/user, mob/living/M, mode = 1)
@@ -262,9 +260,6 @@ MASS SPECTROMETER
 	origin_tech = "magnets=1;engineering=1"
 
 /obj/item/device/analyzer/attack_self(mob/user)
-
-	add_fingerprint(user)
-
 	if (user.stat || user.eye_blind)
 		return
 

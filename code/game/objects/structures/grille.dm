@@ -106,7 +106,6 @@
 
 /obj/structure/grille/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(!shock(user, 100))
 			playsound(loc, W.usesound, 100, 1)

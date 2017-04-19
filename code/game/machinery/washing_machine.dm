@@ -171,7 +171,6 @@
 
 /obj/machinery/washing_machine/container_resist(mob/living/user)
 	if(!busy)
-		add_fingerprint(user)
 		open_machine()
 
 

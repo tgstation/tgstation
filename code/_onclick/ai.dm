@@ -88,6 +88,7 @@
 		RestrainedClickOn(A)
 	else
 	*/
+	A.add_fingerprint(src)
 	A.attack_ai(src)
 
 /*

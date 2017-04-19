@@ -122,7 +122,6 @@
 /obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
-	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
@@ -135,7 +134,6 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("[user] knocks on [src].")
-	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
 /obj/structure/window/attack_paw(mob/user)
@@ -151,7 +149,6 @@
 	if(!can_be_reached(user))
 		return 1 //skip the afterattack
 
-	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity)

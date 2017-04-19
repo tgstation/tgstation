@@ -441,7 +441,6 @@
 		for(var/mob/M in range(1))
 			if(M.s_active == src)
 				close(M)
-	add_fingerprint(user)
 
 /obj/item/weapon/storage/attack_paw(mob/user)
 	return attack_hand(user)

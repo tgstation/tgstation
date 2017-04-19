@@ -52,13 +52,10 @@
 			status = 0
 			GLOB.bombers += "[key_name(user)] unwelded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
 			to_chat(user, "<span class='notice'>The hole has been closed.</span>")
-	add_fingerprint(user)
 	..()
 
 /obj/item/device/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, 1)
-	add_fingerprint(user)
-	return
 
 /obj/item/device/onetankbomb/receive_signal()	//This is mainly called by the sensor through sense() to the holder, and from the holder to here.
 	visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")

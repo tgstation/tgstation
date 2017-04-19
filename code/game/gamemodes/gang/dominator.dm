@@ -93,10 +93,6 @@
 		new /obj/item/stack/sheet/plasteel(src.loc)
 	qdel(src)
 
-/obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
-	add_fingerprint(user)
-	..()
-
 /obj/machinery/dominator/proc/set_broken()
 	if(gang)
 		gang.is_dominating = FALSE

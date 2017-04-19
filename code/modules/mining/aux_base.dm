@@ -33,7 +33,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 /obj/machinery/computer/auxillary_base/attack_hand(mob/user)
 	if(..(user))
 		return
-	add_fingerprint(usr)
 
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)

@@ -142,7 +142,6 @@
 	..(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
-	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(panel_open)
 			if(cell)

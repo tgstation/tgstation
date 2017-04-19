@@ -80,7 +80,7 @@
 /obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
 
@@ -222,7 +222,6 @@
 	if(operating)
 		return
 
-	add_fingerprint(user)
 	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(density || operating)

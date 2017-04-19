@@ -40,7 +40,7 @@
 		src.name = "data disk- '[t]'"
 	else
 		src.name = "data disk"
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	return
 
 /*
@@ -88,8 +88,6 @@
 /obj/item/weapon/card/id/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
-	src.add_fingerprint(user)
-	return
 
 /obj/item/weapon/card/id/examine(mob/user)
 	..()

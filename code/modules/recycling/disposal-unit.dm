@@ -77,7 +77,6 @@
 		..()
 
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
-	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
 		if(istype(I, /obj/item/weapon/screwdriver))
 			panel_open = !panel_open

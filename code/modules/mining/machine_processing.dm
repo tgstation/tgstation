@@ -132,7 +132,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["sel_iron"])
 		if (href_list["sel_iron"] == "yes")
 			machine.selected_iron = 1

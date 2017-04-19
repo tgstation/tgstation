@@ -58,7 +58,7 @@
 		return
 
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["removeall"])
 		dump_box_contents()
 		to_chat(usr, "<span class='notice'>You empty the box.</span>")

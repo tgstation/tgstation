@@ -222,7 +222,6 @@
 			Reset()
 			emagged = 0
 
-	add_fingerprint(usr)
 	updateUsrDialog()
 	return
 

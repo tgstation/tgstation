@@ -4,7 +4,6 @@
 	state = 0
 
 /obj/structure/frame/computer/attackby(obj/item/P, mob/user, params)
-	add_fingerprint(user)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))

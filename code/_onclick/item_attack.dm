@@ -6,6 +6,9 @@
 		if(!resolved && target && I)
 			I.afterattack(target, user, 1, params) // 1: clicking something Adjacent
 
+/obj/item/proc/do_attack_self(mob/user)
+	add_fingerprint(user)
+	return attack_self(user)
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
@@ -49,7 +52,6 @@
 	M.attacked_by(src, user)
 
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-	add_fingerprint(user)
 
 
 //the equivalent of the standard version of attack() but for object targets.

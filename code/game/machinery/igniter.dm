@@ -23,7 +23,6 @@
 /obj/machinery/igniter/attack_hand(mob/user)
 	if(..())
 		return
-	add_fingerprint(user)
 
 	use_power(50)
 	src.on = !( src.on )
@@ -85,7 +84,6 @@
 
 /obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/screwdriver))
-		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
 			user.visible_message("[user] has disabled \the [src]!", "<span class='notice'>You disable the connection to \the [src].</span>")

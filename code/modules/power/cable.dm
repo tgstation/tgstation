@@ -149,8 +149,6 @@ By design, d1 is the smallest direction and d2 is the highest
 			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
 		shock(user, 5, 0.2)
 
-	src.add_fingerprint(user)
-
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
 	if(!prob(prb))

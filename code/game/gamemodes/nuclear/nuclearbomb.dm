@@ -96,7 +96,6 @@
 			return
 		I.forceMove(src)
 		auth = I
-		add_fingerprint(user)
 		return
 
 	switch(deconstruction_state)

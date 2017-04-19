@@ -76,7 +76,6 @@
 	playsound(loc, 'sound/effects/Glassknock.ogg', 10, FALSE, frequency = 32000)
 
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user, params)
-	add_fingerprint(user)
 	if(operating)
 		return
 
@@ -123,7 +122,6 @@
 		close()
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
-	add_fingerprint(user)
 	if(welded || operating || stat & NOPOWER)
 		return
 	if(density)
@@ -132,7 +130,6 @@
 		close()
 
 /obj/machinery/door/firedoor/attack_alien(mob/user)
-	add_fingerprint(user)
 	if(welded)
 		to_chat(user, "<span class='warning'>[src] refuses to budge!</span>")
 		return

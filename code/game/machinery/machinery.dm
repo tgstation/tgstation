@@ -276,7 +276,6 @@ Class Procs:
 	if(set_machine)
 		user.set_machine(src)
 	interact(user)
-	add_fingerprint(user)
 	return 0
 
 /obj/machinery/CheckParts(list/parts_list)
