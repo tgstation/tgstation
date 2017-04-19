@@ -261,6 +261,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
+	reagents.remove_reagent("nicotine", 15)
 
 /obj/item/clothing/mask/cigarette/rollie/trippy/New()
 	..()
@@ -343,6 +344,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/New()
 	..()
 	name = "empty [initial(name)]"
+	reagents.remove_reagent("nicotine", 15)
 
 /obj/item/clothing/mask/cigarette/pipe/Destroy()
 	STOP_PROCESSING(SSobj, src)
