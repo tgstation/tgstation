@@ -312,7 +312,7 @@
 			return
 		else
 			connected_message("Authorized Ejection")
-			SPEAK("An authorized ejection of [occupant.real_name] has occurred.")
+			SPEAK("An authorized ejection [occupant ? "of [occupant.real_name] " : ""]has occurred.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
 	else
