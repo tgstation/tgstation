@@ -75,9 +75,6 @@
 
 	// Admin PM
 	if(href_list["priv_msg"])
-		if (href_list["ahelp_reply"])
-			cmd_ahelp_reply(href_list["priv_msg"])
-			return
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
@@ -158,6 +155,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
+
+	GLOB.ahelp_tickets.ClientLogin(src)
 
 	//Admin Authorisation
 	var/localhost_addresses = list("127.0.0.1", "::1")
@@ -340,6 +339,8 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
+	
+	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src
 	if(movingmob != null)
