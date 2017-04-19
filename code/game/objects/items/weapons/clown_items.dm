@@ -105,7 +105,7 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
-	var/spam_flag = 0
+	var/next_usable = 0
 	var/honksound = 'sound/items/bikehorn.ogg'
 	var/cooldowntime = 20
 
@@ -115,19 +115,15 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!spam_flag)
+	if(!(next_usable > world.time))
 		playsound(loc, honksound, 50, 1, -1) //plays instead of tap.ogg!
 	return ..()
 
 /obj/item/weapon/bikehorn/attack_self(mob/user)
-	if(!spam_flag)
-		spam_flag = TRUE
+	if(!(next_usable > world.time))
+		next_usable = world.time + cooldowntime
 		playsound(src.loc, honksound, 50, 1)
 		src.add_fingerprint(user)
-		addtimer(CALLBACK(src, .proc/clear_cooldown), cooldowntime)
-
-/obj/item/weapon/bikehorn/proc/clear_cooldown()
-	spam_flag = FALSE
 
 /obj/item/weapon/bikehorn/Crossed(mob/living/L)
 	if(isliving(L))
@@ -157,7 +153,7 @@
 	..()
 
 /obj/item/weapon/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
-	if(!spam_flag)
+	if(!(next_usable > world.time))
 		var/turf/T = get_turf(src)
 		for(M in ohearers(7, T))
 			if(ishuman(M) && M.can_hear())
