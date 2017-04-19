@@ -42,7 +42,7 @@
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
-	new /obj/effect/overlay/temp/monkeyify(get_turf(src))
+	new /obj/effect/overlay/temp/monkeyify(loc)
 	sleep(22)
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 
@@ -187,7 +187,7 @@
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
-	new /obj/effect/overlay/temp/monkeyify/humanify(get_turf(src))
+	new /obj/effect/overlay/temp/monkeyify/humanify(loc)
 	sleep(22)
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)

@@ -42,7 +42,8 @@
 	body += "<a href='?_src_=holder;traitor=\ref[M]'>TP</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;subtlemessage=\ref[M]'>SM</a> - "
-	body += "<a href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>"
+	body += "<a href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a> - "
+	body += "<a href='?_src_=holder;individuallog=\ref[M]'>LOGS</a>\] <b><br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
@@ -81,7 +82,6 @@
 	body += "<A href='?_src_=holder;traitor=\ref[M]'>Traitor panel</A> | "
 	body += "<A href='?_src_=holder;narrateto=\ref[M]'>Narrate to</A> | "
 	body += "<A href='?_src_=holder;subtlemessage=\ref[M]'>Subtle message</A> | "
-	body += "<A href='?_src_=holder;individuallog=\ref[M]'>Individual Round Logs</A> | "
 	body += "<A href='?_src_=holder;languagemenu=\ref[M]'>Language Menu</A>"
 
 	if (M.client)
