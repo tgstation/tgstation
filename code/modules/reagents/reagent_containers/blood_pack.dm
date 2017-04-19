@@ -7,8 +7,8 @@
 	var/blood_type = null
 	var/labelled = 0
 
-/obj/item/weapon/reagent_containers/blood/New()
-	..()
+/obj/item/weapon/reagent_containers/blood/Initialize()
+	. = ..()
 	if(blood_type != null)
 		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()
@@ -43,9 +43,9 @@
 		if(51 to INFINITY)
 			icon_state = "full"
 
-/obj/item/weapon/reagent_containers/blood/random/New()
+/obj/item/weapon/reagent_containers/blood/random/Initialize()
 	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
-	..()
+	. = ..()
 
 /obj/item/weapon/reagent_containers/blood/APlus
 	blood_type = "A+"

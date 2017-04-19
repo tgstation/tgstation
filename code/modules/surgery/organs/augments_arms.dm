@@ -14,8 +14,8 @@
 	var/obj/item/holder = null
 	// You can use this var for item path, it would be converted into an item on New()
 
-/obj/item/organ/cyberimp/arm/New()
-	..()
+/obj/item/organ/cyberimp/arm/Initialize()
+	. = ..()
 	if(ispath(holder))
 		holder = new holder(src)
 
@@ -207,8 +207,8 @@
 	contents = newlist(/obj/item/device/assembly/flash/armimplant)
 	origin_tech = "materials=4;combat=3;biotech=4;magnets=4;powerstorage=3"
 
-/obj/item/organ/cyberimp/arm/flash/New()
-	..()
+/obj/item/organ/cyberimp/arm/flash/Initialize()
+	. = ..()
 	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
 		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
 		F.I = src
@@ -225,8 +225,8 @@
 	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
 	origin_tech = "materials=5;combat=7;biotech=5;powerstorage=5;syndicate=6;programming=5"
 
-/obj/item/organ/cyberimp/arm/combat/New()
-	..()
+/obj/item/organ/cyberimp/arm/combat/Initialize()
+	. = ..()
 	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
 		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
 		F.I = src

@@ -12,8 +12,8 @@
 	var/heater_coefficient = 0.10
 	var/on = FALSE
 
-/obj/machinery/chem_heater/New()
-	..()
+/obj/machinery/chem_heater/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_heater(null)
 	B.apply_default_parts(src)
 

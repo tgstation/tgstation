@@ -9,8 +9,8 @@
 	volume = 30
 
 
-/obj/item/weapon/reagent_containers/glass/bottle/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/Initialize()
+	. = ..()
 	if(!icon_state)
 		icon_state = "bottle"
 	update_icon()
@@ -139,8 +139,8 @@
 	icon_state = "bottle16"
 	var/extra_reagent = null
 
-/obj/item/weapon/reagent_containers/glass/bottle/traitor/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/traitor/Initialize()
+	. = ..()
 	extra_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
 	reagents.add_reagent("[extra_reagent]", 3)
 

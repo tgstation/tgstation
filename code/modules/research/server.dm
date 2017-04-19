@@ -14,8 +14,8 @@
 	var/delay = 10
 	req_access = list(GLOB.access_rd) //Only the R&D can change server settings.
 
-/obj/machinery/r_n_d/server/New()
-	..()
+/obj/machinery/r_n_d/server/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
 

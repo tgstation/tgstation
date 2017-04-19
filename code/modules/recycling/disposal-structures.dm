@@ -147,8 +147,8 @@
 	var/obj/structure/disposalconstruct/stored
 
 	// new pipe, set the icon_state as on map
-/obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
-	..()
+/obj/structure/disposalpipe/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 
 	if(make_from && !QDELETED(make_from))
 		base_icon_state = make_from.base_state
@@ -176,7 +176,6 @@
 				stored.ptype = DISP_SORTJUNCTION
 			if("pipe-j2s")
 				stored.ptype = DISP_SORTJUNCTION_FLIP
-	return
 
 
 	// pipe is deleted
@@ -349,15 +348,14 @@
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe-s"
 
-/obj/structure/disposalpipe/segment/New()
-	..()
+/obj/structure/disposalpipe/segment/Initialize()
+	. = ..()
 	if(stored.ptype == DISP_PIPE_STRAIGHT)
 		dpdir = dir | turn(dir, 180)
 	else
 		dpdir = dir | turn(dir, -90)
 
 	update()
-	return
 
 
 
@@ -366,8 +364,8 @@
 /obj/structure/disposalpipe/junction
 	icon_state = "pipe-j1"
 
-/obj/structure/disposalpipe/junction/New()
-	..()
+/obj/structure/disposalpipe/junction/Initialize()
+	. = ..()
 	switch(stored.ptype)
 		if(DISP_JUNCTION)
 			dpdir = dir | turn(dir, -90) | turn(dir,180)
@@ -376,7 +374,6 @@
 		if(DISP_YJUNCTION)
 			dpdir = dir | turn(dir,90) | turn(dir, -90)
 	update()
-	return
 
 
 // next direction to move
@@ -442,8 +439,8 @@
 
 	dpdir = sortdir | posdir | negdir
 
-/obj/structure/disposalpipe/sortjunction/New()
-	..()
+/obj/structure/disposalpipe/sortjunction/Initialize()
+	. = ..()
 
 	// Generate a list of soring tags.
 	if(sortType)
@@ -458,7 +455,6 @@
 
 	updatedir()
 	update()
-	return
 
 /obj/structure/disposalpipe/sortjunction/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/destTagger))
@@ -506,8 +502,8 @@
 	var/negdir = 0
 	var/sortdir = 0
 
-/obj/structure/disposalpipe/wrapsortjunction/New()
-	..()
+/obj/structure/disposalpipe/wrapsortjunction/Initialize()
+	. = ..()
 	posdir = dir
 	if(stored.ptype == DISP_SORTJUNCTION)
 		sortdir = turn(posdir, -90)
@@ -519,7 +515,6 @@
 	dpdir = sortdir | posdir | negdir
 
 	update()
-	return
 
 // next direction to move
 // if coming in from negdir, then next is primary dir or sortdir
@@ -547,14 +542,13 @@
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
-/obj/structure/disposalpipe/trunk/New()
-	..()
+/obj/structure/disposalpipe/trunk/Initialize()
+	. = ..()
 	dpdir = dir
 	spawn(1)
 		getlinked()
 
 	update()
-	return
 
 /obj/structure/disposalpipe/trunk/Destroy()
 	if(linked)
@@ -621,8 +615,8 @@
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
 
-/obj/structure/disposalpipe/broken/New()
-	..()
+/obj/structure/disposalpipe/broken/Initialize()
+	. = ..()
 	update()
 
 // the disposal outlet machine
@@ -645,9 +639,8 @@
 	var/start_eject = 0
 	var/eject_range = 2
 
-/obj/structure/disposaloutlet/New(loc, var/obj/structure/disposalconstruct/make_from)
-	..()
-
+/obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = src

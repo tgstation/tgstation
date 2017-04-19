@@ -16,8 +16,8 @@
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
 	container_type = TRANSPARENT
 
-/obj/item/weapon/reagent_containers/syringe/New()
-	..()
+/obj/item/weapon/reagent_containers/syringe/Initialize()
+	. = ..()
 	if(list_reagents) //syringe starts in inject mode if its already got something inside
 		mode = SYRINGE_INJECT
 		update_icon()
@@ -243,7 +243,7 @@
 	volume = 20
 	origin_tech = "materials=3;engineering=3"
 
-/obj/item/weapon/reagent_containers/syringe/noreact/New()
+/obj/item/weapon/reagent_containers/syringe/noreact/NInitialize()
 	. = ..()
 	reagents.set_reacting(FALSE)
 

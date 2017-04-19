@@ -412,8 +412,8 @@
 		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
 		return 1
 
-/obj/docking_port/mobile/pod/New()
-	..()
+/obj/docking_port/mobile/pod/Initialize()
+	. = ..()
 	if(id == "pod")
 		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
 
@@ -492,8 +492,7 @@
 	icon_state = "safe"
 	var/unlocked = FALSE
 
-/obj/item/weapon/storage/pod/New()
-	..()
+/obj/item/weapon/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/suit/space/orange(src)
@@ -533,13 +532,13 @@
 	dir = EAST
 	roundstart_move = "backup_away"
 
-/obj/docking_port/mobile/emergency/backup/New()
+/obj/docking_port/mobile/emergency/backup/Initialize()
 	// We want to be a valid emergency shuttle
 	// but not be the main one, keep whatever's set
 	// valid.
 	// backup shuttle ignores `timid` because THERE SHOULD BE NO TOUCHING IT
 	var/current_emergency = SSshuttle.emergency
-	..()
+	. = ..()
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 

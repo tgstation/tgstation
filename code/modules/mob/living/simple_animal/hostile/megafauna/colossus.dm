@@ -106,7 +106,7 @@ Difficulty: Very Hard
 	var/target
 
 /obj/effect/overlay/temp/at_shield/Initialize(mapload, new_target)
-	..()
+	. = ..()
 	target = new_target
 	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
 

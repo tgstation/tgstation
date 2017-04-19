@@ -655,7 +655,7 @@
 	var/phomeme_type = "sans"
 	var/list/phomeme_types = list("sans", "papyrus")
 
-/obj/item/organ/tongue/bone/New()
+/obj/item/organ/tongue/bone/Initialize()
 	. = ..()
 	phomeme_type = pick(phomeme_types)
 

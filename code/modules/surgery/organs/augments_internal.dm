@@ -155,8 +155,7 @@
 		/obj/item/device/autosurgeon/reviver)
 	var/amount = 5
 
-/obj/item/weapon/storage/box/cyber_implants/bundle/New()
-	..()
+/obj/item/weapon/storage/box/cyber_implants/PopulateContents()
 	var/implant
 	while(contents.len <= amount)
 		implant = pick(boxed)

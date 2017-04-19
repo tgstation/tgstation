@@ -31,9 +31,9 @@
 	var/challenge = FALSE
 	var/moved = FALSE
 
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle/New()
+/obj/item/weapon/circuitboard/computer/syndicate_shuttle/Initialize()
+	. = ..()
 	GLOB.syndicate_shuttle_boards += src
-	..()
 
 /obj/item/weapon/circuitboard/computer/syndicate_shuttle/Destroy()
 	GLOB.syndicate_shuttle_boards -= src

@@ -96,8 +96,8 @@ Difficulty: Medium
 	duration = 12
 	pixel_z = 500
 
-/obj/effect/overlay/temp/fireball/Initialize(loc)
-	..()
+/obj/effect/overlay/temp/fireball/Initialize()
+	. = ..()
 	animate(src, pixel_z = 0, time = 12)
 
 /obj/effect/overlay/temp/target
@@ -121,8 +121,8 @@ Difficulty: Medium
 /obj/effect/overlay/temp/target/ex_act()
 	return
 
-/obj/effect/overlay/temp/target/Initialize(loc)
-	..()
+/obj/effect/overlay/temp/target/Initialize()
+	. = ..()
 	INVOKE_ASYNC(src, .proc/fall)
 
 /obj/effect/overlay/temp/target/proc/fall()
