@@ -262,7 +262,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/reply = alert(src, "Succumb to your injuries? You will die.", "Succumb?", "Succumb", "Do not Succumb")
 		if(reply == "Succumb")
 			succumb()
-	else if(stat == DEAD)
+
+	if(stat == DEAD) // and if we succumbed, we're dead.
 		ghostize(1)
 	else
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
