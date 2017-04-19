@@ -118,12 +118,7 @@
 	color = "#6600FF" // rgb: 100, 165, 255
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/M)
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		var/obj/item/organ/ears/ears = C.getorganslot("ears")
-		if(istype(ears))
-			// This will not cure genetic deafness.
-			ears.fully_heal()
+	M.restoreEars()
 	..()
 
 /datum/reagent/medicine/cryoxadone

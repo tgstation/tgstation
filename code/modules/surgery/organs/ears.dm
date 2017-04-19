@@ -34,7 +34,9 @@
 	deaf = 0
 	ear_damage = 0
 
-	if(C.disabilities & DEAF)
+	var/mob/living/carbon/C = owner
+
+	if(iscarbon(owner) && C.disabilities & DEAF)
 		deaf = 1
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
