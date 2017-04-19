@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(garbage)
 		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
 /datum/controller/subsystem/garbage/proc/Queue(datum/A)
-	if (!isnull(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
+	if (isnull(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
 		return
 	if (A.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
 		HardDelete(A)
