@@ -200,6 +200,7 @@
 	clonemind.transfer_to(H)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
+		H.grab_ghost()
 		to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
