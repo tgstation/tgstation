@@ -113,7 +113,6 @@
 			else
 				. += T
 
-#ifdef DOCKING_PORT_HIGHLIGHT
 //Debug proc used to highlight bounding area
 /obj/docking_port/proc/highlight(_color)
 	var/list/L = return_coords()
@@ -128,7 +127,6 @@
 		T.color = "#0f0"
 		T = locate(L[3], L[4], z)
 		T.color = "#00f"
-#endif
 
 //return first-found touching dockingport
 /obj/docking_port/proc/get_docked()
@@ -221,6 +219,8 @@
 	// All shuttle templates are timid
 	var/timid = FALSE
 
+	var/safety = FALSE
+
 	var/list/ripples = list()
 
 /obj/docking_port/mobile/New()
@@ -296,6 +296,16 @@
 		// attempt to move us where we currently are, it will get weird.
 			return SHUTTLE_ALREADY_DOCKED
 
+	if(safety)
+		var/safety_check = 0
+		var/list/safety_zone = return_ordered_turfs(S.x, S.y, S.z, S.dir)
+		for(var/turf/checked in safety_zone)
+			if(!istype(checked, /turf/open/space))
+				safety_check++
+		if(safety_check > 4)  // The limit on non-space turfs in the docking area
+			return SHUTTLE_DOCK_OBSTRUCTED
+
+
 	return SHUTTLE_CAN_DOCK
 
 /obj/docking_port/mobile/proc/check_dock(obj/docking_port/stationary/S)
@@ -316,7 +326,7 @@
 	if(!check_dock(S))
 		testing("check_dock failed on request for [src]")
 		return
-	
+
 	if(mode == SHUTTLE_IGNITING && destination == S)
 		return
 
