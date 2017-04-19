@@ -28,11 +28,7 @@ Bonus
 	..()
 	var/mob/living/M = A.affected_mob
 	if(A.stage >= 2)
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			var/obj/item/organ/ears/ears = C.getorgan(/obj/item/organ/ears)
-			if(ears)
-				ears.fully_heal()
+		M.restoreEars()
 
 	if(A.stage >= 3)
 		M.dizziness = 0
@@ -54,7 +50,6 @@ Bonus
 
 	if(A.stage >= 5)
 		M.adjustBrainLoss(-3)
-	return
 
 /*
 //////////////////////////////////////
@@ -131,5 +126,3 @@ Bonus
 			M.drowsyness += 1
 		if(24 to INFINITY)
 			M.Sleeping(2, 0)
-
-	return

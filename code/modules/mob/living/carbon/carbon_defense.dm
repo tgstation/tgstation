@@ -318,9 +318,3 @@
 	var/obj/item/organ/ears/ears = getorganslot("ears")
 	if(istype(ears) && !ears.deaf)
 		. = TRUE
-
-/mob/living/carbon/proc/adjustEarDamage(dmg, deff)
-	var/obj/item/organ/ears/ears = getorganslot("ears")
-	if(istype(ears))
-		ears.ear_damage = max(ears.ear_damage + dmg, 0)
-		ears.deaf = max(ears.deaf + deff, 0)

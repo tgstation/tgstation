@@ -722,9 +722,7 @@
 	..()
 	// heal ears after healing disabilities, since ears check DEAF disability
 	// when healing.
-	var/obj/item/organ/ears/E = getorgan(/obj/item/organ/ears)
-	if(E)
-		E.fully_heal()
+	restoreEars()
 
 /mob/living/carbon/can_be_revived()
 	. = ..()

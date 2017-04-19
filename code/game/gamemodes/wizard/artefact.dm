@@ -471,7 +471,7 @@
 		else if(istype(I,/obj/item/weapon/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
 			target << 'sound/items/AirHorn.ogg'
-			target.adjustEarDamage(0, 3)
+			target.adjustEarDamage(0,3)
 			GiveHint(target)
 		cooldown = world.time +cooldown_time
 		return

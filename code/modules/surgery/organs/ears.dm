@@ -30,9 +30,38 @@
 			ear_damage = max(ear_damage - 0.05, 0)
 			deaf = max(deaf - 1, 0)
 
-/obj/item/organ/ears/proc/fully_heal()
+/obj/item/organ/ears/proc/restoreEars()
 	deaf = 0
 	ear_damage = 0
 
 	if(C.disabilities & DEAF)
 		deaf = 1
+
+/obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
+	ear_damage = max(ear_damage + ddmg, 0)
+	deaf = max(deaf + ddeaf, 0)
+
+/obj/item/organ/ears/proc/minimumDeafTicks(value)
+	deaf = max(deaf, value)
+
+
+/mob/proc/restoreEars()
+
+/mob/living/carbon/restoreEars()
+	var/obj/item/organ/ears/ears = getorgan(/obj/item/organ/ears)
+	if(ears)
+		ears.restoreEars()
+
+/mob/proc/adjustEarDamage()
+
+/mob/living/carbon/adjustEarDamage(ddmg, ddeaf)
+	var/obj/item/organ/ears/ears = getorgan(/obj/item/organ/ears)
+	if(ears)
+		ears.adjustEarDamage(ddmg, ddeaf)
+
+/mob/proc/minimumDeafTicks()
+
+/mob/living/carbon/minimumDeafTicks(value)
+	var/obj/item/organ/ears/ears = getorgan(/obj/item/organ/ears)
+	if(ears)
+		ears.minimumDeafTicks(value)
