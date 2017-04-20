@@ -22,6 +22,7 @@ SUBSYSTEM_DEF(explosion)
 	var/dyn_ex_scale = 0.5
 
 	var/id_counter = 0
+	var/item_throw_speed = 4
 
 /datum/controller/subsystem/explosion/PreInit()
 	doppler_arrays = list()
@@ -41,6 +42,7 @@ SUBSYSTEM_DEF(explosion)
 	rebuild_tick_split_count = TRUE
 	zlevels_that_ignore_bombcap = SSexplosion.zlevels_that_ignore_bombcap
 	doppler_arrays = SSexplosion.doppler_arrays
+	item_throw_speed = SSexplosion.item_throw_speed
 
 	devastation_cap = SSexplosion.devastation_cap
 	heavy_cap = SSexplosion.heavy_cap
@@ -363,6 +365,7 @@ SUBSYSTEM_DEF(explosion)
 	var/y0 = epi.y
 
 	var/cut_to = 1
+	var/its = item_throw_speed
 	for(var/TI in affected_turfs)
 		var/turf/T = TI
 		++cut_to
@@ -406,8 +409,8 @@ SUBSYSTEM_DEF(explosion)
 			if(!I.anchored)
 				var/throw_range = rand(throw_dist, throw_range_max)
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
-				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Resets when it finishes throwing, regardless of hitting anything)
-				I.throw_at(throw_at, throw_range, 4)		
+				I.throw_speed = its //Temporarily change their throw_speed for embedding purposes (Resets when it finishes throwing, regardless of hitting anything)
+				I.throw_at(throw_at, throw_range, its)		
 
 		if(MC_TICK_CHECK)
 			var/circumference = (PI * (init_dist + 4) * 2) //+4 to radius to prevent shit gaps
