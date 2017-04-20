@@ -145,9 +145,10 @@
 
 /datum/controller/subsystem/proc/pause()
 	. = 1
-	if (state == SS_RUNNING)
+	var/current_state = state
+	if (current_state == SS_RUNNING)
 		state = SS_PAUSED
-	else if (state == SS_SLEEPING)
+	else if (current_state == SS_SLEEPING)
 		state = SS_PAUSING
 
 
