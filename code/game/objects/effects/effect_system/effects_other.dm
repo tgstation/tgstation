@@ -134,4 +134,4 @@
 				M.Weaken(rand(1,5))
 		return
 	else
-		SSexplosion.CreateDynamic(location, amount, flashing_factor)
+		dyn_explosion(location, amount, flashing_factor)

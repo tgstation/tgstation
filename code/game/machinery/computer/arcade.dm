@@ -100,7 +100,7 @@
 	for(var/i = num_of_prizes; i > 0; i--)
 		empprize = pickweight(prizes)
 		new empprize(loc)
-	SSexplosion.Create(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
+	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
 
 // ** BATTLE ** //
@@ -1104,7 +1104,7 @@
 	playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, 1)
 	sleep(3.6)
 	visible_message("<span class='userdanger'>[src] explodes!</span>")
-	SSexplosion.Create(loc, 2,4,8, flame_range = 16)
+	explosion(loc, 2,4,8, flame_range = 16)
 	qdel(src)
 
 

@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(doppler_arrays)
+
 /obj/machinery/doppler_array
 	name = "tachyon-doppler array"
 	desc = "A highly precise directional sensor array which measures the release of quants from decaying tachyons. The doppler shifting of the mirror-image formed by these quants can reveal the size, location and temporal affects of energetic disturbances within a large radius ahead of the array.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
@@ -11,10 +13,10 @@
 
 /obj/machinery/doppler_array/New()
 	..()
-	SSexplosion.doppler_arrays += src
+	GLOB.doppler_arrays += src
 
 /obj/machinery/doppler_array/Destroy()
-	SSexplosion.doppler_arrays -= src
+	GLOB.doppler_arrays -= src
 	return ..()
 
 /obj/machinery/doppler_array/process()

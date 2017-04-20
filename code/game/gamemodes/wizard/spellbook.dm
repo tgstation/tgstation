@@ -768,7 +768,7 @@
 
 /obj/item/weapon/spellbook/oneuse/fireball/recoil(mob/user)
 	..()
-	SSexplosion.Create(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
+	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	qdel(src)
 
 /obj/item/weapon/spellbook/oneuse/smoke

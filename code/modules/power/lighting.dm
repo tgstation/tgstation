@@ -535,7 +535,7 @@
 
 /obj/machinery/light/tesla_act(power, explosive = FALSE)
 	if(explosive)
-		SSexplosion.Create(src.loc,0,0,0,flame_range = 5, adminlog = 0)
+		explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
 	qdel(src)
 
 // called when area power state changes
@@ -556,7 +556,7 @@
 	var/turf/T = get_turf(src.loc)
 	break_light_tube()	// break it first to give a warning
 	sleep(2)
-	SSexplosion.Create(T, 0, 0, 2, 2)
+	explosion(T, 0, 0, 2, 2)
 	sleep(1)
 	qdel(src)
 

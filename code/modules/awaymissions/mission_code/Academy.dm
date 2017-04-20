@@ -185,7 +185,7 @@
 			user.throw_at(throw_target, 200, 4)
 		if(8)
 			//Fueltank Explosion
-			SSexplosion.Create(src.loc,-1,0,2, flame_range = 2)
+			explosion(src.loc,-1,0,2, flame_range = 2)
 		if(9)
 			//Cold
 			var/datum/disease/D = new /datum/disease/cold

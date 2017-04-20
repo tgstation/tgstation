@@ -955,7 +955,7 @@
 						inactivity_period = 9999 // technically infinite
 						if(do_after(src,60,target=traitorTarget))
 							customEmote("A fire bursts from [src]'s eyes, igniting white hot and consuming their body in a flaming explosion!")
-							SSexplosion.Create(src, 6, 6, 6)
+							explosion(src, 6, 6, 6)
 						else
 							inactivity_period = 0
 							customEmote("[src]'s chest closes, hiding their insides.")

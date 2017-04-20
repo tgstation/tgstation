@@ -495,13 +495,13 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 		if(null)
 			return 0
 		if("Small Bomb (1, 2, 3, 3)")
-			SSexplosion.Create(epicenter, 1, 2, 3, 3, TRUE, TRUE)
+			explosion(epicenter, 1, 2, 3, 3, TRUE, TRUE)
 		if("Medium Bomb (2, 3, 4, 4)")
-			SSexplosion.Create(epicenter, 2, 3, 4, 4, TRUE, TRUE)
+			explosion(epicenter, 2, 3, 4, 4, TRUE, TRUE)
 		if("Big Bomb (3, 5, 7, 5)")
-			SSexplosion.Create(epicenter, 3, 5, 7, 5, TRUE, TRUE)
+			explosion(epicenter, 3, 5, 7, 5, TRUE, TRUE)
 		if("Maxcap")
-			SSexplosion.Create(epicenter, INFINITY, INFINITY, INFINITY, INFINITY)	//let the cap apply
+			explosion(epicenter, GLOB.MAX_EX_DEVESTATION_RANGE, GLOB.MAX_EX_HEAVY_RANGE, GLOB.MAX_EX_LIGHT_RANGE, GLOB.MAX_EX_FLASH_RANGE)
 		if("Custom Bomb")
 			var/devastation_range = input("Devastation range (in tiles):") as null|num
 			if(devastation_range == null)
@@ -515,11 +515,11 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 			var/flash_range = input("Flash range (in tiles):") as null|num
 			if(flash_range == null)
 				return
-			if(devastation_range > SSexplosion.devastation_cap || heavy_impact_range > SSexplosion.heavy_cap || light_impact_range > SSexplosion.light_cap || flash_range > SSexplosion.flash_cap)
+			if(devastation_range > GLOB.MAX_EX_DEVESTATION_RANGE || heavy_impact_range > GLOB.MAX_EX_HEAVY_RANGE || light_impact_range > GLOB.MAX_EX_LIGHT_RANGE || flash_range > GLOB.MAX_EX_FLASH_RANGE)
 				if(alert("Bomb is bigger than the maxcap. Continue?",,"Yes","No") != "Yes")
 					return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
-			SSexplosion.Create(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, TRUE, TRUE)
+			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, TRUE, TRUE)
 	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 	feedback_add_details("admin_verb","Drop Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -532,7 +532,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 	var/ex_power = input("Explosive Power:") as null|num
 	var/turf/epicenter = mob.loc
 	if(ex_power && epicenter)
-		SSexplosion.CreateDynamic(epicenter, ex_power)
+		dyn_explosion(epicenter, ex_power)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 		feedback_add_details("admin_verb","Drop Dynamic Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -543,7 +543,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 	set desc = "Get the estimated range of a bomb, using explosive power."
 
 	var/ex_power = input("Explosive Power:") as null|num
-	var/range = round((2 * ex_power) ** SSexplosion.dyn_ex_scale)
+	var/range = round((2 * ex_power)**GLOB.DYN_EX_SCALE)
 	to_chat(usr, "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
 
 /client/proc/get_dynex_power()
@@ -552,7 +552,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 	set desc = "Get the estimated required power of a bomb, to reach a specific range."
 
 	var/ex_range = input("Light Explosion Range:") as null|num
-	var/power = (0.5 * ex_range) ** (1 / SSexplosion.dyn_ex_scale)
+	var/power = (0.5 * ex_range)**(1/GLOB.DYN_EX_SCALE)
 	to_chat(usr, "Estimated Explosive Power: [power]")
 
 /client/proc/set_dynex_scale()
@@ -563,7 +563,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 	var/ex_scale = input("New DynEx Scale:") as null|num
 	if(!ex_scale)
 		return
-	SSexplosion.dyn_ex_scale = ex_scale
+	GLOB.DYN_EX_SCALE = ex_scale
 	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 

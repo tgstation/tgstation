@@ -62,7 +62,7 @@
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()
-	SSexplosion.Create(src.loc,-1,-1,2, flame_range = 4)	// small explosion, plus a very large fireball.
+	explosion(src.loc,-1,-1,2, flame_range = 4)	// small explosion, plus a very large fireball.
 	qdel(src)
 
 /obj/item/weapon/grenade/iedcasing/examine(mob/user)

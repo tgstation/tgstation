@@ -634,9 +634,9 @@
 	if(emagged)
 		if(mmi)
 			qdel(mmi)
-		SSexplosion.Create(src.loc,1,2,4,flame_range = 2)
+		explosion(src.loc,1,2,4,flame_range = 2)
 	else
-		SSexplosion.Create(src.loc,-1,0,2)
+		explosion(src.loc,-1,0,2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()

@@ -248,7 +248,7 @@ SUBSYSTEM_DEF(ticker)
 		var/turf/epi = bomb.loc
 		qdel(bomb)
 		if(epi)
-			SSexplosion.Create(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
+			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, atom/bomb = null)

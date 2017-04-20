@@ -61,10 +61,10 @@
 
 /obj/item/projectile/bullet/pellet/overload/on_hit(atom/target, blocked = 0)
  	..()
- 	SSexplosion.Create(target, 0, 0, 2)
+ 	explosion(target, 0, 0, 2)
 
 /obj/item/projectile/bullet/pellet/overload/on_range()
-	SSexplosion.Create(src, 0, 0, 2)
+	explosion(src, 0, 0, 2)
 	do_sparks(3, TRUE, src)
 	..()
 

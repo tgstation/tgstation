@@ -32,7 +32,7 @@
 			var/obj/machinery/telecomms/processor/P = T
 			if(prob(10))
 				// Damage the surrounding area to indicate that it popped
-				SSexplosion.Create(get_turf(P), 0, 0, 2)
+				explosion(get_turf(P), 0, 0, 2)
 				// Only a level 1 explosion actually damages the machine
 				// at all
 				P.ex_act(1)

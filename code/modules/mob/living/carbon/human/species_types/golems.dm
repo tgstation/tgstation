@@ -72,7 +72,7 @@
 	special_names = list("Flood","Fire","Bar","Man")
 
 /datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
-	SSexplosion.Create(get_turf(H),0,1,2,flame_range = 5)
+	explosion(get_turf(H),0,1,2,flame_range = 5)
 	if(H)
 		H.gib()
 

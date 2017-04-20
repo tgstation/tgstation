@@ -166,7 +166,7 @@
 
 /obj/effect/anomaly/flux/detonate()
 	if(explosive)
-		SSexplosion.Create(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
+		explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
 	else
 		new /obj/effect/particle_effect/sparks(loc)
 

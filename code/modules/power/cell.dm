@@ -123,7 +123,7 @@
 		corrupt()
 		return
 	//explosion(T, 0, 1, 2, 2)
-	SSexplosion.Create(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	qdel(src)
 
 /obj/item/weapon/stock_parts/cell/proc/corrupt()

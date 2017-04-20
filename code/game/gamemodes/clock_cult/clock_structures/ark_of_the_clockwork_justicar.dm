@@ -93,7 +93,7 @@
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
 			sleep(27)
-			SSexplosion.Create(src, 1, 3, 8, 8)
+			explosion(src, 1, 3, 8, 8)
 	qdel(src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()

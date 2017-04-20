@@ -765,11 +765,11 @@
 					if (BombCap < 4)
 						BombCap = 4
 
-					SSexplosion.devastation_cap = round(BombCap/4)
-					SSexplosion.heavy_cap = round(BombCap/2)
-					SSexplosion.light_cap = BombCap
-					SSexplosion.flash_cap = BombCap
-					SSexplosion.flame_cap = BombCap
+					GLOB.MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
+					GLOB.MAX_EX_HEAVY_RANGE = round(BombCap/2)
+					GLOB.MAX_EX_LIGHT_RANGE = BombCap
+					GLOB.MAX_EX_FLASH_RANGE = BombCap
+					GLOB.MAX_EX_FLAME_RANGE = BombCap
 				if("arrivals_shuttle_dock_window")
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
 				if("arrivals_shuttle_require_safe_latejoin")

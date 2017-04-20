@@ -108,7 +108,7 @@
 		location = get_turf(src)
 	if(location)
 		location.ex_act(2, target)
-		SSexplosion.Create(location,0,0,3)
+		explosion(location,0,0,3)
 	qdel(src)
 
 /obj/item/weapon/c4/attack(mob/M, mob/user, def_zone)

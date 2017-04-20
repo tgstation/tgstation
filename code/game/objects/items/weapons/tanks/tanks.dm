@@ -245,7 +245,7 @@
 
 		//to_chat(world, "\blue Exploding Pressure: [pressure] kPa, intensity: [range]")
 
-		SSexplosion.Create(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 		if(istype(src.loc,/obj/item/device/transfer_valve))
 			qdel(src.loc)
 		else

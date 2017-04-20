@@ -29,7 +29,7 @@
 
 /obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
 	..()
-	SSexplosion.Create(target, -1, 0, 2)
+	explosion(target, -1, 0, 2)
 	return 1
 
 /obj/item/projectile/bullet/a40mm
@@ -40,7 +40,7 @@
 
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
 	..()
-	SSexplosion.Create(target, -1, 0, 2, 1, 0, flame_range = 3)
+	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
 	return 1
 
 /obj/item/projectile/bullet/a84mm
@@ -54,7 +54,7 @@
 
 /obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = 0)
 	..()
-	SSexplosion.Create(target, -1, 1, 3, 1, 0, flame_range = 4)
+	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
 
 	if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
@@ -73,9 +73,9 @@
 /obj/item/projectile/bullet/srmrocket/on_hit(atom/target, blocked=0)
 	..()
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
-		SSexplosion.Create(target, 0, 1, 2, 4)
+		explosion(target, 0, 1, 2, 4)
 	else
-		SSexplosion.Create(target, 0, 0, 2, 4)
+		explosion(target, 0, 0, 2, 4)
 	return 1
 
 /obj/item/projectile/temp
@@ -192,7 +192,7 @@
 
 /obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
 	..()
-	SSexplosion.Create(target, -1, 0, 1)
+	explosion(target, -1, 0, 1)
 	return 1
 
 /obj/item/projectile/plasma
