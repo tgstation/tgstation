@@ -221,7 +221,7 @@
 
 		LAZYADD(T.affecting_lights, src)
 		affecting_turfs    += T
-
+	FOR_DVIEW_END
 	update_gen++
 
 /datum/light_source/proc/remove_lum()
@@ -262,6 +262,7 @@
 			C = thing
 			corners[C] = 0
 		turfs += T
+	FOR_DVIEW_END
 
 	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
 	affecting_turfs += L
