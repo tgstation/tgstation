@@ -432,5 +432,7 @@
 /obj/item/device/flashlight/eyelight
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
+	brightness_on = 15
+	flashlight_power = 1
 	flags = CONDUCT | DROPDEL
 	actions_types = list()

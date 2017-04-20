@@ -878,33 +878,24 @@
 	icon_state = "flashlight_eyes"
 	flash_protect = 2
 	tint = INFINITY
-	var/obj/item/device/flashlight/eyelight/left_eye
-	var/obj/item/device/flashlight/eyelight/right_eye
+	var/obj/item/device/flashlight/eyelight/eye
 
 /obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
 	return
 
 /obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
 	..()
-	if(!left_eye)
-		left_eye = new /obj/item/device/flashlight/eyelight()
-	left_eye.on = TRUE
-	left_eye.loc = M
-	left_eye.update_brightness(M)
-	if(!right_eye)
-		right_eye = new /obj/item/device/flashlight/eyelight()
-	right_eye.on = TRUE
-	right_eye.loc = M
-	right_eye.update_brightness(M)
+	if(!eye)
+		eye = new /obj/item/device/flashlight/eyelight()
+	eye.on = TRUE
+	eye.loc = M
+	eye.update_brightness(M)
 
 
 /obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
-	left_eye.on = FALSE
-	left_eye.update_brightness(M)
-	left_eye.loc = src
-	right_eye.on = FALSE
-	right_eye.update_brightness(M)
-	right_eye.loc = src
+	eye.on = FALSE
+	eye.update_brightness(M)
+	eye.loc = src
 	..()
 
 // Welding shield implant
