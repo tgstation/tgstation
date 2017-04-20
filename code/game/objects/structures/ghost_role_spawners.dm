@@ -255,7 +255,7 @@
 
 /obj/effect/mob_spawn/human/hotel_staff/security
 	name = "hotel security sleeper"
-	mob_name = "hotel security memeber"
+	mob_name = "hotel security member"
 	uniform = /obj/item/clothing/under/rank/security/blueshirt
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
