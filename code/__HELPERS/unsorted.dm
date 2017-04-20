@@ -1315,6 +1315,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	GLOB.dview_mob.see_invisible = invis_flags; \
 	for(type in view(range, GLOB.dview_mob))
 
+#define FOR_DVIEW_END GLOB.dview_mob.loc = null
+
 //can a window be here, or is there a window blocking it?
 /proc/valid_window_location(turf/T, dir_to_check)
 	if(!T)
@@ -1364,7 +1366,7 @@ GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
 			| \____(      )___) )___
 			\______(_______;;; __;;;
 		*/
-	var/temp_file = "HTTPSGetOutput.txt"
+	var/temp_file = "data/HTTPSGetOutput.txt"
 	var/command
 	if(world.system_type == MS_WINDOWS)
 		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""

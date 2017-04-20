@@ -1,12 +1,14 @@
 @echo off
-title Server Updater
+@title Server Updater
 SETLOCAL ENABLEDELAYEDEXPANSION
 set HOME = %USERPROFILE%
 
 call config.bat
 call bin\getcurdate.bat
+call bin\findgit.bat
 
-echo This will handle downloading git, compiling the server, and applying the update.
+echo This will update the server without resetting local changes like test merges.
+echo Note: This doesn't update the changelog like a normal update does.
 echo Ready?
 
 timeout 120
@@ -18,52 +20,53 @@ if exist updating.lk (
 	pause
 )
 
-if exist prtestjob.lk (
-	call bin/activepr.bat
-	echo WARNING: The server is currently testing the following PRs !PR!. This update would override that. Do you still want to update? Close this window if not, otherwise:
-	pause
-)
-
-del /F /Q prtestjob.lk >nul 2>nul
-
 echo lock>updating.lk
-<nul set /p TRIM="set PR=" > bin/activepr.bat
 
 rem if the first arg to nudge.py is not a channel, it is treated as the "source"
 if not defined UPDATE_LOG_CHANNEL set UPDATE_LOG_CHANNEL="UPDATER"
 
-call python bot\nudge.py %UPDATE_LOG_CHANNEL% "Update job started" >nul 2>nul
+call python bot\nudge.py %UPDATE_LOG_CHANNEL% "Update job started (No reset mode)" >nul 2>nul
 
-call bin\updategit.bat
-if %GIT_EXIT% neq 0 (
-	echo git pull failed. Aborting update
+cd gitrepo
+git fetch origin
+if %ERRORLEVEL% neq 0 (
+	cd ..
+	echo git fetch failed. Aborting update.
 	call python bot\nudge.py %UPDATE_LOG_CHANNEL% "Git fetch failed. Aborting update"
 	del updating.lk >nul 2>nul
 	pause
 	exit /b 1
 )
-
-if defined PUSHCHANGELOGTOGIT (
+git merge origin/%REPO_BRANCH%
+if %ERRORLEVEL% neq 0 (
+	cd ..
+	echo git merge of upstream master failed, aborting update.
+	call python bot\nudge.py %UPDATE_LOG_CHANNEL% "git merge of upstream master failed, aborting update." >nul 2>nul
 	cd gitrepo
-	echo compiling change log
-	python tools\ss13_genchangelog.py html/changelog.html html/changelogs
-	if !ERRORLEVEL! == 0 (
-		echo pushing compiled changelog to server
-		git add -u html/changelog.html
-		git add -u html/changelogs
-		git commit -m "Automatic changelog compile, [ci skip]"
-		if !ERRORLEVEL! == 0 (
-			git push
-		)
-		REM an error here generally means there was nothing to commit.
+	git merge --abort
+	if %ERRORLEVEL% neq 0 (
+		echo ERROR: Error aborting update, resetting repo.
+		cd ..
+		call python bot\nudge.py %UPDATE_LOG_CHANNEL% "Error aborting merge, Resetting git repo" >nul 2>nul
+		cd gitrepo
+		git reset --hard
+		git clean -fd
+		<nul set /p TRIM="set PR=" > bin/activepr.bat
+		del /F /Q prtestjob.lk >nul 2>nul
+		echo NOTICE: We had to reset the repo's state, all active test merges were undone.
 	)
 	cd ..
+	del updating.lk >nul 2>nul
+	pause
+	exit /b 1
 )
+cd ..
+
 
 echo ##################################
 echo ##################################
 echo:
-echo Updating done, compiling in 10 seconds. If you want to preform other actions (like test merge) You can close this now and do them.
+echo In place update done, compiling in 10 seconds. If you want to preform other actions (like more test merges) You can close this now and do them.
 echo:
 del updating.lk >nul 2>nul
 
@@ -74,12 +77,10 @@ call bin\findab.bat
 
 call bin\copyfromgit.bat
 
-if not defined PUSHCHANGELOGTOGIT (
-	echo compiling change log
-	cd gamecode\%AB%
-	call python tools\ss13_genchangelog.py html/changelog.html html/changelogs
-	cd ..\..
-)
+echo compiling change log
+cd gamecode\%AB%
+call python tools\ss13_genchangelog.py html/changelog.html html/changelogs
+cd ..\..
 
 echo Compiling game.
 call bin\build.bat
