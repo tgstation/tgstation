@@ -143,6 +143,7 @@
 	full_speed = FALSE
 	var/datum/gas_mixture/temp_air_contents
 	var/obj/item/weapon/tank/internals/tank = null
+	var/on = FALSE
 
 /obj/item/weapon/tank/jetpack/suit/New()
 	..()
@@ -170,12 +171,14 @@
 	tank = H.s_store
 	air_contents = tank.air_contents
 	START_PROCESSING(SSobj, src)
+	on = TRUE
 	..()
 
 /obj/item/weapon/tank/jetpack/suit/turn_off()
 	tank = null
 	air_contents = temp_air_contents
 	STOP_PROCESSING(SSobj, src)
+	on = FALSE
 	..()
 
 /obj/item/weapon/tank/jetpack/suit/process()
@@ -191,7 +194,7 @@
 
 //Return a jetpack that the mob can use
 //Back worn jetpacks, hardsuit internal packs, and so on.
-//Used in Process_Spacemove() and wherever you want to check for/get a jetpack
+//Used in Process_Spacemove() and wherever you want to check for/get a jetpack	
 
 /mob/proc/get_jetpack()
 	return
@@ -207,3 +210,9 @@
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	return J
+
+/mob/has_gravity(turf/T)
+	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
+	if(J && J.on)
+		return FALSE
+	return ..()
