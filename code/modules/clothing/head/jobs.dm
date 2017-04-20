@@ -116,6 +116,13 @@
 	armor = list(melee = 40, bullet = 30, laser = 25, energy = 10, bomb = 25, bio = 10, rad = 0, fire = 50, acid = 60)
 	strip_delay = 80
 
+/obj/item/clothing/head/HoS/dermal
+	name = "Dermal Armor Patch"
+	desc = "An armored implant that automatically integrates just below the scalp for robust protection without sacrificing style."
+	icon_state = "dermal"
+	item_state = "dermal"
+	flags_inv = 0
+
 /obj/item/clothing/head/HoS/beret
 	name = "head of security beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
