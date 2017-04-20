@@ -8,13 +8,6 @@
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	..()
-	if(mapload)
-		// the delay gives holidays chance to modify maint loot
-		SSticker.OnRoundstart(CALLBACK(src, .proc/lootdrop))
-	else
-		lootdrop()
-
-/obj/effect/spawner/lootdrop/proc/lootdrop()
 	if(loot && loot.len)
 		var/turf/T = get_turf(src)
 		while(lootcount && loot.len)
@@ -65,7 +58,7 @@
 	name = "maintenance loot spawner"
 	// see code/_globalvars/lists/maintenance_loot.dm for loot table
 
-/obj/effect/spawner/lootdrop/maintenance/lootdrop()
+/obj/effect/spawner/lootdrop/maintenance/Initialize(mapload)
 	loot = GLOB.maintenance_loot
 	..()
 
