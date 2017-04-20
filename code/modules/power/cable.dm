@@ -773,3 +773,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	item_color = pick("red","orange","yellow","green","cyan","blue","pink","white")
 	icon_state = "coil_[item_color]"
 	..()
+
+/obj/item/stack/cable_coil/random/five
+	amount = 5

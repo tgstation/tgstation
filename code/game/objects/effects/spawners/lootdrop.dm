@@ -10,7 +10,7 @@
 	..()
 	if(mapload)
 		// the delay gives holidays chance to modify maint loot
-		SSticker.OnRoundstart(CALLBACK(src, ./proc/lootdrop))
+		SSticker.OnRoundstart(CALLBACK(src, .proc/lootdrop))
 	else
 		lootdrop()
 
