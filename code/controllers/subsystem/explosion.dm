@@ -493,20 +493,18 @@ SUBSYSTEM_DEF(explosion)
 		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0) + turfs[T]
 
 		if(dist < dev)
-			T.add_atom_colour("red", TEMPORARY_COLOUR_PRIORITY)
+			T.color = "red"
 			T.maptext = "Dev"
 		else if (dist < heavy)
-			T.add_atom_colour("yellow", TEMPORARY_COLOUR_PRIORITY)
+			T.color = "yellow"
 			T.maptext = "Heavy"
 		else if (dist < light)
-			T.add_atom_colour("blue", TEMPORARY_COLOUR_PRIORITY)
+			T.color = "blue"
 			T.maptext = "Light"
 		CHECK_TICK
 
 	sleep(100)
 	for(var/I in turfs)
 		var/turf/T = I
-		T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "red")
-		T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "yellow")
-		T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "blue")
+		T.color = null
 		T.maptext = null
