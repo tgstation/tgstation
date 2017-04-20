@@ -240,7 +240,7 @@
 	if(istype(AM, /obj/item/weapon/ore) && AM.loc == get_step(src, input_dir))
 		process_ore(AM)
 
-/obj/machinery/mineral/processing_unit/proc/process_ore(O)
+/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/weapon/ore/O)
 	if (istype(O,/obj/item/weapon/ore/iron))
 		ore_iron++;
 		qdel(O)
