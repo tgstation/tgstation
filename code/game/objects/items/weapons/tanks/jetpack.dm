@@ -143,7 +143,6 @@
 	full_speed = FALSE
 	var/datum/gas_mixture/temp_air_contents
 	var/obj/item/weapon/tank/internals/tank = null
-	var/on = FALSE
 
 /obj/item/weapon/tank/jetpack/suit/New()
 	..()
@@ -171,14 +170,12 @@
 	tank = H.s_store
 	air_contents = tank.air_contents
 	START_PROCESSING(SSobj, src)
-	on = TRUE
 	..()
 
 /obj/item/weapon/tank/jetpack/suit/turn_off()
 	tank = null
 	air_contents = temp_air_contents
 	STOP_PROCESSING(SSobj, src)
-	on = FALSE
 	..()
 
 /obj/item/weapon/tank/jetpack/suit/process()
