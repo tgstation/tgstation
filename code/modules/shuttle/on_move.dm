@@ -1,3 +1,4 @@
+// Called when shuttle attempts to move an atom.
 /atom/movable/proc/onShuttleMove(turf/T1, rotation)
 	if(rotation)
 		shuttleRotate(rotation)
@@ -6,16 +7,16 @@
 		update_parallax_contents()
 	return 1
 
+// Called after all of the atoms on shuttle are moved.
+/atom/movable/proc/afterShuttleMove()
+	return
+
+
 /obj/onShuttleMove()
 	if(invisibility >= INVISIBILITY_ABSTRACT)
 		return 0
 	. = ..()
 
-/obj/machinery/atmospherics/onShuttleMove()
-	. = ..()
-	for(DEVICE_TYPE_LOOP)
-		if(get_area(nodes[I]) != get_area(src))
-			nullifyNode(I)
 
 #define DIR_CHECK_TURF_AREA(X) (get_area(get_ranged_target_turf(src, X, 1)) != A)
 /obj/structure/cable/onShuttleMove()

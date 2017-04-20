@@ -481,6 +481,8 @@
 	//move or squish anything in the way ship at destination
 	roadkill(L0, L1, S1.dir)
 
+	var/list/moved_atoms = list()
+
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		if(!T0)
@@ -502,7 +504,8 @@
 
 			//move mobile to new location
 			for(var/atom/movable/AM in T0)
-				AM.onShuttleMove(T1, rotation)
+				if(AM.onShuttleMove(T1, rotation))
+					moved_atoms += AM
 
 		if(rotation)
 			T1.shuttleRotate(rotation)
@@ -516,6 +519,10 @@
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
+
+	for(var/am in moved_atoms)
+		var/atom/movable/AM = am
+		AM.afterShuttleMove()
 
 	check_poddoors()
 	S1.last_dock_time = world.time
