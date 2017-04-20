@@ -12,7 +12,7 @@ notifications:
 env:
     global:
     - BYOND_MAJOR="511"
-    - BYOND_MINOR="1366"
+    - BYOND_MINOR="1380"
     - DM_BUILDFILE="tgstation.dme"
 
 cache:
