@@ -232,6 +232,7 @@
 			spotlights+=L
 			continue
 		continue
+	FOR_DVIEW_END
 
 /obj/machinery/disco/proc/hierofunk()
 	for(var/i in 1 to 10)
