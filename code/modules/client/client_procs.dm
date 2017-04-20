@@ -268,8 +268,16 @@ GLOBAL_LIST(external_rsc_urls)
 
 	add_verbs_from_config()
 	set_client_age_from_db()
+	var/cached_player_age = player_age //we have to cache this because other shit may change it and we need it's current value now down below.
+	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
+		player_age = 0	
+	if(!IsGuestKey(key) && SSdbcore.IsConnected())
+		findJoinDate()
 
-	if (isnum(player_age) && player_age == -1) //first connection
+	sync_client_with_db(tdata)
+	
+	
+	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
@@ -285,16 +293,9 @@ GLOBAL_LIST(external_rsc_urls)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (config.irc_first_connection_alert)
 				send2irc_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
-
-		player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
-
-	else if (isnum(player_age) && player_age < config.notify_new_player_age)
-		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
-
-	if(!IsGuestKey(key) && SSdbcore.IsConnected())
-		findJoinDate()
-
-	sync_client_with_db(tdata)
+	else if (isnum(cached_player_age) && cached_player_age < config.notify_new_player_age)
+		message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age==1?"":"s")]")
+	
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 

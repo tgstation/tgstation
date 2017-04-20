@@ -3,8 +3,8 @@ sudo: false
 
 env:
     global:
-    - BYOND_MAJOR="510"
-    - BYOND_MINOR="1346"
+    - BYOND_MAJOR="511"
+    - BYOND_MINOR="1380"
     - NODE_VERSION="4"
     - BUILD_TOOLS=false
     - BUILD_TESTING=false

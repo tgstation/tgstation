@@ -81,6 +81,8 @@ SUBSYSTEM_DEF(dbcore)
 	return _dm_db_quote(_db_con, str)
 
 /datum/controller/subsystem/dbcore/proc/ErrorMsg() 
+	if(!config.sql_enabled)
+		return "Database disabled by configuration"
 	return _dm_db_error_msg(_db_con)
 
 /datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, cursor_handler = Default_Cursor)
