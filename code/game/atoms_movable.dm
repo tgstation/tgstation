@@ -627,4 +627,4 @@
 /atom/movable/proc/ConveyorMove(movedir)
 	set waitfor = FALSE
 	if(!anchored && has_gravity())
-		step(A,movedir)
+		step(src, movedir)
