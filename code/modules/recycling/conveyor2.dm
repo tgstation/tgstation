@@ -108,10 +108,8 @@
 	affecting = loc.contents - src		// moved items will be all in loc
 	sleep(1)
 	for(var/atom/movable/A in affecting)
-		if(!A.anchored)
-			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
-				step(A,movedir)
-		CHECK_TICK
+		if(A.loc == loc)
+			A.ConveyorMove(movedir)
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
