@@ -422,3 +422,9 @@
 
 //	to_chat(world, "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]")
 	return ..()
+
+/datum/holiday/easter/celebrate()
+	..()
+	GLOB.maintenance_loot += list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg/loaded = 15,
+		/obj/item/weapon/storage/bag/easterbasket = 15)
