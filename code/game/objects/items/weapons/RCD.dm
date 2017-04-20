@@ -350,7 +350,7 @@ obj/item/weapon/construction
 	addtimer(CALLBACK(src, .proc/detonate_pulse_explode), 50)
 
 /obj/item/weapon/construction/rcd/proc/detonate_pulse_explode()
-	explosion(src, 0, 0, 3, 1, flame_range = 1)
+	SSexplosion.Create(src, 0, 0, 3, 1, flame_range = 1)
 	qdel(src)
 
 

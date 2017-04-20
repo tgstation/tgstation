@@ -254,7 +254,7 @@
 		if(metal)
 			visible_message("<span class='warning'>Sparks fly around [src]!")
 			if(prob(max(metal/2, 33)))
-				explosion(loc,0,1,2)
+				SSexplosion.Create(loc,0,1,2)
 			broke()
 			return
 

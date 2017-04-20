@@ -56,9 +56,9 @@
 	if(location)
 		if(directional && target && target.density)
 			var/turf/T = get_step(location, aim_dir)
-			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
+			SSexplosion.Create(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		else
-			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
+			SSexplosion.Create(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		location.ex_act(2, target)
 	if(istype(target, /mob))
 		var/mob/M = target
@@ -137,7 +137,7 @@
 			else if(user.mind.gang_datum)
 				message_say = "[uppertext(user.mind.gang_datum.name)] RULES!"
 	user.say(message_say)
-	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
+	SSexplosion.Create(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
 	user.gib(1, 1)
 	qdel(src)
 

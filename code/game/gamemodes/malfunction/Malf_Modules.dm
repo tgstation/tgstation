@@ -299,7 +299,7 @@
 				to_chat(src, "<span class='warning'>Overloading machine circuitry...</span>")
 				spawn(50)
 					if(M)
-						explosion(get_turf(M), 0,2,3,0)
+						SSexplosion.Create(get_turf(M), 0,2,3,0)
 						qdel(M)
 			else to_chat(src, "<span class='notice'>Out of uses.</span>")
 	else to_chat(src, "<span class='notice'>That's not a machine.</span>")

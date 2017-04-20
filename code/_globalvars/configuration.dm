@@ -22,12 +22,3 @@ GLOBAL_VAR_INIT(tinted_weldhelh, TRUE)
 // Debug2 is used in conjunction with a lot of admin verbs and therefore is actually legit.
 GLOBAL_VAR_INIT(Debug, FALSE)	// global debug switch
 GLOBAL_VAR_INIT(Debug2, FALSE)
-
-//This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
-GLOBAL_VAR_INIT(MAX_EX_DEVESTATION_RANGE, 3)
-GLOBAL_VAR_INIT(MAX_EX_HEAVY_RANGE, 7)
-GLOBAL_VAR_INIT(MAX_EX_LIGHT_RANGE, 14)
-GLOBAL_VAR_INIT(MAX_EX_FLASH_RANGE, 14)
-GLOBAL_VAR_INIT(MAX_EX_FLAME_RANGE, 14)
-GLOBAL_VAR_INIT(DYN_EX_SCALE, 0.5)
-

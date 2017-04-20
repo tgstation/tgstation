@@ -107,7 +107,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		explosion(M, 1, 0, 0, 0)
+		SSexplosion.Create(M, 1, 0, 0, 0)
 		qdel(src)
 
 /////For the Wishgranter///////////

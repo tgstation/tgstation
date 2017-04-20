@@ -130,7 +130,7 @@ Difficulty: Medium
 	playsound(T,'sound/magic/Fireball.ogg', 200, 1)
 	new /obj/effect/overlay/temp/fireball(T)
 	sleep(12)
-	explosion(T, 0, 0, 1, 0, 0, 0, 1)
+	SSexplosion.Create(T, 0, 0, 1, 0, 0, 0, 1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)

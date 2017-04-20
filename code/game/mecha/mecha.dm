@@ -155,7 +155,7 @@
 			M.forceMove(loc)
 
 	if(prob(30))
-		explosion(get_turf(loc), 0, 0, 1, 3)
+		SSexplosion.Create(get_turf(loc), 0, 0, 1, 3)
 
 	if(wreckage)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)

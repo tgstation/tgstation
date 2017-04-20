@@ -47,7 +47,7 @@
 	message_admins("[key_name_admin(imp_in)]<A HREF='?_src_=holder;adminmoreinfo=\ref[imp_in]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[imp_in]'>FLW</A>) has activated their [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[imp_in.x];Y=[imp_in.y];Z=[imp_in.z]'>[A.name] (JMP)</a>.")
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
-		explosion(src,heavy,medium,weak,weak, flame_range = weak)
+		SSexplosion.Create(src,heavy,medium,weak,weak, flame_range = weak)
 		if(imp_in)
 			imp_in.gib(1)
 		qdel(src)
@@ -80,7 +80,7 @@
 	sleep(delay/4)
 	playsound(loc, 'sound/items/timer.ogg', 30, 0)
 	sleep(delay/4)
-	explosion(src,heavy,medium,weak,weak, flame_range = weak)
+	SSexplosion.Create(src,heavy,medium,weak,weak, flame_range = weak)
 	if(imp_in)
 		imp_in.gib(1)
 	qdel(src)
