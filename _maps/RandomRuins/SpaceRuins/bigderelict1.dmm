@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall,
 /area/ruin/derelictoutpost/cargobay)
@@ -313,8 +313,8 @@
 /area/ruin/derelictoutpost/cargobay)
 "aY" = (
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "aZ" = (
 /turf/closed/wall,
 /area/ruin/derelictoutpost)
