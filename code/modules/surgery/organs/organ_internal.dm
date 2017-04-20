@@ -888,14 +888,14 @@
 	if(!eye)
 		eye = new /obj/item/device/flashlight/eyelight()
 	eye.on = TRUE
-	eye.loc = M
+	eye.forceMove(M)
 	eye.update_brightness(M)
 
 
 /obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
 	eye.on = FALSE
 	eye.update_brightness(M)
-	eye.loc = src
+	eye.forceMove(src)
 	..()
 
 // Welding shield implant
