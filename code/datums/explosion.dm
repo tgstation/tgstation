@@ -2,11 +2,10 @@ GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
 //If I see any GC errors for it I will find you
 //and I will gib you
-//	--Cyberboss
 /proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0 , silent = FALSE, smoke = FALSE)
 	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 
-//This datum creates 3 threads
+//This datum creates 3 """""threads""""""
 //1 GatherSpiralTurfsProc runs spiral_range_turfs(tick_checked = TRUE) to populate the affected_turfs list
 //2 CaculateExplosionBlock adds the blockings to the cached_exp_block list
 //3 The main thread explodes the prepared turfs
@@ -141,12 +140,12 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	//lists are guaranteed to contain at least 1 turf at this point
 
-	var/Iteration = 0
-	var/AffTurfLen = affected_turfs.len
-	var/ExpBlockLen = cached_exp_block.len
+	var/iteration = 0
+	var/affTurfLen = affected_turfs.len
+	var/expBlockLen = cached_exp_block.len
 	for(var/TI in affected_turfs)
 		var/turf/T = TI
-		++Iteration
+		++iteration
 		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 		var/dist = init_dist
 
@@ -193,10 +192,10 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/break_condition
 		if(reactionary)
 			//If we've caught up to the density checker thread and there are no more turfs to process
-			break_condition = Iteration == ExpBlockLen && Iteration < AffTurfLen
+			break_condition = iteration == expBlockLen && iteration < affTurfLen
 		else
 			//If we've caught up to the turf gathering thread and it's still running
-			break_condition = Iteration == AffTurfLen && !stopped
+			break_condition = iteration == affTurfLen && !stopped
 
 		if(break_condition || TICK_CHECK)
 			stoplag()
@@ -205,25 +204,25 @@ GLOBAL_LIST_EMPTY(explosions)
 				break
 			
 			//update the trackers
-			AffTurfLen = affected_turfs.len
-			ExpBlockLen = cached_exp_block.len
+			affTurfLen = affected_turfs.len
+			expBlockLen = cached_exp_block.len
 
 			if(break_condition)
 				if(reactionary)
 					//until there are more block checked turfs than what we are currently at
 					//or the explosion has stopped
-					UNTIL(Iteration < AffTurfLen || !running)
+					UNTIL(iteration < affTurfLen || !running)
 				else
 					//until there are more gathered turfs than what we are currently at
 					//or there are no more turfs to gather/the explosion has stopped
-					UNTIL(Iteration < ExpBlockLen || stopped)
+					UNTIL(iteration < expBlockLen || stopped)
 
 				if(!running)
 					break
 
 				//update the trackers
-				AffTurfLen = affected_turfs.len
-				ExpBlockLen = cached_exp_block.len
+				affTurfLen = affected_turfs.len
+				expBlockLen = cached_exp_block.len
 
 			var/circumference = (PI * (init_dist + 4) * 2) //+4 to radius to prevent shit gaps
 			if(exploded_this_tick.len > circumference)	//only do this every revolution
