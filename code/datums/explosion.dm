@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(explosions)
 /proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0 , silent = FALSE, smoke = FALSE)
 	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 
-//This datum creates 3 """""threads""""""
+//This datum creates 3 async tasks
 //1 GatherSpiralTurfsProc runs spiral_range_turfs(tick_checked = TRUE) to populate the affected_turfs list
 //2 CaculateExplosionBlock adds the blockings to the cached_exp_block list
 //3 The main thread explodes the prepared turfs
