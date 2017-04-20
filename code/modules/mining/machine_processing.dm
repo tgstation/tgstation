@@ -1,3 +1,5 @@
+#define PROCESSING_UNIT_CAPACITY 300000
+
 /**********************Mineral processing unit console**************************/
 
 /obj/machinery/mineral/processing_unit_console
@@ -20,183 +22,28 @@
 
 /obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
 
-	var/dat = "<b>Smelter control console</b><br><br>"
-	//iron
-	if(machine.ore_iron || machine.ore_glass || machine.ore_plasma || machine.ore_uranium || machine.ore_gold || machine.ore_silver || machine.ore_diamond || machine.ore_clown || machine.ore_titanium || machine.ore_bluespace || machine.ore_adamantine)
-		if(machine.ore_iron)
-			if (machine.selected_iron==1)
-				dat += "<A href='?src=\ref[src];sel_iron=no'><font color='green'>Smelting</font></A> "
-			else
-				dat += "<A href='?src=\ref[src];sel_iron=yes'><font color='red'>Not smelting</font></A> "
-			dat += "Iron: [machine.ore_iron]<br>"
-		else
-			machine.selected_iron = 0
+	if(!machine)
+		return
 
-		//sand - glass
-		if(machine.ore_glass)
-			if (machine.selected_glass==1)
-				dat += "<A href='?src=\ref[src];sel_glass=no'><font color='green'>Smelting</font></A> "
-			else
-				dat += "<A href='?src=\ref[src];sel_glass=yes'><font color='red'>Not smelting</font></A> "
-			dat += "Sand: [machine.ore_glass]<br>"
-		else
-			machine.selected_glass = 0
+	var/dat = machine.get_machine_data()
 
-		//plasma
-		if(machine.ore_plasma)
-			if (machine.selected_plasma==1)
-				dat += "<A href='?src=\ref[src];sel_plasma=no'><font color='green'>Smelting</font></A> "
-			else
-				dat += "<A href='?src=\ref[src];sel_plasma=yes'><font color='red'>Not smelting</font></A> "
-			dat += "Plasma: [machine.ore_plasma]<br>"
-		else
-			machine.selected_plasma = 0
-
-		//uranium
-		if(machine.ore_uranium)
-			if (machine.selected_uranium==1)
-				dat += "<A href='?src=\ref[src];sel_uranium=no'><font color='green'>Smelting</font></A> "
-			else
-				dat += "<A href='?src=\ref[src];sel_uranium=yes'><font color='red'>Not smelting</font></A> "
-			dat += "Uranium: [machine.ore_uranium]<br>"
-		else
-			machine.selected_uranium = 0
-
-		//gold
-		if(machine.ore_gold)
-			if (machine.selected_gold==1)
-				dat += "<A href='?src=\ref[src];sel_gold=no'><font color='green'>Smelting</font></A> "
-			else
-				dat += "<A href='?src=\ref[src];sel_gold=yes'><font color='red'>Not smelting</font></A> "
-			dat += "Gold: [machine.ore_gold]<br>"
-		else
-			machine.selected_gold = 0
-
-		//silver
-		if(machine.ore_silver)
-			if (machine.selected_silver==1)
-				dat += "<A href='?src=\ref[src];sel_silver=no'><font color='green'>Smelting</font></A> "
-			else
-				dat += "<A href='?src=\ref[src];sel_silver=yes'><font color='red'>Not smelting</font></A> "
-			dat += "Silver: [machine.ore_silver]<br>"
-		else
-			machine.selected_silver = 0
-
-		//diamond
-		if(machine.ore_diamond)
-			if (machine.selected_diamond==1)
-				dat += "<A href='?src=\ref[src];sel_diamond=no'><font color='green'>Smelting</font></A> "
-			else
-				dat += "<A href='?src=\ref[src];sel_diamond=yes'><font color='red'>Not smelting</font></A> "
-			dat += "Diamond: [machine.ore_diamond]<br>"
-		else
-			machine.selected_diamond = 0
-
-		//bananium
-		if(machine.ore_clown)
-			if (machine.selected_clown==1)
-				dat += "<A href='?src=\ref[src];sel_clown=no'><font color='green'>Smelting</font></A> "
-			else
-				dat += "<A href='?src=\ref[src];sel_clown=yes'><font color='red'>Not smelting</font></A> "
-			dat += "Bananium: [machine.ore_clown]<br>"
-		else
-			machine.selected_clown = 0
-
-		//titanium
-		if(machine.ore_titanium)
-			if (machine.selected_titanium==1)
-				dat += "<A href='?src=\ref[src];sel_titanium=no'><font color='green'>Smelting</font></A> "
-			else
-				dat += "<A href='?src=\ref[src];sel_titanium=yes'><font color='red'>Not smelting</font></A> "
-			dat += "Titanium: [machine.ore_titanium]<br>"
-		else
-			machine.selected_titanium = 0
-
-		//bluespace
-		if(machine.ore_bluespace)
-			if (machine.selected_bluespace==1)
-				dat += "<A href='?src=\ref[src];sel_bluespace=no'><font color='green'>Smelting</font></A> "
-			else
-				dat += "<A href='?src=\ref[src];sel_bluespace=yes'><font color='red'>Not smelting</font></A> "
-			dat += "Bluespace crystal: [machine.ore_bluespace]<br>"
-		else
-			machine.selected_bluespace = 0
-
-		//On or off
-		dat += text("Machine is currently ")
-		if (machine.on==1)
-			dat += text("<A href='?src=\ref[src];set_on=off'>On</A> ")
-		else
-			dat += text("<A href='?src=\ref[src];set_on=on'>Off</A> ")
-	else
-		dat+="---No Materials Loaded---"
-
-
-	user << browse(dat, "window=console_processing_unit")
-
-
+	var/datum/browser/popup = new(user, "processing", "Smelting Console", 600, 600)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/mineral/processing_unit_console/Topic(href, href_list)
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
-	if(href_list["sel_iron"])
-		if (href_list["sel_iron"] == "yes")
-			machine.selected_iron = 1
-		else
-			machine.selected_iron = 0
-	if(href_list["sel_glass"])
-		if (href_list["sel_glass"] == "yes")
-			machine.selected_glass = 1
-		else
-			machine.selected_glass = 0
-	if(href_list["sel_plasma"])
-		if (href_list["sel_plasma"] == "yes")
-			machine.selected_plasma = 1
-		else
-			machine.selected_plasma = 0
-	if(href_list["sel_uranium"])
-		if (href_list["sel_uranium"] == "yes")
-			machine.selected_uranium = 1
-		else
-			machine.selected_uranium = 0
-	if(href_list["sel_gold"])
-		if (href_list["sel_gold"] == "yes")
-			machine.selected_gold = 1
-		else
-			machine.selected_gold = 0
-	if(href_list["sel_silver"])
-		if (href_list["sel_silver"] == "yes")
-			machine.selected_silver = 1
-		else
-			machine.selected_silver = 0
-	if(href_list["sel_diamond"])
-		if (href_list["sel_diamond"] == "yes")
-			machine.selected_diamond = 1
-		else
-			machine.selected_diamond = 0
-	if(href_list["sel_clown"])
-		if (href_list["sel_clown"] == "yes")
-			machine.selected_clown = 1
-		else
-			machine.selected_clown = 0
-	if(href_list["sel_titanium"])
-		if (href_list["sel_titanium"] == "yes")
-			machine.selected_titanium = 1
-		else
-			machine.selected_titanium = 0
-	if(href_list["sel_bluespace"])
-		if (href_list["sel_bluespace"] == "yes")
-			machine.selected_bluespace = 1
-		else
-			machine.selected_bluespace = 0
+	add_fingerprint(usr)
+
+	if(href_list["material"])
+		machine.selected_material = href_list["material"]
+
 	if(href_list["set_on"])
-		if (href_list["set_on"] == "on")
-			machine.on = 1
-		else
-			machine.on = 0
-	src.updateUsrDialog()
+		machine.on = (href_list["set_on"] == "on")
+
+	updateUsrDialog()
 	return
 
 /**********************Mineral processing unit**************************/
@@ -209,177 +56,69 @@
 	density = 1
 	anchored = 1
 	var/obj/machinery/mineral/CONSOLE = null
-	var/ore_gold = 0;
-	var/ore_silver = 0;
-	var/ore_diamond = 0;
-	var/ore_glass = 0;
-	var/ore_plasma = 0;
-	var/ore_uranium = 0;
-	var/ore_iron = 0;
-	var/ore_clown = 0;
-	var/ore_adamantine = 0;
-	var/ore_titanium = 0;
-	var/ore_bluespace = 0
-	var/selected_gold = 0
-	var/selected_silver = 0
-	var/selected_diamond = 0
-	var/selected_glass = 0
-	var/selected_plasma = 0
-	var/selected_uranium = 0
-	var/selected_iron = 0
-	var/selected_clown = 0
-	var/selected_titanium = 0
-	var/selected_bluespace = 0
-	var/on = 0 //0 = off, 1 =... oh you know!
+	var/datum/material_container/materials
+	var/on = FALSE
+	var/selected_material = MAT_METAL
 
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 1)
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),PROCESSING_UNIT_CAPACITY)
+
+/obj/machinery/mineral/processing_unit/Destroy()
+	qdel(materials)
+	return ..()
 
 /obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
 	if(istype(AM, /obj/item/weapon/ore) && AM.loc == get_step(src, input_dir))
 		process_ore(AM)
 
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/weapon/ore/O)
-	if (istype(O,/obj/item/weapon/ore/iron))
-		ore_iron++;
+	var/material_amount = materials.get_item_material_amount(O)
+	if(!materials.has_space(material_amount))
+		unload_mineral(O)
+	else
+		materials.insert_item(O)
 		qdel(O)
-		return
-	if (istype(O,/obj/item/weapon/ore/glass))
-		ore_glass++;
-		qdel(O)
-		return
-	if (istype(O,/obj/item/weapon/ore/diamond))
-		ore_diamond++;
-		qdel(O)
-		return
-	if (istype(O,/obj/item/weapon/ore/plasma))
-		ore_plasma++
-		qdel(O)
-		return
-	if (istype(O,/obj/item/weapon/ore/gold))
-		ore_gold++
-		qdel(O)
-		return
-	if (istype(O,/obj/item/weapon/ore/silver))
-		ore_silver++
-		qdel(O)
-		return
-	if (istype(O,/obj/item/weapon/ore/uranium))
-		ore_uranium++
-		qdel(O)
-		return
-	if (istype(O,/obj/item/weapon/ore/bananium))
-		ore_clown++
-		qdel(O)
-		return
-	if (istype(O,/obj/item/weapon/ore/titanium))
-		ore_titanium++
-		qdel(O)
-		return
-	if (istype(O,/obj/item/weapon/ore/bluespace_crystal))
-		ore_bluespace++
-		qdel(O)
-		return
-	unload_mineral(O)
+		if(CONSOLE)
+			CONSOLE.updateUsrDialog()
+
+/obj/machinery/mineral/processing_unit/proc/get_machine_data()
+	var/dat = "<b>Smelter control console</b><br><br>"
+	for(var/mat_id in materials.materials)
+		var/datum/material/M = materials.materials[mat_id]
+		dat += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
+		if (selected_material == mat_id)
+			dat += "Smelting"
+		else
+			dat += "<A href='?src=\ref[CONSOLE];material=[mat_id]'><b>Not Smelting</b></A> "
+		dat += "<br>"
+
+	dat += "<br>"
+	//On or off
+	dat += "Machine is currently "
+	if (on)
+		dat += "<A href='?src=\ref[CONSOLE];set_on=off'>On</A> "
+	else
+		dat += "<A href='?src=\ref[CONSOLE];set_on=on'>Off</A> "
+
+	return dat
 
 /obj/machinery/mineral/processing_unit/process()
-	for(var/i in 1 to 10)
-		if (on)
-			if (selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
-				if (ore_glass > 0)
-					ore_glass--
-					generate_mineral(/obj/item/stack/sheet/glass)
-				else
-					on = 0
-				continue
-			if (selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
-				if (ore_glass > 0 && ore_iron > 0)
-					ore_glass--
-					ore_iron--
-					generate_mineral(/obj/item/stack/sheet/rglass)
-				else
-					on = 0
-				continue
-			if (!selected_glass && selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
-				if (ore_gold > 0)
-					ore_gold--
-					generate_mineral(/obj/item/stack/sheet/mineral/gold)
-				else
-					on = 0
-				continue
-			if (!selected_glass && !selected_gold && selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
-				if (ore_silver > 0)
-					ore_silver--
-					generate_mineral(/obj/item/stack/sheet/mineral/silver)
-				else
-					on = 0
-				continue
-			if (!selected_glass && !selected_gold && !selected_silver && selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
-				if (ore_diamond > 0)
-					ore_diamond--
-					generate_mineral(/obj/item/stack/sheet/mineral/diamond)
-				else
-					on = 0
-				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
-				if (ore_plasma > 0)
-					ore_plasma--
-					generate_mineral(/obj/item/stack/sheet/mineral/plasma)
-				else
-					on = 0
-				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
-				if (ore_uranium > 0)
-					ore_uranium--
-					generate_mineral(/obj/item/stack/sheet/mineral/uranium)
-				else
-					on = 0
-				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
-				if (ore_iron > 0)
-					ore_iron--
-					generate_mineral(/obj/item/stack/sheet/metal)
-				else
-					on = 0
-				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
-				if (ore_iron > 0 && ore_plasma > 0)
-					ore_iron--
-					ore_plasma--
-					generate_mineral(/obj/item/stack/sheet/plasteel)
-				else
-					on = 0
-				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && selected_clown && !selected_titanium && !selected_bluespace)
-				if (ore_clown > 0)
-					ore_clown--
-					generate_mineral(/obj/item/stack/sheet/mineral/bananium)
-				else
-					on = 0
-				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && selected_titanium && !selected_bluespace)
-				if (ore_titanium > 0)
-					ore_titanium--
-					generate_mineral(/obj/item/stack/sheet/mineral/titanium)
-				else
-					on = 0
-				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && !selected_iron && !selected_clown && selected_titanium && !selected_bluespace)
-				if (ore_titanium > 0)
-					ore_titanium--
-					ore_plasma--
-					generate_mineral(/obj/item/stack/sheet/mineral/plastitanium)
-				else
-					on = 0
-				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && selected_bluespace)
-				if (ore_bluespace > 0)
-					ore_bluespace--
-					generate_mineral(/obj/item/stack/sheet/bluespace_crystal)
-				else
-					on = 0
-				continue
+	if (on)
+		var/datum/material/mat = materials.materials[selected_material]
+		if(mat)
+			var/sheets_to_remove = (mat.amount >= (MINERAL_MATERIAL_AMOUNT * 10) ) ? 10 : round(mat.amount /  MINERAL_MATERIAL_AMOUNT)
+			if(!sheets_to_remove)
+				on = FALSE
+			else
+				var/out = get_step(src, output_dir)
+				materials.retrieve_sheets(sheets_to_remove, selected_material, out)
+
+		if(CONSOLE)
+			CONSOLE.updateUsrDialog()
+
+
 			//THESE TWO ARE CODED FOR URIST TO USE WHEN HE GETS AROUND TO IT.
 			//They were coded on 18 Feb 2012. If you're reading this in 2015, then firstly congratulations on the world not ending on 21 Dec 2012 and secondly, Urist is apparently VERY lazy. ~Errorage
 			//Even in the dark year of 2016, where /tg/ is dead, Urist still hasn't finished this -Bawhoppennn
@@ -401,73 +140,12 @@
 				continue*/
 
 
-			//if a non valid combination is selected
-
-			var/b = 1 //this part checks if all required ores are available
-
-			if (!(selected_gold || selected_silver ||selected_diamond || selected_uranium | selected_plasma || selected_iron || selected_iron || selected_titanium))
-				b = 0
-
-			if (selected_gold == 1)
-				if (ore_gold <= 0)
-					b = 0
-			if (selected_silver == 1)
-				if (ore_silver <= 0)
-					b = 0
-			if (selected_diamond == 1)
-				if (ore_diamond <= 0)
-					b = 0
-			if (selected_uranium == 1)
-				if (ore_uranium <= 0)
-					b = 0
-			if (selected_plasma == 1)
-				if (ore_plasma <= 0)
-					b = 0
-			if (selected_iron == 1)
-				if (ore_iron <= 0)
-					b = 0
-			if (selected_glass == 1)
-				if (ore_glass <= 0)
-					b = 0
-			if (selected_clown == 1)
-				if (ore_clown <= 0)
-					b = 0
-			if (selected_titanium == 1)
-				if (ore_titanium <= 0)
-					b = 0
-			if (selected_bluespace == 1)
-				if (ore_bluespace <= 0)
-					b = 0
-
-			if (b) //if they are, deduct one from each, produce slag and shut the machine off
-				if (selected_gold == 1)
-					ore_gold--
-				if (selected_silver == 1)
-					ore_silver--
-				if (selected_diamond == 1)
-					ore_diamond--
-				if (selected_uranium == 1)
-					ore_uranium--
-				if (selected_plasma == 1)
-					ore_plasma--
-				if (selected_iron == 1)
-					ore_iron--
-				if (selected_clown == 1)
-					ore_clown--
-				if (selected_titanium == 1)
-					ore_titanium--
-				if (selected_bluespace == 1)
-					ore_bluespace--
-				generate_mineral(/obj/item/weapon/ore/slag)
-				on = 0
-			else
-				on = 0
-				break
-			break
-		else
-			break
-
-
 /obj/machinery/mineral/processing_unit/proc/generate_mineral(P)
 	var/O = new P(src)
 	unload_mineral(O)
+
+/obj/machinery/mineral/processing_unit/on_deconstruction()
+	materials.retrieve_all()
+	..()
+
+#undef PROCESSING_UNIT_CAPACITY
