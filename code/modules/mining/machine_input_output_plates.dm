@@ -28,4 +28,4 @@
 	S.loc = loc
 	var/turf/T = get_step(src,output_dir)
 	if(T)
-		S.loc = T
+		S.forceMove(T)

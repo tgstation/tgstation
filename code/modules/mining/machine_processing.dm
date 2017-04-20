@@ -10,20 +10,19 @@
 	var/machinedir = EAST
 	speed_process = 1
 
-/obj/machinery/mineral/processing_unit_console/New()
-	..()
-	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
-		if (machine)
-			machine.CONSOLE = src
-		else
-			qdel(src)
+/obj/machinery/mineral/processing_unit_console/Initialize()
+	. = ..()
+	machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
+	if (machine)
+		machine.CONSOLE = src
+	else
+		qdel(src)
 
 /obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
 
 	var/dat = "<b>Smelter control console</b><br><br>"
 	//iron
-	if(machine.ore_iron || machine.ore_glass || machine.ore_plasma || machine.ore_uranium || machine.ore_gold || machine.ore_silver || machine.ore_diamond || machine.ore_clown || machine.ore_adamantine)
+	if(machine.ore_iron || machine.ore_glass || machine.ore_plasma || machine.ore_uranium || machine.ore_gold || machine.ore_silver || machine.ore_diamond || machine.ore_clown || machine.ore_titanium || machine.ore_bluespace || machine.ore_adamantine)
 		if(machine.ore_iron)
 			if (machine.selected_iron==1)
 				dat += "<A href='?src=\ref[src];sel_iron=no'><font color='green'>Smelting</font></A> "
@@ -113,6 +112,15 @@
 		else
 			machine.selected_titanium = 0
 
+		//bluespace
+		if(machine.ore_bluespace)
+			if (machine.selected_bluespace==1)
+				dat += "<A href='?src=\ref[src];sel_bluespace=no'><font color='green'>Smelting</font></A> "
+			else
+				dat += "<A href='?src=\ref[src];sel_bluespace=yes'><font color='red'>Not smelting</font></A> "
+			dat += "Bluespace crystal: [machine.ore_bluespace]<br>"
+		else
+			machine.selected_bluespace = 0
 
 		//On or off
 		dat += text("Machine is currently ")
@@ -178,6 +186,11 @@
 			machine.selected_titanium = 1
 		else
 			machine.selected_titanium = 0
+	if(href_list["sel_bluespace"])
+		if (href_list["sel_bluespace"] == "yes")
+			machine.selected_bluespace = 1
+		else
+			machine.selected_bluespace = 0
 	if(href_list["set_on"])
 		if (href_list["set_on"] == "on")
 			machine.on = 1
@@ -206,6 +219,7 @@
 	var/ore_clown = 0;
 	var/ore_adamantine = 0;
 	var/ore_titanium = 0;
+	var/ore_bluespace = 0
 	var/selected_gold = 0
 	var/selected_silver = 0
 	var/selected_diamond = 0
@@ -215,19 +229,71 @@
 	var/selected_iron = 0
 	var/selected_clown = 0
 	var/selected_titanium = 0
+	var/selected_bluespace = 0
 	var/on = 0 //0 = off, 1 =... oh you know!
+
+/obj/machinery/mineral/processing_unit/Initialize()
+	. = ..()
+	proximity_monitor = new(src, 1)
+
+/obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
+	if(istype(AM, /obj/item/weapon/ore) && AM.loc == get_step(src, input_dir))
+		process_ore(AM)
+
+/obj/machinery/mineral/processing_unit/proc/process_ore(O)
+	if (istype(O,/obj/item/weapon/ore/iron))
+		ore_iron++;
+		qdel(O)
+		return
+	if (istype(O,/obj/item/weapon/ore/glass))
+		ore_glass++;
+		qdel(O)
+		return
+	if (istype(O,/obj/item/weapon/ore/diamond))
+		ore_diamond++;
+		qdel(O)
+		return
+	if (istype(O,/obj/item/weapon/ore/plasma))
+		ore_plasma++
+		qdel(O)
+		return
+	if (istype(O,/obj/item/weapon/ore/gold))
+		ore_gold++
+		qdel(O)
+		return
+	if (istype(O,/obj/item/weapon/ore/silver))
+		ore_silver++
+		qdel(O)
+		return
+	if (istype(O,/obj/item/weapon/ore/uranium))
+		ore_uranium++
+		qdel(O)
+		return
+	if (istype(O,/obj/item/weapon/ore/bananium))
+		ore_clown++
+		qdel(O)
+		return
+	if (istype(O,/obj/item/weapon/ore/titanium))
+		ore_titanium++
+		qdel(O)
+		return
+	if (istype(O,/obj/item/weapon/ore/bluespace_crystal))
+		ore_bluespace++
+		qdel(O)
+		return
+	unload_mineral(O)
 
 /obj/machinery/mineral/processing_unit/process()
 	for(var/i in 1 to 10)
 		if (on)
-			if (selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
+			if (selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
 				if (ore_glass > 0)
 					ore_glass--
 					generate_mineral(/obj/item/stack/sheet/glass)
 				else
 					on = 0
 				continue
-			if (selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium)
+			if (selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
 				if (ore_glass > 0 && ore_iron > 0)
 					ore_glass--
 					ore_iron--
@@ -235,49 +301,49 @@
 				else
 					on = 0
 				continue
-			if (!selected_glass && selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
+			if (!selected_glass && selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
 				if (ore_gold > 0)
 					ore_gold--
 					generate_mineral(/obj/item/stack/sheet/mineral/gold)
 				else
 					on = 0
 				continue
-			if (!selected_glass && !selected_gold && selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
+			if (!selected_glass && !selected_gold && selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
 				if (ore_silver > 0)
 					ore_silver--
 					generate_mineral(/obj/item/stack/sheet/mineral/silver)
 				else
 					on = 0
 				continue
-			if (!selected_glass && !selected_gold && !selected_silver && selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
+			if (!selected_glass && !selected_gold && !selected_silver && selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
 				if (ore_diamond > 0)
 					ore_diamond--
 					generate_mineral(/obj/item/stack/sheet/mineral/diamond)
 				else
 					on = 0
 				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
 				if (ore_plasma > 0)
 					ore_plasma--
 					generate_mineral(/obj/item/stack/sheet/mineral/plasma)
 				else
 					on = 0
 				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && selected_uranium && !selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
 				if (ore_uranium > 0)
 					ore_uranium--
 					generate_mineral(/obj/item/stack/sheet/mineral/uranium)
 				else
 					on = 0
 				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
 				if (ore_iron > 0)
 					ore_iron--
 					generate_mineral(/obj/item/stack/sheet/metal)
 				else
 					on = 0
 				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium && !selected_bluespace)
 				if (ore_iron > 0 && ore_plasma > 0)
 					ore_iron--
 					ore_plasma--
@@ -285,25 +351,32 @@
 				else
 					on = 0
 				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && selected_clown && !selected_titanium)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && selected_clown && !selected_titanium && !selected_bluespace)
 				if (ore_clown > 0)
 					ore_clown--
 					generate_mineral(/obj/item/stack/sheet/mineral/bananium)
 				else
 					on = 0
 				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && selected_titanium)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && selected_titanium && !selected_bluespace)
 				if (ore_titanium > 0)
 					ore_titanium--
 					generate_mineral(/obj/item/stack/sheet/mineral/titanium)
 				else
 					on = 0
 				continue
-			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && !selected_iron && !selected_clown && selected_titanium)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && !selected_iron && !selected_clown && selected_titanium && !selected_bluespace)
 				if (ore_titanium > 0)
 					ore_titanium--
 					ore_plasma--
 					generate_mineral(/obj/item/stack/sheet/mineral/plastitanium)
+				else
+					on = 0
+				continue
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium && selected_bluespace)
+				if (ore_bluespace > 0)
+					ore_bluespace--
+					generate_mineral(/obj/item/stack/sheet/bluespace_crystal)
 				else
 					on = 0
 				continue
@@ -332,7 +405,7 @@
 
 			var/b = 1 //this part checks if all required ores are available
 
-			if (!(selected_gold || selected_silver ||selected_diamond || selected_uranium | selected_plasma || selected_iron || selected_iron))
+			if (!(selected_gold || selected_silver ||selected_diamond || selected_uranium | selected_plasma || selected_iron || selected_iron || selected_titanium))
 				b = 0
 
 			if (selected_gold == 1)
@@ -359,6 +432,12 @@
 			if (selected_clown == 1)
 				if (ore_clown <= 0)
 					b = 0
+			if (selected_titanium == 1)
+				if (ore_titanium <= 0)
+					b = 0
+			if (selected_bluespace == 1)
+				if (ore_bluespace <= 0)
+					b = 0
 
 			if (b) //if they are, deduct one from each, produce slag and shut the machine off
 				if (selected_gold == 1)
@@ -375,6 +454,10 @@
 					ore_iron--
 				if (selected_clown == 1)
 					ore_clown--
+				if (selected_titanium == 1)
+					ore_titanium--
+				if (selected_bluespace == 1)
+					ore_bluespace--
 				generate_mineral(/obj/item/weapon/ore/slag)
 				on = 0
 			else
@@ -383,46 +466,6 @@
 			break
 		else
 			break
-	var/turf/T = get_step(src,input_dir)
-	if(T)
-		var/n = 0
-		for(var/obj/item/O in T)
-			n++
-			if(n>10)
-				break
-			if (istype(O,/obj/item/weapon/ore/iron))
-				ore_iron++;
-				O.loc = null
-				continue
-			if (istype(O,/obj/item/weapon/ore/glass))
-				ore_glass++;
-				O.loc = null
-				continue
-			if (istype(O,/obj/item/weapon/ore/diamond))
-				ore_diamond++;
-				O.loc = null
-				continue
-			if (istype(O,/obj/item/weapon/ore/plasma))
-				ore_plasma++
-				O.loc = null
-				continue
-			if (istype(O,/obj/item/weapon/ore/gold))
-				ore_gold++
-				O.loc = null
-				continue
-			if (istype(O,/obj/item/weapon/ore/silver))
-				ore_silver++
-				O.loc = null
-				continue
-			if (istype(O,/obj/item/weapon/ore/uranium))
-				ore_uranium++
-				O.loc = null
-				continue
-			if (istype(O,/obj/item/weapon/ore/bananium))
-				ore_clown++
-				O.loc = null
-				continue
-			unload_mineral(O)
 
 
 /obj/machinery/mineral/processing_unit/proc/generate_mineral(P)
