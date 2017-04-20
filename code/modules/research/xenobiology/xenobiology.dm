@@ -25,7 +25,7 @@
 		qdel(O)
 	..()
 
-/obj/item/slime_extract/New()
+/obj/item/slime_extract/Initialize()
 		..()
 		create_reagents(100)
 
@@ -559,7 +559,7 @@
 	var/duration = 140
 	alpha = 125
 
-/obj/effect/timestop/New()
+/obj/effect/timestop/Initialize()
 	..()
 	for(var/mob/living/M in GLOB.player_list)
 		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
