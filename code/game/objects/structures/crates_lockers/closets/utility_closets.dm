@@ -23,7 +23,7 @@
 	if (prob(40))
 		new /obj/item/weapon/storage/toolbox/emergency(src)
 
-	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "shit" = 5, "nothing" = 4, "delete" = 1)))
 		if ("small")
 			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
@@ -42,6 +42,11 @@
 		if ("both")
 			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
+	
+		if ("shit")
+		        new /obj/item/weapon/gun/energy/pulse/pistol(src)
+		        new /obj/item/clothing/mask/gas(src)
+		        new /obj/item/weapon/gun/magic/wand/resurrection(src)
 
 		if ("nothing")
 			// doot
