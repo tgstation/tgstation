@@ -428,3 +428,9 @@
 	item_state = "flashdark"
 	brightness_on = 2.5
 	flashlight_power = -3
+
+/obj/item/device/flashlight/eyelight
+	name = "eyelight"
+	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
+	flags = CONDUCT | DROPDEL
+	actions_types = list()
