@@ -481,7 +481,13 @@
 	..()
 
 /obj/item/weapon/melee/baseball_bat/attack(mob/living/target, mob/living/user)
+	var/oldforce = force
+	if(user.a_intent == "help" && (user.zone_selected in list("head", "eyes", "mouth")))
+		force = 0
+		user.visible_message("<span class='notice'>[user] gives [target] a bat on the head to make them feel better!</span>", \
+		"<span class='notice'>You give [target] a bat on the head to make them feel better!</span>")
 	. = ..()
+	force = oldforce
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	if(homerun_ready)
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")
