@@ -28,8 +28,8 @@
 ///////////////
 
 //Start of a breath chain, calls breathe()
-/mob/living/carbon/handle_breathing()
-	if(SSmobs.times_fired%4==2 || failed_last_breath)
+/mob/living/carbon/handle_breathing(times_fired)
+	if((times_fired % 4) == 2 || failed_last_breath)
 		breathe() //Breathe per 4 ticks, unless suffocating
 	else
 		if(istype(loc, /obj/))
