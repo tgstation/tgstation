@@ -923,3 +923,8 @@
 	if(riding_datum)
 		riding_datum.handle_vehicle_offsets()
 		riding_datum.handle_vehicle_layer()
+
+/mob/living/ConveyorMove()
+	if((movement_type & FLYING) && !stat)
+		return
+	..()

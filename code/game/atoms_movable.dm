@@ -623,3 +623,8 @@
 			highest_priority = pri
 
 	. = chosen_langtype
+
+/atom/movable/proc/ConveyorMove(movedir)
+	set waitfor = FALSE
+	if(!anchored && has_gravity())
+		step(src, movedir)
