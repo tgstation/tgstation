@@ -1,8 +1,0 @@
-diff a/code/game/turfs/space/space.dm b/code/game/turfs/space/space.dm	(rejected hunks)
-@@ -210,4 +210,4 @@
- 			to_chat(user, "<span class='notice'>You build a floor.</span>")
- 			ChangeTurf(/turf/open/floor/plating)
- 			return TRUE
--	return FALSE
-\ No newline at end of file
-+	return FALSE
