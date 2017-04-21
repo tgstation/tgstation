@@ -1530,7 +1530,6 @@
 #include "code\modules\mob\living\carbon\human\species.dm"
 #include "code\modules\mob\living\carbon\human\status_procs.dm"
 #include "code\modules\mob\living\carbon\human\update_icons.dm"
-#include "code\modules\mob\living\carbon\human\whisper.dm"
 #include "code\modules\mob\living\carbon\human\species_types\abductors.dm"
 #include "code\modules\mob\living\carbon\human\species_types\android.dm"
 #include "code\modules\mob\living\carbon\human\species_types\angel.dm"
