@@ -1,5 +1,8 @@
 
 /mob/living/silicon/pai/proc/fold_out(force = FALSE)
+	if(!force)	//Lol admin abuse
+		src << "<span class='warning'> This function is still under development.</span>"
+		return 0
 	if(emitterhealth < 0)
 		to_chat(src, "<span class='warning'>Your holochassis emitters are still too unstable! Please wait for automatic repair.</span>")
 		return FALSE
@@ -43,6 +46,9 @@
 	emittersemicd = FALSE
 
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
+	if(!force)	//Lol admin abuse
+		src << "<span class='warning'> This function is still under development.</span>"
+		return 0
 	emittersemicd = TRUE
 	if(!force)
 		addtimer(CALLBACK(src, .proc/emittercool), emittercd)
@@ -68,6 +74,9 @@
 		lay_down()
 
 /mob/living/silicon/pai/proc/choose_chassis()
+	if(!force)	//Lol admin abuse
+		src << "<span class='warning'> This function is still under development.</span>"
+		return 0
 	var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in possible_chassis
 	if(!choice)
 		return 0
