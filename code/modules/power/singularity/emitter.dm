@@ -7,6 +7,11 @@
 	anchored = 0
 	density = 1
 	req_access = list(GLOB.access_engine_equip)
+  
+	// The following 3 vars are mostly for the prototype
+	var/manual = FALSE
+	var/charge = 0
+	var/atom/target = null
 
 	use_power = 0
 	idle_power_usage = 10
@@ -192,34 +197,62 @@
 		add_load(active_power_usage)
 		fire_beam()
 
-/obj/machinery/power/emitter/proc/fire_beam()
-	src.last_shot = world.time
-	if(src.shot_number < 3)
-		src.fire_delay = 20
-		src.shot_number ++
-	else
-		src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
-		src.shot_number = 0
-	var/obj/item/projectile/A = new projectile_type(src.loc)
-	A.setDir(src.dir)
-	playsound(src.loc, projectile_sound, 25, 1)
+/obj/machinery/power/emitter/proc/fire_beam(atom/targeted_atom, mob/user)
+	var/turf/targets_from = get_turf(src)
+	if(targeted_atom == user|| targeted_atom == targets_from)
+		return
+	var/obj/item/projectile/P = new projectile_type(targets_from)
+	playsound(src.loc, projectile_sound, 50, 1)
 	if(prob(35))
 		sparks.start()
 	switch(dir)
 		if(NORTH)
-			A.yo = 20
-			A.xo = 0
+			P.yo = 20
+			P.xo = 0
+		if(NORTHEAST)
+			P.yo = 20
+			P.xo = 20
 		if(EAST)
-			A.yo = 0
-			A.xo = 20
+			P.yo = 0
+			P.xo = 20
+		if(SOUTHEAST)
+			P.yo = -20
+			P.xo = 20
 		if(WEST)
-			A.yo = 0
-			A.xo = -20
+			P.yo = 0
+			P.xo = -20
+		if(SOUTHWEST)
+			P.yo = -20
+			P.xo = -20
+		if(NORTHWEST)
+			P.yo = 20
+			P.xo = -20
 		else // Any other
-			A.yo = -20
-			A.xo = 0
-	A.starting = loc
-	A.fire()
+			P.yo = -20
+			P.xo = 0
+	if(target)
+		P.yo = targeted_atom.y - targets_from.y
+		P.xo = targeted_atom.x - targets_from.x
+		P.current = targets_from
+		P.starting = targets_from
+		P.firer = src
+		P.original = targeted_atom
+	if(!manual)
+		last_shot = world.time
+		if(shot_number < 3)
+			fire_delay = 20
+			shot_number ++
+		else
+			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+			shot_number = 0
+		if(!target)
+			P.setDir(src.dir)
+			P.starting = loc
+		else
+			if(QDELETED(target))
+				target = null
+	P.fire()
+	return P
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
 	if(state == EM_WELDED)
