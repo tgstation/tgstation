@@ -10310,6 +10310,9 @@
 	dir = 4;
 	icon_state = "camera"
 	},
+/obj/machinery/keycard_auth{
+	pixel_x = -24
+	},
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -10533,9 +10536,6 @@
 "aut" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1
-	},
-/obj/machinery/keycard_auth{
-	pixel_x = -24
 	},
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -11958,9 +11958,6 @@
 	})
 "awY" = (
 /obj/structure/dresser,
-/obj/machinery/keycard_auth{
-	pixel_x = 24
-	},
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -14980,9 +14977,6 @@
 /area/crew_quarters/sleep_male)
 "aCz" = (
 /obj/structure/dresser,
-/obj/machinery/keycard_auth{
-	pixel_x = -24
-	},
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -15157,9 +15151,6 @@
 	})
 "aCT" = (
 /obj/structure/dresser,
-/obj/machinery/keycard_auth{
-	pixel_x = 24
-	},
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -55680,6 +55671,9 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/keycard_auth{
+	pixel_y = -28
+	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -90062,6 +90056,9 @@
 /area/hallway/primary/starboard)
 "deX" = (
 /obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/keycard_auth{
+	pixel_x = -24
+	},
 /turf/open/floor/plasteel/barber{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -94000,6 +93997,9 @@
 	dir = 4;
 	icon_state = "alarm0";
 	pixel_x = -22
+	},
+/obj/machinery/keycard_auth{
+	pixel_y = -28
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
