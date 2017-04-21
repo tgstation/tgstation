@@ -1,10 +1,10 @@
 /obj/item/weapon/electronics/firealarm
 	name = "fire alarm electronics"
-	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
+	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
 
 /obj/item/wallframe/firealarm
 	name = "fire alarm frame"
-	desc = "Used for building Fire Alarms"
+	desc = "Used for building fire alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
