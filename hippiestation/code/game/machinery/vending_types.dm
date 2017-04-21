@@ -186,7 +186,7 @@ ENGI VEND
 		/obj/item/weapon/electronics/apc = 10,
 		/obj/item/weapon/electronics/airalarm = 10,
 		/obj/item/weapon/stock_parts/cell/high = 10,
-		/obj/item/weapon/rcd/loaded = 3,
+		/obj/item/weapon/construction/rcd/loaded = 3,
 		/obj/item/device/geiger_counter = 5
 		)
 
