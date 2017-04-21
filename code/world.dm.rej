@@ -1,9 +1,0 @@
-diff a/code/world.dm b/code/world.dm	(rejected hunks)
-@@ -35,6 +35,7 @@
- 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
- 
- 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-+	config = new
- 	GLOB.revdata.DownloadPRDetails()
- 	load_mode()
- 	load_motd()
