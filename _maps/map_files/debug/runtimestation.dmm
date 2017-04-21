@@ -87,7 +87,7 @@
 "bI" = (/obj/structure/table,/turf/open/floor/plasteel,/area/bridge)
 "bJ" = (/obj/structure/table,/obj/item/weapon/card/id/captains_spare,/turf/open/floor/plasteel,/area/bridge)
 "bK" = (/obj/structure/table,/obj/item/weapon/storage/backpack/holding,/turf/open/floor/plasteel,/area/bridge)
-"bL" = (/obj/structure/table,/obj/item/weapon/rcd_ammo/large,/obj/item/weapon/rcd_ammo/large,/obj/item/weapon/rcd_ammo/large,/obj/item/weapon/rcd,/turf/open/floor/plasteel,/area/bridge)
+"bL" = (/obj/structure/table,/obj/item/weapon/rcd_ammo/large,/obj/item/weapon/rcd_ammo/large,/obj/item/weapon/rcd_ammo/large,/obj/item/weapon/construction/rcd,/turf/open/floor/plasteel,/area/bridge)
 "bM" = (/obj/structure/closet/secure_closet/hop,/turf/open/floor/plasteel/blue/side{dir = 4},/area/bridge)
 "bN" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel,/area/hallway/primary/central)
 "bO" = (/obj/structure/cable{d1 = 1;d2 = 2;icon_state = "1-2"},/turf/open/floor/plasteel,/area/hallway/primary/central)

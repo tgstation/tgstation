@@ -33,7 +33,6 @@
 /datum/spellbook_entry/cluwnecurse
 	name = "Cluwne Curse"
 	spell_type = /obj/effect/proc_holder/spell/targeted/cluwnecurse
-	log_name = "CC"
 
 /datum/action/spell_action/New(Target)
 	..()

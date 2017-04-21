@@ -103,24 +103,29 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigoff"
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
-	var/lit = 0
+	var/lit = FALSE
+	var/starts_lit = FALSE
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
 	var/smoketime = 300
 	var/chem_volume = 30
+	var/list/list_reagents = list("nicotine" = 15)
 	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/cigarette/New()
+/obj/item/clothing/mask/cigarette/Initialize()
 	..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
-	reagents.add_reagent("nicotine", 15)
+	if(list_reagents)
+		reagents.add_reagent_list(list_reagents)
+	if(starts_lit)
+		light()
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -244,6 +249,31 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/is_hot()
 	return lit * heat
 
+// Cigarette brands.
+
+/obj/item/clothing/mask/cigarette/space_cigarette
+	desc = "A Space Cigarette brand cigarette."
+/obj/item/clothing/mask/cigarette/dromedary
+	desc = "A DromedaryCo brand cigarette."
+/obj/item/clothing/mask/cigarette/uplift
+	desc = "An Uplift Smooth brand cigarette."
+	list_reagents = list("nicotine" = 7.5, "menthol" = 7.5)
+/obj/item/clothing/mask/cigarette/robust
+	desc = "A Robust brand cigarette."
+/obj/item/clothing/mask/cigarette/robustgold
+	desc = "A Robust Gold brand cigarette."
+	list_reagents = list("nicotine" = 15, "gold" = 1)
+/obj/item/clothing/mask/cigarette/carp
+	desc = "A Carp Classic brand cigarette."
+/obj/item/clothing/mask/cigarette/syndicate
+	desc = "An unknown brand cigarette."
+	list_reagents = list("nicotine" = 15, "omnizine" = 15)
+/obj/item/clothing/mask/cigarette/shadyjims
+	desc = "A Shady Jim's Super Slims cigarette."
+	list_reagents = list("nicotine" = 15, "lipolicide" = 4, "ammonia" = 2, "plantbgone" = 1, "toxin" = 1.5)
+
+// Rollies.
+
 /obj/item/clothing/mask/cigarette/rollie
 	name = "rollie"
 	desc = "A roll of dried plant matter wrapped in thin paper."
@@ -261,10 +291,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
-/obj/item/clothing/mask/cigarette/rollie/trippy/New()
-	..()
-	reagents.add_reagent("mushroomhallucinogen", 50)
-	light()
+/obj/item/clothing/mask/cigarette/rollie/trippy
+	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
+	starts_lit = TRUE
 
 
 /obj/item/weapon/cigbutt/roach
@@ -339,7 +368,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 100
 	var/packeditem = 0
 
-/obj/item/clothing/mask/cigarette/pipe/New()
+/obj/item/clothing/mask/cigarette/pipe/Initialize()
 	..()
 	name = "empty [initial(name)]"
 

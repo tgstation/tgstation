@@ -138,7 +138,7 @@
 /obj/structure/reagent_dispensers/water_cooler
 	name = "liquid cooler"
 	desc = "A machine that dispenses liquid to drink."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'hippiestation/icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = 1
 	tank_volume = 500

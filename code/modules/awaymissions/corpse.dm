@@ -27,7 +27,7 @@
 	if(!uses)
 		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
 		return
-	if(jobban_isbanned(user, "lavaland"))
+	if(jobban_isbanned(user, "lavaland") || jobban_isbanned(user, CATBAN) || jobban_isbanned(user, CLUWNEBAN))
 		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")

@@ -186,7 +186,7 @@ ENGI VEND
 		/obj/item/weapon/electronics/apc = 10,
 		/obj/item/weapon/electronics/airalarm = 10,
 		/obj/item/weapon/stock_parts/cell/high = 10,
-		/obj/item/weapon/rcd/loaded = 3,
+		/obj/item/weapon/construction/rcd/loaded = 3,
 		/obj/item/device/geiger_counter = 5
 		)
 
@@ -673,6 +673,7 @@ WALLMED
 /obj/machinery/vending/wallmed
 	name = "\improper NanoMed"
 	desc = "Wall-mounted Medical Equipment dispenser."
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
 	density = 0
@@ -932,6 +933,7 @@ PDA TECH
 
 /obj/machinery/vending/cart
 	name = "\improper PTech"
+	icon = 'icons/obj/vending.dmi'
 	desc = "Cartridges for PDAs"
 	product_slogans = "Carts to go!"
 	icon_state = "cart"

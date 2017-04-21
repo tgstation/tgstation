@@ -1,0 +1,5 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "Ranged RCD added to the game"
+  - rscadd: "Rapid Lighting Device (also ranged) has been added. It can create wall, floor, and temporary lights of any color you desire."

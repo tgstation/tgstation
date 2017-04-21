@@ -1,0 +1,4 @@
+author: "MrSavage/PoopLicker/Davidj361"
+delete-after: True
+changes: 
+  - bugfix: "Krav maga now gets its abilities toggled if you click the same ability twice"

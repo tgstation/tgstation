@@ -47,7 +47,7 @@
 	if(SSticker && SSticker.mode && owner.mind)
 		SSticker.mode.servants_of_ratvar += owner.mind
 		SSticker.mode.update_servant_icons_added(owner.mind)
-		if(jobban_isbanned(owner, ROLE_SERVANT_OF_RATVAR))
+		if(jobban_isbanned(owner, ROLE_SERVANT_OF_RATVAR) || jobban_isbanned(owner, CATBAN) || jobban_isbanned(owner, CLUWNEBAN))
 			INVOKE_ASYNC(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
 	if(owner.mind)
 		owner.mind.special_role = "Servant of Ratvar"

@@ -453,7 +453,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 			for (var/i in GLOB.special_roles)
-				if(jobban_isbanned(user, i))
+				if(jobban_isbanned(user, i) || jobban_isbanned(user, CATBAN) || jobban_isbanned(user, CLUWNEBAN))
 					dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
 				else
 					var/days_remaining = null
@@ -526,7 +526,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
 			lastJob = job
-			if(jobban_isbanned(user, rank))
+			if(jobban_isbanned(user, rank) || jobban_isbanned(user, CLUWNEBAN) || jobban_isbanned(user, CATBAN))
 				HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
 				continue
 			if(!job.player_old_enough(user.client))
@@ -579,7 +579,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
 			if(rank == "Assistant")//Assistant is special
-				if(job_civilian_low & ASSISTANT)
+				if(jobban_isbanned(user, CLUWNEBAN) || jobban_isbanned(user, CATBAN))
+					HTML += "<font color=orange>Mandatory</font>"
+				else if(job_civilian_low & ASSISTANT)
 					HTML += "<font color=green>Yes</font>"
 				else
 					HTML += "<font color=red>No</font>"

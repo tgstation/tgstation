@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		feedback_add_details("traitor_uplink_items_bought", "[item]")
+		feedback_add_details("traitor_uplink_items_bought", "[name]|[cost]")
 		return new item(loc)
 
 /datum/uplink_item/proc/buy(mob/user, obj/item/device/uplink/U)
@@ -1158,6 +1158,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
 		if(istype(item, /obj/item/organ))
+			feedback_add_details("traitor_uplink_items_bought", "[item]|[cost]")
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
@@ -1325,12 +1326,12 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		new I.item(C)
 		U.purchase_log += "<big>\icon[I.item]</big>"
 
+	feedback_add_details("traitor_uplink_items_bought", "[name]|[cost]")
 	return C
 
 /datum/uplink_item/badass/random
 	name = "Random Item"
-	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't \
-			decided on a strategy yet."
+	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't decided on a strategy yet."
 	item = /obj/item/weapon/paper
 	cost = 0
 	cant_discount = TRUE
@@ -1351,5 +1352,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
 		U.spent_telecrystals += I.cost
-		feedback_add_details("traitor_uplink_items_bought","RN")
+		feedback_add_details("traitor_uplink_items_bought","[name]|[I.cost]")
+		feedback_add_details("traitor_random_uplink_items_gotten","[I.name]")
 		return new I.item(loc)
