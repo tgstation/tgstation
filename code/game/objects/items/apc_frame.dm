@@ -38,7 +38,8 @@
 		if(inverse)
 			ndir = turn(ndir, 180)
 
-		var/obj/O = new result_path(get_turf(user), ndir, 1)
+		var/obj/O = new result_path(get_turf(user))
+		O.Construct(usr, ndir)
 		after_attach(O)
 
 	qdel(src)

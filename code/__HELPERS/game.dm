@@ -536,3 +536,13 @@
 
 /proc/GetBluePart(const/hexa)
 	return hex2num(copytext(hexa, 6, 8))
+
+//See game/objects/obj_construction.dm
+#define CONSTRUCTION_BLUEPRINT(type, bproot_only, bpbuild_root_only)\
+##type/construction_blueprint = /datum/construction_blueprint##type;\
+/datum/construction_blueprint##type{\
+	owner_type = ##type;\
+	root_only = ##bproot_only;\
+	build_root_only = ##bpbuild_root_only;\
+}\
+/datum/construction_blueprint##type/GetBlueprint(obj/obj_type)

@@ -10,13 +10,24 @@
 	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 25
-	var/buildstacktype = /obj/item/stack/sheet/metal
-	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
+	var/can_electrify = FALSE
+	var/last_shock_time
+
+/obj/structure/chair/e_chair/Initialize()
+	SetItemToReachConstructionState(CHAIR_ELECTRIC, new /obj/item/assembly/shock_kit(src))
+	..()
 
 /obj/structure/chair/Initialize()
 	..()
+	if(!GetItemUsedToReachConstructionState(CHAIR_ELECTRIC))
+		current_construction_state = current_construction_state.prev_state
+		if(type == /obj/structure/chair)
+			can_electrify = TRUE
+	else
+		can_electrify = TRUE
+	update_icon()
 	if(!anchored)	//why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
 
@@ -27,11 +38,69 @@
 /obj/structure/chair/proc/RemoveFromLatejoin()
 	GLOB.latejoin -= src	//These may be here due to the arrivals shuttle
 
-/obj/structure/chair/deconstruct()
-	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(buildstacktype && (!(flags & NODECONSTRUCT)))
-		new buildstacktype(loc,buildstackamount)
-	..()
+CONSTRUCTION_BLUEPRINT(/obj/structure/chair, FALSE, FALSE)
+	return newlist(
+		/datum/construction_state/first{
+			required_type_to_construct = /obj/item/stack/sheet/metal
+			required_amount_to_construct = 1
+			construction_delay = 10
+			one_per_turf = 1
+			on_floor = 1
+		},
+		/datum/construction_state{
+			required_type_to_construct = /obj/item/assembly/shock_kit
+			required_amount_to_construct = 1
+			stash_construction_item = 1
+			required_type_to_deconstruct = /obj/item/weapon/wrench
+			required_type_to_repair = /obj/item/weapon/weldingtool
+			damage_reachable = 1
+		},
+		/datum/construction_state/last{
+			required_type_to_deconstruct = /obj/item/weapon/wrench
+		}
+	)
+
+/obj/structure/chair/ConstructionChecks(state_started_id, action_type, obj/item, mob/user, first_check)
+	. = ..()
+	if(!.)
+		return
+
+	if(state_started_id && action_type == CONSTRUCTING)	//not just constructed, must try to be making an echair
+		return can_electrify
+
+/obj/structure/chair/update_icon()
+	cut_overlays()
+	if(current_construction_state.id >= CHAIR_ELECTRIC)
+		icon_state = "echair0"
+		add_overlay(image('icons/obj/chairs.dmi', src, "echair_over", MOB_LAYER + 1))
+		name = "electric [initial(name)]"
+		desc = "Looks absolutely SHOCKING!\n<span class='notice'>Drag your sprite to sit in the chair. Alt-click to rotate it clockwise.</span>"
+	else
+		icon_state = initial(icon_state)
+		name = initial(name)
+		desc = initial(desc)
+
+/obj/structure/chair/proc/shock()
+	if(current_construction_state.id < CHAIR_ELECTRIC)
+		return
+
+	if(last_shock_time + 50 > world.time)
+		return
+	last_shock_time = world.time
+
+	// special power handling
+	var/area/A = get_area(src)
+	if(!A || !A.powered(EQUIP))
+		return
+	A.use_power(EQUIP, 5000)
+
+	flick("echair_shock", src)
+	var/datum/effect_system/spark_spread/s = new
+	s.set_up(12, 1, src)
+	s.start()
+	if(has_buckled_mobs())
+		return 
+	visible_message("<span class='danger'>The [src] went off!</span>", "<span class='italics'>You hear a deep sharp shock!</span>")
 
 /obj/structure/chair/attack_paw(mob/user)
 	return attack_hand(user)
@@ -41,24 +110,6 @@
 		var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
 		W.setDir(dir)
 		qdel(src)
-
-/obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, W.usesound, 50, 1)
-		deconstruct()
-	else if(istype(W, /obj/item/assembly/shock_kit))
-		if(!user.drop_item())
-			return
-		var/obj/item/assembly/shock_kit/SK = W
-		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		E.setDir(dir)
-		E.part = SK
-		SK.loc = E
-		SK.master = E
-		qdel(src)
-	else
-		return ..()
 
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs())
@@ -122,17 +173,22 @@
 	resistance_flags = FLAMMABLE
 	obj_integrity = 70
 	max_integrity = 70
-	buildstacktype = /obj/item/stack/sheet/mineral/wood
-	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
+
+CONSTRUCTION_BLUEPRINT(/obj/structure/chair/wood, FALSE, FALSE)
+	. = ..()
+	var/datum/construction_state/first/F = .[1]
+	F.required_type_to_construct = /obj/item/stack/sheet/mineral/wood
+	F.required_amount_to_construct = 3
 
 /obj/structure/chair/wood/narsie_act()
 	return
 
 /obj/structure/chair/wood/normal //Kept for map compatibility
-
+	construction_blueprint = null	//Reee you have the tools, delete the damn thing!
 
 /obj/structure/chair/wood/wings
+	bp_name = "winged wooden chair"
 	icon_state = "wooden_chair_wings"
 	item_chair = /obj/item/chair/wood/wings
 
@@ -144,9 +200,13 @@
 	resistance_flags = FLAMMABLE
 	obj_integrity = 70
 	max_integrity = 70
-	buildstackamount = 2
 	var/image/armrest = null
 	item_chair = null
+
+CONSTRUCTION_BLUEPRINT(/obj/structure/chair/comfy, FALSE, FALSE)
+	. = ..()
+	var/datum/construction_state/first/F = .[1]
+	F.required_amount_to_construct = 2
 
 /obj/structure/chair/comfy/Initialize()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
@@ -166,29 +226,41 @@
 
 
 /obj/structure/chair/comfy/brown
+	bp_name = "brown comfy chair"
 	color = rgb(255,113,0)
 
 /obj/structure/chair/comfy/beige
+	bp_name = "beige comfy chair"
 	color = rgb(255,253,195)
 
 /obj/structure/chair/comfy/teal
+	bp_name = "teal comfy chair"
 	color = rgb(0,255,255)
 
 /obj/structure/chair/comfy/black
+	bp_name = "black comfy chair"
 	color = rgb(167,164,153)
 
 /obj/structure/chair/comfy/lime
+	bp_name = "lime comfy chair"
 	color = rgb(255,251,0)
 
 /obj/structure/chair/office
+	bp_name = "office chair"
 	anchored = 0
-	buildstackamount = 5
 	item_chair = null
 
+CONSTRUCTION_BLUEPRINT(/obj/structure/chair/office, FALSE, FALSE)
+	. = ..()
+	var/datum/construction_state/first/F = .[1]
+	F.required_amount_to_construct = 5
+
 /obj/structure/chair/office/light
+	bp_name = "white office chair"
 	icon_state = "officechair_white"
 
 /obj/structure/chair/office/dark
+	bp_name = "black office chair"
 	icon_state = "officechair_dark"
 
 //Stool
@@ -198,7 +270,6 @@
 	desc = "Apply butt."
 	icon_state = "stool"
 	can_buckle = 0
-	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
 /obj/structure/chair/stool/narsie_act()
@@ -262,18 +333,14 @@
 	qdel(src)
 
 /obj/item/chair/proc/smash(mob/living/user)
-	var/stack_type = initial(origin_type.buildstacktype)
-	if(!stack_type)
-		return
-	var/remaining_mats = initial(origin_type.buildstackamount)
-	remaining_mats-- //Part of the chair was rendered completely unusable. It magically dissapears. Maybe make some dirt?
-	if(remaining_mats)
-		for(var/M=1 to remaining_mats)
-			new stack_type(get_turf(loc))
+	var/datum/construction_blueprint/BP = initial(origin_type.construction_blueprint)
+	if(BP)
+		BP = new BP
+		var/list/Steps = BP.GetBlueprint()
+		var/datum/construction_state/first/F = Steps[1]
+		new F.required_type_to_construct(get_turf(src))
+		qdel(BP)
 	qdel(src)
-
-
-
 
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))

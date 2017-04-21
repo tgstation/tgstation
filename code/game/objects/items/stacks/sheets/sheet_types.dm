@@ -14,13 +14,6 @@
  * Metal
  */
 GLOBAL_LIST_INIT(metal_recipes, list ( \
-	new/datum/stack_recipe("stool", /obj/structure/chair/stool, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("bar stool", /obj/structure/chair/stool/bar, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("chair", /obj/structure/chair, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("swivel chair", /obj/structure/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("comfy chair", /obj/structure/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("bed", /obj/structure/bed, 2, one_per_turf = 1, on_floor = 1), \
-	null, \
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = 1, on_floor = 1), \
 	null, \
@@ -34,7 +27,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("computer frame", /obj/structure/frame/computer, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("modular console", /obj/machinery/modular_computer/console/buildable/, 10, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("machine frame", /obj/structure/frame/machine, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("airlock assembly", /obj/structure/door_assembly, 4, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("firelock frame", /obj/structure/firelock_frame, 3, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("meatspike frame", /obj/structure/kitchenspike_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
@@ -47,7 +39,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("apc frame", /obj/item/wallframe/apc, 2), \
 	new/datum/stack_recipe("air alarm frame", /obj/item/wallframe/airalarm, 2), \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/wallframe/firealarm, 2), \
-	new/datum/stack_recipe("extinguisher cabinet frame", /obj/item/wallframe/extinguisher_cabinet, 2), \
 	new/datum/stack_recipe("button frame", /obj/item/wallframe/button, 1), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = 1, on_floor = 1), \
@@ -86,15 +77,10 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	is_cyborg = 1
 	cost = 500
 
-/obj/item/stack/sheet/metal/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.metal_recipes
-	return ..()
-
 /*
  * Plasteel
  */
 GLOBAL_LIST_INIT(plasteel_recipes, list ( \
-	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 50), \
 ))
 
@@ -112,10 +98,6 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
 
-/obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.plasteel_recipes
-	return ..()
-
 /obj/item/stack/sheet/plasteel/twenty
 	amount = 20
 
@@ -131,16 +113,12 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wood table frame", /obj/structure/table_frame/wood, 2, time = 10), \
 	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 40), \
 	new/datum/stack_recipe("rolling pin", /obj/item/weapon/kitchen/rollingpin, 2, time = 30), \
-	new/datum/stack_recipe("wooden chair", /obj/structure/chair/wood/, 3, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("winged wooden chair", /obj/structure/chair/wood/wings, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("picture frame", /obj/item/weapon/picture_frame, 1, time = 10),\
-	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/weapon/shield/riot/buckler, 20, time = 40), \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
 	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2), \
@@ -160,10 +138,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
-
-/obj/item/stack/sheet/mineral/wood/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.wood_recipes
-	return ..()
 
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50
@@ -206,10 +180,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
 
-/obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.cloth_recipes
-	return ..()
-
 /obj/item/stack/sheet/cloth/ten
 	amount = 10
 
@@ -237,10 +207,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	origin_tech = "materials=1"
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/cardboard
-
-/obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.cardboard_recipes
-	return ..()
 
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
@@ -286,10 +252,6 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 /obj/item/stack/sheet/runed_metal/fifty
 	amount = 50
 
-/obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.runed_metal_recipes
-	return ..()
-
 /*
  * Brass
  */
@@ -324,7 +286,6 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 		qdel(src)
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.brass_recipes
 	..()
 	pixel_x = 0
 	pixel_y = 0
@@ -378,7 +339,3 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 
 /obj/item/stack/sheet/plastic/five
 	amount = 5
-
-/obj/item/stack/sheet/plastic/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.plastic_recipes
-	. = ..()

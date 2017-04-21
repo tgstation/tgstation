@@ -14,7 +14,7 @@
 #define HEAR 			16		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
 #define CONDUCT			64		// conducts electricity (metal etc.)
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
-#define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
+#define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff	//OBJCONREF TODO: DELETE THIS
 #define OVERLAY_QUEUED  256		//atom queued to SSoverlay
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 

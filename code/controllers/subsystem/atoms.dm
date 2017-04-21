@@ -9,14 +9,17 @@ SUBSYSTEM_DEF(atoms)
 
 	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
-
 	var/list/late_loaders
+
+	var/list/blueprints_cache = list()
+	var/list/recipes_cache	
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
+	InitConstruction()
 	return ..()
 
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms = null)
@@ -91,6 +94,11 @@ SUBSYSTEM_DEF(atoms)
 		InitializeAtoms()
 	old_initialized = SSatoms.old_initialized
 
+	blueprints_cache = SSatoms.blueprints_cache
+	recipes_cache = SSatoms.recipes_cache
+
+	flags |= SS_NO_INIT
+
 /datum/controller/subsystem/atoms/proc/setupGenetics()
 	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
 	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
@@ -109,3 +117,44 @@ SUBSYSTEM_DEF(atoms)
 		else if(B.quality == MINOR_NEGATIVE)
 			GLOB.not_good_mutations |= B
 		CHECK_TICK
+
+
+//This just builds the stack recipes list
+//We need to link and verify blueprints before we cache them and for that we need an instance
+//So we won't do that here
+/datum/controller/subsystem/atoms/proc/InitConstruction()
+	var/list/recipes = list()
+	recipes_cache = recipes
+	var/count = 0
+	var/list/objs = typesof(/obj)
+	for(var/I in objs)
+		var/obj/construction_blueprint_getter_type = I;
+		var/construction_blueprint_get_type = initial(construction_blueprint_getter_type.construction_blueprint);
+		if(construction_blueprint_get_type)
+			var/datum/construction_blueprint/CBP = new construction_blueprint_get_type;
+			if(CBP.owner_type != I && (CBP.root_only || CBP.build_root_only))
+				continue
+			var/list/BP = CBP.GetBlueprint(I)
+			if(BP.len)
+				var/datum/construction_state/first/F = BP[1]
+				if(istype(F) && F.buildable)
+					var/obj/item/stack/mat_type = F.required_type_to_construct
+					if(ispath(mat_type, /obj/item/stack))
+						var/merge_type = initial(mat_type.merge_type)
+						if(!merge_type)
+							merge_type = mat_type
+						var/list/t_recipes = recipes[merge_type]
+						if(!t_recipes)
+							t_recipes = list()
+							recipes[merge_type] = t_recipes
+						//TODO: Handle these snowflakes
+						var/is_glass = ispath(merge_type, /obj/item/stack/sheet/glass) || ispath(merge_type, /obj/item/stack/sheet/rglass)
+						var/obj/O = I
+						var/bp_name = initial(O.bp_name)
+						if(!bp_name)
+							bp_name = initial(O.name)
+						t_recipes += new /datum/stack_recipe(bp_name, I, F.required_amount_to_construct, time = F.construction_delay, one_per_turf = F.one_per_turf, on_floor = F.on_floor, window_checks = is_glass)
+						++count
+		CHECK_TICK
+	testing("Compiled [count] stack construction recipes")
+	return count

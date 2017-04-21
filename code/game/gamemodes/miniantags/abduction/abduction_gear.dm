@@ -538,8 +538,12 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon = 'icons/obj/abductor.dmi'
-	buildstacktype = /obj/item/stack/sheet/mineral/abductor
 	icon_state = "bed"
+
+CONSTRUCTION_BLUEPRINT(/obj/structure/bed/abductor, TRUE, TRUE)
+	. = ..()
+	var/datum/construction_state/first/F = .[1]
+	F.required_type_to_construct = /obj/item/stack/sheet/mineral/abductor
 
 /obj/structure/table_frame/abductor
 	name = "alien table frame"
@@ -635,14 +639,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	material_drop = /obj/item/stack/sheet/mineral/abductor
 
 /obj/structure/door_assembly/door_assembly_abductor
-	name = "alien airlock assembly"
 	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
 	typetext = "abductor"
 	icontext = "abductor"
 	airlock_type = /obj/machinery/door/airlock/abductor
-	anchored = 1
-	state = 1
 
 /obj/structure/door_assembly/door_assembly_abductor/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/weldingtool) && !anchored )

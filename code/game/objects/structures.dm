@@ -109,5 +109,12 @@
 		if(25 to 50)
 			return  "It appears heavily damaged."
 		if(0 to 25)
-			if(!broken)
-				return  "<span class='warning'>It's falling apart!</span>"
+			return  "<span class='warning'>It's falling apart!</span>"
+
+/obj/structure/obj_break(damage_flag)
+	..()
+	broken = TRUE
+
+/obj/structure/OnRepair(mob/user, obj/item/used, old_integrity)
+	..()
+	broken = FALSE

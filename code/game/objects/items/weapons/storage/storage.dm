@@ -564,6 +564,11 @@
 		A.ex_act(severity, target)
 		CHECK_TICK
 
+/obj/item/weapon/storage/Construct(mob/living/user, ndir)
+	..()
+	for (var/obj/item/I in src)
+		qdel(I)
+
 //Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
 
 /obj/item/weapon/storage/proc/PopulateContents()

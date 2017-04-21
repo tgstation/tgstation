@@ -57,6 +57,10 @@
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
 
+/obj/structure/window/Construct(mob/living/user, ndir)
+	..()
+	ini_dir = dir
+
 /obj/structure/window/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)

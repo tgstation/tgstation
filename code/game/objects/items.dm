@@ -627,3 +627,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/microwave_act(obj/machinery/microwave/M)
 	if(M && M.dirty < 100)
 		M.dirty++
+
+/obj/item/Construct(mob/user)
+	..()
+	user.put_in_hands(src)

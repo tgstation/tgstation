@@ -13,6 +13,9 @@
 			else if(integrity_failure)
 				if(obj_integrity <= integrity_failure)
 					obj_break(damage_flag)
+					var/datum/construction_state/ccs = current_construction_state
+					if(ccs)
+						ccs.DamageDeconstruct(src)
 
 //returns the damage value of the attack after processing the obj's various armor protections
 /obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
@@ -226,7 +229,6 @@ GLOBAL_DATUM_INIT(acid_overlay, /image, image("icon" = 'icons/effects/effects.dm
 
 //what happens when the obj's health is below integrity_failure level.
 /obj/proc/obj_break(damage_flag)
-	return
 
 //what happens when the obj's integrity reaches zero.
 /obj/proc/obj_destruction(damage_flag)

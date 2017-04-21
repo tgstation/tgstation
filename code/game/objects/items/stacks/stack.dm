@@ -10,7 +10,6 @@
 /obj/item/stack
 	origin_tech = "materials=1"
 	gender = PLURAL
-	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
 	var/max_amount = 50 //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
@@ -19,12 +18,13 @@
 	var/cost = 1 // How much energy from storage it costs
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 
-/obj/item/stack/Initialize(mapload, new_amount=null , merge = TRUE)
+/obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
 	..()
 	if(new_amount)
 		amount = new_amount
 	if(!merge_type)
 		merge_type = type
+
 	if(merge)
 		for(var/obj/item/stack/S in loc)
 			if(S.merge_type == merge_type)
@@ -63,6 +63,7 @@
 	interact(user)
 
 /obj/item/stack/interact(mob/user)
+	var/list/recipes = SSatoms.recipes_cache[merge_type]
 	if (!recipes)
 		return
 	if (!src || get_amount() <= 0)
@@ -111,7 +112,8 @@
 		return
 	if (href_list["make"])
 		if (src.get_amount() < 1) qdel(src) //Never should happen
-
+		
+		var/list/recipes = SSatoms.recipes_cache[merge_type]
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
 		if (!multiplier ||(multiplier <= 0)) //href protection
@@ -120,23 +122,14 @@
 			return
 		if (R.time)
 			usr.visible_message("<span class='notice'>[usr] starts building [R.title].</span>", "<span class='notice'>You start building [R.title]...</span>")
-			if (!do_after(usr, R.time, target = usr))
-				return
-			if(!building_checks(R, multiplier))
+			if (!do_after(usr, R.time, target = usr, extra_checks = CALLBACK(src, .proc/building_checks, R, multiplier)))
 				return
 
-		var/atom/O = new R.result_type( usr.loc )
-		O.setDir(usr.dir)
+		var/obj/O = new R.result_type( usr.loc )
+		O.Construct(usr)
 		use(R.req_amount * multiplier)
-
-		//START: oh fuck i'm so sorry
-		if(istype(O, /obj/structure/windoor_assembly))
-			var/obj/structure/windoor_assembly/W = O
-			W.ini_dir = W.dir
-		else if(istype(O, /obj/structure/window))
-			var/obj/structure/window/W = O
-			W.ini_dir = W.dir
-		//END: oh fuck i'm so sorry
+		if(istype(O, /obj/item))
+			usr.put_in_hands(O)
 
 		//is it a stack ?
 		if (R.max_res_amount > 1)
@@ -146,16 +139,6 @@
 
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
-
-		if (istype(O,/obj/item))
-			usr.put_in_hands(O)
-		O.add_fingerprint(usr)
-
-		//BubbleWrap - so newly formed boxes are empty
-		if ( istype(O, /obj/item/weapon/storage) )
-			for (var/obj/item/I in O)
-				qdel(I)
-		//BubbleWrap END
 
 	if (src && usr.machine==src) //do not reopen closed window
 		addtimer(CALLBACK(src, /atom/.proc/interact, usr), 0)

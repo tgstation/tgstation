@@ -81,7 +81,7 @@
 
 	var/obj/machinery/camera/portable/builtInCamera
 
-	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
+	var/obj/structure/AIcore/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
@@ -90,7 +90,7 @@
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	..()
 	if(!target_ai) //If there is no player/brain inside.
-		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
+		new/obj/structure/AIcore(loc) //New empty terminal.
 		qdel(src)//Delete AI.
 		return
 
@@ -806,7 +806,7 @@
 			to_chat(user, "<span class='warning'>No intelligence patterns detected.</span>"    )
 			return
 		ShutOffDoomsdayDevice()
-		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
+		new /obj/structure/AIcore(loc)//Spawns a deactivated terminal at AI location.
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
 		radio_enabled = 0 	//No talking on the built-in radio for you either!

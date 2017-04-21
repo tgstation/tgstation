@@ -240,7 +240,11 @@
 									 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
 				if(do_after(user,40*I.toolspeed, target = src))
 					if(panel_open && !density && !operating && src.loc)
-						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
+						if(emagged)
+							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
+							QDEL_NULL(electronics)
+
+						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(loc, dir, electronics)
 						switch(base_state)
 							if("left")
 								WA.facing = "l"
@@ -252,33 +256,8 @@
 							if("rightsecure")
 								WA.facing = "r"
 								WA.secure = 1
-						WA.anchored = 1
-						WA.state= "02"
-						WA.setDir(src.dir)
-						WA.ini_dir = src.dir
 						WA.update_icon()
 						WA.created_name = src.name
-
-						if(emagged)
-							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
-							qdel(src)
-							return
-
-						to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
-
-						var/obj/item/weapon/electronics/airlock/ae
-						if(!electronics)
-							ae = new/obj/item/weapon/electronics/airlock( src.loc )
-							if(req_one_access)
-								ae.one_access = 1
-								ae.accesses = src.req_one_access
-							else
-								ae.accesses = src.req_access
-						else
-							ae = electronics
-							electronics = null
-							ae.loc = src.loc
-
 						qdel(src)
 				return
 	return ..()

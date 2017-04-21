@@ -2,6 +2,18 @@
 
 //Defines for construction states
 
+#define NO_DECONSTRUCT -1   //use as a type for required_type_to_(de)construct to prevent passing that state
+#define CONSTRUCTION_VOLUME 50 //used for all construction sounds
+
+#define DECONSTRUCTING 0
+#define CONSTRUCTING 1
+#define REPAIRING 2
+#define CUSTOM_CONSTRUCTION 3
+
+#define CONSTRUCTION_ITEM "__construction_item_replace__"
+
+#define CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME -1
+
 //girder construction states
 #define GIRDER_NORMAL 0
 #define GIRDER_REINF_STRUTS 1
@@ -39,12 +51,13 @@
 #define SCREWS_OUT -1
 
 //ai core defines
-#define EMPTY_CORE 0
-#define CIRCUIT_CORE 1
-#define SCREWED_CORE 2
-#define CABLED_CORE 3
-#define GLASS_CORE 4
-#define AI_READY_CORE 5
+#define EMPTY_CORE 1
+#define ANCHORED_CORE 2
+#define CIRCUIT_CORE 3
+#define SCREWED_CORE 4
+#define CABLED_CORE 5
+#define GLASS_CORE 6
+#define AI_READY_CORE 7
 
 //field generator construction defines
 #define FG_UNSECURED 0
@@ -118,3 +131,30 @@
 #define RCD_AIRLOCK 2
 #define RCD_DECONSTRUCT 3
 #define RCD_WINDOWGRILLE 4
+
+//barsign.dm
+#define BARSIGN_UNWIRED 1
+#define BARSIGN_OPEN 2
+#define BARSIGN_COMPLETE 3
+
+//displaycase.dm
+#define DISPLAY_CASE_NO_ELECTRONICS 1
+#define DISPLAY_CASE_NOGLASS 2
+#define DISPLAY_CASE_COMPLETE 3
+
+#define AIRLOCK_ASSEMBLY_UNSECURED 1
+#define AIRLOCK_ASSEMBLY_SECURED 2
+#define AIRLOCK_ASSEMBLY_WIRED 3
+#define AIRLOCK_ASSEMBLY_ELECTRONICS 4
+#define AIRLOCK_ASSEMBLY_PLATED 5
+
+#define CHAIR_REGULAR 1
+#define CHAIR_ELECTRIC 2
+
+#define EXTINGUISHER_CABINET_EMPTY 1
+#define EXTINGUISHER_CABINET_FULL 2
+
+#define WINDOOR_UNSECURED 1
+#define WINDOOR_UNWIRED 2
+#define WINDOOR_WIRED 3
+#define WINDOOR_ELECTRONICS 4

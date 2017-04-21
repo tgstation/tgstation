@@ -477,7 +477,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/New(loc, new_amount = null, var/param_color = null)
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null, var/param_color = null)
 	..()
 	if(new_amount) // MAXCOIL by default
 		amount = new_amount
@@ -486,7 +486,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
-	recipes = GLOB.cable_coil_recipes
 
 ///////////////////////////////////
 // General procedures
