@@ -113,14 +113,12 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 Arrest Unidentifiable Persons: []<BR>
 Arrest for Unauthorized Weapons: []<BR>
 Arrest for Warrant: []<BR>
-Operating Mode: []<BR>
 Report Arrests[]<BR>
 Auto Patrol: []"},
 
 "<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
 "<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
@@ -139,9 +137,6 @@ Auto Patrol: []"},
 			update_controls()
 		if("ignorerec")
 			check_records = !check_records
-			update_controls()
-		if("switchmode")
-			arrest_type = !arrest_type
 			update_controls()
 		if("declarearrests")
 			declare_arrests = !declare_arrests
