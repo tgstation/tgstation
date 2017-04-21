@@ -28,10 +28,9 @@ SUBSYSTEM_DEF(lighting)
 	..()
 
 /datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
-	var/real_tick_limit
+	MC_SPLIT_TICK_INIT(3)
 	if(!init_tick_checks)
-		real_tick_limit = GLOB.CURRENT_TICKLIMIT
-		GLOB.CURRENT_TICKLIMIT = ((real_tick_limit - world.tick_usage) / 3) + world.tick_usage
+		MC_SPLIT_TICK
 	var/i = 0
 	for (i in 1 to GLOB.lighting_update_lights.len)
 		var/datum/light_source/L = GLOB.lighting_update_lights[i]
@@ -57,7 +56,7 @@ SUBSYSTEM_DEF(lighting)
 		i = 0
 
 	if(!init_tick_checks)
-		GLOB.CURRENT_TICKLIMIT = ((real_tick_limit - world.tick_usage)/2)+world.tick_usage
+		MC_SPLIT_TICK
 
 	for (i in 1 to GLOB.lighting_update_corners.len)
 		var/datum/lighting_corner/C = GLOB.lighting_update_corners[i]
@@ -74,7 +73,7 @@ SUBSYSTEM_DEF(lighting)
 
 
 	if(!init_tick_checks)
-		GLOB.CURRENT_TICKLIMIT = real_tick_limit
+		MC_SPLIT_TICK
 
 	for (i in 1 to GLOB.lighting_update_objects.len)
 		var/atom/movable/lighting_object/O = GLOB.lighting_update_objects[i]
