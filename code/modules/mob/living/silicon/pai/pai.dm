@@ -13,6 +13,7 @@
 	weather_immunities = list("ash")
 	health = 500
 	maxHealth = 500
+	mouse_opacity = 1
 
 	var/ram = 100	// Used as currency to purchase different abilities
 	var/list/software = list()
