@@ -210,6 +210,11 @@
 	icon_state = "smoke"
 	duration = 50
 
+/obj/effect/overlay/temp/fire
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "3"
+	duration = 20
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
@@ -608,3 +613,8 @@
 	name = "Coconuts"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
+
+/obj/effect/overlay/sparkles
+	name = "sparkles"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shieldsparkles"
