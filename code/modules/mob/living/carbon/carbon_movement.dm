@@ -20,6 +20,7 @@
 			. += legcuffed.slowdown
 
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
+	return
 	if(movement_type & FLYING)
 		return 0
 	if(!(lube&SLIDE_ICE))
