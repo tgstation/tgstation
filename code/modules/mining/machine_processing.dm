@@ -1,4 +1,5 @@
-#define PROCESSING_UNIT_CAPACITY 300000
+#define PROCESSING_UNIT_CAPACITY 1000000
+#define SMELT_AMOUNT 10
 
 /**********************Mineral processing unit console**************************/
 
@@ -27,7 +28,7 @@
 
 	var/dat = machine.get_machine_data()
 
-	var/datum/browser/popup = new(user, "processing", "Smelting Console", 600, 600)
+	var/datum/browser/popup = new(user, "processing", "Smelting Console", 300, 500)
 	popup.set_content(dat)
 	popup.open()
 
@@ -39,6 +40,11 @@
 
 	if(href_list["material"])
 		machine.selected_material = href_list["material"]
+		machine.selected_alloy = null
+
+	if(href_list["alloy"])
+		machine.selected_material = null
+		machine.selected_alloy = href_list["alloy"]
 
 	if(href_list["set_on"])
 		machine.on = (href_list["set_on"] == "on")
@@ -59,11 +65,15 @@
 	var/datum/material_container/materials
 	var/on = FALSE
 	var/selected_material = MAT_METAL
+	var/selected_alloy = null
+	var/datum/research/files
+	var/list/categories = list("Alloys")
 
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 1)
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),PROCESSING_UNIT_CAPACITY)
+	files = new /datum/research/smelter(src)
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	qdel(materials)
@@ -89,12 +99,24 @@
 		var/datum/material/M = materials.materials[mat_id]
 		dat += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
 		if (selected_material == mat_id)
-			dat += "Smelting"
+			dat += " <i>Smelting</i>"
 		else
-			dat += "<A href='?src=\ref[CONSOLE];material=[mat_id]'><b>Not Smelting</b></A> "
+			dat += " <A href='?src=\ref[CONSOLE];material=[mat_id]'><b>Not Smelting</b></A> "
 		dat += "<br>"
 
-	dat += "<br>"
+	dat += "<br><br>"
+	dat += "<b>Smelt Alloys</b><br>"
+
+	for(var/v in files.known_designs)
+		var/datum/design/D = files.known_designs[v]
+		dat += "<span class=\"res_name\">[D.name] "
+		if (selected_alloy == D.id)
+			dat += " <i>Smelting</i>"
+		else
+			dat += " <A href='?src=\ref[CONSOLE];alloy=[D.id]'><b>Not Smelting</b></A> "
+		dat += "<br>"
+
+	dat += "<br><br>"
 	//On or off
 	dat += "Machine is currently "
 	if (on)
@@ -106,14 +128,12 @@
 
 /obj/machinery/mineral/processing_unit/process()
 	if (on)
-		var/datum/material/mat = materials.materials[selected_material]
-		if(mat)
-			var/sheets_to_remove = (mat.amount >= (MINERAL_MATERIAL_AMOUNT * 10) ) ? 10 : round(mat.amount /  MINERAL_MATERIAL_AMOUNT)
-			if(!sheets_to_remove)
-				on = FALSE
-			else
-				var/out = get_step(src, output_dir)
-				materials.retrieve_sheets(sheets_to_remove, selected_material, out)
+		if(selected_material)
+			smelt_ore()
+
+		else if(selected_alloy)
+			smelt_alloy()
+
 
 		if(CONSOLE)
 			CONSOLE.updateUsrDialog()
@@ -139,6 +159,50 @@
 					on = 0
 				continue*/
 
+/obj/machinery/mineral/processing_unit/proc/smelt_ore()
+	var/datum/material/mat = materials.materials[selected_material]
+	if(mat)
+		var/sheets_to_remove = (mat.amount >= (MINERAL_MATERIAL_AMOUNT * SMELT_AMOUNT) ) ? SMELT_AMOUNT : round(mat.amount /  MINERAL_MATERIAL_AMOUNT)
+		if(!sheets_to_remove)
+			on = FALSE
+		else
+			var/out = get_step(src, output_dir)
+			materials.retrieve_sheets(sheets_to_remove, selected_material, out)
+
+
+/obj/machinery/mineral/processing_unit/proc/smelt_alloy()
+	var/datum/design/alloy = files.FindDesignByID(selected_alloy) //check if it's a valid design
+	if(!alloy)
+		on = FALSE
+		return
+
+	var/amount = can_smelt(alloy)
+
+	if(!amount)
+		on = FALSE
+		return
+
+	materials.use_amount(alloy.materials, amount)
+
+	generate_mineral(alloy.build_path)
+
+/obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/D)
+	if(D.make_reagents.len)
+		return 0
+
+	var/build_amount = SMELT_AMOUNT
+
+
+	for(var/mat_id in D.materials)
+		var/M = D.materials[mat_id]
+		var/datum/material/smelter_mat  = materials.materials[mat_id]
+
+		if(!M || !smelter_mat)
+			return 0
+
+		build_amount = min(build_amount, round(smelter_mat.amount / M))
+
+	return build_amount
 
 /obj/machinery/mineral/processing_unit/proc/generate_mineral(P)
 	var/O = new P(src)
@@ -148,4 +212,6 @@
 	materials.retrieve_all()
 	..()
 
+
 #undef PROCESSING_UNIT_CAPACITY
+#undef SMELT_AMOUNT
