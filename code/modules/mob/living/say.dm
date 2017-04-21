@@ -94,15 +94,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		say_dead(original_message)
 		return
 
-	if(check_emote(original_message))
+	if(check_emote(original_message) || !can_speak_basic(original_message))
 		return
 
-	if(!can_speak_basic(original_message)) //Stat is seperate so I can handle whispers properly.
-		return
-
-	var/static/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
-	if(stat && !(message_mode in crit_allowed_modes))
-		return
+	if(in_critical)
+		if(!(crit_allowed_modes[message_mode]))
+			return
+	else if(stat == UNCONSCIOUS)
+		if(!(unconscious_allowed_modes[message_mode]))
+			return
 
 	// language comma detection.
 	var/datum/language/message_language = get_message_language(message)
