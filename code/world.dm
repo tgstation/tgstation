@@ -64,7 +64,7 @@
 		GLOB.diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
-	var/key_valid = (GLOB.comms_allowed && input["key"] == GLOB.comms_key)
+	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
 	var/static/last_irc_status = 0
 
 	if("ping" in input)

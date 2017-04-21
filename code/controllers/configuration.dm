@@ -421,9 +421,9 @@
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")
-					GLOB.comms_key = value
+					global.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
-						GLOB.comms_allowed = 1
+						global.comms_allowed = 1
 				if("cross_server_address")
 					cross_address = value
 					if(value != "byond:\\address:port")
@@ -437,9 +437,9 @@
 					if(value != "byond:\\address:port")
 						allow_panic_bunker_bounce = 1
 				if("medal_hub_address")
-					GLOB.medal_hub = value
+					global.medal_hub = value
 				if("medal_hub_password")
-					GLOB.medal_pass = value
+					global.medal_pass = value
 				if("show_irc_name")
 					config.showircname = 1
 				if("see_own_notes")
@@ -843,17 +843,17 @@
 			if("sql_enabled")
 				config.sql_enabled = 1
 			if("address")
-				GLOB.sqladdress = value
+				global.sqladdress = value
 			if("port")
-				GLOB.sqlport = value
+				global.sqlport = value
 			if("feedback_database")
-				GLOB.sqlfdbkdb = value
+				global.sqlfdbkdb = value
 			if("feedback_login")
-				GLOB.sqlfdbklogin = value
+				global.sqlfdbklogin = value
 			if("feedback_password")
-				GLOB.sqlfdbkpass = value
+				global.sqlfdbkpass = value
 			if("feedback_tableprefix")
-				GLOB.sqlfdbktableprefix = value
+				global.sqlfdbktableprefix = value
 			else
 				GLOB.diary << "Unknown setting in configuration: '[name]'"
 
