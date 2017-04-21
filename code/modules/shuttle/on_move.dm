@@ -1,3 +1,7 @@
+// Called before shuttle starts moving atoms.
+/atom/movable/proc/beforeShuttleMove(turf/T1, rotation)
+	return
+
 // Called when shuttle attempts to move an atom.
 /atom/movable/proc/onShuttleMove(turf/T1, rotation)
 	if(rotation)
@@ -17,15 +21,6 @@
 		return 0
 	. = ..()
 
-
-#define DIR_CHECK_TURF_AREA(X) (get_area(get_ranged_target_turf(src, X, 1)) != A)
-/obj/structure/cable/onShuttleMove()
-	. = ..()
-	var/A = get_area(src)
-	//cut cables on the edge
-	if(DIR_CHECK_TURF_AREA(NORTH) || DIR_CHECK_TURF_AREA(SOUTH) || DIR_CHECK_TURF_AREA(EAST) || DIR_CHECK_TURF_AREA(WEST))
-		cut_cable_from_powernet()
-#undef DIR_CHECK_TURF_AREA
 
 /atom/movable/light/onShuttleMove()
 	return 0

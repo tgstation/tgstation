@@ -481,6 +481,19 @@
 	//move or squish anything in the way ship at destination
 	roadkill(L0, L1, S1.dir)
 
+
+	for(var/i in 1 to L0.len)
+		var/turf/T0 = L0[i]
+		if(!T0)
+			continue
+		var/turf/T1 = L1[i]
+		if(!T1)
+			continue
+		if(T0.type == T0.baseturf)
+			continue
+		for(var/atom/movable/AM in T0)
+			AM.beforeShuttleMove(T1, rotation)
+
 	var/list/moved_atoms = list()
 
 	for(var/i in 1 to L0.len)
