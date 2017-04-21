@@ -15,7 +15,7 @@
 	var/mob/living/carbon/human/H = owner
 	if (H.martial_art.streak == "neck_chop")
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
-		H.martial_art.streak = null
+		H.martial_art.streak = ""
 	else
 		owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>", "<b><i>Your next attack will be a Neck Chop.</i></b>")
 		H.martial_art.streak = "neck_chop"
@@ -31,7 +31,7 @@
 	var/mob/living/carbon/human/H = owner
 	if (H.martial_art.streak == "leg_sweep")
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
-		H.martial_art.streak = null
+		H.martial_art.streak = ""
 	else
 		owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>", "<b><i>Your next attack will be a Leg Sweep.</i></b>")
 		H.martial_art.streak = "leg_sweep"
@@ -47,7 +47,7 @@
 	var/mob/living/carbon/human/H = owner
 	if (H.martial_art.streak == "quick_choke")
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
-		H.martial_art.streak = null
+		H.martial_art.streak = ""
 	else
 		owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
 		H.martial_art.streak = "quick_choke"//internal name for lung punch
