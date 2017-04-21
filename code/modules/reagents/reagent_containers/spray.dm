@@ -23,7 +23,7 @@
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user)
 	// Make it so the bioterror spray doesn't spray yourself when you click your belt item
-	if (istype(src, /obj/item/weapon/reagent_containers/spray/chemsprayer) && A.loc == usr)
+	if (istype(src, /obj/item/weapon/reagent_containers/spray/chemsprayer) && A.loc == user)
 		return
 
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
