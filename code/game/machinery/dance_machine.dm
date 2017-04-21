@@ -311,7 +311,7 @@
 		sleep(selection.song_beat)
 
 
-/obj/machinery/disco/proc/dance(var/mob/living/carbon/M) //Show your moves
+/obj/machinery/disco/proc/dance(var/mob/living/M) //Show your moves
 
 	switch(rand(0,9))
 		if(0 to 1)
@@ -323,7 +323,7 @@
 		if(7 to 9)
 			dance5(M)
 
-/obj/machinery/disco/proc/dance2(var/mob/living/carbon/M)
+/obj/machinery/disco/proc/dance2(var/mob/living/M)
 	for(var/i = 1, i < 10, i++)
 		for(var/d in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
 			M.setDir(d)
@@ -332,7 +332,7 @@
 			sleep(1)
 		sleep(20)
 
-/obj/machinery/disco/proc/dance3(var/mob/living/carbon/M)
+/obj/machinery/disco/proc/dance3(var/mob/living/M)
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 75)
 		if (!M)
@@ -380,7 +380,7 @@
 	M.lying_fix()
 
 
-/obj/machinery/disco/proc/dance4(var/mob/living/carbon/M)
+/obj/machinery/disco/proc/dance4(var/mob/living/M)
 	var/speed = rand(1,3)
 	set waitfor = 0
 	var/time = 30
@@ -391,7 +391,7 @@
 			M.lay_down(TRUE)
 		 time--
 
-/obj/machinery/disco/proc/dance5(var/mob/living/carbon/M)
+/obj/machinery/disco/proc/dance5(var/mob/living/M)
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 60)
