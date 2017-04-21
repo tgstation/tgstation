@@ -120,7 +120,7 @@
 	return
 
 /obj/machinery/door/firedoor/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
-	if(W.remove_fuel(1, user))
+	if(W.remove_fuel(0, user))
 		playsound(get_turf(src), W.usesound, 50, 1)
 		user.visible_message("<span class='notice'>[user] starts [welded ? "unwelding" : "welding"] [src].</span>", "<span class='notice'>You start welding [src].</span>")
 		if(do_after(user, 40*W.toolspeed, 1, target=src))
