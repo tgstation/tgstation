@@ -23,7 +23,7 @@
 		var/obj/item/weapon/computer_hardware/battery/battery_module = computer.all_components[MC_CELL]
 		var/obj/item/weapon/computer_hardware/recharger/recharger = computer.all_components[MC_CHARGE]
 		qdel(hard_drive)
-		computer.take_damage(25, 10, 1, 1)
+		computer.take_damage(25, BRUTE, 0, 0)
 		if(battery_module && prob(25))
 			qdel(battery_module)
 			computer.visible_message("<span class='notice'>\The [computer]'s battery explodes in rain of sparks.</span>")
@@ -58,7 +58,7 @@
 	temp.armed = armed
 	return temp
 
-/datum/computer_file/program/revelation/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/datum/computer_file/program/revelation/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)

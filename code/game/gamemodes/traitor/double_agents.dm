@@ -7,7 +7,7 @@
 	reroll_friendly = 0
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
-	num_modifier = 6 // Six additional traitors
+	num_modifier = 4 // Four additional traitors
 
 	announce_text = "There are double agents trying to kill each other!\n\
 	<span class='danger'>Traitors</span>: Eliminate your targets and protect yourself!\n\
@@ -65,7 +65,7 @@
 	// As soon as we get 3 or 4 extra latejoin traitors, make them traitors and kill each other.
 	if(late_joining_list.len >= rand(3, 4))
 		// True randomness
-		shuffle(late_joining_list)
+		shuffle_inplace(late_joining_list)
 		// Reset the target_list, it'll be used again in force_traitor_objectives
 		target_list = list()
 

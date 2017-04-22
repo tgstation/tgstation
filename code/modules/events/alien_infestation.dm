@@ -36,8 +36,8 @@
 
 /datum/round_event/ghost_role/alien_infestation/spawn_role()
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
-		if(qdeleted(temp_vent))
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
+		if(QDELETED(temp_vent))
 			continue
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
@@ -64,8 +64,8 @@
 
 		spawncount--
 		successSpawn = TRUE
-		message_admins("[new_xeno.key] has been made into an alien by an event.")
-		log_game("[new_xeno.key] was spawned as an alien by an event.")
+		message_admins("[key_name_admin(new_xeno)] has been made into an alien by an event.")
+		log_game("[key_name(new_xeno)] was spawned as an alien by an event.")
 		spawned_mobs += new_xeno
 
 	if(successSpawn)

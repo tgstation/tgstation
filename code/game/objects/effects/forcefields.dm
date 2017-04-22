@@ -5,10 +5,7 @@
 	anchored = 1
 	opacity = 0
 	density = 1
-	unacidable = 1
-
-/obj/effect/forcefield/CanAtmosPass(turf/T)
-	return !density
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/effect/forcefield/cult
 	desc = "An unholy shield that blocks all attacks."
@@ -26,3 +23,8 @@
 /obj/effect/forcefield/mime/New()
 	..()
 	QDEL_IN(src, timeleft)
+
+/obj/effect/forcefield/mime/advanced
+	name = "invisible blockade"
+	desc = "You're goona be here a while."
+	timeleft = 600

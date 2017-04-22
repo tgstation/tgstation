@@ -19,13 +19,13 @@
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
-		user << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
+		to_chat(user, "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>")
 	else
 		STOP_PROCESSING(SSobj, src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
-		invis_view = SEE_INVISIBLE_MINIMUM
-		loc << "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>"
+		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		to_chat(loc, "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>")
 		invis_update()
 
 	if(ishuman(user))
@@ -42,7 +42,7 @@
 	if(!mode)
 		return
 
-	if(!istype(loc,/mob/living/carbon/human))
+	if(!ishuman(loc))
 		invis_update()
 		return
 
@@ -67,7 +67,7 @@
 				O.invisibility = 0
 				invis_objects += O
 
-	addtimer(src, "invis_update", 5)
+	addtimer(CALLBACK(src, .proc/invis_update), 5)
 
 /obj/item/clothing/glasses/meson/engine/proc/invis_update()
 	for(var/obj/O in invis_objects)
@@ -78,7 +78,7 @@
 				O.invisibility = INVISIBILITY_MAXIMUM
 
 /obj/item/clothing/glasses/meson/engine/proc/t_ray_on()
-	if(!istype(loc,/mob/living/carbon/human))
+	if(!ishuman(loc))
 		return 0
 
 	var/mob/living/carbon/human/user = loc
@@ -121,10 +121,10 @@
 
 	if(on)
 		START_PROCESSING(SSobj, src)
-		user << "<span class='notice'>You turn the goggles on.</span>"
+		to_chat(user, "<span class='notice'>You turn the goggles on.</span>")
 	else
 		STOP_PROCESSING(SSobj, src)
-		user << "<span class='notice'>You turn the goggles off.</span>"
+		to_chat(user, "<span class='notice'>You turn the goggles off.</span>")
 		invis_update()
 
 	update_icon()

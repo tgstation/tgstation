@@ -6,14 +6,26 @@
 	anchored = 1
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 25
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
+	layer = OBJ_LAYER
 
-/obj/structure/chair/New()
+/obj/structure/chair/Initialize()
 	..()
-	handle_layer()
+	if(!anchored)	//why would you put these on the shuttle?
+		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+
+/obj/structure/chair/Destroy()
+	RemoveFromLatejoin()
+	return ..()
+
+/obj/structure/chair/proc/RemoveFromLatejoin()
+	GLOB.latejoin -= src	//These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -24,21 +36,6 @@
 /obj/structure/chair/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/chair/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
-	if(M.environment_smash)
-		deconstruct()
-
-/obj/structure/chair/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(70))
-				deconstruct()
-		if(3)
-			if(prob(50))
-				deconstruct()
-
 /obj/structure/chair/narsie_act()
 	if(prob(20))
 		var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
@@ -47,7 +44,7 @@
 
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
 		if(!user.drop_item())
@@ -64,7 +61,7 @@
 		return ..()
 
 /obj/structure/chair/attack_tk(mob/user)
-	if(has_buckled_mobs())
+	if(!anchored || has_buckled_mobs())
 		..()
 	else
 		rotate()
@@ -77,10 +74,14 @@
 			buckled_mob.setDir(direction)
 
 /obj/structure/chair/proc/handle_layer()
-	if(dir == NORTH)
-		layer = ABOVE_ALL_MOB_LAYER
+	if(has_buckled_mobs() && dir == NORTH)
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
+
+/obj/structure/chair/post_buckle_mob(mob/living/M)
+	..()
+	handle_layer()
 
 /obj/structure/chair/proc/spin()
 	setDir(turn(dir, 90))
@@ -106,7 +107,7 @@
 /obj/structure/chair/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -118,8 +119,9 @@
 	icon_state = "wooden_chair"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
@@ -139,23 +141,28 @@
 	desc = "It looks comfy.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
-	burn_state = FLAMMABLE
-	burntime = 30
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 	buildstackamount = 2
 	var/image/armrest = null
 	item_chair = null
 
-/obj/structure/chair/comfy/New()
+/obj/structure/chair/comfy/Initialize()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
+	return ..()
 
+/obj/structure/chair/comfy/Destroy()
+	QDEL_NULL(armrest)
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
+	..()
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
-		overlays -= armrest
+		cut_overlay(armrest)
 
 
 /obj/structure/chair/comfy/brown
@@ -203,7 +210,7 @@
 		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags & NODECONSTRUCT)
 			return
 		if(usr.incapacitated())
-			usr << "<span class='warning'>You can't do that right now!</span>"
+			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
@@ -222,7 +229,7 @@
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
 	item_state = "chair"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	force = 8
 	throwforce = 10
 	throw_range = 3
@@ -243,10 +250,10 @@
 /obj/item/chair/proc/plant(mob/user)
 	for(var/obj/A in get_turf(loc))
 		if(istype(A,/obj/structure/chair))
-			user << "<span class='danger'>There is already a chair here.</span>"
+			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return
 		if(A.density && !(A.flags & ON_BORDER))
-			user << "<span class='danger'>There is already something here.</span>"
+			to_chat(user, "<span class='danger'>There is already something here.</span>")
 			return
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
@@ -263,7 +270,6 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	user.unEquip(src,1) //Even NODROP chairs are destroyed.
 	qdel(src)
 
 
@@ -308,8 +314,9 @@
 	name = "wooden chair"
 	icon_state = "wooden_chair_toppled"
 	item_state = "woodenchair"
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
 	break_chance = 50

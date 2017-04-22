@@ -20,14 +20,14 @@
 		return
 
 	if(use_power(charge_rate, charging=1))
-		holder.give_power(charge_rate * CELLRATE)
+		holder.give_power(charge_rate * GLOB.CELLRATE)
 
 
 /obj/item/weapon/computer_hardware/recharger/APC
 	name = "area power connector"
 	desc = "A device that wirelessly recharges connected device from nearby APC."
 	icon_state = "charger_APC"
-	w_class = 2 // Can't be installed into tablets/PDAs
+	w_class = WEIGHT_CLASS_SMALL // Can't be installed into tablets/PDAs
 	origin_tech = "programming=2;engineering=2;powerstorage=3"
 
 /obj/item/weapon/computer_hardware/recharger/APC/use_power(amount, charging=0)
@@ -39,11 +39,11 @@
 
 	else
 		var/area/A = get_area(src)
-		if(!A || !isarea(A) || !A.master)
+		if(!istype(A))
 			return 0
 
-		if(A.master.powered(EQUIP))
-			A.master.use_power(amount, EQUIP)
+		if(A.powered(EQUIP))
+			A.use_power(amount, EQUIP)
 			return 1
 	return 0
 
@@ -51,13 +51,13 @@
 	name = "wired power connector"
 	desc = "A power connector that recharges connected device from nearby power wire. Incompatible with portable computers."
 	icon_state = "charger_wire"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "engineering=2;powerstorage=1"
 
 /obj/item/weapon/computer_hardware/recharger/wired/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	if(istype(M.physical, /obj/machinery) && M.physical.anchored)
 		return ..()
-	user << "<span class='warning'>\The [src] is incompatible with portable computers!</span>"
+	to_chat(user, "<span class='warning'>\The [src] is incompatible with portable computers!</span>")
 	return 0
 
 /obj/item/weapon/computer_hardware/recharger/wired/use_power(amount, charging=0)
@@ -84,9 +84,9 @@
 // This is not intended to be obtainable in-game. Intended for adminbus and debugging purposes.
 /obj/item/weapon/computer_hardware/recharger/lambda
 	name = "lambda coil"
-	desc = "A very complex device that draws power from it's own bluespace dimension."
+	desc = "A very complex device that draws power from its own bluespace dimension."
 	icon_state = "charger_lambda"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	charge_rate = 100000
 
 /obj/item/weapon/computer_hardware/recharger/lambda/use_power(amount, charging=0)

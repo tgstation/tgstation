@@ -6,6 +6,7 @@
 	icon_state = "mixer0b"
 	use_power = 1
 	idle_power_usage = 40
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/target_temperature = 300
 	var/heater_coefficient = 0.10
@@ -17,7 +18,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/chem_heater
-	name = "circuit board (Chemical Heater)"
+	name = "Chemical Heater (Machine Board)"
 	build_path = /obj/machinery/chem_heater
 	origin_tech = "programming=2;engineering=2;biotech=2"
 	req_components = list(
@@ -53,26 +54,26 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
 		. = 1 //no afterattack
 		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
+			to_chat(user, "<span class='warning'>A beaker is already loaded into the machine!</span>")
 			return
 
 		if(!user.drop_item())
 			return
 		beaker = I
 		I.loc = src
-		user << "<span class='notice'>You add the beaker to the machine.</span>"
+		to_chat(user, "<span class='notice'>You add the beaker to the machine.</span>")
 		icon_state = "mixer1b"
 		return
 	return ..()
 
-/obj/machinery/chem_heater/deconstruction()
+/obj/machinery/chem_heater/on_deconstruction()
 	eject_beaker()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "chem_heater", name, 275, 400, master_ui, state)

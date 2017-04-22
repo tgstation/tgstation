@@ -1,10 +1,8 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 // Mulebot - carries crates around for Quartermaster
 // Navigates via floor navbeacons
 // Remote Controlled from QM's PDA
-
-var/global/mulebot_count = 0
 
 #define SIGH 0
 #define ANNOYED 1
@@ -20,7 +18,7 @@ var/global/mulebot_count = 0
 	health = 50
 	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	a_intent = "harm" //No swapping
+	a_intent = INTENT_HARM //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 
@@ -48,7 +46,7 @@ var/global/mulebot_count = 0
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/bloodiness = 0
 
-/mob/living/simple_animal/bot/mulebot/New()
+/mob/living/simple_animal/bot/mulebot/Initialize()
 	..()
 	wires = new /datum/wires/mulebot(src)
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
@@ -58,10 +56,10 @@ var/global/mulebot_count = 0
 	cell.charge = 2000
 	cell.maxcharge = 2000
 
-	spawn(10) // must wait for map loading to finish
-		mulebot_count += 1
-		if(!suffix)
-			set_suffix("#[mulebot_count]")
+	var/static/mulebot_count = 0
+	mulebot_count += 1
+	if(!suffix)
+		set_suffix("#[mulebot_count]")
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
 	unload(0)
@@ -107,7 +105,7 @@ var/global/mulebot_count = 0
 			user.visible_message("<span class='danger'>[user] knocks [load] off [src] with \the [I]!</span>",
 									"<span class='danger'>You knock [load] off [src] with \the [I]!</span>")
 		else
-			user << "<span class='warning'>You hit [src] with \the [I] but to no effect!</span>"
+			to_chat(user, "<span class='warning'>You hit [src] with \the [I] but to no effect!</span>")
 			..()
 	else
 		..()
@@ -119,7 +117,7 @@ var/global/mulebot_count = 0
 		emagged = 1
 	if(!open)
 		locked = !locked
-		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>"
+		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
@@ -157,15 +155,15 @@ var/global/mulebot_count = 0
 			wires.cut_random()
 
 /mob/living/simple_animal/bot/mulebot/interact(mob/user)
-	if(open && !istype(user, /mob/living/silicon/ai))
+	if(open && !isAI(user))
 		wires.interact(user)
 	else
-		if(wires.is_cut(WIRE_RX) && istype(user, /mob/living/silicon/ai))
+		if(wires.is_cut(WIRE_RX) && isAI(user))
 			return
 		ui_interact(user)
 
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "mulebot", name, 600, 375, master_ui, state)
@@ -209,7 +207,7 @@ var/global/mulebot_count = 0
 				turn_off()
 			else if(cell && !open)
 				if(!turn_on())
-					usr << "<span class='warning'>You can't switch on [src]!</span>"
+					to_chat(usr, "<span class='warning'>You can't switch on [src]!</span>")
 					return
 			. = TRUE
 		else
@@ -231,7 +229,7 @@ var/global/mulebot_count = 0
 			if(mode == BOT_IDLE || mode == BOT_DELIVER)
 				start_home()
 		if("destination")
-			var/new_dest = input(user, "Enter Destination:", name, destination) as null|anything in deliverybeacontags
+			var/new_dest = input(user, "Enter Destination:", name, destination) as null|anything in GLOB.deliverybeacontags
 			if(new_dest)
 				set_destination(new_dest)
 		if("setid")
@@ -239,7 +237,7 @@ var/global/mulebot_count = 0
 			if(new_id)
 				set_suffix(new_id)
 		if("sethome")
-			var/new_home = input(user, "Enter Home:", name, home_destination) as null|anything in deliverybeacontags
+			var/new_home = input(user, "Enter Home:", name, home_destination) as null|anything in GLOB.deliverybeacontags
 			if(new_home)
 				home_destination = new_home
 		if("unload")
@@ -408,6 +406,7 @@ var/global/mulebot_count = 0
 		load.loc = loc
 		load.pixel_y = initial(load.pixel_y)
 		load.layer = initial(load.layer)
+		load.plane = initial(load.plane)
 		if(dirn)
 			var/turf/T = loc
 			var/turf/newT = get_step(T,dirn)
@@ -433,7 +432,7 @@ var/global/mulebot_count = 0
 		return
 	if(on)
 		var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
-		//world << "speed: [speed]"
+		//to_chat(world, "speed: [speed]")
 		var/num_steps = 0
 		switch(speed)
 			if(0)
@@ -474,12 +473,13 @@ var/global/mulebot_count = 0
 				if(next == loc)
 					path -= next
 					return
-				if(istype( next, /turf))
-					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
+				if(isturf(next))
+					//to_chat(world, "at ([x],[y]) moving to ([next.x],[next.y])")
 
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						B.blood_DNA |= blood_DNA.Copy()
+						if(blood_DNA && blood_DNA.len)
+							B.blood_DNA |= blood_DNA.Copy()
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.setDir(newdir)
@@ -497,7 +497,7 @@ var/global/mulebot_count = 0
 					var/moved = step_towards(src, next)	// attempt to move
 					if(cell) cell.use(1)
 					if(moved && oldloc!=loc)	// successful move
-						//world << "Successful move."
+						//to_chat(world, "Successful move.")
 						blockcount = 0
 						path -= loc
 
@@ -508,7 +508,7 @@ var/global/mulebot_count = 0
 
 					else		// failed to move
 
-						//world << "Unable to move."
+						//to_chat(world, "Unable to move.")
 						blockcount++
 						mode = BOT_BLOCKED
 						if(blockcount == 3)
@@ -528,16 +528,16 @@ var/global/mulebot_count = 0
 						return
 				else
 					buzz(ANNOYED)
-					//world << "Bad turf."
+					//to_chat(world, "Bad turf.")
 					mode = BOT_NAV
 					return
 			else
-				//world << "No path."
+				//to_chat(world, "No path.")
 				mode = BOT_NAV
 				return
 
 		if(BOT_NAV)	// calculate new path
-			//world << "Calc new path."
+			//to_chat(world, "Calc new path.")
 			mode = BOT_WAIT_FOR_NAV
 			spawn(0)
 				calc_path()
@@ -596,7 +596,7 @@ var/global/mulebot_count = 0
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
-				calling_ai << "<span class='notice'>\icon[src] [src] wirelessly plays a chiming sound!</span>"
+				to_chat(calling_ai, "<span class='notice'>\icon[src] [src] wirelessly plays a chiming sound!</span>")
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
 				radio_channel = "AI Private" //Report on AI Private instead if the AI is controlling us.
@@ -636,7 +636,7 @@ var/global/mulebot_count = 0
 	if(wires.is_cut(WIRE_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
-			if(istype(M,/mob/living/silicon/robot))
+			if(iscyborg(M))
 				visible_message("<span class='danger'>[src] bumps into [M]!</span>")
 			else
 				if(!paicard)
@@ -665,6 +665,10 @@ var/global/mulebot_count = 0
 
 	var/turf/T = get_turf(src)
 	T.add_mob_blood(H)
+
+	var/list/blood_dna = H.get_blood_dna_list()
+	if(blood_dna)
+		transfer_blood_dna(blood_dna)
 	bloodiness += 4
 
 // player on mulebot attempted to move
@@ -680,7 +684,7 @@ var/global/mulebot_count = 0
 	if(!on || wires.is_cut(WIRE_BEACON))
 		return
 
-	for(var/obj/machinery/navbeacon/NB in deliverybeacons)
+	for(var/obj/machinery/navbeacon/NB in GLOB.deliverybeacons)
 		if(NB.location == new_destination)	// if the beacon location matches the set destination
 									// the we will navigate there
 			destination = new_destination
@@ -738,7 +742,7 @@ var/global/mulebot_count = 0
 		unload(get_dir(loc, A))
 	else
 		..()
-		
+
 /mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/device/paicard/card)
 	if(..())
 		visible_message("[src] safeties are locked on.")
@@ -748,4 +752,4 @@ var/global/mulebot_count = 0
 #undef DELIGHT
 
 /obj/machinery/bot_core/mulebot
-	req_access = list(access_cargo)
+	req_access = list(GLOB.access_cargo)

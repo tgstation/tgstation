@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/rock,
 /area/space)
@@ -515,7 +515,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bc" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -683,7 +683,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "bt" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -692,7 +692,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bu" = (
-/obj/effect/spider/cocoon,
+/obj/structure/spider/cocoon,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -805,7 +805,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bG" = (
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold,
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/gold,
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1175,9 +1175,7 @@
 	},
 /area/awaymission/BMPship)
 "cz" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1337,9 +1335,7 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "cR" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
@@ -1404,7 +1400,7 @@
 	},
 /area/awaymission/research)
 "cY" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
@@ -1540,7 +1536,7 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "dm" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1580,7 +1576,7 @@
 	icon_state = "bulb1";
 	dir = 4
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1588,7 +1584,7 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "dr" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1635,9 +1631,7 @@
 "dw" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1685,7 +1679,7 @@
 /area/awaymission/northblock)
 "dD" = (
 /obj/structure/table/wood,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1718,9 +1712,7 @@
 "dH" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1735,7 +1727,7 @@
 /area/awaymission/northblock)
 "dJ" = (
 /obj/item/stack/rods,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1800,7 +1792,7 @@
 	},
 /area/awaymission/northblock)
 "dT" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1832,10 +1824,8 @@
 "dY" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/obj/effect/decal/cleanable/cobweb2,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/landmark/awaystart,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1874,9 +1864,7 @@
 /area/awaymission/northblock)
 "ed" = (
 /obj/structure/bed,
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
@@ -2082,9 +2070,7 @@
 	},
 /area/awaymission/BMPship)
 "eE" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2122,7 +2108,7 @@
 /obj/structure/table,
 /obj/item/weapon/gun/energy/kinetic_accelerator,
 /obj/item/weapon/gun/energy/kinetic_accelerator,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2151,9 +2137,7 @@
 	},
 /area/awaymission/listeningpost)
 "eO" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2374,7 +2358,7 @@
 	info = "<center><b>CARAVAN SERVICES</b></center><br><center><i>Quality service since 2205</i></center><br><br><center><b>SHIPMENT CONTENTS:</b></center><br><br>4 scattershot rifles<br>6 grenades<br>1 laser rifle<br>1 blowup doll";
 	name = "Shipment Receipt"
 	},
-/obj/item/organ/cyberimp/eyes/thermals,
+/obj/item/organ/eyes/robotic/thermals,
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /obj/item/slimepotion/fireproof,
 /turf/open/floor/plating/asteroid/basalt{
@@ -2417,7 +2401,7 @@
 	icon_state = "bulb1";
 	dir = 1
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
@@ -2434,7 +2418,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2448,7 +2432,7 @@
 	},
 /area/awaymission/BMPship)
 "fv" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2493,7 +2477,7 @@
 	},
 /area/awaymission/BMPship)
 "fB" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2505,7 +2489,7 @@
 	},
 /area/awaymission/BMPship)
 "fD" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8
@@ -2630,9 +2614,7 @@
 	},
 /area/awaymission/BMPship)
 "fU" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/elevatorshaft{
 	name = "elevator flooring";
 	initial_gas_mix = "n2=23;o2=14"
@@ -2768,9 +2750,7 @@
 	},
 /area/awaymission/BMPship)
 "gk" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},

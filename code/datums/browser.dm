@@ -39,10 +39,12 @@
 	//title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
-	stylesheets[name] = file
+	stylesheets["[ckey(name)].css"] = file
+	register_asset("[ckey(name)].css", file)
 
 /datum/browser/proc/add_script(name, file)
-	scripts[name] = file
+	scripts["[ckey(name)].js"] = file
+	register_asset("[ckey(name)].js", file)
 
 /datum/browser/proc/set_content(ncontent)
 	content = ncontent
@@ -51,17 +53,12 @@
 	content += ncontent
 
 /datum/browser/proc/get_header()
-	var/key
-	var/filename
-	for (key in stylesheets)
-		filename = "[ckey(key)].css"
-		user << browse_rsc(stylesheets[key], filename)
-		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'>"
+	var/file
+	for (file in stylesheets)
+		head_content += "<link rel='stylesheet' type='text/css' href='[file]'>"
 
-	for (key in scripts)
-		filename = "[ckey(key)].js"
-		user << browse_rsc(scripts[key], filename)
-		head_content += "<script type='text/javascript' src='[filename]'></script>"
+	for (file in scripts)
+		head_content += "<script type='text/javascript' src='[file]'></script>"
 
 	var/title_attributes = "class='uiTitle'"
 	if (title_image)
@@ -98,15 +95,20 @@
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
+	if (stylesheets.len)
+		send_asset_list(user, stylesheets, verify=FALSE)
+	if (scripts.len)
+		send_asset_list(user, scripts, verify=FALSE)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
-		spawn(0)
-			//winexists sleeps, so we don't need to.
-			for (var/i in 1 to 10)
-				if (user && winexists(user, window_id))
-					onclose(user, window_id, ref)
-					break
+		setup_onclose()
 
+/datum/browser/proc/setup_onclose()
+	set waitfor = 0 //winexists sleeps, so we don't need to.
+	for (var/i in 1 to 10)
+		if (user && winexists(user, window_id))
+			onclose(user, window_id, ref)
+			break
 
 /datum/browser/proc/close()
 	user << browse(null, "window=[window_id]")
@@ -160,8 +162,7 @@
 					winset(user, "mapwindow", "focus=true")
 				break
 	if (timeout)
-		spawn(timeout)
-			close()
+		addtimer(CALLBACK(src, .proc/close), timeout)
 
 /datum/browser/alert/close()
 	.=..()
@@ -248,7 +249,7 @@
 
 	winset(user, windowid, "on-close=\".windowclose [param]\"")
 
-	//world << "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]"
+	//to_chat(world, "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]")
 
 
 // the on-close client verb
@@ -260,12 +261,12 @@
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 
-	//world << "windowclose: [atomref]"
+	//to_chat(world, "windowclose: [atomref]")
 	if(atomref!="null")				// if passed a real atomref
 		var/hsrc = locate(atomref)	// find the reffed atom
 		var/href = "close=1"
 		if(hsrc)
-			//world << "[src] Topic [href] [hsrc]"
+			//to_chat(world, "[src] Topic [href] [hsrc]")
 			usr = src.mob
 			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
 			return										// Topic() proc via client.Topic()
@@ -273,6 +274,6 @@
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
 	if(src && src.mob)
-		//world << "[src] was [src.mob.machine], setting to null"
+		//to_chat(world, "[src] was [src.mob.machine], setting to null")
 		src.mob.unset_machine()
 	return

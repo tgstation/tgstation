@@ -20,7 +20,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	priority_announce("What the fuck was that?!", "General Alert")
 
 /datum/round_event/immovable_rod/start()
-	var/startside = pick(cardinal)
+	var/startside = pick(GLOB.cardinal)
 	var/turf/startT = spaceDebrisStartLoc(startside, 1)
 	var/turf/endT = spaceDebrisFinishLoc(startside, 1)
 	new /obj/effect/immovablerod(startT, endT)
@@ -35,6 +35,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	anchored = 1
 	var/z_original = 0
 	var/destination
+	var/notify = TRUE
 
 /obj/effect/immovablerod/New(atom/start, atom/end)
 	..()
@@ -42,10 +43,11 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		SSaugury.register_doom(src, 2000)
 	z_original = z
 	destination = end
-	notify_ghosts("\A [src] is inbound!",
-		enter_link="<a href=?src=\ref[src];orbit=1>(Click to orbit)</a>",
-		source=src, action=NOTIFY_ORBIT)
-	poi_list += src
+	if(notify)
+		notify_ghosts("\A [src] is inbound!",
+			enter_link="<a href=?src=\ref[src];orbit=1>(Click to orbit)</a>",
+			source=src, action=NOTIFY_ORBIT)
+	GLOB.poi_list += src
 	if(end && end.z==z_original)
 		walk_towards(src, destination, 1)
 
@@ -56,7 +58,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			ghost.ManualFollow(src)
 
 /obj/effect/immovablerod/Destroy()
-	poi_list -= src
+	GLOB.poi_list -= src
 	. = ..()
 
 /obj/effect/immovablerod/Move()
@@ -64,7 +66,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		qdel(src)
 	return ..()
 
-/obj/effect/immovablerod/ex_act(test)
+/obj/effect/immovablerod/ex_act(severity, target)
 	return 0
 
 /obj/effect/immovablerod/Bump(atom/clong)
@@ -76,12 +78,12 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		x = clong.x
 		y = clong.y
 
-	if (istype(clong, /turf) || istype(clong, /obj))
+	if(isturf(clong) || isobj(clong))
 		if(clong.density)
 			clong.ex_act(2)
 
-	else if (istype(clong, /mob))
-		if(istype(clong, /mob/living/carbon/human))
+	else if(ismob(clong))
+		if(ishuman(clong))
 			var/mob/living/carbon/human/H = clong
 			H.visible_message("<span class='danger'>[H.name] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
 			H.adjustBruteLoss(160)

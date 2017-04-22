@@ -1,29 +1,364 @@
-"a" = (/turf/open/space,/area/space)
-"b" = (/obj/structure/lattice,/turf/open/space,/area/ruin/unpowered/no_grav)
-"c" = (/turf/open/floor/plating/airless,/area/ruin/unpowered/no_grav)
-"d" = (/turf/closed/wall/r_wall,/area/ruin/unpowered/no_grav)
-"e" = (/turf/open/floor/plasteel/airless,/area/ruin/unpowered/no_grav)
-"f" = (/turf/open/floor/plasteel/airless{icon_state = "damaged2"},/area/ruin/unpowered/no_grav)
-"g" = (/obj/machinery/light_construct/small{dir = 1},/turf/open/floor/plasteel/airless{icon_state = "damaged3"},/area/ruin/unpowered/no_grav)
-"h" = (/obj/machinery/computer/teleporter,/turf/open/floor/plasteel/airless,/area/ruin/unpowered/no_grav)
-"i" = (/obj/machinery/teleport/station,/turf/open/floor/plasteel/airless,/area/ruin/unpowered/no_grav)
-"j" = (/obj/machinery/teleport/hub,/turf/open/floor/plasteel/airless,/area/ruin/unpowered/no_grav)
-"k" = (/obj/machinery/light_construct/small{dir = 4},/turf/open/floor/plating/airless,/area/ruin/unpowered/no_grav)
-"l" = (/obj/structure/table,/obj/item/weapon/stock_parts/cell{charge = 100;maxcharge = 15000},/turf/open/floor/plasteel/airless,/area/ruin/unpowered/no_grav)
-"m" = (/turf/open/floor/plasteel/airless{icon_state = "damaged4"},/area/ruin/unpowered/no_grav)
-"n" = (/obj/machinery/power/apc{dir = 0;name = "Worn-out APC";pixel_y = -24},/turf/open/floor/plasteel/airless,/area/ruin/unpowered/no_grav)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/oldteleporter)
+"c" = (
+/turf/open/floor/plating/airless,
+/area/ruin/oldteleporter)
+"d" = (
+/turf/closed/wall/r_wall,
+/area/ruin/oldteleporter)
+"e" = (
+/turf/open/floor/plasteel/airless,
+/area/ruin/oldteleporter)
+"f" = (
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged2"
+	},
+/area/ruin/oldteleporter)
+"g" = (
+/obj/structure/light_construct/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged3"
+	},
+/area/ruin/oldteleporter)
+"h" = (
+/obj/machinery/computer/teleporter,
+/turf/open/floor/plasteel/airless,
+/area/ruin/oldteleporter)
+"i" = (
+/obj/machinery/teleport/station,
+/turf/open/floor/plasteel/airless,
+/area/ruin/oldteleporter)
+"j" = (
+/obj/machinery/teleport/hub,
+/turf/open/floor/plasteel/airless,
+/area/ruin/oldteleporter)
+"k" = (
+/obj/structure/light_construct/small{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/oldteleporter)
+"l" = (
+/obj/structure/table,
+/obj/item/weapon/stock_parts/cell{
+	charge = 100;
+	maxcharge = 15000
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/oldteleporter)
+"m" = (
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged4"
+	},
+/area/ruin/oldteleporter)
+"n" = (
+/obj/machinery/power/apc{
+	dir = 0;
+	name = "Worn-out APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/oldteleporter)
 
 (1,1,1) = {"
-aaaaaaaaaababbbbbaaba
-aaaaaaaaaabbbbbbbbbbb
-aaaaaaaaaababbbbbbbba
-aabbbbbbbbbbbbbbbbbaa
-bbbbbbbccccbbbbbbabbb
-abbbbdddcdddcccbaabbb
-aaaaddccefeccbbaaabaa
-aaaadgeeeeeedbaaaaaaa
-aaaadeehijekdbaaaaaaa
-aaaadlmceeefdaaaaaaaa
-aaaaddeneecddaaaaaaaa
-aaaaadddddccaaaaaaaaa
+a
+a
+a
+a
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+b
+b
+b
+d
+d
+d
+d
+d
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+b
+b
+d
+d
+g
+e
+l
+d
+d
+"}
+(7,1,1) = {"
+a
+a
+a
+b
+b
+d
+c
+e
+e
+m
+e
+d
+"}
+(8,1,1) = {"
+a
+a
+a
+b
+c
+d
+c
+e
+h
+c
+n
+d
+"}
+(9,1,1) = {"
+a
+a
+a
+b
+c
+c
+e
+e
+i
+e
+e
+d
+"}
+(10,1,1) = {"
+a
+a
+a
+b
+c
+d
+f
+e
+j
+e
+e
+d
+"}
+(11,1,1) = {"
+b
+b
+b
+b
+c
+d
+e
+e
+e
+e
+c
+c
+"}
+(12,1,1) = {"
+a
+b
+a
+b
+b
+d
+c
+e
+k
+f
+d
+c
+"}
+(13,1,1) = {"
+b
+b
+b
+b
+b
+c
+c
+d
+d
+d
+d
+a
+"}
+(14,1,1) = {"
+b
+b
+b
+b
+b
+c
+b
+b
+b
+a
+a
+a
+"}
+(15,1,1) = {"
+b
+b
+b
+b
+b
+c
+b
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+b
+b
+b
+a
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+b
+a
+a
+b
+b
+a
+a
+a
+a
+a
+a
 "}

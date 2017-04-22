@@ -35,7 +35,7 @@
 /datum/chemical_reaction/chocolate_bar2
 	name = "Chocolate Bar"
 	id = "chocolate_bar"
-	required_reagents = list("milk" = 2, "cocoa" = 2, "sugar" = 2)
+	required_reagents = list("chocolate_milk" = 4, "sugar" = 2)
 	mob_react = 1
 
 /datum/chemical_reaction/chocolate_bar2/on_reaction(datum/reagents/holder, created_volume)

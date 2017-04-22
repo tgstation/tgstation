@@ -10,14 +10,14 @@ LINEN BINS
 	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_NECK
 	layer = MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_color = "white"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 
@@ -29,10 +29,10 @@ LINEN BINS
 	user.drop_item()
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
-		user << "<span class='notice'>You cover yourself with [src].</span>"
+		to_chat(user, "<span class='notice'>You cover yourself with [src].</span>")
 	else
 		layer = initial(layer)
-		user << "<span class='notice'>You smooth [src] out beneath you.</span>"
+		to_chat(user, "<span class='notice'>You smooth [src] out beneath you.</span>")
 	add_fingerprint(user)
 	return
 
@@ -42,7 +42,7 @@ LINEN BINS
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
 		qdel(src)
-		user << "<span class='notice'>You tear [src] up.</span>"
+		to_chat(user, "<span class='notice'>You tear [src] up.</span>")
 	else
 		return ..()
 
@@ -205,8 +205,9 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 	var/amount = 10
 	var/list/sheets = list()
 	var/obj/item/hidden = null
@@ -215,11 +216,11 @@ LINEN BINS
 /obj/structure/bedsheetbin/examine(mob/user)
 	..()
 	if(amount < 1)
-		user << "There are no bed sheets in the bin."
+		to_chat(user, "There are no bed sheets in the bin.")
 	else if(amount == 1)
-		user << "There is one bed sheet in the bin."
+		to_chat(user, "There is one bed sheet in the bin.")
 	else
-		user << "There are [amount] bed sheets in the bin."
+		to_chat(user, "There are [amount] bed sheets in the bin.")
 
 
 /obj/structure/bedsheetbin/update_icon()
@@ -231,16 +232,11 @@ LINEN BINS
 		else
 			icon_state = "linenbin-full"
 
-/obj/structure/bedsheetbin/fire_act()
-	if(!amount)
-		return
+/obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
+	if(amount)
+		amount = 0
+		update_icon()
 	..()
-
-/obj/structure/bedsheetbin/burn()
-	amount = 0
-	extinguish()
-	update_icon()
-	return
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/bedsheet))
@@ -249,15 +245,15 @@ LINEN BINS
 		I.loc = src
 		sheets.Add(I)
 		amount++
-		user << "<span class='notice'>You put [I] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 		update_icon()
-	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.drop_item())
-			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>"
+			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>")
 			return
 		I.loc = src
 		hidden = I
-		user << "<span class='notice'>You hide [I] among the sheets.</span>"
+		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 
 
 
@@ -281,12 +277,12 @@ LINEN BINS
 
 		B.loc = user.loc
 		user.put_in_hands(B)
-		user << "<span class='notice'>You take [B] out of [src].</span>"
+		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
 		update_icon()
 
 		if(hidden)
 			hidden.loc = user.loc
-			user << "<span class='notice'>[hidden] falls out of [B]!</span>"
+			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
 			hidden = null
 
 
@@ -304,7 +300,7 @@ LINEN BINS
 			B = new /obj/item/weapon/bedsheet(loc)
 
 		B.loc = loc
-		user << "<span class='notice'>You telekinetically remove [B] from [src].</span>"
+		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
 		update_icon()
 
 		if(hidden)

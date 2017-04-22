@@ -96,14 +96,17 @@
 	desc = "Your excitement boils away as you realize it's just colored glass. Why would someone hoard these things?"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "rupee"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_GLASS = 500)
 
 /obj/item/rupee/New()
-	color = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
+	var/newcolor = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
+	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	..()
 
 /obj/item/rupee/Crossed(mob/M)
+	if(!istype(M))
+		return
 	if(M.put_in_hands(src))
 		if(src != M.get_active_held_item())
 			M.swap_hand()

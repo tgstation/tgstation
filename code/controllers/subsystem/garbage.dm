@@ -1,10 +1,7 @@
-var/datum/subsystem/garbage_collector/SSgarbage
-
-/datum/subsystem/garbage_collector
+SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = 15
 	wait = 5
-	display_order = 2
 	flags = SS_FIRE_IN_LOBBY|SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 
 	var/collection_timeout = 3000// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
@@ -24,6 +21,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
+	var/list/sleptDestroy = list()	//Same as above but these are paths that slept during their Destroy call
 
 	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
 	// all types that did not respect qdel(A, force=TRUE) and returned one
@@ -34,10 +32,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/list/qdel_list = list()	// list of all types that have been qdel()eted
 #endif
 
-/datum/subsystem/garbage_collector/New()
-	NEW_SS_GLOBAL(SSgarbage)
-
-/datum/subsystem/garbage_collector/stat_entry(msg)
+/datum/controller/subsystem/garbage/stat_entry(msg)
 	msg += "Q:[queue.len]|D:[delslasttick]|G:[gcedlasttick]|"
 	msg += "GR:"
 	if (!(delslasttick+gcedlasttick))
@@ -52,14 +47,29 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
 	..(msg)
 
-/datum/subsystem/garbage_collector/fire()
+/datum/controller/subsystem/garbage/Shutdown()
+	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
+	if(didntgc.len || sleptDestroy.len)
+		var/list/dellog = list()
+		for(var/path in didntgc)
+			dellog += "Path : [path] \n"
+			dellog += "Failures : [didntgc[path]] \n"
+			if(path in sleptDestroy)
+				dellog += "Sleeps : [sleptDestroy[path]] \n"
+				sleptDestroy -= path
+		for(var/path in sleptDestroy)
+			dellog += "Path : [path] \n"
+			dellog += "Sleeps : [sleptDestroy[path]] \n"
+		log_world(dellog.Join())
+
+/datum/controller/subsystem/garbage/fire()
 	HandleToBeQueued()
-	if (!paused)
+	if(state == SS_RUNNING)
 		HandleQueue()
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
-/datum/subsystem/garbage_collector/proc/HandleToBeQueued()
+/datum/controller/subsystem/garbage/proc/HandleToBeQueued()
 	var/list/tobequeued = src.tobequeued
 	var/starttime = world.time
 	var/starttimeofday = world.timeofday
@@ -70,7 +80,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		Queue(ref)
 		tobequeued.Cut(1, 2)
 
-/datum/subsystem/garbage_collector/proc/HandleQueue(time_to_stop)
+/datum/controller/subsystem/garbage/proc/HandleQueue()
 	delslasttick = 0
 	gcedlasttick = 0
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
@@ -92,6 +102,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		var/datum/A
 		A = locate(refID)
 		if (A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
+			#ifdef GC_FAILURE_HARD_LOOKUP
+			A.find_references()
+			#endif
+
 			// Something's still referring to the qdel'd object.  Kill it.
 			var/type = A.type
 			testing("GC: -- \ref[A] | [type] was unable to be GC'd and was deleted --")
@@ -99,7 +113,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			var/time = world.timeofday
 			var/tick = world.tick_usage
 			var/ticktime = world.time
-			del(A)
+			HardDelete(A)
 			tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
 
 			if (tick > highest_del_tickusage)
@@ -120,16 +134,16 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			++gcedlasttick
 			++totalgcs
 
-/datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
-	if (istype(A) && isnull(A.gc_destroyed))
+/datum/controller/subsystem/garbage/proc/QueueForQueuing(datum/A)
+	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
-/datum/subsystem/garbage_collector/proc/Queue(datum/A)
-	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
+/datum/controller/subsystem/garbage/proc/Queue(datum/A)
+	if (isnull(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
 		return
 	if (A.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
-		del(A)
+		HardDelete(A)
 		return
 	var/gctime = world.time
 	var/refid = "\ref[A]"
@@ -141,12 +155,16 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	queue[refid] = gctime
 
-/datum/subsystem/garbage_collector/proc/HardQueue(datum/A)
-	if (istype(A) && isnull(A.gc_destroyed))
+//this is purely to seperate things profile wise.
+/datum/controller/subsystem/garbage/proc/HardDelete(datum/A)
+	del(A)
+
+/datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
+	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
 
-/datum/subsystem/garbage_collector/Recover()
+/datum/controller/subsystem/garbage/Recover()
 	if (istype(SSgarbage.queue))
 		queue |= SSgarbage.queue
 	if (istype(SSgarbage.tobequeued))
@@ -158,19 +176,27 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if(!D)
 		return
 #ifdef TESTING
-	SSgarbage.qdel_list += "[A.type]"
+	SSgarbage.qdel_list += "[D.type]"
 #endif
 	if(!istype(D))
 		del(D)
 	else if(isnull(D.gc_destroyed))
+		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
+		var/start_time = world.time
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
+		if(world.time != start_time)
+			SSgarbage.sleptDestroy["[D.type]"]++
 		if(!D)
 			return
 		switch(hint)
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
-			if (QDEL_HINT_LETMELIVE, QDEL_HINT_IWILLGC)	//qdel should let the object live after calling destory.
+			if (QDEL_HINT_IWILLGC)
+				D.gc_destroyed = world.time
+				return
+			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
 				if(!force)
+					D.gc_destroyed = null //clear the gc variable (important!)
 					return
 				// Returning LETMELIVE after being told to force destroy
 				// indicates the objects Destroy() does not respect force
@@ -186,46 +212,48 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
 				del(D)
-			if (QDEL_HINT_PUTINPOOL)	//qdel will put this object in the pool.
-				PlaceInPool(D, 0)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 				#ifdef TESTING
-				A.find_references()
+				D.find_references()
 				#endif
 			else
 				if(!SSgarbage.noqdelhint["[D.type]"])
 					SSgarbage.noqdelhint["[D.type]"] = "[D.type]"
 					testing("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
 				SSgarbage.QueueForQueuing(D)
-
-// Returns 1 if the object has been queued for deletion.
-/proc/qdeleted(datum/D)
-	if(!istype(D))
-		return FALSE
-	if(D.gc_destroyed)
-		return TRUE
-	return FALSE
+	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy(force=FALSE)
 	tag = null
+	var/list/timers = active_timers
+	active_timers = null
+	for(var/thing in timers)
+		var/datum/timedevent/timer = thing
+		if (timer.spent)
+			continue
+		qdel(timer)
 	return QDEL_HINT_QUEUE
 
 /datum/var/gc_destroyed //Time when this object was destroyed.
 
 #ifdef TESTING
-/client/var/running_find_references
 /datum/var/running_find_references
+/datum/var/last_find_references = 0
 
-/datum/verb/find_references()
+/datum/verb/find_refs()
 	set category = "Debug"
 	set name = "Find References"
 	set background = 1
 	set src in world
 
+	find_references(FALSE)
+
+/datum/proc/find_references(skip_alert)
 	running_find_references = type
 	if(usr && usr.client)
 		if(usr.client.running_find_references)
@@ -237,9 +265,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			SSgarbage.next_fire = world.time + world.tick_lag
 			return
 
-		if(alert("Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
-			running_find_references = null
-			return
+		if(!skip_alert)
+			if(alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+				running_find_references = null
+				return
 
 	//this keeps the garbage collector from failing to collect objects being searched for in here
 	SSgarbage.can_fire = 0
@@ -248,21 +277,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		usr.client.running_find_references = type
 
 	testing("Beginning search for references to a [type].")
-	var/list/things = list()
-	for(var/client/thing)
-		things |= thing
-	for(var/datum/thing)
-		things |= thing
-	testing("Collected list of things in search for references to a [type]. ([things.len] Thing\s)")
-	for(var/datum/thing in things)
-		if(usr && usr.client && !usr.client.running_find_references) return
-		for(var/varname in thing.vars)
-			var/variable = thing.vars[varname]
-			if(variable == src)
-				testing("Found [src.type] \ref[src] in [thing.type]'s [varname] var.")
-			else if(islist(variable))
-				if(src in variable)
-					testing("Found [src.type] \ref[src] in [thing.type]'s [varname] list var.")
+	last_find_references = world.time
+	DoSearchVar(GLOB)
+	for(var/datum/thing in world)
+		DoSearchVar(thing, "WorldRef: [thing]")
 	testing("Completed search for references to a [type].")
 	if(usr && usr.client)
 		usr.client.running_find_references = null
@@ -290,7 +308,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	qdel(src)
 	if(!running_find_references)
-		find_references()
+		find_references(TRUE)
 
 /client/verb/show_qdeleted()
 	set category = "Debug"
@@ -309,4 +327,36 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		dat += "[path] - [tmplist[path]] times<BR>"
 
 	usr << browse(dat, "window=qdeletedlog")
+
+/datum/proc/DoSearchVar(X, Xname)
+	if(usr && usr.client && !usr.client.running_find_references) return
+	if(istype(X, /datum))
+		var/datum/D = X
+		if(D.last_find_references == last_find_references)
+			return
+		D.last_find_references = last_find_references
+		for(var/V in D.vars)
+			for(var/varname in D.vars)
+				var/variable = D.vars[varname]
+				if(variable == src)
+					testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
+				else if(islist(variable))
+					if(src in variable)
+						testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
+#ifdef GC_FAILURE_HARD_LOOKUP
+					for(var/I in variable)
+						DoSearchVar(I, TRUE)
+				else
+					DoSearchVar(variable, "[Xname]: [varname]")
+#endif
+	else if(islist(X))
+		if(src in X)
+			testing("Found [src.type] \ref[src] in list [Xname].")
+#ifdef GC_FAILURE_HARD_LOOKUP
+		for(var/I in X)
+			DoSearchVar(I, Xname + ": list")
+#else
+	CHECK_TICK
+#endif
+
 #endif

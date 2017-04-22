@@ -3,7 +3,7 @@
 	singular_name = "broken tile"
 	desc = "A broken tile. This should not exist."
 	icon = 'icons/obj/tiles.dmi'
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 1
 	throwforce = 1
 	throw_speed = 3
@@ -18,21 +18,17 @@
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
 
-/obj/item/stack/tile/Destroy()
-	..()
-	return QDEL_HINT_PUTINPOOL
-
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(get_amount() < 4)
-			user << "<span class='warning'>You need at least four tiles to do this!</span>"
+			to_chat(user, "<span class='warning'>You need at least four tiles to do this!</span>")
 			return
 
 		if(WT.is_hot() && !mineralType)
-			user << "<span class='warning'>You can not reform this!</span>"
+			to_chat(user, "<span class='warning'>You can not reform this!</span>")
 			return
 
 		if(WT.remove_fuel(0,user))
@@ -79,7 +75,7 @@
 	icon_state = "tile_grass"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/grass
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 
 //Wood
@@ -90,7 +86,7 @@
 	icon_state = "tile-wood"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/wood
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 
 //Carpets
@@ -100,7 +96,7 @@
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
 	turf_type = /turf/open/floor/carpet
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 
 /obj/item/stack/tile/fakespace
@@ -109,9 +105,22 @@
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
 	turf_type = /turf/open/floor/fakespace
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fakespace
 
 /obj/item/stack/tile/fakespace/loaded
+	amount = 30
+
+/obj/item/stack/tile/fakepit
+	name = "fake pits"
+	singular_name = "fake pit"
+	desc = "A piece of carpet with a forced perspective illusion of a pit. No way this could fool anyone!"
+	icon_state = "tile_pit"
+	turf_type = /turf/open/floor/fakepit
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fakepit
+
+/obj/item/stack/tile/fakepit/loaded
 	amount = 30
 
 //High-traction
@@ -122,9 +131,38 @@
 	icon_state = "tile_noslip"
 	turf_type = /turf/open/floor/noslip
 	origin_tech = "materials=3"
+	merge_type = /obj/item/stack/tile/noslip
 
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
+
+//Circuit
+/obj/item/stack/tile/circuit
+	name = "blue circuit tile"
+	singular_name = "blue circuit tile"
+	desc = "A blue circuit tile."
+	icon_state = "tile_bcircuit"
+	turf_type = /turf/open/floor/circuit
+
+/obj/item/stack/tile/circuit/green
+	name = "green circuit tile"
+	singular_name = "green circuit tile"
+	desc = "A green circuit tile."
+	icon_state = "tile_gcircuit"
+	turf_type = /turf/open/floor/circuit/green
+
+/obj/item/stack/tile/circuit/green/anim
+	turf_type = /turf/open/floor/circuit/green/anim
+
+/obj/item/stack/tile/circuit/red
+	name = "red circuit tile"
+	singular_name = "red circuit tile"
+	desc = "A red circuit tile."
+	icon_state = "tile_rcircuit"
+	turf_type = /turf/open/floor/circuit/red
+
+/obj/item/stack/tile/circuit/red/anim
+	turf_type = /turf/open/floor/circuit/red/anim
 
 //Pod floor
 /obj/item/stack/tile/pod
@@ -148,13 +186,6 @@
 	icon_state = "tile_poddark"
 	turf_type = /turf/open/floor/pod/dark
 
-/obj/item/stack/tile/brass
-	name = "brass floor tile"
-	singular_name = "brass floor tile"
-	desc = "A brass floor tile. It vibrates slightly."
-	icon_state = "tile_brass"
-	turf_type = /turf/open/floor/clockwork
-
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
@@ -167,6 +198,8 @@
 	flags = CONDUCT
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/stack/tile/plasteel/cyborg
 	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR

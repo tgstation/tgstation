@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/pirate
 	name = "Pirate"
 	desc = "Does what he wants cause a pirate is free."
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "piratemelee"
 	icon_living = "piratemelee"
 	icon_dead = "piratemelee_dead"
@@ -14,6 +15,7 @@
 	health = 100
 
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "slashes"
@@ -48,7 +50,6 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	deathmessage = "'s suit can't take anymore damage and rips apart!"
 
 /mob/living/simple_animal/hostile/pirate/space/ranged
 	name = "Space Pirate Gunner"

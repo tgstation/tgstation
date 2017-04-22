@@ -23,7 +23,7 @@
 	return
 
 
-/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone, self_delay)
+/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
 		return 0
 
@@ -32,7 +32,7 @@
 		if(self_delay)
 			if(!do_mob(user, M, self_delay))
 				return 0
-		M << "<span class='notice'>You [apply_method] [src].</span>"
+		to_chat(M, "<span class='notice'>You [apply_method] [src].</span>")
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
@@ -43,33 +43,25 @@
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
 
-	user.unEquip(src) //icon update
 	add_logs(user, M, "fed", reagentlist(src))
-	loc = M //Put the pill inside the mob. This fixes the issue where the pill appears to drop to the ground after someone eats it.
-
 	if(reagents.total_volume)
 		reagents.reaction(M, apply_type)
 		reagents.trans_to(M, reagents.total_volume)
-		qdel(src)
-		return 1
-	else
-		qdel(src)
-		return 1
-	return 0
+	qdel(src)
+	return 1
 
 
 /obj/item/weapon/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(target.is_open_container() != 0 && target.reagents)
 		if(!target.reagents.total_volume)
-			user << "<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>"
+			to_chat(user, "<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>")
 			return
-		user << "<span class='notice'>You dissolve [src] in [target].</span>"
+		to_chat(user, "<span class='notice'>You dissolve [src] in [target].</span>")
 		for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
-			O << "<span class='warning'>[user] slips something into [target]!</span>"
+			to_chat(O, "<span class='warning'>[user] slips something into [target]!</span>")
 		reagents.trans_to(target, reagents.total_volume)
-		spawn(5)
-			qdel(src)
+		qdel(src)
 
 /obj/item/weapon/reagent_containers/pill/tox
 	name = "toxins pill"
@@ -108,10 +100,10 @@
 	list_reagents = list("salbutamol" = 30)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/charcoal
-	name = "antitoxin pill"
+	name = "charcoal pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list("charcoal" = 10)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"

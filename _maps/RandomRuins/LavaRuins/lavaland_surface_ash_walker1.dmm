@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -90,6 +90,7 @@
 /obj/item/seeds/glowshroom,
 /obj/item/seeds/glowshroom,
 /obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/storage/bag/plants/portaseeder,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -144,7 +145,7 @@
 /area/ruin/unpowered)
 "u" = (
 /obj/structure/closet/crate/engineering,
-/obj/item/weapon/rcd/loaded,
+/obj/item/weapon/construction/rcd/loaded,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -187,7 +188,7 @@
 /area/ruin/unpowered)
 "z" = (
 /obj/item/weapon/shovel,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -281,14 +282,8 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"R" = (
-/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"Q" = (
-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
+"O" = (
+/obj/item/weapon/reagent_containers/glass/bowl,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -299,8 +294,14 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
-"O" = (
-/obj/item/weapon/reagent_containers/glass/bowl,
+"Q" = (
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/unpowered)
+"R" = (
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

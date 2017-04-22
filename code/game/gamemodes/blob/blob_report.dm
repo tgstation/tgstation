@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /datum/game_mode/blob/send_intercept(report = 0)
 	var/intercepttext = ""
@@ -13,11 +13,11 @@
 			intercepttext += " 2. If found, use any neccesary means to contain and destroy the organism.<BR>"
 			intercepttext += " 3. Avoid damage to the capital infrastructure of the station.<BR>"
 			intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, <b>Biohazard Response Procedure 5-12</b> may be issued.<BR>"
-			print_command_report(intercepttext,"Level 5-6 Biohazard Response Procedures")
+			print_command_report(text=intercepttext,title="Level 5-6 Biohazard Response Procedures",announce=FALSE)
 			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 		if(2)
 			var/nukecode = random_nukecode()
-			for(var/obj/machinery/nuclearbomb/bomb in machines)
+			for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 				if(bomb && bomb.r_code)
 					if(bomb.z == ZLEVEL_STATION)
 						bomb.r_code = nukecode
@@ -29,17 +29,14 @@
 			intercepttext += "1. Secure the Nuclear Authentication Disk.<BR>"
 			intercepttext += "2. Detonate the Nuke located in the vault.<BR>"
 			intercepttext += "Nuclear Authentication Code: [nukecode] <BR>"
-			print_command_report(intercepttext,"Classified [command_name()] Update")
-			priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
+			print_command_report(text=intercepttext,announce=TRUE)
 
-			for(var/mob/living/silicon/ai/aiPlayer in player_list)
+			for(var/mob/living/silicon/ai/aiPlayer in GLOB.player_list)
 				if (aiPlayer.client)
 					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 					aiPlayer.set_zeroth_law(law)
-					aiPlayer << "Laws Updated: [law]"
 		else
 			..()
-	return
 
 
 
@@ -57,20 +54,23 @@
 /datum/station_state/proc/count(count_territories)
 	for(var/turf/T in block(locate(1,1,1), locate(world.maxx,world.maxy,1)))
 
-		if(istype(T,/turf/open/floor))
-			if(!(T:burnt))
+		if(isfloorturf(T))
+			var/turf/open/floor/TF = T
+			if(!(TF.burnt))
 				src.floor += 12
 			else
 				src.floor += 1
 
-		if(istype(T, /turf/closed/wall))
-			if(T:intact)
+		if(iswallturf(T))
+			var/turf/closed/wall/TW = T
+			if(TW.intact)
 				src.wall += 2
 			else
 				src.wall += 1
 
 		if(istype(T, /turf/closed/wall/r_wall))
-			if(T:intact)
+			var/turf/closed/wall/r_wall/TRW = T
+			if(TRW.intact)
 				src.r_wall += 2
 			else
 				src.r_wall += 1
@@ -79,8 +79,10 @@
 		for(var/obj/O in T.contents)
 			if(istype(O, /obj/structure/window))
 				src.window += 1
-			else if(istype(O, /obj/structure/grille) && (!O:destroyed))
-				src.grille += 1
+			else if(istype(O, /obj/structure/grille))
+				var/obj/structure/grille/GR = O
+				if(!GR.broken)
+					src.grille += 1
 			else if(istype(O, /obj/machinery/door))
 				src.door += 1
 			else if(istype(O, /obj/machinery))
@@ -95,7 +97,7 @@
 		if(valid_territories.len)
 			num_territories = valid_territories.len //Add them all up to make the total number of area types
 		else
-			world << "ERROR: NO VALID TERRITORIES"
+			to_chat(world, "ERROR: NO VALID TERRITORIES")
 
 /datum/station_state/proc/score(datum/station_state/result)
 	if(!result)

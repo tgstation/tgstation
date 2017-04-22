@@ -3,15 +3,18 @@
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
-	density = 1
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
+	var/list/drip_containers = list(/obj/item/weapon/reagent_containers/blood,
+											/obj/item/weapon/reagent_containers/food,
+											/obj/item/weapon/reagent_containers/glass)
 
-
-/obj/machinery/iv_drip/New()
+/obj/machinery/iv_drip/Initialize()
 	..()
 	update_icon()
+	drip_containers = typecacheof(drip_containers)
 
 /obj/machinery/iv_drip/update_icon()
 	if(attached)
@@ -25,7 +28,7 @@
 		else
 			icon_state = "donateidle"
 
-	overlays = null
+	cut_overlays()
 
 	if(beaker)
 		if(attached)
@@ -56,7 +59,7 @@
 			add_overlay(filling)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
-	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE))
+	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE) || !isliving(target))
 		return
 
 	if(attached)
@@ -66,42 +69,46 @@
 		return
 
 	if(!target.has_dna())
-		usr << "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>"
+		to_chat(usr, "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>")
 		return
 
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(beaker)
 			usr.visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>", "<span class='notice'>You attach \the [src] to \the [target].</span>")
 			attached = target
-			START_PROCESSING(SSmachine, src)
+			START_PROCESSING(SSmachines, src)
 			update_icon()
 		else
-			usr << "<span class='warning'>There's nothing attached to the IV drip!</span>"
+			to_chat(usr, "<span class='warning'>There's nothing attached to the IV drip!</span>")
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/reagent_containers))
+	if (is_type_in_typecache(W, drip_containers))
 		if(!isnull(beaker))
-			user << "<span class='warning'>There is already a reagent container loaded!</span>"
+			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		W.loc = src
 		beaker = W
-		user << "<span class='notice'>You attach \the [W] to \the [src].</span>"
+		to_chat(user, "<span class='notice'>You attach \the [W] to \the [src].</span>")
 		update_icon()
 		return
 	else
 		return ..()
 
+/obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc)
+	qdel(src)
 
 /obj/machinery/iv_drip/process()
 	if(!attached)
 		return PROCESS_KILL
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
-		attached << "<span class='userdanger'>The IV drip needle is ripped out of you!</span>"
+		to_chat(attached, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
 		attached.apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
 		attached = null
 		update_icon()
@@ -154,8 +161,8 @@
 	set name = "Remove IV Container"
 	set src in view(1)
 
-	if(!istype(usr, /mob/living))
-		usr << "<span class='warning'>You can't do that!</span>"
+	if(!isliving(usr))
+		to_chat(usr, "<span class='warning'>You can't do that!</span>")
 		return
 
 	if(usr.stat)
@@ -171,15 +178,15 @@
 	set name = "Toggle Mode"
 	set src in view(1)
 
-	if(!istype(usr, /mob/living))
-		usr << "<span class='warning'>You can't do that!</span>"
+	if(!isliving(usr))
+		to_chat(usr, "<span class='warning'>You can't do that!</span>")
 		return
 
 	if(usr.stat)
 		return
 
 	mode = !mode
-	usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
+	to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
 	update_icon()
 
 /obj/machinery/iv_drip/examine()
@@ -187,14 +194,14 @@
 	..()
 	if (!(usr in view(2)) && usr!=loc) return
 
-	usr << "The IV drip is [mode ? "injecting" : "taking blood"]."
+	to_chat(usr, "The IV drip is [mode ? "injecting" : "taking blood"].")
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			usr << "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
+			to_chat(usr, "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>")
 		else
-			usr << "<span class='notice'>Attached is an empty [beaker].</span>"
+			to_chat(usr, "<span class='notice'>Attached is an empty [beaker].</span>")
 	else
-		usr << "<span class='notice'>No chemicals are attached.</span>"
+		to_chat(usr, "<span class='notice'>No chemicals are attached.</span>")
 
-	usr << "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
+	to_chat(usr, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")

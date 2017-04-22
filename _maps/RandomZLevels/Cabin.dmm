@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/rock/snow,
 /area/space)
@@ -310,7 +310,7 @@
 /area/awaymission/cabin)
 "aZ" = (
 /obj/structure/guncase/shotgun,
-/obj/item/weapon/gun/projectile/shotgun/riot,
+/obj/item/weapon/gun/ballistic/shotgun/riot,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "ba" = (
@@ -778,9 +778,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cH" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cI" = (
@@ -974,12 +972,7 @@
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dt" = (
-/obj/effect/landmark/mapGenerator/snowy{
-	endTurfX = 159;
-	endTurfY = 157;
-	startTurfX = 37;
-	startTurfY = 35
-	},
+/obj/effect/landmark/mapGenerator/snowy,
 /turf/open/floor/plating/asteroid/snow/temperatre,
 /area/awaymission/snowforest)
 "du" = (

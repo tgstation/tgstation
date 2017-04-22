@@ -57,7 +57,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telecomms/receiver
-	name = "circuit board (Subspace Receiver)"
+	name = "Subspace Receiver (Machine Board)"
 	build_path = /obj/machinery/telecomms/receiver
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
@@ -77,7 +77,7 @@
 	id = "Receiver A"
 	network = "tcommsat"
 	autolinkers = list("receiverA") // link to relay
-	freq_listening = list(SCI_FREQ, MED_FREQ, SUPP_FREQ, SERV_FREQ) // science, medical, supply, service
+	freq_listening = list(GLOB.SCI_FREQ, GLOB.MED_FREQ, GLOB.SUPP_FREQ, GLOB.SERV_FREQ) // science, medical, supply, service
 
 
 //--PRESET RIGHT--//
@@ -86,7 +86,7 @@
 	id = "Receiver B"
 	network = "tcommsat"
 	autolinkers = list("receiverB") // link to relay
-	freq_listening = list(COMM_FREQ, ENG_FREQ, SEC_FREQ) //command, engineering, security
+	freq_listening = list(GLOB.COMM_FREQ, GLOB.ENG_FREQ, GLOB.SEC_FREQ) //command, engineering, security
 
 	//Common and other radio frequencies for people to freely use
 /obj/machinery/telecomms/receiver/preset_right/New()

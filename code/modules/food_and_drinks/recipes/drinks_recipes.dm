@@ -41,7 +41,7 @@
 	name = "Moonshine"
 	id = "moonshine"
 	results = list("moonshine" = 10)
-	required_reagents = list("nutriment" = 10)
+	required_reagents = list("nutriment" = 5, "sugar" = 5)
 	required_catalysts = list("enzyme" = 5)
 
 /datum/chemical_reaction/wine
@@ -357,7 +357,7 @@
 	name = "Changeling Sting"
 	id = "changelingsting"
 	results = list("changelingsting" = 5)
-	required_reagents = list("screwdrivercocktail" = 1, "limejuice" = 1, "lemonjuice" = 1)
+	required_reagents = list("screwdrivercocktail" = 1, "lemon_lime" = 2)
 
 /datum/chemical_reaction/aloe
 	name = "Aloe"
@@ -488,7 +488,7 @@
 /datum/chemical_reaction/grape_soda
 	name = "grape soda"
 	id = "grapesoda"
-	results = list("grape_soda" = 2)
+	results = list("grapesoda" = 2)
 	required_reagents = list("grapejuice" = 1, "sodawater" = 1)
 
 /datum/chemical_reaction/grappa
@@ -535,3 +535,16 @@
 	results = list("arnold_palmer" = 2)
 	required_reagents = list("tea" = 1, "lemonjuice" = 1)
 	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."
+
+/datum/chemical_reaction/chocolate_milk
+	name = "chocolate milk"
+	id = "chocolate_milk"
+	results = list("chocolate_milk" = 2)
+	required_reagents = list("milk" = 1, "cocoa" = 1)
+	mix_message = "The color changes as the mixture blends smoothly."
+	
+/datum/chemical_reaction/eggnog
+	name = "eggnog"
+	id = "eggnog"
+	results = list("eggnog" = 15)
+	required_reagents = list("rum" = 5, "cream" = 5, "eggyolk" = 5) 

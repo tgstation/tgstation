@@ -4,7 +4,7 @@
 /obj/item/weapon/reagent_containers/food
 	possible_transfer_amounts = list()
 	volume = 50	//Sets the default container amount for all food items.
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/reagent_containers/food/New()
 		..()

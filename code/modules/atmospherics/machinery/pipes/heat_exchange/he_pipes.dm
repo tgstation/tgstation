@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/pipe/heat_exchanging/
+/obj/machinery/atmospherics/pipe/heat_exchanging
 	icon = 'icons/obj/atmospherics/pipes/heat.dmi'
 	level = 2
 	var/initialize_directions_he
@@ -7,11 +7,11 @@
 	color = "#404040"
 	buckle_lying = 1
 	var/icon_temperature = T20C //stop small changes in temperature causing icon refresh
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/New()
 	..()
-	color = "#404040"
+	add_atom_colour("#404040", FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/can_be_node(obj/machinery/atmospherics/pipe/heat_exchanging/target)
 	if(!istype(target))

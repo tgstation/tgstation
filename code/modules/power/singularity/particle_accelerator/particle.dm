@@ -25,7 +25,7 @@
 /obj/effect/accelerated_particle/New(loc)
 	..()
 
-	addtimer(src, "move", 1)
+	addtimer(CALLBACK(src, .proc/move), 1)
 
 
 /obj/effect/accelerated_particle/Bump(atom/A)

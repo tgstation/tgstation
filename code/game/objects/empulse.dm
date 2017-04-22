@@ -1,7 +1,7 @@
 /proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
 	if(!epicenter) return
 
-	if(!istype(epicenter, /turf))
+	if(!isturf(epicenter))
 		epicenter = get_turf(epicenter.loc)
 
 	if(log)
@@ -9,7 +9,7 @@
 		log_game("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
 
 	if(heavy_range > 1)
-		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, epicenter)
+		new /obj/effect/overlay/temp/emp/pulse(epicenter)
 
 	if(heavy_range > light_range)
 		light_range = heavy_range

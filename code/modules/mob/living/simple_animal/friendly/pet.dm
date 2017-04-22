@@ -1,19 +1,19 @@
 /mob/living/simple_animal/pet
 	icon = 'icons/mob/pets.dmi'
 	mob_size = MOB_SIZE_SMALL
-	var/obj/item/clothing/tie/petcollar/pcollar = null
+	var/obj/item/clothing/neck/petcollar/pcollar = null
 	var/image/collar = null
 	var/image/pettag = null
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/clothing/tie/petcollar) && !pcollar)
-		var/obj/item/clothing/tie/petcollar/P = O
+	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar)
+		var/obj/item/clothing/neck/petcollar/P = O
 		pcollar = P
 		collar = image('icons/mob/pets.dmi', src, "[icon_state]collar")
 		pettag = image('icons/mob/pets.dmi', src, "[icon_state]tag")
 		regenerate_icons()
-		user << "<span class='notice'>You put the [P] around [src]'s neck.</span>"
+		to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
 		if(P.tagname)
 			real_name = "\proper [P.tagname]"
 			name = real_name
@@ -29,7 +29,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/pet/New()
+/mob/living/simple_animal/pet/Initialize()
 	..()
 	if(pcollar)
 		pcollar = new(src)

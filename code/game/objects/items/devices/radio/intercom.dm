@@ -3,7 +3,7 @@
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	canhear_range = 2
 	var/number = 0
 	var/anyai = 1
@@ -27,7 +27,7 @@
 
 /obj/item/device/radio/intercom/interact(mob/user)
 	..()
-	ui_interact(user, state = default_state)
+	ui_interact(user, state = GLOB.default_state)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)
 	if(!on)
@@ -40,14 +40,14 @@
 			return -1
 	if(!src.listening)
 		return -1
-	if(freq == SYND_FREQ)
+	if(freq == GLOB.SYND_FREQ)
 		if(!(src.syndie))
 			return -1//Prevents broadcast of messages over devices lacking the encryption
 
 	return canhear_range
 
 
-/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
 	if(!anyai && !(speaker in ai))
 		return
 	..()
@@ -56,7 +56,7 @@
 	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
 		last_tick = world.timeofday
 
-		var/area/A = get_area_master(src)
+		var/area/A = get_area(src)
 		if(!A || emped)
 			on = 0
 		else

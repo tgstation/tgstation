@@ -10,13 +10,13 @@
 	bound_width = 96
 	bound_height = 96
 	pixel_x = -32
-	burn_state = LAVA_PROOF
-	luminosity = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	light_range = 1
 	var/boss = FALSE
 	var/is_anyone_home = FALSE
 
 /obj/structure/necropolis_gate/attack_hand(mob/user)
-	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in mob_list)
+	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in GLOB.mob_list)
 		return
 	if(is_anyone_home)
 		return
@@ -28,7 +28,7 @@
 	is_anyone_home = TRUE
 	sleep(50)
 	if(boss)
-		user << "<span class='notice'>There's no response.</span>"
+		to_chat(user, "<span class='notice'>There's no response.</span>")
 		is_anyone_home = FALSE
 		return 0
 	boss = TRUE
@@ -42,9 +42,9 @@
 	visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
 	message_admins("[key_name_admin(user)] has summoned Legion!")
 	log_game("[key_name(user)] summoned Legion.")
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.z == z)
-			M << "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>"
+			to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>")
 			M << 'sound/creatures/legion_spawn.ogg'
 			flash_color(M, flash_color = "#FF0000", flash_time = 50)
 	var/image/door_overlay = image('icons/effects/effects.dmi', "legiondoor")

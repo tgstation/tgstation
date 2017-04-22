@@ -11,11 +11,6 @@
     <span>{{desc}}</span>
     <span>{{helptext}}</span>
     <span>Cost: {{dna_cost}}</span>
-
-    {{#if required_absorbtions}}
-      <span>Required Absorbtions: {{required_absorbtions}}
-    {{/if}}
-
     <ui-button
       state='{{owned ? "selected" : can_purchase ? null : "disabled"}}'
       action='evolve'

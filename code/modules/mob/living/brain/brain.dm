@@ -1,22 +1,20 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /mob/living/brain
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
 	var/obj/item/device/mmi/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_invisible = SEE_INVISIBLE_LIVING
 
-/mob/living/brain/New(loc)
+/mob/living/brain/Initialize()
 	..()
 	create_dna(src)
 	stored_dna.initialize_dna(random_blood_type())
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
-		src.loc = OB
+		loc = OB
 		OB.brainmob = src
 
 
@@ -44,7 +42,7 @@
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return
 
-/mob/living/brain/blob_act(obj/effect/blob/B)
+/mob/living/brain/blob_act(obj/structure/blob/B)
 	return
 
 /mob/living/brain/get_eye_protection()//no eyes

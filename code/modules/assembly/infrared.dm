@@ -92,17 +92,15 @@
 /obj/item/device/assembly/infra/holder_movement()
 	if(!holder)
 		return 0
-//	setDir(holder.dir)
 	qdel(first)
 	return 1
 
 /obj/item/device/assembly/infra/proc/trigger_beam()
-	if((!secured)||(!on)||(cooldown > 0))
-		return 0
+	if(!secured || !on || next_activate > world.time)
+		return FALSE
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
-	cooldown = 2
-	addtimer(src, "process_cooldown", 10)
+	next_activate =  world.time + 30
 
 /obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
 	if(is_secured(user))
@@ -147,7 +145,7 @@
 /obj/item/device/assembly/infra/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return

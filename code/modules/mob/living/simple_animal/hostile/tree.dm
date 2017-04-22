@@ -41,7 +41,7 @@
 
 /mob/living/simple_animal/hostile/tree/Life()
 	..()
-	if(istype(src.loc, /turf/open))
+	if(isopenturf(loc))
 		var/turf/open/T = src.loc
 		if(T.air && T.air.gases["co2"])
 			var/co2 = T.air.gases["co2"][MOLES]
@@ -52,7 +52,7 @@
 					T.atmos_spawn_air("o2=[amt]")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
-	..()
+	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(prob(15))

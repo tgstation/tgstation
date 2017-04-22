@@ -8,15 +8,16 @@
 	var/triggered = 0
 
 /obj/effect/mine/proc/mineEffect(mob/victim)
-	victim << "<span class='danger'>*click*</span>"
+	to_chat(victim, "<span class='danger'>*click*</span>")
 
 /obj/effect/mine/Crossed(AM as mob|obj)
-	if(isanimal(AM))
-		var/mob/living/simple_animal/SA = AM
-		if(!SA.flying)
-			triggermine(SA)
-	else
-		triggermine(AM)
+	if(isturf(loc))
+		if(ismob(AM))
+			var/mob/MM = AM
+			if(!(MM.movement_type & FLYING))
+				triggermine(AM)
+		else
+			triggermine(AM)
 
 /obj/effect/mine/proc/triggermine(mob/victim)
 	if(triggered)
@@ -54,7 +55,7 @@
 
 /obj/effect/mine/kickmine/mineEffect(mob/victim)
 	if(isliving(victim) && victim.client)
-		victim << "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>"
+		to_chat(victim, "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>")
 		qdel(victim.client)
 
 
@@ -114,12 +115,12 @@
 	name = "Red Orb"
 	desc = "You feel angry just looking at it."
 	duration = 1200 //2min
-	color = "red"
+	color = "#FF0000"
 
 /obj/effect/mine/pickup/bloodbath/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
-	victim << "<span class='reallybig redtext'>RIP AND TEAR</span>"
+	to_chat(victim, "<span class='reallybig redtext'>RIP AND TEAR</span>")
 	victim << 'sound/misc/e1m1.ogg'
 	var/old_color = victim.client.color
 	var/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
@@ -141,32 +142,32 @@
 	sleep(10)
 	animate(victim.client,color = old_color, time = duration)//, easing = SINE_EASING|EASE_OUT)
 	sleep(duration)
-	victim << "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.<span>"
+	to_chat(victim, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.<span>")
 	qdel(chainsaw)
 	qdel(src)
 
 /obj/effect/mine/pickup/healing
 	name = "Blue Orb"
 	desc = "You feel better just looking at it."
-	color = "blue"
+	color = "#0000FF"
 
 /obj/effect/mine/pickup/healing/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
-	victim << "<span class='notice'>You feel great!</span>"
+	to_chat(victim, "<span class='notice'>You feel great!</span>")
 	victim.revive(full_heal = 1, admin_revive = 1)
 
 /obj/effect/mine/pickup/speed
 	name = "Yellow Orb"
 	desc = "You feel faster just looking at it."
-	color = "yellow"
+	color = "#FFFF00"
 	duration = 300
 
 /obj/effect/mine/pickup/speed/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
-	victim << "<span class='notice'>You feel fast!</span>"
+	to_chat(victim, "<span class='notice'>You feel fast!</span>")
 	victim.status_flags |= GOTTAGOREALLYFAST
 	sleep(duration)
 	victim.status_flags &= ~GOTTAGOREALLYFAST
-	victim << "<span class='notice'>You slow down.</span>"
+	to_chat(victim, "<span class='notice'>You slow down.</span>")

@@ -39,7 +39,7 @@
 	server_radio = new()
 
 /obj/item/weapon/circuitboard/machine/telecomms/server
-	name = "circuit board (Telecommunication Server)"
+	name = "Telecommunication Server (Machine Board)"
 	build_path = /obj/machinery/telecomms/server
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -72,7 +72,8 @@
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 
-				log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+				//log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+				// TODO languages: ^ I don't know what this does
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)
@@ -141,22 +142,22 @@
 
 /obj/machinery/telecomms/server/presets/science
 	id = "Science Server"
-	freq_listening = list(SCI_FREQ)
+	freq_listening = list(GLOB.SCI_FREQ)
 	autolinkers = list("science")
 
 /obj/machinery/telecomms/server/presets/medical
 	id = "Medical Server"
-	freq_listening = list(MED_FREQ)
+	freq_listening = list(GLOB.MED_FREQ)
 	autolinkers = list("medical")
 
 /obj/machinery/telecomms/server/presets/supply
 	id = "Supply Server"
-	freq_listening = list(SUPP_FREQ)
+	freq_listening = list(GLOB.SUPP_FREQ)
 	autolinkers = list("supply")
 
 /obj/machinery/telecomms/server/presets/service
 	id = "Service Server"
-	freq_listening = list(SERV_FREQ)
+	freq_listening = list(GLOB.SERV_FREQ)
 	autolinkers = list("service")
 
 /obj/machinery/telecomms/server/presets/common
@@ -173,17 +174,17 @@
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
-	freq_listening = list(COMM_FREQ)
+	freq_listening = list(GLOB.COMM_FREQ)
 	autolinkers = list("command")
 
 /obj/machinery/telecomms/server/presets/engineering
 	id = "Engineering Server"
-	freq_listening = list(ENG_FREQ)
+	freq_listening = list(GLOB.ENG_FREQ)
 	autolinkers = list("engineering")
 
 /obj/machinery/telecomms/server/presets/security
 	id = "Security Server"
-	freq_listening = list(SEC_FREQ)
+	freq_listening = list(GLOB.SEC_FREQ)
 	autolinkers = list("security")
 
 /obj/machinery/telecomms/server/presets/common/birdstation/New()

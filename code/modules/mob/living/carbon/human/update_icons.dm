@@ -71,6 +71,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/regenerate_icons()
 
 	if(!..())
+		icon_render_key = null //invalidate bodyparts cache
 		update_body()
 		update_hair()
 		update_inv_w_uniform()
@@ -86,6 +87,7 @@ There are several things that need to be remembered:
 		update_inv_back()
 		update_inv_wear_suit()
 		update_inv_pockets()
+		update_inv_neck()
 		update_transform()
 		//mutations
 		update_mutations_overlay()
@@ -95,7 +97,7 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
-/mob/living/carbon/human/update_inv_w_uniform()
+/mob/living/carbon/human/update_inv_w_uniform(invdrop = TRUE)
 	remove_overlay(UNIFORM_LAYER)
 
 	if(client && hud_used)
@@ -127,17 +129,17 @@ There are several things that need to be remembered:
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE, femaleuniform = U.fitted)
+				standing = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE, femaleuniform = U.fitted)
 
 		if(!standing)
-			standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
+			standing = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
 
 		overlays_standing[UNIFORM_LAYER]	= standing
 
-	else
+	else if(!(dna && dna.species.nojumpsuit) && invdrop)
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
-			unEquip(thing)
+			dropItemToGround(thing)
 
 	apply_overlay(UNIFORM_LAYER)
 	update_mutant_bodyparts()
@@ -383,10 +385,10 @@ There are several things that need to be remembered:
 
 /proc/wear_female_version(t_color, icon, layer, type)
 	var/index = t_color
-	var/icon/female_clothing_icon = female_clothing_icons[index]
+	var/icon/female_clothing_icon = GLOB.female_clothing_icons[index]
 	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
 		generate_female_clothing(index,t_color,icon,type)
-	var/standing	= image("icon"=female_clothing_icons["[t_color]"], "layer"=-layer)
+	var/standing	= image("icon"=GLOB.female_clothing_icons["[t_color]"], "layer"=-layer)
 	return(standing)
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
@@ -412,6 +414,14 @@ There are several things that need to be remembered:
 //update whether our mask item appears on our hud.
 /mob/living/carbon/human/update_hud_wear_mask(obj/item/I)
 	I.screen_loc = ui_mask
+	if(client && hud_used && hud_used.hud_shown)
+		if(hud_used.inventory_shown)
+			client.screen += I
+	update_observer_view(I,1)
+
+//update whether our neck item appears on our hud.
+/mob/living/carbon/human/update_hud_neck(obj/item/I)
+	I.screen_loc = ui_neck
 	if(client && hud_used && hud_used.hud_shown)
 		if(hud_used.inventory_shown)
 			client.screen += I
@@ -542,6 +552,8 @@ generate/load female uniform sprites matching all previously decided variables
 			. += "-robotic"
 		if(BP.use_digitigrade)
 			. += "-digitigrade[BP.use_digitigrade]"
+		if(BP.dmg_overlay_type)
+			. += "-[BP.dmg_overlay_type]"
 
 	if(disabilities & HUSK)
 		. += "-husk"

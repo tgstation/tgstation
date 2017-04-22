@@ -1,13 +1,16 @@
 /datum/pipeline
 	var/datum/gas_mixture/air
-	var/list/datum/gas_mixture/other_airs = list()
+	var/list/datum/gas_mixture/other_airs
 
-	var/list/obj/machinery/atmospherics/pipe/members = list()
-	var/list/obj/machinery/atmospherics/components/other_atmosmch = list()
+	var/list/obj/machinery/atmospherics/pipe/members
+	var/list/obj/machinery/atmospherics/components/other_atmosmch
 
 	var/update = 1
 
 /datum/pipeline/New()
+	other_airs = list()
+	members = list()
+	other_atmosmch = list()
 	SSair.networks += src
 
 /datum/pipeline/Destroy()
@@ -26,8 +29,6 @@
 		reconcile_air()
 	update = air.react()
 
-var/pipenetwarnings = 10
-
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
 	var/volume = 0
 	if(istype(base, /obj/machinery/atmospherics/pipe))
@@ -41,7 +42,6 @@ var/pipenetwarnings = 10
 		addMachineryMember(base)
 	if(!air)
 		air = new
-		air.holder = src
 	var/list/possible_expansions = list(base)
 	while(possible_expansions.len>0)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
@@ -55,6 +55,7 @@ var/pipenetwarnings = 10
 						if(!members.Find(item))
 
 							if(item.parent)
+								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
 									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1
@@ -80,6 +81,8 @@ var/pipenetwarnings = 10
 /datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/C)
 	other_atmosmch |= C
 	var/datum/gas_mixture/G = C.returnPipenetAir(src)
+	if(!G)
+		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [C] which is of type [C.type]. Nearby: ([C.x], [C.y], [C.z])")
 	other_airs |= G
 
 /datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
@@ -144,7 +147,7 @@ var/pipenetwarnings = 10
 	var/target_temperature
 	var/target_heat_capacity
 
-	if(istype(target, /turf/open))
+	if(isopenturf(target))
 
 		var/turf/open/modeled_location = target
 		target_temperature = modeled_location.GetTemperature()
@@ -194,6 +197,12 @@ var/pipenetwarnings = 10
 			air.temperature -= heat/total_heat_capacity
 	update = 1
 
+/datum/pipeline/proc/return_air()
+	. = other_airs + air
+	if(null in .)
+		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
+		return removeNullsFromList(.)
+
 /datum/pipeline/proc/reconcile_air()
 	var/list/datum/gas_mixture/GL = list()
 	var/list/datum/pipeline/PL = list()
@@ -201,8 +210,9 @@ var/pipenetwarnings = 10
 
 	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
 		var/datum/pipeline/P = PL[i]
-		GL += P.air
-		GL += P.other_airs
+		if(!P)
+			continue
+		GL += P.return_air()
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
 				PL |= V.PARENT1
@@ -234,4 +244,3 @@ var/pipenetwarnings = 10
 			var/list/G_gases = G.gases
 			for(var/id in G_gases)
 				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
-

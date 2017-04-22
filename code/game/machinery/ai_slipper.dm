@@ -1,9 +1,13 @@
 /obj/machinery/ai_slipper
 	name = "\improper AI liquid dispenser"
 	icon = 'icons/obj/device.dmi'
-	icon_state = "motion3"
+	icon_state = "ai-slipper0"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	anchored = 1
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+
 	var/uses = 20
 	var/disabled = 1
 	var/lethal = 0
@@ -11,7 +15,7 @@
 	var/cooldown_time = 0
 	var/cooldown_timeleft = 0
 	var/cooldown_on = 0
-	req_access = list(access_ai_upload)
+	req_access = list(GLOB.access_ai_upload)
 
 /obj/machinery/ai_slipper/power_change()
 	if(stat & BROKEN)
@@ -20,7 +24,7 @@
 		if( powered() )
 			stat &= ~NOPOWER
 		else
-			icon_state = "motion0"
+			icon_state = "ai-slipper0"
 			stat |= NOPOWER
 
 /obj/machinery/ai_slipper/proc/setState(enabled, uses)
@@ -36,7 +40,7 @@
 	else // trying to unlock the interface
 		if (src.allowed(user))
 			locked = !locked
-			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the device.</span>"
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the device.</span>")
 			if (locked)
 				if (user.machine==src)
 					user.unset_machine()
@@ -45,7 +49,7 @@
 				if (user.machine==src)
 					src.attack_hand(user)
 		else
-			user << "<span class='danger'>Access denied.</span>"
+			to_chat(user, "<span class='danger'>Access denied.</span>")
 
 
 /obj/machinery/ai_slipper/attack_ai(mob/user)
@@ -56,7 +60,7 @@
 		return
 	if ( (get_dist(src, user) > 1 ))
 		if (!(issilicon(user) || IsAdminGhost(user)))
-			user << text("Too far away.")
+			to_chat(user, text("Too far away."))
 			user.unset_machine()
 			user << browse(null, "window=ai_slipper")
 			return
@@ -77,17 +81,17 @@
 	if(..())
 		return
 	if (src.locked)
-		if (!(istype(usr, /mob/living/silicon)|| IsAdminGhost(usr)))
-			usr << "Control panel is locked!"
+		if(!(issilicon(usr)|| IsAdminGhost(usr)))
+			to_chat(usr, "Control panel is locked!")
 			return
 	if (href_list["toggleOn"])
 		src.disabled = !src.disabled
-		icon_state = src.disabled? "motion0":"motion3"
+		icon_state = src.disabled? "ai-slipper0":"ai-slipper1"
 	if (href_list["toggleUse"])
 		if(cooldown_on || disabled)
 			return
 		else
-			PoolOrNew(/obj/effect/particle_effect/foam, loc)
+			new /obj/effect/particle_effect/foam(loc)
 			src.uses--
 			cooldown_on = 1
 			cooldown_time = world.timeofday + 100

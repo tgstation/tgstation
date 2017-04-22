@@ -1,7 +1,10 @@
-/proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0, var/atom/newloc = null, var/nerf = 0)
+//Vars that will not be copied when using /DuplicateObject
+GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs","vars", "parent","parent_type", "verbs","ckey","key","power_supply","contents","reagents","stat","x","y","z","group","atmos_adjacent_turfs"))
+
+/proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc = FALSE, atom/newloc = null, nerf = FALSE, holoitem=FALSE)
 	if(!original)
 		return null
-	var/obj/O
+	var/atom/O
 
 	if(sameloc)
 		O = new original.type(original.loc)
@@ -9,9 +12,7 @@
 		O = new original.type(newloc)
 
 	if(perfectcopy && O && original)
-		var/global/list/forbidden_vars = list("type","loc","locs","vars", "parent","parent_type", "verbs","ckey","key","power_supply","contents","reagents","stat","x","y","z","group")
-
-		for(var/V in original.vars - forbidden_vars)
+		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
 			if(istype(original.vars[V],/list))
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
@@ -20,15 +21,22 @@
 			else
 				O.vars[V] = original.vars[V]
 
-	if(istype(O))
-		O.burn_state = FIRE_PROOF // holoitems do not burn
+	if(istype(O, /obj))
+		var/obj/N = O
+		if(holoitem)
+			N.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // holoitems do not burn
+
 		if(nerf && istype(O,/obj/item))
 			var/obj/item/I = O
 			I.damtype = STAMINA // thou shalt not
+
+		N.update_icon()
 		if(istype(O,/obj/machinery))
 			var/obj/machinery/M = O
 			M.power_change()
-	O.update_icon()
+
+	if(holoitem)
+		SET_SECONDARY_FLAG(O, HOLOGRAM)
 	return O
 
 
@@ -76,37 +84,38 @@
 			continue
 
 		if(platingRequired)
-			if(istype(B, /turf/open/space))
+			if(isspaceturf(B))
 				continue
 
 		var/old_dir1 = T.dir
 		var/old_icon_state1 = T.icon_state
 		var/old_icon1 = T.icon
 
-		var/turf/X = new T.type(B)
-		X.setDir(old_dir1)
-		X.icon = old_icon1
-		X.icon_state = old_icon_state1
+		B = B.ChangeTurf(T.type)
+		B.setDir(old_dir1)
+		B.icon = old_icon1
+		B.icon_state = old_icon_state1
 
 		for(var/obj/O in T)
-			var/obj/O2 = DuplicateObject(O , 1, newloc = X, nerf=nerf_weapons)
-			if(!O2) continue
+			var/obj/O2 = DuplicateObject(O , perfectcopy=TRUE, newloc = B, nerf=nerf_weapons, holoitem=TRUE)
+			if(!O2) 
+				continue
 			copiedobjs += O2.GetAllContents()
 
 		for(var/mob/M in T)
-			if(istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
-			var/mob/SM = DuplicateObject(M , 1, newloc = X)
+			if(istype(M, /mob/camera)) 
+				continue // If we need to check for more mobs, I'll add a variable
+			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()
 
-		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")
-		for(var/V in T.vars - forbidden_vars)
+		for(var/V in T.vars - GLOB.duplicate_forbidden_vars)
 			if(V == "air")
-				var/turf/open/O1 = X
+				var/turf/open/O1 = B
 				var/turf/open/O2 = T
-				O1.air.copy_from(O2.air)
+				O1.air.copy_from(O2.return_air())
 				continue
-			X.vars[V] = T.vars[V]
-		toupdate += X
+			B.vars[V] = T.vars[V]
+		toupdate += B
 
 	if(toupdate.len)
 		for(var/turf/T1 in toupdate)

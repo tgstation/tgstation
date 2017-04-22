@@ -22,7 +22,7 @@
 /obj/machinery/gibber/autogibber/New()
 	..()
 	spawn(5)
-		for(var/i in cardinal)
+		for(var/i in GLOB.cardinal)
 			var/obj/machinery/mineral/input/input_obj = locate( /obj/machinery/mineral/input, get_step(src.loc, i) )
 			if(input_obj)
 				if(isturf(input_obj.loc))
@@ -31,7 +31,7 @@
 					break
 
 		if(!input_plate)
-			diary << "a [src] didn't find an input plate."
+			GLOB.diary << "a [src] didn't find an input plate."
 			return
 
 /obj/machinery/gibber/autogibber/Bumped(atom/A)
@@ -52,7 +52,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/gibber
-	name = "circuit board (Gibber)"
+	name = "Gibber (Machine Board)"
 	build_path = /obj/machinery/gibber
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -85,28 +85,27 @@
 /obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/gibber/container_resist()
-	src.go_out()
-	return
+/obj/machinery/gibber/container_resist(mob/living/user)
+	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
-		user << "<span class='danger'>It's locked and running.</span>"
+		to_chat(user, "<span class='danger'>It's locked and running.</span>")
 		return
 
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
-			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
+			to_chat(user, "<span class='danger'>This item is not suitable for the gibber!</span>")
 			return
 		var/mob/living/carbon/C = L
 		if(C.buckled ||C.has_buckled_mobs())
-			user << "<span class='warning'>[C] is attached to something!</span>"
+			to_chat(user, "<span class='warning'>[C] is attached to something!</span>")
 			return
 		if(C.abiotic(1) && !ignore_clothing)
-			user << "<span class='danger'>Subject may not have abiotic items on.</span>"
+			to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 			return
 
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
@@ -224,11 +223,11 @@
 		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
 		var/obj/item/skin = allskin
 		skin.loc = src.loc
-		skin.throw_at_fast(pick(nearby_turfs),meat_produced,3)
+		skin.throw_at(pick(nearby_turfs),meat_produced,3)
 		for (var/i=1 to meat_produced)
 			var/obj/item/meatslab = allmeat[i]
 			meatslab.loc = src.loc
-			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
+			meatslab.throw_at(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in view(gibturf))

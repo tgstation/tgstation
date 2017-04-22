@@ -13,7 +13,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/robot/R = usr
-	if(R.module)
+	if(R.module.type != /obj/item/weapon/robot_module)
 		R.hud_used.toggle_show_robot_modules()
 		return 1
 	R.pick_module()
@@ -88,14 +88,16 @@
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_ionpulse()
 
-/datum/hud/robot/New(mob/owner)
+/datum/hud/robot
+	ui_style_icon = 'icons/mob/screen_cyborg.dmi'
+
+/datum/hud/robot/New(mob/owner, ui_style = 'icons/mob/screen_cyborg.dmi')
 	..()
 	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
 
-	using = new/obj/screen/wheel/talk
-	using.screen_loc = ui_borg_talk_wheel
-	wheels += using
+	using = new/obj/screen/language_menu
+	using.screen_loc = ui_borg_language_menu
 	static_inventory += using
 
 //Radio
@@ -148,10 +150,9 @@
 	mymobR.thruster_button = using
 
 //Intent
-	using = new /obj/screen/act_intent/robot()
-	using.icon_state = mymob.a_intent
-	static_inventory += using
-	action_intent = using
+	action_intent = new /obj/screen/act_intent/robot()
+	action_intent.icon_state = mymob.a_intent
+	static_inventory += action_intent
 
 //Health
 	healths = new /obj/screen/healths/robot()
@@ -179,7 +180,7 @@
 
 
 /datum/hud/proc/toggle_show_robot_modules()
-	if(!isrobot(mymob)) return
+	if(!iscyborg(mymob)) return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -187,7 +188,7 @@
 	update_robot_modules_display()
 
 /datum/hud/proc/update_robot_modules_display(mob/viewer)
-	if(!isrobot(mymob)) return
+	if(!iscyborg(mymob)) return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -196,12 +197,15 @@
 	if(!R.module)
 		return
 
+	if(!R.client)
+		return
+
 	if(R.shown_robot_modules && screenmob.hud_used.hud_shown)
 		//Modules display is shown
 		screenmob.client.screen += module_store_icon	//"store" icon
 
 		if(!R.module.modules)
-			usr << "<span class='danger'>Selected module has no modules to select</span>"
+			to_chat(usr, "<span class='danger'>Selected module has no modules to select</span>")
 			return
 
 		if(!R.robot_modules_background)
@@ -222,6 +226,7 @@
 			else
 				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
 			A.layer = ABOVE_HUD_LAYER
+			A.plane = ABOVE_HUD_PLANE
 
 			x++
 			if(x == 4)
@@ -243,7 +248,7 @@
 		hud_used = new /datum/hud/robot(src)
 
 
-/datum/hud/robot/persistant_inventory_update(mob/viewer)
+/datum/hud/robot/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	var/mob/living/silicon/robot/R = mymob
@@ -252,19 +257,19 @@
 
 	if(screenmob.hud_used)
 		if(screenmob.hud_used.hud_shown)
-			if(R.module_state_1)
-				R.module_state_1.screen_loc = ui_inv1
-				screenmob.client.screen += R.module_state_1
-			if(R.module_state_2)
-				R.module_state_2.screen_loc = ui_inv2
-				screenmob.client.screen += R.module_state_2
-			if(R.module_state_3)
-				R.module_state_3.screen_loc = ui_inv3
-				screenmob.client.screen += R.module_state_3
+			for(var/i in 1 to R.held_items.len)
+				var/obj/item/I = R.held_items[i]
+				if(I)
+					switch(i)
+						if(1)
+							I.screen_loc = ui_inv1
+						if(2)
+							I.screen_loc = ui_inv2
+						if(3)
+							I.screen_loc = ui_inv3
+						else
+							return
+					screenmob.client.screen += I
 		else
-			if(R.module_state_1)
-				screenmob.client.screen -= R.module_state_1
-			if(R.module_state_2)
-				screenmob.client.screen -= R.module_state_2
-			if(R.module_state_3)
-				screenmob.client.screen -= R.module_state_3
+			for(var/obj/item/I in R.held_items)
+				screenmob.client.screen -= I

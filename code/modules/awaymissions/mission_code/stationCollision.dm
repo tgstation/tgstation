@@ -7,7 +7,6 @@
  *		for anyone who wants to make their own stuff.
  *
  * Contains:
- *		Areas
  *		Landmarks
  *		Guns
  *		Safe code hints
@@ -15,29 +14,6 @@
  *		Modified Nar-Sie
  */
 
-/*
- * Areas
- */
- //Gateroom gets its own APC specifically for the gate
- /area/awaymission/gateroom
-
- //Library, medbay, storage room
- /area/awaymission/southblock
-
- //Arrivals, security, hydroponics, shuttles (since they dont move, they dont need specific areas)
- /area/awaymission/arrivalblock
-
- //Crew quarters, cafeteria, chapel
- /area/awaymission/midblock
-
- //engineering, bridge (not really north but it doesnt really need its own APC)
- /area/awaymission/northblock
-
- //That massive research room
- /area/awaymission/research
-
-//Syndicate shuttle
-/area/awaymission/syndishuttle
 
 
 /*
@@ -60,7 +36,7 @@
  * Guns - I'm making these specifically so that I dont spawn a pile of fully loaded weapons on the map.
  */
 //Captain's retro laser - Fires practice laser shots instead.
-obj/item/weapon/gun/energy/laser/retro/sc_retro
+/obj/item/weapon/gun/energy/laser/retro/sc_retro
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
@@ -68,18 +44,18 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
 
 //Syndicate sub-machine guns.
-/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
+/obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r
 
-/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/New()
+/obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r/New()
 	..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
 			magazine.stored_ammo -= ammo
 
 //Barman's shotgun
-/obj/item/weapon/gun/projectile/shotgun/sc_pump
+/obj/item/weapon/gun/ballistic/shotgun/sc_pump
 
-/obj/item/weapon/gun/projectile/shotgun/sc_pump/New()
+/obj/item/weapon/gun/ballistic/shotgun/sc_pump/New()
 	..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
@@ -96,23 +72,23 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
  */
 
 //These vars hold the code itself, they'll be generated at round-start
-var/sc_safecode1 = "[rand(0,9)]"
-var/sc_safecode2 = "[rand(0,9)]"
-var/sc_safecode3 = "[rand(0,9)]"
-var/sc_safecode4 = "[rand(0,9)]"
-var/sc_safecode5 = "[rand(0,9)]"
+GLOBAL_VAR_INIT(sc_safecode1, "[rand(0,9)]")
+GLOBAL_VAR_INIT(sc_safecode2, "[rand(0,9)]")
+GLOBAL_VAR_INIT(sc_safecode3, "[rand(0,9)]")
+GLOBAL_VAR_INIT(sc_safecode4, "[rand(0,9)]")
+GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 
 //Pieces of paper actually containing the hints
 /obj/item/weapon/paper/sc_safehint_paper_prison
 	name = "smudged paper"
 
 /obj/item/weapon/paper/sc_safehint_paper_prison/New()
-	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[sc_safecode1]**[sc_safecode4]*'"
+	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[GLOB.sc_safecode1]**[GLOB.sc_safecode4]*'"
 
 /obj/item/weapon/paper/sc_safehint_paper_hydro
 	name = "shredded paper"
 /obj/item/weapon/paper/sc_safehint_paper_hydro/New()
-	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[sc_safecode2]'"
+	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[GLOB.sc_safecode2]'"
 
 /obj/item/weapon/paper/sc_safehint_paper_caf
 	name = "blood-soaked paper"
@@ -123,7 +99,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 	name = "hidden paper"
 /obj/item/weapon/paper/sc_safehint_paper_bible/New()
 	info = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
-			However you can make out the last three digits:</i>'[sc_safecode3][sc_safecode4][sc_safecode5]'
+			However you can make out the last three digits:</i>'[GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]'
 			"}
 
 /obj/item/weapon/paper/sc_safehint_paper_shuttle
@@ -147,7 +123,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 
 /obj/item/weapon/storage/secure/safe/sc_ssafe/New()
 	..()
-	l_code = "[sc_safecode1][sc_safecode2][sc_safecode3][sc_safecode4][sc_safecode5]"
+	l_code = "[GLOB.sc_safecode1][GLOB.sc_safecode2][GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]"
 	l_set = 1
 	new /obj/item/weapon/gun/energy/mindflayer(src)
 	new /obj/item/device/soulstone(src)
@@ -175,7 +151,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 /obj/singularity/narsie/sc_Narsie/consume(atom/A)
 	if(is_type_in_list(A, uneatable))
 		return 0
-	if (istype(A,/mob/living))
+	if(isliving(A))
 		var/mob/living/L = A
 		L.gib()
 	else if(istype(A,/obj/))

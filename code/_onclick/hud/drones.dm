@@ -27,7 +27,7 @@
 			inv.update_icon()
 
 
-/datum/hud/dextrous/drone/persistant_inventory_update()
+/datum/hud/dextrous/drone/persistent_inventory_update()
 	if(!mymob)
 		return
 	var/mob/living/simple_animal/drone/D = mymob

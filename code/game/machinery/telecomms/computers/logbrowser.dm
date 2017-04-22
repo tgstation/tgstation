@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /obj/machinery/computer/telecomms/server
 	name = "telecommunications server monitoring console"
@@ -13,7 +13,7 @@
 
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
-	req_access = list(access_tcomsat)
+	req_access = list(GLOB.access_tcomsat)
 	circuit = /obj/item/weapon/circuitboard/computer/comm_server
 
 /obj/machinery/computer/telecomms/server/attack_hand(mob/user)
@@ -94,7 +94,7 @@
 						race = "Artificial Life"
 						language = "Humanoid" //Ais and borgs speak human, and binary isnt picked up.
 
-					else if(istype(mobtype, /obj))
+					else if(isobj(mobtype))
 						race = "Machinery"
 						language = race
 
@@ -187,7 +187,7 @@
 	if(href_list["delete"])
 
 		if(!src.allowed(usr) && !emagged)
-			usr << "<span class='danger'>ACCESS DENIED.</span>"
+			to_chat(usr, "<span class='danger'>ACCESS DENIED.</span>")
 			return
 
 		if(SelectedServer)

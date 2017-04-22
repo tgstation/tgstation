@@ -141,6 +141,13 @@
 	end_day = 2
 	begin_month = APRIL
 
+/datum/holiday/april_fools/celebrate()
+	if(SSticker)
+		SSticker.login_music = 'sound/ambience/clown.ogg'
+		for(var/mob/dead/new_player/P in GLOB.mob_list)
+			if(P.client)
+				P.client.playtitlemusic()
+
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"
 	begin_day = 20
@@ -302,6 +309,11 @@
 	begin_day = 14
 	begin_month = DECEMBER
 
+/datum/holiday/doomsday
+	name = "Mayan Doomsday Anniversary"
+	begin_day = 21
+	begin_month = DECEMBER
+
 /datum/holiday/xmas
 	name = CHRISTMAS
 	begin_day = 23
@@ -310,6 +322,20 @@
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
+
+/datum/holiday/festive_season
+	name = FESTIVE_SEASON
+	begin_day = 1
+	begin_month = DECEMBER
+	end_day = 31
+
+/datum/holiday/festive_season/celebrate()
+	for(var/obj/effect/landmark/xmastree/XT in GLOB.landmarks_list)
+		new XT.tree(get_turf(XT))
+		qdel(XT)
+
+/datum/holiday/festive_season/greet()
+	return "Have a nice festive season!"
 
 /datum/holiday/boxing
 	name = "Boxing Day"
@@ -394,5 +420,5 @@
 				begin_day += 31
 				begin_month-- //begins in march, ends in april
 
-//	world << "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]"
+//	to_chat(world, "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]")
 	return ..()

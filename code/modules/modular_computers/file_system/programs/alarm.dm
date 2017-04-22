@@ -12,6 +12,7 @@
 	size = 5
 	var/has_alert = 0
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
+	var/alarm_z = list(ZLEVEL_STATION,ZLEVEL_LAVALAND)
 
 /datum/computer_file/program/alarm_monitor/process_tick()
 	..()
@@ -30,7 +31,7 @@
 
 
 /datum/computer_file/program/alarm_monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "station_alert_prog", "Alarm Monitoring", 300, 500, master_ui, state)
@@ -48,6 +49,9 @@
 	return data
 
 /datum/computer_file/program/alarm_monitor/proc/triggerAlarm(class, area/A, O, obj/source)
+
+	if(!(source.z in alarm_z))
+		return
 
 	var/list/L = alarms[class]
 	for(var/I in L)
@@ -99,8 +103,8 @@
 
 /datum/computer_file/program/alarm_monitor/run_program(mob/user)
 	. = ..(user)
-	alarmdisplay += src
+	GLOB.alarmdisplay += src
 
 /datum/computer_file/program/alarm_monitor/kill_program(forced = FALSE)
-	alarmdisplay -= src
+	GLOB.alarmdisplay -= src
 	..()

@@ -127,7 +127,7 @@
 	name = "Botanical gloves"
 	id = "botany_gloves"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 250)
+	materials = list(MAT_BIOMASS = 150)
 	build_path = /obj/item/clothing/gloves/botanic_leather
 	category = list("initial","Leather and Cloth")
 

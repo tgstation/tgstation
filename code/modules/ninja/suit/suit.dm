@@ -18,8 +18,8 @@ Contents:
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/stock_parts/cell)
 	slowdown = 0
-	unacidable = 1
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	resistance_flags = LAVA_PROOF | ACID_PROOF
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
 	strip_delay = 12
 
 		//Important parts of the suit.
@@ -118,17 +118,17 @@ Contents:
 		H.gloves.item_state = "s-ninjan"
 	else
 		if(H.mind.special_role!="Space Ninja")
-			H << "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR..."
+			to_chat(H, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...")
 			H.gib()
 			return 0
 		if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
-			H << "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING..."
+			to_chat(H, "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 			return 0
 		if(!istype(H.shoes, /obj/item/clothing/shoes/space_ninja))
-			H << "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING..."
+			to_chat(H, "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING...")
 			return 0
 		if(!istype(H.gloves, /obj/item/clothing/gloves/space_ninja))
-			H << "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING..."
+			to_chat(H, "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
 			return 0
 
 		affecting = H
@@ -168,7 +168,7 @@ Contents:
 	..()
 	if(s_initialized)
 		if(user == affecting)
-			user << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
-			user << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
-			user << "There are <B>[s_bombs]</B> smoke bomb\s remaining."
-			user << "There are <B>[a_boost]</B> adrenaline booster\s remaining."
+			to_chat(user, "All systems operational. Current energy capacity: <B>[cell.charge]</B>.")
+			to_chat(user, "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>.")
+			to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
+			to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")

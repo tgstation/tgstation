@@ -22,6 +22,7 @@
 	health = 60
 	var/armored = FALSE
 
+	obj_damage = 60
 	melee_damage_lower = 20
 	melee_damage_upper = 30
 	attacktext = "claws"
@@ -85,7 +86,7 @@
 	if(istype(target, /mob/living/simple_animal/hostile/bear) && proximity_flag)
 		var/mob/living/simple_animal/hostile/bear/A = target
 		if(A.armored)
-			user << "<span class='warning'>[A] has already been armored up!</span>"
+			to_chat(user, "<span class='warning'>[A] has already been armored up!</span>")
 			return
 		A.armored = TRUE
 		A.maxHealth += 60
@@ -94,7 +95,7 @@
 		A.melee_damage_lower += 5
 		A.melee_damage_upper += 5
 		A.update_icons()
-		user << "<span class='info'>You strap the armor plating to [A] and sharpen their claws with the nail filer. This was a great idea.</span>"
+		to_chat(user, "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>")
 		qdel(src)
 
 

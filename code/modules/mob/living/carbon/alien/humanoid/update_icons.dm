@@ -23,9 +23,9 @@
 		if(drooling)
 			add_overlay("alienspit_[caste]")
 	else
-		icon_state = "alien[caste]_s"
+		icon_state = "alien[caste]"
 		if(drooling)
-			add_overlay("alienspit_s")
+			add_overlay("alienspit")
 
 	if(leaping)
 		if(alt_icon == initial(alt_icon))
@@ -42,6 +42,8 @@
 			alt_icon = old_icon
 		pixel_x = get_standard_pixel_x_offset(lying)
 		pixel_y = get_standard_pixel_y_offset(lying)
+	update_inv_hands()
+	update_inv_handcuffed()
 
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	if(!..())
@@ -56,7 +58,7 @@
 
 /mob/living/carbon/alien/humanoid/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
-	var/cuff_icon = "aliencuff_s"
+	var/cuff_icon = "aliencuff"
 	var/dmi_file = 'icons/mob/alien.dmi'
 
 	if(mob_size == MOB_SIZE_LARGE)

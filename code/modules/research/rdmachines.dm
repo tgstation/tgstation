@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 
@@ -30,10 +30,8 @@
 		return 0
 	if(!prob(prb))
 		return 0
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
+	do_sparks(5, TRUE, src)
+	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
 		return 1
 	else
 		return 0
@@ -59,7 +57,7 @@
 		return
 	if(default_deconstruction_crowbar(O))
 		return
-	if((flags & OPENCONTAINER) && O.is_open_container())
+	if(is_open_container() && O.is_open_container())
 		return 0 //inserting reagents into the machine
 	if(Insert_Item(O, user))
 		return 1
@@ -77,7 +75,7 @@
 //whether the machine can have an item inserted in its current state.
 /obj/machinery/r_n_d/proc/is_insertion_ready(mob/user)
 	if(panel_open)
-		user << "<span class='warning'>You can't load the [src.name] while it's opened!</span>"
+		to_chat(user, "<span class='warning'>You can't load the [src.name] while it's opened!</span>")
 		return
 	if (disabled)
 		return
@@ -87,25 +85,25 @@
 				console.SyncRDevices()
 
 		if(!linked_console)
-			user << "<span class='warning'>The [name] must be linked to an R&D console first!</span>"
+			to_chat(user, "<span class='warning'>The [name] must be linked to an R&D console first!</span>")
 			return
 	if (busy)
-		user << "<span class='warning'>The [src.name] is busy right now.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] is busy right now.</span>")
 		return
 	if(stat & BROKEN)
-		user << "<span class='warning'>The [src.name] is broken.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] is broken.</span>")
 		return
 	if(stat & NOPOWER)
-		user << "<span class='warning'>The [src.name] has no power.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] has no power.</span>")
 		return
 	if(loaded_item)
-		user << "<span class='warning'>The [src] is already loaded.</span>"
+		to_chat(user, "<span class='warning'>The [src] is already loaded.</span>")
 		return
 	return 1
 
 
 //we eject the loaded item when deconstructing the machine
-/obj/machinery/r_n_d/deconstruction()
+/obj/machinery/r_n_d/on_deconstruction()
 	if(loaded_item)
-		loaded_item.loc = loc
+		loaded_item.forceMove(loc)
 	..()

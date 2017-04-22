@@ -60,7 +60,7 @@
 
 	dat += "<br><br>In total this machine produced <font color='green'><b>[newCoins]</b></font> coins."
 	dat += "<br><A href='?src=\ref[src];makeCoins=[1]'>Make coins</A>"
-	user << browse("[dat]", "window=mint")
+	user << browse(dat, "window=mint")
 
 /obj/machinery/mineral/mint/Topic(href, href_list)
 	if(..())
@@ -68,7 +68,7 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(processing==1)
-		usr << "<span class='notice'>The machine is processing.</span>"
+		to_chat(usr, "<span class='notice'>The machine is processing.</span>")
 		return
 	if(href_list["choose"])
 		if(materials.materials[href_list["choose"]])

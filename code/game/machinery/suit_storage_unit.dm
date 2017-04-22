@@ -1,4 +1,4 @@
-// SUIT STORAGE UNIT /////////////////close_machine(
+// SUIT STORAGE UNIT /////////////////
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
 	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
@@ -6,6 +6,8 @@
 	icon_state = "close"
 	anchored = 1
 	density = 1
+	obj_integrity = 250
+	max_integrity = 250
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -52,6 +54,7 @@
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
+	storage_type = /obj/item/weapon/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
@@ -112,6 +115,21 @@
 		storage = new storage_type(src)
 	update_icon()
 
+/obj/machinery/suit_storage_unit/Destroy()
+	if(suit)
+		qdel(suit)
+		suit = null
+	if(helmet)
+		qdel(helmet)
+		helmet = null
+	if(mask)
+		qdel(mask)
+		mask = null
+	if(storage)
+		qdel(storage)
+		storage = null
+	return ..()
+
 /obj/machinery/suit_storage_unit/update_icon()
 	cut_overlays()
 
@@ -151,31 +169,25 @@
 	storage = null
 	occupant = null
 
-/obj/machinery/suit_storage_unit/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			if(prob(50))
-				open_machine()
-				dump_contents()
-			qdel(src)
-		if(2)
-			if(prob(50))
-				open_machine()
-				dump_contents()
-				qdel(src)
+/obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		open_machine()
+		dump_contents()
+		new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
 /obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !Adjacent(A) || !isliving(A))
 		return
 	var/mob/living/target = A
 	if(!state_open)
-		user << "<span class='warning'>The unit's doors are shut!</span>"
+		to_chat(user, "<span class='warning'>The unit's doors are shut!</span>")
 		return
 	if(!is_operational())
-		user << "<span class='warning'>The unit is not operational!</span>"
+		to_chat(user, "<span class='warning'>The unit is not operational!</span>")
 		return
 	if(occupant || helmet || suit || storage)
-		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
+		to_chat(user, "<span class='warning'>It's too cluttered inside to fit in!</span>")
 		return
 
 	if(target == user)
@@ -206,7 +218,7 @@
 				occupant.adjustFireLoss(rand(10, 16))
 			if(iscarbon(occupant))
 				occupant.emote("scream")
-		addtimer(src, "cook", 50, FALSE)
+		addtimer(CALLBACK(src, .proc/cook), 50)
 	else
 		uv_cycles = initial(uv_cycles)
 		uv = FALSE
@@ -242,18 +254,17 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		if(electrocute_mob(user, src, src))
+		if(electrocute_mob(user, src, src, 1, TRUE))
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
-/obj/machinery/suit_storage_unit/container_resist()
-	var/mob/living/user = usr
+/obj/machinery/suit_storage_unit/container_resist(mob/living/user)
 	add_fingerprint(user)
 	if(locked)
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
-		addtimer(src, "resist_open", 300, FALSE, user)
+		addtimer(CALLBACK(src, .proc/resist_open, user), 300)
 	else
 		open_machine()
 		dump_contents()
@@ -267,28 +278,28 @@
 	if(state_open && is_operational())
 		if(istype(I, /obj/item/clothing/suit/space))
 			if(suit)
-				user << "<span class='warning'>The unit already contains a suit!.</span>"
+				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")
 				return
 			if(!user.drop_item())
 				return
 			suit = I
 		else if(istype(I, /obj/item/clothing/head/helmet))
 			if(helmet)
-				user << "<span class='warning'>The unit already contains a helmet!</span>"
+				to_chat(user, "<span class='warning'>The unit already contains a helmet!</span>")
 				return
 			if(!user.drop_item())
 				return
 			helmet = I
 		else if(istype(I, /obj/item/clothing/mask))
 			if(mask)
-				user << "<span class='warning'>The unit already contains a mask!</span>"
+				to_chat(user, "<span class='warning'>The unit already contains a mask!</span>")
 				return
 			if(!user.drop_item())
 				return
 			mask = I
 		else
 			if(storage)
-				user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
+				to_chat(user, "<span class='warning'>The auxiliary storage compartment is full!</span>")
 				return
 			if(!user.drop_item())
 				return
@@ -311,7 +322,7 @@
 	return ..()
 
 /obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "suit_storage_unit", name, 400, 305, master_ui, state)
@@ -358,24 +369,19 @@
 				return
 			else
 				if(occupant)
-					occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
+					to_chat(occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>")
 				cook()
 				. = TRUE
 		if("dispense")
 			if(!state_open)
 				return
-			switch(params["item"])
-				if("helmet")
-					helmet.loc = loc
-					helmet = null
-				if("suit")
-					suit.loc = loc
-					suit = null
-				if("mask")
-					mask.loc = loc
-					mask = null
-				if("storage")
-					storage.loc = loc
-					storage = null
+			
+			var/static/list/valid_items = list("helmet", "suit", "mask", "storage")
+			var/item_name = params["item"]
+			if(item_name in valid_items)
+				var/obj/item/I = vars[item_name]
+				vars[item_name] = null
+				if(I)
+					I.forceMove(loc)
 			. = TRUE
 	update_icon()

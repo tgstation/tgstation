@@ -70,11 +70,12 @@ global procs
 		Message treatment or composition of output are not done by this proc, these are handled by the rest of
 		say() and the hearer respectively.
 
-	lang_treat(message, atom/movable/speaker, message_langs, raw_message, spans)
+	lang_treat(message, atom/movable/speaker, message_langs, raw_message, spans, message_mode)
 		Modifies the message by comparing the languages of the speaker with the languages of the hearer.
 		Called on the hearer.
+		Passes message_mode to say_quote.
 
-	say_quote(input, spans)
+	say_quote(input, spans, message_mode)
 		Adds a verb and quotes to a message. Also attaches span classes to a message. Verbs are determined by verb_say/verb_ask/verb_yell variables. Called on the speaker.
 
 	get_spans(input, spans)
@@ -85,7 +86,7 @@ global procs
 	say_dead(message)
 		Sends a message to all dead people. Does not use Hear().
 
-	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 		Composes the message mobs see on their screen when they hear something.
 
 	compose_track_href(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -104,6 +105,10 @@ global procs
 	say(message)
 		The say() of mob_living is significantly more complex than that of objects.
 		Most of the extra code has to do with radios and message treatment.
+
+	send_speech(message, range, source, bubble_type, spans, message_mode)
+		mob/living's send_speech allows mobs one tile outside of the defined range to still hear the message,
+		but starred with the stars() proc.
 
 	check_emote(message)
 		Checks if the message begins with an * and is thus an emote.

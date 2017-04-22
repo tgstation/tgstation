@@ -10,25 +10,28 @@
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
-		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if(C.use(4))
 			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
 		else
-			user << ("<span class='warning'>There's not enough cable to finish the task!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
-			user << ("<span class='warning'>There's not enough material in this stack!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
 			return 0
 		else
 			S.use(5)
@@ -42,25 +45,28 @@
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
-		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if (C.use(4))
 			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
 		else
-			user << ("<span class='warning'>There's not enough cable to finish the task!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
-			user << ("<span class='warning'>There's not enough material in this stack!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
 			return 0
 		else
 			S.use(5)
@@ -90,7 +96,7 @@
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "ripley0"
 	const_holder.density = 1
-	const_holder.overlays.len = 0
+	const_holder.cut_overlays(TRUE)
 	qdel(src)
 	return
 
@@ -475,8 +481,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "gygax11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
@@ -494,8 +499,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "gygax13"
 			else
 				user.visible_message("[user] unfastens the  scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
@@ -558,7 +562,7 @@
 
 /datum/construction/reversible/mecha/gygax/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
 	feedback_inc("mecha_gygax_created",1)
 	return
@@ -1062,8 +1066,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install phasic scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "durand11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
@@ -1081,8 +1084,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "durand13"
 			else
 				user.visible_message("[user] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
@@ -1145,7 +1147,7 @@
 
 /datum/construction/reversible/mecha/durand/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
 	feedback_inc("mecha_durand_created",1)
 	return
@@ -1369,8 +1371,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs phasic scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "phazon11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
@@ -1388,8 +1389,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs super capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "phazon13"
 			else
 				user.visible_message("[user] unfastens the phasic scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
@@ -1479,7 +1479,7 @@
 
 /datum/construction/reversible/mecha/phazon/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
 	feedback_inc("mecha_phazon_created",1)
 	return

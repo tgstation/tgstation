@@ -25,6 +25,7 @@
 	using.icon_state = "swap_1_m"
 	using.screen_loc = ui_swaphand_position(owner,1)
 	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	static_inventory += using
 
 	using = new /obj/screen/inventory()
@@ -33,6 +34,7 @@
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand_position(owner,2)
 	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	static_inventory += using
 
 	zone_select = new /obj/screen/zone_sel()
@@ -44,7 +46,7 @@
 	infodisplay += devilsouldisplay
 
 
-/datum/hud/devil/persistant_inventory_update()
+/datum/hud/devil/persistent_inventory_update()
 	if(!mymob)
 		return
 	var/mob/living/carbon/true_devil/D = mymob

@@ -39,9 +39,9 @@
 	spawn_mecha_type = null
 	search_objects = 2
 
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/New()
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/Initialize()
 	..()
-	wanted_objects = subtypesof(/obj/mecha/combat)
+	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/nanotrasen //nanotrasen are syndies! no it's just a weird path.
 	name = "Nanotrasen Mecha Pilot"
@@ -59,7 +59,7 @@
 	faction = list("nanotrasen")
 
 
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/New()
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/Initialize()
 	..()
 	if(spawn_mecha_type)
 		var/obj/mecha/M = new spawn_mecha_type (get_turf(src))
@@ -101,7 +101,7 @@
 	targets_from = src
 
 	//Find a new mecha
-	wanted_objects = subtypesof(/obj/mecha/combat)
+	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
 	var/search_aggressiveness = 2
 	for(var/obj/mecha/combat/C in range(vision_range,src))
 		if(is_valid_mecha(C))
@@ -122,7 +122,7 @@
 		return 0
 	if(!M.has_charge(required_mecha_charge))
 		return 0
-	if(M.health < (initial(M.health)*0.5))
+	if(M.obj_integrity < M.max_integrity*0.5)
 		return 0
 	return 1
 
@@ -194,7 +194,7 @@
 					target = null
 					return
 
-		target.attack_animal(src)
+		return target.attack_animal(src)
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/handle_automated_action()
@@ -216,7 +216,7 @@
 				return
 
 			//Too Much Damage - Eject
-			if(mecha.health < initial(mecha.health)*0.1)
+			if(mecha.obj_integrity < mecha.max_integrity*0.1)
 				exit_mecha(mecha)
 				return
 
@@ -226,18 +226,18 @@
 					mecha.smoke_action.Activate()
 
 			//Heavy damage - Defence Power or Retreat
-			if(mecha.health < initial(mecha.health)*0.25)
+			if(mecha.obj_integrity < mecha.max_integrity*0.25)
 				if(prob(defence_mode_chance))
 					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defence_mode)
 						mecha.leg_overload_mode = 0
 						mecha.defense_action.Activate(TRUE)
-						addtimer(mecha.defense_action, "Activate", 100, FALSE, FALSE) //10 seconds of defence, then toggle off
+						addtimer(CALLBACK(mecha.defense_action, /datum/action/innate/mecha/mech_defence_mode.proc/Activate, FALSE), 100) //10 seconds of defence, then toggle off
 
 				else if(prob(retreat_chance))
 					//Speed boost if possible
 					if(mecha.overload_action && mecha.overload_action.owner && !mecha.leg_overload_mode)
 						mecha.overload_action.Activate(TRUE)
-						addtimer(mecha.overload_action, "Activate", 100, FALSE, FALSE) //10 seconds of speeeeed, then toggle off
+						addtimer(CALLBACK(mecha.overload_action, /datum/action/innate/mecha/mech_defence_mode.proc/Activate, FALSE), 100) //10 seconds of speeeeed, then toggle off
 
 					retreat_distance = 50
 					spawn(100)

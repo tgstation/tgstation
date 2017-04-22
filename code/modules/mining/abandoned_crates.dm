@@ -4,10 +4,12 @@
 	name = "abandoned crate"
 	desc = "What could be inside?"
 	icon_state = "securecrate"
+	integrity_failure = 0 //no breaking open the crate
 	var/code = null
 	var/lastattempt = null
 	var/attempts = 10
 	var/codelen = 4
+	tamperproof = 90
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
@@ -40,7 +42,7 @@
 				new /obj/item/weapon/ore/diamond(src)
 		if(21 to 25)
 			for(var/i in 1 to 5)
-				new /obj/item/weapon/poster/contraband(src)
+				new /obj/item/weapon/poster/random_contraband(src)
 		if(26 to 30)
 			for(var/i in 1 to 3)
 				new /obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
@@ -54,7 +56,7 @@
 		if(46 to 50)
 			new /obj/item/clothing/under/chameleon(src)
 			for(var/i in 1 to 7)
-				new /obj/item/clothing/tie/horrible(src)
+				new /obj/item/clothing/neck/tie/horrible(src)
 		if(51 to 52) // 2% chance
 			new /obj/item/weapon/melee/classic_baton(src)
 		if(53 to 54)
@@ -71,7 +73,7 @@
 		if(61 to 62)
 			for(var/i in 1 to 5)
 				new /obj/item/clothing/head/kitty(src)
-				new /obj/item/clothing/tie/petcollar(src)
+				new /obj/item/clothing/neck/petcollar(src)
 		if(63 to 64)
 			for(var/i in 1 to rand(4, 7))
 				var/newcoin = pick(/obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/diamond, /obj/item/weapon/coin/plasma, /obj/item/weapon/coin/uranium)
@@ -140,7 +142,7 @@
 			new /obj/item/weapon/hand_tele(src)
 		if(97)
 			new /obj/item/clothing/mask/balaclava
-			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+			new /obj/item/weapon/gun/ballistic/automatic/pistol(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
 		if(98)
 			new /obj/item/weapon/katana/cursed(src)
@@ -152,7 +154,7 @@
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
-		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
+		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text
 		if(user.canUseTopic(src, 1))
 			var/list/sanitised = list()
@@ -164,23 +166,20 @@
 					if(sanitised[i] == sanitised[j])
 						sanitycheck = null //if a digit is repeated, reject the input
 			if (input == code)
-				user << "<span class='notice'>The crate unlocks!</span>"
+				to_chat(user, "<span class='notice'>The crate unlocks!</span>")
 				locked = 0
 				cut_overlays()
 				add_overlay("securecrateg")
 			else if (input == null || sanitycheck == null || length(input) != codelen)
-				user << "<span class='notice'>You leave the crate alone.</span>"
+				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
-				user << "<span class='warning'>A red light flashes.</span>"
+				to_chat(user, "<span class='warning'>A red light flashes.</span>")
 				lastattempt = input
 				attempts--
 				if(attempts == 0)
 					boom(user)
 	else
 		return ..()
-
-/obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
-	boom(user)
 
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.canUseTopic(src))
@@ -193,11 +192,11 @@
 			boom(user)
 			return
 		else if(istype(W, /obj/item/device/multitool))
-			user << "<span class='notice'>DECA-CODE LOCK REPORT:</span>"
+			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if(attempts == 1)
-				user << "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>"
+				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")
 			else
-				user << "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>"
+				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>")
 			if(lastattempt != null)
 				var/list/guess = list()
 				var/list/answer = list()
@@ -214,7 +213,7 @@
 						++bulls
 						--cows
 
-				user << "<span class='notice'>Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
+				to_chat(user, "<span class='notice'>Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>")
 			return
 	return ..()
 
@@ -224,14 +223,5 @@
 	else
 		..()
 
-/obj/structure/closet/crate/secure/loot/burn()
-	SSobj.burning -= src
+/obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
 	boom()
-
-/obj/structure/closet/crate/secure/loot/proc/boom(mob/user)
-	if(user)
-		user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
-	for(var/atom/movable/AM in src)
-		qdel(AM)
-	explosion(get_turf(src), 0, 1, 5, 5)
-	qdel(src)

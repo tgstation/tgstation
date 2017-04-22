@@ -16,19 +16,20 @@
 	switch(stage)
 		if(2)
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a slight shock course through your body.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a slight shock course through your body.</span>")
 			if(prob(2))
 				for(var/obj/M in orange(2,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
 						step_towards(M,affected_mob)
 				for(var/mob/living/silicon/S in orange(2,affected_mob))
-					if(istype(S, /mob/living/silicon/ai)) continue
+					if(isAI(S))
+						continue
 					step_towards(S,affected_mob)
 		if(3)
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a strong shock course through your body.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a strong shock course through your body.</span>")
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel like clowning around.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel like clowning around.</span>")
 			if(prob(4))
 				for(var/obj/M in orange(4,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
@@ -37,16 +38,17 @@
 						for(i=0,i<iter,i++)
 							step_towards(M,affected_mob)
 				for(var/mob/living/silicon/S in orange(4,affected_mob))
-					if(istype(S, /mob/living/silicon/ai)) continue
+					if(isAI(S))
+						continue
 					var/i
 					var/iter = rand(1,2)
 					for(i=0,i<iter,i++)
 						step_towards(S,affected_mob)
 		if(4)
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a powerful shock course through your body.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a powerful shock course through your body.</span>")
 			if(prob(2))
-				affected_mob << "<span class='danger'>You query upon the nature of miracles.</span>"
+				to_chat(affected_mob, "<span class='danger'>You query upon the nature of miracles.</span>")
 			if(prob(8))
 				for(var/obj/M in orange(6,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
@@ -55,7 +57,8 @@
 						for(i=0,i<iter,i++)
 							step_towards(M,affected_mob)
 				for(var/mob/living/silicon/S in orange(6,affected_mob))
-					if(istype(S, /mob/living/silicon/ai)) continue
+					if(isAI(S))
+						continue
 					var/i
 					var/iter = rand(1,3)
 					for(i=0,i<iter,i++)

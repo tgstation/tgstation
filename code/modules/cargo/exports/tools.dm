@@ -105,7 +105,7 @@
 /datum/export/rcd
 	cost = 100 // 15 metal -> 75 credits, +25 credits for production
 	unit_name = "rapid construction device"
-	export_types = list(/obj/item/weapon/rcd)
+	export_types = list(/obj/item/weapon/construction/rcd)
 
 /datum/export/rcd_ammo
 	cost = 15 // 1.5 metal, 1 glass -> 12.5 credits, +2.5 credits

@@ -3,7 +3,7 @@
 	desc = "Used to remotely locate or lockdown exosuits."
 	icon_screen = "mecha"
 	icon_keyboard = "tech_key"
-	req_access = list(access_robotics)
+	req_access = list(GLOB.access_robotics)
 	circuit = /obj/item/weapon/circuitboard/computer/mecha_control
 	var/list/located = list()
 	var/screen = 0
@@ -16,7 +16,10 @@
 	var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
-		for(var/obj/item/mecha_parts/mecha_tracking/TR in world)
+		var/list/trackerlist = list()
+		for(var/obj/mecha/MC in GLOB.mechas_list)
+			trackerlist += MC.trackers
+		for(var/obj/item/mecha_parts/mecha_tracking/TR in trackerlist)
 			var/answer = TR.get_mecha_info()
 			if(answer)
 				dat += {"<hr>[answer]<br/>
@@ -63,21 +66,22 @@
 	desc = "Device used to transmit exosuit data."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "programming=2;magnets=2"
+	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
 		return 0
 	var/obj/mecha/M = src.loc
 	var/cell_charge = M.get_charge()
-	var/answer = {"<b>Name:</b> [M.name]<br>
-						<b>Integrity:</b> [M.health/initial(M.health)*100]%<br>
-						<b>Cell charge:</b> [isnull(cell_charge)?"Not found":"[M.cell.percent()]%"]<br>
-						<b>Airtank:</b> [M.return_pressure()]kPa<br>
-						<b>Pilot:</b> [M.occupant||"None"]<br>
-						<b>Location:</b> [get_area(M)||"Unknown"]<br>
-						<b>Active equipment:</b> [M.selected||"None"]<br>"}
+	var/answer = {"<b>Name:</b> [M.name]
+<b>Integrity:</b> [M.obj_integrity/M.max_integrity*100]%
+<b>Cell charge:</b> [isnull(cell_charge)?"Not found":"[M.cell.percent()]%"]
+<b>Airtank:</b> [M.return_pressure()]kPa
+<b>Pilot:</b> [M.occupant||"None"]
+<b>Location:</b> [get_area(M)||"Unknown"]
+<b>Active equipment:</b> [M.selected||"None"] "}
 	if(istype(M, /obj/mecha/working/ripley))
 		var/obj/mecha/working/ripley/RM = M
 		answer += "<b>Used cargo space:</b> [RM.cargo.len/RM.cargo_capacity*100]%<br>"
@@ -86,11 +90,13 @@
 
 /obj/item/mecha_parts/mecha_tracking/emp_act()
 	qdel(src)
-	return
 
-/obj/item/mecha_parts/mecha_tracking/ex_act()
-	qdel(src)
-	return
+/obj/item/mecha_parts/mecha_tracking/Destroy()
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		if(src in M.trackers)
+			M.trackers -= src
+	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
 	if(istype(src.loc, /obj/mecha))
@@ -104,10 +110,17 @@
 	qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
-	if(!src.in_mecha())
+	if(!istype(loc, /obj/mecha))
 		return 0
 	var/obj/mecha/M = src.loc
 	return M.get_log_html()
+
+
+/obj/item/mecha_parts/mecha_tracking/ai_control
+	name = "exosuit AI control beacon"
+	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
+	origin_tech = "programming=3;magnets=2;engineering=2"
+	ai_beacon = TRUE
 
 
 /obj/item/weapon/storage/box/mechabeacons

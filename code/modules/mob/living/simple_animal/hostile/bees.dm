@@ -30,11 +30,12 @@
 	health = 10
 	faction = list("hostile")
 	move_to_delay = 0
+	obj_damage = 0
 	environment_smash = 0
 	mouse_opacity = 2
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	flying = 1
+	movement_type = FLYING
 	gold_core_spawnable = 1
 	search_objects = 1 //have to find those plant trays!
 
@@ -55,7 +56,7 @@
 	return 1
 
 
-/mob/living/simple_animal/hostile/poison/bees/New()
+/mob/living/simple_animal/hostile/poison/bees/Initialize()
 	..()
 	generate_bee_visuals()
 
@@ -80,7 +81,7 @@
 	..()
 
 	if(!beehome)
-		user << "<span class='warning'>This bee is homeless!</span>"
+		to_chat(user, "<span class='warning'>This bee is homeless!</span>")
 
 
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
@@ -124,7 +125,7 @@
 	if(istype(A, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/Hydro = A
 		if(Hydro.myseed && !Hydro.dead && !Hydro.recent_bee_visit)
-			wanted_objects |= /obj/machinery/hydroponics //so we only hunt them while they're alive/seeded/not visisted
+			wanted_objects |= typecacheof(/obj/machinery/hydroponics) //so we only hunt them while they're alive/seeded/not visisted
 			return 1
 	if(isliving(A))
 		var/mob/living/H = A
@@ -141,13 +142,14 @@
 		var/obj/structure/beebox/BB = target
 		loc = BB
 		target = null
-		wanted_objects -= /obj/structure/beebox //so we don't attack beeboxes when not going home
+		wanted_objects -= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
 	else
-		if(beegent && isliving(target))
+		. = ..()
+		if(. && beegent && isliving(target))
 			var/mob/living/L = target
-			beegent.reaction_mob(L, INJECT)
-			L.reagents.add_reagent(beegent.id, rand(1,5))
-		target.attack_animal(src)
+			if(L.reagents)
+				beegent.reaction_mob(L, INJECT)
+				L.reagents.add_reagent(beegent.id, rand(1,5))
 
 
 /mob/living/simple_animal/hostile/poison/bees/proc/assign_reagent(datum/reagent/R)
@@ -163,7 +165,7 @@
 		return
 
 	target = null //so we pick a new hydro tray next FindTarget(), instead of loving the same plant for eternity
-	wanted_objects -= /obj/machinery/hydroponics //so we only hunt them while they're alive/seeded/not visisted
+	wanted_objects -= typecacheof(/obj/machinery/hydroponics) //so we only hunt them while they're alive/seeded/not visisted
 	Hydro.recent_bee_visit = TRUE
 	spawn(BEE_TRAY_RECENT_VISIT)
 		if(Hydro)
@@ -198,7 +200,7 @@
 			idle = max(0, --idle)
 			if(idle <= BEE_IDLE_GOHOME && prob(BEE_PROB_GOHOME))
 				if(!FindTarget())
-					wanted_objects += /obj/structure/beebox //so we don't attack beeboxes when not going home
+					wanted_objects |= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
 					target = beehome
 	if(!beehome) //add outselves to a beebox (of the same reagent) if we have no home
 		for(var/obj/structure/beebox/BB in view(vision_range, src))
@@ -207,10 +209,10 @@
 			BB.bees |= src
 			beehome = BB
 
-/mob/living/simple_animal/hostile/poison/bees/toxin/New()
+/mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
-	assign_reagent(chemical_reagents_list[initial(R.id)])
+	assign_reagent(GLOB.chemical_reagents_list[initial(R.id)])
 
  /mob/living/simple_animal/hostile/poison/bees/queen
  	name = "queen bee"
@@ -226,11 +228,11 @@
 
 //leave pollination for the peasent bees
 /mob/living/simple_animal/hostile/poison/bees/queen/AttackingTarget()
-	if(beegent && isliving(target))
+	. = ..()
+	if(. && beegent && isliving(target))
 		var/mob/living/L = target
 		beegent.reaction_mob(L, TOUCH)
 		L.reagents.add_reagent(beegent.id, rand(1,5))
-	target.attack_animal(src)
 
 
 //PEASENT BEES
@@ -268,25 +270,25 @@
 				user.put_in_active_hand(qb)
 				user.visible_message("<span class='notice'>[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>","<span class ='warning'>You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>")
 			else
-				user << "<span class='warning'>You don't have enough royal bee jelly to split a bee in two!</span>"
+				to_chat(user, "<span class='warning'>You don't have enough royal bee jelly to split a bee in two!</span>")
 		else
-			var/datum/reagent/R = chemical_reagents_list[S.reagents.get_master_reagent_id()]
+			var/datum/reagent/R = GLOB.chemical_reagents_list[S.reagents.get_master_reagent_id()]
 			if(R && S.reagents.has_reagent(R.id, 5))
 				S.reagents.remove_reagent(R.id,5)
 				queen.assign_reagent(R)
 				user.visible_message("<span class='warning'>[user] injects [src]'s genome with [R.name], mutating it's DNA!</span>","<span class='warning'>You inject [src]'s genome with [R.name], mutating it's DNA!</span>")
 				name = queen.name
 			else
-				user << "<span class='warning'>You don't have enough units of that chemical to modify the bee's DNA!</span>"
+				to_chat(user, "<span class='warning'>You don't have enough units of that chemical to modify the bee's DNA!</span>")
 	..()
 
 
-/obj/item/queen_bee/bought/New()
+/obj/item/queen_bee/bought/Initialize()
 	..()
 	queen = new(src)
 
 
 /obj/item/queen_bee/Destroy()
-	qdel(queen)
+	QDEL_NULL(queen)
 	return ..()
 

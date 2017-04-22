@@ -1,5 +1,5 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-var/global/list/rad_collectors = list()
+
+GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
@@ -8,8 +8,11 @@ var/global/list/rad_collectors = list()
 	icon_state = "ca"
 	anchored = 0
 	density = 1
-	req_access = list(access_engine_equip)
+	req_access = list(GLOB.access_engine_equip)
 //	use_power = 0
+	obj_integrity = 350
+	max_integrity = 350
+	integrity_failure = 80
 	var/obj/item/weapon/tank/internals/plasma/loaded_tank = null
 	var/last_power = 0
 	var/active = 0
@@ -18,10 +21,10 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/New()
 	..()
-	rad_collectors += src
+	GLOB.rad_collectors += src
 
 /obj/machinery/power/rad_collector/Destroy()
-	rad_collectors -= src
+	GLOB.rad_collectors -= src
 	return ..()
 
 /obj/machinery/power/rad_collector/process()
@@ -43,74 +46,73 @@ var/global/list/rad_collectors = list()
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(loaded_tank.air_contents.gases["plasma"][MOLES]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			var/fuel = loaded_tank.air_contents.gases["plasma"]
+			fuel = fuel ? fuel[MOLES] : 0
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
-			user << "<span class='warning'>The controls are locked!</span>"
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 			return
 ..()
 
+/obj/machinery/power/rad_collector/can_be_unfasten_wrench(mob/user, silent)
+	if(loaded_tank)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
+		return FAILED_UNFASTEN
+	return ..()
+
+/obj/machinery/power/rad_collector/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+	. = ..()
+	if(. == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			connect_to_network()
+		else
+			disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
-		user << "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>"
+		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")
 		return 1
 	else if(istype(W, /obj/item/device/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
 	else if(istype(W, /obj/item/weapon/tank/internals/plasma))
 		if(!anchored)
-			user << "<span class='warning'>The [src] needs to be secured to the floor first!</span>"
+			to_chat(user, "<span class='warning'>The [src] needs to be secured to the floor first!</span>")
 			return 1
 		if(loaded_tank)
-			user << "<span class='warning'>There's already a plasma tank loaded!</span>"
+			to_chat(user, "<span class='warning'>There's already a plasma tank loaded!</span>")
 			return 1
 		if(!user.drop_item())
 			return 1
 		loaded_tank = W
-		W.loc = src
+		W.forceMove(src)
 		update_icons()
 	else if(istype(W, /obj/item/weapon/crowbar))
-		if(loaded_tank && !src.locked)
+		if(loaded_tank && !locked)
 			eject()
 			return 1
 	else if(istype(W, /obj/item/weapon/wrench))
-		if(loaded_tank)
-			user << "<span class='warning'>Remove the plasma tank first!</span>"
-			return 1
-		if(!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			anchored = 1
-			user.visible_message("[user.name] secures the [src.name].", \
-				"<span class='notice'>You secure the external bolts.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
-			connect_to_network()
-		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			anchored = 0
-			user.visible_message("[user.name] unsecures the [src.name].", \
-				"<span class='notice'>You unsecure the external bolts.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
-			disconnect_from_network()
+		default_unfasten_wrench(user, W, 0)
+		return 1
 	else if(W.GetID())
 		if(allowed(user))
 			if(active)
 				locked = !locked
-				user << "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>"
+				to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
 			else
-				user << "<span class='warning'>The controls can only be locked when \the [src] is active!</span>"
+				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is active!</span>")
 		else
-			user << "<span class='danger'>Access denied.</span>"
+			to_chat(user, "<span class='danger'>Access denied.</span>")
 			return 1
 	else
 		return ..()
 
 
-/obj/machinery/power/rad_collector/ex_act(severity, target)
-	switch(severity)
-		if(2, 3)
-			eject()
-	return ..()
-
+/obj/machinery/power/rad_collector/obj_break(damage_flag)
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+		eject()
+		stat |= BROKEN
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
@@ -119,6 +121,7 @@ var/global/list/rad_collectors = list()
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
+	Z.plane = initial(Z.plane)
 	src.loaded_tank = null
 	if(active)
 		toggle_power()
@@ -128,7 +131,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/proc/receive_pulse(pulse_strength)
 	if(loaded_tank && active)
 		var/power_produced = loaded_tank.air_contents.gases["plasma"] ? loaded_tank.air_contents.gases["plasma"][MOLES] : 0
-		power_produced *= pulse_strength*20
+		power_produced *= pulse_strength*10
 		add_avail(power_produced)
 		last_power = power_produced
 		return
@@ -155,4 +158,3 @@ var/global/list/rad_collectors = list()
 		flick("ca_deactive", src)
 	update_icons()
 	return
-

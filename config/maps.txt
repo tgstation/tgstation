@@ -5,8 +5,7 @@ Lines not inside map blocks are also ignored
 Duplicated entries use the latter one.
 All whitespace at the start and end of lines is ignored. (including indentation, thats just for show)
 Format:
-#map [map name] (name of .dm file in _maps folder without the .dm part)
-	friendlyname [name] (name shown to players)
+#map [map name] (name of .json file in _maps folder without the .json part)
 	minplayers [number] (0 or less disables this requirement)
 	maxplayers [number] (0 or less disables this requirement)
 	default (The last map with this defined will get all votes of players who have not explicitly voted for a map)
@@ -14,32 +13,26 @@ Format:
 endmap
 
 map tgstation2
-	friendlyname Box Station
 	default
 	#voteweight 1.5
 endmap
 
 map metastation
-	friendlyname Meta Station
 	minplayers 25
 	#voteweight 0.5
 endmap
 
-#map ministation
-	friendlyname Mini Station
-	maxplayers 30
-	voteweight 0
+map pubbystation
 endmap
 
-map birdstation
-	friendlyname Bird Boat Station
+map omegastation
 	maxplayers 35
 endmap
 
-map dreamstation
-	friendlyname Dream Station
+map deltastation
+	minplayers 50
 endmap
 
-map efficiencystation
-	friendlyname Efficiency Station
+map cerestation
+	minplayers 45
 endmap

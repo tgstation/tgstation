@@ -132,6 +132,7 @@
 	blobpwrdisplay.screen_loc = ui_health
 	blobpwrdisplay.mouse_opacity = 0
 	blobpwrdisplay.layer = ABOVE_HUD_LAYER
+	blobpwrdisplay.plane = ABOVE_HUD_PLANE
 	infodisplay += blobpwrdisplay
 
 	healths = new /obj/screen/healths/blob()

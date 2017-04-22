@@ -41,6 +41,11 @@
 	var/static/list/smesImageCache
 
 
+/obj/machinery/power/smes/examine(user)
+	..()
+	if(!terminal)
+		to_chat(user, "<span class='warning'>This SMES has no power terminal!</span>")
+
 /obj/machinery/power/smes/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smes(null)
@@ -48,7 +53,7 @@
 
 	spawn(5)
 		dir_loop:
-			for(var/d in cardinal)
+			for(var/d in GLOB.cardinal)
 				var/turf/T = get_step(src, d)
 				for(var/obj/machinery/power/terminal/term in T)
 					if(term && term.dir == turn(d, 180))
@@ -63,7 +68,7 @@
 	return
 
 /obj/item/weapon/circuitboard/machine/smes
-	name = "circuit board (SMES)"
+	name = "SMES (Machine Board)"
 	build_path = /obj/machinery/power/smes
 	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
@@ -101,10 +106,10 @@
 			if(term && term.dir == turn(dir, 180))
 				terminal = term
 				terminal.master = src
-				user << "<span class='notice'>Terminal found.</span>"
+				to_chat(user, "<span class='notice'>Terminal found.</span>")
 				break
 		if(!terminal)
-			user << "<span class='alert'>No power source found.</span>"
+			to_chat(user, "<span class='alert'>No power terminal found.</span>")
 			return
 		stat &= ~BROKEN
 		update_icon()
@@ -121,35 +126,33 @@
 			return
 
 		if(terminal) //is there already a terminal ?
-			user << "<span class='warning'>This SMES already has a power terminal!</span>"
+			to_chat(user, "<span class='warning'>This SMES already has a power terminal!</span>")
 			return
 
 		if(!panel_open) //is the panel open ?
-			user << "<span class='warning'>You must open the maintenance panel first!</span>"
+			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
 			return
 
 		var/turf/T = get_turf(user)
 		if (T.intact) //is the floor plating removed ?
-			user << "<span class='warning'>You must first remove the floor plating!</span>"
+			to_chat(user, "<span class='warning'>You must first remove the floor plating!</span>")
 			return
 
 
 		var/obj/item/stack/cable_coil/C = I
 		if(C.get_amount() < 10)
-			user << "<span class='warning'>You need more wires!</span>"
+			to_chat(user, "<span class='warning'>You need more wires!</span>")
 			return
 
-		user << "<span class='notice'>You start building the power terminal...</span>"
+		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
 			if(C.get_amount() < 10 || !C)
 				return
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
-			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
+			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
+				do_sparks(5, TRUE, src)
 				return
 
 			C.use(10)
@@ -164,7 +167,7 @@
 
 	//disassembling the terminal
 	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
-		terminal.dismantle(user)
+		terminal.dismantle(user, I)
 		return
 
 	//crowbarring it !
@@ -174,15 +177,24 @@
 		log_game("[src] has been deconstructed by [key_name(user)]")
 		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
 		return
+	else if(panel_open && istype(I, /obj/item/weapon/crowbar))
+		return
 
 	return ..()
 
-/obj/machinery/power/smes/deconstruction()
+/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/weapon/crowbar/C)
+	if(istype(C) && terminal)
+		to_chat(usr, "<span class='warning'>You must first remove the power terminal!</span>")
+		return FALSE
+
+	return ..()
+
+/obj/machinery/power/smes/on_deconstruction()
 	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 		log_game("SMES deleted at ([area.name])")
@@ -197,11 +209,13 @@
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.setDir(get_dir(T,src))
 	terminal.master = src
+	stat &= ~BROKEN
 
 /obj/machinery/power/smes/disconnect_terminal()
 	if(terminal)
 		terminal.master = null
 		terminal = null
+		stat |= BROKEN
 
 
 /obj/machinery/power/smes/update_icon()
@@ -245,10 +259,9 @@
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
-	return round(5.5*charge/capacity)
+	return Clamp(round(5.5*charge/capacity),0,5)
 
 /obj/machinery/power/smes/process()
-
 	if(stat & BROKEN)
 		return
 
@@ -339,7 +352,7 @@
 		terminal.powernet.load += amount
 
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)

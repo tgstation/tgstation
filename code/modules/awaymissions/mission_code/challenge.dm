@@ -1,19 +1,3 @@
-//Challenge Areas
-
-/area/awaymission/challenge/start
-	name = "Where Am I?"
-	icon_state = "away"
-
-/area/awaymission/challenge/main
-	name = "Danger Room"
-	icon_state = "away1"
-	requires_power = 0
-
-/area/awaymission/challenge/end
-	name = "Administration"
-	icon_state = "away2"
-	requires_power = 0
-
 
 /obj/machinery/power/emitter/energycannon
 	name = "Energy Cannon"
@@ -22,6 +6,7 @@
 	icon_state = "emitter"
 	anchored = 1
 	density = 1
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 
 	use_power = 0
 	idle_power_usage = 0

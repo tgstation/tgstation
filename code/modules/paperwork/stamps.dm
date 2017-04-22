@@ -5,7 +5,7 @@
 	icon_state = "stamp-ok"
 	item_state = "stamp"
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=60)
@@ -14,7 +14,7 @@
 	attack_verb = list("stamped")
 
 /obj/item/weapon/stamp/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on \his forehead, then promptly falls over, dead.</span>")
+	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead.</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/stamp/qm
@@ -75,11 +75,14 @@
 /obj/item/weapon/stamp/chameleon
 	actions_types = list(/datum/action/item_action/toggle)
 
-/obj/item/weapon/stamp/chameleon/attack_self(mob/user)
+	var/list/stamp_types
+	var/list/stamp_names
 
-	var/list/stamp_types = typesof(/obj/item/weapon/stamp) - src.type // Get all stamp types except our own
+/obj/item/weapon/stamp/chameleon/Initialize()
+	. = ..()
+	stamp_types = typesof(/obj/item/weapon/stamp) - type // Get all stamp types except our own
 
-	var/list/stamp_names = list()
+	stamp_names = list()
 	// Generate them into a list
 	for(var/i in stamp_types)
 		var/obj/item/weapon/stamp/stamp_type = i
@@ -87,6 +90,15 @@
 
 	stamp_names = sortList(stamp_names)
 
+/obj/item/weapon/stamp/chameleon/emp_act(severity)
+	change_to(pick(stamp_types))
+
+/obj/item/weapon/stamp/chameleon/proc/change_to(obj/item/weapon/stamp/stamp_type)
+	name = initial(stamp_type.name)
+	icon_state = initial(stamp_type.icon_state)
+	item_color = initial(stamp_type.item_color)
+
+/obj/item/weapon/stamp/chameleon/attack_self(mob/user)
 	var/input_stamp = input(user, "Choose a stamp to disguise as.",
 		"Choose a stamp.") as null|anything in stamp_names
 
@@ -96,7 +108,4 @@
 			stamp_type = i
 			if(initial(stamp_type.name) == input_stamp)
 				break
-
-		name = initial(stamp_type.name)
-		icon_state = initial(stamp_type.icon_state)
-		item_color = initial(stamp_type.item_color)
+		change_to(stamp_type)

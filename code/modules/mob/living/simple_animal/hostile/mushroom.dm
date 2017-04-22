@@ -13,6 +13,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"
 	harm_intent_damage = 5
+	obj_damage = 0
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attack_same = 2
@@ -23,7 +24,7 @@
 	stat_attack = 2
 	mouse_opacity = 1
 	speed = 1
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("squeaks")
@@ -38,16 +39,16 @@
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
 	..()
 	if(health >= maxHealth)
-		user << "<span class='info'>It looks healthy.</span>"
+		to_chat(user, "<span class='info'>It looks healthy.</span>")
 	else
-		user << "<span class='info'>It looks like it's been roughed up.</span>"
+		to_chat(user, "<span class='info'>It looks like it's been roughed up.</span>")
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
 		adjustBruteLoss(-2)
 
-/mob/living/simple_animal/hostile/mushroom/New()//Makes every shroom a little unique
+/mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)
@@ -61,10 +62,10 @@
 	health = maxHealth
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/adjustHealth(damage)//Possibility to flee from a fight just to make it more visually interesting
+/mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
-		addtimer(src, "stop_retreat", 30)
+		addtimer(CALLBACK(src, .proc/stop_retreat), 30)
 	. = ..()
 
 /mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
@@ -76,7 +77,7 @@
 		if(faint_ticker < 2)
 			M.visible_message("[M] chews a bit on [src].")
 			faint_ticker++
-			return
+			return TRUE
 		M.visible_message("<span class='warning'>[M] devours [src]!</span>")
 		var/level_gain = (powerlevel - M.powerlevel)
 		if(level_gain >= -1 && !bruised && !M.ckey)//Player shrooms can't level up to become robust gods.
@@ -85,7 +86,8 @@
 			M.LevelUp(level_gain)
 		M.adjustBruteLoss(-M.maxHealth)
 		qdel(src)
-	..()
+		return TRUE
+	return ..()
 
 /mob/living/simple_animal/hostile/mushroom/revive(full_heal = 0, admin_revive = 0)
 	if(..())
@@ -110,7 +112,7 @@
 	revive(full_heal = 1)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
-	addtimer(src, "recovery_recharge", 300)
+	addtimer(CALLBACK(src, .proc/recovery_recharge), 300)
 
 /mob/living/simple_animal/hostile/mushroom/proc/recovery_recharge()
 	recovery_cooldown = 0
@@ -136,7 +138,7 @@
 			Recover()
 			qdel(I)
 		else
-			user << "<span class='warning'>[src] won't eat it!</span>"
+			to_chat(user, "<span class='warning'>[src] won't eat it!</span>")
 		return
 	if(I.force)
 		Bruise()
@@ -144,7 +146,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
 	..()
-	if(M.a_intent == "harm")
+	if(M.a_intent == INTENT_HARM)
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM)

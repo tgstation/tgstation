@@ -124,7 +124,7 @@
 		dat+="---No Materials Loaded---"
 
 
-	user << browse("[dat]", "window=console_processing_unit")
+	user << browse(dat, "window=console_processing_unit")
 
 
 

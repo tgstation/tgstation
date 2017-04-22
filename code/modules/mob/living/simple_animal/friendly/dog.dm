@@ -43,7 +43,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = 2
 
-/mob/living/simple_animal/pet/dog/corgi/New()
+/mob/living/simple_animal/pet/dog/corgi/Initialize()
 	..()
 	regenerate_icons()
 
@@ -70,26 +70,31 @@
 	onclose(user, "mob[real_name]")
 	return
 
-/mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
-	if(inventory_head && inventory_back)
-		//helmet and armor = 100% protection
-		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
-			if( O.force )
-				user << "<span class='warning'>[src] is wearing too much armor! You can't cause \him any damage.</span>"
-				visible_message("<span class='danger'>[user] hits [src] with [O], however [src] is too armored.</span>")
-			else
-				user << "<span class='warning'>[src] is wearing too much armor! You can't reach \his skin.<span>"
-				visible_message("[user] gently taps [src] with [O].")
-			if(health>0 && prob(15))
-				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
-			return
+/mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
+	var/armorval = 0
 
+	if(def_zone)
+		if(def_zone == "head")
+			if(inventory_head)
+				armorval = inventory_head.armor[type]
+		else
+			if(inventory_back)
+				armorval = inventory_back.armor[type]
+		return armorval
+	else
+		if(inventory_head)
+			armorval += inventory_head.armor[type]
+		if(inventory_back)
+			armorval += inventory_back.armor[type]
+	return armorval*0.5
+
+/mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/razor))
 		if (shaved)
-			user << "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>"
+			to_chat(user, "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>")
 			return
 		if (nofur)
-			user << "<span class='warning'> You can't shave this corgi, it doesn't have a fur coat!</span>"
+			to_chat(user, "<span class='warning'> You can't shave this corgi, it doesn't have a fur coat!</span>")
 			return
 		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
@@ -113,7 +118,7 @@
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr)))
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -124,7 +129,7 @@
 					update_corgi_fluff()
 					regenerate_icons()
 				else
-					usr << "<span class='danger'>There is nothing to remove from its [remove_from].</span>"
+					to_chat(usr, "<span class='danger'>There is nothing to remove from its [remove_from].</span>")
 					return
 			if("back")
 				if(inventory_back)
@@ -133,14 +138,14 @@
 					update_corgi_fluff()
 					regenerate_icons()
 				else
-					usr << "<span class='danger'>There is nothing to remove from its [remove_from].</span>"
+					to_chat(usr, "<span class='danger'>There is nothing to remove from its [remove_from].</span>")
 					return
 
 		show_inv(usr)
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr)))
 			return
 
 		var/add_to = href_list["add_inv"]
@@ -151,7 +156,7 @@
 
 			if("back")
 				if(inventory_back)
-					usr << "<span class='warning'>It's already wearing something!</span>"
+					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_held_item()
@@ -161,7 +166,7 @@
 						return
 
 					if(!usr.drop_item())
-						usr << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
+						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
 						return
 
 					if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
@@ -174,7 +179,7 @@
 						allowed = TRUE
 
 					if(!allowed)
-						usr << "<span class='warning'>You set [item_to_add] on [src]'s back, but it falls off!</span>"
+						to_chat(usr, "<span class='warning'>You set [item_to_add] on [src]'s back, but it falls off!</span>")
 						item_to_add.loc = loc
 						if(prob(25))
 							step_rand(item_to_add)
@@ -206,14 +211,14 @@
 
 	if(inventory_head)
 		if(user)
-			user << "<span class='warning'>You can't put more than one hat on [src]!</span>"
+			to_chat(user, "<span class='warning'>You can't put more than one hat on [src]!</span>")
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		return
 
 	if(user && !user.drop_item())
-		user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+		to_chat(user, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>")
 		return 0
 
 	var/valid = FALSE
@@ -224,17 +229,17 @@
 
 	if(valid)
 		if(health <= 0)
-			user << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
+			to_chat(user, "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on [p_them()].</span>")
 		else if(user)
 			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
-				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.</span>",
+				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
 				"<span class='italics'>You hear a friendly-sounding bark.</span>")
 		item_to_add.loc = src
 		src.inventory_head = item_to_add
 		update_corgi_fluff()
 		regenerate_icons()
 	else
-		user << "<span class='warning'>You set [item_to_add] on [src]'s head, but it falls off!</span>"
+		to_chat(user, "<span class='warning'>You set [item_to_add] on [src]'s head, but it falls off!</span>")
 		item_to_add.loc = loc
 		if(prob(25))
 			step_rand(item_to_add)
@@ -254,7 +259,7 @@
 	emote_hear = list("barks!", "woofs!", "yaps.","pants.")
 	emote_see = list("shakes its head.", "chases its tail.","shivers.")
 	desc = initial(desc)
-	SetLuminosity(0)
+	set_light(0)
 
 	if(inventory_head && inventory_head.dog_fashion)
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
@@ -281,26 +286,30 @@
 	var/memory_saved = 0
 	var/saved_head //path
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/New()
+/mob/living/simple_animal/pet/dog/corgi/Ian/Initialize()
+	..()
+	//parent call must happen first to ensure IAN
+	//is not in nullspace when child puppies spawn
 	Read_Memory()
 	if(age == 0)
-		var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(loc)
-		P.name = "Ian"
-		P.real_name = "Ian"
-		P.gender = MALE
-		P.desc = "It's the HoP's beloved corgi puppy."
-		Write_Memory(0)
-		qdel(src)
+		var/turf/target = get_turf(loc)
+		if(target)
+			var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(target)
+			P.name = "Ian"
+			P.real_name = "Ian"
+			P.gender = MALE
+			P.desc = "It's the HoP's beloved corgi puppy."
+			Write_Memory(0)
+			qdel(src)
 	else if(age == record_age)
 		icon_state = "old_corgi"
 		icon_living = "old_corgi"
 		icon_dead = "old_corgi_dead"
 		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
-	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
-	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(0)
 	..()
 
@@ -461,7 +470,7 @@
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "<span class='warning'>You can't fit this on [src]!</span>"
+		to_chat(usr, "<span class='warning'>You can't fit this on [src]!</span>")
 		return
 	..()
 
@@ -501,7 +510,7 @@
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "<span class='danger'>[src] already has a cute bow!</span>"
+		to_chat(usr, "<span class='danger'>[src] already has a cute bow!</span>")
 		return
 	..()
 

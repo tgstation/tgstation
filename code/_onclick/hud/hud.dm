@@ -33,8 +33,6 @@
 	var/obj/screen/throw_icon
 	var/obj/screen/module_store_icon
 
-	var/list/wheels = list() //list of the wheel screen objects
-
 	var/list/static_inventory = list() //the screen objects which are static
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
 	var/list/obj/screen/hotkeybuttons = list() //the buttons that can be used via hotkeys
@@ -42,6 +40,7 @@
 	var/list/screenoverlays = list() //the screen objects used as whole screen overlays (flash, damageoverlay, etc...)
 	var/list/inv_slots[slots_amt] // /obj/screen/inventory objects, ordered by their slot ID.
 	var/list/hand_slots // /obj/screen/inventory/hand objects, assoc list of "[held_index]" = object
+	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
@@ -50,11 +49,22 @@
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
 
-/datum/hud/New(mob/owner)
+	var/ui_style_icon = 'icons/mob/screen_midnight.dmi'
+
+/datum/hud/New(mob/owner , ui_style = 'icons/mob/screen_midnight.dmi')
 	mymob = owner
+
+	ui_style_icon = ui_style
+
 	hide_actions_toggle = new
-	hide_actions_toggle.InitialiseIcon(mymob)
+	hide_actions_toggle.InitialiseIcon(src)
+
 	hand_slots = list()
+
+	for(var/mytype in subtypesof(/obj/screen/plane_master))
+		var/obj/screen/plane_master/instance = new mytype()
+		plane_masters["[instance.plane]"] = instance
+		instance.backdrop(mymob)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -65,8 +75,6 @@
 
 	qdel(module_store_icon)
 	module_store_icon = null
-
-	wheels = null //all wheels are also in static_inventory
 
 	if(static_inventory.len)
 		for(var/thing in static_inventory)
@@ -108,25 +116,31 @@
 	deity_follower_display = null
 	nightvisionicon = null
 
+	if(plane_masters.len)
+		for(var/thing in plane_masters)
+			qdel(plane_masters[thing])
+		plane_masters.Cut()
+
 	if(screenoverlays.len)
 		for(var/thing in screenoverlays)
 			qdel(thing)
 		screenoverlays.Cut()
 	mymob = null
+
 	return ..()
 
 /mob/proc/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud(src)
+		update_sight()
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0,mob/viewmob)
 	if(!ismob(mymob))
 		return 0
-	if(!mymob.client)
-		return 0
-
 	var/mob/screenmob = viewmob || mymob
+	if(!screenmob.client)
+		return 0
 
 	screenmob.client.screen = list()
 
@@ -148,7 +162,7 @@
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
 
-			mymob.client.screen += hide_actions_toggle
+			screenmob.client.screen += hide_actions_toggle
 
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
@@ -184,37 +198,31 @@
 			if(infodisplay.len)
 				screenmob.client.screen -= infodisplay
 
+	for(var/thing in plane_masters)
+		screenmob.client.screen += plane_masters[thing]
+
 	hud_version = display_hud_version
-	persistant_inventory_update(screenmob)
+	persistent_inventory_update(screenmob)
 	mymob.update_action_buttons(1)
 	reorganize_alerts()
 	mymob.reload_fullscreen()
+	update_parallax_pref(screenmob)
 
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	..()
 	hidden_inventory_update(viewmob)
 
-/datum/hud/robot/show_hud(version = 0)
+/datum/hud/robot/show_hud(version = 0, mob/viewmob)
 	..()
 	update_robot_modules_display()
 
 /datum/hud/proc/hidden_inventory_update()
 	return
 
-/datum/hud/proc/persistant_inventory_update(mob/viewer)
+/datum/hud/proc/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
-	var/mob/living/L = mymob
-
-	var/mob/screenmob = viewer || L
-
-	for(var/X in wheels)
-		var/obj/screen/wheel/W = X
-		if(W.toggled)
-			screenmob.client.screen |= W.buttons_list
-		else
-			screenmob.client.screen -= W.buttons_list
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
@@ -223,9 +231,9 @@
 
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset
-		usr << "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>"
+		to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 	else
-		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"
+		to_chat(usr, "<span class ='warning'>This mob type does not use a HUD.</span>")
 
 
 //(re)builds the hand ui slots, throwing away old ones

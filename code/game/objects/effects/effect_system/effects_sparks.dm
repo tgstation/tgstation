@@ -5,30 +5,41 @@
 // will always spawn at the items location.
 /////////////////////////////////////////////
 
+/proc/do_sparks(n, c, source)
+	// n - number of sparks
+	// c - cardinals, bool, do the sparks only move in cardinal directions?
+	// source - source of the sparks.
+
+	var/datum/effect_system/spark_spread/sparks = new
+	sparks.set_up(n, c, source)
+	sparks.start()
+	qdel(sparks)
+
+
 /obj/effect/particle_effect/sparks
 	name = "sparks"
 	icon_state = "sparks"
 	anchored = 1
-	luminosity = 1
+	light_range = 1
 
 /obj/effect/particle_effect/sparks/New()
 	..()
 	flick("sparks", src) // replay the animation
 	playsound(src.loc, "sparks", 100, 1)
-	var/turf/T = src.loc
-	if (istype(T, /turf))
+	var/turf/T = loc
+	if(isturf(T))
 		T.hotspot_expose(1000,100)
 	QDEL_IN(src, 20)
 
 /obj/effect/particle_effect/sparks/Destroy()
-	var/turf/T = src.loc
-	if (istype(T, /turf))
+	var/turf/T = loc
+	if(isturf(T))
 		T.hotspot_expose(1000,100)
 	return ..()
 
 /obj/effect/particle_effect/sparks/Move()
 	..()
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(isturf(T))
 		T.hotspot_expose(1000,100)
 

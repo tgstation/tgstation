@@ -30,8 +30,9 @@
 	hardware_flag = machinery_computer.hardware_flag
 	max_hardware_size = machinery_computer.max_hardware_size
 	steel_sheet_cost = machinery_computer.steel_sheet_cost
-	max_damage = machinery_computer._max_damage
-	broken_damage = machinery_computer._break_damage
+	obj_integrity = machinery_computer.obj_integrity
+	max_integrity = machinery_computer.max_integrity
+	integrity_failure = machinery_computer.integrity_failure
 	base_active_power_usage = machinery_computer.base_active_power_usage
 	base_idle_power_usage = machinery_computer.base_idle_power_usage
 
@@ -62,6 +63,8 @@
 			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_id
 		if(MC_SDD)
 			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_disk
+		if(MC_AI)
+			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_card
 
 /obj/item/device/modular_computer/processor/remove_verb(path)
 	switch(path)
@@ -69,3 +72,5 @@
 			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_id
 		if(MC_SDD)
 			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_disk
+		if(MC_AI)
+			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_card

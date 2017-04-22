@@ -16,7 +16,6 @@
 				if(dir & (EAST|WEST)) //Facing east or west
 					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
-		lying_prev = lying	//so we don't try to animate until there's been another change.
 	if(resize != RESIZE_DEFAULT_SIZE)
 		changed++
 		ntransform.Scale(resize)
@@ -31,13 +30,14 @@
 	var/list/overlays_standing[TOTAL_LAYERS]
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
-	var/image/I = overlays_standing[cache_index]
+	var/I = overlays_standing[cache_index]
 	if(I)
 		add_overlay(I)
 
 /mob/living/carbon/proc/remove_overlay(cache_index)
-	if(overlays_standing[cache_index])
-		overlays -= overlays_standing[cache_index]
+	var/I = overlays_standing[cache_index]
+	if(I)
+		cut_overlay(I)
 		overlays_standing[cache_index] = null
 
 /mob/living/carbon/regenerate_icons()
@@ -89,7 +89,9 @@
 /mob/living/carbon/update_fire(var/fire_icon = "Generic_mob_burning")
 	remove_overlay(FIRE_LAYER)
 	if(on_fire)
-		overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+		var/image/new_fire_overlay = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+		new_fire_overlay.appearance_flags = RESET_COLOR
+		overlays_standing[FIRE_LAYER] = new_fire_overlay
 
 	apply_overlay(FIRE_LAYER)
 
@@ -105,9 +107,9 @@
 		var/obj/item/bodypart/BP = X
 		if(BP.dmg_overlay_type)
 			if(BP.brutestate)
-				standing.overlays	+= "[BP.dmg_overlay_type]_[BP.body_zone]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
+				standing.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_[BP.brutestate]0")	//we're adding icon_states of the base image as overlays
 			if(BP.burnstate)
-				standing.overlays	+= "[BP.dmg_overlay_type]_[BP.body_zone]_0[BP.burnstate]"
+				standing.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_0[BP.burnstate]")
 
 	apply_overlay(DAMAGE_LAYER)
 
@@ -130,6 +132,20 @@
 
 	apply_overlay(FACEMASK_LAYER)
 
+/mob/living/carbon/update_inv_neck()
+	remove_overlay(NECK_LAYER)
+
+	if(client && hud_used && hud_used.inv_slots[slot_neck])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_neck]
+		inv.update_icon()
+
+	if(wear_neck)
+		if(!(head && (head.flags_inv & HIDENECK)))
+			var/image/standing = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
+			overlays_standing[NECK_LAYER] = standing
+		update_hud_neck(wear_neck)
+
+	apply_overlay(NECK_LAYER)
 
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
@@ -187,6 +203,10 @@
 /mob/living/carbon/proc/update_hud_wear_mask(obj/item/I)
 	return
 
+//update whether our neck item appears on our hud.
+/mob/living/carbon/proc/update_hud_neck(obj/item/I)
+	return
+
 //update whether our back item appears on our hud.
 /mob/living/carbon/proc/update_hud_back(obj/item/I)
 	return
@@ -213,8 +233,7 @@
 
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(!BP.no_update)
-			BP.update_limb()
+		BP.update_limb()
 
 	//LOAD ICONS
 	if(limb_icon_cache[icon_render_key])
@@ -250,12 +269,6 @@
 	This cache exists because drawing 6/7 icons for humans constantly is quite a waste
 	See RemieRichards on irc.rizon.net #coderbus
 */
-
-var/global/list/limb_icon_cache = list()
-
-/mob/living/carbon
-	var/icon_render_key = ""
-
 
 //produces a key based on the mob's limbs
 

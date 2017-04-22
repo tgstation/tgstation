@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/space,
 /area/space)
@@ -9,89 +9,28 @@
 /turf/closed/wall,
 /area/shuttle/escape)
 "d" = (
-/obj/structure/fireaxecabinet,
-/turf/closed/wall,
-/area/shuttle/escape)
-"e" = (
 /obj/structure/closet/malf,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"e" = (
+/obj/machinery/status_display,
+/turf/closed/wall,
+/area/shuttle/escape)
 "f" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
+/obj/effect/shuttle_build,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "g" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"h" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"i" = (
-/obj/machinery/computer/emergency_shuttle,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"j" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"k" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"l" = (
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"m" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"n" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"o" = (
+"h" = (
 /obj/docking_port/mobile/emergency{
 	name = "Shuttle Under Construction";
 	timid = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"p" = (
+"i" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 4;
@@ -99,20 +38,38 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"q" = (
+"j" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"r" = (
+"k" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"s" = (
-/obj/machinery/status_display,
-/turf/closed/wall,
+"l" = (
+/obj/structure/closet/malf,
+/obj/machinery/light/built{
+	tag = "icon-tube1 (WEST)";
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"m" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 4;
+	name = "4maintenance loot spawner"
+	},
+/obj/machinery/light/built{
+	tag = "icon-tube1 (EAST)";
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -123,9 +80,9 @@ a
 a
 a
 b
-l
+g
 b
-o
+h
 b
 b
 b
@@ -143,8 +100,8 @@ a
 a
 b
 c
-s
-c
+e
+b
 b
 b
 b
@@ -166,100 +123,8 @@ a
 (3,1,1) = {"
 b
 b
-e
-e
-e
-b
-b
-m
-m
-m
-m
-m
-b
-b
-b
-b
-b
-b
-b
-b
-q
-r
-"}
-(4,1,1) = {"
-c
-b
-b
-b
-b
-b
-b
-n
-n
-n
-n
-n
-b
-b
-b
-b
-b
-b
-b
-b
-q
-r
-"}
-(5,1,1) = {"
-c
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-q
-r
-"}
-(6,1,1) = {"
-c
-b
-b
-b
-b
-b
-b
-m
-m
-m
-m
-m
-b
-b
-b
-b
-b
-b
-b
-b
-q
-r
-"}
-(7,1,1) = {"
+d
+l
 d
 b
 b
@@ -267,11 +132,6 @@ b
 b
 b
 b
-n
-n
-n
-n
-n
 b
 b
 b
@@ -280,15 +140,107 @@ b
 b
 b
 b
-q
-r
+b
+j
+k
 "}
-(8,1,1) = {"
-c
+(4,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+k
+"}
+(5,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+k
+"}
+(6,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+k
+"}
+(7,1,1) = {"
+b
+b
 b
 f
-h
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 j
+k
+"}
+(8,1,1) = {"
 b
 b
 b
@@ -304,51 +256,56 @@ b
 b
 b
 b
-q
-r
+b
+b
+b
+b
+b
+j
+k
 "}
 (9,1,1) = {"
-c
 b
-g
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 i
+m
+i
+b
+b
+j
 k
-b
-b
-m
-m
-m
-m
-m
-b
-b
-b
-p
-p
-p
-b
-b
-q
-r
 "}
 (10,1,1) = {"
 a
 b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 c
-c
-c
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-c
-s
+e
 c
 b
 c

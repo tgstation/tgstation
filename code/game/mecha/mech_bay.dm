@@ -31,7 +31,7 @@
 	recharging_turf = get_step(loc, dir)
 
 /obj/item/weapon/circuitboard/machine/mech_recharger
-	name = "circuit board (Mechbay Recharger)"
+	name = "Mechbay Recharger (Machine Board)"
 	build_path = /obj/machinery/mech_bay_recharge_port
 	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
@@ -85,6 +85,7 @@
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/weapon/circuitboard/computer/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
+	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)
 	return interact(user)
@@ -94,7 +95,7 @@
 		return
 	interact(user)
 
-/obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "mech_bay_power_console", "Mech Bay Power Control Console", 400, 170, master_ui, state)
@@ -111,11 +112,11 @@
 
 /obj/machinery/computer/mech_bay_power_console/ui_data(mob/user)
 	var/list/data = list()
-	if(recharge_port && !qdeleted(recharge_port))
+	if(recharge_port && !QDELETED(recharge_port))
 		data["recharge_port"] = list("mech" = null)
-		if(recharge_port.recharging_mech && !qdeleted(recharge_port.recharging_mech))
-			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.health, "maxhealth" = initial(recharge_port.recharging_mech.health), "cell" = null)
-			if(recharge_port.recharging_mech.cell && !qdeleted(recharge_port.recharging_mech.cell))
+		if(recharge_port.recharging_mech && !QDELETED(recharge_port.recharging_mech))
+			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.obj_integrity, "max_integrity" = recharge_port.recharging_mech.max_integrity, "cell" = null)
+			if(recharge_port.recharging_mech.cell && !QDELETED(recharge_port.recharging_mech.cell))
 				data["recharge_port"]["mech"]["cell"] = list(
 				"critfail" = recharge_port.recharging_mech.cell.crit_fail,
 				"charge" = recharge_port.recharging_mech.cell.charge,
@@ -129,7 +130,7 @@
 		return
 	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1)
 	if(!recharge_port )
-		for(var/D in cardinal)
+		for(var/D in GLOB.cardinal)
 			var/turf/A = get_step(src, D)
 			A = get_step(A, D)
 			recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in A
@@ -147,5 +148,6 @@
 		return
 	add_overlay("recharge_comp_on")
 
-/obj/machinery/computer/mech_bay_power_console/initialize()
+/obj/machinery/computer/mech_bay_power_console/Initialize()
+	..()
 	reconnect()

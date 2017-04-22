@@ -4,7 +4,7 @@
 	power_usage = 25
 	icon_state = "harddisk_mini"
 	critical = 1
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "programming=1;engineering=1"
 	device_type = MC_HDD
 	var/max_capacity = 128
@@ -21,13 +21,13 @@
 
 /obj/item/weapon/computer_hardware/hard_drive/examine(user)
 	..()
-	user << "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>"
+	to_chat(user, "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>")
 
 /obj/item/weapon/computer_hardware/hard_drive/diagnostics(var/mob/user)
 	..()
 	// 999 is a byond limit that is in place. It's unlikely someone will reach that many files anyway, since you would sooner run out of space.
-	user << "NT-NFS File Table Status: [stored_files.len]/999"
-	user << "Storage capacity: [used_capacity]/[max_capacity]GQ"
+	to_chat(user, "NT-NFS File Table Status: [stored_files.len]/999")
+	to_chat(user, "Storage capacity: [used_capacity]/[max_capacity]GQ")
 
 // Use this proc to add file to the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
 /obj/item/weapon/computer_hardware/hard_drive/proc/store_file(var/datum/computer_file/F)
@@ -133,7 +133,7 @@
 	origin_tech = "programming=2;engineering=2"
 	power_usage = 50 					// Hybrid, medium capacity and medium power storage
 	icon_state = "harddisk_mini"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/computer_hardware/hard_drive/super
 	name = "super hard disk drive"
@@ -142,7 +142,7 @@
 	origin_tech = "programming=3;engineering=3"
 	power_usage = 100					// High-capacity but uses lots of power, shortening battery life. Best used with APC link.
 	icon_state = "harddisk_mini"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/computer_hardware/hard_drive/cluster
 	name = "cluster hard disk drive"
@@ -151,7 +151,7 @@
 	origin_tech = "programming=4;engineering=4"
 	max_capacity = 2048
 	icon_state = "harddisk"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 // For tablets, etc. - highly power efficient.
 /obj/item/weapon/computer_hardware/hard_drive/small
@@ -161,7 +161,7 @@
 	origin_tech = "programming=2;engineering=2"
 	max_capacity = 64
 	icon_state = "ssd_mini"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/computer_hardware/hard_drive/micro
 	name = "micro solid state drive"
@@ -170,4 +170,4 @@
 	origin_tech = "programming=1;engineering=1"
 	max_capacity = 32
 	icon_state = "ssd_micro"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY

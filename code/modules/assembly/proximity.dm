@@ -10,8 +10,6 @@
 	var/timing = 0
 	var/time = 10
 	var/sensitivity = 1
-	var/atom/oldloc
-	var/list/turfs_around = list()
 
 /obj/item/device/assembly/prox_sensor/proc/toggle_scan()
 
@@ -19,21 +17,14 @@
 /obj/item/device/assembly/prox_sensor/proc/sense()
 
 
-/obj/item/device/assembly/prox_sensor/New()
-	..()
-	START_PROCESSING(SSobj, src)
-	oldloc = loc
+/obj/item/device/assembly/prox_sensor/Initialize()
+	. = ..()
+	proximity_monitor = new(src, 0)
 
 /obj/item/device/assembly/prox_sensor/describe()
 	if(timing)
 		return "<span class='notice'>The proximity sensor is arming.</span>"
 	return "The proximity sensor is [scanning?"armed":"disarmed"]."
-
-/obj/item/device/assembly/prox_sensor/on_attach(datum/wires/w)
-	handle_move(w.holder)
-
-/obj/item/device/assembly/prox_sensor/on_detach(datum/wires/w)
-	handle_move(w.holder.loc)
 
 /obj/item/device/assembly/prox_sensor/activate()
 	if(!..())
@@ -42,12 +33,15 @@
 	update_icon()
 	return 1
 
-
 /obj/item/device/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(!secured)
-		scanning = 0
+		if(scanning)
+			toggle_scan()
+			proximity_monitor.host = src
 		timing = 0
+	else
+		proximity_monitor.host = loc
 	update_icon()
 	return secured
 
@@ -59,12 +53,11 @@
 
 
 /obj/item/device/assembly/prox_sensor/sense()
-	if((!secured)||(cooldown > 0))
+	if(!secured || next_activate > world.time)
 		return 0
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
-	cooldown = 2
-	addtimer(src, "process_cooldown", 10)
+	next_activate = world.time + 30
 
 
 /obj/item/device/assembly/prox_sensor/process()
@@ -74,30 +67,19 @@
 			timing = 0
 			toggle_scan(1)
 			time = initial(time)
-	handle_move(get_turf(loc))
-
-/obj/item/device/assembly/prox_sensor/dropped()
-	..()
-	if(scanning)
-		addtimer(src, "sense", 0)
-
 
 /obj/item/device/assembly/prox_sensor/toggle_scan(scan)
 	if(!secured)
 		return 0
 	scanning = scan
-	if(scanning)
-		add_to_proximity_list(src, sensitivity)
-	else
-		remove_from_proximity_list(src, sensitivity)
-	oldloc = get_turf(loc)
+	proximity_monitor.SetRange(scanning ? sensitivity : 0)
 	update_icon()
 
 /obj/item/device/assembly/prox_sensor/proc/sensitivity_change(value)
 	var/sense = min(max(sensitivity + value, 0), 5)
-	if(scanning)
-		shift_proximity(src, oldloc, sensitivity, loc, sense)
 	sensitivity = sense
+	if(scanning && proximity_monitor.SetRange(sense))
+		sense()
 
 /obj/item/device/assembly/prox_sensor/update_icon()
 	cut_overlays()
@@ -111,17 +93,6 @@
 	if(holder)
 		holder.update_icon()
 	return
-
-/obj/item/device/assembly/prox_sensor/proc/handle_move(atom/newloc)
-	if(scanning)
-		if(shift_proximity(src, oldloc, sensitivity, newloc, sensitivity))
-			sense()
-			oldloc = newloc
-
-/obj/item/device/assembly/prox_sensor/Move(newloc)
-	..()
-	handle_move(newloc)
-
 
 /obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
 	if(is_secured(user))

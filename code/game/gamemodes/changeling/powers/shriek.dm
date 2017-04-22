@@ -10,12 +10,13 @@
 /obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
-			if(!M.mind || !M.mind.changeling)
-				M.adjustEarDamage(0,30)
-				M.confused += 25
-				M.Jitter(50)
+			var/mob/living/carbon/C = M
+			if(!C.mind || !C.mind.changeling)
+				C.adjustEarDamage(0, 30)
+				C.confused += 25
+				C.Jitter(50)
 			else
-				M << sound('sound/effects/screech.ogg')
+				C << sound('sound/effects/screech.ogg')
 
 		if(issilicon(M))
 			M << sound('sound/weapons/flash.ogg')
@@ -23,10 +24,8 @@
 
 	for(var/obj/machinery/light/L in range(4, user))
 		L.on = 1
-		L.broken()
-
-	feedback_add_details("changeling_powers","RS")
-	return 1
+		L.break_light_tube()
+	return TRUE
 
 /obj/effect/proc_holder/changeling/dissonant_shriek
 	name = "Dissonant Shriek"
@@ -38,8 +37,6 @@
 /obj/effect/proc_holder/changeling/dissonant_shriek/sting_action(mob/user)
 	for(var/obj/machinery/light/L in range(5, usr))
 		L.on = 1
-		L.broken()
+		L.break_light_tube()
 	empulse(get_turf(user), 2, 5, 1)
-	return 1
-
-
+	return TRUE

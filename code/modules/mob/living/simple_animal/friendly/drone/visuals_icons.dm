@@ -7,14 +7,15 @@
 
 
 /mob/living/simple_animal/drone/proc/apply_overlay(cache_index)
-	var/image/I = drone_overlays[cache_index]
+	var/I = drone_overlays[cache_index]
 	if(I)
 		add_overlay(I)
 
 
 /mob/living/simple_animal/drone/proc/remove_overlay(cache_index)
-	if(drone_overlays[cache_index])
-		overlays -= drone_overlays[cache_index]
+	var/I = drone_overlays[cache_index]
+	if(I)
+		cut_overlay(I)
 		drone_overlays[cache_index] = null
 
 
@@ -41,6 +42,7 @@
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = ABOVE_HUD_LAYER
+			r_hand.plane = ABOVE_HUD_PLANE
 			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
 
@@ -58,6 +60,7 @@
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = ABOVE_HUD_LAYER
+			l_hand.plane = ABOVE_HUD_PLANE
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
 
@@ -107,7 +110,7 @@
 	switch(appearence)
 		if("Maintenance Drone")
 			visualAppearence = MAINTDRONE
-			var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
+			colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
 			icon_state = "[visualAppearence]_[colour]"
 			icon_living = "[visualAppearence]_[colour]"
 			icon_dead = "[visualAppearence]_dead"
@@ -148,7 +151,7 @@
 	staticOverlays.len = 0
 
 	if(seeStatic)
-		for(var/mob/living/L in mob_list)
+		for(var/mob/living/L in GLOB.mob_list)
 			if(isdrone(L))
 				continue
 			var/image/chosen

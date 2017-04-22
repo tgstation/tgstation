@@ -7,7 +7,7 @@
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
 
 	if(!has_active_hand()) //can't attack without a hand.
-		src << "<span class='notice'>You look at your arm and sigh.</span>"
+		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
 		return
 
 	// Special glove functions:
@@ -20,7 +20,7 @@
 	var/override = 0
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(src, A)
+		override += HM.on_attack_hand(src, A, proximity)
 
 	if(override)
 		return
@@ -82,27 +82,28 @@
 /mob/living/carbon/monkey/RestrainedClickOn(atom/A)
 	if(..())
 		return
-	if(a_intent != "harm" || !ismob(A))
+	if(a_intent != INTENT_HARM || !ismob(A))
 		return
 	if(is_muzzled())
 		return
 	var/mob/living/carbon/ML = A
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/obj/item/bodypart/affecting = null
-	if(ishuman(ML))
-		var/mob/living/carbon/human/H = ML
-		affecting = H.get_bodypart(ran_zone(dam_zone))
-	var/armor = ML.run_armor_check(affecting, "melee")
-	if(prob(75))
-		ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
-		ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
-						"<span class='userdanger'>[name] bites [ML]!</span>")
-		if(armor >= 2)
-			return
-		for(var/datum/disease/D in viruses)
-			ML.ForceContractDisease(D)
-	else
-		ML.visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")
+	if(istype(ML))
+		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/obj/item/bodypart/affecting = null
+		if(ishuman(ML))
+			var/mob/living/carbon/human/H = ML
+			affecting = H.get_bodypart(ran_zone(dam_zone))
+		var/armor = ML.run_armor_check(affecting, "melee")
+		if(prob(75))
+			ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
+			ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
+							"<span class='userdanger'>[name] bites [ML]!</span>")
+			if(armor >= 2)
+				return
+			for(var/datum/disease/D in viruses)
+				ML.ForceContractDisease(D)
+		else
+			ML.visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")
 
 /*
 	Aliens
@@ -200,5 +201,5 @@
 	New Players:
 	Have no reason to click on anything at all.
 */
-/mob/new_player/ClickOn()
+/mob/dead/new_player/ClickOn()
 	return

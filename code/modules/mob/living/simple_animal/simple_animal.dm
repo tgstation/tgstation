@@ -57,12 +57,11 @@
 
 	//Hot simple_animal baby making vars
 	var/list/childtype = null
-	var/scan_ready = 1
+	var/next_scan_time = 0
 	var/animal_species //Sorry, no spider+corgi buttbabies.
 
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
-	var/flying = 0 //whether it's flying or touching the ground.
 	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
 	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
@@ -83,11 +82,13 @@
 	var/dextrous_hud_type = /datum/hud/dextrous
 	var/datum/personal_crafting/handcrafting
 
+	//domestication
+	var/tame = 0
 
-/mob/living/simple_animal/New()
+/mob/living/simple_animal/Initialize()
 	..()
+	GLOB.simple_animals += src
 	handcrafting = new()
-	verbs -= /mob/verb/observe
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
 	if(!real_name)
@@ -95,23 +96,14 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 
+	// goats bray, cows go moo, and the fox says Geckers
+	grant_language(/datum/language/common)
+
 /mob/living/simple_animal/Login()
 	if(src && src.client)
 		src.client.screen = list()
 		client.screen += client.void
 	..()
-
-/mob/living/simple_animal/Life()
-	if(..()) //alive
-		if(!ckey)
-			if(stat != DEAD)
-				handle_automated_movement()
-			if(stat != DEAD)
-				handle_automated_action()
-			if(stat != DEAD)
-				handle_automated_speech()
-		if(stat != DEAD)
-			return 1
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -142,7 +134,7 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(cardinal)
+					var/anydir = pick(GLOB.cardinal)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
@@ -164,9 +156,9 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote("me", 1, pick(emote_see))
+							emote("me [pick(emote_see)]", 1)
 						else
-							emote("me", 2, pick(emote_hear))
+							emote("me [pick(emote_hear)]", 2)
 				else
 					say(pick(speak))
 			else
@@ -183,66 +175,69 @@
 						emote("me", 2, pick(emote_hear))
 
 
-/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
-	var/atmos_suitable = 1
+/mob/living/simple_animal/proc/environment_is_safe(datum/gas_mixture/environment, check_temp = FALSE)
+	. = TRUE
 
 	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
-		atmos_suitable = 0 //getting choked
+		. = FALSE //getting choked
 
+	if(isturf(src.loc) && isopenturf(src.loc))
+		var/turf/open/ST = src.loc
+		if(ST.air)
+			var/ST_gases = ST.air.gases
+			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
+
+			var/tox = ST_gases["plasma"][MOLES]
+			var/oxy = ST_gases["o2"][MOLES]
+			var/n2  = ST_gases["n2"][MOLES]
+			var/co2 = ST_gases["co2"][MOLES]
+
+			ST.air.garbage_collect()
+
+			if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
+				. = FALSE
+			else if(atmos_requirements["max_oxy"] && oxy > atmos_requirements["max_oxy"])
+				. = FALSE
+			else if(atmos_requirements["min_tox"] && tox < atmos_requirements["min_tox"])
+				. = FALSE
+			else if(atmos_requirements["max_tox"] && tox > atmos_requirements["max_tox"])
+				. = FALSE
+			else if(atmos_requirements["min_n2"] && n2 < atmos_requirements["min_n2"])
+				. = FALSE
+			else if(atmos_requirements["max_n2"] && n2 > atmos_requirements["max_n2"])
+				. = FALSE
+			else if(atmos_requirements["min_co2"] && co2 < atmos_requirements["min_co2"])
+				. = FALSE
+			else if(atmos_requirements["max_co2"] && co2 > atmos_requirements["max_co2"])
+				. = FALSE
+		else
+			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
+				. = FALSE
+
+	if(check_temp)
+		var/areatemp = get_temperature(environment)
+		if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
+			. = FALSE
+
+
+/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
 	var/atom/A = src.loc
 	if(isturf(A))
-		var/turf/T = A
 		var/areatemp = get_temperature(environment)
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
+			//to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
-		if(istype(T,/turf/open))
-			var/turf/open/ST = T
-			if(ST.air)
-				var/ST_gases = ST.air.gases
-				ST.air.assert_gases(arglist(hardcoded_gases))
-
-				var/tox = ST_gases["plasma"][MOLES]
-				var/oxy = ST_gases["o2"][MOLES]
-				var/n2  = ST_gases["n2"][MOLES]
-				var/co2 = ST_gases["co2"][MOLES]
-
-				ST.air.garbage_collect()
-
-				if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
-					atmos_suitable = 0
-				else if(atmos_requirements["max_oxy"] && oxy > atmos_requirements["max_oxy"])
-					atmos_suitable = 0
-				else if(atmos_requirements["min_tox"] && tox < atmos_requirements["min_tox"])
-					atmos_suitable = 0
-				else if(atmos_requirements["max_tox"] && tox > atmos_requirements["max_tox"])
-					atmos_suitable = 0
-				else if(atmos_requirements["min_n2"] && n2 < atmos_requirements["min_n2"])
-					atmos_suitable = 0
-				else if(atmos_requirements["max_n2"] && n2 > atmos_requirements["max_n2"])
-					atmos_suitable = 0
-				else if(atmos_requirements["min_co2"] && co2 < atmos_requirements["min_co2"])
-					atmos_suitable = 0
-				else if(atmos_requirements["max_co2"] && co2 > atmos_requirements["max_co2"])
-					atmos_suitable = 0
-
-				if(!atmos_suitable)
-					adjustBruteLoss(unsuitable_atmos_damage)
-
-		else
-			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
-				adjustBruteLoss(unsuitable_atmos_damage)
+	if(!environment_is_safe(environment))
+		adjustHealth(unsuitable_atmos_damage)
 
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
-	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(2)
-	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(3)
+	if((bodytemperature < minbodytemp) || (bodytemperature > maxbodytemp))
+		adjustHealth(unsuitable_atmos_damage)
 
 /mob/living/simple_animal/gib()
 	if(butcher_results)
@@ -255,12 +250,9 @@
 	if(icon_gib)
 		new /obj/effect/overlay/temp/gib_animation/animal(loc, icon_gib)
 
-/mob/living/simple_animal/say_quote(input)
-	var/ending = copytext(input, length(input))
-	if(speak_emote && speak_emote.len && ending != "?" && ending != "!")
-		var/emote = pick(speak_emote)
-		if(emote)
-			return "[emote], \"[input]\""
+/mob/living/simple_animal/say_quote(input, list/spans)
+	if(speak_emote && speak_emote.len)
+		verb_say = pick(speak_emote)
 	return ..()
 
 /mob/living/simple_animal/emote(act, m_type=1, message = null)
@@ -298,25 +290,20 @@
 	if(!gibbed)
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
-		if(deathmessage)
-			visible_message("<span class='danger'>\The [src] [deathmessage]</span>")
-		else if(!del_on_death)
-			visible_message("<span class='danger'>\The [src] stops moving...</span>")
+		if(deathmessage || !del_on_death)
+			emote("deathgasp")
 	if(del_on_death)
-		ghostize()
-		stat = DEAD
+		..()
 		//Prevent infinite loops if the mob Destroy() is overriden in such
 		//a manner as to cause a call to death() again
 		del_on_death = FALSE
 		qdel(src)
-		return
 	else
 		health = 0
 		icon_state = icon_dead
-		stat = DEAD
 		density = 0
 		lying = 1
-	..()
+		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -348,16 +335,10 @@
 		lying = 0
 		. = 1
 
-/mob/living/simple_animal/fully_heal(admin_revive = 0)
-	health = maxHealth
-	..()
-
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || !scan_ready || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
-		return 0
-	scan_ready = 0
-	spawn(400)
-		scan_ready = 1
+	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || SSticker.current_state != GAME_STATE_PLAYING)
+		return
+	next_scan_time = world.time + 400
 	var/alone = 1
 	var/mob/living/simple_animal/partner
 	var/children = 0
@@ -372,14 +353,14 @@
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
 
-		else if(istype(M, /mob/living) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
-			alone = 0
-			continue
+		else if(isliving(M) && !faction_check_mob(M)) //shyness check. we're not shy in front of things that share a faction with us.
+			return //we never mate when not alone, so just abort early
+
 	if(alone && partner && children < 3)
 		var/childspawn = pickweight(childtype)
-		new childspawn(loc)
-		return 1
-	return 0
+		var/turf/target = get_turf(loc)
+		if(target)
+			return new childspawn(target)
 
 /mob/living/simple_animal/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
 	if(incapacitated())
@@ -388,7 +369,7 @@
 		if(be_close && !in_range(M, src))
 			return 0
 	else
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	return 1
 
@@ -434,6 +415,7 @@
 	if(nest)
 		nest.spawned_mobs -= src
 	nest = null
+	GLOB.simple_animals -= src
 	return ..()
 
 
@@ -457,6 +439,7 @@
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
+	sync_lighting_plane_alpha()
 
 /mob/living/simple_animal/get_idcard()
 	return access_card
@@ -497,7 +480,7 @@
 		if(istype(held_item, /obj/item/weapon/twohanded))
 			var/obj/item/weapon/twohanded/T = held_item
 			if(T.wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [T.name].</span>")
 				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
@@ -520,10 +503,43 @@
 		var/obj/item/r_hand = get_item_for_held_index(2)
 		if(r_hand)
 			r_hand.layer = ABOVE_HUD_LAYER
+			r_hand.plane = ABOVE_HUD_PLANE
 			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
 		if(l_hand)
 			l_hand.layer = ABOVE_HUD_LAYER
+			l_hand.plane = ABOVE_HUD_PLANE
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
 
+//ANIMAL RIDING
+/mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
+	if(riding_datum)
+		riding_datum.restore_position(buckled_mob)
+	. = ..()
+
+
+/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+	if(riding_datum)
+		if(user.incapacitated())
+			return
+		for(var/atom/movable/A in get_turf(src))
+			if(A != src && A != M && A.density)
+				return
+		M.loc = get_turf(src)
+		riding_datum.handle_vehicle_offsets()
+		riding_datum.ridden = src
+
+/mob/living/simple_animal/relaymove(mob/user, direction)
+	if(tame && riding_datum)
+		riding_datum.handle_ride(user, direction)
+
+/mob/living/simple_animal/Moved()
+	. = ..()
+	if(riding_datum)
+		riding_datum.on_vehicle_move()
+
+
+/mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
+	. = ..()
+	riding_datum = new/datum/riding/animal

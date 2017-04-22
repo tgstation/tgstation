@@ -42,15 +42,12 @@
 
 
 /obj/item/device/assembly/timer/proc/timer_end()
-	if((!secured)||(cooldown > 0))
-		return 0
+	if(!secured || next_activate > world.time)
+		return FALSE
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
-	cooldown = 2
-	spawn(10)
-		process_cooldown()
-		if(loop)
-			timing = 1
+	if(loop)
+		timing = 1
 	update_icon()
 
 
@@ -98,7 +95,7 @@
 		if(timing && istype(holder, /obj/item/device/transfer_valve))
 			var/timer_message = "[key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated [src] attachment on [holder]."
 			message_admins(timer_message)
-			bombers += timer_message
+			GLOB.bombers += timer_message
 			log_game("[key_name(usr)] activated [src] attachment for [loc]")
 		update_icon()
 	if(href_list["repeat"])

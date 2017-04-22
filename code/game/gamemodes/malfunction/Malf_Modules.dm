@@ -9,16 +9,16 @@
 
 	var/power_type
 
-/datum/AI_Module/large/
+/datum/AI_Module/large
 	uses = 1
 
-/datum/AI_Module/small/
+/datum/AI_Module/small
 	uses = 5
 
 /datum/AI_Module/large/nuke_station
 	module_name = "Doomsday Device"
 	mod_pick_name = "nukestation"
-	description = "Activate a weapon that will disintegrate all organic life on the station after a 450 second delay."
+	description = "Activate a weapon that will disintegrate all organic life on the station after a 450 second delay. Can only be used while on the station, will fail if your core is moved off station or destroyed."
 	cost = 130
 	one_time = 1
 
@@ -28,11 +28,13 @@
 	set category = "Malfunction"
 	set name = "Doomsday Device"
 
-	for(var/N in nuke_tiles)
-		var/turf/T = N
-		T.icon_state = "rcircuitanim" //This causes all blue "circuit" tiles on the map to change to animated red icon state.
+	var/turf/T = get_turf(src)
 
-	src << "<span class='notice'>Nuclear device armed.</span>"
+	if(!istype(T) || T.z != ZLEVEL_STATION)
+		to_chat(src, "<span class='warning'>You cannot activate the doomsday device while off-station!</span>")
+		return
+
+	to_chat(src, "<span class='notice'>Doomsday device armed.</span>")
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
 	set_security_level("delta")
 	nuking = 1
@@ -40,7 +42,7 @@
 	doomsday_device = DOOM
 	doomsday_device.start()
 	verbs -= /mob/living/silicon/ai/proc/nuke_station
-	for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+	for(var/obj/item/weapon/pinpointer/P in GLOB.pinpointer_list)
 		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 
 /obj/machinery/doomsday_device
@@ -67,6 +69,11 @@
 		countdown = null
 	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
+	SSmapping.remove_nuke_threat(src)
+	for(var/A in GLOB.ai_list)
+		var/mob/living/silicon/ai/Mlf = A
+		if(Mlf.doomsday_device == src)
+			Mlf.doomsday_device = null
 	. = ..()
 
 /obj/machinery/doomsday_device/proc/start()
@@ -75,9 +82,10 @@
 	countdown.start()
 	START_PROCESSING(SSfastprocess, src)
 	SSshuttle.registerHostileEnvironment(src)
+	SSmapping.add_nuke_threat(src) //This causes all blue "circuit" tiles on the map to change to animated red icon state.
 
 /obj/machinery/doomsday_device/proc/seconds_remaining()
-	. = max(0, (round(detonation_timer - world.time) / 10))
+	. = max(0, (round((detonation_timer - world.time) / 10)))
 
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
@@ -92,27 +100,27 @@
 	if(sec_left <= 0)
 		timing = FALSE
 		detonate(T.z)
-		qdel(src)
 	else
-		if(!(sec_left % 60) && (!milestones[sec_left]))
-			milestones[sec_left] = TRUE
-			var/message = "[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
+		var/key = num2text(sec_left)
+		if(!(sec_left % 60) && !(key in milestones))
+			milestones[key] = TRUE
+			var/message = "[key] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
 			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = 1)
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		M << 'sound/machines/Alarm.ogg'
 	sleep(100)
-	for(var/mob/living/L in mob_list)
+	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)
 		if(!T || T.z != z_level)
 			continue
 		if(issilicon(L))
 			continue
-		L << "<span class='danger'><B>The blast wave from the [src] tears you atom from atom!</B></span>"
+		to_chat(L, "<span class='userdanger'>The blast wave from [src] tears you atom from atom!</span>")
 		L.dust()
-	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
-	ticker.force_ending = 1
+	to_chat(world, "<B>The AI cleansed the station of life with the doomsday device!</B>")
+	SSticker.force_ending = 1
 
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret Upgrade"
@@ -132,11 +140,11 @@
 
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
 	//Upgrade AI turrets around the world
-	for(var/obj/machinery/porta_turret/ai/turret in machines)
-		turret.health += 30
-		turret.eprojectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
-		turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
-	src << "<span class='notice'>Turrets upgraded.</span>"
+	for(var/obj/machinery/porta_turret/ai/turret in GLOB.machines)
+		turret.obj_integrity += 30
+		turret.lethal_projectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
+		turret.lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
+	to_chat(src, "<span class='notice'>Turrets upgraded.</span>")
 
 /datum/AI_Module/large/lockdown
 	module_name = "Hostile Station Lockdown"
@@ -154,22 +162,22 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/door/D in airlocks)
+	for(var/obj/machinery/door/D in GLOB.airlocks)
 		if(D.z != ZLEVEL_STATION)
 			continue
-		addtimer(D, "hostile_lockdown", 0, FALSE, src)
-		addtimer(D, "disable_lockdown", 900)
+		INVOKE_ASYNC(D, /obj/machinery/door.proc/hostile_lockdown, src)
+		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
 
-	var/obj/machinery/computer/communications/C = locate() in machines
+	var/obj/machinery/computer/communications/C = locate() in GLOB.machines
 	if(C)
 		C.post_status("alert", "lockdown")
 
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
-	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
-	addtimer(GLOBAL_PROC, "minor_announce", 900, FALSE,
+	to_chat(src, "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>")
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/minor_announce,
 		"Automatic system reboot complete. Have a secure day.",
-		"Network reset:")
+		"Network reset:"), 900)
 
 /datum/AI_Module/large/destroy_rcd
 	module_name = "Destroy RCDs"
@@ -184,19 +192,20 @@
 	set category = "Malfunction"
 	set name = "Destroy RCDs"
 	set desc = "Detonate all RCDs on the station, while sparing onboard cyborg RCDs."
+	set waitfor = FALSE
 
 	if(!canUseTopic() || malf_cooldown)
 		return
 
-	for(var/I in rcd_list)
-		if(!istype(I, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
-			var/obj/item/weapon/rcd/RCD = I
+	for(var/I in GLOB.rcd_list)
+		if(!istype(I, /obj/item/weapon/construction/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			var/obj/item/weapon/construction/rcd/RCD = I
 			RCD.detonate_pulse()
 
-	src << "<span class='warning'>RCD detonation pulse emitted.</span>"
-	malf_cooldown = 1
-	spawn(100)
-		malf_cooldown = 0
+	to_chat(src, "<span class='warning'>RCD detonation pulse emitted.</span>")
+	malf_cooldown = TRUE
+	sleep(100)
+	malf_cooldown = FALSE
 
 /datum/AI_Module/large/mecha_domination
 	module_name = "Viral Mech Domination"
@@ -215,7 +224,7 @@
 	if(stat)
 		return
 	can_dominate_mechs = 1 //Yep. This is all it does. Honk!
-	src << "Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>"
+	to_chat(src, "Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>")
 	verbs -= /mob/living/silicon/ai/proc/mech_takeover
 
 /datum/AI_Module/large/break_fire_alarms
@@ -235,11 +244,11 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/firealarm/F in machines)
+	for(var/obj/machinery/firealarm/F in GLOB.machines)
 		if(F.z != ZLEVEL_STATION)
 			continue
 		F.emagged = 1
-	src << "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>"
+	to_chat(src, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	src.verbs -= /mob/living/silicon/ai/proc/break_fire_alarms
 
 /datum/AI_Module/large/break_air_alarms
@@ -259,11 +268,11 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/airalarm/AA in machines)
+	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		if(AA.z != ZLEVEL_STATION)
 			continue
 		AA.emagged = 1
-	src << "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode."
+	to_chat(src, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.")
 	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
 
 /datum/AI_Module/small/overload_machine
@@ -275,7 +284,7 @@
 
 	power_type = /mob/living/silicon/ai/proc/overload_machine
 
-/mob/living/silicon/ai/proc/overload_machine(obj/machinery/M in machines)
+/mob/living/silicon/ai/proc/overload_machine(obj/machinery/M in GLOB.machines)
 	set name = "Overload Machine"
 	set category = "Malfunction"
 
@@ -286,14 +295,14 @@
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
-				src << "<span class='warning'>Overloading machine circuitry...</span>"
+				M.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [M]!</span>")
+				to_chat(src, "<span class='warning'>Overloading machine circuitry...</span>")
 				spawn(50)
 					if(M)
-						explosion(get_turf(M), 0,1,1,0)
+						explosion(get_turf(M), 0,2,3,0)
 						qdel(M)
-			else src << "<span class='notice'>Out of uses.</span>"
-	else src << "<span class='notice'>That's not a machine.</span>"
+			else to_chat(src, "<span class='notice'>Out of uses.</span>")
+	else to_chat(src, "<span class='notice'>That's not a machine.</span>")
 
 /datum/AI_Module/small/override_machine
 	module_name = "Machine Override"
@@ -305,7 +314,7 @@
 	power_type = /mob/living/silicon/ai/proc/override_machine
 
 
-/mob/living/silicon/ai/proc/override_machine(obj/machinery/M in machines)
+/mob/living/silicon/ai/proc/override_machine(obj/machinery/M in GLOB.machines)
 	set name = "Override Machine"
 	set category = "Malfunction"
 
@@ -314,17 +323,17 @@
 
 	if (istype(M, /obj/machinery))
 		if(!M.can_be_overridden())
-			src << "Can't override this device."
+			to_chat(src, "Can't override this device.")
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
-				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
-				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
+				M.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound!</span>")
+				to_chat(src, "<span class='warning'>Reprogramming machine behaviour...</span>")
 				spawn(50)
-					if(M && !qdeleted(M))
+					if(M && !QDELETED(M))
 						new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, src, 1)
-			else src << "<span class='notice'>Out of uses.</span>"
-	else src << "<span class='notice'>That's not a machine.</span>"
+			else to_chat(src, "<span class='notice'>Out of uses.</span>")
+	else to_chat(src, "<span class='notice'>That's not a machine.</span>")
 
 /datum/AI_Module/large/place_cyborg_transformer
 	module_name = "Robotic Factory (Removes Shunting)"
@@ -350,12 +359,13 @@
 		if(!canPlaceTransformer())
 			return
 		var/turf/T = get_turf(eyeobj)
-		new /obj/machinery/transformer/conveyor(T)
+		var/obj/machinery/transformer/conveyor = new(T)
+		conveyor.masterAI = src
 		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
 		var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in current_modules
 		PCT.uses --
 		can_shunt = 0
-		src << "<span class='warning'>You cannot shunt anymore.</span>"
+		to_chat(src, "<span class='warning'>You cannot shunt anymore.</span>")
 
 /mob/living/silicon/ai/proc/canPlaceTransformer()
 	if(!eyeobj || !isturf(src.loc) || !canUseTopic())
@@ -372,9 +382,9 @@
 		for(var/n=1;n<4,n++)
 			var/fail
 			var/turf/T = turfs[n]
-			if(!istype(T, /turf/open/floor))
+			if(!isfloorturf(T))
 				fail = 1
-			var/datum/camerachunk/C = cameranet.getCameraChunk(T.x, T.y, T.z)
+			var/datum/camerachunk/C = GLOB.cameranet.getCameraChunk(T.x, T.y, T.z)
 			if(!C.visibleTurfs[T])
 				alert_msg = "We cannot get camera vision of this location."
 				fail = 1
@@ -415,12 +425,12 @@
 	for(var/datum/AI_Module/small/blackout/blackout in current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
-			for(var/obj/machinery/power/apc/apc in machines)
+			for(var/obj/machinery/power/apc/apc in GLOB.machines)
 				if(prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++
-			src << "<span class='notice'>Overcurrent applied to the powernet.</span>"
-		else src << "<span class='notice'>Out of uses.</span>"
+			to_chat(src, "<span class='notice'>Overcurrent applied to the powernet.</span>")
+		else to_chat(src, "<span class='notice'>Out of uses.</span>")
 
 /datum/AI_Module/small/reactivate_cameras
 	module_name = "Reactivate Camera Network"
@@ -441,7 +451,7 @@
 	var/fixedcams = 0 //Tells the AI how many cams it fixed. Stats are fun.
 
 	for(var/datum/AI_Module/small/reactivate_cameras/camera in current_modules)
-		for(var/obj/machinery/camera/C in cameranet.cameras)
+		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 			var/initial_range = initial(C.view_range) //To prevent calling the proc twice
 			if(camera.uses > 0)
 				if(!C.status)
@@ -454,10 +464,10 @@
 					fixedcams++
 					//If a camera is both deactivated and has bad focus, it will cost two uses to fully fix!
 			else
-				src << "<span class='warning'>Out of uses.</span>"
+				to_chat(src, "<span class='warning'>Out of uses.</span>")
 				verbs -= /mob/living/silicon/ai/proc/reactivate_cameras //It is useless now, clean it up.
 				break
-	src << "<span class='notice'>Diagnostic complete! Operations completed: [fixedcams].</span>"
+	to_chat(src, "<span class='notice'>Diagnostic complete! Operations completed: [fixedcams].</span>")
 
 	malf_cooldown = 1
 	spawn(30) //Lag protection
@@ -484,14 +494,14 @@
 	see_override = SEE_INVISIBLE_MINIMUM //Night-vision, without which X-ray would be very limited in power.
 	update_sight()
 
-	for(var/obj/machinery/camera/C in cameranet.cameras)
+	for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 		if(C.assembly)
 			var/upgraded = 0
 
 			if(!C.isXRay())
 				C.upgradeXRay()
 				//Update what it can see.
-				cameranet.updateVisibility(C, 0)
+				GLOB.cameranet.updateVisibility(C, 0)
 				upgraded = 1
 
 			if(!C.isEmpProof())
@@ -501,7 +511,7 @@
 			if(upgraded)
 				upgradedcams++
 
-	src << "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: [upgradedcams]. Light amplification system online.</span>"
+	to_chat(src, "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: [upgradedcams]. Light amplification system online.</span>")
 	verbs -= /mob/living/silicon/ai/proc/upgrade_cameras
 
 /datum/module_picker
@@ -596,5 +606,5 @@
 
 	if(eyeobj)
 		eyeobj.relay_speech = TRUE
-	src << "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>"
+	to_chat(src, "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>")
 	verbs -= /mob/living/silicon/ai/proc/surveillance

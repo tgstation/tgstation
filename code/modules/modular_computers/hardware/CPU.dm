@@ -5,7 +5,7 @@
 	name = "processor board"
 	desc = "A standard CPU board used in most computers. It can run up to three programs simultaneously."
 	icon_state = "cpuboard"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	power_usage = 50
 	critical = 1
 	malfunction_probability = 1
@@ -20,7 +20,7 @@
 	name = "microprocessor"
 	desc = "A miniaturised CPU used in portable devices. It can run up to two programs simultaneously."
 	icon_state = "cpu"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	power_usage = 25
 	max_idle_programs = 1
 	origin_tech = "programming=2;engineering=2"
@@ -29,7 +29,7 @@
 	name = "photonic processor board"
 	desc = "An advanced experimental CPU board that uses photonic core instead of regular circuitry. It can run up to five programs simultaneously, but uses a lot of power."
 	icon_state = "cpuboard_super"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	power_usage = 250
 	max_idle_programs = 4
 	origin_tech = "programming=5;engineering=4"
@@ -38,7 +38,7 @@
 	name = "photonic microprocessor"
 	desc = "An advanced miniaturised CPU for use in portable devices. It uses photonic core instead of regular circuitry. It can run up to three programs simultaneously."
 	icon_state = "cpu_super"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	power_usage = 75
 	max_idle_programs = 2
 	origin_tech = "programming=4;engineering=3"

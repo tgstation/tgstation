@@ -1,7 +1,7 @@
 //like orange but only checks north/south/east/west for one step
 /proc/cardinalrange(var/center)
 	var/list/things = list()
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinal)
 		var/turf/T = get_step(center, direction)
 		if(!T) continue
 		things += T.contents
@@ -24,6 +24,8 @@
 	var/processing = 0//To track if we are in the update list or not, we need to be when we are damaged and if we ever
 	var/stability = 100//If this gets low bad things tend to happen
 	var/efficiency = 1//How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
+	var/coredirs = 0
+	var/dirs = 0
 
 
 /obj/machinery/am_shielding/New(loc)
@@ -50,7 +52,7 @@
 			break
 
 	if(!control_unit)//No other guys nearby look for a control unit
-		for(var/direction in cardinal)
+		for(var/direction in GLOB.cardinal)
 		for(var/obj/machinery/power/am_control_unit/AMC in cardinalrange(src))
 			if(AMC.add_shielding(src))
 				break
@@ -105,25 +107,48 @@
 
 
 /obj/machinery/am_shielding/update_icon()
+	dirs = 0
+	coredirs = 0
 	cut_overlays()
-	for(var/direction in alldirs)
-		var/machine = locate(/obj/machinery, get_step(loc, direction))
-		if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit)||(istype(machine, /obj/machinery/power/am_control_unit) && machine == control_unit))
-			add_overlay("shield_[direction]")
+	for(var/direction in GLOB.alldirs)
+		var/turf/T = get_step(loc, direction)
+		for(var/obj/machinery/machine in T)
+			if(istype(machine, /obj/machinery/am_shielding))
+				var/obj/machinery/am_shielding/shield = machine
+				if(shield.control_unit == control_unit)
+					if(shield.processing)
+						coredirs |= direction
+					if(direction in GLOB.cardinal)
+						dirs |= direction
+
+			else
+				if(istype(machine, /obj/machinery/power/am_control_unit) && (direction in GLOB.cardinal))
+					var/obj/machinery/power/am_control_unit/control = machine
+					if(control == control_unit)
+						dirs |= direction
+
+
+	var/prefix = ""
+	var/icondirs=dirs
+
+	if(coredirs)
+		prefix="core"
+
+	icon_state = "[prefix]shield_[icondirs]"
 
 	if(core_check())
-		add_overlay("core")
+		add_overlay("core[control_unit && control_unit.active]")
 		if(!processing)
 			setup_core()
 	else if(processing)
 		shutdown_core()
 
 
-/obj/machinery/am_shielding/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/am_shielding/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
-				if(damage)
+				if(damage_amount)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 				else
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
@@ -132,8 +157,8 @@
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
-	if(damage >= 10)
-		stability -= damage/2
+	if(damage_amount >= 10)
+		stability -= damage_amount/2
 		check_stability()
 
 
@@ -150,19 +175,24 @@
 
 //Scans cards for shields or the control unit and if all there it
 /obj/machinery/am_shielding/proc/core_check()
-	for(var/direction in alldirs)
-		var/machine = locate(/obj/machinery, get_step(loc, direction))
-		if(!machine)
-			return 0//Need all for a core
-		if(!istype(machine, /obj/machinery/am_shielding) && !istype(machine, /obj/machinery/power/am_control_unit))
+	for(var/direction in GLOB.alldirs)
+		var/found_am_device=0
+		for(var/obj/machinery/machine in get_step(loc, direction))
+		//var/machine = locate(/obj/machinery, get_step(loc, direction))
+			if(!machine)
+				continue//Need all for a core
+			if(istype(machine, /obj/machinery/am_shielding) || istype(machine, /obj/machinery/power/am_control_unit))
+				found_am_device = 1
+				break
+		if(!found_am_device)
 			return 0
 	return 1
 
 
 /obj/machinery/am_shielding/proc/setup_core()
 	processing = 1
-	machines |= src
-	START_PROCESSING(SSmachine, src)
+	GLOB.machines |= src
+	START_PROCESSING(SSmachines, src)
 	if(!control_unit)
 		return
 	control_unit.linked_cores.Add(src)
@@ -206,7 +236,7 @@
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1

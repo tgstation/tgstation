@@ -24,16 +24,16 @@
 	set category = null
 
 	if(!src.holder)
-		src << "<font color='red'>Only Admins may use this command.</font>"
+		to_chat(src, "<font color='red'>Only Admins may use this command.</font>")
 		return
 
-	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in clients
+	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in GLOB.clients
 	if(!istype(target,/client))
-		src << "<font color='red'>Error: giveruntimelog(): Client not found.</font>"
+		to_chat(src, "<font color='red'>Error: giveruntimelog(): Client not found.</font>")
 		return
 
 	target.verbs |= /client/proc/getruntimelog
-	target << "<font color='red'>You have been granted access to runtime logs. Please use them responsibly or risk being banned.</font>"
+	to_chat(target, "<font color='red'>You have been granted access to runtime logs. Please use them responsibly or risk being banned.</font>")
 	return
 
 
@@ -52,8 +52,8 @@
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << ftp( file(path) )
-	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
+	src << ftp(file(path))
+	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
 	return
 
 
@@ -72,8 +72,8 @@
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << ftp( file(path) )
-	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
+	src << ftp(file(path))
+	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
 	return
 
 
@@ -85,12 +85,12 @@
 	set name = "Show Server Log"
 	set desc = "Shows today's server log."
 
-	if(fexists("[diary]"))
-		src << ftp(diary)
+	if(fexists("[GLOB.diary]"))
+		src << ftp(GLOB.diary)
 	else
-		src << "<font color='red'>Server log not found, try using .getserverlog.</font>"
+		to_chat(src, "<font color='red'>Server log not found, try using .getserverlog.</font>")
 		return
-	feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","Show Server Log") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 //Shows today's attack log
@@ -99,10 +99,10 @@
 	set name = "Show Server Attack Log"
 	set desc = "Shows today's server attack log."
 
-	if(fexists("[diaryofmeanpeople]"))
-		src << ftp(diaryofmeanpeople)
+	if(fexists("[GLOB.diaryofmeanpeople]"))
+		src << ftp(GLOB.diaryofmeanpeople)
 	else
-		src << "<font color='red'>Server attack log not found, try using .getserverlog.</font>"
+		to_chat(src, "<font color='red'>Server attack log not found, try using .getserverlog.</font>")
 		return
-	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","Show Server Attack log") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

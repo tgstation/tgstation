@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -18,7 +18,7 @@
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = -28;
-	shattered = 1
+	broken = 1
 	},
 /obj/item/clothing/suit/hooded/bloated_human,
 /obj/effect/decal/cleanable/blood,
@@ -31,7 +31,7 @@
 	desc = "Oh no, seven years of bad luck!";
 	icon_state = "mirror_broke";
 	pixel_x = 28;
-	shattered = 1
+	broken = 1
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth;
@@ -44,7 +44,7 @@
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = -28;
-	shattered = 1
+	broken = 1
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -71,7 +71,7 @@
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
 	pixel_y = 28;
-	shattered = 1
+	broken = 1
 	},
 /obj/item/weapon/kitchen/knife/envy,
 /turf/open/floor/plating{
@@ -83,7 +83,7 @@
 	desc = "Oh no, seven years of bad luck!";
 	icon_state = "mirror_broke";
 	pixel_x = 28;
-	shattered = 1
+	broken = 1
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -94,7 +94,7 @@
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = -28;
-	shattered = 1
+	broken = 1
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -112,7 +112,7 @@
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = -28;
-	shattered = 1
+	broken = 1
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth;

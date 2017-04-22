@@ -1,5 +1,7 @@
 //use this define to highlight docking port bounding boxes (ONLY FOR DEBUG USE)
-// #define DOCKING_PORT_HIGHLIGHT
+#ifdef TESTING
+#define DOCKING_PORT_HIGHLIGHT
+#endif
 
 //NORTH default dir
 /obj/docking_port
@@ -8,7 +10,7 @@
 	//icon = 'icons/dirsquare.dmi'
 	icon_state = "pinonfar"
 
-	unacidable = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = 1
 
 	var/id
@@ -29,12 +31,16 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+/obj/docking_port/take_damage()
+	return
+
 /obj/docking_port/singularity_pull()
 	return
 /obj/docking_port/singularity_act()
 	return 0
 /obj/docking_port/shuttleRotate()
 	return //we don't rotate with shuttles via this code.
+
 //returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
 /obj/docking_port/proc/return_coords(_x, _y, _dir)
 	if(_dir == null)
@@ -115,6 +121,7 @@
 	var/turf/T1 = locate(L[3],L[4],z)
 	for(var/turf/T in block(T0,T1))
 		T.color = _color
+		LAZYINITLIST(T.atom_colours)
 		T.maptext = null
 	if(_color)
 		var/turf/T = locate(L[1], L[2], z)
@@ -158,6 +165,7 @@
 	name = "In Transit"
 	turf_type = /turf/open/space/transit
 	var/list/turf/assigned_turfs = list()
+	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
 /obj/docking_port/stationary/transit/New()
@@ -184,7 +192,6 @@
 
 
 /obj/docking_port/mobile
-	icon_state = "mobile"
 	name = "shuttle"
 	icon_state = "pinonclose"
 
@@ -233,7 +240,9 @@
 		areaInstance = null
 	. = ..()
 
-/obj/docking_port/mobile/initialize()
+/obj/docking_port/mobile/Initialize(mapload)
+	..()
+
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
 		areaInstance = A
@@ -305,6 +314,10 @@
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
 	if(!check_dock(S))
+		testing("check_dock failed on request for [src]")
+		return
+	
+	if(mode == SHUTTLE_IGNITING && destination == S)
 		return
 
 	switch(mode)
@@ -338,6 +351,8 @@
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/enterTransit()
+	if(SSshuttle.lockdown && z == ZLEVEL_STATION)	//emp went off, no escape
+		return
 	previous = null
 //		if(!destination)
 //			return
@@ -384,10 +399,10 @@
 
 	qdel(src, force=TRUE)
 
-/obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1)
+/obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += PoolOrNew(/obj/effect/overlay/temp/ripple, t)
+		ripples += new /obj/effect/overlay/temp/ripple(t, animate_time)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	for(var/R in ripples)
@@ -413,12 +428,15 @@
 	return ripple_turfs
 
 /obj/docking_port/mobile/proc/check_poddoors()
-	for(var/obj/machinery/door/poddoor/shuttledock/pod in airlocks)
+	for(var/obj/machinery/door/poddoor/shuttledock/pod in GLOB.airlocks)
 		pod.check()
 
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
+	if(S1.get_docked() == src)
+		remove_ripples()
+		return
 	// Crashing this ship with NO SURVIVORS
 	if(!force)
 		if(!check_dock(S1))
@@ -451,9 +469,13 @@
 		if(!A0)
 			A0 = new area_type(null)
 		for(var/turf/T0 in L0)
+			var/area/old = T0.loc
 			A0.contents += T0
-
-
+			T0.change_area(old, A0)
+	if (istype(S1, /obj/docking_port/stationary/transit))
+		areaInstance.parallax_movedir = preferred_direction
+	else
+		areaInstance.parallax_movedir = FALSE
 	remove_ripples()
 
 	//move or squish anything in the way ship at destination
@@ -469,10 +491,12 @@
 		if(T0.type != T0.baseturf) //So if there is a hole in the shuttle we don't drag along the space/asteroid/etc to wherever we are going next
 			T0.copyTurf(T1)
 			T1.baseturf = destination_turf_type
+			var/area/old = T1.loc
 			areaInstance.contents += T1
+			T1.change_area(old, areaInstance)
 
 			//copy over air
-			if(istype(T1, /turf/open))
+			if(isopenturf(T1))
 				var/turf/open/Ts1 = T1
 				Ts1.copy_air_with_tile(T0)
 
@@ -483,15 +507,12 @@
 		if(rotation)
 			T1.shuttleRotate(rotation)
 
-		//lighting stuff
-		T1.redraw_lighting()
 		SSair.remove_from_active(T1)
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
 
 		T0.ChangeTurf(turf_type)
 
-		T0.redraw_lighting()
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
@@ -506,15 +527,19 @@
 	return SSshuttle.getDock(roundstart_move)
 
 /obj/docking_port/mobile/proc/dockRoundstart()
-	var/port = findRoundstartDock()
+	. = dock_id(roundstart_move)
+
+/obj/docking_port/mobile/proc/dock_id(id)
+	var/port = SSshuttle.getDock(id)
 	if(port)
-		return dock(port)
+		. = dock(port)
+	else
+		. = null
 
 /obj/effect/landmark/shuttle_import
 	name = "Shuttle Import"
 
 /obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
-	var/list/hurt_mobs = list()
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		var/turf/T1 = L1[i]
@@ -526,8 +551,7 @@
 
 		for(var/atom/movable/AM in T1)
 			if(ismob(AM))
-				if(isliving(AM) && !(AM in hurt_mobs))
-					hurt_mobs |= AM
+				if(isliving(AM))
 					var/mob/living/M = AM
 					if(M.buckled)
 						M.buckled.unbuckle_mob(M, 1)
@@ -535,15 +559,14 @@
 						M.pulledby.stop_pulling()
 					M.stop_pulling()
 					M.visible_message("<span class='warning'>[M] is hit by \
-							a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
+							a hyperspace ripple!</span>",
 							"<span class='userdanger'>You feel an immense \
 							crushing pressure as the space around you ripples.</span>")
-					if(M.anchored)
-						M.gib()
+					if(M.key || M.get_ghost(TRUE))
+						feedback_add_details("shuttle_gib", "[type]")
 					else
-						step(M, dir)
-						M.Paralyse(10)
-						M.ex_act(2)
+						feedback_add_details("shuttle_gib_unintelligent", "[type]")
+					M.gib()
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
 				if(istype(AM, /obj/singularity) && !istype(AM, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
@@ -555,7 +578,7 @@
 
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
-	check_ripples()
+	check_effects()
 
 	if(mode == SHUTTLE_IGNITING)
 		check_transit_zone()
@@ -587,11 +610,28 @@
 	timer = 0
 	destination = null
 
-/obj/docking_port/mobile/proc/check_ripples()
+/obj/docking_port/mobile/proc/check_effects()
 	if(!ripples.len)
 		if((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL))
-			if(timeLeft(1) <= SHUTTLE_RIPPLE_TIME)
-				create_ripples(destination)
+			var/tl = timeLeft(1)
+			if(tl <= SHUTTLE_RIPPLE_TIME)
+				create_ripples(destination, tl)
+
+	var/obj/docking_port/stationary/S0 = get_docked()
+	if(areaInstance.parallax_movedir && istype(S0, /obj/docking_port/stationary/transit) && timeLeft(1) <= PARALLAX_LOOP_TIME)
+		parallax_slowdown()
+
+/obj/docking_port/mobile/proc/parallax_slowdown()
+	areaInstance.parallax_movedir = FALSE
+	if(assigned_transit && assigned_transit.assigned_area)
+		assigned_transit.assigned_area.parallax_movedir = FALSE
+	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
+	for (var/thing in L0)
+		var/turf/T = thing
+		for (var/thing2 in T)
+			var/atom/movable/AM = thing2
+			if (length(AM.client_mobs_in_contents))
+				AM.update_parallax_contents()
 
 /obj/docking_port/mobile/proc/check_transit_zone()
 	if(assigned_transit)
@@ -602,6 +642,14 @@
 /obj/docking_port/mobile/proc/setTimer(wait)
 	timer = world.time + wait
 	last_timer_length = wait
+
+/obj/docking_port/mobile/proc/modTimer(multiple)
+	var/time_remaining = timer - world.time
+	if(time_remaining < 0 || !last_timer_length)
+		return
+	time_remaining *= multiple
+	last_timer_length *= multiple
+	setTimer(time_remaining)
 
 /obj/docking_port/mobile/proc/invertTimer()
 	if(!last_timer_length)
@@ -663,24 +711,28 @@
 		else
 			dst = destination
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
+
+
+// attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
+/obj/docking_port/mobile/proc/getControlConsole()
+	for(var/obj/machinery/computer/shuttle/S in areaInstance)
+		if(S.shuttleId == id)
+			return S
+	return null
+
+/obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
+	var/s
+	switch(phase)
+		if(HYPERSPACE_WARMUP)
+			s = 'sound/effects/hyperspace_begin.ogg'
+		if(HYPERSPACE_LAUNCH)
+			s = 'sound/effects/hyperspace_progress.ogg'
+		if(HYPERSPACE_END)
+			s = 'sound/effects/hyperspace_end.ogg'
+		else
+			CRASH("Invalid hyperspace sound phase: [phase]")
+	for(var/A in areas)
+		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
+			playsound(E, s, 100, FALSE, max(width, height) - world.view)
+
 #undef DOCKING_PORT_HIGHLIGHT
-
-
-/turf/proc/copyTurf(turf/T)
-	if(T.type != type)
-		var/obj/O
-		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
-			O = new()
-			O.underlays.Add(T)
-		T.ChangeTurf(type)
-		if(underlays.len)
-			T.underlays = O.underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(T.color != color)
-		T.color = color
-	if(T.dir != dir)
-		T.setDir(dir)
-	return T

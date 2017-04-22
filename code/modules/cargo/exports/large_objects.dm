@@ -81,22 +81,10 @@
 	unit_name = "pipe dispenser"
 	export_types = list(/obj/machinery/pipedispenser)
 
-
-/datum/export/large/singularitygen
-	cost = 4000 // If you have one left after engine setup, sell it.
-	unit_name = "unused gravitational singularity generator"
-	export_types = list(/obj/machinery/the_singularitygen)
-	include_subtypes = FALSE
-
-/datum/export/large/singularitygen/tesla
-	unit_name = "unused energy ball generator"
-	export_types = list(/obj/machinery/the_singularitygen/tesla)
-
 /datum/export/large/supermatter
 	cost = 9000
 	unit_name = "supermatter shard"
 	export_types = list(/obj/machinery/power/supermatter_shard)
-
 
 // Misc
 /datum/export/large/iv

@@ -1,11 +1,11 @@
 /obj/structure/closet/secure_closet/RD
 	name = "\proper research director's locker"
-	req_access = list(access_rd)
+	req_access = list(GLOB.access_rd)
 	icon_state = "rd"
 
-/obj/structure/closet/secure_closet/RD/New()
+/obj/structure/closet/secure_closet/RD/PopulateContents()
 	..()
-	new /obj/item/clothing/suit/cloak/rd(src)
+	new /obj/item/clothing/neck/cloak/rd(src)
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
 	new /obj/item/clothing/head/bio_hood/scientist(src)
 	new /obj/item/clothing/suit/toggle/labcoat(src)
