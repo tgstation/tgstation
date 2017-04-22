@@ -58,6 +58,10 @@
 
 	Master.Initialize(10, FALSE)
 
+	for (var/typepath in (typesof(/datum/menu)-/datum/menu))
+		new typepath()
+	return
+
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)

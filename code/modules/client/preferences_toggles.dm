@@ -1,76 +1,115 @@
+//this works as is to create a single checked item, but has no back end code for toggleing the check yet
+#define TOGGLE_CHECKBOX(PARENT, CHILD) PARENT/CHILD/abstract = TRUE;PARENT/CHILD/checkbox = CHECKBOX_TOGGLE;PARENT/CHILD/verb/CHILD
+
+//Example usage TOGGLE_CHECKBOX(datum/menu/Settings/Ghost/chatterbox, toggle_ghost_ears)()
+
+/datum/menu/Settings/Load_checked(client/C)
+	return
+
+//override because we don't want to save preferences twice.
+/datum/menu/Settings/Set_checked(client/C, verbpath)
+	if (checkbox == CHECKBOX_GROUP)
+		C.prefs.menuoptions[src.type] = verbpath
+	else if (checkbox == CHECKBOX_TOGGLE)
+		var/checked = Get_checked(C)
+		C.prefs.menuoptions[type] = !checked
+		winset(C, "[verbpath]", "is-checked = [!checked]")
+
 //toggles
-/client/verb/toggle_ghost_ears()
+/datum/menu/Settings/Ghost/chatterbox
+	name = "Chat Box Spam"
+
+///datum/menu/Settings/Ghost/chatterbox/verb/toggle_ghost_ears()
+TOGGLE_CHECKBOX(datum/menu/Settings/Ghost/chatterbox, toggle_ghost_ears)()
 	set name = "Show/Hide GhostEars"
 	set category = "Preferences"
-	set desc = ".Toggle Between seeing all mob speech, and only speech of nearby mobs"
-	prefs.chat_toggles ^= CHAT_GHOSTEARS
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"].")
-	prefs.save_preferences()
+	set desc = "Show/Hide GhostEars"
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTEARS
+	to_chat(usr, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"].")
+	usr.client.prefs.save_preferences()
 	feedback_add_details("preferences_verb","Toggle Ghost Ears|[prefs.chat_toggles & CHAT_GHOSTEARS]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Ghost/chatterbox/toggle_ghost_ears/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_GHOSTEARS
 
-/client/verb/toggle_ghost_sight()
+TOGGLE_CHECKBOX(datum/menu/Settings/Ghost/chatterbox, toggle_ghost_sight)()
 	set name = "Show/Hide GhostSight"
 	set category = "Preferences"
 	set desc = ".Toggle Between seeing all mob emotes, and only emotes of nearby mobs"
-	prefs.chat_toggles ^= CHAT_GHOSTSIGHT
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"].")
-	prefs.save_preferences()
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTSIGHT
+	to_chat(usr, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"].")
+	usr.client.prefs.save_preferences()
 	feedback_add_details("preferences_verb","Toggle Ghost Sight|[prefs.chat_toggles & CHAT_GHOSTSIGHT]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Ghost/chatterbox/oggle_ghost_sight/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_GHOSTSIGHT
 
-/client/verb/toggle_ghost_whispers()
+TOGGLE_CHECKBOX(datum/menu/Settings/Ghost/chatterbox, toggle_ghost_whispers)()
 	set name = "Show/Hide GhostWhispers"
 	set category = "Preferences"
 	set desc = ".Toggle between hearing all whispers, and only whispers of nearby mobs"
-	prefs.chat_toggles ^= CHAT_GHOSTWHISPER
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"].")
-	prefs.save_preferences()
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTWHISPER
+	to_chat(usr, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"].")
+	usr.client.prefs.save_preferences()
 	feedback_add_details("preferences_verb","Toggle Ghost Whispers|[prefs.chat_toggles & CHAT_GHOSTWHISPER]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Ghost/chatterbox/toggle_ghost_whispers/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_GHOSTWHISPER
 
-/client/verb/toggle_ghost_radio()
+TOGGLE_CHECKBOX(datum/menu/Settings/Ghost/chatterbox, toggle_ghost_radio)()
 	set name = "Show/Hide GhostRadio"
 	set category = "Preferences"
 	set desc = ".Enable or disable hearing radio chatter as a ghost"
-	prefs.chat_toggles ^= CHAT_GHOSTRADIO
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTRADIO) ? "see radio chatter" : "not see radio chatter"].")
-	prefs.save_preferences()
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTRADIO
+	to_chat(usr, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTRADIO) ? "see radio chatter" : "not see radio chatter"].")
+	usr.client.prefs.save_preferences()
 	feedback_add_details("preferences_verb","Toggle Ghost Radio|[prefs.chat_toggles & CHAT_GHOSTRADIO]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc! //social experiment, increase the generation whenever you copypaste this shamelessly GENERATION 1
+/datum/menu/Settings/Ghost/chatterbox/toggle_ghost_radio/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_GHOSTRADIO
 
-/client/verb/toggle_ghost_pda()
+TOGGLE_CHECKBOX(datum/menu/Settings/Ghost/chatterbox, toggle_ghost_pda)()
 	set name = "Show/Hide GhostPDA"
 	set category = "Preferences"
 	set desc = ".Toggle Between seeing all mob pda messages, and only pda messages of nearby mobs"
-	prefs.chat_toggles ^= CHAT_GHOSTPDA
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"].")
-	prefs.save_preferences()
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTPDA
+	to_chat(usr, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"].")
+	usr.client.prefs.save_preferences()
 	feedback_add_details("preferences_verb","Toggle Ghost PDA|[prefs.chat_toggles & CHAT_GHOSTPDA]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Ghost/chatterbox/toggle_ghost_pda/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_GHOSTPDA
 
 //please be aware that the following two verbs have inverted stat output, so that "Toggle Deathrattle|1" still means you activated it
-/client/verb/toggle_deathrattle()
+TOGGLE_CHECKBOX(datum/menu/Settings/Ghost/chatterbox, toggle_deathrattle)()
 	set name = "Toggle Deathrattle"
 	set category = "Preferences"
 	set desc = "Toggle recieving a message in deadchat when sentient mobs die."
-	prefs.toggles ^= DISABLE_DEATHRATTLE
-	prefs.save_preferences()
+	usr.client.prefs.toggles ^= DISABLE_DEATHRATTLE
+	usr.client.prefs.save_preferences()
 	to_chat(usr, "You will [(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get messages when a sentient mob dies.")
 	feedback_add_details("preferences_verb", "Toggle Deathrattle|[!(prefs.toggles & DISABLE_DEATHRATTLE)]") //If you are copy-pasting this, maybe you should spend some time reading the comments.
+/datum/menu/Settings/Ghost/chatterbox/toggle_deathrattle/Get_checked(client/C)
+	return !(C.prefs.toggles & DISABLE_DEATHRATTLE)
 
-/client/verb/toggle_arrivalrattle()
+TOGGLE_CHECKBOX(datum/menu/Settings/Ghost/chatterbox, toggle_arrivalrattle)()
 	set name = "Toggle Arrivalrattle"
 	set category = "Preferences"
 	set desc = "Toggle recieving a message in deadchat when someone joins the station."
-	prefs.toggles ^= DISABLE_ARRIVALRATTLE
+	usr.client.prefs.toggles ^= DISABLE_ARRIVALRATTLE
 	to_chat(usr, "You will [(prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get messages when someone joins the station.")
-	prefs.save_preferences()
+	usr.client.prefs.save_preferences()
 	feedback_add_details("preferences_verb", "Toggle Arrivalrattle|[!(prefs.toggles & DISABLE_ARRIVALRATTLE)]") //If you are copy-pasting this, maybe you should rethink where your life went so wrong.
+/datum/menu/Settings/Ghost/chatterbox/toggle_arrivalrattle/Get_checked(client/C)
+	return !(C.prefs.toggles & DISABLE_ARRIVALRATTLE)
 
-/client/verb/togglemidroundantag()
+TOGGLE_CHECKBOX(datum/menu/Settings/Ghost, togglemidroundantag)()
 	set name = "Toggle Midround Antagonist"
 	set category = "Preferences"
 	set desc = "Toggles whether or not you will be considered for antagonist status given during a round."
-	prefs.toggles ^= MIDROUND_ANTAG
-	prefs.save_preferences()
-	to_chat(src, "You will [(prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions.")
+	usr.client.prefs.toggles ^= MIDROUND_ANTAG
+	usr.client.prefs.save_preferences()
+	to_chat(usr, "You will [(prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions.")
 	feedback_add_details("preferences_verb","Toggle Midround Antag|[prefs.toggles & MIDROUND_ANTAG]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Ghost/togglemidroundantag/Get_checked(client/C)
+	return C.prefs.toggles & MIDROUND_ANTAG
+
+#warn todo: Import the rest of this.
 
 /client/verb/toggletitlemusic()
 	set name = "Hear/Silence LobbyMusic"
