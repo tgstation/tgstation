@@ -20,6 +20,8 @@
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
+	obj_integrity = 100
+	max_integrity = 100
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
@@ -42,6 +44,11 @@
 	icon_state = "facehugger_impregnated"
 	item_state = "facehugger_impregnated"
 	stat = DEAD
+
+/obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	..()
+	if(integrity < 90)
+		Die()
 
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	attack_hand(user)
@@ -70,19 +77,10 @@
 	if (sterile)
 		to_chat(user, "<span class='boldannounce'>It looks like the proboscis has been removed.</span>")
 
-/obj/item/clothing/mask/facehugger/attackby(obj/item/O,mob/m, params)
-	if(O.force)
-		Die()
-	return
-
-/obj/item/clothing/mask/facehugger/bullet_act(obj/item/projectile/P)
-	if(P.damage)
-		Die()
 
 /obj/item/clothing/mask/facehugger/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		Die()
-	return
 
 /obj/item/clothing/mask/facehugger/equipped(mob/M)
 	Attach(M)
