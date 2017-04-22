@@ -47,8 +47,11 @@
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	..()
-	if(integrity < 90)
+	if(obj_integrity < 90)
 		Die()
+
+/obj/item/clothing/mask/facehugger/attackby(obj/item/O,mob/m, params)
+	return O.attack_obj(src, user)
 
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	attack_hand(user)
