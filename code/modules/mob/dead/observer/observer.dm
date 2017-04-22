@@ -272,24 +272,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
-		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
-	var/oldloc = loc
-
+		setDir(direct )//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	if(NewLoc)
 		loc = NewLoc
+		for(var/obj/effect/step_trigger/S in NewLoc)
+			S.Crossed(src)
 		update_parallax_contents()
-	else
-		loc = get_turf(src) //Get out of closets and such as a ghost
-		if((direct & NORTH) && y < world.maxy)
-			y++
-		else if((direct & SOUTH) && y > 1)
-			y--
-		if((direct & EAST) && x < world.maxx)
-			x++
-		else if((direct & WEST) && x > 1)
-			x--
+		return
+	loc = get_turf(src) //Get out of closets and such as a ghost
+	if((direct & NORTH) && y < world.maxy)
+		y++
+	else if((direct & SOUTH) && y > 1)
+		y--
+	if((direct & EAST) && x < world.maxx)
+		x++
+	else if((direct & WEST) && x > 1)
+		x--
 
-	Moved(oldloc, direct)
+	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
+		S.Crossed(src)
 
 /mob/dead/observer/is_active()
 	return 0
