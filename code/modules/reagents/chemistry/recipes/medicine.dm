@@ -30,26 +30,6 @@
 	results = list("synaptizine" = 3)
 	required_reagents = list("sugar" = 1, "lithium" = 1, "water" = 1)
 
-/datum/chemical_reaction/charcoal
-	name = "Charcoal"
-	id = "charcoal"
-	results = list("charcoal" = 2)
-	required_reagents = list("ash" = 1, "sodiumchloride" = 1)
-	mix_message = "The mixture yields a fine black powder."
-	required_temp = 380
-
-/datum/chemical_reaction/silver_sulfadiazine
-	name = "Silver Sulfadiazine"
-	id = "silver_sulfadiazine"
-	results = list("silver_sulfadiazine" = 5)
-	required_reagents = list("ammonia" = 1, "silver" = 1, "sulfur" = 1, "oxygen" = 1, "chlorine" = 1)
-
-/datum/chemical_reaction/salglu_solution
-	name = "Saline-Glucose Solution"
-	id = "salglu_solution"
-	results = list("salglu_solution" = 3)
-	required_reagents = list("sodiumchloride" = 1, "water" = 1, "sugar" = 1)
-
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
 	id = "mine_salve"
@@ -61,19 +41,6 @@
 	id = "mine_salve"
 	results = list("mine_salve" = 15)
 	required_reagents = list("plasma" = 5, "iron" = 5, "sugar" = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
-
-/datum/chemical_reaction/synthflesh
-	name = "Synthflesh"
-	id = "synthflesh"
-	results = list("synthflesh" = 3)
-	required_reagents = list("blood" = 1, "carbon" = 1, "styptic_powder" = 1)
-
-/datum/chemical_reaction/styptic_powder
-	name = "Styptic Powder"
-	id = "styptic_powder"
-	results = list("styptic_powder" = 4)
-	required_reagents = list("aluminium" = 1, "hydrogen" = 1, "oxygen" = 1, "sacid" = 1)
-	mix_message = "The solution yields an astringent powder."
 
 /datum/chemical_reaction/calomel
 	name = "Calomel"
@@ -105,12 +72,6 @@
 	id = "oxandrolone"
 	results = list("oxandrolone" = 6)
 	required_reagents = list("carbon" = 3, "phenol" = 1, "hydrogen" = 1, "oxygen" = 1)
-
-/datum/chemical_reaction/salbutamol
-	name = "Salbutamol"
-	id = "salbutamol"
-	results = list("salbutamol" = 5)
-	required_reagents = list("sal_acid" = 1, "lithium" = 1, "aluminium" = 1, "bromine" = 1, "ammonia" = 1)
 
 /datum/chemical_reaction/perfluorodecalin
 	name = "Perfluorodecalin"
