@@ -41,7 +41,7 @@
 	data["open"] = state_open
 
 	data["occupant"] = list()
-	if(isliving(occupant))
+	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		data["occupant"]["name"] = mob_occupant.name
 		data["occupant"]["stat"] = mob_occupant.stat

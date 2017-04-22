@@ -110,8 +110,8 @@
 		return
 	var/datum/gas_mixture/air1 = AIR1
 	var/turf/T = get_turf(src)
-	if(isliving(occupant))
-		var/mob/living/mob_occupant
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
 		if(mob_occupant.health >= 100) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
@@ -149,7 +149,7 @@
 		on = FALSE
 		update_icon()
 		return
-	if(isliving(occupant))
+	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
 		var/mob/living/carbon/human/H = occupant
@@ -255,7 +255,7 @@
 	data["autoEject"] = autoeject
 
 	var/list/occupantData = list()
-	if(isliving(occupant))
+	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		occupantData["name"] = mob_occupant.name
 		occupantData["stat"] = mob_occupant.stat

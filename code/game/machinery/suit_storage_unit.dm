@@ -211,7 +211,7 @@
 		uv = TRUE
 		locked = TRUE
 		update_icon()
-		if(isliving(occupant))
+		if(occupant)
 			var/mob/living/mob_occupant = occupant
 			if(uv_super)
 				mob_occupant.adjustFireLoss(rand(20, 36))
@@ -368,7 +368,7 @@
 			else if(!helmet && !mask && !suit && !storage && !occupant)
 				return
 			else
-				if(isliving(occupant))
+				if(occupant)
 					var/mob/living/mob_occupant = occupant
 					to_chat(mob_occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!</span>")
 				cook()

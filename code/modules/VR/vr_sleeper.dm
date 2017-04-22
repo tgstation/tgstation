@@ -9,6 +9,7 @@
 	icon_state = "sleeper"
 	state_open = TRUE
 	anchored = TRUE
+	occupant_typecache = list(/mob/living/carbon/human) // turned into typecache in Initialize
 	var/you_die_in_the_game_you_die_for_real = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	var/mob/living/carbon/human/virtual_reality/vr_human
@@ -93,7 +94,7 @@
 	switch(action)
 		if("vr_connect")
 			var/mob/living/carbon/human/human_occupant = occupant
-			if(ishuman(occupant) && human_occupant.mind)
+			if(human_occupant && human_occupant.mind)
 				to_chat(occupant, "<span class='warning'>Transfering to virtual reality...</span>")
 				if(vr_human)
 					vr_human.revert_to_reality(FALSE, FALSE)

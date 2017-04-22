@@ -105,8 +105,8 @@
 	..()
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	if(isliving(occupant))
-		var/mob/living/mob_occupant = occupant
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
