@@ -22,7 +22,7 @@
 	if(C.disabilities & DEAF)
 		deaf = max(deaf, 1)
 	else
-		if(HAS_SECONDARY_FLAG(C.ears, HEALS_EARS))
+		if(C.ears && HAS_SECONDARY_FLAG(C.ears, HEALS_EARS))
 			deaf = max(deaf - 1, 1)
 			ear_damage = max(ear_damage - 0.10, 0)
 		// if higher than UNHEALING_EAR_DAMAGE, no natural healing occurs.
