@@ -27,7 +27,6 @@
 	var/coredirs = 0
 	var/dirs = 0
 
-
 /obj/machinery/am_shielding/New(loc)
 	..(loc)
 	spawn(10)
@@ -38,11 +37,13 @@
 /obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
 	//Make sure we are the only one here
 	if(!istype(src.loc, /turf))
+		new /obj/item/device/am_shielding_container(get_turf(src))
 		qdel(src)
 		return
 	for(var/obj/machinery/am_shielding/AMS in loc.contents)
 		if(AMS == src)
 			continue
+		new /obj/item/device/am_shielding_container(get_turf(src))
 		qdel(src)
 		return
 
@@ -62,6 +63,7 @@
 			spawn(20)
 				controllerscan(1)//Last chance
 			return
+		new /obj/item/device/am_shielding_container(get_turf(src))
 		qdel(src)
 	return
 
@@ -218,6 +220,12 @@
 		qdel(src)
 	return
 
+/obj/machinery/am_shielding/proc/on_damage()
+	color = "#ff0000"
+	addtimer(CALLBACK(src, .proc/reset_color), 5)
+
+/obj/machinery/am_shielding/proc/reset_color()
+	color = initial(color)
 
 /obj/machinery/am_shielding/proc/recalc_efficiency(new_efficiency)//tbh still not 100% sure how I want to deal with efficiency so this is likely temp
 	if(!control_unit || !processing)
@@ -227,8 +235,6 @@
 	control_unit.reported_core_efficiency += (new_efficiency - efficiency)
 	efficiency = new_efficiency
 	return
-
-
 
 /obj/item/device/am_shielding_container
 	name = "packaged antimatter reactor section"
