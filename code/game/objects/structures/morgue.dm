@@ -24,9 +24,6 @@
 	var/locked = 0
 	var/opendir = SOUTH
 
-/obj/structure/bodycontainer/New()
-	..()
-
 /obj/structure/bodycontainer/Destroy()
 	open()
 	if(connected)
@@ -34,7 +31,8 @@
 		connected = null
 	return ..()
 
-/obj/structure/bodycontainer/on_log()
+/obj/structure/bodycontainer/on_log(login)
+	..()
 	update_icon()
 
 /obj/structure/bodycontainer/update_icon()

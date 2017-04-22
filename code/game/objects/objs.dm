@@ -165,14 +165,6 @@
 /obj/proc/hide(h)
 	return
 
-//If a mob logouts/logins in side of an object you can use this proc
-/obj/proc/on_log()
-	..()
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_log()
-
-
 /obj/singularity_pull(S, current_size)
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
