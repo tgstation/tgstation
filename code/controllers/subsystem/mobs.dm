@@ -17,12 +17,12 @@ SUBSYSTEM_DEF(mobs)
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-
+	var/times_fired = src.times_fired
 	while(currentrun.len)
 		var/mob/M = currentrun[currentrun.len]
 		currentrun.len--
 		if(M)
-			M.Life(seconds)
+			M.Life(seconds, times_fired)
 		else
 			GLOB.mob_list.Remove(M)
 		if (MC_TICK_CHECK)

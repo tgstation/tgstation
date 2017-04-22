@@ -331,10 +331,10 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	if(message == "")
 		return
 
-/mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
-	healthscan(usr, M)
-	chemscan(usr, M)
-	return
+/mob/living/simple_animal/borer/UnarmedAttack(atom/A)
+	if(isliving(A))
+		healthscan(usr, A)
+		chemscan(usr, A)
 
 /mob/living/simple_animal/borer/ex_act()
 	if(victim)
@@ -764,7 +764,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		if("Blindness")
 			victim.blind_eyes(2)
 		if("Deafness")
-			victim.ear_deaf = 20
+			victim.minimumDeafTicks(20)
 		if("Stun")
 			victim.Weaken(10)
 

@@ -5,6 +5,7 @@
 	flags = HEAR
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
+	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
 
@@ -41,8 +42,6 @@
 	var/notransform = null	//Carbon
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
-	var/ear_deaf = 0		//Carbon
-	var/ear_damage = 0		//Carbon
 	var/stuttering = 0		//Carbon
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon

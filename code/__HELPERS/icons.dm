@@ -866,7 +866,6 @@ The _flatIcons list is a cache for generated icon files.
 
 	var/image/text_image = new(loc = A)
 	text_image.maptext = "<font size = 4>[letter]</font>"
-	text_image.color = AverageColour(atom_icon)
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
 	qdel(atom_icon)
@@ -897,25 +896,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	final_image.text = initial(SA.name)
 	return final_image
 
-//Find's the average colour of the icon
-//By vg's ComicIronic
-/proc/AverageColour(icon/I)
-	var/list/colours = list()
-	for(var/x_pixel = 1 to I.Width())
-		for(var/y_pixel = 1 to I.Height())
-			var/this_colour = I.GetPixel(x_pixel, y_pixel)
-			if(this_colour)
-				colours.Add(this_colour)
-
-	if(!colours.len)
-		return null
-
-	var/final_average = colours[1]
-	for(var/colour in (colours - colours[1]))
-		final_average = BlendRGB(final_average, colour, 1)
-	return final_average
-
-
 //Interface for using DrawBox() to draw 1 pixel on a coordinate.
 //Returns the same icon specifed in the argument, but with the pixel drawn
 /proc/DrawPixel(icon/I,colour,drawX,drawY)
@@ -944,15 +924,15 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	return 0
 
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(var/icon_id,var/outfit,var/datum/preferences/prefs)
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs)
 	var/static/list/humanoid_icon_cache = list()
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = new()
 
 		if(prefs)
 			prefs.copy_to(body)
-		if(outfit)
-			body.equipOutfit(outfit, TRUE)
+		if(J)
+			J.equip(body, TRUE, FALSE)
 
 		SSoverlays.Flush()
 

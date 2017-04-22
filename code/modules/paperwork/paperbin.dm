@@ -24,7 +24,7 @@
 		bin_pen = P
 		update_icon()
 		var/static/warned = FALSE
-		if(!warned)
+		if(P.type == /obj/item/weapon/pen && !warned)
 			warning("one or more paperbins ate a pen duing initialize()")
 			warned = TRUE
 

@@ -15,13 +15,11 @@
 	next_move = 1
 
 	..()
-	if (key != client.key)
-		key = client.key
+
 	reset_perspective(loc)
 
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_log()
+	if(loc)
+		loc.on_log(TRUE)
 
 	//readd this mob's HUDs (antag, med, etc)
 	reload_huds()
@@ -47,4 +45,4 @@
 	if(client)
 		client.click_intercept = null
 
-	client.view = world.view // Resets the client.view in case it was changed.
+		client.view = world.view // Resets the client.view in case it was changed.

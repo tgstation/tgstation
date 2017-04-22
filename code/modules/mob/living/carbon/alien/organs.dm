@@ -100,6 +100,7 @@
 		var/mob/living/carbon/alien/A = M
 		A.updatePlasmaDisplay()
 
+#define QUEEN_DEATH_DEBUFF_DURATION 2400
 
 /obj/item/organ/alien/hivenode
 	name = "hive node"
@@ -140,15 +141,19 @@
 
 	recent_queen_death = 1
 	owner.throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
-	spawn(2400) //four minutes
-		if(QDELETED(src)) //In case the node is deleted
-			return
-		recent_queen_death = 0
-		if(!owner) //In case the xeno is butchered or subjected to surgery after death.
-			return
-		to_chat(owner, "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>")
-		owner.clear_alert("alien_noqueen")
+	addtimer(CALLBACK(src, .proc/clear_queen_death), QUEEN_DEATH_DEBUFF_DURATION)
 
+
+/obj/item/organ/alien/hivenode/proc/clear_queen_death()
+	if(QDELETED(src)) //In case the node is deleted
+		return
+	recent_queen_death = 0
+	if(!owner) //In case the xeno is butchered or subjected to surgery after death.
+		return
+	to_chat(owner, "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>")
+	owner.clear_alert("alien_noqueen")
+
+#undef QUEEN_DEATH_DEBUFF_DURATION
 
 /obj/item/organ/alien/resinspinner
 	name = "resin spinner"

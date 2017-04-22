@@ -40,6 +40,7 @@
 		if(owner)
 			if(owner == M)
 				return
+			Remove(owner)
 		owner = M
 		M.actions += src
 		if(M.client)
@@ -197,6 +198,9 @@
 			var/mob/living/carbon/C = owner
 			if(target == C.internal)
 				button.icon_state = "template_active"
+
+/datum/action/item_action/pick_color
+	name = "Choose A Color"
 
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"

@@ -47,6 +47,21 @@ SUBSYSTEM_DEF(garbage)
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
 	..(msg)
 
+/datum/controller/subsystem/garbage/Shutdown()
+	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
+	if(didntgc.len || sleptDestroy.len)
+		var/list/dellog = list()
+		for(var/path in didntgc)
+			dellog += "Path : [path] \n"
+			dellog += "Failures : [didntgc[path]] \n"
+			if(path in sleptDestroy)
+				dellog += "Sleeps : [sleptDestroy[path]] \n"
+				sleptDestroy -= path
+		for(var/path in sleptDestroy)
+			dellog += "Path : [path] \n"
+			dellog += "Sleeps : [sleptDestroy[path]] \n"
+		log_world(dellog.Join())
+
 /datum/controller/subsystem/garbage/fire()
 	HandleToBeQueued()
 	if(state == SS_RUNNING)
@@ -98,7 +113,7 @@ SUBSYSTEM_DEF(garbage)
 			var/time = world.timeofday
 			var/tick = world.tick_usage
 			var/ticktime = world.time
-			del(A)
+			HardDelete(A)
 			tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
 
 			if (tick > highest_del_tickusage)
@@ -125,10 +140,10 @@ SUBSYSTEM_DEF(garbage)
 		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
 /datum/controller/subsystem/garbage/proc/Queue(datum/A)
-	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
+	if (isnull(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
 		return
 	if (A.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
-		del(A)
+		HardDelete(A)
 		return
 	var/gctime = world.time
 	var/refid = "\ref[A]"
@@ -139,6 +154,10 @@ SUBSYSTEM_DEF(garbage)
 		queue -= refid // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 
 	queue[refid] = gctime
+
+//this is purely to seperate things profile wise.
+/datum/controller/subsystem/garbage/proc/HardDelete(datum/A)
+	del(A)
 
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
@@ -339,4 +358,5 @@ SUBSYSTEM_DEF(garbage)
 #else
 	CHECK_TICK
 #endif
+
 #endif

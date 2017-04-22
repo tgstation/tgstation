@@ -19,8 +19,8 @@ Chaplain
 	minimal_access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
-	if(M.mind)
-		M.mind.isholy = TRUE
+	if(H.mind)
+		H.mind.isholy = TRUE
 
 	var/obj/item/weapon/storage/book/bible/booze/B = new
 
@@ -31,7 +31,8 @@ Chaplain
 		B.item_state = SSreligion.bible_item_state
 		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.deity]. Defer to the Chaplain.")
 		H.equip_to_slot_or_del(B, slot_in_backpack)
-		var/obj/item/weapon/nullrod/N = new SSreligion.holy_weapon_type(H)
+		var/nrt = SSreligion.holy_weapon_type || /obj/item/weapon/nullrod
+		var/obj/item/weapon/nullrod/N = new nrt(H)
 		H.equip_to_slot_or_del(N, slot_in_backpack)
 		return
 

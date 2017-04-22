@@ -175,7 +175,7 @@
 	else
 		investigate_log("has exploded.", "supermatter")
 		explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
-		if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
+		if(power > POWER_PENALTY_THRESHOLD)
 			investigate_log("has spawned additional energy balls.", "supermatter")
 			var/obj/singularity/energy_ball/E = new(T)
 			E.energy = power
@@ -382,8 +382,8 @@
 	if(!istype(L))		// We don't run process() when we are in space
 		return 0	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
-
-
+	if(!istype(Proj.firer, /obj/machinery/power/emitter))
+		investigate_log("has been hit by [Proj] fired by [Proj.firer]", "supermatter")
 	if(Proj.flag != "bullet")
 		power += Proj.damage * config_bullet_energy
 		if(!has_been_powered)
@@ -491,6 +491,8 @@
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		matter_power += 200
+	else if(istype(AM, /obj/singularity))
+		return
 	else if(isobj(AM) && !istype(AM, /obj/effect))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)

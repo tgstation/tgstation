@@ -58,6 +58,10 @@
 	if(!buckled)
 		Weaken(3)
 
+/obj/effect/abstract/proximity_checker/onShuttleMove()
+	//timer so it only happens once
+	addtimer(CALLBACK(monitor, /datum/proximity_monitor/proc/SetRange, monitor.current_range, TRUE), 0, TIMER_UNIQUE)
+
 // Shuttle Rotation //
 
 /atom/proc/shuttleRotate(rotation)
