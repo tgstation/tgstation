@@ -26,6 +26,8 @@
 
 
 				send2irc("Server", "[cheesy_message]")
+	for(var/I in client_images)
+		client.images -= I
 	..()
 
 	if(isobj(loc))
