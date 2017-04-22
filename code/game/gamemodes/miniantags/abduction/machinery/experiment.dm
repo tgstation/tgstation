@@ -111,18 +111,18 @@
 	else
 		dat += "<span class='linkOff'>Experiment </span>"
 
-	if(!isliving(occupant))
+	if(!occupant)
 		dat += "<h3>Machine Unoccupied</h3>"
 	else
 		dat += "<h3>Subject Status : </h3>"
 		dat += "[occupant.name] => "
 		var/mob/living/mob_occupant = occupant
 		switch(mob_occupant.stat)
-			if(0)
+			if(CONSCIOUS)
 				dat += "<span class='good'>Conscious</span>"
-			if(1)
+			if(UNCONSCIOUS)
 				dat += "<span class='average'>Unconscious</span>"
-			else
+			else // DEAD
 				dat += "<span class='bad'>Deceased</span>"
 	dat += "<br>"
 	dat += "[flash]"
@@ -147,7 +147,7 @@
 	if(href_list["close"])
 		close_machine()
 		return
-	if(isliving(occupant))
+	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant.stat != DEAD)
 			if(href_list["experiment"])

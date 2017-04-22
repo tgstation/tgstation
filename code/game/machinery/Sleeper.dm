@@ -129,8 +129,8 @@
 		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
 
 	data["occupant"] = list()
-	if(isliving(occupant))
-		var/mob/living/mob_occupant = occupant
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
 		data["occupant"]["stat"] = mob_occupant.stat
 		data["occupant"]["health"] = mob_occupant.health
@@ -151,6 +151,8 @@
 /obj/machinery/sleeper/ui_act(action, params)
 	if(..())
 		return
+	var/mob/living/mob_occupant = occupant
+
 	switch(action)
 		if("door")
 			if(state_open)
@@ -160,9 +162,8 @@
 			. = TRUE
 		if("inject")
 			var/chem = params["chem"]
-			if(!is_operational() || !isliving(occupant))
+			if(!is_operational() || mob_occupant)
 				return
-			var/mob/living/mob_occupant = occupant
 			if(mob_occupant.health < min_health && chem != "epinephrine")
 				return
 			if(inject_chem(chem))
@@ -180,9 +181,9 @@
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
-	if(!isliving(occupant))
-		return
 	var/mob/living/mob_occupant = occupant
+	if(!mob_occupant)
+		return
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
 	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
 	return amount && occ_health
