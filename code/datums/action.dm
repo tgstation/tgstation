@@ -40,6 +40,7 @@
 		if(owner)
 			if(owner == M)
 				return
+			Remove(owner)
 		owner = M
 		M.actions += src
 		if(M.client)

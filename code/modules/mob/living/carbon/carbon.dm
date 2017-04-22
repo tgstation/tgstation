@@ -734,6 +734,9 @@
 		if(reagents)
 			reagents.addiction_list = list()
 	..()
+	// heal ears after healing disabilities, since ears check DEAF disability
+	// when healing.
+	restoreEars()
 
 /mob/living/carbon/can_be_revived()
 	. = ..()

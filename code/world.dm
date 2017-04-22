@@ -210,6 +210,7 @@
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
+	feedback_set("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
 	if(GLOB.blackbox)
 		GLOB.blackbox.save_all_data_to_sql()
 	Master.Shutdown()	//run SS shutdowns

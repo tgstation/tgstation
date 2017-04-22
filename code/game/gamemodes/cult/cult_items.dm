@@ -281,6 +281,10 @@
 	if(curselimit > 1)
 		to_chat(user, "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>")
 		return
+	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
+		to_chat(user, "<span class='warning'>Nar-Sie is already on this plane, there is no delaying the end of all things.</span>")
+		return
+
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 		var/cursetime = 1800
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime

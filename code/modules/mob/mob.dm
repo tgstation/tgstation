@@ -72,7 +72,7 @@
 				msg = alt_msg
 				type = alt_type
 
-		if(type & 2 && ear_deaf)//Hearing related
+		if(type & 2 && !can_hear())//Hearing related
 			if(!alt_msg)
 				return
 			else
@@ -569,7 +569,6 @@
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
-
 	if(client && client.holder)
 		if(statpanel("MC"))
 			stat("Location:", "([x], [y], [z])")
@@ -591,6 +590,8 @@
 				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
 			GLOB.cameranet.stat_entry()
+		if(statpanel("Tickets"))
+			GLOB.ahelp_tickets.stat_entry()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -960,10 +961,6 @@
 			set_eye_damage(var_value)
 		if("eye_blurry")
 			set_blurriness(var_value)
-		if("ear_deaf")
-			setEarDamage(-1, var_value)
-		if("ear_damage")
-			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")

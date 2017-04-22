@@ -68,8 +68,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(!target)
 			to_chat(usr, "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>")
 			return
-		log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		message_admins("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
+		var/msg = "[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
+		log_admin(msg)
+		message_admins(msg)
+		admin_ticket_log(target, msg)
 		returnval = WrapAdminProcCall(target, procname, lst) // Pass the lst as an argument list to the proc
 	else
 		//this currently has no hascall protection. wasn't able to get it working.
@@ -125,7 +127,9 @@ GLOBAL_PROTECT(AdminProcCall)
 		to_chat(usr, "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>")
 		return
 	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-	message_admins("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
+	var/msg = "[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
+	message_admins(msg)
+	admin_ticket_log(A, msg)
 	feedback_add_details("admin_verb","Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	var/returnval = WrapAdminProcCall(A, procname, lst) // Pass the lst as an argument list to the proc

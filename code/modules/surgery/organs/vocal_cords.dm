@@ -107,7 +107,7 @@
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
-		if(!L.ear_deaf && !L.null_rod_check() && L != user && L.stat != DEAD)
+		if(L.can_hear() && !L.null_rod_check() && L != user && L.stat != DEAD)
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = L
 				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
