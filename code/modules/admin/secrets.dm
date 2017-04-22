@@ -1,7 +1,8 @@
 /datum/admins/proc/Secrets()
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
-	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
+	var/list/dat = list("<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>")
 
 	dat +={"
 			<B>General Secrets</B><BR>
@@ -83,7 +84,7 @@
 			<BR>
 			"}
 
-	usr << browse(dat, "window=secrets")
+	usr << browse(dat.Join(), "window=secrets")
 	return
 
 
@@ -197,8 +198,7 @@
 		if("moveminingshuttle")
 			if(!check_rights(R_ADMIN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","ShM")
+			feedback_add_details("admin_secrets_fun_used","Send Mining Shuttle")
 			if(!SSshuttle.toggleShuttle("mining","mining_home","mining_away"))
 				message_admins("[key_name_admin(usr)] moved mining shuttle")
 				log_admin("[key_name(usr)] moved the mining shuttle")
@@ -206,8 +206,7 @@
 		if("movelaborshuttle")
 			if(!check_rights(R_ADMIN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","ShL")
+			feedback_add_details("admin_secrets_fun_used","Send Labor Shuttle")
 			if(!SSshuttle.toggleShuttle("laborcamp","laborcamp_home","laborcamp_away"))
 				message_admins("[key_name_admin(usr)] moved labor shuttle")
 				log_admin("[key_name(usr)] moved the labor shuttle")
@@ -215,12 +214,11 @@
 		if("moveferry")
 			if(!check_rights(R_ADMIN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","ShF")
+			feedback_add_details("admin_secrets_fun_used","Send Centcom Ferry")
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
 				message_admins("[key_name_admin(usr)] moved the centcom ferry")
 				log_admin("[key_name(usr)] moved the centcom ferry")
-			
+
 		if("togglearrivals")
 			if(!check_rights(R_ADMIN))
 				return
@@ -228,8 +226,7 @@
 			if(A)
 				var/new_perma = !A.perma_docked
 				A.perma_docked = new_perma
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","ShA[new_perma ? "s" : "g"]")
+				feedback_add_details("admin_toggle","Permadock Arrivals Shuttle|[new_perma]")
 				message_admins("[key_name_admin(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 				log_admin("[key_name(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 			else
@@ -279,8 +276,7 @@
 		if("monkey")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","M")
+			feedback_add_details("admin_secrets_fun_used","Monkeyize All Humans")
 			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				spawn(0)
 					H.monkeyize()
@@ -291,34 +287,23 @@
 				return
 			var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
 			if(result)
+				feedback_add_details("admin_secrets_fun_used","Mass Species Change([result])")
 				log_admin("[key_name(usr)] turned all humans into [result]", 1)
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
 				for(var/mob/living/carbon/human/H in GLOB.mob_list)
 					H.set_species(newtype)
 
-		if("corgi")
-			if(!check_rights(R_FUN))
-				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","M")
-			for(var/mob/living/carbon/human/H in GLOB.mob_list)
-				spawn(0)
-					H.corgize()
-			ok = 1
-
 		if("tripleAI")
 			if(!check_rights(R_FUN))
 				return
 			usr.client.triple_ai()
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","TriAI")
+			feedback_add_details("admin_secrets_fun_used","Triple AI")
 
 		if("power")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","P")
+			feedback_add_details("admin_secrets_fun_used","Power All APCs")
 			log_admin("[key_name(usr)] made all areas powered", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all areas powered</span>")
 			power_restore()
@@ -326,8 +311,7 @@
 		if("unpower")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","UP")
+			feedback_add_details("admin_secrets_fun_used","Depower All APCs")
 			log_admin("[key_name(usr)] made all areas unpowered", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all areas unpowered</span>")
 			power_failure()
@@ -335,8 +319,7 @@
 		if("quickpower")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","QP")
+			feedback_add_details("admin_secrets_fun_used","Power All SMESs")
 			log_admin("[key_name(usr)] made all SMESs powered", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all SMESs powered</span>")
 			power_restore_quick()
@@ -350,8 +333,7 @@
 			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
 			if(!objective)
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","TA([objective])")
+			feedback_add_details("admin_secrets_fun_used","Traitor All ([objective])")
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				if(H.stat == 2 || !H.client || !H.mind) continue
 				if(is_special_character(H)) continue
@@ -383,8 +365,7 @@
 		if("changebombcap")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","BC")
+			feedback_add_details("admin_secrets_fun_used","Bomb Cap")
 
 			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", GLOB.MAX_EX_LIGHT_RANGE) as num|null
 			if (newBombCap < 4)
@@ -400,20 +381,10 @@
 			message_admins("<span class='boldannounce'>[key_name_admin(usr)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]</span>")
 			log_admin("[key_name(usr)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")
 
-
-		if("lightsout")
-			if(!check_rights(R_FUN))
-				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","LO")
-			message_admins("[key_name_admin(usr)] has broke a lot of lights")
-			E = new /datum/round_event/electrical_storm{lightsoutAmount = 2}()
-
 		if("blackout")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","BO")
+			feedback_add_details("admin_secrets_fun_used","Break All Lights")
 			message_admins("[key_name_admin(usr)] broke all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.break_light_tube()
@@ -429,8 +400,7 @@
 
 			if(animetype == "Cancel" || droptype == "Cancel")
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","CC")
+			feedback_add_details("admin_secrets_fun_used","Chinese Cartoons")
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
 			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				H << sound('sound/AI/animes.ogg')
@@ -460,8 +430,7 @@
 		if("whiteout")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","WO")
+			feedback_add_details("admin_secrets_fun_used","Fix All Lights")
 			message_admins("[key_name_admin(usr)] fixed all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.fix()
@@ -472,8 +441,7 @@
 		if("virus")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","V")
+			feedback_add_details("admin_secrets_fun_used","Virus Outbreak")
 			switch(alert("Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose"))
 				if("Make Your Own")
 					AdminCreateVirus(usr.client)
@@ -488,8 +456,7 @@
 		if("retardify")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","RET")
+			feedback_add_details("admin_secrets_fun_used","Mass Braindamage")
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
 				H.setBrainLoss(60)
@@ -498,8 +465,7 @@
 		if("eagles")//SCRAW
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","EgL")
+			feedback_add_details("admin_secrets_fun_used","Egalitarian Station")
 			for(var/obj/machinery/door/airlock/W in GLOB.machines)
 				if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
@@ -509,8 +475,7 @@
 		if("guns")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","SG")
+			feedback_add_details("admin_secrets_fun_used","Summon Guns")
 			var/survivor_probability = 0
 			switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
 				if("Some Antags")
@@ -523,8 +488,7 @@
 		if("magic")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","SM")
+			feedback_add_details("admin_secrets_fun_used","Summon Magic")
 			var/survivor_probability = 0
 			switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
 				if("Some Antags")
@@ -540,24 +504,22 @@
 			if(!SSevents.wizardmode)
 				if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
 					summonevents()
-					feedback_inc("admin_secrets_fun_used",1)
-					feedback_add_details("admin_secrets_fun_used","SE")
+					feedback_add_details("admin_secrets_fun_used","Activate Summon Events")
 
 			else
 				switch(alert("What would you like to do?",,"Intensify Summon Events","Turn Off Summon Events","Nothing"))
 					if("Intensify Summon Events")
 						summonevents()
-						feedback_inc("admin_secrets_fun_used",1)
-						feedback_add_details("admin_secrets_fun_used","SE")
+						feedback_add_details("admin_secrets_fun_used","Intensify Summon Events")
 					if("Turn Off Summon Events")
 						SSevents.toggleWizardmode()
 						SSevents.resetFrequency()
+						feedback_add_details("admin_secrets_fun_used","Disable Summon Events")
 
 		if("dorf")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","DF")
+			feedback_add_details("admin_secrets_fun_used","Dwarf Beards")
 			for(var/mob/living/carbon/human/B in GLOB.mob_list)
 				B.facial_hair_style = "Dward Beard"
 				B.update_hair()
@@ -566,25 +528,21 @@
 		if("onlyone")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","OO")
+			feedback_add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one()
 			send_to_playing_players('sound/misc/highlander.ogg')
-//				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
 
 		if("delayed_onlyone")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","OO")
+			feedback_add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one_delayed()
 			send_to_playing_players('sound/misc/highlander_delayed.ogg')
 
 		if("onlyme")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","OM")
+			feedback_add_details("admin_secrets_fun_used","There Can Be Only Me")
 			only_me()
 
 		if("maint_access_brig")
