@@ -10,6 +10,7 @@
 	is_affected_by_gravity = TRUE
 	var/list/drip_containers = list(/obj/item/weapon/reagent_containers/blood,
 											/obj/item/weapon/reagent_containers/food,
+											/obj/item/weapon/reagent_containers/glass)
 
 /obj/machinery/iv_drip/Initialize()
 	..()
