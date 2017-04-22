@@ -54,6 +54,12 @@
 /obj/item/organ/proc/on_life()
 	return
 
+/obj/item/organ/Moved(atom/oldloc, dir)
+	..()
+
+	if(oldloc == owner)
+		Remove(owner)
+
 /obj/item/organ/examine(mob/user)
 	..()
 	if(status == ORGAN_ROBOTIC && crit_fail)
