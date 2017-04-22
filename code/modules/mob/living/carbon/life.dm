@@ -114,7 +114,6 @@
 	var/safe_tox_max = 0.05
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
-	var/oxygen_used = 0
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
@@ -133,7 +132,6 @@
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath_gases["o2"][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
@@ -143,11 +141,10 @@
 		failed_last_breath = 0
 		if(oxyloss)
 			adjustOxyLoss(-5)
-		oxygen_used = breath_gases["o2"][MOLES]
 		clear_alert("oxy")
 
-	breath_gases["o2"][MOLES] -= oxygen_used
-	breath_gases["co2"][MOLES] += oxygen_used
+	breath_gases["co2"][MOLES] += breath_gases["o2"][MOLES]
+	breath_gases["o2"][MOLES] = 0
 
 	//CARBON DIOXIDE
 	if(CO2_partialpressure > safe_co2_max)

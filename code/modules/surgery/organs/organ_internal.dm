@@ -295,8 +295,6 @@
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		return 0
 
-	var/gas_breathed = 0
-
 	var/list/breath_gases = breath.gases
 
 	breath.assert_gases("o2", "plasma", "co2", "n2o", "bz")
@@ -321,19 +319,17 @@
 	//Too little oxygen!
 	if(safe_oxygen_min)
 		if(O2_pp < safe_oxygen_min)
-			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath_gases["o2"][MOLES])
+			handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath_gases["o2"][MOLES])
 			H.throw_alert("oxy", /obj/screen/alert/oxy)
 		else
 			H.failed_last_breath = 0
 			if(H.getOxyLoss())
 				H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["o2"][MOLES]
 			H.clear_alert("oxy")
 
 	//Exhale
-	breath_gases["o2"][MOLES] -= gas_breathed
-	breath_gases["co2"][MOLES] += gas_breathed
-	gas_breathed = 0
+	breath_gases["co2"][MOLES] += breath_gases["o2"][MOLES]
+	breath_gases["o2"][MOLES] = 0
 
 
 	//-- CO2 --//
@@ -359,18 +355,16 @@
 	//Too little CO2!
 	if(breathlevels["safe_co2_min"])
 		if(CO2_pp < safe_co2_min)
-			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath_gases["co2"][MOLES])
+			handle_too_little_breath(H,CO2_pp, safe_co2_min,breath_gases["co2"][MOLES])
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["co2"][MOLES]
 			H.clear_alert("not_enough_co2")
 
 	//Exhale
-	breath_gases["co2"][MOLES] -= gas_breathed
-	breath_gases["o2"][MOLES] += gas_breathed
-	gas_breathed = 0
+	breath_gases["o2"][MOLES] += breath_gases["co2"][MOLES]
+	breath_gases["co2"][MOLES] = 0
 
 
 	//-- TOX --//
@@ -389,18 +383,16 @@
 	//Too little toxins!
 	if(safe_toxins_min)
 		if(Toxins_pp < safe_toxins_min)
-			gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath_gases["plasma"][MOLES])
+			handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath_gases["plasma"][MOLES])
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["plasma"][MOLES]
 			H.clear_alert("not_enough_tox")
 
 	//Exhale
-	breath_gases["plasma"][MOLES] -= gas_breathed
-	breath_gases["co2"][MOLES] += gas_breathed
-	gas_breathed = 0
+	breath_gases["co2"][MOLES] += breath_gases["plasma"][MOLES]
+	breath_gases["plasma"][MOLES] = 0
 
 
 	//-- TRACES --//
