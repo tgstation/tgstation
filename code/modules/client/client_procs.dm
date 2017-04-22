@@ -329,6 +329,9 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	do_computerid_test(src) //Will test to see if their cid changed and will ban if so.
+	check_compid_list(src) 	//Will analyze their computer ID usage patterns for aberrations
+
 
 //////////////
 //DISCONNECT//
