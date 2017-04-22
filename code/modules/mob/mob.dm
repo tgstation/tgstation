@@ -69,7 +69,7 @@
 				msg = alt_msg
 				type = alt_type
 
-		if(type & 2 && ear_deaf)//Hearing related
+		if(type & 2 && !can_hear())//Hearing related
 			if(!alt_msg)
 				return
 			else
@@ -958,10 +958,6 @@
 			set_eye_damage(var_value)
 		if("eye_blurry")
 			set_blurriness(var_value)
-		if("ear_deaf")
-			setEarDamage(-1, var_value)
-		if("ear_damage")
-			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")
