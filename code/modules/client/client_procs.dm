@@ -328,6 +328,26 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	var/list/topmenus = GLOB.menulist[/datum/menu]
+	for (var/thing in topmenus)
+		var/datum/menu/topmenu = thing
+		var/topmenuname = "[topmenu]"
+		if (topmenuname == "[topmenu.type]")
+			var/list/tree = splittext(topmenuname, "/")
+			topmenuname = tree[tree.len]
+		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
+		var/list/entries = topmenu.Generate_list(src)
+		for (var/child in entries)
+			winset(src, "[url_encode(child)]", "[entries[child]]")
+			if (!ispath(child, /datum/menu))
+				var/atom/verb/verbpath = child
+				if (copytext(verbpath.name,1,2) != "@")
+					new child(src)
+
+	for (var/thing in prefs.menuoptions)
+		var/datum/menu/menuitem = GLOB.menulist[thing]
+		if (menuitem)
+			menuitem.Load_checked(src)
 
 //////////////
 //DISCONNECT//

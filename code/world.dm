@@ -59,6 +59,7 @@
 	load_mode()
 	load_motd()
 	load_admins()
+	load_menu()
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -68,6 +69,7 @@
 	GLOB.data_core = new /datum/datacore()
 
 	Master.Initialize(10, FALSE)
+	return
 
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
@@ -341,5 +343,10 @@
 
 	status = s
 
+
 /world/proc/has_round_started()
 	return SSticker.HasRoundStarted()
+
+/world/proc/load_menu()
+	for (var/typepath in (typesof(/datum/menu)-/datum/menu))
+		new typepath()
