@@ -49,14 +49,14 @@
 
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user)
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
-		if(Attach(user))
+		if(Leap(user))
 			return
 	..()
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M, mob/user)
 	..()
-	if(user.temporarilyRemoveItemFromInventory(src))
-		Attach(M)
+	if(user.transferItemToLoc(src, get_turf(M)))
+		Leap(M)
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
@@ -98,7 +98,7 @@
 
 /obj/item/clothing/mask/facehugger/HasProximity(atom/movable/AM as mob|obj)
 	if(CanHug(AM) && Adjacent(AM))
-		return Attach(AM)
+		return Leap(AM)
 	return 0
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
@@ -116,7 +116,7 @@
 	..()
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]"
-		Attach(hit_atom)
+		Leap(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/M)
 	// valid targets: corgis, carbons except aliens and devils
@@ -144,9 +144,13 @@
 		// corgi: valid
 		return TRUE
 
-/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
+/obj/item/clothing/mask/facehugger/proc/Leap(mob/living/M)
 	if(!valid_to_attach(M))
 		return FALSE
+	if(iscarbon(M))
+		var/mob/living/carbon/target = M
+		if(target.wear_mask && istype(target.wear_mask, /obj/item/clothing/mask/facehugger))
+			return FALSE
 	// passed initial checks - time to leap!
 	M.visible_message("<span class='danger'>[src] leaps at [M]'s face!</span>", \
 							"<span class='userdanger'>[src] leaps at [M]'s face!</span>")
@@ -165,11 +169,15 @@
 
 		if(target.wear_mask)
 			var/obj/item/clothing/W = target.wear_mask
-			if(!istype(W,/obj/item/clothing/mask/facehugger) && target.dropItemToGround(W))
+			if(target.dropItemToGround(W))
 				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
 									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
-		forceMove(target)
 		target.equip_to_slot_if_possible(src, slot_wear_mask, 0, 1, 1)
+	return TRUE // time for a smoke
+
+/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
+	if(!valid_to_attach(M))
+		return
 	// early returns and validity checks done: attach.
 	attached++
 	//ensure we detach once we no longer need to be attached
@@ -188,8 +196,6 @@
 	GoIdle() //so it doesn't jump the people that tear it off
 
 	addtimer(CALLBACK(src, .proc/Impregnate, M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
-
-	return TRUE // time for a smoke
 
 /obj/item/clothing/mask/facehugger/proc/detach()
 	attached = 0
