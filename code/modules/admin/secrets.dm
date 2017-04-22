@@ -198,7 +198,6 @@
 		if("moveminingshuttle")
 			if(!check_rights(R_ADMIN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","Send Mining Shuttle")
 			if(!SSshuttle.toggleShuttle("mining","mining_home","mining_away"))
 				message_admins("[key_name_admin(usr)] moved mining shuttle")
