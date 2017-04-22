@@ -175,7 +175,7 @@
 	else
 		investigate_log("has exploded.", "supermatter")
 		explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
-		if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
+		if(power > POWER_PENALTY_THRESHOLD)
 			investigate_log("has spawned additional energy balls.", "supermatter")
 			var/obj/singularity/energy_ball/E = new(T)
 			E.energy = power

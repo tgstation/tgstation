@@ -58,6 +58,7 @@
 		internal_organs += new /obj/item/organ/heart
 
 	internal_organs += new dna.species.mutanteyes()
+	internal_organs += new dna.species.mutantears
 	internal_organs += new /obj/item/organ/brain
 	..()
 

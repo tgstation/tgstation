@@ -1,4 +1,5 @@
 /obj/item/wallframe
+	icon = 'icons/obj/wallframe.dmi'
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT*2)
 	flags = CONDUCT
 	origin_tech = "materials=1;engineering=1"
@@ -38,7 +39,7 @@
 		if(inverse)
 			ndir = turn(ndir, 180)
 
-		var/obj/O = new result_path(get_turf(user), ndir, 1)
+		var/obj/O = new result_path(get_turf(user), ndir, TRUE)
 		after_attach(O)
 
 	qdel(src)
@@ -71,8 +72,7 @@
 /obj/item/wallframe/apc
 	name = "\improper APC frame"
 	desc = "Used for repairing or building APCs"
-	icon = 'icons/obj/apc_repair.dmi'
-	icon_state = "apc_frame"
+	icon_state = "apc"
 	result_path = /obj/machinery/power/apc
 	inverse = 1
 

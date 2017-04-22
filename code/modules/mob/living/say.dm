@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
 	log_message(message, INDIVIDUAL_SAY_LOG)
 
-	var/radio_return = radio(message, message_mode, spans)
+	var/radio_return = radio(message, message_mode, spans, language)
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
