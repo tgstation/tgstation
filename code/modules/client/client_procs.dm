@@ -197,7 +197,7 @@ GLOBAL_LIST(external_rsc_urls)
 	var/alert_mob_dupe_login = FALSE
 	if(config.log_access)
 		for(var/I in GLOB.clients)
-			if(I == src)
+			if(!I || I == src)
 				continue
 			var/client/C = I
 			if(C.key && (C.key != key) )
