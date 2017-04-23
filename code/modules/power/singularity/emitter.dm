@@ -88,7 +88,7 @@
 		rotate()
 
 /obj/machinery/power/emitter/Initialize()
-	..()
+	. = ..()
 	if(state == 2 && anchored)
 		connect_to_network()
 

@@ -86,7 +86,7 @@
 							/obj/item/weapon/stock_parts/manipulator = 6)
 
 /obj/machinery/power/compressor/Initialize()
-	..()
+	. = ..()
 	locate_machinery()
 	if(!turbine)
 		stat |= BROKEN
@@ -202,7 +202,7 @@
 							/obj/item/weapon/stock_parts/capacitor = 6)
 
 /obj/machinery/power/turbine/Initialize()
-	..()
+	. = ..()
 	locate_machinery()
 	if(!compressor)
 		stat |= BROKEN
@@ -338,7 +338,7 @@
 
 
 /obj/machinery/computer/turbine_computer/Initialize()
-	..()
+	. = ..()
 	locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()

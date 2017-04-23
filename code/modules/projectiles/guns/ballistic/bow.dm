@@ -15,7 +15,7 @@
 	var/slowdown_when_ready = 2
 
 /obj/item/weapon/gun/ballistic/bow/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 
 /obj/item/weapon/gun/ballistic/bow/update_icon()

@@ -241,7 +241,7 @@
 	. = ..()
 
 /obj/docking_port/mobile/Initialize(mapload)
-	..()
+	. = ..()
 
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
@@ -316,7 +316,7 @@
 	if(!check_dock(S))
 		testing("check_dock failed on request for [src]")
 		return
-	
+
 	if(mode == SHUTTLE_IGNITING && destination == S)
 		return
 

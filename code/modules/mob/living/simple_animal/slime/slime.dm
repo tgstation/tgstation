@@ -92,7 +92,7 @@
 	create_reagents(100)
 	set_colour(new_colour)
 	grant_language(/datum/language/slime)
-	..()
+	. = ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
