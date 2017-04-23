@@ -136,7 +136,7 @@
 		return "0h"
 
 /proc/update_exp(var/mins, var/ann = 0)
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		return -1
 	spawn(0)
 		for(var/client/L in GLOB.clients)
@@ -149,7 +149,7 @@
 /client/proc/update_exp_client(var/minutes, var/announce_changes = 0)
 	if(!src ||!ckey)
 		return
-	var/DBQuery/exp_read = GLOB.dbcon.NewQuery("SELECT exp FROM [format_table_name("player")] WHERE ckey='[ckey]'")
+	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT exp FROM [format_table_name("player")] WHERE ckey='[ckey]'")
 	if(!exp_read.Execute())
 		var/err = exp_read.ErrorMsg()
 		log_game("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
@@ -191,24 +191,9 @@
 	var/new_exp = json_encode(play_records)
 	prefs.exp = new_exp
 	new_exp = sanitizeSQL(new_exp)
-	var/DBQuery/update_query = GLOB.dbcon.NewQuery("UPDATE [format_table_name("player")] SET exp = '[new_exp]' WHERE ckey='[ckey]'")
+	var/datum/DBQuery/update_query = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET exp = '[new_exp]' WHERE ckey='[ckey]'")
 	if(!update_query.Execute())
 		var/err = update_query.ErrorMsg()
 		log_game("SQL ERROR during exp_update_client write. Error : \[[err]\]\n")
 		message_admins("SQL ERROR during exp_update_client write. Error : \[[err]\]\n")
 		return
-
-
-/client/proc/read_exp_db()
-	if(!src ||!ckey)
-		return
-	var/DBQuery/exp_read = GLOB.dbcon.NewQuery("SELECT exp FROM [format_table_name("player")] WHERE ckey='[ckey]'")
-	if(!exp_read.Execute())
-		var/err = exp_read.ErrorMsg()
-		log_game("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
-		return FALSE
-	while(exp_read.NextRow())
-		prefs.exp = exp_read.item[1]
-		return TRUE
-	return FALSE

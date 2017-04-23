@@ -338,17 +338,17 @@
 				if("use_account_age_for_jobs")
 					use_account_age_for_jobs = 1
 				if("use_exp_tracking")
-					config.use_exp_tracking = 1
+					use_exp_tracking = 1
 				if("use_exp_restrictions_heads")
-					config.use_exp_restrictions_heads = 1
+					use_exp_restrictions_heads = 1
 				if("use_exp_restrictions_heads_hours")
-					config.use_exp_restrictions_heads_hours = text2num(value)
+					use_exp_restrictions_heads_hours = text2num(value)
 				if("use_exp_restrictions_heads_department")
-					config.use_exp_restrictions_heads_department = 1
+					use_exp_restrictions_heads_department = 1
 				if("use_exp_restrictions_other")
-					config.use_exp_restrictions_other = 1
+					use_exp_restrictions_other = 1
 				if("use_exp_restrictions_admin_bypass")
-					config.use_exp_restrictions_admin_bypass = 1
+					use_exp_restrictions_admin_bypass = 1
 				if("lobby_countdown")
 					lobby_countdown = text2num(value)
 				if("round_end_countdown")
