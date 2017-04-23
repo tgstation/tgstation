@@ -54946,6 +54946,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
@@ -55707,6 +55712,12 @@
 /area/engine/engine_smes)
 "bSP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -56328,6 +56339,12 @@
 /area/engine/engine_smes)
 "bTQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -56891,6 +56908,11 @@
 /area/atmos)
 "bUR" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (SOUTHWEST)";
 	icon_state = "yellow";
@@ -56905,6 +56927,11 @@
 	dir = 1;
 	icon_state = "camera";
 	network = list("SS13","CE")
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/yellow/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -57375,6 +57402,12 @@
 	name = "Central Asteroid Maintenance";
 	req_access_txt = "10"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -57784,6 +57817,12 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -59669,6 +59708,11 @@
 "caf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (NORTHEAST)";
+	icon_state = "intact";
+	dir = 5
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90903,6 +90947,11 @@
 	})
 "dgP" = (
 /obj/item/stack/rods,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92357,6 +92406,11 @@
 "djR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -95048,6 +95102,1559 @@
 /area/maintenance/starboard{
 	name = "Starboard Asteroid Maintenance"
 	})
+"dpi" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Mix To Incinerator";
+	on = 0
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpj" = (
+/obj/machinery/atmospherics/pipe/manifold/orange/hidden{
+	tag = "icon-manifold (NORTH)";
+	icon_state = "manifold";
+	dir = 1
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpk" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpl" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpm" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpn" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpo" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpp" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Central Asteroid Maintenance";
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpr" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dps" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpt" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpu" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpv" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpw" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpx" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpy" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpz" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpA" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpB" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpD" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpE" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpF" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpG" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpH" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpI" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpJ" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (SOUTHWEST)";
+	icon_state = "intact";
+	dir = 10
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpK" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpL" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (NORTHEAST)";
+	icon_state = "intact";
+	dir = 5
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpM" = (
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpN" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (SOUTHWEST)";
+	icon_state = "intact";
+	dir = 10
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpO" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpP" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (NORTHEAST)";
+	icon_state = "intact";
+	dir = 5
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpQ" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (SOUTHWEST)";
+	icon_state = "intact";
+	dir = 10
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpR" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpS" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (NORTHEAST)";
+	icon_state = "intact";
+	dir = 5
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpT" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (SOUTHWEST)";
+	icon_state = "intact";
+	dir = 10
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpU" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpV" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpW" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Central Asteroid Maintenance";
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpX" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dpZ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqa" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (NORTHEAST)";
+	icon_state = "intact";
+	dir = 5
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqb" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqc" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqd" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqe" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqf" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqg" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqh" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqi" = (
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqj" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	tag = "icon-intact (SOUTHWEST)";
+	icon_state = "intact";
+	dir = 10
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqk" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dql" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqm" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqn" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqo" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqp" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqq" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqr" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqs" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqt" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqu" = (
+/obj/machinery/door/airlock/atmos{
+	name = "Turbine Access";
+	req_access_txt = "32"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqv" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqw" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqx" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqy" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqz" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Central Asteroid Maintenance";
+	req_access_txt = "12"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqB" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqC" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqD" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqE" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqF" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqG" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqH" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqI" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/maintcentral{
+	name = "Central Asteroid Maintenance"
+	})
+"dqJ" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqK" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4;
+	name = "input gas connector port"
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqL" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	name = "plasma tank pump"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 4;
+	initialize_directions = 11
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqN" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/weapon/extinguisher,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqO" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqP" = (
+/obj/machinery/power/smes{
+	capacity = 9e+006;
+	charge = 10000
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqQ" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqR" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqS" = (
+/obj/machinery/atmospherics/components/unary/tank/toxins{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqT" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	name = "plasma tank pump"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqU" = (
+/obj/machinery/atmospherics/pipe/manifold4w/general{
+	level = 2
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqV" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqW" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqX" = (
+/obj/machinery/airalarm{
+	desc = "This particular atmos control unit appears to have no access restrictions.";
+	dir = 8;
+	icon_state = "alarm0";
+	locked = 0;
+	name = "all-access air alarm";
+	pixel_x = 24;
+	req_access = "0";
+	req_one_access = "0"
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	name = "output gas connector port"
+	},
+/obj/machinery/portable_atmospherics/canister,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqY" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dqZ" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dra" = (
+/obj/structure/chair/stool,
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Incinerator APC";
+	pixel_x = -23;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drb" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drc" = (
+/obj/machinery/atmospherics/components/binary/valve{
+	name = "Mix to Space"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drd" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dre" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drf" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "Incinerator to Output";
+	on = 0
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drg" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drh" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dri" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/weapon/pen,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drj" = (
+/obj/machinery/computer/turbine_computer{
+	id = "incineratorturbine"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	icon_state = "intact";
+	dir = 6
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drk" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drl" = (
+/obj/machinery/button/door{
+	id = "auxincineratorvent";
+	name = "Auxiliary Vent Control";
+	pixel_x = 6;
+	pixel_y = -24;
+	req_access_txt = "32"
+	},
+/obj/machinery/button/door{
+	id = "turbinevent";
+	name = "Turbine Vent Control";
+	pixel_x = -6;
+	pixel_y = -24;
+	req_access_txt = "32"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/maintenance/incinerator)
+"drm" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4;
+	name = "Incinerator to Space"
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/maintenance/incinerator)
+"drn" = (
+/obj/machinery/doorButtons/airlock_controller{
+	idExterior = "incinerator_airlock_exterior";
+	idSelf = "incinerator_access_control";
+	idInterior = "incinerator_airlock_interior";
+	name = "Incinerator Access Console";
+	pixel_x = 6;
+	pixel_y = -26;
+	req_access_txt = "12"
+	},
+/obj/machinery/button/ignition{
+	id = "Incinerator";
+	pixel_x = -6;
+	pixel_y = -24
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 4;
+	initialize_directions = 11
+	},
+/obj/machinery/meter,
+/turf/open/floor/plasteel/floorgrime,
+/area/maintenance/incinerator)
+"dro" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drp" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drq" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drs" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drt" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 2
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dru" = (
+/obj/machinery/door/airlock/glass{
+	autoclose = 0;
+	frequency = 1449;
+	heat_proof = 1;
+	icon_state = "door_locked";
+	id_tag = "incinerator_airlock_interior";
+	locked = 1;
+	name = "Turbine Interior Airlock";
+	req_access_txt = "32"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/maintenance/incinerator)
+"drv" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drw" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drx" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 2;
+	name = "Incinerator Output Pump";
+	on = 1
+	},
+/turf/open/space,
+/area/maintenance/incinerator)
+"dry" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drz" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 2;
+	on = 1
+	},
+/obj/machinery/doorButtons/access_button{
+	idDoor = "incinerator_airlock_exterior";
+	idSelf = "incinerator_access_control";
+	layer = 3.1;
+	name = "Incinerator airlock control";
+	pixel_x = 8;
+	pixel_y = -24
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/sign/fire{
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/maintenance/incinerator)
+"drA" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/maintenance/incinerator)
+"drB" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	on = 1
+	},
+/obj/structure/sign/fire{
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/obj/machinery/doorButtons/access_button{
+	idSelf = "incinerator_access_control";
+	idDoor = "incinerator_airlock_interior";
+	name = "Incinerator airlock control";
+	pixel_x = -8;
+	pixel_y = 24
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/open/floor/engine,
+/area/maintenance/incinerator)
+"drC" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drD" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/space,
+/area/maintenance/incinerator)
+"drE" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drF" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 2
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drG" = (
+/obj/machinery/door/airlock/glass{
+	autoclose = 0;
+	frequency = 1449;
+	heat_proof = 1;
+	icon_state = "door_locked";
+	id_tag = "incinerator_airlock_exterior";
+	locked = 1;
+	name = "Turbine Exterior Airlock";
+	req_access_txt = "32"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/maintenance/incinerator)
+"drH" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drI" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drJ" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/space,
+/area/maintenance/incinerator)
+"drK" = (
+/obj/machinery/door/poddoor{
+	id = "auxincineratorvent";
+	name = "Auxiliary Incinerator Vent"
+	},
+/turf/open/floor/engine/vacuum{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drL" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1;
+	frequency = 1441;
+	id = "inc_in"
+	},
+/turf/open/floor/engine/vacuum{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drM" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/igniter{
+	icon_state = "igniter0";
+	id = "Incinerator";
+	luminosity = 2;
+	on = 0
+	},
+/turf/open/floor/engine/vacuum{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drN" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	external_pressure_bound = 0;
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	on = 0;
+	pressure_checks = 2;
+	pump_direction = 0
+	},
+/turf/open/floor/engine/vacuum{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drO" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/incinerator)
+"drP" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/space,
+/area/maintenance/incinerator)
+"drQ" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/incinerator)
+"drR" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/incinerator)
+"drS" = (
+/obj/machinery/power/compressor{
+	comp_id = "incineratorturbine";
+	dir = 1;
+	luminosity = 2
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine/vacuum{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drT" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/incinerator)
+"drU" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/incinerator)
+"drV" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/space,
+/area/maintenance/incinerator)
+"drW" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/incinerator)
+"drX" = (
+/obj/machinery/power/turbine{
+	luminosity = 2
+	},
+/obj/structure/cable/yellow,
+/turf/open/floor/engine/vacuum{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"drY" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/incinerator)
+"drZ" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/maintenance/incinerator)
+"dsa" = (
+/obj/structure/sign/fire{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/incinerator)
+"dsb" = (
+/obj/machinery/door/poddoor{
+	id = "turbinevent";
+	name = "Turbine Vent"
+	},
+/turf/open/floor/engine/vacuum{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/incinerator)
+"dsc" = (
+/obj/structure/sign/fire{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/incinerator)
 
 (1,1,1) = {"
 aaa
@@ -110765,7 +112372,7 @@ aeY
 afs
 afM
 ags
-doY
+doX
 dpa
 aiJ
 akw
@@ -121654,26 +123261,26 @@ aZt
 bAd
 bAd
 byQ
-byP
-byP
-byP
-byO
-dgD
-bvU
-dht
-cbr
-cbr
-cbr
-dfU
-cbr
-cbr
-dfU
-cbr
-cbr
-cbr
-cbr
-dfU
-dfU
+bEj
+dpl
+dpm
+dpn
+dpo
+dpp
+dpq
+dpr
+dps
+dpt
+dpu
+dpv
+dpw
+dpx
+dpy
+dpz
+dpB
+dpD
+dpF
+dpH
 caf
 bBN
 bBN
@@ -121911,7 +123518,7 @@ aZt
 bBN
 cMH
 bDb
-byP
+bEk
 bGE
 bGE
 bGE
@@ -121931,8 +123538,8 @@ cbr
 djb
 diU
 cbr
-cbr
-cbr
+dpJ
+dpL
 bAd
 aZt
 aZt
@@ -122168,7 +123775,7 @@ aZt
 bBN
 byS
 byQ
-byP
+bEk
 bGE
 bHH
 bHH
@@ -122189,7 +123796,7 @@ bOM
 bOM
 bOM
 dgQ
-djm
+dpM
 byS
 bAd
 bBN
@@ -122425,7 +124032,7 @@ aZt
 bAd
 bAd
 byQ
-byO
+dpk
 bGE
 bHI
 bJv
@@ -122446,8 +124053,8 @@ bYp
 bXG
 bOM
 cbr
-cbr
-cbr
+dpN
+dpP
 cMH
 byS
 cbr
@@ -122682,7 +124289,7 @@ aZH
 bAd
 bAd
 bEi
-byP
+bEk
 bGE
 bHJ
 bHJ
@@ -122704,8 +124311,8 @@ bXG
 bOM
 byS
 dfU
-cbr
-cbr
+dpQ
+dpS
 byS
 cbr
 dgD
@@ -122939,7 +124546,7 @@ aZH
 bAd
 cMH
 byQ
-byP
+bEk
 bGE
 bHK
 bHK
@@ -122962,10 +124569,10 @@ bOM
 bAd
 diS
 djs
-dgD
-bvU
-dht
-cbr
+dpT
+dpW
+dpY
+dqa
 cMH
 cMH
 byS
@@ -123195,8 +124802,8 @@ aZt
 aZH
 bBN
 bCZ
-byP
-byP
+bEj
+bEl
 bGE
 bGE
 bGE
@@ -123222,7 +124829,7 @@ cMH
 byS
 cMH
 dfU
-cbr
+dqb
 byS
 byS
 aZt
@@ -123452,7 +125059,7 @@ aZt
 bAd
 byS
 bAf
-byP
+bEk
 bAd
 bGE
 bHL
@@ -123479,8 +125086,8 @@ cMV
 cbr
 byS
 cbr
-cbr
-djM
+dqc
+djm
 bAd
 aZt
 aZt
@@ -123736,8 +125343,8 @@ cbr
 dgD
 cNc
 dht
-cbr
-djm
+dqd
+djO
 byS
 aZH
 aZt
@@ -123966,7 +125573,7 @@ aZt
 bAd
 bAd
 dgC
-byP
+dpi
 bFq
 bGG
 bHN
@@ -123993,8 +125600,8 @@ cMW
 cbr
 cMH
 bAd
-cbr
-djO
+dqe
+djP
 djl
 aZH
 aZt
@@ -124223,7 +125830,7 @@ bal
 bal
 bal
 bDb
-bEj
+dpj
 bFr
 bGH
 bHO
@@ -124250,12 +125857,12 @@ bOM
 bOM
 bOM
 byS
-cbr
-djP
+dqf
+bAe
 cMH
 aZH
 aZt
-aaa
+abC
 aaa
 aaa
 aaa
@@ -124507,13 +126114,13 @@ cbi
 cbi
 bOM
 dge
-cbr
-bAe
-byS
-aZH
-aZt
-aZt
-aaa
+dqg
+dqr
+dqJ
+dqR
+dqZ
+drh
+drp
 aaa
 aaa
 aaa
@@ -124764,13 +126371,13 @@ cbj
 cbP
 bOM
 dfU
-cbr
-bBN
-bBN
-aZH
-aZt
-aZt
-aaa
+dqh
+dqs
+dqK
+dqS
+dra
+dri
+drq
 aaa
 aaa
 aaa
@@ -125021,19 +126628,19 @@ cbi
 cbi
 bOM
 cbr
-cbr
-bBN
-aZH
-aZH
-aZt
-aZt
-aZt
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dqi
+dqt
+dqL
+dqT
+drb
+drj
+drr
+drx
+drD
+drJ
+drP
+drV
+drZ
 aaa
 aaa
 aaa
@@ -125278,19 +126885,19 @@ bOM
 bOM
 bOM
 djb
-cbr
-cMH
-aZH
-aZH
-aZt
-aZt
-aZt
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dqj
+dqu
+dqM
+dqU
+drc
+drk
+drs
+dry
+drE
+drK
+drQ
+arw
+arw
 aaa
 aaa
 aaa
@@ -125535,19 +127142,19 @@ cbk
 cbk
 bOM
 cbr
-djm
-cMH
-aZt
-aZt
-aZt
-aZt
-aZt
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dqk
+dqv
+dqN
+dqV
+drd
+drl
+drt
+drz
+drF
+drL
+drR
+drW
+dsa
 aaa
 aaa
 aaa
@@ -125792,19 +127399,19 @@ cbl
 cbQ
 bOM
 cbr
-cbr
-bAd
-aZH
-aZt
-aZt
-aZt
-aZt
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dql
+dqw
+dqO
+dqW
+dre
+drm
+dru
+drA
+drG
+drM
+drS
+drX
+dsb
 aaa
 aaa
 aaa
@@ -126049,19 +127656,19 @@ cbk
 cbk
 bOM
 cbr
-dfU
-bAd
-aZH
-aZH
-aZt
-aZt
-aZt
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dqm
+dqx
+dqP
+dqX
+drf
+drn
+drv
+drB
+drH
+drN
+drT
+drY
+dsc
 aaa
 aaa
 aaa
@@ -126306,19 +127913,19 @@ bOM
 bOM
 bOM
 cbr
-cbr
-byS
-bBN
-aZH
-aZt
-aZt
-aZt
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dqn
+dqy
+dqQ
+dqY
+drg
+dro
+drw
+drC
+drI
+drO
+drU
+arw
+arw
 aaa
 aaa
 aaa
@@ -126563,15 +128170,15 @@ cbm
 cbm
 bOM
 djs
-cbr
+dqo
 dgE
 byS
 aZH
 aZt
 aZt
 aZt
-aaa
-aaa
+abC
+abC
 aaa
 aaa
 aaa
@@ -126820,7 +128427,7 @@ cbn
 cbR
 bOM
 djF
-cbr
+dqp
 djR
 cMH
 aZH
@@ -127078,7 +128685,7 @@ cbm
 bOM
 bAd
 dgQ
-bvU
+dqz
 bBN
 aZH
 aZt
@@ -127335,7 +128942,7 @@ bOM
 bOM
 cbr
 diU
-caf
+dqA
 byS
 aZH
 aZt
@@ -127592,7 +129199,7 @@ cbo
 bOM
 djG
 bAd
-cbr
+dqB
 bBN
 aZH
 aZt
@@ -127849,27 +129456,27 @@ cbS
 bOM
 bAd
 byS
-cbr
+dqC
 byS
 aZH
 aZH
 aZH
 aZt
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -128106,27 +129713,27 @@ cbo
 bOM
 bAd
 cMH
-cbr
+dqD
 byS
 aZH
 aZH
 aZH
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -128363,27 +129970,27 @@ bOM
 bOM
 bAd
 bAd
-cbr
+dqE
 bBN
 aZH
 aZH
 aZH
 aaa
-aaa
-aaa
 cKF
 cKF
 cKF
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -128620,27 +130227,27 @@ byS
 bAd
 byS
 cbr
-cbr
+dqF
 bBN
 aZH
 aZH
 aZH
 aaa
-aaa
-aaa
 cKF
 cKF
 cKF
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -128877,27 +130484,27 @@ djv
 byS
 bPt
 byP
-cbr
+dqG
 djk
 aZH
 aZt
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -129122,19 +130729,19 @@ bTP
 bUR
 bVQ
 bWD
-cbr
-cbr
-cbr
-cbr
-cbr
-cMV
-cbr
-cbr
-cbr
+dpA
+dpC
+dpE
+dpG
+dpI
+dpK
+dpO
+dpR
+dpU
 djw
 byP
 byP
-cbr
+dqH
 cMH
 aZH
 aZt
@@ -129144,17 +130751,17 @@ cKF
 cKF
 cKF
 cKF
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 aac
 aad
@@ -129387,11 +130994,11 @@ bAe
 djk
 cbr
 byP
-byP
-byP
-byP
-byP
-byP
+dpV
+dpX
+dpZ
+dqq
+dqI
 byS
 aZH
 aaa
@@ -129401,17 +131008,17 @@ cKF
 cKF
 cKF
 cKF
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aad
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 aab
 aad
 aad
@@ -129658,17 +131265,17 @@ cKF
 cKF
 cKF
 cKF
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 aab
 aab
 aad
@@ -129915,17 +131522,17 @@ cKF
 cKF
 cKF
 cKF
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aad
-aaa
-aad
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+aab
 aab
 aad
 aac
@@ -130181,7 +131788,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aab
 aab
 aab
 aad
