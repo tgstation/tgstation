@@ -43,7 +43,7 @@
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;subtlemessage=\ref[M]'>SM</a> - "
 	body += "<a href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a> - "
-	body += "<a href='?_src_=holder;individuallog=\ref[M]'>LOGS</a>\] <b><br>"
+	body += "<a href='?_src_=holder;individuallog=\ref[M]'>LOGS</a>\] <br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
