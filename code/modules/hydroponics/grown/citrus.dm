@@ -38,10 +38,10 @@
 	species = "orange"
 	plantname = "Orange Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange
-	lifespan = 60
-	endurance = 50
-	yield = 5
-	potency = 20
+	lifespan = 0
+	endurance = 0
+	yield = 0
+	potency = 0
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
