@@ -192,21 +192,16 @@
 		break_light_tube(1)
 	return ..()
 
-/obj/machinery/light/built/New()
+/obj/machinery/light/built
 	status = LIGHT_EMPTY
-	update(0)
-	..()
 
-/obj/machinery/light/small/built/New()
+/obj/machinery/light/small/built
 	status = LIGHT_EMPTY
-	update(0)
-	..()
-
 
 // create a new lighting fixture
-/obj/machinery/light/New()
+/obj/machinery/light/Initialize(mapload)
 	..()
-	spawn(2)
+	if(mapload)
 		switch(fitting)
 			if("tube")
 				brightness = 8
@@ -216,8 +211,7 @@
 				brightness = 4
 				if(prob(5))
 					break_light_tube(1)
-		spawn(1)
-			update(0)
+	update(0)
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
