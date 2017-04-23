@@ -106,37 +106,6 @@
 	icon_state = "flashlight_eyes"
 	flash_protect = 2
 	tint = INFINITY
-
-/obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
-	return
-
-/obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
-	..()
-	M.set_light(M.light_range + 15, M.light_power + 1)
-
-
-/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
-	M.set_light(M.light_range -15, M.light_power - 1)
-	..()
-
-// Welding shield implant
-/obj/item/organ/eyes/robotic/shield
-	name = "shielded robotic eyes"
-	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
-	origin_tech = "materials=4;biotech=3;engineering=4;plasmatech=3"
-	flash_protect = 2
-
-/obj/item/organ/eyes/robotic/shield/emp_act(severity)
-	return
-
-/obj/item/organ/eyes/robotic/flashlight
-	name = "flashlight eyes"
-	desc = "It's two flashlights rigged together with some wire. Why would you put these in someones head?"
-	eye_color ="fee5a3"
-	icon = 'icons/obj/lighting.dmi'
-	icon_state = "flashlight_eyes"
-	flash_protect = 2
-	tint = INFINITY
 	var/obj/item/device/flashlight/eyelight/eye
 
 /obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
@@ -156,3 +125,14 @@
 	eye.update_brightness(M)
 	eye.forceMove(src)
 	..()
+
+
+// Welding shield implant
+/obj/item/organ/eyes/robotic/shield
+	name = "shielded robotic eyes"
+	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
+	origin_tech = "materials=4;biotech=3;engineering=4;plasmatech=3"
+	flash_protect = 2
+
+/obj/item/organ/eyes/robotic/shield/emp_act(severity)
+	return
