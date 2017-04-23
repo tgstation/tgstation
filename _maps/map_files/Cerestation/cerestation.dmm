@@ -16030,8 +16030,7 @@
 	c_tag = "Cargo Hall East";
 	dir = 8;
 	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = ""
+	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -19703,8 +19702,7 @@
 	c_tag = "Cargo Security Checkpoint";
 	dir = 8;
 	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = ""
+	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -20689,8 +20687,7 @@
 	c_tag = "Docking Quantum Pad";
 	dir = 8;
 	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = ""
+	network = list("SS13","QM")
 	},
 /obj/machinery/airalarm{
 	dir = 8;
@@ -21051,8 +21048,7 @@
 /obj/machinery/camera{
 	c_tag = "Courtroom Jury East";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -21111,8 +21107,7 @@
 /obj/machinery/camera{
 	c_tag = "Dorm Lockers";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -22641,8 +22636,7 @@
 	c_tag = "Cargo Lobby";
 	dir = 8;
 	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = ""
+	network = list("SS13","QM")
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/brown/corner{
@@ -23585,8 +23579,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -24113,8 +24106,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -25566,8 +25558,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -25842,8 +25833,7 @@
 /obj/machinery/camera{
 	c_tag = "Vault Airlock";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/black,
@@ -26357,8 +26347,7 @@
 /obj/machinery/camera{
 	c_tag = "Command Atmospherics Checkpoint";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -26419,8 +26408,7 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Atmospherics Checkpoint";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -26777,8 +26765,7 @@
 /obj/machinery/camera{
 	c_tag = "Custodials";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /obj/item/key/janitor,
 /turf/open/floor/plasteel{
@@ -26912,8 +26899,7 @@
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 10";
 	dir = 8;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -27010,8 +26996,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -27798,8 +27783,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -27840,8 +27824,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/girder,
 /obj/structure/grille,
@@ -27887,8 +27870,7 @@
 /obj/machinery/camera{
 	c_tag = "Vault";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
@@ -28390,8 +28372,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -28407,8 +28388,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -29158,8 +29138,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -29532,8 +29511,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -30069,8 +30047,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -30190,8 +30167,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -30635,8 +30611,7 @@
 /obj/machinery/camera{
 	c_tag = "Bar Backroom";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -31181,8 +31156,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -31691,8 +31665,7 @@
 	c_tag = "Medbay Asteroid Hallway 6";
 	dir = 8;
 	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = ""
+	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (EAST)";
@@ -31718,8 +31691,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -33025,8 +32997,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -33842,8 +33813,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -34134,8 +34104,7 @@
 /obj/machinery/camera{
 	c_tag = "Bar";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32
@@ -34417,8 +34386,7 @@
 /obj/machinery/camera{
 	c_tag = "EVA Storage";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/blue/side{
 	tag = "icon-blue (EAST)";
@@ -34457,8 +34425,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -34653,11 +34620,6 @@
 /area/crew_quarters/bar)
 "bjs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/button/door{
-	id = "kitchen";
-	name = "Privacy Shutters";
-	pixel_x = -24
-	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35181,8 +35143,7 @@
 /obj/machinery/camera{
 	c_tag = "Service Atmospherics Checkpoint";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -36317,9 +36278,6 @@
 	},
 /area/engine/supermatter)
 "bmt" = (
-/obj/machinery/power/emitter{
-	state = 2
-	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
@@ -36329,6 +36287,10 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/machinery/power/emitter{
+	anchored = 1;
+	state = 2
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -36346,9 +36308,6 @@
 	},
 /area/engine/supermatter)
 "bmv" = (
-/obj/machinery/power/emitter{
-	state = 2
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -36359,17 +36318,22 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
+/obj/machinery/power/emitter{
+	anchored = 1;
+	state = 2
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/supermatter)
 "bmw" = (
-/obj/machinery/power/emitter{
-	state = 2
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/emitter{
+	anchored = 1;
+	state = 2
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -36728,8 +36692,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36948,8 +36911,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -37077,8 +37039,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -37095,8 +37056,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -37184,8 +37144,7 @@
 /obj/machinery/camera{
 	c_tag = "Surgery Observation";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -37361,16 +37320,16 @@
 /area/crew_quarters/bar)
 "boe" = (
 /obj/machinery/vending/cola,
-/obj/structure/sign/poster/random{
-	name = "random official poster";
-	pixel_x = 32;
-	random_basetype = /obj/structure/sign/poster/official
-	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
 	pixel_x = 0;
 	pixel_y = -28
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -37380,6 +37339,11 @@
 /obj/machinery/food_cart,
 /obj/machinery/light_switch{
 	pixel_x = -25
+	},
+/obj/machinery/button/door{
+	id = "kitchen";
+	name = "Privacy Shutters";
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -37500,8 +37464,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -37610,8 +37573,7 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Asteroid Hallway 2";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (EAST)";
@@ -37781,8 +37743,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -38186,8 +38147,7 @@
 	c_tag = "Virology Breakroom";
 	dir = 5;
 	icon_state = "camera";
-	network = list("SS13","CMO");
-	tag = ""
+	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -38262,8 +38222,7 @@
 /obj/machinery/camera{
 	c_tag = "Primary Tool Storage North";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -39518,8 +39477,7 @@
 	c_tag = "Medbay Asteroid Hallway 3";
 	dir = 8;
 	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = ""
+	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -39827,8 +39785,7 @@
 	c_tag = "Virology 2";
 	dir = 5;
 	icon_state = "camera";
-	network = list("SS13","CMO");
-	tag = ""
+	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -39852,8 +39809,7 @@
 	c_tag = "Virology";
 	dir = 5;
 	icon_state = "camera";
-	network = list("SS13","CMO");
-	tag = ""
+	network = list("SS13","CMO")
 	},
 /obj/machinery/requests_console{
 	department = "Virology";
@@ -41322,8 +41278,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -41594,8 +41549,7 @@
 	c_tag = "Virology Airlocks";
 	dir = 5;
 	icon_state = "camera";
-	network = list("SS13","CMO");
-	tag = ""
+	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	tag = "icon-whitegreen (WEST)";
@@ -42136,8 +42090,7 @@
 	c_tag = "SM East";
 	dir = 9;
 	icon_state = "camera";
-	network = list("SS13","CE");
-	tag = ""
+	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -43494,8 +43447,7 @@
 "bxY" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell{
 	dir = 8;
-	icon_state = "cell-off";
-	tag = ""
+	icon_state = "cell-off"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -44024,8 +43976,7 @@
 /obj/machinery/camera{
 	c_tag = "Medbay Atmospherics Checkpoint";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -44139,8 +44090,7 @@
 /obj/machinery/camera{
 	c_tag = "Medbay East";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /obj/structure/noticeboard{
 	dir = 8;
@@ -44191,8 +44141,7 @@
 /obj/machinery/camera{
 	c_tag = "Cyrotubes";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -44552,8 +44501,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -44729,8 +44677,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/yellow/corner{
 	tag = "icon-yellowcorner (NORTH)";
@@ -44978,8 +44925,7 @@
 /obj/machinery/camera{
 	c_tag = "Primary Tool Storage South";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -45033,6 +44979,11 @@
 /area/hydroponics)
 "bAG" = (
 /obj/machinery/vending/hydronutrients,
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/green/side{
 	tag = "icon-green (NORTH)";
 	icon_state = "green";
@@ -45436,8 +45387,7 @@
 	c_tag = "Medbay West";
 	dir = 5;
 	icon_state = "camera";
-	network = list("SS13");
-	tag = ""
+	network = list("SS13")
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -45572,6 +45522,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Hydroponics East";
+	dir = 9;
+	icon_state = "camera"
+	},
 /turf/open/floor/plasteel/darkgreen/side{
 	tag = "icon-darkgreen (NORTHEAST)";
 	icon_state = "darkgreen";
@@ -45584,8 +45539,7 @@
 /obj/machinery/camera{
 	c_tag = "Hydroponics Backroom";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -46259,7 +46213,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/closed/wall{
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hydroponics)
@@ -46497,8 +46453,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/engine{
@@ -46622,8 +46577,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -46766,8 +46720,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating/airless,
@@ -47374,8 +47327,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
+	icon_state = "1-8"
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -47489,8 +47441,7 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Security Checkpoint";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -48158,8 +48109,7 @@
 	c_tag = "Medbay Asteroid Hallway 2";
 	dir = 8;
 	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = ""
+	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -48639,6 +48589,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -49470,6 +49421,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (EAST)";
 	icon_state = "yellow";
@@ -50341,8 +50293,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
@@ -50410,8 +50361,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -50601,8 +50551,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -51195,8 +51144,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -51216,8 +51164,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -52023,6 +51970,7 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -52100,8 +52048,7 @@
 	c_tag = "Engineering East";
 	dir = 9;
 	icon_state = "camera";
-	network = list("SS13","CE");
-	tag = ""
+	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (EAST)";
@@ -52526,8 +52473,7 @@
 	c_tag = "Atmospherics North";
 	dir = 9;
 	icon_state = "camera";
-	network = list("SS13","CE");
-	tag = ""
+	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -53272,8 +53218,7 @@
 	c_tag = "Atmospherics Airlock";
 	dir = 5;
 	icon_state = "camera";
-	network = list("SS13","CE");
-	tag = ""
+	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -53726,8 +53671,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53748,8 +53692,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53765,8 +53708,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53936,8 +53878,7 @@
 	c_tag = "Medbay Storage";
 	dir = 10;
 	icon_state = "camera";
-	network = list("SS13","CMO");
-	tag = ""
+	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -54178,8 +54119,7 @@
 /obj/machinery/camera{
 	c_tag = "Library East";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -54422,8 +54362,7 @@
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
+	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
@@ -56205,8 +56144,7 @@
 	c_tag = "Atmospheric Tanks 2";
 	dir = 5;
 	icon_state = "camera";
-	network = list("SS13","CE");
-	tag = ""
+	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -57033,8 +56971,7 @@
 	c_tag = "Medbay Asteroid Hallway 1";
 	dir = 8;
 	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = ""
+	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -57631,8 +57568,7 @@
 /obj/machinery/camera{
 	c_tag = "Library Explicits";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -58077,8 +58013,7 @@
 	c_tag = "Atmospherics Distro";
 	dir = 9;
 	icon_state = "camera";
-	network = list("SS13","CE");
-	tag = ""
+	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -59358,8 +59293,7 @@
 /obj/machinery/camera{
 	c_tag = "Chapel West";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/chapel{
 	tag = "icon-chapel (NORTH)";
@@ -59880,8 +59814,7 @@
 /obj/machinery/camera{
 	c_tag = "Chapel East";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -61349,8 +61282,7 @@
 /obj/machinery/camera{
 	c_tag = "Chapel Office";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -61509,8 +61441,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -61528,8 +61459,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
@@ -61543,8 +61473,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -61762,8 +61691,7 @@
 /obj/machinery/camera{
 	c_tag = "Chapel Coffins";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -62418,8 +62346,7 @@
 /obj/machinery/camera{
 	c_tag = "Crematorium";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -62766,8 +62693,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -63048,8 +62974,7 @@
 /obj/machinery/camera{
 	c_tag = "Docking Atmospherics Checkpoint";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -63248,8 +63173,7 @@
 /obj/machinery/camera{
 	c_tag = "Service-Research Bridge";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/engine{
@@ -63482,8 +63406,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -63494,8 +63417,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -63513,8 +63435,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -63704,8 +63625,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -63720,8 +63640,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -64205,8 +64124,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plating/airless/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -64221,8 +64139,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /turf/open/floor/plating/airless/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -64295,8 +64212,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -65731,8 +65647,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Asteroid Hallway 1";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
@@ -65890,8 +65805,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -65903,8 +65817,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/floorgrime{
@@ -66361,8 +66274,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Atmospherics Checkpoint";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -67223,8 +67135,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/door/airlock/atmos{
 	name = "Research Atmospherics Checkpoint";
@@ -67330,8 +67241,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -67345,8 +67255,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -67542,8 +67451,7 @@
 	c_tag = "Docking Quantum Pad";
 	dir = 8;
 	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = ""
+	network = list("SS13","QM")
 	},
 /obj/machinery/airalarm{
 	dir = 8;
@@ -69048,8 +68956,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -69080,8 +68987,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
@@ -69098,8 +69004,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/structure/sign/map/left/ceres{
 	pixel_y = 32
@@ -69119,8 +69024,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/camera{
 	c_tag = "Research Asteroid Hallway 2"
@@ -69140,8 +69044,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -69165,8 +69068,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -69188,8 +69090,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
@@ -69206,8 +69107,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/light{
 	dir = 1
@@ -69227,8 +69127,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
@@ -69248,8 +69147,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -69267,8 +69165,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/camera{
 	c_tag = "Research Asteroid Hallway 3"
@@ -69285,8 +69182,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -69305,8 +69201,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -71762,8 +71657,7 @@
 	c_tag = "Science SMES";
 	dir = 8;
 	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = ""
+	network = list("SS13","QM")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -73315,8 +73209,7 @@
 	c_tag = "Toxins Mixing";
 	dir = 9;
 	icon_state = "camera";
-	network = list("SS13","RD");
-	tag = ""
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (EAST)";
@@ -75084,8 +74977,7 @@
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 13";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -75154,8 +75046,7 @@
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 9";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -75892,8 +75783,7 @@
 	c_tag = "Research Xenobiology-Testing Airlock";
 	dir = 9;
 	icon_state = "camera";
-	network = list("SS13","RD");
-	tag = ""
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -78190,8 +78080,7 @@
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 12";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -78233,8 +78122,7 @@
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 8";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -78313,8 +78201,7 @@
 	c_tag = "Testing Lab";
 	dir = 9;
 	icon_state = "camera";
-	network = list("SS13","RD");
-	tag = ""
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -78594,8 +78481,7 @@
 	c_tag = "Research Testing Containment";
 	dir = 9;
 	icon_state = "camera";
-	network = list("SS13","RD");
-	tag = ""
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -81760,8 +81646,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -85064,8 +84949,7 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+	pixel_x = 0
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
@@ -85932,8 +85816,7 @@
 /obj/machinery/camera{
 	c_tag = "Genetics Monkey Dome";
 	dir = 9;
-	icon_state = "camera";
-	tag = ""
+	icon_state = "camera"
 	},
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -89770,8 +89653,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91373,8 +91255,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/machinery/door/airlock/glass_engineering{
 	name = "Chief Engineer's Office";
@@ -93609,8 +93490,7 @@
 	c_tag = "Toxins Storage";
 	dir = 9;
 	icon_state = "camera";
-	network = list("SS13","RD");
-	tag = ""
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -94500,6 +94380,508 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/hor)
+"dnM" = (
+/turf/closed/mineral,
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnN" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnO" = (
+/turf/closed/mineral,
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnP" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnQ" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnR" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnS" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnT" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnU" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnV" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnW" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnX" = (
+/obj/structure/closet,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnY" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dnZ" = (
+/obj/machinery/door/airlock/glass_external{
+	cyclelinkeddir = 8
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doa" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dob" = (
+/obj/machinery/door/airlock/glass_external{
+	cyclelinkeddir = 8
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doc" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dod" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doe" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dof" = (
+/turf/closed/mineral,
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dog" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doh" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doi" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doj" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-20";
+	light_color = "#E1E17D";
+	light_range = 5;
+	luminosity = 2;
+	tag = "icon-plant-20"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dok" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dol" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dom" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"don" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doo" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dop" = (
+/obj/structure/bed,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doq" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dor" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dos" = (
+/obj/structure/sign/map/left/ceres{
+	pixel_x = 32
+	},
+/obj/structure/closet/crate/bin,
+/obj/item/weapon/paper/crumpled{
+	info = "...SOMETHING IN THE ROCKS, IT WATCHES US ALL..."
+	},
+/obj/item/weapon/paper/crumpled{
+	info = "...THEY SENT US HERE FOR A REASON...TERRIBLE..."
+	},
+/obj/item/weapon/paper/crumpled{
+	info = "...EMPTY HALLS...USELESS SPACE..."
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dot" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dou" = (
+/turf/closed/mineral/random/low_chance,
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dov" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/weapon/paper/crumpled{
+	info = "I can't be here for much longer, this station is too empty for its own good.  Something is wrong..."
+	},
+/obj/item/weapon/paper{
+	info = "<b><center>2XXX - 2nd Trimestor</center></b><br><br><center>I hide in here, away from the masses, not like it matters much considering how fucking huge this place is. ";
+	name = "Journal Log"
+	},
+/obj/item/weapon/paper{
+	info = "<b><center>2XXX - 3rd Trimestor</center></b><br><br><center>I hear strange whispers from the halls, longing for blood. Something isn't right here. Why did they transfer us here to work in the first place? ";
+	name = "Journal Log 2"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dow" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"dox" = (
+/obj/item/weapon/paper/crumpled/bloody{
+	info = "...THE HOPLINE CALLS...IT THIRSTS FOR BLOOD...I MUST GO..."
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doy" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doz" = (
+/obj/structure/table,
+/obj/item/weapon/pen,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doA" = (
+/turf/closed/mineral,
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doB" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doC" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doD" = (
+/obj/structure/sign/map/left{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doE" = (
+/obj/structure/table,
+/obj/structure/sign/map/right{
+	pixel_y = -32
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doF" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doG" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doH" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doI" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doJ" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doK" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doL" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doM" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doN" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/derelict/secret{
+	valid_territory = 0
+	})
+"doO" = (
+/obj/machinery/smartfridge/food,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/kitchen)
+"doP" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/northleft{
+	name = "Kitchen Pick-Up";
+	req_access_txt = "28"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/cafeteria{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/kitchen)
+"doQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/southleft{
+	name = "Hydroponics Pick-Up";
+	req_access_txt = "35"
+	},
+/turf/open/floor/plasteel/darkgreen{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hydroponics)
+"doR" = (
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hydroponics)
+"doS" = (
+/obj/machinery/plantgenes,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hydroponics)
+"doT" = (
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hydroponics)
+"doU" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/assembly/robotics)
 
 (1,1,1) = {"
 aaa
@@ -98692,12 +99074,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aad
+aab
+aab
+aab
+aab
+aad
 aaa
 aaa
 aaa
@@ -98947,16 +99329,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aad
+aab
+aab
+aab
+aab
+aab
+aab
+aad
+aab
+aab
 aaa
 aaa
 aaa
@@ -99204,17 +99586,17 @@ aaa
 aag
 aaa
 aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
 aad
-aaa
-aaa
-aaa
-aaa
-aaa
 aad
-aaa
-aaa
+aad
+aad
+aab
+aab
+aad
 aaa
 aaa
 aaa
@@ -99461,17 +99843,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
+aab
+aad
+aad
+aad
+aad
+aad
+aad
+aad
 aaa
 aaa
 aaa
@@ -99717,19 +100099,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aad
+aab
+aab
+dnS
+dnZ
+dog
+don
+dou
+doB
+aac
+aac
+aac
+aad
 aaa
 aaa
 aaa
@@ -99974,19 +100356,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
 aad
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dnM
+dnT
+doa
+doh
+doo
+dov
+doC
+doI
 aac
+aac
+aad
 aad
 aab
 aaa
@@ -100232,19 +100614,19 @@ aaa
 aaa
 aad
 aad
-aab
-aab
-aab
-aaa
-aaa
-aaa
-aaa
-aaa
+aad
+dnN
+dnU
+dob
+doi
+dop
+dow
+doD
+doJ
 aac
-aab
-aab
-aab
 aac
+aad
+aad
 aab
 aaa
 aaa
@@ -100489,21 +100871,21 @@ aaa
 aac
 aac
 aad
-aab
-aab
-aab
-aab
-aab
-aaa
 aad
-aad
+dnO
+dnV
+doc
+doj
+doq
+dox
+doE
+doK
 aac
-aab
-aab
-aab
 aad
 aad
-aaa
+aad
+aab
+aab
 aaa
 aaa
 aaa
@@ -100747,21 +101129,21 @@ aac
 aac
 aad
 aad
+dnP
+dnW
+dod
+dok
+dor
+doy
+doF
+doL
 aac
-aac
-aac
+aad
 aab
+aad
+aad
+aad
 aab
-aac
-aac
-aac
-aab
-aab
-aab
-aac
-aac
-aaa
-aaa
 aad
 aaa
 aaa
@@ -101004,22 +101386,22 @@ aaa
 aad
 aac
 aac
+dnQ
+dnX
+doe
+dol
+dos
+doz
+doG
+doM
 aac
-aac
-aac
+aad
 aab
+aac
+aad
+aad
+aad
 aab
-aac
-aac
-aac
-aab
-aab
-aab
-aac
-aac
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -101261,24 +101643,24 @@ aaa
 aad
 aac
 aac
-aac
-aaa
-aaa
-aaa
-aaa
-aac
-aac
-aac
+dnR
+dnY
+dof
+dom
+dot
+doA
+doH
+doN
 aad
 aad
 aab
+aac
+aac
+aac
 aad
 aad
-aaa
-aaa
-aaa
-aaa
-aaa
+aad
+aad
 aaa
 aaa
 aaa
@@ -101517,26 +101899,26 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aac
+aac
 aad
+aad
+aac
+aac
+aac
 aac
 aad
 aad
 aad
+aab
+aac
+aac
+aac
 aad
 aab
 aab
 aad
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aad
 aaa
 aaa
 abC
@@ -101777,23 +102159,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aad
+aac
+aac
+aac
+aac
+aad
+aab
+aad
+aad
+aad
+aad
+aad
 aab
 aab
-aab
-aab
-aab
-aab
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aad
+aad
 aaa
 aaa
 abC
@@ -102034,19 +102416,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aad
+aad
+aad
+aad
+aad
+aad
+aab
+aad
+aad
+aad
 aab
 aab
 aab
-aab
-aab
-aab
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -102293,13 +102675,13 @@ aaa
 aaa
 aaa
 aaa
+aad
 aaa
-aaa
 aab
 aab
 aab
 aab
-aaa
+aab
 aaa
 aaa
 aad
@@ -107808,7 +108190,7 @@ crg
 cqo
 cgN
 cta
-cuY
+doU
 cuY
 cwS
 cLE
@@ -111341,7 +111723,7 @@ byr
 bCN
 bAI
 bFg
-byr
+doS
 bBL
 bJj
 bKP
@@ -111836,7 +112218,7 @@ bfF
 bgy
 bhs
 biD
-bjr
+blh
 bkl
 blh
 bmk
@@ -112093,7 +112475,7 @@ cKo
 bch
 bch
 biE
-bch
+doO
 bkm
 bli
 bli
@@ -112870,18 +113252,18 @@ blj
 bml
 bjw
 bjw
-bch
+doP
 bqU
 bax
 btO
-bBL
-bwN
+doQ
+bAJ
 byt
 bzF
 bAJ
 bBI
 bCQ
-bEg
+bAJ
 bFi
 bGA
 bBL
@@ -113138,9 +113520,9 @@ bzG
 bvm
 bvm
 bCR
-bvm
+doR
 bFj
-bvm
+doT
 bBL
 bJq
 bKT
@@ -113908,7 +114290,7 @@ byw
 bzJ
 byw
 bBJ
-bCU
+byw
 bEh
 bFl
 bGC
@@ -129809,8 +130191,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+cKF
+cKF
 aaa
 aaa
 aZf
@@ -130068,7 +130450,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cKF
 aaa
 aZf
 aZt
@@ -148515,9 +148897,9 @@ aaa
 aaa
 dnB
 dnD
-dnG
-dnH
-dnI
+dnD
+dnD
+dnD
 anT
 aoX
 aoU
