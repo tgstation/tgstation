@@ -5,6 +5,9 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 
+	 // ME TARZAN, YOU JANEBOT
+	initial_languages = list(/datum/language/common)
+
 
 
 /mob/living/carbon/human/dummy
@@ -41,8 +44,6 @@
 	martial_art = default_martial_art
 
 	handcrafting = new()
-
-	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
 
 	..()
 

@@ -141,9 +141,6 @@
 	//Gives a HUD view to player bots that use a HUD.
 	activate_data_hud()
 
-	grant_language(/datum/language/common)
-	grant_language(/datum/language/machine)
-
 
 /mob/living/simple_animal/bot/update_canmove()
 	. = ..()
