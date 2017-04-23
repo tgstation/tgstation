@@ -59,7 +59,12 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//Message
 	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
+	var/languageicon = ""
+	var/datum/language/D = get_language_instance(message_language)
+	if(D.display_icon(src))
+		languageicon = D.get_icon()
+
+	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][languageicon][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
@@ -93,7 +98,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 			return speaker.say_quote(raw_message, spans, message_mode)
 	else if(language)
 		var/atom/movable/AM = speaker.GetSource()
-		var/datum/language/D = new language
+		var/datum/language/D = get_language_instance(language)
 		raw_message = D.scramble(raw_message)
 		if(AM)
 			return AM.say_quote(raw_message, spans, message_mode)

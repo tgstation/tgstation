@@ -8,3 +8,6 @@
 	key = "4"
 	syllables = list("sss","sSs","SSS")
 	default_priority = 50
+
+	icon = 'icons/mob/alien.dmi'
+	icon_state = "alienq"

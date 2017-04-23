@@ -11,6 +11,9 @@
 	space_chance = 10
 	default_priority = 90
 
+	icon = 'icons/mob/robots.dmi'
+	icon_state = "robot_old"
+
 /datum/language/machine/get_random_name()
 	if(prob(70))
 		return "[pick(GLOB.posibrain_names)]-[rand(100, 999)]"

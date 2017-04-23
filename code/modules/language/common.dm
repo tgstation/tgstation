@@ -5,8 +5,11 @@
 	speech_verb = "says"
 	whisper_verb = "whispers"
 	key = "0"
-	flags = TONGUELESS_SPEECH
+	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_UNDERSTOOD
 	default_priority = 100
+
+	icon = 'icons/obj/cardboard_cutout.dmi'
+	icon_state = "cutout_greytide"
 
 //Syllable Lists
 /*

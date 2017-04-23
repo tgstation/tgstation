@@ -121,7 +121,7 @@
 
 	if(flags & CLEAN_ON_MOVE)
 		clean_on_move()
-	
+
 	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
 	if(proximity_monitor)
 		proximity_monitor.HandleMove()

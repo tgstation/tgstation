@@ -8,5 +8,8 @@
 	default_priority = 10
 	spans = list(SPAN_ROBOT, "brass")
 
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "wall_gear"
+
 /datum/language/ratvar/scramble(var/input)
 	. = text2ratvar(input)

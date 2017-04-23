@@ -12,3 +12,6 @@
 	space_chance = 0
 	sentence_chance = 0
 	default_priority = 20
+
+	icon = 'icons/mob/drone.dmi'
+	icon_state = "drone_repair"

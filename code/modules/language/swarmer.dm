@@ -10,6 +10,10 @@
 	space_chance = 100
 	sentence_chance = 0
 	default_priority = 60
+
+	icon = 'icons/mob/swarmer.dmi'
+	icon_state = "swarmer"
+
 	// since various flats and sharps are the same,
 	// all non-accidental notes are doubled in the list
 	/* The list with unicode symbols for the accents.

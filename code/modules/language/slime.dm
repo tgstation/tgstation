@@ -8,3 +8,6 @@
 	key = "k"
 	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix","*","!")
 	default_priority = 70
+
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "grey adult slime"
