@@ -16,8 +16,7 @@ SUBSYSTEM_DEF(lighting)
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)
 	if (config.starlight)
-		for(var/I in GLOB.sortedAreas)
-			var/area/A = I
+		for(var/area/A in world)
 			if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
 				A.luminosity = 0
 
