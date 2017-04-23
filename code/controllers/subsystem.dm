@@ -145,10 +145,11 @@
 
 /datum/controller/subsystem/proc/pause()
 	. = 1
-	if (state == SS_RUNNING)
-		state = SS_PAUSED
-	else if (state == SS_SLEEPING)
-		state = SS_PAUSING
+	switch(state)
+		if(SS_RUNNING)
+			state = SS_PAUSED
+		if(SS_SLEEPING)
+			state = SS_PAUSING
 
 
 //used to initialize the subsystem AFTER the map has loaded
