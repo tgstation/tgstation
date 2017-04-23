@@ -131,6 +131,7 @@
 	},
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
+	
 	},
 /obj/structure/fans/tiny/invisible,
 /area/ruin/powered)
