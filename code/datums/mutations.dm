@@ -257,7 +257,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		else
 			new_mob = owner.randmuti()
 	else
-		new_mob = owner.randmutg()
+		new_mob = owner.randmutvg()
 	if(new_mob && ismob(new_mob))
 		owner = new_mob
 	. = owner
