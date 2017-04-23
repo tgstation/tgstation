@@ -90,6 +90,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	C.current_ticket = CKey2ActiveTicket(C.ckey)
 	if(C.current_ticket)
 		C.current_ticket.AddInteraction("Client reconnected.")
+		C.current_ticket.initiator = C
 
 //Dissasociate ticket
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
