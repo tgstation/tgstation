@@ -383,7 +383,8 @@
 /obj/machinery/clonepod/proc/end_malfunction(mob/victim)
 	if(!istype(victim)) //Where the hell did they go?
 		return
-	victim.ghostize(FALSE)
+	victim.ghostize()
+	victim.mind.current = null
 	victim.gib(TRUE, TRUE, TRUE)
 
 /obj/machinery/clonepod/relaymove(mob/user)
