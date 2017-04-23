@@ -103,7 +103,7 @@
 /client/verb/stop_client_sounds()
 	set name = "Stop Sounds"
 	set category = "Preferences"
-	set desc = "Kills all currently playing sounds, use if admin taste in midis a shite"
+	set desc = "Kills all currently playing sounds, use if admin taste in midis are shite"
 	src << sound(null)
 	feedback_add_details("preferences_verb","Stop Self Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
