@@ -1,5 +1,5 @@
 /proc/create_all_lighting_objects()
-	for(var/I in GLOB.sortedAreas)
+	for(var/I in world)
 		var/area/A = I
 
 		if(!IS_DYNAMIC_LIGHTING(A))
