@@ -32,7 +32,7 @@
 		var/datum/action/A = X
 		A.Grant(M)
 
-
+//Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0)
 	owner = null
 	if(M)
@@ -78,7 +78,7 @@
 
 /obj/item/organ/Destroy()
 	if(owner)
-		Remove(owner, 1)
+		Remove(owner)
 	return ..()
 
 /obj/item/organ/attack(mob/living/carbon/M, mob/user)

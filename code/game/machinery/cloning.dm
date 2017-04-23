@@ -172,6 +172,11 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
+	if(clonemind.changeling)
+		var/obj/item/organ/brain/B = H.getorganslot("brain")
+		B.vital = FALSE
+		B.decoy_override = TRUE
+
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 
 	if(efficiency > 2)
