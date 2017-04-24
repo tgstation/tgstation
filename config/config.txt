@@ -32,7 +32,7 @@ BAN_LEGACY_SYSTEM
 ##Unhash this to track player playtime in the database. Requires database to be enabled.
 #USE_EXP_TRACKING
 ##Unhash this to enable playtime requirements for head jobs.
-USE_EXP_RESTRICTIONS_HEADS
+#USE_EXP_RESTRICTIONS_HEADS
 ##Unhash this to override head jobs' playtime requirements with this number of hours.
 #USE_EXP_RESTRICTIONS_HEADS_HOURS 15
 ##Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
