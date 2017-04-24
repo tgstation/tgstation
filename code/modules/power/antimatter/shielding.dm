@@ -30,7 +30,7 @@
 
 /obj/machinery/am_shielding/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/controllerscan, 1), 10)
+	addtimer(CALLBACK(src, .proc/controllerscan), 10)
 
 
 /obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
