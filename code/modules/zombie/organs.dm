@@ -26,7 +26,6 @@
 /obj/item/organ/zombie_infection/Insert(var/mob/living/carbon/M, special = 0)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	old_species = M.dna.species.type
 
 /obj/item/organ/zombie_infection/Remove(mob/living/carbon/M, special = 0)
 	. = ..()
