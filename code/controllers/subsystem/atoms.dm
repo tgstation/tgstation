@@ -26,6 +26,7 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 
 	var/static/list/NewQdelList = list()
+	var/static/list/DidntInitialize = list()
 
 	if(atoms)
 		for(var/I in atoms)
@@ -39,6 +40,9 @@ SUBSYSTEM_DEF(atoms)
 				var/start_tick = world.time
 				if(A.Initialize(TRUE))
 					LAZYADD(late_loaders, A)
+				else if(!A.initialized && !(A.type in DidntInitialize))
+					WARNING("[A.type] isn't initializing!")
+					DidntInitialize[A.type] = TRUE
 				if(start_tick != world.time)
 					WARNING("[A]: [A.type] slept during it's Initialize!")
 				CHECK_TICK
@@ -57,6 +61,9 @@ SUBSYSTEM_DEF(atoms)
 				var/start_tick = world.time
 				if(A.Initialize(TRUE))
 					LAZYADD(late_loaders, A)
+				else if(!A.initialized && !(A.type in DidntInitialize))
+					WARNING("[A.type] isn't initializing!")
+					DidntInitialize[A.type] = TRUE
 				#ifdef TESTING
 				else
 					++count
@@ -72,6 +79,9 @@ SUBSYSTEM_DEF(atoms)
 		var/atom/A = I
 		var/start_tick = world.time
 		A.Initialize(FALSE)
+		if(!A.initialized && !(A.type in DidntInitialize))
+			WARNING("[A.type] isn't initializing!")
+			DidntInitialize[A.type] = TRUE
 		if(start_tick != world.time)
 			WARNING("[A]: [A.type] slept during it's Initialize!")
 		CHECK_TICK
