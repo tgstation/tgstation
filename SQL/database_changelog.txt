@@ -1,12 +1,11 @@
-8th April 2017, by Shadowlight213
+23rd April 2017, by Shadowlight213
 
-Modified table 'player' adding the column 'exp'
+Added role_time table to track time spent playing departments. see the schema.
 
-ALTER TABLE player ADD exp mediumtext NOT NULL DEFAULT '';
+To grandfather in all players, run this 
 
-UPDATE player SET exp="{\"exempt\":true}"
-
-This will grandfather everyone in the db in the exp system
+INSERT INTO `role_time` (ckey) SELECT ckey FROM `player`;
+UPDATE role_time SET exempt = "1";
 
 ----------------------------------------------------
 

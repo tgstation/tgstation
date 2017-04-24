@@ -253,7 +253,6 @@ CREATE TABLE `SS13_messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
 --
 -- Table structure for table `SS13_role_time`
 --
@@ -263,24 +262,22 @@ DROP TABLE IF EXISTS `SS13_role_time`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_role_time` (
   `ckey` varchar(32) NOT NULL,
-  `living` int(11) NOT NULL DEFAULT '0',
-  `crew` int(11) NOT NULL DEFAULT '0',
-  `command` int(11) NOT NULL DEFAULT '0',
-  `engineering` int(11) NOT NULL DEFAULT '0',
-  `medical` int(11) NOT NULL DEFAULT '0',
-  `science` int(11) NOT NULL DEFAULT '0',
-  `supply` int(11) NOT NULL DEFAULT '0',
-  `security` int(11) NOT NULL DEFAULT '0',
-  `silicon` int(11) NOT NULL DEFAULT '0',
-  `service` int(11) NOT NULL DEFAULT '0',
-  `special` int(11) NOT NULL DEFAULT '0',
-  `ghost` int(11) NOT NULL DEFAULT '0',
-  `exempt` tinyint(1) NOT NULL DEFAULT '0',
+  `living` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `crew` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `command` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `engineering` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `medical` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `science` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `supply` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `security` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `silicon` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `service` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `special` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `ghost` mediumint(11) unsigned NOT NULL DEFAULT '0',
+  `exempt` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-
 
 --
 -- Table structure for table `SS13_player`
