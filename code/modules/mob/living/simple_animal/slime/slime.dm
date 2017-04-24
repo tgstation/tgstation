@@ -16,7 +16,7 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
-	speak_emote = list("telepathically chirps")
+	speak_emote = list("chirps")
 	bubble_icon = "slime"
 	initial_languages = list(/datum/language/common, /datum/language/slime)
 
@@ -31,10 +31,10 @@
 
 	see_in_dark = 8
 
-	verb_say = "telepathically chirps"
-	verb_ask = "telepathically asks"
-	verb_exclaim = "telepathically cries"
-	verb_yell = "telephatically cries"
+	verb_say = "chirps"
+	verb_ask = "asks"
+	verb_exclaim = "cries"
+	verb_yell = "cries"
 
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
