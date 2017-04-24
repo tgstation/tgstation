@@ -245,22 +245,23 @@ GLOBAL_VAR_INIT(time_last_disabled_id, 0)
 			dat += "<td>[I.assignment]</td>"
 			dat += "<td>[I.disabled?"Disabled":"Enabled"]</td>"
 			dat += "<td>"
-			if(disable_id_cooldown < (world.time / 10) - GLOB.time_last_disabled_id)
-				if(!I.disabled)
+			if(!I.disabled)
+				if(disable_id_cooldown < (world.time / 10) - GLOB.time_last_disabled_id)
 					if(scan && scan.tier > I.tier && access_allowed)
 						dat += "<a href='?src=\ref[src];choice=disable;card=[GLOB.registered_id_cards.Find(I)]'>Disable</a><br>"
 					else
 						dat += "Disable"
 				else
-					if(scan && scan.tier > I.tier && access_allowed)
-						dat += "<a href='?src=\ref[src];choice=enable;card=[GLOB.registered_id_cards.Find(I)]'>Enable</a><br>"
-					else
-						dat += "Enable"
+					var/time_to_wait = round(disable_id_cooldown - ((world.time / 10) - GLOB.time_last_disabled_id), 1)
+					var/mins = round(time_to_wait / 60)
+					var/seconds = time_to_wait - (60*mins)
+					dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
 			else
-				var/time_to_wait = round(disable_id_cooldown - ((world.time / 10) - GLOB.time_last_disabled_id), 1)
-				var/mins = round(time_to_wait / 60)
-				var/seconds = time_to_wait - (60*mins)
-				dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
+				if(scan && scan.tier > I.tier && access_allowed)
+					dat += "<a href='?src=\ref[src];choice=enable;card=[GLOB.registered_id_cards.Find(I)]'>Enable</a><br>"
+				else
+					dat += "Enable"
+
 			dat += "</td></tr>"
 		dat += "</table>"
 
@@ -533,7 +534,6 @@ GLOBAL_VAR_INIT(time_last_disabled_id, 0)
 						return
 		if ("enable")
 			var/obj/item/weapon/card/id/target_id = GLOB.registered_id_cards[text2num(href_list["card"])]
-			GLOB.time_last_disabled_id = world.time / 10
 			target_id.disabled = FALSE
 
 		if ("disable")
