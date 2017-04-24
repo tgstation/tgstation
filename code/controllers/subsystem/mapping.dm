@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
+	var/loading_ruins = FALSE
+
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
@@ -32,13 +34,13 @@ SUBSYSTEM_DEF(mapping)
 	if(config.defaulted)
 		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
 	loadWorld()
-	SortAreas()
+	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
 	// Generate mining.
-
+	loading_ruins = TRUE
 	var/mining_type = config.minetype
 	if (mining_type == "lavaland")
 		seedRuins(list(5), global.config.lavaland_budget, /area/lavaland/surface/outdoors, lava_ruins_templates)
@@ -54,7 +56,8 @@ SUBSYSTEM_DEF(mapping)
 				space_zlevels += i
 
 	seedRuins(space_zlevels, global.config.space_budget, /area/space, space_ruins_templates)
-
+	loading_ruins = FALSE
+	repopulate_sorted_areas()
 	// Set up Z-level transistions.
 	setup_map_transitions()
 	..()
