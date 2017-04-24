@@ -393,8 +393,8 @@ GLOBAL_LIST(external_rsc_urls)
 		return
 	if(!query_client_in_db.NextRow())
 		new_player = 1
-		account_join_date = findJoinDate()
-		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] VALUES ('[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', account_join_date ? \'[account_join_date]\' : NULL)")
+		account_join_date = sanitizeSQL(findJoinDate())
+		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] VALUES ('[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
 		if(!query_add_player.Execute())
 			return
 		if(!account_join_date)
@@ -408,9 +408,8 @@ GLOBAL_LIST(external_rsc_urls)
 		if(!account_join_date)
 			account_age = query_get_client_age.item[2]
 			if(!account_age)
-				account_join_date = findJoinDate()
+				account_join_date = sanitizeSQL(findJoinDate())
 				if(!account_join_date)
-					account_join_date = "Error"
 					account_age = -1
 				else
 					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),accountjoindate)")
@@ -419,9 +418,11 @@ GLOBAL_LIST(external_rsc_urls)
 					if(query_datediff.NextRow())
 						account_age = text2num(query_datediff.item[1])
 	if(!new_player)
-		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
+		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
 		if(!query_log_player.Execute())
 			return
+	if(!account_join_date)
+		account_join_date = "Error"
 	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 
