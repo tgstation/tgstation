@@ -73,6 +73,9 @@
 	//Ears
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 
+	//Hands
+	var/obj/item/mutanthands = null
+
 ///////////
 // PROCS //
 ///////////
@@ -115,7 +118,7 @@
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
 		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
 			C.dropItemToGround(thing)
-	
+
 	// this needs to be FIRST because qdel calls update_body which checks if we have DIGITIGRADE legs or not and if not then removes DIGITIGRADE from species_traits
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
 		species_traits += DIGITIGRADE
@@ -139,15 +142,16 @@
 		qdel(lungs)
 		lungs = null
 
-	if(eyes)
-		qdel(eyes)
-		eyes = new mutanteyes
-		eyes.Insert(C)
+	if(C.get_bodypart("head"))
+		if(eyes)
+			qdel(eyes)
+			eyes = new mutanteyes
+			eyes.Insert(C)
 
-	if(ears)
-		qdel(ears)
-		ears = new mutantears
-		ears.Insert(C)
+		if(ears)
+			qdel(ears)
+			ears = new mutantears
+			ears.Insert(C)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
@@ -169,11 +173,26 @@
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
 
+	if(mutanthands)
+		// Drop items in hands
+		// If you're lucky enough to have a NODROP item, then it stays.
+		for(var/V in C.held_items)
+			var/obj/item/I = V
+			if(istype(I))
+				if(C.dropItemToGround(I))
+					C.put_in_hands(new mutanthands())
+			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+				C.put_in_hands(new mutanthands())
+
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(TRUE)
+	if(mutanthands)
+		for(var/obj/item/I in C.held_items)
+			if(istype(I, mutanthands))
+				qdel(I)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)

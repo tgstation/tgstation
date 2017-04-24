@@ -1511,7 +1511,9 @@
 
 /datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
 	// Silently add the zombie infection organ to be activated upon death
-	new /obj/item/organ/zombie_infection(H)
+	if(!H.getorganslot("zombie_infection"))
+		var/obj/item/organ/zombie_infection/ZI = new()
+		ZI.Insert(H)
 	..()
 
 /datum/reagent/growthserum
