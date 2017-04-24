@@ -97,7 +97,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
 	GLOB.AdminProcCaller = ckey	//if this runtimes, too bad for you
 	++GLOB.AdminProcCallCount
-	world.WrapAdminProcCall(target, procname, arguments)
+	. = world.WrapAdminProcCall(target, procname, arguments)
 	if(--GLOB.AdminProcCallCount == 0)
 		GLOB.AdminProcCaller = null
 
@@ -106,7 +106,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	if(target == GLOBAL_PROC)
 		return call(procname)(arglist(arguments))
 	else
-		return call(procname)(arglist(arguments))
+		return call(target, procname)(arglist(arguments))
 
 /proc/IsAdminAdvancedProcCall()
 	return usr && usr.client && GLOB.AdminProcCaller == usr.client.ckey
