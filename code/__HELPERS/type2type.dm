@@ -72,7 +72,7 @@
 	return .
 
 //Splits the text of a file at seperator and returns them in a list.
-/proc/file2list(filename, seperator="\n")
+/world/proc/file2list(filename, seperator="\n")
 	return splittext(return_file_text(filename),seperator)
 
 

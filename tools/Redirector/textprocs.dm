@@ -11,7 +11,7 @@ proc
 	///////////////////
 	// Reading files //
 	///////////////////
-	dd_file2list(file_path, separator = "\n")
+	dd_world.file2list(file_path, separator = "\n")
 		var/file
 		if (isfile(file_path))
 			file = file_path

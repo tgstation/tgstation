@@ -11,7 +11,7 @@ var/list/adminkeys = list()
 
 proc/gen_configs()
 
-	config_stream = dd_file2list("config.txt")
+	config_stream = dd_world.file2list("config.txt")
 
 	var/server_gen = 0	// if the stream is looking for servers
 	var/admin_gen = 0	// if the stream is looking for admins
@@ -43,7 +43,7 @@ proc/gen_configs()
 	// Generate the list of admins now
 
 	for(var/file in adminfiles)
-		var/admin_config_stream = dd_file2list(file)
+		var/admin_config_stream = dd_world.file2list(file)
 
 		for(var/line in admin_config_stream)
 
