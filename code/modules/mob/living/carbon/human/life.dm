@@ -33,6 +33,9 @@
 		set_species(/datum/species/tarajan, icon_update=1)
 	if(jobban_isbanned(src, CLUWNEBAN) && !dna.check_mutation(CLUWNEMUT))
 		dna.add_mutation(CLUWNEMUT)
+	if(client && hud_used)
+		if(hud_used.staminas)
+			hud_used.staminas.icon_state = staminahudamount()
 
 	if(..()) //not dead
 		for(var/datum/mutation/human/HM in dna.mutations)
