@@ -179,7 +179,7 @@ SUBSYSTEM_DEF(garbage)
 	SSgarbage.qdel_list += "[D.type]"
 #endif
 	if(!istype(D))
-		del(D)
+		SSgarbage.HardDelete(D)
 	else if(isnull(D.gc_destroyed))
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
@@ -211,7 +211,7 @@ SUBSYSTEM_DEF(garbage)
 			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
 				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
-				del(D)
+				SSgarbage.HardDelete(D)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 				#ifdef TESTING
