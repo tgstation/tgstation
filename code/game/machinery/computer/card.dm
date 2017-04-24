@@ -1,8 +1,7 @@
-
-
 //Keeps track of the time for the ID console. Having it as a global variable prevents people from dismantling/reassembling it to
 //increase the slots of many jobs.
 GLOBAL_VAR_INIT(time_last_changed_position, 0)
+GLOBAL_VAR_INIT(time_last_disabled_id, 0)
 
 /obj/machinery/computer/card
 	name = "identification console"
@@ -25,6 +24,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	//if set to -1: No cooldown... probably a bad idea
 	//if set to 0: Not able to close "original" positions. You can only close positions that you have opened before
 	var/change_position_cooldown = 60
+	//Same deal for disabling IDs
+	var/disable_id_cooldown = 15
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
 		"AI",
@@ -214,6 +215,55 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 			dat += "</td></tr>"
 		dat += "</table>"
+
+	else if (mode == 3) //remote ID disabling
+		dat = "<tt><b>Remote ID Disabling</b><br>"
+		dat += "<a href='?src=\ref[src];choice=return'>Return</a>"
+		dat += " || Confirm Identity: "
+		var/S
+		if(scan)
+			S = html_encode(scan.tier2text())
+		else
+			S = "--------"
+		dat += "<a href='?src=\ref[src];choice=scan'>[S]</a>"
+		dat += "<table>"
+		dat += "<tr><td style='width:25%'><b>Name</b></td><td style='width:25%'><b>Occupation</b></td><td style='width:25%'><b>Status</b></td><td style='width:25%'><b>Toggle Access</b></td></tr>"
+
+		var/access_allowed
+		if(scan && (GLOB.access_change_ids in scan.access))
+			access_allowed = TRUE
+		else
+			access_allowed = FALSE
+
+		for(var/obj/item/weapon/card/id/I in GLOB.registered_id_cards)
+			if(QDELETED(I) || I.tier == 0)
+				GLOB.registered_id_cards -= I
+				continue
+
+			dat += "<tr>"
+			dat += "<td>[I.registered_name]</td>"
+			dat += "<td>[I.assignment]</td>"
+			dat += "<td>[I.disabled?"Disabled":"Enabled"]</td>"
+			dat += "<td>"
+			if(disable_id_cooldown < (world.time / 10) - GLOB.time_last_disabled_id)
+				if(!I.disabled)
+					if(scan && scan.tier > I.tier && access_allowed)
+						dat += "<a href='?src=\ref[src];choice=disable;card=[GLOB.registered_id_cards.Find(I)]'>Disable</a><br>"
+					else
+						dat += "Disable"
+				else
+					if(scan && scan.tier > I.tier && access_allowed)
+						dat += "<a href='?src=\ref[src];choice=enable;card=[GLOB.registered_id_cards.Find(I)]'>Enable</a><br>"
+					else
+						dat += "Enable"
+			else
+				var/time_to_wait = round(disable_id_cooldown - ((world.time / 10) - GLOB.time_last_disabled_id), 1)
+				var/mins = round(time_to_wait / 60)
+				var/seconds = time_to_wait - (60*mins)
+				dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
+			dat += "</td></tr>"
+		dat += "</table>"
+
 	else
 		var/header = ""
 
@@ -248,6 +298,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			header += "<a href='?src=\ref[src];choice=modify'>Remove [target_name]</a> || "
 			header += "<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br> "
 			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> <br> "
+			header += "<a href='?src=\ref[src];choice=mode;mode_target=3'>Access Remote ID Disabling</a> <br> "
 			header += "<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"
 
 		header += "<hr>"
@@ -331,7 +382,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		else
 			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
-			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
+			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> <br> "
+			body += "<a href='?src=\ref[src];choice=mode;mode_target=3'>Access Remote ID Disabling</a> <br> "
 			if(!target_dept)
 				body += "<br><hr><a href = '?src=\ref[src];choice=mode;mode_target=2'>Job Management</a>"
 
@@ -351,6 +403,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if ("modify")
 			if (modify)
 				GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
+				GLOB.registered_id_cards |= modify
 				modify.update_label()
 				modify.loc = loc
 				modify.verb_pickup()
@@ -478,12 +531,22 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					else
 						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
 						return
+		if ("enable")
+			var/obj/item/weapon/card/id/target_id = GLOB.registered_id_cards[text2num(href_list["card"])]
+			GLOB.time_last_disabled_id = world.time / 10
+			target_id.disabled = FALSE
+
+		if ("disable")
+			var/obj/item/weapon/card/id/target_id = GLOB.registered_id_cards[text2num(href_list["card"])]
+			GLOB.time_last_disabled_id = world.time / 10
+			target_id.disabled = TRUE
+
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 
 		if("return")
 			//DISPLAY MAIN MENU
-			mode = 3;
+			mode = 0;
 			playsound(src, "terminal_type", 25, 0)
 
 		if("make_job_available")
