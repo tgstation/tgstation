@@ -83,17 +83,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		to_chat(usr, .)
 	feedback_add_details("admin_verb","Advanced ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-GLOBAL_VAR_INIT(AdminProcCall, null)
-GLOBAL_PROTECT(AdminProcCall)
+GLOBAL_VAR_INIT(AdminProcCaller, null)
+GLOBAL_PROTECT(AdminProcCaller)
+GLOBAL_VAR_INIT(AdminProcCallCount, 0)
+GLOBAL_PROTECT(AdminProcCallCount)
 
 /proc/WrapAdminProcCall(target, procname, list/arguments)
-	if(GLOB.AdminProcCall)
-		to_chat(usr, "<span class='adminnotice'>Another admin called proc is still running, your proc will be run after theirs finishes</span>")
-		UNTIL(!GLOB.AdminProcCall)
+	var/current_caller = GLOB.AdminProcCaller
+	var/ckey = usr.client.ckey
+	if(current_caller && current_caller != ckey)
+		to_chat(usr, "<span class='adminnotice'>Another set of admin called procs are still running, your proc will be run after theirs finish.</span>")
+		UNTIL(!GLOB.AdminProcCaller)
 		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
-	GLOB.AdminProcCall = usr.client.ckey	//if this runtimes, too bad for you
+	GLOB.AdminProcCaller = ckey	//if this runtimes, too bad for you
+	++GLOB.AdminProcCallCount
 	world.WrapAdminProcCall(target, procname, arguments)
-	GLOB.AdminProcCall = null
+	if(--GLOB.AdminProcCallCount == 0)
+		GLOB.AdminProcCaller = null
 
 //adv proc call this, ya nerds
 /world/proc/WrapAdminProcCall(target, procname, list/arguments)
@@ -103,7 +109,7 @@ GLOBAL_PROTECT(AdminProcCall)
 		return call(procname)(arglist(arguments))
 
 /proc/IsAdminAdvancedProcCall()
-	return usr && usr.client && GLOB.AdminProcCall == usr.client.ckey
+	return usr && usr.client && GLOB.AdminProcCaller == usr.client.ckey
 
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
 	set category = "Debug"
