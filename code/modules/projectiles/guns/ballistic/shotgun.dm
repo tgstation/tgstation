@@ -128,14 +128,6 @@
 	..()
 	to_chat(user, "The bolt is [bolt_open ? "open" : "closed"].")
 
-/obj/item/weapon/gun/ballistic/shotgun/pipe
-	name = "pipe pistol"
-	desc = "A makeshift low-power pistol made from salvaged parts."
-	icon_state = "m1911"
-	w_class = WEIGHT_CLASS_NORMAL
-	mag_type = /obj/item/ammo_box/magazine/internal/makeshift //mag is internal for balance reasons
-	can_suppress = 0
-
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."

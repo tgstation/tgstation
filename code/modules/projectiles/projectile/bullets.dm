@@ -21,7 +21,7 @@
 	damage = 20
 
 /obj/item/projectile/bullet/makeshift
-	damage = 7 //pretty weak
+	damage = 7 //pretty weak.
 
 /obj/item/projectile/bullet/toxinbullet
 	damage = 15

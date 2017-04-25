@@ -304,6 +304,35 @@
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
+
+// PIPE PISTOL //
+/obj/item/weapon/gun/ballistic/revolver/pipe
+	name = "pipe pistol"
+	desc = "A makeshift 9mm pistol made from salvaged parts."
+	icon_state = "m1911"
+	w_class = WEIGHT_CLASS_NORMAL
+	mag_type = /obj/item/ammo_box/magazine/internal/makeshift //mag is internal for balance reasons
+	can_suppress = 0
+
+/obj/item/weapon/gun/ballistic/revolver/pipe/attackby(obj/item/A, mob/user, params)
+	..()
+	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
+		chamber_round()
+
+/obj/item/weapon/gun/ballistic/revolver/pipe/attack_self(mob/living/user)
+	var/num_unloaded = 0
+	while (get_ammo() > 0)
+		var/obj/item/ammo_casing/CB
+		CB = magazine.get_round(0)
+		chambered = null
+		CB.loc = get_turf(src.loc)
+		CB.update_icon()
+		num_unloaded++
+	if (num_unloaded)
+		to_chat(user, "<span class='notice'>You pull back the slide on \the [src] and unload [num_unloaded] bullet\s.</span>")
+	else
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+
 // IMPROVISED SHOTGUN //
 
 /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised
