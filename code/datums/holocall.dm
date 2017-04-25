@@ -1,3 +1,5 @@
+#define HOLOPAD_MAX_DIAL_TIME 200
+
 /mob/camera/aiEye/remote/holo/setLoc()
 	. = ..()
 	var/obj/machinery/holopad/H = origin
@@ -15,7 +17,6 @@
 	var/obj/effect/overlay/holo_pad_hologram/hologram	//user's hologram, once connected
 
 	var/call_start_time
-	var/static/max_dial_time = 200
 
 //creates a holocall made by `caller` from `calling_pad` to `callees`
 /datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees)
@@ -143,7 +144,7 @@
 		if(connected_holopad)
 			. = !QDELETED(connected_holopad) && connected_holopad.is_operational()
 		else
-			. = world.time < (call_start_time + max_dial_time)
+			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
 				calling_holopad.say("No answer recieved.")
 				calling_holopad.temp = ""
