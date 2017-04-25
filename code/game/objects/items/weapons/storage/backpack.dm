@@ -324,6 +324,10 @@
 	slowdown = 1
 	max_combined_w_class = 30
 
+/obj/item/weapon/storage/backpack/dufflebag/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
+
 /obj/item/weapon/storage/backpack/dufflebag/captain
 	name = "captain's dufflebag"
 	desc = "A large dufflebag for holding extra captainly goods."
