@@ -628,7 +628,7 @@ Difficulty: Very Hard
 	var/heal_power = 5
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
-	..()
+	. = ..()
 	verbs -= /mob/living/verb/pulled
 	verbs -= /mob/verb/me_verb
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]

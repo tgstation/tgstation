@@ -344,8 +344,9 @@
 		cut_overlays()
 		set_light(0)
 	else if(on)
-		var/image/I = image(icon,"glowstick-glow",color)
-		add_overlay(I)
+		var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
+		glowstick_overlay.color = color
+		add_overlay(glowstick_overlay)
 		item_state = "glowstick-on"
 		set_light(brightness_on)
 	else
@@ -428,3 +429,11 @@
 	item_state = "flashdark"
 	brightness_on = 2.5
 	flashlight_power = -3
+
+/obj/item/device/flashlight/eyelight
+	name = "eyelight"
+	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
+	brightness_on = 15
+	flashlight_power = 1
+	flags = CONDUCT | DROPDEL
+	actions_types = list()

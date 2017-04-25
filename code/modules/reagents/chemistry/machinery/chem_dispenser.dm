@@ -14,7 +14,7 @@
 	var/amount = 30
 	var/recharged = 0
 	var/recharge_delay = 5
-	var/image/icon_beaker = null
+	var/mutable_appearance/beaker_overlay
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
 		"hydrogen",
@@ -184,10 +184,9 @@
 		beaker.loc = src
 		to_chat(user, "<span class='notice'>You add \the [B] to the machine.</span>")
 
-		if(!icon_beaker)
-			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
-		icon_beaker.pixel_x = rand(-10,5)
-		add_overlay(icon_beaker)
+		beaker_overlay = beaker_overlay ||  mutable_appearance(icon, "disp_beaker") 
+		beaker_overlay.pixel_x = rand(-10, 5)//randomize beaker overlay position.
+		add_overlay(beaker_overlay)
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/weapon/card/emag))
 		to_chat(user, "<span class='warning'>You can't load \the [I] into the machine!</span>")
 	else

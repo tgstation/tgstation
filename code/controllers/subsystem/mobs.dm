@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(mobs)
 	name = "Mobs"
-	init_order = 4
 	priority = 100
 	flags = SS_KEEP_TIMING|SS_NO_INIT
 

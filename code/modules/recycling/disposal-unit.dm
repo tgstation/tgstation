@@ -363,7 +363,7 @@
 
 	//flush handle
 	if(flush)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-handle"))
+		add_overlay("dispover-handle")
 
 	//only handle is shown if no power
 	if(stat & NOPOWER || panel_open)
@@ -371,13 +371,13 @@
 
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-full"))
+		add_overlay("dispover-full")
 
 	//charging and ready light
 	if(pressure_charging)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-charge"))
+		add_overlay("dispover-charge")
 	else if(full_pressure)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-ready"))
+		add_overlay("dispover-ready")
 
 //timed process
 //charge the gas reservoir and perform flush if ready

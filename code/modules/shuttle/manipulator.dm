@@ -26,9 +26,9 @@
 
 /obj/machinery/shuttle_manipulator/update_icon()
 	cut_overlays()
-	var/image/hologram_projection = image(icon, "hologram_on")
+	var/mutable_appearance/hologram_projection = mutable_appearance(icon, "hologram_on")
 	hologram_projection.pixel_y = 22
-	var/image/hologram_ship = image(icon, "hologram_whiteship")
+	var/mutable_appearance/hologram_ship = mutable_appearance(icon, "hologram_whiteship")
 	hologram_ship.pixel_y = 27
 	add_overlay(hologram_projection)
 	add_overlay(hologram_ship)

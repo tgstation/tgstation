@@ -284,79 +284,66 @@
 /obj/item/bodypart/proc/get_limb_icon(dropped)
 	icon_state = "" //to erase the default sprite, we're building the visual aspects of the bodypart through overlays alone.
 
-	var/list/standing = list()
+	. = list()
 
-	var/image_dir
+	var/image_dir = 0
 	if(dropped)
 		image_dir = SOUTH
 		if(dmg_overlay_type)
 			if(brutestate)
-				standing	+= image("icon"='icons/mob/dam_mob.dmi', "icon_state"="[dmg_overlay_type]_[body_zone]_[brutestate]0", "layer"=-DAMAGE_LAYER, "dir"=image_dir)
+				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
 			if(burnstate)
-				standing	+= image("icon"='icons/mob/dam_mob.dmi', "icon_state"="[dmg_overlay_type]_[body_zone]_0[burnstate]", "layer"=-DAMAGE_LAYER, "dir"=image_dir)
+				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
+	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+	. += limb
 
 	if(animal_origin)
 		if(status == BODYPART_ORGANIC)
+			limb.icon = 'icons/mob/animal_parts.dmi'
 			if(species_id == "husk")
-				standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state"="[animal_origin]_husk_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				limb.icon_state = "[animal_origin]_husk_[body_zone]"
 			else
-				standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state"="[animal_origin]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				limb.icon_state = "[animal_origin]_[body_zone]"
 		else
-			standing += image("icon"='icons/mob/augments.dmi', "icon_state"="[animal_origin]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
-		return standing
+			limb.icon = 'icons/mob/augments.dmi'
+			limb.icon_state = "[animal_origin]_[body_zone]"
+		return
 
 	var/icon_gender = (body_gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
 
 	if((body_zone != "head" && body_zone != "chest"))
 		should_draw_gender = FALSE
 
-	var/image/I
-
 	if(status == BODYPART_ORGANIC)
 		if(should_draw_greyscale)
+			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)
-				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else if(use_digitigrade)
-				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="digitigrade_[use_digitigrade]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				limb.icon_state = "digitigrade_[use_digitigrade]_[body_zone]"
 			else
-				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				limb.icon_state = "[species_id]_[body_zone]"
 		else
+			limb.icon = 'icons/mob/human_parts.dmi'
 			if(should_draw_gender)
-				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
-				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+				limb.icon_state = "[species_id]_[body_zone]"
+
 	else
+		limb.icon = icon
 		if(should_draw_gender)
-			I = image("icon"= icon, "icon_state"="[body_zone]_[icon_gender]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			limb.icon_state = "[body_zone]_[icon_gender]"
 		else
-			I = image("icon"= icon, "icon_state"="[body_zone]", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
-		standing += I
-		return standing
+			limb.icon_state = "[body_zone]"
+		return
 
 
-	if(!should_draw_greyscale)
-		standing += I
-		return standing
-
-	//Greyscale Colouring
-	var/draw_color
-
-	if(skin_tone) //Limb has skin color variable defined, use it
-		draw_color = skintone2hex(skin_tone)
-	if(species_color)
-		draw_color = species_color
-	if(mutation_color)
-		draw_color = mutation_color
-
-	if(draw_color)
-		I.color = "#[draw_color]"
-	//End Greyscale Colouring
-	standing += I
-
-	return standing
-
-
+	if(should_draw_greyscale)
+		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
+		if(draw_color)
+			limb.color = "#[draw_color]"
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()

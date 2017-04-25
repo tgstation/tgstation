@@ -110,12 +110,8 @@
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
 	if(icon_icon && button_icon_state && current_button.button_icon_state != button_icon_state)
-		var/image/img
-		img = image(icon_icon, current_button, button_icon_state)
-		img.pixel_x = 0
-		img.pixel_y = 0
 		current_button.cut_overlays(TRUE)
-		current_button.add_overlay(img)
+		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
 

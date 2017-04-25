@@ -19,8 +19,7 @@
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(fireaxe)
-		qdel(fireaxe)
-		fireaxe = null
+		QDEL_NULL(fireaxe)
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)

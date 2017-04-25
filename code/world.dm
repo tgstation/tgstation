@@ -17,7 +17,7 @@
 	log_world("World loaded at [time_stamp()]")
 
 #if (PRELOAD_RSC == 0)
-	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
+	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
 	while(i<=external_rsc_urls.len)
 		if(external_rsc_urls[i])
@@ -251,7 +251,7 @@
 	world << sound(round_end_sound)
 
 /world/proc/load_mode()
-	var/list/Lines = file2list("data/mode.txt")
+	var/list/Lines = world.file2list("data/mode.txt")
 	if(Lines.len)
 		if(Lines[1])
 			GLOB.master_mode = Lines[1]

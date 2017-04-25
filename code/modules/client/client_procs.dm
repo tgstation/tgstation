@@ -197,7 +197,7 @@ GLOBAL_LIST(external_rsc_urls)
 	var/alert_mob_dupe_login = FALSE
 	if(config.log_access)
 		for(var/I in GLOB.clients)
-			if(I == src)
+			if(!I || I == src)
 				continue
 			var/client/C = I
 			if(C.key && (C.key != key) )
@@ -340,6 +340,25 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
+    
+		if (!GLOB.admins.len && SSticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
+			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
+				var/cheesy_message = pick(
+					"I have no admins online!",\
+					"I'm all alone :(",\
+					"I'm feeling lonely :(",\
+					"I'm so lonely :(",\
+					"Why does nobody love me? :(",\
+					"I want a man :(",\
+					"Where has everyone gone?",\
+					"I need a hug :(",\
+					"Someone come hold me :(",\
+					"I need someone on me :(",\
+					"What happened? Where has everyone gone?",\
+					"Forever alone :("\
+				)
+				
+				send2irc("Server", "[cheesy_message] (No admins online)")
 	
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
