@@ -41,3 +41,7 @@
 		wizard.notransform = 0
 		wizard.forceMove(get_turf(src))
 	return ..()
+
+/obj/effect/immovablerod/wizard/penetrate(mob/living/L)
+	L.visible_message("<span class='danger'>[L] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
+	L.adjustBruteLoss(50 + (maxdistance * 2))
