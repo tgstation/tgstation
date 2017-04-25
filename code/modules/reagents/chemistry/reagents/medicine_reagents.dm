@@ -288,30 +288,26 @@
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a blood substitute on an IV drip."
+	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a temporary blood substitute."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "sweetness and salt"
+	var/last_added = 0
+	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
+	if(last_added)
+		M.blood_volume -= last_added
+		last_added = 0
+	if(M.blood_volume < maximum_reachable)
+		var/new_blood_level = min(M.blood_volume + volume * 5, maximum_reachable)
+		last_added = new_blood_level - M.blood_volume
+		M.blood_volume = new_blood_level
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			C.blood_volume += 0.2
 		. = 1
-	..()
-
-/datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(ishuman(M) && method == INJECT)
-		var/mob/living/carbon/human/H = M
-		if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
-			var/efficiency = (BLOOD_VOLUME_NORMAL-H.blood_volume)/700 + 0.2//The lower the blood of the patient, the better it is as a blood substitute.
-			efficiency = Clamp(efficiency, 0.1, 0.75)
-			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
-			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
 	..()
 
 /datum/reagent/medicine/mine_salve
