@@ -123,7 +123,7 @@ Difficulty: Medium
 		return
 	target.visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
 	for(var/turf/turf in range(9,get_turf(target)))
-		if(prob(10))
+		if(prob(11))
 			new /obj/effect/overlay/temp/target(turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
@@ -164,7 +164,7 @@ Difficulty: Medium
 		target = manual_target
 	if(!target)
 		return
-	//swoop_cooldown = world.time + 200
+	swoop_cooldown = world.time + 200
 	stop_automated_movement = TRUE
 	swooping |= SWOOP_DAMAGEABLE
 	density = FALSE
@@ -209,8 +209,6 @@ Difficulty: Medium
 		if(fire_rain)
 			new /obj/effect/overlay/temp/target(loc, flame_hit)
 		forceMove(get_step(src, get_dir(src, target)))
-		if(!target && !FindTarget())
-			break
 		if(loc == get_turf(target))
 			if(!fire_rain)
 				break
@@ -218,8 +216,9 @@ Difficulty: Medium
 				var/mob/living/L = target
 				if(L.stat == DEAD)
 					break
-		swoop_duration -= 1.5
-		sleep(1.5)
+		var/swoop_speed = 1.5
+		swoop_duration -= swoop_speed
+		sleep(swoop_speed)
 
 	//ensure swoop direction continuity.
 	if(negative)
