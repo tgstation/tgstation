@@ -24,7 +24,7 @@
 	imp_in.adjustFireLoss(-10, 0)
 	imp_in.adjustOxyLoss(-50, 0)
 	imp_in.adjustStaminaLoss(-75)
-	imp_in.setEarDamage(0,0)
+	imp_in.restoreEars()
 	imp_in.cure_blind()
 	imp_in.cure_nearsighted()
 

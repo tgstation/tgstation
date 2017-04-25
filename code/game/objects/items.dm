@@ -4,10 +4,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // if true, everyone item when created will have its name changed to be
 // more... RPG-like.
 
-GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
-// if true, everyone item when created will have its name changed to be
-// more... RPG-like.
-
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
