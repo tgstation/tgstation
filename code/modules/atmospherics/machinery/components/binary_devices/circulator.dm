@@ -17,6 +17,7 @@
 
 	var/global/const/CIRC_LEFT = 1
 	var/global/const/CIRC_RIGHT = 2
+	pipe_flags = PIPING_ONE_PER_TURF
 
 
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()

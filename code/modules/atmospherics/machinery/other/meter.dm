@@ -14,13 +14,12 @@
 	obj_integrity = 150
 	max_integrity = 150
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 40, acid = 0)
+	var/target_layer = PIPING_LAYER_DEFAULT
 
 
 /obj/machinery/meter/New()
 	..()
 	SSair.atmos_machinery += src
-	src.target = locate(/obj/machinery/atmospherics/pipe) in loc
-	return 1
 
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
@@ -29,8 +28,17 @@
 
 /obj/machinery/meter/Initialize(mapload)
 	..()
-	if (mapload && !target)
-		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
+	if(mapload && !target)
+		for(var/obj/machinery/atmospherics/pipe/pipe in src.loc)
+			if(pipe.piping_layer == target_layer)
+				target = pipe
+				setAttachLayer(pipe.piping_layer)
+				break
+
+/obj/machinery/meter/proc/setAttachLayer(var/new_layer)
+	target_layer = new_layer
+	src.pixel_x = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
+	src.pixel_y = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
 
 /obj/machinery/meter/process_atmos()
 	if(!target)
