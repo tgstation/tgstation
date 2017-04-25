@@ -23,6 +23,14 @@
 	mag_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = 0
 
+/obj/item/weapon/gun/ballistic/automatic/pistol/pipe
+	name = "pipe pistol"
+	desc = "A makeshift low-power pistol made from salvaged parts."
+	icon_state = "m1911"
+	w_class = WEIGHT_CLASS_NORMAL
+	mag_type = /obj/item/ammo_box/magazine/m45
+	can_suppress = 0
+
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle
 	name = "desert eagle"
 	desc = "A robust .50 AE handgun."
