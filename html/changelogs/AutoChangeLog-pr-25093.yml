@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "T-Ray scans are no longer visible to bystanders."
+  - bugfix: "T-Ray scans no longer allow viewers to interact with underfloor objects."
