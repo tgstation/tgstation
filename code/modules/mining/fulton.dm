@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		if(!safe_for_living_creatures && check_for_living_mobs(A))
 			to_chat(user, "[src] is not safe for use with living creatures, they wouldn't survive the trip back!")
 			return
-		if(A.loc == user) // no extracting stuff you're holding
+		if(!isturf(A.loc)) // no extracting stuff inside other stuff
 			return
 		if(A.anchored)
 			return
@@ -159,10 +159,10 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/beacon_network = "station"
 
 /obj/structure/extraction_point/Initialize()
+	. = ..()
 	var/area/area_name = get_area(src)
 	name += " ([rand(100,999)]) ([area_name.name])"
 	GLOB.total_extraction_beacons += src
-	..()
 
 /obj/structure/extraction_point/Destroy()
 	GLOB.total_extraction_beacons -= src

@@ -79,21 +79,18 @@
 
 /atom/Destroy()
 	if(alternate_appearances)
-		for(var/aakey in alternate_appearances)
-			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
-			qdel(AA)
-		alternate_appearances = null
-	if(viewing_alternate_appearances)
-		for(var/aakey in viewing_alternate_appearances)
-			for(var/aa in viewing_alternate_appearances[aakey])
-				var/datum/alternate_appearance/AA = aa
-				AA.hide(list(src))
+		for(var/K in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
+			AA.remove_from_hud(src)
+
 	if(reagents)
 		qdel(reagents)
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
 	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
+
+	QDEL_NULL(light)
 
 	return ..()
 
@@ -498,6 +495,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /atom/proc/mech_melee_attack(obj/mecha/M)
 	return
 
+//If a mob logouts/logins in side of an object you can use this proc
+/atom/proc/on_log(login)
+	if(loc)
+		loc.on_log(login)
 
 
 /*

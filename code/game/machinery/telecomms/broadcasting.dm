@@ -60,6 +60,8 @@
 						var/data, var/compression, var/list/level, var/freq, var/list/spans,
 						var/verb_say, var/verb_ask, var/verb_exclaim, var/verb_yell, var/datum/language/language)
 
+	set waitfor = FALSE
+
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 
 	if(!message)
@@ -167,7 +169,8 @@
 				else
 					GLOB.blackbox.messages += blackbox_msg
 
-	spawn(50)
+	sleep(50)
+	if(!QDELETED(virt)) //It could happen to YOU
 		qdel(virt)
 
 //Use this to test if an obj can communicate with a Telecommunications Network

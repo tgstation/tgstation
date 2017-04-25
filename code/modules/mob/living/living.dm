@@ -379,8 +379,6 @@
 	cure_blind()
 	cure_husk()
 	disabilities = 0
-	ear_deaf = 0
-	ear_damage = 0
 	hallucination = 0
 	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
@@ -923,3 +921,8 @@
 	if(riding_datum)
 		riding_datum.handle_vehicle_offsets()
 		riding_datum.handle_vehicle_layer()
+
+/mob/living/ConveyorMove()
+	if((movement_type & FLYING) && !stat)
+		return
+	..()

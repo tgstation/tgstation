@@ -81,7 +81,8 @@
 					body += "<a href='?_src_=holder;traitor="+ref+"'>TP</a> - "
 					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
 					body += "<a href='?_src_=holder;subtlemessage="+ref+"'>SM</a> - "
-					body += "<a href='?_src_=holder;adminplayerobservefollow="+ref+"'>FLW</a><br>"
+					body += "<a href='?_src_=holder;adminplayerobservefollow="+ref+"'>FLW</a> - "
+					body += "<a href='?_src_=holder;individuallog="+ref+"'>LOGS</a><br>"
 					if(antagonist > 0)
 						body += "<font size='2'><a href='?_src_=holder;secrets=check_antagonist'><font color='red'><b>Antagonist</b></font></a></font>";
 

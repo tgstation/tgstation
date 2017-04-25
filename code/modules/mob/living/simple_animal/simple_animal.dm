@@ -7,6 +7,9 @@
 
 	status_flags = CANPUSH
 
+	// goats bray, cows go moo, and the fox says Geckers
+	initial_languages = list(/datum/language/common)
+
 	var/icon_living = ""
 	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
@@ -87,6 +90,7 @@
 
 /mob/living/simple_animal/Initialize()
 	..()
+	GLOB.simple_animals += src
 	handcrafting = new()
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -95,26 +99,12 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 
-	// goats bray, cows go moo, and the fox says Geckers
-	grant_language(/datum/language/common)
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
 		src.client.screen = list()
 		client.screen += client.void
 	..()
-
-/mob/living/simple_animal/Life()
-	if(..()) //alive
-		if(!ckey)
-			if(stat != DEAD)
-				handle_automated_movement()
-			if(stat != DEAD)
-				handle_automated_action()
-			if(stat != DEAD)
-				handle_automated_speech()
-		if(stat != DEAD)
-			return 1
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -426,6 +416,7 @@
 	if(nest)
 		nest.spawned_mobs -= src
 	nest = null
+	GLOB.simple_animals -= src
 	return ..()
 
 

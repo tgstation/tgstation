@@ -5,45 +5,19 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
-	if(href_list["rejectadminhelp"])
-		if(world.time && (spamcooldown > world.time))
-			to_chat(usr, "Please wait [max(round((spamcooldown - world.time)*0.1, 0.1), 0)] seconds.")
-			return
+	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/client/C = locate(href_list["rejectadminhelp"]) in GLOB.clients
-		if(!C)
-			return
-		if (deltimer(C.adminhelptimerid))
-			C.giveadminhelpverb()
+		
+		var/ahelp_ref = href_list["ahelp"]
+		var/datum/admin_help/AH = locate(ahelp_ref)
+		if(AH)
+			AH.Action(href_list["ahelp_action"])
+		else
+			to_chat(usr, "Ticket [ahelp_ref] has been deleted!")
 
-		C << 'sound/effects/adminhelp.ogg'
-
-		to_chat(C, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
-		to_chat(C, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
-		to_chat(C, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
-
-		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them.")
-		log_admin_private("[key_name(usr)] Rejected [C.key]'s admin help.")
-		spamcooldown = world.time + 150 // 15 seconds
-
-	else if(href_list["icissue"])
-		if(world.time && spamcooldown > world.time)
-			to_chat(usr, "Please wait [max(round((spamcooldown - world.time)*0.1, 0.1), 0)] seconds.")
-			return
-		var/client/C = locate(href_list["icissue"]) in GLOB.clients
-		if(!C)
-			return
-
-		var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
-		msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
-		msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
-
-		to_chat(C, msg)
-
-		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue.")
-		log_admin_private("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
-		spamcooldown = world.time + 150 // 15 seconds
+	else if(href_list["ahelp_tickets"])
+		GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
@@ -1149,8 +1123,11 @@
 				else
 					to_chat(M, "<span class='danger'>No ban appeals URL has been set.</span>")
 				log_admin_private("[key_name(usr)] has banned [M.ckey].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
-
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>"
+				message_admins(msg)
+				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
+				if(AH)
+					AH.Resolve()
 				qdel(M.client)
 			if("No")
 				var/reason = input(usr,"Please State Reason.","Reason") as message|null
@@ -1174,7 +1151,11 @@
 					return
 				ban_unban_log_save("[key_name(usr)] has permabanned [key_name(M)]. - Reason: [reason] - This is a permanent ban.")
 				log_admin_private("[key_name(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.")
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>")
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>"
+				message_admins(msg)
+				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
+				if(AH)
+					AH.Resolve()
 				feedback_inc("ban_perma",1)
 				qdel(M.client)
 			if("Cancel")

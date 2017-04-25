@@ -40,24 +40,15 @@
 	// Upgrades bitflag
 	var/upgrades = 0
 
-/obj/machinery/camera/New()
-	..()
+/obj/machinery/camera/Initialize(mapload)
+	. = ..()
 	assembly = new(src)
 	assembly.state = 4
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	proximity_monitor = new(src, 1)
 
-	/* // Use this to look for cameras that have the same c_tag.
-	for(var/obj/machinery/camera/C in cameranet.cameras)
-		var/list/tempnetwork = C.network&src.network
-		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
-			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
-	*/
-
-/obj/machinery/camera/Initialize(mapload)
-	..()
-	if(mapload && z == 1 && prob(3) && !start_active)
+	if(mapload && z == ZLEVEL_STATION && prob(3) && !start_active)
 		toggle_cam()
 
 /obj/machinery/camera/Destroy()
@@ -394,8 +385,8 @@
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf
 
-/obj/machinery/camera/portable/New()
-	..()
+/obj/machinery/camera/portable/Initialize()
+	. = ..()
 	assembly.state = 0 //These cameras are portable, and so shall be in the portable state if removed.
 	assembly.anchored = 0
 	assembly.update_icon()
