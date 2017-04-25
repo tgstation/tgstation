@@ -1,16 +1,17 @@
 /obj/item/clothing/under/syndicate
 	name = "tactical turtleneck"
-	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants."
+	desc = "A suspicious looking turtleneck with digital camouflage cargo pants. The tag says it's made of 100% asbestos."
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	item_color = "syndicate"
 	has_sensor = 0
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 40)
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 200, acid = 40)
 	alt_covers_chest = 1
 
 /obj/item/clothing/under/syndicate/tacticool
 	name = "tacticool turtleneck"
-	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
+	desc = "Just looking at this makes you want to buy an SKS, go into the woods, and -operate-."
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	item_color = "tactifool"
