@@ -445,7 +445,7 @@
 		var/list/L = value
 		var/list/items = list()
 
-		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > 500))
+		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > (IS_NORMAL_LIST(L) ? 50 : 150)))
 			for (var/i in 1 to L.len)
 				var/key = L[i]
 				var/val
