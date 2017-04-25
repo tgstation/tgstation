@@ -290,6 +290,7 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.totaldels++
 			SSgarbage.queue.Cut(1, 2)
 
+#ifdef TESTING
 /datum/verb/qdel_then_find_references()
 	set category = "Debug"
 	set name = "qdel() then Find References"
@@ -317,6 +318,7 @@ SUBSYSTEM_DEF(garbage)
 		dat += "[path] - [tmplist[path]] times<BR>"
 
 	usr << browse(dat, "window=qdeletedlog")
+#endif
 
 /datum/proc/DoSearchVar(X, Xname)
 	if(usr && usr.client && !usr.client.running_find_references) return
@@ -331,7 +333,8 @@ SUBSYSTEM_DEF(garbage)
 				if(variable == src)
 					testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
 				else if(islist(variable))
-					if(src in variable)
+					var/list/L = variable
+					if(src in L)
 						testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
 #ifdef GC_FAILURE_HARD_LOOKUP
 					for(var/I in variable)
@@ -340,7 +343,8 @@ SUBSYSTEM_DEF(garbage)
 					DoSearchVar(variable, "[Xname]: [varname]")
 #endif
 	else if(islist(X))
-		if(src in X)
+		var/list/L = X
+		if(src in L)
 			testing("Found [src.type] \ref[src] in list [Xname].")
 #ifdef GC_FAILURE_HARD_LOOKUP
 		for(var/I in X)
