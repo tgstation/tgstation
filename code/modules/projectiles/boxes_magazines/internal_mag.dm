@@ -195,4 +195,4 @@
 	name = "pipe pistol internal mag"
 	ammo_type = /obj/item/ammo_casing/m9mm
 	caliber = "9mm" //can be loaded with standard 9mm for more damage
-	max_ammo = 6
+	max_ammo = 9
