@@ -292,6 +292,7 @@
 	reagent_state = LIQUID
 	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 60
 	taste_description = "sweetness and salt"
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
@@ -308,6 +309,21 @@
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
+		. = 1
+	..()
+
+/datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
+	if(prob(3))
+		to_chat(M, "<span class = 'warning'>You feel salty.</span>")
+		holder.add_reagent("sodiumchloride", 1)
+		holder.remove_reagent("salglu_solution", 0.5)
+	else if(prob(3))
+		to_chat(M, "<span class = 'warning'>You feel sweet.</span>")
+		holder.add_reagent("sugar", 1)
+		holder.remove_reagent("salglu_solution", 0.5)
+	if(prob(33))
+		M.adjustBruteLoss(0.5*REM, 0)
+		M.adjustFireLoss(0.5*REM, 0)
 		. = 1
 	..()
 
