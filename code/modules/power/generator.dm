@@ -64,9 +64,8 @@
 	else
 		cut_overlays()
 
-    var/L = min(round(lastgenlev/100000),11)
-		
-    if(L != 0)
+		var/L = min(round(lastgenlev/100000),11)
+		if(L != 0)
 			add_overlay(image('icons/obj/power.dmi', "teg-op[L]"))
 
 		add_overlay("teg-oc[lastcirc]")
