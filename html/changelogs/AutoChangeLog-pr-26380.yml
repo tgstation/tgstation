@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Examining a window now gives hints to the appropriate tool for the
-next stage of construction/deconstruction."
