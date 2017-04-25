@@ -104,9 +104,12 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	log_admin("[key_name(usr)] teleported [key_name(M)]")
-	message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)]")
-	M.forceMove(get_turf(usr))
+	var/atom/loc = get_turf(usr)
+	log_admin("[key_name(usr)] teleported [key_name(M)] to [COORD(loc)]")
+	var/msg = "[key_name_admin(usr)] teleported [key_name_admin(M)] to [ADMIN_COORDJMP(loc)]"
+	message_admins(msg)
+	admin_ticket_log(M, msg)
+	M.forceMove(loc)
 	feedback_add_details("admin_verb","Get Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/Getkey()
@@ -129,7 +132,9 @@
 	if(!M)
 		return
 	log_admin("[key_name(usr)] teleported [key_name(M)]")
-	message_admins("[key_name_admin(usr)] teleported [key_name(M)]")
+	var/msg = "[key_name_admin(usr)] teleported [key_name_admin(M)]"
+	message_admins(msg)
+	admin_ticket_log(M, msg)
 	if(M)
 		M.forceMove(get_turf(usr))
 		usr.loc = M.loc
@@ -146,7 +151,9 @@
 		if(M.forceMove(safepick(get_area_turfs(A))))
 
 			log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
-			message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")
+			var/msg = "[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]"
+			message_admins(msg)
+			admin_ticket_log(M, msg)
 		else
 			to_chat(src, "Failed to move mob to a valid location.")
 		feedback_add_details("admin_verb","Send Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

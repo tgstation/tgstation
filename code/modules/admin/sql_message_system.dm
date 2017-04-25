@@ -1,5 +1,5 @@
 /proc/create_message(type, target_ckey, admin_ckey, text, timestamp, server, secret, logged = 1, browse)
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!type)
@@ -9,7 +9,7 @@
 		if(!new_ckey)
 			return
 		new_ckey = sanitizeSQL(new_ckey)
-		var/DBQuery/query_find_ckey = GLOB.dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ckey = '[new_ckey]'")
+		var/datum/DBQuery/query_find_ckey = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ckey = '[new_ckey]'")
 		if(!query_find_ckey.warn_execute())
 			return
 		if(!query_find_ckey.NextRow())
@@ -44,19 +44,22 @@
 				secret = 0
 			else
 				return
-	var/DBQuery/query_create_message = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, secret) VALUES ('[type]', '[target_ckey]', '[admin_ckey]', '[text]', '[timestamp]', '[server]', '[secret]')")
+	var/datum/DBQuery/query_create_message = SSdbcore.NewQuery("INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, secret) VALUES ('[type]', '[target_ckey]', '[admin_ckey]', '[text]', '[timestamp]', '[server]', '[secret]')")
 	if(!query_create_message.warn_execute())
 		return
 	if(logged)
 		log_admin_private("[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]: [text]")
-		message_admins("[key_name_admin(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]:<br>[text]")
+		var/header = "[key_name_admin(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]"
+		message_admins("[header]:<br>[text]")
+		admin_ticket_log(target_ckey, "<font color='blue'>[header]</font>")
+		admin_ticket_log(target_ckey, text)
 		if(browse)
 			browse_messages("[type]")
 		else
 			browse_messages(target_ckey = target_ckey)
 
 /proc/delete_message(message_id, logged = 1, browse)
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	message_id = text2num(message_id)
@@ -65,14 +68,14 @@
 	var/type
 	var/target_ckey
 	var/text
-	var/DBQuery/query_find_del_message = GLOB.dbcon.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id]")
+	var/datum/DBQuery/query_find_del_message = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id]")
 	if(!query_find_del_message.warn_execute())
 		return
 	if(query_find_del_message.NextRow())
 		type = query_find_del_message.item[1]
 		target_ckey = query_find_del_message.item[2]
 		text = query_find_del_message.item[4]
-	var/DBQuery/query_del_message = GLOB.dbcon.NewQuery("DELETE FROM [format_table_name("messages")] WHERE id = [message_id]")
+	var/datum/DBQuery/query_del_message = SSdbcore.NewQuery("DELETE FROM [format_table_name("messages")] WHERE id = [message_id]")
 	if(!query_del_message.warn_execute())
 		return
 	if(logged)
@@ -84,13 +87,13 @@
 			browse_messages(target_ckey = target_ckey)
 
 /proc/edit_message(message_id, browse)
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
 		return
-	var/DBQuery/query_find_edit_message = GLOB.dbcon.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id]")
+	var/datum/DBQuery/query_find_edit_message = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id]")
 	if(!query_find_edit_message.warn_execute())
 		return
 	if(query_find_edit_message.NextRow())
@@ -104,7 +107,7 @@
 			return
 		new_text = sanitizeSQL(new_text)
 		var/edit_text = sanitizeSQL("Edited by [editor_ckey] on [SQLtime()] from<br>[old_text]<br>to<br>[new_text]<hr>")
-		var/DBQuery/query_edit_message = GLOB.dbcon.NewQuery("UPDATE [format_table_name("messages")] SET text = '[new_text]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id]")
+		var/datum/DBQuery/query_edit_message = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET text = '[new_text]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id]")
 		if(!query_edit_message.warn_execute())
 			return
 		log_admin_private("[key_name(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_text] to [new_text]")
@@ -115,13 +118,13 @@
 			browse_messages(target_ckey = target_ckey)
 
 /proc/toggle_message_secrecy(message_id)
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
 		return
-	var/DBQuery/query_find_message_secret = GLOB.dbcon.NewQuery("SELECT type, targetckey, adminckey, secret FROM [format_table_name("messages")] WHERE id = [message_id]")
+	var/datum/DBQuery/query_find_message_secret = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, secret FROM [format_table_name("messages")] WHERE id = [message_id]")
 	if(!query_find_message_secret.warn_execute())
 		return
 	if(query_find_message_secret.NextRow())
@@ -131,7 +134,7 @@
 		var/secret = text2num(query_find_message_secret.item[4])
 		var/editor_ckey = sanitizeSQL(usr.ckey)
 		var/edit_text = "Made [secret ? "not secret" : "secret"] by [editor_ckey] on [SQLtime()]<hr>"
-		var/DBQuery/query_message_secret = GLOB.dbcon.NewQuery("UPDATE [format_table_name("messages")] SET secret = NOT secret, lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id]")
+		var/datum/DBQuery/query_message_secret = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET secret = NOT secret, lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id]")
 		if(!query_message_secret.warn_execute())
 			return
 		log_admin_private("[key_name(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
@@ -139,7 +142,7 @@
 		browse_messages(target_ckey = target_ckey)
 
 /proc/browse_messages(type, target_ckey, index, linkless = 0, filter)
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/output
@@ -166,7 +169,7 @@
 			else
 				output += "|<a href='?_src_=holder;showwatchfilter=1'>\[Filter offline clients\]</a></center>"
 		output += ruler
-		var/DBQuery/query_get_type_messages = GLOB.dbcon.NewQuery("SELECT id, targetckey, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]'")
+		var/datum/DBQuery/query_get_type_messages = SSdbcore.NewQuery("SELECT id, targetckey, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]'")
 		if(!query_get_type_messages.warn_execute())
 			return
 		while(query_get_type_messages.NextRow())
@@ -190,7 +193,7 @@
 			output += "<br>[text]<hr style='background:#000000; border:0; height:1px'>"
 	if(target_ckey)
 		target_ckey = sanitizeSQL(target_ckey)
-		var/DBQuery/query_get_messages = GLOB.dbcon.NewQuery("SELECT type, secret, id, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' ORDER BY timestamp DESC")
+		var/datum/DBQuery/query_get_messages = SSdbcore.NewQuery("SELECT type, secret, id, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' ORDER BY timestamp DESC")
 		if(!query_get_messages.warn_execute())
 			return
 		var/messagedata
@@ -265,7 +268,7 @@
 				search = "^\[^\[:alpha:\]\]"
 			else
 				search = "^[index]"
-		var/DBQuery/query_list_messages = GLOB.dbcon.NewQuery("SELECT DISTINCT targetckey FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey REGEXP '[search]' ORDER BY targetckey")
+		var/datum/DBQuery/query_list_messages = SSdbcore.NewQuery("SELECT DISTINCT targetckey FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey REGEXP '[search]' ORDER BY targetckey")
 		if(!query_list_messages.warn_execute())
 			return
 		while(query_list_messages.NextRow())
@@ -277,7 +280,7 @@
 	usr << browse(output, "window=browse_messages;size=900x500")
 
 proc/get_message_output(type, target_ckey)
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!type)
@@ -288,7 +291,7 @@ proc/get_message_output(type, target_ckey)
 	var/query = "SELECT id, adminckey, text, timestamp, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]'"
 	if(type == "message" || type == "watchlist entry")
 		query += " AND targetckey = '[target_ckey]'"
-	var/DBQuery/query_get_message_output = GLOB.dbcon.NewQuery(query)
+	var/datum/DBQuery/query_get_message_output = SSdbcore.NewQuery(query)
 	if(!query_get_message_output.warn_execute())
 		return
 	while(query_get_message_output.NextRow())
@@ -301,7 +304,7 @@ proc/get_message_output(type, target_ckey)
 			if("message")
 				output += "<font color='red' size='3'><b>Admin message left by <span class='prefix'>[admin_ckey]</span> on [timestamp]</b></font>"
 				output += "<br><font color='red'>[text]</font><br>"
-				var/DBQuery/query_message_read = GLOB.dbcon.NewQuery("UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = [message_id]")
+				var/datum/DBQuery/query_message_read = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = [message_id]")
 				if(!query_message_read.warn_execute())
 					return
 			if("watchlist entry")
@@ -333,7 +336,7 @@ proc/get_message_output(type, target_ckey)
 		var/timestamp = note.group[1]
 		notetext = note.group[2]
 		var/admin_ckey = note.group[3]
-		var/DBQuery/query_convert_time = GLOB.dbcon.NewQuery("SELECT ADDTIME(STR_TO_DATE('[timestamp]','%d-%b-%Y'), '0')")
+		var/datum/DBQuery/query_convert_time = SSdbcore.NewQuery("SELECT ADDTIME(STR_TO_DATE('[timestamp]','%d-%b-%Y'), '0')")
 		if(!query_convert_time.Execute())
 			return
 		if(query_convert_time.NextRow())

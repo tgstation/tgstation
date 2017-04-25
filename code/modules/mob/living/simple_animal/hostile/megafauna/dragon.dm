@@ -54,7 +54,7 @@ Difficulty: Medium
 	death_sound = 'sound/magic/demon_dies.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
-	..()
+	. = ..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
@@ -97,7 +97,7 @@ Difficulty: Medium
 	pixel_z = 500
 
 /obj/effect/overlay/temp/fireball/Initialize(loc)
-	..()
+	. = ..()
 	animate(src, pixel_z = 0, time = 12)
 
 /obj/effect/overlay/temp/target
@@ -122,7 +122,7 @@ Difficulty: Medium
 	return
 
 /obj/effect/overlay/temp/target/Initialize(loc)
-	..()
+	. = ..()
 	INVOKE_ASYNC(src, .proc/fall)
 
 /obj/effect/overlay/temp/target/proc/fall()

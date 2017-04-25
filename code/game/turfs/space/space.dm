@@ -162,6 +162,7 @@
 /turf/open/space/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	if(!CanBuildHere())
 		return FALSE
+
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)

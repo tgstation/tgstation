@@ -25,7 +25,7 @@
 	announcement += "<br>"
 
 	for(var/mob/M in GLOB.player_list)
-		if(!isnewplayer(M) && !M.ear_deaf)
+		if(!isnewplayer(M) && M.can_hear())
 			to_chat(M, announcement)
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				M << sound(sound)
@@ -51,7 +51,7 @@
 		return
 
 	for(var/mob/M in GLOB.player_list)
-		if(!isnewplayer(M) && !M.ear_deaf)
+		if(!isnewplayer(M) && M.can_hear())
 			to_chat(M, "<b><font size = 3><font color = red>[title]</font color><BR>[message]</font size></b><BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				if(alert)

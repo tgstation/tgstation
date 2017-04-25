@@ -7811,11 +7811,7 @@
 /area/shuttle/assault_pod)
 "tm" = (
 /obj/machinery/computer/shuttle/syndicate/drop_pod,
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3";
-	icon_state = "wall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "tn" = (
 /obj/structure/grille,

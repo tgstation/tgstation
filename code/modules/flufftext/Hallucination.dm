@@ -673,7 +673,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	QDEL_IN(O, 300)
 
 
-
 /obj/effect/hallucination/bolts
 	var/list/doors = list()
 

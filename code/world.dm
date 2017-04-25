@@ -17,7 +17,7 @@
 	log_world("World loaded at [time_stamp()]")
 
 #if (PRELOAD_RSC == 0)
-	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
+	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
 	while(i<=external_rsc_urls.len)
 		if(external_rsc_urls[i])
@@ -35,7 +35,7 @@
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-	load_configuration()
+	config = new
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
@@ -48,7 +48,7 @@
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	if(config.sql_enabled)
-		if(!GLOB.dbcon.Connect())
+		if(!SSdbcore.Connect())
 			log_world("Your server failed to establish a connection with the database.")
 		else
 			log_world("Database connection established.")
@@ -210,6 +210,7 @@
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
+	feedback_set("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
 	if(GLOB.blackbox)
 		GLOB.blackbox.save_all_data_to_sql()
 	Master.Shutdown()	//run SS shutdowns
@@ -250,7 +251,7 @@
 	world << sound(round_end_sound)
 
 /world/proc/load_mode()
-	var/list/Lines = file2list("data/mode.txt")
+	var/list/Lines = world.file2list("data/mode.txt")
 	if(Lines.len)
 		if(Lines[1])
 			GLOB.master_mode = Lines[1]
@@ -263,18 +264,6 @@
 
 /world/proc/load_motd()
 	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
-
-/world/proc/load_configuration()
-	config = new /datum/configuration()
-	config.load("config/config.txt")
-	config.load("config/game_options.txt","game_options")
-	config.loadsql("config/dbconfig.txt")
-	if (config.maprotation)
-		config.loadmaplist("config/maps.txt")
-
-	// apply some settings from config..
-	GLOB.abandon_allowed = config.respawn
-
 
 /world/proc/update_status()
 	var/s = ""

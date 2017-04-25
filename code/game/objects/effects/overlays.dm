@@ -214,7 +214,7 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "3"
 	duration = 20
-
+	
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10

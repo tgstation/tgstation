@@ -179,12 +179,12 @@
 
 /proc/SDQL_callproc_global(procname,args_list)
 	set waitfor = FALSE
-	call(procname)(arglist(args_list))
+	WrapAdminProcCall(GLOBAL_PROC, procname, args_list)
 
 /proc/SDQL_callproc(thing, procname, args_list)
 	set waitfor = FALSE
 	if(hascall(thing, procname))
-		call(thing, procname)(arglist(args_list))
+		WrapAdminProcCall(thing, procname, args_list)
 
 /proc/SDQL_parse(list/query_list)
 	var/datum/SDQL_parser/parser = new()
@@ -479,8 +479,8 @@
 		new_args += SDQL_expression(source, arg)
 	if(object == world) // Global proc.
 		procname = "/proc/[procname]"
-		return call(procname)(arglist(new_args))
-	return call(object, procname)(arglist(new_args)) // Spawn in case the function sleeps.
+		return WrapAdminProcCall(GLOBAL_PROC, procname, new_args)
+	return WrapAdminProcCall(object, procname, new_args)
 
 /proc/SDQL2_tokenize(query_text)
 

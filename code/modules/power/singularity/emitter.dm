@@ -13,6 +13,11 @@
 	var/charge = 0
 	var/atom/target = null
 
+	// The following 3 vars are mostly for the prototype
+	var/manual = FALSE
+	var/charge = 0
+	var/atom/target = null
+
 	use_power = 0
 	idle_power_usage = 10
 	active_power_usage = 300
@@ -88,7 +93,7 @@
 		rotate()
 
 /obj/machinery/power/emitter/Initialize()
-	..()
+	. = ..()
 	if(state == 2 && anchored)
 		connect_to_network()
 
