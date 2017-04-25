@@ -140,10 +140,6 @@
 		containsPrize = FALSE
 		qdel(src)
 
-/obj/effect/spawner/lootdrop/maintenance/New()
-	..()
-	loot += list(/obj/item/weapon/reagent_containers/food/snacks/egg/loaded = 15, /obj/item/weapon/storage/bag/easterbasket = 15)
-
 //Easter Recipes + food
 /obj/item/weapon/reagent_containers/food/snacks/hotcrossbun
 	bitesize = 2

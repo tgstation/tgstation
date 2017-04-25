@@ -35,12 +35,6 @@
 
 	client.sethotkeys() //set mob specific hotkeys
 
-	if(viewing_alternate_appearances && viewing_alternate_appearances.len)
-		for(var/aakey in viewing_alternate_appearances)
-			for(var/aa in viewing_alternate_appearances[aakey])
-				var/datum/alternate_appearance/AA = aa
-				AA.display_to(list(src))
-
 	update_client_colour()
 	if(client)
 		client.click_intercept = null

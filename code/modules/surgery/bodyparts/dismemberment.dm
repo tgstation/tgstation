@@ -137,14 +137,10 @@
 	loc = LB
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
-	if(C.mind && C.mind.changeling)
-		LB.brain = new //changeling doesn't lose its real brain organ, we drop a decoy.
-		LB.brain.loc = LB
-		LB.brain.decoy_override = TRUE
-	else			//if not a changeling, we put the brain organ inside the dropped head
-		Remove(C)	//and put the player in control of the brainmob
-		loc = LB
-		LB.brain = src
+	Remove(C)	//Changeling brain concerns are now handled in Remove
+	loc = LB
+	LB.brain = src
+	if(brainmob)
 		LB.brainmob = brainmob
 		brainmob = null
 		LB.brainmob.loc = LB

@@ -720,7 +720,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = "10"
+	req_access_txt = "10; 13"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1216,7 +1216,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Storage";
-	req_access_txt = "32;47;48"
+	req_access_txt = "10;32;47;48"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -15746,8 +15746,9 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = "24";
-	req_one_access = null
+	req_access_txt = "10";
+	req_one_access = null;
+	req_one_access_txt = "13; 24"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -15820,8 +15821,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/atmos{
 	name = "Fore Port Solar Access";
-	req_access_txt = "24";
-	req_one_access = null
+	req_access_txt = "0";
+	req_one_access = null;
+	req_one_access_txt = "13; 24"
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -38349,7 +38351,10 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/highsecurity,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Secure Tech Storage";
+	req_access_txt = "19;23"
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -107067,7 +107072,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = "10"
+	req_access_txt = "10; 13"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
