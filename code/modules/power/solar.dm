@@ -282,7 +282,7 @@
 	var/list/connected_panels = list()
 
 /obj/machinery/power/solar_control/Initialize()
-	..()
+	. = ..()
 	if(powernet)
 		set_panels(currentdir)
 	connect_to_network()

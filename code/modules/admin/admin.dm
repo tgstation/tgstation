@@ -410,7 +410,7 @@
 
 /datum/admins/proc/restart()
 	set category = "Server"
-	set name = "Hard Restart"
+	set name = "Reboot World"
 	set desc="Restarts the world immediately"
 	if (!usr.client.holder)
 		return
@@ -419,7 +419,7 @@
 		return
 	if(confirm == "Yes")
 		SSticker.delay_end = 0
-		feedback_add_details("admin_verb","Hard Restart") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_error", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 
 /datum/admins/proc/end_round()

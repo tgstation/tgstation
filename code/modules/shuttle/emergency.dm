@@ -450,7 +450,7 @@
 	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
 /obj/docking_port/stationary/random/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 

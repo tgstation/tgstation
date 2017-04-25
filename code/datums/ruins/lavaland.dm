@@ -129,13 +129,6 @@
 	suffix = "lavaland_surface_ufo_crash.dmm"
 	cost = 5
 
-/datum/map_template/ruin/lavaland/ww_vault
-	name = "Wishgranter Vault"
-	id = "ww-vault"
-	description = "Scrawled on the large double doors is both a message and a warning: 'meat grinder requires sacri...'. You're not so sure about this anymore."
-	suffix = "lavaland_surface_ww_vault.dmm"
-	cost = 20
-
 /datum/map_template/ruin/lavaland/xeno_nest
 	name = "Xenomorph Nest"
 	id = "xeno-nest"

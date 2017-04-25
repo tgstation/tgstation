@@ -3,7 +3,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	flags = SS_TICKER|SS_FIRE_IN_LOBBY
 	wait = 1
 	priority = 500
-	init_order = -6
+	init_order = INIT_ORDER_OVERLAY
 
 	stat_tag = "Ov"
 	currentrun = null

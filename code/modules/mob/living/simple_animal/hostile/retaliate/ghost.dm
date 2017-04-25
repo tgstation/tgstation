@@ -39,7 +39,7 @@
 	var/random = TRUE //if you want random names for ghosts or not
 
 /mob/living/simple_animal/hostile/retaliate/ghost/Initialize()
-	..()
+	. = ..()
 	give_hair()
 	if(random)
 		switch(rand(0,1))

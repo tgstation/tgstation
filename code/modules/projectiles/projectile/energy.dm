@@ -42,7 +42,7 @@
 	range = 10
 
 /obj/item/projectile/energy/net/Initialize()
-	..()
+	. = ..()
 	SpinAnimation()
 
 /obj/item/projectile/energy/net/on_hit(atom/target, blocked = 0)
@@ -61,11 +61,11 @@
 	desc = "A field of bluespace energy, locking on to teleport a target."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dragnetfield"
+	light_range = 3
 	anchored = 1
 
 /obj/effect/nettingportal/Initialize()
-	..()
-	set_light(3)
+	. = ..()
 	var/obj/item/device/radio/beacon/teletarget = null
 	for(var/obj/machinery/computer/teleporter/com in GLOB.machines)
 		if(com.target)

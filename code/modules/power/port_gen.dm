@@ -60,7 +60,7 @@
 	var/current_heat = 0
 
 /obj/machinery/power/port_gen/pacman/Initialize()
-	..()
+	. = ..()
 	if(anchored)
 		connect_to_network()
 

@@ -18,7 +18,7 @@
 	//	flags = CONDUCT
 
 /obj/structure/lattice/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
 			QDEL_IN(LAT, 0)

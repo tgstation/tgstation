@@ -166,7 +166,7 @@
 	terminal.master = src
 
 /obj/machinery/power/apc/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 	has_electronics = 2 //installed and secured

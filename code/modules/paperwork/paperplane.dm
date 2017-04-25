@@ -14,7 +14,7 @@
 	var/obj/item/weapon/paper/internalPaper
 
 /obj/item/weapon/paperplane/Initialize(mapload, obj/item/weapon/paper/newPaper)
-	..()
+	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
 	if(newPaper)

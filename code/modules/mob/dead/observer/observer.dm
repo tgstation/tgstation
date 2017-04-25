@@ -272,25 +272,24 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
-		setDir(direct )//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
+		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
+	var/oldloc = loc
+
 	if(NewLoc)
 		loc = NewLoc
-		for(var/obj/effect/step_trigger/S in NewLoc)
-			S.Crossed(src)
 		update_parallax_contents()
-		return
-	loc = get_turf(src) //Get out of closets and such as a ghost
-	if((direct & NORTH) && y < world.maxy)
-		y++
-	else if((direct & SOUTH) && y > 1)
-		y--
-	if((direct & EAST) && x < world.maxx)
-		x++
-	else if((direct & WEST) && x > 1)
-		x--
+	else
+		loc = get_turf(src) //Get out of closets and such as a ghost
+		if((direct & NORTH) && y < world.maxy)
+			y++
+		else if((direct & SOUTH) && y > 1)
+			y--
+		if((direct & EAST) && x < world.maxx)
+			x++
+		else if((direct & WEST) && x > 1)
+			x--
 
-	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
-		S.Crossed(src)
+	Moved(oldloc, direct)
 
 /mob/dead/observer/is_active()
 	return 0
@@ -808,6 +807,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(!invisibility)
 		to_chat(user, "It seems extremely obvious.")
+
+// Ghosts have no momentum, being massless ectoplasm
+/mob/dead/observer/Process_Spacemove(movement_dir)
+	return 1
 
 /proc/set_observer_default_invisibility(amount, message=null)
 	for(var/mob/dead/observer/G in GLOB.player_list)
