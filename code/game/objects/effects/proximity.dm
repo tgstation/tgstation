@@ -73,6 +73,7 @@
 	checkers = checkers_local
 
 /obj/effect/abstract/proximity_checker
+	invisibility = INVISIBILITY_ABSTRACT
 	var/datum/proximity_monitor/monitor
 
 /obj/effect/abstract/proximity_checker/Initialize(mapload, datum/proximity_monitor/_monitor)

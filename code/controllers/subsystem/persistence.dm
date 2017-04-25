@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
-	init_order = -100
+	init_order = INIT_ORDER_PERSISTENCE
 	flags = SS_NO_FIRE
 	var/savefile/secret_satchels
 	var/list/satchel_blacklist 		= list() //this is a typecache

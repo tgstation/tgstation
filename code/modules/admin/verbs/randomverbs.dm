@@ -974,7 +974,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 /client/proc/has_antag_hud()
 	var/datum/atom_hud/A = GLOB.huds[ANTAG_HUD_TRAITOR]
-	return mob in A.hudusers
+	return A.hudusers[mob]
 
 /client/proc/open_shuttle_manipulator()
 	set category = "Admin"

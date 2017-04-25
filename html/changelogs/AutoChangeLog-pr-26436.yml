@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Swarmers now only speak their own language, rather than swarmer and
+common."

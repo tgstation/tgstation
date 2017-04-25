@@ -54,7 +54,7 @@
 
 	if(standard_station_regex.Find(new_name))
 		to_chat(user, "Your name has been automatically approved.")
-		rename_station(new_name, user)
+		rename_station(new_name, user.name, user.real_name, key_name(user))
 		return
 
 	to_chat(user, "Your name has been sent to your employers for approval.")
@@ -79,7 +79,7 @@
 	response_timer_id = null
 
 /obj/item/station_charter/proc/rename_station(designation, uname, ureal_name, ukey)
-	change_station_name(designation)
+	set_station_name(designation)
 	minor_announce("[ureal_name] has designated your station as [station_name()]", "Captain's Charter", 0)
 	log_game("[ukey] has renamed the station as [station_name()].")
 

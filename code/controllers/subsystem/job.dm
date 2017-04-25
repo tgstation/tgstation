@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
-	init_order = 14
+	init_order = INIT_ORDER_JOBS
 	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
@@ -448,7 +448,7 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/LoadJobs()
-	var/jobstext = return_file_text("config/jobs.txt")
+	var/jobstext = file2text("config/jobs.txt")
 	for(var/datum/job/J in occupations)
 		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
 		jobs.Find(jobstext)

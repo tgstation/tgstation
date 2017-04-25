@@ -475,26 +475,35 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 
+/obj/item/weapon/lighter/update_icon()
+	if(lit)
+		icon_state = "[initial(icon_state)]_on"
+	else
+		icon_state = "[initial(icon_state)]"
+
+/obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
+	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
+
 /obj/item/weapon/lighter/greyscale
 	name = "cheap lighter"
 	desc = "A cheap-as-free lighter."
 	icon_state = "lighter"
 
-/obj/item/weapon/lighter/greyscale/New()
-	..()
-	var/image/I = image(icon,"lighter-overlay")
-	var/newcolor = color2hex(randomColor(1))
-	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+/obj/item/weapon/lighter/greyscale/Initialize()
+	. = ..()
+	add_atom_colour(color2hex(randomColor(1)), FIXED_COLOUR_PRIORITY)
+	update_icon()
+
+/obj/item/weapon/lighter/greyscale/update_icon()
+	cut_overlays()
+	var/image/I = image(icon,"[initial(icon_state)]_base")
+	I.appearance_flags = RESET_COLOR //the edging doesn't change color
+	if(lit)
+		I.icon_state = "[initial(icon_state)]_on"
 	add_overlay(I)
 
 /obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
 	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
-
-/obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
-	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
-
-/obj/item/weapon/lighter/update_icon()
-	icon_state = lit ? "[icon_state]_on" : "[initial(icon_state)]"
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 	if(user.is_holding(src))

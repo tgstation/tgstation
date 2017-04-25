@@ -122,9 +122,10 @@
 	if(flags & CLEAN_ON_MOVE)
 		clean_on_move()
 	
-	var/datum/proximity_monitor/pc = proximity_monitor
-	if(pc)
-		pc.HandleMove()
+	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
+	if(proximity_monitor)
+		proximity_monitor.HandleMove()
+
 	return 1
 
 /atom/movable/proc/clean_on_move()
@@ -175,7 +176,7 @@
 
 	if(stationloving && force)
 		STOP_PROCESSING(SSinbounds, src)
-	
+
 	QDEL_NULL(proximity_monitor)
 
 	. = ..()
@@ -623,3 +624,8 @@
 			highest_priority = pri
 
 	. = chosen_langtype
+
+/atom/movable/proc/ConveyorMove(movedir)
+	set waitfor = FALSE
+	if(!anchored && has_gravity())
+		step(src, movedir)

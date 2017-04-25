@@ -5,6 +5,9 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 
+	 // ME TARZAN, YOU JANEBOT
+	initial_languages = list(/datum/language/common)
+
 
 
 /mob/living/carbon/human/dummy
@@ -42,8 +45,6 @@
 
 	handcrafting = new()
 
-	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
-
 	..()
 
 /mob/living/carbon/human/create_internal_organs()
@@ -58,6 +59,7 @@
 		internal_organs += new /obj/item/organ/heart
 
 	internal_organs += new dna.species.mutanteyes()
+	internal_organs += new dna.species.mutantears
 	internal_organs += new /obj/item/organ/brain
 	..()
 

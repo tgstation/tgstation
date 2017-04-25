@@ -186,10 +186,9 @@
 		var/mob/living/carbon/human/gibee = occupant
 		if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
-			typeofskin = gibee.dna.species.skinned_type
-		else
-			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
-			typeofskin = /obj/item/stack/sheet/animalhide/human
+			if(gibee.dna.species.skinned_type)
+				typeofskin = gibee.dna.species.skinned_type
+
 	else if(iscarbon(occupant))
 		var/mob/living/carbon/C = occupant
 		typeofmeat = C.type_of_meat
