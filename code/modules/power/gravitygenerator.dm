@@ -98,7 +98,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 //
 
 /obj/machinery/gravity_generator/main/station/Initialize()
-	..()
+	. = ..()
 	setup_parts()
 	middle.add_overlay("activated")
 	update_list()

@@ -92,7 +92,7 @@
 		E.Grant(src)
 	create_reagents(100)
 	set_colour(new_colour)
-	..()
+	. = ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
