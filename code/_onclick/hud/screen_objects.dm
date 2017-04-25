@@ -134,21 +134,16 @@
 			icon_state = icon_empty
 
 /obj/screen/inventory/hand
-	var/image/active_overlay
-	var/image/handcuff_overlay
-	var/image/blocked_overlay
+	var/mutable_appearance/handcuff_overlay
+	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "blocked")
 	var/held_index = 0
 
 /obj/screen/inventory/hand/update_icon()
 	..()
 
-	if(!active_overlay)
-		active_overlay = image("icon"=icon, "icon_state"="hand_active")
 	if(!handcuff_overlay)
 		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
-		handcuff_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"=state)
-	if(!blocked_overlay)
-		blocked_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"="blocked")
+		handcuff_overlay = mutable_appearance('icons/mob/screen_gen.dmi', state)
 
 	cut_overlays()
 
@@ -163,7 +158,7 @@
 					add_overlay(blocked_overlay)
 
 		if(held_index == hud.mymob.active_hand_index)
-			add_overlay(active_overlay)
+			add_overlay("hand_active")
 
 
 /obj/screen/inventory/hand/Click(location, control, params)
@@ -445,7 +440,7 @@
 
 /obj/screen/zone_sel/update_icon(mob/user)
 	cut_overlays()
-	add_overlay(image('icons/mob/screen_gen.dmi', "[selecting]"))
+	add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[selecting]"))
 	user.zone_selected = selecting
 
 /obj/screen/zone_sel/alien
@@ -453,7 +448,7 @@
 
 /obj/screen/zone_sel/alien/update_icon(mob/user)
 	cut_overlays()
-	add_overlay(image('icons/mob/screen_alien.dmi', "[selecting]"))
+	add_overlay(mutable_appearance('icons/mob/screen_alien.dmi', "[selecting]"))
 	user.zone_selected = selecting
 
 /obj/screen/zone_sel/robot

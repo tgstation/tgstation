@@ -218,6 +218,7 @@
 #include "code\datums\martial.dm"
 #include "code\datums\material_container.dm"
 #include "code\datums\mind.dm"
+#include "code\datums\mutable_appearance.dm"
 #include "code\datums\mutations.dm"
 #include "code\datums\outfit.dm"
 #include "code\datums\progressbar.dm"

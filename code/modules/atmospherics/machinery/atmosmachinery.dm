@@ -201,17 +201,10 @@ Pipelines + Other Objects -> Pipe network
 	//Generate a unique identifier for this image combination
 	var/identifier = iconsetids[iconset] + "_[iconstate]_[direction]_[col]"
 
-	var/image/img
-	if(pipeimages[identifier] == null)
-		img = image(iconset, icon_state=iconstate, dir=direction)
-		img.color = col
-
-		pipeimages[identifier] = img
-
-	else
-		img = pipeimages[identifier]
-
-	return img
+	if((!(. = pipeimages[identifier])))
+		var/image/pipe_overlay
+		pipe_overlay = . = pipeimages[identifier] = image(iconset, iconstate, dir = direction)
+		pipe_overlay.color = col
 
 /obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
 	if(can_unwrench)

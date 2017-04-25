@@ -14,8 +14,8 @@
 	debris = list(/obj/item/clockwork/alloy_shards/medium = 1, \
 	/obj/item/clockwork/alloy_shards/small = 6, \
 	/obj/item/clockwork/component/replicant_alloy/replication_plate = 1)
-	var/image/daemon_glow
-	var/image/component_glow
+	var/static/mutable_appearance/daemon_glow = mutable_appearance('icons/obj/clockwork_objects.dmi', "tinkerglow")
+	var/static/mutable_appearance/component_glow = mutable_appearance('icons/obj/clockwork_objects.dmi', "t_random_component")
 	var/component_id_to_produce
 	var/production_time = 0 //last time we produced a component
 	var/production_cooldown = 120
@@ -119,14 +119,9 @@
 	. = ..()
 	if(active)
 		var/component_color = get_component_color(component_id_to_produce)
-		if(!daemon_glow)
-			daemon_glow = new('icons/obj/clockwork_objects.dmi', "tinkerglow")
 		daemon_glow.color = component_color
 		add_overlay(daemon_glow)
-		if(!component_glow)
-			component_glow = new('icons/obj/clockwork_objects.dmi', "t_[component_id_to_produce ? component_id_to_produce :"random_component"]")
-		else
-			component_glow.icon_state = "t_[component_id_to_produce ? component_id_to_produce :"random_component"]"
+		component_glow.icon_state = "t_[component_id_to_produce ? component_id_to_produce :"random_component"]"
 		component_glow.color = component_color
 		add_overlay(component_glow)
 		production_time = world.time + production_cooldown //don't immediately produce when turned on after being off

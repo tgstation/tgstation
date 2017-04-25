@@ -29,7 +29,7 @@
 	..()
 	cut_overlays()
 	if(has_latches)
-		add_overlay(image('icons/obj/storage.dmi', "[latches]"))
+		add_overlay(latches)
 
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
