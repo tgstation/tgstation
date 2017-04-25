@@ -44,6 +44,7 @@
 	id = "vanguard"
 	duration = 200
 	tick_interval = 0 //tick as fast as possible
+	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /obj/screen/alert/status_effect/vanguard
 	var/datum/progressbar/progbar
 
@@ -58,7 +59,8 @@
 	if(istype(L)) //this is probably more safety than actually needed
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
-		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."
+		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.\
+		[GLOB.ratvar_awakens ? "":"<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."]"
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
@@ -88,7 +90,7 @@
 		for(var/i in owner.stun_absorption)
 			if(owner.stun_absorption[i]["end_time"] > world.time && owner.stun_absorption[i]["priority"] > vanguard["priority"])
 				otheractiveabsorptions = TRUE
-		if(!ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
+		if(!GLOB.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
 			vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
 			owner.Stun(stuns_blocked)
 			owner.Weaken(stuns_blocked)

@@ -9,7 +9,7 @@
 	var/mob/living/ranged_ability_user
 	var/ranged_clickcd_override = -1
 
-var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
+GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/Destroy()
 	if(ranged_ability_user)
@@ -133,7 +133,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			return 0
 
 	var/turf/T = get_turf(user)
-	if(T.z == ZLEVEL_CENTCOM && (!centcom_cancast || ticker.mode.name == "ragin' mages")) //Certain spells are not allowed on the centcom zlevel
+	if(T.z == ZLEVEL_CENTCOM && (!centcom_cancast || SSticker.mode.name == "ragin' mages")) //Certain spells are not allowed on the centcom zlevel
 		to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
 		return 0
 
@@ -242,6 +242,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
+/obj/effect/proc_holder/spell/proc/can_target(mob/living/target)
+	return TRUE
+
 /obj/effect/proc_holder/spell/proc/start_recharge()
 	if(action)
 		action.UpdateButtonIcon()
@@ -292,9 +295,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(isliving(target) && message)
 			to_chat(target, text("[message]"))
 		if(sparks_spread)
-			var/datum/effect_system/spark_spread/sparks = new
-			sparks.set_up(sparks_amt, 0, location) //no idea what the 0 is
-			sparks.start()
+			do_sparks(sparks_amt, FALSE, location)
 		if(smoke_spread)
 			if(smoke_spread == 1)
 				var/datum/effect_system/smoke_spread/smoke = new
@@ -326,6 +327,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			adjust_var(user, holder_var_type, -holder_var_amount)
 
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
+	if (!istype(target))
+		return
 	switch(type)
 		if("bruteloss")
 			target.adjustBruteLoss(amount)
@@ -361,6 +364,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	switch(max_targets)
 		if(0) //unlimited
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
+				if(!can_target(target))
+					continue
 				targets += target
 		if(1) //single target can be picked
 			if(range < 0)
@@ -370,6 +375,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
+						continue
+					if(!can_target(M))
 						continue
 					possible_targets += M
 
@@ -396,6 +403,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
+				if(!can_target(target))
+					continue
 				possible_targets += target
 			for(var/i=1,i<=max_targets,i++)
 				if(!possible_targets.len)
@@ -420,6 +429,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/list/targets = list()
 
 	for(var/turf/target in view_or_range(range,user,selection_type))
+		if(!can_target(target))
+			continue
 		if(!(target in view_or_range(inner_radius,user,selection_type)))
 			targets += target
 

@@ -15,7 +15,8 @@
 	var/cooldown_timer
 	var/robot_cell_charge = 5000
 	var/obj/effect/countdown/transformer/countdown
-
+	var/mob/living/silicon/ai/masterAI
+	
 /obj/machinery/transformer/New()
 	// On us
 	..()
@@ -103,6 +104,10 @@
 
  	// So he can't jump out the gate right away.
 	R.SetLockdown()
+	if(masterAI)
+		R.connected_ai = masterAI
+		R.lawsync()
+		R.lawupdate = 1
 	addtimer(CALLBACK(src, .proc/unlock_new_robot, R), 50)
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/R)
@@ -110,7 +115,7 @@
 	sleep(30)
 	if(R)
 		R.SetLockdown(0)
-		R.notify_ai(1)
+		R.notify_ai(NEW_BORG)
 
 /obj/machinery/transformer/conveyor/New()
 	..()

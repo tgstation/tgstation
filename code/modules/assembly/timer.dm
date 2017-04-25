@@ -95,7 +95,7 @@
 		if(timing && istype(holder, /obj/item/device/transfer_valve))
 			var/timer_message = "[key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated [src] attachment on [holder]."
 			message_admins(timer_message)
-			bombers += timer_message
+			GLOB.bombers += timer_message
 			log_game("[key_name(usr)] activated [src] attachment for [loc]")
 		update_icon()
 	if(href_list["repeat"])

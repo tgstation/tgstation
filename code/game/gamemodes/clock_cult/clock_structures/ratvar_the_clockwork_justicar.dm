@@ -11,15 +11,16 @@
 	appearance_flags = 0
 	light_power = 0.7
 	light_range = 15
-	light_color = rgb(190, 135, 0)
+	light_color = "#BE8700"
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
+	dangerous_possession = TRUE
 
-/obj/structure/destructible/clockwork/massive/ratvar/New()
-	..()
-	ratvar_awakens++
-	for(var/obj/O in all_clockwork_objects)
+/obj/structure/destructible/clockwork/massive/ratvar/Initialize()
+	. = ..()
+	GLOB.ratvar_awakens++
+	for(var/obj/O in GLOB.all_clockwork_objects)
 		O.ratvar_act()
 	START_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='ratvar'>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</span>")
@@ -27,11 +28,11 @@
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0.1), 50)
+	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
-	ratvar_awakens--
-	for(var/obj/O in all_clockwork_objects)
+	GLOB.ratvar_awakens--
+	for(var/obj/O in GLOB.all_clockwork_objects)
 		O.ratvar_act()
 	STOP_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>")
@@ -62,27 +63,30 @@
 		T.ratvar_act()
 	for(var/I in circleviewturfs(src, round(proselytize_range * 0.5)))
 		var/turf/T = I
-		T.ratvar_act(1)
-	var/dir_to_step_in = pick(cardinal)
+		T.ratvar_act(TRUE)
+	var/dir_to_step_in = pick(GLOB.cardinal)
+	var/list/meals = list()
+	for(var/mob/living/L in GLOB.living_mob_list) //we want to know who's alive so we don't lose and retarget a single person
+		if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
+			meals += L
 	if(!prey)
-		for(var/obj/singularity/narsie/N in singularities)
+		for(var/obj/singularity/narsie/N in GLOB.singularities)
 			if(N.z == z)
 				prey = N
 				break
-		if(!prey) //In case there's a Nar-Sie
-			var/list/meals = list()
-			for(var/mob/living/L in living_mob_list)
-				if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
-					meals += L
-			if(meals.len)
-				prey = pick(meals)
-				to_chat(prey, "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
-				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>")
-				prey << 'sound/effects/ratvar_reveal.ogg'
+		if(!prey && LAZYLEN(meals))
+			prey = pick(meals)
+			to_chat(prey, "<span class='heavy_brass'><font size=5>\"You will do, heretic.\"</font></span>\n\
+			<span class='userdanger'You feel something massive turn its crushing focus to you...</span>")
+			prey << 'sound/effects/ratvar_reveal.ogg'
 	else
-		if((!istype(prey, /obj/singularity/narsie) && prob(10)) || is_servant_of_ratvar(prey) || prey.z != z)
-			to_chat(prey, "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
-			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>")
+		if((!istype(prey, /obj/singularity/narsie) && prob(10) && LAZYLEN(meals) > 1) || prey.z != z || !(prey in meals))
+			if(is_servant_of_ratvar(prey))
+				to_chat(prey, "<span class='heavy_brass'><font size=5>\"Serve me well.\"</font></span>\n\
+				<span class='big_brass'>You feel great joy as your god turns His eye to another heretic...</span>")
+			else
+				to_chat(prey, "<span class='heavy_brass'><font size=5>\"No matter. I will find you later, heretic.\"</font></span>\n\
+				<span class='userdanger'>You feel tremendous relief as the crushing focus relents...</span>")
 			prey = null
 		else
 			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target
@@ -109,13 +113,13 @@
 	while(src && narsie)
 		send_to_playing_players('sound/magic/clockwork/ratvar_attack.ogg')
 		sleep(5.2)
-		for(var/mob/M in mob_list)
+		for(var/mob/M in GLOB.mob_list)
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#966400", flash_time=1)
 				shake_camera(M, 4, 3)
-		var/ratvar_chance = min(ticker.mode.servants_of_ratvar.len, 50)
-		var/narsie_chance = ticker.mode.cult.len
-		for(var/mob/living/simple_animal/hostile/construct/harvester/C in player_list)
+		var/ratvar_chance = min(SSticker.mode.servants_of_ratvar.len, 50)
+		var/narsie_chance = SSticker.mode.cult.len
+		for(var/mob/living/simple_animal/hostile/construct/harvester/C in GLOB.player_list)
 			narsie_chance++
 		ratvar_chance = rand(base_victory_chance, ratvar_chance)
 		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
@@ -125,7 +129,7 @@
 		sleep(rand(2,5))
 		send_to_playing_players('sound/magic/clockwork/narsie_attack.ogg')
 		sleep(7.4)
-		for(var/mob/M in mob_list)
+		for(var/mob/M in GLOB.mob_list)
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#C80000", flash_time=1)
 				shake_camera(M, 4, 3)

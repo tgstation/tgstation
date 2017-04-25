@@ -2,7 +2,7 @@
 
 
 /client/proc/join_date_check(y,m,d)
-	var/DBQuery/query_datediff = dbcon.NewQuery("SELECT DATEDIFF(Now(),'[y]-[m]-[d]')")
+	var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),'[y]-[m]-[d]')")
 
 	if(!query_datediff.Execute())
 		return FALSE

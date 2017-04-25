@@ -322,7 +322,7 @@
 	return ..()
 
 /obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "suit_storage_unit", name, 400, 305, master_ui, state)
@@ -375,18 +375,13 @@
 		if("dispense")
 			if(!state_open)
 				return
-			switch(params["item"])
-				if("helmet")
-					helmet.loc = loc
-					helmet = null
-				if("suit")
-					suit.loc = loc
-					suit = null
-				if("mask")
-					mask.loc = loc
-					mask = null
-				if("storage")
-					storage.loc = loc
-					storage = null
+			
+			var/static/list/valid_items = list("helmet", "suit", "mask", "storage")
+			var/item_name = params["item"]
+			if(item_name in valid_items)
+				var/obj/item/I = vars[item_name]
+				vars[item_name] = null
+				if(I)
+					I.forceMove(loc)
 			. = TRUE
 	update_icon()

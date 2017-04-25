@@ -89,13 +89,13 @@
 	..()
 	update_icon()
 
-	spawn(4)
-		if(skin)
-			add_overlay(image('icons/mob/aibots.dmi', "medskin_[skin]"))
+	if(skin)
+		add_overlay(image('icons/mob/aibots.dmi', "medskin_[skin]"))
 
-		var/datum/job/doctor/J = new/datum/job/doctor
-		access_card.access += J.get_access()
-		prev_access = access_card.access
+	var/datum/job/doctor/J = new /datum/job/doctor
+	access_card.access += J.get_access()
+	prev_access = access_card.access
+	qdel(J)
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -338,7 +338,7 @@
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
-	if(C.stat == 2)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		return 0 //welp too late for them!
 
 	if(C.suiciding)
@@ -404,7 +404,7 @@
 		soft_reset()
 		return
 
-	if(C.stat == 2)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/mno.ogg',"Live, damnit! LIVE!" = 'sound/voice/mlive.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/mlost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
@@ -496,7 +496,7 @@
 	return
 
 /mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
-	var/datum/reagent/R  = chemical_reagents_list[reagent_id]
+	var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
 	if(!R.overdose_threshold) //Some chems do not have an OD threshold
 		return 0
 	var/current_volume = patient.reagents.get_reagent_amount(reagent_id)
@@ -536,13 +536,11 @@
 	..()
 
 /mob/living/simple_animal/bot/medbot/proc/declare(crit_patient)
-	if(declare_cooldown)
+	if(declare_cooldown > world.time)
 		return
 	var/area/location = get_area(src)
 	speak("Medical emergency! [crit_patient ? "<b>[crit_patient]</b>" : "A patient"] is in critical condition at [location]!",radio_channel)
-	declare_cooldown = 1
-	spawn(200) //Twenty seconds
-		declare_cooldown = 0
+	declare_cooldown = world.time + 200
 
 /obj/machinery/bot_core/medbot
-	req_one_access =list(access_medical, access_robotics)
+	req_one_access =list(GLOB.access_medical, GLOB.access_robotics)

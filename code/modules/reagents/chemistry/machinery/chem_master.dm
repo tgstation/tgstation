@@ -137,7 +137,7 @@
 
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
@@ -321,7 +321,7 @@
 			. = TRUE
 
 		if("analyze")
-			var/datum/reagent/R = chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)

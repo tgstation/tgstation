@@ -15,7 +15,7 @@
 	if(!istype(M))
 		return
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
-		if(user.mind && (user.mind in ticker.mode.get_gang_bosses()))
+		if(user.mind && (user.mind in SSticker.mode.get_gang_bosses()))
 			if(..(M,user,1))
 				if(cooldown)
 					to_chat(user, "<span class='warning'>[src] needs more time to recharge before it can be used.</span>")
@@ -23,7 +23,7 @@
 				if(M.client)
 					M.mind_initialize()		//give them a mind datum if they don't have one.
 					var/datum/gang/G = user.mind.gang_datum
-					var/recruitable = ticker.mode.add_gangster(M.mind,G)
+					var/recruitable = SSticker.mode.add_gangster(M.mind,G)
 					switch(recruitable)
 						if(2)
 							M.Paralyse(5)
@@ -36,6 +36,7 @@
 	..()
 
 /obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
+	set waitfor = FALSE
 	var/cooldown_time = 600+(600*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
 
 	cooldown = 1
@@ -52,8 +53,8 @@
 
 	if(charges)
 		cooldown_time = 50
-	spawn(cooldown_time)
-		cooldown = 0
-		icon_state = "pen"
-		var/mob/M = get(src, /mob)
-		to_chat(M, "<span class='notice'>[bicon(src)] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")
+	sleep(cooldown_time)
+	cooldown = 0
+	icon_state = "pen"
+	var/mob/M = get(src, /mob)
+	to_chat(M, "<span class='notice'>[bicon(src)] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")

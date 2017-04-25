@@ -32,7 +32,7 @@
 	icon = smooth_icon
 	..()
 	if (mineralType && mineralAmt && spread && spreadChance)
-		for(var/dir in cardinal)
+		for(var/dir in GLOB.cardinal)
 			if(prob(spreadChance))
 				var/turf/T = get_step(src, dir)
 				if(istype(T, /turf/closed/mineral/random))
@@ -44,7 +44,6 @@
 
 
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
-
 	if (!user.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -67,18 +66,16 @@
 				feedback_add_details("pick_used_mining","[P.type]")
 	else
 		return attack_hand(user)
-	return
 
 /turf/closed/mineral/proc/gets_drilled()
 	if (mineralType && (src.mineralAmt > 0) && (src.mineralAmt < 11))
 		var/i
-		for (i=0;i<mineralAmt;i++)
+		for(i in 1 to mineralAmt)
 			new mineralType(src)
-		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
+			feedback_add_details("ore_mined",mineralType)
 	ChangeTurf(turf_type, defer_change)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
-	return
 
 /turf/closed/mineral/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash >= 2)
@@ -206,9 +203,9 @@
 
 /turf/closed/mineral/random/labormineral
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium = 2, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 3, /turf/closed/mineral/titanium = 4,
-		/turf/closed/mineral/silver = 6, /turf/closed/mineral/plasma = 15, /turf/closed/mineral/iron = 80,
-		/turf/closed/mineral/gibtonite = 3)
+		/turf/closed/mineral/uranium = 3, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 8, /turf/closed/mineral/titanium = 8,
+		/turf/closed/mineral/silver = 20, /turf/closed/mineral/plasma = 30, /turf/closed/mineral/iron = 95,
+		/turf/closed/mineral/gibtonite = 2)
 	icon_state = "rock_labor"
 
 
@@ -219,9 +216,9 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	defer_change = 1
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/volcanic = 2, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 3, /turf/closed/mineral/titanium/volcanic = 4,
-		/turf/closed/mineral/silver/volcanic = 6, /turf/closed/mineral/plasma/volcanic = 15, /turf/closed/mineral/iron/volcanic = 80,
-		/turf/closed/mineral/gibtonite/volcanic = 3)
+		/turf/closed/mineral/uranium/volcanic = 3, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 8, /turf/closed/mineral/titanium/volcanic = 8,
+		/turf/closed/mineral/silver/volcanic = 20, /turf/closed/mineral/plasma/volcanic = 30, /turf/closed/mineral/bscrystal/volcanic = 1, /turf/closed/mineral/gibtonite/volcanic = 2,
+		/turf/closed/mineral/iron/volcanic = 95)
 
 
 

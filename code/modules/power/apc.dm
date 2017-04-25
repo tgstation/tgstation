@@ -52,6 +52,8 @@
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
+
+	var/lon_range = 1.5
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -109,11 +111,11 @@
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	if (!req_access)
-		req_access = list(access_engine_equip)
+		req_access = list(GLOB.access_engine_equip)
 	if (!armor)
 		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	..()
-	apcs_list += src
+	GLOB.apcs_list += src
 
 	wires = new /datum/wires/apc(src)
 	// offset 24 pixels in direction of dir
@@ -138,7 +140,7 @@
 		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
-	apcs_list -= src
+	GLOB.apcs_list -= src
 
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
@@ -159,7 +161,6 @@
 /obj/machinery/power/apc/handle_atom_del(atom/A)
 	if(A == cell)
 		cell = null
-		update_icon()
 		update_icon()
 		updateUsrDialog()
 
@@ -290,6 +291,21 @@
 				O += status_overlays_environ[environ+1]
 			add_overlay(O)
 
+	// And now, seperately for cleanness, the lighting changing
+	if(update_state & UPSTATE_ALLGOOD)
+		switch(charging)
+			if(0)
+				light_color = LIGHT_COLOR_RED
+			if(1)
+				light_color = LIGHT_COLOR_BLUE
+			if(2)
+				light_color = LIGHT_COLOR_GREEN
+		set_light(lon_range)
+	else if(update_state & UPSTATE_BLUESCREEN)
+		light_color = LIGHT_COLOR_BLUE
+		set_light(lon_range)
+	else
+		set_light(0)
 
 /obj/machinery/power/apc/proc/check_updates()
 
@@ -388,7 +404,7 @@
 								"<span class='notice'>You break the charred power control board and remove the remains.</span>",
 								"<span class='italics'>You hear a crack.</span>")
 							return
-							//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
+							//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 						else if (emagged) // We emag board, not APC's frame
 							emagged = 0
 							user.visible_message(\
@@ -655,13 +671,8 @@
 		return
 	..()
 
-/obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(malfhack)
-		return
-	..()
-
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
@@ -681,7 +692,7 @@
 		"chargingStatus" = charging,
 		"totalLoad" = lastused_total,
 		"coverLocked" = coverlocked,
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
 		"malfStatus" = get_malf_status(user),
 
 		"powerChannels" = list(
@@ -742,15 +753,10 @@
 		area.power_light = (lighting > 1)
 		area.power_equip = (equipment > 1)
 		area.power_environ = (environ > 1)
-//		if (area.name == "AI Chamber")
-//			spawn(10)
-//				to_chat(world, " [area.name] [area.power_equip]")
 	else
 		area.power_light = 0
 		area.power_equip = 0
 		area.power_environ = 0
-//		if (area.name == "AI Chamber")
-//			to_chat(world, "[area.power_equip]")
 	area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
@@ -893,7 +899,7 @@
 			occupier.loc = src.loc
 			occupier.death()
 			occupier.gib()
-			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+			for(var/obj/item/weapon/pinpointer/P in GLOB.pinpointer_list)
 				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
 				P.nuke_warning = FALSE
 
@@ -1019,18 +1025,18 @@
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, GLOB.CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
 		if(excess > lastused_total)		// if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
+			add_load(cellused/GLOB.CELLRATE)		// add the load used to recharge the cell
 
 
 		else		// no excess, and not enough per-apc
-			if((cell.charge/CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * excess)	//recharge with what we can
+			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
+				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess)	//recharge with what we can
 				add_load(excess)		// so draw what we can from the grid
 				charging = 0
 
@@ -1078,8 +1084,8 @@
 		if(chargemode && charging == 1 && operating)
 			if(excess > 0)		// check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
-				var/ch = min(excess*CELLRATE, cell.maxcharge*CHARGELEVEL)
-				add_load(ch/CELLRATE) // Removes the power we're taking from the grid
+				var/ch = min(excess*GLOB.CELLRATE, cell.maxcharge*GLOB.CHARGELEVEL)
+				add_load(ch/GLOB.CELLRATE) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
 			else
@@ -1093,7 +1099,7 @@
 
 		if(chargemode)
 			if(!charging)
-				if(excess > cell.maxcharge*CHARGELEVEL)
+				if(excess > cell.maxcharge*GLOB.CHARGELEVEL)
 					chargecount++
 				else
 					chargecount = 0
@@ -1196,14 +1202,16 @@
 	if(/* !get_connection() || */ !operating || shorted)
 		return
 	if( cell && cell.charge>=20)
-		cell.use(20);
-		spawn(0)
-			for(var/area/A in area.related)
-				for(var/obj/machinery/light/L in A)
-					L.on = TRUE
-					L.break_light_tube()
-					L.on = FALSE
-					stoplag()
+		cell.use(20)
+		INVOKE_ASYNC(src, .proc/break_lights)
+
+/obj/machinery/power/apc/proc/break_lights()
+	for(var/area/A in area.related)
+		for(var/obj/machinery/light/L in A)
+			L.on = TRUE
+			L.break_light_tube()
+			L.on = FALSE
+			stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))
@@ -1231,13 +1239,39 @@
 	for(var/obj/machinery/M in area.contents)
 		if(M.critical_machine)
 			return
-	for(var/A in ai_list)
+	for(var/A in GLOB.ai_list)
 		var/mob/living/silicon/ai/I = A
 		if(get_area(I) == area)
 			return
 
 	failure_timer = max(failure_timer, round(duration))
 
+#undef UPSTATE_CELL_IN
+#undef UPSTATE_OPENED1
+#undef UPSTATE_OPENED2
+#undef UPSTATE_MAINT
+#undef UPSTATE_BROKE
+#undef UPSTATE_BLUESCREEN
+#undef UPSTATE_WIREEXP
+#undef UPSTATE_ALLGOOD
+
+#undef APC_RESET_EMP
+
+//update_overlay
+#undef APC_UPOVERLAY_CHARGEING0
+#undef APC_UPOVERLAY_CHARGEING1
+#undef APC_UPOVERLAY_CHARGEING2
+#undef APC_UPOVERLAY_EQUIPMENT0
+#undef APC_UPOVERLAY_EQUIPMENT1
+#undef APC_UPOVERLAY_EQUIPMENT2
+#undef APC_UPOVERLAY_LIGHTING0
+#undef APC_UPOVERLAY_LIGHTING1
+#undef APC_UPOVERLAY_LIGHTING2
+#undef APC_UPOVERLAY_ENVIRON0
+#undef APC_UPOVERLAY_ENVIRON1
+#undef APC_UPOVERLAY_ENVIRON2
+#undef APC_UPOVERLAY_LOCKED
+#undef APC_UPOVERLAY_OPERATING
 
 #undef APC_UPDATE_ICON_COOLDOWN
 

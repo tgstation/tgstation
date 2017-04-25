@@ -1,8 +1,6 @@
-var/datum/controller/subsystem/persistence/SSpersistence
-
-/datum/controller/subsystem/persistence
+SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
-	init_order = -100
+	init_order = INIT_ORDER_PERSISTENCE
 	flags = SS_NO_FIRE
 	var/savefile/secret_satchels
 	var/list/satchel_blacklist 		= list() //this is a typecache
@@ -12,9 +10,6 @@ var/datum/controller/subsystem/persistence/SSpersistence
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/savefile/chisel_messages_sav
-
-/datum/controller/subsystem/persistence/New()
-	NEW_SS_GLOBAL(SSpersistence)
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -71,7 +66,7 @@ var/datum/controller/subsystem/persistence/SSpersistence
 	return 1
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
-	for(var/mob/living/simple_animal/parrot/Poly/P in living_mob_list)
+	for(var/mob/living/simple_animal/parrot/Poly/P in GLOB.living_mob_list)
 		twitterize(P.speech_buffer, "polytalk")
 		break //Who's been duping the bird?!
 
@@ -86,12 +81,25 @@ var/datum/controller/subsystem/persistence/SSpersistence
 	var/saved_messages = json_decode(saved_json)
 
 	for(var/item in saved_messages)
-		var/turf/T = locate(item["x"], item["y"], ZLEVEL_STATION)
+		if(!islist(item))
+			continue
+
+		var/xvar = item["x"]
+		var/yvar = item["y"]
+		var/zvar = item["z"]
+
+		if(!xvar || !yvar || !zvar)
+			continue
+
+		var/turf/T = locate(xvar, yvar, zvar)
 		if(!isturf(T))
 			continue
+
 		if(locate(/obj/structure/chisel_message) in T)
 			continue
+
 		var/obj/structure/chisel_message/M = new(T)
+
 		M.unpack(item)
 		if(!M.loc)
 			M.persists = FALSE

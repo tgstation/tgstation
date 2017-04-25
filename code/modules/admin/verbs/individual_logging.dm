@@ -11,17 +11,21 @@
 	dat += "<hr style='background:#000000; border:0; height:1px'>"
 
 
-
 	if(type == INDIVIDUAL_SHOW_ALL_LOG)
 		dat += "<center>Displaying all logs of [key_name(M)]</center><br><hr>"
 		for(var/log_type in M.logging)
+			var/list/reversed = M.logging[log_type]
+			reversed = reverseRange(reversed.Copy())
 			dat += "<center>[log_type]</center><br>"
-			for(var/entry in M.logging[log_type])
-				dat += "<font size=2px>[entry]: [M.logging[log_type][entry]]</font><br>"
+			for(var/entry in reversed)
+				dat += "<font size=2px>[entry]: [reversed[entry]]</font><br>"
 			dat += "<hr>"
 	else
 		dat += "<center>[type] of [key_name(M)]</center><br>"
-		for(var/entry in M.logging[type])
-			dat += "<font size=2px>[entry]: [M.logging[type][entry]]</font><hr>"
+		var/list/reversed = M.logging[type]
+		if(reversed)
+			reversed = reverseRange(reversed.Copy())
+			for(var/entry in reversed)
+				dat += "<font size=2px>[entry]: [reversed[entry]]</font><hr>"
 
 	usr << browse(dat, "window=invidual_logging;size=600x480")

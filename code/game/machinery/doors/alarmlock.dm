@@ -24,7 +24,7 @@
 /obj/machinery/door/airlock/alarmlock/Initialize()
 	..()
 	SSradio.remove_object(src, air_frequency)
-	air_connection = SSradio.add_object(src, air_frequency, RADIO_TO_AIRALARM)
+	air_connection = SSradio.add_object(src, air_frequency, GLOB.RADIO_TO_AIRALARM)
 	open()
 
 /obj/machinery/door/airlock/alarmlock/receive_signal(datum/signal/signal)

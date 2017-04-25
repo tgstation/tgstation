@@ -50,8 +50,8 @@
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
 	var/species
-	if(istype(I, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/O = I
+	if(istype(I, /obj/item/stack/))
+		var/obj/item/stack/O = I
 
 		if(istype(O, /obj/item/stack/sheet/metal))
 			species = /datum/species/golem
@@ -98,6 +98,12 @@
 		if(istype(O, /obj/item/stack/sheet/bluespace_crystal))
 			species = /datum/species/golem/bluespace
 
+		if(istype(O, /obj/item/stack/sheet/runed_metal))
+			species = /datum/species/golem/runic
+
+		if(istype(O, /obj/item/stack/medical/gauze) || istype(O, /obj/item/stack/sheet/cloth))
+			species = /datum/species/golem/cloth
+
 		if(species)
 			if(O.use(10))
 				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
@@ -131,7 +137,7 @@
 	icon_state = "sleeper"
 	has_id = 1
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
-	id_access_list = list(access_syndicate)
+	id_access_list = list(GLOB.access_syndicate)
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"

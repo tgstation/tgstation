@@ -1,4 +1,12 @@
 
+/proc/melee_item_attack_chain(mob/user, obj/item/I, atom/target, params)
+	if(I.pre_attackby(target, user, params))
+		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
+		var/resolved = target.attackby(I,user,params)
+		if(!resolved && target && I)
+			I.afterattack(target, user, 1, params) // 1: clicking something Adjacent
+
+
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	return
@@ -11,10 +19,7 @@
 	return
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	if(unique_rename && istype(I, /obj/item/weapon/pen))
-		rewrite(user)
-	else
-		return I.attack_obj(src, user)
+	return I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)

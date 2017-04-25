@@ -16,16 +16,12 @@
 	var/attack_cooldown = 10 //delay, in deciseconds, where you can't attack with the spear
 	var/timerid
 
-/obj/item/clockwork/ratvarian_spear/New()
-	..()
-	impale_cooldown = 0
-
 /obj/item/clockwork/ratvarian_spear/Destroy()
 	deltimer(timerid)
 	return ..()
 
 /obj/item/clockwork/ratvarian_spear/ratvar_act()
-	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
+	if(GLOB.ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
 		force = 25
 		throwforce = 50
 		armour_penetration = 10
@@ -40,7 +36,7 @@
 		timerid = addtimer(CALLBACK(src, .proc/break_spear), RATVARIAN_SPEAR_DURATION, TIMER_STOPPABLE)
 
 /obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act() //doesn't break!
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		force = 25
 		throwforce = 50
 		armour_penetration = 10
@@ -67,7 +63,7 @@
 		else
 			impaling = TRUE
 			attack_verb = list("impaled")
-			force += 22 //40 damage if ratvar isn't alive, 50 if he is
+			force += 22 //total 40 damage if ratvar isn't alive, 50 if he is
 			armour_penetration += 10 //if you're impaling someone, armor sure isn't that useful
 			user.stop_pulling()
 
@@ -78,19 +74,19 @@
 	user.do_attack_animation(target)
 	if(!target.attacked_by(src, user)) //TODO MAKE ATTACK() USE PROPER RETURN VALUES
 		impaling = FALSE //if we got blocked, stop impaling
-	else if(!target.null_rod_check())
+	else if(!target.null_rod_check()) //if they don't have a null rod, we do bonus damage on a successful attack
 		if(issilicon(target))
 			var/mob/living/silicon/S = target
 			if(S.stat != DEAD)
 				S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
-				S.adjustFireLoss(22)
-		else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
+				S.adjustFireLoss(22) //total 37 damage on borgs
+		else if(iscultist(target) || isconstruct(target))
 			var/mob/living/M = target
 			if(M.stat != DEAD)
 				to_chat(M, "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>")
-				M.adjustFireLoss(15)
+				M.adjustFireLoss(15) //total 30 damage on cultists
 		else
-			target.adjustFireLoss(3)
+			target.adjustFireLoss(3) //anything else takes a total of 18
 	add_logs(user, target, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
@@ -98,10 +94,10 @@
 	ratvar_act()
 	if(impaling)
 		impale_cooldown = world.time + initial(impale_cooldown)
-		attack_cooldown = world.time + initial(attack_cooldown)
+		attack_cooldown = world.time + initial(attack_cooldown) //can't attack until we're done impaling
 		if(target)
 			new /obj/effect/overlay/temp/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
-			target.Stun(2)
+			target.Stun(2) //brief stun
 			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>")
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
@@ -118,7 +114,7 @@
 					step(target, get_dir(user, target))
 					T = get_turf(target)
 					B.forceMove(T)
-					target.Weaken(2)
+					target.Weaken(2) //then weaken if we stayed next to them
 					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
 				flash_color(target, flash_color="#911414", flash_time=8)
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted

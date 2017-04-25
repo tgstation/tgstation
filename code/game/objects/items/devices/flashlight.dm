@@ -10,7 +10,8 @@
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = 0
-	var/brightness_on = 4 //luminosity when on
+	var/brightness_on = 4 //range of light when on
+	var/flashlight_power //strength of the light when on. optional
 
 /obj/item/device/flashlight/Initialize()
 	..()
@@ -19,7 +20,10 @@
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
+		if(flashlight_power)
+			set_light(l_range = brightness_on, l_power = flashlight_power)
+		else
+			set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
@@ -303,7 +307,7 @@
 // Glowsticks, in the uncomfortable range of similar to flares,
 // but not similar enough to make it worth a refactor
 /obj/item/device/flashlight/glowstick
-	name = "green glowstick"
+	name = "glowstick"
 	desc = "A military-grade glowstick."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 4
@@ -359,6 +363,11 @@
 	. = ..()
 	if(.)
 		user.visible_message("<span class='notice'>[user] cracks and shakes [src].</span>", "<span class='notice'>You crack and shake [src], turning it on!</span>")
+		activate()
+
+/obj/item/device/flashlight/glowstick/proc/activate()
+	if(!on)
+		on = TRUE
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/glowstick/red
@@ -397,3 +406,25 @@
 	name = initial(glowtype.name)
 	color = initial(glowtype.color)
 	. = ..()
+
+/obj/item/device/flashlight/spotlight //invisible lighting source
+	name = "disco lighting"
+	icon_state = null
+	light_color = null
+	brightness_on = 0
+	light_range = 0
+	light_power = 10
+	alpha = 0
+	layer = 0
+	on = TRUE
+	anchored = TRUE
+	var/range = null
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/item/device/flashlight/flashdark
+	name = "flashdark"
+	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
+	icon_state = "flashdark"
+	item_state = "flashdark"
+	brightness_on = 2.5
+	flashlight_power = -3

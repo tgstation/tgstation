@@ -67,7 +67,7 @@ AI MODULES
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
 	var/aikey = law_datum.owner ? law_datum.owner.ckey : "null"
-	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""]")
+	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""]")
 	log_law("[user.key]/[user.name] used [src.name] on [aikey]/([ainame]).[law2log ? " The law specified [law2log]" : ""]")
 	message_admins("[key_name_admin(user)] used [src.name] on [key_name_admin(law_datum.owner)].[law2log ? " The law specified [law2log]" : ""]")
 

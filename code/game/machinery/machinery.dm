@@ -127,18 +127,18 @@ Class Procs:
 /obj/machinery/Initialize()
 	if (!armor)
 		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
-	..()
-	machines += src
+	. = ..()
+	GLOB.machines += src
 	if(!speed_process)
-		START_PROCESSING(SSmachine, src)
+		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
 
 /obj/machinery/Destroy()
-	machines.Remove(src)
+	GLOB.machines.Remove(src)
 	if(!speed_process)
-		STOP_PROCESSING(SSmachine, src)
+		STOP_PROCESSING(SSmachines, src)
 	else
 		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
@@ -213,9 +213,12 @@ Class Procs:
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/machinery/interact(mob/user)
+/obj/machinery/interact(mob/user, special_state)
 	add_fingerprint(user)
-	ui_interact(user)
+	if(special_state)
+		ui_interact(user, state = special_state)
+	else
+		ui_interact(user)
 
 /obj/machinery/ui_status(mob/user)
 	if(is_interactable())

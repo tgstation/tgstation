@@ -1,4 +1,4 @@
-var/datum/feedback/blackbox = new()
+GLOBAL_DATUM_INIT(blackbox, /datum/feedback, new)
 
 //the feedback datum; stores all feedback
 /datum/feedback
@@ -33,7 +33,7 @@ var/datum/feedback/blackbox = new()
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
-	for (var/obj/machinery/message_server/MS in message_servers)
+	for (var/obj/machinery/message_server/MS in GLOB.message_servers)
 		if (MS.pda_msgs.len > pda_msg_amt)
 			pda_msg_amt = MS.pda_msgs.len
 		if (MS.rc_msgs.len > rc_msg_amt)
@@ -62,10 +62,10 @@ var/datum/feedback/blackbox = new()
 	if (!feedback) return
 
 	round_end_data_gathering() //round_end time logging and some other data processing
-	if (!dbcon.Connect()) return
+	if (!SSdbcore.Connect()) return
 	var/round_id
 
-	var/DBQuery/query_feedback_max_id = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM [format_table_name("feedback")]")
+	var/datum/DBQuery/query_feedback_max_id = SSdbcore.NewQuery("SELECT MAX(round_id) AS round_id FROM [format_table_name("feedback")]")
 	if(!query_feedback_max_id.Execute())
 		return
 	while (query_feedback_max_id.NextRow())
@@ -86,15 +86,15 @@ var/datum/feedback/blackbox = new()
 	if (sqlrowlist == "")
 		return
 
-	var/DBQuery/query_feedback_save = dbcon.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
+	var/datum/DBQuery/query_feedback_save = SSdbcore.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
 	query_feedback_save.Execute()
 
 
 /proc/feedback_set(variable,value)
-	if(!blackbox)
+	if(!GLOB.blackbox)
 		return
 
-	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
 
 	if(!FV)
 		return
@@ -102,10 +102,10 @@ var/datum/feedback/blackbox = new()
 	FV.set_value(value)
 
 /proc/feedback_inc(variable,value)
-	if(!blackbox)
+	if(!GLOB.blackbox)
 		return
 
-	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
 
 	if(!FV)
 		return
@@ -113,10 +113,10 @@ var/datum/feedback/blackbox = new()
 	FV.inc(value)
 
 /proc/feedback_dec(variable,value)
-	if(!blackbox)
+	if(!GLOB.blackbox)
 		return
 
-	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
 
 	if(!FV)
 		return
@@ -124,10 +124,10 @@ var/datum/feedback/blackbox = new()
 	FV.dec(value)
 
 /proc/feedback_set_details(variable,details)
-	if(!blackbox)
+	if(!GLOB.blackbox)
 		return
 
-	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
 
 	if(!FV)
 		return
@@ -135,10 +135,10 @@ var/datum/feedback/blackbox = new()
 	FV.set_details(details)
 
 /proc/feedback_add_details(variable,details)
-	if(!blackbox)
+	if(!GLOB.blackbox)
 		return
 
-	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+	var/datum/feedback_variable/FV = GLOB.blackbox.find_feedback_datum(variable)
 
 	if(!FV)
 		return
@@ -206,68 +206,48 @@ var/datum/feedback/blackbox = new()
 	return list(variable,value,details)
 
 //sql reporting procs
-/proc/sql_poll_players()
+/proc/sql_poll_population()
 	if(!config.sql_enabled)
+		return
+	if(!SSdbcore.Connect())
 		return
 	var/playercount = 0
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.client)
 			playercount += 1
-	if(!dbcon.Connect())
-		log_game("SQL ERROR during player polling. Failed to connect.")
-	else
-		var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-		var/DBQuery/query_record_playercount = dbcon.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, time) VALUES ([playercount], '[sqltime]')")
-		query_record_playercount.Execute()
-
-/proc/sql_poll_admins()
-	if(!config.sql_enabled)
-		return
-	var/admincount = admins.len
-	if(!dbcon.Connect())
-		log_game("SQL ERROR during admin polling. Failed to connect.")
-	else
-		var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-		var/DBQuery/query_record_admincount = dbcon.NewQuery("INSERT INTO [format_table_name("legacy_population")] (admincount, time) VALUES ([admincount], '[sqltime]')")
-		query_record_admincount.Execute()
-
-/proc/sql_report_round_start()
-	// TODO
-	if(!config.sql_enabled)
-		return
-
-/proc/sql_report_round_end()
-	// TODO
-	if(!config.sql_enabled)
-		return
+	var/admincount = GLOB.admins.len
+	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON('[world.internet_address]'), '[world.port]')")
+	query_record_playercount.Execute()
 
 /proc/sql_report_death(mob/living/L)
 	if(!config.sql_enabled)
 		return
-	if(!L)
+	if(!SSdbcore.Connect())
 		return
-	if(!L.key || !L.mind)
+	if(!L || !L.key || !L.mind)
 		return
-
 	var/turf/T = get_turf(L)
 	var/area/placeofdeath = get_area(T.loc)
-	var/podname = placeofdeath.name
-
 	var/sqlname = sanitizeSQL(L.real_name)
-	var/sqlkey = sanitizeSQL(L.key)
-	var/sqlpod = sanitizeSQL(podname)
-	var/sqlspecial = sanitizeSQL(L.mind.special_role)
+	var/sqlkey = sanitizeSQL(L.ckey)
 	var/sqljob = sanitizeSQL(L.mind.assigned_role)
+	var/sqlspecial = sanitizeSQL(L.mind.special_role)
+	var/sqlpod = sanitizeSQL(placeofdeath.name)
 	var/laname
 	var/lakey
-	if(L.lastattacker)
-		laname = sanitizeSQL(L.lastattacker:real_name)
-		lakey = sanitizeSQL(L.lastattacker:key)
-	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-	var/coord = "[L.x], [L.y], [L.z]"
-	var/map = SSmapping.config.map_name
-	if(!dbcon.Connect())
-		log_game("SQL ERROR during death reporting. Failed to connect.")
-	else
-		var/DBQuery/query_report_death = dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord, mapname, server_ip, server_port) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[L.gender]', [L.getBruteLoss()], [L.getFireLoss()], [L.brainloss], [L.getOxyLoss()], '[coord]', '[map]', INET_ATON('[world.internet_address]'), '[world.port]')")
-		query_report_death.Execute()
+	if(L.lastattacker && ismob(L.lastattacker))
+		var/mob/LA = L.lastattacker
+		laname = sanitizeSQL(LA.real_name)
+		lakey = sanitizeSQL(LA.key)
+	var/sqlgender = sanitizeSQL(L.gender)
+	var/sqlbrute = sanitizeSQL(L.getBruteLoss())
+	var/sqlfire = sanitizeSQL(L.getFireLoss())
+	var/sqlbrain = sanitizeSQL(L.getBrainLoss())
+	var/sqloxy = sanitizeSQL(L.getOxyLoss())
+	var/sqltox = sanitizeSQL(L.getStaminaLoss())
+	var/sqlclone = sanitizeSQL(L.getStaminaLoss())
+	var/sqlstamina = sanitizeSQL(L.getStaminaLoss())
+	var/coord = sanitizeSQL("[L.x], [L.y], [L.z]")
+	var/map = sanitizeSQL(SSmapping.config.map_name)
+	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, coord, mapname, server_ip, server_port) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[SQLtime()]', '[laname]', '[lakey]', '[sqlgender]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[coord]', '[map]', INET_ATON('[world.internet_address]'), '[world.port]')")
+	query_report_death.Execute()

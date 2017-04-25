@@ -209,6 +209,7 @@
 	..()
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
+		new /datum/data/mining_equipment("Extra Id",       			/obj/item/weapon/card/id/mining, 				                   	250),
 		new /datum/data/mining_equipment("Science Goggles",       	/obj/item/clothing/glasses/science, 				                   	250),
 		new /datum/data/mining_equipment("Monkey Cube",				/obj/item/weapon/reagent_containers/food/snacks/monkeycube,        		300),
 		new /datum/data/mining_equipment("Toolbelt",				/obj/item/weapon/storage/belt/utility,	    							350),
@@ -271,10 +272,10 @@
 /obj/item/weapon/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
 	if(istype(AM, /obj/item/weapon/card/id) && proximity)
 		var/obj/item/weapon/card/id/I = AM
-		I.access |=	access_mining
-		I.access |= access_mining_station
-		I.access |= access_mineral_storeroom
-		I.access |= access_cargo
+		I.access |=	GLOB.access_mining
+		I.access |= GLOB.access_mining_station
+		I.access |= GLOB.access_mineral_storeroom
+		I.access |= GLOB.access_cargo
 		to_chat(user, "You upgrade [I] with mining access.")
 		qdel(src)
 	..()

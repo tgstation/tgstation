@@ -65,7 +65,7 @@
 				var/mob/dead/observer/theghost = pick(candidates)
 				spawn_antag(theghost.client, get_turf(src), href_list["school"])
 				if(H && H.mind)
-					ticker.mode.update_wiz_icons_added(H.mind)
+					SSticker.mode.update_wiz_icons_added(H.mind)
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
@@ -98,8 +98,8 @@
 			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
 
 	equip_antag(M)
-	var/wizard_name_first = pick(wizard_first)
-	var/wizard_name_second = pick(wizard_second)
+	var/wizard_name_first = pick(GLOB.wizard_first)
+	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	if(usr)
 		var/datum/objective/protect/new_objective = new /datum/objective/protect
@@ -107,9 +107,9 @@
 		new_objective.target = usr.mind
 		new_objective.explanation_text = "Protect [usr.real_name], the wizard."
 		M.mind.objectives += new_objective
-	ticker.mode.apprentices += M.mind
+	SSticker.mode.apprentices += M.mind
 	M.mind.special_role = "apprentice"
-	ticker.mode.update_wiz_icons_added(M.mind)
+	SSticker.mode.update_wiz_icons_added(M.mind)
 	M << sound('sound/effects/magic.ogg')
 	var/newname = copytext(sanitize(input(M, "You are [wizard_name]'s apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
 	if (!newname)
@@ -142,7 +142,7 @@
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is out of power!</span>")
 		return 0
-	if(!(user.mind in ticker.mode.syndicates))
+	if(!(user.mind in SSticker.mode.syndicates))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
 		return 0
 	if(user.z != ZLEVEL_CENTCOM)
@@ -162,9 +162,7 @@
 		used = 1
 		var/mob/dead/observer/theghost = pick(nuke_candidates)
 		spawn_antag(theghost.client, get_turf(src), "syndieborg")
-		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
-		S.set_up(4, 1, src)
-		S.start()
+		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
 		to_chat(user, "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")
@@ -173,13 +171,15 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	M.mind.make_Nuke(null, null, 0, FALSE)
-	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
+	var/code = "BOMB-NOT-FOUND"
+	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
+	if(nuke)
+		code = nuke.r_code
+	M.mind.make_Nuke(null, code, 0, FALSE)
+	var/newname = M.dna.species.random_name(M.gender,0,SSticker.mode.nukeops_lastname)
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname
-
-
 
 //////SYNDICATE BORG
 /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
@@ -204,12 +204,12 @@
 		else
 			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
 
-	var/brainfirstname = pick(first_names_male)
+	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
-		brainfirstname = pick(first_names_female)
-	var/brainopslastname = pick(last_names)
-	if(ticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
-		brainopslastname = ticker.mode.nukeops_lastname
+		brainfirstname = pick(GLOB.first_names_female)
+	var/brainopslastname = pick(GLOB.last_names)
+	if(SSticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
+		brainopslastname = SSticker.mode.nukeops_lastname
 	var/brainopsname = "[brainfirstname] [brainopslastname]"
 
 	R.mmi.name = "Man-Machine Interface: [brainopsname]"
@@ -263,7 +263,7 @@
 	S.key = C.key
 	S.mind.assigned_role = S.name
 	S.mind.special_role = S.name
-	ticker.mode.traitors += S.mind
+	SSticker.mode.traitors += S.mind
 	var/datum/objective/assassinate/new_objective
 	if(usr)
 		new_objective = new /datum/objective/assassinate

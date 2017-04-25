@@ -5,10 +5,11 @@
 	name = "chasm"
 	desc = "Watch your step."
 	baseturf = /turf/open/chasm
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
-	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/chasm)
+	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
+	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	var/drop_x = 1
 	var/drop_y = 1
 	var/drop_z = 1
@@ -20,6 +21,34 @@
 /turf/open/chasm/process()
 	if(!drop_stuff())
 		STOP_PROCESSING(SSobj, src)
+
+
+/turf/open/chasm/attackby(obj/item/C, mob/user, params, area/area_restriction)
+	..()
+	if(istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		if(!L)
+			if(R.use(1))
+				to_chat(user, "<span class='notice'>You construct a lattice.</span>")
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				ReplaceWithLattice()
+			else
+				to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
+			return
+	if(istype(C, /obj/item/stack/tile/plasteel))
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		if(L)
+			var/obj/item/stack/tile/plasteel/S = C
+			if(S.use(1))
+				qdel(L)
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				to_chat(user, "<span class='notice'>You build a floor.</span>")
+				ChangeTurf(/turf/open/floor/plating)
+			else
+				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
+		else
+			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
 /turf/open/chasm/proc/drop_stuff(AM)
 	. = 0
@@ -94,6 +123,9 @@
 		L.notransform = TRUE
 		L.Stun(10)
 		L.resting = TRUE
+	var/oldtransform = AM.transform
+	var/oldcolor = AM.color
+	var/oldalpha = AM.alpha
 	animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
 	for(var/i in 1 to 5)
 		//Make sure the item is still there after our sleep
@@ -111,6 +143,18 @@
 		qdel(S.mmi)
 
 	qdel(AM)
-
+	
+	if(AM && !QDELETED(AM))	//It's indestructible
+		visible_message("<span class='boldwarning'>[src] spits out the [AM]!</span>")
+		AM.alpha = oldalpha
+		AM.color = oldcolor
+		AM.transform = oldtransform
+		AM.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
+	
 /turf/open/chasm/straight_down/lava_land_surface/normal_air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
+
+
+/turf/open/chasm/CanPass(atom/movable/mover, turf/target, height=0)
+	return 1

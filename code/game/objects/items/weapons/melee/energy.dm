@@ -21,13 +21,13 @@
 		item_color = pick(possible_colors)
 		switch(item_color)//Only run this check if the color was picked randomly, so that colors can be manually set for non-random colored energy weapons.
 			if("red")
-				light_color = "#ff0000"
+				light_color = LIGHT_COLOR_RED
 			if("green")
-				light_color = "#00ff00"
+				light_color = LIGHT_COLOR_GREEN
 			if("blue")
-				light_color = "#40ceff"
+				light_color = LIGHT_COLOR_LIGHT_CYAN
 			if("purple")
-				light_color = "#9b51ff"
+				light_color = LIGHT_COLOR_LAVENDER
 	if(active)
 		set_light(brightness_on)
 
@@ -88,9 +88,9 @@
 	. = ..()
 
 /obj/item/weapon/melee/energy/sword/process()
-	if(hacked)
-		light_color = pick("#ff0000", "#00ff00", "#40ceff", "#9b51ff")
 	if(active)
+		if(hacked)
+			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)
@@ -237,9 +237,6 @@
 	icon_state = "cutlass0"
 	icon_state_on = "cutlass1"
 	light_color = "#ff0000"
-
-/obj/item/weapon/melee/energy/sword/pirate/New()
-	return
 
 /obj/item/weapon/melee/energy/blade
 	name = "energy blade"

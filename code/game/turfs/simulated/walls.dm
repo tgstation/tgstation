@@ -154,8 +154,8 @@
 	//check for wall mounted frames
 	if(istype(W,/obj/item/wallframe))
 		var/obj/item/wallframe/F = W
-		if(F.try_build(src))
-			F.attach(src)
+		if(F.try_build(src, user))
+			F.attach(src, user)
 		return 1
 	//Poster stuff
 	else if(istype(W,/obj/item/weapon/poster))
@@ -257,3 +257,17 @@
 
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
+
+/turf/closed/wall/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
+	return FALSE
+
+/turf/closed/wall/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the wall.</span>")
+			ChangeTurf(/turf/open/floor/plating)
+			return TRUE
+	return FALSE

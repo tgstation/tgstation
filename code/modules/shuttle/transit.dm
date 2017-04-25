@@ -7,8 +7,8 @@
 
 /obj/effect/landmark/transit/New()
 	. = ..()
-	transit_markers += src
+	GLOB.transit_markers += src
 
 /obj/effect/landmark/transit/Destroy()
-	transit_markers -= src
+	GLOB.transit_markers -= src
 	. = ..()

@@ -13,8 +13,6 @@
 
 	flags = CAN_BE_DIRTY
 
-	var/list/proximity_checkers
-
 	var/image/obscured	//camerachunks
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
@@ -45,6 +43,10 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
+	var/area/A = loc
+	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
+		add_overlay(/obj/effect/fullbright)
+
 	if(requires_activation)
 		CalculateAdjacentTurfs()
 		SSair.add_to_active(src)
@@ -66,7 +68,7 @@
 	if(force)
 		..()
 		//this will completely wipe turf state
-		var/turf/basic/B = new /turf/basic(src)
+		var/turf/B = new world.turf(src)
 		for(var/A in B.contents)
 			qdel(A)
 		for(var/I in B.vars)
@@ -152,10 +154,6 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/AM)
-	for(var/A in proximity_checkers)
-		var/atom/B = A
-		B.HasProximity(AM)
-
 	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
 
@@ -213,12 +211,15 @@
 /turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE)
 	if(!path)
 		return
-	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
+	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
+	var/old_baseturf = baseturf
 	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
+
+	W.baseturf = old_baseturf
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
@@ -241,6 +242,8 @@
 			FD.CalculateAffectingAreas()
 
 	queue_smooth_neighbors(src)
+
+	HandleTurfChange(src)
 
 /turf/open/AfterChange(ignore_air)
 	..()
@@ -277,7 +280,6 @@
 		air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 
 	air.temperature /= turf_count
-	air.holder = src
 	SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
@@ -344,8 +346,8 @@
 	return can_have_cabling() & !intact
 
 /turf/proc/visibilityChanged()
-	if(ticker)
-		cameranet.updateVisibility(src)
+	if(SSticker)
+		GLOB.cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
 
@@ -395,7 +397,7 @@
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
-	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		add_blueprints(AM)
 
 /turf/proc/empty(turf_type=/turf/open/space)
@@ -484,3 +486,17 @@
 	LAZYINITLIST(decals)
 	cut_overlay(decals[group])
 	decals[group] = null
+
+/turf/proc/photograph(limit=20)
+	var/image/I = new()
+	I.overlays += src
+	for(var/V in contents)
+		var/atom/A = V
+		if(A.invisibility)
+			continue
+		I.overlays += A
+		if(limit)
+			limit--
+		else
+			return I
+	return I

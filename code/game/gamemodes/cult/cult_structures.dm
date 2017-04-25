@@ -94,6 +94,7 @@
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
 	icon_state = "forge"
 	light_range = 3
+	light_color = LIGHT_COLOR_LAVA
 	break_message = "<span class='warning'>The force breaks apart into shards with a howling scream!</span>"
 
 /obj/structure/destructible/cult/forge/attack_hand(mob/living/user)
@@ -121,18 +122,13 @@
 		to_chat(user, "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>")
 
 
-var/list/blacklisted_pylon_turfs = typecacheof(list(
-	/turf/closed,
-	/turf/open/floor/engine/cult,
-	/turf/open/space,
-	/turf/open/floor/plating/lava,
-	/turf/open/chasm))
 
 /obj/structure/destructible/cult/pylon
 	name = "pylon"
 	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
 	light_range = 5
+	light_color = LIGHT_COLOR_RED
 	break_sound = 'sound/effects/Glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	var/heal_delay = 25
@@ -175,6 +171,12 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 			if(istype(T, /turf/open/floor/engine/cult))
 				cultturfs |= T
 				continue
+			var/static/list/blacklisted_pylon_turfs = typecacheof(list(
+				/turf/closed,
+				/turf/open/floor/engine/cult,
+				/turf/open/space,
+				/turf/open/floor/plating/lava,
+				/turf/open/chasm))
 			if(is_type_in_typecache(T, blacklisted_pylon_turfs))
 				continue
 			else
@@ -199,6 +201,7 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
 	light_range = 1.4
+	light_color = LIGHT_COLOR_FIRE
 	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
 
 /obj/structure/destructible/cult/tome/attack_hand(mob/living/user)

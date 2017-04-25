@@ -254,24 +254,32 @@
 
 //SPEEDUWAGON
 
-/datum/riding/space/speedbike/speedwagon/handle_vehicle_offsets()
+/datum/riding/space/speedwagon
+	vehicle_move_delay = 0
+
+/datum/riding/space/speedwagon/handle_vehicle_offsets()
 	if(ridden.has_buckled_mobs())
 		for(var/m in ridden.buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.setDir(ridden.dir)
+			ridden.pixel_x = -48
+			ridden.pixel_y = -48
 			switch(ridden.dir)
 				if(NORTH)
-					buckled_mob.pixel_x = -5
-					buckled_mob.pixel_y = -5
+					buckled_mob.pixel_x = -10
+					buckled_mob.pixel_y = -3
 				if(SOUTH)
-					buckled_mob.pixel_x = 5
+					buckled_mob.pixel_x = 16
 					buckled_mob.pixel_y = 3
 				if(EAST)
-					buckled_mob.pixel_x = -8
-					buckled_mob.pixel_y = 5
+					buckled_mob.pixel_x = -4
+					buckled_mob.pixel_y = 30
 				if(WEST)
-					buckled_mob.pixel_x = 8
-					buckled_mob.pixel_y = 5
+					buckled_mob.pixel_x = 4
+					buckled_mob.pixel_y = -1
+
+/datum/riding/space/speedwagon/handle_vehicle_layer()
+	ridden.layer = BELOW_MOB_LAYER
 
 ///////////////BOATS////////////
 /datum/riding/boat
@@ -327,11 +335,11 @@
 /datum/riding/human/ride_check(mob/living/M)
 	var/mob/living/carbon/human/H = ridden	//IF this runtimes I'm blaming the admins.
 	if(M.incapacitated(FALSE, TRUE) || H.incapacitated(FALSE, TRUE))
-		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
+		M.visible_message("<span class='warning'>[M] falls off [ridden]!</span>")
 		Unbuckle(M)
 		return FALSE
 	if(M.restrained(TRUE))
-		M.visible_message("<span class='boldwarning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
+		M.visible_message("<span class='warning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
 		Unbuckle(M)
 		return FALSE
 	if(H.pulling == M)
@@ -367,7 +375,7 @@
 	ridden.unbuckle_mob(user)
 	user.Weaken(3)
 	user.Stun(3)
-	user.visible_message("<span class='boldwarning'>[ridden] pushes [user] off of them!</span>")
+	user.visible_message("<span class='warning'>[ridden] pushes [user] off of them!</span>")
 
 /datum/riding/cyborg
 	keytype = null
@@ -428,7 +436,7 @@
 	var/turf/target = get_edge_target_turf(ridden, ridden.dir)
 	var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
 	M.Move(targetm)
-	M.visible_message("<span class='boldwarning'>[M] is thrown clear of [ridden]!</span>")
+	M.visible_message("<span class='warning'>[M] is thrown clear of [ridden]!</span>")
 	M.throw_at(target, 14, 5, ridden)
 	M.Weaken(3)
 

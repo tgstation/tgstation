@@ -20,7 +20,7 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Operative"
-	id_access_list = list(access_syndicate)
+	id_access_list = list(GLOB.access_syndicate)
 
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
@@ -34,7 +34,7 @@
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	has_id = 1
 	id_job = "Operative"
-	id_access_list = list(access_syndicate)
+	id_access_list = list(GLOB.access_syndicate)
 
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
@@ -47,7 +47,7 @@
 	back = /obj/item/weapon/tank/jetpack/oxygen/harness
 	has_id = 1
 	id_job = "Operative"
-	id_access_list = list(access_syndicate)
+	id_access_list = list(GLOB.access_syndicate)
 
 
 

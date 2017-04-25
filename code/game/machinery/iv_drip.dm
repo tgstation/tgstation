@@ -3,14 +3,18 @@
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
+	var/list/drip_containers = list(/obj/item/weapon/reagent_containers/blood,
+											/obj/item/weapon/reagent_containers/food,
+											/obj/item/weapon/reagent_containers/glass)
 
-
-/obj/machinery/iv_drip/New()
+/obj/machinery/iv_drip/Initialize()
 	..()
 	update_icon()
+	drip_containers = typecacheof(drip_containers)
 
 /obj/machinery/iv_drip/update_icon()
 	if(attached)
@@ -55,7 +59,7 @@
 			add_overlay(filling)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
-	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE))
+	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE) || !isliving(target))
 		return
 
 	if(attached)
@@ -72,14 +76,14 @@
 		if(beaker)
 			usr.visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>", "<span class='notice'>You attach \the [src] to \the [target].</span>")
 			attached = target
-			START_PROCESSING(SSmachine, src)
+			START_PROCESSING(SSmachines, src)
 			update_icon()
 		else
 			to_chat(usr, "<span class='warning'>There's nothing attached to the IV drip!</span>")
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/reagent_containers))
+	if (is_type_in_typecache(W, drip_containers))
 		if(!isnull(beaker))
 			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
 			return

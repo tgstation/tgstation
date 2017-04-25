@@ -124,9 +124,9 @@
 /proc/set_basalt_light(turf/open/floor/B)
 	switch(B.icon_state)
 		if("basalt1", "basalt2", "basalt3")
-			B.set_light(2, 0.6, "#c48a18") //more light
+			B.set_light(2, 0.6, LIGHT_COLOR_LAVA) //more light
 		if("basalt5", "basalt9")
-			B.set_light(1.4, 0.6, "#c48a18") //barely anything!
+			B.set_light(1.4, 0.6, LIGHT_COLOR_LAVA) //barely anything!
 
 /turf/open/floor/plating/asteroid/basalt/gets_dug()
 	if(!dug)
@@ -202,7 +202,7 @@
 		length = set_length
 
 	// Get our directiosn
-	forward_cave_dir = pick(alldirs - exclude_dir)
+	forward_cave_dir = pick(GLOB.alldirs - exclude_dir)
 	// Get the opposite direction of our facing direction
 	backward_cave_dir = angle2dir(dir2angle(forward_cave_dir) + 180)
 

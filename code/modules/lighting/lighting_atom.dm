@@ -35,9 +35,7 @@
 		return
 
 	if (!light_power || !light_range) // We won't emit light anyways, destroy the light source.
-		if(light)
-			light.destroy()
-			light = null
+		QDEL_NULL(light)
 	else
 		if (!istype(loc, /atom/movable)) // We choose what atom should be the top atom of the light here.
 			. = src
@@ -49,20 +47,15 @@
 		else
 			light = new/datum/light_source(src, .)
 
-// Destroy our light source so we GC correctly.
-/atom/Destroy()
-	if (light)
-		light.destroy()
-		light = null
-	. = ..()
-
 // If we have opacity, make sure to tell (potentially) affected light sources.
 /atom/movable/Destroy()
 	var/turf/T = loc
-	if (opacity && istype(T))
-		T.reconsider_lights()
-
 	. = ..()
+	if (opacity && istype(T))
+		var/old_has_opaque_atom = T.has_opaque_atom
+		T.recalc_atom_opacity()
+		if (old_has_opaque_atom != T.has_opaque_atom)
+			T.reconsider_lights()
 
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).

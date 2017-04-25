@@ -1,22 +1,19 @@
-var/datum/controller/subsystem/atoms/SSatoms
-
 #define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
 #define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
 
-/datum/controller/subsystem/atoms
+SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
-	init_order = 11
+	init_order = INIT_ORDER_ATOMS
 	flags = SS_NO_FIRE
 
 	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
 
-/datum/controller/subsystem/atoms/New()
-	NEW_SS_GLOBAL(SSatoms)
+	var/list/late_loaders
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
-	fire_overlay.appearance_flags = RESET_COLOR
+	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
@@ -26,16 +23,18 @@ var/datum/controller/subsystem/atoms/SSatoms
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
-	var/list/late_loaders
-
 	initialized = INITIALIZATION_INNEW_MAPLOAD
+
+	var/static/list/NewQdelList = list()
 
 	if(atoms)
 		for(var/I in atoms)
 			var/atom/A = I
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
 				if(QDELETED(A))
-					stack_trace("Found new qdeletion in type [A.type]!")
+					if(!(NewQdelList[A.type]))
+						WARNING("Found new qdeletion in type [A.type]!")
+						NewQdelList[A.type] = TRUE
 					continue
 				var/start_tick = world.time
 				if(A.Initialize(TRUE))
@@ -51,7 +50,9 @@ var/datum/controller/subsystem/atoms/SSatoms
 		for(var/atom/A in world)
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
 				if(QDELETED(A))
-					stack_trace("Found new qdeletion in type [A.type]!")
+					if(!(NewQdelList[A.type]))
+						WARNING("Found new qdeletion in type [A.type]!")
+						NewQdelList[A.type] = TRUE
 					continue
 				var/start_tick = world.time
 				if(A.Initialize(TRUE))
@@ -67,15 +68,15 @@ var/datum/controller/subsystem/atoms/SSatoms
 
 	initialized = INITIALIZATION_INNEW_REGULAR
 
-	if(late_loaders)
-		for(var/I in late_loaders)
-			var/atom/A = I
-			var/start_tick = world.time
-			A.Initialize(FALSE)
-			if(start_tick != world.time)
-				WARNING("[A]: [A.type] slept during it's Initialize!")
-			CHECK_TICK
-		testing("Late-initialized [late_loaders.len] atoms")
+	for(var/I in late_loaders)
+		var/atom/A = I
+		var/start_tick = world.time
+		A.Initialize(FALSE)
+		if(start_tick != world.time)
+			WARNING("[A]: [A.type] slept during it's Initialize!")
+		CHECK_TICK
+	testing("Late-initialized [LAZYLEN(late_loaders)] atoms")
+	LAZYCLEARLIST(late_loaders)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized
@@ -102,9 +103,9 @@ var/datum/controller/subsystem/atoms/SSatoms
 			continue
 		B.dna_block = pick_n_take(avnums)
 		if(B.quality == POSITIVE)
-			good_mutations |= B
+			GLOB.good_mutations |= B
 		else if(B.quality == NEGATIVE)
-			bad_mutations |= B
+			GLOB.bad_mutations |= B
 		else if(B.quality == MINOR_NEGATIVE)
-			not_good_mutations |= B
+			GLOB.not_good_mutations |= B
 		CHECK_TICK

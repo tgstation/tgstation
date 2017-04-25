@@ -1,11 +1,8 @@
-var/list/emojis
-
 /proc/emoji_parse(text)
 	. = text
 	if(!config.emojis)
 		return
-	if(!emojis)
-		emojis = icon_states(icon('icons/emoji.dmi'))
+	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
 	var/parsed = ""
 	var/pos = 1
 	var/search = 0

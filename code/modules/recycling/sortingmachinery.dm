@@ -27,7 +27,7 @@
 		var/obj/item/device/destTagger/O = W
 
 		if(sortTag != O.currTag)
-			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
+			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
@@ -108,7 +108,7 @@
 		var/obj/item/device/destTagger/O = W
 
 		if(sortTag != O.currTag)
-			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
+			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
@@ -151,13 +151,13 @@
 	var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
-	for (var/i = 1, i <= TAGGERLOCATIONS.len, i++)
-		dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[TAGGERLOCATIONS[i]]</a></td>"
+	for (var/i = 1, i <= GLOB.TAGGERLOCATIONS.len, i++)
+		dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[GLOB.TAGGERLOCATIONS[i]]</a></td>"
 
 		if(i%4==0)
 			dat += "</tr><tr>"
 
-	dat += "</tr></table><br>Current Selection: [currTag ? TAGGERLOCATIONS[currTag] : "None"]</tt>"
+	dat += "</tr></table><br>Current Selection: [currTag ? GLOB.TAGGERLOCATIONS[currTag] : "None"]</tt>"
 
 	user << browse(dat, "window=destTagScreen;size=450x350")
 	onclose(user, "destTagScreen")

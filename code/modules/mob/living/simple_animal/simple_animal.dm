@@ -7,6 +7,9 @@
 
 	status_flags = CANPUSH
 
+	// goats bray, cows go moo, and the fox says Geckers
+	initial_languages = list(/datum/language/common)
+
 	var/icon_living = ""
 	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
@@ -87,6 +90,7 @@
 
 /mob/living/simple_animal/Initialize()
 	..()
+	GLOB.simple_animals += src
 	handcrafting = new()
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -95,23 +99,12 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 
+
 /mob/living/simple_animal/Login()
 	if(src && src.client)
 		src.client.screen = list()
 		client.screen += client.void
 	..()
-
-/mob/living/simple_animal/Life()
-	if(..()) //alive
-		if(!ckey)
-			if(stat != DEAD)
-				handle_automated_movement()
-			if(stat != DEAD)
-				handle_automated_action()
-			if(stat != DEAD)
-				handle_automated_speech()
-		if(stat != DEAD)
-			return 1
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -142,7 +135,7 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(cardinal)
+					var/anydir = pick(GLOB.cardinal)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
@@ -193,7 +186,7 @@
 		var/turf/open/ST = src.loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(arglist(hardcoded_gases))
+			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
 			var/tox = ST_gases["plasma"][MOLES]
 			var/oxy = ST_gases["o2"][MOLES]
@@ -344,7 +337,7 @@
 		. = 1
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
+	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || SSticker.current_state != GAME_STATE_PLAYING)
 		return
 	next_scan_time = world.time + 400
 	var/alone = 1
@@ -423,6 +416,7 @@
 	if(nest)
 		nest.spawned_mobs -= src
 	nest = null
+	GLOB.simple_animals -= src
 	return ..()
 
 
@@ -446,6 +440,7 @@
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
+	sync_lighting_plane_alpha()
 
 /mob/living/simple_animal/get_idcard()
 	return access_card

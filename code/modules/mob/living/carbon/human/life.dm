@@ -66,18 +66,8 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	//Ears
-	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
-		setEarDamage(-1, max(ear_deaf, 1))
-	else
-		if(istype(ears, /obj/item/clothing/ears/earmuffs)) // earmuffs rest your ears, healing ear_deaf faster and ear_damage, but keeping you deaf.
-			setEarDamage(max(ear_damage-0.10, 0), max(ear_deaf - 1, 1))
-		// deafness heals slowly over time, unless ear_damage is over 100
-		if(ear_damage < 100)
-			adjustEarDamage(-0.05,-1)
-
 	if (getBrainLoss() >= 60 && stat != DEAD)
-		if (prob(3))
+		if(prob(3))
 			if(prob(25))
 				emote("drool")
 			else
@@ -92,7 +82,7 @@
 	if(!dna.species.breathe(src))
 		..()
 #define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30)
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
 	var/L = getorganslot("lungs")
@@ -315,13 +305,13 @@
 		for(var/obj/item/I in BP.embedded_objects)
 			if(prob(I.embedded_pain_chance))
 				BP.receive_damage(I.w_class*I.embedded_pain_multiplier)
-				to_chat(src, "<span class='userdanger'>\the [I] embedded in your [BP.name] hurts!</span>")
+				to_chat(src, "<span class='userdanger'>[I] embedded in your [BP.name] hurts!</span>")
 
 			if(prob(I.embedded_fall_chance))
 				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
 				I.loc = get_turf(src)
-				visible_message("<span class='danger'>\the [I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>\the [I] falls out of your [BP.name]!</span>")
+				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 

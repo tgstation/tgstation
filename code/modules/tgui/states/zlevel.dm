@@ -4,7 +4,7 @@
   * Only checks that the Z-level of the user and src_object are the same.
  **/
 
-/var/global/datum/ui_state/z_state/z_state = new()
+GLOBAL_DATUM_INIT(z_state, /datum/ui_state/z_state, new)
 
 /datum/ui_state/z_state/can_use_topic(src_object, mob/user)
 	var/turf/turf_obj = get_turf(src_object)

@@ -26,20 +26,20 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/mob/living/dust()
+/mob/living/dust(just_ash = FALSE)
 	death(1)
 
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
 	dust_animation()
-	spawn_dust()
+	spawn_dust(just_ash)
 	qdel(src)
 
 /mob/living/proc/dust_animation()
 	return
 
-/mob/living/proc/spawn_dust()
+/mob/living/proc/spawn_dust(just_ash = FALSE)
 	new /obj/effect/decal/cleanable/ash(loc)
 
 
@@ -55,9 +55,9 @@
 		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	living_mob_list -= src
+	GLOB.living_mob_list -= src
 	if(!gibbed)
-		dead_mob_list += src
+		GLOB.dead_mob_list += src
 	paralysis = 0
 	stunned = 0
 	weakened = 0
@@ -65,7 +65,7 @@
 	SetSleeping(0, 0)
 	blind_eyes(1)
 	reset_perspective(null)
-	hide_fullscreens()
+	reload_fullscreen()
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()

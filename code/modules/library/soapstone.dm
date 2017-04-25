@@ -192,10 +192,14 @@
 	var/turf/T = get_turf(src)
 	data["x"] = T.x
 	data["y"] = T.y
+	data["z"] = T.z
 	data["like_keys"] = like_keys
 	data["dislike_keys"] = dislike_keys
 
 /obj/structure/chisel_message/proc/unpack(list/data)
+	if(!islist(data))
+		return
+
 	hidden_message = data["hidden_message"]
 	creator_name = data["creator_name"]
 	creator_key = data["creator_key"]
@@ -209,8 +213,10 @@
 
 	var/x = data["x"]
 	var/y = data["y"]
-	var/turf/newloc = locate(x, y, ZLEVEL_STATION)
-	forceMove(newloc)
+	var/z = data["z"]
+	var/turf/newloc = locate(x, y, z)
+	if(isturf(newloc))
+		forceMove(newloc)
 	update_icon()
 
 /obj/structure/chisel_message/examine(mob/user)
@@ -223,7 +229,7 @@
 	SSpersistence.chisel_messages -= src
 	. = ..()
 
-/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = always_state)
+/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

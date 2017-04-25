@@ -81,7 +81,13 @@ LOG_LAW
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
 
-## disconnect players who did nothing during 10 minutes
+## period of time in seconds for players to be considered inactive
+# INACTIVITY_PERIOD 300
+
+## period of time in seconds for players to be considered afk and kickable
+# AFK_PERIOD 600
+
+## disconnect players who are considered afk
 # KICK_INACTIVE
 
 ## Comment this out to stop admins being able to choose their personal ooccolor
@@ -279,9 +285,13 @@ ANNOUNCE_ADMIN_LOGOUT
 #ANNOUNCE_ADMIN_LOGIN
 
 ## Map rotation
-## This feature requires you are running a Windows OS (or can other wise run .bat files) and that you are using the tgstation-server toolset in tools/
 ## You should edit maps.txt to match your configuration when you enable this.
 #MAPROTATION
+
+## Map voting
+## Allows players to vote for their preffered map
+## When it's set to zero, the map will be randomly picked each round
+ALLOW_MAP_VOTING 1
 
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
@@ -301,10 +311,10 @@ ANNOUNCE_ADMIN_LOGOUT
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
-#CLIENT_WARN_VERSION 510
-#CLIENT_WARN_MESSAGE Byond is really close to releasing 510 beta as the stable release, please take this time to try it out. Reports are that the client preforms better then the version you are using, and also handles network lag better. Shortly after it's release we will end up using 510 client features and you will be forced to update.
-#CLIENT_ERROR_VERSION 509
-#CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
+#CLIENT_WARN_VERSION 511
+#CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
+CLIENT_ERROR_VERSION 511
+CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
 
 ## TOPIC RATE LIMITING
 ## This allows you to limit how many topic calls (clicking on a interface window) the client can do in any given game second and/or game minute.

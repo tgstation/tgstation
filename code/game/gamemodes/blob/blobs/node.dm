@@ -10,10 +10,10 @@
 	point_return = 25
 
 
-/obj/structure/blob/node/New(loc)
-	blob_nodes += src
+/obj/structure/blob/node/Initialize()
+	GLOB.blob_nodes += src
 	START_PROCESSING(SSobj, src)
-	..()
+	. = ..()
 
 /obj/structure/blob/node/scannerreport()
 	return "Gradually expands and sustains nearby blob spores and blobbernauts."
@@ -29,7 +29,7 @@
 	add_overlay(C)
 
 /obj/structure/blob/node/Destroy()
-	blob_nodes -= src
+	GLOB.blob_nodes -= src
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 

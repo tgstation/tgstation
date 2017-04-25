@@ -1,6 +1,6 @@
 //The gateway to Reebe, from which Ratvar emerges.
 /obj/structure/destructible/clockwork/massive/celestial_gateway
-	name = "gateway to the Celestial Derelict"
+	name = "ark of the Clockwork Justicar"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
 	obj_integrity = 500
@@ -19,44 +19,30 @@
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
 	var/fourth_sound_played = FALSE
-	var/ratvar_portal = TRUE //if the gateway actually summons ratvar or just produces a hugeass conversion burst
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
-	var/list/required_components = list(BELLIGERENT_EYE = 7, VANGUARD_COGWHEEL = 7, GEIS_CAPACITOR = 7, REPLICANT_ALLOY = 7, HIEROPHANT_ANSIBLE = 7)
+	var/list/required_components = list(BELLIGERENT_EYE = ARK_CONSUME_COST, VANGUARD_COGWHEEL = ARK_CONSUME_COST, GEIS_CAPACITOR = ARK_CONSUME_COST, REPLICANT_ALLOY = ARK_CONSUME_COST, HIEROPHANT_ANSIBLE = ARK_CONSUME_COST)
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/New()
-	..()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
+	. = ..()
 	INVOKE_ASYNC(src, .proc/spawn_animation)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	var/turf/T = get_turf(src)
-	var/objective_is_gateway = (ticker && ticker.mode && ticker.mode.clockwork_objective == CLOCKCULT_GATEWAY)
 	new/obj/effect/clockwork/general_marker/inathneq(T)
-	if(objective_is_gateway)
-		hierophant_message("<span class='inathneq'>\"[text2ratvar("Engine, come forth and show your servants your mercy")]!\"</span>")
-	else
-		hierophant_message("<span class='inathneq'>\"[text2ratvar("We will show all the mercy of Engine")]!\"</span>")
+	hierophant_message("<span class='inathneq'>\"[text2ratvar("Engine, come forth and show your servants your mercy")]!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/sevtug(T)
-	if(objective_is_gateway)
-		hierophant_message("<span class='sevtug'>\"[text2ratvar("Engine, come forth and show this station your decorating skills")]!\"</span>")
-	else
-		hierophant_message("<span class='sevtug'>\"[text2ratvar("We will show all Engine's decorating skills")]!\"</span>")
+	hierophant_message("<span class='sevtug'>\"[text2ratvar("Engine, come forth and show this station your decorating skills")]!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 45, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/nezbere(T)
-	if(objective_is_gateway)
-		hierophant_message("<span class='nezbere'>\"[text2ratvar("Engine, come forth and shine your light across this realm")]!!\"</span>")
-	else
-		hierophant_message("<span class='nezbere'>\"[text2ratvar("We will show all Engine's light")]!!\"</span>")
+	hierophant_message("<span class='nezbere'>\"[text2ratvar("Engine, come forth and shine your light across this realm")]!!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 60, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/nzcrentr(T)
-	if(objective_is_gateway)
-		hierophant_message("<span class='nzcrentr'>\"[text2ratvar("Engine, come forth")].\"</span>")
-	else
-		hierophant_message("<span class='nzcrentr'>\"[text2ratvar("We will show all Engine's power")].\"</span>")
+	hierophant_message("<span class='nzcrentr'>\"[text2ratvar("Engine, come forth")].\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 75, 0)
 	sleep(10)
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
@@ -74,9 +60,7 @@
 	countdown = new(src)
 	countdown.start()
 	var/area/gate_area = get_area(src)
-	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>", FALSE, src)
-	if(!objective_is_gateway)
-		ratvar_portal = FALSE
+	hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has been created in [gate_area.map_name]!</b></span>", FALSE, src)
 	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSprocessing, src)
 
@@ -84,7 +68,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
-		hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>")
+		hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has fallen at [gate_area.map_name]!</b></span>")
 		send_to_playing_players(sound(null, 0, channel = 8))
 	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
 	SSshuttle.clearHostileEnvironment(src)
@@ -179,14 +163,14 @@
 					to_chat(user, "<span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
 					<span class='[get_component_span(i)]_large'>[required_components[i]]</span>")
 		else
-			to_chat(user, "<span class='big'><b>Seconds until [ratvar_portal ? "Ratvar's arrival":"Proselytization"]:</b> [get_arrival_text(TRUE)]</span>")
+			to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
 			switch(progress_in_seconds)
 				if(-INFINITY to GATEWAY_REEBE_FOUND)
 					to_chat(user, "<span class='heavy_brass'>It's still opening.</span>")
 				if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 					to_chat(user, "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>")
 				if(GATEWAY_RATVAR_COMING to INFINITY)
-					to_chat(user, "<span class='heavy_brass'>[ratvar_portal ? "Ratvar is coming through the gateway":"The gateway is glowing with massed power"]!</span>")
+					to_chat(user, "<span class='heavy_brass'>Ratvar is coming through the gateway!</span>")
 	else
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
@@ -194,11 +178,11 @@
 			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 				to_chat(user, "<span class='warning'>It seems to be leading somewhere.</span>")
 			if(GATEWAY_RATVAR_COMING to INFINITY)
-				to_chat(user, "<span class='boldwarning'>[ratvar_portal ? "Something is coming through":"It's glowing brightly"]!</span>")
+				to_chat(user, "<span class='boldwarning'>Something is coming through!</span>")
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!first_sound_played || prob(7))
-		for(var/M in player_list)
+		for(var/M in GLOB.player_list)
 			if(M && !isnewplayer(M))
 				to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
 	if(!obj_integrity)
@@ -227,9 +211,9 @@
 		var/used_components = FALSE
 		for(var/i in required_components)
 			if(required_components[i])
-				var/to_use = min(clockwork_component_cache[i], required_components[i])
+				var/to_use = min(GLOB.clockwork_component_cache[i], required_components[i])
 				required_components[i] -= to_use
-				clockwork_component_cache[i] -= to_use
+				GLOB.clockwork_component_cache[i] -= to_use
 				if(to_use)
 					used_components = TRUE
 		if(used_components)
@@ -276,39 +260,28 @@
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
 				var/turf/startpoint = get_turf(src)
 				QDEL_IN(src, 3)
-				if(ratvar_portal)
-					sleep(3)
-					clockwork_gateway_activated = TRUE
-					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
-				else
-					INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0) //call the shuttle immediately
-					sleep(3)
-					clockwork_gateway_activated = TRUE
-					send_to_playing_players("<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
-					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
-					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>")
-					send_to_playing_players('sound/magic/clockwork/invoke_general.ogg')
-					var/x0 = startpoint.x
-					var/y0 = startpoint.y
-					for(var/I in spiral_range_turfs(255, startpoint))
-						var/turf/T = I
-						if(!T)
-							continue
-						var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
-						if(dist < 100)
-							dist = TRUE
-						else
-							dist = FALSE
-						T.ratvar_act(dist)
-						CHECK_TICK
-					for(var/mob/living/L in living_mob_list)
-						L.ratvar_act()
-					for(var/I in all_clockwork_mobs)
-						var/mob/M = I
-						if(M.stat == CONSCIOUS)
-							clockwork_say(M, text2ratvar(pick("Purge all untruths and honor Engine!", "All glory to Engine's light!", "Engine's power is unmatched!")))
+				sleep(3)
+				GLOB.clockwork_gateway_activated = TRUE
+				new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
+				send_to_playing_players("<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
+				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
+				<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")].\"</span>")
+				send_to_playing_players('sound/magic/clockwork/invoke_general.ogg')
+				var/x0 = startpoint.x
+				var/y0 = startpoint.y
+				for(var/I in spiral_range_turfs(255, startpoint))
+					var/turf/T = I
+					if(!T)
+						continue
+					var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+					if(dist < 100)
+						dist = TRUE
+					else
+						dist = FALSE
+					T.ratvar_act(dist, TRUE)
+					CHECK_TICK
 
-//the actual appearance of the Gateway to the Celestial Derelict; an object so the edges of the gate can be clicked through.
+//the actual appearance of the Ark of the Clockwork Justicar; an object so the edges of the gate can be clicked through.
 /obj/effect/clockwork/overlay/gateway_glow
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "clockwork_gateway_charging"
@@ -318,7 +291,3 @@
 	light_range = 2
 	light_power = 4
 	light_color = "#6A4D2F"
-
-/obj/effect/clockwork/overlay/gateway_glow/New()
-	..()
-	update_light()
