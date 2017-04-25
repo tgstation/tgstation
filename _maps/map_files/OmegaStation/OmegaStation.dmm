@@ -25691,6 +25691,10 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
+	},
 /turf/open/floor/plasteel/green/corner{
 	tag = "icon-greencorner (NORTH)";
 	icon_state = "greencorner";
@@ -35413,6 +35417,10 @@
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
+	},
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -72445,11 +72453,11 @@ aHl
 aIi
 aJs
 aKz
-buX
+buW
 aMR
 buZ
-bva
-bvb
+buZ
+buW
 aQL
 aRI
 aSS
@@ -72706,7 +72714,7 @@ aLP
 aMS
 aMS
 aOC
-bvc
+buW
 aQM
 aRJ
 aST
@@ -73734,7 +73742,7 @@ aLT
 aMW
 aMW
 aOD
-bve
+buW
 aQQ
 aRN
 aSX
@@ -73987,11 +73995,11 @@ aHr
 aIo
 aJw
 aKE
-buY
+buW
 aMX
 aMX
 aMX
-bvf
+buW
 aQR
 aRO
 aSY
