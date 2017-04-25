@@ -150,7 +150,7 @@ SUBSYSTEM_DEF(garbage)
 	var/ticktime = world.time
 	
 	var/type = A.type
-	var/refid = "\ref[A]"
+	var/refID = "\ref[A]"
 	
 	del(A)
 	
