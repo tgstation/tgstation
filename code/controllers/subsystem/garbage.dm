@@ -148,7 +148,9 @@ SUBSYSTEM_DEF(garbage)
 	var/time = world.timeofday
 	var/tick = world.tick_usage
 	var/ticktime = world.time
+	
 	var/type = A.type
+	var/refid = "\ref[A]"
 	
 	del(A)
 	
@@ -164,7 +166,6 @@ SUBSYSTEM_DEF(garbage)
 		log_game("Error: [type]([refID]) took longer then 1 second to delete (took [time/10] seconds to delete)")
 		message_admins("Error: [type]([refID]) took longer then 1 second to delete (took [time/10] seconds to delete).")
 		postpone(time/5)
-		break
 	
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
@@ -218,7 +219,7 @@ SUBSYSTEM_DEF(garbage)
 			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
 				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
-				HardDelete(D)
+				SSgarbage.HardDelete(D)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 				#ifdef TESTING
