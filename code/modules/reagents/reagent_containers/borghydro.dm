@@ -110,7 +110,7 @@ Borg Hypospray
 		return
 	mode = chosen_reagent
 	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
+	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent_ids[mode]]
 	to_chat(user, "<span class='notice'>[src] is now dispensing '[R.name]'.</span>")
 	return
 

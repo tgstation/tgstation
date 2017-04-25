@@ -1,14 +1,14 @@
-
+#define GLOW_MODE 3
+#define LIGHT_MODE 2
+#define REMOVE_MODE 1
 
 /*
 CONTAINS:
 RCD
+ARCD
 */
-/obj/item/weapon/rcd
-	name = "rapid-construction-device (RCD)"
-	desc = "A device used to rapidly build and deconstruct walls and floors."
-	icon = 'icons/obj/tools.dmi'
-	icon_state = "rcd"
+
+obj/item/weapon/construction
 	opacity = 0
 	density = 0
 	anchored = 0
@@ -25,30 +25,119 @@ RCD
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
-	var/max_matter = 160
-	var/working = 0
+	var/max_matter = 100
+	var/sheetmultiplier	= 4 //Controls the amount of matter added for each glass/metal sheet, triple for plasteel
+	var/plasteelmultiplier = 3 //Plasteel is worth 3 times more than glass or metal
+	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
+
+/obj/item/weapon/construction/Initialize()
+	..()
+	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
+	spark_system = new /datum/effect_system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+
+
+/obj/item/weapon/construction/Destroy()
+	QDEL_NULL(spark_system)
+	. = ..()
+
+/obj/item/weapon/construction/attackby(obj/item/weapon/W, mob/user, params)
+	if(iscyborg(user))
+		return
+	var/loaded = 0
+	if(istype(W, /obj/item/weapon/rcd_ammo))
+		var/obj/item/weapon/rcd_ammo/R = W
+		if((matter + R.ammoamt) > max_matter)
+			to_chat(user, "<span class='warning'>The [src] can't hold any more matter-units!</span>")
+			return
+		qdel(W)
+		matter += R.ammoamt
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		loaded = 1
+	else if(istype(W, /obj/item/stack/sheet/metal) || istype(W, /obj/item/stack/sheet/glass))
+		loaded = loadwithsheets(W, sheetmultiplier, user)
+	else if(istype(W, /obj/item/stack/sheet/plasteel))
+		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //Plasteel is worth 3 times more than glass or metal
+	if(loaded)
+		to_chat(user, "<span class='notice'>The [src] now holds [matter]/[max_matter] matter-units.</span>")
+		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+	else
+		return ..()
+
+/obj/item/weapon/construction/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
+	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
+	if(maxsheets > 0)
+		var/amount_to_use = min(S.amount, maxsheets)
+		S.use(amount_to_use)
+		matter += value*amount_to_use
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the [src]. </span>")
+		return 1
+	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the [src]!")
+	return 0
+
+/obj/item/weapon/construction/proc/activate()
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+/obj/item/weapon/construction/attack_self(mob/user)
+	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+	if(prob(20))
+		spark_system.start()
+
+/obj/item/weapon/construction/proc/useResource(amount, mob/user)
+	if(matter < amount)
+		if(user)
+			to_chat(user, no_ammo_message)
+		return 0
+	matter -= amount
+	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
+	update_icon()
+	return 1
+
+/obj/item/weapon/construction/proc/checkResource(amount, mob/user)
+	. = matter >= amount
+	if(!. && user)
+		to_chat(user, no_ammo_message)
+	return .
+
+/obj/item/weapon/construction/proc/range_check(atom/A, mob/user)
+	if(!(A in view(7, get_turf(user))))
+		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the [src] blinks red.</span>")
+		return FALSE
+	else
+		return TRUE
+
+/obj/item/weapon/construction/proc/prox_check(proximity)
+	if(proximity)
+		return TRUE
+	else
+		return FALSE
+
+
+/obj/item/weapon/construction/rcd
+	name = "rapid-construction-device (RCD)"
+	desc = "A device used to rapidly build and deconstruct walls and floors."
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "rcd"
+	max_matter = 160
 	var/mode = 1
 	var/canRturf = 0
+	var/ranged = FALSE
 	var/airlock_type = /obj/machinery/door/airlock
 	var/window_type = /obj/structure/window/fulltile
 
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
-	var/sheetmultiplier	= 4			 //Controls the amount of matter added for each glass/metal sheet, triple for plasteel
-	var/plasteelmultiplier = 3 //Plasteel is worth 3 times more than glass or metal
-
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
-
 	var/delay_mod = 1
 
-	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on \
-		the RCD blinks yellow.</span>"
 
-/obj/item/weapon/rcd/suicide_act(mob/user)
+/obj/item/weapon/construction/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/rcd/verb/toggle_window_type()
+/obj/item/weapon/construction/rcd/verb/toggle_window_type()
 	set name = "Toggle Window Type"
 	set category = "Object"
 	set src in usr // What does this do?
@@ -64,7 +153,7 @@ RCD
 
 	to_chat(usr, "<span class='notice'>You change \the [src]'s window mode to [window_type_name].</span>")
 
-/obj/item/weapon/rcd/verb/change_airlock_access()
+/obj/item/weapon/construction/rcd/verb/change_airlock_access()
 	set name = "Change Airlock Access"
 	set category = "Object"
 	set src in usr
@@ -77,7 +166,6 @@ RCD
 		return
 
 	var/t1 = text("")
-
 
 
 	if(use_one_access)
@@ -114,7 +202,7 @@ RCD
 	popup.open()
 	onclose(usr, "airlock")
 
-/obj/item/weapon/rcd/Topic(href, href_list)
+/obj/item/weapon/construction/rcd/Topic(href, href_list)
 	..()
 	if (usr.stat || usr.restrained())
 		return
@@ -127,7 +215,7 @@ RCD
 
 	change_airlock_access()
 
-/obj/item/weapon/rcd/proc/toggle_access(acc)
+/obj/item/weapon/construction/rcd/proc/toggle_access(acc)
 	if (acc == "all")
 		conf_access = null
 	else if(acc == "one")
@@ -145,7 +233,7 @@ RCD
 			if (!conf_access.len)
 				conf_access = null
 
-/obj/item/weapon/rcd/verb/change_airlock_setting()
+/obj/item/weapon/construction/rcd/verb/change_airlock_setting()
 	set name = "Change Airlock Setting"
 	set category = "Object"
 	set src in usr
@@ -207,59 +295,28 @@ RCD
 			airlock_type = /obj/machinery/door/airlock
 
 
-/obj/item/weapon/rcd/New()
+/obj/item/weapon/construction/rcd/proc/rcd_create(atom/A, mob/user)
+	var/list/rcd_results = A.rcd_vals(user, src)
+	if(!rcd_results)
+		return FALSE
+	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
+		if(checkResource(rcd_results["cost"], user))
+			if(A.rcd_act(user, src, rcd_results["mode"]))
+				useResource(rcd_results["cost"], user)
+				activate()
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				return TRUE
+
+/obj/item/weapon/construction/rcd/New()
 	..()
-	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
-	src.spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(5, 0, src)
-	spark_system.attach(src)
-	rcd_list += src
+	GLOB.rcd_list += src
 
-
-/obj/item/weapon/rcd/Destroy()
-	qdel(spark_system)
-	spark_system = null
-	rcd_list -= src
+/obj/item/weapon/construction/rcd/Destroy()
+	GLOB.rcd_list -= src
 	. = ..()
 
-/obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
-	if(iscyborg(user))	//Make sure cyborgs can't load their RCDs
-		return
-	var/loaded = 0
-	if(istype(W, /obj/item/weapon/rcd_ammo))
-		var/obj/item/weapon/rcd_ammo/R = W
-		if((matter + R.ammoamt) > max_matter)
-			to_chat(user, "<span class='warning'>The RCD can't hold any more matter-units!</span>")
-			return
-		qdel(W)
-		matter += R.ammoamt
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		loaded = 1
-	else if(istype(W, /obj/item/stack/sheet/metal) || istype(W, /obj/item/stack/sheet/glass))
-		loaded = loadwithsheets(W, sheetmultiplier, user)
-	else if(istype(W, /obj/item/stack/sheet/plasteel))
-		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //Plasteel is worth 3 times more than glass or metal
-	if(loaded)
-		to_chat(user, "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>")
-		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
-	else
-		return ..()
-
-/obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
-	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
-	if(maxsheets > 0)
-		var/amount_to_use = min(S.amount, maxsheets)
-		S.use(amount_to_use)
-		matter += value*amount_to_use
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the RCD. </span>")
-		return 1
-	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!")
-	return 0
-
-/obj/item/weapon/rcd/attack_self(mob/user)
-	//Change the mode
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+/obj/item/weapon/construction/rcd/attack_self(mob/user)
+	..()
 	switch(mode)
 		if(1)
 			mode = 2
@@ -274,61 +331,36 @@ RCD
 			mode = 1
 			to_chat(user, "<span class='notice'>You change RCD's mode to 'Floor & Walls'.</span>")
 
-	if(prob(20))
-		src.spark_system.start()
-
-/obj/item/weapon/rcd/proc/activate()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-
-
-/obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
-	if(!proximity)
+/obj/item/weapon/construction/rcd/proc/target_check(atom/A, mob/user) // only returns true for stuff the device can actually work with
+	if((isturf(A) && A.density && mode==RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
+		return TRUE
+	else
 		return FALSE
-	var/list/rcd_results = A.rcd_vals(user, src)
-	if(!rcd_results)
-		return FALSE
-	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
-		if(checkResource(rcd_results["cost"], user))
-			if(A.rcd_act(user, src, rcd_results["mode"]))
-				useResource(rcd_results["cost"], user)
-				activate()
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-				return TRUE
 
-/obj/item/weapon/rcd/proc/useResource(amount, mob/user)
-	if(matter < amount)
-		if(user)
-			to_chat(user, no_ammo_message)
-		return 0
-	matter -= amount
-	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
-	return 1
+/obj/item/weapon/construction/rcd/afterattack(atom/A, mob/user, proximity)
+	if(!prox_check(proximity))
+		return
+	rcd_create(A, user)
 
-/obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
-	. = matter >= amount
-	if(!. && user)
-		to_chat(user, no_ammo_message)
-	return .
-
-/obj/item/weapon/rcd/proc/detonate_pulse()
+/obj/item/weapon/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
 		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
 		vibrating violently!</b></span>")
 	// 5 seconds to get rid of it
 	addtimer(CALLBACK(src, .proc/detonate_pulse_explode), 50)
 
-/obj/item/weapon/rcd/proc/detonate_pulse_explode()
+/obj/item/weapon/construction/rcd/proc/detonate_pulse_explode()
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
 	qdel(src)
 
 
-/obj/item/weapon/rcd/borg/New()
+/obj/item/weapon/construction/rcd/borg/New()
 	..()
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = 1
 
-/obj/item/weapon/rcd/borg/useResource(amount, mob/user)
+/obj/item/weapon/construction/rcd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
 		return 0
 	var/mob/living/silicon/robot/borgy = user
@@ -341,7 +373,7 @@ RCD
 		to_chat(user, no_ammo_message)
 	return .
 
-/obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
+/obj/item/weapon/construction/rcd/borg/checkResource(amount, mob/user)
 	if(!iscyborg(user))
 		return 0
 	var/mob/living/silicon/robot/borgy = user
@@ -354,10 +386,10 @@ RCD
 		to_chat(user, no_ammo_message)
 	return .
 
-/obj/item/weapon/rcd/loaded
+/obj/item/weapon/construction/rcd/loaded
 	matter = 160
 
-/obj/item/weapon/rcd/combat
+/obj/item/weapon/construction/rcd/combat
 	name = "industrial RCD"
 	max_matter = 500
 	matter = 500
@@ -378,7 +410,191 @@ RCD
 	ammoamt = 160
 
 
-/obj/item/weapon/rcd/admin
+/obj/item/weapon/construction/rcd/admin
 	name = "admin RCD"
 	max_matter = INFINITY
 	matter = INFINITY
+
+
+// Ranged RCD
+
+
+/obj/item/weapon/construction/rcd/arcd
+	name = "advanced rapid-construction-device (ARCD)"
+	desc = "A prototype RCD with ranged capability and extended capacity"
+	max_matter = 300
+	matter = 300
+	delay_mod = 0.6
+	ranged = TRUE
+	icon_state = "arcd"
+	item_state = "rcd"
+
+/obj/item/weapon/construction/rcd/arcd/afterattack(atom/A, mob/user)
+	if(!range_check(A,user))
+		return
+	if(target_check(A,user))
+		user.Beam(A,icon_state="rped_upgrade",time=30)
+	rcd_create(A,user)
+
+
+
+// RAPID LIGHTING DEVICE
+
+
+
+/obj/item/weapon/construction/rld
+	name = "rapid-light-device (RLD)"
+	desc = "A device used to rapidly provide lighting sources to an area."
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "rld-5"
+	matter = 200
+	max_matter = 200
+	var/mode = LIGHT_MODE
+	actions_types = list(/datum/action/item_action/pick_color)
+
+	var/wallcost = 10
+	var/floorcost = 15
+	var/launchcost = 5
+	var/deconcost = 10
+
+	var/walldelay = 10
+	var/floordelay = 10
+	var/decondelay = 15
+
+	var/color_choice = null
+
+
+/obj/item/weapon/construction/rld/ui_action_click(mob/user, var/datum/action/A)
+	if(istype(A, /datum/action/item_action/pick_color))
+		color_choice = input(user,"Choose Color") as color
+	else
+		..()
+
+/obj/item/weapon/construction/rld/update_icon()
+	icon_state = "rld-[round(matter/35)]"
+	..()
+
+
+/obj/item/weapon/construction/rld/attack_self(mob/user)
+	..()
+	switch(mode)
+		if(REMOVE_MODE)
+			mode = LIGHT_MODE
+			to_chat(user, "<span class='notice'>You change RLD's mode to 'Permanent Light Construction'.</span>")
+		if(LIGHT_MODE)
+			mode = GLOW_MODE
+			to_chat(user, "<span class='notice'>You change RLD's mode to 'Light Launcher'.</span>")
+		if(GLOW_MODE)
+			mode = REMOVE_MODE
+			to_chat(user, "<span class='notice'>You change RLD's mode to 'Deconstruct'.</span>")
+
+
+/obj/item/weapon/construction/rld/proc/checkdupes(var/target)
+	. = list()
+	var/turf/checking = get_turf(target)
+	for(var/obj/machinery/light/dupe in checking)
+		if(istype(dupe, /obj/machinery/light))
+			. |= dupe
+
+
+/obj/item/weapon/construction/rld/afterattack(atom/A, mob/user)
+	if(!range_check(A,user))
+		return
+	var/turf/start = get_turf(src)
+	switch(mode)
+		if(REMOVE_MODE)
+			if(istype(A, /obj/machinery/light/))
+				if(checkResource(deconcost, user))
+					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
+					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, decondelay, target = A))
+						if(!useResource(deconcost, user))
+							return 0
+						activate()
+						qdel(A)
+						return TRUE
+				return FALSE
+		if(LIGHT_MODE)
+			if(iswallturf(A))
+				var/turf/closed/wall/W = A
+				if(checkResource(floorcost, user))
+					to_chat(user, "<span class='notice'>You start building a wall light...</span>")
+					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 0)
+					if(do_after(user, floordelay, target = A))
+						if(!istype(W))
+							return FALSE
+						var/list/candidates = list()
+						var/turf/open/winner = null
+						var/winning_dist = null
+						for(var/direction in GLOB.cardinal)
+							var/turf/C = get_step(W, direction)
+							var/list/dupes = checkdupes(C)
+							if(start.CanAtmosPass(C) && !dupes.len)
+								candidates += C
+						if(!candidates.len)
+							to_chat(user, "<span class='warning'>Valid target not found...</span>")
+							playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, 1)
+							return FALSE
+						for(var/turf/open/O in candidates)
+							if(istype(O))
+								var/x0 = O.x
+								var/y0 = O.y
+								var/contender = cheap_hypotenuse(start.x, start.y, x0, y0)
+								if(!winner)
+									winner = O
+									winning_dist = contender
+								else
+									if(contender < winning_dist) // lower is better
+										winner = O
+										winning_dist = contender
+						activate()
+						if(!useResource(wallcost, user))
+							return FALSE
+						var/light = get_turf(winner)
+						var/align = get_dir(winner, A)
+						var/obj/machinery/light/L = new /obj/machinery/light(light)
+						L.dir = align
+						L.color = color_choice
+						L.light_color = L.color
+						return TRUE
+				return FALSE
+
+			if(isfloorturf(A))
+				var/turf/open/floor/F = A
+				if(checkResource(floorcost, user))
+					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
+					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
+					if(do_after(user, floordelay, target = A))
+						if(!istype(F))
+							return 0
+						if(!useResource(floorcost, user))
+							return 0
+						activate()
+						var/destination = get_turf(A)
+						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)
+						FL.color = color_choice
+						FL.light_color = FL.color
+						return TRUE
+				return FALSE
+
+		if(GLOW_MODE)
+			if(useResource(launchcost, user))
+				activate()
+				to_chat(user, "<span class='notice'>You fire a glowstick!</span>")
+				var/obj/item/device/flashlight/glowstick/G  = new /obj/item/device/flashlight/glowstick(start)
+				G.color = color_choice
+				G.light_color = G.color
+				G.throw_at(A, 9, 3, user)
+				G.on = TRUE
+				G.update_brightness()
+				return TRUE
+			return FALSE
+
+#undef GLOW_MODE
+#undef LIGHT_MODE
+#undef REMOVE_MODE

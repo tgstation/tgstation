@@ -24,7 +24,7 @@
 		bin_pen = P
 		update_icon()
 		var/static/warned = FALSE
-		if(!warned)
+		if(P.type == /obj/item/weapon/pen && !warned)
 			warning("one or more paperbins ate a pen duing initialize()")
 			warned = TRUE
 
@@ -86,7 +86,7 @@
 			papers.Remove(P)
 		else
 			P = new papertype(src)
-			if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
+			if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 				if(prob(30))
 					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 					P.rigged = 1

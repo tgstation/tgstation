@@ -24,7 +24,8 @@
 							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(prob(damage))
 			for(var/mob/living/N in buckled_mobs)
@@ -44,7 +45,6 @@
 				adjustCloneLoss(damage)
 			if(STAMINA)
 				adjustStaminaLoss(damage)
-		updatehealth()
 
 /mob/living/silicon/attack_paw(mob/living/user)
 	return attack_hand(user)

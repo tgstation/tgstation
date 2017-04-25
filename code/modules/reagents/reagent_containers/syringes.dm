@@ -41,8 +41,8 @@
 	..()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/attack_paw()
-	return attack_hand()
+/obj/item/weapon/reagent_containers/syringe/attack_paw(mob/user)
+	return attack_hand(user)
 
 /obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
@@ -80,7 +80,7 @@
 					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
 					busy = 1
-					if(!do_mob(user, target))
+					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
 						busy = 0
 						return
 					if(reagents.total_volume >= reagents.maximum_volume)
@@ -123,13 +123,12 @@
 				if(L != user)
 					L.visible_message("<span class='danger'>[user] is trying to inject [L]!</span>", \
 											"<span class='userdanger'>[user] is trying to inject [L]!</span>")
-					if(!do_mob(user, L))
+					if(!do_mob(user, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
 						return
 					if(!reagents.total_volume)
 						return
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
 						return
-
 					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!", \
 									"<span class='userdanger'>[user] injects [L] with the syringe!")
 

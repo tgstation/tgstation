@@ -50,14 +50,14 @@
 	for(var/hostile in hostile_types)
 		number_of_hostiles += hostile_types[hostile]
 
-	var/list/b_spawns = generic_event_spawns.Copy()
+	var/list/b_spawns = GLOB.generic_event_spawns.Copy()
 	while(number_of_bosses > boss_spawn.len)
 		var/turf/F = get_turf(pick_n_take(b_spawns))
 		if(!F)
 			F = safepick(get_area_turfs(pick(station_areas)))
 		boss_spawn += F
 
-	var/list/h_spawns = generic_event_spawns.Copy()
+	var/list/h_spawns = GLOB.generic_event_spawns.Copy()
 	while(number_of_hostiles > hostiles_spawn.len)
 		var/turf/T = get_turf(pick_n_take(h_spawns))
 		if(!T)

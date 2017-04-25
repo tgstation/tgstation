@@ -304,6 +304,9 @@
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "piss water"
+	glass_icon_state = "beerglass"
+	glass_name = "glass of beer"
+	glass_desc = "A freezing pint of beer."
 
 /datum/reagent/toxin/beer2/on_mob_life(mob/living/M)
 	switch(current_cycle)

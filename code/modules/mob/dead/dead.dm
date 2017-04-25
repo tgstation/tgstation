@@ -10,3 +10,6 @@
 
 /mob/dead/gib()		//ghosts can't be gibbed.
 	return
+
+/mob/dead/ConveyorMove()	//lol
+	return

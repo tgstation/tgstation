@@ -9,8 +9,8 @@
 		emote("deathgasp")
 
 	. = ..()
-	if(ticker && ticker.mode)
-		ticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+	if(SSticker && SSticker.mode)
+		SSticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
 	for(var/mob/M in src)
@@ -35,7 +35,7 @@
 				if(org_zone == "chest")
 					O.Remove(src)
 					O.forceMove(get_turf(src))
-					O.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
+					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
@@ -44,11 +44,11 @@
 				continue
 			I.Remove(src)
 			I.forceMove(get_turf(src))
-			I.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
+			I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
 
 /mob/living/carbon/spread_bodyparts()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		BP.drop_limb()
-		BP.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
+		BP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)

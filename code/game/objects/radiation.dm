@@ -51,3 +51,6 @@
 
 /mob/living/simple_animal/bot/rad_act(amount)
 	. = ..(amount, TRUE)
+
+/mob/living/simple_animal/drone/rad_act(amount)
+	. = ..(amount, TRUE)
