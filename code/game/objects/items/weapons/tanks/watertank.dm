@@ -432,11 +432,6 @@
 	update_filling()
 	user.update_inv_back() //for overlays update
 
-/obj/item/weapon/reagent_containers/chemtank/stim/New()
-	..()
-	reagents.add_reagent("stimulants_longterm", 300)
-	update_filling()
-
 //Operator backpack spray
 /obj/item/weapon/watertank/operator
 	name = "backpack water tank"
