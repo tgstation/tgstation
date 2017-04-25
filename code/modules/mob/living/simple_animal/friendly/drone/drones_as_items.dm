@@ -21,10 +21,10 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
-	poi_list |= src
+	GLOB.poi_list |= src
 
 /obj/item/drone_shell/Destroy()
-	poi_list -= src
+	GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/drone_shell/attack_ghost(mob/user)
@@ -36,7 +36,7 @@
 		if(user.client.player_age < DRONE_MINIMUM_AGE)
 			to_chat(user, "<span class='danger'>You're too new to play as a drone! Please try again in [DRONE_MINIMUM_AGE - user.client.player_age] days.</span>")
 			return
-	if(!ticker.mode)
+	if(!SSticker.mode)
 		to_chat(user, "Can't become a drone before the game has started.")
 		return
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")

@@ -14,6 +14,9 @@
 /obj/effect/portal/Bumped(mob/M as mob|obj)
 	teleport(M)
 
+/obj/effect/portal/attack_tk(mob/user)
+	return
+
 /obj/effect/portal/attack_hand(mob/user)
 	if(Adjacent(user))
 		teleport(user)
@@ -27,7 +30,7 @@
 
 /obj/effect/portal/New(loc, turf/target, creator=null, lifespan=300)
 	..()
-	portals += src
+	GLOB.portals += src
 	src.target = target
 	src.creator = creator
 
@@ -39,7 +42,7 @@
 		QDEL_IN(src, lifespan)
 
 /obj/effect/portal/Destroy()
-	portals -= src
+	GLOB.portals -= src
 	if(istype(creator, /obj/item/weapon/hand_tele))
 		var/obj/item/weapon/hand_tele/O = creator
 		O.active_portals--

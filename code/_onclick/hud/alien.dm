@@ -63,9 +63,8 @@
 		H.leap_icon.screen_loc = ui_alien_storage_r
 		static_inventory += H.leap_icon
 
-	using = new/obj/screen/wheel/talk
-	using.screen_loc = ui_alien_talk_wheel
-	wheels += using
+	using = new/obj/screen/language_menu
+	using.screen_loc = ui_alien_language_menu
 	static_inventory += using
 
 	using = new /obj/screen/drop()

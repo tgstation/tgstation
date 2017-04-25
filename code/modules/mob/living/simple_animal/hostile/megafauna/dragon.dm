@@ -69,7 +69,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
 	if(!swooping)
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/DestroySurroundings()
 	if(!swooping)
@@ -162,7 +162,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
-	for(var/d in cardinal)
+	for(var/d in GLOB.cardinal)
 		INVOKE_ASYNC(src, .proc/fire_wall, d)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
@@ -231,7 +231,7 @@ Difficulty: Medium
 			if(L && !QDELETED(L)) // Some mobs are deleted on death
 				var/throw_dir = get_dir(src, L)
 				if(L.loc == loc)
-					throw_dir = pick(alldirs)
+					throw_dir = pick(GLOB.alldirs)
 				var/throwtarget = get_edge_target_turf(src, throw_dir)
 				L.throw_at(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")

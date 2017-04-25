@@ -17,7 +17,7 @@
 
 /mob/living/simple_animal/hostile/guardian/healer/Initialize()
 	..()
-	var/datum/atom_hud/medsensor = huds[DATA_HUD_MEDICAL_ADVANCED]
+	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/guardian/healer/Stat()
@@ -27,21 +27,20 @@
 			stat(null, "Beacon Cooldown Remaining: [max(round((beacon_cooldown - world.time)*0.1, 0.1), 0)] seconds")
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
-	if(..())
-		if(toggle == TRUE)
-			if(iscarbon(target))
-				var/mob/living/carbon/C = target
-				C.adjustBruteLoss(-5)
-				C.adjustFireLoss(-5)
-				C.adjustOxyLoss(-5)
-				C.adjustToxLoss(-5)
-				var/obj/effect/overlay/temp/heal/H = new /obj/effect/overlay/temp/heal(get_turf(C))
-				if(namedatum)
-					H.color = namedatum.colour
-				if(C == summoner)
-					update_health_hud()
-					med_hud_set_health()
-					med_hud_set_status()
+	. = ..()
+	if(toggle && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.adjustBruteLoss(-5)
+		C.adjustFireLoss(-5)
+		C.adjustOxyLoss(-5)
+		C.adjustToxLoss(-5)
+		var/obj/effect/overlay/temp/heal/H = new /obj/effect/overlay/temp/heal(get_turf(C))
+		if(namedatum)
+			H.color = namedatum.colour
+		if(C == summoner)
+			update_health_hud()
+			med_hud_set_health()
+			med_hud_set_status()
 
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(src.loc == summoner)

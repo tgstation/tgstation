@@ -2,6 +2,9 @@
 	var/var_edited = FALSE //Warrenty void if seal is broken
 	var/fingerprintslast = null
 
+/datum/proc/can_vv_get(var_name)
+	return TRUE
+
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
 	switch(var_name)
 		if ("vars")
@@ -155,7 +158,8 @@
 
 		names = sortList(names)
 		for (var/V in names)
-			variable_html += D.vv_get_var(V)
+			if(D.can_vv_get(V))
+				variable_html += D.vv_get_var(V)
 
 	var/html = {"
 <html>
@@ -335,7 +339,7 @@
 									target="_parent._top"
 									onmouseclick="this.focus()"
 									style="background-color:#ffffff">
-									<option value>Select option</option>
+									<option value selected>Select option</option>
 									[dropdownoptions_html.Join()]
 								</select>
 							</form>
@@ -850,7 +854,7 @@
 
 			if(A.reagents)
 				var/chosen_id
-				var/list/reagent_options = sortList(chemical_reagents_list)
+				var/list/reagent_options = sortList(GLOB.chemical_reagents_list)
 				switch(alert(usr, "Choose a method.", "Add Reagents", "Enter ID", "Choose ID"))
 					if("Enter ID")
 						var/valid_id
@@ -1031,14 +1035,15 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 				return
 
-			var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
+			var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
 
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")
 				return
 
 			if(result)
-				var/newtype = species_list[result]
+				var/newtype = GLOB.species_list[result]
+				admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [H] to [result]")
 				H.set_species(newtype)
 
 		else if(href_list["editbodypart"])
@@ -1079,12 +1084,12 @@
 					if("augment")
 						if(ishuman(C))
 							if(BP)
-								BP.change_bodypart_status(BODYPART_ROBOTIC, 1)
+								BP.change_bodypart_status(BODYPART_ROBOTIC, TRUE, TRUE)
 							else
 								to_chat(usr, "[C] doesn't have such bodypart.")
 						else
 							to_chat(usr, "Only humans can be augmented.")
-
+			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [C]")
 
 
 		else if(href_list["purrbation"])
@@ -1107,12 +1112,16 @@
 			if(success)
 				to_chat(usr, "Put [H] on purrbation.")
 				log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
-				message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
+				var/msg = "<span class='notice'>[key_name_admin(usr)] has put [key_name(H)] on purrbation.</span>"
+				message_admins(msg)
+				admin_ticket_log(H, msg)
 
 			else
 				to_chat(usr, "Removed [H] from purrbation.")
 				log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
-				message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
+				var/msg = "<span class='notice'>[key_name_admin(usr)] has removed [key_name(H)] from purrbation.</span>"
+				message_admins(msg)
+				admin_ticket_log(H, msg)
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))
@@ -1151,6 +1160,8 @@
 
 			if(amount != 0)
 				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
+				var/msg = "<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>"
+				message_admins(msg)
+				admin_ticket_log(L, msg)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 

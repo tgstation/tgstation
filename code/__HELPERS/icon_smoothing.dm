@@ -67,7 +67,7 @@
 		if(AM.can_be_unanchored && !AM.anchored)
 			return 0
 
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinal)
 		AM = find_type_in_direction(A, direction)
 		if(AM == NULLTURF_BORDER)
 			if((A.smooth & SMOOTH_BORDER))

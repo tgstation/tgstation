@@ -8,7 +8,7 @@
 	size = 12
 	requires_ntnet = 0
 	usage_flags = PROGRAM_CONSOLE
-	transfer_access = access_heads
+	transfer_access = GLOB.access_heads
 	available_on_ntnet = 1
 	var/restoring = FALSE
 
@@ -114,7 +114,7 @@
 
 	return data
 
-/datum/computer_file/program/aidiag/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/datum/computer_file/program/aidiag/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "ai_restorer", "Integrity Restorer", 600, 400, master_ui, state)

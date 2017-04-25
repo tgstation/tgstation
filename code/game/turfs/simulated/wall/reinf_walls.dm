@@ -38,6 +38,8 @@
 /turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
+	if(!M.environment_smash)
+		return
 	if(M.environment_smash == 3)
 		dismantle_wall(1)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -249,8 +251,12 @@
 		if(prob(30))
 			dismantle_wall()
 
-/turf/closed/wall/r_vall/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
-	return FALSE
+/turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+	if(!the_rcd.canRturf)
+		return FALSE
+	return ..()
 
-/turf/closed/wall/r_vall/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
-	return FALSE
+/turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+	if(!the_rcd.canRturf)
+		return FALSE
+	return ..()

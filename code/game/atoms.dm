@@ -28,10 +28,12 @@
 	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
 	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
 
+	var/datum/proximity_monitor/proximity_monitor
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
-	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
-		_preloader.load(src)
+	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+		GLOB._preloader.load(src)
 
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
@@ -39,8 +41,10 @@
 	if(do_initialize > INITIALIZATION_INSSATOMS)
 		if(QDELETED(src))
 			CRASH("Found new qdeletion in type [type]!")
-		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		Initialize(arglist(args))
+		var/mapload = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		args[1] = mapload
+		if(Initialize(arglist(args)) && mapload)
+			LAZYADD(SSatoms.late_loaders, src)
 
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is being loaded. mapload = FALSE
@@ -75,21 +79,18 @@
 
 /atom/Destroy()
 	if(alternate_appearances)
-		for(var/aakey in alternate_appearances)
-			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
-			qdel(AA)
-		alternate_appearances = null
-	if(viewing_alternate_appearances)
-		for(var/aakey in viewing_alternate_appearances)
-			for(var/aa in viewing_alternate_appearances[aakey])
-				var/datum/alternate_appearance/AA = aa
-				AA.hide(list(src))
+		for(var/K in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
+			AA.remove_from_hud(src)
+
 	if(reagents)
 		qdel(reagents)
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
 	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
+
+	QDEL_NULL(light)
 
 	return ..()
 
@@ -279,7 +280,7 @@
 	if(AM && isturf(AM.loc))
 		step(AM, turn(AM.dir, 180))
 
-var/list/blood_splatter_icons = list()
+GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/blood_splatter_index()
 	return "\ref[initial(icon)]-[initial(icon_state)]"
@@ -353,13 +354,13 @@ var/list/blood_splatter_icons = list()
 	if(initial(icon) && initial(icon_state))
 		//try to find a pre-processed blood-splatter. otherwise, make a new one
 		var/index = blood_splatter_index()
-		var/icon/blood_splatter_icon = blood_splatter_icons[index]
+		var/icon/blood_splatter_icon = GLOB.blood_splatter_icons[index]
 		if(!blood_splatter_icon)
 			blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 			blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 			blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 			blood_splatter_icon = fcopy_rsc(blood_splatter_icon)
-			blood_splatter_icons[index] = blood_splatter_icon
+			GLOB.blood_splatter_icons[index] = blood_splatter_icon
 		add_overlay(blood_splatter_icon)
 
 /obj/item/clothing/gloves/add_blood(list/blood_dna)
@@ -398,12 +399,12 @@ var/list/blood_splatter_icons = list()
 	return 1
 
 /atom/proc/get_global_map_pos()
-	if(!islist(global_map) || isemptylist(global_map)) return
+	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map)) return
 	var/cur_x = null
 	var/cur_y = null
 	var/list/y_arr = null
-	for(cur_x=1,cur_x<=global_map.len,cur_x++)
-		y_arr = global_map[cur_x]
+	for(cur_x=1,cur_x<=GLOB.global_map.len,cur_x++)
+		y_arr = GLOB.global_map[cur_x]
 		cur_y = y_arr.Find(src.z)
 		if(cur_y)
 			break
@@ -443,10 +444,10 @@ var/list/blood_splatter_icons = list()
 /atom/proc/ratvar_act()
 	return
 
-/atom/proc/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/atom/proc/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	return FALSE
 
-/atom/proc/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/atom/proc/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
@@ -455,14 +456,11 @@ var/list/blood_splatter_icons = list()
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
 
-// Byond seemingly calls stat, each tick.
-// Calling things each tick can get expensive real quick.
-// So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/atom/Stat()
-	. = ..()
-	sleep(1)
-	stoplag()
+//called when the turf the atom resides on is ChangeTurfed
+/atom/proc/HandleTurfChange(turf/T)
+	for(var/a in src)
+		var/atom/A = a
+		A.HandleTurfChange(T)
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
 /atom/proc/get_remote_view_fullscreens(mob/user)
@@ -497,6 +495,10 @@ var/list/blood_splatter_icons = list()
 /atom/proc/mech_melee_attack(obj/mecha/M)
 	return
 
+//If a mob logouts/logins in side of an object you can use this proc
+/atom/proc/on_log(login)
+	if(loc)
+		loc.on_log(login)
 
 
 /*
@@ -557,7 +559,7 @@ var/list/blood_splatter_icons = list()
 			return
 
 /atom/vv_edit_var(var_name, var_value)
-	if(!Debug2)
+	if(!GLOB.Debug2)
 		admin_spawned = TRUE
 	. = ..()
 	switch(var_name)
