@@ -120,3 +120,5 @@
 #define SLIDE_ICE 8
 
 #define MAX_CHICKENS 50
+
+#define UNHEALING_EAR_DAMAGE 100

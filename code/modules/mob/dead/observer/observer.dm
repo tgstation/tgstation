@@ -808,6 +808,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!invisibility)
 		to_chat(user, "It seems extremely obvious.")
 
+// Ghosts have no momentum, being massless ectoplasm
+/mob/dead/observer/Process_Spacemove(movement_dir)
+	return 1
+
 /proc/set_observer_default_invisibility(amount, message=null)
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		G.invisibility = amount

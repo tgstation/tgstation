@@ -18,13 +18,14 @@
 /obj/structure/tank_dispenser/plasma
 	oxygentanks = 0
 
-/obj/structure/tank_dispenser/New()
+/obj/structure/tank_dispenser/Initialize()
+	. = ..()
 	for(var/i in 1 to oxygentanks)
 		new /obj/item/weapon/tank/internals/oxygen(src)
 	for(var/i in 1 to plasmatanks)
 		new /obj/item/weapon/tank/internals/plasma(src)
 	update_icon()
-	..()
+	
 /obj/structure/tank_dispenser/update_icon()
 	cut_overlays()
 	switch(oxygentanks)

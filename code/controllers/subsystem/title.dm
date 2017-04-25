@@ -36,7 +36,8 @@ SUBSYSTEM_DEF(title)
 				break
 
 		file_path = "config/title_screens/images/[pick(title_screens)]"
-		icon = new(file_path)
+		
+		icon = new(fcopy_rsc(file_path))
 
 		if(splash_turf)
 			splash_turf.icon = icon

@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
-	init_order = 13
+	init_order = INIT_ORDER_TICKER
 
 	priority = 200
 	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING

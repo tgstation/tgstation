@@ -1,0 +1,7 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "You can examine a firedoor for hints on how to
+construct/deconstruct it."
+  - rscadd: "Add an additional hint during construction where you can add
+plasteel to make the firedoor reinforced."
