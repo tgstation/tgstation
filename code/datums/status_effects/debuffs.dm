@@ -56,7 +56,7 @@
 	var/number_legs = owner.get_num_legs()
 	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.null_rod_check() && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
-			if(ratvar_awakens)
+			if(GLOB.ratvar_awakens)
 				owner.Weaken(1)
 			if(iscultist(owner))
 				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "l_leg")
