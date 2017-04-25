@@ -32,7 +32,7 @@
 
 /datum/round_event/ion_storm/start()
 	//AI laws
-	for(var/mob/living/silicon/ai/M in living_mob_list)
+	for(var/mob/living/silicon/ai/M in GLOB.living_mob_list)
 		M.laws_sanity_check()
 		if(M.stat != 2 && M.see_in_dark != 0)
 			if(prob(replaceLawsetChance))
@@ -55,7 +55,7 @@
 			M.post_lawchange()
 
 	if(botEmagChance)
-		for(var/mob/living/simple_animal/bot/bot in living_mob_list)
+		for(var/mob/living/simple_animal/bot/bot in GLOB.living_mob_list)
 			if(prob(botEmagChance))
 				bot.emag_act()
 

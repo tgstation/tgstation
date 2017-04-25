@@ -57,13 +57,13 @@
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
 
-/obj/structure/window/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/obj/structure/window/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 	return FALSE
 
-/obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
+/obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
@@ -546,7 +546,7 @@
 	return ..()
 
 /obj/structure/window/reinforced/clockwork/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		obj_integrity = max_integrity
 		update_icon()
 

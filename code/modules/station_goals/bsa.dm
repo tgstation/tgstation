@@ -248,7 +248,7 @@
 	var/area_aim = FALSE //should also show areas for targeting
 
 /obj/machinery/computer/bsa_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "bsa", name, 400, 305, master_ui, state)
@@ -280,12 +280,12 @@
 
 /obj/machinery/computer/bsa_control/proc/calibrate(mob/user)
 	var/list/gps_locators = list()
-	for(var/obj/item/device/gps/G in GPS_list) //nulls on the list somehow
+	for(var/obj/item/device/gps/G in GLOB.GPS_list) //nulls on the list somehow
 		gps_locators[G.gpstag] = G
 
 	var/list/options = gps_locators
 	if(area_aim)
-		options += teleportlocs
+		options += GLOB.teleportlocs
 	var/V = input(user,"Select target", "Select target",null) in options|null
 	target = options[V]
 

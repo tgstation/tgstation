@@ -26,7 +26,7 @@
 
 
 /datum/round_event/rabbitrelease/start()
-	for(var/obj/effect/landmark/R in landmarks_list)
+	for(var/obj/effect/landmark/R in GLOB.landmarks_list)
 		if(R.name != "blobspawn")
 			if(prob(35))
 				if(isspaceturf(R.loc))
@@ -139,10 +139,6 @@
 		dispensePrize(get_turf(user))
 		containsPrize = FALSE
 		qdel(src)
-
-/obj/effect/spawner/lootdrop/maintenance/New()
-	..()
-	loot += list(/obj/item/weapon/reagent_containers/food/snacks/egg/loaded = 15, /obj/item/weapon/storage/bag/easterbasket = 15)
 
 //Easter Recipes + food
 /obj/item/weapon/reagent_containers/food/snacks/hotcrossbun

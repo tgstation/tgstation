@@ -115,9 +115,9 @@
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-			radio.talk_into(src, "Patient fully restored", radio_channel)
+			radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
 			if(autoeject) // Eject if configured.
-				radio.talk_into(src, "Auto ejecting patient now", radio_channel)
+				radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
 				open_machine()
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
@@ -239,7 +239,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "cryo", name, 400, 550, master_ui, state)

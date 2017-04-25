@@ -263,34 +263,6 @@
 /turf/open/floor/plasteel/loadingarea/dirtydirty
 	icon_state = "loadingareadirty2"
 
-
-/turf/open/floor/plasteel/shuttle
-	icon_state = "shuttlefloor"
-	floor_tile = /obj/item/stack/tile/mineral/titanium //old shuttle floors so i don't have to change the map paths in this pr
-/turf/open/floor/plasteel/shuttle/red
-	name = "Brig floor"
-	icon_state = "shuttlefloor4"
-	floor_tile = /obj/item/stack/tile/mineral/plastitanium
-/turf/open/floor/plasteel/shuttle/yellow
-	icon_state = "shuttlefloor2"
-/turf/open/floor/plasteel/shuttle/white
-	icon_state = "shuttlefloor3"
-/turf/open/floor/plasteel/shuttle/purple
-	icon_state = "shuttlefloor5"
-
-/turf/open/floor/plasteel/airless/shuttle
-	icon_state = "shuttlefloor"
-/turf/open/floor/plasteel/airless/shuttle/red
-	name = "Brig floor"
-	icon_state = "shuttlefloor4"
-/turf/open/floor/plasteel/airless/shuttle/yellow
-	icon_state = "shuttlefloor2"
-/turf/open/floor/plasteel/airless/shuttle/white
-	icon_state = "shuttlefloor3"
-/turf/open/floor/plasteel/airless/shuttle/purple
-	icon_state = "shuttlefloor5"
-
-
 /turf/open/floor/plasteel/asteroid
 	icon_state = "asteroidfloor"
 /turf/open/floor/plasteel/airless/asteroid

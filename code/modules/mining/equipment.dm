@@ -68,7 +68,7 @@
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
-	feedback_add_details("jaunter", "U") // user activated
+	feedback_add_details("jaunter", "User") // user activated
 	activate(user)
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
@@ -82,7 +82,7 @@
 	var/list/destinations = list()
 
 	if(isgolem(user))
-		for(var/obj/item/device/radio/beacon/B in teleportbeacons)
+		for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
 			var/turf/T = get_turf(B)
 			if(istype(T.loc, /area/ruin/powered/golem_ship))
 				destinations += B
@@ -91,7 +91,7 @@
 	if(destinations.len)
 		return destinations
 
-	for(var/obj/item/device/radio/beacon/B in teleportbeacons)
+	for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
 		var/turf/T = get_turf(B)
 		if(T.z == ZLEVEL_STATION)
 			destinations += B
@@ -124,13 +124,13 @@
 
 	if(triggered)
 		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
-		feedback_add_details("jaunter","E") // EMP accidental activation
+		feedback_add_details("jaunter","EMP") // EMP accidental activation
 		activate(usr)
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
 		to_chat(user, "Your [src] activates, saving you from the chasm!</span>")
-		feedback_add_details("jaunter","C") // chasm automatic activation
+		feedback_add_details("jaunter","Chasm") // chasm automatic activation
 		activate(user)
 	else
 		to_chat(user, "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
@@ -573,9 +573,9 @@
 			L.underlays -= marked_image
 			qdel(marked_image)
 			marked_image = null
-			var/backstab = check_target_facings(user, L)
+			var/backstab_dir = get_dir(user, L)
 			var/def_check = L.getarmor(type = "bomb")
-			if(backstab == FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR || backstab == FACING_SAME_DIR)
+			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
 				L.apply_damage(80, BRUTE, blocked = def_check)
 				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 			else

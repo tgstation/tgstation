@@ -4,7 +4,7 @@
 	icon_state = "frog"
 	icon_living = "frog"
 	icon_dead = "frog_dead"
-	speak = list("ribbits","croaks")
+	speak = list("ribbit","croak")
 	emote_see = list("hops in a circle.", "shakes.")
 	speak_chance = 1
 	turns_per_move = 5

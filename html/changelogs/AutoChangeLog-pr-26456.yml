@@ -1,0 +1,4 @@
+author: "basilman"
+delete-after: True
+changes: 
+  - bugfix: "fixed species with no skin dropping skin when gibbed."

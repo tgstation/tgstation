@@ -1,11 +1,9 @@
-var/datum/controller/subsystem/processing/overlays/SSoverlays
-
-/datum/controller/subsystem/processing/overlays
+PROCESSING_SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER|SS_FIRE_IN_LOBBY
 	wait = 1
 	priority = 500
-	init_order = -6
+	init_order = INIT_ORDER_OVERLAY
 
 	stat_tag = "Ov"
 	currentrun = null
@@ -13,8 +11,7 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 	var/list/overlay_icon_cache
 	var/initialized = FALSE
 
-/datum/controller/subsystem/processing/overlays/New()
-	NEW_SS_GLOBAL(SSoverlays)
+/datum/controller/subsystem/processing/overlays/PreInit()
 	LAZYINITLIST(overlay_icon_state_caches)
 	LAZYINITLIST(overlay_icon_cache)
 

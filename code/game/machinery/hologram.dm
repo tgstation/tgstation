@@ -27,7 +27,8 @@ Possible to do for anyone motivated enough:
 #define HOLOPAD_PASSIVE_POWER_USAGE 1
 #define HOLOGRAM_POWER_USAGE 2
 
-var/list/holopads = list()
+GLOBAL_LIST_EMPTY(holopads)
+#define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
 	name = "Holopad"
@@ -35,8 +36,6 @@ var/list/holopads = list()
 	icon_state = "holopad0"
 	layer = LOW_OBJ_LAYER
 	flags = HEAR
-	languages_spoken = ROBOT | HUMAN
-	languages_understood = ROBOT | HUMAN
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
@@ -51,6 +50,7 @@ var/list/holopads = list()
 	var/list/holo_calls	//array of /datum/holocalls
 	var/datum/holocall/outgoing_call	//do not modify the datums only check and call the public procs
 	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
+	var/static/list/holopads = list()
 
 /obj/machinery/holopad/Initialize()
 	..()
@@ -120,10 +120,8 @@ var/list/holopads = list()
 /obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
-	if(user.incapacitated() || !is_operational())
-		return
 
-	if(outgoing_call)	//someone is making a call, leave them be
+	if(outgoing_call || user.incapacitated() || !is_operational())
 		return
 
 	user.set_machine(src)
@@ -173,7 +171,7 @@ var/list/holopads = list()
 			temp = "You requested an AI's presence.<BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in silicon_mobs)
+			for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 				if(!AI.client)
 					continue
 				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
@@ -296,7 +294,7 @@ var/list/holopads = list()
 			Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 			Hologram.Impersonation = user
 
-		Hologram.languages_spoken = user.languages_spoken
+		Hologram.languages = user.languages
 		Hologram.mouse_opacity = 0//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 		Hologram.anchored = 1//So space wind cannot drag it.
@@ -312,16 +310,16 @@ var/list/holopads = list()
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/holopad/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(speaker && masters.len && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				master.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)
+				master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 	
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		if(HC.connected_holopad == src && speaker != HC.hologram)
-			HC.user.Hear(message, speaker, message_langs, raw_message, radio_freq, spans)
+			HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans)
 	
 	if(outgoing_call && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message)

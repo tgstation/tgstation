@@ -137,7 +137,7 @@
 			qdel(src)
 		. = TRUE
 
-/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
+/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	// tgui is a plague upon this codebase
 
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -409,7 +409,7 @@
 	return TRUE
 
 /obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
-	for(var/datum/gang/G in ticker.mode.gangs)
+	for(var/datum/gang/G in SSticker.mode.gangs)
 		if(territory.type in (G.territory|G.territory_new))
 			. = G.name
 			break

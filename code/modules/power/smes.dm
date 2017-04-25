@@ -53,7 +53,7 @@
 
 	spawn(5)
 		dir_loop:
-			for(var/d in cardinal)
+			for(var/d in GLOB.cardinal)
 				var/turf/T = get_step(src, d)
 				for(var/obj/machinery/power/terminal/term in T)
 					if(term && term.dir == turn(d, 180))
@@ -152,9 +152,7 @@
 				return
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
+				do_sparks(5, TRUE, src)
 				return
 
 			C.use(10)
@@ -196,7 +194,7 @@
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 		log_game("SMES deleted at ([area.name])")
@@ -261,7 +259,7 @@
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
-	return round(5.5*charge/capacity)
+	return Clamp(round(5.5*charge/capacity),0,5)
 
 /obj/machinery/power/smes/process()
 	if(stat & BROKEN)
@@ -354,7 +352,7 @@
 		terminal.powernet.load += amount
 
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)

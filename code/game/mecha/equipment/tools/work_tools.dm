@@ -199,11 +199,11 @@
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 
 /obj/item/mecha_parts/mecha_equipment/rcd/New()
-	rcd_list += src
+	GLOB.rcd_list += src
 	..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
- 	rcd_list -= src
+ 	GLOB.rcd_list -= src
  	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
@@ -409,18 +409,18 @@
 	NC.cableColor("red")
 	NC.d1 = 0
 	NC.d2 = fdirn
-	NC.updateicon()
+	NC.update_icon()
 
 	var/datum/powernet/PN
 	if(last_piece && last_piece.d2 != chassis.dir)
 		last_piece.d1 = min(last_piece.d2, chassis.dir)
 		last_piece.d2 = max(last_piece.d2, chassis.dir)
-		last_piece.updateicon()
+		last_piece.update_icon()
 		PN = last_piece.powernet
 
 	if(!PN)
 		PN = new()
-		powernets += PN
+		GLOB.powernets += PN
 	NC.powernet = PN
 	PN.cables += NC
 	NC.mergeConnectedNetworks(NC.d2)

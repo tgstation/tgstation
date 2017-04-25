@@ -17,7 +17,7 @@
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
+		radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/trinary/filter/Destroy()
 	if(SSradio)
@@ -26,7 +26,7 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	cut_overlays()
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinal)
 		if(direction & initialize_directions)
 			var/obj/machinery/atmospherics/node = findConnecting(direction)
 			if(node)
@@ -113,7 +113,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_filter", name, 475, 155, master_ui, state)
@@ -154,9 +154,9 @@
 			filter_type = ""
 			var/filter_name = "nothing"
 			var/gas = params["mode"]
-			if(gas in meta_gas_info)
+			if(gas in GLOB.meta_gas_info)
 				filter_type = gas
-				filter_name	= meta_gas_info[gas][META_GAS_NAME]
+				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", "atmos")
 			. = TRUE
 	update_icon()

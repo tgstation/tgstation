@@ -1,4 +1,4 @@
-/mob/living/brain/say(message)
+/mob/living/brain/say(message, language)
 	if(!(container && istype(container, /obj/item/device/mmi)))
 		return //No MMI, can't speak, bucko./N
 	else
@@ -7,16 +7,17 @@
 				return
 			else
 				message = Gibberish(message, (emp_damage*6))//scrambles the message, gets worse when emp_damage is higher
+
 		..()
 
 /mob/living/brain/get_spans()
 	return ..() | SPAN_ROBOT
 
-/mob/living/brain/radio(message, message_mode, list/spans)
+/mob/living/brain/radio(message, message_mode, list/spans, language)
 	if(message_mode && istype(container, /obj/item/device/mmi))
 		var/obj/item/device/mmi/R = container
 		if(R.radio)
-			R.radio.talk_into(src, message, , spans)
+			R.radio.talk_into(src, message, , get_spans(), language)
 			return ITALICS | REDUCE_RANGE
 
 /mob/living/brain/lingcheck()
@@ -25,3 +26,11 @@
 /mob/living/brain/treat_message(message)
 	message = capitalize(message)
 	return message
+
+/mob/living/brain/can_speak_in_language(datum/language/dt)
+	if(HAS_SECONDARY_FLAG(src, OMNITONGUE))
+		. = has_language(dt)
+	else if(istype(container, /obj/item/device/mmi/posibrain/soul_vessel))
+		. = has_language(dt) && ispath(dt, /datum/language/ratvar)
+	else
+		. = ..()

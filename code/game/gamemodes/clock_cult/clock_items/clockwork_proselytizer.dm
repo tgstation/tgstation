@@ -88,8 +88,8 @@
 				amount -= MIN_CLOCKCULT_POWER
 	. = ..()
 
-/obj/item/clockwork/clockwork_proselytizer/New()
-	..()
+/obj/item/clockwork/clockwork_proselytizer/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clockwork/clockwork_proselytizer/Destroy()
@@ -113,11 +113,11 @@
 		charge_delay = 2
 
 /obj/item/clockwork/clockwork_proselytizer/ratvar_act()
-	if(nezbere_invoked)
+	if(GLOB.nezbere_invoked)
 		charge_rate = 1250
 	else
 		charge_rate = initial(charge_rate)
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		uses_power = FALSE
 		speed_multiplier = initial(speed_multiplier) * 0.25
 	else
@@ -165,7 +165,7 @@
 
 /obj/item/clockwork/clockwork_proselytizer/proc/can_use_power(amount)
 	if(amount == RATVAR_POWER_CHECK)
-		if(ratvar_awakens || !uses_power)
+		if(GLOB.ratvar_awakens || !uses_power)
 			return TRUE
 		else
 			return FALSE
