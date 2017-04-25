@@ -7,6 +7,7 @@
 //These are synced with the Database, if you change the values of the defines
 //then you MUST update the database!
 #define ROLE_TRAITOR			"traitor"
+#define ROLE_DOUBLEAGENT		"double agent"
 #define ROLE_OPERATIVE			"operative"
 #define ROLE_CHANGELING			"changeling"
 #define ROLE_WIZARD				"wizard"
@@ -30,6 +31,7 @@
 //(in game days played) to play that role
 GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TRAITOR = /datum/game_mode/traitor,
+	ROLE_DOUBLEAGENT = /datum/game_mode/traitor/double_agents,
 	ROLE_OPERATIVE = /datum/game_mode/nuclear,
 	ROLE_CHANGELING = /datum/game_mode/changeling,
 	ROLE_WIZARD = /datum/game_mode/wizard,

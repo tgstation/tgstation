@@ -5,6 +5,7 @@
 	required_enemies = 5
 	recommended_enemies = 8
 	reroll_friendly = 0
+	antag_flag = ROLE_DOUBLEAGENT
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
 	num_modifier = 4 // Four additional traitors
