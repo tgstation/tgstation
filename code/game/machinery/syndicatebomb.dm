@@ -30,8 +30,6 @@
 	var/next_beep
 	var/detonation_timer
 	var/explode_now = FALSE
-	light_color = LIGHT_COLOR_RED
-	light_range = 1 //faintly visible only in the dark
 
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
 	. = (payload in src) && (active || ignore_active) && !defused
