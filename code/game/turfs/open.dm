@@ -4,6 +4,114 @@
 	var/wet = 0
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
 	var/image/wet_overlay = null
+	var/turf_gravity_overrides_area = FALSE	//USE AREAS. NOT THIS. THIS IS ONLY FOR VERY LOCALIZED EFFECTS.
+	var/turf_gravity_strength = 1
+	var/turf_gravity_direction = FALSE
+	var/turf_gravity_throwing = 0
+	var/turf_gravity_stunning = 0
+	var/turf_gravity_override = TRUE
+	var/turf_gravity_speed = 2
+	var/list/atom/movable/atoms_with_forced_gravity
+	var/turf_has_gravity_override = -1
+
+/turf/open/Initialize()
+	atoms_with_forced_gravity = list()
+	..()
+
+/turf/open/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(findtext(var_name, "gravity"))
+		sync_all_gravity()
+
+/turf/open/proc/sync_all_gravity()
+	if(!initialized)
+		return FALSE
+	if(!turf_gravity_overrides_area)
+		for(var/atom/movable/AM in atoms_with_forced_gravity)
+			reset_forced_gravity_atom(AM)
+	else
+		for(var/atom/movable/AM in contents)
+			if(islist(atoms_with_forced_gravity) && !atoms_with_forced_gravity[AM])
+				force_gravity_on_atom(AM)
+	for(var/atom/movable/AM in contents)
+		AM.sync_gravity()
+	turf_gravity_throwing = FALSE
+	turf_gravity_stunning = FALSE
+
+/turf/open/Entered(atom/movable/AM)
+	..()
+	//slipping
+	if (istype(AM,/mob/living/carbon))
+		var/mob/living/carbon/M = AM
+		if(M.movement_type & FLYING)
+			return
+		switch(wet)
+			if(TURF_WET_WATER)
+				if(!M.slip(0, 3, null, NO_SLIP_WHEN_WALKING))
+					M.inertia_dir = 0
+			if(TURF_WET_LUBE)
+				if(M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP)))
+					M.confused = max(M.confused, 8)
+			if(TURF_WET_ICE)
+				M.slip(0, 6, null, (SLIDE|GALOSHES_DONT_HELP))
+			if(TURF_WET_PERMAFROST)
+				M.slip(0, 6, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
+			if(TURF_WET_SLIDE)
+				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
+	//melting
+	if(isobj(AM) && air && air.temperature > T0C)
+		var/obj/O = AM
+		if(HAS_SECONDARY_FLAG(O, FROZEN))
+			O.make_unfrozen()
+	if(turf_gravity_overrides_area)
+		force_gravity_on_atom(AM)
+
+/turf/open/Exited(atom/movable/AM)
+	. = ..()
+	if(AM in atoms_with_forced_gravity)
+		reset_forced_gravity_atom(AM)
+
+/turf/open/Destroy()
+	if(initialized)
+		for(var/atom/movable/AM in atoms_with_forced_gravity)
+			reset_forced_gravity_atom(AM)
+			CHECK_TICK
+	. = ..()
+
+/turf/open/proc/force_gravity_on_atom(atom/movable/AM)
+	if(!AM.is_affected_by_gravity)
+		return FALSE
+	if(!initialized)
+		return FALSE
+	if(SSgravity)
+		if(!SSgravity.atoms_forced_gravity_processing[AM])
+			SSgravity.atoms_forced_gravity_processing[AM] = AM
+	AM.forced_gravity_by_turf = src
+	AM.gravity_strength = turf_gravity_strength
+	AM.gravity_direction = turf_gravity_direction
+	AM.gravity_throwing = turf_gravity_throwing
+	AM.gravity_stunning = turf_gravity_stunning
+	AM.gravity_speed = turf_gravity_speed
+	AM.gravity_override = turf_gravity_override
+	if(islist(atoms_with_forced_gravity))
+		atoms_with_forced_gravity[AM] = AM
+
+/turf/open/proc/reset_forced_gravity_atom(atom/movable/AM)
+	if(!initialized)
+		return FALSE
+	if(SSgravity)
+		if(SSgravity.atoms_forced_gravity_processing[AM])
+			SSgravity.atoms_forced_gravity_processing -= AM
+	AM.forced_gravity_by_turf = null
+	AM.gravity_strength = 0
+	AM.gravity_speed = 5
+	AM.gravity_direction = FALSE
+	AM.gravity_throwing = 0
+	AM.gravity_stunning = 0
+	AM.gravity_override = 0
+	AM.sync_gravity()
+	if(islist(atoms_with_forced_gravity))
+		atoms_with_forced_gravity -= AM
 
 /turf/open/indestructible
 	name = "floor"

@@ -5,6 +5,8 @@
 	icon_state = "extinguish"
 	var/life = 15
 	mouse_opacity = 0
+	anchored = FALSE
+	is_affected_by_gravity = TRUE
 
 
 /obj/effect/particle_effect/water/New()

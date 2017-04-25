@@ -58,9 +58,12 @@
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 260
 	var/current_heat = 0
+	is_affected_by_gravity = TRUE
 
 /obj/machinery/power/port_gen/pacman/Initialize()
 	..()
+	is_affected_by_gravity = anchored
+	sync_gravity()
 	if(anchored)
 		connect_to_network()
 
@@ -182,21 +185,21 @@
 		updateUsrDialog()
 		return
 	else if(!active)
-
 		if(exchange_parts(user, O))
 			return
-
 		if(istype(O, /obj/item/weapon/wrench))
-
 			if(!anchored && !isinspace())
 				connect_to_network()
 				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
 				anchored = 1
+				is_affected_by_gravity = FALSE
+				sync_gravity()
 			else if(anchored)
-				disconnect_from_network()
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
+				disconnect_from_network()
+				is_affected_by_gravity = TRUE
+				sync_gravity()
 				anchored = 0
-
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			return
 		else if(istype(O, /obj/item/weapon/screwdriver))

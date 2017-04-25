@@ -16,9 +16,7 @@
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
 	faction += "\ref[src]"
-
 	language_menu = new(src)
-
 
 /mob/living/prepare_huds()
 	..()
@@ -27,6 +25,45 @@
 /mob/living/proc/prepare_data_huds()
 	med_hud_set_health()
 	med_hud_set_status()
+
+/mob/living/gravity_act(moving = TRUE)
+	set waitfor = 0
+	. = ..(moving = FALSE)	//We handle movement here.
+	if(!gravity_direction)	//Downwards/upwards gravity with strengths might be a thing later but for now it does nothing.
+		return FALSE
+	if(istype(get_step(src, gravity_direction), /turf/closed))
+		return FALSE
+	if(!isturf(loc))	//We're not on a turf to be pulled.
+		return FALSE
+	if(movement_type & FLYING)
+		return FALSE	//Flying mob, resists gravitational pull.
+	if(!has_gravity() && !gravity_override)
+		return FALSE
+	var/temp_throw = FALSE
+
+	if(m_intent == MOVE_INTENT_WALK && SSgravity)
+		var/slip_prob = SSgravity.mob_base_gravity_slip_chance
+		var/fall_prob = SSgravity.mob_base_gravity_fall_chance
+		var/atom/A = get_gravity_handgrip()
+		if(!isnull(A) && istype(A, /atom))
+			if(A.gravity_handhold)
+				slip_prob = SSgravity.mob_handhold_gravity_slip_chance
+				fall_prob = SSgravity.mob_handhold_gravity_fall_chance
+		slip_prob += (gravity_strength * SSgravity.mob_gravity_strength_slip_mod)
+		fall_prob += (gravity_strength * SSgravity.mob_gravity_strength_fall_mod)
+		if(prob(slip_prob))
+			src << "<span class='warning'>You slip and lose your grip!</span>"
+		else if(prob(fall_prob))
+			src << "<span class='warning'>You slip and completely lose your footing!</span>"
+			Weaken(1*gravity_strength)
+			temp_throw = TRUE
+		else
+			return FALSE
+	if((gravity_throwing || temp_throw) && !throwing)
+		Weaken(1)
+		throw_at(get_edge_target_turf(src, gravity_direction), gravity_strength * 20, gravity_strength)
+	else
+		step(src, gravity_direction)
 
 /mob/living/Destroy()
 	if(ranged_ability)
@@ -411,6 +448,12 @@
 	return
 
 /mob/living/Move(atom/newloc, direct)
+	if(gravity_direction && (m_intent == MOVE_INTENT_RUN) && SSgravity && has_gravity())
+		if(get_dir(get_turf(src), newloc) == turn(gravity_direction, 180))
+			if(prob(SSgravity.mob_slip_chance))
+				if(prob(10))
+					src << "<span class='warning'>You slip and fail to get anywhere! Try walking!</span>"
+				return FALSE
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
@@ -460,7 +503,10 @@
 					. += 6
 				. += config.run_speed
 			if(MOVE_INTENT_WALK)
-				. += config.walk_speed
+				if(!gravity_direction)
+					. += config.walk_speed
+				if(gravity_direction)
+					. += 2	//You crawl a bit faster.
 
 /mob/living/proc/makeTrail(turf/T)
 	if(!has_gravity())

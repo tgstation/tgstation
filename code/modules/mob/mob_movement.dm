@@ -282,6 +282,16 @@
 		return 1
 	return 0
 
+/mob/proc/get_gravity_handgrip()
+	for(var/atom/A in range(1, get_turf(src)))
+		if(A.gravity_handhold)
+			return A
+		if(istype(A, /atom/movable))
+			var/atom/movable/AM = A
+			if(AM.density && AM.anchored && (pulling != AM))
+				return AM
+	return null
+
 /mob/get_spacemove_backup()
 	for(var/A in orange(1, get_turf(src)))
 		if(isarea(A))

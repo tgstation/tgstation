@@ -35,6 +35,7 @@
 	var/reference = null
 	var/powered = 0
 	var/strength = null
+	is_affected_by_gravity = FALSE
 
 /obj/structure/particle_accelerator/examine(mob/user)
 	..()

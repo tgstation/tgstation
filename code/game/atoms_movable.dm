@@ -8,6 +8,7 @@
 
 /atom/movable
 	layer = OBJ_LAYER
+	var/is_affected_by_gravity = FALSE	//Set to FALSE if this item should never be moved by gravity no matter what. Don't varedit before it has initialized!
 	var/last_move = null
 	var/anchored = 0
 	var/datum/thrownthing/throwing = null
@@ -34,6 +35,20 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+	var/gravity_direction = FALSE
+	var/gravity_strength = 1
+	var/gravity_stunning = 0
+	var/gravity_throwing = FALSE
+	var/gravity_override = FALSE
+	var/gravity_ignores_anchored = FALSE
+	var/gravity_ignores_turfcheck = FALSE
+	var/gravity_ignores_area = FALSE
+	var/gravity_tick = 0
+	var/gravity_speed = 2
+	var/gravity_initialized = FALSE
+	var/force_gravity_processing = FALSE
+	var/turf/open/forced_gravity_by_turf = null
+	var/area/current_gravity_area = null
 	var/floating = FALSE
 
 /atom/movable/vv_edit_var(var_name, var_value)
@@ -43,7 +58,94 @@
 		return FALSE	//PLEASE no.
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
-	return ..()
+	. = ..()
+	if(var_name == "is_affected_by_gravity")
+		sync_gravity()
+	if(var_name == "force_gravity_processing")
+		if(SSgravity)
+			if(var_value)
+				SSgravity.atoms_forced_gravity_processing[src] = src
+			else if(SSgravity.atoms_forced_gravity_processing[src])
+				SSgravity.atoms_forced_gravity_processing -= src
+
+/atom/movable/proc/manual_gravity_process()
+	sync_gravity()
+	gravity_act()
+
+/atom/movable/proc/sync_gravity()
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity)
+		return FALSE
+	if(gravity_ignores_area)
+		return FALSE
+	var/area/A = get_area(src)
+	if(!A)
+		return FALSE
+	if(current_gravity_area && (A != current_gravity_area))
+		if(SSgravity)
+			SSgravity.error_mismatched_area["[type]-[current_gravity_area]-[A]"]++
+		current_gravity_area.update_gravity(src, FALSE)
+		current_gravity_area = null
+		A.update_gravity(src, TRUE)
+	if(isturf(loc) || gravity_ignores_turfcheck)
+		var/turf/T = loc
+		if(forced_gravity_by_turf)
+			if(T != forced_gravity_by_turf)
+				if(SSgravity)
+					SSgravity.error_mismatched_turf["[type]-[T.type]-[forced_gravity_by_turf.type]"]++
+				forced_gravity_by_turf.reset_forced_gravity_atom(src)
+				forced_gravity_by_turf = null
+				sync_gravity()
+				return FALSE
+		else if(istype(T, /turf/open))
+			var/turf/open/O = T
+			if(O.turf_gravity_overrides_area && (O != forced_gravity_by_turf))
+				O.force_gravity_on_atom(src)
+			else
+				A.update_gravity(src, is_affected_by_gravity)
+	else
+		A.update_gravity(src, FALSE)	//We're not on a turf and we don't need to be included in processing.
+		if(forced_gravity_by_turf)
+			forced_gravity_by_turf.reset_forced_gravity_atom(src)
+
+/atom/movable/proc/init_gravity()
+	var/turf/open/T = get_turf(src)
+	if(istype(T))
+		if(T.turf_gravity_overrides_area)
+			T.force_gravity_on_atom(src)
+	sync_gravity()
+	if(force_gravity_processing && SSgravity)
+		SSgravity.atoms_forced_gravity_processing[src] = src
+	gravity_initialized = TRUE
+
+/atom/movable/proc/gravity_act(moving = TRUE)
+	set waitfor = FALSE
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity)
+		return FALSE	//KILLSWITCH!
+	if(!isturf(src.loc))	//Gravity was so strong it was pulling shards and rods out of windows!
+		if(!gravity_ignores_turfcheck)	//We don't need to process.
+			sync_gravity()
+		return FALSE
+	var/turf/newturf = get_step(get_turf(src), gravity_direction)
+	if(anchored && !gravity_ignores_anchored)
+		return FALSE
+	if(!gravity_direction)
+		return FALSE
+	if(!override && !has_gravity())
+		return FALSE
+	if(!moving)
+		return TRUE
+	if(gravity_throwing && !throwing)
+		throw_at(get_edge_target_turf(get_turf(src), gravity_direction), gravity_strength * 20, gravity_strength * 2)
+		gravity_throwing = FALSE
+	if(!(newturf && newturf.Enter(src, get_turf(src))))
+		return FALSE
+	else
+		step(src, gravity_direction)
+
+/atom/movable/Initialize()
+	..()
+	if(SSgravity && (SSgravity.init_state >= 1))
+		init_gravity()
 
 /atom/movable/Initialize(mapload)
 	..()
@@ -118,7 +220,8 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
-
+	if(isturf(loc) && forced_gravity_by_turf && (loc != forced_gravity_by_turf))
+		forced_gravity_by_turf.reset_forced_gravity_atom(src)
 	if(flags & CLEAN_ON_MOVE)
 		clean_on_move()
 	
@@ -182,12 +285,15 @@
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
+	if(gravity_initialized && SSgravity && SSgravity.atoms_forced_gravity_processing[src])
+		SSgravity.atoms_forced_gravity_processing -= src
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	loc = null
 	invisibility = INVISIBILITY_ABSTRACT
 	if(pulledby)
 		pulledby.stop_pulling()
+	sync_gravity()
 
 
 // Previously known as HasEntered()
@@ -231,6 +337,7 @@
 				AM.Crossed(src)
 
 		Moved(oldloc, 0)
+		sync_gravity()
 		return 1
 	return 0
 

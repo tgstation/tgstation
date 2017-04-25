@@ -21,6 +21,7 @@ FLOOR SAFES
 	var/dial = 0		//where is the dial pointing?
 	var/space = 0		//the combined w_class of everything in the safe
 	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
+	is_affected_by_gravity = FALSE	//Bolted to the ground.
 
 
 /obj/structure/safe/New()
@@ -30,7 +31,7 @@ FLOOR SAFES
 
 	tumbler_2_pos = rand(0, 71)
 	tumbler_2_open = rand(0, 71)
-
+	is_affected_by_gravity = !anchored	//Incase of mapmakers.
 
 /obj/structure/safe/Initialize(mapload)
 	..()

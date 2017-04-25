@@ -146,3 +146,4 @@
 
 	var/list/progressbars = null	//for stacking do_after bars
 	var/list/can_ride_typecache = list()
+	gravity_ignores_anchored = TRUE

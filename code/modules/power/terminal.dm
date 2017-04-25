@@ -11,6 +11,7 @@
 	var/obj/machinery/power/master = null
 	anchored = 1
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
+	is_affected_by_gravity = FALSE
 
 
 /obj/machinery/power/terminal/New()

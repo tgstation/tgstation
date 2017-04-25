@@ -27,6 +27,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	use_power = 0
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
+	is_affected_by_gravity = FALSE
 
 /obj/machinery/gravity_generator/throw_at()
 	return FALSE
@@ -97,11 +98,12 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 // Generator which spawns with the station.
 //
 
-/obj/machinery/gravity_generator/main/station/Initialize()
+/obj/machinery/gravity_generator/main/station/init_gravity()
 	..()
 	setup_parts()
 	middle.add_overlay("activated")
 	update_list()
+	resync_gravgen_areas()
 
 //
 // Generator an admin can spawn
@@ -129,16 +131,31 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/charge_count = 100
 	var/current_overlay = null
 	var/broken_state = 0
+	var/current_grav_dir = FALSE
+	var/new_grav_dir = FALSE
+	var/cardinal_unlock = FALSE
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", "gravity")
+	if(SSgravity)
+		SSgravity.gravgens -= src
 	on = 0
 	update_list()
+	resync_gravgen_areas()
+	for(var/area/A in world)
+		if(A.z == z)
+			A.gravity_direction = FALSE
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
 		if(!QDESTROYING(O))
 			qdel(O)
 	return ..()
+
+/obj/machinery/gravity_generator/main/init_gravity()
+	. = ..()
+	if(SSgravity)
+		SSgravity.gravgens += src
+		resync_gravgen_areas()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
 	var/turf/our_turf = get_turf(src)
@@ -250,6 +267,18 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		dat += "Unpowered."
 
 	dat += "<br>Gravity Charge: [charge_count]%</div>"
+	if(!current_grav_dir)
+		dat += "<br><span class='boldnotice'>ALL SYSTEMS NOMINAL!</span>"
+	else
+		dat += "<br><span class='danger'>CURRENT GRAVITATIONAL DIRECTION: [dir2text(current_grav_dir)]</span>"
+	if(cardinal_unlock)
+	//	dat += "<br><span class='userdanger'>SYSTEM OVERRIDDEN: <A href='?src=\ref[src];reset_emagged=1'>RESET?</A></span>" Right now, admin vareditable only.
+		dat += "<br><span class='danger'>SET GRAVITATIONAL DIRECTION: [new_grav_dir]</span>"
+		dat += "<br><span class='boldnotice'><A href='?src=\ref[src];set_dir=1'>NORTH</A> <A href='?src=\ref[src];set_dir=2'>SOUTH</A>"
+		dat += " <A href='?src=\ref[src];set_dir=4'>EAST</A> <A href='?src=\ref[src];set_dir=8'>WEST</A></span>"
+		dat += "<br><span class='userdanger'><A href='?src=\ref[src];set_dir=0'>DEFAULT: DOWN</A></span>"
+	if(current_grav_dir != new_grav_dir)
+		dat += "<br><span class='userdanger'>DIRECTION CHANGE PENDING POWER CYCLE!</span>"
 
 	var/datum/browser/popup = new(user, "gravgen", name)
 	popup.set_content(dat)
@@ -266,6 +295,20 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", "gravity")
 		set_power()
 		src.updateUsrDialog()
+	//if(href_list["reset_emagged"])
+	//	emagged = FALSE
+	//	fix_gravity_direction()
+	if(href_list["set_dir"])
+		set_gravity_direction(href_list["set_dir"])
+
+/obj/machinery/gravity_generator/main/proc/fix_gravity_direction()
+	new_grav_dir = FALSE
+
+/obj/machinery/gravity_generator/main/proc/set_gravity_direction(set_dir)
+	if(!isnum(set_dir))
+		new_grav_dir = text2num(set_dir)
+	else
+		new_grav_dir = set_dir
 
 // Power and Icon States
 
@@ -308,15 +351,17 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		if(gravity_in_level() == 0)
 			alert = 1
 			investigate_log("was brought online and is now producing gravity for this level.", "gravity")
+			current_grav_dir = new_grav_dir
 			message_admins("The gravity generator was brought online. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 	else
 		if(gravity_in_level() == 1)
 			alert = 1
 			investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
+			current_grav_dir = FALSE
 			message_admins("The gravity generator was brought offline with no backup generator. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-
 	update_icon()
 	update_list()
+	resync_gravgen_areas()
 	src.updateUsrDialog()
 	if(alert)
 		shake_everyone()

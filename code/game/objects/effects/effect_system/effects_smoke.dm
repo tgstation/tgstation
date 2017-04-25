@@ -10,7 +10,7 @@
 	pixel_y = -32
 	opacity = 0
 	layer = FLY_LAYER
-	anchored = 1
+	anchored = TRUE
 	mouse_opacity = 0
 	animate_movement = 0
 	var/amount = 4

@@ -40,7 +40,16 @@
 	var/static_light = 0
 	var/static_environ
 
-	var/has_gravity = 0
+	var/has_gravity = 0				//Has gravity innately/no matter what. Ignores gravity generator gravity direction.
+	var/list/contents_affected_by_gravity
+	var/gravity_generator = FALSE	//Does it have gravity from a gravgen on the zlevel?
+	var/ignores_gravgens = FALSE
+	var/gravity_overriding = FALSE	//Still directionally move things despite not having gravity.
+	var/gravity_direction = FALSE	//False/cardinals
+	var/gravity_strength = 1
+	var/gravity_throwing = FALSE
+	var/gravity_stunning = 0
+	var/gravity_speed = 2	//deciseconds per process. From 1 to practically infinite. Smaller the faster.
 	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
@@ -98,6 +107,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 
 /area/Initialize()
+	contents_affected_by_gravity = list()
 	icon_state = ""
 	layer = AREA_LAYER
 	uid = ++global_uid
@@ -418,9 +428,55 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(ENVIRON)
 			used_environ += amount
 
+/area/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(findtext(var_name, "gravity"))
+		update_all_gravity()
+
+/area/proc/update_all_gravity()
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity || !initialized)
+		return FALSE
+	for(var/atom/movable/AM in contents)
+		update_gravity(AM, AM.is_affected_by_gravity)
+		CHECK_TICK
+	gravity_throwing = FALSE
+	gravity_stunning = FALSE
+
+/area/proc/update_gravity(atom/movable/AM, enable)
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity || !initialized)
+		return FALSE
+	if(enable)
+		AM.gravity_direction = gravity_direction
+		AM.gravity_strength = gravity_strength
+		AM.gravity_stunning = gravity_stunning
+		AM.gravity_throwing = gravity_throwing
+		AM.gravity_override = gravity_overriding
+		AM.gravity_speed = gravity_speed
+		AM.current_gravity_area = src
+		contents_affected_by_gravity[AM] = AM
+	else
+		AM.gravity_direction = initial(AM.gravity_direction)
+		AM.gravity_strength = initial(AM.gravity_strength)
+		AM.gravity_stunning = FALSE
+		AM.gravity_throwing = FALSE
+		AM.gravity_speed = initial(AM.gravity_speed)
+		AM.gravity_override = initial(AM.gravity_override)
+		AM.current_gravity_area = null
+		if(contents_affected_by_gravity[AM])
+			contents_affected_by_gravity -= AM
+
+/area/proc/init_gravity()
+	for(var/atom/movable/AM in contents)
+		if(AM.is_affected_by_gravity)
+			update_gravity(AM, TRUE)
 
 /area/Entered(A)
 	set waitfor = FALSE
+	if(SSgravity && !SSgravity.legacy_gravity && initialized)
+		var/atom/movable/AM = A
+		if(AM.is_affected_by_gravity)
+			update_gravity(AM, TRUE)
+
 	if(!isliving(A))
 		return
 
@@ -450,11 +506,15 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!T || !isturf(T))
 		T = get_turf(src)
 	var/area/A = get_area(T)
+	if(istype(T, /turf/open))
+		var/turf/open/O = T
+		if(O.turf_has_gravity_override != -1)
+			return O.turf_has_gravity_override
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
-	else if(A && A.has_gravity) // Areas which always has gravity
+	else if(A && (A.has_gravity || A.gravity_generator))
 		return 1
-	else
+	if((SSgravity && SSgravity.legacy_gravity) || !SSgravity)
 		// There's a gravity generator on our z level
 		if(T && GLOB.gravity_generators["[T.z]"] && length(GLOB.gravity_generators["[T.z]"]))
 			return 1
@@ -469,3 +529,59 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	valid_territory = 0
 	blob_allowed = 0
 	addSorted()
+
+/proc/reset_world_gravity()
+	reset_all_turf_gravity()
+	reset_all_area_gravity()
+
+/proc/reset_all_turf_gravity()
+	for(var/turf/open/T in world)
+		T.turf_gravity_overrides_area = FALSE
+		T.turf_gravity_strength = FALSE
+		T.turf_gravity_direction = FALSE
+		T.turf_gravity_throwing = FALSE
+		T.turf_gravity_stunning = FALSE
+		T.turf_gravity_override = FALSE
+		for(var/atom/movable/AM in T.atoms_with_forced_gravity)
+			T.reset_forced_gravity_atom(AM)
+			CHECK_TICK
+		T.sync_all_gravity()
+		CHECK_TICK
+
+/proc/reset_all_area_gravity()
+	for(var/I in GLOB.sortedAreas)
+		var/area/A = I
+		A.gravity_generator = FALSE
+		A.gravity_overriding = FALSE
+		A.has_gravity = initial(A.has_gravity)
+		CHECK_TICK
+	resync_gravgen_areas()
+
+/proc/resync_gravgen_areas()
+	if(!SSgravity)
+		return "NO GRAVITY SUBSYSTEM!"
+	for(var/I in GLOB.sortedAreas)
+		var/area/A = I
+		A.gravity_generator = FALSE
+		CHECK_TICK
+	for(var/I in SSgravity.gravgens)
+		var/obj/machinery/gravity_generator/main/GG = I
+		if(GG.on)
+			for(var/S in GLOB.sortedAreas)
+				var/area/A = S
+				if(A.z == GG.z)
+					if(A.ignores_gravgens)
+						continue
+					A.gravity_generator = TRUE
+					A.gravity_direction = GG.current_grav_dir
+				CHECK_TICK
+		CHECK_TICK
+	for(var/I in GLOB.sortedAreas)
+		var/area/A = I
+		A.update_all_gravity()
+		CHECK_TICK
+
+/area/Exited(atom/movable/AM, newloc)
+	..()
+	if(SSgravity && !SSgravity.legacy_gravity)
+		update_gravity(AM, FALSE)

@@ -19,7 +19,8 @@
 /obj/effect/particle_effect/sparks
 	name = "sparks"
 	icon_state = "sparks"
-	anchored = 1
+	anchored = FALSE	//Sparks are affected by wind...
+	is_affected_by_gravity = FALSE
 	light_range = 1
 
 /obj/effect/particle_effect/sparks/New()

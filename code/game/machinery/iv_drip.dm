@@ -7,6 +7,7 @@
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
+	is_affected_by_gravity = TRUE
 	var/list/drip_containers = list(/obj/item/weapon/reagent_containers/blood,
 											/obj/item/weapon/reagent_containers/food,
 											/obj/item/weapon/reagent_containers/glass)

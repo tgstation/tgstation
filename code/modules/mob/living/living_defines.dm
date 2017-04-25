@@ -72,6 +72,6 @@
 	var/list/implants = null
 
 	var/datum/riding/riding_datum
-
+	is_affected_by_gravity = TRUE
 	var/datum/language/selected_default_language
 	var/datum/language_menu/language_menu

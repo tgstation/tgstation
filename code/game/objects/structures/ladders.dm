@@ -7,6 +7,7 @@
 	var/height = 0							//the 'height' of the ladder. higher numbers are considered physically higher
 	var/obj/structure/ladder/down = null	//the ladder below this one
 	var/obj/structure/ladder/up = null		//the ladder above this one
+	is_affected_by_gravity = FALSE
 
 /obj/structure/ladder/unbreakable //mostly useful for awaymissions to prevent halting progress in a mission
 	name = "sturdy ladder"

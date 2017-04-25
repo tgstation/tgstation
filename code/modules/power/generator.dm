@@ -25,6 +25,7 @@
 	var/lastgen = 0
 	var/lastgenlev = -1
 	var/lastcirc = "00"
+	is_affected_by_gravity = FALSE
 
 
 /obj/machinery/power/generator/Initialize(mapload)

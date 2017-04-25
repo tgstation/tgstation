@@ -11,6 +11,7 @@
 	icon = 'icons/mob/alien.dmi'
 	obj_integrity = 100
 	max_integrity = 100
+	is_affected_by_gravity = FALSE	//They're too sticky to be pulled.
 
 /obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee")

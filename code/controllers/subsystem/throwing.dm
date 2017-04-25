@@ -121,6 +121,7 @@ SUBSYSTEM_DEF(throwing)
 		thrownthing.newtonian_move(init_dir)
 	if (callback)
 		callback.Invoke()
+	thrownthing.sync_gravity()
 
 /datum/thrownthing/proc/hit_atom(atom/A)
 	thrownthing.throw_impact(A, src)

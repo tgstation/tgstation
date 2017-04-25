@@ -35,6 +35,7 @@
 	var/output_level = 50000 // amount of power the SMES attempts to output
 	var/output_level_max = 200000 // cap on output_level
 	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
+	is_affected_by_gravity = FALSE
 
 	var/obj/machinery/power/terminal/terminal = null
 

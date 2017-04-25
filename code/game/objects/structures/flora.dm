@@ -3,6 +3,7 @@
 	obj_integrity = 150
 	max_integrity = 150
 	anchored = 1
+	is_affected_by_gravity = FALSE
 
 //trees
 /obj/structure/flora/tree

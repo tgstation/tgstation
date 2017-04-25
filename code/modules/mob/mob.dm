@@ -33,6 +33,9 @@
 		AA.onNewMob(src)
 	..()
 
+/mob/gravity_act(moving = FALSE)
+	. = ..(moving = FALSE)
+
 /atom/proc/prepare_huds()
 	hud_list = list()
 	for(var/hud in hud_possible)

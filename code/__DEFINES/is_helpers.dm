@@ -6,6 +6,8 @@
 
 #define ismovableatom(A) (istype(A, /atom/movable))
 
+#define isarea(A) (istype(A, /area))
+
 //Turfs
 #define isopenturf(A) (istype(A, /turf/open))
 

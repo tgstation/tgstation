@@ -13,6 +13,7 @@
 /area/shuttle/transit
 	name = "Hyperspace"
 	desc = "Weeeeee"
+	ignores_gravgens = TRUE
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"

@@ -27,6 +27,7 @@
 	var/stored_core_stability_delay = 0
 
 	var/stored_power = 0//Power to deploy per tick
+	is_affected_by_gravity = FALSE
 
 
 /obj/machinery/power/am_control_unit/New()
