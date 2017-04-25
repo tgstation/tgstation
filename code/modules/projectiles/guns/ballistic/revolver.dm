@@ -309,7 +309,7 @@
 /obj/item/weapon/gun/ballistic/revolver/pipe
 	name = "pipe pistol"
 	desc = "A makeshift 9mm pistol made from salvaged parts."
-	icon_state = "m1911"
+	icon_state = "pipepistol"
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/internal/makeshift //mag is internal for balance reasons
 	can_suppress = 0
