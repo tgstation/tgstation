@@ -240,18 +240,8 @@ SUBSYSTEM_DEF(garbage)
 	return QDEL_HINT_QUEUE
 
 /datum/var/gc_destroyed //Time when this object was destroyed.
-
-#ifdef TESTING
 /datum/var/running_find_references
 /datum/var/last_find_references = 0
-
-/datum/verb/find_refs()
-	set category = "Debug"
-	set name = "Find References"
-	set background = 1
-	set src in world
-
-	find_references(FALSE)
 
 /datum/proc/find_references(skip_alert)
 	running_find_references = type
@@ -266,7 +256,7 @@ SUBSYSTEM_DEF(garbage)
 			return
 
 		if(!skip_alert)
-			if(alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+			if(alert("Running this will HEAVILY increase server load for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
 				running_find_references = null
 				return
 
@@ -357,6 +347,4 @@ SUBSYSTEM_DEF(garbage)
 			DoSearchVar(I, Xname + ": list")
 #else
 	CHECK_TICK
-#endif
-
 #endif

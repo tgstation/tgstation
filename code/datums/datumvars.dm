@@ -27,6 +27,7 @@
 	. += "---"
 	.["Call Proc"] = "?_src_=vars;proc_call=\ref[src]"
 	.["Mark Object"] = "?_src_=vars;mark_object=\ref[src]"
+	.["Find References"] = "?_src_=vars;find_references=\ref[src]"
 
 
 /datum/proc/on_reagent_change()
@@ -515,6 +516,17 @@
 
 		src.holder.marked_datum = D
 		href_list["datumrefresh"] = href_list["mark_object"]
+	
+	else if(href_list["find_references"])
+		if(!check_rights(R_DEBUG, TRUE))
+			return
+
+		var/datum/D = locate(href_list["mark_object"])
+		if(!istype(D))
+			to_chat(usr, "This can only be done to instances of type /datum")
+			return
+
+		D.find_references()
 
 	else if(href_list["proc_call"])
 		if(!check_rights(0))
