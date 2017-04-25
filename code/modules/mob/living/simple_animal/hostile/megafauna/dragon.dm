@@ -180,7 +180,7 @@ Difficulty: Medium
 	else if(target.x == initial_x) //if their x is the same, pick a direction
 		negative = prob(50)
 	var/obj/effect/overlay/temp/dragon_flight/F = new /obj/effect/overlay/temp/dragon_flight(loc, negative)
-	world << "pre-swap negative: [negative]"
+
 	negative = !negative //invert it for the swoop down later
 
 	var/oldtransform = transform
@@ -311,11 +311,11 @@ Difficulty: Medium
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
 		if(!islist(flame_hit) || !flame_hit[L])
-			L.adjustFireLoss(30)
+			L.adjustFireLoss(40)
 			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
 			flame_hit[L] = TRUE
 		else
-			L.adjustFireLoss(5) //if we've already hit them, do way less damage
+			L.adjustFireLoss(10) //if we've already hit them, do way less damage
 
 /obj/effect/overlay/temp/dragon_swoop
 	name = "certain death"
