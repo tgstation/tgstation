@@ -11,7 +11,6 @@
 	sentence_chance = 0
 	default_priority = 60
 
-	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer"
 
 	// since various flats and sharps are the same,
