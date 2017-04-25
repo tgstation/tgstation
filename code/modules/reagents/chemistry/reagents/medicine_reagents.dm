@@ -294,14 +294,15 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "sweetness and salt"
 	var/last_added = 0
-	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10
+	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
 	if(last_added)
 		M.blood_volume -= last_added
 		last_added = 0
-	if(M.blood_volume < maximum_reachable)
-		var/new_blood_level = min(M.blood_volume + volume * 5, maximum_reachable)
+	if(M.blood_volume < maximum_reachable)	//Can only up to double your effective blood level.
+		var/amount_to_add = min(M.blood_volume, volume*5)
+		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
 		last_added = new_blood_level - M.blood_volume
 		M.blood_volume = new_blood_level
 	if(prob(33))
