@@ -38,9 +38,6 @@
 
 	var/obj/machinery/power/terminal/terminal = null
 
-	var/static/list/smesImageCache
-
-
 /obj/machinery/power/smes/examine(user)
 	..()
 	if(!terminal)
@@ -226,36 +223,20 @@
 	if(panel_open)
 		return
 
-	if(!smesImageCache || !smesImageCache.len)
-		smesImageCache = list()
-		smesImageCache.len = 9
-
-		smesImageCache[SMES_CLEVEL_1] = image('icons/obj/power.dmi',"smes-og1")
-		smesImageCache[SMES_CLEVEL_2] = image('icons/obj/power.dmi',"smes-og2")
-		smesImageCache[SMES_CLEVEL_3] = image('icons/obj/power.dmi',"smes-og3")
-		smesImageCache[SMES_CLEVEL_4] = image('icons/obj/power.dmi',"smes-og4")
-		smesImageCache[SMES_CLEVEL_5] = image('icons/obj/power.dmi',"smes-og5")
-
-		smesImageCache[SMES_OUTPUTTING] = image('icons/obj/power.dmi', "smes-op1")
-		smesImageCache[SMES_NOT_OUTPUTTING] = image('icons/obj/power.dmi',"smes-op0")
-		smesImageCache[SMES_INPUTTING] = image('icons/obj/power.dmi', "smes-oc1")
-		smesImageCache[SMES_INPUT_ATTEMPT] = image('icons/obj/power.dmi', "smes-oc0")
-
 	if(outputting)
-		add_overlay(smesImageCache[SMES_OUTPUTTING])
+		add_overlay("smes-op1")
 	else
-		add_overlay(smesImageCache[SMES_NOT_OUTPUTTING])
+		add_overlay("smes-op0")
 
 	if(inputting)
-		add_overlay(smesImageCache[SMES_INPUTTING])
+		add_overlay("smes-oc1")
 	else
 		if(input_attempt)
-			add_overlay(smesImageCache[SMES_INPUT_ATTEMPT])
+			add_overlay("smes-oc0")
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		add_overlay(smesImageCache[clevel])
-	return
+		add_overlay("smes-og[clevel]")
 
 
 /obj/machinery/power/smes/proc/chargedisplay()

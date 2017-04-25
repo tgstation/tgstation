@@ -136,7 +136,10 @@
 		var/iconF = "flight"
 		if(gun_light.on)
 			iconF = "flight_on"
-		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
+		var/mutable_appearance/flashlight_overlay = mutable_appearance(icon, iconF)
+		flashlight_overlay.pixel_x = flight_x_offset
+		flashlight_overlay.pixel_y = flight_y_offset
+		add_overlay(flashlight_overlay)
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic

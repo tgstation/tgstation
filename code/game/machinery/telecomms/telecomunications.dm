@@ -176,7 +176,6 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 			for(var/x in autolinkers)
 				if(x in T.autolinkers)
 					links |= T
-					break
 
 /obj/machinery/telecomms/update_icon()
 	if(on)

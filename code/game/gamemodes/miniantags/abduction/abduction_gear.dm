@@ -479,6 +479,25 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(BATON_PROBE)
 			to_chat(user, "<span class='warning'>The baton is in probing mode.</span>")
 
+/obj/item/device/radio/headset/abductor
+	name = "alien headset"
+	desc = "An advanced alien headset designed to monitor communications of human space stations. Why does it have a microphone? No one knows."
+	origin_tech = "magnets=2;abductor=3"
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "abductor_headset"
+	item_state = "abductor_headset"
+	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
+
+/obj/item/device/radio/headset/abductor/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
+	make_syndie()
+
+/obj/item/device/radio/headset/abductor/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		return // Stops humans from disassembling abductor headsets.
+	return ..()
+
 
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"

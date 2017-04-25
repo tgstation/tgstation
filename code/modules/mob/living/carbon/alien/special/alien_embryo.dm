@@ -81,7 +81,7 @@
 
 	var/mob/dead/observer/ghost = pick(candidates)
 
-	var/overlay = image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
+	var/mutable_appearance/overlay = mutable_appearance('icons/mob/alien.dmi', "burst_lie")
 	owner.add_overlay(overlay)
 
 	var/atom/xeno_loc = get_turf(owner)

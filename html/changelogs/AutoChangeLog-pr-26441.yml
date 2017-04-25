@@ -1,0 +1,7 @@
+author: "coiax, WJohnston"
+delete-after: True
+changes: 
+  - rscadd: "Plasmamen lungs, also known as \"plasma filters\" now look different
+from human lungs."
+  - rscadd: "Plasmamen now have their own special type of bone tongue. They
+still sound the same, it's just purple. Like them."

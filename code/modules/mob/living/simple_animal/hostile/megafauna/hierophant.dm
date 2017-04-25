@@ -74,7 +74,7 @@ Difficulty: Hard
 	death_sound = 'sound/magic/Repulse.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
-	..()
+	. = ..()
 	internal = new/obj/item/device/gps/internal/hierophant(src)
 	spawned_beacon = new(loc)
 

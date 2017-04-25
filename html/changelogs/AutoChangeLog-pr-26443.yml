@@ -1,0 +1,4 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - tweak: "Skeletons and plasmamen's hitboxes now more closely match that of humans. They are no longer full of holes and incredibly frustrating to hit, should they run around naked."
