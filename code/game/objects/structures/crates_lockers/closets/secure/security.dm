@@ -29,6 +29,7 @@
 	new /obj/item/weapon/storage/belt/sabre(src)
 	new /obj/item/weapon/gun/energy/e_gun(src)
 	new /obj/item/weapon/door_remote/captain(src)
+	new /obj/item/weapon/gun/energy/pulse/carbine(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -53,6 +54,7 @@
 	new /obj/item/weapon/gun/energy/e_gun(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/weapon/door_remote/civillian(src)
+	new /obj/item/weapon/gun/energy/pulse/carbine(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
