@@ -27,7 +27,7 @@
 
 	if(!available_vr_spawnpoints || !available_vr_spawnpoints.len) //(re)build spawnpoint lists
 		available_vr_spawnpoints = list()
-		for(var/obj/effect/landmark/vr_spawn/V in landmarks_list)
+		for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
 			available_vr_spawnpoints[V.vr_category] = list()
 			var/turf/T = get_turf(V)
 			if(T)
@@ -80,7 +80,7 @@
 		ui_interact(occupant)
 
 
-/obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "vr_sleeper", "VR Sleeper", 475, 340, master_ui, state)

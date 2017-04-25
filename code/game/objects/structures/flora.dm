@@ -262,7 +262,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.override = 1
-	user.add_alt_appearance("sneaking_mission", I, player_list)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
 	..()
 
 /obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)
@@ -339,7 +339,7 @@
 /obj/structure/flora/rock/jungle
 	icon_state = "pile of rocks"
 	desc = "A pile of rocks."
-	icon_state = "rocks"
+	icon_state = "rock"
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
 
@@ -380,6 +380,6 @@
 	pixel_x = -16
 	pixel_y = -16
 
-/obj/structure/flora/rock/jungle/Initialize()
+/obj/structure/flora/rock/pile/largejungle/Initialize()
 	..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"

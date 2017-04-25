@@ -370,7 +370,7 @@
 	cut_overlays()
 
 	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpack-10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpack-10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -388,7 +388,7 @@
 	. = list()
 	//inhands + reagent_filling
 	if(!isinhands && reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpackmob-10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpackmob-10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)

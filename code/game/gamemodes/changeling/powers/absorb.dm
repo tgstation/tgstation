@@ -31,8 +31,8 @@
 	var/datum/changeling/changeling = user.mind.changeling
 	var/mob/living/carbon/human/target = user.pulling
 	changeling.isabsorbing = 1
-	for(var/stage = 1, stage<=3, stage++)
-		switch(stage)
+	for(var/i in 1 to 3)
+		switch(i)
 			if(1)
 				to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
 			if(2)
@@ -42,12 +42,13 @@
 				to_chat(target, "<span class='userdanger'>You feel a sharp stabbing pain!</span>")
 				target.take_overall_damage(40)
 
-		feedback_add_details("changeling_powers","A[stage]")
+		feedback_add_details("changeling_powers","Absorb DNA|[i]")
 		if(!do_mob(user, target, 150))
 			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
 			changeling.isabsorbing = 0
 			return
 
+	feedback_add_details("changeling_powers","Absorb DNA|4")
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>", "<span class='notice'>We have absorbed [target].</span>")
 	to_chat(target, "<span class='userdanger'>You are absorbed by the changeling!</span>")
 
@@ -99,7 +100,7 @@
 
 	target.death(0)
 	target.Drain()
-	return 1
+	return TRUE
 
 
 

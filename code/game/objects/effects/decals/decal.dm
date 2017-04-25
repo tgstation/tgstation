@@ -10,6 +10,10 @@
 	if(!(resistance_flags & FIRE_PROOF)) //non fire proof decal or being burned by lava
 		qdel(src)
 
+/obj/effect/decal/HandleTurfChange(turf/T)
+	..()
+	if(T == loc && (isspaceturf(T) || isclosedturf(T) || islava(T) || istype(T, /turf/open/water) || istype(T, /turf/open/chasm)))
+		qdel(src)
 
 /obj/effect/turf_decal
 	var/group = TURF_DECAL_PAINT
@@ -55,3 +59,9 @@
 
 /obj/effect/turf_decal/loading_area
 	icon_state = "loading_area"
+
+/obj/effect/turf_decal/sand
+	icon_state = "sandyfloor"
+
+/obj/effect/turf_decal/sand/plating
+	icon_state = "sandyplating"

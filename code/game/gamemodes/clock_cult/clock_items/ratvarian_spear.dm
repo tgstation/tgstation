@@ -16,16 +16,12 @@
 	var/attack_cooldown = 10 //delay, in deciseconds, where you can't attack with the spear
 	var/timerid
 
-/obj/item/clockwork/ratvarian_spear/New()
-	..()
-	impale_cooldown = 0
-
 /obj/item/clockwork/ratvarian_spear/Destroy()
 	deltimer(timerid)
 	return ..()
 
 /obj/item/clockwork/ratvarian_spear/ratvar_act()
-	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
+	if(GLOB.ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
 		force = 25
 		throwforce = 50
 		armour_penetration = 10
@@ -40,7 +36,7 @@
 		timerid = addtimer(CALLBACK(src, .proc/break_spear), RATVARIAN_SPEAR_DURATION, TIMER_STOPPABLE)
 
 /obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act() //doesn't break!
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		force = 25
 		throwforce = 50
 		armour_penetration = 10

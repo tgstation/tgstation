@@ -39,6 +39,16 @@
 	weaponscheck = 0
 	auto_patrol = 1
 
+/mob/living/simple_animal/bot/secbot/beepsky/jr
+	name = "Officer Pipsqueak"
+	desc = "It's Officer Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
+
+/mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize()
+	..()
+	resize = 0.8
+	update_transform()
+
+
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/turf/Tsec = get_turf(src)
 	new /obj/item/weapon/stock_parts/cell/potato(Tsec)
@@ -61,7 +71,7 @@
 		prev_access = access_card.access
 
 	//SECHUD
-	var/datum/atom_hud/secsensor = huds[DATA_HUD_SECURITY_ADVANCED]
+	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	secsensor.add_hud_to(src)
 
 /mob/living/simple_animal/bot/secbot/turn_on()
@@ -410,4 +420,4 @@ Auto Patrol: []"},
 	..()
 
 /obj/machinery/bot_core/secbot
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)

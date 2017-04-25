@@ -8,7 +8,7 @@
 	turf_type = /turf/open/floor/light
 	var/state = 0
 
-/obj/item/stack/tile/light/New(var/loc, var/amount=null)
+/obj/item/stack/tile/light/Initialize(mapload, new_amount, merge = TRUE)
 	..()
 	if(prob(5))
 		state = 3 //broken

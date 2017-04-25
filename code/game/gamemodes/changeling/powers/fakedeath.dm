@@ -19,9 +19,7 @@
 	user.update_canmove()
 
 	addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
-
-	feedback_add_details("changeling_powers","FD")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
 	if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)

@@ -10,7 +10,7 @@
 	max_temperature = 60000
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	infra_luminosity = 3
-	operation_req_access = list(access_cent_specops)
+	operation_req_access = list(GLOB.access_cent_specops)
 	wreckage = /obj/structure/mecha_wreckage/marauder
 	add_req_access = 0
 	internal_damage_threshold = 25
@@ -45,7 +45,7 @@
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
 	name = "\improper Seraph"
 	icon_state = "seraph"
-	operation_req_access = list(access_cent_specops)
+	operation_req_access = list(GLOB.access_cent_specops)
 	step_in = 3
 	obj_integrity = 550
 	wreckage = /obj/structure/mecha_wreckage/seraph
@@ -71,7 +71,7 @@
 	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model."
 	name = "\improper Mauler"
 	icon_state = "mauler"
-	operation_req_access = list(access_syndicate)
+	operation_req_access = list(GLOB.access_syndicate)
 	wreckage = /obj/structure/mecha_wreckage/mauler
 	max_equip = 5
 

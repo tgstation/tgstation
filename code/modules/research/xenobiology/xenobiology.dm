@@ -190,8 +190,6 @@
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
-		SM.languages_spoken |= HUMAN
-		SM.languages_understood |= HUMAN
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
@@ -238,8 +236,6 @@
 
 
 	user.mind.transfer_to(SM)
-	SM.languages_spoken = user.languages_spoken
-	SM.languages_understood = user.languages_understood
 	SM.faction = user.faction.Copy()
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
@@ -486,9 +482,14 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = TURF_LAYER
 
-/obj/effect/golemrune/New()
-	..()
+/obj/effect/golemrune/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
+	notify_ghosts("Golem rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
+
+/obj/effect/golemrune/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
@@ -523,7 +524,7 @@
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
 	G.set_species(/datum/species/golem/adamantine)
 	G.set_cloned_appearance()
-	G.real_name = "Adamantine Golem ([rand(1, 1000)])"
+	G.real_name = G.dna.species.random_name()
 	G.name = G.real_name
 	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
 	G.dna.species.auto_equip(G)
@@ -560,7 +561,7 @@
 
 /obj/effect/timestop/New()
 	..()
-	for(var/mob/living/M in player_list)
+	for(var/mob/living/M in GLOB.player_list)
 		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
 			immune |= M
 	timestop()

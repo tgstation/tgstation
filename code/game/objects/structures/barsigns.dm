@@ -3,7 +3,7 @@
 	desc = "A bar sign with no writing on it"
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
-	req_access = list(access_bar)
+	req_access = list(GLOB.access_bar)
 	obj_integrity = 500
 	max_integrity = 500
 	integrity_failure = 250
@@ -132,7 +132,7 @@
 	sleep(100) //10 seconds
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	emagged = 1
-	req_access = list(access_syndicate)
+	req_access = list(GLOB.access_syndicate)
 
 
 
@@ -298,6 +298,11 @@
 	name = "The Net"
 	icon = "thenet"
 	desc = "You just seem to get caught up in it for hours."
+
+/datum/barsign/maidcafe
+	name = "Maid Cafe"
+	icon = "maidcafe"
+	desc = "Welcome back, master!"
 
 
 /datum/barsign/hiddensigns

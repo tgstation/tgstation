@@ -1,4 +1,4 @@
-var/list/total_extraction_beacons = list()
+GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/weapon/extraction_pack
 	name = "fulton extraction pack"
@@ -18,7 +18,7 @@ var/list/total_extraction_beacons = list()
 
 /obj/item/weapon/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
-	for(var/B in total_extraction_beacons)
+	for(var/B in GLOB.total_extraction_beacons)
 		var/obj/structure/extraction_point/EP = B
 		if(EP.beacon_network in beacon_networks)
 			possible_beacons += EP
@@ -30,11 +30,12 @@ var/list/total_extraction_beacons = list()
 	else
 		var/A
 
-		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) in possible_beacons
+		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in possible_beacons
 
 		if(!A)
 			return
 		beacon = A
+		to_chat(user, "You link the extraction pack to the beacon system.")
 
 /obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
 	if(!beacon)
@@ -53,14 +54,14 @@ var/list/total_extraction_beacons = list()
 		if(!safe_for_living_creatures && check_for_living_mobs(A))
 			to_chat(user, "[src] is not safe for use with living creatures, they wouldn't survive the trip back!")
 			return
-		if(A.loc == user) // no extracting stuff you're holding
+		if(!isturf(A.loc)) // no extracting stuff inside other stuff
 			return
 		if(A.anchored)
 			return
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(do_after(user,50,target=A))
 			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
-			if(loc == user || istype(user.back, /obj/item/weapon/storage/backpack))
+			if(loc == user && istype(user.back, /obj/item/weapon/storage/backpack))
 				var/obj/item/weapon/storage/backpack/B = user.back
 				if(B.can_be_inserted(src,stop_messages = 1))
 					B.handle_item_insertion(src)
@@ -68,9 +69,9 @@ var/list/total_extraction_beacons = list()
 			if(uses_left <= 0)
 				user.drop_item(src)
 				loc = A
-			var/image/balloon
-			var/image/balloon2
-			var/image/balloon3
+			var/mutable_appearance/balloon
+			var/mutable_appearance/balloon2
+			var/mutable_appearance/balloon3
 			if(isliving(A))
 				var/mob/living/M = A
 				M.Weaken(16) // Keep them from moving during the duration of the extraction
@@ -81,12 +82,12 @@ var/list/total_extraction_beacons = list()
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
 			A.loc = holder_obj
-			balloon2 = image('icons/obj/fulton_balloon.dmi',"fulton_expand")
+			balloon2 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_expand")
 			balloon2.pixel_y = 10
 			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.add_overlay(balloon2)
 			sleep(4)
-			balloon = image('icons/obj/fulton_balloon.dmi',"fulton_balloon")
+			balloon = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_balloon")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.cut_overlay(balloon2)
@@ -120,7 +121,7 @@ var/list/total_extraction_beacons = list()
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			sleep(10)
-			balloon3 = image('icons/obj/fulton_balloon.dmi',"fulton_retract")
+			balloon3 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_retract")
 			balloon3.pixel_y = 10
 			balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.cut_overlay(balloon)
@@ -150,21 +151,21 @@ var/list/total_extraction_beacons = list()
 
 /obj/structure/extraction_point
 	name = "fulton recovery beacon"
-	desc = "A beacon for the fulton recovery system. Hit a beacon with a pack to link the pack to a beacon."
+	desc = "A beacon for the fulton recovery system. Activate a pack in your hand to link it to a beacon."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_point"
 	anchored = 1
 	density = 0
 	var/beacon_network = "station"
 
-/obj/structure/extraction_point/New()
+/obj/structure/extraction_point/Initialize()
+	. = ..()
 	var/area/area_name = get_area(src)
 	name += " ([rand(100,999)]) ([area_name.name])"
-	total_extraction_beacons += src
-	..()
+	GLOB.total_extraction_beacons += src
 
 /obj/structure/extraction_point/Destroy()
-	total_extraction_beacons -= src
+	GLOB.total_extraction_beacons -= src
 	..()
 
 /obj/effect/extraction_holder

@@ -57,8 +57,7 @@
 
 /obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
 	cut_overlays()
-	var/image/img = image(hide_icon, src, hidden ? show_state : hide_state)
-	add_overlay(img)
+	add_overlay(mutable_appearance(hide_icon, hidden ? show_state : hide_state))
 
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)

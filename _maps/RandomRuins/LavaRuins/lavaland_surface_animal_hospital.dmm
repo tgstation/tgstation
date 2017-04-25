@@ -218,7 +218,7 @@
 	},
 /area/ruin/powered)
 "aE" = (
-/turf/closed/wall/shuttle/smooth/nodiagonal{
+/turf/closed/wall/mineral/titanium/nodiagonal{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -238,12 +238,12 @@
 /area/ruin/powered)
 "aH" = (
 /obj/structure/extinguisher_cabinet,
-/turf/closed/wall/shuttle/smooth/nodiagonal{
+/turf/closed/wall/mineral/titanium/nodiagonal{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "aI" = (
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/ruin/powered)
 "aJ" = (
 /turf/open/floor/plasteel/grimy{

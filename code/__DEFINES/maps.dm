@@ -42,3 +42,5 @@ Last space-z level = empty
 
 #define ZLEVEL_SPACEMIN 3
 #define ZLEVEL_SPACEMAX 11
+
+#define SPACERUIN_MAP_EDGE_PAD 15

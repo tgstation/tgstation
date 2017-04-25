@@ -16,7 +16,7 @@
 	var/is_anyone_home = FALSE
 
 /obj/structure/necropolis_gate/attack_hand(mob/user)
-	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in mob_list)
+	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in GLOB.mob_list)
 		return
 	if(is_anyone_home)
 		return
@@ -42,12 +42,12 @@
 	visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
 	message_admins("[key_name_admin(user)] has summoned Legion!")
 	log_game("[key_name(user)] summoned Legion.")
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.z == z)
 			to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>")
 			M << 'sound/creatures/legion_spawn.ogg'
 			flash_color(M, flash_color = "#FF0000", flash_time = 50)
-	var/image/door_overlay = image('icons/effects/effects.dmi', "legiondoor")
+	var/mutable_appearance/door_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 	notify_ghosts("Legion has been summoned in the [get_area(src)]!", source = src, alert_overlay = door_overlay, action = NOTIFY_JUMP)
 	is_anyone_home = FALSE
 	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))

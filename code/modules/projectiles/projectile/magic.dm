@@ -122,7 +122,7 @@
 		var/mob/living/silicon/robot/Robot = M
 		if(Robot.mmi)
 			qdel(Robot.mmi)
-		Robot.notify_ai(1)
+		Robot.notify_ai(NEW_BORG)
 	else
 		for(var/obj/item/W in contents)
 			if(!M.dropItemToGround(W))
@@ -261,9 +261,8 @@
 
 	if(!new_mob)
 		return
-
-	new_mob.languages_spoken |= HUMAN
-	new_mob.languages_understood |= HUMAN
+	new_mob.grant_language(/datum/language/common)
+	SET_SECONDARY_FLAG(new_mob, OMNITONGUE)
 	new_mob.logging = M.logging
 
 	// Some forms can still wear some items
@@ -293,7 +292,7 @@
 	..()
 
 /atom/proc/animate_atom_living(var/mob/living/owner = null)
-	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, protected_objects))
+	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, GLOB.protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)

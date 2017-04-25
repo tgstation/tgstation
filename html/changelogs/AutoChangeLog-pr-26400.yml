@@ -1,0 +1,6 @@
+author: "CoreOverload"
+delete-after: True
+changes: 
+  - bugfix: "Disposals no longer get broken by shuttles rotation."
+  - bugfix: "Wires no longer get broken by shuttles movement and rotation."
+  - bugfix: "Atmospheric equipment no longer gets broken by shuttles movement and rotation. Glory to the Flying Fortress of Atmosia!"

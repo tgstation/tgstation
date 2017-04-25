@@ -21,6 +21,7 @@
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
 	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep, /datum/clockwork_scripture/create_object/replicant, \
 	/datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
+	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 	actions_types = list(/datum/action/item_action/clock/hierophant)
 
 /obj/item/clockwork/slab/starter
@@ -51,6 +52,7 @@
 	nonhuman_usable = TRUE
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
 	/datum/clockwork_scripture/create_object/tinkerers_cache)
+	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
 /obj/item/clockwork/slab/cyborg/engineer //five scriptures, plus a proselytizer
@@ -81,10 +83,18 @@
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_void/cyborg)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
-	to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
+	if(!GLOB.ratvar_awakens)
+		to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
+	else
+		..()
 
-/obj/item/clockwork/slab/New()
+/obj/item/clockwork/slab/cyborg/ratvar_act()
 	..()
+	if(!GLOB.ratvar_awakens)
+		SStgui.close_uis(src)
+
+/obj/item/clockwork/slab/Initialize()
+	. = ..()
 	update_slab_info(src)
 	START_PROCESSING(SSobj, src)
 	production_time = world.time + SLAB_PRODUCTION_TIME
@@ -97,7 +107,7 @@
 	return ..()
 
 /obj/item/clockwork/slab/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		nonhuman_usable = TRUE
 	else
 		nonhuman_usable = initial(nonhuman_usable)
@@ -119,7 +129,7 @@
 		return
 	var/servants = 0
 	var/production_slowdown = 0
-	for(var/mob/living/M in living_mob_list)
+	for(var/mob/living/M in GLOB.living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
 	if(servants > SCRIPT_SERVANT_REQ)
@@ -149,11 +159,11 @@
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
-		if(clockwork_caches) //show components on examine
+		if(GLOB.clockwork_caches) //show components on examine
 			to_chat(user, "<b>Stored components (with global cache):</b>")
 			for(var/i in stored_components)
 				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
-				(<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>")
+				(<b>[stored_components[i] + GLOB.clockwork_component_cache[i]]</b>)</span>")
 		else
 			to_chat(user, "<b>Stored components:</b>")
 			for(var/i in stored_components)
@@ -195,9 +205,9 @@
 		if(!C.component_id)
 			return 0
 		user.visible_message("<span class='notice'>[user] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src]\
-		[clockwork_caches ? ", where it is added to the global cache":""].</span>")
-		if(clockwork_caches)
-			clockwork_component_cache[C.component_id]++
+		[GLOB.clockwork_caches ? ", where it is added to the global cache":""].</span>")
+		if(GLOB.clockwork_caches)
+			GLOB.clockwork_component_cache[C.component_id]++
 			update_slab_info()
 		else
 			stored_components[C.component_id]++
@@ -269,7 +279,7 @@
 	ui_interact(user)
 	return TRUE
 
-/obj/item/clockwork/slab/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = inventory_state)
+/obj/item/clockwork/slab/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "clockwork_slab", name, 800, 420, master_ui, state)
@@ -286,7 +296,7 @@
 	var/initial_tier = initial(scripture.tier)
 	if(initial_tier != SCRIPTURE_PERIPHERAL)
 		var/list/tiers_of_scripture = scripture_unlock_check()
-		if(!ratvar_awakens && !no_cost && !tiers_of_scripture[initial_tier])
+		if(!GLOB.ratvar_awakens && !no_cost && !tiers_of_scripture[initial_tier])
 			to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
 			return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
@@ -298,7 +308,7 @@
 //Guide to Serving Ratvar
 /obj/item/clockwork/slab/proc/recollection()
 	var/list/textlist = list("If you're seeing this, file a bug report.")
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		textlist = list("<font color=#BE8700 size=3><b>")
 		for(var/i in 1 to 100)
 			textlist += "HONOR RATVAR "
@@ -306,7 +316,7 @@
 	else
 		var/servants = 0
 		var/production_time = SLAB_PRODUCTION_TIME
-		for(var/mob/living/M in living_mob_list)
+		for(var/mob/living/M in GLOB.living_mob_list)
 			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 				servants++
 		if(servants > SCRIPT_SERVANT_REQ)
@@ -362,11 +372,12 @@
 		The remaining functions are several buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
 		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>")
 		if(LAZYLEN(quickbound))
-			for(var/i in 1 to quickbound.len)
-				if(!quickbound[i])
-					continue
-				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-				textlist += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_bright(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
+			for(var/i in 1 to maximum_quickbound)
+				if(LAZYLEN(quickbound) < i || !quickbound[i])
+					textlist += "A <b>Quickbind</b> slot, currently set to <b><font color=#BE8700>Nothing</font></b>.<br>"
+				else
+					var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+					textlist += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_bright(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
 		textlist += "<br>\
 		Examine the slab or swap to Recital to check the number of components it has available.<br><br>\
 		\
@@ -383,9 +394,9 @@
 			temp_data += " "
 		else
 			temp_data += " ("
-	if(clockwork_caches) //if we have caches, display what's in the global cache
-		for(var/i in clockwork_component_cache)
-			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i] + clockwork_component_cache[i]]</b></font>"
+	if(GLOB.clockwork_caches) //if we have caches, display what's in the global cache
+		for(var/i in GLOB.clockwork_component_cache)
+			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i] + GLOB.clockwork_component_cache[i]]</b></font>"
 			if(i != HIEROPHANT_ANSIBLE)
 				temp_data += " "
 	else
@@ -415,8 +426,8 @@
 	generate_all_scripture()
 
 	data["scripture"] = list()
-	for(var/s in all_scripture)
-		var/datum/clockwork_scripture/S = all_scripture[s]
+	for(var/s in GLOB.all_scripture)
+		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
 		if(S.tier == selected_scripture) //display only scriptures of the selected tier
 			var/scripture_color = get_component_color_bright(S.primary_component)
 			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
@@ -460,10 +471,10 @@
 			selected_scripture = params["category"]
 		if("component")
 			var/list/components = list("Random Components")
-			for(var/i in clockwork_component_cache)
+			for(var/i in GLOB.clockwork_component_cache)
 				var/cache_components = 0
-				if(clockwork_caches)
-					cache_components = clockwork_component_cache[i]
+				if(GLOB.clockwork_caches)
+					cache_components = GLOB.clockwork_component_cache[i]
 				components["[get_component_name(i)] [(cache_components + stored_components[i])]"] = i
 			var/input_component = input("Choose a component type.", "Target Component") as null|anything in components
 			if(input_component && !..())
@@ -478,8 +489,8 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
-				var/target_index = input("Position of [initial(path.name)], 1 to 5?", "Input")  as num|null
-				if(isnum(target_index) && target_index > 0 && target_index < 6 && !..())
+				var/target_index = input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
+				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
 					var/datum/clockwork_scripture/S
 					if(LAZYLEN(quickbound) >= target_index)
 						S = quickbound[target_index]
@@ -492,6 +503,9 @@
 		return
 	while(LAZYLEN(quickbound) < index)
 		quickbound += null
+	var/datum/clockwork_scripture/quickbind_slot = GLOB.all_scripture[quickbound[index]]
+	if(quickbind_slot && !quickbind_slot.quickbind)
+		return //we can't unbind things we can't normally bind
 	quickbound[index] = scripture
 	update_quickbind()
 
@@ -504,7 +518,7 @@
 				continue
 			var/datum/action/item_action/clock/quickbind/Q = new /datum/action/item_action/clock/quickbind(src)
 			Q.scripture_index = i
-			var/datum/clockwork_scripture/quickbind_slot = all_scripture[quickbound[i]]
+			var/datum/clockwork_scripture/quickbind_slot = GLOB.all_scripture[quickbound[i]]
 			Q.name = "[quickbind_slot.name] ([Q.scripture_index])"
 			var/list/temp_desc = list()
 			for(var/c in quickbind_slot.consumed_components) //show how much the bound scripture costs

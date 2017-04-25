@@ -10,7 +10,7 @@
 	anchored = 0
 	obj_integrity = 100
 	max_integrity = 100
-	var/oreAmount = 7
+	var/oreAmount = 5
 	var/material_drop_type = /obj/item/stack/sheet/metal
 	CanAtmosPass = ATMOS_PASS_DENSITY
 

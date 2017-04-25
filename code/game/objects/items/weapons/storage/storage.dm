@@ -405,6 +405,9 @@
 	if(iscyborg(user))
 		return	//Robots can't interact with storage items.
 
+	if(contents.len >= storage_slots) //don't use items on the backpack if they don't fit
+		return 1
+
 	if(!can_be_inserted(W, 0 , user))
 		return 0
 
@@ -498,7 +501,7 @@
 		remove_from_storage(I, T)
 
 
-/obj/item/weapon/storage/New()
+/obj/item/weapon/storage/Initialize(mapload)
 	..()
 
 	can_hold = typecacheof(can_hold)
@@ -527,6 +530,8 @@
 	closer.layer = ABOVE_HUD_LAYER
 	closer.plane = ABOVE_HUD_PLANE
 	orient2hud()
+
+	PopulateContents()
 
 
 /obj/item/weapon/storage/Destroy()
@@ -561,3 +566,7 @@
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
 		CHECK_TICK
+
+//Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
+
+/obj/item/weapon/storage/proc/PopulateContents()

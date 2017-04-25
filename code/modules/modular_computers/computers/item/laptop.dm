@@ -19,7 +19,7 @@
 	var/slowdown_open = 1
 
 /obj/item/device/modular_computer/laptop/Initialize()
-	..()
+	. = ..()
 
 	// No running around with open laptops in hands.
 	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)

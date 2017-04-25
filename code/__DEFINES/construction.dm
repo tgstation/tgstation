@@ -60,6 +60,12 @@
 #define GEAR_SECURE 1
 #define GEAR_LOOSE 2
 
+//floodlights because apparently we use defines now
+#define FLOODLIGHT_NEEDS_WIRES 0
+#define FLOODLIGHT_NEEDS_LIGHTS 1
+#define FLOODLIGHT_NEEDS_SECURING 2
+#define FLOODLIGHT_NEEDS_WRENCHING 3
+
 //other construction-related things
 
 //windows affected by nar-sie turn this color.
