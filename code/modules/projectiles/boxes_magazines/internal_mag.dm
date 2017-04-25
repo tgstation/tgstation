@@ -190,3 +190,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/arrow
 	caliber = "arrow"
 	max_ammo = 1
+
+/obj/item/ammo_box/magazine/internal/makeshift
+	name = "pipe pistol internal mag"
+	ammo_type = /obj/item/ammo_casing/m9mm
+	caliber = "9mm"
+	max_ammo = 6
