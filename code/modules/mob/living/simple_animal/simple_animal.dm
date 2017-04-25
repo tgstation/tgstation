@@ -127,9 +127,11 @@
 		stuttering = 0
 
 /mob/living/simple_animal/proc/handle_automated_action()
+	set waitfor = FALSE
 	return
 
 /mob/living/simple_animal/proc/handle_automated_movement()
+	set waitfor = FALSE
 	if(!stop_automated_movement && wander)
 		if((isturf(src.loc) || allow_movement_on_non_turfs) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
@@ -142,6 +144,7 @@
 			return 1
 
 /mob/living/simple_animal/proc/handle_automated_speech(var/override)
+	set waitfor = FALSE
 	if(speak_chance)
 		if(prob(speak_chance) || override)
 			if(speak && speak.len)
