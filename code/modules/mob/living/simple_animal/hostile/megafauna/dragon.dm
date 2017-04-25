@@ -194,10 +194,10 @@ Difficulty: Medium
 	swooping |= SWOOP_INVULNERABLE
 	sleep(7)
 	var/list/flame_hit = list()
-	for(var/i in 1 to swoop_duration)
+	while(swoop_duration > 0)
 		if(!target && !FindTarget())
 			break //we lost our target while chasing it down and couldn't get a new one
-		if(i >= swoop_duration - 7)
+		if(swoop_duration < 7)
 			fire_rain = FALSE //stop raining fire near the end of the swoop
 		if(loc == get_turf(target))
 			if(!fire_rain)
@@ -218,7 +218,8 @@ Difficulty: Medium
 				var/mob/living/L = target
 				if(L.stat == DEAD)
 					break
-		sleep(1)
+		swoop_duration -= 1.5
+		sleep(1.5)
 
 	//ensure swoop direction continuity.
 	if(negative)
