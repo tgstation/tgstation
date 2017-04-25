@@ -197,6 +197,8 @@ Difficulty: Medium
 	for(var/i in 1 to swoop_duration)
 		if(!target && !FindTarget())
 			break //we lost our target while chasing it down and couldn't get a new one
+		if(i >= swoop_duration - 7)
+			fire_rain = FALSE //stop raining fire near the end of the swoop
 		if(loc == get_turf(target))
 			if(!fire_rain)
 				break //we're not spewing fire at our target, slam they
@@ -204,7 +206,7 @@ Difficulty: Medium
 				var/mob/living/L = target
 				if(L.stat == DEAD)
 					break //target is dead and we're on em, slam they
-		if(fire_rain && i < swoop_duration - 7)
+		if(fire_rain)
 			new /obj/effect/overlay/temp/target(loc, flame_hit)
 		forceMove(get_step(src, get_dir(src, target)))
 		if(!target && !FindTarget())
