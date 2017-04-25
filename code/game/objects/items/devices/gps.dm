@@ -30,6 +30,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	cut_overlay("working")
 	add_overlay("emp")
 	addtimer(CALLBACK(src, .proc/reboot), 300, TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
+	SStgui.close_uis(src) //Close the UI control if it is open.
 
 /obj/item/device/gps/proc/reboot()
 	emped = FALSE
