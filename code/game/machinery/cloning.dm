@@ -44,7 +44,7 @@
 		"corazone", // prevents cardiac arrest damage
 		"mimesbane") // stops them gasping from lack of air.
 
-	light_color = LIGHT_COLOR_CYAN
+	light_color = LIGHT_COLOR_GREEN
 	light_range = 2
 
 /obj/machinery/clonepod/New()
