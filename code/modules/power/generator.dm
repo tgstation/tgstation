@@ -28,7 +28,7 @@
 
 
 /obj/machinery/power/generator/Initialize(mapload)
-	..()
+	. = ..()
 	var/obj/machinery/atmospherics/components/binary/circulator/circpath = /obj/machinery/atmospherics/components/binary/circulator
 	cold_circ = locate(circpath) in get_step(src, cold_dir)
 	hot_circ = locate(circpath) in get_step(src, hot_dir)
@@ -64,11 +64,12 @@
 	else
 		cut_overlays()
 
-		var/L = min(round(lastgenlev/100000),11)
-		if(L != 0)
+    var/L = min(round(lastgenlev/100000),11)
+		
+    if(L != 0)
 			add_overlay(image('icons/obj/power.dmi', "teg-op[L]"))
 
-		add_overlay(image('icons/obj/power.dmi', "teg-oc[lastcirc]"))
+		add_overlay("teg-oc[lastcirc]")
 
 
 #define GENRATE 800		// generator output coefficient from Q

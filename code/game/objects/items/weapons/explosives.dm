@@ -16,7 +16,7 @@
 
 /obj/item/weapon/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
-	image_overlay = image('icons/obj/grenade.dmi', "plastic-explosive2")
+	plastic_overlay = mutable_appearance(icon, "plastic-explosive2")
 	..()
 
 /obj/item/weapon/c4/Destroy()
@@ -92,7 +92,7 @@
 		message_admins(message,0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
 
-		target.add_overlay(image_overlay, 1)
+		target.add_overlay(plastic_overlay, 1)
 		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>")
 		addtimer(CALLBACK(src, .proc/explode), timer * 10)
 
@@ -103,7 +103,7 @@
 	if(target)
 		if(!QDELETED(target))
 			location = get_turf(target)
-			target.cut_overlay(image_overlay, TRUE)
+			target.cut_overlay(plastic_overlay, TRUE)
 	else
 		location = get_turf(src)
 	if(location)

@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(npcpool)
 	var/list/canBeUsed = list()
 	var/list/needsDelegate = list()
 	var/list/needsAssistant = list()
-	
+
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/stage

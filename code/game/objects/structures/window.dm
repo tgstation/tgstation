@@ -18,7 +18,7 @@
 	var/fulltile = 0
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
-	var/image/crack_overlay
+	var/static/mutable_appearance/crack_overlay = mutable_appearance('icons/obj/structures.dmi')
 	var/list/debris = list()
 	can_be_unanchored = 1
 	resistance_flags = ACID_PROOF
@@ -361,10 +361,10 @@
 		if(smooth)
 			queue_smooth(src)
 
-		cut_overlay(crack_overlay)
+		cut_overlays()
 		if(ratio > 75)
 			return
-		crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]",-(layer+0.1))
+		crack_overlay.icon_state = "damage[ratio]"
 		add_overlay(crack_overlay)
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

@@ -78,6 +78,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
 
+/obj/item/stack/sheet/metal/twenty
+	amount = 20
+
 /obj/item/stack/sheet/metal/five
 	amount = 5
 

@@ -47,7 +47,7 @@
 			to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>")
 			M << 'sound/creatures/legion_spawn.ogg'
 			flash_color(M, flash_color = "#FF0000", flash_time = 50)
-	var/image/door_overlay = image('icons/effects/effects.dmi', "legiondoor")
+	var/mutable_appearance/door_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 	notify_ghosts("Legion has been summoned in the [get_area(src)]!", source = src, alert_overlay = door_overlay, action = NOTIFY_JUMP)
 	is_anyone_home = FALSE
 	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
