@@ -329,7 +329,7 @@
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
-		to_chat(user, "<span class='notice'>You pull back the slide on \the [src] and unload [num_unloaded] bullet\s.</span>")
+		to_chat(user, "<span class='notice'>You pull back the breach on \the [src] and unload [num_unloaded] bullet\s.</span>")
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
