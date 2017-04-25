@@ -167,14 +167,14 @@
 
 // ai as human but can't flush
 /obj/machinery/disposal/attack_ai(mob/user)
-	interact(user, 1)
+	interact(user)
 
 // human interact with machine
 /obj/machinery/disposal/attack_hand(mob/user)
 	if(user && user.loc == src)
 		to_chat(usr, "<span class='warning'>You cannot reach the controls from inside!</span>")
 		return
-	interact(user, 0)
+	interact(user)
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
@@ -285,7 +285,7 @@
 // handle machine interaction
 
 /obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	if(stat & BROKEN)
 		return
 	if(user.loc == src)
@@ -304,7 +304,6 @@
 	data["panel_open"] = panel_open
 	var/per = Clamp(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
 	data["per"] = round(per, 1)
-	data["isai"] = isAI(user)
 	return data
 
 /obj/machinery/disposal/bin/ui_act(action, params)
