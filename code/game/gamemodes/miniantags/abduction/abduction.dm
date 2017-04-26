@@ -166,7 +166,7 @@
 			var/obj/machinery/abductor/console/con = get_team_console(team_number)
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
-				SSshuttle.emergency.request(null, 0.5)
+				SSshuttle.emergency.request(null, set_coefficient = 0.5)
 				finished = 1
 				return ..()
 	return ..()
