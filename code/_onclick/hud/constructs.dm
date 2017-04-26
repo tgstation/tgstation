@@ -61,4 +61,4 @@
 	mymob.pullin.icon = 'icons/mob/screen_construct.dmi'
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
-mymob.pullin.screen_loc = ui_construct_pull
+	mymob.pullin.screen_loc = ui_construct_pull
