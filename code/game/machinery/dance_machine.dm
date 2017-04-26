@@ -6,6 +6,8 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "disco0"
 	anchored = FALSE
+	obj_integrity = 400
+	max_integrity = 400
 	verb_say = "states"
 	density = TRUE
 	req_access = list(GLOB.access_engine)
