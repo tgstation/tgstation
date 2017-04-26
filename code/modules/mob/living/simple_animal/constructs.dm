@@ -34,7 +34,7 @@
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
-  updateglow()
+	updateglow()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
 
