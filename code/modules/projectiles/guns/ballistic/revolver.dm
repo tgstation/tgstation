@@ -318,7 +318,7 @@
 /obj/item/weapon/gun/ballistic/revolver/pipe/New()
 	..()
 	if(prob(20)
-		icon_state = "pipepistol-alt1"
+		icon_state = "["pipepistol-alt1"]"
 
 /obj/item/weapon/gun/ballistic/revolver/pipe/attackby(obj/item/A, mob/user, params)
 	..()
