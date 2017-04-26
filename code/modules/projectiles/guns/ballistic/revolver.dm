@@ -308,7 +308,7 @@
 // PIPE PISTOL //
 /obj/item/weapon/gun/ballistic/revolver/pipe
 	name = "pipe pistol"
-	desc = "A makeshift 9mm pistol made from salvaged parts."
+	desc = "A makeshift 9mm pistol made from salvaged parts." //An engraving on the side reads: Tacolizard Forever
 	icon_state = "pipepistol"
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/internal/makeshift //mag is internal for balance reasons
