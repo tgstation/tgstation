@@ -639,9 +639,9 @@ var/list/teleport_runes = list()
 	qdel(src) //delete before pulsing because it's a delay reee
 	empulse(E, 9*invokers.len, 12*invokers.len) // Scales now, from a single room to most of the station depending on # of chanters
 
-//Rite of Astral Communion: Separates one's spirit from their body. They will take damage while it is active.
-/obj/effect/rune/astral
-	cultist_name = "Astral Communion"
+//Rite of Spirit Sight: Separates one's spirit from their body. They will take damage while it is active.
+/obj/effect/rune/spirit
+	cultist_name = "Spirit Sight"
 	cultist_desc = "severs the link between one's spirit and body. This effect is taxing and one's physical body will take damage while this is active."
 	invocation = "Fwe'sh mah erl nyag r'ya!"
 	icon_state = "7"
@@ -650,24 +650,24 @@ var/list/teleport_runes = list()
 	construct_invoke = 0
 	var/mob/living/affecting = null
 
-/obj/effect/rune/astral/examine(mob/user)
+/obj/effect/rune/spirit/examine(mob/user)
 	..()
 	if(affecting)
 		to_chat(user, "<span class='cultitalic'>A translucent field encases [user] above the rune!</span>")
 
-/obj/effect/rune/astral/can_invoke(mob/living/user)
+/obj/effect/rune/spirit/can_invoke(mob/living/user)
 	if(rune_in_use)
 		to_chat(user, "<span class='cultitalic'>[src] cannot support more than one body!</span>")
-		log_game("Astral Communion rune failed - more than one user")
+		log_game("Spirit Sight rune failed - more than one user")
 		return list()
 	var/turf/T = get_turf(src)
 	if(!(user in T))
 		to_chat(user, "<span class='cultitalic'>You must be standing on top of [src]!</span>")
-		log_game("Astral Communion rune failed - user not standing on rune")
+		log_game("Spirit Sight rune failed - user not standing on rune")
 		return list()
 	return ..()
 
-/obj/effect/rune/astral/invoke(var/list/invokers)
+/obj/effect/rune/spirit/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	..()
 	var/turf/T = get_turf(src)
