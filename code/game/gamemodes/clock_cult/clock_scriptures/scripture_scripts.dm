@@ -115,8 +115,8 @@
 					if(S.health < S.maxHealth)
 						S.adjustHealth(-heal_amount)
 						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
-						if(i == heal_attempts && H.health >= H.maxHealth) //we finished healing on the last tick, give them the message
-							to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+						if(i == heal_attempts && S.health >= S.maxHealth) //we finished healing on the last tick, give them the message
+							to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 							break
 					else
 						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
@@ -130,8 +130,8 @@
 					if(S.health < S.maxHealth)
 						S.heal_ordered_damage(heal_amount, damage_heal_order)
 						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
-						if(i == heal_attempts && H.health >= H.maxHealth)
-							to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+						if(i == heal_attempts && S.health >= S.maxHealth)
+							to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 							break
 					else
 						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
