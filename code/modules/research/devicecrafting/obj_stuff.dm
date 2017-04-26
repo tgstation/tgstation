@@ -1,5 +1,4 @@
-/obj
-	var/datum/devicecrafting/holder/devicecrafting_holder
+/obj/var/datum/devicecrafting/holder/devicecrafting_holder
 
 
 /obj/proc/add_device_holder(var/amount_of_slots)
