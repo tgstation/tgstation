@@ -115,6 +115,9 @@
 					if(S.health < S.maxHealth)
 						S.adjustHealth(-heal_amount)
 						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
+						if(i == heal_attempts && H.health >= H.maxHealth) //we finished healing on the last tick, give them the message
+							to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+							break
 					else
 						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 						break
@@ -127,6 +130,9 @@
 					if(S.health < S.maxHealth)
 						S.heal_ordered_damage(heal_amount, damage_heal_order)
 						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
+						if(i == heal_attempts && H.health >= H.maxHealth)
+							to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+							break
 					else
 						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 						break
@@ -136,16 +142,16 @@
 					continue
 				T = get_turf(M)
 				var/heal_ticks = 0 //one heal tick for each piece of ratvarian armor worn
-				var/obj/item/I = L.get_item_by_slot(slot_wear_suit)
+				var/obj/item/I = H.get_item_by_slot(slot_wear_suit)
 				if(is_type_in_typecache(I, ratvarian_armor_typecache))
 					heal_ticks++
-				I = L.get_item_by_slot(slot_head)
+				I = H.get_item_by_slot(slot_head)
 				if(is_type_in_typecache(I, ratvarian_armor_typecache))
 					heal_ticks++
-				I = L.get_item_by_slot(slot_gloves)
+				I = H.get_item_by_slot(slot_gloves)
 				if(is_type_in_typecache(I, ratvarian_armor_typecache))
 					heal_ticks++
-				I = L.get_item_by_slot(slot_shoes)
+				I = H.get_item_by_slot(slot_shoes)
 				if(is_type_in_typecache(I, ratvarian_armor_typecache))
 					heal_ticks++
 				if(heal_ticks)
@@ -153,6 +159,9 @@
 						if(H.health < H.maxHealth)
 							H.heal_ordered_damage(heal_amount, damage_heal_order)
 							new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
+							if(i == heal_ticks && H.health >= H.maxHealth)
+								to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+								break
 						else
 							to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 							break
