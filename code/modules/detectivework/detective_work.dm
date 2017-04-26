@@ -72,6 +72,29 @@
 
 	fingerprintslast = M.ckey
 
+/atom/proc/add_hiddenprint_telekinetic(mob/living/M)
+	if(!M || !M.key)
+		return
+
+	if(!fingerprintshidden) //Add the list if it does not exist
+		fingerprintshidden = list()
+
+	var/hasgloves = ""
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.gloves)
+			hasgloves = "(gloves)"
+
+	var/current_time = time_stamp()
+	if(!fingerprintshidden[M.key])
+		fingerprintshidden[M.key] = "First: [M.real_name]\[[current_time]\][hasgloves] with TK. Ckey: [M.ckey]"
+	else
+		var/laststamppos = findtext(fingerprintshidden[M.key], " Last: ")
+		if(laststamppos)
+			fingerprintshidden[M.key] = copytext(fingerprintshidden[M.key], 1, laststamppos)
+		fingerprintshidden[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves] with TK. Ckey: [M.ckey]"
+
+	fingerprintslast = M.ckey
 
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
 /atom/proc/add_fingerprint(mob/living/M, ignoregloves = 0)
