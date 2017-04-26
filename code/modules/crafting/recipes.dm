@@ -278,8 +278,7 @@
 /datum/crafting_recipe/i9mm
 	name = "Makeshift 9mm Round"
 	result = /obj/item/ammo_casing/m9mm
-	reqs = list(/obj/item/weapon/grenade/chem_grenade = 1,
-				/obj/item/stack/sheet/metal = 1,
+	reqs = list(/obj/item/stack/sheet/metal = 1,
 				/obj/item/stack/cable_coil = 1,
 				/datum/reagent/fuel = 10)
 	tools = list(/obj/item/weapon/screwdriver)
