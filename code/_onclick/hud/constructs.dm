@@ -5,7 +5,7 @@
 /datum/hud/construct/New(mob/owner)
 	..()
 	pull_icon = new /obj/screen/pull()
-	pull_icon.icon = ui_style
+	pull_icon.icon = ui_style_icon
 	pull_icon.update_icon(mymob)
 	pull_icon.screen_loc = ui_pull_resist
 	static_inventory += pull_icon
