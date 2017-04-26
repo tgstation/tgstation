@@ -321,7 +321,7 @@
 	..()
 
 	//this code is used to make the random icon persistent
-	if(variant !== 0)
+	if(variant != 0)
 		randomized = 1
 	if(randomized == 0)
 		if(prob(50))
