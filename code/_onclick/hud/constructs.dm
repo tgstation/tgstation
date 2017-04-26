@@ -15,4 +15,4 @@
 	
 /mob/living/simple_animal/hostile/construct/create_mob_hud()
 	if(client && !hud_used)
-		hud_used = new /datum/hud/revenant(src)
+		hud_used = new /datum/hud/construct(src)
