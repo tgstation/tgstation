@@ -202,7 +202,7 @@
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	origin_tech = "syndicate=2"
-	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
+	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0
 	resistance_flags = 0
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)

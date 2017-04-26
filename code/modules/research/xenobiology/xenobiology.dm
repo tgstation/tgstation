@@ -420,7 +420,7 @@
 	item_color = "golem"
 	flags = ABSTRACT | NODROP
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	has_sensor = 0
+	has_sensor = NO_SENSORS
 
 /obj/item/clothing/suit/golem
 	name = "adamantine shell"
