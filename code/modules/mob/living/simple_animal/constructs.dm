@@ -286,10 +286,6 @@
 
 /////////////////////////////ui stuff/////////////////////////////
 
-/mob/living/simple_animal/hostile/construct/create_health_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/construct(src)
-
 /mob/living/simple_animal/hostile/construct/update_health_hud()
 	if(!client || !hud_used)
 		return
