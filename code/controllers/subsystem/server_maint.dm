@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(server_maint)
 		src.currentrun = GLOB.clients.Copy()
 	
 	var/list/currentrun = src.currentrun
-	var/round_started = Master.round_started
+	var/round_started = SSticker.HasRoundStarted()
 
 	for(var/I in currentrun)
 		var/client/C = I
