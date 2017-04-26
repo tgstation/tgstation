@@ -315,22 +315,17 @@
 	can_suppress = 0
 	sparks = 1
 	dont_update = 1 //hopefully prevents icon from changing to default after a variant is selected
-	var/randomized = 0 //has the icon been randomized yet?
-	var/variant = 0 //which variant is being used?
 
 /obj/item/weapon/gun/ballistic/revolver/pipe/New()
 	..()
 
 	//this code is used to make the random icon persistent.
-	if(variant != 0)
-		randomized = 1
-	if(randomized == 0)
-		if(prob(50))
-			icon_state = "pipepistol-alt1"
-			variant = 2
-		else
-			icon_state = "pipepistol"
-			variant = 1
+	if(prob(50))
+		icon_state = "pipepistol-alt1"
+	elseif(prob(50))
+		icon_state = "pipepistol-alt2"
+	else
+		icon_state = "pipepistol"
 
 /obj/item/weapon/gun/ballistic/revolver/pipe/attackby(obj/item/A, mob/user, params)
 	..()
@@ -344,7 +339,7 @@
 		CB = magazine.get_round(0)
 		chambered = null
 		CB.loc = get_turf(src.loc)
-		//CB.update_icon()
+		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You pull back the breach on \the [src] and unload [num_unloaded] bullet\s.</span>")
