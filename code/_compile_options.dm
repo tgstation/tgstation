@@ -20,8 +20,6 @@
 #define BACKGROUND_ENABLED 0    // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
 								// 1 will enable set background. 0 will disable set background.
 
-#define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
-
 //ADMIN STUFF
 #define ROUNDSTART_LOGOUT_REPORT_TIME	6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
@@ -63,11 +61,11 @@
 #endif
 
 //Update this whenever you need to take advantage of more recent byond features
-#define MIN_COMPILER_VERSION 510
+#define MIN_COMPILER_VERSION 511
 #if DM_VERSION < MIN_COMPILER_VERSION
 //Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update.
-#error You need version 510 or higher
+#error You need version 511 or higher
 #endif
 
 

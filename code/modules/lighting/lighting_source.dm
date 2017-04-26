@@ -28,7 +28,6 @@
 
 	var/vis_update      // Whether we should smartly recalculate visibility. and then only update tiles that became (in)visible to us.
 	var/needs_update    // Whether we are queued for an update.
-	var/destroyed       // Whether we are destroyed and need to stop emitting light.
 	var/force_update
 
 /datum/light_source/New(var/atom/owner, var/atom/top)
@@ -60,20 +59,16 @@
 
 	return ..()
 
-// Kill ourselves.
-/datum/light_source/proc/destroy()
-	destroyed = TRUE
+/datum/light_source/Destroy(force)
 	force_update()
 	if (source_atom)
 		source_atom.light_sources -= src
 
 	if (top_atom)
 		top_atom.light_sources    -= src
-
-// Fuck supporting force.
-/datum/light_source/Destroy(var/force)
-	destroy()
-	return QDEL_HINT_IWILLGC
+	. = ..()
+	if(!force)
+		return QDEL_HINT_IWILLGC
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
 // If you want it to go switch everybody to elastic tab stops.
@@ -114,7 +109,7 @@
 // Will check if we actually need to update, and update any variables that may need to be updated.
 /datum/light_source/proc/check()
 	if (!source_atom || !light_range || !light_power)
-		destroy()
+		qdel(src)
 		return 1
 
 	if (!top_atom)
@@ -226,7 +221,7 @@
 
 		LAZYADD(T.affecting_lights, src)
 		affecting_turfs    += T
-
+	FOR_DVIEW_END
 	update_gen++
 
 /datum/light_source/proc/remove_lum()
@@ -267,6 +262,7 @@
 			C = thing
 			corners[C] = 0
 		turfs += T
+	FOR_DVIEW_END
 
 	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
 	affecting_turfs += L

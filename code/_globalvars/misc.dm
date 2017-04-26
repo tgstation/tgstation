@@ -14,8 +14,3 @@ GLOBAL_VAR_INIT(CELLRATE, 0.002)  // multiplier for watts per tick <> cell stora
 GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
 
 GLOBAL_LIST_EMPTY(powernets)
-
-//Database connections
-//A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).
-GLOBAL_DATUM_INIT(dbcon, /DBConnection, new)	//Feedback database (New database)
-GLOBAL_PROTECT(dbcon)

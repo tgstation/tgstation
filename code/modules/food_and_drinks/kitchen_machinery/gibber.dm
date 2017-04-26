@@ -47,7 +47,7 @@
 
 /obj/machinery/gibber/New()
 	..()
-	src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
+	add_overlay("grjam")
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gibber(null)
 	B.apply_default_parts(src)
 
@@ -72,15 +72,15 @@
 /obj/machinery/gibber/update_icon()
 	cut_overlays()
 	if (dirty)
-		src.add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
+		add_overlay("grbloody")
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
+		add_overlay("grjam")
 	else if (operating)
-		src.add_overlay(image('icons/obj/kitchen.dmi', "gruse"))
+		add_overlay("gruse")
 	else
-		src.add_overlay(image('icons/obj/kitchen.dmi', "gridle"))
+		add_overlay("gridle")
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -186,10 +186,9 @@
 		var/mob/living/carbon/human/gibee = occupant
 		if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
-			typeofskin = gibee.dna.species.skinned_type
-		else
-			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
-			typeofskin = /obj/item/stack/sheet/animalhide/human
+			if(gibee.dna.species.skinned_type)
+				typeofskin = gibee.dna.species.skinned_type
+
 	else if(iscarbon(occupant))
 		var/mob/living/carbon/C = occupant
 		typeofmeat = C.type_of_meat

@@ -42,8 +42,6 @@
 	var/notransform = null	//Carbon
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
-	var/ear_deaf = 0		//Carbon
-	var/ear_damage = 0		//Carbon
 	var/stuttering = 0		//Carbon
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon

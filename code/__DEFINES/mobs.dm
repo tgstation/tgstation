@@ -10,7 +10,7 @@
 #define BLOOD_VOLUME_MAXIMUM		2000
 #define BLOOD_VOLUME_SLIME_SPLIT	1120
 #define BLOOD_VOLUME_NORMAL			560
-#define BLOOD_VOLUME_SAFE			501
+#define BLOOD_VOLUME_SAFE			475
 #define BLOOD_VOLUME_OKAY			336
 #define BLOOD_VOLUME_BAD			224
 #define BLOOD_VOLUME_SURVIVE		122
@@ -36,6 +36,9 @@
 
 #define BODYPART_ORGANIC   1
 #define BODYPART_ROBOTIC   2
+
+#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
+#define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
@@ -117,3 +120,5 @@
 #define SLIDE_ICE 8
 
 #define MAX_CHICKENS 50
+
+#define UNHEALING_EAR_DAMAGE 100

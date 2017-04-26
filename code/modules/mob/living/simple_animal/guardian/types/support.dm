@@ -6,7 +6,6 @@
 	value = 5
 	var/obj/structure/recieving_pad/beacon
 	var/beacon_cooldown = 0
-	var/datum/action/innate/beacon/B = new
 
 /datum/guardian_abilities/heal/Destroy()
 	QDEL_NULL(B)
@@ -61,20 +60,19 @@
 	medsensor.add_hud_to(guardian)
 
 /datum/guardian_abilities/heal/ability_act()
-	if(toggle)
-		if(iscarbon(guardian.target))
-			var/mob/living/carbon/C = guardian.target
-			C.adjustBruteLoss(-5)
-			C.adjustFireLoss(-5)
-			C.adjustOxyLoss(-5)
-			C.adjustToxLoss(-5)
-			var/obj/effect/overlay/temp/heal/H = new /obj/effect/overlay/temp/heal(get_turf(C))
-			if(guardian.namedatum)
-				H.color = guardian.namedatum.colour
-			if(C == user)
-				guardian.update_health_hud()
-				guardian.med_hud_set_health()
-				guardian.med_hud_set_status()
+	if(toggle && iscarbon(guardian.target))
+		var/mob/living/carbon/C = guardian.target
+		C.adjustBruteLoss(-5)
+		C.adjustFireLoss(-5)
+		C.adjustOxyLoss(-5)
+		C.adjustToxLoss(-5)
+		var/obj/effect/overlay/temp/heal/H = new /obj/effect/overlay/temp/heal(get_turf(C))
+		if(guardian.namedatum)
+			H.color = guardian.namedatum.colour
+		if(C == user)
+			guardian.update_health_hud()
+			guardian.med_hud_set_health()
+			guardian.med_hud_set_status()
 
 /datum/guardian_abilities/heal/handle_mode()
 	if(guardian.loc == user)
