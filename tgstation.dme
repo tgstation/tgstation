@@ -422,7 +422,6 @@
 #include "code\game\gamemodes\clock_cult\clock_structures\geis_binding.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\interdiction_lens.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\mania_motor.dm"
-#include "code\game\gamemodes\clock_cult\clock_structures\mending_motor.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\ocular_warden.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\ratvar_the_clockwork_justicar.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\taunting_trail.dm"

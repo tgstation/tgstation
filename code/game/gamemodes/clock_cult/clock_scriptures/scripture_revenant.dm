@@ -110,7 +110,7 @@
 	channel_time = 150
 	consumed_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 6)
 	usage_tip = "Ocular wardens will become empowered, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
-	and interdiction lenses, mending motors, mania motors, tinkerer's daemons, and clockwork obelisks will all require no power."
+	and interdiction lenses, mania motors, tinkerer's daemons, and clockwork obelisks will all require no power."
 	tier = SCRIPTURE_REVENANT
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 4
