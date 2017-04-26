@@ -15,6 +15,7 @@
 		return
 	new /obj/effect/overlay/temp/telekinesis(loc)
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
+	add_hiddenprint_telekinesis(user)
 	return
 
 /obj/attack_tk(mob/user)
@@ -25,6 +26,7 @@
 	O.tk_user = user
 	if(O.focus_object(src))
 		user.put_in_active_hand(O)
+		add_hiddenprint_telekinesis(O)
 	else
 		qdel(O)
 		..()
@@ -104,6 +106,7 @@
 		qdel(src)
 		return
 	focus.attack_self_tk(user)
+	add_hiddenprint_telekinesis(user)
 	update_icon()
 
 /obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
