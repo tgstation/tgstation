@@ -43,13 +43,17 @@
 				generate_cache_component(i, src)
 			take_damage(max_integrity)
 			return 0
-		if(SSshuttle.emergency.mode != SHUTTLE_CALL)
-			to_chat(user, "<span class='warning'>No emergency shuttles are attempting to arrive at the station!</span>")
-			return 0
-		var/efficiency = get_efficiency_mod()
-		if(total_accessable_power() < get_delay_cost() * efficiency)
-			to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
-			return 0
+		if(!active)
+			if(SSshuttle.emergency.mode != SHUTTLE_CALL)
+				to_chat(user, "<span class='warning'>No emergency shuttles are attempting to arrive at the station!</span>")
+				return 0
+			if(obj_integrity <= 1)
+				to_chat(user, "<span class='warning'>[src] is too damaged to function!</span>")
+				return 0
+			var/efficiency = get_efficiency_mod()
+			if(total_accessable_power() < get_delay_cost() * efficiency)
+				to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
+				return 0
 		toggle(0, user)
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/process()
@@ -61,6 +65,12 @@
 	if(!try_use_power(get_delay_cost() * efficiency))
 		forced_disable(FALSE)
 		return
+	if(SSshuttle.emergency.mode == SHUTTLE_CALL && SSshuttle.canRecall())
+		if(obj_integrity > 1)
+			take_damage(1)
+		else
+			forced_disable(FALSE)
+			return
 	SSshuttle.emergency.setTimer(SSshuttle.emergency.timeLeft(1) + (get_delay_time() * efficiency))
 	var/placement_style = prob(50)
 	for(var/t in SSshuttle.emergency.ripple_area(SSshuttle.getDock("emergency_home")))
