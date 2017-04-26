@@ -559,10 +559,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/is_sharp()
 	return sharpness
 
+/obj/item/proc/is_heavy()
+	return heavy
+
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
-		if((sharpness || damtype == BURN) && w_class >= 3)
-			. = force*(w_class-1)
+		if(heavy || damtype == BURN)
+			. = force
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
