@@ -207,9 +207,6 @@
 	H.grab_ghost()
 	to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
 
-	if(grab_ghost_when == CLONER_MATURE_CLONE)
-		addtimer(CALLBACK(src, .proc/occupant_dreams), 100)
-
 	if(H)
 		H.faction |= factions
 
@@ -218,11 +215,6 @@
 		H.suiciding = FALSE
 	attempting = FALSE
 	return TRUE
-
-/obj/machinery/clonepod/proc/occupant_dreams()
-	if(occupant)
-		to_chat(occupant, "<span class='revennotice'>While your body grows, you have the strangest dream, like you can see yourself from the outside.</span>")
-		occupant.ghostize(TRUE)
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
@@ -240,6 +232,9 @@
 			go_out()
 
 		else if(occupant.cloneloss > (100 - heal_level))
+			if(occupant.key && grab_ghost_when == CLONER_MATURE_CLONE)
+				to_chat(occupant, "<span class='revennotice'>While your body grows, you have the strangest dream, like you can see yourself from the outside.</span>")
+				occupant.ghostize(can_reenter_corpse=TRUE)
 			occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
