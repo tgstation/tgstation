@@ -26,6 +26,10 @@
 		)
 	var/datum/track/selection = null
 
+/obj/machinery/disco/immovable
+	movable = FALSE
+	resistance_flags = INDESTRUCTIBLE
+
 /datum/track
 	var/song_name = "generic"
 	var/song_path = null
