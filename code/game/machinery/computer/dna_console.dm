@@ -401,12 +401,12 @@
 							if(buffer_slot["SE"])
 								I = new /obj/item/weapon/dnainjector/timed(loc)
 								var/powers = 0
-								for(var/datum/mutation/human/HM in good_mutations + bad_mutations + not_good_mutations)
+								for(var/datum/mutation/human/HM in GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations)
 									if(HM.check_block_string(buffer_slot["SE"]))
 										I.add_mutations.Add(HM)
-										if(HM in good_mutations)
+										if(HM in GLOB.good_mutations)
 											powers += 1
-										if(HM in bad_mutations + not_good_mutations)
+										if(HM in GLOB.bad_mutations + GLOB.not_good_mutations)
 											powers -= 1 //To prevent just unlocking everything to get all powers to a syringe for max tech
 									else
 										I.remove_mutations.Add(HM)

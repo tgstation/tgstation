@@ -350,9 +350,7 @@
 		else
 			to_chat(user, "<span class='userdanger'>You stick \the [W] into the light socket!</span>")
 			if(has_power() && (W.flags & CONDUCT))
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(3, 1, src)
-				s.start()
+				do_sparks(3, TRUE, src)
 				if (prob(75))
 					electrocute_mob(user, get_area(src), src, rand(0.7,1.0), TRUE)
 	else
@@ -500,6 +498,7 @@
 
 	status = LIGHT_EMPTY
 	update()
+	return L
 
 /obj/machinery/light/attack_tk(mob/user)
 	if(status == LIGHT_EMPTY)
@@ -508,7 +507,8 @@
 
 	to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
 	// create a light tube/bulb item and put it in the user's hand
-	drop_light_tube()
+	var/obj/item/weapon/light/L = drop_light_tube()
+	L.attack_tk(user)
 
 
 // break the light and make sparks if was on
@@ -521,9 +521,7 @@
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
 			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(on)
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(3, 1, src)
-			s.start()
+			do_sparks(3, TRUE, src)
 	status = LIGHT_BROKEN
 	update()
 
@@ -651,3 +649,14 @@
 		force = 5
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		update()
+
+
+/obj/machinery/light/floor
+	name = "floor light"
+	icon = 'icons/obj/lighting.dmi'
+	base_state = "floor"		// base description and icon_state
+	icon_state = "floor1"
+	brightness = 4
+	layer = 2.5
+	light_type = /obj/item/weapon/light/bulb
+	fitting = "bulb"

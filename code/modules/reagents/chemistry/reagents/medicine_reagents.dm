@@ -118,7 +118,7 @@
 	color = "#6600FF" // rgb: 100, 165, 255
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/M)
-	M.setEarDamage(0,0)
+	M.restoreEars()
 	..()
 
 /datum/reagent/medicine/cryoxadone

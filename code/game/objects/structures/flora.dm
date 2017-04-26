@@ -81,7 +81,11 @@
 
 /obj/structure/flora/tree/jungle
 	name = "tree"
+	icon_state = "tree"
 	desc = "It's seriously hampering your view of the jungle."
+	icon = 'icons/obj/flora/jungletrees.dmi'
+	pixel_x = -48
+	pixel_y = -20
 
 /obj/structure/flora/tree/jungle/Initialize()
 	icon_state = "[icon_state][rand(1, 3)]"
@@ -258,7 +262,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.override = 1
-	user.add_alt_appearance("sneaking_mission", I, player_list)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
 	..()
 
 /obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)
@@ -335,12 +339,13 @@
 /obj/structure/flora/rock/jungle
 	icon_state = "pile of rocks"
 	desc = "A pile of rocks."
+	icon_state = "rock"
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
 
 /obj/structure/flora/rock/jungle/Initialize()
 	..()
-	icon_state = "[icon_state][rand(1,5)]"
+	icon_state = "[initial(icon_state)][rand(1,5)]"
 
 
 //Jungle bushes
@@ -364,9 +369,17 @@
 	icon_state = "bush"
 	icon = 'icons/obj/flora/largejungleflora.dmi'
 	pixel_x = -16
+	pixel_y = -12
 	layer = ABOVE_ALL_MOB_LAYER
 
 /obj/structure/flora/rock/pile/largejungle
 	name = "rocks"
+	icon_state = "rocks"
 	icon = 'icons/obj/flora/largejungleflora.dmi'
 	density = FALSE
+	pixel_x = -16
+	pixel_y = -16
+
+/obj/structure/flora/rock/pile/largejungle/Initialize()
+	..()
+	icon_state = "[initial(icon_state)][rand(1,3)]"

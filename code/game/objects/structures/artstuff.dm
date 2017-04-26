@@ -45,7 +45,7 @@
 #define AMT_OF_CANVASES	4 //Keep this up to date or shit will break.
 
 //To safe memory on making /icons we cache the blanks..
-var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
+GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 
 /obj/item/weapon/canvas
 	name = "canvas"
@@ -71,11 +71,11 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 //Find the right size blank canvas
 /obj/item/weapon/canvas/proc/getGlobalBackup()
 	. = null
-	if(globalBlankCanvases[whichGlobalBackup])
-		. = globalBlankCanvases[whichGlobalBackup]
+	if(GLOB.globalBlankCanvases[whichGlobalBackup])
+		. = GLOB.globalBlankCanvases[whichGlobalBackup]
 	else
 		var/icon/I = icon(initial(icon),initial(icon_state))
-		globalBlankCanvases[whichGlobalBackup] = I
+		GLOB.globalBlankCanvases[whichGlobalBackup] = I
 		. = I
 
 

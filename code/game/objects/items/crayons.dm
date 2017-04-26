@@ -137,7 +137,7 @@
 			qdel(src)
 		. = TRUE
 
-/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
+/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	// tgui is a plague upon this codebase
 
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -409,7 +409,7 @@
 	return TRUE
 
 /obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
-	for(var/datum/gang/G in ticker.mode.gangs)
+	for(var/datum/gang/G in SSticker.mode.gangs)
 		if(territory.type in (G.territory|G.territory_new))
 			. = G.name
 			break
@@ -521,7 +521,7 @@
 /obj/item/weapon/storage/crayons/update_icon()
 	cut_overlays()
 	for(var/obj/item/toy/crayon/crayon in contents)
-		add_overlay(image('icons/obj/crayons.dmi',crayon.item_color))
+		add_overlay(mutable_appearance('icons/obj/crayons.dmi', crayon.item_color))
 
 /obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
@@ -667,10 +667,9 @@
 	icon_state = is_capped ? icon_capped : icon_uncapped
 	if(use_overlays)
 		cut_overlays()
-		var/image/I = image('icons/obj/crayons.dmi',
-			icon_state = "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
-		I.color = paint_color
-		add_overlay(I)
+		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
+		spray_overlay.color = paint_color
+		add_overlay(spray_overlay)
 
 /obj/item/toy/crayon/spraycan/gang
 	//desc = "A modified container containing suspicious paint."

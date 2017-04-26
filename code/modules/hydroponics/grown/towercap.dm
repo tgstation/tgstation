@@ -116,8 +116,9 @@
 		can_buckle = 1
 		buckle_requires_restraints = 1
 		to_chat(user, "<span class='italics'>You add a rod to [src].")
-		var/image/U = image(icon='icons/obj/hydroponics/equipment.dmi',icon_state="bonfire_rod",pixel_y=16)
-		underlays += U
+		var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
+		rod_underlay.pixel_y = 16
+		underlays += rod_underlay
 	if(W.is_hot())
 		StartBurning()
 
@@ -187,10 +188,10 @@
 		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 
-/obj/structure/bonfire/buckle_mob(mob/living/M, force = 0)
+/obj/structure/bonfire/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(..())
 		M.pixel_y += 13
 
-/obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force=0)
+/obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
 	if(..())
 		buckled_mob.pixel_y -= 13

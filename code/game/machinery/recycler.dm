@@ -1,4 +1,4 @@
-var/const/SAFETY_COOLDOWN = 100
+#define SAFETY_COOLDOWN 100
 
 /obj/machinery/recycler
 	name = "recycler"
@@ -12,7 +12,7 @@ var/const/SAFETY_COOLDOWN = 100
 	var/icon_name = "grinder-o"
 	var/blood = 0
 	var/eat_dir = WEST
-	var/amount_produced = 1
+	var/amount_produced = 50
 	var/datum/material_container/materials
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
@@ -40,9 +40,9 @@ var/const/SAFETY_COOLDOWN = 100
 		mat_mod = 2 * B.rating
 	mat_mod *= 50000
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		amt_made = 25 * M.rating //% of materials salvaged
+		amt_made = 12.5 * M.rating //% of materials salvaged
 	materials.max_amount = mat_mod
-	amount_produced = min(100, amt_made)
+	amount_produced = min(50, amt_made) + 50
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
@@ -109,9 +109,12 @@ var/const/SAFETY_COOLDOWN = 100
 		eat(AM)
 
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
-	var/list/to_eat = list(AM0)
+	var/list/to_eat
 	if(istype(AM0, /obj/item))
-		to_eat += AM0.GetAllContents()
+		to_eat = AM0.GetAllContents()
+	else
+		to_eat = list(AM0)
+
 	var/items_recycled = 0
 
 	for(var/i in to_eat)
@@ -204,3 +207,5 @@ var/const/SAFETY_COOLDOWN = 100
 /obj/item/weapon/paper/recycler
 	name = "paper - 'garbage duty instructions'"
 	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect the said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then deliver these minerals to cargo or engineering. You are our last hope for a clean station, do not screw this up!"
+
+#undef SAFETY_COOLDOWN

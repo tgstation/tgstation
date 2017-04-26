@@ -56,7 +56,7 @@
 	qdel(holder)
 	if(!QDELETED(target))
 		if(mobloc.density)
-			for(var/direction in alldirs)
+			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_step(mobloc, direction)
 				if(T)
 					if(target.Move(T))

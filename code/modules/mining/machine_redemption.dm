@@ -10,8 +10,8 @@
 	anchored = 1
 	input_dir = NORTH
 	output_dir = SOUTH
-	req_access = list(access_mineral_storeroom)
-	var/req_access_reclaim = access_mining_station
+	req_access = list(GLOB.access_mineral_storeroom)
+	var/req_access_reclaim = GLOB.access_mining_station
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list = list() //Key: Type.  Value: Instance of type.
@@ -85,7 +85,7 @@
 		var/obj/item/stack/sheet/sheet = stack_list[s]
 		msg += "[capitalize(sheet.name)]: [sheet.amount] sheets<br>"
 
-	for(var/obj/machinery/requests_console/D in allConsoles)
+	for(var/obj/machinery/requests_console/D in GLOB.allConsoles)
 		if(D.receive_ore_updates)
 			D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 
@@ -232,10 +232,10 @@
 			if(!(text2path(href_list["release"]) in stack_list))
 				return
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
-			var/obj/item/stack/sheet/out = new inp.type(src,merge=FALSE)
+			var/obj/item/stack/sheet/out = new inp.type(src, 0, FALSE)
 			var/desired = input("How many sheets?", "How many sheets to eject?", 1) as null|num
 			out.amount = round(min(desired,50,inp.amount))
-			if(out.amount)
+			if(out.amount >= 1)
 				inp.amount -= out.amount
 				unload_mineral(out)
 			if(inp.amount < 1)
