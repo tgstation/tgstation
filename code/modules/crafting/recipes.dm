@@ -269,7 +269,8 @@
 				/obj/item/pipe = 2,
 				/obj/item/stack/packageWrap = 5,
 				/obj/item/stack/cable_coil = 1,
-				/obj/item/stack/sheet/mineral/wood = 1)
+				/obj/item/stack/sheet/mineral/wood = 1,
+				/obj/item/stack/rods = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 150
 	category = CAT_WEAPON
