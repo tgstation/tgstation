@@ -314,11 +314,22 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/makeshift //mag is internal for balance reasons
 	can_suppress = 0
 	sparks = 1
+	var/randomized = 0 //has the icon been randomized yet?
+	var/variant = 0 //which variant is being used?
 
 /obj/item/weapon/gun/ballistic/revolver/pipe/New()
 	..()
-	if(prob(20))
-		icon_state = "pipepistol-alt1"
+
+	//this code is used to make the random icon persistent
+	if(variant !== 0)
+		randomized = 1
+	if(randomized == 0)
+		if(prob(50))
+			icon_state = "pipepistol-alt1"
+			variant = 2
+		else
+			icon_state = "pipepistol"
+			variant = 1
 
 /obj/item/weapon/gun/ballistic/revolver/pipe/attackby(obj/item/A, mob/user, params)
 	..()
