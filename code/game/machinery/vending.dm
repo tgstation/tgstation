@@ -297,7 +297,7 @@
 			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
 			cut_overlays()
 			if(panel_open)
-				add_overlay(image(icon, "[initial(icon_state)]-panel"))
+				add_overlay("[initial(icon_state)]-panel")
 			playsound(src.loc, W.usesound, 50, 1)
 			updateUsrDialog()
 		else

@@ -44,14 +44,11 @@
 			add_overlay("[O]_l")
 
 	if(a_right)
-		var/list/images = list()
-		images += image(icon, icon_state = "[a_right.icon_state]_left")
+		var/mutable_appearance/right = mutable_appearance(icon, "[a_right.icon_state]_left")
+		right.transform = matrix(-1, 0, 0, 0, 1, 0)
 		for(var/O in a_right.attached_overlays)
-			images += image(icon, icon_state = "[O]_l")
-		var/matrix = matrix(-1, 0, 0, 0, 1, 0)
-		for(var/image/I in images)
-			I.transform = matrix
-			add_overlay(I)
+			right.add_overlay("[O]_l")
+		add_overlay(right)
 
 	if(master)
 		master.update_icon()

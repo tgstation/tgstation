@@ -2398,10 +2398,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aea" = (
 /obj/machinery/conveyor{
@@ -2415,10 +2412,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aeb" = (
 /obj/machinery/conveyor{
@@ -2429,10 +2423,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aec" = (
 /obj/machinery/conveyor{
@@ -2448,10 +2439,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aed" = (
 /obj/machinery/conveyor{
@@ -2461,10 +2449,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aee" = (
 /obj/machinery/conveyor{
@@ -2483,10 +2468,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aef" = (
 /obj/machinery/conveyor{
@@ -4519,9 +4501,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/stripes/end{
-	dir = 8
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating{
 	tag = "icon-plating_warn_end (WEST)";
 	icon_state = "plating_warn_end"
@@ -4537,10 +4520,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ahp" = (
 /obj/machinery/conveyor{
@@ -4551,10 +4534,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ahq" = (
 /obj/machinery/conveyor{
@@ -4568,6 +4551,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plating{
 	tag = "icon-plating_warn_side (EAST)";
@@ -4583,6 +4569,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plating{
 	tag = "icon-plating_warn_side (EAST)";
@@ -4605,6 +4594,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plating{
 	tag = "icon-plating_warn_side (EAST)";
@@ -5035,6 +5027,9 @@
 /obj/structure/plasticflaps,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -11429,9 +11424,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/green/side{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "SERVER"
+	dir = 5
 	},
 /area/atmos)
 "arz" = (
@@ -12047,7 +12040,7 @@
 	layer = 2.9
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/mining)
 "asv" = (
 /turf/open/floor/engine/n2,
@@ -25691,6 +25684,10 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
+	},
 /turf/open/floor/plasteel/green/corner{
 	tag = "icon-greencorner (NORTH)";
 	icon_state = "greencorner";
@@ -26169,7 +26166,7 @@
 	},
 /obj/structure/shuttle/engine/heater,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aPF" = (
 /obj/structure/window/reinforced{
@@ -26178,7 +26175,7 @@
 /obj/structure/shuttle/engine/heater,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aPG" = (
 /obj/structure/grille,
@@ -26758,7 +26755,7 @@
 "aQE" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aQF" = (
 /obj/machinery/light{
@@ -27771,10 +27768,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_end (WEST)";
-	icon_state = "white_warn_end"
-	},
+/turf/open/floor/plasteel,
 /area/medical/research{
 	name = "Research Division"
 	})
@@ -27788,10 +27782,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_end (EAST)";
-	icon_state = "white_warn_end"
-	},
+/turf/open/floor/plasteel,
 /area/medical/research{
 	name = "Research Division"
 	})
@@ -29350,7 +29341,8 @@
 	})
 "aVC" = (
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 8;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/medical/research{
 	name = "Research Division"
@@ -29802,7 +29794,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 8;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/medical/research{
 	name = "Research Division"
@@ -35414,6 +35407,10 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "bfN" = (
@@ -37061,10 +37058,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_end (WEST)";
-	icon_state = "white_warn_end"
-	},
+/turf/open/floor/plasteel,
 /area/toxins/xenobiology)
 "biD" = (
 /obj/machinery/shower{
@@ -37080,10 +37074,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
-	tag = "icon-white_warn_end (EAST)";
-	icon_state = "white_warn_end"
-	},
+/turf/open/floor/plasteel,
 /area/toxins/xenobiology)
 "biE" = (
 /obj/structure/sign/xenobio,
@@ -37583,7 +37574,8 @@
 "bjw" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden,
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 8;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/toxins/xenobiology)
 "bjx" = (
@@ -37593,7 +37585,8 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 8;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/toxins/xenobiology)
 "bjy" = (
@@ -37757,7 +37750,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "bjO" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -37914,7 +37907,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "bjX" = (
 /obj/structure/grille,
@@ -38933,14 +38926,7 @@
 "bmh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 0;
-	frequency = 1441;
-	id_tag = "o2_out";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -41743,6 +41729,197 @@
 "bvf" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"bvg" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvh" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvi" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvj" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvk" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvl" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvm" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvn" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvo" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvp" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvq" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvr" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvs" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvt" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvu" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvv" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvw" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvx" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvy" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvz" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvA" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvB" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvC" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvD" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvE" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvF" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvG" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvH" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvI" = (
+/obj/item/weapon/pickaxe/emergency,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvJ" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvK" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvL" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvM" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
+"bvN" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/unpowered{
+	name = "Asteroid"
+	})
 
 (1,1,1) = {"
 aaa
@@ -71389,7 +71566,7 @@ aad
 aad
 aad
 aad
-aac
+abj
 aaW
 aad
 aad
@@ -71646,7 +71823,7 @@ aad
 aad
 aad
 abi
-aac
+abj
 abi
 abi
 aad
@@ -71683,9 +71860,9 @@ aJp
 aRF
 aSP
 aEt
-abi
+bvo
 aad
-abi
+bvo
 aad
 abi
 aad
@@ -71903,8 +72080,8 @@ aad
 abi
 aik
 aaW
-aac
-aac
+abj
+abj
 abu
 abP
 aad
@@ -72158,11 +72335,11 @@ aac
 aad
 aad
 aad
-aac
-aac
+abj
+abj
 abS
-aac
-aac
+abj
+abj
 acD
 aad
 abi
@@ -72201,11 +72378,11 @@ aUR
 aVL
 aUR
 aUQ
-abi
+bvo
 ahu
 aad
 aac
-acD
+bvI
 aad
 aac
 aad
@@ -72415,9 +72592,9 @@ aac
 aad
 aad
 aaW
-aac
+abj
 abu
-ajP
+aaV
 aad
 abS
 aad
@@ -72445,11 +72622,11 @@ aHl
 aIi
 aJs
 aKz
-buX
+buW
 aMR
 buZ
-bva
-bvb
+buZ
+buW
 aQL
 aRI
 aSS
@@ -72458,10 +72635,10 @@ aUS
 aUU
 aWz
 aVL
-abi
+bvo
 ahu
-abP
-abu
+bvh
+bvg
 aad
 aad
 aad
@@ -72676,7 +72853,7 @@ abu
 abu
 aad
 aad
-aac
+abj
 abi
 anx
 anx
@@ -72706,7 +72883,7 @@ aLP
 aMS
 aMS
 aOC
-bvc
+buW
 aQM
 aRJ
 aST
@@ -72715,8 +72892,8 @@ aUR
 aUU
 aWz
 aUQ
-abP
-abi
+bvh
+bvo
 aad
 aad
 aad
@@ -72930,9 +73107,9 @@ aad
 aad
 aad
 abu
-aac
+abj
 aad
-ajP
+aaV
 abP
 amG
 anx
@@ -72972,8 +73149,8 @@ aUS
 aUU
 aWz
 aVL
-abu
-abP
+bvg
+bvh
 aad
 aad
 aad
@@ -73229,8 +73406,8 @@ aUT
 aUU
 aUU
 aUQ
-abu
-abi
+bvg
+bvo
 aad
 aad
 aad
@@ -73486,7 +73663,7 @@ aUS
 aUU
 aWz
 aVL
-abP
+bvh
 aad
 aad
 aad
@@ -73734,7 +73911,7 @@ aLT
 aMW
 aMW
 aOD
-bve
+buW
 aQQ
 aRN
 aSX
@@ -73743,7 +73920,7 @@ aUR
 aUU
 aWz
 aUQ
-abi
+bvo
 aad
 aad
 aad
@@ -73987,11 +74164,11 @@ aHr
 aIo
 aJw
 aKE
-buY
+buW
 aMX
 aMX
 aMX
-bvf
+buW
 aQR
 aRO
 aSY
@@ -74000,7 +74177,7 @@ aUS
 aUU
 aWz
 aVL
-abi
+bvo
 aOH
 aZo
 baj
@@ -74767,11 +74944,11 @@ aQT
 aRR
 aTa
 aEt
-abi
-abu
-abP
-abi
-abi
+bvo
+bvg
+bvh
+bvo
+bvo
 aOH
 aZr
 bam
@@ -88596,9 +88773,9 @@ aaa
 aad
 aad
 aad
-abu
-abP
-abP
+bvg
+bvh
+bvh
 adn
 aec
 aeS
@@ -88665,7 +88842,7 @@ bhj
 bhT
 aRz
 aad
-abu
+bvg
 aac
 aad
 aad
@@ -88854,7 +89031,7 @@ aaa
 aac
 aac
 aac
-abu
+bvg
 aad
 adn
 aed
@@ -88921,7 +89098,7 @@ bgv
 bhk
 bhU
 aRy
-abu
+bvg
 aac
 aaa
 aaa
@@ -89178,7 +89355,7 @@ bgw
 bhl
 bhV
 aRy
-abu
+bvg
 aaa
 aaa
 aaa
@@ -89387,9 +89564,9 @@ acv
 aph
 aqp
 abt
-abP
-abP
-abu
+bvh
+bvh
+bvg
 aac
 aac
 aae
@@ -89645,7 +89822,7 @@ api
 amD
 amC
 amC
-abu
+bvg
 aac
 aae
 aae
@@ -89692,7 +89869,7 @@ bgy
 bhk
 bhX
 aRy
-abu
+bvg
 aaa
 aaa
 aaa
@@ -89949,7 +90126,7 @@ bgz
 bhk
 bgw
 aRy
-abu
+bvg
 aac
 aaa
 aaa

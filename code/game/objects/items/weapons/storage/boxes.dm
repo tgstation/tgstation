@@ -38,7 +38,7 @@
 	. = ..()
 	if(illustration)
 		cut_overlays()
-		add_overlay(image('icons/obj/storage.dmi', "[illustration]"))
+		add_overlay(illustration)
 
 /obj/item/weapon/storage/box/attack_self(mob/user)
 	..()

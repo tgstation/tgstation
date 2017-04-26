@@ -5,7 +5,7 @@ GLOBAL_PROTECT(whitelist)
 
 /proc/load_whitelist()
 	GLOB.whitelist = list()
-	for(var/line in file2list(WHITELISTFILE))
+	for(var/line in world.file2list(WHITELISTFILE))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))

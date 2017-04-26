@@ -90,7 +90,7 @@
 	update_icon()
 
 	if(skin)
-		add_overlay(image('icons/mob/aibots.dmi', "medskin_[skin]"))
+		add_overlay("medskin_[skin]")
 
 	var/datum/job/doctor/J = new /datum/job/doctor
 	access_card.access += J.get_access()

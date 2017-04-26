@@ -1138,13 +1138,13 @@ B --><-- A
 		if(location == src)
 			return 1
 
-/proc/flick_overlay_static(image/I, atom/A, duration)
+/proc/flick_overlay_static(O, atom/A, duration)
 	set waitfor = 0
-	if(!A || !I)
+	if(!A || !O)
 		return
-	A.add_overlay(I)
+	A.add_overlay(O)
 	sleep(duration)
-	A.cut_overlay(I)
+	A.cut_overlay(O)
 
 /proc/get_areas_in_z(zlevel)
 	. = list()

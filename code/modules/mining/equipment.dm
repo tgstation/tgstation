@@ -513,7 +513,7 @@
 	var/charged = 1
 	var/charge_time = 16
 	var/atom/mark = null
-	var/marked_image = null
+	var/mutable_appearance/marked_underlay
 
 /obj/item/projectile/destabilizer
 	name = "destabilizing force"
@@ -530,15 +530,16 @@
 		if(hammer_synced.mark == target)
 			return ..()
 		if(isliving(target))
-			if(hammer_synced.mark && hammer_synced.marked_image)
-				hammer_synced.mark.underlays -= hammer_synced.marked_image
-				hammer_synced.marked_image = null
+			if(hammer_synced.mark && hammer_synced.marked_underlay)
+				hammer_synced.mark.underlays -= hammer_synced.marked_underlay
+				hammer_synced.marked_underlay = null
 			var/mob/living/L = target
 			if(L.mob_size >= MOB_SIZE_LARGE)
 				hammer_synced.mark = L
-				var/image/I = image('icons/effects/effects.dmi', loc = L, icon_state = "shield2",pixel_y = (-L.pixel_y),pixel_x = (-L.pixel_x))
-				L.underlays += I
-				hammer_synced.marked_image = I
+				hammer_synced.marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+				hammer_synced.marked_underlay.pixel_x = -L.pixel_x
+				hammer_synced.marked_underlay.pixel_y = -L.pixel_y
+				L.underlays += hammer_synced.marked_underlay
 		var/target_turf = get_turf(target)
 		if(ismineralturf(target_turf))
 			var/turf/closed/mineral/M = target_turf
@@ -570,9 +571,8 @@
 		new /obj/effect/overlay/temp/kinetic_blast(get_turf(L))
 		mark = 0
 		if(L.mob_size >= MOB_SIZE_LARGE)
-			L.underlays -= marked_image
-			qdel(marked_image)
-			marked_image = null
+			L.underlays -= marked_underlay
+			QDEL_NULL(marked_underlay)
 			var/backstab_dir = get_dir(user, L)
 			var/def_check = L.getarmor(type = "bomb")
 			if((user.dir & backstab_dir) && (L.dir & backstab_dir))

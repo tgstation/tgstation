@@ -64,17 +64,17 @@
 		deconstruct()
 
 /obj/machinery/disposal/Initialize(mapload)
-	. = mapload	//late-initialize, we need turfs to have air
-	if(initialized)	//will only be run on late mapload initialization
-		//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
-		var/atom/L = loc
-		var/datum/gas_mixture/env = new
-		env.copy_from(L.return_air())
-		var/datum/gas_mixture/removed = env.remove(SEND_PRESSURE + 1)
-		air_contents.merge(removed)
-		trunk_check()
-	else
-		..()
+	..()
+	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
+
+/obj/machinery/disposal/LateInitialize()
+	//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
+	var/atom/L = loc
+	var/datum/gas_mixture/env = new
+	env.copy_from(L.return_air())
+	var/datum/gas_mixture/removed = env.remove(SEND_PRESSURE + 1)
+	air_contents.merge(removed)
+	trunk_check()
 
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -364,7 +364,7 @@
 
 	//flush handle
 	if(flush)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-handle"))
+		add_overlay("dispover-handle")
 
 	//only handle is shown if no power
 	if(stat & NOPOWER || panel_open)
@@ -372,13 +372,13 @@
 
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-full"))
+		add_overlay("dispover-full")
 
 	//charging and ready light
 	if(pressure_charging)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-charge"))
+		add_overlay("dispover-charge")
 	else if(full_pressure)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-ready"))
+		add_overlay("dispover-ready")
 
 //timed process
 //charge the gas reservoir and perform flush if ready
