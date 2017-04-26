@@ -616,14 +616,24 @@
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
+
+	var/list/arguments
 	if(ispath(chosen,/turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
-		var/atom/A = new chosen(usr.loc)
+		if(alert(usr, "Would you like to add arguments?", "Spawn", "No", "Yes") == "Yes")
+			arguments = get_callproc_args(TRUE);
+		
+		if(!usr)
+			return
+		
+		arguments = list(usr.loc) + arguments
+
+		var/atom/A = new chosen(argslist(arguments))
 		A.admin_spawned = TRUE
 
-	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])[LAZYLEN(arguments) > 1 " with parameters [print_single_line(arguments)]": ""]")
 	feedback_add_details("admin_verb","Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
