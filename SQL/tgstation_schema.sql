@@ -268,6 +268,7 @@ CREATE TABLE `player` (
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
+  `exp` mediumtext,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ckey` (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),

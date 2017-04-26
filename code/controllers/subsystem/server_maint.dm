@@ -2,10 +2,12 @@ SUBSYSTEM_DEF(server_maint)
 	name = "Server Tasks"
 	wait = 6000
 	flags = SS_NO_TICK_CHECK
+	var/triggertime = null
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (config.hub)
 		world.visibility = 1
+	triggertime = REALTIMEOFDAY
 	..()
 
 /datum/controller/subsystem/server_maint/fire()
@@ -21,3 +23,6 @@ SUBSYSTEM_DEF(server_maint)
 
 	if(config.sql_enabled)
 		sql_poll_population()
+		if(config.use_exp_tracking)
+			if(REALTIMEOFDAY > (triggertime +3000))	//server maint fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire
+				update_exp(10,0)
