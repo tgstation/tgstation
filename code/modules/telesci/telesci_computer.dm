@@ -30,9 +30,9 @@
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
 
-/obj/machinery/computer/telescience/New()
+/obj/machinery/computer/telescience/Initialize()
 	recalibrate()
-	..()
+	. = ..()
 
 /obj/machinery/computer/telescience/Destroy()
 	eject()

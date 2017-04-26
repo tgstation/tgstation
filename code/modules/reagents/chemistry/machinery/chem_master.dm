@@ -17,12 +17,12 @@
 	var/useramount = 30 // Last used amount
 	layer = BELOW_OBJ_LAYER
 
-/obj/machinery/chem_master/New()
+/obj/machinery/chem_master/Initialize()
 	create_reagents(100)
 	add_overlay("waitlight")
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_master(null)
 	B.apply_default_parts(src)
-	..()
+	. = ..()
 
 /obj/item/weapon/circuitboard/machine/chem_master
 	name = "ChemMaster 3000 (Machine Board)"
