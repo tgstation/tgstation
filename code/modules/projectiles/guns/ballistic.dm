@@ -11,13 +11,14 @@
 
 /obj/item/weapon/gun/ballistic/New()
 	..()
-	if(!spawnwithmagazine)
+	if(!spawnwithmagazine && !dont_update)
 		update_icon()
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
 	chamber_round()
-	update_icon()
+	if(!dont_update)
+		update_icon()
 
 /obj/item/weapon/gun/ballistic/update_icon()
 	..()
@@ -60,8 +61,9 @@
 				magazine = AM
 				to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 				chamber_round()
-				A.update_icon()
-				update_icon()
+				if(!dont_update)
+					A.update_icon()
+					update_icon()
 				return 1
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
@@ -80,7 +82,8 @@
 				S.initial_w_class = w_class
 				fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 				w_class = WEIGHT_CLASS_NORMAL //so pistols do not fit in pockets when suppressed
-				update_icon()
+				if(!dont_update)
+					update_icon()
 				return
 			else
 				to_chat(user, "<span class='warning'>[src] already has a suppressor!</span>")
@@ -102,7 +105,8 @@
 			fire_sound = S.oldsound
 			w_class = S.initial_w_class
 			suppressed = 0
-			update_icon()
+			if(!dont_update)
+				update_icon()
 			return
 	..()
 
@@ -121,7 +125,8 @@
 		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
-	update_icon()
+	if(!dont_update)
+		update_icon()
 	return
 
 
@@ -178,7 +183,8 @@
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		sawn_state = SAWN_OFF
-		update_icon()
+		if(!dont_update)
+			update_icon()
 		return 1
 
 // Sawing guns related proc

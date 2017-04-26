@@ -314,13 +314,14 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/makeshift //mag is internal for balance reasons
 	can_suppress = 0
 	sparks = 1
+	dont_update = 1 //hopefully prevents icon from changing to default after a variant is selected
 	var/randomized = 0 //has the icon been randomized yet?
 	var/variant = 0 //which variant is being used?
 
 /obj/item/weapon/gun/ballistic/revolver/pipe/New()
 	..()
 
-	//this code is used to make the random icon persistent
+	//this code is used to make the random icon persistent.
 	if(variant != 0)
 		randomized = 1
 	if(randomized == 0)
