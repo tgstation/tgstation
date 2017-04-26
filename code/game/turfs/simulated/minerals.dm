@@ -63,7 +63,7 @@
 			if(ismineralturf(src))
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
-				feedback_add_details("pick_used_mining","[P.type]")
+				SSblackbox.add_details("pick_used_mining","[P.type]")
 	else
 		return attack_hand(user)
 
@@ -72,7 +72,7 @@
 		var/i
 		for(i in 1 to mineralAmt)
 			new mineralType(src)
-			feedback_add_details("ore_mined",mineralType)
+			SSblackbox.add_details("ore_mined",mineralType)
 	ChangeTurf(turf_type, defer_change)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction

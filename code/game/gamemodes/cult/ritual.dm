@@ -247,7 +247,7 @@ This file contains the arcane tome files.
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
 	R.add_mob_blood(user)
 	to_chat(user, "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>")
-	feedback_add_details("cult_runes_scribed", R.cultist_name)
+	SSblackbox.add_details("cult_runes_scribed", R.cultist_name)
 
 /obj/item/weapon/tome/proc/check_rune_turf(turf/T, mob/user)
 	var/area/A = get_area(T)

@@ -166,7 +166,7 @@
 	body += "</body></html>"
 
 	usr << browse(body, "window=adminplayeropts-\ref[M];size=550x515")
-	feedback_add_details("admin_verb","Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /datum/admins/proc/access_news_network() //MARKER
@@ -419,7 +419,7 @@
 		return
 	if(confirm == "Yes")
 		SSticker.delay_end = 0
-		feedback_add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_error", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 
 /datum/admins/proc/end_round()
@@ -434,7 +434,7 @@
 		return
 	if(confirm == "Yes")
 		SSticker.force_ending = 1
-		feedback_add_details("admin_verb","End Round") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","End Round") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /datum/admins/proc/announce()
@@ -450,7 +450,7 @@
 			message = adminscrub(message,500)
 		to_chat(world, "<span class='adminnotice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b></span>\n \t [message]")
 		log_admin("Announce: [key_name(usr)] : [message]")
-	feedback_add_details("admin_verb","Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/set_admin_notice()
 	set category = "Special Verbs"
@@ -471,7 +471,7 @@
 		message_admins("[key_name(usr)] set the admin notice.")
 		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
 		to_chat(world, "<span class ='adminnotice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>")
-	feedback_add_details("admin_verb","Set Admin Notice") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Set Admin Notice") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	GLOB.admin_notice = new_admin_notice
 	return
 
@@ -482,7 +482,7 @@
 	toggle_ooc()
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled OOC.")
-	feedback_add_details("admin_toggle","Toggle OOC|[GLOB.ooc_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle OOC|[GLOB.ooc_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleoocdead()
 	set category = "Server"
@@ -492,7 +492,7 @@
 
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
-	feedback_add_details("admin_toggle","Toggle Dead OOC|[GLOB.dooc_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Dead OOC|[GLOB.dooc_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/startnow()
 	set category = "Server"
@@ -507,7 +507,7 @@
 				started as soon as possible.)"
 		message_admins("<font color='blue'>\
 			[usr.key] has started the game.[msg]</font>")
-		feedback_add_details("admin_verb","Start Now") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","Start Now") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
 	else
 		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
@@ -526,7 +526,7 @@
 	log_admin("[key_name(usr)] toggled new player game entering.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled new player game entering.</span>")
 	world.update_status()
-	feedback_add_details("admin_toggle","Toggle Entering|[GLOB.enter_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Entering|[GLOB.enter_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleAI()
 	set category = "Server"
@@ -539,7 +539,7 @@
 		to_chat(world, "<B>The AI job is chooseable now.</B>")
 	log_admin("[key_name(usr)] toggled AI allowed.")
 	world.update_status()
-	feedback_add_details("admin_toggle","Toggle AI|[config.allow_ai]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle AI|[config.allow_ai]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleaban()
 	set category = "Server"
@@ -553,7 +553,7 @@
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [GLOB.abandon_allowed ? "On" : "Off"].</span>")
 	log_admin("[key_name(usr)] toggled respawn to [GLOB.abandon_allowed ? "On" : "Off"].")
 	world.update_status()
-	feedback_add_details("admin_toggle","Toggle Respawn|[GLOB.abandon_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Respawn|[GLOB.abandon_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/delay()
 	set category = "Server"
@@ -572,7 +572,7 @@
 			to_chat(world, "<b>The game will start in [newtime] seconds.</b>")
 			world << 'sound/ai/attention.ogg'
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
-		feedback_add_details("admin_verb","Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)
 	set category = "Admin"
@@ -583,7 +583,7 @@
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
 		alert("[M.name] is not prisoned.")
-	feedback_add_details("admin_verb","Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
@@ -624,7 +624,7 @@
 		A.admin_spawned = TRUE
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
-	feedback_add_details("admin_verb","Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /datum/admins/proc/show_traitor_panel(mob/M in GLOB.mob_list)
@@ -640,7 +640,7 @@
 		return
 
 	M.mind.edit_memory()
-	feedback_add_details("admin_verb","Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /datum/admins/proc/toggletintedweldhelmets()
@@ -654,7 +654,7 @@
 		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.")
-	feedback_add_details("admin_toggle","Toggle Tinted Welding Helmets|[GLOB.tinted_weldhelh]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Tinted Welding Helmets|[GLOB.tinted_weldhelh]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleguests()
 	set category = "Server"
@@ -667,7 +667,7 @@
 		to_chat(world, "<B>Guests may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled guests game entering [GLOB.guests_allowed?"":"dis"]allowed.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [GLOB.guests_allowed?"":"dis"]allowed.</span>")
-	feedback_add_details("admin_toggle","Toggle Guests|[GLOB.guests_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Guests|[GLOB.guests_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
@@ -796,7 +796,7 @@
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
 	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
-	feedback_add_details("admin_verb","Ghost Drag Control")
+	SSblackbox.add_details("admin_verb","Ghost Drag Control")
 
 	tomob.ckey = frommob.ckey
 	qdel(frommob)

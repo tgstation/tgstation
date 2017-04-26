@@ -396,7 +396,7 @@
 						remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
 
 					for(var/P in C.results)
-						feedback_add_details("chemical_reaction", "[P]|[cached_results[P]*multiplier]")
+						SSblackbox.add_details("chemical_reaction", "[P]|[cached_results[P]*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
 						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 

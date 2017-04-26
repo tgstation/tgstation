@@ -136,7 +136,7 @@
 			else
 				inserted_id.mining_points -= prize.cost
 				new prize.equipment_path(src.loc)
-				feedback_add_details("mining_equipment_bought",
+				SSblackbox.add_details("mining_equipment_bought",
 					"[src.type]|[prize.equipment_path]")
 				// Add src.type to keep track of free golem purchases
 				// seperately.
@@ -189,7 +189,7 @@
 		if("Mining Conscription Kit")
 			new /obj/item/weapon/storage/backpack/dufflebag/mining_conscript(loc)
 
-	feedback_add_details("mining_voucher_redeemed", selection)
+	SSblackbox.add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)

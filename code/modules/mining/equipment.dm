@@ -68,7 +68,7 @@
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
-	feedback_add_details("jaunter", "User") // user activated
+	SSblackbox.add_details("jaunter", "User") // user activated
 	activate(user)
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
@@ -124,13 +124,13 @@
 
 	if(triggered)
 		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
-		feedback_add_details("jaunter","EMP") // EMP accidental activation
+		SSblackbox.add_details("jaunter","EMP") // EMP accidental activation
 		activate(usr)
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
 		to_chat(user, "Your [src] activates, saving you from the chasm!</span>")
-		feedback_add_details("jaunter","Chasm") // chasm automatic activation
+		SSblackbox.add_details("jaunter","Chasm") // chasm automatic activation
 		activate(user)
 	else
 		to_chat(user, "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
@@ -320,7 +320,7 @@
 						H.attack_same = 0
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
-				feedback_add_details("lazarus_injector", "[M.type]")
+				SSblackbox.add_details("lazarus_injector", "[M.type]")
 				playsound(src,'sound/effects/refill.ogg',50,1)
 				icon_state = "lazarus_empty"
 				return
