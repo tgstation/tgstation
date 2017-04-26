@@ -252,7 +252,8 @@
 		if(mind)
 			mind.transfer_to(O)
 			if(O.mind.changeling)
-				O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+				for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
+					mind.changeling.purchasedpowers -= HF
 
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
