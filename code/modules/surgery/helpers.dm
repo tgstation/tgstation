@@ -20,7 +20,7 @@
 			current_surgery = S
 
 	if(!current_surgery)
-		var/list/all_surgeries = surgeries_list.Copy()
+		var/list/all_surgeries = GLOB.surgeries_list.Copy()
 		var/list/available_surgeries = list()
 
 		for(var/datum/surgery/S in all_surgeries)
@@ -30,6 +30,8 @@
 				if(!S.requires_bodypart)
 					continue
 				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+					continue
+				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
 			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
 				continue

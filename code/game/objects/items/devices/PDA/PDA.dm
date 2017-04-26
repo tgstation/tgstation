@@ -1,7 +1,7 @@
 
 //The advanced pea-green monochrome lcd of tomorrow.
 
-var/global/list/obj/item/device/pda/PDAs = list()
+GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/device/pda
@@ -51,7 +51,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
-	var/image/photo = null //Scanned photo
+	var/icon/photo //Scanned photo
 
 	var/list/contained_item = list(/obj/item/weapon/pen, /obj/item/toy/crayon, /obj/item/weapon/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
@@ -62,7 +62,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(fon)
 		set_light(f_lum)
 
-	PDAs += src
+	GLOB.PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
 	inserted_item =	new /obj/item/weapon/pen(src)
@@ -82,22 +82,24 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/update_icon()
 	cut_overlays()
+	var/mutable_appearance/overlay = new()
+	overlay.pixel_x = overlays_x_offset
 	if(id)
-		var/image/I = image(icon_state = "id_overlay", pixel_x = overlays_x_offset)
-		add_overlay(I)
+		overlay.icon_state = "id_overlay"
+		add_overlay(new /mutable_appearance(overlay))
 	if(inserted_item)
-		var/image/I = image(icon_state = "insert_overlay", pixel_x = overlays_x_offset)
-		add_overlay(I)
+		overlay.icon_state = "insert_overlay"
+		add_overlay(new /mutable_appearance(overlay))
 	if(fon)
-		var/image/I = image(icon_state = "light_overlay", pixel_x = overlays_x_offset)
-		add_overlay(I)
+		overlay.icon_state = "light_overlay"
+		add_overlay(new /mutable_appearance(overlay))
 	if(pai)
 		if(pai.pai)
-			var/image/I = image(icon_state = "pai_overlay", pixel_x = overlays_x_offset)
-			add_overlay(I)
+			overlay.icon_state = "pai_overlay"
+			add_overlay(new /mutable_appearance(overlay))
 		else
-			var/image/I = image(icon_state = "pai_off_overlay", pixel_x = overlays_x_offset)
-			add_overlay(I)
+			overlay.icon_state = "pai_off_overlay"
+			add_overlay(new /mutable_appearance(overlay))
 
 /obj/item/device/pda/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -138,7 +140,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
 				dat += "[worldtime2text()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
-				dat += "[time2text(world.realtime, "MMM DD")] [year_integer+540]"
+				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]"
 
 				dat += "<br><br>"
 
@@ -474,7 +476,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if("Toggle Door")
 				if(cartridge && cartridge.access_remote_door)
-					for(var/obj/machinery/door/poddoor/M in machines)
+					for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 						if(M.id == cartridge.remote_door_id)
 							if(M.density)
 								M.open()
@@ -633,10 +635,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	update_icon()
-	add_overlay(image(icon, icon_alert))
+	add_overlay(icon_alert)
 
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
@@ -646,8 +648,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return null
 
 	var/obj/machinery/message_server/useMS = null
-	if(message_servers)
-		for (var/obj/machinery/message_server/MS in message_servers)
+	if(GLOB.message_servers)
+		for (var/obj/machinery/message_server/MS in GLOB.message_servers)
 		//PDAs are now dependant on the Message Server.
 			if(MS.active)
 				useMS = MS
@@ -895,7 +897,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 /obj/item/device/pda/Destroy()
-	PDAs -= src
+	GLOB.PDAs -= src
 	if(id)
 		qdel(id)
 		id = null
@@ -978,20 +980,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		to_chat(user, "You do not have a PDA. You should make an issue report about this.")
 
-/obj/item/weapon/storage/box/PDAs/New()
-	..()
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
-	new /obj/item/weapon/cartridge/head(src)
-
-	var/newcart = pick(	/obj/item/weapon/cartridge/engineering,
-						/obj/item/weapon/cartridge/security,
-						/obj/item/weapon/cartridge/medical,
-						/obj/item/weapon/cartridge/signal/toxins,
-						/obj/item/weapon/cartridge/quartermaster)
-	new newcart(src)
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/device/pda/emp_act(severity)
@@ -1004,7 +992,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /proc/get_viewable_pdas()
 	. = list()
 	// Returns a list of PDAs which can be viewed from another PDA/message monitor.
-	for(var/obj/item/device/pda/P in PDAs)
+	for(var/obj/item/device/pda/P in GLOB.PDAs)
 		if(!P.owner || P.toff || P.hidden) continue
 		. += P
 	return .

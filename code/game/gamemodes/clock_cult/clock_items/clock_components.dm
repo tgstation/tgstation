@@ -57,10 +57,6 @@
 	light_power = 0.4
 	light_color = "#F42B9D"
 
-/obj/item/clockwork/component/belligerent_eye/lens_gem/New()
-	..()
-	update_light()
-
 /obj/item/clockwork/component/vanguard_cogwheel
 	name = "vanguard cogwheel"
 	desc = "A sturdy brass cog with a faintly glowing blue gem in its center."
@@ -167,8 +163,8 @@
 	var/randomsinglesprite = FALSE
 	var/randomspritemax = 2
 
-/obj/item/clockwork/alloy_shards/New()
-	..()
+/obj/item/clockwork/alloy_shards/Initialize()
+	. = ..()
 	if(randomsinglesprite)
 		replace_name_desc()
 		icon_state = "[icon_state][rand(1, randomspritemax)]"

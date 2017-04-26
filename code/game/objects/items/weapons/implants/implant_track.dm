@@ -6,11 +6,11 @@
 
 /obj/item/weapon/implant/tracking/New()
 	..()
-	tracked_implants += src
+	GLOB.tracked_implants += src
 
 /obj/item/weapon/implant/tracking/Destroy()
 	. = ..()
-	tracked_implants -= src
+	GLOB.tracked_implants -= src
 
 /obj/item/weapon/implanter/tracking
 	imp_type = /obj/item/weapon/implant/tracking

@@ -155,7 +155,7 @@
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
 	origin_tech = "materials=4;combat=4;biotech=4;powerstorage=4;syndicate=3"
-	holder = /obj/item/weapon/gun/energy/laser/mounted
+	contents = newlist(/obj/item/weapon/gun/energy/laser/mounted)
 
 /obj/item/organ/cyberimp/arm/gun/laser/l
 	zone = "l_arm"
@@ -166,7 +166,7 @@
 	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_taser"
 	origin_tech = "materials=5;combat=5;biotech=4;powerstorage=4"
-	holder = /obj/item/weapon/gun/energy/e_gun/advtaser/mounted
+	contents = newlist(/obj/item/weapon/gun/energy/e_gun/advtaser/mounted)
 
 /obj/item/organ/cyberimp/arm/gun/taser/l
 	zone = "l_arm"

@@ -117,7 +117,7 @@
 	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
 		// No adjacency needed
 		if(W)
-			melee_item_attack_chain(src, W, A)
+			melee_item_attack_chain(src, W, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -131,7 +131,7 @@
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
 		if(Adjacent(A) || (W && CheckReach(src, A, W.reach))) //Adjacent or reaching attacks
 			if(W)
-				melee_item_attack_chain(src, W, A)
+				melee_item_attack_chain(src, W, A, params)
 			else
 				if(ismob(A))
 					changeNext_move(CLICK_CD_MELEE)

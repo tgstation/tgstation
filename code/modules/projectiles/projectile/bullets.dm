@@ -49,10 +49,8 @@
 	..()
 
 /obj/item/projectile/bullet/pellet/weak/on_range()
- 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
- 	sparks.set_up(1, 1, src)
- 	sparks.start()
- 	..()
+	do_sparks(1, TRUE, src)
+	..()
 
 /obj/item/projectile/bullet/pellet/overload
 	damage = 3
@@ -66,11 +64,9 @@
  	explosion(target, 0, 0, 2)
 
 /obj/item/projectile/bullet/pellet/overload/on_range()
- 	explosion(src, 0, 0, 2)
- 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
- 	sparks.set_up(3, 3, src)
- 	sparks.start()
- 	..()
+	explosion(src, 0, 0, 2)
+	do_sparks(3, TRUE, src)
+	..()
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20

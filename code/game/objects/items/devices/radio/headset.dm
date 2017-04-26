@@ -22,7 +22,7 @@
 	keyslot2 = null
 	return ..()
 
-/obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
+/obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans,datum/language/language)
 	if (!listening)
 		return ITALICS | REDUCE_RANGE
 	return ..()
@@ -231,7 +231,7 @@
 
 
 			for(var/ch_name in channels)
-				SSradio.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 
@@ -296,7 +296,7 @@
 
 
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 	return
 

@@ -13,8 +13,8 @@
 
 #define DEVILRESURRECTTIME 600
 
-var/global/list/allDevils = list()
-var/global/list/lawlorify = list (
+GLOBAL_LIST_EMPTY(allDevils)
+GLOBAL_LIST_INIT(lawlorify, list (
 		LORE = list(
 			OBLIGATION_FOOD = "This devil seems to always offer its victims food before slaughtering them.",
 			OBLIGATION_FIDDLE = "This devil will never turn down a musical challenge.",
@@ -77,8 +77,7 @@ var/global/list/lawlorify = list (
 			BANISH_DESTRUCTION = "If your corpse is destroyed, you will be unable to resurrect.",
 			BANISH_FUNERAL_GARB = "If your corpse is clad in funeral garments, you will be unable to resurrect."
 		)
-	)
-
+	))
 /datum/devilinfo
 	var/datum/mind/owner = null
 	var/obligation
@@ -112,11 +111,11 @@ var/global/list/lawlorify = list (
 	return devil
 
 /proc/devilInfo(name, saveDetails = 0)
-	if(allDevils[lowertext(name)])
-		return allDevils[lowertext(name)]
+	if(GLOB.allDevils[lowertext(name)])
+		return GLOB.allDevils[lowertext(name)]
 	else
 		var/datum/devilinfo/devil = randomDevilInfo(name)
-		allDevils[lowertext(name)] = devil
+		GLOB.allDevils[lowertext(name)] = devil
 		devil.exists = saveDetails
 		return devil
 
@@ -287,9 +286,9 @@ var/global/list/lawlorify = list (
 	if(A)
 		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner.current, action=NOTIFY_ATTACK)
 	sleep(50)
-	if(!ticker.mode.devil_ascended)
+	if(!SSticker.mode.devil_ascended)
 		SSshuttle.emergency.request(null, 0.3)
-	ticker.mode.devil_ascended++
+	SSticker.mode.devil_ascended++
 	form = ARCH_DEVIL
 
 /datum/devilinfo/proc/remove_spells()
@@ -415,8 +414,8 @@ var/global/list/lawlorify = list (
 	check_regression()
 
 /datum/devilinfo/proc/create_new_body()
-	if(blobstart.len > 0)
-		var/turf/targetturf = get_turf(pick(blobstart))
+	if(GLOB.blobstart.len > 0)
+		var/turf/targetturf = get_turf(pick(GLOB.blobstart))
 		var/mob/currentMob = owner.current
 		if(!currentMob)
 			currentMob = owner.get_ghost()

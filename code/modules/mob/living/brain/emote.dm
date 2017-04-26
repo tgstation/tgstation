@@ -20,7 +20,7 @@
 
 /datum/emote/brain/flash
 	key = "flash"
-	message = "lights' blink."
+	message = "blinks their lights."
 
 /datum/emote/brain/notice
 	key = "notice"

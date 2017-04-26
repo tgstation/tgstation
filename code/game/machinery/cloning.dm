@@ -6,7 +6,7 @@
 #define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
 #define MINIMUM_HEAL_LEVEL 40
 
-#define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans())
+#define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans(), get_default_language())
 
 /obj/machinery/clonepod
 	anchored = 1
@@ -15,7 +15,7 @@
 	density = 1
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
-	req_access = list(access_cloning) //For premature unlocking.
+	req_access = list(GLOB.access_cloning) //For premature unlocking.
 	verb_say = "states"
 	var/heal_level //The clone is released once its health reaches this level.
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -126,6 +126,15 @@
 	if (is_operational() && (!isnull(occupant)) && (occupant.stat != DEAD))
 		to_chat(user, "Current clone cycle is [round(get_completion())]% complete.")
 
+/obj/machinery/clonepod/return_air()
+	// We want to simulate the clone not being in contact with
+	// the atmosphere, so we'll put them in a constant pressure
+	// nitrogen. They'll breathe through the chemicals we pump into them.
+	var/static/datum/gas_mixture/immutable/cloner/GM //global so that there's only one instance made for all cloning pods
+	if(!GM)
+		GM = new
+	return GM
+
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
 
@@ -163,10 +172,15 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
+	if(clonemind.changeling)
+		var/obj/item/organ/brain/B = H.getorganslot("brain")
+		B.vital = FALSE
+		B.decoy_override = TRUE
+
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 
 	if(efficiency > 2)
-		var/list/unclean_mutations = (not_good_mutations|bad_mutations)
+		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
 		H.dna.remove_mutation_group(unclean_mutations)
 	if(efficiency > 5 && prob(20))
 		H.randmutvg()
