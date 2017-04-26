@@ -14,18 +14,15 @@
 
 
 /obj/structure/ladder/Initialize(mapload)
-	if(!initialized)
-		GLOB.ladders += src
-		..()
-	if(mapload)
-		return TRUE
-	update_link()
+	GLOB.ladders += src
+	..()
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy()
 	GLOB.ladders -= src
 	. = ..()
 
-/obj/structure/ladder/proc/update_link()
+/obj/structure/ladder/LateInitialize()
 	for(var/obj/structure/ladder/L in GLOB.ladders)
 		if(L.id == id)
 			if(L.height == (height - 1))

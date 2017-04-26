@@ -7936,7 +7936,9 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/landmark/start/cargo_technician,
+/obj/effect/landmark/start{
+	name = "Cargo Technician"
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aqV" = (
@@ -13923,7 +13925,7 @@
 	dir = 4;
 	icon_state = "burst_r"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "aEy" = (
 /obj/structure/shuttle/engine/heater{
@@ -13933,7 +13935,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "aEz" = (
 /obj/machinery/power/apc{
@@ -14458,7 +14460,7 @@
 	dir = 4;
 	icon_state = "propulsion"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "aFG" = (
 /turf/open/floor/plasteel/arrival{
@@ -15366,7 +15368,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aHt" = (
-/obj/effect/landmark/observer_start,
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aHu" = (
@@ -16626,7 +16630,7 @@
 	dir = 4;
 	icon_state = "burst_l"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "aKj" = (
 /obj/machinery/door/firedoor,
@@ -26739,7 +26743,9 @@
 /obj/structure/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start/roboticist,
+/obj/effect/landmark/start{
+	name = "Roboticist"
+	},
 /turf/open/floor/plasteel/white,
 /area/assembly/robotics)
 "biN" = (
@@ -39959,9 +39965,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/shieldwallgen{
-	req_access_txt = "55"
-	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "bJI" = (
@@ -58776,7 +58780,7 @@
 	dir = 8;
 	icon_state = "propulsion_l"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cxu" = (
 /turf/closed/wall/mineral/titanium,
@@ -58812,7 +58816,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cxz" = (
 /obj/machinery/computer/shuttle/ferry/request,
@@ -58840,7 +58844,7 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cxE" = (
 /obj/machinery/door/airlock/titanium,
@@ -59477,11 +59481,11 @@
 /area/engine/engineering)
 "czi" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czj" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czk" = (
 /obj/machinery/door/airlock/external{
@@ -59513,7 +59517,7 @@
 	anchored = 1
 	},
 /obj/structure/light_construct,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czo" = (
 /turf/open/space,
@@ -60963,7 +60967,7 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cCz" = (
 /obj/machinery/door/airlock/external,
@@ -61781,6 +61785,12 @@
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "Supermatter Chamber";
+	dir = 2;
+	network = list("Engine");
+	pixel_x = 23
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -63383,7 +63393,7 @@
 	name = "arrivals";
 	width = 7
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "cIh" = (
 /obj/machinery/door/airlock/external{
@@ -64916,41 +64926,6 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "cMC" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cMD" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cME" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cMF" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cMG" = (
-/turf/open/floor/engine,
-/area/engine/supermatter)
-"cMH" = (
-/turf/open/floor/engine,
-/area/engine/supermatter)
-"cMI" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cMJ" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cMK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/highpressure/fulltile,
-/turf/open/floor/plating,
-/area/engine/supermatter)
-"cML" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cMM" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"cMN" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -64967,7 +64942,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cMO" = (
+"cMD" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cME" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMF" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMG" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMH" = (
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"cMI" = (
 /obj/machinery/power/rad_collector{
 	anchored = 1
 	},
@@ -64975,13 +64965,37 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/camera{
-	c_tag = "Supermatter Chamber";
-	dir = 2;
-	network = list("Engine");
-	pixel_x = 23
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"cMJ" = (
+/obj/machinery/power/rad_collector{
+	anchored = 1
+	},
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/open/floor/engine,
+/area/engine/supermatter)
+"cMK" = (
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"cML" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMM" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/highpressure/fulltile,
+/turf/open/floor/plating,
+/area/engine/supermatter)
+"cMO" = (
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cMP" = (
+/turf/closed/wall/r_wall,
 /area/engine/supermatter)
 
 (1,1,1) = {"
@@ -74582,7 +74596,7 @@ cyV
 cyi
 cMh
 cyi
-czi
+cye
 cyi
 cyi
 cye
@@ -75091,7 +75105,7 @@ cyi
 cyJ
 cyc
 cyi
-czi
+cye
 cyi
 cMe
 cyi
@@ -76121,7 +76135,7 @@ cyc
 cyc
 cyc
 cyR
-czj
+cza
 cyR
 cyc
 cyc
@@ -93386,11 +93400,11 @@ cpy
 cDv
 cDD
 cqU
-cMC
-cMO
+cMD
 cEu
-cEu
-cMC
+cMI
+cMI
+cMD
 cFL
 cGf
 cGw
@@ -93642,12 +93656,12 @@ chV
 cDq
 cqf
 cqD
-cMC
+cMD
 crs
 cEv
 cEv
 cFe
-cMC
+cMD
 cFM
 czE
 cGx
@@ -94145,7 +94159,7 @@ ccw
 ccw
 ccw
 cdk
-cMN
+cMC
 cgR
 ckK
 clJ
@@ -94158,10 +94172,10 @@ cqg
 cqE
 cqZ
 crt
-cMG
+cMH
 cAm
-cMG
-cMK
+cMH
+cMN
 cFO
 csC
 csQ
@@ -94669,13 +94683,13 @@ ccw
 cii
 cDq
 cqi
-cMC
+cMD
 cAP
 crv
 cEy
 cEy
 cFh
-cMC
+cMD
 cFQ
 czE
 cGx
@@ -94928,11 +94942,11 @@ cDr
 cDw
 cDE
 cEa
-cMC
+cMD
 cEz
 cEz
 cEz
-cMC
+cMD
 cFR
 cGf
 cGz

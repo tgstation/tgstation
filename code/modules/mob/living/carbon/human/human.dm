@@ -5,6 +5,9 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 
+	 // ME TARZAN, YOU JANEBOT
+	initial_languages = list(/datum/language/common)
+
 
 
 /mob/living/carbon/human/dummy
@@ -46,8 +49,6 @@
 
 	update_teeth()
 
-	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
-
 	..()
 
 /mob/living/carbon/human/create_internal_organs()
@@ -62,6 +63,7 @@
 		internal_organs += new /obj/item/organ/heart
 
 	internal_organs += new dna.species.mutanteyes()
+	internal_organs += new dna.species.mutantears
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/butt
 	..()
@@ -733,8 +735,8 @@
 
 /mob/living/carbon/human/wash_cream()
 	//clean both to prevent a rare bug
-	cut_overlay(image('icons/effects/creampie.dmi', "creampie_lizard"))
-	cut_overlay(image('icons/effects/creampie.dmi', "creampie_human"))
+	cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
+	cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
 
 
 //Turns a mob black, flashes a skeleton overlay
@@ -743,17 +745,19 @@
 	//Handle mutant parts if possible
 	if(dna && dna.species)
 		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
-		var/static/image/electrocution_skeleton_anim = image(icon = icon, icon_state = "electrocuted_base")
-		electrocution_skeleton_anim.appearance_flags = RESET_COLOR
+		var/static/mutable_appearance/electrocution_skeleton_anim
+		if(!electrocution_skeleton_anim)
+			electrocution_skeleton_anim = mutable_appearance(icon, "electrocuted_base")
+			electrocution_skeleton_anim.appearance_flags |= RESET_COLOR
 		add_overlay(electrocution_skeleton_anim)
 		addtimer(CALLBACK(src, .proc/end_electrocution_animation, electrocution_skeleton_anim), anim_duration)
 
 	else //or just do a generic animation
 		flick_overlay_view(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), src, anim_duration)
 
-/mob/living/carbon/human/proc/end_electrocution_animation(image/I)
+/mob/living/carbon/human/proc/end_electrocution_animation(mutable_appearance/MA)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
-	cut_overlay(I)
+	cut_overlay(MA)
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )
@@ -822,9 +826,9 @@
 					if(hal_screwyhud == SCREWYHUD_HEALTHY)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
+						hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
-					hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[t]6"))
+					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]6"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
@@ -928,15 +932,19 @@
 		riding_datum = new /datum/riding/human(src)
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
 		return
-	if(iscarbon(M))
-		if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-			M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
-			return
-		if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
-			M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
-			return
-	. = ..(M, force, check_loc)
-	stop_pulling()
+	visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
+	if(do_after(M, 15, target = src))
+		if(iscarbon(M))
+			if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+				M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
+				return
+			if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
+				M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
+				return
+		. = ..(M, force, check_loc)
+		stop_pulling()
+	else
+		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
 
 /mob/living/carbon/human/unbuckle_mob(mob/living/M, force=FALSE)
 	if(iscarbon(M))

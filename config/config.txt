@@ -81,7 +81,13 @@ LOG_LAW
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
 
-## disconnect players who did nothing during 10 minutes
+## period of time in seconds for players to be considered inactive
+# INACTIVITY_PERIOD 300
+
+## period of time in seconds for players to be considered afk and kickable
+# AFK_PERIOD 600
+
+## disconnect players who are considered afk
 # KICK_INACTIVE
 
 ## Comment this out to stop admins being able to choose their personal ooccolor

@@ -45,7 +45,7 @@
 			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				apply_cuffs(C,user)
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
-				feedback_add_details("handcuffs","[type]")
+				SSblackbox.add_details("handcuffs","[type]")
 
 				add_logs(user, C, "handcuffed")
 			else
@@ -275,7 +275,7 @@
 						C.legcuffed = src
 						src.loc = C
 						C.update_inv_legcuffed()
-						feedback_add_details("handcuffs","[type]")
+						SSblackbox.add_details("handcuffs","[type]")
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
 				if(SA.mob_size > MOB_SIZE_TINY)
@@ -336,7 +336,7 @@
 		C.legcuffed = src
 		src.loc = C
 		C.update_inv_legcuffed()
-		feedback_add_details("handcuffs","[type]")
+		SSblackbox.add_details("handcuffs","[type]")
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Weaken(weaken)
 

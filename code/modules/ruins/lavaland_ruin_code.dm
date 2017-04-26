@@ -24,8 +24,8 @@
 	icon_state = "datadisk1"
 	max_blueprints = 1
 
-/obj/item/weapon/disk/design_disk/golem_shell/New()
-	..()
+/obj/item/weapon/disk/design_disk/golem_shell/Initialize()
+	. = ..()
 	var/datum/design/golem_shell/G = new
 	blueprints[1] = G
 

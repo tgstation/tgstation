@@ -21,7 +21,7 @@
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/last_act = 0
-	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
+	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
 	var/defer_change = 0
 
 /turf/closed/mineral/Initialize()
@@ -63,7 +63,7 @@
 			if(ismineralturf(src))
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
-				feedback_add_details("pick_used_mining","[P.type]")
+				SSblackbox.add_details("pick_used_mining","[P.type]")
 	else
 		return attack_hand(user)
 
@@ -72,7 +72,7 @@
 		var/i
 		for(i in 1 to mineralAmt)
 			new mineralType(src)
-			feedback_add_details("ore_mined",mineralType)
+			SSblackbox.add_details("ore_mined",mineralType)
 	ChangeTurf(turf_type, defer_change)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
@@ -380,7 +380,7 @@
 	var/stage = 0 //How far into the lifecycle of gibtonite we are, 0 is untouched, 1 is active and attempting to detonate, 2 is benign and ready for extraction
 	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
 	var/activated_name = null
-	var/activated_image = null
+	var/mutable_appearance/activated_overlay
 
 /turf/closed/mineral/gibtonite/Initialize()
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
@@ -394,9 +394,8 @@
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
-		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = ON_EDGED_TURF_LAYER)
-		add_overlay(I)
-		activated_image = I
+		activated_overlay = mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_active", ON_EDGED_TURF_LAYER)
+		add_overlay(activated_overlay)
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
 		stage = 1
@@ -433,9 +432,9 @@
 
 /turf/closed/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
-		cut_overlay(activated_image)
-		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = ON_EDGED_TURF_LAYER)
-		add_overlay(I)
+		cut_overlay(activated_overlay)
+		activated_overlay.icon_state = "rock_Gibtonite_inactive"
+		add_overlay(activated_overlay)
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
 		stage = 2
 		if(det_time < 0)

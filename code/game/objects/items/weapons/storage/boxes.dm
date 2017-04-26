@@ -30,7 +30,6 @@
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
 	icon = 'hippiestation/icons/obj/storage.dmi'
-	pixel_y = 6
 
 /obj/item/weapon/storage/box/Initialize(mapload)
 	..()
@@ -40,7 +39,11 @@
 	. = ..()
 	if(illustration)
 		cut_overlays()
-		add_overlay(image('icons/obj/storage.dmi', "[illustration]"))
+		var/image/illust = new()
+		illust.icon = 'icons/obj/storage.dmi'
+		illust.icon_state = "[illustration]"
+		illust.pixel_y = 6
+		add_overlay(illust)
 
 /obj/item/weapon/storage/box/attack_self(mob/user)
 	..()

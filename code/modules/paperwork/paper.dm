@@ -336,11 +336,9 @@
 			return
 
 		stamps += "<img src=large_[P.icon_state].png>"
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+		var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[P.icon_state]")
 		stampoverlay.pixel_x = rand(-2, 2)
 		stampoverlay.pixel_y = rand(-3, 2)
-
-		stampoverlay.icon_state = "paper_[P.icon_state]"
 
 		LAZYADD(stamped, P.icon_state)
 		add_overlay(stampoverlay)
