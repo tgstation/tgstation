@@ -583,9 +583,9 @@
 							"<span class='userdanger'>You feel an immense \
 							crushing pressure as the space around you ripples.</span>")
 					if(M.key || M.get_ghost(TRUE))
-						feedback_add_details("shuttle_gib", "[type]")
+						SSblackbox.add_details("shuttle_gib", "[type]")
 					else
-						feedback_add_details("shuttle_gib_unintelligent", "[type]")
+						SSblackbox.add_details("shuttle_gib_unintelligent", "[type]")
 					M.gib()
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else

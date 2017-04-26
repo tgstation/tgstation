@@ -398,7 +398,7 @@
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
-	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
+	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
 /turf/proc/empty(turf_type=/turf/open/space)
