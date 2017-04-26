@@ -340,7 +340,6 @@
 		CB = magazine.get_round(0)
 		chambered = null
 		CB.loc = get_turf(src.loc)
-		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You pull back the breach on \the [src] and unload [num_unloaded] bullet\s.</span>")
