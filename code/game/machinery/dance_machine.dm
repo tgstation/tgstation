@@ -28,7 +28,7 @@
 		)
 	var/datum/track/selection = null
 
-/obj/machinery/disco/immovable
+/obj/machinery/disco/invulnerable
 	movable = FALSE
 	resistance_flags = INDESTRUCTIBLE
 
