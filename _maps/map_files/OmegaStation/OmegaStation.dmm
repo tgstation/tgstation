@@ -16054,9 +16054,6 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -16532,9 +16529,6 @@
 	},
 /obj/machinery/status_display{
 	pixel_x = -32
-	},
-/obj/machinery/light{
-	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
@@ -24146,9 +24140,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aME" = (
@@ -24202,9 +24193,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/status_display{
 	pixel_x = 32
-	},
-/obj/machinery/light{
-	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 5
@@ -41755,58 +41743,6 @@
 "bvf" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
-"bvg" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 1
-	},
-/area/shuttle/escape)
-"bvh" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"bvi" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"bvj" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"bvk" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/escape)
-"bvl" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel/neutral/side,
-/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -72509,11 +72445,11 @@ aHl
 aIi
 aJs
 aKz
-buW
+buX
 aMR
 buZ
-buZ
-buW
+bva
+bvb
 aQL
 aRI
 aSS
@@ -72770,7 +72706,7 @@ aLP
 aMS
 aMS
 aOC
-buW
+bvc
 aQM
 aRJ
 aST
@@ -73798,7 +73734,7 @@ aLT
 aMW
 aMW
 aOD
-buW
+bve
 aQQ
 aRN
 aSX
@@ -74051,11 +73987,11 @@ aHr
 aIo
 aJw
 aKE
-buW
+buY
 aMX
 aMX
 aMX
-buW
+bvf
 aQR
 aRO
 aSY
@@ -94090,9 +94026,9 @@ aAb
 axY
 aDl
 aEi
-bvh
 aEi
-bvj
+aEi
+aEi
 aEi
 aJf
 aKm
@@ -94602,13 +94538,13 @@ axY
 aAc
 axY
 aCp
-bvg
+aDl
 aEk
 aEj
 aGd
 aEl
 aEk
-bvl
+aJf
 aKn
 aLz
 axY
@@ -95118,9 +95054,9 @@ aAd
 aCq
 aDl
 aEm
-bvi
 aEm
-bvk
+aEm
+aEm
 aEm
 aJf
 aKo
