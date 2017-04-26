@@ -235,7 +235,7 @@
 			var/obj/item/stack/sheet/out = new inp.type(src, 0, FALSE)
 			var/desired = input("How many sheets?", "How many sheets to eject?", 1) as null|num
 			out.amount = round(min(desired,50,inp.amount))
-			if(out.amount)
+			if(out.amount >= 1)
 				inp.amount -= out.amount
 				unload_mineral(out)
 			if(inp.amount < 1)

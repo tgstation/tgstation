@@ -27,7 +27,7 @@
 		return INITIALIZE_HINT_QDEL
 	SSshuttle.arrivals = src
 
-	..()
+	. = ..()
 
 	preferred_direction = dir
 	return INITIALIZE_HINT_LATELOAD	//for latejoin list

@@ -102,7 +102,7 @@
 
 /datum/chemical_reaction/slime/slimemobspawn/on_reaction(datum/reagents/holder)
 	var/turf/T = get_turf(holder.my_atom)
-	summon_mobs(T)
+	summon_mobs(holder, T)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
 	..()
@@ -473,7 +473,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimepotion2/on_reaction(datum/reagents/holder)
-	new /obj/item/slimepotion/sentience
+	new /obj/item/slimepotion/sentience(get_turf(holder.my_atom))
 	..()
 
 //Adamantine

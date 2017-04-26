@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Ash Drake swoops no longer teleport the Ash Drake to your position."
+  - balance: "Some other tweaks to Ash Drake attacks and patterns; discover these yourself!"

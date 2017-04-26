@@ -36,3 +36,26 @@
         SSatoms.InitAtom(src, args);\
     }\
 }
+
+// Subsystem init_order, from highest priority to lowest priority
+// The numbers just define the ordering, they are meaningless otherwise.
+
+#define INIT_ORDER_JOBS 15
+#define INIT_ORDER_EVENTS 14
+#define INIT_ORDER_TICKER 13
+#define INIT_ORDER_MAPPING 12
+#define INIT_ORDER_ATOMS 11
+#define INIT_ORDER_MACHINES 9
+#define INIT_ORDER_SHUTTLE 3
+#define INIT_ORDER_TIMER 1
+#define INIT_ORDER_DEFAULT 0
+#define INIT_ORDER_AIR -1
+#define INIT_ORDER_MINIMAP -2
+#define INIT_ORDER_ASSETS -3
+#define INIT_ORDER_ICON_SMOOTHING -5
+#define INIT_ORDER_OVERLAY -6
+#define INIT_ORDER_XKEYSCORE -10
+#define INIT_ORDER_STICKY_BAN -10
+#define INIT_ORDER_LIGHTING -20
+#define INIT_ORDER_SQUEAK -40
+#define INIT_ORDER_PERSISTENCE -100

@@ -47,6 +47,7 @@
 	internal_organs += new /obj/item/organ/alien/hivenode
 	internal_organs += new /obj/item/organ/tongue/alien
 	internal_organs += new /obj/item/organ/eyes/night_vision/alien
+	internal_organs += new /obj/item/organ/ears
 	..()
 
 /mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
@@ -145,6 +146,8 @@ Des: Removes all infected images from the alien.
 	if(mind)
 		mind.transfer_to(new_xeno)
 	qdel(src)
+
+	// TODO make orbiters orbit the new xeno, or make xenos species rather than types
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

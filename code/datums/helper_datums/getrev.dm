@@ -6,9 +6,9 @@
 	var/date
 
 /datum/getrev/New()
-	var/head_file = return_file_text(".git/logs/HEAD")
+	var/head_file = file2text(".git/logs/HEAD")
 	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
-		var/list/tmp = file2list("..\\prtestjob.lk")
+		var/list/tmp = world.file2list("..\\prtestjob.lk")
 		for(var/I in tmp)
 			if(I)
 				testmerge |= I
