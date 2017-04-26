@@ -850,7 +850,7 @@ var/list/wall_runes = list()
 	light_color = LIGHT_COLOR_LAVA
 	req_cultists = 3
 	construct_invoke = 0
-	var/tick_damage = 30
+	var/tick_damage = 25
 	rune_in_use = FALSE
 
 /obj/effect/rune/blood_boil/do_invoke_glow()
