@@ -25684,6 +25684,10 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
+	},
 /turf/open/floor/plasteel/green/corner{
 	tag = "icon-greencorner (NORTH)";
 	icon_state = "greencorner";
@@ -35402,6 +35406,10 @@
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
+	},
+/obj/structure/cable/white{
+	tag = "icon-0-8";
+	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -71854,7 +71862,7 @@ aSP
 aEt
 bvo
 aad
-bvr
+bvo
 aad
 abi
 aad
@@ -72370,7 +72378,7 @@ aUR
 aVL
 aUR
 aUQ
-bvu
+bvo
 ahu
 aad
 aac
@@ -72627,10 +72635,10 @@ aUS
 aUU
 aWz
 aVL
-bvv
+bvo
 ahu
-bvG
-bvH
+bvh
+bvg
 aad
 aad
 aad
@@ -72884,8 +72892,8 @@ aUR
 aUU
 aWz
 aUQ
-bvw
-bvD
+bvh
+bvo
 aad
 aad
 aad
@@ -73141,8 +73149,8 @@ aUS
 aUU
 aWz
 aVL
-bvx
-bvE
+bvg
+bvh
 aad
 aad
 aad
@@ -73398,8 +73406,8 @@ aUT
 aUU
 aUU
 aUQ
-bvy
-bvF
+bvg
+bvo
 aad
 aad
 aad
@@ -73655,7 +73663,7 @@ aUS
 aUU
 aWz
 aVL
-bvz
+bvh
 aad
 aad
 aad
@@ -73912,7 +73920,7 @@ aUR
 aUU
 aWz
 aUQ
-bvA
+bvo
 aad
 aad
 aad
@@ -74169,7 +74177,7 @@ aUS
 aUU
 aWz
 aVL
-bvB
+bvo
 aOH
 aZo
 baj
@@ -74936,11 +74944,11 @@ aQT
 aRR
 aTa
 aEt
-bvp
-bvq
-bvs
-bvt
-bvC
+bvo
+bvg
+bvh
+bvo
+bvo
 aOH
 aZr
 bam
@@ -88767,7 +88775,7 @@ aad
 aad
 bvg
 bvh
-bvj
+bvh
 adn
 aec
 aeS
@@ -88834,7 +88842,7 @@ bhj
 bhT
 aRz
 aad
-bvN
+bvg
 aac
 aad
 aad
@@ -89023,7 +89031,7 @@ aaa
 aac
 aac
 aac
-bvi
+bvg
 aad
 adn
 aed
@@ -89090,7 +89098,7 @@ bgv
 bhk
 bhU
 aRy
-bvJ
+bvg
 aac
 aaa
 aaa
@@ -89347,7 +89355,7 @@ bgw
 bhl
 bhV
 aRy
-bvK
+bvg
 aaa
 aaa
 aaa
@@ -89556,9 +89564,9 @@ acv
 aph
 aqp
 abt
-bvk
-bvl
-bvn
+bvh
+bvh
+bvg
 aac
 aac
 aae
@@ -89814,7 +89822,7 @@ api
 amD
 amC
 amC
-bvm
+bvg
 aac
 aae
 aae
@@ -89861,7 +89869,7 @@ bgy
 bhk
 bhX
 aRy
-bvL
+bvg
 aaa
 aaa
 aaa
@@ -90118,7 +90126,7 @@ bgz
 bhk
 bgw
 aRy
-bvM
+bvg
 aac
 aaa
 aaa
