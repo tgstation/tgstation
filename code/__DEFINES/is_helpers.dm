@@ -96,7 +96,7 @@
 
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
-#define issutando(A) (istype(A, /mob/living/simple_animal/hostile/sutando))
+#define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
 #define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
 

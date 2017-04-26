@@ -1,16 +1,16 @@
 
-/datum/hud/sutando/New(mob/living/simple_animal/hostile/sutando/owner)
+/datum/hud/guardian/New(mob/living/simple_animal/hostile/guardian/owner)
 	..()
 	var/obj/screen/using
 
-	healths = new /obj/screen/healths/sutando()
+	healths = new /obj/screen/healths/guardian()
 	infodisplay += healths
 
-	using = new /obj/screen/sutando/Manifest()
+	using = new /obj/screen/guardian/Manifest()
 	using.screen_loc = ui_hand_position(2)
 	static_inventory += using
 
-	using = new /obj/screen/sutando/Recall()
+	using = new /obj/screen/guardian/Recall()
 	using.screen_loc = ui_hand_position(1)
 	static_inventory += using
 
@@ -18,23 +18,23 @@
 	using.screen_loc = ui_storage1
 	static_inventory += using
 
-	using = new /obj/screen/sutando/ToggleLight()
+	using = new /obj/screen/guardian/ToggleLight()
 	using.screen_loc = ui_inventory
 	static_inventory += using
 
-	using = new /obj/screen/sutando/Communicate()
+	using = new /obj/screen/guardian/Communicate()
 	using.screen_loc = ui_back
 	static_inventory += using
 
 
-/mob/living/simple_animal/hostile/sutando/create_mob_hud()
+/mob/living/simple_animal/hostile/guardian/create_mob_hud()
 	if(client && !hud_used)
 		if(dextrous)
 			..()
 		else
-			hud_used = new /datum/hud/sutando(src, ui_style2icon(client.prefs.UI_style))
+			hud_used = new /datum/hud/guardian(src, ui_style2icon(client.prefs.UI_style))
 
-/datum/hud/dextrous/sutando/New(mob/living/simple_animal/hostile/sutando/owner, ui_style = 'icons/mob/screen_midnight.dmi') //for a dextrous sutando
+/datum/hud/dextrous/guardian/New(mob/living/simple_animal/hostile/guardian/owner, ui_style = 'icons/mob/screen_midnight.dmi') //for a dextrous guardian
 	..()
 	var/obj/screen/using
 	if(owner.dextrous)
@@ -48,24 +48,24 @@
 		inv_box.slot_id = slot_generic_dextrous_storage
 		static_inventory += inv_box
 
-		using = new /obj/screen/sutando/Communicate()
+		using = new /obj/screen/guardian/Communicate()
 		using.screen_loc = ui_sstore1
 		static_inventory += using
 
 	else
 
-		using = new /obj/screen/sutando/Communicate()
+		using = new /obj/screen/guardian/Communicate()
 		using.screen_loc = ui_id
 		static_inventory += using
 
-	healths = new /obj/screen/healths/sutando()
+	healths = new /obj/screen/healths/guardian()
 	infodisplay += healths
 
-	using = new /obj/screen/sutando/Manifest()
+	using = new /obj/screen/guardian/Manifest()
 	using.screen_loc = ui_belt
 	static_inventory += using
 
-	using = new /obj/screen/sutando/Recall()
+	using = new /obj/screen/guardian/Recall()
 	using.screen_loc = ui_back
 	static_inventory += using
 
@@ -73,15 +73,15 @@
 	using.screen_loc = ui_storage2
 	static_inventory += using
 
-	using = new /obj/screen/sutando/ToggleLight()
+	using = new /obj/screen/guardian/ToggleLight()
 	using.screen_loc = ui_inventory
 	static_inventory += using
 
-/datum/hud/dextrous/sutando/persistent_inventory_update()
+/datum/hud/dextrous/guardian/persistent_inventory_update()
 	if(!mymob)
 		return
-	if(istype(mymob, /mob/living/simple_animal/hostile/sutando))
-		var/mob/living/simple_animal/hostile/sutando/D = mymob
+	if(istype(mymob, /mob/living/simple_animal/hostile/guardian))
+		var/mob/living/simple_animal/hostile/guardian/D = mymob
 
 		if(D.dextrous)
 			if(hud_shown)
@@ -94,65 +94,65 @@
 
 	..()
 
-/obj/screen/sutando
-	icon = 'icons/mob/sutando.dmi'
+/obj/screen/guardian
+	icon = 'icons/mob/guardian.dmi'
 
-/obj/screen/sutando/Manifest
+/obj/screen/guardian/Manifest
 	icon_state = "manifest"
 	name = "Manifest"
 	desc = "Spring forth into battle!"
 
-/obj/screen/sutando/Manifest/Click()
-	if(issutando(usr))
-		var/mob/living/simple_animal/hostile/sutando/G = usr
+/obj/screen/guardian/Manifest/Click()
+	if(isguardian(usr))
+		var/mob/living/simple_animal/hostile/guardian/G = usr
 		G.Manifest()
 
 
-/obj/screen/sutando/Recall
+/obj/screen/guardian/Recall
 	icon_state = "recall"
 	name = "Recall"
 	desc = "Return to your user."
 
-/obj/screen/sutando/Recall/Click()
-	if(issutando(usr))
-		var/mob/living/simple_animal/hostile/sutando/G = usr
+/obj/screen/guardian/Recall/Click()
+	if(isguardian(usr))
+		var/mob/living/simple_animal/hostile/guardian/G = usr
 		G.Recall()
 
-/obj/screen/sutando/ToggleMode
+/obj/screen/guardian/ToggleMode
 	icon_state = "toggle"
 	name = "Toggle Mode"
 	desc = "Switch between ability modes."
 
-/obj/screen/sutando/ToggleMode/Click()
-	if(issutando(usr))
-		var/mob/living/simple_animal/hostile/sutando/G = usr
+/obj/screen/guardian/ToggleMode/Click()
+	if(isguardian(usr))
+		var/mob/living/simple_animal/hostile/guardian/G = usr
 		G.ToggleMode()
 
-/obj/screen/sutando/ToggleMode/Inactive
+/obj/screen/guardian/ToggleMode/Inactive
 	icon_state = "notoggle" //greyed out so it doesn't look like it'll work
 
-/obj/screen/sutando/ToggleMode/Assassin
+/obj/screen/guardian/ToggleMode/Assassin
 	icon_state = "stealth"
 	name = "Toggle Stealth"
 	desc = "Enter or exit stealth."
 
-/obj/screen/sutando/Communicate
+/obj/screen/guardian/Communicate
 	icon_state = "communicate"
 	name = "Communicate"
 	desc = "Communicate telepathically with your user."
 
-/obj/screen/sutando/Communicate/Click()
-	if(issutando(usr))
-		var/mob/living/simple_animal/hostile/sutando/G = usr
+/obj/screen/guardian/Communicate/Click()
+	if(isguardian(usr))
+		var/mob/living/simple_animal/hostile/guardian/G = usr
 		G.Communicate()
 
 
-/obj/screen/sutando/ToggleLight
+/obj/screen/guardian/ToggleLight
 	icon_state = "light"
 	name = "Toggle Light"
 	desc = "Glow like star dust."
 
-/obj/screen/sutando/ToggleLight/Click()
-	if(issutando(usr))
-		var/mob/living/simple_animal/hostile/sutando/G = usr
+/obj/screen/guardian/ToggleLight/Click()
+	if(isguardian(usr))
+		var/mob/living/simple_animal/hostile/guardian/G = usr
 		G.ToggleLight()

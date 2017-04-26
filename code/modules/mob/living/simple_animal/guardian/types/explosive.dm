@@ -1,60 +1,60 @@
 //killed queem u bad cat
 
-/datum/sutando_abilities/bomb
+/datum/guardian_abilities/bomb
 	id = "bomb"
 	name = "Remote Explosives"
 	var/bomb_cooldown = 0
 	value = 6
 
-/datum/sutando_abilities/bomb/handle_stats()
+/datum/guardian_abilities/bomb/handle_stats()
 	. = ..()
-	stand.melee_damage_lower += 7
-	stand.melee_damage_upper += 7
-	for(var/i in stand.damage_coeff)
-		stand.damage_coeff[i] -= 0.2
-	stand.range += 6
+	guardian.melee_damage_lower += 7
+	guardian.melee_damage_upper += 7
+	for(var/i in guardian.damage_coeff)
+		guardian.damage_coeff[i] -= 0.2
+	guardian.range += 6
 
-/datum/sutando_abilities/bomb/ability_act()
+/datum/guardian_abilities/bomb/ability_act()
 	if(prob(40))
-		if(isliving(stand.target))
-			var/mob/living/M = stand.target
-			if(!M.anchored && M != user && !stand.hasmatchingsummoner(M))
-				new /obj/effect/overlay/temp/sutando/phase/out(get_turf(M))
+		if(isliving(guardian.target))
+			var/mob/living/M = guardian.target
+			if(!M.anchored && M != user && !guardian.hasmatchingsummoner(M))
+				new /obj/effect/overlay/temp/guardian/phase/out(get_turf(M))
 				do_teleport(M, M, 10)
 				for(var/mob/living/L in range(1, M))
-					if(stand.hasmatchingsummoner(L)) //if the user matches don't hurt them
+					if(guardian.hasmatchingsummoner(L)) //if the user matches don't hurt them
 						continue
-					if(L != stand && L != user)
+					if(L != guardian && L != user)
 						L.apply_damage(15, BRUTE)
-						stand.say("[battlecry]!!")
+						guardian.say("[battlecry]!!")
 				new /obj/effect/overlay/temp/explosion(get_turf(M))
 
 
-/datum/sutando_abilities/bomb/alt_ability_act(atom/movable/A)
+/datum/guardian_abilities/bomb/alt_ability_act(atom/movable/A)
 	if(!istype(A))
 		return
-	if(stand.loc == user)
-		to_chat(stand,"<span class='danger'><B>You must be manifested to create bombs!</span></B>")
+	if(guardian.loc == user)
+		to_chat(guardian,"<span class='danger'><B>You must be manifested to create bombs!</span></B>")
 		return
 	if(isobj(A))
-		if(bomb_cooldown <= world.time && !stand.stat)
-			var/obj/sutando_bomb/B = new/obj/sutando_bomb(get_turf(A))
-			to_chat(stand,"<span class='danger'><B>Success! Bomb armed!</span></B>")
-			stand.say("[battlecry]!!")
+		if(bomb_cooldown <= world.time && !guardian.stat)
+			var/obj/guardian_bomb/B = new/obj/guardian_bomb(get_turf(A))
+			to_chat(guardian,"<span class='danger'><B>Success! Bomb armed!</span></B>")
+			guardian.say("[battlecry]!!")
 			bomb_cooldown = world.time + 200
-			B.spawner = stand
+			B.spawner = guardian
 			B.disguise(A)
 		else
-			to_chat(stand,"<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>")
+			to_chat(guardian,"<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>")
 
-/obj/sutando_bomb
+/obj/guardian_bomb
 	name = "bomb"
 	desc = "You shouldn't be seeing this!"
 	var/obj/stored_obj
-	var/mob/living/simple_animal/hostile/sutando/spawner
+	var/mob/living/simple_animal/hostile/guardian/spawner
 
 
-/obj/sutando_bomb/proc/disguise(obj/A)
+/obj/guardian_bomb/proc/disguise(obj/A)
 	A.loc = src
 	stored_obj = A
 	opacity = A.opacity
@@ -63,12 +63,12 @@
 	appearance = A.appearance
 	addtimer(CALLBACK(src, .proc/disable), 600)
 
-/obj/sutando_bomb/proc/disable()
+/obj/guardian_bomb/proc/disable()
 	stored_obj.forceMove(get_turf(src))
 	spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
 	qdel(src)
 
-/obj/sutando_bomb/proc/detonate(mob/living/user)
+/obj/guardian_bomb/proc/detonate(mob/living/user)
 	if(isliving(user))
 		if(user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
 			user << "<span class='danger'><B>The [src] was boobytrapped!</span></B>"
@@ -82,17 +82,17 @@
 		else
 			user << "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>"
 
-/obj/sutando_bomb/Bump(atom/A)
+/obj/guardian_bomb/Bump(atom/A)
 	detonate(A)
 	..()
 
-/obj/sutando_bomb/attackby(mob/living/user)
+/obj/guardian_bomb/attackby(mob/living/user)
 	detonate(user)
 
-/obj/sutando_bomb/attack_hand(mob/living/user)
+/obj/guardian_bomb/attack_hand(mob/living/user)
 	detonate(user)
 
-/obj/sutando_bomb/examine(mob/user)
+/obj/guardian_bomb/examine(mob/user)
 	stored_obj.examine(user)
 	if(get_dist(user,src)<=2)
 		user << "<span class='holoparasite'>It glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>!</span>"

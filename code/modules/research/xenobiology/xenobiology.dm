@@ -611,8 +611,8 @@
 /obj/effect/timestop/wizard
 	duration = 100
 
-/obj/effect/timestop/wizard/sutando
-	effectsound = 'sound/magic/sutandotime.ogg'
+/obj/effect/timestop/wizard/guardian
+	effectsound = 'sound/magic/guardiantime.ogg'
 	freezerange = 5
 
 
