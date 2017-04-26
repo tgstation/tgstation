@@ -72,7 +72,7 @@
 
 	fingerprintslast = M.ckey
 
-/atom/proc/add_hiddenprint_telekinetic(mob/living/M)
+/atom/proc/add_hiddenprint_telekinesis(mob/living/M)
 	if(!M || !M.key)
 		return
 
