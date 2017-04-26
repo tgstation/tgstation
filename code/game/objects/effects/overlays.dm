@@ -214,7 +214,7 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "3"
 	duration = 20
-	
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
@@ -387,6 +387,20 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "ratvarspearbreak"
 	layer = BELOW_MOB_LAYER
+	pixel_y = -16
+	pixel_x = -16
+
+/obj/effect/overlay/temp/ratvar/prolonging_prism
+	icon_state = "prolonging_prism"
+	layer = RIPPLE_LAYER
+	duration = 30
+
+/obj/effect/overlay/temp/ratvar/prolonging_prism/Initialize()
+	. = ..()
+	animate(src, alpha = 0, time = duration, easing = BOUNCE_EASING)
+
+/obj/effect/overlay/temp/ratvar/prolonging_prism/big
+	icon = 'icons/effects/64x64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 

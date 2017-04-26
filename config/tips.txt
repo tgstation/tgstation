@@ -171,13 +171,13 @@ As a Servant, you can deconstruct a Clockwork Wall with a Clockwork Proselytizer
 As a Servant, Volt Void will drain power from nearby Sigils of Transmission to up to double the damage of each volt ray. It'll even use your own power if you happen to be a cyborg!
 As a Servant, Fellowship Armory invokes much faster for each nearby servant and attempts to provide each affected servant with powerful armor against melee, bullet, and bomb attacks. The gauntlets provided are also immune to elecricity.
 As a Servant, Spatial Gateway can teleport to any living Servant or Clockwork Obelisk, and gains additional uses and duration for each Servant assisting in the invocation.
-As a Servant, defending the Gateway to the Celestial Derelict is your ultimate goal, and it is heavily recommended that you defend it with all the tools you have avalible, including Ocular Wardens, Mania Motors, Mending Motors, and other, not mentioned things.
+As a Servant, defending the Gateway to the Celestial Derelict is your ultimate goal, and it is heavily recommended that you defend it with all the tools you have avalible, including Ocular Wardens, Mania Motors, and various powers.
 As a Servant, once Ratvar has arrived, all of your tools gain a massive boost in power and will, in general, have no cost and work at double speed.
 As a Servant, you can impale human targets with a Ratvarian Spear by pulling them, then attacking them. This does massive damage and stuns them, and should effectively win the fight.
 As a Servant, Sentinel's Compromise can instantly return you or another Servant to a fighting state by converting half of all their brute, burn, and oxygen damage to toxin, effectively halving the damage they have. Clockwork Floors will also rapidly heal toxin damage in Servants, allowing the Compromise more effectiveness.
 As a Servant, Belligerent and Taunting Tirade are extremely powerful for disabling and disrupting large groups of enemies, though they render you somewhat vulnerable, as Belligerent requires that you stand still, and Taunting Tirade makes you extremely obvious.
 As a Servant, Soul Vessels can be placed in cyborg shells, mecha, Cogscarab shells, and Anima Fragment shells.
-As a Servant, you can unwrench Clockwork Structures, but doing so will damage them, severely weakening them until repaired with a proselytizer or a mending motor. Damage from other sources will also similarly weaken structures.
+As a Servant, you can unwrench Clockwork Structures, but doing so will damage them, severely weakening them until repaired with a Proselytizer or Mending Mantra. Damage from other sources will also similarly weaken structures.
 You can deconvert Cultists of Nar-Sie and Servants of Ratvar by feeding them large amounts of holy water.
 As a Wizard, you can turn people to stone, then animate the resulting statue with a staff of animation to create an extremely powerful minion, for all of 5 minutes at least.
 As a Wizard, the fireball spell performs very poorly at close range, as it can easily catch you in the blast. It is best used as a form of artillery down long hallways.

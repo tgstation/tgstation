@@ -69,6 +69,76 @@
 	quickbind_desc = "Creates a Vitality Matrix, which drains non-Servants on it to heal Servants that cross it."
 
 
+//Mending Mantra: Channeled for up to five times over ten seconds to fire up to five rays of energy at target locations.
+/datum/clockwork_scripture/channeled/mending_mantra
+	descname = "Channeled, Area Structure and Construct Repair"
+	name = "Mending Mantra"
+	desc = "Rapidly repairs nearby structures and constructs. Channeled every two seconds for a maximum of ten seconds."
+	chant_invocations = list("Mend our dents!", "Heal our scratches!", "Repair our gears!")
+	chant_amount = 5
+	chant_interval = 20
+	consumed_components = list(VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 1)
+	usage_tip = "This is a very effective way to rapidly repair multiple damaged structures or constructs."
+	tier = SCRIPTURE_SCRIPT
+	primary_component = VANGUARD_COGWHEEL
+	sort_priority = 4
+	quickbind = TRUE
+	quickbind_desc = "Allows you to repair nearby structures and constructs.<br><b>Maximum 5 chants.</b>"
+	var/heal_attempts = 4
+	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
+	var/static/list/heal_finish_messages = list("There, all mended!", "Try not to get too damaged.", "No more dents and scratches for you!", "Champions never die.", "All patched up.", \
+	"Ah, child, it's okay now.", "Pain is temporary.", "What you do for the Justiciar is eternal.", "Bear this for me.", "Be strong, child.", "Please, be careful!", \
+	"If you die, you will be remembered.")
+	var/static/list/heal_target_typecache = typecacheof(list(
+	/obj/structure/destructible/clockwork,
+	/obj/machinery/door/airlock/clockwork,
+	/obj/machinery/door/window/clockwork,
+	/obj/structure/window/reinforced/clockwork,
+	/obj/structure/table/reinforced/brass))
+
+/datum/clockwork_scripture/channeled/mending_mantra/chant_effects(chant_number)
+	var/turf/T
+	for(var/atom/movable/M in range(7, invoker))
+		if(isliving(M))
+			if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+				var/mob/living/simple_animal/S = M
+				if(S.health == S.maxHealth || S.stat == DEAD)
+					continue
+				T = get_turf(M)
+				for(var/i in 1 to heal_attempts)
+					if(S.health < S.maxHealth)
+						S.adjustHealth(-5)
+						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
+					else
+						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+						break
+			else if(issilicon(M))
+				var/mob/living/silicon/S = M
+				if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
+					continue
+				T = get_turf(M)
+				for(var/i in 1 to heal_attempts)
+					if(S.health < S.maxHealth)
+						S.heal_ordered_damage(5, damage_heal_order)
+						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
+					else
+						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+						break
+		else if(is_type_in_typecache(M, heal_target_typecache))
+			var/obj/structure/destructible/clockwork/C = M
+			if(C.obj_integrity == C.max_integrity || (istype(C) && !C.can_be_repaired))
+				continue
+			T = get_turf(M)
+			for(var/i in 1 to heal_attempts)
+				if(C.obj_integrity < C.max_integrity)
+					C.obj_integrity = min(C.obj_integrity + 5, C.max_integrity)
+					C.update_icon()
+					new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
+				else
+					break
+	return TRUE
+
+
 //Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
 /datum/clockwork_scripture/create_object/sigil_of_submission
 	descname = "Trap, Conversion"
