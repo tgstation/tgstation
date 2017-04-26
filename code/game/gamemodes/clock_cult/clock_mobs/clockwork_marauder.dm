@@ -21,6 +21,8 @@
 	var/blockchance = 17 //chance to block attacks entirely
 	var/counterchance = 30 //chance to counterattack after blocking
 	var/static/list/damage_heal_order = list(OXY, BURN, BRUTE, TOX) //we heal our host's damage in this order
+	light_range = 2
+	light_power = 1.1
 	playstyle_string = "<span class='sevtug'>You are a clockwork marauder</span><b>, a living extension of Sevtug's will. As a marauder, you are somewhat slow, but may block attacks, \
 	and have a chance to also counter blocked melee attacks for extra damage, in addition to being immune to extreme temperatures and pressures. \
 	Your primary goal is to serve the creature that you are now a part of. You can use <span class='sevtug_small'><i>:b</i></span> to communicate silently with your master, \
@@ -30,9 +32,8 @@
 	fighting safely. As a final note, you should probably avoid harming any fellow servants of Ratvar.</span>"
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Initialize()
-	..()
+	. = ..()
 	true_name = pick(possible_true_names)
-	set_light(2, 1.1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()

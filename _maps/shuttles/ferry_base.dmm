@@ -77,7 +77,7 @@
 /area/shuttle/transport)
 "o" = (
 /turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle/interior{
+/turf/closed/wall/mineral/titanium/interior{
 	icon_state = "swall_f10"
 	},
 /area/shuttle/transport)

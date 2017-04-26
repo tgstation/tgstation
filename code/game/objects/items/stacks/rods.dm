@@ -74,3 +74,12 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/cyborg/update_icon()
 	return
+
+/obj/item/stack/rods/ten
+	amount = 10
+
+/obj/item/stack/rods/twentyfive
+	amount = 25
+
+/obj/item/stack/rods/fifty
+	amount = 50

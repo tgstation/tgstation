@@ -775,11 +775,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	deltimer(density_timer)
 	air_update_turf(1)
 	if(density)
-		var/image/I = image(layer = ABOVE_MOB_LAYER, icon = 'icons/effects/effects.dmi', icon_state = "barriershimmer")
-		I.appearance_flags = RESET_COLOR
-		I.alpha = 60
-		I.color = "#701414"
-		add_overlay(I)
+		var/mutable_appearance/shimmer = mutable_appearance('icons/effects/effects.dmi', "barriershimmer", ABOVE_MOB_LAYER)
+		shimmer.appearance_flags |= RESET_COLOR
+		shimmer.alpha = 60
+		shimmer.color = "#701414"
+		add_overlay(shimmer)
 		add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	else
 		cut_overlays()
