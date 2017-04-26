@@ -84,6 +84,21 @@
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
+	var/disabled = FALSE // if it has been remotely disabled
+	var/tier = 1 // level of the card for disabling purposes
+
+/obj/item/weapon/card/id/proc/tier2text()
+	switch(tier)
+		if(0,1)
+			return "Employee"
+		if(2)
+			return "Command"
+		if(3)
+			return "Captain"
+		if(4)
+			return "Centcomm Officer"
+		else
+			return "Corrupted ID"
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
@@ -95,9 +110,14 @@
 	..()
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
+	if(disabled)
+		to_chat(user, "<span class='warning'>It has been disabled.</span>")
 
 /obj/item/weapon/card/id/GetAccess()
-	return access
+	if(!disabled)
+		return access
+	else
+		return list()
 
 /obj/item/weapon/card/id/GetID()
 	return src
@@ -122,18 +142,21 @@ update_label("John Doe", "Clowny")
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
+	tier = 2
 
 /obj/item/weapon/card/id/gold
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
+	tier = 3
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(GLOB.access_maint_tunnels, GLOB.access_syndicate)
 	origin_tech = "syndicate=1"
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
+	tier = 0 //invisible to consoles
 
 /obj/item/weapon/card/id/syndicate/Initialize()
 	..()
@@ -182,6 +205,7 @@ update_label("John Doe", "Clowny")
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(GLOB.access_syndicate)
+	tier = 0 //invisible to consoles
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
@@ -190,10 +214,12 @@ update_label("John Doe", "Clowny")
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
+	tier = 3
 
 /obj/item/weapon/card/id/captains_spare/Initialize()
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
+	GLOB.registered_id_cards += src
 	..()
 
 /obj/item/weapon/card/id/centcom
@@ -202,6 +228,7 @@ update_label("John Doe", "Clowny")
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
+	tier = 4
 
 /obj/item/weapon/card/id/centcom/Initialize()
 	access = get_all_centcom_access()
@@ -213,6 +240,7 @@ update_label("John Doe", "Clowny")
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
+	tier = 4
 
 /obj/item/weapon/card/id/ert/Initialize()
 	access = get_all_accesses()+get_ert_access("commander")-GLOB.access_change_ids

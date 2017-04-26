@@ -1,3 +1,4 @@
+GLOBAL_LIST_INIT(registered_id_cards, list())
 
 /datum/datacore
 	var/medical[] = list()
@@ -204,6 +205,10 @@
 			assignment = H.job
 		else
 			assignment = "Unassigned"
+
+		var/obj/item/weapon/card/id/card = H.get_idcard()
+		if(card && card.registered_name && card.tier != 0)
+			GLOB.registered_id_cards |= card
 
 		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++,6)
