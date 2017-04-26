@@ -870,7 +870,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	failure_message = "<span class='holoparasitebold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
 	ling_failure = "<span class='holoparasitebold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
 	allowmultiple = TRUE
-  allowling = TRUE
+	allowling = TRUE
 	random = TRUE
 
 /obj/item/weapon/guardiancreator/carp/choose

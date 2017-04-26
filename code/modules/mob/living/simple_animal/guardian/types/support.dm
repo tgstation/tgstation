@@ -6,6 +6,7 @@
 	value = 5
 	var/obj/structure/recieving_pad/beacon
 	var/beacon_cooldown = 0
+	var/datum/action/innate/beacon/B = new
 
 /datum/guardian_abilities/heal/Destroy()
 	QDEL_NULL(B)

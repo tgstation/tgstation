@@ -43,7 +43,7 @@
 		to_chat(guardian,"<span class='danger'><B>You switch to combat mode.</span></B>")
 		toggle = FALSE
 	else
-		var/mutable_appearance/I = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
+		var/mutable_appearance/shield_overlay = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
 		if(guardian.namedatum)
 			shield_overlay.color = guardian.namedatum.colour
 		guardian.add_overlay(shield_overlay)
