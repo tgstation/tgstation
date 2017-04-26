@@ -20,7 +20,7 @@
 	var/obj/docking_port/mobile/preview_shuttle
 	var/datum/map_template/shuttle/preview_template
 
-/obj/machinery/shuttle_manipulator/New()
+/obj/machinery/shuttle_manipulator/Initialize()
 	. = ..()
 	update_icon()
 

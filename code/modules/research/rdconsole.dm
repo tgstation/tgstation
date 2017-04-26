@@ -100,8 +100,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		C.files.RefreshResearch()
 
 
-/obj/machinery/computer/rdconsole/New()
-	..()
+/obj/machinery/computer/rdconsole/Initialize()
+	. = ..()
 	files = new /datum/research(src) //Setup the research data holder.
 	matching_designs = list()
 	if(!id)
@@ -1065,8 +1065,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = null
 	req_access_txt = "29"
 
-/obj/machinery/computer/rdconsole/robotics/New()
-	..()
+/obj/machinery/computer/rdconsole/robotics/Initialize()
+	. = ..()
 	if(circuit)
 		circuit.name = "RD Console - Robotics (Computer Board)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
