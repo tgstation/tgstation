@@ -46,7 +46,7 @@
 	return ..()
 
 /atom/movable/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/L in initial_languages)
 		grant_language(L)
 
