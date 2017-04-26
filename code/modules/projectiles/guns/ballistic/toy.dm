@@ -9,7 +9,7 @@
 	force = 0
 	throwforce = 0
 	burst_size = 3
-	can_suppress = 0
+	can_suppress = TRUE
 	clumsy_check = 0
 	needs_permit = 0
 	casing_ejector = 0
@@ -24,14 +24,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	fire_sound = 'sound/weapons/Gunshot.ogg'
-	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
 
 /obj/item/weapon/gun/ballistic/automatic/toy/pistol/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol/riot
@@ -57,6 +56,7 @@
 	clumsy_check = 0
 	needs_permit = 0
 	casing_ejector = 0
+	can_suppress = FALSE
 
 /obj/item/weapon/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
 	..()
@@ -81,7 +81,7 @@
 	name = "donksoft SMG"
 	desc = "A bullpup two-round burst toy SMG, designated 'C-20r'. Ages 8 and up."
 	icon = 'icons/obj/guns/toy.dmi'
-	can_suppress = 0
+	can_suppress = TRUE
 	needs_permit = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45
 	casing_ejector = 0
@@ -93,7 +93,7 @@
 	name = "donksoft LMG"
 	desc = "A heavily modified toy light machine gun, designated 'L6 SAW'. Ages 8 and up."
 	icon = 'icons/obj/guns/toy.dmi'
-	can_suppress = 0
+	can_suppress = FALSE
 	needs_permit = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/m762
 	casing_ejector = 0

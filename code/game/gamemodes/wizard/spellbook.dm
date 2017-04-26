@@ -109,6 +109,7 @@
 /datum/spellbook_entry/rod_form
 	name = "Rod Form"
 	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
+	cost = 3
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
@@ -213,7 +214,7 @@
 
 /datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
 	. = ..()
-	user.tesla_ignore = TRUE
+	SET_SECONDARY_FLAG(user, TESLA_IGNORE)
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"

@@ -34,7 +34,7 @@
 
 	SSshuttle.arrivals = src
 
-	..()
+	. = ..()
 
 	areas = list()
 

@@ -60,8 +60,7 @@
 	stat = DEAD
 	..(gibbed)
 	drop_all_held_items()
-	spawn (0)
-		mind.devilinfo.beginResurrectionCheck(src)
+	INVOKE_ASYNC(mind.devilinfo, /datum/devilinfo/proc/beginResurrectionCheck, src)
 
 
 /mob/living/carbon/true_devil/examine(mob/user)

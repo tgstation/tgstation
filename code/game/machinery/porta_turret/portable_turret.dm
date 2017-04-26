@@ -85,7 +85,7 @@
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
 	if(!has_cover)
-		popUp()
+		INVOKE_ASYNC(src, .proc/popUp)
 
 /obj/machinery/porta_turret/update_icon()
 	cut_overlays()
@@ -784,8 +784,7 @@
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
 	desc = "Used for building turret control panels"
-	icon = 'icons/obj/apc_repair.dmi'
-	icon_state = "apc_frame"
+	icon_state = "apc"
 	result_path = /obj/machinery/turretid
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 

@@ -169,7 +169,7 @@
 	..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && tesla_ignore)
+	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
@@ -275,20 +275,24 @@
 
 /mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 1, damage_pwr = 5, deafen_pwr = 15)
 	var/ear_safety = get_ear_protection()
+	var/obj/item/organ/ears/ears = getorganslot("ears")
 	if(ear_safety < 2) //has ears
 		var/effect_amount = intensity - ear_safety
 		if(effect_amount > 0)
 			if(stun_pwr)
 				Stun(stun_pwr*effect_amount)
 				Weaken(stun_pwr*effect_amount)
-			if(deafen_pwr || damage_pwr)
-				setEarDamage(ear_damage + damage_pwr*effect_amount, max(ear_deaf, deafen_pwr*effect_amount))
-				if (ear_damage >= 15)
+			if(istype(ears) && (deafen_pwr || damage_pwr))
+				ears.ear_damage += damage_pwr * effect_amount
+				ears.deaf = max(ears.deaf, deafen_pwr * effect_amount)
+
+				if(ears.ear_damage >= 15)
 					to_chat(src, "<span class='warning'>Your ears start to ring badly!</span>")
-					if(prob(ear_damage - 5))
-						to_chat(src, "<span class='warning'>You can't hear anything!</span>")
-						disabilities |= DEAF
-				else if(ear_damage >= 5)
+					if(prob(ears.ear_damage - 5))
+						to_chat(src, "<span class='userdanger'>You can't hear anything!</span>")
+						ears.ear_damage = min(ears.ear_damage, UNHEALING_EAR_DAMAGE)
+						// you need earmuffs, inacusiate, or replacement
+				else if(ears.ear_damage >= 5)
 					to_chat(src, "<span class='warning'>Your ears start to ring!</span>")
 				src << sound('sound/weapons/flash_ring.ogg',0,1,0,250)
 		return effect_amount //how soundbanged we are
@@ -308,3 +312,9 @@
 			hit_clothes = head
 		if(hit_clothes)
 			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, 0)
+
+/mob/living/carbon/can_hear()
+	. = FALSE
+	var/obj/item/organ/ears/ears = getorganslot("ears")
+	if(istype(ears) && !ears.deaf)
+		. = TRUE

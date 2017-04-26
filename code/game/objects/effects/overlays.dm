@@ -35,7 +35,6 @@
 	..()
 	if(randomdir)
 		setDir(pick(GLOB.cardinal))
-	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 
 	timerid = QDEL_IN(src, duration)
 
@@ -209,6 +208,11 @@
 /obj/effect/overlay/temp/small_smoke
 	icon_state = "smoke"
 	duration = 50
+
+/obj/effect/overlay/temp/fire
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "3"
+	duration = 20
 
 /obj/effect/overlay/temp/cult
 	randomdir = 0
@@ -608,3 +612,8 @@
 	name = "Coconuts"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
+
+/obj/effect/overlay/sparkles
+	name = "sparkles"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shieldsparkles"
