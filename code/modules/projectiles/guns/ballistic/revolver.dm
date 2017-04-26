@@ -311,7 +311,7 @@
 	desc = "A makeshift 9mm pistol made from salvaged parts." //An engraving on the side reads: Tacolizard Forever
 	icon_state = "pipepistol"
 	w_class = WEIGHT_CLASS_NORMAL
-	mag_type = /obj/item/ammo_box/magazine/internal/makeshift //mag is internal for balance reasons
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/makeshift //mag is internal for balance reasons
 	can_suppress = 0
 	sparks = 1
 	dont_update = 1 //hopefully prevents icon from changing to default after a variant is selected
