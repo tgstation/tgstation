@@ -206,7 +206,7 @@
 				toggle_all_ctf(user)
 		return
 
-	if(SSticker.current_state < GAME_STATE_PLAYING)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)

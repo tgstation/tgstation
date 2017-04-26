@@ -2161,7 +2161,7 @@
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
+		if(SSticker.IsRoundInProgress())
 			var/afkonly = text2num(href_list["afkonly"])
 			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
 				to_chat(usr, "Kick clients from lobby aborted")

@@ -89,7 +89,7 @@
 	to_chat(src, "Enforce Continuous Rounds: [config.continuous.len] of [config.modes.len] roundtypes")
 	to_chat(src, "Allow Midround Antagonists: [config.midround_antag.len] of [config.modes.len] roundtypes")
 	if(config.show_game_type_odds)
-		if(SSticker.current_state == GAME_STATE_PLAYING)
+		if(SSticker.IsRoundInProgress())
 			var/prob_sum = 0
 			var/current_odds_differ = FALSE
 			var/list/probs = list()

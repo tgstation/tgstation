@@ -149,7 +149,7 @@
 			return 1
 
 	if(href_list["late_join"])
-		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
+		if(!SSticker || !SSticker.IsRoundInProgress())
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 

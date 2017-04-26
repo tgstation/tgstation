@@ -804,7 +804,7 @@
 	return 1
 
 /client/proc/adminGreet(logout)
-	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
+	if(SSticker.HasRoundStarted())
 		var/string
 		if(logout && config && config.announce_admin_logout)
 			string = pick(
