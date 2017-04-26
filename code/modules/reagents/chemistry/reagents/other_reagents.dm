@@ -1145,6 +1145,7 @@
 	name = "Red Crayon Powder"
 	id = "redcrayonpowder"
 	colorname = "red"
+	color = "#DA0000" // red
 
 /datum/reagent/crayonpowder/orange
 	name = "Orange Crayon Powder"
@@ -1181,6 +1182,18 @@
 	id = "invisiblecrayonpowder"
 	colorname = "invisible"
 	color = "#FFFFFF00" // white + no alpha
+
+/datum/reagent/crayonpowder/black
+	name = "Black Crayon Powder"
+	id = "blackcrayonpowder"
+	colorname = "black"
+	color = "#1C1C1C" // not quite black
+
+/datum/reagent/crayonpowder/white
+	name = "White Crayon Powder"
+	id = "whitecrayonpowder"
+	colorname = "white"
+	color = "#FFFFFF" // white
 
 
 
