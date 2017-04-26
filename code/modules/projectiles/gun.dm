@@ -59,6 +59,10 @@
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
 	var/datum/action/toggle_scope_zoom/azoom
 
+	//spark effects
+	var/datum/effect_system/spark_spread/spark_system
+	var/sparks = 0 //determines if gun shoots sparks when fired
+
 
 /obj/item/weapon/gun/New()
 	..()
@@ -68,6 +72,9 @@
 		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
 		new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
+	spark_system = new /datum/effect_system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
 
 
 /obj/item/weapon/gun/CheckParts(list/parts_list)
@@ -106,6 +113,9 @@
 
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
+	if(sparks)
+		src.spark_system.start()
+
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
 
