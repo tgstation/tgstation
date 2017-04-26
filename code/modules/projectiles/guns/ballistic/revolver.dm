@@ -319,13 +319,14 @@
 /obj/item/weapon/gun/ballistic/revolver/pipe/New()
 	..()
 
-	//this code is used to make the random icon persistent.
+	//this code is used to select the icon. Except byond rng sucks and it gives the same icon several times in a row.
 	if(prob(50))
 		icon_state = "pipepistol-alt1"
-	elseif(prob(50))
-		icon_state = "pipepistol-alt2"
 	else
-		icon_state = "pipepistol"
+		if(prob(50))
+			icon_state = "pipepistol-alt2"
+		else
+			icon_state = "pipepistol"
 
 /obj/item/weapon/gun/ballistic/revolver/pipe/attackby(obj/item/A, mob/user, params)
 	..()
