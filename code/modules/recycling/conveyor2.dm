@@ -212,13 +212,14 @@
 
 
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
-	if(mapload)
-		return TRUE	//need machines list
-	. = ..()
+	..()
 	if(!id)
 		id = newid
 	update()
 
+	return INITIALIZE_HINT_LATELOAD //for machines list
+
+/obj/machinery/conveyor_switch/LateInitialize()
 	conveyors = list()
 	for(var/obj/machinery/conveyor/C in GLOB.machines)
 		if(C.id == id)

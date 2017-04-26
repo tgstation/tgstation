@@ -30,6 +30,7 @@
 		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
+	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/new_player/proc/new_player_panel()
 
