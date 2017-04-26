@@ -59,9 +59,10 @@
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(istype(tool, /obj/item/weapon/organ_storage))
-		tool = tool.contents[1]
 		tool.icon_state = "evidenceobj"
 		tool.desc = "A container for holding body parts."
+		tool.cut_overlays()
+		tool = tool.contents[1]
 	if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/L = tool
 		user.drop_item()

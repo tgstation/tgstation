@@ -121,6 +121,7 @@
 			I = tool.contents[1]
 			tool.icon_state = "evidenceobj"
 			tool.desc = "A container for holding body parts."
+			tool.cut_overlays()
 			tool = I
 		else
 			I = tool
