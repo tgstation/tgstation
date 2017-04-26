@@ -313,6 +313,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/internal/makeshift //mag is internal for balance reasons
 	can_suppress = 0
+	sparks = 1
+
+/obj/item/weapon/gun/ballistic/revolver/pipe/New()
+	..()
+	if(prob(20)
+		icon_state = "pipepistol-alt1"
 
 /obj/item/weapon/gun/ballistic/revolver/pipe/attackby(obj/item/A, mob/user, params)
 	..()
