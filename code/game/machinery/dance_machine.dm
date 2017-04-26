@@ -11,7 +11,6 @@
 	req_access = list(GLOB.access_engine)
 	var/active = FALSE
 	var/list/rangers = list()
-	var/list/listeners = list()
 	var/charge = 35
 	var/stop = 0
 	var/list/available = list()
@@ -66,7 +65,7 @@
 	else
 		icon_state = "disco0"
 	..()
-	
+
 
 /obj/machinery/disco/interact(mob/user)
 	if (!anchored)
@@ -74,7 +73,7 @@
 		return
 	if(!allowed(user))
 		to_chat(user,"<span class='warning'>Error: Access Denied - Message: Only the engineering department can be trusted with this kind of power.</span>")
-		playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+		playsound_local(src,'sound/misc/compiler-failure.ogg', 25, 1)
 		return
 	if(!Adjacent(user) && !isAI(user))
 		return
@@ -121,11 +120,7 @@
 				lights_spin()
 				updateUsrDialog()
 			else if(active)
-				active = FALSE
-				STOP_PROCESSING(SSobj, src)
-				update_icon()
-				dance_over()
-				stop = world.time + 300
+				stop = 0
 				updateUsrDialog()
 		if("select")
 			if(active)
@@ -316,7 +311,7 @@
 		sleep(selection.song_beat)
 
 
-/obj/machinery/disco/proc/dance(var/mob/living/carbon/M) //Show your moves
+/obj/machinery/disco/proc/dance(var/mob/living/M) //Show your moves
 
 	switch(rand(0,9))
 		if(0 to 1)
@@ -328,55 +323,64 @@
 		if(7 to 9)
 			dance5(M)
 
-/obj/machinery/disco/proc/dance2(var/mob/living/carbon/M)
-	set waitfor = 0
+/obj/machinery/disco/proc/dance2(var/mob/living/M)
 	for(var/i = 1, i < 10, i++)
-		M.SpinAnimation(15,1)
-		M.setDir(pick(GLOB.cardinal))
-		sleep(8)
+		for(var/d in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+			M.setDir(d)
+			if(i == WEST)
+				M.emote("flip")
+			sleep(1)
+		sleep(20)
 
-/obj/machinery/disco/proc/dance3(var/mob/living/carbon/M)
+/obj/machinery/disco/proc/dance3(var/mob/living/M)
 	var/matrix/initial_matrix = matrix(M.transform)
-	for(var/i in 1 to 6)
+	for (var/i in 1 to 75)
 		if (!M)
 			return
-		M.SpinAnimation(7,1)
-		M.setDir(pick(GLOB.cardinal))
-		for (var/x in 1 to 12)
-			sleep(1)
-			if (!M)
-				return
-			if (i<5)
+		switch(i)
+			if (1 to 15)
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(0,1)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (i>4)
+			if (16 to 30)
 				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,-2)
+				initial_matrix.Translate(1,-1)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			M.setDir(turn(M.dir, 90))
-			switch (M.dir)
-				if (NORTH)
-					initial_matrix = matrix(M.transform)
-					initial_matrix.Translate(0,3)
-					animate(M, transform = initial_matrix, time = 1, loop = 0)
-				if (SOUTH)
-					initial_matrix = matrix(M.transform)
-					initial_matrix.Translate(0,-3)
-					animate(M, transform = initial_matrix, time = 1, loop = 0)
-				if (EAST)
-					initial_matrix = matrix(M.transform)
-					initial_matrix.Translate(3,0)
-					animate(M, transform = initial_matrix, time = 1, loop = 0)
-				if (WEST)
-					initial_matrix = matrix(M.transform)
-					initial_matrix.Translate(-3,0)
-					animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep(10)
-		animate(M, transform = null, time = 1, loop = 0)
+			if (31 to 45)
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(-1,-1)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
+			if (46 to 60)
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(-1,1)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
+			if (61 to 75)
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(1,0)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
+		M.setDir(turn(M.dir, 90))
+		switch (M.dir)
+			if (NORTH)
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(0,3)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
+			if (SOUTH)
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(0,-3)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
+			if (EAST)
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(3,0)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
+			if (WEST)
+				initial_matrix = matrix(M.transform)
+				initial_matrix.Translate(-3,0)
+				animate(M, transform = initial_matrix, time = 1, loop = 0)
+		sleep (1)
+	M.lying_fix()
 
 
-/obj/machinery/disco/proc/dance4(var/mob/living/carbon/M)
+/obj/machinery/disco/proc/dance4(var/mob/living/M)
 	var/speed = rand(1,3)
 	set waitfor = 0
 	var/time = 30
@@ -387,8 +391,8 @@
 			M.lay_down(TRUE)
 		 time--
 
-/obj/machinery/disco/proc/dance5(var/mob/living/carbon/M)
-	INVOKE_ASYNC(M, .proc/dance5helper)
+/obj/machinery/disco/proc/dance5(var/mob/living/M)
+	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 60)
 		if (!M)
@@ -420,59 +424,13 @@
 				initial_matrix.Translate(-3,0)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
 		sleep (1)
-	animate(M, transform = null, time = 1, loop = 0)
+	M.lying_fix()
 
-/obj/machinery/disco/proc/dance5helper(var/mob/living/carbon/M)
-	if (M)
-		animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-	sleep (70)
-	if (M)
-		animate(M, transform = null, time = 1, loop = 0)
 
-/mob/living/carbon/proc/dancey() // Dance5 except independent of the machine if admins want to meme it up
-	INVOKE_ASYNC(src, .proc/danceyhelper)
-	var/matrix/initial_matrix = matrix(transform)
-	for (var/i in 1 to 60)
-		if (!src)
-			return
-		if (i<31)
-			initial_matrix = matrix(transform)
-			initial_matrix.Translate(0,1)
-			transform = initial_matrix
-			animate(src, transform, time = 1, loop = 0)
-		if (i>30)
-			initial_matrix = matrix(transform)
-			initial_matrix.Translate(0,-1)
-			transform = initial_matrix
-			animate(src, transform, time = 1, loop = 0)
-		setDir(turn(src.dir, 90))
-		switch (dir)
-			if (NORTH)
-				initial_matrix = matrix(transform)
-				initial_matrix.Translate(0,3)
-				animate(src, transform, time = 1, loop = 0)
-			if (SOUTH)
-				initial_matrix = matrix(transform)
-				initial_matrix.Translate(0,-3)
-				animate(src, transform, time = 1, loop = 0)
-			if (EAST)
-				initial_matrix = matrix(transform)
-				initial_matrix.Translate(3,0)
-				animate(src, transform, time = 1, loop = 0)
-			if (WEST)
-				initial_matrix = matrix(transform)
-				initial_matrix.Translate(-3,0)
-				animate(src, transform, time = 1, loop = 0)
-		sleep (1)
+
+/mob/living/proc/lying_fix()
 	animate(src, transform = null, time = 1, loop = 0)
-
-/mob/living/carbon/proc/danceyhelper()
-	if (src)
-		animate(src, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-	sleep (70)
-	if (src)
-		animate(src, transform = null, time = 1, loop = 0)
-
+	lying_prev = 0
 
 /obj/machinery/disco/proc/dance_over()
 	for(var/obj/item/device/flashlight/spotlight/SL in spotlights)
@@ -481,35 +439,34 @@
 	for(var/obj/effect/overlay/sparkles/SP in sparkles)
 		qdel(SP)
 	sparkles.Cut()
-	rangers.Cut()
-	for(var/mob/living/L in listeners)
+	for(var/mob/living/L in rangers)
 		if(!L || !L.client)
 			continue
 		L.stop_sound_channel(CHANNEL_JUKEBOX)
-	listeners.Cut()
+	rangers = list()
+
 
 
 /obj/machinery/disco/process()
 	if(charge<35)
 		charge += 1
 	if(world.time < stop && active)
-		rangers = list()
-		for(var/mob/living/M in range(9,src))
-			rangers += M
-			if(!(listeners[M]))
+		for(var/mob/M in range(10,src))
+			if(!(M in rangers))
+				rangers[M] = TRUE
 				M.playsound_local(get_turf(M), selection.song_path, 100, channel = CHANNEL_JUKEBOX)
-				listeners[M] = TRUE
-			if(prob(5+(allowed(M)*4)))
+			if(prob(5+(allowed(M)*4)) && M.canmove)
 				dance(M)
-		for(var/mob/living/L in listeners)
-			if(!(L in rangers))
-				listeners -= L
+		for(var/mob/L in rangers)
+			if(get_dist(src,L) > 10)
+				rangers -= L
 				if(!L || !L.client)
 					continue
 				L.stop_sound_channel(CHANNEL_JUKEBOX)
 	else if(active)
+		active = FALSE
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
 		playsound(src,'sound/machines/terminal_off.ogg',50,1)
-		active = FALSE
 		icon_state = "disco0"
+		stop = world.time + 100

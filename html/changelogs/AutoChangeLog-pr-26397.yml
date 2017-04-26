@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Fixed easter eggs spawning during non-Easter."
-  - bugfix: "Fixes stations not having holiday specific prefixes during the holidays."

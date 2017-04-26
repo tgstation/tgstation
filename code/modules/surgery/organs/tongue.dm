@@ -10,7 +10,7 @@
 	var/taste_sensitivity = 15 // lower is more sensitive.
 
 /obj/item/organ/tongue/Initialize(mapload)
-	..()
+	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/common,
 		/datum/language/monkey,
@@ -123,7 +123,7 @@
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 
 /obj/item/organ/tongue/alien/Initialize(mapload)
-	..()
+	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
@@ -186,7 +186,7 @@
 	taste_sensitivity = 25 // not as good as an organic tongue
 
 /obj/item/organ/tongue/robot/Initialize(mapload)
-	..()
+	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,

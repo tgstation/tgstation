@@ -167,10 +167,9 @@
 	item_state = "syringe_[rounded_vol]"
 
 	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
-		filling.icon_state = "syringe[rounded_vol]"
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
+		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(filling_overlay)
 
 /obj/item/weapon/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"

@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Items will no longer be used on backpacks if they fail to insert when they're too full."

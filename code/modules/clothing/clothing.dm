@@ -251,9 +251,9 @@ BLIND     // can't see anything
 	. = list()
 	if(!isinhands)
 		if(damaged_clothes)
-			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedgloves")
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
 		if(blood_DNA)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -279,9 +279,9 @@ BLIND     // can't see anything
 	. = list()
 	if(!isinhands)
 		if(damaged_clothes)
-			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedhelmet")
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
 		if(blood_DNA)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
+			. += mutable_appearance('icons/effects/blood.dmi', "helmetblood")
 
 /obj/item/clothing/head/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -304,9 +304,9 @@ BLIND     // can't see anything
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
-				. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedmask")
+				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 			if(blood_DNA)
-				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 
 //Mask
@@ -326,9 +326,9 @@ BLIND     // can't see anything
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
-				. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedmask")
+				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 			if(blood_DNA)
-				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -400,9 +400,9 @@ BLIND     // can't see anything
 			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
 
 		if(damaged_clothes)
-			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedshoe")
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
+			. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
@@ -455,9 +455,9 @@ BLIND     // can't see anything
 	. = list()
 	if(!isinhands)
 		if(damaged_clothes)
-			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damaged[blood_overlay_type]")
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
 		if(blood_DNA)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")
+			. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
 
 /obj/item/clothing/suit/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -534,17 +534,17 @@ BLIND     // can't see anything
 	if(!isinhands)
 
 		if(damaged_clothes)
-			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damageduniform")
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 		if(blood_DNA)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
+			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 		if(hastie)
 			var/tie_color = hastie.item_color
 			if(!tie_color)
 				tie_color = hastie.icon_state
-			var/image/tI = image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]")
-			tI.alpha = hastie.alpha
-			tI.color = hastie.color
-			. += tI
+			var/mutable_appearance/tie = mutable_appearance('icons/mob/ties.dmi', "[tie_color]")
+			tie.alpha = hastie.alpha
+			tie.color = hastie.color
+			. += tie
 
 /obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
 	..()
