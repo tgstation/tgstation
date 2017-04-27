@@ -338,13 +338,9 @@
 /obj/machinery/clonepod/proc/go_out()
 	countdown.stop()
 
-	var/turf/T = get_turf(src)
-
 	if(mess) //Clean that mess and dump those gibs!
 		mess = FALSE
-		for(var/obj/A in contents)
-			if(istype(A, /obj/effect/decal/cleanable/blood/gibs))
-				A.forceMove(T)
+		new /obj/effect/gibspawner/generic(loc)
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		icon_state = "pod_0"
 		return
@@ -357,6 +353,7 @@
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		occupant.flash_act()
 
+	var/turf/T = get_turf(src)
 	occupant.forceMove(T)
 	icon_state = "pod_0"
 	occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
@@ -378,14 +375,7 @@
 		to_chat(occupant, "<span class='warning'><b>Agony blazes across your consciousness as your body is torn apart.</b><br><i>Is this what dying is like? Yes it is.</i></span>")
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
-		addtimer(CALLBACK(src, .proc/end_malfunction, occupant), 40)
-
-/obj/machinery/clonepod/proc/end_malfunction(mob/victim)
-	if(!istype(victim)) //Where the hell did they go?
-		return
-	victim.ghostize()
-	victim.mind.current = null
-	victim.gib(TRUE, TRUE, TRUE)
+		QDEL_IN(occupant, 40)
 
 /obj/machinery/clonepod/relaymove(mob/user)
 	if(user.stat == CONSCIOUS)
