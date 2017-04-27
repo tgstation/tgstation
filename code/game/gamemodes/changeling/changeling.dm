@@ -254,19 +254,19 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 				for(var/datum/objective/objective in changeling.objectives)
 					if(objective.check_completion())
 						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
-						feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
+						SSblackbox.add_details("changeling_objective","[objective.type]|SUCCESS")
 					else
 						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
-						feedback_add_details("changeling_objective","[objective.type]|FAIL")
+						SSblackbox.add_details("changeling_objective","[objective.type]|FAIL")
 						changelingwin = 0
 					count++
 
 			if(changelingwin)
 				text += "<br><font color='green'><b>The changeling was successful!</b></font>"
-				feedback_add_details("changeling_success","SUCCESS")
+				SSblackbox.add_details("changeling_success","SUCCESS")
 			else
 				text += "<br><span class='boldannounce'>The changeling has failed.</span>"
-				feedback_add_details("changeling_success","FAIL")
+				SSblackbox.add_details("changeling_success","FAIL")
 			text += "<br>"
 
 		to_chat(world, text)

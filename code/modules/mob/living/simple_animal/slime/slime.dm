@@ -18,6 +18,7 @@
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("telepathically chirps")
 	bubble_icon = "slime"
+	initial_languages = list(/datum/language/common, /datum/language/slime)
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 
@@ -91,8 +92,7 @@
 		E.Grant(src)
 	create_reagents(100)
 	set_colour(new_colour)
-	grant_language(/datum/language/slime)
-	..()
+	. = ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
@@ -118,7 +118,7 @@
 	if(stat != DEAD)
 		icon_state = icon_text
 		if(mood && !stat)
-			add_overlay(image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]"))
+			add_overlay("aslime-[mood]")
 	else
 		icon_state = icon_dead
 	..()

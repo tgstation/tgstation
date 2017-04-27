@@ -14,9 +14,8 @@
 		revert_cast()
 		return
 	invocation(thearea,user)
-	spawn(0)
-		if(charge_type == "recharge" && recharge)
-			start_recharge()
+	if(charge_type == "recharge" && recharge)
+		INVOKE_ASYNC(src, .proc/start_recharge)
 	cast(targets,thearea,user)
 	after_cast(targets)
 

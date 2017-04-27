@@ -4,15 +4,17 @@
 
 SUBSYSTEM_DEF(squeak)
 	name = "Squeak"
-	priority = 40
+	init_order = INIT_ORDER_SQUEAK
 	flags = SS_NO_FIRE
 
 	var/list/exposed_wires = list()
 
 /datum/controller/subsystem/squeak/Initialize(timeofday)
-	trigger_migration()
+	trigger_migration(config.mice_roundstart)
 
 /datum/controller/subsystem/squeak/proc/trigger_migration(num_mice=10)
+	if(!num_mice)
+		return
 	find_exposed_wires()
 
 	var/mob/living/simple_animal/mouse/M

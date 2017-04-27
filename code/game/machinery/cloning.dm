@@ -126,6 +126,15 @@
 	if (is_operational() && (!isnull(occupant)) && (occupant.stat != DEAD))
 		to_chat(user, "Current clone cycle is [round(get_completion())]% complete.")
 
+/obj/machinery/clonepod/return_air()
+	// We want to simulate the clone not being in contact with
+	// the atmosphere, so we'll put them in a constant pressure
+	// nitrogen. They'll breathe through the chemicals we pump into them.
+	var/static/datum/gas_mixture/immutable/cloner/GM //global so that there's only one instance made for all cloning pods
+	if(!GM)
+		GM = new
+	return GM
+
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
 
@@ -163,6 +172,11 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
+	if(clonemind.changeling)
+		var/obj/item/organ/brain/B = H.getorganslot("brain")
+		B.vital = FALSE
+		B.decoy_override = TRUE
+
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 
 	if(efficiency > 2)
@@ -190,11 +204,13 @@
 
 	clonemind.transfer_to(H)
 
-	H.grab_ghost()
-	to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
+	if(grab_ghost_when == CLONER_FRESH_CLONE)
+		H.grab_ghost()
+		to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
-		addtimer(CALLBACK(src, .proc/occupant_dreams), 100)
+		H.ghostize(TRUE)	//Only does anything if they were still in their old body and not already a ghost
+		to_chat(H.get_ghost(TRUE), "<span class='notice'>Your body is beginning to regenerate in a cloning pod. You will become conscious when it is complete.</span>")
 
 	if(H)
 		H.faction |= factions
@@ -204,11 +220,6 @@
 		H.suiciding = FALSE
 	attempting = FALSE
 	return TRUE
-
-/obj/machinery/clonepod/proc/occupant_dreams()
-	if(occupant)
-		to_chat(occupant, "<span class='revennotice'>While your body grows, you have the strangest dream, like you can see yourself from the outside.</span>")
-		occupant.ghostize(TRUE)
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
@@ -303,7 +314,7 @@
 			return
 		else
 			connected_message("Authorized Ejection")
-			SPEAK("An authorized ejection of [occupant.real_name] has occurred.")
+			SPEAK("An authorized ejection of [clonemind.name] has occurred.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
 	else
@@ -356,6 +367,8 @@
 		SPEAK("Critical error! Please contact a Thinktronic Systems \
 			technician, as your warranty may be affected.")
 		mess = TRUE
+		for(var/obj/item/O in unattached_flesh)
+			qdel(O)
 		icon_state = "pod_g"
 		if(occupant.mind != clonemind)
 			clonemind.transfer_to(occupant)
@@ -371,9 +384,9 @@
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
-	if(prob(100/(severity*efficiency)))
+	if((occupant || mess) && prob(100/(severity*efficiency)))
 		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
-		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [occupant.real_name] prematurely." ,0))
+		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [clonemind.name] prematurely." ,0))
 		go_out()
 	..()
 

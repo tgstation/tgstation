@@ -8,8 +8,8 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
-/obj/item/clothing/head/helmet/clockwork/New()
-	..()
+/obj/item/clothing/head/helmet/clockwork/Initialize()
+	. = ..()
 	ratvar_act()
 	GLOB.all_clockwork_objects += src
 
@@ -64,8 +64,8 @@
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
-/obj/item/clothing/suit/armor/clockwork/New()
-	..()
+/obj/item/clothing/suit/armor/clockwork/Initialize()
+	. = ..()
 	ratvar_act()
 	GLOB.all_clockwork_objects += src
 
@@ -125,8 +125,8 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
-/obj/item/clothing/gloves/clockwork/New()
-	..()
+/obj/item/clothing/gloves/clockwork/Initialize()
+	. = ..()
 	ratvar_act()
 	GLOB.all_clockwork_objects += src
 
@@ -178,8 +178,8 @@
 	put_on_delay = 30
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/obj/item/clothing/shoes/clockwork/New()
-	..()
+/obj/item/clothing/shoes/clockwork/Initialize()
+	. = ..()
 	ratvar_act()
 	GLOB.all_clockwork_objects += src
 

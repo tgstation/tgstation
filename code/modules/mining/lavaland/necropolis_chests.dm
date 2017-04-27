@@ -9,8 +9,7 @@
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
 
-/obj/structure/closet/crate/necropolis/tendril/Initialize()
-	..()
+/obj/structure/closet/crate/necropolis/tendril/PopulateContents()
 	var/loot = rand(1,25)
 	switch(loot)
 		if(1)
@@ -87,7 +86,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
-		feedback_add_details("wisp_lantern","F") // freed
+		SSblackbox.add_details("wisp_lantern","Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
@@ -102,7 +101,7 @@
 		wisp.stop_orbit()
 		wisp.loc = src
 		icon_state = "lantern-blue"
-		feedback_add_details("wisp_lantern","R") // returned
+		SSblackbox.add_details("wisp_lantern","Returned")
 
 /obj/item/device/wisp_lantern/Initialize()
 	..()
@@ -141,7 +140,7 @@
 		return
 	new /obj/effect/particle_effect/smoke(user.loc)
 	user.forceMove(get_turf(linked))
-	feedback_add_details("warp_cube","[src.type]")
+	SSblackbox.add_details("warp_cube","[src.type]")
 	new /obj/effect/particle_effect/smoke(user.loc)
 
 /obj/item/device/warp_cube/red
@@ -229,7 +228,7 @@
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
-		feedback_add_details("immortality_talisman","U") // usage
+		SSblackbox.add_details("immortality_talisman","Activated") // usage
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
@@ -239,13 +238,15 @@
 		user.forceMove(Z)
 		user.notransform = 1
 		user.status_flags |= GODMODE
-		spawn(100)
-			user.status_flags &= ~GODMODE
-			user.notransform = 0
-			user.forceMove(get_turf(Z))
-			user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
-			Z.can_destroy = TRUE
-			qdel(Z)
+		addtimer(CALLBACK(src, .proc/return_to_reality, user, Z), 100)
+
+/obj/item/device/immortality_talisman/proc/return_to_reality(mob/user, obj/effect/immortality_talisman/Z)
+	user.status_flags &= ~GODMODE
+	user.notransform = 0
+	user.forceMove(get_turf(Z))
+	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
+	Z.can_destroy = TRUE
+	qdel(Z)
 
 /obj/effect/immortality_talisman
 	icon_state = "blank"
@@ -453,8 +454,7 @@
 /obj/structure/closet/crate/necropolis/dragon
 	name = "dragon chest"
 
-/obj/structure/closet/crate/necropolis/dragon/Initialize()
-	..()
+/obj/structure/closet/crate/necropolis/dragon/PopulateContents()
 	var/loot = rand(1,4)
 	switch(loot)
 		if(1)
@@ -689,9 +689,8 @@
 
 /obj/item/mayhem/attack_self(mob/user)
 	for(var/mob/living/carbon/human/H in range(7,user))
-		spawn()
-			var/obj/effect/mine/pickup/bloodbath/B = new(H)
-			B.mineEffect(H)
+		var/obj/effect/mine/pickup/bloodbath/B = new(H)
+		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
 	qdel(src)
@@ -699,8 +698,7 @@
 /obj/structure/closet/crate/necropolis/bubblegum
 	name = "bubblegum chest"
 
-/obj/structure/closet/crate/necropolis/bubblegum/Initialize()
-	..()
+/obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	var/loot = rand(1,3)
 	switch(loot)
 		if(1)
@@ -743,9 +741,8 @@
 		L.mind.objectives += survive
 		to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>")
 		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
-		spawn()
-			var/obj/effect/mine/pickup/bloodbath/B = new(L)
-			B.mineEffect(L)
+		var/obj/effect/mine/pickup/bloodbath/B = new(L)
+		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
 
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			if(H == L)

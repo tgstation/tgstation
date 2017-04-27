@@ -21,14 +21,14 @@
 	var/mob/camera/blob/overmind
 
 
-/obj/structure/blob/New(loc)
+/obj/structure/blob/Initialize()
 	var/area/Ablob = get_area(loc)
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		GLOB.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinal))
 	update_icon()
-	..()
+	.= ..()
 	ConsumeTile()
 	if(atmosblock)
 		CanAtmosPass = ATMOS_PASS_NO
@@ -307,7 +307,7 @@
 /obj/structure/blob/examine(mob/user)
 	..()
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	if(user.research_scanner || (user in hud_to_check.hudusers))
+	if(user.research_scanner || hud_to_check.hudusers[user])
 		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
 		chemeffectreport(user)
 		typereport(user)

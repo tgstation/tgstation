@@ -204,7 +204,8 @@
 	dismemberment = 20
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
 
-/obj/item/projectile/plasma/New()
+/obj/item/projectile/plasma/Initialize()
+	. = ..()
 	var/turf/proj_turf = get_turf(src)
 	if(!isturf(proj_turf))
 		return
@@ -215,7 +216,6 @@
 			name = "full strength [name]"
 			damage *= 4
 			range *= 2
-	..()
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
@@ -254,9 +254,10 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/item/projectile/gravityrepulse/New(var/obj/item/ammo_casing/energy/gravityrepulse/C)
-	..()
-	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
+/obj/item/projectile/gravityrepulse/Initialize()
+	. = ..()
+	var/obj/item/ammo_casing/energy/gravityrepulse/C = loc
+	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
 /obj/item/projectile/gravityrepulse/on_hit()
@@ -284,9 +285,10 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/item/projectile/gravityattract/New(var/obj/item/ammo_casing/energy/gravityattract/C)
-	..()
-	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
+/obj/item/projectile/gravityattract/Initialize()
+	. = ..()
+	var/obj/item/ammo_casing/energy/gravityattract/C = loc
+	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
 /obj/item/projectile/gravityattract/on_hit()
@@ -313,9 +315,10 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/item/projectile/gravitychaos/New(var/obj/item/ammo_casing/energy/gravitychaos/C)
-	..()
-	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
+/obj/item/projectile/gravitychaos/Initialize()
+	. = ..()
+	var/obj/item/ammo_casing/energy/gravitychaos/C = loc
+	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
 /obj/item/projectile/gravitychaos/on_hit()

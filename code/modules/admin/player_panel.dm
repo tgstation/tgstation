@@ -81,7 +81,8 @@
 					body += "<a href='?_src_=holder;traitor="+ref+"'>TP</a> - "
 					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
 					body += "<a href='?_src_=holder;subtlemessage="+ref+"'>SM</a> - "
-					body += "<a href='?_src_=holder;adminplayerobservefollow="+ref+"'>FLW</a><br>"
+					body += "<a href='?_src_=holder;adminplayerobservefollow="+ref+"'>FLW</a> - "
+					body += "<a href='?_src_=holder;individuallog="+ref+"'>LOGS</a><br>"
 					if(antagonist > 0)
 						body += "<font size='2'><a href='?_src_=holder;secrets=check_antagonist'><font color='red'><b>Antagonist</b></font></a></font>";
 
@@ -309,7 +310,7 @@
 	usr << browse(dat, "window=players;size=600x480")
 
 /datum/admins/proc/check_antagonists()
-	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
+	if (SSticker.HasRoundStarted())
 		var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 		if(SSticker.mode.replacementmode)
 			dat += "Former Game Mode: <B>[SSticker.mode.name]</B><BR>"

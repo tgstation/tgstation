@@ -141,9 +141,9 @@ function tag_pr($payload, $opened) {
 	$remove = array();
 
 	$mergeable = $payload['pull_request']['mergeable'];
-	if($mergeable == null || $mergeable)	//only look for the false value
+	if($mergeable === TRUE)	//only look for the false value
 		$remove[] = 'Merge Conflict';
-	else
+	else if ($mergable === FALSE)
 		$tags[] = 'Merge Conflict';
 
 	if(has_tree_been_edited($payload, '_maps'))
@@ -423,13 +423,13 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 
 function sendtoallservers($str, $payload = null) {
 	global $servers;
-	
+	if (!empty($payload))
+		$str .= '&payload='.urlencode(json_encode($payload));
 	foreach ($servers as $serverid => $server) {
+		$msg = $str;
 		if (isset($server['comskey']))
-			$str .= '&key='.urlencode($server['comskey']);
-		if (!empty($payload))
-			$str .= '&payload='.urlencode(json_encode($payload));
-		$rtn = export($server['address'], $server['port'], $str);
+			$msg .= '&key='.urlencode($server['comskey']);
+		$rtn = export($server['address'], $server['port'], $msg);
 		echo "Server Number $serverid replied: $rtn\n";
 	}
 }
@@ -437,7 +437,6 @@ function sendtoallservers($str, $payload = null) {
 
 
 function export($addr, $port, $str) {
-	global $error;
 	// All queries must begin with a question mark (ie "?players")
 	if($str{0} != '?') $str = ('?' . $str);
 	
@@ -448,8 +447,7 @@ function export($addr, $port, $str) {
 	$server = socket_create(AF_INET,SOCK_STREAM,SOL_TCP) or exit("ERROR");
 	socket_set_option($server, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 2, 'usec' => 0)); //sets connect and send timeout to 2 seconds
 	if(!socket_connect($server,$addr,$port)) {
-		$error = true;
-		return "ERROR";
+		return "ERROR: Connection failed";
 	}
 
 	
@@ -460,7 +458,8 @@ function export($addr, $port, $str) {
 		//echo $bytessent.'<br>';
 		$result = socket_write($server,substr($query,$bytessent),$bytestosend-$bytessent);
 		//echo 'Sent '.$result.' bytes<br>';
-		if ($result===FALSE) die(socket_strerror(socket_last_error()));
+		if ($result===FALSE) 
+			return "ERROR: " . socket_strerror(socket_last_error());
 		$bytessent += $result;
 	}
 	
@@ -491,9 +490,7 @@ function export($addr, $port, $str) {
 				return $unpackstr;
 			}
 		}
-	}	
-	//if we get to this point, something went wrong;
-	$error = true;
-	return "ERROR";
+	}
+	return "";
 }
 ?>

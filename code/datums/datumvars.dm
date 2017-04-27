@@ -340,7 +340,7 @@
 									target="_parent._top"
 									onmouseclick="this.focus()"
 									style="background-color:#ffffff">
-									<option value>Select option</option>
+									<option value selected>Select option</option>
 									[dropdownoptions_html.Join()]
 								</select>
 							</form>
@@ -446,7 +446,7 @@
 		var/list/L = value
 		var/list/items = list()
 
-		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > 500))
+		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > (IS_NORMAL_LIST(L) ? 50 : 150)))
 			for (var/i in 1 to L.len)
 				var/key = L[i]
 				var/val
@@ -1054,6 +1054,7 @@
 
 			if(result)
 				var/newtype = GLOB.species_list[result]
+				admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [H] to [result]")
 				H.set_species(newtype)
 
 		else if(href_list["editbodypart"])
@@ -1099,7 +1100,7 @@
 								to_chat(usr, "[C] doesn't have such bodypart.")
 						else
 							to_chat(usr, "Only humans can be augmented.")
-
+			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [C]")
 
 
 		else if(href_list["purrbation"])
@@ -1122,12 +1123,16 @@
 			if(success)
 				to_chat(usr, "Put [H] on purrbation.")
 				log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
-				message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
+				var/msg = "<span class='notice'>[key_name_admin(usr)] has put [key_name(H)] on purrbation.</span>"
+				message_admins(msg)
+				admin_ticket_log(H, msg)
 
 			else
 				to_chat(usr, "Removed [H] from purrbation.")
 				log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
-				message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
+				var/msg = "<span class='notice'>[key_name_admin(usr)] has removed [key_name(H)] from purrbation.</span>"
+				message_admins(msg)
+				admin_ticket_log(H, msg)
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))
@@ -1166,6 +1171,8 @@
 
 			if(amount != 0)
 				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
+				var/msg = "<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>"
+				message_admins(msg)
+				admin_ticket_log(L, msg)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 

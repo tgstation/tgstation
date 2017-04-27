@@ -13,8 +13,8 @@ This file contains the arcane tome files.
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/weapon/tome/New()
-	..()
+/obj/item/weapon/tome/Initialize()
+	. = ..()
 	if(!LAZYLEN(GLOB.rune_types))
 		GLOB.rune_types = list()
 		var/static/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
@@ -247,7 +247,7 @@ This file contains the arcane tome files.
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
 	R.add_mob_blood(user)
 	to_chat(user, "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>")
-	feedback_add_details("cult_runes_scribed", R.cultist_name)
+	SSblackbox.add_details("cult_runes_scribed", R.cultist_name)
 
 /obj/item/weapon/tome/proc/check_rune_turf(turf/T, mob/user)
 	var/area/A = get_area(T)
