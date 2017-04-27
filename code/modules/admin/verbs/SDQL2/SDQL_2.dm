@@ -477,7 +477,7 @@
 	var/list/new_args = list()
 	for(var/arg in arguments)
 		new_args += SDQL_expression(source, arg)
-	if(object == world) // Global proc.
+	if(object == GLOB) // Global proc.
 		procname = "/proc/[procname]"
 		return WrapAdminProcCall(GLOBAL_PROC, procname, new_args)
 	return WrapAdminProcCall(object, procname, new_args)
