@@ -1,4 +1,3 @@
-#define PROCESSING_UNIT_CAPACITY 1000000
 #define SMELT_AMOUNT 10
 
 /**********************Mineral processing unit console**************************/
@@ -77,7 +76,7 @@
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 1)
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),PROCESSING_UNIT_CAPACITY)
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
 	files = new /datum/research/smelter(src)
 
 /obj/machinery/mineral/processing_unit/Destroy()
@@ -218,6 +217,4 @@
 	materials.retrieve_all()
 	..()
 
-
-#undef PROCESSING_UNIT_CAPACITY
 #undef SMELT_AMOUNT
