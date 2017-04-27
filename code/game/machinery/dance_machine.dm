@@ -129,7 +129,7 @@
 			check_GBP()
 			var/list/available = list()
 			for(var/datum/track/S in songs)
-				available += S.name
+				available += S.song_name
 			select_name = input(usr, "Choose your song", "Track:") as null|anything in available
 			if (QDELETED(src))
 				return
