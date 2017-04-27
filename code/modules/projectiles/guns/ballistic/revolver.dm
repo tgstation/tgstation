@@ -316,17 +316,6 @@
 	sparks = 1
 	dont_update = 1 //hopefully prevents icon from changing to default after a variant is selected
 
-/obj/item/weapon/gun/ballistic/revolver/pipe/New()
-	..()
-
-	//this code is used to select the icon. Except byond rng sucks and it gives the same icon several times in a row.
-	if(prob(50))
-		icon_state = "pipepistol-alt1"
-	else
-		if(prob(50))
-			icon_state = "pipepistol-alt2"
-		else
-			icon_state = "pipepistol"
 
 /obj/item/weapon/gun/ballistic/revolver/pipe/attackby(obj/item/A, mob/user, params)
 	..()
