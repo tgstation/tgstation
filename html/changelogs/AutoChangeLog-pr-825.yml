@@ -1,0 +1,5 @@
+author: "Gun Hog"
+delete-after: True
+changes: 
+  - rscadd: "The GPS interface has been converted to tgui."
+  - experiment: "GPS now update automatically or manually, give distance and direction to a signal, and many other improvements!"
