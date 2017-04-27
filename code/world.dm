@@ -25,17 +25,32 @@
 		else
 			external_rsc_urls.Cut(i,i+1)
 #endif
-	//logs
-	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-	GLOB.href_logfile = file("data/logs/[date_string] hrefs.htm")
-	GLOB.diary = file("data/logs/[date_string].log")
-	GLOB.diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
-	GLOB.diary << "\n\nStarting up. [time_stamp()]\n---------------------"
-	GLOB.diaryofmeanpeople << "\n\nStarting up. [time_stamp()]\n---------------------"
+	config = new
+	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+	if(config.sql_enabled)
+		if(SSdbcore.Connect())
+			log_world("Database connection established.")
+			var/datum/DBQuery/query_feedback_create_round = SSdbcore.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), MAX(round_id)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
+			query_feedback_create_round.Execute()
+			var/datum/DBQuery/query_feedback_max_id = SSdbcore.NewQuery("SELECT MAX(round_id) FROM [format_table_name("feedback")]")
+			query_feedback_max_id.Execute()
+			if(query_feedback_max_id.NextRow())
+				GLOB.round_id = query_feedback_max_id.item[1]
+				GLOB.log_directory += "[GLOB.round_id]"
+		else
+			log_world("Your server failed to establish a connection with the database.")
+	if(!GLOB.round_id)
+		GLOB.log_directory += "[time_stamp()]"
+	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
+	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
+	GLOB.world_runtime_log = file("[GLOB.log_directory]/runtime.log")
+	GLOB.world_href_log = file("[GLOB.log_directory]/hrefs.html")
+	GLOB.world_game_log << "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------"
+	GLOB.world_attack_log << "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------"
+	GLOB.world_runtime_log << "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------"
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-	config = new
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
@@ -43,16 +58,8 @@
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
-	investigate_reset()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
-
-	if(config.sql_enabled)
-		if(!SSdbcore.Connect())
-			log_world("Your server failed to establish a connection with the database.")
-		else
-			log_world("Database connection established.")
-
 
 	GLOB.data_core = new /datum/datacore()
 
@@ -61,7 +68,7 @@
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
-		GLOB.diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
+		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
@@ -253,7 +260,7 @@
 	if(Lines.len)
 		if(Lines[1])
 			GLOB.master_mode = Lines[1]
-			GLOB.diary << "Saved mode is '[GLOB.master_mode]'"
+			GLOB.world_game_log << "Saved mode is '[GLOB.master_mode]'"
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
