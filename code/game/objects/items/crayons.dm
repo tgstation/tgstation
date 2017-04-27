@@ -242,10 +242,10 @@
 	return jointext(out,"")
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
-	if(!proximity || !check_allowed_items(target))
+	if(check_empty(user))
 		return
 
-	if(check_empty(user))
+	if(!proximity || !check_allowed_items(target))
 		return
 
 	if(istype(target, /obj/effect/decal/cleanable))
@@ -363,20 +363,13 @@
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		cost = 5
 	. = use_charges(cost)
-	var/fraction = min(1, . / reagents.maximum_volume)
-	if(affected_turfs.len)
-		fraction /= affected_turfs.len
-	for(var/t in affected_turfs)
-		reagents.reaction(t, TOUCH, fraction * volume_multiplier)
-		reagents.trans_to(t, ., volume_multiplier)
+	reagents.remove_all(.)
 	check_empty(user)
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
 		to_chat(user, "You take a bite of the [src.name]. Delicious!")
 		var/eaten = use_charges(5)
-		if(check_empty(user)) //Prevents divsion by zero
-			return
 		var/fraction = min(eaten / reagents.total_volume, 1)
 		reagents.reaction(M, INGEST, fraction * volume_multiplier)
 		reagents.trans_to(M, eaten, volume_multiplier)
@@ -642,8 +635,9 @@
 
 		// Caution, spray cans contain inflammable substances
 		. = use_charges(10)
-		var/fraction = min(1, . / reagents.maximum_volume)
+		var/fraction = min(1, . / reagents.total_volume)
 		reagents.reaction(C, VAPOR, fraction * volume_multiplier)
+		reagents.remove_all(.)	//because vapor reactions already make the mob injest
 
 		return
 
@@ -655,10 +649,7 @@
 			else
 				target.set_opacity(initial(target.opacity))
 		. = use_charges(2)
-		var/fraction = min(1, . / reagents.maximum_volume)
-		reagents.reaction(target, TOUCH, fraction * volume_multiplier)
-		reagents.trans_to(target, ., volume_multiplier)
-
+		reagents.remove_all(.)
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		return
