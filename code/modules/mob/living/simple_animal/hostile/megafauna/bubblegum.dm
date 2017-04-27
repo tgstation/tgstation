@@ -150,7 +150,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(target)
 	if(!T || T == loc)
 		return
-	new /obj/effect/overlay/temp/dragon_swoop(T)
+	new /obj/effect/overlay/temp/dragon_swoop/bubblegum(T)
 	charging = TRUE
 	DestroySurroundings()
 	walk(src, 0)
@@ -275,6 +275,9 @@ Difficulty: Hard
 			if(L.stat != CONSCIOUS)
 				addtimer(CALLBACK(src, .proc/devour, L), 2)
 	sleep(1)
+
+/obj/effect/overlay/temp/dragon_swoop/bubblegum
+	duration = 10
 
 /obj/effect/overlay/temp/bubblegum_hands
 	icon = 'icons/effects/bubblegum.dmi'

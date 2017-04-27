@@ -17,8 +17,8 @@
 	var/allow_creating_vr_humans = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
 	var/outfit = /datum/outfit/vr_basic
 
-/obj/machinery/vr_sleeper/New()
-	..()
+/obj/machinery/vr_sleeper/Initialize()
+	. = ..()
 	sparks = new /datum/effect_system/spark_spread()
 	sparks.set_up(2,0)
 	sparks.attach(src)

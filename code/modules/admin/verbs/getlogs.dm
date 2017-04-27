@@ -90,7 +90,7 @@
 	else
 		to_chat(src, "<font color='red'>Server log not found, try using .getserverlog.</font>")
 		return
-	feedback_add_details("admin_verb","Show Server Log") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Show Server Log") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 //Shows today's attack log
@@ -104,5 +104,5 @@
 	else
 		to_chat(src, "<font color='red'>Server attack log not found, try using .getserverlog.</font>")
 		return
-	feedback_add_details("admin_verb","Show Server Attack log") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Show Server Attack log") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

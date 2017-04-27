@@ -34,6 +34,7 @@ Buildable meters
 		PIPE_CONNECTOR, \
 		PIPE_UVENT, \
 		PIPE_SCRUBBER, \
+		PIPE_INJECTOR, \
 		PIPE_HEAT_EXCHANGE, \
 		\
 		PIPE_PUMP, \
@@ -93,6 +94,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	"[PIPE_CONNECTOR]"		 = "connector", \
 	"[PIPE_UVENT]"			 = "uvent", \
 	"[PIPE_SCRUBBER]"		 = "scrubber", \
+	"[PIPE_INJECTOR]"		 = "injector", \
 	"[PIPE_HEAT_EXCHANGE]"	 = "heunary", \
 	\
 	"[PIPE_PUMP]"			 = "pump", \
@@ -120,6 +122,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		"[PIPE_CONNECTOR]" 		= "connector", \
 		"[PIPE_UVENT]" 			= "vent", \
 		"[PIPE_SCRUBBER]" 		= "scrubber", \
+		"[PIPE_INJECTOR]"		= "injector", \
 		"[PIPE_HEAT_EXCHANGE]" 	= "heat exchanger", \
 		\
 		"[PIPE_PUMP]" 			= "pump", \

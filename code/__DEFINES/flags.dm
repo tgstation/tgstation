@@ -36,6 +36,10 @@
 #define INFORM_ADMINS_ON_RELOCATE "inform_admins_on_relocate"
 #define BANG_PROTECT "bang_protect"
 
+// An item worn in the ear slot with HEALS_EARS will heal your ears each
+// Life() tick, even if normally your ears would be too damaged to heal.
+#define HEALS_EARS "heals_ears"
+
 // A mob with OMNITONGUE has no restriction in the ability to speak
 // languages that they know. So even if they wouldn't normally be able to
 // through mob or tongue restrictions, this flag allows them to ignore

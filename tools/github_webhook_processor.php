@@ -141,9 +141,9 @@ function tag_pr($payload, $opened) {
 	$remove = array();
 
 	$mergeable = $payload['pull_request']['mergeable'];
-	if($mergeable == null || $mergeable)	//only look for the false value
+	if($mergeable === TRUE)	//only look for the false value
 		$remove[] = 'Merge Conflict';
-	else
+	else if ($mergable === FALSE)
 		$tags[] = 'Merge Conflict';
 
 	if(has_tree_been_edited($payload, '_maps'))

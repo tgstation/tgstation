@@ -465,11 +465,13 @@
 	icon_state = "crayonblack"
 	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
 	item_color = "black"
+	reagent_contents = list("nutriment" = 1, "blackcrayonpowder" = 1)
 
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
 	item_color = "white"
+	reagent_contents = list("nutriment" = 1, "whitecrayonpowder" = 1)
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
@@ -521,7 +523,7 @@
 /obj/item/weapon/storage/crayons/update_icon()
 	cut_overlays()
 	for(var/obj/item/toy/crayon/crayon in contents)
-		add_overlay(image('icons/obj/crayons.dmi',crayon.item_color))
+		add_overlay(mutable_appearance('icons/obj/crayons.dmi', crayon.item_color))
 
 /obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
@@ -667,10 +669,9 @@
 	icon_state = is_capped ? icon_capped : icon_uncapped
 	if(use_overlays)
 		cut_overlays()
-		var/image/I = image('icons/obj/crayons.dmi',
-			icon_state = "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
-		I.color = paint_color
-		add_overlay(I)
+		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
+		spray_overlay.color = paint_color
+		add_overlay(spray_overlay)
 
 /obj/item/toy/crayon/spraycan/gang
 	//desc = "A modified container containing suspicious paint."
