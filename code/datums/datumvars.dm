@@ -27,6 +27,7 @@
 	. += "---"
 	.["Call Proc"] = "?_src_=vars;proc_call=\ref[src]"
 	.["Mark Object"] = "?_src_=vars;mark_object=\ref[src]"
+	.["Delete"] = "?_src_=vars;delete=\ref[src]"
 
 
 /datum/proc/on_reagent_change()
@@ -524,6 +525,16 @@
 
 		if(T)
 			callproc_datum(T)
+
+	else if(href_list["delete"])
+		if(!check_rights(R_DEBUG, 0))
+			return
+
+		var/datum/D = locate(href_list["delete"])
+		if(!D)
+			to_chat(usr, "Unable to locate item!")
+		admin_delete(D)
+		href_list["datumrefresh"] = href_list["delete"]
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))
