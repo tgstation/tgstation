@@ -315,6 +315,7 @@
 	can_suppress = 0
 	sparks = 1
 	dont_update = 1 //hopefully prevents icon from changing to default after a variant is selected
+	slot_flags = SLOT_BACK
 
 
 /obj/item/weapon/gun/ballistic/revolver/pipe/attackby(obj/item/A, mob/user, params)
