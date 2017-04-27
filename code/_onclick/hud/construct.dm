@@ -1,8 +1,8 @@
 
-/datum/hud/construct
+/datum/hud/constructs
 	ui_style_icon = 'icons/mob/screen_construct.dmi'
 	
-/datum/hud/construct/New(mob/owner)
+/datum/hud/constructs/New(mob/owner)
 	..()
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style_icon
