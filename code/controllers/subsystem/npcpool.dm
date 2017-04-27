@@ -25,7 +25,6 @@ SUBSYSTEM_DEF(npcpool)
 	needsDelegate -= I
 	canBeUsed -= I
 	needsAssistant -= I
-	currentrun -= I
 
 /datum/controller/subsystem/npcpool/fire(resumed = FALSE)
 	//bot delegation and coordination systems
