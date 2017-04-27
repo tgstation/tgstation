@@ -359,8 +359,6 @@
 					result = (result |= val)
 				if("~=")
 					result = (result &= ~val)
-				if("|")
-					result = (result|val)
 				else
 					to_chat(usr, "<span class='danger'>SDQL2: Unknown op [op]</span>")
 					result = null
