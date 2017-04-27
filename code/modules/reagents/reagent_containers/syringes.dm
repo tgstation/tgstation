@@ -229,6 +229,13 @@
 	volume = 1
 	list_reagents = list("gluttonytoxin" = 1)
 
+/obj/item/weapon/reagent_containers/syringe/rage
+	name = "Unstable Rage Serum"
+	desc = "A syringe containing an extremely unstable mutation serum."
+	amount_per_transfer_from_this = 1
+	volume = 1
+	list_reagents = list("ragemutationtoxin" = 1)
+
 /obj/item/weapon/reagent_containers/syringe/bluespace
 	name = "bluespace syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals"

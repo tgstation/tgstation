@@ -424,3 +424,22 @@
 	exp_light = -1
 	exp_flash = 4
 	exp_fire= 5
+
+/obj/item/projectile/magic/aoe/shockwave
+	name = "kinetic shockwave"
+	icon_state = "shockwave"
+	damage = 15
+	damage_type = BRUTE
+	nodamage = 0
+
+/obj/item/projectile/magic/aoe/shockwave/Initialize()
+	shake_camera(src, 7, 2)
+
+/obj/item/projectile/magic/aoe/shockwave/on_hit(target)
+	. = ..()
+	var/turf/T = get_turf(target)
+	explosion(T, -1, 0, 2, 0, 0, flame_range = 0)
+	if(ismob(target))
+		var/mob/living/M = target
+		M.take_overall_damage(0,10)
+		M.Weaken(4)

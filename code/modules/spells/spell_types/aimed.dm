@@ -102,3 +102,20 @@
 	active_msg = "You prepare to cast your fireball spell!"
 	deactive_msg = "You extinguish your fireball... for now."
 	active = FALSE
+
+/obj/effect/proc_holder/spell/aimed/groundpound
+	name = "Shockwave"
+	desc = "Slam your fists into the floor, sending a shockwave of energy that trips up those caught in the blast."
+	school = "evocation"
+	charge_max = 150
+	clothes_req = 0
+	invocation = "RAAAAUUGGGHHH!!!"
+	invocation_type = "shout"
+	range = 5
+	projectile_type = /obj/item/projectile/magic/aoe/shockwave
+	base_icon_state = "shockwave0"
+	action_icon_state = "shockwave0"
+	sound = 'sound/effects/meteorimpact.ogg'
+	active_msg = "You raise your arms, ready to slam into the flooring! "
+	deactive_msg = "You lower your arms back down to your side, deciding against it. "
+	active = FALSE
