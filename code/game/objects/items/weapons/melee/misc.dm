@@ -59,33 +59,48 @@
 
 /obj/item/weapon/melee/buff_arm/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 10
+		final_block_chance += 10 //50% total to block thrown items
 	if(attack_type == MELEE_ATTACK)
-		final_block_chance -= 5
-	if(attack_type == UNARMED_ATTACK) //puny fists cannot bypass muscles
+		final_block_chance -= 5 //20% total to block melee attacks
+	if(attack_type == UNARMED_ATTACK) //unarmed and xeno leaps fully blocked.
 		final_block_chance = 100
 	if(attack_type == LEAP_ATTACK)
 		final_block_chance = 100
 	return ..()
 
+ //at least look cool when accidently hitting yourself
 /obj/item/weapon/melee/buff_arm/afterattack(target, mob/user)
-	if(user && target == user) //at least look cool when accidently hitting yourself
+	if(user && target == user)
 		user.visible_message("<span class='danger'>[user] beats their chest in a fit of primal rage!</span>")
 		user.say(pick("GRRAAAGHHH!!!", "RAAAAAAGHH!!!", "AAAAAGGRHHHH!!!"))
 		playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 		return
-	else if(iscarbon(target) && prob(35))
+
+//random special weaken when attacking
+	else if(iscarbon(target))
 		var/mob/living/carbon/T = target
-		if(T.lying) //don't want stun locking, not like you'd survive long enough for it to happen in the first place
-			return
-		else
+		if(!T.lying && prob(35)) //don't want stun locking, not like you'd survive long enough for it to happen in the first place
 			T.visible_message("<span class='warning'>[T] cries out in pain as [user] slams them into the ground!</span>", \
 							 "<span class='danger'>You cry out in vain as [T] slams you into the ground, knocking the air out of your lungs!</span>")
 			T.emote("gasp")
 			T.adjustOxyLoss(-25)
 			T.Weaken(4)
-			return
-	else if(istype(target, /obj/machinery/door/airlock)) //shameless copy from armblade please don't hurt me
+			for(var/mob/M in range(5, src))
+				shake_camera(M, 5, 1)
+
+//eating corpses, 15 second delay for 25 brute/burn heal.
+		if(T.stat == DEAD)
+			var/mob/living/carbon/U = user
+			user.visible_message("<span class='warning'>[user] starts trying to devour [T]!", "<span class='notice'>You start to devour [T]..</span>")
+			if(do_after(user, 100, target = T )) //10 seconds to consume
+				U.adjustBruteLoss(-25)
+				U.adjustFireLoss(-25)
+				user.visible_message("<span class='danger'>[user] devours [T]!", "<span class='notice'>You devour[T].</span>")
+				T.gib()
+				U.emote("burp")
+
+ //shameless copy from armblade please don't hurt me, allows prying open unbolted doors
+	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = target
 		if(!A.requiresID() || A.allowed(user))
 			return
