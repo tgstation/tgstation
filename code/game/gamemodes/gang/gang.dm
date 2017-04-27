@@ -260,12 +260,12 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 		return
 	if(!winner)
 		to_chat(world, "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>")
-		feedback_set_details("round_end_result","loss - gangs failed takeover")
+		SSblackbox.set_details("round_end_result","loss - gangs failed takeover")
 
 		SSticker.news_report = GANG_LOSS
 	else
 		to_chat(world, "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>")
-		feedback_set_details("round_end_result","win - gang domination complete")
+		SSblackbox.set_details("round_end_result","win - gang domination complete")
 
 		SSticker.news_report = GANG_TAKEOVER
 

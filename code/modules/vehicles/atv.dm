@@ -9,8 +9,8 @@
 	. = ..()
 	riding_datum = new/datum/riding/atv
 
-/obj/vehicle/atv/New()
-	..()
+/obj/vehicle/atv/Initialize()
+	. = ..()
 	atvcover = atvcover || mutable_appearance(icon, "atvcover", ABOVE_MOB_LAYER)
 
 
@@ -34,7 +34,7 @@
 	density = 0
 
 
-/obj/vehicle/atv/turret/New()
+/obj/vehicle/atv/turret/Initialize()
 	. = ..()
 	turret = new(loc)
 	turret.base = src

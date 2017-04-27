@@ -513,7 +513,7 @@
 	winset(C, "mainwindow", "flash=5")
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if(SSticker.current_state != GAME_STATE_PLAYING || !character)
+	if(!SSticker.IsRoundInProgress() || !character)
 		return
 	var/area/A = get_area(character)
 	var/message = "<span class='game deadsay'><span class='name'>\

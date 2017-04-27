@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(mapping)
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
-	feedback_add_details("map_name", config.map_name)
+	SSblackbox.add_details("map_name", config.map_name)
 
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
@@ -144,31 +144,35 @@ SUBSYSTEM_DEF(mapping)
 					mapvotes[global.config.defaultmap.map_name] += 1
 				continue
 			mapvotes[vote] += 1
+	else
+		for(var/M in global.config.maplist)
+			mapvotes[M] = 1
 
-		//filter votes
-		for (var/map in mapvotes)
-			if (!map)
-				mapvotes.Remove(map)
-			if (!(map in global.config.maplist))
-				mapvotes.Remove(map)
-				continue
-			var/datum/map_config/VM = global.config.maplist[map]
-			if (!VM)
-				mapvotes.Remove(map)
-				continue
-			if (VM.voteweight <= 0)
-				mapvotes.Remove(map)
-				continue
-			if (VM.config_min_users > 0 && players < VM.config_min_users)
-				mapvotes.Remove(map)
-				continue
-			if (VM.config_max_users > 0 && players > VM.config_max_users)
-				mapvotes.Remove(map)
-				continue
+	//filter votes
+	for (var/map in mapvotes)
+		if (!map)
+			mapvotes.Remove(map)
+		if (!(map in global.config.maplist))
+			mapvotes.Remove(map)
+			continue
+		var/datum/map_config/VM = global.config.maplist[map]
+		if (!VM)
+			mapvotes.Remove(map)
+			continue
+		if (VM.voteweight <= 0)
+			mapvotes.Remove(map)
+			continue
+		if (VM.config_min_users > 0 && players < VM.config_min_users)
+			mapvotes.Remove(map)
+			continue
+		if (VM.config_max_users > 0 && players > VM.config_max_users)
+			mapvotes.Remove(map)
+			continue
 
+		if(global.config.allow_map_voting)
 			mapvotes[map] = mapvotes[map]*VM.voteweight
 
-	var/pickedmap = global.config.allow_map_voting ? pickweight(mapvotes) : pick(global.config.maplist)
+	var/pickedmap = pickweight(mapvotes)
 	if (!pickedmap)
 		return
 	var/datum/map_config/VM = global.config.maplist[pickedmap]

@@ -11,8 +11,8 @@
 	var/roundstart = 0
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
 
-/obj/item/weapon/reagent_containers/pill/New()
-	..()
+/obj/item/weapon/reagent_containers/pill/Initialize()
+	. = ..()
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
 	if(reagents.total_volume && roundstart)

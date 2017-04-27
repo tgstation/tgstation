@@ -48,7 +48,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 
 	var/initializations_finished_with_no_players_logged_in	//I wonder what this could be?
 	// Has round started? (So we know what subsystems to run)
-	var/round_started = 0
+	var/local_round_started = FALSE	//Don't read this var, use SSticker.HasRoundStarted() instead
 
 	// The type of the last subsystem to be process()'d.
 	var/last_type_processed
@@ -189,7 +189,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 
 // Notify the MC that the round has started.
 /datum/controller/master/proc/RoundStart()
-	round_started = 1
+	local_round_started = TRUE
 	var/timer = world.time
 	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_FIRE_IN_LOBBY || SS.flags & SS_TICKER)
@@ -222,7 +222,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	//	local vars rock
 
 	// Schedule the first run of the Subsystems.
-	round_started = world.has_round_started()
+	local_round_started = world.has_round_started()
 	//all this shit is here so that flag edits can be refreshed by restarting the MC. (and for speed)
 	var/list/tickersubsystems = list()
 	var/list/normalsubsystems = list()
@@ -245,7 +245,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			lobbysubsystems += SS
 			timer += world.tick_lag * rand(1, 5)
 			SS.next_fire = timer
-		else if (round_started)
+		else if (local_round_started)
 			timer += world.tick_lag * rand(1, 5)
 			SS.next_fire = timer
 		normalsubsystems += SS
@@ -296,7 +296,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		if (!Failsafe || (Failsafe.processing_interval > 0 && (Failsafe.lasttick+(Failsafe.processing_interval*5)) < world.time))
 			new/datum/controller/failsafe() // (re)Start the failsafe.
 		if (!queue_head || !(iteration % 3))
-			if (round_started)
+			if (local_round_started)
 				subsystems_to_check = normalsubsystems
 			else
 				subsystems_to_check = lobbysubsystems
