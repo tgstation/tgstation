@@ -135,10 +135,10 @@
 
 
 /obj/machinery/abductor/console/Initialize(mapload)
-	if(mapload)
-		return TRUE //wait for machines list
 	..()
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/abductor/console/LateInitialize()
 	if(!team)
 		return
 

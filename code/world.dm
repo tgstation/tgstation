@@ -17,7 +17,7 @@
 	log_world("World loaded at [time_stamp()]")
 
 #if (PRELOAD_RSC == 0)
-	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
+	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
 	while(i<=external_rsc_urls.len)
 		if(external_rsc_urls[i])
@@ -208,11 +208,9 @@
 #undef WORLD_REBOOT
 
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	feedback_set_details("[feedback_c]","[feedback_r]")
+	SSblackbox.set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	feedback_set("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
-	if(GLOB.blackbox)
-		GLOB.blackbox.save_all_data_to_sql()
+	SSblackbox.set_val("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
 	Master.Shutdown()	//run SS shutdowns
 	RoundEndAnimation(round_end_sound_sent)
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
@@ -251,7 +249,7 @@
 	world << sound(round_end_sound)
 
 /world/proc/load_mode()
-	var/list/Lines = file2list("data/mode.txt")
+	var/list/Lines = world.file2list("data/mode.txt")
 	if(Lines.len)
 		if(Lines[1])
 			GLOB.master_mode = Lines[1]
@@ -315,3 +313,6 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+
+/world/proc/has_round_started()
+	return SSticker.HasRoundStarted()

@@ -30,9 +30,9 @@
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
 
-/obj/machinery/computer/telescience/New()
+/obj/machinery/computer/telescience/Initialize()
 	recalibrate()
-	..()
+	. = ..()
 
 /obj/machinery/computer/telescience/Destroy()
 	eject()
@@ -46,7 +46,7 @@
 	to_chat(user, "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots.")
 
 /obj/machinery/computer/telescience/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		for(var/i = 1; i <= starting_crystals; i++)
 			crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals

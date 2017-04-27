@@ -867,44 +867,6 @@
 		. = 1
 	..()
 
-/datum/reagent/medicine/stimulants/longterm
-	name = "Stimulants"
-	id = "stimulants_longterm"
-	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Highly addictive."
-	color = "#78008C"
-	metabolization_rate = 2 * REAGENTS_METABOLISM
-	overdose_threshold = 0
-	addiction_threshold = 5
-
-/datum/reagent/medicine/stimulants/longterm/addiction_act_stage1(mob/living/M)
-	M.adjustToxLoss(5*REM, 0)
-	M.adjustStaminaLoss(5*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/stimulants/longterm/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(6*REM, 0)
-	M.adjustStaminaLoss(5*REM, 0)
-	M.Stun(2, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/stimulants/longterm/addiction_act_stage3(mob/living/M)
-	M.adjustToxLoss(7*REM, 0)
-	M.adjustStaminaLoss(5*REM, 0)
-	M.adjustBrainLoss(1*REM)
-	M.Stun(2, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/stimulants/longterm/addiction_act_stage4(mob/living/M)
-	M.adjustToxLoss(8*REM, 0)
-	M.adjustStaminaLoss(5*REM, 0)
-	M.adjustBrainLoss(2*REM)
-	M.Stun(2, 0)
-	..()
-	. = 1
-
 /datum/reagent/medicine/insulin
 	name = "Insulin"
 	id = "insulin"

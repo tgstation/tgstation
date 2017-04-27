@@ -32,7 +32,7 @@
 		var/datum/action/A = X
 		A.Grant(M)
 
-
+//Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0)
 	owner = null
 	if(M)
@@ -78,7 +78,9 @@
 
 /obj/item/organ/Destroy()
 	if(owner)
-		Remove(owner, 1)
+		// The special flag is important, because otherwise mobs can die
+		// while undergoing transformation into different mobs.
+		Remove(owner, special=TRUE)
 	return ..()
 
 /obj/item/organ/attack(mob/living/carbon/M, mob/user)
