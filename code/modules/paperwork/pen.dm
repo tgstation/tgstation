@@ -103,13 +103,13 @@
 	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
 	if(isobj(O) && proximity)
 		if(O.unique_rename)
-			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description","Change GPS tag")
 			if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
 
 				if(penchoice == "Rename")
 					var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
 					var/oldname = O.name
-					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
+					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE) && input != null)
 						if(oldname == input)
 							to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
 							return
@@ -122,12 +122,29 @@
 
 				if(penchoice == "Change description")
 					var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
-					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
+					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE) && input != null)
 						O.desc = input
 						to_chat(user, "You have successfully changed \the [O.name]'s description.")
 						return
 					else
 						to_chat(user, "You are too far away!")
+
+				if(penchoice == "Change GPS tag")
+					if(istype(O, /obj/item/device/gps))
+						var/obj/item/device/gps/the_gps = O
+						var/input = stripped_input(user,"Input your new GPS tag here.", ,"", 20) //You can pretend to be Angelic Signal but not be crazy.
+						if(!QDELETED(the_gps) && user.canUseTopic(the_gps, be_close = TRUE) && input != null)
+							if(input == "")
+								to_chat(user, "<span class='notify'>Input is required.</span>")
+								return
+							else
+								the_gps.gpstag = input
+								the_gps.attack_self(user)
+								return
+					else
+						to_chat(user, "This isn't a GPS!")
+						src.afterattack(O,user) // Try again!
+						return
 			else
 				to_chat(user, "You are too far away!")
 				return
