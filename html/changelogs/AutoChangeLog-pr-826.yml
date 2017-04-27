@@ -1,0 +1,5 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - tweak: "Server hop verb moved to the OOC tab"
+  - rscadd: "Server hop verb can now be used in the lobby as well as while a ghost."
