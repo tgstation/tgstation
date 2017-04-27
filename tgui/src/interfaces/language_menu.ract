@@ -4,12 +4,14 @@
       <span>{{desc}}</span>
       <span>Key: ,{{key}}</span>
       <span>{{can_speak ? "Can Speak" : "Cannot Speak"}}</span>
-      <ui-button
-        action='select_default'
-        params='{"language_name":"{{name}}"}'
-        style='{{is_default ? "selected" : can_speak ? null : "disabled"}}'
-      >{{is_default ? "Default Language" : "Select as Default"}}
+      {{#if data.is_living}}
+        <ui-button
+          action='select_default'
+          params='{"language_name":"{{name}}"}'
+          style='{{is_default ? "selected" : can_speak ? null : "disabled"}}'
+        >{{is_default ? "Default Language" : "Select as Default"}}
       </ui-button>
+      {{/if}}
       {{#if data.admin_mode}}
         <ui-button
           action='remove_language'
@@ -21,11 +23,13 @@
   {{/each}}
 </ui-display>
 {{#if data.admin_mode}}
-  <ui-button
-    action='toggle_omnitongue'
-    style='{{data.omnitongue ? "selected" : null}}'
-    >Omnitongue {{data.omnitongue ? "Enabled" : "Disabled"}}
-    </ui-button>
+  {{#if data.is_living}}
+    <ui-button
+      action='toggle_omnitongue'
+      style='{{data.omnitongue ? "selected" : null}}'
+      >Omnitongue {{data.omnitongue ? "Enabled" : "Disabled"}}
+      </ui-button>
+  {{/if}}
   <ui-display title="Unknown Languages">
     {{#each data.unknown_languages}}
       <ui-section label={{name}}>

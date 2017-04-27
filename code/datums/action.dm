@@ -482,6 +482,6 @@
 /datum/action/language_menu/Trigger()
 	if(!..())
 		return FALSE
-	if(isliving(owner))
-		var/mob/living/L = owner
-		L.open_language_menu(usr)
+	if(ismob(owner))
+		var/mob/M = owner
+		M.open_language_menu(usr)
