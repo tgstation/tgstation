@@ -214,7 +214,7 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "3"
 	duration = 20
-	
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
@@ -224,7 +224,15 @@
 	name = "blood sparks"
 	icon_state = "bloodsparkles"
 
-/obj/effect/overlay/temp/dir_setting/cult/phase
+/obj/effect/overlay/temp/cult/blood  // The traditional teleport
+	name = "blood jaunt"
+	duration = 12
+	icon_state = "bloodin"
+
+/obj/effect/overlay/temp/cult/blood/out
+	icon_state = "bloodout"
+
+/obj/effect/overlay/temp/dir_setting/cult/phase  // The veil shifter teleport
 	name = "phase glow"
 	duration = 7
 	icon_state = "cultin"

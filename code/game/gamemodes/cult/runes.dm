@@ -416,6 +416,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	for(var/M in invokers)
 		if(sacrifice_fulfilled)
 			to_chat(M, "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>")
+			GLOB.sac_complete = TRUE
 		else
 			if(ishuman(sacrificial) || iscyborg(sacrificial))
 				to_chat(M, "<span class='cultlarge'>\"I accept this sacrifice.\"</span>")

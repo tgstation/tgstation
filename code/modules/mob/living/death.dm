@@ -49,8 +49,14 @@
 	timeofdeath = world.time
 	tod = worldtime2text()
 	var/turf/T = get_turf(src)
+	var/area/A = get_area(T)
+	if(src.mind.special_role == "Cult Master")
+		for(var/datum/mind/M in SSticker.mode.cult)
+			if(istype(M.current, /mob/living) && isliving(M.current))
+				M.current << "<span class='cultlarge'> Your cult's master, [mind.name], has fallen in the [A.name]!"
+			else
+				continue
 	if(mind && mind.name && mind.active && (!(T.flags & NO_DEATHRATTLE)))
-		var/area/A = get_area(T)
 		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[A.name]</b>.</span>"
 		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)

@@ -1,5 +1,3 @@
-
-
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 	var/list/cult_objectives = list()
@@ -36,10 +34,10 @@
 	antag_flag = ROLE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
-	required_players = 24
-	required_enemies = 4
-	recommended_enemies = 4
-	enemy_minimum_age = 14
+	required_players = 1
+	required_enemies = 1
+	recommended_enemies = 1
+	enemy_minimum_age = 1
 
 	announce_span = "cult"
 	announce_text = "Some crew members are trying to start a cult to Nar-Sie!\n\
@@ -54,6 +52,7 @@
 
 	var/datum/mind/sacrifice_target = null//The target to be sacrificed
 	var/list/cultists_to_cult = list() //the cultists we'll convert
+
 
 /datum/game_mode/cult/pre_setup()
 	cult_objectives += "sacrifice"
@@ -109,6 +108,7 @@
 					possible_targets += player.mind
 		if(possible_targets.len > 0)
 			sacrifice_target = pick(possible_targets)
+			GLOB.sac_target = sacrifice_target
 			if(!sacrifice_target)
 				message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
 		else
