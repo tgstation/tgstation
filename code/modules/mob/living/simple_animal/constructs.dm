@@ -85,7 +85,10 @@
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0
-
+	
+/mob/living/simple_animal/hostile/construct/Life() 
+	. = ..()
+	update_health_hud()
 
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/hostile/construct/armored
@@ -141,6 +144,10 @@
 			return -1 // complete projectile permutation
 
 	return (..(P))
+
+/mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
+	. = ..()
+update_health_hud()
 
 
 
@@ -281,7 +288,7 @@
 		overlay_layer=TURF_LAYER+0.2
 
 	overlays += image(icon,"glow-[icon_state]",overlay_layer)
-	set_light(1, 1, l_color = "#ffffff")
+	set_light(1, 1, l_color = "#ff0000")
 
 
 /////////////////////////////ui stuff/////////////////////////////
