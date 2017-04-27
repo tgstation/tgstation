@@ -50,7 +50,8 @@
 		if(C.has_brain_worms())
 			var/mob/living/simple_animal/borer/B = C.has_brain_worms()
 			B.leave_victim() //Should remove borer if the brain is removed - RR
-	transfer_identity(C)
+	if(!gc_destroyed || (owner && !owner.gc_destroyed))
+		transfer_identity(C)
 	C.update_hair()
 
 /obj/item/organ/brain/prepare_eat()
