@@ -396,7 +396,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					A.action = action
 					A.target = source
 					if(!alert_overlay)
-						alert_overlay = new(src)
+						alert_overlay = new(source)
 					alert_overlay.layer = FLOAT_LAYER
 					alert_overlay.plane = FLOAT_PLANE
 					A.add_overlay(alert_overlay)
