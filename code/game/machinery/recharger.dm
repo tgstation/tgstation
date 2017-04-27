@@ -61,7 +61,7 @@
 			G.loc = src
 			charging = G
 			use_power = 2
-			update_icon(scan = 1)
+			update_icon(scan = TRUE)
 		else
 			to_chat(user, "<span class='notice'>[src] isn't connected to anything!</span>")
 		return 1
@@ -162,7 +162,7 @@
 	..()
 
 
-/obj/machinery/recharger/update_icon(using_power = 0, scan = 0)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+/obj/machinery/recharger/update_icon(using_power = 0, scan)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "rechargeroff"
 		return
