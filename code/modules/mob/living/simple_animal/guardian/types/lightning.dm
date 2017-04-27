@@ -24,6 +24,7 @@
 	guardian.range += 4
 
 /datum/guardian_abilities/lightning/recall_act()
+	..()
 	removechains()
 
 /datum/guardian_abilities/lightning/ability_act()

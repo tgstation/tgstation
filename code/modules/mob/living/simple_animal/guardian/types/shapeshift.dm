@@ -8,6 +8,7 @@
 	var/obj/item/host = null
 
 /datum/guardian_abilities/shapeshift/recall_act()
+	..()
 	QDEL_NULL(host)
 
 /datum/guardian_abilities/shapeshift/handle_stats()

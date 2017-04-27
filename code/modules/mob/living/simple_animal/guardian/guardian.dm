@@ -507,7 +507,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	cooldown = world.time + 10
 	for(var/I in current_abilities)
 		var/datum/guardian_abilities/S = I
-		S.recall_act()
+		S.recall_act(forced)
 	return TRUE
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()

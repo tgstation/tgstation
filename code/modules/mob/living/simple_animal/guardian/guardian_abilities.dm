@@ -44,8 +44,11 @@
 /datum/guardian_abilities/proc/impact_act()
 
 
-/datum/guardian_abilities/proc/recall_act()
-
+/datum/guardian_abilities/proc/recall_act(forced)
+	if(!user || guardian.loc == user || (cooldown > world.time && !forced) && guardian.dextrous)
+		return FALSE
+	guardian.drop_all_held_items()
+	return TRUE //lose items, then return
 
 /datum/guardian_abilities/proc/adjusthealth_act()
 
@@ -63,7 +66,9 @@
 
 
 /datum/guardian_abilities/proc/snapback_act()
-
+	if(user && !(get_dist(get_turf(user),get_turf(guardian)) <= guardian.range) && guardian.dextrous)
+		guardian.drop_all_held_items()
+		return TRUE //lose items, then return
 
 /datum/guardian_abilities/proc/boom_act()
 

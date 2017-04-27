@@ -76,5 +76,6 @@
 		charging = FALSE
 
 /datum/guardian_abilities/charge/snapback_act()
+	..()
 	if(!charging)
 		. = guardian.snapback()
