@@ -591,7 +591,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		admin_keys += "[C][C.holder.fakekey ? "(Stealth)" : ""][C.is_afk() ? "(AFK)" : ""]"
 
 	for(var/admin in admin_keys)
-		if(LAZYLEN(admin_keys) > 1)
+		if(LAZYLEN(message) > 1)
 			message += ", [admin]"
 		else
 			message += "[admin]"
