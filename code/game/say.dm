@@ -56,24 +56,16 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
 	//End name span.
 	var/endspanpart = "</span>"
-	// Saymod
-	var/atom/movable/AM = speaker.GetSource()
-
-	var/saymod
-	if(AM)
-		saymod = AM.say_mod(raw_message, message_mode)
-	else
-		saymod = speaker.say_mod(raw_message, message_mode)
 
 	//Message
-	var/messagepart = " <span class='message'>\"[lang_treat(speaker, message_language, raw_message, spans, message_mode)]\"</span></span>"
+	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans)]</span></span>"
 
 	var/languageicon = ""
 	var/datum/language/D = get_language_instance(message_language)
 	if(D.display_icon(src))
-		languageicon = " [D.get_icon()]"
+		languageicon = "[D.get_icon()] "
 
-	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart] [saymod][languageicon],[messagepart]"
+	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
@@ -94,18 +86,18 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/proc/say_quote(input, list/spans=list(), message_mode)
 	if(!input)
-		return "..."
+		input = "..."
 
 	if(copytext(input, length(input) - 1) == "!!")
 		spans |= SPAN_YELL
-	return attach_spans(input, spans)
+
+	var/spanned = attach_spans(input, spans)
+	return "[say_mod(input, message_mode)], \"[spanned]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
 	if(has_language(language))
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
-			if(AM.verb_say != speaker.verb_say || AM.verb_ask != speaker.verb_ask || AM.verb_exclaim != speaker.verb_exclaim || AM.verb_yell != speaker.verb_yell) //If the saymod was changed
-				return speaker.say_quote(raw_message, spans, message_mode)
 			return AM.say_quote(raw_message, spans, message_mode)
 		else
 			return speaker.say_quote(raw_message, spans, message_mode)
