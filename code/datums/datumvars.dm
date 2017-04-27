@@ -27,7 +27,7 @@
 	. += "---"
 	.["Call Proc"] = "?_src_=vars;proc_call=\ref[src]"
 	.["Mark Object"] = "?_src_=vars;mark_object=\ref[src]"
-	.["Delete"] = "?_src_vars;delete=\ref[src]"
+	.["Delete"] = "?_src_=vars;delete=\ref[src]"
 
 
 /datum/proc/on_reagent_change()
