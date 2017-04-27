@@ -8,6 +8,7 @@
 	var/tick_interval = 10 //How many deciseconds between ticks, approximately. Leave at 10 for every second.
 	var/mob/living/owner //The mob affected by the status effect.
 	var/status_type = STATUS_EFFECT_UNIQUE //How many of the effect can be on one mob, and what happens when you try to add another
+	var/on_remove_on_mob_delete = FALSE //if we call on_remove() when the mob is deleted
 	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
 
 /datum/status_effect/New(mob/living/new_owner)
@@ -23,6 +24,7 @@
 		owner.clear_alert(id)
 		on_remove()
 		LAZYREMOVE(owner.status_effects, src)
+		owner = null
 	return ..()
 
 /datum/status_effect/proc/start_ticking()
@@ -53,7 +55,7 @@
 /datum/status_effect/proc/on_apply() //Called whenever the buff is applied.
 /datum/status_effect/proc/tick() //Called every tick.
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed.
-/datum/status_effect/proc/be_replaced() //Called instead of on_remove when a status effect is replaced by itself
+/datum/status_effect/proc/be_replaced() //Called instead of on_remove when a status effect is replaced by itself or when a status effect with on_remove_on_mob_delete = FALSE has its mob deleted
 	owner.clear_alert(id)
 	LAZYREMOVE(owner.status_effects, src)
 	owner = null
