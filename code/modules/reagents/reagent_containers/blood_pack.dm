@@ -25,13 +25,10 @@
 
 /obj/item/weapon/reagent_containers/blood/proc/update_pack_name()
 	if(!labelled)
-		if(volume)
-			if(blood_type)
-				name = "blood pack [blood_type]"
-			else
-				name = "blood pack"
+		if(blood_type)
+			name = "blood pack - [blood_type]"
 		else
-			name = "empty blood pack"
+			name = "blood pack"
 
 /obj/item/weapon/reagent_containers/blood/update_icon()
 	var/percent = round((reagents.total_volume / volume) * 100)
@@ -69,7 +66,7 @@
 	blood_type = "L"
 
 /obj/item/weapon/reagent_containers/blood/empty
-	name = "empty blood pack"
+	name = "blood pack"
 	icon_state = "empty"
 
 /obj/item/weapon/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
