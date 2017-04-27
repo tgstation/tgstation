@@ -281,7 +281,7 @@
 		overlay_layer=TURF_LAYER+0.2
 
 	overlays += image(icon,"glow-[icon_state]",overlay_layer)
-	set_light(1, 1, l_color = "#FFFFFF")
+	set_light(1, 1, l_color = "#ffffff")
 
 
 /////////////////////////////ui stuff/////////////////////////////
@@ -289,7 +289,7 @@
 /mob/living/simple_animal/hostile/construct/update_health_hud()
 	if(!client || !hud_used)
 		return
-	hud_used = new /datum/hud/alien(src)
+	hud_used = new /datum/hud/constructs(src)
 	if(hud_used.healths)
 		if(stat != DEAD)
 			if(health >= maxHealth)
