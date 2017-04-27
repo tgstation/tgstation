@@ -2,8 +2,11 @@
 	var/traitor_name = "traitor"
 	var/list/datum/mind/traitors = list()
 
-	var/datum/mind/exchange_red
-	var/datum/mind/exchange_blue
+	var/datum/mind/partner_one
+	var/datum/mind/partner_two
+	
+	var/datum/mind/P1
+	var/datum/mind/P2
 
 /datum/game_mode/traitor
 	name = "traitor"
@@ -63,8 +66,8 @@
 		spawn(rand(10,100))
 			finalize_traitor(traitor)
 			greet_traitor(traitor)
-	if(!exchange_blue)
-		exchange_blue = -1 //Block latejoiners from getting exchange objectives
+	if(!partner_two)
+		partner_two = -1 //Block latejoiners from getting group objectives
 	modePlayer += traitors
 	..()
 	return 1
@@ -133,14 +136,14 @@
 		var/is_hijacker = prob(10)
 		var/martyr_chance = prob(20)
 		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
-		if(!exchange_blue && traitors.len >= 8) 	//Set up an exchange if there are enough traitors
-			if(!exchange_red)
-				exchange_red = traitor
+		if(!partner_two && traitors.len >= 6) 	//Set up a multi-traitor objective if there are enough traitors
+			if(!partner_one)
+				partner_one = traitor
 			else
-				exchange_blue = traitor
-				assign_exchange_role(exchange_red)
-				assign_exchange_role(exchange_blue)
-			objective_count += 1					//Exchange counts towards number of objectives
+				partner_two = traitor
+				assign_group_role(partner_one)
+				assign_group_role(partner_two)
+			objective_count += 1					//Group objective counts toward number of objectives
 		var/list/active_ais = active_ais()
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 			if(prob(50))
@@ -363,45 +366,48 @@
 	if(!safety) // If they are not a rev. Can be added on to.
 		give_codewords(traitor_mob)
 
-/datum/game_mode/proc/assign_exchange_role(datum/mind/owner)
-	//set faction
-	var/faction = "red"
-	if(owner == exchange_blue)
-		faction = "blue"
+/datum/game_mode/proc/assign_group_role(datum/mind/owner)
+	if(prob(35)) 		//Assign exchange objectives
+		//set faction
+		var/faction = "red"
+		if(owner == partner_two)
+			faction = "blue"
+		var/datum/objective/steal/exchange/exchange_objective = new
+		exchange_objective.set_faction(faction,((faction == "red") ? partner_two : partner_one))
+		exchange_objective.owner = owner
+		owner.objectives += exchange_objective
 
-	//Assign objectives
-	var/datum/objective/steal/exchange/exchange_objective = new
-	exchange_objective.set_faction(faction,((faction == "red") ? exchange_blue : exchange_red))
-	exchange_objective.owner = owner
-	owner.objectives += exchange_objective
+		if(prob(20))
+			var/datum/objective/steal/exchange/backstab/backstab_objective = new
+			backstab_objective.set_faction(faction)
+			backstab_objective.owner = owner
+			owner.objectives += backstab_objective
 
-	if(prob(20))
-		var/datum/objective/steal/exchange/backstab/backstab_objective = new
-		backstab_objective.set_faction(faction)
-		backstab_objective.owner = owner
-		owner.objectives += backstab_objective
+		//Spawn and equip documents
+		var/mob/living/carbon/human/mob = owner.current
 
-	//Spawn and equip documents
-	var/mob/living/carbon/human/mob = owner.current
+		var/obj/item/weapon/folder/syndicate/folder
+		if(owner == exchange_red)
+			folder = new/obj/item/weapon/folder/syndicate/red(mob.loc)
+		else
+			folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
 
-	var/obj/item/weapon/folder/syndicate/folder
-	if(owner == exchange_red)
-		folder = new/obj/item/weapon/folder/syndicate/red(mob.loc)
+		var/list/slots = list (
+			"backpack" = slot_in_backpack,
+			"left pocket" = slot_l_store,
+			"right pocket" = slot_r_store
+		)
+
+		var/where = "At your feet"
+		var/equipped_slot = mob.equip_in_one_of_slots(folder, slots)
+		if (equipped_slot)
+			where = "In your [equipped_slot]"
+		to_chat(mob, "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>")
 	else
-		folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
-
-	var/list/slots = list (
-		"backpack" = slot_in_backpack,
-		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store
-	)
-
-	var/where = "At your feet"
-	var/equipped_slot = mob.equip_in_one_of_slots(folder, slots)
-	if (equipped_slot)
-		where = "In your [equipped_slot]"
-	to_chat(mob, "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>")
-
+		var/datum/objective/steal/the_heist = new
+		the_heist.owner = owner
+		owner.objectives += the_heist
+		
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/traitorhud = huds[ANTAG_HUD_TRAITOR]
 	traitorhud.join_hud(traitor_mind.current)
