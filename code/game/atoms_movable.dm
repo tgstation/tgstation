@@ -17,6 +17,7 @@
 	var/list/languages
 	var/list/initial_languages = list(/datum/language/common)
 	var/only_speaks_language = null
+	var/datum/language_menu/language_menu = null
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -178,6 +179,7 @@
 		STOP_PROCESSING(SSinbounds, src)
 
 	QDEL_NULL(proximity_monitor)
+	QDEL_NULL(language_menu)
 
 	. = ..()
 	if(loc)
@@ -624,6 +626,11 @@
 			highest_priority = pri
 
 	. = chosen_langtype
+
+/atom/movable/proc/open_language_menu(mob/user)
+	if(!language_menu)
+		language_menu = new(src)
+	language_menu.ui_interact(user)
 
 /atom/movable/proc/ConveyorMove(movedir)
 	set waitfor = FALSE

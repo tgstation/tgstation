@@ -91,10 +91,8 @@
 	screen_loc = ui_language_menu
 
 /obj/screen/language_menu/Click()
-	var/mob/living/L = usr
-	if(!istype(L))
-		return
-	L.open_language_menu(usr)
+	var/mob/M = usr
+	M.open_language_menu(M)
 
 /obj/screen/inventory
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.

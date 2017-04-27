@@ -1,5 +1,5 @@
 /datum/language_menu
-	var/mob/living/owner
+	var/atom/movable/owner
 
 /datum/language_menu/New(new_owner)
 	owner = new_owner
@@ -17,7 +17,13 @@
 /datum/language_menu/ui_data(mob/user)
 	var/list/data = list()
 
-	var/datum/language/mob_default_language = owner.get_default_language()
+	var/datum/language/mob_default_language
+	if(isliving(owner))
+		var/mob/living/L = owner
+		mob_default_language = L.get_default_language()
+		data["is_living"] = TRUE
+	else
+		data["is_living"] = FALSE
 
 	data["languages"] = list()
 	for(var/ld in owner.languages)
@@ -27,12 +33,13 @@
 		L["name"] = initial(LD.name)
 		L["desc"] = initial(LD.desc)
 		L["key"] = initial(LD.key)
-		L["is_default"] = (LD == mob_default_language)
+		if(isliving(owner))
+			L["is_default"] = (LD == mob_default_language)
 		L["can_speak"] = owner.can_speak_in_language(LD)
 
 		data["languages"] += list(L)
 
-	if(check_rights_for(user.client, R_ADMIN))
+	if(check_rights_for(user.client, R_ADMIN) || isobserver(owner))
 		data["admin_mode"] = TRUE
 		data["omnitongue"] = HAS_SECONDARY_FLAG(owner, OMNITONGUE)
 
@@ -65,24 +72,28 @@
 
 	switch(action)
 		if("select_default")
-			if(language_datum)
-				owner.selected_default_language = language_datum
+			if(isliving(owner) && language_datum)
+				var/mob/living/L = owner
+				L.selected_default_language = language_datum
 				. = TRUE
 		if("grant_language")
-			if(is_admin && language_datum)
+			if((is_admin || isobserver(owner)) && language_datum)
 				owner.grant_language(language_datum)
-				message_admins("[key_name_admin(user)] granted the [language_name] language to [key_name_admin(owner)].")
-				log_admin("[key_name(user)] granted the language [language_name] to [key_name(owner)].")
+				if(is_admin)
+					message_admins("[key_name_admin(user)] granted the [language_name] language to [key_name_admin(owner)].")
+					log_admin("[key_name(user)] granted the language [language_name] to [key_name(owner)].")
 				. = TRUE
 		if("remove_language")
-			if(is_admin && language_datum)
+			if((is_admin || isobserver(owner)) && language_datum)
 				owner.remove_language(language_datum)
-				message_admins("[key_name_admin(user)] removed the [language_name] language to [key_name_admin(owner)].")
-				log_admin("[key_name(user)] removed the language [language_name] to [key_name(owner)].")
+				if(is_admin)
+					message_admins("[key_name_admin(user)] removed the [language_name] language to [key_name_admin(owner)].")
+					log_admin("[key_name(user)] removed the language [language_name] to [key_name(owner)].")
 				. = TRUE
 		if("toggle_omnitongue")
-			if(is_admin)
+			if(is_admin || isobserver(owner))
 				TOGGLE_SECONDARY_FLAG(owner, OMNITONGUE)
-				message_admins("[key_name_admin(user)] [HAS_SECONDARY_FLAG(owner, OMNITONGUE) ? "enabled" : "disabled"] the ability to speak all languages (that they know) of [key_name_admin(owner)].")
-				log_admin("[key_name(user)] [HAS_SECONDARY_FLAG(owner, OMNITONGUE) ? "enabled" : "disabled"] the ability to speak all languages (that_they know) of [key_name(owner)].")
+				if(is_admin)
+					message_admins("[key_name_admin(user)] [HAS_SECONDARY_FLAG(owner, OMNITONGUE) ? "enabled" : "disabled"] the ability to speak all languages (that they know) of [key_name_admin(owner)].")
+					log_admin("[key_name(user)] [HAS_SECONDARY_FLAG(owner, OMNITONGUE) ? "enabled" : "disabled"] the ability to speak all languages (that_they know) of [key_name(owner)].")
 				. = TRUE
