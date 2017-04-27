@@ -64,6 +64,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	if(emped)
 		t += "ERROR"
 	else
+		t += "<BR><A href='?src=\ref[src];tag=1'>Set Tag</A> "
 		t += "<BR>Tag: [gpstag]"
 		if(locked_location && locked_location.loc)
 			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
@@ -83,6 +84,16 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
+
+/obj/item/device/gps/Topic(href, href_list)
+	..()
+	if(href_list["tag"] )
+		var/a = input("Please enter desired tag.", name, gpstag) as text
+		a = (copytext(sanitize(a), 1, 20))
+		if(in_range(src, usr))
+			gpstag = a
+			attack_self(usr)
+
 
 /obj/item/device/gps/science
 	icon_state = "gps-s"
