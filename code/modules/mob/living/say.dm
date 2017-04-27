@@ -448,5 +448,5 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/proc/open_language_menu(mob/user)
 	language_menu.ui_interact(user)
 
-/mob/living/whisper(message as text)
-	say("#[message]")
+/mob/living/whisper(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+	say("#[message]", bubble_type, spans, sanitize, language)
