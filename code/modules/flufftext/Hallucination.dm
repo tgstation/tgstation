@@ -286,8 +286,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		bubblegum = new(wall, target)
 		sleep(10) //ominous wait
 		var/charged = FALSE //only get hit once
-		while(get_turf(bubblegum) != landing && target)
-			if(target.stat==DEAD)break
+		while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
 			bubblegum.forceMove(get_step_towards(bubblegum, landing))
 			bubblegum.setDir(get_dir(bubblegum, landing))
 			target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
