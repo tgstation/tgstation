@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /obj/item/device/gps/examine(mob/user)
 	..()
 	if(unique_rename)
-		to_chat(user, "<span class='notice'>[src] can be changed by using a pen.</span>")
+		to_chat(user, "<span class='notice'>[src]'s tag can be changed by using a pen.</span>")
 
 /obj/item/device/gps/AltClick(mob/user)
 	toggletracking(user)
