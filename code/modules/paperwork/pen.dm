@@ -128,23 +128,6 @@
 						return
 					else
 						to_chat(user, "You are too far away!")
-
-				if(penchoice == "Change GPS tag")
-					if(istype(O, /obj/item/device/gps))
-						var/obj/item/device/gps/the_gps = O
-						var/input = stripped_input(user,"Input your new GPS tag here.", ,"", 20) //You can pretend to be Angelic Signal but not be crazy.
-						if(!QDELETED(the_gps) && user.canUseTopic(the_gps, be_close = TRUE) && input != null)
-							if(input == "")
-								to_chat(user, "<span class='notify'>Input is required.</span>")
-								return
-							else
-								the_gps.gpstag = input
-								the_gps.attack_self(user)
-								return
-					else
-						to_chat(user, "This isn't a GPS!")
-						src.afterattack(O,user) // Try again!
-						return
 			else
 				to_chat(user, "You are too far away!")
 				return

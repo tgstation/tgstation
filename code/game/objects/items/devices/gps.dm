@@ -137,6 +137,16 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			global_mode = !global_mode
 			. = TRUE
 
+/obj/item/device/gps/Topic(href, href_list)
+	..()
+	if(href_list["tag"] )
+		var/a = input("Please enter desired tag.", name, gpstag) as text
+		a = (copytext(sanitize(a), 1, 20))
+		if(in_range(src, usr))
+			gpstag = a
+			attack_self(usr)
+
+
 /obj/item/device/gps/science
 	icon_state = "gps-s"
 	gpstag = "SCI0"
