@@ -69,7 +69,7 @@
 /obj/item/clockwork/component/vanguard_cogwheel/onyx_prism
 	name = "onyx prism"
 	desc = "An onyx prism with a small aperture. It's very heavy."
-	clockwork_desc = "A broken prism from a mending motor. <b>Serviceable as a substitute for a vanguard cogwheel.</b>"
+	clockwork_desc = "A broken prism from a prolonging prism. <b>Serviceable as a substitute for a vanguard cogwheel.</b>"
 	icon_state = "onyx_prism"
 	cultist_message = "The prism grows painfully hot in your hands."
 	servant_of_ratvar_messages = list("The prism isn't getting any lighter." = FALSE, "\"So... you haven't failed yet. Have hope, child.\"" = TRUE, \
