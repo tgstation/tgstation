@@ -113,7 +113,7 @@
 	invocation_type = "shout"
 	range = 5
 	projectile_type = /obj/item/projectile/magic/aoe/shockwave
-	base_icon_state = "shockwave0"
+	base_icon_state = "shockwave"
 	action_icon_state = "shockwave0"
 	sound = 'sound/effects/meteorimpact.ogg'
 	active_msg = "You raise your arms, ready to slam into the flooring! "

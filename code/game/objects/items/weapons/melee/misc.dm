@@ -49,7 +49,6 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "buff_arm"
 	item_state = "buff_arm"
-	block_chance = 15 //2 arms, total 30% chance to block shots.
 	flags = NODROP|ABSTRACT|DROPDEL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
@@ -59,9 +58,7 @@
 
 /obj/item/weapon/melee/buff_arm/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 10 //50% total to block thrown items
-	if(attack_type == MELEE_ATTACK)
-		final_block_chance -= 5 //20% total to block melee attacks
+		final_block_chance += 20 //40% against thrown items
 	if(attack_type == UNARMED_ATTACK) //unarmed and xeno leaps fully blocked.
 		final_block_chance = 100
 	if(attack_type == LEAP_ATTACK)

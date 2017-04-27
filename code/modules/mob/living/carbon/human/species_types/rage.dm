@@ -15,11 +15,9 @@ but essentially loses their ability to interact in any meaningful way that doesn
 	siemens_coeff = 0
 	limbs_id = "human"
 	no_equip = list(slot_head, slot_gloves, slot_wear_suit) //keeps user from wearing most types of armor to prevent additional resistance stacking.
-	armor = 45
-	speedmod = 0
-	brutemod = 0.25
+	brutemod = 0.20
 	burnmod = 0.35
-	heatmod = 1.2
+	heatmod = 1.8
 	stunmod = 0.15
 
 /datum/species/rage/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
@@ -42,7 +40,7 @@ but essentially loses their ability to interact in any meaningful way that doesn
 			var/obj/item/weapon/melee/buff_arm/h = new /obj/item/weapon/melee/buff_arm()
 			H.put_in_hands(h)
 	H.visible_message("<span class='danger'>[H]'s arms rapidly expand and contort into throbbing masses of muscle, their faces contorting into that of some wild, bloodlusting beast!</span>")
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/groundpound)
+	H.AddSpell(new /obj/effect/proc_holder/spell/aimed/groundpound)
 	H.resize = 1.25
 
 /datum/species/rage/on_species_loss(mob/living/carbon/human/H)
