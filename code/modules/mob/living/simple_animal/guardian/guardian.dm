@@ -257,7 +257,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/snapback()
 	for(var/I in current_abilities)
 		var/datum/guardian_abilities/S = I
-		S.snapback_act()
+		if(!(S.snapback_act()))
+			return
+
 	if(summoner)
 		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
 			return
