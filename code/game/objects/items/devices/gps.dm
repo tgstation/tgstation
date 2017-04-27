@@ -120,7 +120,6 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			var/a = input("Please enter desired tag.", name, gpstag) as text
 			a = copytext(sanitize(a), 1, 20)
 			gpstag = a
-			name = "global positioning system ([gpstag])"
 			. = TRUE
 		if("power")
 			toggletracking(usr)
