@@ -178,7 +178,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
 	update_icon("alienh_pounce")
-	if(A == target)
+	if(A == target && target.stat!=DEAD)
 		target.Weaken(5)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 
@@ -287,6 +287,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		sleep(10) //ominous wait
 		var/charged = FALSE //only get hit once
 		while(get_turf(bubblegum) != landing && target)
+			if(target.stat==DEAD)break
 			bubblegum.forceMove(get_step_towards(bubblegum, landing))
 			bubblegum.setDir(get_dir(bubblegum, landing))
 			target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
