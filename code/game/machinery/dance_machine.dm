@@ -126,7 +126,7 @@
 			if(active)
 				to_chat(usr, "<span class='warning'>Error: You cannot change the song until the current one is over.</span>")
 				return
-			check_GBP()
+
 			var/list/available = list()
 			for(var/datum/track/S in songs)
 				available += S.song_name
