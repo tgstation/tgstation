@@ -10,3 +10,6 @@ All new defines go in here!
 
 //Mutations
 #define CLUWNEMUT "Cluwne"
+
+//Stamina HUD
+#define ui_stamina "EAST-1:28,CENTER-3:12"
