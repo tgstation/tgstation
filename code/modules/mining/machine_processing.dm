@@ -52,6 +52,11 @@
 	updateUsrDialog()
 	return
 
+/obj/machinery/mineral/processing_unit_console/Destroy()
+	machine = null
+	return ..()
+
+
 /**********************Mineral processing unit**************************/
 
 
@@ -76,6 +81,7 @@
 	files = new /datum/research/smelter(src)
 
 /obj/machinery/mineral/processing_unit/Destroy()
+	CONSOLE = null
 	qdel(materials)
 	return ..()
 
