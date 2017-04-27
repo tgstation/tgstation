@@ -14,6 +14,7 @@
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
+	see_in_dark = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -30,13 +31,15 @@
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
-	
+
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	updateglow()
+	update_health_hud()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
+
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -85,10 +88,14 @@
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0
-	
-/mob/living/simple_animal/hostile/construct/Life() 
-	. = ..()
+
+/mob/living/simple_animal/hostile/construct/Life()
 	update_health_hud()
+	..()
+
+/mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	update_health_hud()
+	..()
 
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/hostile/construct/armored
@@ -144,10 +151,6 @@
 			return -1 // complete projectile permutation
 
 	return (..(P))
-
-/mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
-	. = ..()
-update_health_hud()
 
 
 
@@ -282,20 +285,12 @@ update_health_hud()
 /////////////////////////////Glow/////////////////////////////
 
 /mob/living/simple_animal/hostile/construct/proc/updateglow()
-	overlays = 0
-	var/overlay_layer = LIGHTING_LAYER + 1
-	if(layer != MOB_LAYER)
-		overlay_layer=TURF_LAYER+0.2
-
-	overlays += image(icon,"glow-[icon_state]",overlay_layer)
-	set_light(1, 1, l_color = "#ff0000")
+	set_light(2, 2, l_color = "#ff0000")
 
 
 /////////////////////////////ui stuff/////////////////////////////
 
 /mob/living/simple_animal/hostile/construct/update_health_hud()
-	if(!client || !hud_used)
-		return
 	hud_used = new /datum/hud/constructs(src)
 	if(hud_used.healths)
 		if(stat != DEAD)
