@@ -145,7 +145,7 @@
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/armor/vest
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. \n +\
-					Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. <u> Do not abandon the base, activate the self destruct device if you are compromised.</u></b> \n +\
+					Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. <u> Do not abandon the base, activate the self destruct device if you are compromised.</u></b> \n +\
 					Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail.\n +\
 					<u> Remember, an enemy of our enemy is a friend, so also provide support to those that hinder Nanotrasen unless commanded otherwise by HQ. \n +\
 					Do not let the base fall into enemy hands!</u></font>"
