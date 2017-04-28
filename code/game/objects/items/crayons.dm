@@ -46,7 +46,7 @@
 
 	var/charges = 30 //-1 or less for unlimited uses
 	var/charges_left
-	var/volume_multiplier = 1 // Increases reagent effect
+	var/volume_multiplier = 1 // Increases reagent effect, works as reagent used per charge
 
 	var/actually_paints = TRUE
 
@@ -322,6 +322,8 @@
 	if(length(text_buffer))
 		drawing = copytext(text_buffer,1,2)
 
+	var/cost = 1
+
 	if(actually_paints)
 		if(gang_mode)
 			// Double check it wasn't tagged in the meanwhile
@@ -333,6 +335,7 @@
 				if(PAINT_NORMAL)
 					new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot, is_slippery)
 				if(PAINT_LARGE_HORIZONTAL)
+					cost = 5
 					var/turf/left = locate(target.x-1,target.y,target.z)
 					var/turf/right = locate(target.x+1,target.y,target.z)
 					if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
@@ -341,6 +344,7 @@
 						new /obj/effect/decal/cleanable/crayon(right, paint_color, drawing + "_3", temp, graf_rot, is_slippery)
 					else
 						to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
+						cost = 0
 						return
 
 	if(!instant)
@@ -355,20 +359,17 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	var/cost = 1
-	if(paint_mode == PAINT_LARGE_HORIZONTAL)
-		cost = 5
 	. = use_charges(cost)
-	reagents.remove_all(.)
+	reagents.remove_all(. * volume_multiplier)
 	check_empty(user)
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
 		to_chat(user, "You take a bite of the [src.name]. Delicious!")
 		var/eaten = use_charges(5)
-		var/fraction = min(eaten / reagents.total_volume, 1)
-		reagents.reaction(M, INGEST, fraction * volume_multiplier)
-		reagents.trans_to(M, eaten, volume_multiplier)
+		var/fraction = min(eaten / (charges_left + eaten), 1)	//percent of remaining consumed
+		reagents.reaction(M, INGEST, fraction)
+		reagents.trans_to(M, eaten * volume_multiplier)
 		// check_empty() is called during afterattack
 	else
 		..()
@@ -487,7 +488,7 @@
 	if(.)
 		var/floor_colour = rgb(rand(0,255), rand(0,255), rand(0,255))
 		target.add_atom_colour(floor_colour, WASHABLE_COLOUR_PRIORITY)
-		if(paint_mode = PAINT_LARGE_HORIZONTAL)
+		if(paint_mode == PAINT_LARGE_HORIZONTAL)
 			var/turf/left = locate(target.x-1,target.y,target.z)
 			left.add_atom_colour(floor_colour, WASHABLE_COLOUR_PRIORITY)
 			var/turf/right = locate(target.x+1,target.y,target.z)
@@ -642,9 +643,9 @@
 
 		// Caution, spray cans contain inflammable substances
 		. = use_charges(10)
-		var/fraction = min(1, . / reagents.total_volume)
-		reagents.reaction(C, VAPOR, fraction * volume_multiplier)
-		reagents.remove_all(.)	//because vapor reactions already make the mob injest
+		var/fraction = min(1, . / (charges_left + .))
+		reagents.reaction(C, VAPOR, fraction)
+		reagents.remove_all(. * volume_multiplier)	//because vapor reactions already make the mob injest
 
 		return
 
@@ -656,7 +657,7 @@
 			else
 				target.set_opacity(initial(target.opacity))
 		. = use_charges(2)
-		reagents.remove_all(.)
+		reagents.remove_all(. * volume_multiplier)
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		return
@@ -727,6 +728,16 @@
 	reagent_contents = list("clf3" = 1)
 	actually_paints = FALSE
 	paint_color = "#000000"
+	validSurfaces = list(/turf/open/floor)
+
+/obj/item/toy/crayon/spraycan/hellcan/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(.)
+		var/turf/T = get_turf(A)
+		if(!isfloorturf(T))
+			return
+		if(!locate(/obj/effect/hotspot) in T)
+			new /obj/effect/hotspot(T)
 
 /obj/item/toy/crayon/spraycan/lubecan
 	name = "slippery spraycan"
