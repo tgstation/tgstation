@@ -1379,6 +1379,7 @@
 #include "code\modules\jobs\job_types\security.dm"
 #include "code\modules\jobs\job_types\silicon.dm"
 #include "code\modules\jobs\map_changes\map_changes.dm"
+#include "code\modules\language\codespeak.dm"
 #include "code\modules\language\common.dm"
 #include "code\modules\language\draconic.dm"
 #include "code\modules\language\drone.dm"

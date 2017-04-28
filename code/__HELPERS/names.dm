@@ -167,9 +167,13 @@ GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
 	/N
 	*/
 
-/proc/generate_code_phrase()//Proc is used for phrase and response in master_controller.dm
+/proc/generate_code_phrase(return_list=FALSE)//Proc is used for phrase and response in master_controller.dm
 
-	var/code_phrase = ""//What is returned when the proc finishes.
+	if(!return_list)
+		. = ""
+	else
+		. = list()
+
 	var/words = pick(//How many words there will be. Minimum of two. 2, 4 and 5 have a lesser chance of being selected. 3 is the most likely.
 		50; 2,
 		200; 3,
@@ -204,39 +208,39 @@ GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
 				switch(rand(1,2))//Mainly to add more options later.
 					if(1)
 						if(names.len&&prob(70))
-							code_phrase += pick(names)
+							. += pick(names)
 						else
 							if(prob(10))
-								code_phrase += pick(lizard_name(MALE),lizard_name(FEMALE))
+								. += pick(lizard_name(MALE),lizard_name(FEMALE))
 							else
-								code_phrase += pick(pick(GLOB.first_names_male,GLOB.first_names_female))
-								code_phrase += " "
-								code_phrase += pick(GLOB.last_names)
+								var/new_name = pick(pick(GLOB.first_names_male,GLOB.first_names_female))
+								new_name += " "
+								new_name += pick(GLOB.last_names)
+								. += new_name
 					if(2)
-						code_phrase += pick(get_all_jobs())//Returns a job.
+						. += pick(get_all_jobs())//Returns a job.
 				safety -= 1
 			if(2)
 				switch(rand(1,3))//Food, drinks, or things. Only selectable once.
 					if(1)
-						code_phrase += lowertext(pick(drinks))
+						. += lowertext(pick(drinks))
 					if(2)
-						code_phrase += lowertext(pick(foods))
+						. += lowertext(pick(foods))
 					if(3)
-						code_phrase += lowertext(pick(locations))
+						. += lowertext(pick(locations))
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
 					if(1)
-						code_phrase += lowertext(pick(nouns))
+						. += lowertext(pick(nouns))
 					if(2)
-						code_phrase += lowertext(pick(objects))
+						. += lowertext(pick(objects))
 					if(3)
-						code_phrase += lowertext(pick(adjectives))
+						. += lowertext(pick(adjectives))
 					if(4)
-						code_phrase += lowertext(pick(threats))
-		if(words==1)
-			code_phrase += "."
-		else
-			code_phrase += ", "
-
-	return code_phrase
+						. += lowertext(pick(threats))
+		if(!return_list)
+			if(words==1)
+				. += "."
+			else
+				. += ", "
