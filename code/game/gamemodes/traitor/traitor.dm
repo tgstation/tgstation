@@ -391,7 +391,7 @@
 
 		//Spawn and equip documents
 		var/obj/item/weapon/folder/syndicate/folder
-		if(owner == exchange_red)
+		if(owner == partner_one)
 			folder = new/obj/item/weapon/folder/syndicate/red(mob.loc)
 		else
 			folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
