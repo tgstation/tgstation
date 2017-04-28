@@ -267,6 +267,19 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"jquery-1.10.2.min.js" = 'html/IRV/jquery-1.10.2.min.js'
 	)
 
+/datum/asset/simple/chat
+	assets = list(
+	"jquery.min.js" = 'code/modules/html_interface/js/jquery.min.js',
+	"json2.min.js" = 'goon/browserassets/js/json2.min.js',
+	"browserOutput.js" = 'goon/browserassets/js/browserOutput.js',
+	"fontawesome-webfont.eot" = 'tgui/assets/fonts/fontawesome-webfont.eot',
+	"fontawesome-webfont.svg" = 'tgui/assets/fonts/fontawesome-webfont.svg',
+	"fontawesome-webfont.ttf" = 'tgui/assets/fonts/fontawesome-webfont.ttf',
+	"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
+	"font-awesome.css" = 'goon/browserassets/css/font-awesome.css',
+	"browserOutput.css" = 'goon/browserassets/css/browserOutput.css'
+	)
+
 //Registers HTML Interface assets.
 /datum/asset/HTML_interface/register()
 	for(var/path in typesof(/datum/html_interface))

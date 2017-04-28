@@ -2,18 +2,6 @@
 For the main html chat area
 *********************************/
 
-/var/list/chatResources = list(
-	"code/modules/html_interface/jquery.min.js",
-	"goon/browserassets/js/json2.min.js",
-	"goon/browserassets/js/browserOutput.js",
-	"tgui/assets/fonts/fontawesome-webfont.eot",
-	"tgui/assets/fonts/fontawesome-webfont.svg",
-	"tgui/assets/fonts/fontawesome-webfont.ttf",
-	"tgui/assets/fonts/fontawesome-webfont.woff",
-	"goon/browserassets/css/font-awesome.css",
-	"goon/browserassets/css/browserOutput.css"
-)
-
 //Precaching a bunch of shit
 var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons for the browser output
 
@@ -30,7 +18,7 @@ var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons fo
 	. = ..()
 
 	owner = C
-	// to_chat(world.log, "chatOutput: New()")
+	// log_world("chatOutput: New()")
 
 /datum/chatOutput/proc/start()
 	//Check for existing chat
@@ -57,15 +45,10 @@ var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons fo
 
 	// to_chat(world.log, "chatOutput: load()")
 
-	for(var/attempts in 1 to 5)
-		for(var/asset in global.chatResources) // No asset cache, just get this fucking shit SENT.
-			owner << browse_rsc(file(asset))
-
-		//log_world("Sending main chat window to client [owner.ckey]")
-		owner << browse(file("goon/browserassets/html/browserOutput.html"), "window=browseroutput")
-		sleep(14 + (chatResources.len * 7))
-		if(!owner || loaded)
-			break
+	var/datum/asset/chat = get_asset_datum(/datum/asset/simple/chat)
+	chat.send(owner)
+	//log_world("Sending main chat window to client [owner.ckey]")
+	owner << browse(file("goon/browserassets/html/browserOutput.html"), "window=browseroutput")
 
 	// log_world("chatOutput: [owner.ckey] load() completed")
 
