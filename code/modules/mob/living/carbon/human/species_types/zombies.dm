@@ -8,12 +8,12 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
+	
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
 	id = "memezombies"
 	limbs_id = "zombie"
-	no_equip = list(slot_wear_mask, slot_head)
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 2
 
@@ -24,6 +24,10 @@
 		C.death()
 		// Zombies only move around when not in crit, they instantly
 		// succumb otherwise, and will standup again soon
+
+/datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
+	. = min(2, amount * stunmod)
+
 
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -44,12 +48,16 @@
 	infection = C.getorganslot("zombie_infection")
 	if(!infection)
 		infection = new(C)
+	stunmod = 0.7
+	C.status_flags += IGNORESLOWDOWN
+
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	for(var/obj/item/I in C.held_items)
 		if(istype(I, /obj/item/zombie_hand))
 			qdel(I)
+	C.status_flags -= IGNORESLOWDOWN
 
 
 // Your skin falls off
