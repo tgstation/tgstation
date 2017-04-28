@@ -6,7 +6,9 @@
 	exclaim_verb = "clanks"
 	key = "r"
 	default_priority = 10
-	spans = list(SPAN_ROBOT, "brass")
+	spans = list(SPAN_ROBOT)
+
+	icon_state = "ratvar"
 
 /datum/language/ratvar/scramble(var/input)
 	. = text2ratvar(input)
