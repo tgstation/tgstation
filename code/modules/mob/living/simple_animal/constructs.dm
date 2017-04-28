@@ -35,7 +35,6 @@
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
-	updateglow()
 	update_health_hud()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
@@ -89,13 +88,10 @@
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0
 
-/mob/living/simple_animal/hostile/construct/Life()
-	update_health_hud()
-	..()
-
 /mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	update_health_hud()
-	..()
+	. = ..()
+	if(updating_health)
+		update_health_hud()
 
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/hostile/construct/armored
@@ -282,29 +278,20 @@
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
 
 
-/////////////////////////////Glow/////////////////////////////
-
-/mob/living/simple_animal/hostile/construct/proc/updateglow()
-	set_light(2, 2, l_color = "#ff0000")
-
 
 /////////////////////////////ui stuff/////////////////////////////
 
 /mob/living/simple_animal/hostile/construct/update_health_hud()
-	hud_used = new /datum/hud/constructs(src)
-	if(hud_used.healths)
-		if(stat != DEAD)
-			if(health >= maxHealth)
-				hud_used.healths.icon_state = "[icon_state]_health0"
-			else if(health > maxHealth*0.8)
-				hud_used.healths.icon_state = "[icon_state]_health2"
-			else if(health > maxHealth*0.6)
-				hud_used.healths.icon_state = "[icon_state]_health3"
-			else if(health > maxHealth*0.4)
-				hud_used.healths.icon_state = "[icon_state]_health4"
-			else if(health > maxHealth*0.2)
-				hud_used.healths.icon_state = "[icon_state]_health5"
-			else
-				hud_used.healths.icon_state = "[icon_state]_health6"
+	if(hud_used)
+		if(health >= maxHealth)
+			hud_used.healths.icon_state = "[icon_state]_health0"
+		else if(health > maxHealth*0.8)
+			hud_used.healths.icon_state = "[icon_state]_health2"
+		else if(health > maxHealth*0.6)
+			hud_used.healths.icon_state = "[icon_state]_health3"
+		else if(health > maxHealth*0.4)
+			hud_used.healths.icon_state = "[icon_state]_health4"
+		else if(health > maxHealth*0.2)
+			hud_used.healths.icon_state = "[icon_state]_health5"
 		else
-			hud_used.healths.icon_state = "[icon_state]_health7"
+			hud_used.healths.icon_state = "[icon_state]_health6"

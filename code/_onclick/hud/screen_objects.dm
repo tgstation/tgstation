@@ -535,7 +535,7 @@
 /obj/screen/healths/construct
 	icon = 'icons/mob/screen_construct.dmi'
 	icon_state = "artificer_health0"
-	screen_loc = ui_health
+	screen_loc = ui_construct_health
 	mouse_opacity = 0
 
 /obj/screen/healthdoll
