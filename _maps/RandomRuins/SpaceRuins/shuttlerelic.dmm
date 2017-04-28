@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
 	tag = "icon-corner (WEST)";
 	icon_state = "corner";
@@ -21,7 +21,7 @@
 	},
 /area/ruin/powered)
 "e" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "f" = (
@@ -68,7 +68,7 @@
 	icon_state = "propulsion";
 	dir = 1
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered)
 "k" = (
 /mob/living/simple_animal/hostile/retaliate/spaceman,
@@ -141,7 +141,7 @@
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "r" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
 	tag = "icon-corner (NORTH)";
 	icon_state = "corner";
@@ -149,7 +149,7 @@
 	},
 /area/ruin/powered)
 "s" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
 	tag = "icon-corner (EAST)";
 	icon_state = "corner";
@@ -172,15 +172,15 @@
 /area/ruin/powered)
 "v" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered)
 "w" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered)
 "x" = (
 /obj/structure/shuttle/engine/propulsion/burst,
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered)
 
 (1,1,1) = {"

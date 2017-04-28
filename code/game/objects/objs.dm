@@ -1,6 +1,4 @@
 /obj
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
 	var/crit_fail = FALSE
 	animate_movement = 2
 	var/throwforce = 0
@@ -39,7 +37,7 @@
 	..()
 
 /obj/Initialize()
-	..()
+	. = ..()
 	if (!armor)
 		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	if(on_blueprints && isturf(loc))
@@ -166,14 +164,6 @@
 
 /obj/proc/hide(h)
 	return
-
-//If a mob logouts/logins in side of an object you can use this proc
-/obj/proc/on_log()
-	..()
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_log()
-
 
 /obj/singularity_pull(S, current_size)
 	if(!anchored || current_size >= STAGE_FIVE)

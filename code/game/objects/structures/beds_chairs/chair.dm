@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	latejoin -= src	//These may be here due to the arrivals shuttle
+	GLOB.latejoin -= src	//These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -145,11 +145,11 @@
 	obj_integrity = 70
 	max_integrity = 70
 	buildstackamount = 2
-	var/image/armrest = null
+	var/mutable_appearance/armrest
 	item_chair = null
 
 /obj/structure/chair/comfy/Initialize()
-	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
+	armrest = mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
 	return ..()
 

@@ -7,11 +7,14 @@
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
+	var/list/drip_containers = list(/obj/item/weapon/reagent_containers/blood,
+											/obj/item/weapon/reagent_containers/food,
+											/obj/item/weapon/reagent_containers/glass)
 
-
-/obj/machinery/iv_drip/New()
+/obj/machinery/iv_drip/Initialize()
 	..()
 	update_icon()
+	drip_containers = typecacheof(drip_containers)
 
 /obj/machinery/iv_drip/update_icon()
 	if(attached)
@@ -33,27 +36,27 @@
 		else
 			add_overlay("beakeridle")
 		if(beaker.reagents.total_volume)
-			var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
+			var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "reagent")
 
 			var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
 			switch(percent)
 				if(0 to 9)
-					filling.icon_state = "reagent0"
+					filling_overlay.icon_state = "reagent0"
 				if(10 to 24)
-					filling.icon_state = "reagent10"
+					filling_overlay.icon_state = "reagent10"
 				if(25 to 49)
-					filling.icon_state = "reagent25"
+					filling_overlay.icon_state = "reagent25"
 				if(50 to 74)
-					filling.icon_state = "reagent50"
+					filling_overlay.icon_state = "reagent50"
 				if(75 to 79)
-					filling.icon_state = "reagent75"
+					filling_overlay.icon_state = "reagent75"
 				if(80 to 90)
-					filling.icon_state = "reagent80"
+					filling_overlay.icon_state = "reagent80"
 				if(91 to INFINITY)
-					filling.icon_state = "reagent100"
+					filling_overlay.icon_state = "reagent100"
 
-			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
-			add_overlay(filling)
+			filling_overlay.color = list("#0000", "#0000", "#0000", "#000f", mix_color_from_reagents(beaker.reagents.reagent_list))
+			add_overlay(filling_overlay)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
 	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE) || !isliving(target))
@@ -73,14 +76,14 @@
 		if(beaker)
 			usr.visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>", "<span class='notice'>You attach \the [src] to \the [target].</span>")
 			attached = target
-			START_PROCESSING(SSmachine, src)
+			START_PROCESSING(SSmachines, src)
 			update_icon()
 		else
 			to_chat(usr, "<span class='warning'>There's nothing attached to the IV drip!</span>")
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/reagent_containers))
+	if (is_type_in_typecache(W, drip_containers))
 		if(!isnull(beaker))
 			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
 			return
@@ -197,7 +200,7 @@
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
 			to_chat(usr, "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>")
 		else
-			to_chat(usr, "<span class='notice'>Attached is an empty [beaker].</span>")
+			to_chat(usr, "<span class='notice'>Attached is an empty [beaker.name].</span>")
 	else
 		to_chat(usr, "<span class='notice'>No chemicals are attached.</span>")
 

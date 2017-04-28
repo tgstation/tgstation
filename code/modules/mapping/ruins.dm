@@ -1,5 +1,4 @@
 
-
 /proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
@@ -32,8 +31,8 @@
 
 		while(sanity > 0)
 			sanity--
-			var/width_border = TRANSITIONEDGE + round(ruin.width / 2)
-			var/height_border = TRANSITIONEDGE + round(ruin.height / 2)
+			var/width_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(ruin.width / 2)
+			var/height_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(ruin.height / 2)
 			var/z_level = pick(z_levels)
 			var/turf/T = locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z_level)
 			var/valid = TRUE

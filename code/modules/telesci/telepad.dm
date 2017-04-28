@@ -10,8 +10,8 @@
 	active_power_usage = 5000
 	var/efficiency
 
-/obj/machinery/telepad/New()
-	..()
+/obj/machinery/telepad/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telesci_pad(null)
 	B.apply_default_parts(src)
 
@@ -167,8 +167,6 @@
 
 /obj/item/weapon/rcs/emag_act(mob/user)
 	if(!emagged)
-		emagged = 1
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
+		emagged = TRUE
+		do_sparks(5, TRUE, src)
 		to_chat(user, "<span class='caution'>You emag the RCS. Click on it to toggle between modes.</span>")

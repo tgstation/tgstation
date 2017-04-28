@@ -78,13 +78,13 @@
 	. += slowdown
 
 /mob/living/silicon/pai/Destroy()
-	pai_list -= src
+	GLOB.pai_list -= src
 	..()
 
 /mob/living/silicon/pai/Initialize()
 	var/obj/item/device/paicard/P = loc
 	START_PROCESSING(SSfastprocess, src)
-	pai_list += src
+	GLOB.pai_list += src
 	make_laws()
 	canmove = 0
 	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
@@ -110,10 +110,13 @@
 	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
 	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
 	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
+
+	var/datum/action/language_menu/ALM = new
 	AS.Grant(src)
 	AC.Grant(src)
 	AR.Grant(src)
 	AL.Grant(src)
+	ALM.Grant(src)
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
@@ -237,3 +240,6 @@
 /mob/living/silicon/pai/process()
 	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
 	hit_slowdown = Clamp((hit_slowdown - 1), 0, 100)
+
+/mob/living/silicon/pai/generateStaticOverlay()
+	return

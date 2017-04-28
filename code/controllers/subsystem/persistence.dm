@@ -1,8 +1,6 @@
-var/datum/controller/subsystem/persistence/SSpersistence
-
-/datum/controller/subsystem/persistence
+SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
-	init_order = -100
+	init_order = INIT_ORDER_PERSISTENCE
 	flags = SS_NO_FIRE
 	var/savefile/secret_satchels
 	var/list/satchel_blacklist 		= list() //this is a typecache
@@ -12,9 +10,6 @@ var/datum/controller/subsystem/persistence/SSpersistence
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/savefile/chisel_messages_sav
-
-/datum/controller/subsystem/persistence/New()
-	NEW_SS_GLOBAL(SSpersistence)
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -71,7 +66,7 @@ var/datum/controller/subsystem/persistence/SSpersistence
 	return 1
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
-	for(var/mob/living/simple_animal/parrot/Poly/P in living_mob_list)
+	for(var/mob/living/simple_animal/parrot/Poly/P in GLOB.living_mob_list)
 		twitterize(P.speech_buffer, "polytalk")
 		break //Who's been duping the bird?!
 

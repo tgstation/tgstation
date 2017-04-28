@@ -106,6 +106,8 @@
 
 /obj/item/weapon/twohanded/equip_to_best_slot(mob/M)
 	if(..())
+		if(istype(src, /obj/item/weapon/twohanded/required))
+			return // unwield forces twohanded-required items to be dropped.
 		unwield(M)
 		return
 

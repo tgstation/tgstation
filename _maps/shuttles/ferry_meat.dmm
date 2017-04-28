@@ -134,7 +134,7 @@
 /area/shuttle/transport)
 "s" = (
 /turf/open/floor/plasteel/freezer,
-/turf/closed/wall/shuttle/interior{
+/turf/closed/wall/mineral/titanium/interior{
 	icon_state = "swall_f10"
 	},
 /area/shuttle/transport)

@@ -73,18 +73,18 @@
 		if(hp <= 0)
 			visible_message("<span class='danger'>[src] breaks into tiny pieces and collapses!</span>")
 			qdel(src)
-		var/image/I = image("icon"='icons/effects/effects.dmi', "icon_state"="scorch", "layer"=OBJ_LAYER+0.5)
-		I.pixel_x = p_x - 1 //offset correction
-		I.pixel_y = p_y - 1
+		var/image/bullet_hole = image('icons/effects/effects.dmi', "scorch", OBJ_LAYER + 0.5)
+		bullet_hole.pixel_x = p_x - 1 //offset correction
+		bullet_hole.pixel_y = p_y - 1
 		if(decaltype == DECALTYPE_SCORCH)
-			I.setDir(pick(NORTH,SOUTH,EAST,WEST))// random scorch design
+			bullet_hole.setDir(pick(NORTH,SOUTH,EAST,WEST))// random scorch design
 			if(P.damage >= 20 || istype(P, /obj/item/projectile/beam/practice))
-				I.setDir(pick(NORTH,SOUTH,EAST,WEST))
+				bullet_hole.setDir(pick(NORTH,SOUTH,EAST,WEST))
 			else
-				I.icon_state = "light_scorch"
+				bullet_hole.icon_state = "light_scorch"
 		else
-			I.icon_state = "dent"
-		add_overlay(I)
+			bullet_hole.icon_state = "dent"
+		add_overlay(bullet_hole)
 		return
 	return -1
 

@@ -100,8 +100,8 @@
 	icon_state = "medi_holo"
 	duration = 30
 
-/obj/effect/overlay/temp/medical_holosign/New(loc, creator)
-	..()
+/obj/effect/overlay/temp/medical_holosign/Initialize(mapload, creator)
+	. = ..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)
 		visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
@@ -307,7 +307,7 @@
 // Glowsticks, in the uncomfortable range of similar to flares,
 // but not similar enough to make it worth a refactor
 /obj/item/device/flashlight/glowstick
-	name = "green glowstick"
+	name = "glowstick"
 	desc = "A military-grade glowstick."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 4
@@ -344,8 +344,9 @@
 		cut_overlays()
 		set_light(0)
 	else if(on)
-		var/image/I = image(icon,"glowstick-glow",color)
-		add_overlay(I)
+		var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
+		glowstick_overlay.color = color
+		add_overlay(glowstick_overlay)
 		item_state = "glowstick-on"
 		set_light(brightness_on)
 	else
@@ -363,6 +364,11 @@
 	. = ..()
 	if(.)
 		user.visible_message("<span class='notice'>[user] cracks and shakes [src].</span>", "<span class='notice'>You crack and shake [src], turning it on!</span>")
+		activate()
+
+/obj/item/device/flashlight/glowstick/proc/activate()
+	if(!on)
+		on = TRUE
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/glowstick/red
@@ -402,6 +408,21 @@
 	color = initial(glowtype.color)
 	. = ..()
 
+/obj/item/device/flashlight/spotlight //invisible lighting source
+	name = "disco light"
+	desc = "Groovy..."
+	icon_state = null
+	light_color = null
+	brightness_on = 0
+	light_range = 0
+	light_power = 10
+	alpha = 0
+	layer = 0
+	on = TRUE
+	anchored = TRUE
+	var/range = null
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /obj/item/device/flashlight/flashdark
 	name = "flashdark"
 	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
@@ -409,3 +430,11 @@
 	item_state = "flashdark"
 	brightness_on = 2.5
 	flashlight_power = -3
+
+/obj/item/device/flashlight/eyelight
+	name = "eyelight"
+	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
+	brightness_on = 15
+	flashlight_power = 1
+	flags = CONDUCT | DROPDEL
+	actions_types = list()

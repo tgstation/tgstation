@@ -1,4 +1,3 @@
-
 /datum/species/golem
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
@@ -27,11 +26,11 @@
 	var/list/special_names
 
 /datum/species/golem/random_name(gender,unique,lastname)
-	var/golem_surname = pick(golem_names)
+	var/golem_surname = pick(GLOB.golem_names)
 	// 3% chance that our golem has a human surname, because
 	// cultural contamination
 	if(prob(3))
-		golem_surname = pick(last_names)
+		golem_surname = pick(GLOB.last_names)
 	else if(special_names && prob(5))
 		golem_surname = pick(special_names)
 
@@ -445,7 +444,7 @@
 	var/active = null
 
 /datum/species/golem/bananium/random_name(gender,unique,lastname)
-	var/clown_name = pick(clown_names)
+	var/clown_name = pick(GLOB.clown_names)
 	var/golem_name = "[uppertext(clown_name)]"
 	return golem_name
 

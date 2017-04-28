@@ -83,7 +83,6 @@
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
-	var/dorm = 0		// determines if this ID has claimed a dorm already
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
@@ -131,11 +130,11 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
-	access = list(access_maint_tunnels, access_syndicate)
+	access = list(GLOB.access_maint_tunnels, GLOB.access_syndicate)
 	origin_tech = "syndicate=1"
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
-/obj/item/weapon/card/id/syndicate/New()
+/obj/item/weapon/card/id/syndicate/Initialize()
 	..()
 	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/card/id
@@ -181,7 +180,7 @@ update_label("John Doe", "Clowny")
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
-	access = list(access_syndicate)
+	access = list(GLOB.access_syndicate)
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
@@ -191,7 +190,7 @@ update_label("John Doe", "Clowny")
 	registered_name = "Captain"
 	assignment = "Captain"
 
-/obj/item/weapon/card/id/captains_spare/New()
+/obj/item/weapon/card/id/captains_spare/Initialize()
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
 	..()
@@ -203,7 +202,7 @@ update_label("John Doe", "Clowny")
 	registered_name = "Central Command"
 	assignment = "General"
 
-/obj/item/weapon/card/id/centcom/New()
+/obj/item/weapon/card/id/centcom/Initialize()
 	access = get_all_centcom_access()
 	..()
 
@@ -214,29 +213,33 @@ update_label("John Doe", "Clowny")
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 
-/obj/item/weapon/card/id/ert/New()
-	access = get_all_accesses()+get_ert_access("commander")-access_change_ids
+/obj/item/weapon/card/id/ert/Initialize()
+	access = get_all_accesses()+get_ert_access("commander")-GLOB.access_change_ids
+	..()
 
 /obj/item/weapon/card/id/ert/Security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
 
-/obj/item/weapon/card/id/ert/Security/New()
-	access = get_all_accesses()+get_ert_access("sec")-access_change_ids
+/obj/item/weapon/card/id/ert/Security/Initialize()
+	access = get_all_accesses()+get_ert_access("sec")-GLOB.access_change_ids
+	..()
 
 /obj/item/weapon/card/id/ert/Engineer
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
 
-/obj/item/weapon/card/id/ert/Engineer/New()
-	access = get_all_accesses()+get_ert_access("eng")-access_change_ids
+/obj/item/weapon/card/id/ert/Engineer/Initialize()
+	access = get_all_accesses()+get_ert_access("eng")-GLOB.access_change_ids
+	..()
 
 /obj/item/weapon/card/id/ert/Medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
 
-/obj/item/weapon/card/id/ert/Medical/New()
-	access = get_all_accesses()+get_ert_access("med")-access_change_ids
+/obj/item/weapon/card/id/ert/Medical/Initialize()
+	access = get_all_accesses()+get_ert_access("med")-GLOB.access_change_ids
+	..()
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
@@ -281,18 +284,18 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/mining
 	name = "mining ID"
-	access = list(access_mining, access_mining_station, access_mineral_storeroom)
+	access = list(GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
 
 /obj/item/weapon/card/id/away
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	access = list(access_away_general)
+	access = list(GLOB.access_away_general)
 
 /obj/item/weapon/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
-	access = list(access_away_general, access_away_maint)
+	access = list(GLOB.access_away_general, GLOB.access_away_maint)
 
 /obj/item/weapon/card/id/away/hotel/securty
 	name = "Officer ID"
-	access = list(access_away_general, access_away_maint, access_away_sec)
+	access = list(GLOB.access_away_general, GLOB.access_away_maint, GLOB.access_away_sec)

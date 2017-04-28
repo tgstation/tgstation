@@ -141,7 +141,7 @@
 	message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
 	log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")
-	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 	to_chat(src, "<span class='danger'>ALERT: Foreign software detected.</span>")
 	sleep(5)
 	to_chat(src, "<span class='danger'>Initiating diagnostics...</span>")

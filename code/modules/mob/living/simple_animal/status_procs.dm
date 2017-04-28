@@ -23,12 +23,3 @@
 
 /mob/living/simple_animal/become_blind()
 	return
-
-
-
-/mob/living/simple_animal/adjustEarDamage()
-	return
-
-/mob/living/simple_animal/setEarDamage()
-	return
-

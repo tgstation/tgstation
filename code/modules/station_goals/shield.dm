@@ -30,7 +30,7 @@
 
 /datum/station_goal/proc/get_coverage()
 	var/list/coverage = list()
-	for(var/obj/machinery/satellite/meteor_shield/A in machines)
+	for(var/obj/machinery/satellite/meteor_shield/A in GLOB.machines)
 		if(!A.active || A.z != ZLEVEL_STATION)
 			continue
 		coverage |= view(A.kill_range,A)
@@ -47,7 +47,7 @@
 	circuit = /obj/item/weapon/circuitboard/machine/computer/sat_control
 	var/notice
 
-/obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "sat_control", name, 400, 305, master_ui, state)
@@ -62,7 +62,7 @@
 			. = TRUE
 
 /obj/machinery/computer/sat_control/proc/toggle(id)
-	for(var/obj/machinery/satellite/S in machines)
+	for(var/obj/machinery/satellite/S in GLOB.machines)
 		if(S.id == id && S.z == z)
 			S.toggle()
 
@@ -70,7 +70,7 @@
 	var/list/data = list()
 
 	data["satellites"] = list()
-	for(var/obj/machinery/satellite/S in machines)
+	for(var/obj/machinery/satellite/S in GLOB.machines)
 		data["satellites"] += list(list(
 			"id" = S.id,
 			"active" = S.active,
@@ -79,7 +79,7 @@
 	data["notice"] = notice
 
 
-	var/datum/station_goal/station_shield/G = locate() in ticker.mode.station_goals
+	var/datum/station_goal/station_shield/G = locate() in SSticker.mode.station_goals
 	if(G)
 		data["meteor_shield"] = 1
 		data["meteor_shield_coverage"] = G.get_coverage()
@@ -99,8 +99,8 @@
 	var/static/gid = 0
 	var/id = 0
 
-/obj/machinery/satellite/New()
-	..()
+/obj/machinery/satellite/Initialize()
+	. = ..()
 	id = gid++
 
 /obj/machinery/satellite/interact(mob/user)
@@ -147,7 +147,7 @@
 /obj/machinery/satellite/meteor_shield/process()
 	if(!active)
 		return
-	for(var/obj/effect/meteor/M in meteor_list)
+	for(var/obj/effect/meteor/M in GLOB.meteor_list)
 		if(M.z != z)
 			continue
 		if(get_dist(M,src) > kill_range)
@@ -166,7 +166,7 @@
 			change_meteor_chance(0.5)
 
 /obj/machinery/satellite/meteor_shield/proc/change_meteor_chance(mod)
-	var/datum/round_event_control/E = locate(/datum/round_event_control/meteor_wave) in SSevent.control
+	var/datum/round_event_control/E = locate(/datum/round_event_control/meteor_wave) in SSevents.control
 	if(E)
 		E.weight *= mod
 

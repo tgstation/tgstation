@@ -30,9 +30,9 @@
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
 
-/obj/machinery/computer/telescience/New()
+/obj/machinery/computer/telescience/Initialize()
 	recalibrate()
-	..()
+	. = ..()
 
 /obj/machinery/computer/telescience/Destroy()
 	eject()
@@ -46,7 +46,7 @@
 	to_chat(user, "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots.")
 
 /obj/machinery/computer/telescience/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		for(var/i = 1; i <= starting_crystals; i++)
 			crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
@@ -139,20 +139,14 @@
 	var/datum/browser/popup = new(user, "telesci", name, 300, 500)
 	popup.set_content(t)
 	popup.open()
-	return
 
 /obj/machinery/computer/telescience/proc/sparks()
 	if(telepad)
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, get_turf(telepad))
-		s.start()
-	else
-		return
+		do_sparks(5, TRUE, get_turf(telepad))
 
 /obj/machinery/computer/telescience/proc/telefail()
 	sparks()
 	visible_message("<span class='warning'>The telepad weakly fizzles.</span>")
-	return
 
 /obj/machinery/computer/telescience/proc/doteleport(mob/user)
 
@@ -201,9 +195,7 @@
 			// use a lot of power
 			use_power(power * 10)
 
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(5, 1, get_turf(telepad))
-			s.start()
+			do_sparks(5, TRUE, get_turf(telepad))
 
 			temp_msg = "Teleport successful.<BR>"
 			if(teles_left < 10)
@@ -211,10 +203,7 @@
 			else
 				temp_msg += "Data printed below."
 
-			var/sparks = get_turf(target)
-			var/datum/effect_system/spark_spread/y = new /datum/effect_system/spark_spread
-			y.set_up(5, 1, sparks)
-			y.start()
+			do_sparks(5, TRUE, get_turf(target))
 
 			var/turf/source = target
 			var/turf/dest = get_turf(telepad)

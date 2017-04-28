@@ -185,7 +185,7 @@
 				if("number")
 					valueholder = input(user,"Enter variable value:" ,"Value", 123) as num
 				if("mob-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value") as mob in mob_list
+					valueholder = input(user,"Enter variable value:" ,"Value") as mob in GLOB.mob_list
 				if("obj-reference")
 					valueholder = input(user,"Enter variable value:" ,"Value") as obj in world
 				if("turf-reference")
@@ -218,7 +218,7 @@
 	cornerA = null
 	cornerB = null
 
-/proc/togglebuildmode(mob/M in player_list)
+/proc/togglebuildmode(mob/M in GLOB.player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
 	if(M.client)
@@ -305,14 +305,18 @@
 		if(VAR_BUILDMODE)
 			if(left_click) //I cant believe this shit actually compiles.
 				if(object.vars.Find(varholder))
-					log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
-					object.vars[varholder] = valueholder
+					if(object.vv_edit_var(varholder, valueholder))
+						log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
+					else
+						to_chat(user, "<span class='warning'>Varedit rejected</span>")
 				else
 					to_chat(user, "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>")
 			if(right_click)
 				if(object.vars.Find(varholder))
-					log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
-					object.vars[varholder] = initial(object.vars[varholder])
+					if(object.vv_edit_var(varholder, initial(object.vars[varholder])))
+						log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
+					else
+						to_chat(user, "<span class='warning'>Varedit rejected</span>")
 				else
 					to_chat(user, "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>")
 
