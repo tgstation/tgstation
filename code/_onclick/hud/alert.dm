@@ -264,9 +264,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Blood Sense"
 	desc = "Allows you to sense blood that is manipulated by dark magicks."
 	icon_state = "cult_sense"
-	var/image/finder
+	var/obj/effect/overlay/finder
 	var/image/sacimage
 	var/mob/sacmob
+	var/angle = 0
 
 /obj/screen/alert/bloodsense/Initialize()
 	..()
@@ -280,7 +281,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	reshape.Crop(7,4,26,30)
 	reshape.Crop(-5,-2,26,29)
 	sacimage = reshape
-	add_overlay(finder)
+	add_overlay(finder.icon)
 	START_PROCESSING(SSprocessing, src)
 	process()
 
@@ -297,33 +298,33 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		cut_overlays()
 		finder.icon_state = "no_sacrifice"
 		desc = "Nar-Sie demands that [GLOB.sac_target] be sacrificed before the summoning can begin."
-		add_overlay(finder)
+		add_overlay(finder.icon)
 		add_overlay(sacimage)
 		return
 	if(!GLOB.blood_target && GLOB.sac_complete)
 		cut_overlays()
 		finder.icon_state = "sacrifice"
 		desc = "The sacrifice is complete, prepare to summon Nar-Sie!"
-		add_overlay(finder)
+		add_overlay(finder.icon)
 		return
 	var/turf/Q = get_turf(GLOB.blood_target)
 	var/turf/A = get_turf(mob_viewer)
 	if(Q.z != A.z) //The target is on a different Z level, we cannot sense that far.
 		return
-	finder.dir = get_dir(A, Q)
-	var/Qdist = get_dist(A, Q)
-	setDir(finder.dir)
-	cut_overlays()
-	switch(Qdist)
-		if(2 to 7)
-			finder.icon_state = "finder_near"
-		if(8 to 20)
-			finder.icon_state = "finder_med"
-		if(21 to INFINITY)
-			finder.icon_state = "finder_far"
-		else
-			finder.icon_state = "finder_center"
-	add_overlay(finder)
+	var/target_angle = Get_Angle(GLOB.blood_target, mob_viewer)
+//	var/target_dist = get_dist(A, Q)
+	if(finder.icon_state != "arrow")
+		cut_overlays()
+		finder.icon_state = "arrow"
+		angle = 0
+	var/difference = target_angle - angle
+	angle = target_angle
+	if(difference < 0)
+		finder.RotateAnimation(5, 0, 6, difference)
+	else
+		finder.RotateAnimation(5, 1, 6, difference)
+	add_overlay(finder.icon)
+
 
 
 // CLOCKCULT

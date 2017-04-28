@@ -24,6 +24,26 @@
 		//doesn't have an object argument because this is "Stacking" with the animate call above
 		//3 billion% intentional
 
+atom/proc/RotateAnimation(speed = 10, clockwise = 1, segments = 6, degrees = 90)
+	if(!segments || !degrees)
+		return
+	var/segment = degrees/segments
+	if(!clockwise)
+		segment = -segment
+	var/list/matrices = list()
+	for(var/i in 1 to segments-1)
+		var/matrix/M = matrix(transform)
+		M.Turn(segment*i)
+		matrices += M
+	var/matrix/last = matrix(transform)
+	matrices += last
+
+	speed /= segments
+
+	animate(src, transform = matrices[1], time = speed)
+	for(var/i in 2 to segments) //2 because 1 is covered above
+		animate(transform = matrices[i], time = speed)
+
 
 //Dumps the matrix data in format a-f
 /matrix/proc/tolist()

@@ -141,8 +141,8 @@
 /datum/action/innate/cultmast/cultmark/IsAvailable()
 	if(owner.mind.special_role != "Cult Master")
 		return 0
-	if((world.time - time)<900)
-		owner << "<span class='cultlarge'><b>You need to wait [round((900-(world.time-time))/10)] seconds before you can mark another target!</b></span>"
+	if((world.time - time)<1500)
+		owner << "<span class='cultlarge'><b>You need to wait [round((1500-(world.time-time))/10)] seconds before you can mark another target!</b></span>"
 		return 0
 	return ..()
 
@@ -181,7 +181,9 @@
 		for(var/datum/mind/M in SSticker.mode.cult)
 			M.current << "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [GLOB.blood_target] as the cult's highest priority, get there immediately!</b></span>"
 			M.current << pick(sound('sound/hallucinations/over_here2.ogg',0,1,75), sound('sound/hallucinations/over_here3.ogg',0,1,75))
-			new /obj/effect/cultmark(M, GLOB.blood_target)
+			var/marked_turf = get_turf(GLOB.blood_target)
+			var/image/cult_marker = image('icons/effects/cult_target.dmi', marked_turf, "glow", ABOVE_MOB_LAYER)
+			M.current.client.images |= cult_marker
 		remove_ranged_ability(caller, "The marking rite is complete! It will last for one minute.")
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_blood_target), 1200, TIMER_OVERRIDE)
 		return TRUE
@@ -192,7 +194,7 @@
 		M.current << "<span class='cultlarge'><b>The blood mark on [GLOB.blood_target] has expired!</b></span>"
 	GLOB.blood_target = null
 
-
+/*
 obj/effect/cultmark
 	var/image/cult_marker
 	var/mob/living/viewer
@@ -200,7 +202,8 @@ obj/effect/cultmark
 obj/effect/cultmark/Initialize(var/mob/living/T, var/atom/BT)
 	..()
 	viewer = T
-	cult_marker = image('icons/effects/cult_target.dmi', BT, "glow", ABOVE_MOB_LAYER)
+	var/marked_turf = get_turf(BT)
+	cult_marker = image('icons/effects/cult_target.dmi', marked_turf, "glow", ABOVE_MOB_LAYER)
 	if(viewer.client)
 		viewer.client.images |= cult_marker
 	sleep(1200)
@@ -209,4 +212,4 @@ obj/effect/cultmark/Initialize(var/mob/living/T, var/atom/BT)
 /obj/effect/cultmark/Destroy()
 	if(viewer.client)
 		viewer.client.images.Remove(cult_marker)
-	return ..()
+	return ..()*/

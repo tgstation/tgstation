@@ -491,7 +491,7 @@
 	var/list/yes_voters = new
 	var/list/cult_total = new
 	if(world.time<1800)
-		Nominee << "It would be premature to select a leader while everyone is still settling in, try again in [(1800-world.time)/10] seconds"
+		Nominee << "It would be premature to select a leader while everyone is still settling in, try again in [round((1800-world.time)/10)] seconds"
 		return
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(!istype(B.current, /mob/living))
@@ -500,13 +500,13 @@
 		if(isliving(M))
 			M << 'sound/misc/notice2.ogg' //Alerting them to their consideration
 			M.verbs -= /mob/living/proc/cult_master
-			M << "<span class='cultlarge'>[usr] has asserted that they are worthy of leading the cult. A vote will be called shortly.</span>"
-			spawn(200)
+			to_chat(M, "<span class='cultlarge'>[Nominee] has asserted that they are worthy of leading the cult. A vote will be called shortly.</span>")
+			sleep(200)
 			switch(askuser(M,"[Nominee] seeks to lead your cult, do you support  them?","Please answer in 20 seconds!","Yes","No","Abstain", StealFocus=0, Timeout=200))
 				if(1)
 					M << "<span class='notice'>Choice registered: Yes.</span>"
 					if((world.time-time_passed)>400)
-						M << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+						M << "<span class='danger'>Sorry, your vote came too late!</span>"
 						M << 'sound/machines/buzz-sigh.ogg'
 					else
 						yes_voters += M
@@ -522,8 +522,8 @@
 		var/datum/action/innate/cultmast/cultmark/Mark= new()
 		FinalReckoning.Grant(Nominee)
 		Mark.Grant(Nominee)
-		Nominee.update_action_buttons_icon()
 		Nominee.mind.special_role = "Cult Master"
+		Nominee.update_action_buttons_icon()
 		SSticker.mode.set_antag_hud(Nominee,"cultmaster")
 		GLOB.cult_mastered = 1
 		for(var/datum/mind/B in SSticker.mode.cult)
@@ -533,8 +533,7 @@
 	else
 		for(var/datum/mind/B in SSticker.mode.cult)
 			if(isliving(B.current))
-				B.current << "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte. A new vote may be called shortly."
-				sleep(450)
+				B.current << "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte."
 				B.current.verbs += /mob/living/proc/cult_master
 		return FALSE
 
