@@ -1126,6 +1126,13 @@
 	else
 		return ..()
 
+/obj/machinery/door/airlock/attack_animal(mob/living/simple_animal/user)
+	if(user.environment_smash >= 3)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
+		visible_message("<span class='danger'>[user] tears through the airlock!</span>")
+		var/obj/structure/door_assembly/door = new assemblytype(get_turf(src))
+		door.density = 0
 
 /obj/machinery/door/airlock/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
 	if(!operating && density)
