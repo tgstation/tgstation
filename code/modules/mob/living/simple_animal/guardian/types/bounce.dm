@@ -20,6 +20,5 @@
 /datum/guardian_abilities/bounce/boom_act(severity)
 	guardian.visible_message("<span class='danger'>The explosive force bounces off [guardian]'s rubbery surface!</span>")
 	for(var/mob/M in range(7,guardian))
-		if(M != user)
-			M.ex_act(severity) //reflect
-			M.visible_message("<span class='danger'>The explosive force bounces onto [M]!</span>")
+		M.ex_act(severity) //reflect
+		M.visible_message("<span class='danger'>The explosive force bounces onto [M]!</span>")

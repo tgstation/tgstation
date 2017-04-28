@@ -369,7 +369,7 @@
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
-	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of stands available, but all of them will transfer some amount of damage to you. \
+	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardians available, but all of them will transfer some amount of damage to you. \
 	It would be wise to avoid buying these with anything capable of causing you to swap bodies with others."
 	item_path = /obj/item/weapon/guardiancreator/choose/wizard
 	category = "Assistance"
