@@ -64,154 +64,52 @@
 		return TRUE
 	. = ..()
 
+/obj/item/weapon/gun/blastcannon/proc/calculate_bomb()
+	if(!istype(bomb)||!istype(bomb.tank_one)||!istype(bomb.tank_two))
+		return 0
+	air1 = bomb.tank_one.air_contents
+	air2 = bomb.tank_two.air_contents
+	var/datum/gas_mixture/temp
+	temp.volume = air1.volume + air2.volume
+	temp.merge(air1)
+	temp.merge(air2)
+	for(var/i = 0, i < 6, i++)
+		temp.react()
+	var/pressure = temp.return_pressure()
+	qdel(temp)
+	if(pressure < TANK_FRAGMENT_PRESSURE)
+		return 0
+	return (pressure/TANK_FRAGMENT_SCALE)
+
 /obj/item/weapon/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
-	if(!bomb)
-		return
-
-
+	if((!bomb) || (target == user) || (target.loc == user) || (!target) || (target.loc == user.loc) || (target.loc in range(user, 2) || (target in range(user, 2))
+		return ..()
 	var/power = calculate_bomb()
 	qdel(bomb)
 	update_icon()
-
-
- +
- +/obj/item/weapon/gun/projectile/blastcannon/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
- +	if (istype(A, /obj/item/weapon/storage/backpack ))
- +		return
- +
- +	else if (A.loc == user.loc)
- +		return
- +
- +	else if (A.loc == user)
- +		return
- +
- +	else if (locate (/obj/structure/table, src.loc))
- +		return
-
-
-
- +		bomb_air_contents_1 = bomb.tank_one.air_contents
- +		bomb_air_contents_2 = bomb.tank_two.air_contents
- +
- +		bomb_air_contents_2.volume += bomb_air_contents_1.volume
- +		var/datum/gas_mixture/temp
- +		temp = bomb_air_contents_1.remove_ratio(1)
- +		bomb_air_contents_2.merge(temp)
- +
- +		if(!bomb_air_contents_2)
- +			return
- +
- +		if(bomb_air_contents_2)
- +			bomb_air_contents_2.react()
- +
- +		var/pressure = bomb_air_contents_2.return_pressure()
- +		var/cap = 0
- +		var/uncapped = 0
- +
- +		var/heavy_damage_range = 0
- +		var/medium_damage_range = 0
- +		var/light_damage_range = 0
- +
- +		if(pressure > TANK_FRAGMENT_PRESSURE)
- +			bomb_air_contents_2.react()
- +			bomb_air_contents_2.react()
- +			bomb_air_contents_2.react()
- +			pressure = bomb_air_contents_2.return_pressure()
- +			var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
- +			uncapped = range
- +			if(!ignorecap)
- +				if(range > MAX_EXPLOSION_RANGE)
- +					cap = 1
- +				range = min(range, MAX_EXPLOSION_RANGE)
- +			var/turf/epicenter = get_turf(loc)
- +
- +			var/transfer_moles1 = (bomb.tank_one.air_contents.return_pressure() * bomb.tank_one.air_contents.volume)/(bomb.tank_one.air_contents.temperature * R_IDEAL_GAS_EQUATION)
- +			bomb.tank_one.air_contents.remove(transfer_moles1)
- +			var/transfer_moles2 = (bomb.tank_two.air_contents.return_pressure() * bomb.tank_two.air_contents.volume)/(bomb.tank_two.air_contents.temperature * R_IDEAL_GAS_EQUATION)
- +			bomb.tank_two.air_contents.remove(transfer_moles2)
- +
- +			bomb_air_contents_1 = null
- +			bomb_air_contents_2 = null
- +
- +			user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name] and fires a blast wave at \the [A]!</span>","<span class='danger'>You open \the [bomb] on your [src.name] and fire a blast wave at \the [A]!</span>")
- +			var/sound = rand(1,6)
- +			switch(sound)
- +				if(1)
- +					playsound(user, 'sound/effects/Explosion1.ogg', 100, 1)
- +				if(2)
- +					playsound(user, 'sound/effects/Explosion2.ogg', 100, 1)
- +				if(3)
- +					playsound(user, 'sound/effects/Explosion3.ogg', 100, 1)
- +				if(4)
- +					playsound(user, 'sound/effects/Explosion4.ogg', 100, 1)
- +				if(5)
- +					playsound(user, 'sound/effects/Explosion5.ogg', 100, 1)
- +				if(6)
- +					playsound(user, 'sound/effects/Explosion6.ogg', 100, 1)
- +
- +			heavy_damage_range = round(range*0.25)
- +			medium_damage_range = round(range*0.5)
- +			light_damage_range = round(range)
- +
- +			if(ismob(src.loc))
- +				var/mob/shooter = src.loc
- +				var/turf/shooterturf = get_turf(shooter)
- +				var/area/R = get_area(shooterturf)
- +
- +				var/log_str = "Blast wave fired in <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[shooterturf.x];Y=[shooterturf.y];Z=[shooterturf.z]'>[R.name]</a> "
- +				log_str += "by [shooter.name]([shooter.ckey])"
- +
- +				log_str += "(<A HREF='?_src_=holder;adminmoreinfo=\ref[shooter]'>?</A>)"
- +
- +				message_admins(log_str, 0, 1)
- +				log_game(log_str)
- +
- +			for(var/obj/machinery/computer/bhangmeter/bhangmeter in doppler_arrays)
- +				if(bhangmeter)
- +					bhangmeter.sense_explosion(epicenter.x,epicenter.y,epicenter.z,round(uncapped*0.25), round(uncapped*0.5), round(uncapped),"???", cap)
- +
- +		else
- +			user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name]!</span>","<span class='danger'>You open \the [bomb] on your [src.name]!</span>")
- +			user.visible_message("\The [bomb] on [user]'s [src.name] hisses pitifully.","\The [bomb] on your [src.name] hisses pitifully.")
- +			to_chat(user, "<span class='warning'>The bomb is a dud!</span>")
- +			var/ratio1 = bomb_air_contents_1.volume/bomb_air_contents_2.volume
- +			var/datum/gas_mixture/temp2
- +			temp2 = bomb_air_contents_2.remove_ratio(ratio1)
- +			bomb_air_contents_1.merge(temp2)
- +			bomb_air_contents_2.volume -=  bomb_air_contents_1.volume
- +
- +			bomb.tank_one.air_contents = bomb_air_contents_1
- +			bomb.tank_two.air_contents = bomb_air_contents_2
- +
- +		if(heavy_damage_range && medium_damage_range && light_damage_range)
- +			var/obj/item/projectile/bullet/blastwave/B = new(null)
- +			B.heavy_damage_range = heavy_damage_range
- +			B.medium_damage_range = medium_damage_range
- +			B.light_damage_range = light_damage_range
- +			in_chamber = B
- +			if(Fire(A,user,params, "struggle" = struggle))
- +				if(ismob(src.loc) && !isanimal(src.loc))
- +					var/mob/living/M = src.loc
- +					var/turf/Q = get_turf(M)
- +					var/turf/target
- +					var/throwdir = turn(M.dir, 180)
- +					if(istype(Q, /turf/space)) // if ended in space, then range is unlimited
- +						target = get_edge_target_turf(Q, throwdir)
- +					else						// otherwise limit to 10 tiles
- +						target = get_ranged_target_turf(Q, throwdir, 10)
- +					M.throw_at(target,100,4)
- +					if(!(M.flags & INVULNERABLE))
- +						M.apply_effects(0, 2)
- +						to_chat(user, "<span class='warning'>You're thrown back by the force of the blast!</span>")
- +
- +				bomb.damaged = 1
- +			else
- +				qdel(B)
- +				in_chamber = null
-
-
-
-
+	var/heavy = power/5
+	var/medium = power/2
+	var/light = power
+	user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name] and fires a blast wave at \the [target]!</span>","<span class='danger'>You open \the [bomb] on your [src.name] and fire a blast wave at \the [target]!</span>")
+	var/sound = rand(1,6)
+	switch(sound)
+		if(1)
+			playsound(user, 'sound/effects/Explosion1.ogg', 100, 1)
+		if(2)
+	 		playsound(user, 'sound/effects/Explosion2.ogg', 100, 1)
+		if(3)
+			playsound(user, 'sound/effects/Explosion3.ogg', 100, 1)
+		if(4)
+			playsound(user, 'sound/effects/Explosion4.ogg', 100, 1)
+		if(5)
+			playsound(user, 'sound/effects/Explosion5.ogg', 100, 1)
+		if(6)
+			playsound(user, 'sound/effects/Explosion6.ogg', 100, 1)
+	var/turf/starting = get_turf(user)
+	var/area/A = get_area(user)
+	var/log_str = "Blast wave fired at [ADMIN_COORDJMP(starting)] ([A.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
+	message_admins(log_str)
+	log_game(log_str)
 
 /obj/item/projectile/blastwave
 	name = "blast wave"

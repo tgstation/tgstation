@@ -170,7 +170,6 @@
 	select_name = "narrow-beam"
 	e_cost = 2000
 	var/base_energy_multiplier = 250
-	var/hitscan_delay = 10
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	firing_effect_type =
 	var/projectile_damage = 20
@@ -187,14 +186,14 @@
 	name = "particle beam"
 	icon = null
 	icon_state = null
-	hitsound = '
-	hitsound_wall = "
+	hitsound = ''
+	hitsound_wall = ''
 	damage = 20
 	damage_type = BURN
 	flag = energy
 	range = 150
 	jitter = 10
-	impact_effect_type =
+	impact_effect_type = ""
 
 /obj/item/projectile/beam/beam_rifle/fire(setAngle, atom/direct_target)
 	if(!log_override && firer && original)
