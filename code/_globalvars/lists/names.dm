@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(mime_names, world.file2list("strings/names/mime.txt"))
 GLOBAL_LIST_INIT(carp_names, world.file2list("strings/names/carp.txt"))
 GLOBAL_LIST_INIT(golem_names, world.file2list("strings/names/golem.txt"))
 GLOBAL_LIST_INIT(plasmaman_names, world.file2list("strings/names/plasmaman.txt"))
-GLOBAL_LIST_INIT(posibrain_names, list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","GOOF","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","WJ","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","COI"))
+GLOBAL_LIST_INIT(posibrain_names, world.file2list("strings/names/posibrain.txt"))
 
 
 GLOBAL_LIST_INIT(verbs, world.file2list("strings/names/verbs.txt"))
