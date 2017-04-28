@@ -41,7 +41,7 @@
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 
-	for(var/mob/living/carbon/human/applicant in player_list)
+	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_TRAITOR in applicant.client.prefs.be_special)
 			if(!applicant.stat)
 				if(applicant.mind)
@@ -77,7 +77,7 @@
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 
-	for(var/mob/living/carbon/human/applicant in player_list)
+	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_CHANGELING in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
 			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
@@ -110,7 +110,7 @@
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 
-	for(var/mob/living/carbon/human/applicant in player_list)
+	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_REV in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
 			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
@@ -152,7 +152,7 @@
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 
-	for(var/mob/living/carbon/human/applicant in player_list)
+	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_CULTIST in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
 			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
@@ -185,7 +185,7 @@
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 
-	for(var/mob/living/carbon/human/applicant in player_list)
+	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_SERVANT_OF_RATVAR in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
 			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
@@ -199,11 +199,11 @@
 
 		for(var/i = 0, i<numCultists, i++)
 			H = pick(candidates)
-			H << "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \
+			to_chat(H, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \
 			you see the truth. Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm, and he has selected you as one of his harbringers. You are now a servant of \
-			Ratvar, and you will bring him back.</span>"
+			Ratvar, and you will bring him back.</span>")
 			add_servant_of_ratvar(H, TRUE)
-			ticker.mode.equip_servant(H)
+			SSticker.mode.equip_servant(H)
 			candidates.Remove(H)
 
 		return 1
@@ -224,7 +224,7 @@
 		var/agentcount = 0
 
 		for(var/i = 0, i<numagents,i++)
-			shuffle(candidates) //More shuffles means more randoms
+			shuffle_inplace(candidates) //More shuffles means more randoms
 			for(var/mob/j in candidates)
 				if(!j || !j.client)
 					candidates.Remove(j)
@@ -241,13 +241,13 @@
 
 		var/nuke_code = random_nukecode()
 
-		var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+		var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
 		if(nuke)
 			nuke.r_code = nuke_code
 
 		//Let's find the spawn locations
 		var/list/turf/synd_spawn = list()
-		for(var/obj/effect/landmark/A in landmarks_list)
+		for(var/obj/effect/landmark/A in GLOB.landmarks_list)
 			if(A.name == "Syndicate-Spawn")
 				synd_spawn += get_turf(A)
 				continue
@@ -294,7 +294,7 @@
 	if(candidates.len >= 2) //Minimum 2 to be considered a squad
 		//Pick the lucky players
 		var/numagents = min(5,candidates.len) //How many commandos to spawn
-		var/list/spawnpoints = emergencyresponseteamspawn
+		var/list/spawnpoints = GLOB.emergencyresponseteamspawn
 		while(numagents && candidates.len)
 			if (numagents > spawnpoints.len)
 				numagents--
@@ -309,20 +309,20 @@
 			var/mob/living/carbon/human/Commando = new(spawnloc)
 			chosen_candidate.client.prefs.copy_to(Commando)
 			if(numagents == 1) //If Squad Leader
-				Commando.real_name = "Officer [pick(commando_names)]"
+				Commando.real_name = "Officer [pick(GLOB.commando_names)]"
 				Commando.equipOutfit(/datum/outfit/death_commando/officer)
 			else
-				Commando.real_name = "Trooper [pick(commando_names)]"
+				Commando.real_name = "Trooper [pick(GLOB.commando_names)]"
 				Commando.equipOutfit(/datum/outfit/death_commando)
 			Commando.dna.update_dna_identity()
 			Commando.key = chosen_candidate.key
 			Commando.mind.assigned_role = "Death Commando"
-			for(var/obj/machinery/door/poddoor/ert/door in airlocks)
+			for(var/obj/machinery/door/poddoor/ert/door in GLOB.airlocks)
 				spawn(0)
 					door.open()
 
 			//Assign antag status and the mission
-			ticker.mode.traitors += Commando.mind
+			SSticker.mode.traitors += Commando.mind
 			Commando.mind.special_role = "deathsquad"
 			var/datum/objective/missionobj = new
 			missionobj.owner = Commando.mind
@@ -331,14 +331,14 @@
 			Commando.mind.objectives += missionobj
 
 			//Greet the commando
-			Commando << "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>"
+			to_chat(Commando, "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>")
 			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
 			else
 				missiondesc += " Follow orders given to you by your squad leader."
 			missiondesc += "<BR><B>Your Mission</B>: [mission]"
-			Commando << missiondesc
+			to_chat(Commando, missiondesc)
 
 			if(config.enforce_human_authority)
 				Commando.set_species(/datum/species/human)
@@ -370,7 +370,7 @@
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 
-	for(var/mob/living/carbon/human/applicant in player_list)
+	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_GANG in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
 			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
@@ -382,9 +382,9 @@
 	if(candidates.len >= 2)
 		for(var/needs_assigned=2,needs_assigned>0,needs_assigned--)
 			H = pick(candidates)
-			if(gang_colors_pool.len)
+			if(GLOB.gang_colors_pool.len)
 				var/datum/gang/newgang = new()
-				ticker.mode.gangs += newgang
+				SSticker.mode.gangs += newgang
 				H.mind.make_Gang(newgang)
 				candidates.Remove(H)
 			else if(needs_assigned == 2)
@@ -402,7 +402,7 @@
 		var/mob/dead/observer/chosen_candidate = pick(candidates)
 
 		//Create the official
-		var/mob/living/carbon/human/newmob = new (pick(emergencyresponseteamspawn))
+		var/mob/living/carbon/human/newmob = new (pick(GLOB.emergencyresponseteamspawn))
 		chosen_candidate.client.prefs.copy_to(newmob)
 		newmob.real_name = newmob.dna.species.random_name(newmob.gender,1)
 		newmob.dna.update_dna_identity()
@@ -411,7 +411,7 @@
 		newmob.equipOutfit(/datum/outfit/centcom_official)
 
 		//Assign antag status and the mission
-		ticker.mode.traitors += newmob.mind
+		SSticker.mode.traitors += newmob.mind
 		newmob.mind.special_role = "official"
 		var/datum/objective/missionobj = new
 		missionobj.owner = newmob.mind
@@ -423,8 +423,8 @@
 			newmob.set_species(/datum/species/human)
 
 		//Greet the official
-		newmob << "<B><font size=3 color=red>You are a Centcom Official.</font></B>"
-		newmob << "<BR>Central Command is sending you to [station_name()] with the task: [mission]"
+		to_chat(newmob, "<B><font size=3 color=red>You are a Centcom Official.</font></B>")
+		to_chat(newmob, "<BR>Central Command is sending you to [station_name()] with the task: [mission]")
 
 		//Logging and cleanup
 		message_admins("Centcom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
@@ -450,8 +450,13 @@
 			alert = "Blue"
 		if("Green: Centcom Official")
 			return makeOfficial()
-	var/teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
-	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
+	var/teamcheck = input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num
+	if(isnull(teamcheck))
+		return
+	var/teamsize = min(7,teamcheck)
+	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.") as null|text
+	if(!mission)
+		return
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
 	var/teamSpawned = 0
 
@@ -462,7 +467,7 @@
 		if (alert == "Red")
 			numagents = min(teamsize,candidates.len)
 			redalert = 1
-		var/list/spawnpoints = emergencyresponseteamspawn
+		var/list/spawnpoints = GLOB.emergencyresponseteamspawn
 		while(numagents && candidates.len)
 			if (numagents > spawnpoints.len)
 				numagents--
@@ -475,7 +480,7 @@
 
 			//Spawn and equip the officer
 			var/mob/living/carbon/human/ERTOperative = new(spawnloc)
-			var/list/lastname = last_names
+			var/list/lastname = GLOB.last_names
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
 			var/ertname = pick(lastname)
 			switch(numagents)
@@ -506,12 +511,12 @@
 
 			//Open the Armory doors
 			if(alert != "Blue")
-				for(var/obj/machinery/door/poddoor/ert/door in airlocks)
+				for(var/obj/machinery/door/poddoor/ert/door in GLOB.airlocks)
 					spawn(0)
 						door.open()
 
 			//Assign antag status and the mission
-			ticker.mode.traitors += ERTOperative.mind
+			SSticker.mode.traitors += ERTOperative.mind
 			ERTOperative.mind.special_role = "ERT"
 			var/datum/objective/missionobj = new
 			missionobj.owner = ERTOperative.mind
@@ -520,14 +525,14 @@
 			ERTOperative.mind.objectives += missionobj
 
 			//Greet the commando
-			ERTOperative << "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>"
+			to_chat(ERTOperative, "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>")
 			var/missiondesc = "Your squad is being sent on a Code [alert] mission to [station_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Avoid civilian casualites when possible. Board the shuttle when your team is ready."
 			else
 				missiondesc += " Follow orders given to you by your commander. Avoid civilian casualites when possible."
 			missiondesc += "<BR><B>Your Mission</B>: [mission]"
-			ERTOperative << missiondesc
+			to_chat(ERTOperative, missiondesc)
 
 			if(config.enforce_human_authority)
 				ERTOperative.set_species(/datum/species/human)

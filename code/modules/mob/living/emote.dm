@@ -7,9 +7,10 @@
 		param = copytext(act, custom_param + 1, length(act) + 1)
 		act = copytext(act, 1, custom_param)
 
-	var/datum/emote/E = emote_list[act]
+	var/datum/emote/E
+	E = E.emote_list[act]
 	if(!E)
-		src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 		return
 	E.run_emote(src, param, m_type)
 
@@ -380,22 +381,22 @@
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
 	. = TRUE
 	if(copytext(input,1,5) == "says")
-		user << "<span class='danger'>Invalid emote.</span>"
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
 	else if(copytext(input,1,9) == "exclaims")
-		user << "<span class='danger'>Invalid emote.</span>"
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
 	else if(copytext(input,1,6) == "yells")
-		user << "<span class='danger'>Invalid emote.</span>"
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
 	else if(copytext(input,1,5) == "asks")
-		user << "<span class='danger'>Invalid emote.</span>"
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
 	else
 		. = FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
 	if(jobban_isbanned(user, "emote"))
-		user << "You cannot send custom emotes (banned)."
+		to_chat(user, "You cannot send custom emotes (banned).")
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
-		user << "You cannot send IC messages (muted)."
+		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
 		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
@@ -425,10 +426,12 @@
 	var/list/keys = list()
 	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
 
+	var/datum/emote/E
+	var/list/emote_list = E.emote_list
 	for(var/e in emote_list)
 		if(e in keys)
 			continue
-		var/datum/emote/E = emote_list[e]
+		E = emote_list[e]
 		if(E.can_run_emote(user, TRUE))
 			keys += E.key
 
@@ -444,7 +447,7 @@
 
 	message = jointext(message, "")
 
-	user << message
+	to_chat(user, message)
 
 /datum/emote/sound/beep
 	key = "beep"
@@ -462,5 +465,10 @@
 	user.spin(20, 1)
 	if(istype(user, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = user
-		R.riding_datum.force_dismount()
+		if(R.buckled_mobs)
+			for(var/mob/M in R.buckled_mobs)
+				if(R.riding_datum)
+					R.riding_datum.force_dismount(M)
+				else
+					R.unbuckle_all_mobs()
 	..()

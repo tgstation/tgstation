@@ -146,3 +146,106 @@
 	smoke_amt = 4
 	action_icon_state = "parasmoke"
 	action_background_icon_state = "bg_cult"
+
+
+/obj/effect/proc_holder/spell/targeted/abyssal_gaze
+	name = "Abyssal Gaze"
+	desc = "This spell instills a deep terror in your target, temporarily chilling and blinding it."
+
+	charge_max = 750
+	range = 5
+	include_user = FALSE
+	selection_type = "range"
+	stat_allowed = FALSE
+
+	school = "evocation"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	action_background_icon_state = "bg_demon"
+	action_icon_state = "abyssal_gaze"
+
+/obj/effect/proc_holder/spell/targeted/abyssal_gaze/cast(list/targets, mob/user = usr)
+	if(!LAZYLEN(targets))
+		to_chat(user, "<span class='notice'>No target found in range.</span>")
+		revert_cast()
+		return
+
+	var/mob/living/carbon/target = targets[1]
+
+	if(!(target in oview(range)))
+		to_chat(user, "<span class='notice'>[target] is too far away!</span>")
+		revert_cast()
+		return
+
+	to_chat(target, "<span class='userdanger'>A freezing darkness surrounds you...</span>")
+	target.playsound_local(get_turf(target), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
+	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
+	target.adjust_blindness(5)
+	addtimer(CALLBACK(src, .proc/cure_blindness, target), 40)
+	target.bodytemperature -= 200
+
+/obj/effect/proc_holder/spell/targeted/abyssal_gaze/proc/cure_blindness(mob/target)
+	target.adjust_blindness(-5)
+
+/obj/effect/proc_holder/spell/targeted/dominate
+	name = "Dominate"
+	desc = "This spell dominates the mind of a lesser creature, causing it to see you as an ally."
+
+	charge_max = 600
+	range = 7
+	include_user = FALSE
+	selection_type = "range"
+	stat_allowed = FALSE
+
+	school = "evocation"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	action_background_icon_state = "bg_demon"
+	action_icon_state = "dominate"
+
+/obj/effect/proc_holder/spell/targeted/dominate/cast(list/targets, mob/user = usr)
+	if(!LAZYLEN(targets))
+		to_chat(user, "<span class='notice'>No target found in range.</span>")
+		revert_cast()
+		return
+
+	var/mob/living/simple_animal/S = targets[1]
+
+	if(S.ckey)
+		to_chat(user, "<span class='warning'>[S] is too intelligent to dominate!</span>")
+		revert_cast()
+		return
+
+	if(S.stat)
+		to_chat(user, "<span class='warning'>[S] is dead!</span>")
+		revert_cast()
+		return
+
+	if(S.sentience_type != SENTIENCE_ORGANIC)
+		to_chat(user, "<span class='warning'>[S] cannot be dominated!</span>")
+		revert_cast()
+		return
+
+	if(!(S in oview(range)))
+		to_chat(user, "<span class='notice'>[S] is too far away!</span>")
+		revert_cast()
+		return
+
+	S.add_atom_colour("#990000", FIXED_COLOUR_PRIORITY)
+	S.faction = list("cult")
+	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, 1)
+	new /obj/effect/overlay/temp/cult/sac(get_turf(S))
+
+/obj/effect/proc_holder/spell/targeted/dominate/can_target(mob/living/target)
+	if(!isanimal(target) || target.stat)
+		return FALSE
+	if("cult" in target.faction)
+		return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem
+	charge_max = 800
+	jaunt_in_type = /obj/effect/overlay/temp/dir_setting/cult/phase
+	jaunt_out_type = /obj/effect/overlay/temp/dir_setting/cult/phase/out

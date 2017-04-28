@@ -28,7 +28,7 @@
 	del_on_death = 1
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 
-/mob/living/simple_animal/hostile/hivebot/New()
+/mob/living/simple_animal/hostile/hivebot/Initialize()
 	..()
 	deathmessage = "[src] blows apart!"
 

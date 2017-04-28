@@ -52,7 +52,7 @@
 
 	mode = value
 	update_icon()
-	SetLuminosity(0)
+	set_light(0)
 
 /obj/item/device/powersink/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -61,7 +61,7 @@
 			if(isturf(T) && !T.intact)
 				attached = locate() in T
 				if(!attached)
-					user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
+					to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
 				else
 					set_mode(CLAMPED_OFF)
 					user.visible_message( \
@@ -69,7 +69,7 @@
 						"<span class='notice'>You attach \the [src] to the cable.</span>",
 						"<span class='italics'>You hear some wires being connected to something.</span>")
 			else
-				user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
+				to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
 		else
 			set_mode(DISCONNECTED)
 			user.visible_message( \
@@ -113,7 +113,7 @@
 
 	var/datum/powernet/PN = attached.powernet
 	if(PN)
-		SetLuminosity(5)
+		set_light(5)
 
 		// found a powernet, so drain up to max power from it
 

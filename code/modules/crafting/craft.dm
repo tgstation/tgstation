@@ -70,14 +70,14 @@
 		if(T.Adjacent(user))
 			for(var/B in T)
 				var/atom/movable/AM = B
-				if(AM.flags & HOLOGRAM)
+				if(HAS_SECONDARY_FLAG(AM, HOLOGRAM))
 					continue
 				. += AM
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
 	for(var/obj/item/I in get_environment(user))
-		if(I.flags & HOLOGRAM)
+		if(HAS_SECONDARY_FLAG(I, HOLOGRAM))
 			continue
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
@@ -124,7 +124,7 @@
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
 				if(send_feedback)
-					feedback_add_details("object_crafted","[I.type]")
+					SSblackbox.add_details("object_crafted","[I.type]")
 				return 0
 			return "."
 		return ", missing tool."
@@ -253,7 +253,7 @@
 		qdel(DL)
 
 
-/datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = not_incapacitated_turf_state)
+/datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
@@ -273,7 +273,7 @@
 	var/list/surroundings = get_surroundings(user)
 	var/list/can_craft = list()
 	var/list/cant_craft = list()
-	for(var/rec in crafting_recipes)
+	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
 		if(R.category != cur_category)
 			continue
@@ -296,26 +296,26 @@
 			ui_interact(usr) //explicit call to show the busy display
 			var/fail_msg = construct_item(usr, TR)
 			if(!fail_msg)
-				usr << "<span class='notice'>[TR.name] constructed.</span>"
+				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")
 			else
-				usr << "<span class='warning'>Construction failed[fail_msg]</span>"
+				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
 			busy = 0
 			ui_interact(usr)
 		if("forwardCat") //Meow
 			viewing_category = next_cat()
-			usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+			to_chat(usr, "<span class='notice'>Category is now [categories[viewing_category]].</span>")
 			. = TRUE
 		if("backwardCat")
 			viewing_category = prev_cat()
-			usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+			to_chat(usr, "<span class='notice'>Category is now [categories[viewing_category]].</span>")
 			. = TRUE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
-			usr << "<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>"
+			to_chat(usr, "<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>")
 			. = TRUE
 		if("toggle_compact")
 			display_compact = !display_compact
-			usr << "<span class='notice'>Crafting menu is now [display_compact? "compact" : "full size"].</span>"
+			to_chat(usr, "<span class='notice'>Crafting menu is now [display_compact? "compact" : "full size"].</span>")
 			. = TRUE
 
 

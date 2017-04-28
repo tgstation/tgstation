@@ -4,10 +4,10 @@
 
 /area/CATEGORY/OR/DESCRIPTOR/NAME 	(you can make as many subdivisions as you want)
 	name = "NICE NAME" 				(not required but makes things really nice)
-	icon = "ICON FILENAME" 			(defaults to areas.dmi)
+	icon = 'ICON FILENAME' 			(defaults to 'icons/turf/areas.dmi')
 	icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
 	requires_power = 0 				(defaults to 1)
-	music = "music/music.ogg"		(defaults to "music/music.ogg")
+	music = null					(defaults to nothing, look in sound/ambience for music)
 
 NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
 
@@ -16,7 +16,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /*-----------------------------------------------------------------------------*/
 
-/area/engine
+/area/engine/supermatter
+	name = "Supermatter Engine"
+	icon_state = "engine_sm"
 
 /area/ai_monitored	//stub defined ai_monitored.dm
 
@@ -37,7 +39,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
@@ -48,14 +50,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/space/nearstation
 	icon_state = "space_near"
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/start
 	name = "start area"
 	icon_state = "start"
 	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
 
 
@@ -79,9 +80,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Asteroid - Artifact"
 	icon_state = "cave"
 
-/area/asteroid/artifactroom/New()
-	..()
-	SetDynamicLighting()
+/area/asteroid/artifactroom/Initialize()
+	. = ..()
+	set_dynamic_lighting()
 
 /area/planet/clown
 	name = "Clown Planet"
@@ -418,8 +419,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/solar
 	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
 	blob_allowed = FALSE
 	flags = NONE
@@ -923,26 +923,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/turret_protected/AIsatextFP
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/AIsatextFS
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/AIsatextAS
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/NewAIMain
 	name = "AI Main New"
@@ -995,7 +987,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
+/area/chapel/asteroid
+	name = "Chapel Asteroid"
+	icon_state = "explored"
 
+/area/chapel/dock
+	name = "Chapel Dock"
+	icon_state = "construction"
 
 /////////////////////////////////////////////////////////////////////
 /*
@@ -1004,7 +1002,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 */
 
 //SPACE STATION 13
-var/list/the_station_areas = list (
+GLOBAL_LIST_INIT(the_station_areas, list (
 	/area/atmos,
 	/area/maintenance,
 	/area/hallway,
@@ -1033,4 +1031,4 @@ var/list/the_station_areas = list (
 	/area/ai_monitored/turret_protected/ai_upload, //do not try to simplify to "/area/ai_monitored/turret_protected" --rastaf0
 	/area/ai_monitored/turret_protected/ai_upload_foyer,
 	/area/ai_monitored/turret_protected/ai,
-)
+))

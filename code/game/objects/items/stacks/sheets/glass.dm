@@ -8,10 +8,10 @@
 /*
  * Glass sheets
  */
-var/global/list/datum/stack_recipe/glass_recipes = list ( \
+GLOBAL_LIST_INIT(glass_recipes, list ( \
 	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
-)
+))
 
 /obj/item/stack/sheet/glass
 	name = "glass"
@@ -32,8 +32,8 @@ var/global/list/datum/stack_recipe/glass_recipes = list ( \
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
 
-/obj/item/stack/sheet/glass/New(loc, amount)
-	recipes = glass_recipes
+/obj/item/stack/sheet/glass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.glass_recipes
 	..()
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
@@ -41,11 +41,11 @@ var/global/list/datum/stack_recipe/glass_recipes = list ( \
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if (get_amount() < 1 || CC.get_amount() < 5)
-			user << "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>"
+			to_chat(user, "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>")
 			return
 		CC.use(5)
 		use(1)
-		user << "<span class='notice'>You attach wire to the [name].</span>"
+		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		new_tile.add_fingerprint(user)
 	else if(istype(W, /obj/item/stack/rods))
@@ -61,7 +61,7 @@ var/global/list/datum/stack_recipe/glass_recipes = list ( \
 			if (!G && replace)
 				user.put_in_hands(RG)
 		else
-			user << "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>"
+			to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>")
 			return
 	else
 		return ..()
@@ -70,12 +70,12 @@ var/global/list/datum/stack_recipe/glass_recipes = list ( \
 /*
  * Reinforced glass sheets
  */
-var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
+GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	null, \
 	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
-)
+))
 
 
 /obj/item/stack/sheet/rglass
@@ -106,8 +106,8 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 	source.add_charge(amount * metcost)
 	glasource.add_charge(amount * glacost)
 
-/obj/item/stack/sheet/rglass/New(loc, amount)
-	recipes = reinforced_glass_recipes
+/obj/item/stack/sheet/rglass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.reinforced_glass_recipes
 	..()
 
 
@@ -135,7 +135,8 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 	return (BRUTELOSS)
 
 
-/obj/item/weapon/shard/New()
+/obj/item/weapon/shard/Initialize()
+	. = ..()
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
 		if("small")
@@ -159,11 +160,11 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.species_traits)) // golems, etc
-			H << "<span class='warning'>[src] cuts into your hand!</span>"
+			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			H.apply_damage(force*0.5, BRUTE, hit_hand)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
-		M << "<span class='warning'>[src] cuts into your hand!</span>"
+		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 		M.apply_damage(force*0.5, BRUTE, hit_hand)
 
 
@@ -180,7 +181,7 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 				if(G.amount >= G.max_amount)
 					continue
 				G.attackby(NG, user)
-			user << "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>"
+			to_chat(user, "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>")
 			qdel(src)
 	else
 		return ..()
@@ -197,15 +198,16 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 			if(!istype(O))
 				return
 			var/feetCover = (H.wear_suit && H.wear_suit.body_parts_covered & FEET) || (H.w_uniform && H.w_uniform.body_parts_covered & FEET)
-			if(!H.shoes && !feetCover)
-				H.apply_damage(5, BRUTE, picked_def_zone)
-				if(cooldown < world.time - 10) //cooldown to avoid message spam.
-					if(!H.incapacitated())
-						H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
-								"<span class='userdanger'>You step in the broken glass!</span>")
-					else
-						H.visible_message("<span class='danger'>[H] slides on the broken glass!</span>", \
-								"<span class='userdanger'>You slide on the broken glass!</span>")
+			if(H.shoes || feetCover || H.movement_type & FLYING || H.buckled)
+				return
+			H.apply_damage(5, BRUTE, picked_def_zone)
+			if(cooldown < world.time - 10) //cooldown to avoid message spam.
+				if(!H.incapacitated())
+					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
+							"<span class='userdanger'>You step in the broken glass!</span>")
+				else
+					H.visible_message("<span class='danger'>[H] slides on the broken glass!</span>", \
+							"<span class='userdanger'>You slide on the broken glass!</span>")
 
-					cooldown = world.time
-				H.Weaken(3)
+				cooldown = world.time
+			H.Weaken(3)

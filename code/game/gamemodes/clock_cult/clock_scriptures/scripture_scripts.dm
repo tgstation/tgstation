@@ -6,12 +6,12 @@
 /datum/clockwork_scripture/create_object/ocular_warden
 	descname = "Structure, Turret"
 	name = "Ocular Warden"
-	desc = "Forms an automatic short-range turret that deals low sustained damage to the unenlightened in its range."
+	desc = "Forms an automatic short-range turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
 	channel_time = 120
 	consumed_components = list(BELLIGERENT_EYE = 1, REPLICANT_ALLOY = 1)
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
-	creator_message = "<span class='brass'>You form an ocular warden, which will focus its searing gaze upon nearby unenlightened.</span>"
+	creator_message = "<span class='brass'>You form an ocular warden, which will automatically attack nearby unrestrained non-Servants that can see it.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
 	usage_tip = "Although powerful, the warden is very fragile and should optimally be placed behind barricades."
 	tier = SCRIPTURE_SCRIPT
@@ -23,8 +23,8 @@
 	quickbind_desc = "Creates an Ocular Warden, which will automatically attack nearby unrestrained non-Servants that can see it."
 
 /datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
-	for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(3, invoker))
-		invoker << "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
+	for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(OCULAR_WARDEN_EXCLUSION_RANGE, invoker))
+		to_chat(invoker, "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" )
 		return FALSE
 	return ..()
 
@@ -52,7 +52,7 @@
 /datum/clockwork_scripture/create_object/vitality_matrix
 	descname = "Trap, Damage to Healing"
 	name = "Vitality Matrix"
-	desc = "Scribes a sigil beneath the invoker which drains life from any living non-Servants that cross it. Servants that cross it, however, will be healed based on how much Vitality all \
+	desc = "Places a sigil that drains life from any living non-Servants that cross it. Servants that cross it, however, will be healed based on how much Vitality all \
 	Matrices have drained from non-Servants. Dead Servants can be revived by this sigil if there is vitality equal to the target Servant's non-oxygen damage."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 60
@@ -146,7 +146,7 @@
 
 /datum/clockwork_scripture/function_call/check_special_requirements()
 	for(var/datum/action/innate/function_call/F in invoker.actions)
-		invoker << "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>"
+		to_chat(invoker, "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>")
 		return FALSE
 	return invoker.can_hold_items()
 
@@ -166,7 +166,7 @@
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	buttontooltipstyle = "clockcult"
 	var/cooldown = 0
-	var/base_cooldown = 1800
+	var/base_cooldown = RATVARIAN_SPEAR_DURATION
 
 /datum/action/innate/function_call/IsAvailable()
 	if(!is_servant_of_ratvar(owner) || cooldown > world.time)
@@ -175,23 +175,17 @@
 
 /datum/action/innate/function_call/Activate()
 	if(!owner.get_empty_held_indexes())
-		usr << "<span class='warning'>You need an empty hand to call forth your spear!</span>"
+		to_chat(usr, "<span class='warning'>You need an empty hand to call forth your spear!</span>")
 		return FALSE
 	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
 	owner.put_in_hands(R)
-	if(!ratvar_awakens)
-		R.clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
-		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		R.timerid = addtimer(CALLBACK(R, /obj/item/clockwork/ratvarian_spear.proc/break_spear), base_cooldown, TIMER_STOPPABLE)
+	if(!GLOB.ratvar_awakens)
+		to_chat(owner, "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>")
 	cooldown = base_cooldown + world.time
 	owner.update_action_buttons_icon()
-	addtimer(CALLBACK(src, .proc/update_actions), base_cooldown)
+	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
 	return TRUE
-
-/datum/action/innate/function_call/proc/update_actions()
-	if(owner)
-		owner.update_action_buttons_icon()
 
 
 //Spatial Gateway: Allows the invoker to teleport themselves and any nearby allies to a conscious servant or clockwork obelisk.
@@ -214,16 +208,17 @@
 
 /datum/clockwork_scripture/spatial_gateway/check_special_requirements()
 	if(!isturf(invoker.loc))
-		invoker << "<span class='warning'>You must not be inside an object to use this scripture!</span>"
+		to_chat(invoker, "<span class='warning'>You must not be inside an object to use this scripture!</span>")
 		return FALSE
 	var/other_servants = 0
-	for(var/mob/living/L in living_mob_list)
+	for(var/mob/living/L in GLOB.living_mob_list)
 		if(is_servant_of_ratvar(L) && !L.stat && L != invoker)
 			other_servants++
-	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
-		other_servants++
+	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)
+		if(O.anchored)
+			other_servants++
 	if(!other_servants)
-		invoker << "<span class='warning'>There are no other servants or clockwork obelisks!</span>"
+		to_chat(invoker, "<span class='warning'>There are no other conscious servants or anchored clockwork obelisks!</span>")
 		return FALSE
 	return TRUE
 
@@ -234,7 +229,7 @@
 		if(!L.stat && is_servant_of_ratvar(L))
 			portal_uses++
 			duration += 40 //4 seconds
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		portal_uses = max(portal_uses, 100) //Very powerful if Ratvar has been summoned
 		duration = max(duration, 100)
 	return slab.procure_gateway(invoker, duration, portal_uses)
@@ -268,7 +263,7 @@
 	var/turf/T = get_turf(invoker)
 	if(!ray.run_scripture() && slab && invoker)
 		if(can_recite() && T == get_turf(invoker))
-			if(!ratvar_awakens)
+			if(!GLOB.ratvar_awakens)
 				var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(invoker))
 				var/multiplier = 0.5
 				var/usable_power = min(Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER), 1000)
@@ -286,7 +281,7 @@
 				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
 				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
 				playsound(invoker, 'sound/machines/defib_zap.ogg', VH.damage, 1, -1)
-			invoker << "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>"
+			to_chat(invoker, "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>")
 		else
 			return FALSE
 	return TRUE

@@ -26,6 +26,8 @@
 				/obj/item/stack/sheet/mineral/bananium = list("banana" = 20),
 				/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 				/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
+				/obj/item/stack/sheet/bluespace_crystal = list("bluespace" = 20),
+				/obj/item/weapon/ore/bluespace_crystal = list("bluespace" = 20),
 				/obj/item/weapon/grown/nettle/basic = list("sacid" = 0),
 				/obj/item/weapon/grown/nettle/death = list("facid" = 0, "sacid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
@@ -35,6 +37,8 @@
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/oat = list("flour" = -5),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/rice = list("rice" = -5),
+				/obj/item/weapon/reagent_containers/food/snacks/donut/New = list("sprinkles" = -2, "sugar" = 1),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries = list("bluecherryjelly" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/egg = list("eggyolk" = -5),
@@ -50,7 +54,9 @@
 				/obj/item/slime_extract = list(),
 				/obj/item/weapon/reagent_containers/pill = list(),
 				/obj/item/weapon/reagent_containers/food = list(),
-				/obj/item/weapon/reagent_containers/honeycomb = list()
+				/obj/item/weapon/reagent_containers/honeycomb = list(),
+				/obj/item/toy/crayon = list()
+
 		)
 
 		var/list/juice_items = list (
@@ -85,10 +91,9 @@
 
 		var/list/holdingitems = list()
 
-/obj/machinery/reagentgrinder/New()
-	..()
+/obj/machinery/reagentgrinder/Initialize()
+	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	return
 
 /obj/machinery/reagentgrinder/Destroy()
 	if(beaker)
@@ -130,18 +135,18 @@
 						update_icon()
 						src.updateUsrDialog()
 				else
-						user << "<span class='warning'>There's already a container inside.</span>"
+						to_chat(user, "<span class='warning'>There's already a container inside.</span>")
 				return 1 //no afterattack
 
 		if(is_type_in_list(I, dried_items))
 				if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown))
 						var/obj/item/weapon/reagent_containers/food/snacks/grown/G = I
 						if(!G.dry)
-								user << "<span class='warning'>You must dry that first!</span>"
+								to_chat(user, "<span class='warning'>You must dry that first!</span>")
 								return 1
 
 		if(holdingitems && holdingitems.len >= limit)
-				usr << "The machine cannot hold anymore items."
+				to_chat(usr, "The machine cannot hold anymore items.")
 				return 1
 
 		//Fill machine with a bag!
@@ -151,11 +156,11 @@
 						B.remove_from_storage(G, src)
 						holdingitems += G
 						if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
-								user << "<span class='notice'>You fill the All-In-One grinder to the brim.</span>"
+								to_chat(user, "<span class='notice'>You fill the All-In-One grinder to the brim.</span>")
 								break
 
 				if(!I.contents.len)
-						user << "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>"
+						to_chat(user, "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>")
 
 				src.updateUsrDialog()
 				return 1
@@ -164,7 +169,7 @@
 				if(user.a_intent == INTENT_HARM)
 						return ..()
 				else
-						user << "<span class='warning'>Cannot refine into a reagent!</span>"
+						to_chat(user, "<span class='warning'>Cannot refine into a reagent!</span>")
 						return 1
 
 		if(user.drop_item())
@@ -451,4 +456,14 @@
 				var/amount = O.reagents.total_volume
 				O.reagents.trans_to(beaker, amount)
 				if(!O.reagents.total_volume)
+						remove_object(O)
+
+		for (var/obj/item/toy/crayon/O in holdingitems)
+				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+						break
+				for (var/r_id in O.reagent_contents)
+						var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+						if (space == 0)
+								break
+						beaker.reagents.add_reagent(r_id, min(O.reagent_contents[r_id], space))
 						remove_object(O)

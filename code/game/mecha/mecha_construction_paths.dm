@@ -26,12 +26,12 @@
 		if(C.use(4))
 			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
 		else
-			user << ("<span class='warning'>There's not enough cable to finish the task!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
-			user << ("<span class='warning'>There's not enough material in this stack!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
 			return 0
 		else
 			S.use(5)
@@ -61,12 +61,12 @@
 		if (C.use(4))
 			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
 		else
-			user << ("<span class='warning'>There's not enough cable to finish the task!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
-			user << ("<span class='warning'>There's not enough material in this stack!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
 			return 0
 		else
 			S.use(5)
@@ -96,7 +96,7 @@
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "ripley0"
 	const_holder.density = 1
-	const_holder.overlays.len = 0
+	const_holder.cut_overlays(TRUE)
 	qdel(src)
 	return
 
@@ -277,7 +277,7 @@
 
 /datum/construction/reversible/mecha/ripley/spawn_result()
 	..()
-	feedback_inc("mecha_ripley_created",1)
+	SSblackbox.inc("mecha_ripley_created",1)
 	return
 
 
@@ -562,9 +562,9 @@
 
 /datum/construction/reversible/mecha/gygax/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
-	feedback_inc("mecha_gygax_created",1)
+	SSblackbox.inc("mecha_gygax_created",1)
 	return
 
 /datum/construction/mecha/firefighter_chassis
@@ -786,7 +786,7 @@
 
 /datum/construction/reversible/mecha/firefighter/spawn_result()
 	..()
-	feedback_inc("mecha_firefighter_created",1)
+	SSblackbox.inc("mecha_firefighter_created",1)
 	return
 
 
@@ -864,7 +864,7 @@
 
 /datum/construction/mecha/honker/spawn_result()
 	..()
-	feedback_inc("mecha_honker_created",1)
+	SSblackbox.inc("mecha_honker_created",1)
 	return
 
 /datum/construction/mecha/durand_chassis
@@ -1147,9 +1147,9 @@
 
 /datum/construction/reversible/mecha/durand/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
-	feedback_inc("mecha_durand_created",1)
+	SSblackbox.inc("mecha_durand_created",1)
 	return
 
 //PHAZON
@@ -1479,9 +1479,9 @@
 
 /datum/construction/reversible/mecha/phazon/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
-	feedback_inc("mecha_phazon_created",1)
+	SSblackbox.inc("mecha_phazon_created",1)
 	return
 
 //ODYSSEUS
@@ -1692,5 +1692,5 @@
 
 /datum/construction/reversible/mecha/odysseus/spawn_result()
 	..()
-	feedback_inc("mecha_odysseus_created",1)
+	SSblackbox.inc("mecha_odysseus_created",1)
 	return

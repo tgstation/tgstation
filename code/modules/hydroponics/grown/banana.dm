@@ -92,7 +92,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("singulo" = 0.2, "banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
+	reagents_add = list("bluespace" = 0.2, "banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 	rarity = 30
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace

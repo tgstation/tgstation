@@ -15,45 +15,37 @@ Chaplain
 
 	outfit = /datum/outfit/job/chaplain
 
-	access = list(access_morgue, access_chapel_office, access_crematorium, access_theatre)
-	minimal_access = list(access_morgue, access_chapel_office, access_crematorium, access_theatre)
+	access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
+	minimal_access = list(GLOB.access_morgue, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_theatre)
 
-/datum/outfit/job/chaplain
-	name = "Chaplain"
-	jobtype = /datum/job/chaplain
-
-	belt = /obj/item/device/pda/chaplain
-	uniform = /obj/item/clothing/under/rank/chaplain
-	backpack_contents = list(/obj/item/device/camera/spooky = 1)
-	backpack = /obj/item/weapon/storage/backpack/cultpack
-	satchel = /obj/item/weapon/storage/backpack/cultpack
-
-
-/datum/outfit/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
+/datum/job/chaplain/after_spawn(mob/living/H, mob/M)
 	if(H.mind)
 		H.mind.isholy = TRUE
 
-	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
+	var/obj/item/weapon/storage/book/bible/booze/B = new
 
-	if(SSreligion.Bible_deity_name)
-		B.deity_name = SSreligion.Bible_deity_name
-		B.name = SSreligion.Bible_name
-		B.icon_state = SSreligion.Bible_icon_state
-		B.item_state = SSreligion.Bible_item_state
-		H << "There is already an established religion onboard the station. You are an acolyte of [SSreligion.Bible_deity_name]. Defer to the Chaplain."
+	if(SSreligion.religion)
+		B.deity_name = SSreligion.deity
+		B.name = SSreligion.bible_name
+		B.icon_state = SSreligion.bible_icon_state
+		B.item_state = SSreligion.bible_item_state
+		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.deity]. Defer to the Chaplain.")
 		H.equip_to_slot_or_del(B, slot_in_backpack)
-		var/obj/item/weapon/nullrod/N = new(H)
+		var/nrt = SSreligion.holy_weapon_type || /obj/item/weapon/nullrod
+		var/obj/item/weapon/nullrod/N = new nrt(H)
 		H.equip_to_slot_or_del(N, slot_in_backpack)
 		return
 
 	var/new_religion = "Christianity"
-	if(H.client && H.client.prefs.custom_names["religion"])
-		new_religion = H.client.prefs.custom_names["religion"]
+	if(M.client && M.client.prefs.custom_names["religion"])
+		new_religion = M.client.prefs.custom_names["religion"]
+
+	var/new_deity = "Space Jesus"
+	if(M.client && M.client.prefs.custom_names["deity"])
+		new_deity = M.client.prefs.custom_names["deity"]
+
+	B.deity_name = new_deity
+
 
 	switch(lowertext(new_religion))
 		if("christianity")
@@ -81,14 +73,24 @@ Chaplain
 			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 		else
 			B.name = "The Holy Book of [new_religion]"
-	feedback_set_details("religion_name","[new_religion]")
-	SSreligion.Bible_name = B.name
 
-	var/new_deity = "Space Jesus"
-	if(H.client && H.client.prefs.custom_names["deity"])
-		new_deity = H.client.prefs.custom_names["deity"]
-	B.deity_name = new_deity
 
-	SSreligion.Bible_deity_name = B.deity_name
-	feedback_set_details("religion_deity","[new_deity]")
+	if(SSreligion)
+		SSreligion.religion = new_religion
+		SSreligion.bible_name = B.name
+		SSreligion.deity = B.deity_name
+
 	H.equip_to_slot_or_del(B, slot_in_backpack)
+
+	SSblackbox.set_details("religion_name","[new_religion]")
+	SSblackbox.set_details("religion_deity","[new_deity]")
+
+/datum/outfit/job/chaplain
+	name = "Chaplain"
+	jobtype = /datum/job/chaplain
+
+	belt = /obj/item/device/pda/chaplain
+	uniform = /obj/item/clothing/under/rank/chaplain
+	backpack_contents = list(/obj/item/device/camera/spooky = 1)
+	backpack = /obj/item/weapon/storage/backpack/cultpack
+	satchel = /obj/item/weapon/storage/backpack/cultpack

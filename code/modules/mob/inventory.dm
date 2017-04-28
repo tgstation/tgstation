@@ -148,15 +148,16 @@
 /mob/proc/can_equip(obj/item/I, slot, disable_warning = 0)
 	return FALSE
 
-
-/mob/proc/put_in_hand(obj/item/I, hand_index)
+/mob/proc/can_put_in_hand(I, hand_index)
 	if(!put_in_hand_check(I))
 		return FALSE
 	if(!has_hand_for_held_index(hand_index))
 		return FALSE
-	var/obj/item/curr = held_items[hand_index]
-	if(!curr)
-		I.loc = src
+	return !held_items[hand_index]
+
+/mob/proc/put_in_hand(obj/item/I, hand_index)
+	if(can_put_in_hand(I, hand_index))
+		I.forceMove(src)
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
 		I.plane = ABOVE_HUD_PLANE
@@ -255,6 +256,17 @@
 		return FALSE
 	return TRUE
 
+/mob/proc/putItemFromInventoryInHandIfPossible(obj/item/I, hand_index, force_removal = FALSE)
+	if(!can_put_in_hand(I, hand_index))
+		return FALSE
+	if(!temporarilyRemoveItemFromInventory(I, force_removal))
+		return FALSE
+	I.remove_item_from_storage(src)
+	if(!put_in_hand(I, hand_index))
+		qdel(I)
+		CRASH("Assertion failure: putItemFromInventoryInHandIfPossible") //should never be possible
+	return TRUE
+
 //The following functions are the same save for one small difference
 
 //for when you want the item to end up on the ground
@@ -268,14 +280,15 @@
 
 //visibly unequips I but it is NOT MOVED AND REMAINS IN SRC
 //item MUST BE FORCEMOVE'D OR QDEL'D
-/mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE)
-	return doUnEquip(I, force, null, TRUE)
+/mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE, idrop = TRUE)
+	return doUnEquip(I, force, null, TRUE, idrop)
 
 //DO NOT CALL THIS PROC
 //use one of the above 2 helper procs
 //you may override it, but do not modify the args
-/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move) //Force overrides NODROP for things like wizarditis and admin undress.
+/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides NODROP for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
+													//Invdrop is used to prevent stuff in pockets dropping. only set to false if it's going to immediately be replaced
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
 		return TRUE
 
@@ -334,11 +347,16 @@
 		items += w_uniform
 	return items
 
-
+/mob/living/proc/unequip_everything()
+	var/list/items = list()
+	items |= get_equipped_items()
+	for(var/I in items)
+		dropItemToGround(I)
+	drop_all_held_items()
 
 /obj/item/proc/equip_to_best_slot(var/mob/M)
 	if(src != M.get_active_held_item())
-		M << "<span class='warning'>You are not holding anything to equip!</span>"
+		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
 
 	if(M.equip_to_appropriate_slot(src))
@@ -368,7 +386,7 @@
 		S.handle_item_insertion(src)
 		return TRUE
 
-	M << "<span class='warning'>You are unable to equip that!</span>"
+	to_chat(M, "<span class='warning'>You are unable to equip that!</span>")
 	return FALSE
 
 

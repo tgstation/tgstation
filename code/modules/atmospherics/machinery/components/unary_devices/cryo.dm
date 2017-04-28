@@ -114,10 +114,10 @@
 		if(occupant.health >= 100) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
-			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
-			radio.talk_into(src, "Patient fully restored", radio_channel)
+			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
+			radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
 			if(autoeject) // Eject if configured.
-				radio.talk_into(src, "Auto ejecting patient now", radio_channel)
+				radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
 				open_machine()
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
@@ -189,7 +189,7 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
-	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>"
+	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300))
 		if(occupant == user) // Check they're still here.
@@ -199,11 +199,11 @@
 	..()
 	if(occupant)
 		if(on)
-			user << "Someone's inside [src]!"
+			to_chat(user, "Someone's inside [src]!")
 		else
-			user << "You can barely make out a form floating in [src]."
+			to_chat(user, "You can barely make out a form floating in [src].")
 	else
-		user << "[src] seems empty."
+		to_chat(user, "[src] seems empty.")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -214,7 +214,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		. = 1 //no afterattack
 		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
+			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
 			return
 		if(!user.drop_item())
 			return
@@ -222,6 +222,8 @@
 		I.loc = src
 		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
+		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
+		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return
 	if(!on && !occupant && !state_open)
 		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
@@ -237,7 +239,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "cryo", name, 400, 550, master_ui, state)

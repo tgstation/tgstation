@@ -32,5 +32,5 @@
 		else
 			return 0
 	else
-		user << "<span class='warning'>There aren't any cores left in [target]!</span>"
+		to_chat(user, "<span class='warning'>There aren't any cores left in [target]!</span>")
 		return 1

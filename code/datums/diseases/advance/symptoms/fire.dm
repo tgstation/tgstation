@@ -31,21 +31,21 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(3)
-				M << "<span class='warning'>[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]</span>"
+				to_chat(M, "<span class='warning'>[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]</span>")
 			if(4)
 				Firestacks_stage_4(M, A)
 				M.IgniteMob()
-				M << "<span class='userdanger'>Your skin bursts into flames!</span>"
+				to_chat(M, "<span class='userdanger'>Your skin bursts into flames!</span>")
 				M.emote("scream")
 			if(5)
 				Firestacks_stage_5(M, A)
 				M.IgniteMob()
-				M << "<span class='userdanger'>Your skin erupts into an inferno!</span>"
+				to_chat(M, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
 				M.emote("scream")
 	return
 
 /datum/symptom/fire/proc/Firestacks_stage_4(mob/living/M, datum/disease/advance/A)
-	var/get_stacks = (sqrt(20+A.totalStageSpeed()*2))-(sqrt(16+A.totalStealth()))
+	var/get_stacks = (sqrt(20+A.totalStageSpeed()*2))-(sqrt(max(0, 16+A.totalStealth())))
 	M.adjust_fire_stacks(get_stacks)
 	M.adjustFireLoss(get_stacks/2)
 	return 1
@@ -90,16 +90,16 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(3)
-				M << "<span class='warning'>[pick("Your veins boil.", "You feel hot.", "You smell meat cooking.")]</span>"
+				to_chat(M, "<span class='warning'>[pick("Your veins boil.", "You feel hot.", "You smell meat cooking.")]</span>")
 			if(4)
 				Alkali_fire_stage_4(M, A)
 				M.IgniteMob()
-				M << "<span class='userdanger'>Your sweat bursts into flames!</span>"
+				to_chat(M, "<span class='userdanger'>Your sweat bursts into flames!</span>")
 				M.emote("scream")
 			if(5)
 				Alkali_fire_stage_5(M, A)
 				M.IgniteMob()
-				M << "<span class='userdanger'>Your skin erupts into an inferno!</span>"
+				to_chat(M, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
 				M.emote("scream")
 				if(M.fire_stacks < 0)
 					M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")

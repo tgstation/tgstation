@@ -10,6 +10,7 @@
 	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
+	item_state = "paper"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
@@ -29,6 +30,18 @@
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
+	var/contact_poison // Reagent ID to transfer on contact
+	var/contact_poison_volume = 0
+
+
+/obj/item/weapon/paper/pickup(user)
+	if(contact_poison && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/clothing/gloves/G = H.gloves
+		if(!istype(G) || G.transfer_prints)
+			H.reagents.add_reagent(contact_poison,contact_poison_volume)
+			contact_poison = null
+	..()
 
 
 /obj/item/weapon/paper/New()
@@ -57,7 +70,7 @@
 
 	if(istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
 		if(!iscultist(user) && !user.stat)
-			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+			to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
 			return
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
@@ -67,7 +80,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
-		user << "<span class='notice'>It is too far away.</span>"
+		to_chat(user, "<span class='notice'>It is too far away.</span>")
 
 
 /obj/item/weapon/paper/verb/rename()
@@ -80,7 +93,7 @@
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if(H.disabilities & CLUMSY && prob(25))
-			H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
+			to_chat(H, "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
 			return
@@ -95,7 +108,7 @@
 
 /obj/item/weapon/paper/attack_self(mob/user)
 	user.examinate(src)
-	if(rigged && (SSevent.holidays && SSevent.holidays[APRIL_FOOLS]))
+	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		if(spam_flag == 0)
 			spam_flag = 1
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
@@ -240,7 +253,7 @@
 
 
 /obj/item/weapon/paper/proc/openhelp(mob/user)
-	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
+	user << browse({"<HTML><HEAD><TITLE>Paper Help</TITLE></HEAD>
 	<BODY>
 		<b><center>Crayon&Pen commands</center></b><br>
 		<br>
@@ -266,6 +279,9 @@
 	if(usr.stat || usr.restrained())
 		return
 
+	if(href_list["help"])
+		openhelp(usr)
+		return
 	if(href_list["write"])
 		var/id = href_list["write"]
 		var/t =  stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE)
@@ -289,8 +305,8 @@
 			else
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
-
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
+			i.on_write(src,usr)
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]") // Update the window
 			update_icon()
 
 
@@ -305,13 +321,13 @@
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]")
 			return
 		else
-			user << "<span class='notice'>You don't know how to read or write.</span>"
+			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
 			return
 		if(istype(src, /obj/item/weapon/paper/talisman/))
-			user << "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>"
+			to_chat(user, "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>")
 			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
@@ -320,16 +336,14 @@
 			return
 
 		stamps += "<img src=large_[P.icon_state].png>"
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+		var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[P.icon_state]")
 		stampoverlay.pixel_x = rand(-2, 2)
 		stampoverlay.pixel_y = rand(-3, 2)
-
-		stampoverlay.icon_state = "paper_[P.icon_state]"
 
 		LAZYADD(stamped, P.icon_state)
 		add_overlay(stampoverlay)
 
-		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
+		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	if(P.is_hot())
 		if(user.disabilities & CLUMSY && prob(10))

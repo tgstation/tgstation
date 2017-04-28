@@ -11,11 +11,10 @@
 	dna = null
 	faction = list("alien")
 	ventcrawler = VENTCRAWLER_ALWAYS
-	languages_spoken = ALIEN
-	languages_understood = ALIEN
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"
+	initial_languages = list(/datum/language/xenocommon)
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	var/nightvision = 1
@@ -33,7 +32,7 @@
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
-/mob/living/carbon/alien/New()
+/mob/living/carbon/alien/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
@@ -48,6 +47,7 @@
 	internal_organs += new /obj/item/organ/alien/hivenode
 	internal_organs += new /obj/item/organ/tongue/alien
 	internal_organs += new /obj/item/organ/eyes/night_vision/alien
+	internal_organs += new /obj/item/organ/ears
 	..()
 
 /mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
@@ -110,7 +110,7 @@ Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
-		for (var/mob/living/C in mob_list)
+		for (var/mob/living/C in GLOB.mob_list)
 			if(C.status_flags & XENO_HOST)
 				var/obj/item/organ/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
@@ -137,7 +137,7 @@ Des: Removes all infected images from the alien.
 	return initial(pixel_y)
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
-	src << "<span class='noticealien'>You begin to evolve!</span>"
+	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
 	new_xeno.setDir(dir)
 	if(!alien_name_regex.Find(name))
@@ -146,6 +146,8 @@ Des: Removes all infected images from the alien.
 	if(mind)
 		mind.transfer_to(new_xeno)
 	qdel(src)
+
+	// TODO make orbiters orbit the new xeno, or make xenos species rather than types
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

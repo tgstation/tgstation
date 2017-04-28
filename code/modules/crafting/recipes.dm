@@ -35,7 +35,8 @@
 	result = /obj/item/weapon/twohanded/spear
 	reqs = list(/obj/item/weapon/twohanded/spear = 1,
 				/obj/item/weapon/grenade = 1)
-	parts = list(/obj/item/weapon/grenade = 1)
+	parts = list(/obj/item/weapon/twohanded/spear = 1,
+				/obj/item/weapon/grenade = 1)
 	time = 15
 	category = CAT_WEAPON
 
@@ -253,7 +254,7 @@
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/weaponcrafting/reciever = 1,
+	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
@@ -443,4 +444,11 @@
 	result = /obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton
 	time = 10
 	reqs = list(/obj/item/stack/sheet/cardboard = 1)
+	category = CAT_MISC
+
+/datum/crafting_recipe/pressureplate
+	name = "Pressure Plate"
+	result = /obj/item/device/pressure_plate
+	time = 5
+	reqs = list(/obj/item/stack/sheet/plasteel = 1, /obj/item/stack/tile/plasteel = 1, /obj/item/stack/cable_coil = 2)
 	category = CAT_MISC

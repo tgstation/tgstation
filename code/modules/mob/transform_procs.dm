@@ -42,7 +42,7 @@
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
-	new /obj/effect/overlay/temp/monkeyify(get_turf(src))
+	new /obj/effect/overlay/temp/monkeyify(loc)
 	sleep(22)
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 
@@ -57,7 +57,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
 		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
 
 	if(suiciding)
@@ -126,7 +126,7 @@
 
 
 	if (tr_flags & TR_DEFAULTMSG)
-		O << "<B>You are now a monkey.</B>"
+		to_chat(O, "<B>You are now a monkey.</B>")
 
 	for(var/A in loc.vars)
 		if(loc.vars[A] == src)
@@ -187,7 +187,7 @@
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
-	new /obj/effect/overlay/temp/monkeyify/humanify(get_turf(src))
+	new /obj/effect/overlay/temp/monkeyify/humanify(loc)
 	sleep(22)
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
@@ -205,7 +205,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
 		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=0)//we don't want to keep the race block active
 		O.domutcheck()
 
@@ -276,7 +276,7 @@
 
 	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)
-		O << "<B>You are now a human.</B>"
+		to_chat(O, "<B>You are now a human.</B>")
 
 	. = O
 
@@ -285,11 +285,6 @@
 			loc.vars[A] = O
 
 	qdel(src)
-
-
-/mob/new_player/AIize()
-	spawning = 1
-	return ..()
 
 /mob/living/carbon/human/AIize()
 	if (notransform)
@@ -311,36 +306,37 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
-/mob/proc/AIize()
+/mob/proc/AIize(transfer_after = TRUE)
 	if(client)
-		stopLobbySound()
+		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 	var/turf/loc_landmark
-	for(var/obj/effect/landmark/start/sloc in landmarks_list)
+	for(var/obj/effect/landmark/start/sloc in GLOB.landmarks_list)
 		if(sloc.name != "AI")
 			continue
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
 			continue
 		loc_landmark = sloc.loc
 	if(!loc_landmark)
-		for(var/obj/effect/landmark/tripai in landmarks_list)
+		for(var/obj/effect/landmark/tripai in GLOB.landmarks_list)
 			if(tripai.name == "tripai")
 				if(locate(/mob/living/silicon/ai) in tripai.loc)
 					continue
 				loc_landmark = tripai.loc
 	if(!loc_landmark)
-		src << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
+		to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
+		for(var/obj/effect/landmark/start/sloc in GLOB.landmarks_list)
 			if (sloc.name == "AI")
 				loc_landmark = sloc.loc
 
+	if(!transfer_after)
+		mind.active = FALSE
+
 	. = new /mob/living/silicon/ai(loc_landmark, null, src)
+
 	qdel(src)
-	return
 
-
-//human -> robot
-/mob/living/carbon/human/proc/Robotize(delete_items = 0)
+/mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -367,12 +363,13 @@
 	R.gender = gender
 	R.invisibility = 0
 
-
 	if(mind)		//TODO
+		if(!transfer_after)
+			mind.active = FALSE
 		mind.transfer_to(R)
 		if(mind.special_role)
 			R.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
-	else
+	else if(transfer_after)
 		R.key = key
 
 	if (config.rename_cyborg)
@@ -388,7 +385,7 @@
 
 	R.loc = loc
 	R.job = "Cyborg"
-	R.notify_ai(1)
+	R.notify_ai(NEW_BORG)
 
 	. = R
 	qdel(src)
@@ -420,7 +417,7 @@
 	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
 
-	new_xeno << "<B>You are now an alien.</B>"
+	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno
 	qdel(src)
 
@@ -452,7 +449,7 @@
 	new_slime.a_intent = INTENT_HARM
 	new_slime.key = key
 
-	new_slime << "<B>You are now a slime. Skreee!</B>"
+	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
 	. = new_slime
 	qdel(src)
 
@@ -483,7 +480,7 @@
 	new_corgi.a_intent = INTENT_HARM
 	new_corgi.key = key
 
-	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
+	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
 	. = new_corgi
 	qdel(src)
 
@@ -493,7 +490,7 @@
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
 	if(!safe_animal(mobpath))
-		usr << "<span class='danger'>Sorry but this mob type is currently unavailable.</span>"
+		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
 		return
 
 	if(notransform)
@@ -516,7 +513,7 @@
 	new_mob.a_intent = INTENT_HARM
 
 
-	new_mob << "You suddenly feel more... animalistic."
+	to_chat(new_mob, "You suddenly feel more... animalistic.")
 	. = new_mob
 	qdel(src)
 
@@ -526,14 +523,14 @@
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
 	if(!safe_animal(mobpath))
-		usr << "<span class='danger'>Sorry but this mob type is currently unavailable.</span>"
+		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
 		return
 
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
 	new_mob.a_intent = INTENT_HARM
-	new_mob << "You feel more... animalistic"
+	to_chat(new_mob, "You feel more... animalistic")
 
 	. = new_mob
 	qdel(src)

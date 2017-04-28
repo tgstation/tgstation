@@ -18,6 +18,15 @@ insert ascii eagle on american flag background here
 	container_type = OPENCONTAINER
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
+	var/static/list/blacklisted_items = typecacheof(list(
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/crowbar,
+		/obj/item/weapon/wrench,
+		/obj/item/weapon/wirecutters,
+		/obj/item/device/multitool,
+		/obj/item/weapon/weldingtool,
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/storage/part_replacer))
 
 /obj/item/weapon/circuitboard/machine/deep_fryer
 	name = "circuit board (Deep Fryer)"
@@ -37,18 +46,26 @@ insert ascii eagle on american flag background here
 /obj/machinery/deepfryer/examine()
 	..()
 	if(frying)
-		usr << "You can make out [frying] in the oil."
+		to_chat(usr, "You can make out [frying] in the oil.")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(!reagents.total_volume)
-		user << "There's nothing to fry with in [src]!"
+		to_chat(user, "There's nothing to fry with in [src]!")
 		return
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
-		user << "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>"
+		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
+		return
+	if(default_unfasten_wrench(user, I))
+		return
+	else if(exchange_parts(user, I))
+		return
+	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
-		if(user.drop_item() && !frying)
-			user << "<span class='notice'>You put [I] into [src].</span>"
+		if(is_type_in_typecache(I, blacklisted_items))
+			. = ..()
+		else if(user.drop_item() && !frying)
+			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 			frying = I
 			frying.forceMove(src)
 			icon_state = "fryer_on"
@@ -60,7 +77,7 @@ insert ascii eagle on american flag background here
 	if(frying)
 		cook_time++
 		if(cook_time == 30)
-			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			visible_message("[src] dings!")
 		else if (cook_time == 60)
 			visible_message("[src] emits an acrid smell!")
@@ -69,7 +86,7 @@ insert ascii eagle on american flag background here
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)
 		if(frying.loc == src)
-			user << "<span class='notice'>You eject [frying] from [src].</span>"
+			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
 			var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
 			if(istype(frying, /obj/item/weapon/reagent_containers/))
 				var/obj/item/weapon/reagent_containers/food = frying
@@ -78,19 +95,20 @@ insert ascii eagle on american flag background here
 			S.overlays = frying.overlays
 			S.icon_state = frying.icon_state
 			S.desc = frying.desc
+			S.w_class = frying.w_class
 			reagents.trans_to(S, 2*(cook_time/15))
 			switch(cook_time)
 				if(0 to 15)
-					S.color = rgb(166,103,54)
+					S.add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
 					S.name = "lightly-fried [frying.name]"
 				if(16 to 49)
-					S.color = rgb(103,63,24)
+					S.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 					S.name = "fried [frying.name]"
 				if(50 to 59)
-					S.color = rgb(63, 23, 4)
+					S.add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
 					S.name = "deep-fried [frying.name]"
 				if(60 to INFINITY)
-					S.color = rgb(33,19,9)
+					S.add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
 					S.name = "the physical manifestation of the very concept of fried foods"
 					S.desc = "A heavily fried...something.  Who can tell anymore?"
 			S.filling_color = S.color
@@ -106,7 +124,7 @@ insert ascii eagle on american flag background here
 			return
 	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
 		if(user.grab_state < GRAB_AGGRESSIVE)
-			user << "<span class='warning'>You need a better grip to do that!</span>"
+			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")

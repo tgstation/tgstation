@@ -8,7 +8,7 @@
 
 /obj/item/organ/body_egg/on_find(mob/living/finder)
 	..()
-	finder << "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>"
+	to_chat(finder, "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>")
 
 /obj/item/organ/body_egg/New(loc)
 	if(iscarbon(loc))

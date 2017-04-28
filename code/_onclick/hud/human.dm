@@ -87,6 +87,8 @@
 
 /datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
+	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
+
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
@@ -94,9 +96,8 @@
 	using.icon = ui_style
 	static_inventory += using
 
-	using = new/obj/screen/wheel/talk
+	using = new/obj/screen/language_menu
 	using.icon = ui_style
-	wheels += using
 	static_inventory += using
 
 	using = new /obj/screen/area_creator

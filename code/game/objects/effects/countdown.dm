@@ -20,7 +20,7 @@
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	user << "This countdown is displaying: [displayed_text]"
+	to_chat(user, "This countdown is displaying: [displayed_text]")
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A

@@ -190,7 +190,7 @@
 		return
 
 	if(recharging_time > world.time)
-		usr << "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>"
+		to_chat(usr, "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>")
 		return
 
 	var/atom/target = get_edge_target_turf(usr, usr.dir) //gets the user's direction

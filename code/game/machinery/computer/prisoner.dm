@@ -3,7 +3,7 @@
 	desc = "Used to manage tracking implants placed inside criminals."
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
-	req_access = list(access_brig)
+	req_access = list(GLOB.access_brig)
 	var/id = 0
 	var/temp = null
 	var/status = 0
@@ -12,6 +12,8 @@
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 	var/obj/item/weapon/card/id/prisoner/inserted_id
 	circuit = /obj/item/weapon/circuitboard/computer/prisoner
+
+	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/prisoner/attack_hand(mob/user)
 	if(..())
@@ -32,7 +34,7 @@
 		dat += "<H3>Prisoner Implant Management</H3>"
 		dat += "<HR>Chemical Implants<BR>"
 		var/turf/Tr = null
-		for(var/obj/item/weapon/implant/chem/C in tracked_chem_implants)
+		for(var/obj/item/weapon/implant/chem/C in GLOB.tracked_chem_implants)
 			Tr = get_turf(C)
 			if((Tr) && (Tr.z != src.z))
 				continue//Out of range
@@ -45,7 +47,7 @@
 			dat += "<A href='?src=\ref[src];inject10=\ref[C]'>(<font class='bad'>(10)</font>)</A><BR>"
 			dat += "********************************<BR>"
 		dat += "<HR>Tracking Implants<BR>"
-		for(var/obj/item/weapon/implant/tracking/T in tracked_implants)
+		for(var/obj/item/weapon/implant/tracking/T in GLOB.tracked_implants)
 			if(!isliving(T.imp_in))
 				continue
 			Tr = get_turf(T)
@@ -94,7 +96,7 @@
 						return
 					I.loc = src
 					inserted_id = I
-				else usr << "<span class='danger'>No valid ID.</span>"
+				else to_chat(usr, "<span class='danger'>No valid ID.</span>")
 			else if(inserted_id)
 				switch(href_list["id"])
 					if("eject")
@@ -109,16 +111,16 @@
 							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
 							inserted_id.goal = num
 		else if(href_list["inject1"])
-			var/obj/item/weapon/implant/I = locate(href_list["inject1"]) in tracked_chem_implants
+			var/obj/item/weapon/implant/I = locate(href_list["inject1"]) in GLOB.tracked_chem_implants
 			if(I && istype(I))
 				I.activate(1)
 		else if(href_list["inject5"])
-			var/obj/item/weapon/implant/I = locate(href_list["inject5"]) in tracked_chem_implants
+			var/obj/item/weapon/implant/I = locate(href_list["inject5"]) in GLOB.tracked_chem_implants
 			if(I && istype(I))
 				I.activate(5)
 
 		else if(href_list["inject10"])
-			var/obj/item/weapon/implant/I = locate(href_list["inject10"]) in tracked_chem_implants
+			var/obj/item/weapon/implant/I = locate(href_list["inject10"]) in GLOB.tracked_chem_implants
 			if(I && istype(I))
 				I.activate(10)
 
@@ -126,19 +128,18 @@
 			if(src.allowed(usr))
 				screen = !screen
 			else
-				usr << "Unauthorized Access."
+				to_chat(usr, "Unauthorized Access.")
 
 		else if(href_list["warn"])
 			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
-			if(!warning) return
-			var/obj/item/weapon/implant/I = locate(href_list["warn"]) in tracked_chem_implants
+			if(!warning)
+				return
+			var/obj/item/weapon/implant/I = locate(href_list["warn"]) in GLOB.tracked_implants
 			if(I && istype(I) && I.imp_in)
 				var/mob/living/R = I.imp_in
-				R << "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>"
+				to_chat(R, "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>")
 				log_say("[usr]/[usr.ckey] sent an implant message to [R]/[R.ckey]: '[warning]'")
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
-
-

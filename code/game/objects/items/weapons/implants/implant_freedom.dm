@@ -9,7 +9,7 @@
 
 /obj/item/weapon/implant/freedom/activate()
 	uses--
-	imp_in << "You feel a faint click."
+	to_chat(imp_in, "You feel a faint click.")
 	if(iscarbon(imp_in))
 		var/mob/living/carbon/C_imp_in = imp_in
 		C_imp_in.uncuff()
@@ -36,16 +36,9 @@ No Implant Specifics"}
 
 /obj/item/weapon/implanter/freedom
 	name = "implanter (freedom)"
-
-/obj/item/weapon/implanter/freedom/New()
-	imp = new /obj/item/weapon/implant/freedom(src)
-	..()
-
+	imp_type = /obj/item/weapon/implant/freedom
 
 /obj/item/weapon/implantcase/freedom
 	name = "implant case - 'Freedom'"
 	desc = "A glass case containing a freedom implant."
-
-/obj/item/weapon/implantcase/freedom/New()
-	imp = new /obj/item/weapon/implant/freedom(src)
-	..()
+	imp_type = /obj/item/weapon/implant/freedom
