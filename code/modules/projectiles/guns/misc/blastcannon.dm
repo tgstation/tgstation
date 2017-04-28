@@ -96,7 +96,7 @@
 		if(1)
 			playsound(user, 'sound/effects/Explosion1.ogg', 100, 1)
 		if(2)
-	 		playsound(user, 'sound/effects/Explosion2.ogg', 100, 1)
+			playsound(user, 'sound/effects/Explosion2.ogg', 100, 1)
 		if(3)
 			playsound(user, 'sound/effects/Explosion3.ogg', 100, 1)
 		if(4)

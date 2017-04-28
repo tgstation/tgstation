@@ -34,11 +34,24 @@
 	var/obj/item/weapon/stock_parts/matter_bin/bin = new /obj/item/weapon/stock_parts/matter_bin
 	cell_type = /obj/item/weapon/stock_parts/cell/beam_rifle
 	var/datum/action/item_action/beam_rifle_power/poweraction
+	can_mouse_down = TRUE
+	var/aiming = FALSE
+	var/aiming_time = 20
+	var/aiming_time_increase_per_pixel = 5
+	var/aiming_time_increase_range_falloff = 1
+	var/turf/aiming_target = null
+	var/aiming_x = 0
+	var/aiming_y = 0
 
 /obj/item/weapon/gun/energy/beam_rifle/New()
 	..()
 	poweraction = new()
 	poweraction.gun = src
+	START_PROCESSING(SSFastprocess, src)
+
+/obj/item/weapon/gun/energy/beam_rifle/Destroy()
+	STOP_PROCESSING(SSFastprocess, src)
+	..()
 
 /obj/item/weapon/gun/energy/beam_rifle/pickup(mob/user)
 	if(poweraction)
@@ -68,10 +81,9 @@
 	scoped_inaccuracy = Clamp((3 - manip.rating), 0, 5)
 	hipfire_inaccuacy = Clamp((30 - (manip.rating * 5)), 0, 30)
 	for(var/obj/item/ammo_casing/energy/beam_rifle/BR in ammo_type)
-		BR.base_energy_multiplier = (BR.initial(base_energy_multiplier) * (1 - (scan.rating * 0.075)))
+		BR.base_energy_multiplier = (initial(BR.base_energy_multiplier) * (1 - (scan.rating * 0.075)))
 		BR.e_cost = round((power * BR.base_energy_multiplier)*energy_coeff)
 		BR.update_damage(power)
-		BR.hitscan_delay = (BR.initial(hitscan_delay) - (scan.rating * 0.1))
 
 /obj/item/weapon/gun/energy/beam_rifle/zoom(user, forced_zoom)
 	. = ..(user, forced_zoom)
@@ -161,18 +173,60 @@
 	gun.select_power(owner)
 	. = ..()
 
+/obj/item/weapon/gun/energy/beam_rifle/proc/aiming_beam()
+	////////////////////
+
+/obj/item/weapon/gun/energy/beam_rifle/process()
+	if(!aiming)
+		return
+	if(aiming_time > 0)
+		aiming_time--
+	aiming_beam()
+	//
+	world << "<span class='notice'>Aiming x [x] y [y] on turf [aiming_target]"
+	world << "aiming_time == [aiming_time]"
+	//
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/start_aiming()
+	aiming_time = initial(aiming_time)
+	aiming = TRUE
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/stop_aiming()
+	aiming_time = initial(aiming_time)
+	aiming = FALSE
+	aiming_target = null
+	aiming_x = 0
+	aiming_y = 0
+
+/obj/item/weapon/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params)
+	if(isturf(over_location))
+		aiming_target = over_location
+	var/list/paramlist = params2list(params)
+	aiming_x = paramlist["icon-x"]
+	aiming_y = paramlist["icon-y"]
+
+/obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params)
+	if(isturf(location))
+		aiming_target = location
+	aiming_x = paramlist["icon-x"]
+	aiming_y = paramlist["icon_y"]
+	start_aiming()
+
+/obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params)
+	stop_aiming()
+
 /obj/item/ammo_casing/energy/beam_rifle
 	name = "particle acceleration lens"
 	desc = "Don't look into barrel!"
+	var/base_energy_multiplier = 250
+	var/projectile_damage = 20
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/energy/beam_rifle
 	select_name = "narrow-beam"
 	e_cost = 2000
-	var/base_energy_multiplier = 250
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	firing_effect_type = ""
-	var/projectile_damage = 20
 	delay = 40
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan/proc/update_damage(power)
@@ -194,8 +248,10 @@
 	range = 150
 	jitter = 10
 	impact_effect_type = ""
+	var/tracer_type = /obj/effect/overlay/temp/projectile_beam/tracer
 
 /obj/item/projectile/beam/beam_rifle/fire(setAngle, atom/direct_target)
+	set waitfor = 0
 	if(!log_override && firer && original)
 		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(direct_target)
@@ -205,7 +261,6 @@
 		return
 	if(setAngle)
 		Angle = setAngle
-	set waitfor = 0
 	var/next_run = world.time
 	while(loc)
 		if((!( current ) || loc == current))
@@ -217,7 +272,7 @@
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
-		var/obj/effect/overlay/temp/projectile_beam/tracer/T = new(loc, 5)
+		var/obj/effect/overlay/temp/projectile_beam/tracer/T = new tracer_type(loc, 5)
 		T.set_transform(M)
 		var/Pixel_x=round(sin(Angle)+16*sin(Angle)*2)
 		var/Pixel_y=round(cos(Angle)+16*cos(Angle)*2)
@@ -244,7 +299,6 @@
 		step_towards(src, locate(new_x, new_y, z))
 		pixel_x = pixel_x_offset
 		pixel_y = pixel_y_offset
-		animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
 		if(original && (original.layer>=2.75) || ismob(original))
 			if(loc == get_turf(original))
 				if(!(original in permutated))
@@ -256,6 +310,12 @@
 	if(isturf(target) || istype(target,/obj/structure))
 		target.ex_act(2)
 	//more effects here
+
+/obj/item/projectile/beam/beam_rifle/aiming_beam
+	tracer_type = /obj/effect/overlay/temp/projectile_beam/tracer/aiming
+
+/obj/item/projectile/beam/beam_rifle/aiming_beam/on_hit()
+	qdel(src)
 
 /obj/effect/overlay/temp/projectile_beam
 	icon = 'icons/obj/projectiles.dmi'
@@ -276,3 +336,7 @@
 
 /obj/effect/overlay/temp/projectile_beam/tracer
 	icon_state = "tracer_beam"
+
+/obj/effect/overlay/temp/projectile_beam/tracer/aiming
+	icon_state = "gbeam"
+	duration = 2
