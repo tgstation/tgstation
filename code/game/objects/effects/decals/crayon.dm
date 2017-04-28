@@ -5,17 +5,16 @@
 	icon_state = "rune1"
 	gender = NEUTER
 	var/do_icon_rotate = TRUE
+	var/is_slippery = FALSE
 
-/obj/effect/decal/cleanable/crayon/Initialize(mapload, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/alt_icon = null)
+/obj/effect/decal/cleanable/crayon/Initialize(mapload, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/should_slip = FALSE)
 	..()
-	
+
 	name = e_name
 	desc = "A [name] vandalizing the station."
 	if(type == "poseur tag")
 		type = pick(GLOB.gang_name_pool)
 
-	if(alt_icon)
-		icon = alt_icon
 	icon_state = type
 
 	if(rotation && do_icon_rotate)
@@ -25,6 +24,13 @@
 
 	add_atom_colour(main, FIXED_COLOUR_PRIORITY)
 
+	is_slippery = should_slip
+
+/obj/effect/decal/cleanable/crayon/Crossed(AM as mob|obj)
+	if(is_slippery && istype(AM, /mob/living/carbon))
+		var/mob/living/carbon/M = AM
+		if(M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP)))
+			M.confused = max(M.confused, 8)
 
 /obj/effect/decal/cleanable/crayon/gang
 	layer = HIGH_OBJ_LAYER //Harder to hide

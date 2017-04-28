@@ -68,6 +68,8 @@
 	var/pre_noise = FALSE
 	var/post_noise = FALSE
 
+	var/is_slippery = FALSE
+
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|OXYLOSS)
@@ -299,7 +301,7 @@
 				graf_rot = 0
 
 	if(!instant)
-		to_chat(user, "<span class='notice'>You start drawing a [temp] on the	[target.name]...</span>")
+		to_chat(user, "<span class='notice'>You start drawing a [temp] on the [target.name]...</span>")
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -320,29 +322,23 @@
 	if(length(text_buffer))
 		drawing = copytext(text_buffer,1,2)
 
-
-	var/list/turf/affected_turfs = list()
-
 	if(actually_paints)
 		if(gang_mode)
 			// Double check it wasn't tagged in the meanwhile
 			if(!can_claim_for_gang(user, target))
 				return
 			tag_for_gang(user, target)
-			affected_turfs += target
 		else
 			switch(paint_mode)
 				if(PAINT_NORMAL)
-					new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
-					affected_turfs += target
+					new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot, is_slippery)
 				if(PAINT_LARGE_HORIZONTAL)
 					var/turf/left = locate(target.x-1,target.y,target.z)
 					var/turf/right = locate(target.x+1,target.y,target.z)
 					if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
-						new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
-						affected_turfs += left
-						affected_turfs += right
-						affected_turfs += target
+						new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing + "_1", temp, graf_rot, is_slippery)
+						new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing + "_2", temp, graf_rot, is_slippery)
+						new /obj/effect/decal/cleanable/crayon(right, paint_color, drawing + "_3", temp, graf_rot, is_slippery)
 					else
 						to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
 						return
@@ -485,7 +481,18 @@
 
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity)
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
+	if(istype(target, /obj/effect/decal/cleanable))
+		target = target.loc
 	. = ..()
+	if(.)
+		var/floor_colour = rgb(rand(0,255), rand(0,255), rand(0,255))
+		target.add_atom_colour(floor_colour, WASHABLE_COLOUR_PRIORITY)
+		if(paint_mode = PAINT_LARGE_HORIZONTAL)
+			var/turf/left = locate(target.x-1,target.y,target.z)
+			left.add_atom_colour(floor_colour, WASHABLE_COLOUR_PRIORITY)
+			var/turf/right = locate(target.x+1,target.y,target.z)
+			right.add_atom_colour(floor_colour, WASHABLE_COLOUR_PRIORITY)
+
 
 /*
  * Crayon Box
@@ -728,6 +735,7 @@
 	icon_capped = "clowncan2_cap"
 	icon_uncapped = "clowncan2"
 	use_overlays = FALSE
+	is_slippery = TRUE
 
 	reagent_contents = list("lube" = 1, "banana" = 1)
 	volume_multiplier = 5
