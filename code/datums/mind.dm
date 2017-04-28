@@ -1143,7 +1143,7 @@
 					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
-					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
+					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
 				SSticker.mode.devils += src
 				special_role = "devil"
