@@ -6,6 +6,7 @@
 	value = 4
 	var/obj/item/remembered = null
 	var/obj/item/host = null
+	blacklisted_abilities = list(/datum/guardian_abilities/heal, /datum/guardian_abilities/assassin)
 
 /datum/guardian_abilities/shapeshift/recall_act()
 	..()

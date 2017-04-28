@@ -7,6 +7,7 @@
 	var/obj/structure/recieving_pad/beacon
 	var/beacon_cooldown = 0
 	var/datum/action/innate/beacon/B = new
+	blacklisted_abilities = list(/datum/guardian_abilities/assassin, /datum/guardian_abilities/shapeshift)
 
 /datum/guardian_abilities/heal/Destroy()
 	QDEL_NULL(B)

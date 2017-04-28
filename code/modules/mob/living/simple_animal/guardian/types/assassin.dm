@@ -7,6 +7,7 @@
 	var/stealthcooldown = 160
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
+	blacklisted_abilities = list(/datum/guardian_abilities/heal, /datum/guardian_abilities/shapeshift)
 
 /datum/guardian_abilities/assassin/Destroy()
 	return ..()
