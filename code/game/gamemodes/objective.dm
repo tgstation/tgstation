@@ -730,6 +730,12 @@ var/global/list/possible_items_special = list()
 	else
 		return 0
 	return 0
+	
+/datum/objective/traitor_group
+	var/mission_accomplished = 0 
+
+/datum/objective/traitor_group/check_completion()
+	return mission_accomplished
 
 
 ////////////////////////////////
