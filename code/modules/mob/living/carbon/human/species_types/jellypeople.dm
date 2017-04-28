@@ -325,3 +325,4 @@
 	M.transfer_to(dupe)
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",
+		"<span class='notice'>and start moving this one!</span>")

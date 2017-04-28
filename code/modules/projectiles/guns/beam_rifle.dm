@@ -171,7 +171,7 @@
 	e_cost = 2000
 	var/base_energy_multiplier = 250
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
-	firing_effect_type =
+	firing_effect_type = ""
 	var/projectile_damage = 20
 	delay = 40
 
@@ -253,8 +253,9 @@
 
 /obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
 	. = ..(target, blocked)
-	if(isturf(target) || istype(target,/obj/structure/))
+	if(isturf(target) || istype(target,/obj/structure))
 		target.ex_act(2)
+	//more effects here
 
 /obj/effect/overlay/temp/projectile_beam
 	icon = 'icons/obj/projectiles.dmi'

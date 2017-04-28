@@ -6,7 +6,7 @@
 	item_state = blastcannon_empty
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
-	fire_sound =
+	fire_sound = ''
 	needs_permit = FALSE
 	clumsy_check = FALSE
 	randomspread = FALSE
@@ -52,12 +52,12 @@
 	if(istype(O, /obj/item/device/transfer_valve))
 		var/obj/item/device/transfer_valve/T = O
 		if(!T.tank_one || !T.tank_two)
-			user << "<span class='warning'>What good would an incomplete bomb do?</span>"
+			to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 			return FALSE
 		if(!user.drop_item(O))
-			user << "<span class='warning'>The [O] seems to be stuck to your hand!</span>"
+			to_chat(user, "<span class='warning'>The [O] seems to be stuck to your hand!</span>")
 			return FALSE
-		user.visible_message("<span class='warning'>[user] attaches the [O] to the [src]!</span>"
+		user.visible_message("<span class='warning'>[user] attaches the [O] to the [src]!</span>")
 		bomb = O
 		O.loc = src
 		update_icon()
@@ -82,7 +82,7 @@
 	return (pressure/TANK_FRAGMENT_SCALE)
 
 /obj/item/weapon/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
-	if((!bomb) || (target == user) || (target.loc == user) || (!target) || (target.loc == user.loc) || (target.loc in range(user, 2) || (target in range(user, 2))
+	if((!bomb) || (target == user) || (target.loc == user) || (!target) || (target.loc == user.loc) || (target.loc in range(user, 2)) || (target in range(user, 2)))
 		return ..()
 	var/power = calculate_bomb()
 	qdel(bomb)
