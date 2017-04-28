@@ -35,6 +35,10 @@
 	set name = "Play Local Sound"
 	if(!check_rights(R_SOUNDS))
 		return
+	var/freq = input(usr,"What frequency? Default : 1. 2 is twice as fast, -1 is backwards. Anything above or below 100/-100 respectively will be treated as Hz instead of multiplier.", "Frequnecy", 1) as null|num
+	var/volume = input(usr, "Volume? 100 for full volume, 0 for mute.", "Volume", 100) as null|num
+	if(isnull(freq) || isnull(volume))
+		return
 
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
