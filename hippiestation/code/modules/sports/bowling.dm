@@ -33,9 +33,9 @@
 	throw_speed = 1
 	var/pro_wielded = FALSE
 
-/obj/item/weapon/bowling/New()
-	color = pick("white","green","yellow","purple")
+/obj/item/weapon/bowling/Initialize()
 	..()
+	color = pick("white","green","yellow","purple")
 
 /obj/item/weapon/bowling/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
 	if(istype(thrower, /mob/living/carbon/human))

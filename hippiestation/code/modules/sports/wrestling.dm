@@ -30,9 +30,9 @@
 	icon_state = "unitard"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/wrestling/New()
-	color = pick("white","green","yellow")
+/obj/item/clothing/under/wrestling/Initialize()
 	..()
+	color = pick("white","green","yellow")
 
 /datum/action/slam/var/action_icon = 'hippiestation/icons/mob/actions.dmi'
 /datum/action/strike/var/action_icon = 'hippiestation/icons/mob/actions.dmi'

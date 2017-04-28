@@ -721,7 +721,7 @@ CHOCOLATE
 	name = "\improper Random Snackies"
 	desc = "Uh oh!"
 
-/obj/machinery/vending/snack/random/New()
+/obj/machinery/vending/snack/random/Initialize()
     ..()
     var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
     new T(get_turf(src))
@@ -839,7 +839,7 @@ SODA
 	name = "\improper Random Drinkies"
 	desc = "Uh oh!"
 
-/obj/machinery/vending/cola/random/New()
+/obj/machinery/vending/cola/random/Initialize()
     ..()
     var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
     new T(get_turf(src))

@@ -14,7 +14,7 @@
 	max_amount = 10
 	attack_verb = list("stapled")
 
-/obj/item/stack/staples/New(loc, amount=0)
+/obj/item/stack/staples/Initialize(loc, amount=0)
 	update_icon()
 	return ..()
 
@@ -42,7 +42,7 @@
 	var/obj/item/weapon/paper/P = null //TODO: Make papers attachable to people
 	var/obj/item/organ/butt/B = null
 
-/obj/item/weapon/staplegun/New()
+/obj/item/weapon/staplegun/Initialize()
 	..()
 	update_icon()
 

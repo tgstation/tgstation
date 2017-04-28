@@ -86,7 +86,7 @@
 	icon_state = "turf"
 	var/obj/overlay/water/watereffect
 
-/turf/open/pool/water/New()
+/turf/open/pool/water/Initialize()
 	..()
 	for(var/obj/overlay/water/W in src)
 		if(W)

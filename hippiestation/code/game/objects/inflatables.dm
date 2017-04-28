@@ -30,7 +30,7 @@
 	var/torntype = /obj/item/inflatable/torn
 	var/itemtype = /obj/item/inflatable
 
-/obj/structure/inflatable/New(location)
+/obj/structure/inflatable/Initialize(location)
 	..()
 	air_update_turf(1)
 
@@ -265,7 +265,7 @@
 	max_combined_w_class = 21
 	w_class = 3
 
-/obj/item/weapon/storage/inflatable/New()
+/obj/item/weapon/storage/inflatable/Initialize()
 	..()
 	for(var/i = 0, i < 8, i++)
 		new /obj/item/inflatable/door(src)

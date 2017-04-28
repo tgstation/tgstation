@@ -20,7 +20,7 @@
 /obj/item/weapon/hockeypack/ui_action_click()
 	toggle_stick()
 
-/obj/item/weapon/hockeypack/New()
+/obj/item/weapon/hockeypack/Initialize()
 	..()
 	packstick = make_stick()
 
@@ -118,7 +118,7 @@
 	icon_state = "hockeystick[wielded]"
 	return
 
-/obj/item/weapon/twohanded/hockeystick/New(parent_pack)
+/obj/item/weapon/twohanded/hockeystick/Initialize(parent_pack)
 	..()
 	if(check_pack_exists(parent_pack, src))
 		pack = parent_pack

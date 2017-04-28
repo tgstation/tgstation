@@ -21,13 +21,19 @@
 		user.emote("spin")
 
 /obj/item/toy/poolnoodle/red
-	New()
-		color = "#ff4c4c"
 
 /obj/item/toy/poolnoodle/blue
-	New()
-		color = "#3232ff"
 
 /obj/item/toy/poolnoodle/yellow
-	New()
-		color = "#ffff66"
+
+/obj/item/toy/poolnoodle/red/Initialize()
+	..()
+	color = "#ff4c4c"
+
+/obj/item/toy/poolnoodle/blue/Initialize()
+	..()
+	color = "#3232ff"
+
+/obj/item/toy/poolnoodle/yellow/Initialize()
+	..()
+	color = "#ffff66"

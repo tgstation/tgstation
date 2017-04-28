@@ -58,7 +58,7 @@
 
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
-/obj/machinery/vending/New()
+/obj/machinery/vending/Initialize()
 	..()
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
