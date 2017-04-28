@@ -134,7 +134,7 @@
 		if(!key_valid)
 			return "Bad Key"
 		else
-			AnnouncePR(input["announce"])
+			AnnouncePR(input["announce"], json_decode(input["payload"]))
 
 	else if("crossmessage" in input)
 		if(!key_valid)
@@ -170,16 +170,17 @@
 	else if("server_hop" in input)
 		show_server_hop_transfer_screen(input["server_hop"])
 
-#define PR_ANNOUNCEMENTS_PER_ROUND 3 //The number of unique PR announcements allowed per round
+#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
 									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
 
-/world/proc/AnnouncePR(announcement)
-	var/static/list/PRcounts = new	//PR announcement -> number of times announced this round
-	if(!(announcement in PRcounts))
-		PRcounts[announcement] = 1
+/world/proc/AnnouncePR(announcement, list/payload)
+	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
+	var/id = "[payload["pull_request"]["id"]]"
+	if(!PRcounts[id]])
+		PRcounts[id] = 1
 	else
-		++PRcounts[announcement]
-		if(PRcounts[announcement] > PR_ANNOUNCEMENTS_PER_ROUND)
+		++PRcounts[id]
+		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
 			return
 
 #define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
