@@ -13,8 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\basemap.dm"
-#include "_maps\loadallmaps.dm"
+#include "_maps\runtimestation.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\globals.dm"
@@ -519,6 +518,7 @@
 #include "code\game\machinery\hologram.dm"
 #include "code\game\machinery\igniter.dm"
 #include "code\game\machinery\iv_drip.dm"
+#include "code\game\machinery\launch_pad.dm"
 #include "code\game\machinery\lightswitch.dm"
 #include "code\game\machinery\limbgrower.dm"
 #include "code\game\machinery\machinery.dm"
@@ -567,6 +567,7 @@
 #include "code\game\machinery\computer\crew.dm"
 #include "code\game\machinery\computer\dna_console.dm"
 #include "code\game\machinery\computer\gulag_teleporter.dm"
+#include "code\game\machinery\computer\launchpad_control.dm"
 #include "code\game\machinery\computer\law.dm"
 #include "code\game\machinery\computer\medical.dm"
 #include "code\game\machinery\computer\message.dm"
