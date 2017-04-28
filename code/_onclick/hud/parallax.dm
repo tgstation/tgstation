@@ -261,9 +261,9 @@
 		for(var/y in -count to count)
 			if(x == 0 && y == 0)
 				continue
-			var/image/I = image(icon, null, icon_state)
-			I.transform = matrix(1, 0, x*480, 0, 1, y*480)
-			new_overlays += I
+			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)
+			texture_overlay.transform = matrix(1, 0, x*480, 0, 1, y*480)
+			new_overlays += texture_overlay
 	cut_overlays()
 	add_overlay(new_overlays)
 	view_sized = view

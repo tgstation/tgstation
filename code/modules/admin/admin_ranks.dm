@@ -105,7 +105,7 @@ GLOBAL_PROTECT(admin_ranks)
 	if(config.admin_legacy_system)
 		var/previous_rights = 0
 		//load text from file and process each line seperately
-		for(var/line in file2list("config/admin_ranks.txt"))
+		for(var/line in world.file2list("config/admin_ranks.txt"))
 			if(!line)
 				continue
 			if(findtextEx(line,"#",1,2))
@@ -175,7 +175,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 	if(config.admin_legacy_system)
 		//load text from file
-		var/list/lines = file2list("config/admins.txt")
+		var/list/lines = world.file2list("config/admins.txt")
 
 		//process each line seperately
 		for(var/line in lines)

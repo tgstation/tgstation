@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "When you are crushed by a door, it prints a visible message,
-instead of, in some cases, silently damaging you."

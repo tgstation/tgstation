@@ -57,10 +57,10 @@
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
 					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
-				feedback_add_details("wizard_spell_improved", "[name]|[aspell.level]")
+				SSblackbox.add_details("wizard_spell_improved", "[name]|[aspell.level]")
 				return 1
 	//No same spell found - just learn it
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	user.mind.AddSpell(S)
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
 	return 1
@@ -109,6 +109,7 @@
 /datum/spellbook_entry/rod_form
 	name = "Rod Form"
 	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
+	cost = 3
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
@@ -265,7 +266,7 @@
 
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	new item_path(get_turf(user))
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	return 1
 
 /datum/spellbook_entry/item/GetInfo()
@@ -464,7 +465,7 @@
 		return TRUE
 
 /datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	new /datum/round_event/wizard/ghost()
 	active = TRUE
 	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
@@ -481,7 +482,7 @@
 	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	rightandwrong(0, user, 25)
 	active = 1
 	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
@@ -498,7 +499,7 @@
 	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	rightandwrong(1, user, 25)
 	active = 1
 	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
@@ -516,7 +517,7 @@
 	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	summonevents()
 	times++
 	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)

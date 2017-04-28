@@ -10,7 +10,7 @@
 	var/taste_sensitivity = 15 // lower is more sensitive.
 
 /obj/item/organ/tongue/Initialize(mapload)
-	..()
+	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/common,
 		/datum/language/monkey,
@@ -123,7 +123,7 @@
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 
 /obj/item/organ/tongue/alien/Initialize(mapload)
-	..()
+	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
@@ -136,9 +136,7 @@
 
 /obj/item/organ/tongue/bone
 	name = "bone \"tongue\""
-	desc = "Apparently skeletons alter the sounds they produce \
-		through oscillation of their teeth, hence their characteristic \
-		rattling."
+	desc = "Apparently skeletons alter the sounds they produce through oscillation of their teeth, hence their characteristic rattling."
 	icon_state = "tonguebone"
 	say_mod = "rattles"
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
@@ -148,7 +146,7 @@
 	var/phomeme_type = "sans"
 	var/list/phomeme_types = list("sans", "papyrus")
 
-/obj/item/organ/tongue/bone/New()
+/obj/item/organ/tongue/bone/Initialize()
 	. = ..()
 	phomeme_type = pick(phomeme_types)
 
@@ -186,7 +184,7 @@
 	taste_sensitivity = 25 // not as good as an organic tongue
 
 /obj/item/organ/tongue/robot/Initialize(mapload)
-	..()
+	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,

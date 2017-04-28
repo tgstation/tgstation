@@ -29590,9 +29590,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	dir = 9;
-	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "icon-whiteblue (NORTHWEST)"
+	dir = 9
 	},
 /area/medical/medbay3)
 "bhO" = (
@@ -29631,9 +29629,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	dir = 9;
-	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "icon-whiteblue (NORTHWEST)"
+	dir = 9
 	},
 /area/medical/medbay)
 "bhS" = (
@@ -48652,17 +48648,23 @@
 	pixel_y = 24
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTt" = (
 /obj/machinery/power/terminal{
 	icon_state = "term";
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTu" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTv" = (
 /obj/machinery/telecomms/bus/preset_three,
@@ -48726,20 +48728,28 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/darkred/side,
+/turf/open/floor/plasteel/darkred/side{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTD" = (
-/turf/open/floor/plasteel/darkpurple/side,
+/turf/open/floor/plasteel/darkpurple/side{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTE" = (
-/turf/open/floor/plasteel/darkgreen/side,
+/turf/open/floor/plasteel/darkgreen/side{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTF" = (
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
 	},
-/turf/open/floor/plasteel/darkgreen/side,
+/turf/open/floor/plasteel/darkgreen/side{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTG" = (
 /turf/closed/indestructible{
@@ -48826,17 +48836,20 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	dir = 1
+	dir = 1;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTS" = (
 /turf/open/floor/plasteel/darkblue/side{
-	dir = 1
+	dir = 1;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTT" = (
 /turf/open/floor/plasteel/darkyellow/side{
-	dir = 1
+	dir = 1;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTU" = (
@@ -48845,7 +48858,8 @@
 	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	dir = 1
+	dir = 1;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTV" = (
@@ -48896,7 +48910,9 @@
 /obj/item/weapon/stock_parts/subspace/amplifier,
 /obj/item/weapon/stock_parts/subspace/analyzer,
 /obj/item/weapon/stock_parts/subspace/analyzer,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUc" = (
 /obj/structure/table,
@@ -48904,7 +48920,9 @@
 /obj/item/weapon/stock_parts/subspace/ansible,
 /obj/item/weapon/stock_parts/subspace/crystal,
 /obj/item/weapon/stock_parts/subspace/crystal,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUd" = (
 /obj/structure/table,
@@ -48912,7 +48930,9 @@
 /obj/item/weapon/stock_parts/subspace/filter,
 /obj/item/weapon/stock_parts/subspace/transmitter,
 /obj/item/weapon/stock_parts/subspace/transmitter,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUe" = (
 /obj/machinery/camera/motion{
@@ -48921,7 +48941,6 @@
 	network = list("SS13","Telecoms")
 	},
 /turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
@@ -48931,7 +48950,9 @@
 /obj/item/weapon/stock_parts/subspace/treatment,
 /obj/item/weapon/stock_parts/manipulator,
 /obj/item/weapon/stock_parts/manipulator,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUg" = (
 /obj/structure/table,
@@ -48939,13 +48960,17 @@
 /obj/item/weapon/stock_parts/console_screen,
 /obj/item/weapon/stock_parts/micro_laser,
 /obj/item/weapon/stock_parts/micro_laser,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUh" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/scanning_module,
 /obj/item/weapon/stock_parts/scanning_module,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUi" = (
 /obj/machinery/camera/motion{
@@ -83827,33 +83852,33 @@ bQl
 bQC
 bQN
 bQZ
-bRg
-bRg
-bRg
-bRE
-bRg
-bRg
-bRg
-bRg
-bRE
-bRg
-bRg
-bRg
-bRg
-bRE
-bRg
-bRg
-bRg
-bRg
-bRE
-bRg
-bRg
-bRg
-bRg
-bRE
-bRg
-bRg
-bRg
+aeZ
+aeZ
+aeZ
+afy
+aeZ
+aeZ
+aeZ
+aeZ
+afy
+aeZ
+aeZ
+aeZ
+aeZ
+afy
+aeZ
+aeZ
+aeZ
+aeZ
+afy
+aeZ
+aeZ
+aeZ
+aeZ
+afy
+aeZ
+aeZ
+aeZ
 bSp
 bSu
 bSC
@@ -97895,7 +97920,7 @@ aaa
 aaa
 aGT
 aOx
-cii
+aPw
 aKE
 aPw
 aSs

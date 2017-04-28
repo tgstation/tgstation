@@ -145,8 +145,8 @@
 	var/area_type = /area/space
 	var/last_dock_time
 
-/obj/docking_port/stationary/New()
-	..()
+/obj/docking_port/stationary/Initialize()
+	. = ..()
 	SSshuttle.stationary += src
 	if(!id)
 		id = "[SSshuttle.stationary.len]"
@@ -168,8 +168,8 @@
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
-/obj/docking_port/stationary/transit/New()
-	..()
+/obj/docking_port/stationary/transit/Initialize()
+	. = ..()
 	SSshuttle.transit += src
 
 /obj/docking_port/stationary/transit/proc/dezone()
@@ -223,8 +223,8 @@
 
 	var/list/ripples = list()
 
-/obj/docking_port/mobile/New()
-	..()
+/obj/docking_port/mobile/Initialize()
+	. = ..()
 	if(!timid)
 		register()
 
@@ -241,7 +241,7 @@
 	. = ..()
 
 /obj/docking_port/mobile/Initialize(mapload)
-	..()
+	. = ..()
 
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
@@ -316,7 +316,7 @@
 	if(!check_dock(S))
 		testing("check_dock failed on request for [src]")
 		return
-	
+
 	if(mode == SHUTTLE_IGNITING && destination == S)
 		return
 
@@ -583,9 +583,9 @@
 							"<span class='userdanger'>You feel an immense \
 							crushing pressure as the space around you ripples.</span>")
 					if(M.key || M.get_ghost(TRUE))
-						feedback_add_details("shuttle_gib", "[type]")
+						SSblackbox.add_details("shuttle_gib", "[type]")
 					else
-						feedback_add_details("shuttle_gib_unintelligent", "[type]")
+						SSblackbox.add_details("shuttle_gib_unintelligent", "[type]")
 					M.gib()
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else

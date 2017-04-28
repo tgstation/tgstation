@@ -3,7 +3,7 @@
 	var/deletes_extract = TRUE
 
 /datum/chemical_reaction/slime/on_reaction(datum/reagents/holder)
-	feedback_add_details("slime_cores_used","[type]")
+	SSblackbox.add_details("slime_cores_used","[type]")
 	if(deletes_extract)
 		delete_extract(holder)
 

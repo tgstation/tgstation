@@ -132,15 +132,20 @@
 		add_overlay("[icon_state]_empty")
 	else
 		if(!shaded_charge)
+			var/mutable_appearance/charge_overlay = mutable_appearance(icon, iconState)
 			for(var/i = ratio, i >= 1, i--)
-				add_overlay(image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1)))
+				charge_overlay.pixel_x = ammo_x_offset * (i - 1)
+				add_overlay(charge_overlay)
 		else
-			add_overlay(image(icon = icon, icon_state = "[icon_state]_charge[ratio]"))
+			add_overlay("[icon_state]_charge[ratio]")
 	if(gun_light && can_flashlight)
 		var/iconF = "flight"
 		if(gun_light.on)
 			iconF = "flight_on"
-		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
+		var/mutable_appearance/flashlight_overlay = mutable_appearance(icon, iconF)
+		flashlight_overlay.pixel_x = flight_x_offset
+		flashlight_overlay.pixel_y = flight_y_offset
+		add_overlay(flashlight_overlay)
 	if(itemState)
 		itemState += "[ratio]"
 		item_state = itemState
