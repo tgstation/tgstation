@@ -140,3 +140,5 @@ See tgui/LICENSE.md for the MIT license.
 See tgui/assets/fonts/SIL-OFL-1.1-LICENSE.md for the SIL Open Font License.
 
 All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+
+tgstation/sound/voice/AISyndiHack.ogg and  tgstation/sound/voice/syndicate_intro.ogg are under GNU General Public License version 3 and are by Aryn via Baystation, which does not separately license its assets.
