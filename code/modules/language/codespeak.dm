@@ -17,6 +17,8 @@
 		words += generate_code_phrase(return_list=TRUE)
 		. = jointext(words, ", ")
 
+	. = capitalize(.)
+
 	add_to_cache(input, .)
 
 /obj/item/weapon/codespeak_manual
