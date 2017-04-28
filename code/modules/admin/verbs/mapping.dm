@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	for(var/t in GLOB.active_turfs_startlist)
 		var/turf/T = t
-		dat += "[T.x], [T.y], [T.z]\n"
+		dat += "[ADMIN_COORDJMP(T)]\n"
 		dat += "<br>"
 
 	usr << browse(dat, "window=at_list")
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 			count++
 		to_chat(usr, "[count] AT markers placed.")
 
-	feedback_add_details("admin_verb", "Show Roundstart Active Turf Markers")
+	SSblackbox.add_details("admin_verb","Show Roundstart Active Turf Markers")
 
 /client/proc/enable_debug_verbs()
 	set category = "Debug"
