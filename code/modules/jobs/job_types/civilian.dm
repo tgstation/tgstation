@@ -143,6 +143,15 @@ Librarian
 		/obj/item/soapstone = 1
 	)
 
+
+/datum/outfit/job/librarian/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	H.grant_all_languages(omnitongue=TRUE)
+
 /*
 Lawyer
 */
