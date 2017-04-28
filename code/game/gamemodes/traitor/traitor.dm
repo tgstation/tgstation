@@ -367,6 +367,12 @@
 		give_codewords(traitor_mob)
 
 /datum/game_mode/proc/assign_group_role(datum/mind/owner)
+	var/mob/living/carbon/human/mob = owner.current
+	var/list/slots = list (
+	"backpack" = slot_in_backpack,
+	"left pocket" = slot_l_store,
+	"right pocket" = slot_r_store
+	)
 	if(prob(35)) 		//Assign exchange objectives
 		//set faction
 		var/faction = "red"
@@ -384,30 +390,27 @@
 			owner.objectives += backstab_objective
 
 		//Spawn and equip documents
-		var/mob/living/carbon/human/mob = owner.current
-
 		var/obj/item/weapon/folder/syndicate/folder
 		if(owner == exchange_red)
 			folder = new/obj/item/weapon/folder/syndicate/red(mob.loc)
 		else
 			folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
-
-		var/list/slots = list (
-			"backpack" = slot_in_backpack,
-			"left pocket" = slot_l_store,
-			"right pocket" = slot_r_store
-		)
-
+			
 		var/where = "At your feet"
 		var/equipped_slot = mob.equip_in_one_of_slots(folder, slots)
 		if (equipped_slot)
 			where = "In your [equipped_slot]"
 		to_chat(mob, "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>")
 	else
-		var/datum/objective/steal/the_heist = new
-		the_heist.owner = owner
-		owner.objectives += the_heist
-		
+		var/datum/objective/traitor_group
+		traitor_group.owner = owner
+		owner.objectives += traitor_group
+		/*
+		var/obj/item/mission_checker/checker
+		mission_checker = new/obj/item/mission_checker(mob.loc)
+		mob.equip_in_one_of_slots(mission_checker, slots)
+		to_chat(mob, "<BR><BR><span class='info'>Ya gotta get the stuff</span><BR>")
+		*/
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/traitorhud = huds[ANTAG_HUD_TRAITOR]
 	traitorhud.join_hud(traitor_mind.current)
