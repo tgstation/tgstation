@@ -38,7 +38,7 @@
 	to_chat(user, "<span class='notice'>You plant [src].</span>")
 	message_admins("Kudzu planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(user)]",0,1)
 	investigate_log("was planted by [key_name(user)] at [COORD(user)]","botany")
-	new /obj/effect/spacevine_controller(user.loc, mutations, potency, production)
+	new /datum/spacevine_controller(get_turf(user), mutations, potency, production)
 	qdel(src)
 
 /obj/item/seeds/kudzu/attack_self(mob/user)

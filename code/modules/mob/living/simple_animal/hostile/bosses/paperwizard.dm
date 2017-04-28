@@ -41,7 +41,7 @@
 		/mob/living/simple_animal/hostile/stickman,
 		/mob/living/simple_animal/hostile/stickman/ranged,
 		/mob/living/simple_animal/hostile/stickman/dog)
-		var/list/directions = cardinal.Copy()
+		var/list/directions = GLOB.cardinal.Copy()
 		for(var/i in 1 to 3)
 			var/minions_chosen = pick_n_take(minions)
 			new minions_chosen (get_step(boss,pick_n_take(directions)), 1)
@@ -71,7 +71,7 @@
 				target = pick(threats)
 		if(target)
 			var/mob/living/simple_animal/hostile/boss/paper_wizard/wiz = boss
-			var/directions = cardinal.Copy()
+			var/directions = GLOB.cardinal.Copy()
 			for(var/i in 1 to 3)
 				var/mob/living/simple_animal/hostile/boss/paper_wizard/copy/C = new (get_step(target,pick_n_take(directions)))
 				wiz.copies += C
@@ -149,8 +149,8 @@
 	duration = 18
 	randomdir = FALSE
 
-/obj/effect/overlay/temp/paperwiz_dying/New()
-	..()
+/obj/effect/overlay/temp/paperwiz_dying/Initialize()
+	. = ..()
 	visible_message("<span class='boldannounce'>The wizard cries out in pain as a gate appears behind him, sucking him in!</span>")
 	playsound(get_turf(src),'sound/magic/MandSwap.ogg', 50, 1, 1)
 	playsound(get_turf(src),'sound/hallucinations/wail.ogg', 50, 1, 1)

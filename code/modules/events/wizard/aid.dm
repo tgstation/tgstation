@@ -9,7 +9,7 @@
 
 /datum/round_event/wizard/robelesscasting/start()
 
-	for(var/mob/living/L in mob_list) //Hey if a corgi has magic missle he should get the same benifit as anyone
+	for(var/mob/living/L in GLOB.mob_list) //Hey if a corgi has magic missle he should get the same benifit as anyone
 		if(L.mind && L.mind.spell_list.len != 0)
 			var/spell_improved = 0
 			for(var/obj/effect/proc_holder/spell/S in L.mind.spell_list)
@@ -29,7 +29,7 @@
 	earliest_start = 0
 
 /datum/round_event/wizard/improvedcasting/start()
-	for(var/mob/living/L in mob_list)
+	for(var/mob/living/L in GLOB.mob_list)
 		if(L.mind && L.mind.spell_list.len != 0)
 			for(var/obj/effect/proc_holder/spell/S in L.mind.spell_list)
 				S.name = initial(S.name)

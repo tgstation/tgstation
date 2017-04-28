@@ -59,7 +59,7 @@
 			shot_delay = 6//Longer shot delay because JESUS CHRIST
 			check_records = 0//Don't actively target people set to arrest
 			arrest_type = 1//Don't even try to cuff
-			bot_core.req_access = list(access_maint_tunnels, access_theatre)
+			bot_core.req_access = list(GLOB.access_maint_tunnels, GLOB.access_theatre)
 			arrest_type = 1
 			if((lasercolor == "b") && (name == "\improper ED-209 Security Robot"))//Picks a name if there isn't already a custome one
 				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
@@ -67,7 +67,7 @@
 				name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
 
 	//SECHUD
-	var/datum/atom_hud/secsensor = huds[DATA_HUD_SECURITY_ADVANCED]
+	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	secsensor.add_hud_to(src)
 
 /mob/living/simple_animal/bot/ed209/turn_on()
@@ -358,7 +358,7 @@ Auto Patrol[]"},
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.add_overlay(image('icons/mob/aibots.dmi', "hs_hole"))
+	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 

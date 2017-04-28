@@ -74,7 +74,7 @@ Difficulty: Hard
 	death_sound = 'sound/magic/Repulse.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
-	..()
+	. = ..()
 	internal = new/obj/item/device/gps/internal/hierophant(src)
 	spawned_beacon = new(loc)
 
@@ -139,7 +139,7 @@ Difficulty: Hard
 	if(!blinking)
 		if(target && isliving(target))
 			INVOKE_ASYNC(src, .proc/melee_blast, get_turf(target)) //melee attacks on living mobs produce a 3x3 blast
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/DestroySurroundings()
 	if(!blinking)
@@ -243,7 +243,7 @@ Difficulty: Hard
 					var/oldcolor = color
 					animate(src, color = "#660099", time = 10)
 					var/list/targets = ListTargets()
-					var/list/cardinal_copy = cardinal.Copy()
+					var/list/cardinal_copy = GLOB.cardinal.Copy()
 					while(health && targets.len && cardinal_copy.len)
 						var/mob/living/pickedtarget = pick(targets)
 						if(targets.len > 4)
@@ -285,7 +285,7 @@ Difficulty: Hard
 		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
 			var/obj/effect/overlay/temp/hierophant/chaser/OC = new /obj/effect/overlay/temp/hierophant/chaser(loc, src, target, max(1.5, 5 - anger_modifier * 0.07), FALSE)
 			OC.moving = 4
-			OC.moving_dir = pick(cardinal - C.moving_dir)
+			OC.moving_dir = pick(GLOB.cardinal - C.moving_dir)
 	else //just release a burst of power
 		INVOKE_ASYNC(src, .proc/burst, get_turf(src))
 
@@ -297,7 +297,7 @@ Difficulty: Hard
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, src, FALSE)
-	for(var/d in diagonals)
+	for(var/d in GLOB.diagonals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/cardinal_blasts(mob/victim) //fire cardinal cross blasts with a delay
@@ -308,7 +308,7 @@ Difficulty: Hard
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, src, FALSE)
-	for(var/d in cardinal)
+	for(var/d in GLOB.cardinal)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/alldir_blasts(mob/victim) //fire alldir cross blasts with a delay
@@ -319,7 +319,7 @@ Difficulty: Hard
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, src, FALSE)
-	for(var/d in alldirs)
+	for(var/d in GLOB.alldirs)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blast_wall(turf/T, set_dir) //make a wall of blasts beam_range tiles long
@@ -338,7 +338,7 @@ Difficulty: Hard
 	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
 		return
 	arena_cooldown = world.time + initial(arena_cooldown)
-	for(var/d in cardinal)
+	for(var/d in GLOB.cardinal)
 		INVOKE_ASYNC(src, .proc/arena_squares, T, d)
 	for(var/t in RANGE_TURFS(11, T))
 		if(t && get_dist(t, T) == 11)
@@ -426,8 +426,8 @@ Difficulty: Hard
 	layer = BELOW_MOB_LAYER
 	var/mob/living/caster //who made this, anyway
 
-/obj/effect/overlay/temp/hierophant/New(loc, new_caster)
-	..()
+/obj/effect/overlay/temp/hierophant/Initialize(mapload, new_caster)
+	. = ..()
 	if(new_caster)
 		caster = new_caster
 
@@ -437,13 +437,13 @@ Difficulty: Hard
 	light_range = 1
 	randomdir = FALSE
 
-/obj/effect/overlay/temp/hierophant/squares/New(loc, new_caster)
-	..()
+/obj/effect/overlay/temp/hierophant/squares/Initialize(mapload, new_caster)
+	. = ..()
 	if(ismineralturf(loc))
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
 
-/obj/effect/overlay/temp/hierophant/wall //smoothing and pooling are not friends. TODO: figure this out
+/obj/effect/overlay/temp/hierophant/wall //smoothing and pooling were not friends, but pooling is dead.
 	name = "vortex wall"
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
 	icon_state = "wall"
@@ -451,15 +451,14 @@ Difficulty: Hard
 	duration = 100
 	smooth = SMOOTH_TRUE
 
-/obj/effect/overlay/temp/hierophant/wall/New(loc, new_caster)
-	..()
+/obj/effect/overlay/temp/hierophant/wall/Initialize(mapload, new_caster)
+	. = ..()
 	queue_smooth_neighbors(src)
 	queue_smooth(src)
 
 /obj/effect/overlay/temp/hierophant/wall/Destroy()
 	queue_smooth_neighbors(src)
-	..()
-	return QDEL_HINT_QUEUE
+	return ..()
 
 /obj/effect/overlay/temp/hierophant/wall/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(mover == caster)
@@ -480,8 +479,8 @@ Difficulty: Hard
 	var/currently_seeking = FALSE
 	var/friendly_fire_check = FALSE //if blasts produced apply friendly fire
 
-/obj/effect/overlay/temp/hierophant/chaser/New(loc, new_caster, new_target, new_speed, is_friendly_fire)
-	..()
+/obj/effect/overlay/temp/hierophant/chaser/Initialize(mapload, new_caster, new_target, new_speed, is_friendly_fire)
+	. = ..()
 	target = new_target
 	friendly_fire_check = is_friendly_fire
 	if(new_speed)
@@ -491,7 +490,7 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/chaser/proc/get_target_dir()
 	. = get_cardinal_dir(src, targetturf)
 	if((. != previous_moving_dir && . == more_previouser_moving_dir) || . == 0) //we're alternating, recalculate
-		var/list/cardinal_copy = cardinal.Copy()
+		var/list/cardinal_copy = GLOB.cardinal.Copy()
 		cardinal_copy -= more_previouser_moving_dir
 		. = pick(cardinal_copy)
 
@@ -558,8 +557,8 @@ Difficulty: Hard
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
 
-/obj/effect/overlay/temp/hierophant/blast/New(loc, new_caster, friendly_fire)
-	..()
+/obj/effect/overlay/temp/hierophant/blast/Initialize(mapload, new_caster, friendly_fire)
+	. = ..()
 	friendly_fire_check = friendly_fire
 	if(new_caster)
 		hit_things += new_caster

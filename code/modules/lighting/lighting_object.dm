@@ -1,4 +1,4 @@
-/var/list/all_lighting_objects = list() // Global list of lighting objects.
+GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 
 /atom/movable/lighting_object
 	name          = ""
@@ -19,7 +19,7 @@
 /atom/movable/lighting_object/Initialize(mapload, var/no_update = FALSE)
 	. = ..()
 	verbs.Cut()
-	global.all_lighting_objects += src
+	GLOB.all_lighting_objects += src
 
 	var/turf/T         = loc // If this runtimes atleast we'll know what's creating overlays in things that aren't turfs.
 	T.lighting_object = src
@@ -35,8 +35,8 @@
 
 /atom/movable/lighting_object/Destroy(var/force)
 	if (force)
-		global.all_lighting_objects        -= src
-		global.lighting_update_objects     -= src
+		GLOB.all_lighting_objects        -= src
+		GLOB.lighting_update_objects     -= src
 
 		var/turf/T   = loc
 		if (istype(T))
@@ -68,6 +68,7 @@
 	// Including with these comments.
 
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
+	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 	var/datum/lighting_corner/cr  = T.corners[3] || dummy_lighting_corner
 	var/datum/lighting_corner/cg  = T.corners[2] || dummy_lighting_corner
 	var/datum/lighting_corner/cb  = T.corners[4] || dummy_lighting_corner
@@ -75,20 +76,48 @@
 
 	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
 
-	color  = list(
-		cr.cache_r, cr.cache_g, cr.cache_b, 0,
-		cg.cache_r, cg.cache_g, cg.cache_b, 0,
-		cb.cache_r, cb.cache_g, cb.cache_b, 0,
-		ca.cache_r, ca.cache_g, ca.cache_b, 0,
-		0, 0, 0, 1
-	)
+	var/rr = cr.cache_r
+	var/rg = cr.cache_g
+	var/rb = cr.cache_b
+
+	var/gr = cg.cache_r
+	var/gg = cg.cache_g
+	var/gb = cg.cache_b
+
+	var/br = cb.cache_r
+	var/bg = cb.cache_g
+	var/bb = cb.cache_b
+
+	var/ar = ca.cache_r
+	var/ag = ca.cache_g
+	var/ab = ca.cache_b
+
 	#if LIGHTING_SOFT_THRESHOLD != 0
-	luminosity = max > LIGHTING_SOFT_THRESHOLD
+	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
 	#else
-	// Because of floating points™️, it won't even be a flat 0.
+	// Because of floating points�?, it won't even be a flat 0.
 	// This number is mostly arbitrary.
-	luminosity = max > 1e-6
+	var/set_luminosity = max > 1e-6
 	#endif
+
+	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
+	//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
+		icon_state = "transparent"
+		color = null
+	else if(!set_luminosity)
+		icon_state = "dark"
+		color = null
+	else
+		icon_state = null
+		color = list(
+			rr, rg, rb, 00,
+			gr, gg, gb, 00,
+			br, bg, bb, 00,
+			ar, ag, ab, 00,
+			00, 00, 00, 01
+		)
+
+	luminosity = set_luminosity
 
 // Variety of overrides so the overlays don't get affected by weird things.
 

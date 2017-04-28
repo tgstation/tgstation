@@ -70,20 +70,25 @@
 	onclose(user, "mob[real_name]")
 	return
 
-/mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
-	if(inventory_head && inventory_back)
-		//helmet and armor = 100% protection
-		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
-			if( O.force )
-				to_chat(user, "<span class='warning'>[src] is wearing too much armor! You can't cause [p_them()] any damage.</span>")
-				visible_message("<span class='danger'>[user] hits [src] with [O], however [src] is too armored.</span>")
-			else
-				to_chat(user, "<span class='warning'>[src] is wearing too much armor! You can't reach [p_their()] skin.<span>")
-				visible_message("[user] gently taps [src] with [O].")
-			if(health>0 && prob(15))
-				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
-			return
+/mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
+	var/armorval = 0
 
+	if(def_zone)
+		if(def_zone == "head")
+			if(inventory_head)
+				armorval = inventory_head.armor[type]
+		else
+			if(inventory_back)
+				armorval = inventory_back.armor[type]
+		return armorval
+	else
+		if(inventory_head)
+			armorval += inventory_head.armor[type]
+		if(inventory_back)
+			armorval += inventory_back.armor[type]
+	return armorval*0.5
+
+/mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/razor))
 		if (shaved)
 			to_chat(user, "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>")
@@ -304,7 +309,7 @@
 		turns_per_move = 20
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
-	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(0)
 	..()
 
@@ -401,7 +406,7 @@
 	cut_overlays()
 	if(inventory_head)
 		var/image/head_icon
-		var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
+		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
 
 		if(!DF.obj_icon_state)
 			DF.obj_icon_state = inventory_head.icon_state
@@ -411,17 +416,17 @@
 			DF.obj_color = inventory_head.color
 
 		if(health <= 0)
-			head_icon = DF.get_image(dir = EAST)
+			head_icon = DF.get_overlay(dir = EAST)
 			head_icon.pixel_y = -8
 			head_icon.transform = turn(head_icon.transform, 180)
 		else
-			head_icon = DF.get_image()
+			head_icon = DF.get_overlay()
 
 		add_overlay(head_icon)
 
 	if(inventory_back)
 		var/image/back_icon
-		var/datum/dog_fashion.DF = new inventory_back.dog_fashion(src)
+		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
 
 		if(!DF.obj_icon_state)
 			DF.obj_icon_state = inventory_back.icon_state
@@ -431,18 +436,20 @@
 			DF.obj_color = inventory_back.color
 
 		if(health <= 0)
-			back_icon = DF.get_image(dir = EAST)
+			back_icon = DF.get_overlay(dir = EAST)
 			back_icon.pixel_y = -11
 			back_icon.transform = turn(back_icon.transform, 180)
 		else
-			back_icon = DF.get_image()
+			back_icon = DF.get_overlay()
 		add_overlay(back_icon)
 
 	if(facehugger)
+		var/mutable_appearance/facehugger_overlay = mutable_appearance('icons/mob/mask.dmi')
 		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
-			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgipuppy"))
+			facehugger_overlay.icon_state = "facehugger_corgipuppy"
 		else
-			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
+			facehugger_overlay.icon_state = "facehugger_corgi"
+		add_overlay(facehugger_overlay)
 	if(pcollar)
 		add_overlay(collar)
 		add_overlay(pettag)

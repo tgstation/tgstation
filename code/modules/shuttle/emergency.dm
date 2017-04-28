@@ -16,7 +16,7 @@
 		say("Please equip your ID card into your ID slot to authenticate.")
 	. = ..()
 
-/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = human_adjacent_state)
+/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.human_adjacent_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -63,7 +63,7 @@
 		to_chat(user, "<span class='warning'>You don't have an ID.</span>")
 		return
 
-	if(!(access_heads in ID.access))
+	if(!(GLOB.access_heads in ID.access))
 		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
@@ -118,7 +118,14 @@
 	// Launch check is in process in case auth_need changes for some reason
 	// probably external.
 	. = FALSE
-	if(!SSshuttle.emergency || ENGINES_STARTED || (!IS_DOCKED))
+	if(!SSshuttle.emergency)
+		return
+
+	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+		authorized.Cut()
+		emagged = FALSE
+
+	if(ENGINES_STARTED || (!IS_DOCKED))
 		return .
 
 	// Check to see if we've reached criteria for early launch
@@ -200,8 +207,17 @@
 
 	. = ..()
 
-/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, coefficient=1, area/signalOrigin, reason, redAlert)
-	var/call_time = SSshuttle.emergencyCallTime * coefficient
+/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signalOrigin, reason, redAlert, set_coefficient=null)
+	if(!isnum(set_coefficient))
+		var/security_num = seclevel2num(get_security_level())
+		switch(security_num)
+			if(SEC_LEVEL_GREEN)
+				set_coefficient = 2
+			if(SEC_LEVEL_BLUE)
+				set_coefficient = 1
+			else
+				set_coefficient = 0.5
+	var/call_time = SSshuttle.emergencyCallTime * set_coefficient
 	switch(mode)
 		// The shuttle can not normally be called while "recalling", so
 		// if this proc is called, it's via admin fiat
@@ -236,7 +252,7 @@
 /obj/docking_port/mobile/emergency/proc/is_hijacked()
 	var/has_people = FALSE
 
-	for(var/mob/living/player in player_list)
+	for(var/mob/living/player in GLOB.player_list)
 		if(player.mind)
 			if(player.stat != DEAD)
 				if(issilicon(player)) //Borgs are technically dead anyways
@@ -283,12 +299,12 @@
 				setTimer(SSshuttle.emergencyDockTime)
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-				feedback_add_details("emergency_shuttle", src.name)
+				SSblackbox.add_details("emergency_shuttle", src.name)
 
 				// Gangs only have one attempt left if the shuttle has
 				// docked with the station to prevent suffering from
 				// endless dominator delays
-				for(var/datum/gang/G in ticker.mode.gangs)
+				for(var/datum/gang/G in SSticker.mode.gangs)
 					if(G.is_dominating)
 						G.dom_attempts = 0
 					else
@@ -323,7 +339,7 @@
 			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
 				sound_played = 1 //Only rev them up once.
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_WARMUP, areas)
 
@@ -337,7 +353,7 @@
 
 				//now move the actual emergency shuttle to its transit dock
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_LAUNCH, areas)
 				enterTransit()
@@ -352,7 +368,7 @@
 		if(SHUTTLE_ESCAPE)
 			if(sound_played && time_left <= HYPERSPACE_END_TIME)
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_END, areas)
 			if(areaInstance.parallax_movedir && time_left <= PARALLAX_LOOP_TIME)
@@ -397,7 +413,7 @@
 /obj/docking_port/mobile/pod/request()
 	var/obj/machinery/computer/shuttle/S = getControlConsole()
 
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA || (S && S.emagged))
+	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || (S && S.emagged))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
@@ -405,8 +421,8 @@
 		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
 		return 1
 
-/obj/docking_port/mobile/pod/New()
-	..()
+/obj/docking_port/mobile/pod/Initialize()
+	. = ..()
 	if(id == "pod")
 		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
 
@@ -443,7 +459,7 @@
 	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
 /obj/docking_port/stationary/random/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 
@@ -485,8 +501,7 @@
 	icon_state = "safe"
 	var/unlocked = FALSE
 
-/obj/item/weapon/storage/pod/New()
-	..()
+/obj/item/weapon/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/suit/space/orange(src)
@@ -503,7 +518,7 @@
 	return
 
 /obj/item/weapon/storage/pod/MouseDrop(over_object, src_location, over_location)
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA || unlocked)
+	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || unlocked)
 		. = ..()
 	else
 		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
@@ -526,13 +541,13 @@
 	dir = EAST
 	roundstart_move = "backup_away"
 
-/obj/docking_port/mobile/emergency/backup/New()
+/obj/docking_port/mobile/emergency/backup/Initialize()
 	// We want to be a valid emergency shuttle
 	// but not be the main one, keep whatever's set
 	// valid.
 	// backup shuttle ignores `timid` because THERE SHOULD BE NO TOUCHING IT
 	var/current_emergency = SSshuttle.emergency
-	..()
+	. = ..()
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 

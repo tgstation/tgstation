@@ -97,8 +97,6 @@
 	icon_living = "drone_clock"
 	icon_dead = "drone_clock_dead"
 	picked = TRUE
-	languages_spoken = RATVAR
-	languages_understood = HUMAN|RATVAR
 	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
@@ -112,6 +110,8 @@
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
+	initial_languages = list(/datum/language/common, /datum/language/ratvar)
+	only_speaks_language = /datum/language/ratvar
 	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
@@ -142,7 +142,7 @@
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
+	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
@@ -167,12 +167,12 @@
 		..()
 
 /mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
-	if(!ratvar_awakens)
+	if(!GLOB.ratvar_awakens)
 		changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
 	return TRUE
 
 /mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		return 1
 	return ..()
 

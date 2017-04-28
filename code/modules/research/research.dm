@@ -313,10 +313,10 @@ research holder datum.
 	var/list/tech_stored = list()
 	var/max_tech_stored = 1
 
-/obj/item/weapon/disk/tech_disk/New()
-	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+/obj/item/weapon/disk/tech_disk/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 	for(var/i in 1 to max_tech_stored)
 		tech_stored += null
 
@@ -339,8 +339,8 @@ research holder datum.
 	materials = list()
 	max_tech_stored = 0
 
-/obj/item/weapon/disk/tech_disk/debug/New()
-	..()
+/obj/item/weapon/disk/tech_disk/debug/Initialize()
+	. = ..()
 	var/list/techs = subtypesof(/datum/tech)
 	max_tech_stored = techs.len
 	for(var/V in techs)

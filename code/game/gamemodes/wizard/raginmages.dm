@@ -20,7 +20,7 @@
 	..()
 	var/playercount = 0
 	if(!max_mages && !bullshit_mode)
-		for(var/mob/living/player in mob_list)
+		for(var/mob/living/player in GLOB.mob_list)
 			if(player.client && player.stat != 2)
 				playercount += 1
 			max_mages = round(playercount / 8)
@@ -90,7 +90,7 @@
 	var/mob/dead/observer/theghost = null
 	spawn(rand(spawn_delay_min, spawn_delay_max))
 		message_admins("SWF is still pissed, sending another wizard - [max_mages - mages_made] left.")
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/dead/observer/G in GLOB.player_list)
 			if(G.client && !G.client.holder && !G.client.is_afk() && (ROLE_WIZARD in G.client.prefs.be_special))
 				if(!jobban_isbanned(G, ROLE_WIZARD) && !jobban_isbanned(G, "Syndicate"))
 					if(age_check(G.client))
@@ -98,7 +98,7 @@
 		if(!candidates.len)
 			message_admins("No applicable ghosts for the next ragin' mage, asking ghosts instead.")
 			var/time_passed = world.time
-			for(var/mob/dead/observer/G in player_list)
+			for(var/mob/dead/observer/G in GLOB.player_list)
 				if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
 					if(age_check(G.client))
 						spawn(0)
@@ -117,7 +117,7 @@
 			mages_made--
 			return
 		else
-			shuffle(candidates)
+			shuffle_inplace(candidates)
 			for(var/mob/i in candidates)
 				if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
 
@@ -132,7 +132,7 @@
 
 /datum/game_mode/wizard/raginmages/declare_completion()
 	if(finished)
-		feedback_set_details("round_end_result","loss - wizard killed")
+		SSblackbox.set_details("round_end_result","loss - wizard killed")
 		to_chat(world, "<FONT size=3><B>The crew has managed to hold off the wizard attack! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>")
 	..(1)
 
@@ -141,7 +141,7 @@
 		return
 
 	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
+	var/mob/living/carbon/human/new_character = new(pick(GLOB.latejoin))//The mob being spawned.
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()

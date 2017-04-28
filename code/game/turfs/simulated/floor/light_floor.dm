@@ -16,6 +16,11 @@
 	..()
 	update_icon()
 
+/turf/open/floor/light/break_tile()
+	..()
+	light_range = 0
+	update_light()
+
 /turf/open/floor/light/update_icon()
 	..()
 	if(on)

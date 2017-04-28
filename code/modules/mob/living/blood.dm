@@ -65,12 +65,8 @@
 			listclearnulls(BP.embedded_objects)
 			temp_bleed += 0.5*BP.embedded_objects.len
 
-			if(brutedamage > 30)
-				temp_bleed += 0.5
-			if(brutedamage > 50)
-				temp_bleed += 1
-			if(brutedamage > 70)
-				temp_bleed += 2
+			if(brutedamage >= 20)
+				temp_bleed += (brutedamage * 0.013)
 
 		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 
