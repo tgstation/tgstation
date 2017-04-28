@@ -50,11 +50,6 @@
 	material_id = MAT_PLASMA
 	message = "cm3 of plasma"
 
-/datum/export/material/plasma/get_cost(obj/O, contr = 0, emag = 0)
-	. = ..()
-	if(emag) // Syndicate pays you more for the plasma.
-		. = round(. * 1.5)
-
 // Uranium. Still useful for both power generation and nuclear annihilation.
 /datum/export/material/uranium
 	cost = 400
