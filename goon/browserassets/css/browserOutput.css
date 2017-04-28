@@ -117,7 +117,7 @@ a.popt {text-decoration: none;}
 }
 #options .sub {clear: both; display: none; width: 160px;}
 #options .sub.scroll {overflow-y: scroll;}
-#options .sub a {padding: 5px 0 5px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
+#options .sub a {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
 #options .sub span {
 	display: block;
 	line-height: 30px;
