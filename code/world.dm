@@ -176,7 +176,7 @@
 /world/proc/AnnouncePR(announcement, list/payload)
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
 	var/id = "[payload["pull_request"]["id"]]"
-	if(!PRcounts[id]])
+	if(!PRcounts[id])
 		PRcounts[id] = 1
 	else
 		++PRcounts[id]
