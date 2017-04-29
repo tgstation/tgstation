@@ -555,9 +555,7 @@
 /obj/structure/disposalpipe/trunk/Initialize()
 	. = ..()
 	dpdir = dir
-	spawn(1)
-		getlinked()
-
+	addtimer(CALLBACK(src, .proc/getlinked), 1)
 	update()
 
 /obj/structure/disposalpipe/trunk/Destroy()

@@ -81,8 +81,7 @@ Notes:
 
 /datum/tooltip/proc/hide()
 	if (src.queueHide)
-		spawn(1)
-			winshow(src.owner, src.control, 0)
+		addtimer(CALLBACK(src, .proc/winshow, src.owner, src.control, 0), 1)
 	else
 		winshow(src.owner, src.control, 0)
 
