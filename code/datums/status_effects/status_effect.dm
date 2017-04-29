@@ -21,8 +21,8 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	if(owner)
 		owner.clear_alert(id)
-		on_remove()
 		LAZYREMOVE(owner.status_effects, src)
+		on_remove()
 	return ..()
 
 /datum/status_effect/proc/start_ticking()
