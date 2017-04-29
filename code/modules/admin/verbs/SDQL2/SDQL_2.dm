@@ -251,6 +251,11 @@
 
 /proc/SDQL_from_objs(list/tree)
 	if("world" in tree)
+		if(IsAdminAdvancedProcCall())
+			var/msg = "WARNING: Attempt to retrieve world reference made by [usr]!"
+			log_admin(msg)
+			message_admins(msg)
+			return
 		return world
 	return SDQL_expression(world, tree)
 
@@ -451,6 +456,11 @@
 				else
 					return null
 			if("world")
+				if(IsAdminAdvancedProcCall())
+					var/msg = "WARNING: Attempt to retrieve world reference made by [usr]!"
+					log_admin(msg)
+					message_admins(msg)
+					return
 				v = world
 			if("global")
 				v = GLOB
