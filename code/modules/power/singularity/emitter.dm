@@ -93,6 +93,7 @@
 		connect_to_network()
 
 	sparks = new
+	sparks.attach(src)
 	sparks.set_up(5, TRUE, src)
 
 /obj/machinery/power/emitter/Destroy()
