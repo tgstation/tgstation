@@ -309,9 +309,9 @@
 	invocation = "Lo'Nab Na'Dm!"
 	creation_time = 80
 
-/obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
-	if(iscultist(user))
-		to_chat(user, "<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
+/obj/item/weapon/paper/talisman/horror/afterattack(mob/living/target, mob/living/user)
+	if(iscultist(user) && (get_dist(user, target) < 7))
+		to_chat(user, "<span class='cultitalic'>You disturb [target] with visions of madness!</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 25)
