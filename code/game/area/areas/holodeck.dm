@@ -102,10 +102,6 @@
 	name = "Holodeck - Atmospheric Burn Test"
 	restricted = 1
 
-/area/holodeck/rec_center/winterwonderland
-	name = "Holodeck - Winter Wonderland"
-	restricted = 1
-
 /area/holodeck/rec_center/wildlife
 	name = "Holodeck - Wildlife Simulation"
 	restricted = 1
