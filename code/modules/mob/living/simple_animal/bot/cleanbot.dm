@@ -2,7 +2,7 @@
 /mob/living/simple_animal/bot/cleanbot
 	name = "\improper Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "cleanbot0"
 	density = 0
 	anchored = 0
@@ -31,7 +31,7 @@
 	var/next_dest
 	var/next_dest_loc
 
-/mob/living/simple_animal/bot/cleanbot/New()
+/mob/living/simple_animal/bot/cleanbot/Initialize()
 	..()
 	get_targets()
 	icon_state = "cleanbot[on]"
@@ -65,14 +65,14 @@
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
-			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>"
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				user << "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>"
+				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
 	else
 		return ..()
 
@@ -80,7 +80,7 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'>[src] buzzes and beeps.</span>"
+			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))
@@ -136,7 +136,7 @@
 			bot_patrol()
 
 	if(target)
-		if(qdeleted(target) || !isturf(target.loc))
+		if(QDELETED(target) || !isturf(target.loc))
 			target = null
 			mode = BOT_IDLE
 			return
@@ -242,7 +242,7 @@
 					T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
 			else
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
-				PoolOrNew(/obj/effect/particle_effect/foam, loc)
+				new /obj/effect/particle_effect/foam(loc)
 
 	else
 		..()
@@ -265,7 +265,7 @@
 	..()
 
 /obj/machinery/bot_core/cleanbot
-	req_one_access = list(access_janitor, access_robotics)
+	req_one_access = list(GLOB.access_janitor, GLOB.access_robotics)
 
 
 /mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)

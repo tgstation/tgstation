@@ -61,18 +61,18 @@
 		strengthdiv = 8
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
 			var/deity
-			if(SSreligion.Bible_deity_name)
-				deity = SSreligion.Bible_deity_name
+			if(SSreligion.deity)
+				deity = SSreligion.deity
 			else
 				deity = "Christ"
-			R << "<span class='userdanger'>The power of [deity] compels you!</span>"
+			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")
 			R.stun(20)
 			R.reveal(100)
 			R.adjustHealth(50)
 		sleep(20)
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
-				C << "<span class='userdanger'>The divine explosion sears you!</span>"
+				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
 				C.Weaken(2)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
@@ -132,7 +132,7 @@
 /datum/chemical_reaction/clf3/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(1,T))
-		PoolOrNew(/obj/effect/hotspot, turf)
+		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 1000 // hot as shit
 
 /datum/chemical_reaction/reagent_explosion/methsplosion
@@ -147,7 +147,7 @@
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(1,T))
-		PoolOrNew(/obj/effect/hotspot, turf)
+		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 1000 // hot as shit
 	..()
 
@@ -216,9 +216,7 @@
 	if(holder.has_reagent("stabilizing_agent"))
 		return
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(2, 1, location)
-	s.start()
+	do_sparks(2, TRUE, location)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
@@ -235,9 +233,7 @@
 
 /datum/chemical_reaction/flash_powder_flash/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(2, 1, location)
-	s.start()
+	do_sparks(2, TRUE, location)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)

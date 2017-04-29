@@ -29,9 +29,7 @@ Possible to do for anyone motivated enough:
 #define RANGE_BASED 4
 #define AREA_BASED 6
 
-var/const/HOLOPAD_MODE = RANGE_BASED
-
-var/list/holopads = list()
+#define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
 	name = "\improper AI holopad"
@@ -39,8 +37,6 @@ var/list/holopads = list()
 	icon_state = "holopad0"
 	layer = LOW_OBJ_LAYER
 	flags = HEAR
-	languages_spoken = ROBOT | HUMAN
-	languages_understood = ROBOT | HUMAN
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
@@ -52,6 +48,7 @@ var/list/holopads = list()
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 	var/temp = ""
+	var/static/list/holopads = list()
 
 /obj/machinery/holopad/New()
 	..()
@@ -65,7 +62,7 @@ var/list/holopads = list()
 	holopads -= src
 	return ..()
 
-/obj/machinery/holo_pad/power_change()
+/obj/machinery/holopad/power_change()
 	if (powered())
 		stat &= ~NOPOWER
 	else
@@ -100,7 +97,7 @@ var/list/holopads = list()
 /obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if(user.stat || !is_operational())
 		return
 	user.set_machine(src)
 	var/dat
@@ -115,7 +112,7 @@ var/list/holopads = list()
 	popup.open()
 
 /obj/machinery/holopad/Topic(href, href_list)
-	if(..())
+	if(..() || !is_operational())
 		return
 	if (href_list["AIrequest"])
 		if(last_request + 200 < world.time)
@@ -123,10 +120,10 @@ var/list/holopads = list()
 			temp = "You requested an AI's presence.<BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in living_mob_list)
+			for(var/mob/living/silicon/ai/AI in GLOB.living_mob_list)
 				if(!AI.client)
 					continue
-				AI << "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>"
+				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
 		else
 			temp = "A request for AI presence was already sent recently.<BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
@@ -171,7 +168,7 @@ var/list/holopads = list()
 						var/area/holo_area = get_area(src)
 						var/area/eye_area = get_area(master.eyeobj)
 
-						if(eye_area in holo_area.master.related)
+						if(eye_area in holo_area.related)
 							return TRUE
 
 			clear_holo(master)//If not, we want to get rid of the hologram.
@@ -180,20 +177,20 @@ var/list/holopads = list()
 /obj/machinery/holopad/proc/activate_holo(mob/living/silicon/ai/user)
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it
 		if (istype(user.current, /obj/machinery/holopad))
-			user << "<span class='danger'>ERROR:</span> \black Image feed in progress."
+			to_chat(user, "<span class='danger'>ERROR:</span> \black Image feed in progress.")
 			return
 		create_holo(user)//Create one.
 		src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
 	else
-		user << "<span class='danger'>ERROR:</span> \black Unable to project hologram."
+		to_chat(user, "<span class='danger'>ERROR:</span> \black Unable to project hologram.")
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/holopad/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(speaker && masters.len && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				master.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)
+				master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 
 /obj/machinery/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
 	var/obj/effect/overlay/holo_pad_hologram/h = new(T)//Spawn a blank effect at the location.
@@ -202,13 +199,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	h.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	h.anchored = 1//So space wind cannot drag it.
 	h.name = "[A.name] (Hologram)"//If someone decides to right click.
-	h.SetLuminosity(2)	//hologram lighting
+	h.set_light(2)	//hologram lighting
 	set_holo(A, h)
 	return TRUE
 
 /obj/machinery/holopad/proc/set_holo(mob/living/silicon/ai/A, var/obj/effect/overlay/holo_pad_hologram/h)
 	masters[A] = h
-	SetLuminosity(2) // pad lighting
+	set_light(2) // pad lighting
 	icon_state = "holopad1"
 	A.current = src
 	use_power += HOLOGRAM_POWER_USAGE
@@ -225,7 +222,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	masters -= user // Discard AI from the list of those who use holopad
 	use_power = max(HOLOPAD_PASSIVE_POWER_USAGE, use_power - HOLOGRAM_POWER_USAGE)//Reduce power usage
 	if (!masters.len) // If no users left
-		SetLuminosity(0) // pad lighting (hologram lighting will be handled automatically since its owner was deleted)
+		set_light(0) // pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 		icon_state = "holopad0"
 		use_power = HOLOPAD_PASSIVE_POWER_USAGE
 	return TRUE
@@ -241,7 +238,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return 1
 
 /obj/item/weapon/circuitboard/machine/holopad
-	name = "circuit board (AI Holopad)"
+	name = "AI Holopad (Machine Board)"
 	build_path = /obj/machinery/holopad
 	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)

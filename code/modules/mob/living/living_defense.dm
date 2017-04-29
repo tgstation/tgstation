@@ -6,19 +6,19 @@
 	if(armor && armour_penetration)
 		armor = max(0, armor - armour_penetration)
 		if(penetrated_text)
-			src << "<span class='userdanger'>[penetrated_text]</span>"
+			to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
 		else
-			src << "<span class='userdanger'>Your armor was penetrated!</span>"
+			to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
 	else if(armor >= 100)
 		if(absorb_text)
-			src << "<span class='userdanger'>[absorb_text]</span>"
+			to_chat(src, "<span class='userdanger'>[absorb_text]</span>")
 		else
-			src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
+			to_chat(src, "<span class='userdanger'>Your armor absorbs the blow!</span>")
 	else if(armor > 0)
 		if(soften_text)
-			src << "<span class='userdanger'>[soften_text]</span>"
+			to_chat(src, "<span class='userdanger'>[soften_text]</span>")
 		else
-			src << "<span class='userdanger'>Your armor softens the blow!</span>"
+			to_chat(src, "<span class='userdanger'>Your armor softens the blow!</span>")
 	return armor
 
 
@@ -122,14 +122,14 @@
 	IgniteMob()
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src || anchored)
+	if(user == src || anchored || !isturf(user.loc))
 		return 0
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message)
 		return
 
 	if(!(status_flags & CANPUSH))
-		user << "<span class='warning'>[src] can't be grabbed more aggressively!</span>"
+		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return 0
 	grippedby(user)
 
@@ -172,8 +172,8 @@
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
-	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
+	if(!SSticker || !SSticker.mode)
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.buckled)
@@ -205,12 +205,12 @@
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return 0
 
 	if (M.a_intent == INTENT_HARM)
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
-			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
+			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
 			return 0
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		if (prob(75))
@@ -244,10 +244,6 @@
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return 0
-
 	switch(M.a_intent)
 		if ("help")
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
@@ -267,7 +263,6 @@
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
-	flash_act()
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
@@ -275,8 +270,9 @@
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
 	return 1
 
-
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
+		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
 			adjustFireLoss(shock_damage)
@@ -300,8 +296,11 @@
 	return(gain)
 
 /mob/living/narsie_act()
+	if(status_flags & GODMODE)
+		return
+
 	if(is_servant_of_ratvar(src) && !stat)
-		src << "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>"
+		to_chat(src, "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>")
 		adjustBruteLoss(35)
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
@@ -324,13 +323,19 @@
 
 
 /mob/living/ratvar_act()
-	if(!is_servant_of_ratvar(src) && !add_servant_of_ratvar(src))
-		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
-		adjustFireLoss(35)
-		if(src)
-			adjust_fire_stacks(1)
-			IgniteMob()
-		return FALSE
+	if(status_flags & GODMODE)
+		return
+
+	if(stat != DEAD && !is_servant_of_ratvar(src))
+		for(var/obj/item/weapon/implant/mindshield/M in implants)
+			qdel(M)
+		if(!add_servant_of_ratvar(src))
+			to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
+			adjustFireLoss(35)
+			if(src)
+				adjust_fire_stacks(1)
+				IgniteMob()
+			return FALSE
 	return TRUE
 
 
@@ -338,7 +343,7 @@
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(get_eye_protection() < intensity && (override_blindness_check || !(disabilities & BLIND)))
 		overlay_fullscreen("flash", type)
-		addtimer(src, "clear_fullscreen", 25, TIMER_NORMAL, "flash", 25)
+		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
 		return 1
 
 //called when the mob receives a loud bang

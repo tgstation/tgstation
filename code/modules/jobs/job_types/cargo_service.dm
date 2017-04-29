@@ -14,11 +14,12 @@ Quartermaster
 
 	outfit = /datum/outfit/job/quartermaster
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
+	access = list(GLOB.access_maint_tunnels, GLOB.access_mailsorting, GLOB.access_cargo, GLOB.access_cargo_bot, GLOB.access_qm, GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
+	minimal_access = list(GLOB.access_maint_tunnels, GLOB.access_mailsorting, GLOB.access_cargo, GLOB.access_cargo_bot, GLOB.access_qm, GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
+	jobtype = /datum/job/qm
 
 	belt = /obj/item/device/pda/quartermaster
 	ears = /obj/item/device/radio/headset/headset_cargo
@@ -43,11 +44,12 @@ Cargo Technician
 
 	outfit = /datum/outfit/job/cargo_tech
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting, access_mineral_storeroom)
+	access = list(GLOB.access_maint_tunnels, GLOB.access_mailsorting, GLOB.access_cargo, GLOB.access_cargo_bot, GLOB.access_qm, GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
+	minimal_access = list(GLOB.access_maint_tunnels, GLOB.access_cargo, GLOB.access_cargo_bot, GLOB.access_mailsorting, GLOB.access_mineral_storeroom)
 
 /datum/outfit/job/cargo_tech
 	name = "Cargo Technician"
+	jobtype = /datum/job/cargo_tech
 
 	belt = /obj/item/device/pda/cargo
 	ears = /obj/item/device/radio/headset/headset_cargo
@@ -70,11 +72,12 @@ Shaft Miner
 
 	outfit = /datum/outfit/job/miner
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
+	access = list(GLOB.access_maint_tunnels, GLOB.access_mailsorting, GLOB.access_cargo, GLOB.access_cargo_bot, GLOB.access_qm, GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom)
+	minimal_access = list(GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mailsorting, GLOB.access_mineral_storeroom)
 
 /datum/outfit/job/miner
-	name = "Shaft Miner"
+	name = "Shaft Miner (Lavaland)"
+	jobtype = /datum/job/mining
 
 	belt = /obj/item/device/pda/shaftminer
 	ears = /obj/item/device/radio/headset/headset_cargo/mining
@@ -93,6 +96,42 @@ Shaft Miner
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
 	box = /obj/item/weapon/storage/box/survival_mining
 
+/datum/outfit/job/miner/asteroid
+	name = "Shaft Miner (Asteroid)"
+	uniform = /obj/item/clothing/under/rank/miner
+	shoes = /obj/item/clothing/shoes/workboots
+
+/datum/outfit/job/miner/equipped
+	name = "Shaft Miner (Lavaland + Equipment)"
+	suit = /obj/item/clothing/suit/hooded/explorer
+	mask = /obj/item/clothing/mask/gas/explorer
+	glasses = /obj/item/clothing/glasses/meson
+	suit_store = /obj/item/weapon/tank/internals/oxygen
+	internals_slot = slot_s_store
+	backpack_contents = list(
+		/obj/item/weapon/storage/bag/ore=1,
+		/obj/item/weapon/kitchen/knife/combat/survival=1,
+		/obj/item/weapon/mining_voucher=1,
+		/obj/item/device/t_scanner/adv_mining_scanner/lesser=1,
+		/obj/item/weapon/gun/energy/kinetic_accelerator=1)
+
+/datum/outfit/job/miner/equipped/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	if(visualsOnly)
+		return
+	if(istype(H.wear_suit, /obj/item/clothing/suit/hooded))
+		var/obj/item/clothing/suit/hooded/S = H.wear_suit
+		S.ToggleHood()
+
+/datum/outfit/job/miner/equipped/asteroid
+	name = "Shaft Miner (Asteroid + Equipment)"
+	uniform = /obj/item/clothing/under/rank/miner
+	shoes = /obj/item/clothing/shoes/workboots
+	suit = /obj/item/clothing/suit/space/hardsuit/mining
+	mask = /obj/item/clothing/mask/breath
+
+
+
 /*
 Bartender
 */
@@ -109,12 +148,13 @@ Bartender
 
 	outfit = /datum/outfit/job/bartender
 
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons)
-	minimal_access = list(access_bar)
+	access = list(GLOB.access_hydroponics, GLOB.access_bar, GLOB.access_kitchen, GLOB.access_morgue, GLOB.access_weapons)
+	minimal_access = list(GLOB.access_bar)
 
 
 /datum/outfit/job/bartender
 	name = "Bartender"
+	jobtype = /datum/job/bartender
 
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	belt = /obj/item/device/pda/bar
@@ -141,11 +181,12 @@ Cook
 
 	outfit = /datum/outfit/job/cook
 
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
-	minimal_access = list(access_kitchen, access_morgue)
+	access = list(GLOB.access_hydroponics, GLOB.access_bar, GLOB.access_kitchen, GLOB.access_morgue)
+	minimal_access = list(GLOB.access_kitchen, GLOB.access_morgue)
 
 /datum/outfit/job/cook
 	name = "Cook"
+	jobtype = /datum/job/cook
 
 	belt = /obj/item/device/pda/cook
 	ears = /obj/item/device/radio/headset/headset_srv
@@ -154,14 +195,15 @@ Cook
 	head = /obj/item/clothing/head/chefhat
 	backpack_contents = list(/obj/item/weapon/sharpener = 1)
 
-/datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-	var/datum/job/cook/J = SSjob.GetJob(H.job)
+	var/datum/job/cook/J = SSjob.GetJobType(jobtype)
 	if(J) // Fix for runtime caused by invalid job being passed
-		J.cooks++
-		if(J.cooks>1)//Cooks
+		if(J.cooks>0)//Cooks
 			suit = /obj/item/clothing/suit/apron/chef
 			head = /obj/item/clothing/head/soft/mime
+		if(!visualsOnly)
+			J.cooks++
 
 /datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
     ..()
@@ -186,11 +228,16 @@ Botanist
 
 	outfit = /datum/outfit/job/botanist
 
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
-	minimal_access = list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
+	access = list(GLOB.access_hydroponics, GLOB.access_bar, GLOB.access_kitchen, GLOB.access_morgue)
+	minimal_access = list(GLOB.access_hydroponics, GLOB.access_morgue)
+	// Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS
+	// Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT
+	// Given Morgue access because they have a viable means of cloning.
+
 
 /datum/outfit/job/botanist
 	name = "Botanist"
+	jobtype = /datum/job/hydro
 
 	belt = /obj/item/device/pda/botanist
 	ears = /obj/item/device/radio/headset/headset_srv
@@ -220,13 +267,14 @@ Janitor
 
 	outfit = /datum/outfit/job/janitor
 
-	access = list(access_janitor, access_maint_tunnels)
-	minimal_access = list(access_janitor, access_maint_tunnels)
+	access = list(GLOB.access_janitor, GLOB.access_maint_tunnels)
+	minimal_access = list(GLOB.access_janitor, GLOB.access_maint_tunnels)
 
 /datum/outfit/job/janitor
 	name = "Janitor"
+	jobtype = /datum/job/janitor
 
 	belt = /obj/item/device/pda/janitor
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor
-	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
+	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1, /obj/item/soapstone/empty=1)

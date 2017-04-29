@@ -29,7 +29,6 @@ echo Repo downloaded.
 echo Setting up folders...
 mkdir gamecode\a
 mkdir gamecode\b
-mkdir gamecode\override
 mkdir gamedata
 mkdir bot
 
@@ -37,8 +36,8 @@ echo Copying things around....
 echo (1/3)
 xcopy gitrepo\data gamedata\data /Y /X /K /R /H /I /C /V /E /Q >nul
 xcopy gitrepo\config gamedata\config /Y /X /K /R /H /I /C /V /E /Q >nul
-xcopy gitrepo\cfg gamedata\cfg /Y /X /K /R /H /I /C /V /E /Q >nul
 xcopy gitrepo\bot bot /Y /X /K /R /H /I /C /V /E /Q >nul
+copy gitrepo\libmysql.dll gamedata\libmysql.dll /D /V /Y >nul
 echo (2/3)
 xcopy gitrepo gamecode\a /Y /X /K /R /H /I /C /V /E /Q /EXCLUDE:copyexclude.txt >nul
 mkdir gamecode\a\.git\logs\
@@ -51,25 +50,27 @@ echo done.
 
 echo Setting up symbolic links.
 mklink gamecode\a\nudge.py ..\..\bot\nudge.py
-mklink gamecode\a\CORE_DATA.py ..\..\bot\CORE_DATA.py
+mklink gamecode\a\libmysql.dll ..\..\gamedata\libmysql.dll
 mklink /d gamecode\a\data ..\..\gamedata\data
 mklink /d gamecode\a\config ..\..\gamedata\config
-mklink /d gamecode\a\cfg ..\..\gamedata\cfg
 
 mklink gamecode\b\nudge.py ..\..\bot\nudge.py
-mklink gamecode\b\CORE_DATA.py ..\..\bot\CORE_DATA.py
+mklink gamecode\b\libmysql.dll ..\..\gamedata\libmysql.dll
 mklink /d gamecode\b\data ..\..\gamedata\data
 mklink /d gamecode\b\config ..\..\gamedata\config
-mklink /d gamecode\b\cfg ..\..\gamedata\cfg
 
 mklink /d gamefolder gamecode\a
+
+echo prepping python (if installed)
+pip install PyYaml
+pip install beautifulsoup4
 
 echo Compiling for the first time.
 
 echo Compiling change log.
-cd gamecode\a
+cd gamefolder
 call python tools\ss13_genchangelog.py html/changelog.html html/changelogs
-cd ..\..
+cd ..
 echo Compiling game.
 call bin\build.bat
 if %DM_EXIT% neq 0 echo DM compile failed.

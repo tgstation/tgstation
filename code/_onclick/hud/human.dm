@@ -87,28 +87,28 @@
 
 /datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
+	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
+
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	using = new /obj/screen/inventory/craft
+	using = new /obj/screen/craft
 	using.icon = ui_style
 	static_inventory += using
 
-	using = new/obj/screen/wheel/talk
-	using.icon = ui_style
-	wheels += using
-	static_inventory += using
-
-	using = new /obj/screen/inventory/area_creator
+	using = new/obj/screen/language_menu
 	using.icon = ui_style
 	static_inventory += using
 
-	using = new /obj/screen/act_intent()
-	using.icon_state = mymob.a_intent
+	using = new /obj/screen/area_creator
+	using.icon = ui_style
 	static_inventory += using
-	action_intent = using
 
-	using = new /obj/screen/mov_intent()
+	action_intent = new /obj/screen/act_intent/segmented
+	action_intent.icon_state = mymob.a_intent
+	static_inventory += action_intent
+
+	using = new /obj/screen/mov_intent
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi

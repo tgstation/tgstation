@@ -35,17 +35,17 @@
 
 	nation += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
 
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.mind)
 			var/datum/mind/M = H.mind
-			if(M.assigned_role && !(M in ticker.mode.traitors))
+			if(M.assigned_role && !(M in SSticker.mode.traitors))
 				for(var/job in jobs_to_revolt)
 					if(M.assigned_role == job)
 						citizens += H
-						ticker.mode.traitors += M
+						SSticker.mode.traitors += M
 						M.special_role = "separatist"
-						H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a separatist, long live [nation]!</font>"
-						H << "<B>You are a separatist! [nation] forever! Protect the soverignty of your newfound land with your comrades in arms!</B>"
+						H.log_message("<font color='red'>Was made into a separatist, long live [nation]!</font>", INDIVIDUAL_ATTACK_LOG)
+						to_chat(H, "<B>You are a separatist! [nation] forever! Protect the soverignty of your newfound land with your comrades in arms!</B>")
 	if(citizens.len)
 		var/message
 		for(var/job in jobs_to_revolt)

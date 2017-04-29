@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -158,10 +158,12 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)
 "aB" = (
-/turf/open/floor/plasteel/asteroid/warning{
+/turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	dir = 1;
 	tag = "icon-asteroidwarning (NORTH)"
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
 	},
 /area/ruin/powered)
 "aC" = (
@@ -208,10 +210,12 @@
 /obj/item/weapon/tank/internals/emergency_oxygen,
 /obj/item/trash/candy,
 /obj/item/toy/talking/owl,
-/turf/open/floor/plasteel/asteroid/warning{
+/turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	dir = 1;
 	tag = "icon-asteroidwarning (NORTH)"
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
 	},
 /area/ruin/powered)
 "aK" = (
@@ -277,10 +281,12 @@
 /area/ruin/powered)
 "aW" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/asteroid/warning{
+/turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	dir = 1;
 	tag = "icon-asteroidwarning (NORTH)"
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
 	},
 /area/ruin/powered)
 "aX" = (

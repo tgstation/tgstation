@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/skeleton
 	name = "reanimated skeleton"
 	desc = "A real bonefied skeleton, doesn't seem like it wants to socialize."
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "skeleton"
 	icon_living = "skeleton"
 	icon_dead = "skeleton"
@@ -26,8 +27,8 @@
 	stat_attack = 1
 	gold_core_spawnable = 1
 	faction = list("skeleton")
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	deathmessage = "collapses into a pile of bones!"
 	del_on_death = 1
 	loot = list(/obj/effect/decal/remains/human)

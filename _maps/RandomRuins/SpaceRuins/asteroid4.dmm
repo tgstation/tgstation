@@ -1,39 +1,519 @@
-"a" = (/turf/open/space,/area/space)
-"b" = (/turf/closed/mineral,/area/ruin/unpowered/no_grav)
-"c" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
-"d" = (/turf/closed/mineral,/area/ruin/unpowered)
-"e" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
-"f" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered)
-"g" = (/turf/closed/mineral/clown,/area/ruin/unpowered)
-"h" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
-"i" = (/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
-"j" = (/turf/open/floor/plating/asteroid,/turf/closed/wall/mineral/titanium,/area/ruin/unpowered)
-"k" = (/turf/open/floor/plating,/obj/item/stack/sheet/mineral/bananium{amount = 15},/turf/closed/wall/mineral/titanium,/area/ruin/unpowered)
-"l" = (/turf/closed/wall/mineral/titanium,/area/ruin/unpowered)
-"m" = (/obj/structure/chair{dir = 1},/obj/item/weapon/shard,/obj/effect/mob_spawn/human/clown{brute_damage = 120; oxy_damage = 75},/obj/item/weapon/paper{info = "Extraction was successful! The disguise was perfect, the clowns never knew what hit 'em! Once I get back to base with the bananium samples I'll be rich, I tell you! RICH!"},/obj/item/stack/sheet/mineral/bananium{amount = 15},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"n" = (/obj/structure/chair{dir = 1},/obj/item/weapon/storage/pod{pixel_x = -26},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"o" = (/obj/structure/shuttle/engine/propulsion/burst,/turf/closed/wall/mineral/titanium/overspace,/area/ruin/unpowered)
-"p" = (/obj/machinery/door/airlock/titanium{name = "Escape Pod Airlock"},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral,
+/area/ruin/unpowered/no_grav)
+"c" = (
+/turf/closed/mineral/random/high_chance,
+/area/ruin/unpowered/no_grav)
+"d" = (
+/turf/closed/mineral,
+/area/ruin/unpowered)
+"e" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"f" = (
+/turf/closed/mineral/random/high_chance,
+/area/ruin/unpowered)
+"g" = (
+/turf/closed/mineral/clown,
+/area/ruin/unpowered)
+"h" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered)
+"i" = (
+/turf/open/floor/plating/asteroid,
+/area/ruin/unpowered)
+"j" = (
+/turf/open/floor/plating/asteroid,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"k" = (
+/turf/open/floor/plating,
+/obj/item/stack/sheet/mineral/bananium{
+	amount = 15
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"l" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"m" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/weapon/shard,
+/obj/effect/mob_spawn/human/clown{
+	brute_damage = 120;
+	oxy_damage = 75
+	},
+/obj/item/weapon/paper{
+	info = "Extraction was successful! The disguise was perfect, the clowns never knew what hit 'em! Once I get back to base with the bananium samples I'll be rich, I tell you! RICH!"
+	},
+/obj/item/stack/sheet/mineral/bananium{
+	amount = 15
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"n" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/weapon/storage/pod{
+	pixel_x = -26
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"o" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/closed/wall/mineral/titanium/overspace,
+/area/ruin/unpowered)
+"p" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Escape Pod Airlock"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
-aabbbaaaaaaaaaaaaaaa
-acccbbbbaaaaaaaaaaaa
-acccbbcbbbaaaaaadaaa
-abbbbbbbbbbaaaaddaaa
-abeebbbbbbcaaaadddaa
-aaeeebbbbbcaaaaddaaa
-aaaeeeeebaaaaadddaaa
-aaaaaeeebaaaaaddaaaa
-aaaaaaaaaaaaaaddaaaa
-aaaaaaaaaaaaffddaaaa
-aaabaaaaaaddffdaaaaa
-aaabaaaaadddgddaaaaa
-aabbbaaahddggidfaaaa
-aabbbaaahhdjkjdfaaaa
-abbbbaaahhdlmlddaaaa
-abbaaaaaaadlnldaaaaa
-aaaaabaaaaaopoaaaaaa
-aaabaaaaaaaaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+c
+c
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+b
+c
+c
+b
+e
+e
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+b
+c
+c
+b
+e
+e
+e
+a
+a
+a
+b
+b
+b
+b
+b
+a
+a
+b
+"}
+(5,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+e
+e
+a
+a
+a
+a
+a
+b
+b
+b
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+b
+e
+e
+a
+a
+a
+a
+a
+a
+a
+a
+b
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+b
+c
+b
+b
+b
+e
+e
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+b
+e
+e
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+h
+h
+h
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+b
+a
+a
+a
+a
+a
+d
+d
+h
+h
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+b
+c
+c
+a
+a
+a
+a
+d
+d
+d
+d
+d
+d
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+d
+d
+g
+j
+l
+l
+o
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+f
+f
+g
+g
+k
+m
+n
+p
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+f
+f
+d
+i
+j
+l
+l
+o
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+d
+d
+d
+d
+d
+d
+d
+a
+a
+f
+f
+d
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+d
+d
+d
+d
+d
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+a
+a
+d
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}

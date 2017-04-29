@@ -45,14 +45,14 @@
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
 	if(. && manifest)
-		user << "<span class='notice'>The manifest is torn off [src].</span>"
+		to_chat(user, "<span class='notice'>The manifest is torn off [src].</span>")
 		playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
 		manifest.forceMove(get_turf(src))
 		manifest = null
 		update_icon()
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	user << "<span class='notice'>You tear the manifest off of [src].</span>"
+	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
 
 	manifest.forceMove(loc)
@@ -85,7 +85,7 @@
 	name = "blood freezer"
 	desc = "A freezer containing packs of blood."
 
-/obj/structure/closet/crate/freezer/blood/New()
+/obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()
 	new /obj/item/weapon/reagent_containers/blood/empty(src)
 	new /obj/item/weapon/reagent_containers/blood/empty(src)
@@ -97,6 +97,21 @@
 	new /obj/item/weapon/reagent_containers/blood/lizard(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/blood/random(src)
+
+/obj/structure/closet/crate/freezer/surplus_limbs
+	name = "surplus prosthetic limbs"
+	desc = "A crate containing an assortment of cheap prosthetic limbs."
+
+/obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
+	. = ..()
+	new /obj/item/bodypart/l_arm/robot/surplus(src)
+	new /obj/item/bodypart/l_arm/robot/surplus(src)
+	new /obj/item/bodypart/r_arm/robot/surplus(src)
+	new /obj/item/bodypart/r_arm/robot/surplus(src)
+	new /obj/item/bodypart/l_leg/robot/surplus(src)
+	new /obj/item/bodypart/l_leg/robot/surplus(src)
+	new /obj/item/bodypart/r_leg/robot/surplus(src)
+	new /obj/item/bodypart/r_leg/robot/surplus(src)
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
@@ -120,8 +135,13 @@
 	name = "\improper RCD crate"
 	icon_state = "engi_crate"
 
-/obj/structure/closet/crate/rcd/New()
+/obj/structure/closet/crate/rcd/PopulateContents()
 	..()
 	for(var/i in 1 to 4)
 		new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd(src)
+	new /obj/item/weapon/construction/rcd(src)
+
+/obj/structure/closet/crate/science
+	name = "science crate"
+	desc = "A science crate."
+	icon_state = "scicrate"

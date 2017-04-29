@@ -32,11 +32,11 @@
 
 /obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
-	user << "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
+	to_chat(user, "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining.")
 
 /obj/item/weapon/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return 0
 
 	var/obj/item/weapon/reagent_containers/syringe/S = syringes[syringes.len]
@@ -45,22 +45,21 @@
 	S.loc = user.loc
 
 	syringes.Remove(S)
-	user << "<span class='notice'>You unload [S] from \the [src].</span>"
+	to_chat(user, "<span class='notice'>You unload [S] from \the [src].</span>")
 
 	return 1
 
 /obj/item/weapon/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = 1)
 	if(istype(A, /obj/item/weapon/reagent_containers/syringe))
 		if(syringes.len < max_syringes)
-			if(!user.unEquip(A))
+			if(!user.transferItemToLoc(A, src))
 				return
-			user << "<span class='notice'>You load [A] into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load [A] into \the [src].</span>")
 			syringes.Add(A)
-			A.forceMove(src)
 			recharge_newshot()
 			return 1
 		else
-			usr << "<span class='warning'>[src] cannot hold more syringes!</span>"
+			to_chat(usr, "<span class='warning'>[src] cannot hold more syringes!</span>")
 	return 0
 
 /obj/item/weapon/gun/syringe/rapidsyringe

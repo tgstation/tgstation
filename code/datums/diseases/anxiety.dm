@@ -16,18 +16,18 @@
 	switch(stage)
 		if(2) //also changes say, see say.dm
 			if(prob(5))
-				affected_mob << "<span class='notice'>You feel anxious.</span>"
+				to_chat(affected_mob, "<span class='notice'>You feel anxious.</span>")
 		if(3)
 			if(prob(10))
-				affected_mob << "<span class='notice'>Your stomach flutters.</span>"
+				to_chat(affected_mob, "<span class='notice'>Your stomach flutters.</span>")
 			if(prob(5))
-				affected_mob << "<span class='notice'>You feel panicky.</span>"
+				to_chat(affected_mob, "<span class='notice'>You feel panicky.</span>")
 			if(prob(2))
-				affected_mob << "<span class='danger'>You're overtaken with panic!</span>"
+				to_chat(affected_mob, "<span class='danger'>You're overtaken with panic!</span>")
 				affected_mob.confused += (rand(2,3))
 		if(4)
 			if(prob(10))
-				affected_mob << "<span class='danger'>You feel butterflies in your stomach.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel butterflies in your stomach.</span>")
 			if(prob(5))
 				affected_mob.visible_message("<span class='danger'>[affected_mob] stumbles around in a panic.</span>", \
 												"<span class='userdanger'>You have a panic attack!</span>")

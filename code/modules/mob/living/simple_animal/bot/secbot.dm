@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/secbot
 	name = "\improper Securitron"
 	desc = "A little security robot.  He looks less than thrilled."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "secbot0"
 	density = 0
 	anchored = 0
@@ -15,6 +15,7 @@
 	bot_type = SEC_BOT
 	model = "Securitron"
 	bot_core_type = /obj/machinery/bot_core/secbot
+	var/baton_type = /obj/item/weapon/melee/baton
 	window_id = "autosec"
 	window_name = "Automatic Security Unit v1.6"
 	allow_pai = 0
@@ -38,6 +39,16 @@
 	weaponscheck = 0
 	auto_patrol = 1
 
+/mob/living/simple_animal/bot/secbot/beepsky/jr
+	name = "Officer Pipsqueak"
+	desc = "It's Officer Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
+
+/mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize()
+	..()
+	resize = 0.8
+	update_transform()
+
+
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/turf/Tsec = get_turf(src)
 	new /obj/item/weapon/stock_parts/cell/potato(Tsec)
@@ -51,7 +62,7 @@
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = "AI Private"
 
-/mob/living/simple_animal/bot/secbot/New()
+/mob/living/simple_animal/bot/secbot/Initialize()
 	..()
 	icon_state = "secbot[on]"
 	spawn(3)
@@ -60,7 +71,7 @@
 		prev_access = access_card.access
 
 	//SECHUD
-	var/datum/atom_hud/secsensor = huds[DATA_HUD_SECURITY_ADVANCED]
+	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	secsensor.add_hud_to(src)
 
 /mob/living/simple_animal/bot/secbot/turn_on()
@@ -144,8 +155,9 @@ Auto Patrol: []"},
 		mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == INTENT_HARM)
+	if((H.a_intent == INTENT_HARM) || (H.a_intent == INTENT_DISARM))
 		retaliate(H)
+
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/weapon/W, mob/user, params)
@@ -159,7 +171,7 @@ Auto Patrol: []"},
 	..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'>You short out [src]'s target assessment circuits.</span>"
+			to_chat(user, "<span class='danger'>You short out [src]'s target assessment circuits.</span>")
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = 0
@@ -380,7 +392,7 @@ Auto Patrol: []"},
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
-	new /obj/item/weapon/melee/baton(Tsec)
+	new baton_type(Tsec)
 
 	if(prob(50))
 		new /obj/item/bodypart/l_arm/robot(Tsec)
@@ -403,16 +415,9 @@ Auto Patrol: []"},
 		var/mob/living/carbon/C = AM
 		if(!istype(C) || !C || in_range(src, target))
 			return
-		C.visible_message("<span class='warning'>[pick( \
-						  "[C] dives out of [src]'s way!", \
-						  "[C] stumbles over [src]!", \
-						  "[C] jumps out of [src]'s path!", \
-						  "[C] trips over [src] and falls!", \
-						  "[C] topples over [src]!", \
-						  "[C] leaps out of [src]'s way!")]</span>")
-		C.Weaken(2)
+		knockOver(C)
 		return
 	..()
 
 /obj/machinery/bot_core/secbot
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)

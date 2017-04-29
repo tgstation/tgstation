@@ -14,7 +14,7 @@
 	var/amount = 30
 	var/recharged = 0
 	var/recharge_delay = 5
-	var/image/icon_beaker = null
+	var/mutable_appearance/beaker_overlay
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
 		"hydrogen",
@@ -52,8 +52,8 @@
 		"toxin"
 	)
 
-/obj/machinery/chem_dispenser/New()
-	..()
+/obj/machinery/chem_dispenser/Initialize()
+	. = ..()
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
@@ -75,9 +75,9 @@
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
 	if(emagged)
-		user << "<span class='warning'>\The [src] has no functional safeties to emag.</span>"
+		to_chat(user, "<span class='warning'>\The [src] has no functional safeties to emag.</span>")
 		return
-	user << "<span class='notice'>You short out \the [src]'s safeties.</span>"
+	to_chat(user, "<span class='notice'>You short out \the [src]'s safeties.</span>")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
 	emagged = 1
 
@@ -97,7 +97,7 @@
 		cut_overlays()
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "chem_dispenser", name, 550, 550, master_ui, state)
@@ -129,7 +129,7 @@
 
 	var chemicals[0]
 	for(var/re in dispensable_reagents)
-		var/datum/reagent/temp = chemical_reagents_list[re]
+		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
 		if(temp)
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id)))
 	data["chemicals"] = chemicals
@@ -170,11 +170,11 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
 		var/obj/item/weapon/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
-			user << "<span class='warning'>A container is already loaded into the machine!</span>"
+			to_chat(user, "<span class='warning'>A container is already loaded into the machine!</span>")
 			return
 
 		if(!user.drop_item()) // Can't let go?
@@ -182,14 +182,13 @@
 
 		beaker = B
 		beaker.loc = src
-		user << "<span class='notice'>You add \the [B] to the machine.</span>"
+		to_chat(user, "<span class='notice'>You add \the [B] to the machine.</span>")
 
-		if(!icon_beaker)
-			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
-		icon_beaker.pixel_x = rand(-10,5)
-		add_overlay(icon_beaker)
+		beaker_overlay = beaker_overlay ||  mutable_appearance(icon, "disp_beaker") 
+		beaker_overlay.pixel_x = rand(-10, 5)//randomize beaker overlay position.
+		add_overlay(beaker_overlay)
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/weapon/card/emag))
-		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
+		to_chat(user, "<span class='warning'>You can't load \the [I] into the machine!</span>")
 	else
 		return ..()
 
@@ -245,13 +244,13 @@
 		)
 	)
 
-/obj/machinery/chem_dispenser/constructable/New()
-	..()
+/obj/machinery/chem_dispenser/constructable/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_dispenser(null)
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/chem_dispenser
-	name = "circuit board (Portable Chem Dispenser)"
+	name = "Portable Chem Dispenser (Machine Board)"
 	build_path = /obj/machinery/chem_dispenser/constructable
 	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
 	req_components = list(
@@ -281,7 +280,6 @@
 	dispensable_reagents = sortList(dispensable_reagents)
 
 /obj/machinery/chem_dispenser/constructable/attackby(obj/item/I, mob/user, params)
-	..()
 	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
 		return
 
@@ -318,6 +316,8 @@
 		"tonic",
 		"sodawater",
 		"lemon_lime",
+		"pwr_game",
+		"shamblers",
 		"sugar",
 		"orangejuice",
 		"limejuice",

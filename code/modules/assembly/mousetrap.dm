@@ -11,7 +11,9 @@
 /obj/item/device/assembly/mousetrap/examine(mob/user)
 	..()
 	if(armed)
-		user << "It looks like it's armed."
+		to_chat(user, "The mousetrap is armed!")
+	else
+		to_chat(user, "The mousetrap is not armed.")
 
 /obj/item/device/assembly/mousetrap/activate()
 	if(..())
@@ -20,7 +22,7 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/user = usr
 				if((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY && prob(50))
-					user << "<span class='warning'>Your hand slips, setting off the trigger!</span>"
+					to_chat(user, "<span class='warning'>Your hand slips, setting off the trigger!</span>")
 					pulse(0)
 		update_icon()
 		if(usr)
@@ -73,7 +75,7 @@
 
 /obj/item/device/assembly/mousetrap/attack_self(mob/living/carbon/human/user)
 	if(!armed)
-		user << "<span class='notice'>You arm [src].</span>"
+		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
 		if(((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
@@ -83,7 +85,7 @@
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
-		user << "<span class='notice'>You disarm [src].</span>"
+		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
 	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
@@ -113,6 +115,8 @@
 						triggered(H)
 						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 										  "<span class='warning'>You accidentally step on [src]</span>")
+				else if(ismouse(MM))
+					triggered(MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
 			triggered(AM)
 	..()

@@ -18,7 +18,7 @@ Assistant
 /datum/job/assistant/get_access()
 	if((config.jobs_have_maint_access & ASSISTANTS_HAVE_MAINT_ACCESS) || !config.jobs_have_minimal_access) //Config has assistant maint access set
 		. = ..()
-		. |= list(access_maint_tunnels)
+		. |= list(GLOB.access_maint_tunnels)
 	else
 		return ..()
 
@@ -32,6 +32,7 @@ Assistant
 
 /datum/outfit/job/assistant
 	name = "Assistant"
+	jobtype = /datum/job/assistant
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()

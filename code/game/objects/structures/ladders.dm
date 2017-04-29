@@ -13,20 +13,29 @@
 	desc = "An extremely sturdy metal ladder."
 
 
-/obj/structure/ladder/New()
-	spawn(8)
-		for(var/obj/structure/ladder/L in world)
-			if(L.id == id)
-				if(L.height == (height - 1))
-					down = L
-					continue
-				if(L.height == (height + 1))
-					up = L
-					continue
+/obj/structure/ladder/Initialize(mapload)
+	GLOB.ladders += src
+	..()
+	return INITIALIZE_HINT_LATELOAD
 
-			if(up && down)	//if both our connections are filled
-				break
-		update_icon()
+/obj/structure/ladder/Destroy()
+	GLOB.ladders -= src
+	. = ..()
+
+/obj/structure/ladder/LateInitialize()
+	for(var/obj/structure/ladder/L in GLOB.ladders)
+		if(L.id == id)
+			if(L.height == (height - 1))
+				down = L
+				continue
+			if(L.height == (height + 1))
+				up = L
+				continue
+
+		if(up && down)	//if both our connections are filled
+			break
+	update_icon()
+
 
 /obj/structure/ladder/update_icon()
 	if(up && down)
@@ -66,6 +75,8 @@
 		go_up(user,is_ghost)
 	else if(down)
 		go_down(user,is_ghost)
+	else
+		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
 
 	if(!is_ghost)
 		add_fingerprint(user)

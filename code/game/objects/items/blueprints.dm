@@ -127,7 +127,7 @@
 		showing = get_images(get_turf(user), viewing.view)
 		viewing.images |= showing
 		if(message)
-			user << message
+			to_chat(user, message)
 
 /obj/item/areaeditor/blueprints/proc/clear_viewer(mob/user, message = "")
 	if(viewing)
@@ -135,7 +135,7 @@
 		viewing = null
 	showing.Cut()
 	if(message)
-		user << message
+		to_chat(user, message)
 
 /obj/item/areaeditor/blueprints/dropped(mob/user)
 	..()
@@ -146,9 +146,7 @@
 /obj/item/areaeditor/proc/get_area()
 	var/turf/T = get_turf(usr)
 	var/area/A = T.loc
-	A = A.master
 	return A
-
 
 /obj/item/areaeditor/proc/get_area_type(area/A = get_area())
 	if(A.outdoors)
@@ -170,18 +168,18 @@
 
 /obj/item/areaeditor/blueprints/proc/view_wire_devices(mob/user)
 	var/message = "<br>You examine the wire legend.<br>"
-	for(var/wireset in wire_color_directory)
-		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[wire_name_directory[wireset]]</a>"
+	for(var/wireset in GLOB.wire_color_directory)
+		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[GLOB.wire_name_directory[wireset]]</a>"
 	message += "</p>"
 	return message
 
 /obj/item/areaeditor/blueprints/proc/view_wire_set(mob/user, wireset)
 	//for some reason you can't use wireset directly as a derefencer so this is the next best :/
-	for(var/device in wire_color_directory)
+	for(var/device in GLOB.wire_color_directory)
 		if("[device]" == wireset)	//I know... don't change it...
-			var/message = "<p><b>[wire_name_directory[device]]:</b>"
-			for(var/Col in wire_color_directory[device])
-				var/wire_name = wire_color_directory[device][Col]
+			var/message = "<p><b>[GLOB.wire_name_directory[device]]:</b>"
+			for(var/Col in GLOB.wire_color_directory[device])
+				var/wire_name = GLOB.wire_color_directory[device][Col]
 				if(!findtext(wire_name, WIRE_DUD_PREFIX))	//don't show duds
 					message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
 			message += "</p>"
@@ -193,13 +191,13 @@
 	if(!istype(res,/list))
 		switch(res)
 			if(ROOM_ERR_SPACE)
-				creator << "<span class='warning'>The new area must be completely airtight.</span>"
+				to_chat(creator, "<span class='warning'>The new area must be completely airtight.</span>")
 				return
 			if(ROOM_ERR_TOOLARGE)
-				creator << "<span class='warning'>The new area is too large.</span>"
+				to_chat(creator, "<span class='warning'>The new area is too large.</span>")
 				return
 			else
-				creator << "<span class='warning'>Error! Please notify administration.</span>"
+				to_chat(creator, "<span class='warning'>Error! Please notify administration.</span>")
 				return
 
 	var/list/turfs = res
@@ -207,7 +205,7 @@
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
-		creator << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
+		to_chat(creator, "<span class='warning'>The given name is too long.  The area remains undefined.</span>")
 		return
 	var/area/old = get_area(get_turf(creator))
 	var/old_gravity = old.has_gravity
@@ -220,17 +218,30 @@
 			turfs -= turfs[key]
 			turfs -= key
 	if(A)
-		A.contents += turfs
-		A.SetDynamicLighting()
+		A.set_dynamic_lighting()
+		for (var/turf/T in turfs)
+			var/area/old_area = T.loc
+			A.contents += T
+			T.change_area(old_area, T)
+
 	else
 		A = new
 		A.setup(str)
-		A.contents += turfs
-		A.SetDynamicLighting()
+		A.set_dynamic_lighting()
+		for (var/turf/T in turfs)
+			var/area/old_area = T.loc
+			A.contents += T
+			T.change_area(old_area, T)
 	A.has_gravity = old_gravity
-	creator << "<span class='notice'>You have created a new area, named [str]. It is now weather proof, and constructing an APC will allow it to be powered.</span>"
-	return 1
 
+	for(var/area/RA in old.related)
+		if(RA.firedoors)
+			for(var/D in RA.firedoors)
+				var/obj/machinery/door/firedoor/FD = D
+				FD.CalculateAffectingAreas()
+
+	to_chat(creator, "<span class='notice'>You have created a new area, named [str]. It is now weather proof, and constructing an APC will allow it to be powered.</span>")
+	return 1
 
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area()
@@ -239,12 +250,16 @@
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
-		usr << "<span class='warning'>The given name is too long.  The area's name is unchanged.</span>"
+		to_chat(usr, "<span class='warning'>The given name is too long.  The area's name is unchanged.</span>")
 		return
 	set_area_machinery_title(A,str,prevname)
 	for(var/area/RA in A.related)
 		RA.name = str
-	usr << "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>"
+		if(RA.firedoors)
+			for(var/D in RA.firedoors)
+				var/obj/machinery/door/firedoor/FD = D
+				FD.CalculateAffectingAreas()
+	to_chat(usr, "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>")
 	interact()
 	return 1
 
@@ -294,7 +309,7 @@
 			return ROOM_ERR_TOOLARGE
 		var/turf/T = pending[1] //why byond havent list::pop()?
 		pending -= T
-		for (var/dir in cardinal)
+		for (var/dir in GLOB.cardinal)
 			var/skip = 0
 			for (var/obj/structure/window/W in T)
 				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
@@ -328,7 +343,7 @@
 
 	for(var/V in border) //lazy but works
 		var/turf/F = V
-		for(var/direction in cardinal)
+		for(var/direction in GLOB.cardinal)
 			if(direction == border[F])
 				continue //don't want to grab turfs from outside the border
 			var/turf/U = get_step(F, direction)

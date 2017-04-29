@@ -10,7 +10,7 @@
 	anchored = 0
 	obj_integrity = 100
 	max_integrity = 100
-	var/oreAmount = 7
+	var/oreAmount = 5
 	var/material_drop_type = /obj/item/stack/sheet/metal
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
@@ -46,7 +46,7 @@
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		user.visible_message("[user] is slicing apart the [name]...", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user,30, target = src))
+		if(do_after(user,40*W.toolspeed, target = src))
 			if(!src.loc)
 				return
 			user.visible_message("[user] slices apart the [name].", \
@@ -97,7 +97,7 @@
 
 /obj/structure/statue/uranium
 	obj_integrity = 300
-	luminosity = 2
+	light_range = 2
 	material_drop_type = /obj/item/stack/sheet/mineral/uranium
 	var/last_event = 0
 	var/active = null

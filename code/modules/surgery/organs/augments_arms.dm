@@ -14,8 +14,8 @@
 	var/obj/item/holder = null
 	// You can use this var for item path, it would be converted into an item on New()
 
-/obj/item/organ/cyberimp/arm/New()
-	..()
+/obj/item/organ/cyberimp/arm/Initialize()
+	. = ..()
 	if(ispath(holder))
 		holder = new holder(src)
 
@@ -31,7 +31,7 @@
 
 /obj/item/organ/cyberimp/arm/examine(mob/user)
 	..()
-	user << "<span class='info'>[src] is assembled in the [zone == "r_arm" ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>"
+	to_chat(user, "<span class='info'>[src] is assembled in the [zone == "r_arm" ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>")
 
 /obj/item/organ/cyberimp/arm/attackby(obj/item/weapon/W, mob/user, params)
 	..()
@@ -41,7 +41,7 @@
 		else
 			zone = "r_arm"
 		slot = zone + "_device"
-		user << "<span class='notice'>You modify [src] to be installed on the [zone == "r_arm" ? "right" : "left"] arm.</span>"
+		to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == "r_arm" ? "right" : "left"] arm.</span>")
 		update_icon()
 	else if(istype(W, /obj/item/weapon/card/emag))
 		emag_act()
@@ -55,7 +55,7 @@
 
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
 	if(prob(15/severity) && owner)
-		owner << "<span class='warning'>[src] is hit by EMP!</span>"
+		to_chat(owner, "<span class='warning'>[src] is hit by EMP!</span>")
 		// give the owner an idea about why his implant is glitching
 		Retract()
 	..()
@@ -70,10 +70,9 @@
 
 	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
 		var/obj/item/device/assembly/flash/F = holder
-		F.SetLuminosity(0)
+		F.set_light(0)
 
-	owner.unEquip(holder, 1)
-	holder.forceMove(src)
+	owner.transferItemToLoc(holder, src, TRUE)
 	holder = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 
@@ -91,20 +90,20 @@
 
 	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
 		var/obj/item/device/assembly/flash/F = holder
-		F.SetLuminosity(7)
+		F.set_light(7)
 
 	var/obj/item/arm_item = owner.get_active_held_item()
 
 	if(arm_item)
-		if(!owner.unEquip(arm_item))
-			owner << "<span class='warning'>Your [arm_item] interferes with [src]!</span>"
+		if(!owner.dropItemToGround(arm_item))
+			to_chat(owner, "<span class='warning'>Your [arm_item] interferes with [src]!</span>")
 			return
 		else
-			owner << "<span class='notice'>You drop [arm_item] to activate [src]!</span>"
+			to_chat(owner, "<span class='notice'>You drop [arm_item] to activate [src]!</span>")
 
 	var/result = (zone == "r_arm" ? owner.put_in_r_hand(holder) : owner.put_in_l_hand(holder))
 	if(!result)
-		owner << "<span class='warning'>Your [src] fails to activate!</span>"
+		to_chat(owner, "<span class='warning'>Your [src] fails to activate!</span>")
 		return
 
 	// Activate the hand that now holds our item.
@@ -117,7 +116,7 @@
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
 	if(crit_fail || (!holder && !contents.len))
-		owner << "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>"
+		to_chat(owner, "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>")
 		return
 
 	// You can emag the arm-mounted implant by activating it while holding emag in it's hand.
@@ -142,7 +141,7 @@
 		Retract()
 		owner.visible_message("<span class='danger'>A loud bang comes from [owner]\'s [zone == "r_arm" ? "right" : "left"] arm!</span>")
 		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
-		owner << "<span class='userdanger'>You feel an explosion erupt inside your [zone == "r_arm" ? "right" : "left"] arm as your implant breaks!</span>"
+		to_chat(owner, "<span class='userdanger'>You feel an explosion erupt inside your [zone == "r_arm" ? "right" : "left"] arm as your implant breaks!</span>")
 		owner.adjust_fire_stacks(20)
 		owner.IgniteMob()
 		owner.adjustFireLoss(25)
@@ -156,7 +155,7 @@
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
 	origin_tech = "materials=4;combat=4;biotech=4;powerstorage=4;syndicate=3"
-	holder = /obj/item/weapon/gun/energy/laser/mounted
+	contents = newlist(/obj/item/weapon/gun/energy/laser/mounted)
 
 /obj/item/organ/cyberimp/arm/gun/laser/l
 	zone = "l_arm"
@@ -167,7 +166,7 @@
 	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_taser"
 	origin_tech = "materials=5;combat=5;biotech=4;powerstorage=4"
-	holder = /obj/item/weapon/gun/energy/e_gun/advtaser/mounted
+	contents = newlist(/obj/item/weapon/gun/energy/e_gun/advtaser/mounted)
 
 /obj/item/organ/cyberimp/arm/gun/taser/l
 	zone = "l_arm"
@@ -185,7 +184,7 @@
 
 /obj/item/organ/cyberimp/arm/toolset/emag_act()
 	if(!(locate(/obj/item/weapon/kitchen/knife/combat/cyborg) in items_list))
-		usr << "<span class='notice'>You unlock [src]'s integrated knife!</span>"
+		to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
 		items_list += new /obj/item/weapon/kitchen/knife/combat/cyborg(src)
 		return 1
 	return 0
@@ -208,8 +207,8 @@
 	contents = newlist(/obj/item/device/assembly/flash/armimplant)
 	origin_tech = "materials=4;combat=3;biotech=4;magnets=4;powerstorage=3"
 
-/obj/item/organ/cyberimp/arm/flash/New()
-	..()
+/obj/item/organ/cyberimp/arm/flash/Initialize()
+	. = ..()
 	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
 		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
 		F.I = src
@@ -226,8 +225,8 @@
 	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
 	origin_tech = "materials=5;combat=7;biotech=5;powerstorage=5;syndicate=6;programming=5"
 
-/obj/item/organ/cyberimp/arm/combat/New()
-	..()
+/obj/item/organ/cyberimp/arm/combat/Initialize()
+	. = ..()
 	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
 		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
 		F.I = src

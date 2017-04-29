@@ -22,11 +22,11 @@ Also, you never added distance checking after target is selected. I've went ahea
 */
 /obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/user = usr, distanceoverride)
 	if(!targets.len)
-		user << "<span class='warning'>No mind found!</span>"
+		to_chat(user, "<span class='warning'>No mind found!</span>")
 		return
 
 	if(targets.len > 1)
-		user << "<span class='warning'>Too many minds! You're not a hive damnit!</span>"//Whaa...aat?
+		to_chat(user, "<span class='warning'>Too many minds! You're not a hive damnit!</span>")
 		return
 
 	var/mob/living/target = targets[1]
@@ -35,27 +35,27 @@ Also, you never added distance checking after target is selected. I've went ahea
 	var/t_is = target.p_are()
 
 	if(!(target in oview(range)) && !distanceoverride)//If they are not in overview after selection. Do note that !() is necessary for in to work because ! takes precedence over it.
-		user << "<span class='warning'>[t_He] [t_is] too far away!</span>"
+		to_chat(user, "<span class='warning'>[t_He] [t_is] too far away!</span>")
 		return
 
 	if(ismegafauna(target))
-		user << "<span class='warning'>This creature is too powerful to control!</span>"
+		to_chat(user, "<span class='warning'>This creature is too powerful to control!</span>")
 		return
 
 	if(target.stat == DEAD)
-		user << "<span class='warning'>You don't particularly want to be dead!</span>"
+		to_chat(user, "<span class='warning'>You don't particularly want to be dead!</span>")
 		return
 
 	if(!target.key || !target.mind)
-		user << "<span class='warning'>[t_He] appear[target.p_s()] to be catatonic! Not even magic can affect [target.p_their()] vacant mind.</span>"
+		to_chat(user, "<span class='warning'>[t_He] appear[target.p_s()] to be catatonic! Not even magic can affect [target.p_their()] vacant mind.</span>")
 		return
 
 	if(user.suiciding)
-		user << "<span class='warning'>You're killing yourself! You can't concentrate enough to do this!</span>"
+		to_chat(user, "<span class='warning'>You're killing yourself! You can't concentrate enough to do this!</span>")
 		return
 
 	if((target.mind.special_role in protected_roles) || cmptext(copytext(target.key,1,2),"@"))
-		user << "<span class='warning'>[target.p_their(TRUE)] mind is resisting your spell!</span>"
+		to_chat(user, "<span class='warning'>[target.p_their(TRUE)] mind is resisting your spell!</span>")
 		return
 
 	var/mob/living/victim = target//The target of the spell whos body will be transferred to.

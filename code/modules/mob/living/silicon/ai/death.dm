@@ -1,10 +1,8 @@
 /mob/living/silicon/ai/death(gibbed)
 	if(stat == DEAD)
 		return
-	if(!gibbed)
-		visible_message("<b>[src]</b> lets out a flurry of sparks, its screen flickering as its systems slowly halt.")
-	stat = DEAD
 
+	. = ..()
 
 	if("[icon_state]_dead" in icon_states(src.icon,1))
 		icon_state = "[icon_state]_dead"
@@ -18,20 +16,11 @@
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
 
-	shuttle_caller_list -= src
+	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 
-	if(nuking)
-		set_security_level("red")
-		nuking = FALSE
-		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
-			P.nuke_warning = FALSE
+	ShutOffDoomsdayDevice()
 
-	if(doomsday_device)
-		doomsday_device.timing = FALSE
-		SSshuttle.clearHostileEnvironment(doomsday_device)
-		qdel(doomsday_device)
 	if(explosive)
 		spawn(10)
 			explosion(src.loc, 3, 6, 12, 15)
@@ -42,4 +31,15 @@
 			if(istype(loc, /obj/item/device/aicard))
 				loc.icon_state = "aicard-404"
 
-	return ..()
+/mob/living/silicon/ai/proc/ShutOffDoomsdayDevice()
+	if(nuking)
+		set_security_level("red")
+		nuking = FALSE
+		for(var/obj/item/weapon/pinpointer/P in GLOB.pinpointer_list)
+			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
+			P.nuke_warning = FALSE
+
+	if(doomsday_device)
+		doomsday_device.timing = FALSE
+		SSshuttle.clearHostileEnvironment(doomsday_device)
+		qdel(doomsday_device)

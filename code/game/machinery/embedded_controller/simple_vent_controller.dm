@@ -51,9 +51,11 @@
 	// Setup parameters only
 	var/airpump_tag
 
-/obj/machinery/embedded_controller/radio/simple_vent_controller/initialize()
+/obj/machinery/embedded_controller/radio/simple_vent_controller/Initialize(mapload)
 	..()
 
+	if(!mapload)
+		return
 	var/datum/computer/file/embedded_program/simple_vent_controller/new_prog = new
 
 	new_prog.airpump_tag = airpump_tag

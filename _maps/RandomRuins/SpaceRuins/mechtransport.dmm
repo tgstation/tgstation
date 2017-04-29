@@ -1,7 +1,7 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/ruin/powered/mechtransport)
@@ -153,8 +153,8 @@
 /area/ruin/powered/mechtransport)
 "I" = (
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "J" = (
 /obj/machinery/computer/mecha,
 /turf/open/floor/mineral/titanium/blue,
@@ -185,8 +185,8 @@
 /area/ruin/powered/mechtransport)
 "P" = (
 /obj/item/stack/sheet/metal,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "Q" = (
 /obj/structure/mecha_wreckage/gygax,
 /turf/open/floor/mineral/titanium/airless,
@@ -195,7 +195,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/space)
+/area/template_noop)
 "S" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
@@ -214,8 +214,8 @@
 /area/ruin/powered/mechtransport)
 "V" = (
 /obj/item/stack/rods,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "W" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall15";
@@ -224,7 +224,7 @@
 /area/ruin/powered/mechtransport)
 "X" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/mechtransport)
 
 (1,1,1) = {"

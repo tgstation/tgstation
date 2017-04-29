@@ -10,7 +10,7 @@
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
-	user << "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>"
+	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
 	if(user.stat != DEAD)
 		user.emote("deathgasp")
 		user.tod = worldtime2text()
@@ -18,19 +18,17 @@
 	user.update_stat()
 	user.update_canmove()
 
-	addtimer(src, "ready_to_regenerate", LING_FAKEDEATH_TIME, TIMER_UNIQUE, user)
-
-	feedback_add_details("changeling_powers","FD")
-	return 1
+	addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
+	return TRUE
 
 /obj/effect/proc_holder/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
 	if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
-		user << "<span class='notice'>We are ready to revive.</span>"
+		to_chat(user, "<span class='notice'>We are ready to revive.</span>")
 		user.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	if(user.status_flags & FAKEDEATH)
-		user << "<span class='warning'>We are already reviving.</span>"
+		to_chat(user, "<span class='warning'>We are already reviving.</span>")
 		return
 	if(!user.stat) //Confirmation for living changelings if they want to fake their death
 		switch(alert("Are we sure we wish to fake our own death?",,"Yes", "No"))

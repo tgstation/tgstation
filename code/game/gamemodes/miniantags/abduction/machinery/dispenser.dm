@@ -1,6 +1,6 @@
 /obj/machinery/abductor/gland_dispenser
-	name = "Replacement Organ Storage"
-	desc = "A tank filled with replacement organs"
+	name = "replacement organ storage"
+	desc = "A tank filled with replacement organs."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "dispenser"
 	density = 1
@@ -15,7 +15,7 @@
 
 /obj/machinery/abductor/gland_dispenser/New()
 	..()
-	gland_types = subtypesof(/obj/item/organ/gland)
+	gland_types = subtypesof(/obj/item/organ/heart/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
@@ -49,18 +49,17 @@
 		var/g_color = gland_colors[i]
 		var/amount = amounts[i]
 		dat += "<a class='box gland' style='background-color:[g_color]' href='?src=\ref[src];dispense=[i]'>[amount]</a>"
-		if(item_count == 3) // Three boxes per line
+		if(item_count == 4) // Four boxes per line
 			dat +="</br></br>"
 			item_count = 0
 	var/datum/browser/popup = new(user, "glands", "Gland Dispenser", 200, 200)
 	popup.add_head_content(box_css)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/organ/gland))
+	if(istype(W, /obj/item/organ/heart/gland))
 		if(!user.drop_item())
 			return
 		W.loc = src
@@ -77,7 +76,7 @@
 
 	if(href_list["dispense"])
 		Dispense(text2num(href_list["dispense"]))
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/abductor/gland_dispenser/proc/Dispense(count)
 	if(amounts[count]>0)

@@ -11,7 +11,7 @@
 	var/inview = 1
 
 	if(!energyKatana)
-		H << "<span class='warning'>Could not locate Energy Katana!</span>"
+		to_chat(H, "<span class='warning'>Could not locate Energy Katana!</span>")
 		return
 
 	if(energyKatana in H)
@@ -26,13 +26,13 @@
 	if(!ninjacost(cost))
 		if(istype(energyKatana.loc, /mob/living/carbon))
 			var/mob/living/carbon/C = energyKatana.loc
-			C.unEquip(energyKatana)
+			C.transferItemToLoc(energyKatana, get_turf(energyKatana), TRUE)
 
 			//Somebody swollowed my sword, probably the clown doing a circus act.
 			if(energyKatana in C.stomach_contents)
 				C.stomach_contents -= energyKatana
-
-		energyKatana.loc = get_turf(energyKatana)
+		else
+			energyKatana.forceMove(get_turf(energyKatana))
 
 		if(inview) //If we can see the katana, throw it towards ourselves, damaging people as we go.
 			energyKatana.spark_system.start()

@@ -171,6 +171,14 @@
 	build_path = /obj/item/weapon/electronics/firealarm
 	category = list("initial", "Electronics")
 
+/datum/design/earmuffs
+	name = "Earmuffs"
+	id = "earmuffs"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/clothing/ears/earmuffs
+	category = list("initial", "Misc")
+
 /datum/design/pipe_painter
 	name = "Pipe painter"
 	id = "pipe_painter"
@@ -573,7 +581,7 @@
 	id = "rcd"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/weapon/rcd
+	build_path = /obj/item/weapon/construction/rcd
 	category = list("hacked", "Construction")
 
 /datum/design/rpd
@@ -608,6 +616,14 @@
 	build_path = /obj/item/weapon/restraints/handcuffs
 	category = list("hacked", "Security")
 
+/datum/design/receiver
+	name = "Modular Receiver"
+	id = "reciever"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000)
+	build_path = /obj/item/weaponcrafting/receiver
+	category = list("hacked", "Security")
+
 /datum/design/shotgun_slug
 	name = "Shotgun slug"
 	id = "shotgun_slug"
@@ -638,6 +654,22 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
+	category = list("hacked", "Security")
+
+/datum/design/riot_dart
+	name = "Foam riot dart"
+	id = "riot_dart"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 1000) //Discount for making individually - no box = less metal!
+	build_path = /obj/item/ammo_casing/caseless/foam_dart/riot
+	category = list("hacked", "Security")
+
+/datum/design/riot_darts
+	name = "Foam riot dart box"
+	id = "riot_darts"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50000) //Comes with 40 darts
+	build_path = /obj/item/ammo_box/foambox/riot
 	category = list("hacked", "Security")
 
 /datum/design/a357

@@ -27,6 +27,36 @@
 			adjustStaminaLoss(damage * hit_percent)
 	return 1
 
+/mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
+	switch(damagetype)
+		if(BRUTE)
+			return adjustBruteLoss(damage)
+		if(BURN)
+			return adjustFireLoss(damage)
+		if(TOX)
+			return adjustToxLoss(damage)
+		if(OXY)
+			return adjustOxyLoss(damage)
+		if(CLONE)
+			return adjustCloneLoss(damage)
+		if(STAMINA)
+			return adjustStaminaLoss(damage)
+
+/mob/living/proc/get_damage_amount(damagetype = BRUTE)
+	switch(damagetype)
+		if(BRUTE)
+			return getBruteLoss()
+		if(BURN)
+			return getFireLoss()
+		if(TOX)
+			return getToxLoss()
+		if(OXY)
+			return getOxyLoss()
+		if(CLONE)
+			return getCloneLoss()
+		if(STAMINA)
+			return getStaminaLoss()
+
 
 /mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
 	if(blocked >= 100)
@@ -230,3 +260,15 @@
 	adjustFireLoss(burn, 0)
 	if(updating_health)
 		updatehealth()
+
+//heal up to amount damage, in a given order
+/mob/living/proc/heal_ordered_damage(amount, list/damage_types)
+	. = amount //we'll return the amount of damage healed
+	for(var/i in damage_types)
+		var/amount_to_heal = min(amount, get_damage_amount(i)) //heal only up to the amount of damage we have
+		if(amount_to_heal)
+			apply_damage_type(-amount_to_heal, i)
+			amount -= amount_to_heal //remove what we healed from our current amount
+		if(!amount)
+			break
+	. -= amount //if there's leftover healing, remove it from what we return

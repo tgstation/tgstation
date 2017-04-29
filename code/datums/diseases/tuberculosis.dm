@@ -17,42 +17,42 @@
 		if(2)
 			if(prob(2))
 				affected_mob.emote("cough")
-				affected_mob << "<span class='danger'>Your chest hurts.</span>"
+				to_chat(affected_mob, "<span class='danger'>Your chest hurts.</span>")
 			if(prob(2))
-				affected_mob << "<span class='danger'>Your stomach violently rumbles!</span>"
+				to_chat(affected_mob, "<span class='danger'>Your stomach violently rumbles!</span>")
 			if(prob(5))
-				affected_mob << "<span class='danger'>You feel a cold sweat form.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a cold sweat form.</span>")
 		if(4)
 			if(prob(2))
-				affected_mob << "<span class='userdanger'>You see four of everything</span>"
+				to_chat(affected_mob, "<span class='userdanger'>You see four of everything</span>")
 				affected_mob.Dizzy(5)
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a sharp pain from your lower chest!</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a sharp pain from your lower chest!</span>")
 				affected_mob.adjustOxyLoss(5)
 				affected_mob.emote("gasp")
 			if(prob(10))
-				affected_mob << "<span class='danger'>You feel air escape from your lungs painfully.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel air escape from your lungs painfully.</span>")
 				affected_mob.adjustOxyLoss(25)
 				affected_mob.emote("gasp")
 		if(5)
 			if(prob(2))
-				affected_mob << "<span class='userdanger'>[pick("You feel your heart slowing...", "You relax and slow your heartbeat.")]</span>"
+				to_chat(affected_mob, "<span class='userdanger'>[pick("You feel your heart slowing...", "You relax and slow your heartbeat.")]</span>")
 				affected_mob.adjustStaminaLoss(70)
 			if(prob(10))
 				affected_mob.adjustStaminaLoss(100)
 				affected_mob.visible_message("<span class='warning'>[affected_mob] faints!</span>", "<span class='userdanger'>You surrender yourself and feel at peace...</span>")
 				affected_mob.AdjustSleeping(5)
 			if(prob(2))
-				affected_mob << "<span class='userdanger'>You feel your mind relax and your thoughts drift!</span>"
+				to_chat(affected_mob, "<span class='userdanger'>You feel your mind relax and your thoughts drift!</span>")
 				affected_mob.confused = min(100, affected_mob.confused + 8)
 			if(prob(10))
 				affected_mob.vomit(20)
 			if(prob(3))
-				affected_mob << "<span class='warning'><i>[pick("Your stomach silently rumbles...", "Your stomach seizes up and falls limp, muscles dead and lifeless.", "You could eat a crayon")]</i></span>"
+				to_chat(affected_mob, "<span class='warning'><i>[pick("Your stomach silently rumbles...", "Your stomach seizes up and falls limp, muscles dead and lifeless.", "You could eat a crayon")]</i></span>")
 				affected_mob.overeatduration = max(affected_mob.overeatduration - 100, 0)
 				affected_mob.nutrition = max(affected_mob.nutrition - 100, 0)
 			if(prob(15))
-				affected_mob << "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>"
+				to_chat(affected_mob, "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>")
 				affected_mob.bodytemperature += 40
 	return
 

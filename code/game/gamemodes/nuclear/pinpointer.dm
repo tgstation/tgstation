@@ -22,10 +22,11 @@
 
 /obj/item/weapon/pinpointer/New()
 	..()
-	pinpointer_list += src
+	GLOB.pinpointer_list += src
 
 /obj/item/weapon/pinpointer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
+	GLOB.pinpointer_list -= src
 	return ..()
 
 /obj/item/weapon/pinpointer/attack_self(mob/living/user)
@@ -64,10 +65,10 @@
 			msg += "\"([target_x], [target_y])\"."
 		else
 			msg = "Its tracking indicator is blank."
-	user << msg
-	for(var/obj/machinery/nuclearbomb/bomb in machines)
+	to_chat(user, msg)
+	for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 		if(bomb.timing)
-			user << "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]"
+			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]")
 
 /obj/item/weapon/pinpointer/process()
 	if(!active)
@@ -76,7 +77,7 @@
 	scan_for_target()
 	point_to_target()
 	my_god_jc_a_bomb()
-	addtimer(src, "refresh_target", 50, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, .proc/refresh_target), 50, TIMER_UNIQUE)
 
 /obj/item/weapon/pinpointer/proc/scan_for_target() //Looks for whatever it's tracking
 	if(target)
@@ -90,11 +91,11 @@
 			var/obj/item/weapon/disk/nuclear/N = locate()
 			target = N
 		if(TRACK_MALF_AI)
-			for(var/V in ai_list)
+			for(var/V in GLOB.ai_list)
 				var/mob/living/silicon/ai/A = V
 				if(A.nuking)
 					target = A
-			for(var/V in apcs_list)
+			for(var/V in GLOB.apcs_list)
 				var/obj/machinery/power/apc/A = V
 				if(A.malfhack && A.occupier)
 					target = A
@@ -103,7 +104,7 @@
 		if(TRACK_OPERATIVES)
 			var/list/possible_targets = list()
 			var/turf/here = get_turf(src)
-			for(var/V in ticker.mode.syndicates)
+			for(var/V in SSticker.mode.syndicates)
 				var/datum/mind/M = V
 				if(M.current && M.current.stat != DEAD)
 					possible_targets |= M.current
@@ -141,19 +142,19 @@
 				icon_state = "pinon[nuke_warning ? "alert" : "far"]"
 
 /obj/item/weapon/pinpointer/proc/my_god_jc_a_bomb() //If we should get the hell back to the ship
-	for(var/obj/machinery/nuclearbomb/bomb in nuke_list)
+	for(var/obj/machinery/nuclearbomb/bomb in GLOB.nuke_list)
 		if(bomb.timing)
 			if(!nuke_warning)
 				nuke_warning = TRUE
 				playsound(src, 'sound/items/Nuke_toy_lowpower.ogg', 50, 0)
 				if(isliving(loc))
 					var/mob/living/L = loc
-					L << "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>"
+					to_chat(L, "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>")
 
 /obj/item/weapon/pinpointer/proc/switch_mode_to(new_mode) //If we shouldn't be tracking what we are
 	if(isliving(loc))
 		var/mob/living/L = loc
-		L << "<span class='userdanger'>Your [name] beeps as it reconfigures its tracking algorithms.</span>"
+		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures its tracking algorithms.</span>")
 		playsound(L, 'sound/machines/triple_beep.ogg', 50, 1)
 	mode = new_mode
 	target = null //Switch modes so we can find the new target

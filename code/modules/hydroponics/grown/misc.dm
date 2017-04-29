@@ -130,7 +130,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		prime()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)

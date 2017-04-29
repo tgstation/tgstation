@@ -31,9 +31,16 @@
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
 /atom/Click(location,control,params)
-	usr.ClickOn(src, params)
+	if(initialized)
+		usr.ClickOn(src, params)
+
 /atom/DblClick(location,control,params)
-	usr.DblClickOn(src,params)
+	if(initialized)
+		usr.DblClickOn(src,params)
+
+/atom/MouseWheel(delta_x,delta_y,location,control,params)
+	if(initialized)
+		usr.MouseWheelOn(src, delta_x, delta_y, params)
 
 /*
 	Standard mob ClickOn()
@@ -53,7 +60,7 @@
 		return
 	next_click = world.time + 1
 
-	if(client.click_intercept)
+	if(client && client.click_intercept)
 		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
 			return
 
@@ -110,9 +117,7 @@
 	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
 		// No adjacency needed
 		if(W)
-			var/resolved = A.attackby(W,src)
-			if(!resolved && A && W)
-				W.afterattack(A,src,1,params) // 1 indicates adjacency
+			melee_item_attack_chain(src, W, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -124,12 +129,9 @@
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		if(A.Adjacent(src)) // see adjacent.dm
+		if(Adjacent(A) || (W && CheckReach(src, A, W.reach))) //Adjacent or reaching attacks
 			if(W)
-				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src,params)
-				if(!resolved && A && W)
-					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
+				melee_item_attack_chain(src, W, A, params)
 			else
 				if(ismob(A))
 					changeNext_move(CLICK_CD_MELEE)
@@ -140,6 +142,29 @@
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
+
+/proc/CheckReach(atom/movable/here, atom/movable/there, reach)
+	if(!here || !there)
+		return
+	switch(reach)
+		if(0)
+			return here.loc == there.loc
+		if(1)
+			return here.Adjacent(there)
+		if(2 to INFINITY)
+			var/obj/dummy = new(get_turf(here)) //We'll try to move this every tick, failing if we can't
+			dummy.pass_flags |= PASSTABLE
+			for(var/i in 1 to reach) //Limit it to that many tries
+				var/turf/T = get_step(dummy, get_dir(dummy, there))
+				if(dummy.loc == there.loc)
+					qdel(dummy)
+					return 1
+				if(there.density && dummy in range(1, there)) //For windows and suchlike
+					qdel(dummy)
+					return 1
+				if(!dummy.Move(T)) //we're blocked!
+					qdel(dummy)
+					return
 
 // Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
 /mob/proc/DblClickOn(atom/A, params)
@@ -234,7 +259,7 @@
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.martial_art)
 		H.next_click = world.time + CLICK_CD_MELEE
-	else 
+	else
 		..()
 /*
 	Alt click
@@ -370,3 +395,19 @@
 		if(T)
 			T.Click(location, control, params)
 	. = 1
+
+
+/* MouseWheelOn */
+
+/mob/proc/MouseWheelOn(atom/A, delta_x, delta_y, params)
+	return
+
+/mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
+	var/list/modifier = params2list(params)
+	if(modifier["shift"])
+		var/view = 0
+		if(delta_y > 0)
+			view = -1
+		else
+			view = 1
+		add_view_range(view)

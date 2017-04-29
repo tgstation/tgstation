@@ -16,7 +16,7 @@
 
 
 
-/turf/open/floor/mineral/New()
+/turf/open/floor/mineral/Initialize()
 	broken_states = list("[initial(icon_state)]_dam")
 	..()
 	if (!icons)
@@ -113,6 +113,9 @@
 	icon_state = "shuttlefloor4"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 	icons = list("shuttlefloor4","shuttlefloor4_dam")
+
+/turf/open/floor/mineral/plastitanium/airless
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/mineral/plastitanium/brig
 	name = "Brig floor"
@@ -221,7 +224,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
 
-/turf/open/floor/mineral/abductor/New()
+/turf/open/floor/mineral/abductor/Initialize()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 

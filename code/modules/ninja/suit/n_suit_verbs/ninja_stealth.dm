@@ -15,7 +15,7 @@ Contents:
 		cancel_stealth()
 	else
 		if(cell.charge <= 0)
-			U << "<span class='warning'>You don't have enough power to enable Stealth!</span>"
+			to_chat(U, "<span class='warning'>You don't have enough power to enable Stealth!</span>")
 			return
 		s_active=!s_active
 		animate(U, alpha = 50,time = 15)
@@ -45,5 +45,5 @@ Contents:
 	if(!s_busy)
 		toggle_stealth()
 	else
-		affecting << "<span class='danger'>Stealth does not appear to work!</span>"
+		to_chat(affecting, "<span class='danger'>Stealth does not appear to work!</span>")
 

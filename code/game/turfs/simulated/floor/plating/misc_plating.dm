@@ -7,7 +7,7 @@
 	name = "alien floor"
 	icon_state = "alienpod1"
 
-/turf/open/floor/plating/abductor/New()
+/turf/open/floor/plating/abductor/Initialize()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 
@@ -41,7 +41,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	planetary_atmos = TRUE
 
-/turf/open/floor/plating/ashplanet/New()
+/turf/open/floor/plating/ashplanet/Initialize()
 	if(smooth)
 		pixel_y = -4
 		pixel_x = -4
@@ -72,7 +72,7 @@
 	icon_state = "wateryrock"
 	slowdown = 2
 
-/turf/open/floor/plating/ashplanet/wateryrock/New()
+/turf/open/floor/plating/ashplanet/wateryrock/Initialize()
 	icon_state = "[icon_state][rand(1, 9)]"
 	..()
 
@@ -113,7 +113,7 @@
 	name = "iron sand"
 	desc = "Like sand, but more <i>metal</i>."
 
-/turf/open/floor/plating/ironsand/New()
+/turf/open/floor/plating/ironsand/Initialize()
 	..()
 	icon_state = "ironsand[rand(1,15)]"
 

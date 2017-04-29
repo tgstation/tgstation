@@ -96,11 +96,8 @@
 
 /obj/item/clothing/shoes/sneakers/orange/attackby(obj/H, loc, params)
 	..()
-	if ((istype(H, /obj/item/weapon/restraints/handcuffs) && !( src.chained )))
-		//H = null
-		if (src.icon_state != "orange") return
-		if(istype(H, /obj/item/weapon/restraints/handcuffs/cable))
-			return 0
+	// Note: not using istype here because we want to ignore all subtypes
+	if (H.type == /obj/item/weapon/restraints/handcuffs && !chained)
 		qdel(H)
 		src.chained = 1
 		src.slowdown = 15
@@ -111,6 +108,6 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/C = user
 		if(C.shoes == src && src.chained == 1)
-			user << "<span class='warning'>You need help taking these off!</span>"
+			to_chat(user, "<span class='warning'>You need help taking these off!</span>")
 			return
 	..()

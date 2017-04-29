@@ -8,24 +8,88 @@
 	icon_state = "rockvault"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-/turf/open/floor/bluegrid
+//Circuit flooring, glows a little
+/turf/open/floor/circuit
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
-	floor_tile = /obj/item/stack/tile/plasteel
+	var/icon_normal = "bcircuit"
+	light_color = LIGHT_COLOR_CYAN
+	floor_tile = /obj/item/stack/tile/circuit
+	var/on = TRUE
 
-/turf/open/floor/bluegrid/New()
+/turf/open/floor/circuit/Initialize()
+	SSmapping.nuke_tiles += src
+	update_icon()
 	..()
-	nuke_tiles += src
 
-/turf/open/floor/bluegrid/Destroy()
-	nuke_tiles -= src
+/turf/open/floor/circuit/Destroy()
+	SSmapping.nuke_tiles -= src
 	return ..()
 
-/turf/open/floor/greengrid
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "gcircuit"
-	floor_tile = /obj/item/stack/tile/plasteel
+/turf/open/floor/circuit/update_icon()
+	if(on)
+		if(LAZYLEN(SSmapping.nuke_threats))
+			icon_state = "rcircuitanim"
+			light_color = LIGHT_COLOR_FLARE
+		else
+			icon_state = icon_normal
+			light_color = initial(light_color)
+		set_light(1.4, 0.5)
+	else
+		icon_state = "[icon_normal]off"
+		set_light(0)
 
+/turf/open/floor/circuit/off
+	icon_state = "bcircuitoff"
+	on = FALSE
+
+/turf/open/floor/circuit/airless
+	initial_gas_mix = "TEMP=2.7"
+
+/turf/open/floor/circuit/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
+
+/turf/open/floor/circuit/green
+	icon_state = "gcircuit"
+	icon_normal = "gcircuit"
+	light_color = LIGHT_COLOR_GREEN
+	floor_tile = /obj/item/stack/tile/circuit/green
+
+/turf/open/floor/circuit/green/off
+	icon_state = "gcircuitoff"
+	on = FALSE
+
+/turf/open/floor/circuit/green/anim
+	icon_state = "gcircuitanim"
+	icon_normal = "gcircuitanim"
+	floor_tile = /obj/item/stack/tile/circuit/green/anim
+
+/turf/open/floor/circuit/green/airless
+	initial_gas_mix = "TEMP=2.7"
+
+/turf/open/floor/circuit/green/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
+
+/turf/open/floor/circuit/red
+	icon_state = "rcircuit"
+	icon_normal = "rcircuit"
+	light_color = LIGHT_COLOR_FLARE
+	floor_tile = /obj/item/stack/tile/circuit/red
+
+/turf/open/floor/circuit/red/off
+	icon_state = "rcircuitoff"
+	on = FALSE
+
+/turf/open/floor/circuit/red/anim
+	icon_state = "rcircuitanim"
+	icon_normal = "rcircuitanim"
+	floor_tile = /obj/item/stack/tile/circuit/red/anim
+
+/turf/open/floor/circuit/red/airless
+	initial_gas_mix = "TEMP=2.7"
+
+/turf/open/floor/circuit/red/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 
 /turf/open/floor/pod
 	name = "pod floor"
@@ -67,11 +131,11 @@
 	icon_state = "plating"
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
-/turf/open/floor/clockwork/New()
+/turf/open/floor/clockwork/Initialize()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor, src)
+	new /obj/effect/overlay/temp/ratvar/floor(src)
+	new /obj/effect/overlay/temp/ratvar/beam(src)
+	realappearence = new /obj/effect/clockwork/overlay/floor(src)
 	realappearence.linked = src
 	change_construction_value(1)
 
@@ -82,6 +146,11 @@
 		qdel(realappearence)
 		realappearence = null
 	return ..()
+
+/turf/open/floor/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
@@ -124,7 +193,7 @@
 	return ..()
 
 /turf/open/floor/clockwork/make_plating()
-	PoolOrNew(/obj/item/stack/tile/brass, src)
+	new /obj/item/stack/tile/brass(src)
 	return ..()
 
 /turf/open/floor/clockwork/narsie_act()
@@ -133,7 +202,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 
 /turf/open/floor/bluespace
@@ -194,6 +263,5 @@
 	. = ..()
 	//Do this *after* the turf has changed as qdel in spacevines will call changeturf again if it hasn't
 	for(var/obj/structure/spacevine/SV in src)
-		if(!qdestroying(SV))//Helps avoid recursive loops
+		if(!QDESTROYING(SV))//Helps avoid recursive loops
 			qdel(SV)
-	UpdateAffectingLights()
