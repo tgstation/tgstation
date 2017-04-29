@@ -202,6 +202,21 @@
 		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? "":"s"] [structure_number == 1 ? "is":"are"] in range.</span>")
 		if(iscyborg(user))
 			to_chat(user, "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>")
+		else if(GLOB.ratvar_awakens)
+			to_chat(user, "<span class='brass'>Hitting the [sigil_name] with brass sheets will convert them to power at a rate of <b>1</b> brass sheet to <b>[POWER_FLOOR]W</b> power.</span>")
+		if(GLOB.ratvar_awakens)
+			to_chat(user, "<span class='brass'>You can recharge Clockwork Proselytizers from the [sigil_name].</span>")
+
+/obj/effect/clockwork/sigil/transmission/attackby(obj/item/I, mob/living/user, params)
+	if(is_servant_of_ratvar(user) && istype(I, /obj/item/stack/tile/brass) && !GLOB.ratvar_awakens)
+		var/obj/item/stack/tile/brass/B = I
+		user.visible_message("<span class='warning'>[user] places [B] on [src], causing it to disintegrate into glowing orange energy!</span>", \
+		"<span class='brass'>You charge the [sigil_name] with [B], providing it with <b>[B.amount * POWER_FLOOR]W</b> of power.</span>")
+		modify_charge(-(B.amount * POWER_FLOOR))
+		playsound(src, 'sound/effects/light_flicker.ogg', (B.amount * POWER_FLOOR) * 0.01, 1)
+		qdel(B)
+		return 1
+	return ..()
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(is_servant_of_ratvar(L))
@@ -243,8 +258,8 @@
 		return FALSE
 	return TRUE
 
-/obj/effect/clockwork/sigil/transmission/New()
-	..()
+/obj/effect/clockwork/sigil/transmission/Initialize()
+	. = ..()
 	update_glow()
 
 /obj/effect/clockwork/sigil/transmission/proc/modify_charge(amount)
@@ -299,8 +314,7 @@
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
 		return
 	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
-	animate(src, alpha = 255, time = 10)
-	addtimer(CALLBACK(src, .proc/update_alpha), 10)
+	animate(src, alpha = 255, time = 10, flags = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
 	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || vitality))) && get_turf(L) == get_turf(src))
@@ -369,12 +383,4 @@
 		animation_number = initial(animation_number)
 		sigil_active = FALSE
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
-	if(sigil_active || alpha == 255)
-		animate(src, alpha = initial(alpha), time = 10)
-		addtimer(CALLBACK(src, .proc/update_alpha), 10)
-
-/obj/effect/clockwork/sigil/vitality/proc/update_alpha()
-	if(sigil_active)
-		alpha = 255
-	else
-		alpha = initial(alpha)
+	animate(src, alpha = initial(alpha), time = 10, flags = ANIMATION_END_NOW)
