@@ -29,9 +29,7 @@ Possible to do for anyone motivated enough:
 #define RANGE_BASED 4
 #define AREA_BASED 6
 
-var/const/HOLOPAD_MODE = RANGE_BASED
-
-var/list/holopads = list()
+#define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
 	name = "\improper AI holopad"
@@ -39,8 +37,6 @@ var/list/holopads = list()
 	icon_state = "holopad0"
 	layer = LOW_OBJ_LAYER
 	flags = HEAR
-	languages_spoken = ROBOT | HUMAN
-	languages_understood = ROBOT | HUMAN
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
@@ -52,6 +48,7 @@ var/list/holopads = list()
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 	var/temp = ""
+	var/static/list/holopads = list()
 
 /obj/machinery/holopad/New()
 	..()
@@ -100,7 +97,7 @@ var/list/holopads = list()
 /obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if(user.stat || !is_operational())
 		return
 	user.set_machine(src)
 	var/dat
@@ -115,7 +112,7 @@ var/list/holopads = list()
 	popup.open()
 
 /obj/machinery/holopad/Topic(href, href_list)
-	if(..())
+	if(..() || !is_operational())
 		return
 	if (href_list["AIrequest"])
 		if(last_request + 200 < world.time)
@@ -123,7 +120,7 @@ var/list/holopads = list()
 			temp = "You requested an AI's presence.<BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in living_mob_list)
+			for(var/mob/living/silicon/ai/AI in GLOB.living_mob_list)
 				if(!AI.client)
 					continue
 				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
@@ -189,11 +186,11 @@ var/list/holopads = list()
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/holopad/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(speaker && masters.len && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				master.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)
+				master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 
 /obj/machinery/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
 	var/obj/effect/overlay/holo_pad_hologram/h = new(T)//Spawn a blank effect at the location.

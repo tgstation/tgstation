@@ -3,7 +3,7 @@
 	filedesc = "ID card modification program"
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
-	transfer_access = access_change_ids
+	transfer_access = GLOB.access_heads
 	requires_ntnet = 0
 	size = 8
 	var/mod_mode = 1
@@ -52,8 +52,8 @@
 /datum/computer_file/program/card_mod/proc/can_open_job(datum/job/job)
 	if(job)
 		if(!job_blacklisted(job.title))
-			if((job.total_positions <= player_list.len * (max_relative_positions / 100)))
-				var/delta = (world.time / 10) - time_last_changed_position
+			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
+				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
 					return 1
 				return -2
@@ -65,7 +65,7 @@
 	if(job)
 		if(!job_blacklisted(job.title))
 			if(job.total_positions > job.current_positions)
-				var/delta = (world.time / 10) - time_last_changed_position
+				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
 					return 1
 				return -2
@@ -73,7 +73,7 @@
 	return 0
 
 
-/datum/computer_file/program/card_mod/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/datum/computer_file/program/card_mod/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
@@ -161,7 +161,7 @@
 				else
 					var/contents = {"<h4>Crew Manifest</h4>
 									<br>
-									[data_core ? data_core.get_manifest(0) : ""]
+									[GLOB.data_core ? GLOB.data_core.get_manifest(0) : ""]
 									"}
 					if(!printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
 						to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
@@ -174,7 +174,7 @@
 				switch(select)
 					if("id")
 						if(id_card)
-							data_core.manifest_modify(id_card.registered_name, id_card.assignment)
+							GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment)
 							card_slot.try_eject(1, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
@@ -186,7 +186,7 @@
 					if("auth")
 						if(auth_card)
 							if(id_card)
-								data_core.manifest_modify(id_card.registered_name, id_card.assignment)
+								GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment)
 							head_subordinates = null
 							region_access = null
 							authenticated = 0
@@ -260,7 +260,7 @@
 			if(can_open_job(j) != 1)
 				return 0
 			if(opened_positions[edit_job_target] >= 0)
-				time_last_changed_position = world.time / 10
+				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions++
 			opened_positions[edit_job_target]++
 		if("PRG_close_job")
@@ -272,7 +272,7 @@
 				return 0
 			//Allow instant closing without cooldown if a position has been opened before
 			if(opened_positions[edit_job_target] <= 0)
-				time_last_changed_position = world.time / 10
+				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions--
 			opened_positions[edit_job_target]--
 		if("PRG_regsel")
@@ -344,7 +344,7 @@
 	if(!mod_mode)
 		data["manifest"] = list()
 		var/list/crew = list()
-		for(var/datum/data/record/t in sortRecord(data_core.general))
+		for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 			crew.Add(list(list(
 				"name" = t.fields["name"],
 				"rank" = t.fields["rank"])))
@@ -376,12 +376,12 @@
 			data["id_name"] = id_card ? strip_html_simple(id_card.name) : "-----"
 
 			if(show_assignments)
-				data["engineering_jobs"] = format_jobs(engineering_positions)
-				data["medical_jobs"] = format_jobs(medical_positions)
-				data["science_jobs"] = format_jobs(science_positions)
-				data["security_jobs"] = format_jobs(security_positions)
-				data["cargo_jobs"] = format_jobs(supply_positions)
-				data["civilian_jobs"] = format_jobs(civilian_positions)
+				data["engineering_jobs"] = format_jobs(GLOB.engineering_positions)
+				data["medical_jobs"] = format_jobs(GLOB.medical_positions)
+				data["science_jobs"] = format_jobs(GLOB.science_positions)
+				data["security_jobs"] = format_jobs(GLOB.security_positions)
+				data["cargo_jobs"] = format_jobs(GLOB.supply_positions)
+				data["civilian_jobs"] = format_jobs(GLOB.civilian_positions)
 				data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 
 
@@ -435,7 +435,7 @@
 		out = "[open ? "Open Position" : "Close Position"]"
 		enable = 1
 	else if(can_change == -2)
-		var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
+		var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - GLOB.time_last_changed_position), 1)
 		var/mins = round(time_to_wait / 60)
 		var/seconds = time_to_wait - (60*mins)
 		out = "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
@@ -452,25 +452,25 @@
 			var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
 			if(auth_card)
 				region_access = list()
-				if(transfer_access in auth_card.GetAccess())
+				if(GLOB.access_change_ids in auth_card.GetAccess())
 					minor = 0
 					authenticated = 1
 					return 1
 				else
-					if((access_hop in auth_card.access) && ((target_dept==1) || !target_dept))
+					if((GLOB.access_hop in auth_card.access) && ((target_dept==1) || !target_dept))
 						region_access |= 1
 						region_access |= 6
 						get_subordinates("Head of Personnel")
-					if((access_hos in auth_card.access) && ((target_dept==2) || !target_dept))
+					if((GLOB.access_hos in auth_card.access) && ((target_dept==2) || !target_dept))
 						region_access |= 2
 						get_subordinates("Head of Security")
-					if((access_cmo in auth_card.access) && ((target_dept==3) || !target_dept))
+					if((GLOB.access_cmo in auth_card.access) && ((target_dept==3) || !target_dept))
 						region_access |= 3
 						get_subordinates("Chief Medical Officer")
-					if((access_rd in auth_card.access) && ((target_dept==4) || !target_dept))
+					if((GLOB.access_rd in auth_card.access) && ((target_dept==4) || !target_dept))
 						region_access |= 4
 						get_subordinates("Research Director")
-					if((access_ce in auth_card.access) && ((target_dept==5) || !target_dept))
+					if((GLOB.access_ce in auth_card.access) && ((target_dept==5) || !target_dept))
 						region_access |= 5
 						get_subordinates("Chief Engineer")
 					if(region_access.len)

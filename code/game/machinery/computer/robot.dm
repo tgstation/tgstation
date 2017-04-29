@@ -6,7 +6,7 @@
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
 	icon_screen = "robot"
 	icon_keyboard = "rd_key"
-	req_access = list(access_robotics)
+	req_access = list(GLOB.access_robotics)
 	circuit = /obj/item/weapon/circuitboard/computer/robotics
 	var/temp = null
 
@@ -37,7 +37,7 @@
 	user.set_machine(src)
 	var/dat
 	var/robots = 0
-	for(var/mob/living/silicon/robot/R in mob_list)
+	for(var/mob/living/silicon/robot/R in GLOB.mob_list)
 		if(!can_control(user, R))
 			continue
 		robots++
@@ -75,7 +75,7 @@
 		dat += "<BR>"
 
 	var/drones = 0
-	for(var/mob/living/simple_animal/drone/D in mob_list)
+	for(var/mob/living/simple_animal/drone/D in GLOB.mob_list)
 		if(D.hacked)
 			continue
 		drones++
@@ -103,7 +103,7 @@
 
 	else if (href_list["killbot"])
 		if(src.allowed(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["killbot"]) in silicon_mobs
+			var/mob/living/silicon/robot/R = locate(href_list["killbot"]) in GLOB.silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
@@ -123,7 +123,7 @@
 
 	else if (href_list["stopbot"])
 		if(src.allowed(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["stopbot"]) in silicon_mobs
+			var/mob/living/silicon/robot/R = locate(href_list["stopbot"]) in GLOB.silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
@@ -139,7 +139,7 @@
 
 	else if (href_list["magbot"])
 		if((issilicon(usr) && is_special_character(usr)) || IsAdminGhost(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["magbot"]) in silicon_mobs
+			var/mob/living/silicon/robot/R = locate(href_list["magbot"]) in GLOB.silicon_mobs
 			if(istype(R) && !R.emagged && ((R.syndicate && R == usr) || R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
 				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 				message_admins("[key_name_admin(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
@@ -149,7 +149,7 @@
 
 	else if(href_list["convert"])
 		if(issilicon(usr) && is_special_character(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["convert"]) in silicon_mobs
+			var/mob/living/silicon/robot/R = locate(href_list["convert"]) in GLOB.silicon_mobs
 			if(istype(R) && !is_servant_of_ratvar(R) && is_servant_of_ratvar(usr) && R.connected_ai == usr)
 				log_game("[key_name(usr)] converted [R.name] using robotic console!")
 				message_admins("[key_name_admin(usr)] converted cyborg [key_name_admin(R)] using robotic console!")

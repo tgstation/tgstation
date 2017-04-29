@@ -18,7 +18,7 @@
 
 /obj/item/weapon/gun/energy/pulse/prize/New()
 	. = ..()
-	poi_list |= src
+	GLOB.poi_list |= src
 	var/msg = "A pulse rifle prize has been created at ([x],[y],[z] - (\
 	<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>\
 	JMP</a>)"
@@ -30,7 +30,7 @@
 		action = NOTIFY_ORBIT)
 
 /obj/item/weapon/gun/energy/pulse/prize/Destroy()
-	poi_list -= src
+	GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/weapon/gun/energy/pulse/loyalpin

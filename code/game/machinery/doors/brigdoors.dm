@@ -23,7 +23,7 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	desc = "A remote control for a door."
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)
 	anchored = 1
 	density = 0
 	var/id = null // id of linked machinery/lockers
@@ -112,8 +112,8 @@
 		return 0
 
 	if(!forced)
-		Radio.set_frequency(SEC_FREQ)
-		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", SEC_FREQ)
+		Radio.set_frequency(GLOB.SEC_FREQ)
+		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", GLOB.SEC_FREQ, get_default_language())
 
 	timing = FALSE
 	activation_time = null
@@ -147,7 +147,7 @@
 	timer_duration = new_time
 
 /obj/machinery/door_timer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "brig_timer", name, 300, 200, master_ui, state)
@@ -184,7 +184,7 @@
 	if(maptext)
 		maptext = ""
 	cut_overlays()
-	add_overlay(image('icons/obj/status_display.dmi', icon_state=state))
+	add_overlay(mutable_appearance('icons/obj/status_display.dmi', state))
 
 
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
@@ -212,6 +212,11 @@
 	if(..())
 		return
 	. = TRUE
+	
+	if(!allowed(usr))
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		return FALSE
+
 	switch(action)
 		if("time")
 			var/value = text2num(params["adjust"])

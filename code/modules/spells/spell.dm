@@ -9,7 +9,7 @@
 	var/mob/living/ranged_ability_user
 	var/ranged_clickcd_override = -1
 
-var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
+GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/Destroy()
 	if(ranged_ability_user)
@@ -133,7 +133,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			return 0
 
 	var/turf/T = get_turf(user)
-	if(T.z == ZLEVEL_CENTCOM && (!centcom_cancast || ticker.mode.name == "ragin' mages")) //Certain spells are not allowed on the centcom zlevel
+	if(T.z == ZLEVEL_CENTCOM && (!centcom_cancast || SSticker.mode.name == "ragin' mages")) //Certain spells are not allowed on the centcom zlevel
 		to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
 		return 0
 
@@ -223,8 +223,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/playMagSound()
 	playsound(get_turf(usr), sound,50,1)
 
-/obj/effect/proc_holder/spell/New()
-	..()
+/obj/effect/proc_holder/spell/Initialize()
+	. = ..()
 	action = new(src)
 
 	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
@@ -295,9 +295,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(isliving(target) && message)
 			to_chat(target, text("[message]"))
 		if(sparks_spread)
-			var/datum/effect_system/spark_spread/sparks = new
-			sparks.set_up(sparks_amt, 0, location) //no idea what the 0 is
-			sparks.start()
+			do_sparks(sparks_amt, FALSE, location)
 		if(smoke_spread)
 			if(smoke_spread == 1)
 				var/datum/effect_system/smoke_spread/smoke = new
@@ -329,6 +327,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			adjust_var(user, holder_var_type, -holder_var_amount)
 
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
+	if (!istype(target))
+		return
 	switch(type)
 		if("bruteloss")
 			target.adjustBruteLoss(amount)

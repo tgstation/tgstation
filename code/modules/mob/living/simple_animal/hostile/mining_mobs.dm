@@ -15,7 +15,7 @@
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	mob_size = MOB_SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
@@ -48,7 +48,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/death(gibbed)
-	feedback_add_details("mobs_killed_mining","[src.type]")
+	SSblackbox.add_details("mobs_killed_mining","[src.type]")
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk
@@ -266,15 +266,15 @@
 	update_icon()
 
 	if(implanted)
-		feedback_add_details("hivelord_core", "[type]|implanted")
+		SSblackbox.add_details("hivelord_core", "[type]|implanted")
 	else
-		feedback_add_details("hivelord_core", "[type]|stabilizer")
+		SSblackbox.add_details("hivelord_core", "[type]|stabilizer")
 
 
 /obj/item/organ/hivelord_core/proc/go_inert()
 	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
-	feedback_add_details("hivelord_core", "[src.type]|inert")
+	SSblackbox.add_details("hivelord_core", "[src.type]|inert")
 	update_icon()
 
 /obj/item/organ/hivelord_core/ui_action_click()
@@ -298,10 +298,10 @@
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
-				feedback_add_details("hivelord_core","[src.type]|used|other")
+				SSblackbox.add_details("hivelord_core","[src.type]|used|other")
 			else
 				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
-				feedback_add_details("hivelord_core","[src.type]|used|self")
+				SSblackbox.add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
@@ -502,7 +502,7 @@
 	for(var/obj/effect/goliath_tentacle/original/O in loc)//No more GG NO RE from 2+ goliaths simultaneously tentacling you
 		if(O != src)
 			qdel(src)
-	var/list/directions = cardinal.Copy()
+	var/list/directions = GLOB.cardinal.Copy()
 	var/counter
 	for(counter = 1, counter <= 3, counter++)
 		var/spawndir = pick(directions)
@@ -1009,7 +1009,7 @@
 #define MEDAL_PREFIX "Tendril"
 /mob/living/simple_animal/hostile/spawner/lavaland/death()
 	var/last_tendril = TRUE
-	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in mob_list)
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_list)
 		if(other != src)
 			last_tendril = FALSE
 			break

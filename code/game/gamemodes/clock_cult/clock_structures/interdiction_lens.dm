@@ -20,7 +20,7 @@
 	var/static/list/rage_messages = list("...", "Disgusting.", "Die.", "Foul.", "Worthless.", "Mortal.", "Unfit.", "Weak.", "Fragile.", "Useless.", "Leave my sight!")
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/Initialize()
-	..()
+	. = ..()
 	update_current_glow()
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/examine(mob/user)
@@ -97,7 +97,7 @@
 		var/efficiency = get_efficiency_mod()
 		var/rage_modifier = get_efficiency_mod(TRUE)
 
-		for(var/i in ai_list)
+		for(var/i in GLOB.ai_list)
 			var/mob/living/silicon/ai/AI = i
 			if(AI && AI.stat != DEAD && !is_servant_of_ratvar(AI))
 				unconverted_ai = TRUE
