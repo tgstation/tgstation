@@ -13,7 +13,6 @@
 	var/list/rangers = list()
 	var/charge = 35
 	var/stop = 0
-	var/list/select_name = list()
 	var/list/spotlights = list()
 	var/list/sparkles = list()
 	var/static/list/songs = list(
@@ -46,9 +45,8 @@
 	if(!beat)
 		beat = 5
 	if(!length)
-		length = 2400	//Unless there's a way to discern via BYOND.
+		length = 2400 //Unless there's a way to discern via BYOND.
 	var/datum/track/T = new /datum/track(name, file, length, beat)
-	available |= T.song_name
 	songs += T
 
 /obj/machinery/disco/Initialize()
@@ -143,14 +141,11 @@
 
 			var/list/available = list()
 			for(var/datum/track/S in songs)
-				available += S.song_name
-			select_name = input(usr, "Choose your song", "Track:") as null|anything in available
-			if (QDELETED(src))
+				available[S.song_name] = S
+			var/selected = input(usr, "Choose your song", "Track:") as null|anything in available
+			if(QDELETED(src) || !selected || !istype(available[selected], /datum/track))
 				return
-			for(var/datum/track/S in songs)
-				if(select_name == S.song_name)
-					selection = S
-					break
+			selection = available[selected]
 			updateUsrDialog()
 		if("horn")
 			deejay('sound/items/AirHorn2.ogg')
