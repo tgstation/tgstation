@@ -271,6 +271,7 @@
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/weapon/organ_storage,
 		/obj/item/borg/lollipop)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
