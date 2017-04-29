@@ -45,7 +45,7 @@
 /obj/item/weapon/melee/buff_arm
 	name = "extremely buff arm"
 	desc = "An extremely buff mass of muscle that on closer inspection seems to be trying to imitate an arm. You probably don't \
-		want to be on the recieving end of this."
+		want to be on the receiving end of this."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "buff_arm"
 	item_state = "buff_arm"
