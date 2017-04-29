@@ -37,6 +37,20 @@
 	song_length = length
 	song_beat = beat
 
+/obj/machinery/disco/proc/add_track(file, name, length, beat)
+	var/sound/S = file
+	if(!istype(S))
+		return
+	if(!name)
+		name = "[file]"
+	if(!beat)
+		beat = 5
+	if(!length)
+		length = 2400	//Unless there's a way to discern via BYOND.
+	var/datum/track/T = new /datum/track(name, file, length, beat)
+	available |= T.song_name
+	songs += T
+
 /obj/machinery/disco/Initialize()
 	..()
 	selection = songs[1]
