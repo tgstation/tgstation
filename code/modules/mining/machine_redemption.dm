@@ -23,7 +23,6 @@
 	var/list/ore_buffer = list()
 	var/datum/material_container/materials
 	var/datum/research/files
-	var/list/categories = list("Alloys")
 
 /obj/machinery/mineral/ore_redemption/Initialize()
 	. = ..()
@@ -33,7 +32,8 @@
 	files = new /datum/research/smelter(src)
 
 /obj/machinery/mineral/ore_redemption/Destroy()
-	qdel(materials)
+	QDEL_NULL(materials)
+	QDEL_NULL(files)
 	return ..()
 
 /obj/item/weapon/circuitboard/machine/ore_redemption

@@ -71,7 +71,6 @@
 	var/selected_material = MAT_METAL
 	var/selected_alloy = null
 	var/datum/research/files
-	var/list/categories = list("Alloys")
 
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
@@ -81,7 +80,8 @@
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	CONSOLE = null
-	qdel(materials)
+	QDEL_NULL(materials)
+	QDEL_NULL(files)
 	return ..()
 
 /obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
