@@ -1,5 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - tweak: "The GPS set tag has gone from a limit of 5 characters to 20."
-  - rscadd: "The GPS can now be personalized in both name and description using a pen."
