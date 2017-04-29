@@ -304,14 +304,14 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		log_admin_private(msg)
 
 //Mark open ticket as resolved/legitimate, returns ahelp verb
-/datum/admin_help/proc/Resolve(key_name = key_name_admin(usr), silent = FALSE)
+/datum/admin_help/proc/Resolve(key_name = key_name_admin(usr), silent = FALSE, reset_verb = TRUE)
 	if(state != AHELP_ACTIVE)
 		return
 	RemoveActive()
 	state = AHELP_RESOLVED
 	GLOB.ahelp_tickets.ListInsert(src)
 	
-	if(initiator)
+	if(reset_verb && initiator)
 		initiator.giveadminhelpverb()
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
@@ -359,8 +359,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message_admins(msg)
 	log_admin_private(msg)
 	AddInteraction("Marked as IC issue by [key_name]")
-	Resolve(silent = TRUE)
-	TimeoutVerb()
+	Resolve(silent = TRUE, reset_verb = FALSE)
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
@@ -451,7 +450,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //
 
 /client/proc/giveadminhelpverb()
-	src.verbs |= /client/verb/adminhelp
+	verbs |= /client/verb/adminhelp
 	deltimer(adminhelptimerid)
 	adminhelptimerid = 0
 
@@ -485,6 +484,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		else
 			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
 			current_ticket.Close()
+
+	if(!(/client/verb/adminhelp in verbs))
+		to_chat(usr, "<span class='warning'>Nice try!</span>")
+		return
 
 	new /datum/admin_help(msg, src, FALSE)
 
