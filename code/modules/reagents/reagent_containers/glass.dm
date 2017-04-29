@@ -291,7 +291,6 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	origin_tech = null
-	flags = 0
 
 /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
