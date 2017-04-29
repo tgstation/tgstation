@@ -254,6 +254,8 @@
 		if(held_index > C.hand_bodyparts.len)
 			C.hand_bodyparts.len = held_index
 		C.hand_bodyparts[held_index] = src
+		if(C.dna.species.mutanthands && !is_pseudopart)
+			C.put_in_hand(new C.dna.species.mutanthands(), held_index)
 		if(C.hud_used)
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
@@ -268,6 +270,9 @@
 				C.surgeries -= S
 				qdel(S)
 				break
+
+	for(var/obj/item/organ/O in contents)
+		O.Insert(C)
 
 	update_bodypart_damage_state()
 
