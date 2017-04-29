@@ -13,7 +13,6 @@
 	var/list/rangers = list()
 	var/charge = 35
 	var/stop = 0
-	var/list/available = list()
 	var/list/select_name = list()
 	var/list/spotlights = list()
 	var/list/sparkles = list()
@@ -30,6 +29,7 @@
 	var/song_path = null
 	var/song_length = 0
 	var/song_beat = 0
+	var/GBP_required = 0
 
 /datum/track/New(name, path, length, beat)
 	song_name = name
@@ -140,7 +140,10 @@
 			if(active)
 				to_chat(usr, "<span class='warning'>Error: You cannot change the song until the current one is over.</span>")
 				return
-			check_GBP()
+
+			var/list/available = list()
+			for(var/datum/track/S in songs)
+				available += S.song_name
 			select_name = input(usr, "Choose your song", "Track:") as null|anything in available
 			if (QDELETED(src))
 				return
@@ -172,13 +175,6 @@
 		return
 	charge -= 5
 	playsound(src, S,300,1)
-
-/obj/machinery/disco/proc/check_GBP()
-	available |= "Engineering's Basic Beat"
-	available |= "Engineering's Domination Dance"
-	available |= "Engineering's Superiority Shimmy"
-	available |= "Engineering's Ultimate High-Energy Hustle"
-
 
 /obj/machinery/disco/proc/dance_setup()
 	stop = world.time + selection.song_length
