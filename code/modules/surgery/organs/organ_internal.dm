@@ -39,7 +39,7 @@
 		M.internal_organs -= src
 		if(M.internal_organs_slot[slot] == src)
 			M.internal_organs_slot.Remove(slot)
-		if(vital && !special)
+		if(vital && !special && !(M.status_flags & GODMODE))
 			M.death()
 	for(var/X in actions)
 		var/datum/action/A = X
