@@ -1,4 +1,4 @@
-#define EXPLOSION_THROW_SPEED
+#define EXPLOSION_THROW_SPEED 4
 
 GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
