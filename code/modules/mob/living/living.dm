@@ -597,7 +597,7 @@
 	return name
 
 /mob/living/update_gravity(has_gravity,override = 0)
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
 		clear_alert("weightless")
