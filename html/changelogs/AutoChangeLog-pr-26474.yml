@@ -1,4 +1,0 @@
-author: "CoreOverload"
-delete-after: True
-changes: 
-  - rscadd: "Gas injectors are now buildable!"

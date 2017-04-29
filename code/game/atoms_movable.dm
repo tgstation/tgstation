@@ -46,7 +46,7 @@
 	return ..()
 
 /atom/movable/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/L in initial_languages)
 		grant_language(L)
 
@@ -121,7 +121,7 @@
 
 	if(flags & CLEAN_ON_MOVE)
 		clean_on_move()
-	
+
 	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
 	if(proximity_monitor)
 		proximity_monitor.HandleMove()
@@ -562,7 +562,7 @@
 		return
 	else
 		var/turf/currentturf = get_turf(src)
-		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		var/turf/targetturf = relocate()
 		log_game("[src] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
 		if(HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE))

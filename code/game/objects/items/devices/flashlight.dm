@@ -100,8 +100,8 @@
 	icon_state = "medi_holo"
 	duration = 30
 
-/obj/effect/overlay/temp/medical_holosign/New(loc, creator)
-	..()
+/obj/effect/overlay/temp/medical_holosign/Initialize(mapload, creator)
+	. = ..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)
 		visible_message("<span class='danger'>[creator] created a medical hologram!</span>")

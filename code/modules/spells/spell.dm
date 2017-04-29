@@ -223,8 +223,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/playMagSound()
 	playsound(get_turf(usr), sound,50,1)
 
-/obj/effect/proc_holder/spell/New()
-	..()
+/obj/effect/proc_holder/spell/Initialize()
+	. = ..()
 	action = new(src)
 
 	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"

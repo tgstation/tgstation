@@ -7,10 +7,14 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;magnets=1;bluespace=2"
+	unique_rename = TRUE
 	var/gpstag = "COM0"
 	var/emped = FALSE
 	var/turf/locked_location
 	var/tracking = TRUE
+	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
+	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
+
 
 /obj/item/device/gps/Initialize()
 	..()
@@ -27,6 +31,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	cut_overlay("working")
 	add_overlay("emp")
 	addtimer(CALLBACK(src, .proc/reboot), 300, TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
+	SStgui.close_uis(src) //Close the UI control if it is open.
 
 /obj/item/device/gps/proc/reboot()
 	emped = FALSE
@@ -34,6 +39,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	add_overlay("working")
 
 /obj/item/device/gps/AltClick(mob/user)
+	toggletracking(user)
+
+/obj/item/device/gps/proc/toggletracking(mob/user)
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return //user not valid to use gps
 	if(emped)
@@ -48,36 +56,80 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		to_chat(user, "[src] is now tracking, and visible to other GPS devices.")
 		tracking = TRUE
 
-/obj/item/device/gps/attack_self(mob/user)
-	if(!tracking)
-		to_chat(user, "[src] is turned off. Use alt+click to toggle it back on.")
-		return
 
-	var/obj/item/device/gps/t = ""
-	var/gps_window_height = 110 + GLOB.GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
+/obj/item/device/gps/ui_interact(mob/user, ui_key = "gps", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	if(emped)
-		t += "ERROR"
-	else
-		t += "<BR><A href='?src=\ref[src];tag=1'>Set Tag</A> "
-		t += "<BR>Tag: [gpstag]"
-		if(locked_location && locked_location.loc)
-			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
-			gps_window_height += 20
+		to_chat(user, "[src] fizzles weakly.")
+		return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		var/gps_window_height = 300 + GLOB.GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
+		ui = new(user, src, ui_key, "gps", "Global Positioning System", 600, gps_window_height, master_ui, state) //width, height
+		ui.open()
 
-		for(var/obj/item/device/gps/G in GLOB.GPS_list)
-			var/turf/pos = get_turf(G)
-			var/area/gps_area = get_area(G)
-			var/tracked_gpstag = G.gpstag
-			if(G.emped == 1)
-				t += "<BR>[tracked_gpstag]: ERROR"
-			else if(G.tracking)
-				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
-			else
-				continue
-	var/datum/browser/popup = new(user, "GPS", name, 360, min(gps_window_height, 800))
-	popup.set_content(t)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
+	ui.set_autoupdate(state = updating)
+
+
+/obj/item/device/gps/ui_data(mob/user)
+	var/list/data = list()
+	data["power"] = tracking
+	data["tag"] = gpstag
+	data["updating"] = updating
+	data["globalmode"] = global_mode
+	if(!tracking || emped) //Do not bother scanning if the GPS is off or EMPed
+		return data
+
+	var/turf/curr = get_turf(src)
+	data["current"] = "[get_area_name(curr)] ([curr.x], [curr.y], [curr.z])"
+
+	var/list/signals = list()
+	data["signals"] = list()
+
+	for(var/gps in GLOB.GPS_list)
+		var/obj/item/device/gps/G = gps
+		if(G.emped || !G.tracking || G == src)
+			continue
+		var/turf/pos = get_turf(G)
+		if(!global_mode && pos.z != curr.z)
+			continue
+		var/area/gps_area = get_area_name(G)
+		var/list/signal = list()
+		signal["entrytag"] = G.gpstag //Name or 'tag' of the GPS
+		signal["area"] = format_text(gps_area)
+		signal["coord"] = "[pos.x], [pos.y], [pos.z]"
+		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
+			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
+			signal["degrees"] = round(Get_Angle(curr, pos)) //0-360 degree directional bearing, for more precision.
+			var/direction = uppertext(dir2text(get_dir(curr, pos))) //Direction text (East, etc). Not as precise, but still helpful.
+			if(!direction)
+				direction = "CENTER"
+				signal["degrees"] = "N/A"
+			signal["direction"] = direction
+
+		signals += list(signal) //Add this signal to the list of signals
+	data["signals"] = signals
+	return data
+
+
+
+/obj/item/device/gps/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("rename")
+			var/a = input("Please enter desired tag.", name, gpstag) as text
+			a = copytext(sanitize(a), 1, 20)
+			gpstag = a
+			. = TRUE
+		if("power")
+			toggletracking(usr)
+			. = TRUE
+		if("updating")
+			updating = !updating
+			. = TRUE
+		if("globalmode")
+			global_mode = !global_mode
+			. = TRUE
 
 /obj/item/device/gps/Topic(href, href_list)
 	..()

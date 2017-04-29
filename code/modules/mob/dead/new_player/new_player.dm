@@ -30,6 +30,7 @@
 		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
+	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/new_player/proc/new_player_panel()
 
@@ -148,7 +149,7 @@
 			return 1
 
 	if(href_list["late_join"])
-		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
+		if(!SSticker || !SSticker.IsRoundInProgress())
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 

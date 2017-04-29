@@ -14883,6 +14883,20 @@
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"Me" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Mf" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -64444,7 +64458,7 @@ Fa
 Fh
 Fh
 Fh
-Fh
+Me
 Fh
 Fh
 Fa
@@ -65729,7 +65743,7 @@ Fa
 Md
 Fp
 FC
-Fh
+Mf
 Fh
 Fh
 Fa

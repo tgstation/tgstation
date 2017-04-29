@@ -115,9 +115,9 @@
 						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
 						switch(GLOB.security_level)
 							if(SEC_LEVEL_GREEN)
-								feedback_inc("alert_comms_green",1)
+								SSblackbox.inc("alert_comms_green",1)
 							if(SEC_LEVEL_BLUE)
-								feedback_inc("alert_comms_blue",1)
+								SSblackbox.inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else
 					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
@@ -176,7 +176,7 @@
 								SSshuttle.points -= S.credit_cost
 								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
 								message_admins("[key_name_admin(usr)] purchased [S.name].")
-								feedback_add_details("shuttle_purchase", S.name)
+								SSblackbox.add_details("shuttle_purchase", S.name)
 							else
 								to_chat(usr, "Something went wrong! The shuttle exchange system seems to be down.")
 						else
@@ -368,9 +368,9 @@
 				message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
 				switch(GLOB.security_level)
 					if(SEC_LEVEL_GREEN)
-						feedback_inc("alert_comms_green",1)
+						SSblackbox.inc("alert_comms_green",1)
 					if(SEC_LEVEL_BLUE)
-						feedback_inc("alert_comms_blue",1)
+						SSblackbox.inc("alert_comms_blue",1)
 			tmp_alertlevel = 0
 			src.aistate = STATE_DEFAULT
 		if("ai-changeseclevel")

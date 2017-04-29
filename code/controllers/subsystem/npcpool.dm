@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(npcpool)
 /datum/controller/subsystem/npcpool/stat_entry()
 	..("NPCS:[processing.len]|D:[needsDelegate.len]|A:[needsAssistant.len]|U:[canBeUsed.len]")
 
-/datum/controller/subsystem/npcpool/proc/stop_processing(mob/living/carbon/human/interactive/I)
+/datum/controller/subsystem/npcpool/proc/stop_processing(mob/living/I)
 	processing -= I
 	currentrun -= I
 	needsDelegate -= I

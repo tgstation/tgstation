@@ -52,8 +52,8 @@
 		"toxin"
 	)
 
-/obj/machinery/chem_dispenser/New()
-	..()
+/obj/machinery/chem_dispenser/Initialize()
+	. = ..()
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
@@ -244,8 +244,8 @@
 		)
 	)
 
-/obj/machinery/chem_dispenser/constructable/New()
-	..()
+/obj/machinery/chem_dispenser/constructable/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_dispenser(null)
 	B.apply_default_parts(src)
 

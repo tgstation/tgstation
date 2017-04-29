@@ -21,7 +21,7 @@
 	attach(A2,user)
 	name = "[A.name]-[A2.name] assembly"
 	update_icon()
-	feedback_add_details("assembly_made","[initial(A.name)]-[initial(A2.name)]")
+	SSblackbox.add_details("assembly_made","[initial(A.name)]-[initial(A2.name)]")
 
 /obj/item/device/assembly_holder/proc/attach(obj/item/device/assembly/A, mob/user)
 	if(!A.remove_item_from_storage(src))

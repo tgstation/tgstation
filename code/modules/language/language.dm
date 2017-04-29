@@ -21,6 +21,21 @@
 	var/static/list/scramble_cache = list()
 	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
 
+	// if you are seeing someone speak popcorn language, then something is wrong.
+	var/icon = 'icons/misc/language.dmi'
+	var/icon_state = "popcorn"
+
+/datum/language/proc/display_icon(atom/movable/hearer)
+	var/understands = hearer.has_language(src.type)
+	if(flags & LANGUAGE_HIDE_ICON_IF_UNDERSTOOD && understands)
+		return FALSE
+	if(flags & LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD && !understands)
+		return FALSE
+	return TRUE
+
+/datum/language/proc/get_icon()
+	return "<img class=icon src=\ref[icon] iconstate='[icon_state]'>"
+
 /datum/language/proc/get_random_name(gender, name_count=2, syllable_count=4, syllable_divisor=2)
 	if(!syllables || !syllables.len)
 		if(gender==FEMALE)
@@ -93,3 +108,13 @@
 	return speech_verb
 
 #undef SCRAMBLE_CACHE_LEN
+
+/proc/get_language_instance(langtype)
+	if(!ispath(langtype, /datum/language))
+		return
+
+	if(!GLOB.language_datums[langtype])
+		var/datum/language/langdatum = new langtype
+		GLOB.language_datums[langtype] = langdatum
+
+	. = GLOB.language_datums[langtype]

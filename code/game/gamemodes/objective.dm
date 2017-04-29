@@ -654,7 +654,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			for(var/mob/dead/new_player/P in GLOB.player_list)
 				if(P.client && P.ready && P.mind!=owner)
 					n_p ++
-		else if (SSticker.current_state == GAME_STATE_PLAYING)
+		else if (SSticker.IsRoundInProgress())
 			for(var/mob/living/carbon/human/P in GLOB.player_list)
 				if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
 					n_p ++

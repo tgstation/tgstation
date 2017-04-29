@@ -43,7 +43,7 @@
 					C << 'sound/effects/pray.ogg'
 	to_chat(usr, "Your prayers have been received by the gods.")
 
-	feedback_add_details("admin_verb","Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
 /proc/Centcomm_announce(text , mob/Sender)
