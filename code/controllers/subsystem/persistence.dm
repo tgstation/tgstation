@@ -11,10 +11,14 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_messages = list()
 	var/savefile/chisel_messages_sav
 
+	var/savefile/trophy_sav
+	var/old_trophy_list = ""
+
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
 	LoadPoly()
 	LoadChiselMessages()
+	LoadTrophies()
 	..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
@@ -105,10 +109,23 @@ SUBSYSTEM_DEF(persistence)
 			M.persists = FALSE
 			qdel(M)
 
+/datum/controller/subsystem/persistence/proc/LoadTrophies()
+	trophy_sav = new /savefile("data/npc_saves/TrophyItems.sav")
+	trophy_sav >> old_trophy_list
+
+	var/list/expanded_trophy_items = list()
+
+	if(!isnull(old_trophy_list))
+		expanded_trophy_items = splittext(old_trophy_list,"#")
+		SetUpTrophies(expanded_trophy_items)
+	else
+		expanded_trophy_items.len = 0
+
 
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
 	CollectSecretSatchels()
+	CollectTrophies()
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	for(var/A in new_secret_satchels)
@@ -135,4 +152,31 @@ SUBSYSTEM_DEF(persistence)
 	chisel_messages_sav[SSmapping.config.map_name] << json_encode(saved_messages)
 
 /datum/controller/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/M)
-	saved_messages += list(M.pack()) // dm eats one list.
+	saved_messages += list(M.pack()) // dm eats one list
+
+
+/datum/controller/subsystem/persistence/proc/CollectTrophies()
+	for(var/A in GLOB.trophy_cases)
+		var/obj/structure/displaycase/trophy/T = A
+		if(T.showpiece)
+			old_trophy_list += "[T.showpiece.type]|[T.trophy_message]#"
+	trophy_sav << old_trophy_list
+
+/datum/controller/subsystem/persistence/proc/SetUpTrophies(list/expanded_trophy_items)
+	for(var/A in GLOB.trophy_cases)
+		var/obj/structure/displaycase/trophy/T = A
+		T.added_roundstart = TRUE
+
+		var/trophy_string = pick_n_take(expanded_trophy_items)
+
+		var/list/chosen_trophy = splittext(trophy_string,"|")
+		if(!chosen_trophy || isemptylist(chosen_trophy) || chosen_trophy.len != 2) //Malformed
+			continue
+
+		var/path = text2path(chosen_trophy[1]) //If the item no longer exist, this returns null
+		if(!path)
+			continue
+
+		T.showpiece = new path
+		T.trophy_message = chosen_trophy[2]
+		T.update_icon()

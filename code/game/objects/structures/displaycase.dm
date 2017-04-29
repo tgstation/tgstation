@@ -16,8 +16,8 @@
 	var/obj/item/weapon/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
 
-/obj/structure/displaycase/New()
-	..()
+/obj/structure/displaycase/Initialize()
+	. = ..()
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
 	update_icon()
@@ -249,3 +249,63 @@
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(GLOB.access_rd)
+
+
+
+/obj/structure/displaycase/trophy
+	name = "trophy display case"
+	desc = "Store your trophies of accomplishment in here, and they will stay forever."
+	resistance_flags = ALL
+	var/trophy_message = ""
+	var/added_roundstart = TRUE
+
+/obj/structure/displaycase/trophy/Initialize()
+	. = ..()
+	GLOB.trophy_cases += src
+
+/obj/structure/displaycase/trophy/Destroy()
+	GLOB.trophy_cases -= src
+	. = ..()
+
+/obj/structure/displaycase/trophy/examine(mob/user)
+	..()
+	if(trophy_message)
+		to_chat(user, "The plaque reads:")
+		to_chat(user, trophy_message)
+
+/obj/structure/displaycase/trophy/attackby(obj/item/weapon/W, mob/user, params)
+
+	if(!added_roundstart)
+		to_chat(user, "You've already put something new in this case.")
+		return
+
+	if(is_type_in_typecache(W, GLOB.blacklisted_cargo_types))
+		to_chat(user, "You think putting [W] in would be a bad idea.")
+		return
+
+	if(user.drop_item())
+
+		if(showpiece)
+			to_chat(user, "You press a button, and [showpiece] descends into the floor of the case.")
+			SSpersistence.old_trophy_list += "[showpiece.type]|[trophy_message]#"
+			qdel(showpiece)
+			showpiece = null
+
+		to_chat(user, "You insert [W] into the case.")
+		W.forceMove(src)
+		showpiece = W
+		added_roundstart = FALSE
+		update_icon()
+
+		trophy_message = W.desc //default value
+
+		var/chosen_plaque = stripped_input(user, "What would you like the plaque to say? Default value is item's description", "Trophy Plaque")
+		if(chosen_plaque && user.Adjacent(src))
+			trophy_message = chosen_plaque
+			to_chat(user, "You set the plaque's text.")
+
+	else
+		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the [src.name]!</span>")
+
+	return
+
