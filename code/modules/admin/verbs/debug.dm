@@ -89,6 +89,7 @@ GLOBAL_VAR_INIT(AdminProcCallCount, 0)
 GLOBAL_PROTECT(AdminProcCallCount)
 
 /proc/WrapAdminProcCall(target, procname, list/arguments)
+	set waifor = FALSE
 	var/current_caller = GLOB.AdminProcCaller
 	var/ckey = usr.client.ckey
 	if(current_caller && current_caller != ckey)
@@ -103,6 +104,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 //adv proc call this, ya nerds
 /world/proc/WrapAdminProcCall(target, procname, list/arguments)
+	set waitfor = FALSE
 	if(target == GLOBAL_PROC)
 		return call(procname)(arglist(arguments))
 	else
