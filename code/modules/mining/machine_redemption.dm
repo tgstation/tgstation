@@ -111,9 +111,17 @@
 	var/area/A = get_area(src)
 	var/msg = "Now available in [A]:<br>"
 
+	var/has_minerals = FALSE
+
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
-		msg += "[capitalize(M.name)]: [M.amount / MINERAL_MATERIAL_AMOUNT] sheets<br>"
+		var/mineral_amount = M.amount / MINERAL_MATERIAL_AMOUNT
+		if(mineral_amount)
+			has_minerals = TRUE
+		msg += "[capitalize(M.name)]: [mineral_amount] sheets<br>"
+
+	if(!has_minerals)
+		return
 
 	for(var/obj/machinery/requests_console/D in GLOB.allConsoles)
 		if(D.receive_ore_updates)
