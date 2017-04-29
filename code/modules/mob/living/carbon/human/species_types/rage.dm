@@ -42,6 +42,8 @@ but essentially loses their ability to interact in any meaningful way that doesn
 	H.visible_message("<span class='danger'>[H]'s arms rapidly expand and contort into throbbing masses of muscle, their faces contorting into that of some wild, bloodlusting beast!</span>")
 	H.AddSpell(new /obj/effect/proc_holder/spell/aimed/groundpound)
 	H.resize = 1.25
+	H.mind.objectives += new/datum/objective("<span class='userdanger'>CRUSH. KILL. DESTROY. FEAST UPON THE BLOOD OF THE WEAK.</span>") //unstable war machine, kill or be killed
+	H.mind.announce_objectives()
 
 /datum/species/rage/on_species_loss(mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[H] convulses and contorts violently as their body rapidly changes, exploding into a shower of gibs!</span>")

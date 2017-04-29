@@ -69,7 +69,7 @@
 /obj/item/weapon/melee/buff_arm/afterattack(target, mob/user)
 	if(user && target == user)
 		user.visible_message("<span class='danger'>[user] beats their chest in a fit of primal rage!</span>")
-		user.say(pick("GRRAAAGHHH!!!", "RAAAAAAGHH!!!", "AAAAAGGRHHHH!!!"))
+		user.say(pick(";GRRAAAGHHH!!!", ";RAAAAAAGHH!!!", ";AAAAAGGRHHHH!!!"))
 		playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 		return
 
@@ -115,6 +115,9 @@
 		user.visible_message("<span class='warning'>[user] forces the airlock to open with their [src]!</span>", "<span class='warning'>You managed to pry the door open.</span>", \
 		"<span class='italics'>You hear a metal screeching sound.</span>")
 		A.open(2)
+
+	else if(prob(25))
+		user.say(pick(";RAAAAAARRGH!!!",";GRRRRAAAUGGH!!!",";AAAAAARGGHH!!!"))
 
 /obj/item/weapon/melee/sabre
 	name = "officer's sabre"
