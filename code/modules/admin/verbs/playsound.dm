@@ -7,7 +7,10 @@
 	log_admin("[key_name(src)] played sound [S]")
 	message_admins("[key_name_admin(src)] played sound [S]")
 
-	var/freq = 1
+	var/freq = input(usr,"What frequency? Default : 1. 2 is twice as fast, -1 is backwards. Anything above or below 100/-100 respectively will be treated as Hz instead of multiplier.", "Frequnecy", 1) as null|num
+	var/volume = input(usr, "Volume? 100 for full volume, 0 for mute.", "Volume", 100) as null|num
+	if(isnull(freq) || isnull(volume))
+		return
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
 		to_chat(src, "You feel the Honkmother messing with your song...")
@@ -27,11 +30,14 @@
 
 	SSblackbox.add_details("admin_verb","Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
 /client/proc/play_local_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Local Sound"
 	if(!check_rights(R_SOUNDS))
+		return
+	var/freq = input(usr,"What frequency? Default : 1. 2 is twice as fast, -1 is backwards. Anything above or below 100/-100 respectively will be treated as Hz instead of multiplier.", "Frequnecy", 1) as null|num
+	var/volume = input(usr, "Volume? 100 for full volume, 0 for mute.", "Volume", 100) as null|num
+	if(isnull(freq) || isnull(volume))
 		return
 
 	log_admin("[key_name(src)] played a local sound [S]")
