@@ -345,13 +345,13 @@
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
-		feedback_set_details("round_end_result","win - heads killed")
+		SSblackbox.set_details("round_end_result","win - heads killed")
 		to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>")
 
 		SSticker.news_report = REVS_WIN
 
 	else if(finished == 2)
-		feedback_set_details("round_end_result","loss - rev heads killed")
+		SSblackbox.set_details("round_end_result","loss - rev heads killed")
 		to_chat(world, "<span class='redtext'>The heads of staff managed to stop the revolution!</span>")
 
 		SSticker.news_report = REVS_LOSE

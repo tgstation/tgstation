@@ -14,8 +14,8 @@
 	var/delay = 10
 	req_access = list(GLOB.access_rd) //Only the R&D can change server settings.
 
-/obj/machinery/r_n_d/server/New()
-	..()
+/obj/machinery/r_n_d/server/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
 
@@ -38,7 +38,7 @@
 	heat_gen /= max(1, tot_rating)
 
 /obj/machinery/r_n_d/server/Initialize(mapload)
-	..()
+	. = ..()
 	if(!files) files = new /datum/research(src)
 	var/list/temp_list
 	if(!id_with_upload.len)
@@ -137,7 +137,7 @@
 	server_id = -1
 
 /obj/machinery/r_n_d/server/centcom/Initialize()
-	..()
+	. = ..()
 	fix_noid_research_servers()
 
 /proc/fix_noid_research_servers()

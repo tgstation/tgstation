@@ -60,6 +60,8 @@
 						var/data, var/compression, var/list/level, var/freq, var/list/spans,
 						var/verb_say, var/verb_ask, var/verb_exclaim, var/verb_yell, var/datum/language/language)
 
+	set waitfor = FALSE
+
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 
 	if(!message)
@@ -142,32 +144,10 @@
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
 		var/blackbox_msg = "[AM] [AM.say_quote(message, spans)]"
-		if(istype(GLOB.blackbox))
-			switch(freq)
-				if(1459)
-					GLOB.blackbox.msg_common += blackbox_msg
-				if(1351)
-					GLOB.blackbox.msg_science += blackbox_msg
-				if(1353)
-					GLOB.blackbox.msg_command += blackbox_msg
-				if(1355)
-					GLOB.blackbox.msg_medical += blackbox_msg
-				if(1357)
-					GLOB.blackbox.msg_engineering += blackbox_msg
-				if(1359)
-					GLOB.blackbox.msg_security += blackbox_msg
-				if(1441)
-					GLOB.blackbox.msg_deathsquad += blackbox_msg
-				if(1213)
-					GLOB.blackbox.msg_syndicate += blackbox_msg
-				if(1349)
-					GLOB.blackbox.msg_service += blackbox_msg
-				if(1347)
-					GLOB.blackbox.msg_cargo += blackbox_msg
-				else
-					GLOB.blackbox.messages += blackbox_msg
+		SSblackbox.LogBroadcast(blackbox_msg, freq)
 
-	spawn(50)
+	sleep(50)
+	if(!QDELETED(virt)) //It could happen to YOU
 		qdel(virt)
 
 //Use this to test if an obj can communicate with a Telecommunications Network

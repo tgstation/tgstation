@@ -111,6 +111,10 @@
 #define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"
 #define ui_alien_queen_finder "EAST-1:28,CENTER-3:15"
 
+//constructs
+#define ui_construct_pull "EAST,CENTER-2:15"
+#define ui_construct_health "EAST,CENTER:15"  //same as borgs and humans
+
 // AI
 
 #define ui_ai_core "SOUTH:6,WEST"

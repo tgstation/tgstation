@@ -30,7 +30,6 @@
 	var/list/hands_nodrop = list()
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
-	var/image/phase_underlay = null
 	var/datum/action/innate/chrono_teleport/teleport_now = new
 	var/activating = 0
 	var/activated = 0
@@ -97,10 +96,6 @@
 		for(var/obj/item/I in user.held_items)
 			if(I in hands_nodrop)
 				I.flags &= ~NODROP
-		if(phase_underlay && !QDELETED(phase_underlay))
-			user.underlays -= phase_underlay
-			qdel(phase_underlay)
-			phase_underlay = null
 		if(camera)
 			camera.remove_target_ui()
 			camera.loc = user
@@ -132,8 +127,6 @@
 				to_chat(user, "<span class='notice'>Your [exposed_I.name] got left behind.</span>")
 
 		user.ExtinguishMob()
-
-		phase_underlay = create_phase_underlay(user)
 
 		hands_nodrop = list()
 		for(var/obj/item/I in user.held_items)
@@ -170,15 +163,6 @@
 		phase_timer_id = addtimer(CALLBACK(src, .proc/finish_chronowalk, user, to_turf), 3, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
-
-
-/obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(var/mob/user)
-	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "")
-	user_icon.AddAlphaMask(getFlatIcon(user))
-	var/image/phase = new(user_icon)
-	phase.appearance_flags = RESET_COLOR|RESET_ALPHA
-	user.underlays += phase
-	return phase
 
 /obj/item/clothing/suit/space/chronos/process()
 	if(activated)

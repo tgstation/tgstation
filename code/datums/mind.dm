@@ -1143,7 +1143,7 @@
 					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
-					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
+					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
 				SSticker.mode.devils += src
 				special_role = "devil"
@@ -1192,14 +1192,17 @@
 				log_admin("[key_name(usr)] turned [current] into abductor.")
 				SSticker.mode.update_abductor_icons_added(src)
 			if("equip")
+				if(!ishuman(current))
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
+					return
+
+				var/mob/living/carbon/human/H = current
 				var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
 				if(gear)
-					var/datum/game_mode/abduction/temp = new
-					temp.equip_common(current)
 					if(gear=="Agent")
-						temp.equip_agent(current)
+						H.equipOutfit(/datum/outfit/abductor/agent)
 					else
-						temp.equip_scientist(current)
+						H.equipOutfit(/datum/outfit/abductor/scientist)
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
@@ -1468,11 +1471,8 @@
 	H.set_species(/datum/species/abductor)
 	var/datum/species/abductor/S = H.dna.species
 
-	switch(role)
-		if("Agent")
-			S.agent = 1
-		if("Scientist")
-			S.scientist = 1
+	if(role == "Scientist")
+		S.scientist = TRUE
 	S.team = team
 
 	var/list/obj/effect/landmark/abductor/agent_landmarks = new
@@ -1489,13 +1489,10 @@
 	if(teleport=="Yes")
 		switch(role)
 			if("Agent")
-				S.agent = 1
 				L = agent_landmarks[team]
-				H.loc = L.loc
 			if("Scientist")
-				S.scientist = 1
-				L = agent_landmarks[team]
-				H.loc = L.loc
+				L = scientist_landmarks[team]
+		H.forceMove(L.loc)
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S

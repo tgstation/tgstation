@@ -2,7 +2,7 @@
 /datum/controller/subsystem
 	// Metadata; you should define these.
 	name = "fire coderbus" //name of the subsystem
-	var/init_order = 0		//order of initialization. Higher numbers are initialized first, lower numbers later. Can be decimal and negative values.
+	var/init_order = INIT_ORDER_DEFAULT		//order of initialization. Higher numbers are initialized first, lower numbers later. Use defines in __DEFINES/subsystems.dm for easy understanding of order.
 	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
 	var/priority = 50		//When mutiple subsystems need to run in the same tick, higher priority subsystems will run first and be given a higher share of the tick before MC_TICK_CHECK triggers a sleep
 
@@ -145,10 +145,11 @@
 
 /datum/controller/subsystem/proc/pause()
 	. = 1
-	if (state == SS_RUNNING)
-		state = SS_PAUSED
-	else if (state == SS_SLEEPING)
-		state = SS_PAUSING
+	switch(state)
+		if(SS_RUNNING)
+			state = SS_PAUSED
+		if(SS_SLEEPING)
+			state = SS_PAUSING
 
 
 //used to initialize the subsystem AFTER the map has loaded

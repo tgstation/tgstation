@@ -145,11 +145,11 @@
 	obj_integrity = 70
 	max_integrity = 70
 	buildstackamount = 2
-	var/image/armrest = null
+	var/mutable_appearance/armrest
 	item_chair = null
 
 /obj/structure/chair/comfy/Initialize()
-	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
+	armrest = mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
 	return ..()
 

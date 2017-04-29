@@ -100,8 +100,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		C.files.RefreshResearch()
 
 
-/obj/machinery/computer/rdconsole/New()
-	..()
+/obj/machinery/computer/rdconsole/Initialize()
+	. = ..()
 	files = new /datum/research(src) //Setup the research data holder.
 	matching_designs = list()
 	if(!id)
@@ -309,13 +309,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/T in temp_tech)
 					var/datum/tech/KT = files.known_tech[T] //For stat logging of high levels
 					if(files.IsTechHigher(T, temp_tech[T]) && KT.level >= 5) //For stat logging of high levels
-						feedback_add_details("high_research_level","[KT][KT.level + 1]") //+1 to show the level which we're about to get
+						SSblackbox.add_details("high_research_level","[KT][KT.level + 1]") //+1 to show the level which we're about to get
 					files.UpdateTech(T, temp_tech[T])
 
 				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 					for(var/material in linked_destroy.loaded_item.materials)
 						linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
-					feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
+					SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
 				linked_destroy.loaded_item = null
 				for(var/obj/I in linked_destroy.contents)
 					for(var/mob/M in I.contents)
@@ -452,7 +452,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							new_item.materials = efficient_mats.Copy()
 						new_item.loc = linked_lathe.loc
 						if(!already_logged)
-							feedback_add_details("item_printed","[new_item.type]|[amount]")
+							SSblackbox.add_details("item_printed","[new_item.type]|[amount]")
 							already_logged = 1
 				screen = old_screen
 				linked_lathe.busy = 0
@@ -519,7 +519,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					var/obj/item/new_item = new P(src)
 					new_item.loc = linked_imprinter.loc
 					new_item.materials = efficient_mats.Copy()
-					feedback_add_details("circuit_printed","[new_item.type]")
+					SSblackbox.add_details("circuit_printed","[new_item.type]")
 				screen = old_screen
 				linked_imprinter.busy = 0
 			else
@@ -1065,10 +1065,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = null
 	req_access_txt = "29"
 
-/obj/machinery/computer/rdconsole/robotics/New()
-	..()
+/obj/machinery/computer/rdconsole/robotics/Initialize()
+	. = ..()
 	if(circuit)
-		circuit.name = "RD Console - Robotics (Computer Board)"
+		circuit.name = "R&D Console - Robotics (Computer Board)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
 
 /obj/machinery/computer/rdconsole/core

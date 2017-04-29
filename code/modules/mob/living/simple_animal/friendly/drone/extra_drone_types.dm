@@ -139,8 +139,6 @@
 	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 
-	grant_language(/datum/language/ratvar)
-
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)

@@ -14,7 +14,7 @@
 	var/tables_required = 2
 	active = FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/New()
+/obj/machinery/power/emitter/energycannon/magical/Initialize()
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
@@ -60,6 +60,7 @@
 	obj_integrity = 1000
 	max_integrity = 1000
 	verb_say = "chants"
+	initial_languages = list(/datum/language/common)
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
 	var/never_spoken = TRUE
@@ -68,7 +69,6 @@
 /obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	grant_language(/datum/language/common)
 
 /obj/structure/table/abductor/wabbajack/Destroy()
 	STOP_PROCESSING(SSobj, src)

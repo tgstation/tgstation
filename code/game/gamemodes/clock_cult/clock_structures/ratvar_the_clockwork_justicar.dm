@@ -25,7 +25,7 @@
 	START_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='ratvar'>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</span>")
 	send_to_playing_players('sound/effects/ratvar_reveal.ogg')
-	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
+	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0)
@@ -40,8 +40,8 @@
 
 /obj/structure/destructible/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
 	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No")
-	if(alertresult == "No" || !O)
-		return 0
+	if(alertresult == "No" || QDELETED(O) || !istype(O) || !O.key)
+		return FALSE
 	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new/mob/living/simple_animal/drone/cogscarab/ratvar(get_turf(src))
 	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
 	R.key = O.key

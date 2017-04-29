@@ -582,7 +582,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return 0
 
 //Repopulates sortedAreas list
-/proc/SortAreas()
+/proc/repopulate_sorted_areas()
 	GLOB.sortedAreas = list()
 
 	for(var/area/A in world)
@@ -787,7 +787,8 @@ GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
-	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
+	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment,
+	/obj/structure/sign/picture_frame
 	)))
 
 GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
@@ -1138,13 +1139,13 @@ B --><-- A
 		if(location == src)
 			return 1
 
-/proc/flick_overlay_static(image/I, atom/A, duration)
+/proc/flick_overlay_static(O, atom/A, duration)
 	set waitfor = 0
-	if(!A || !I)
+	if(!A || !O)
 		return
-	A.add_overlay(I)
+	A.add_overlay(O)
 	sleep(duration)
-	A.cut_overlay(I)
+	A.cut_overlay(O)
 
 /proc/get_areas_in_z(zlevel)
 	. = list()

@@ -991,7 +991,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		SET_SECONDARY_FLAG(src, FROZEN)
 
 //Assumes already frozed
-obj/proc/make_unfrozen()
+/obj/proc/make_unfrozen()
 	icon = initial(icon)
 	name = replacetext(name, "frozen ", "")
 	CLEAR_SECONDARY_FLAG(src, FROZEN)
