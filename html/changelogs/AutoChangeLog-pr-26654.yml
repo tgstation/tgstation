@@ -1,0 +1,4 @@
+author: "tacolizard forever"
+delete-after: True
+changes: 
+  - bugfix: "Rechargers no longer flash the 'fully charged' animation before charging something"

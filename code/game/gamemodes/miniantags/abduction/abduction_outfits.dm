@@ -22,13 +22,13 @@
 	if(console)
 		var/obj/item/clothing/suit/armor/abductor/vest/V = locate() in H
 		if(V)
-			console.vest = V
+			console.AddVest(V)
 			V.flags |= NODROP
 
-		var/obj/item/device/abductor/gizmo/G = locate() in H.getBackSlot()
-		if(G)
-			console.gizmo = G
-			G.console = console
+		var/obj/item/weapon/storage/backpack/B = locate() in H
+		if(B)
+			for(var/obj/item/device/abductor/gizmo/G in B.contents)
+				console.AddGizmo(G)
 
 /datum/outfit/abductor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -40,10 +40,10 @@
 	name = "Abductor Agent"
 	head = /obj/item/clothing/head/helmet/abductor
 	suit = /obj/item/clothing/suit/armor/abductor/vest
+	suit_store = /obj/item/weapon/abductor_baton
 	belt = /obj/item/weapon/storage/belt/military/abductor/full
 
 	backpack_contents = list(
-		/obj/item/weapon/abductor_baton = 1,
 		/obj/item/weapon/gun/energy/alien = 1,
 		/obj/item/device/abductor/silencer = 1
 		)

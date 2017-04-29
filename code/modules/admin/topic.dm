@@ -498,7 +498,7 @@
 		GLOB.Banlist["minutes"] << minutes
 		GLOB.Banlist["bannedby"] << usr.ckey
 		GLOB.Banlist.cd = "/base"
-		feedback_inc("ban_edit",1)
+		SSblackbox.inc("ban_edit",1)
 		unbanpanel()
 
 	/////////////////////////////////////new ban stuff
@@ -520,7 +520,7 @@
 				if("Yes")
 					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
 					log_admin_private("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
-					feedback_inc("ban_appearance_unban", 1)
+					SSblackbox.inc("ban_appearance_unban", 1)
 					DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, "appearance")
 					if(M.client)
 						jobban_buildcache(M.client)
@@ -539,7 +539,7 @@
 					jobban_buildcache(M.client)
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
 				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
-				feedback_inc("ban_appearance",1)
+				SSblackbox.inc("ban_appearance",1)
 				create_message("note", M.ckey, null, "Appearance banned - [reason]", null, null, 0, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>")
@@ -924,8 +924,8 @@
 							jobban_buildcache(M.client)
 						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
 						log_admin_private("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes.")
-						feedback_inc("ban_job_tmp",1)
-						feedback_add_details("ban_job_tmp","- [job]")
+						SSblackbox.inc("ban_job_tmp",1)
+						SSblackbox.add_details("ban_job_tmp","- [job]")
 						if(!msg)
 							msg = job
 						else
@@ -949,8 +949,8 @@
 								jobban_buildcache(M.client)
 							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
 							log_admin_private("[key_name(usr)] perma-banned [key_name(M)] from [job]")
-							feedback_inc("ban_job",1)
-							feedback_add_details("ban_job","- [job]")
+							SSblackbox.inc("ban_job",1)
+							SSblackbox.add_details("ban_job","- [job]")
 							if(!msg)
 								msg = job
 							else
@@ -980,8 +980,8 @@
 						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
 						if(M.client)
 							jobban_buildcache(M.client)
-						feedback_inc("ban_job_unban",1)
-						feedback_add_details("ban_job_unban","- [job]")
+						SSblackbox.inc("ban_job_unban",1)
+						SSblackbox.add_details("ban_job_unban","- [job]")
 						if(!msg)
 							msg = job
 						else
@@ -1116,8 +1116,8 @@
 				ban_unban_log_save("[key_name(usr)] has banned [key_name(M)]. - Reason: [reason] - This will be removed in [mins] minutes.")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
 				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
-				feedback_inc("ban_tmp",1)
-				feedback_inc("ban_tmp_mins",mins)
+				SSblackbox.inc("ban_tmp",1)
+				SSblackbox.inc("ban_tmp_mins",mins)
 				if(config.banappeals)
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
 				else
@@ -1156,7 +1156,7 @@
 				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
 				if(AH)
 					AH.Resolve()
-				feedback_inc("ban_perma",1)
+				SSblackbox.inc("ban_perma",1)
 				qdel(M.client)
 			if("Cancel")
 				return
@@ -1687,7 +1687,7 @@
 
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
-		feedback_inc("admin_cookies_spawned",1)
+		SSblackbox.inc("admin_cookies_spawned",1)
 		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
 		H << 'sound/effects/pray_chaplain.ogg'
 
@@ -1987,7 +1987,7 @@
 			var/choice = alert("Please confirm Feed channel creation.","Network Channel Handler","Confirm","Cancel")
 			if(choice=="Confirm")
 				GLOB.news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admin_signature, src.admincaster_feed_channel.locked, 1)
-				feedback_inc("newscaster_channels",1)
+				SSblackbox.inc("newscaster_channels",1)
 				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
 		src.access_news_network()
@@ -2010,7 +2010,7 @@
 			src.admincaster_screen = 6
 		else
 			GLOB.news_network.SubmitArticle(src.admincaster_feed_message.returnBody(-1), src.admin_signature, src.admincaster_feed_channel.channel_name, null, 1)
-			feedback_inc("newscaster_stories",1)
+			SSblackbox.inc("newscaster_stories",1)
 			src.admincaster_screen=4
 
 		for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
@@ -2161,7 +2161,7 @@
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
+		if(SSticker.IsRoundInProgress())
 			var/afkonly = text2num(href_list["afkonly"])
 			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
 				to_chat(usr, "Kick clients from lobby aborted")

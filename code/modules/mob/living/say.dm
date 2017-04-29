@@ -423,18 +423,17 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return 3
 	return 0
 
-/mob/living/say_quote(input, list/spans, message_mode)
-	var/tempinput = attach_spans(input, spans)
+/mob/living/say_mod(input, message_mode)
 	if(message_mode == MODE_WHISPER)
-		return "[verb_whisper], \"[tempinput]\""
-	if(message_mode == MODE_WHISPER_CRIT)
-		return "[verb_whisper] in [p_their()] last breath, \"[tempinput]\""
-	if (stuttering)
-		return "stammers, \"[tempinput]\""
-	if (getBrainLoss() >= 60)
-		return "gibbers, \"[tempinput]\""
-
-	return ..()
+		. = verb_whisper
+	else if(message_mode == MODE_WHISPER_CRIT)
+		. = "[verb_whisper] in [p_their()] last breath"
+	else if(stuttering)
+		. = "stammers"
+	else if(getBrainLoss() >= 60)
+		. = "gibbers"
+	else
+		. = ..()
 
 /mob/living/get_default_language()
 	if(selected_default_language)
@@ -448,5 +447,5 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/proc/open_language_menu(mob/user)
 	language_menu.ui_interact(user)
 
-/mob/living/whisper(message as text)
-	say("#[message]")
+/mob/living/whisper(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+	say("#[message]", bubble_type, spans, sanitize, language)

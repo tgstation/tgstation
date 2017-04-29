@@ -214,28 +214,6 @@
 	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
 
 
-//Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures at a power cost
-/datum/clockwork_scripture/create_object/mending_motor
-	descname = "Powered Structure, Repairs Other Structures"
-	name = "Mending Motor"
-	desc = "Creates a mechanized prism that will rapidly repair damaged clockwork constructs, converted cyborgs, and clockwork structures."
-	invocations = list("May this prism...", "...mend our dents and scratches!")
-	channel_time = 80
-	consumed_components = list(VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
-	object_path = /obj/structure/destructible/clockwork/powered/mending_motor
-	creator_message = "<span class='brass'>You form a mending motor, which will rapidly repair damaged clockwork constructs, converted cyborgs, and clockwork structures.</span>"
-	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "Powerful healing but power use is somewhat inefficient, though much better than a proselytizer."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 7
-	quickbind = TRUE
-	quickbind_desc = "Creates a Mending Motor, which rapidly repairs constructs and structures at a power cost."
-
-
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
 /datum/clockwork_scripture/create_object/mania_motor
 	descname = "Powered Structure, Area Denial"

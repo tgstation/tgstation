@@ -20,7 +20,7 @@
 	var/obj/docking_port/mobile/preview_shuttle
 	var/datum/map_template/shuttle/preview_template
 
-/obj/machinery/shuttle_manipulator/New()
+/obj/machinery/shuttle_manipulator/Initialize()
 	. = ..()
 	update_icon()
 
@@ -155,7 +155,7 @@
 					message_admins("[key_name_admin(usr)] fast travelled \
 						[M]")
 					log_admin("[key_name(usr)] fast travelled [M]")
-					feedback_add_details("shuttle_fasttravel", M.name)
+					SSblackbox.add_details("shuttle_fasttravel", M.name)
 					break
 
 		if("preview")
@@ -182,7 +182,7 @@
 						with the shuttle manipulator.")
 					log_admin("[key_name(usr)] loaded [mdp] with the \
 						shuttle manipulator.</span>")
-					feedback_add_details("shuttle_manipulator", mdp.name)
+					SSblackbox.add_details("shuttle_manipulator", mdp.name)
 
 	update_icon()
 

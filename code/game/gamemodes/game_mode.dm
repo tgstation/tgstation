@@ -80,12 +80,12 @@
 		report = config.intercept
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
-	feedback_set_details("round_start","[time2text(world.realtime)]")
+	SSblackbox.set_details("round_start","[time2text(world.realtime)]")
 	if(SSticker && SSticker.mode)
-		feedback_set_details("game_mode","[SSticker.mode]")
+		SSblackbox.set_details("game_mode","[SSticker.mode]")
 	if(GLOB.revdata.commit)
-		feedback_set_details("revision","[GLOB.revdata.commit]")
-	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+		SSblackbox.set_details("revision","[GLOB.revdata.commit]")
+	SSblackbox.set_details("server_ip","[world.internet_address]:[world.port]")
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
@@ -246,17 +246,17 @@
 				ghosts++
 
 	if(clients > 0)
-		feedback_set("round_end_clients",clients)
+		SSblackbox.set_val("round_end_clients",clients)
 	if(ghosts > 0)
-		feedback_set("round_end_ghosts",ghosts)
+		SSblackbox.set_val("round_end_ghosts",ghosts)
 	if(surviving_humans > 0)
-		feedback_set("survived_human",surviving_humans)
+		SSblackbox.set_val("survived_human",surviving_humans)
 	if(surviving_total > 0)
-		feedback_set("survived_total",surviving_total)
+		SSblackbox.set_val("survived_total",surviving_total)
 	if(escaped_humans > 0)
-		feedback_set("escaped_human",escaped_humans)
+		SSblackbox.set_val("escaped_human",escaped_humans)
 	if(escaped_total > 0)
-		feedback_set("escaped_total",escaped_total)
+		SSblackbox.set_val("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
 	return 0
 

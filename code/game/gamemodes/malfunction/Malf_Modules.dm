@@ -556,7 +556,7 @@
 	var/mob/living/silicon/ai/A = usr
 
 	if(A.stat == DEAD)
-		A <<"You are already dead!" //Omae Wa Mou Shindeiru
+		to_chat(A, "You are already dead!") //Omae Wa Mou Shindeiru
 		return
 
 	for(var/datum/AI_Module/AM in possible_modules)

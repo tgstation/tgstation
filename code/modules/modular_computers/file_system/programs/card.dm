@@ -3,7 +3,7 @@
 	filedesc = "ID card modification program"
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
-	transfer_access = GLOB.access_change_ids
+	transfer_access = GLOB.access_heads
 	requires_ntnet = 0
 	size = 8
 	var/mod_mode = 1
@@ -452,7 +452,7 @@
 			var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
 			if(auth_card)
 				region_access = list()
-				if(transfer_access in auth_card.GetAccess())
+				if(GLOB.access_change_ids in auth_card.GetAccess())
 					minor = 0
 					authenticated = 1
 					return 1
