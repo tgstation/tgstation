@@ -456,7 +456,7 @@
 				v = GLOB
 			else
 				return null
-	else if(object == world) // Shitty ass hack kill me.
+	else if(object == GLOB) // Shitty ass hack kill me.
 		v = expression[start]
 	if(long)
 		if(expression[start + 1] == ".")
