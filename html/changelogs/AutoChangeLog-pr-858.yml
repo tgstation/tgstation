@@ -1,0 +1,5 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscdel: "Removed double agents mode."
+  - rscadd: "Replaced it with Internal Affairs mode."
