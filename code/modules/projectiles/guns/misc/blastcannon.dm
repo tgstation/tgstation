@@ -1,23 +1,23 @@
 /obj/item/weapon/gun/blastcannon
 	name = "pipe gun"
 	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole."
-	icon_state = empty_blastcannon
-	var/icon_state_loaded = loaded_blastcannon
-	item_state = blastcannon_empty
+	icon_state = "empty_blastcannon"
+	var/icon_state_loaded = "loaded_blastcannon"
+	item_state = "blastcannon_empty"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
-	fire_sound = ''
+	fire_sound = 'sound/weapons/blastcannon.ogg'
 	needs_permit = FALSE
 	clumsy_check = FALSE
 	randomspread = FALSE
 
 	var/obj/item/device/transfer_valve/bomb = null
-	var/datum_gas_mixture/air1 = null
-	var/datum_gas_mixture/air2 = null
+	var/datum/gas_mixture/air1 = null
+	var/datum/gas_mixture/air2 = null
 
 /obj/item/weapon/gun/blastcannon/New()
-	if(!firingpin)
-		firingpin = new
+	if(!pin)
+		pin = new
 	. = ..()
 
 /obj/item/weapon/gun/blastcannon/Destroy()
@@ -91,20 +91,12 @@
 	var/medium = power/2
 	var/light = power
 	user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name] and fires a blast wave at \the [target]!</span>","<span class='danger'>You open \the [bomb] on your [src.name] and fire a blast wave at \the [target]!</span>")
-	var/sound = rand(1,6)
+	var/sound = rand(1, 2)
 	switch(sound)
 		if(1)
 			playsound(user, 'sound/effects/Explosion1.ogg', 100, 1)
 		if(2)
 			playsound(user, 'sound/effects/Explosion2.ogg', 100, 1)
-		if(3)
-			playsound(user, 'sound/effects/Explosion3.ogg', 100, 1)
-		if(4)
-			playsound(user, 'sound/effects/Explosion4.ogg', 100, 1)
-		if(5)
-			playsound(user, 'sound/effects/Explosion5.ogg', 100, 1)
-		if(6)
-			playsound(user, 'sound/effects/Explosion6.ogg', 100, 1)
 	var/turf/starting = get_turf(user)
 	var/area/A = get_area(user)
 	var/log_str = "Blast wave fired at [ADMIN_COORDJMP(starting)] ([A.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
@@ -117,24 +109,24 @@
 	damage = 0
 	nodamage = FALSE
 	forcedodge = TRUE
-	var/heavy = 0
-	var/medium = 0
-	var/light = 0
+	var/heavyr = 0
+	var/mediumr = 0
+	var/lightr = 0
 	range = 150
 
 /obj/item/projectile/blastwave/Range()
 	..()
-	if(heavy)
+	if(heavyr)
 		loc.ex_act(1)
-	else if(medium)
+	else if(mediumr)
 		loc.ex_act(2)
-	else if(light)
+	else if(lightr)
 		loc.ex_act(3)
 	else
 		qdel(src)
-	heavy--
-	medium--
-	light--
+	heavyr--
+	mediumr--
+	lightr--
 
 /obj/item/projectile/blastwave/ex_act()
 	return

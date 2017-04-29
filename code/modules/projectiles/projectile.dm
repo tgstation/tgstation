@@ -75,7 +75,7 @@
 		return "chest"
 
 /obj/item/projectile/proc/prehit(atom/target)
-	return
+	return TRUE
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
 	var/turf/target_loca = get_turf(target)
@@ -148,7 +148,8 @@
 
 	var/turf/target_turf = get_turf(A)
 
-	prehit(A)
+	if(!prehit(A))
+		return FALSE
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
@@ -162,7 +163,8 @@
 				mobs_list += L
 			if(mobs_list.len)
 				var/mob/living/picked_mob = pick(mobs_list)
-				prehit(picked_mob)
+				if(!prehit(picked_mob))
+					return FALSE
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
 
@@ -255,7 +257,6 @@
 				Range()
 			sleep(config.run_speed * 0.9)
 
-
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
 	src.loc = get_turf(user)
@@ -280,17 +281,18 @@
 			//Split Y+Pixel_Y up into list(Y, Pixel_Y)
 			var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
 			// to_chat(world, "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]")
-			var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
-			var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
+			var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
+			var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
 
 			//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 			var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
 
-			var/ox = round(screenview/2) //"origin" x
-			var/oy = round(screenview/2) //"origin" y
+			var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
+			var/oy = round(screenview/2) - user.client.pixel_y //"origin" y
 			// to_chat(world, "Pixel position: [x] [y]")
 			var/angle = Atan2(y - oy, x - ox)
 			// to_chat(world, "Angle: [angle]")
+			world << "angle [angle] origin [ox]/[oy] target [x]/[y] offset [y-oy]/[x-ox]"
 			src.Angle = angle
 	if(spread)
 		src.Angle += spread
