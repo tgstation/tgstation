@@ -6,6 +6,8 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "disco0"
 	anchored = FALSE
+	obj_integrity = 400
+	max_integrity = 400
 	verb_say = "states"
 	density = TRUE
 	req_access = list(GLOB.access_engine)
@@ -13,6 +15,7 @@
 	var/list/rangers = list()
 	var/charge = 35
 	var/stop = 0
+	var/movable = TRUE
 	var/list/available = list()
 	var/list/select_name = list()
 	var/list/spotlights = list()
@@ -24,6 +27,10 @@
 		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/boogie2.ogg',	1770, 	5),
 		)
 	var/datum/track/selection = null
+
+/obj/machinery/disco/invulnerable
+	movable = FALSE
+	resistance_flags = INDESTRUCTIBLE
 
 /datum/track
 	var/song_name = "generic"
@@ -48,7 +55,7 @@
 
 /obj/machinery/disco/attackby(obj/item/O, mob/user, params)
 	if(!active)
-		if(istype(O, /obj/item/weapon/wrench))
+		if(istype(O, /obj/item/weapon/wrench) && movable)
 			if(!anchored && !isinspace())
 				to_chat(user,"<span class='notice'>You secure the [src] to the floor.</span>")
 				anchored = TRUE
