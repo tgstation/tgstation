@@ -658,7 +658,7 @@
 	taste_mult = 0 // apparently tasteless.
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
-	if(M.canmove && isspaceturf(M.loc))
+	if(M.canmove && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -738,7 +738,7 @@
 	taste_description = "metal"
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
-	if(M.canmove && isspaceturf(M.loc))
+	if(M.canmove && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
