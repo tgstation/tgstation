@@ -34,6 +34,20 @@
 	SSticker.mode.cult_objectives += "eldergod"
 	on_gain()
 
+/datum/antagonist/cultist/proc/backup_cult_memorization(datum/mind/cult_mind)
+	for(var/obj_count in 1 to 2)
+		var/explanation
+		switch(SSticker.mode.cult_objectives[obj_count])
+			if("sacrifice")
+				if(GLOB.sac_mind)
+					explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
+				else
+					explanation = "The veil has already been weakened here, proceed to the final objective."
+			if("eldergod")
+				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes on it. You must do this after sacrificing your target."
+		to_chat(cult_mind.current, "<B>Objective #[obj_count]</B>: [explanation]")
+		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+
 /datum/antagonist/cult/on_gain()
 	. = ..()
 	if(SSticker.mode.cult_objectives.len == 0)
@@ -41,6 +55,8 @@
 		return
 	if(!owner)
 		return
+	if(!istype(SSticker.mode, /datum/game_mode/cult))
+		backup_cult_memorization(owner)
 	if(jobban_isbanned(owner.current, ROLE_CULTIST))
 		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST), 0)
 	owner.current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
