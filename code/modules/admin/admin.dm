@@ -610,6 +610,17 @@
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
+	return spawn_atom_impl(object, FALSE)
+
+/datum/admins/proc/spawn_atom_adv(object as text)
+	set category = "Debug"
+	set desc = "(atom path) Spawn an atom with New() parameters"
+	set name = "Advanced Spawn"
+
+	return spawn_atom_impl(object, TRUE)
+
+
+/datum/admins/proc/spawn_atom_impl(object, params)
 	if(!check_rights(R_SPAWN))
 		return
 
@@ -622,18 +633,18 @@
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
-		if(alert(usr, "Would you like to add arguments?", "Spawn", "No", "Yes") == "Yes")
-			arguments = get_callproc_args(TRUE);
+		if(params)
+			arguments = usr.client.get_callproc_args(TRUE)
 		
 		if(!usr)
 			return
 		
 		arguments = list(usr.loc) + arguments
 
-		var/atom/A = new chosen(argslist(arguments))
+		var/atom/A = new chosen(arglist(arguments))
 		A.admin_spawned = TRUE
 
-	log_admin("[key_name(usr)] spawned [chosen] at [COORDS(usr)][LAZYLEN(arguments) > 1 ? " with parameters [print_single_line(arguments)]": ""]")
+	log_admin("[key_name(usr)] spawned [chosen] at [COORD(usr)][LAZYLEN(arguments) > 1 ? " with parameters [print_single_line(arguments)]": ""]")
 	SSblackbox.add_details("admin_verb","Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
