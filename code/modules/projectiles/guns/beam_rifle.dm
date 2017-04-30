@@ -1,7 +1,9 @@
 
 /obj/item/weapon/gun/energy/beam_rifle
 	name = "particle acceleration rifle"
-	desc = "A powerful marksman rifle that uses highly focused particle beams to obliterate targets."
+	desc = "An energy-based anti material marksman rifle that uses highly charged particle beams moving at extreme velocities to decimate whatever is unfortunate enough to be targetted by one. \
+		<span class='boldnotice'>Hold down left click while scoped to aim, when weapon is fully aimed (Tracer goes from red to green as it charges), release to fire. Moving while aiming or \
+		changing where you're pointing at while aiming will delay the aiming process depending on how much you changed.</span>"
 	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "esniper"
 	item_state = "esniper"
@@ -19,23 +21,14 @@
 	zoom_out_amt = 23
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_HUGE
-	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan, /obj/item/ammo_casing/energy/beam_rifle/hitscan/explosive)
-	var/power = 20
-	var/maxpower = 20
-	var/energy_coeff = 0.20
+	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	var/hipfire_inaccuracy = 2
 	var/hipfire_recoil = 10
 	var/scoped_inaccuracy = 0
 	var/scoped_recoil = 3
 	var/scoped = FALSE
 	var/noscope = FALSE	//Can you fire this without a scope?
-	var/obj/item/weapon/stock_parts/capacitor/cap = new /obj/item/weapon/stock_parts/capacitor
-	var/obj/item/weapon/stock_parts/scanning_module/scan = new /obj/item/weapon/stock_parts/scanning_module
-	var/obj/item/weapon/stock_parts/manipulator/manip = new /obj/item/weapon/stock_parts/manipulator
-	var/obj/item/weapon/stock_parts/micro_laser/laser = new /obj/item/weapon/stock_parts/micro_laser
-	var/obj/item/weapon/stock_parts/matter_bin/bin = new /obj/item/weapon/stock_parts/matter_bin
 	cell_type = /obj/item/weapon/stock_parts/cell/beam_rifle
-	var/datum/action/item_action/beam_rifle_power/poweraction
 	canMouseDown = TRUE
 	var/aiming = FALSE
 	var/aiming_time = 10
@@ -44,10 +37,20 @@
 	var/aiming_time_increase_user_movement = 3
 	var/aiming_time_increase_per_pixel = 1
 	var/aiming_time_increase_range_falloff = 1
-	var/aiming_x = 0
-	var/aiming_y = 0
+	var/lastangle = 0
 	var/mob/current_user = null
 	var/list/obj/effect/overlay/temp/current_tracers = list()
+	var/obj/item/weapon/gun/energy/beam_rifle/gun
+	var/aoe_structure_range = 1
+	var/aoe_structure_damage = 30
+	var/aoe_fire_range = 1
+	var/aoe_fire_chance = 66
+	var/aoe_mob_range = 1
+	var/aoe_mob_damage = 20
+	var/impact_destroy_wall = TRUE
+	var/impact_structure_damage = 50
+	var/impact_fire = TRUE
+	var/projectile_damage = 40
 
 /obj/item/weapon/gun/energy/beam_rifle/debug
 	aiming_time = 0
@@ -56,11 +59,7 @@
 	scoped_recoil = 0
 	hipfire_recoil = 0
 	hipfire_inaccuracy = 0
-	maxpower = 2000
 	cell_type = /obj/item/weapon/stock_parts/cell/infinite
-
-/obj/item/weapon/gun/energy/beam_rifle/debug/update_stats()
-	return
 
 /obj/item/weapon/gun/energy/beam_rifle/debug/Initialize()
 	..()
@@ -69,37 +68,11 @@
 
 /obj/item/weapon/gun/energy/beam_rifle/New()
 	..()
-	poweraction = new()
-	poweraction.gun = src
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	..()
-
-/obj/item/weapon/gun/energy/beam_rifle/pickup(mob/user)
-	if(poweraction)
-		poweraction.Grant(user)
-	. = ..()
-
-/obj/item/weapon/gun/energy/beam_rifle/dropped(mob/user)
-	if(poweraction)
-		poweraction.Remove(user)
-	. = ..()
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/update_stats()
-	maxpower = laser.rating*20
-	if(maxpower > power)
-		power = maxpower
-	energy_coeff = (1 - (cap*0.1875))
-	scoped_recoil = 5 - bin.rating
-	hipfire_recoil = 10 - bin.rating*2
-	hipfire_inaccuracy = Clamp((30 - (manip.rating * 5)), 0, 30)
-	for(var/obj/item/ammo_casing/energy/beam_rifle/BR in contents)
-		world << "DEBUG: Changing [BR]"
-		BR.base_energy_multiplier = (initial(BR.base_energy_multiplier) * (1 - (scan.rating * 0.075)))
-		BR.e_cost = round((power * BR.base_energy_multiplier)*energy_coeff)
-		BR.update_damage(power)
 
 /obj/item/weapon/gun/energy/beam_rifle/zoom(user, forced_zoom)
 	. = ..()
@@ -131,69 +104,10 @@
 		return FALSE
 	. = ..(user)
 
-/obj/item/weapon/gun/energy/beam_rifle/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/stock_parts))
-		var/obj/item/weapon/stock_parts/S = I
-		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
-			to_chat(user, "[I] has been sucessfully installed into systems.")
-			if(user.transferItemToLoc(I, src))
-				if(manip)
-					manip.forceMove(get_turf(src))
-					manip = null
-				manip = I
-		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
-			to_chat(user, "[I] has been sucessfully installed into systems.")
-			if(user.transferItemToLoc(I, src))
-				if(scan)
-					scan.forceMove(get_turf(src))
-					scan = null
-				scan = I
-		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
-			to_chat(user, "[I] has been sucessfully installed into systems.")
-			if(user.transferItemToLoc(I, src))
-				if(laser)
-					laser.forceMove(get_turf(src))
-					laser = null
-				laser = I
-		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
-			to_chat(user, "[I] has been sucessfully installed into systems.")
-			if(user.transferItemToLoc(I, src))
-				if(bin)
-					bin.forceMove(get_turf(src))
-					bin = null
-				bin = I
-		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
-			to_chat(user, "[I] has been sucessfully installed into systems.")
-			if(user.transferItemToLoc(I, src))
-				if(cap)
-					cap.forceMove(get_turf(src))
-					cap = null
-				cap = I
-	. = ..(I, user, params)
-
 /obj/item/weapon/gun/energy/beam_rifle/emp_act(severity)
 	chambered = null
 	recharge_newshot()
 	return	//Energy drain handled by its cell.
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/select_power(mob/user)
-	var/powerpercent = 50
-	powerpercent = round(input("Set [src] to percentage power","Adjust power output", null) as num|null)
-	powerpercent = Clamp(powerpercent, 0, 100)
-	if(powerpercent)
-		power = ((100/maxpower) * powerpercent)
-		user << "<span class='boldnotice'>[src] set to [powerpercent]% power.</span>"
-	update_stats()
-
-/datum/action/item_action/beam_rifle_power
-	name = "Adjust Power Output"
-	var/obj/item/weapon/gun/energy/beam_rifle/gun
-	button_icon_state = "esniper_power"
-	background_icon_state = "bg_tech_red"
-
-/datum/action/item_action/beam_rifle_power/Trigger()
-	gun.select_power(owner)
-	. = ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/aiming_beam()
 	var/atom/A = current_user.client.mouseObject
@@ -207,7 +121,7 @@
 	P.preparePixelProjectile(current_user.client.mouseObject, T, current_user, current_user.client.mouseParams, 0)
 	if(aiming_time >= 1)
 		var/percent = ((100/aiming_time)*aiming_time_left)
-		P.color = rgb(255 * percent,255 * (100 - percent),0)
+		P.color = rgb(255 * percent,255 * ((100 - percent) / 100),0)
 	else
 		P.color = rgb(0, 255, 0)
 	for(var/obj/effect/overlay/temp/O in current_tracers)
@@ -227,15 +141,15 @@
 			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
 			var/list/screen_loc_X = splittext(screen_loc_params[1],":")
 			var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
-			var/new_aiming_x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
-			var/new_aiming_y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
-			var/difference_raw = abs(new_aiming_x - aiming_x) + abs(new_aiming_y - aiming_y)
-			aiming_x = new_aiming_x
-			aiming_y = new_aiming_y
-			var/range_from_user = get_dist(get_turf(current_user.client.mouseObject), get_turf(current_user))
-			var/penalty = difference_raw - range_from_user
-			world << "difference_raw [difference_raw] range [range_from_user]"
-			delay_penalty(penalty)
+			var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
+			var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
+			var/screenview = (current_user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
+			var/ox = round(screenview/2) - current_user.client.pixel_x //"origin" x
+			var/oy = round(screenview/2) - current_user.client.pixel_y //"origin" y
+			var/angle = Atan2(y - oy, x - ox)
+			var/difference = abs(lastangle - angle)
+			delay_penalty(difference)
+			lastangle = angle
 
 /obj/item/weapon/gun/energy/beam_rifle/on_mob_move()
 	delay_penalty(aiming_time_increase_user_movement)
@@ -283,43 +197,65 @@
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
-	select_name = "narrow-beam"
-	e_cost = 500
-	base_energy_multiplier = 62.5	//4x the damage of an egun on lethal at full charge.
+	select_name = "beam"
+	e_cost = 4000
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	delay = 40
-
-/obj/item/ammo_casing/energy/beam_rifle/hitscan/explosive
-	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan/explosive
-	select_name = "explosive-beam"
-	e_cost = 1000
-	base_energy_multiplier = 125	//2x the damage of an egun on lethal at full charge, but AOE damage.
-	var/area_damage = 20
-	var/burn_chance = 20
-
-/obj/item/ammo_casing/energy/beam_rifle/hitscan/explosive/update_damage(damage)
-	projectile_damage = 0
-	area_damage = damage
-	burn_chance = damage
-
-/obj/item/ammo_casing/energy/beam_rifle/hitscan/explosive/ready_proj()
-	..()
-	var/obj/item/projectile/beam/beam_rifle/hitscan/explosive/E = BB
-	E.area_damage = area_damage
-	E.burn_chance = burn_chance
 
 /obj/item/projectile/beam/beam_rifle
 	name = "particle beam"
 	icon = ""
-	//hitsound = ''
-	//hitsound_wall = ''
-	damage = 20
+	hitsound = 'sound/effects/explosion3.ogg'
+	damage = 40
 	damage_type = BURN
 	flag = "energy"
 	range = 150
 	jitter = 10
 	var/obj/item/weapon/gun/energy/beam_rifle/gun
-	//impact_effect_type = ""
+	var/aoe_structure_range = 1
+	var/aoe_structure_damage = 30
+	var/aoe_fire_range = 1
+	var/aoe_fire_chance = 66
+	var/aoe_mob_range = 1
+	var/aoe_mob_damage = 20
+	var/impact_destroy_wall = TRUE
+	var/impact_structure_damage = 50
+	var/impact_fire = TRUE
+
+/obj/item/projectile/beam/beam_rifle/proc/sync_stats()
+	aoe_structure_range = gun.aoe_structure_range
+	aoe_structure_damage = gun.aoe_structure_damage
+	aoe_fire_range = gun.aoe_fire_range
+	aoe_fire_chance = gun.aoe_fire_chance
+	aoe_mob_range = gun.aoe_mob_range
+	aoe_mob_damage = gun.aoe_mob_damage
+	impact_destroy_wall = gun.impact_destroy_wall
+	impact_structure_damage = gun.impact_structure_damage
+	impact_fire = gun.impact_fire
+	damage = gun.projectile_damage
+
+/obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
+	var/turf/impact_turf = get_turf(target)
+	. = ..(target, blocked)
+	if(isturf(target) && impact_destroy_wall)
+		target.ex_act(2)
+	if(isobj(target))
+		var/obj/objtarget = target
+		objtarget.take_damage(impact_structure_damage, BURN, "energy", FALSE)
+	if(impact_fire)
+		new /obj/effect/hotspot(impact_turf)
+	if(aoe_mob_range || aoe_structure_range || aoe_fire_range)
+		new /obj/effect/overlay/temp/explosion/fast(impact_turf)
+		for(var/mob/living/L in range(aoe_mob_range, impact_turf))
+			L.adjustFireLoss(aoe_mob_damage)
+			to_chat(L, "<span class='userdanger'>You are seared by the [src]!</span>")
+		for(var/turf/T in range(aoe_fire_range, impact_turf))
+			if(prob(aoe_fire_chance))
+				new /obj/effect/hotspot(impact_turf)
+		for(var/obj/O in range(aoe_structure_range, impact_turf))
+			if(isturf(O.loc))	//Only damage stuff on the floor
+				O.take_damage(aoe_structure_damage, BURN, "energy", FALSE)
+	playsound(get_turf(target), 'sound/effects/explosion3.ogg', 100, 1)
 
 /obj/item/projectile/beam/beam_rifle/hitscan
 	icon_state = ""
@@ -327,6 +263,8 @@
 
 /obj/item/projectile/beam/beam_rifle/hitscan/fire(setAngle, atom/direct_target)	//oranges didn't let me make this a var the first time around so copypasta time
 	set waitfor = 0
+	if(gun)
+		sync_stats()
 	if(!log_override && firer && original)
 		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(setAngle)
@@ -389,34 +327,6 @@
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer_effect()
 	new tracer_type(loc, time = 5, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
-
-/obj/item/projectile/beam/beam_rifle/hitscan/on_hit(atom/target, blocked = 0)
-	. = ..(target, blocked)
-	if(!ismob(target))
-		target.ex_act(2)
-
-/obj/item/projectile/beam/beam_rifle/hitscan/explosive
-	damage = 0
-	var/area_damage = 10
-	var/burn_chance = 33
-
-/obj/item/projectile/beam/beam_rifle/hitscan/explosive/on_hit(atom/target, blocked = 0)
-	var/turf/T = get_turf(target)
-	. = ..()
-	new /obj/effect/overlay/temp/explosion/fast(T)
-	for(var/atom/A in range(3, T))
-		if(isobj(A))
-			var/obj/O = A
-			O.take_damage(area_damage, BURN, "energy", FALSE)
-		if(isliving(A))
-			var/mob/living/L = A
-			to_chat(L, "<span class='userdanger'>You are seared by the [src]!</span>")
-			L.adjustFireLoss(area_damage)
-		if(isturf(A))
-			var/turf/Z = A
-			if(prob(burn_chance))
-				new /obj/effect/hotspot(Z)
-	playsound(get_turf(target), 'sound/effects/Explosion1.ogg', 100, 1)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
 	tracer_type = /obj/effect/overlay/temp/projectile_beam/tracer/aiming
