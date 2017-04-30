@@ -329,11 +329,9 @@
 		to_chat(user, "You see [target]'s name appear several times throughout the paper. Probably not a good sign for them.")
 
 /obj/item/weapon/gang_hitman/process()
-	if(QDELETED(target))
-		return
 
-	if(target.stat == DEAD )
-		if(target.mind.gang_datum == null )
+	if(target.stat == DEAD || QDELETED(target) )
+		if(target.mind.gang_datum == null || target == null )
 			gang_ref.points += points_for_kill
 		if(target.mind.gang_datum != null)
 			if( (target in SSticker.mode.get_gang_bosses()) )
