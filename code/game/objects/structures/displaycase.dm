@@ -255,6 +255,8 @@
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
 	var/trophy_message = ""
 	var/added_roundstart = TRUE
+	alert = TRUE
+	integrity_failure = 0
 
 /obj/structure/displaycase/trophy/Initialize()
 	. = ..()
@@ -273,6 +275,9 @@
 		to_chat(user, trophy_message)
 
 /obj/structure/displaycase/trophy/attackby(obj/item/weapon/W, mob/user, params)
+
+	if(!user.Adjacent(src)) //no TK museology
+		return
 
 	if(!added_roundstart)
 		to_chat(user, "You've already put something new in this case.")
@@ -296,10 +301,14 @@
 
 		trophy_message = W.desc //default value
 
-		var/chosen_plaque = stripped_input(user, "What would you like the plaque to say? Default value is item's description", "Trophy Plaque")
-		if(chosen_plaque && user.Adjacent(src))
-			trophy_message = chosen_plaque
-			to_chat(user, "You set the plaque's text.")
+		var/chosen_plaque = stripped_input(user, "What would you like the plaque to say? Default value is item's description.", "Trophy Plaque")
+		if(chosen_plaque)
+			if(user.Adjacent(src))
+				trophy_message = chosen_plaque
+				to_chat(user, "You set the plaque's text.")
+			else
+				to_chat(user, "You are too far to set the plaque's text.")
+
 
 	else
 		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
@@ -308,7 +317,10 @@
 
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
-		SSpersistence.TrySaveTrophy(src)
-		visible_message("<span class='danger'>The [showpiece] crumbles to dust!</span>")
-		new /obj/effect/decal/cleanable/ash(loc)
-		QDEL_NULL(showpiece)
+		if(added_roundstart)
+			visible_message("<span class='danger'>The [showpiece] crumbles to dust!</span>")
+			new /obj/effect/decal/cleanable/ash(loc)
+			QDEL_NULL(showpiece)
+		else
+			SSpersistence.TrySaveTrophy(src)
+			..()
