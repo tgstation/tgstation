@@ -158,9 +158,12 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/CollectTrophies()
 	for(var/A in GLOB.trophy_cases)
 		var/obj/structure/displaycase/trophy/T = A
-		if(T.showpiece)
-			old_trophy_list += "[T.showpiece.type]|[T.trophy_message]#"
+		TrySaveTrophy(T)
 	trophy_sav << old_trophy_list
+
+/datum/controller/subsystem/persistence/proc/TrySaveTrophy(obj/structure/displaycase/trophy/T)
+	if(!T.added_roundstart && T.showpiece)
+		old_trophy_list += "[T.showpiece.type]|[T.trophy_message]#"
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/expanded_trophy_items)
 	for(var/A in GLOB.trophy_cases)

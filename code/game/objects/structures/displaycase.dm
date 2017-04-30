@@ -24,11 +24,9 @@
 
 /obj/structure/displaycase/Destroy()
 	if(electronics)
-		qdel(electronics)
-		electronics = null
+		QDEL_NULL(electronics)
 	if(showpiece)
-		qdel(showpiece)
-		showpiece = null
+		QDEL_NULL(showpiece)
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
@@ -176,8 +174,8 @@
 /obj/structure/displaycase/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && (broken || open))
-		dump()
 		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
+		dump()
 		src.add_fingerprint(user)
 		update_icon()
 		return
@@ -255,7 +253,6 @@
 /obj/structure/displaycase/trophy
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
-	resistance_flags = ALL
 	var/trophy_message = ""
 	var/added_roundstart = TRUE
 
@@ -264,6 +261,8 @@
 	GLOB.trophy_cases += src
 
 /obj/structure/displaycase/trophy/Destroy()
+	if(showpiece)
+		SSpersistence.TrySaveTrophy(src)
 	GLOB.trophy_cases -= src
 	. = ..()
 
@@ -287,9 +286,7 @@
 
 		if(showpiece)
 			to_chat(user, "You press a button, and [showpiece] descends into the floor of the case.")
-			SSpersistence.old_trophy_list += "[showpiece.type]|[trophy_message]#"
-			qdel(showpiece)
-			showpiece = null
+			QDEL_NULL(showpiece)
 
 		to_chat(user, "You insert [W] into the case.")
 		W.forceMove(src)
@@ -305,7 +302,13 @@
 			to_chat(user, "You set the plaque's text.")
 
 	else
-		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the [src.name]!</span>")
+		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
 
 	return
 
+/obj/structure/displaycase/trophy/dump()
+	if (showpiece)
+		SSpersistence.TrySaveTrophy(src)
+		visible_message("<span class='danger'>The [showpiece] crumbles to dust!</span>")
+		new /obj/effect/decal/cleanable/ash(loc)
+		QDEL_NULL(showpiece)
