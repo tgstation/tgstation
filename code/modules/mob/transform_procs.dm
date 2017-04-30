@@ -13,12 +13,6 @@
 			stored_implants += IMP
 			IMP.removed(src, 1, 1)
 
-	if (tr_flags & TR_KEEPORGANS)
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
-			int_organs += I
-			I.Remove(src, 1)
-
 	var/list/missing_bodyparts_zones = get_missing_limbs()
 
 	var/obj/item/cavity_object
@@ -95,11 +89,29 @@
 	//re-add organs to new mob
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)
+			var/obj/item/organ/I = X
+			I.Remove(O, 1)
 			qdel(X)
+
+		if(mind)
+			mind.transfer_to(O)
+			if(O.mind.changeling)
+				O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+
+		for(var/X in internal_organs)
+			var/obj/item/organ/I = X
+			int_organs += I
+			I.Remove(src, 1)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
 			I.Insert(O, 1)
+
+	if(!(tr_flags & TR_KEEPORGANS))
+		if(mind)
+			mind.transfer_to(O)
+			if(O.mind.changeling)
+				O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 
 	var/obj/item/bodypart/chest/torso = O.get_bodypart("chest")
 	if(cavity_object)
@@ -117,12 +129,6 @@
 						continue //so headless changelings don't lose their brain when transforming
 					qdel(G) //we lose the organs in the missing limbs
 		qdel(BP)
-
-	//transfer mind and delete old mob
-	if(mind)
-		mind.transfer_to(O)
-		if(O.mind.changeling)
-			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 
 
 	if (tr_flags & TR_DEFAULTMSG)
@@ -153,12 +159,6 @@
 			var/obj/item/weapon/implant/IMP = X
 			stored_implants += IMP
 			IMP.removed(src, 1, 1)
-
-	if (tr_flags & TR_KEEPORGANS)
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
-			int_organs += I
-			I.Remove(src, 1)
 
 	var/list/missing_bodyparts_zones = get_missing_limbs()
 
@@ -242,14 +242,27 @@
 			var/obj/item/weapon/implant/IMP = Y
 			IMP.implant(O, null, 1)
 
+	//re-add organs to new mob
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)
+			var/obj/item/organ/I = X
+			I.Remove(O, 1)
 			qdel(X)
+
+		if(mind)
+			mind.transfer_to(O)
+			if(O.mind.changeling)
+				for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
+					O.mind.changeling.purchasedpowers -= HF
+
+		for(var/X in internal_organs)
+			var/obj/item/organ/I = X
+			int_organs += I
+			I.Remove(src, 1)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
 			I.Insert(O, 1)
-
 
 	var/obj/item/bodypart/chest/torso = get_bodypart("chest")
 	if(cavity_object)
@@ -268,11 +281,12 @@
 					qdel(G) //we lose the organs in the missing limbs
 		qdel(BP)
 
-	if(mind)
-		mind.transfer_to(O)
-		if(O.mind.changeling)
-			for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
-				mind.changeling.purchasedpowers -= HF
+	if(!(tr_flags & TR_KEEPORGANS))
+		if(mind)
+			mind.transfer_to(O)
+			if(O.mind.changeling)
+				for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
+					O.mind.changeling.purchasedpowers -= HF
 
 	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)
