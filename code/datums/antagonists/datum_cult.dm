@@ -5,7 +5,7 @@
 	qdel(communion)
 	return ..()
 
-/datum/antagonist/cultist/proc/add_objectives()
+/datum/antagonist/cult/proc/add_objectives()
 	var/list/target_candidates = list()
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
 		if(player.mind && !is_convertable_to_cult(player) && !owner && isliving(player))
@@ -34,7 +34,7 @@
 	SSticker.mode.cult_objectives += "eldergod"
 	on_gain()
 
-/datum/antagonist/cultist/proc/backup_cult_memorization(datum/mind/cult_mind)
+/datum/antagonist/cult/proc/backup_cult_memorization(datum/mind/cult_mind)
 	for(var/obj_count in 1 to 2)
 		var/explanation
 		switch(SSticker.mode.cult_objectives[obj_count])
@@ -61,7 +61,7 @@
 		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST), 0)
 	owner.current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 
-/datum/antagonist/cultist/apply_innate_effects()
+/datum/antagonist/cult/apply_innate_effects()
 	owner.faction |= "cult"
 	owner.verbs += /mob/living/proc/cult_help
 	if(!GLOB.cult_mastered)
@@ -70,7 +70,7 @@
 	owner.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 	..()
 
-/datum/antagonist/cultist/remove_innate_effects()
+/datum/antagonist/cult/remove_innate_effects()
 	owner.faction -= "cult"
 	owner.verbs -= /mob/living/proc/cult_help
 	owner.verbs -= /mob/living/proc/cult_master
