@@ -283,8 +283,13 @@
 		return
 
 	if(is_type_in_typecache(W, GLOB.blacklisted_cargo_types))
-		to_chat(user, "You think putting [W] in would be a bad idea.")
+		to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
 		return
+
+	for(var/a in W.GetAllContents())
+		if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
+			to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
+			return
 
 	if(user.drop_item())
 
