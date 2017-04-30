@@ -223,12 +223,12 @@
 /datum/game_mode/cult/declare_completion()
 
 	if(!check_cult_victory())
-		feedback_set_details("round_end_result","win - cult win")
-		feedback_set("round_end_result",acolytes_survived)
+		SSblackbox.set_details("round_end_result","win - cult win")
+		SSblackbox.set_val("round_end_result",acolytes_survived)
 		to_chat(world, "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>")
 	else
-		feedback_set_details("round_end_result","loss - staff stopped the cult")
-		feedback_set("round_end_result",acolytes_survived)
+		SSblackbox.set_details("round_end_result","loss - staff stopped the cult")
+		SSblackbox.set_val("round_end_result",acolytes_survived)
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
 
 	var/text = ""
@@ -241,27 +241,27 @@
 				if("survive")
 					if(!check_survive())
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='greenannounce'>Success!</span>"
-						feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
+						SSblackbox.add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
 						SSticker.news_report = CULT_ESCAPE
 					else
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='boldannounce'>Fail.</span>"
-						feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
+						SSblackbox.add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
 						SSticker.news_report = CULT_FAILURE
 				if("sacrifice")
 					if(GLOB.sac_complete)
 						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
-						feedback_add_details("cult_objective","cult_sacrifice|SUCCESS")
+						SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
 					else
 						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
-						feedback_add_details("cult_objective","cult_sacrifice|FAIL")
+						SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
 				if("eldergod")
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
-						feedback_add_details("cult_objective","cult_narsie|SUCCESS")
+						SSblackbox.add_details("cult_objective","cult_narsie|SUCCESS")
 						SSticker.news_report = CULT_SUMMON
 					else
 						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
-						feedback_add_details("cult_objective","cult_narsie|FAIL")
+						SSblackbox.add_details("cult_objective","cult_narsie|FAIL")
 						SSticker.news_report = CULT_FAILURE
 
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
@@ -282,12 +282,12 @@
 	if(!GLOB.sac_complete)
 		cult_fail++
 	if(!cult_fail)
-		feedback_set_details("round_end_result","win - cult win")
-		feedback_set("round_end_result",acolytes_survived)
+		SSblackbox.set_details("round_end_result","win - cult win")
+		SSblackbox.set_val("round_end_result",acolytes_survived)
 		to_chat(world, "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>")
 	else
-		feedback_set_details("round_end_result","loss - staff stopped the cult")
-		feedback_set("round_end_result",acolytes_survived)
+		SSblackbox.set_details("round_end_result","loss - staff stopped the cult")
+		SSblackbox.set_val("round_end_result",acolytes_survived)
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
 	if(cult_objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"
@@ -297,14 +297,18 @@
 				if("sacrifice")
 					if(GLOB.sac_complete)
 						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
+						SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
 					else
 						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
+						SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
 				if("eldergod")
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
+						SSblackbox.add_details("cult_objective","cult_narsie|SUCCESS")
 						SSticker.news_report = CULT_SUMMON
 					else
 						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
+						SSblackbox.add_details("cult_objective","cult_narsie|FAIL")
 						SSticker.news_report = CULT_FAILURE
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 	to_chat(world, text)
