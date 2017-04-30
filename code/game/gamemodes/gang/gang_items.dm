@@ -78,6 +78,7 @@
 		gangtool.recall(user)
 
 
+
 /datum/gang_item/function/outfit
 	name = "Create Armored Gang Outfit"
 	id = "outfit"
@@ -292,3 +293,84 @@
 
 /datum/gang_item/equipment/dominator/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	new item_path(user.loc)
+
+/* *************** Place a Hit *************** */
+
+/datum/gang_item/equipment/place_hit
+	name = "Hit contract"
+	id = "hit"
+	cost = 40
+	item_path = /obj/item/weapon/gang_hitman
+	spawn_msg = "Allows you to place a hit on someone other than your gang for points. \n \
+				If they are not a gang head or the gang head body is destroyed, you will receive 10 points with a full refund by default. \n \
+				If the target is a gang head or lieutenant, you will receive 35 points and a full refund. "
+
+/datum/gang_item/equipment/place_hit/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	if(item_path)
+		var/obj/item/weapon/gang_hitman/O = new item_path(user.loc)
+		user.put_in_hands(O)
+		O.gang_ref = gang // this bugger right here is why we have to overwrite proc
+	if(spawn_msg)
+		to_chat(user, spawn_msg)
+
+/obj/item/weapon/gang_hitman
+	name = "contract"
+	desc = "A nice complement to life insurance."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "paperslip"
+	var/used = FALSE
+	var/datum/gang/gang_ref = null
+	var/mob/living/target = null
+	var/points_for_kill = 50 // (Assuming Cost is 40 and this var is default) +10 for killing the poor sod, +25 if enemy gang, +35 if they're a ganghead
+
+/obj/item/weapon/gang_hitman/process()
+	if(QDELETED(target))
+		return
+
+	if(target.stat == DEAD )
+		if(target.mind.gang_datum == null )
+			gang_ref.points += points_for_kill
+		if(target.mind.gang_datum != null)
+			if( (target in SSticker.mode.get_gang_bosses()) )
+				gang_ref.points += Floor(points_for_kill * 1.5, 1)
+			else
+				gang_ref.points += Floor(points_for_kill * 1.3, 1)
+
+		STOP_PROCESSING(SSobj, src)
+		used = TRUE
+
+
+/obj/item/weapon/gang_hitman/attack_self(mob/user)
+	if(used)
+		to_chat(user, "This contract has been used.")
+		return
+
+	if( gang_ref == null )
+		to_chat(user, "This contract is not associated with a gang and therefore cannot be redeemed!")
+		return
+
+	var/list/mind2bodylist = list()
+	for(var/datum/mind/M in gang_ref.gangsters) // You can only target people outside the gang that spawned the contract.
+		var/mob/mind2body = M.current
+		mind2bodylist += mind2body
+	for(var/datum/mind/PT in gang_ref.prev_targets) // CHEATER CHEATER PUMPKIN EATER
+		var/mob/prev_targ2body = PT.current
+		mind2bodylist += prev_targ2body
+
+	var/list/selection = GLOB.player_list - mind2bodylist
+
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in selection
+
+	if(!(isliving(choice)))
+		to_chat(user, "[choice] is already dead!")
+		used = FALSE
+		return
+	if(choice == user)
+		to_chat(user, "A modest sacrifice, but we prefer to not indulge in assisted suicide.")
+		used = FALSE
+		return
+	else
+		target = choice
+		used = TRUE
+		gang_ref.prev_targets += target
+		START_PROCESSING(SSobj, src)

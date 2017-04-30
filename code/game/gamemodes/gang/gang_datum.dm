@@ -7,6 +7,7 @@
 	var/color_hex = "#FFFFFF"
 	var/list/datum/mind/gangsters = list() //gang B Members
 	var/list/datum/mind/bosses = list() //gang A Bosses
+	var/list/datum/mind/prev_targets = list() // Preventative Exploits in Hit system! Unable to be converted by the gang once on this list.
 	var/list/obj/item/device/gangtool/gangtools = list()
 	var/style
 	var/fighting_style = "normal"
@@ -38,6 +39,7 @@
 		/datum/gang_item/equipment/pen,
 		/datum/gang_item/equipment/gangtool,
 		/datum/gang_item/equipment/necklace,
+		/datum/gang_item/equipment/place_hit,
 		/datum/gang_item/equipment/dominator
 	)
 
