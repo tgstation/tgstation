@@ -1940,6 +1940,7 @@
 #include "code\modules\research\designs\mechfabricator_designs.dm"
 #include "code\modules\research\designs\medical_designs.dm"
 #include "code\modules\research\designs\power_designs.dm"
+#include "code\modules\research\designs\smelting_designs.dm"
 #include "code\modules\research\designs\stock_parts_designs.dm"
 #include "code\modules\research\designs\telecomms_designs.dm"
 #include "code\modules\research\designs\weapon_designs.dm"
