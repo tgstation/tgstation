@@ -8,7 +8,7 @@
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN))
 			return
-		
+
 		var/ahelp_ref = href_list["ahelp"]
 		var/datum/admin_help/AH = locate(ahelp_ref)
 		if(AH)
@@ -1186,7 +1186,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		var/dat = {"<B>What mode do you wish to play?</B><HR>"}
 		for(var/mode in config.modes)
@@ -1200,7 +1200,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1215,7 +1215,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if (SSticker && SSticker.mode)
+		if (SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		GLOB.master_mode = href_list["c_mode2"]
 		log_admin("[key_name(usr)] set the mode as [GLOB.master_mode].")
@@ -1229,7 +1229,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1826,7 +1826,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!SSticker || !SSticker.mode)
+		if(!SSticker.HasRoundStarted())
 			alert("The game hasn't started yet!")
 			return
 

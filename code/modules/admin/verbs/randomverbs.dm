@@ -701,7 +701,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Make Everyone Random"
 	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
 
-	if(SSticker && SSticker.mode)
+	if(SSticker.HasRoundStarted())
 		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!")
 		return
 

@@ -1283,8 +1283,6 @@
 
 	if(!density)
 		return 1
-	if(!SSticker || !SSticker.mode)
-		return 0
 	operating = 1
 	update_icon(AIRLOCK_OPENING, 1)
 	src.set_opacity(0)
