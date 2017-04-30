@@ -9037,32 +9037,34 @@
 	},
 /obj/structure/grille,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "ary" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "arz" = (
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
 "arA" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"arB" = (
+/obj/machinery/camera{
+	c_tag = "Core-Command-Cargo Bridge 4";
+	dir = 8;
+	network = list("SS13")
 	},
 /turf/open/floor/engine,
-/area/space)
-"arB" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/grille,
-/turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "arC" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -15884,6 +15886,10 @@
 	req_one_access_txt = "19;41"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge";
+	name = "Emergency Blast Door"
+	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -15914,6 +15920,10 @@
 	req_one_access_txt = "19;41"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge";
+	name = "Emergency Blast Door"
+	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22532,8 +22542,13 @@
 	icon_state = "1-4"
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "aPn" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
@@ -22547,8 +22562,13 @@
 	pixel_x = 0
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "aPo" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
@@ -22566,7 +22586,9 @@
 	},
 /obj/structure/grille,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "aPp" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
@@ -22578,25 +22600,31 @@
 	},
 /obj/structure/grille,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "aPq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"aPr" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/grille,
-/turf/open/space,
-/area/space)
-"aPr" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/structure/grille,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "aPs" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -23795,11 +23823,10 @@
 	},
 /area/hallway/primary/fore)
 "aQS" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
 "aQT" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -23821,15 +23848,22 @@
 /turf/open/floor/engine,
 /area/space)
 "aQV" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/neutral/corner{
-	tag = "icon-neutralcorner (NORTH)";
-	icon_state = "neutralcorner";
-	dir = 1;
-	baseturf = /turf/open/floor/plating/asteroid/airless
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/area/hallway/primary/fore)
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "aQW" = (
+/obj/machinery/door/airlock/glass,
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
 	icon_state = "neutralcorner";
@@ -23838,13 +23872,10 @@
 	},
 /area/hallway/primary/fore)
 "aQX" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
 /obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
@@ -25027,9 +25058,10 @@
 	},
 /area/hallway/primary/fore)
 "aSQ" = (
-/obj/structure/window/reinforced,
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
 "aSR" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
@@ -25473,8 +25505,11 @@
 	dir = 6
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "aTD" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -25484,8 +25519,11 @@
 	dir = 4
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "aTE" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -25496,7 +25534,9 @@
 	},
 /obj/structure/grille,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
 "aTF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/atmos{
@@ -27883,16 +27923,27 @@
 	},
 /obj/structure/girder,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
 "aXD" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
 "aXE" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -27943,8 +27994,13 @@
 	dir = 10
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
 "aXJ" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
@@ -27959,8 +28015,14 @@
 	dir = 6
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
 "aXK" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -28069,8 +28131,13 @@
 	},
 /obj/structure/girder,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
 "aXT" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -28109,8 +28176,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
 "aXY" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
@@ -28124,8 +28196,14 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
 "aXZ" = (
 /obj/machinery/power/solar_control{
 	id = "foresolar";
@@ -28449,8 +28527,13 @@
 	dir = 10
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
 "aYy" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
@@ -28458,8 +28541,13 @@
 	},
 /obj/structure/girder,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
 "aYz" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
@@ -28473,8 +28561,13 @@
 	icon_state = "1-2"
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
 "aYA" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -28685,17 +28778,14 @@
 	name = "Civilian Asteroid"
 	})
 "aYU" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "Medbay-Cargo Bridge";
-	dir = 4;
-	icon_state = "camera"
-	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
 "aYV" = (
 /obj/machinery/conveyor/auto{
 	tag = "icon-conveyor0 (EAST)";
@@ -29094,8 +29184,13 @@
 	},
 /obj/structure/girder,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
 "aZN" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -29170,8 +29265,13 @@
 	dir = 9
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
 "aZU" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
@@ -29186,8 +29286,14 @@
 	dir = 5
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
 "aZV" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -29245,6 +29351,9 @@
 /area/hallway/primary/port)
 "bac" = (
 /obj/machinery/door/airlock/glass,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29396,8 +29505,13 @@
 	icon_state = "1-8"
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
 "bat" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -29443,6 +29557,12 @@
 	},
 /area/hallway/primary/port)
 "bay" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29779,6 +29899,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29975,6 +30098,9 @@
 	pixel_x = -32
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
 	icon_state = "neutralcorner";
@@ -30529,6 +30655,12 @@
 	pixel_x = 29;
 	pixel_y = 0
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (EAST)";
 	icon_state = "neutralcorner";
@@ -30604,6 +30736,9 @@
 	pixel_x = -24
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
 	icon_state = "neutralcorner";
@@ -31212,6 +31347,11 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -32183,6 +32323,9 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
 	icon_state = "neutralcorner";
@@ -33999,6 +34142,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
 	icon_state = "neutralcorner";
@@ -34520,6 +34666,12 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -34528,6 +34680,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	on = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -37990,6 +38148,12 @@
 	icon_state = "camera";
 	network = list("SS13")
 	},
+/obj/machinery/button/door{
+	id = "cmooffice";
+	name = "Office Emergency Lockdown";
+	pixel_x = 0;
+	pixel_y = -24
+	},
 /mob/living/simple_animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/barber{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -38471,8 +38635,13 @@
 	dir = 5
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
 "bpN" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
@@ -38486,8 +38655,13 @@
 	dir = 4
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
 "bpO" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
@@ -38500,8 +38674,13 @@
 	dir = 9
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
 "bpP" = (
 /obj/machinery/light{
 	dir = 4
@@ -38584,8 +38763,13 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
 "bpW" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
@@ -38602,8 +38786,13 @@
 	dir = 4
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
 "bpX" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
@@ -38620,8 +38809,13 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
 "bpY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -38668,6 +38862,9 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "cmooffice"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -41081,15 +41278,24 @@
 /turf/open/floor/engine,
 /area/space)
 "btW" = (
-/obj/structure/window/reinforced,
-/obj/machinery/camera{
-	c_tag = "Service-Engineering Bridge 2";
-	dir = 1
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
 	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
 "btX" = (
 /obj/machinery/door/airlock/glass,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
 	dir = 8;
@@ -41102,6 +41308,12 @@
 	pixel_x = 0;
 	pixel_y = -29
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
 	dir = 8;
@@ -41110,6 +41322,12 @@
 /area/hallway/primary/central)
 "btZ" = (
 /obj/machinery/light,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
 	dir = 8;
@@ -41119,6 +41337,12 @@
 "bua" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
@@ -41137,6 +41361,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
 	dir = 8;
@@ -41145,6 +41375,12 @@
 /area/hallway/primary/central)
 "buc" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
 	dir = 8;
@@ -41154,6 +41390,12 @@
 "bud" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -41168,6 +41410,11 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -41342,12 +41589,24 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/central)
 "bur" = (
 /obj/machinery/light,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -41358,24 +41617,39 @@
 	pixel_x = 0;
 	pixel_y = -29
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/central)
 "but" = (
 /obj/machinery/door/airlock/glass,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/central)
 "buu" = (
-/obj/structure/window/reinforced,
-/obj/machinery/camera{
-	c_tag = "Medbay-Engineering Bridge";
-	dir = 1
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
 	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
 "buv" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
@@ -41882,19 +42156,19 @@
 	dir = 6
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced,
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
 "bvv" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/grille,
-/turf/open/space,
-/area/space)
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
 "bvw" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -41904,8 +42178,11 @@
 	dir = 10
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
 "bvx" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "External Airlock Access";
@@ -42232,8 +42509,11 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
 "bvW" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -42246,8 +42526,11 @@
 	dir = 4
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
 "bvX" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -42261,8 +42544,11 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
 "bvY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
@@ -53329,9 +53615,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/poddoor/preopen{
-	id = "ceoffice";
-	name = "office emergency blastdoors"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "ceoffice"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -53350,9 +53635,8 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "ceoffice";
-	name = "office emergency blastdoors"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "ceoffice"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -53379,9 +53663,8 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "ceoffice";
-	name = "office emergency blastdoors"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "ceoffice"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -53404,9 +53687,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/poddoor/preopen{
-	id = "ceoffice";
-	name = "office emergency blastdoors"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "ceoffice"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -59049,8 +59331,13 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
 "bYM" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
@@ -59066,8 +59353,13 @@
 	},
 /obj/structure/girder,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
 "bYN" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -59352,8 +59644,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
 "bZo" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
@@ -59367,8 +59664,13 @@
 	},
 /obj/structure/girder,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
 "bZp" = (
 /obj/machinery/light{
 	dir = 8
@@ -61326,17 +61628,10 @@
 	name = "Central Asteroid Maintenance"
 	})
 "cdj" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
-/obj/machinery/camera{
-	c_tag = "Docking-Medbay Bridge";
-	dir = 8;
-	network = list("SS13")
-	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
 "cdk" = (
 /obj/structure/disposalpipe/junction{
 	icon_state = "pipe-j2";
@@ -61589,6 +61884,12 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -62285,6 +62586,12 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -62740,21 +63047,24 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/turf/open/floor/plating/airless/astplate{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-/area/mine/unexplored{
-	name = "Civilian Asteroid"
-	})
-"cfO" = (
+/obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/turf/open/floor/plating/airless/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
+"cfO" = (
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/hallway/primary/port)
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
 "cfP" = (
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -62762,16 +63072,20 @@
 	},
 /area/hallway/primary/port)
 "cfQ" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/hallway/primary/port)
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
 "cfR" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -62784,11 +63098,15 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating/airless/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/mine/unexplored{
-	name = "Civilian Asteroid"
+/area/construction/hallway{
+	name = "Service-Science Bridge"
 	})
 "cfS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -62830,8 +63148,13 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
 "cfV" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
@@ -62847,8 +63170,13 @@
 	},
 /obj/structure/girder,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
 "cfW" = (
 /obj/structure/table,
 /obj/item/toy/figure/clown,
@@ -62899,11 +63227,15 @@
 	pixel_x = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating/airless/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/mine/unexplored{
-	name = "Civilian Asteroid"
+/area/construction/hallway{
+	name = "Service-Science Bridge"
 	})
 "cgb" = (
 /obj/structure/window/reinforced{
@@ -62915,11 +63247,15 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating/airless/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/mine/unexplored{
-	name = "Civilian Asteroid"
+/area/construction/hallway{
+	name = "Service-Science Bridge"
 	})
 "cgc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -63034,9 +63370,6 @@
 	name = "Port Asteroid Maintenance"
 	})
 "cgp" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -63044,7 +63377,9 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/hallway/primary/port)
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
 "cgq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -63145,6 +63480,9 @@
 	icon_state = "tube1";
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63229,6 +63567,9 @@
 	pixel_x = 28;
 	pixel_y = 0
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63286,26 +63627,24 @@
 	name = "Research Asteroid"
 	})
 "cgT" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating/airless/astplate{
+/turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/mine/unexplored{
-	name = "Research Asteroid"
+/area/construction/hallway{
+	name = "Service-Science Bridge"
 	})
 "cgU" = (
-/obj/structure/window/reinforced{
+/obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/hallway/primary/aft)
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
 "cgV" = (
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -63313,36 +63652,31 @@
 	},
 /area/hallway/primary/aft)
 "cgW" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
+/obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Service-Research Bridge";
 	dir = 9;
 	icon_state = "camera"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/hallway/primary/aft)
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
 "cgX" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plating/airless/astplate{
+/turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/mine/unexplored{
-	name = "Research Asteroid"
+/area/construction/hallway{
+	name = "Service-Science Bridge"
 	})
 "cgY" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -63386,16 +63720,14 @@
 	name = "Aft Asteroid Maintenance"
 	})
 "chd" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	name = "reinforced floor"
 	},
-/area/hallway/primary/aft)
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
 "che" = (
 /obj/machinery/power/solar{
 	id = "portsolar";
@@ -63568,6 +63900,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -64255,11 +64592,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating/airless/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/mine/unexplored{
-	name = "Research Asteroid"
+/area/construction/hallway{
+	name = "Service-Science Bridge"
 	})
 "ciE" = (
 /obj/structure/window/reinforced{
@@ -64273,11 +64614,15 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating/airless/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/mine/unexplored{
-	name = "Research Asteroid"
+/area/construction/hallway{
+	name = "Service-Science Bridge"
 	})
 "ciF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -68760,8 +69105,13 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
 "cqD" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -69618,6 +69968,11 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -70571,6 +70926,12 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
 	dir = 8;
@@ -70583,6 +70944,12 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
 	dir = 8;
@@ -70594,6 +70961,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
 	dir = 8;
@@ -70601,44 +70974,50 @@
 	},
 /area/hallway/primary/aft)
 "ctA" = (
-/obj/structure/window/reinforced,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/machinery/camera{
 	c_tag = "Research-Docking Bridge 1";
 	dir = 1;
 	icon_state = "camera";
 	network = list("SS13")
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
 	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
 "ctB" = (
-/obj/structure/window/reinforced,
-/obj/machinery/camera{
-	c_tag = "Research-Docking Bridge 2";
-	dir = 1;
-	icon_state = "camera";
-	network = list("SS13")
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Science-Docking Bridge APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
 "ctC" = (
-/obj/structure/window/reinforced,
-/obj/machinery/camera{
-	c_tag = "Research-Docking Bridge 3";
-	dir = 1;
-	icon_state = "camera";
-	network = list("SS13")
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
 "ctD" = (
 /obj/machinery/door/airlock/glass,
 /obj/structure/disposalpipe/segment{
@@ -71040,8 +71419,11 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/girder,
 /obj/structure/grille,
+/obj/structure/window/reinforced,
 /turf/open/space,
-/area/space)
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
 "cul" = (
 /obj/machinery/status_display{
 	density = 0;
@@ -75808,6 +76190,9 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rdoffice"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75817,6 +76202,9 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rdoffice"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75835,6 +76223,9 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rdoffice"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -76744,6 +77135,7 @@
 	icon_state = "camera";
 	network = list("SS13")
 	},
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (SOUTHWEST)";
 	icon_state = "whitepurple";
@@ -76792,6 +77184,7 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -28
 	},
+/obj/machinery/recharger,
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
 	dir = 8;
@@ -83116,7 +83509,9 @@
 "cPD" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
 "cPE" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/engine,
@@ -83204,12 +83599,11 @@
 /turf/open/floor/engine,
 /area/space)
 "cPT" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
 "cPU" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -83401,6 +83795,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (EAST)";
 	icon_state = "neutralcorner";
@@ -83420,6 +83820,9 @@
 "cQC" = (
 /obj/machinery/door/airlock/glass,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
 	icon_state = "neutralcorner";
@@ -83476,6 +83879,9 @@
 /area/hallway/primary/central)
 "cQJ" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
 	icon_state = "neutralcorner";
@@ -83908,14 +84314,13 @@
 	},
 /area/hallway/primary/starboard)
 "cRM" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
 "cRN" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -84293,7 +84698,9 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
 "cSD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -84867,6 +85274,12 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -84883,6 +85296,12 @@
 "cTX" = (
 /obj/machinery/door/airlock/glass,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -85126,12 +85545,19 @@
 	},
 /area/teleporter)
 "cUy" = (
-/obj/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
 "cUz" = (
 /obj/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -87241,6 +87667,10 @@
 	req_one_access = null;
 	req_one_access_txt = "0"
 	},
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge";
+	name = "Emergency Blast Door"
+	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87253,6 +87683,10 @@
 	req_access_txt = "19";
 	req_one_access = null;
 	req_one_access_txt = "0"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge";
+	name = "Emergency Blast Door"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -87339,6 +87773,9 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "qmoffice"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87356,6 +87793,9 @@
 "cZQ" = (
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/grille,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "qmoffice"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87592,6 +88032,11 @@
 /area/quartermaster/qm)
 "dap" = (
 /obj/structure/closet/secure_closet/quartermaster,
+/obj/machinery/button/door{
+	id = "qmoffice";
+	name = "Office Emergency Lockdown";
+	pixel_x = -24
+	},
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (WEST)";
 	icon_state = "brown";
@@ -90354,6 +90799,9 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "cmooffice"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92494,17 +92942,13 @@
 	name = "Central Asteroid Maintenance"
 	})
 "djU" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
-/obj/machinery/camera{
-	c_tag = "Docking-Medbay Bridge 2";
-	dir = 8;
-	network = list("SS13")
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
-/area/space)
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
 "djV" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -93824,6 +94268,12 @@
 	on = 1;
 	scrub_N2O = 0;
 	scrub_Toxins = 0
+	},
+/obj/machinery/button/door{
+	id = "researchlockdown";
+	name = "Office Emergency Lockdown";
+	pixel_x = -24;
+	pixel_y = -8
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -97106,9 +97556,8 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "ceoffice";
-	name = "office emergency blastdoors"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "ceoffice"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -97147,14 +97596,4058 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "ceoffice";
-	name = "office emergency blastdoors"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "ceoffice"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/chief)
+"dsQ" = (
+/obj/machinery/camera{
+	c_tag = "Core-Command-Cargo Bridge 4";
+	dir = 8;
+	network = list("SS13")
+	},
+/turf/open/space,
+/area/space)
+"dsR" = (
+/obj/machinery/camera{
+	c_tag = "Core-Command-Cargo Bridge 1";
+	dir = 8;
+	network = list("SS13")
+	},
+/turf/open/space,
+/area/space)
+"dsS" = (
+/obj/machinery/camera{
+	c_tag = "Core-Command-Cargo Bridge 2";
+	network = list("SS13")
+	},
+/turf/open/space,
+/area/space)
+"dsT" = (
+/obj/machinery/camera{
+	c_tag = "Core-Command-Cargo Bridge 3";
+	network = list("SS13")
+	},
+/turf/open/space,
+/area/space)
+"dsU" = (
+/obj/machinery/camera{
+	c_tag = "Core-Command-Cargo Bridge Ceneter";
+	dir = 1
+	},
+/turf/open/space,
+/area/space)
+"dsV" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dsW" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dsX" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dsY" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dsZ" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dta" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dtb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dtc" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtd" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dte" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtf" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtg" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dth" = (
+/obj/machinery/camera{
+	c_tag = "Command-Service Bridge";
+	dir = 4;
+	icon_state = "camera"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dti" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtj" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dtl" = (
+/obj/machinery/camera{
+	c_tag = "Command-Engineering Bridge";
+	dir = 8;
+	network = list("SS13")
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dtm" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dtn" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dto" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtp" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtq" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtr" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dts" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Medical-Cargo Bridge APC";
+	pixel_x = -25
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtt" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtu" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtv" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtw" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtx" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Command-Service Bridge APC";
+	pixel_x = -25
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dty" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtz" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtA" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dtC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dtD" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtE" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtF" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtG" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtH" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtI" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtJ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtK" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtL" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtM" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtN" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtO" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtP" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtQ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtR" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dtS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dtT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dtU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtV" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Medbay-Cargo Bridge";
+	dir = 4;
+	icon_state = "camera"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtW" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtX" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtY" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dtZ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dua" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dub" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"duc" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dud" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"due" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"duf" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dug" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"duh" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dui" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"duj" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"duk" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/port)
+"dul" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dum" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dun" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dup" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dur" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dus" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"dut" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"duu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"duv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duw" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dux" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duy" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duz" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duB" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"duC" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"duD" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"duE" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duF" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duG" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duH" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duI" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duJ" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duK" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duL" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duM" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duN" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duO" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duP" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duQ" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duR" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duS" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duT" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duU" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duV" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duW" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duX" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duY" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"duZ" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dva" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvb" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvc" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvd" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dve" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvf" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvg" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvh" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvi" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvj" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvk" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvl" = (
+/obj/machinery/camera{
+	c_tag = "Service-Engineering Bridge 1";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvm" = (
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Service-Engineering Bridge APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvn" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvo" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvp" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvq" = (
+/obj/machinery/camera{
+	c_tag = "Service-Engineering Bridge 2";
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvr" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	icon_state = "neutralcorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dvs" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	icon_state = "neutralcorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dvt" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	icon_state = "neutralcorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dvu" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dvv" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dvw" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dvx" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"dvy" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"dvz" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"dvA" = (
+/obj/machinery/camera{
+	c_tag = "Medbay-Engineering Bridge";
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"dvB" = (
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Engineering-Medical Bridge APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"dvC" = (
+/obj/machinery/camera{
+	c_tag = "Medbay-Engineering Bridge 2";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"dvD" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvE" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvF" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvG" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvH" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvI" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvJ" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvK" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvL" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvM" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvN" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvO" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvP" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvQ" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvR" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvS" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvT" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvU" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvV" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvW" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvX" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvY" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dvZ" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Service-Engineering Bridge"
+	})
+"dwa" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"dwb" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"dwc" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Engineering-Medical Bridge"
+	})
+"dwd" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwe" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwf" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwg" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwh" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwi" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwj" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwk" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwl" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwm" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwn" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwo" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwp" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwq" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwr" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dws" = (
+/obj/machinery/camera{
+	c_tag = "Docking-Medbay Bridge";
+	dir = 8;
+	network = list("SS13")
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwu" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwv" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dww" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwx" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwy" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Docking-Medical Bridge APC";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwA" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwB" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwC" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwD" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwE" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwF" = (
+/obj/machinery/camera{
+	c_tag = "Docking-Medbay Bridge 2";
+	dir = 8;
+	network = list("SS13")
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dwH" = (
+/obj/machinery/door/airlock/glass,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dwI" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dwJ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dwK" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dwL" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dwM" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dwN" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 24
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dwO" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwP" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwQ" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwR" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwS" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwT" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwU" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwV" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwW" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwX" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwY" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dwZ" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxa" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxb" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxc" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxd" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxe" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxf" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxg" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxh" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxi" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxj" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxk" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxl" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxm" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxn" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxo" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxp" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxq" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxr" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxs" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxt" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxu" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxv" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxw" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxx" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxy" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxz" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxA" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxB" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxC" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxD" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxE" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxF" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxG" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxH" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxI" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxJ" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxK" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxL" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxM" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxN" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxO" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxP" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxQ" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxR" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxS" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxT" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxU" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxV" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxW" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxX" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxY" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dxZ" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dya" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyb" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyc" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyd" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dye" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyf" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyg" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyh" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyi" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyj" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyk" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyl" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dym" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyn" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyo" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyp" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyq" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyr" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dys" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyt" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyu" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyv" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyw" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyx" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyy" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyz" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyA" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyB" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyC" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyD" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyE" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyF" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyG" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyH" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyI" = (
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyJ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	icon_state = "neutralcorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/aft)
+"dyK" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	icon_state = "neutralcorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/aft)
+"dyL" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	icon_state = "neutralcorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/aft)
+"dyM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Research-Docking Bridge 5";
+	dir = 1;
+	icon_state = "camera";
+	network = list("SS13")
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyN" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Research-Docking Bridge 2";
+	dir = 1;
+	icon_state = "camera";
+	network = list("SS13")
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyO" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyP" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyS" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyV" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Research-Docking Bridge 3";
+	dir = 1;
+	icon_state = "camera";
+	network = list("SS13")
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyW" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dyZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dza" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Research-Docking Bridge 4";
+	dir = 1;
+	icon_state = "camera";
+	network = list("SS13")
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dzb" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dzc" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dzd" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dze" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dzf" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dzg" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dzh" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dzi" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dzj" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
+"dzk" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dzl" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dzm" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dzn" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/space,
+/area/space)
+"dzo" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/structure/grille,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzp" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzq" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzr" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzs" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzt" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzu" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzv" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzx" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzy" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzz" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzA" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzB" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzC" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzD" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzE" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzG" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzI" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzJ" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzK" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzL" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzM" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzN" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzP" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzQ" = (
+/obj/machinery/camera{
+	c_tag = "Core-Command-Cargo Bridge 1";
+	dir = 8;
+	network = list("SS13")
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzS" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzT" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzU" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzV" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzW" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzX" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dzZ" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAa" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAb" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAc" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAd" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAe" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAf" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAg" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAh" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAi" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAm" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAn" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAo" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAp" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAq" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAs" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAt" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAu" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAv" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAw" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAx" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAy" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAz" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAA" = (
+/obj/machinery/camera{
+	c_tag = "Core-Command-Cargo Bridge 2";
+	network = list("SS13")
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAB" = (
+/obj/machinery/camera{
+	c_tag = "Core-Command-Cargo Bridge 3";
+	network = list("SS13")
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAC" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Cargo-AI-Command Bridge APC";
+	pixel_y = 24
+	},
+/obj/structure/cable/orange{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAD" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAE" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAF" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAG" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAH" = (
+/obj/machinery/camera{
+	c_tag = "Core-Command-Cargo Bridge 3";
+	network = list("SS13")
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAI" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAJ" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAK" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAL" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAM" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAN" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAO" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAP" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAQ" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (NORTH)";
+	icon_state = "neutralcorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/fore)
+"dAR" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (NORTH)";
+	icon_state = "neutralcorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/fore)
+"dAS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (NORTH)";
+	icon_state = "neutralcorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/fore)
+"dAT" = (
+/obj/effect/landmark/lightsout,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAU" = (
+/obj/machinery/light,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAV" = (
+/obj/machinery/light/small,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAW" = (
+/obj/machinery/light,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAX" = (
+/obj/machinery/light,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAY" = (
+/obj/machinery/light/small,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dAZ" = (
+/obj/machinery/light,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dBa" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dBb" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dBc" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dBd" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dBe" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dBf" = (
+/turf/closed/wall/r_wall,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dBg" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/construction/hallway{
+	name = "Cargo-AI-Command Bridge"
+	})
+"dBh" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBi" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBj" = (
+/obj/effect/landmark/lightsout,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Service Bridge"
+	})
+"dBk" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBl" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Command-Engineering Bridge APC";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBm" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBn" = (
+/obj/effect/landmark/lightsout,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Medical-Cargo Bridge"
+	})
+"dBo" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBp" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBq" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBr" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBs" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBt" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBu" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Command-Engineering Bridge"
+	})
+"dBv" = (
+/obj/machinery/door/airlock/glass,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (EAST)";
+	icon_state = "neutralcorner";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dBw" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (EAST)";
+	icon_state = "neutralcorner";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dBx" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (EAST)";
+	icon_state = "neutralcorner";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dBy" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (EAST)";
+	icon_state = "neutralcorner";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dBz" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (EAST)";
+	icon_state = "neutralcorner";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/central)
+"dBA" = (
+/obj/effect/landmark/lightsout,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Docking-Medical Bridge"
+	})
+"dBB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
+"dBC" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Service-Science Bridge APC";
+	pixel_x = 23;
+	pixel_y = 2
+	},
+/obj/structure/cable,
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	name = "reinforced floor"
+	},
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
+"dBD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
+"dBE" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	name = "reinforced floor"
+	},
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
+"dBF" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	name = "reinforced floor"
+	},
+/area/construction/hallway{
+	name = "Service-Science Bridge"
+	})
+"dBG" = (
+/obj/effect/landmark/lightsout,
+/turf/open/floor/engine,
+/area/construction/hallway{
+	name = "Science-Docking Bridge"
+	})
 
 (1,1,1) = {"
 aaa
@@ -108808,7 +113301,7 @@ abE
 aaa
 aaa
 aaa
-aaa
+cKF
 aaa
 aaa
 aaa
@@ -111379,18 +115872,18 @@ aLm
 aXC
 aXS
 aXS
+dsX
 aXS
 aXS
 aXS
+dsX
+aXS
+aXS
+dsX
 aXS
 aXS
 aXS
-aXS
-aXS
-aXS
-aXS
-aXS
-aXS
+dsX
 aXS
 aXS
 aZM
@@ -111464,16 +115957,16 @@ cfN
 cga
 cga
 cga
+dBB
+cga
+cga
+cgT
+cga
+cga
+cgT
 cga
 cga
 cga
-cgT
-cgT
-cgT
-cgT
-cgT
-cgT
-cgT
 ciD
 cjg
 cjg
@@ -111633,24 +116126,24 @@ aSU
 aVB
 aSU
 aSR
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-aYI
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
+dsV
+dsV
+dsV
+dsV
+dsV
+dsV
+dsV
+dth
+dsV
+dsV
+dtx
+dsV
+dsV
+dsV
+dsV
+dsV
+dsV
+dsV
 baa
 baw
 baY
@@ -111725,13 +116218,13 @@ cgp
 cfO
 cfO
 cgU
-cgU
-cgU
-cgU
-cgU
-cgU
-cgU
-cgU
+cfO
+cfO
+cgp
+cfO
+cfO
+cfO
+cfO
 cjh
 cjF
 cjF
@@ -111890,24 +116383,24 @@ aRD
 aRD
 aRD
 aRP
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
+dsV
+dsV
+dsV
+dsV
+dsV
+dsV
+dsV
+dsV
+dBj
+dsV
+dty
+dsV
+dsV
+dsV
+dsV
+dsV
+dsV
+dsV
 bab
 bax
 baZ
@@ -111974,21 +116467,21 @@ bTq
 bax
 bax
 bab
-cfP
-cfP
-cfP
-cfP
-cfP
-cfP
-cfP
-cgV
-cgV
-cgV
-cgV
-cgV
-cgV
-cgV
-cgV
+cfO
+cfO
+cfO
+cfO
+cfO
+cfO
+cfO
+cfO
+cfO
+cfO
+cfO
+cfO
+cfO
+cfO
+cfO
 cji
 cjG
 cjG
@@ -112147,26 +116640,26 @@ aSN
 aSN
 aSN
 aSP
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
+dsV
+dsV
+dsV
+dsY
+dsV
+dsV
+dsV
+dti
+dsV
+dsV
+dtz
+dtG
+dtG
+dtG
+dtQ
+dtG
+dtG
+dtG
 bac
-bay
+duk
 bba
 bbA
 bbA
@@ -112235,13 +116728,13 @@ cfQ
 cfQ
 cfQ
 cfQ
-cfQ
-cfQ
-cfQ
+dBC
+dBE
+dBF
 cgW
 chd
 chd
-cho
+chd
 chd
 chd
 chd
@@ -112407,18 +116900,18 @@ aLm
 aXD
 aXD
 aXD
+dsZ
 aXD
 aXD
 aXD
+dsZ
+aXD
+aXD
+dsZ
 aXD
 aXD
 aXD
-aXD
-aXD
-aXD
-aXD
-aXD
-aXD
+dsZ
 aXD
 aXD
 aXD
@@ -112492,16 +116985,16 @@ cfR
 cgb
 cgb
 cgb
+dBD
+cgb
+cgb
+cgX
+cgb
+cgb
+cgX
 cgb
 cgb
 cgb
-cgX
-cgX
-cgX
-cgX
-cgX
-cgX
-cgX
 ciE
 cjg
 cjg
@@ -114931,7 +119424,7 @@ afr
 afr
 afr
 dsr
-dsw
+dsm
 akB
 all
 alK
@@ -115444,7 +119937,7 @@ abW
 afr
 dsi
 dsn
-aiQ
+dsn
 dsx
 afr
 amC
@@ -115702,7 +120195,7 @@ afr
 dsj
 dso
 dst
-dsy
+dsx
 afr
 amD
 ann
@@ -115958,7 +120451,7 @@ abW
 afr
 dsk
 dsp
-dsu
+dsp
 dsz
 afr
 amE
@@ -115969,7 +120462,7 @@ aqh
 ann
 ann
 alH
-dsK
+dsJ
 alH
 auc
 ann
@@ -116214,8 +120707,8 @@ abW
 abW
 afr
 dsl
-dsq
-dsv
+dsj
+dsj
 ahq
 afr
 amF
@@ -117840,9 +122333,9 @@ aZm
 bon
 bpM
 cRM
-arz
-arz
-bvm
+duE
+duE
+dvD
 bwV
 byz
 bzM
@@ -118097,9 +122590,9 @@ bjB
 arw
 bpN
 cRM
-arz
-arz
-bvm
+duE
+duE
+dvD
 bwW
 bvm
 aZn
@@ -118354,8 +122847,8 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
+duE
+duE
 bvu
 bwX
 bjB
@@ -118609,10 +123102,10 @@ aaa
 aaa
 aaa
 arw
-bpN
-cRM
-arz
-aSQ
+dum
+duv
+duE
+duE
 bvv
 arw
 aaa
@@ -118868,9 +123361,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -119125,9 +123618,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -119382,9 +123875,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -119639,9 +124132,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -119894,10 +124387,10 @@ aaa
 aaa
 aaa
 arw
-bpN
-cRM
-arz
-aSQ
+dum
+duv
+duE
+dvl
 bvv
 arw
 aaa
@@ -120153,9 +124646,9 @@ aaa
 arw
 bpN
 cRM
-arz
-btV
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -120410,9 +124903,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -120667,9 +125160,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -120924,9 +125417,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -121179,10 +125672,10 @@ aaa
 aaa
 aaa
 arw
-bpN
-cRM
-arz
-aSQ
+dum
+dux
+duE
+duE
 bvv
 arw
 aaa
@@ -121438,9 +125931,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -121695,9 +126188,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -121952,9 +126445,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+duE
+dvF
 arw
 aaa
 aaa
@@ -122207,10 +126700,10 @@ aaa
 aaa
 aaa
 arw
-bpN
-cRM
-arz
-aSQ
+dum
+dux
+duE
+dvm
 bvv
 arw
 aaa
@@ -122456,7 +126949,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cKF
 aaa
 aaa
 abC
@@ -122466,9 +126959,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+dvn
+dvF
 arw
 aaa
 aaa
@@ -122723,9 +127216,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+dvn
+dvF
 arw
 aaa
 aaa
@@ -122980,9 +127473,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+dvn
+dvF
 arw
 aaa
 aaa
@@ -123237,9 +127730,9 @@ aaa
 arw
 bpN
 cRM
-arz
-btW
-bvv
+duE
+dvn
+dvF
 arw
 aaa
 aaa
@@ -123310,8 +127803,8 @@ cph
 cpM
 cqB
 crL
-cjG
-ctv
+csz
+dyJ
 cUn
 cjU
 ckB
@@ -123492,10 +127985,10 @@ aaa
 aaa
 aaa
 arw
-bpN
-cRM
-arz
-aSQ
+dum
+duv
+duE
+dvq
 bvv
 arw
 aaa
@@ -123751,9 +128244,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+dvn
+dvF
 arw
 aaa
 aaa
@@ -123825,7 +128318,7 @@ cpO
 cmY
 cjF
 cjG
-ctv
+dyK
 cUn
 cjU
 dlF
@@ -124008,9 +128501,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+dvn
+dvF
 arw
 aaa
 aaa
@@ -124082,7 +128575,7 @@ cpP
 cmY
 cjF
 cjG
-ctv
+dyK
 cUn
 cgN
 dlG
@@ -124265,9 +128758,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+dvn
+dvF
 arw
 aaa
 aZt
@@ -124522,9 +129015,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+dvn
+dvF
 arw
 aZt
 aZt
@@ -124777,10 +129270,10 @@ aZf
 aZf
 aaa
 arw
-bpN
-cRM
-arz
-aSQ
+dum
+duv
+duE
+dvn
 bvv
 arw
 aZt
@@ -124851,8 +129344,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 cgN
@@ -125036,9 +129529,9 @@ aaa
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+dvn
+dvF
 arw
 aZf
 aZt
@@ -125108,9 +129601,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-dlz
+dwX
+dwX
+cUy
 cuk
 cgN
 cgN
@@ -125293,9 +129786,9 @@ aZf
 arw
 bpN
 cRM
-arz
-aSQ
-bvv
+duE
+dvn
+dvF
 arw
 aZf
 aZt
@@ -125365,8 +129858,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -125550,8 +130043,8 @@ aZf
 boo
 bpO
 cRM
-arz
-aSQ
+duE
+dvn
 bvw
 bwY
 aZf
@@ -125622,8 +130115,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -125878,11 +130371,11 @@ aaa
 aaa
 aaa
 arw
-cqC
-aQS
-arz
-cUy
-cuk
+dwO
+dxb
+dwX
+dyM
+dwO
 aaa
 aaa
 aXR
@@ -126065,7 +130558,7 @@ boq
 cQD
 cSs
 baO
-bhM
+dvr
 bal
 cKO
 bal
@@ -126136,8 +130629,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -126322,7 +130815,7 @@ bor
 cQW
 baN
 baO
-bhM
+dvr
 bal
 bwZ
 bal
@@ -126393,8 +130886,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -126650,8 +131143,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -126907,8 +131400,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -127093,7 +131586,7 @@ bcY
 cQW
 baN
 baO
-bhM
+dvr
 bal
 bxa
 bcp
@@ -127163,11 +131656,11 @@ aaa
 aaa
 aaa
 arw
-cqC
-aQS
-arz
+dwO
+dxg
+dwX
 ctA
-cuk
+dwO
 abC
 abC
 aXR
@@ -127421,8 +131914,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -127678,8 +132171,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -127935,8 +132428,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -128192,8 +132685,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 abC
@@ -128448,11 +132941,11 @@ aaa
 aaa
 aaa
 arw
-cqC
-aQS
-arz
+dwO
+dxb
+dwX
 cUy
-cuk
+dwO
 aaa
 aaa
 aXR
@@ -128706,8 +133199,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -128963,8 +133456,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -129220,8 +133713,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -129476,11 +133969,11 @@ aaa
 aaa
 aaa
 arw
-cqC
-aQS
-arz
-cUy
-cuk
+dwO
+dxg
+dwX
+dyN
+dwO
 aaa
 aaa
 aXR
@@ -129734,10 +134227,10 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
-cuk
+cqC
 aaa
 aaa
 aXR
@@ -129991,8 +134484,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -130248,8 +134741,8 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
+dwX
+dwX
 cUy
 cuk
 aaa
@@ -130504,11 +134997,11 @@ aaa
 aaa
 aaa
 arw
-cqC
-aQS
-arz
+dwO
+dxb
+dwX
 ctB
-cuk
+dwO
 abC
 abC
 aXR
@@ -130654,18 +135147,18 @@ aLm
 aXI
 aXX
 aXX
+dta
 aXX
 aXX
 aXX
+dta
+aXX
+aXX
+dta
 aXX
 aXX
 aXX
-aXX
-aXX
-aXX
-aXX
-aXX
-aXX
+dta
 aXX
 aXX
 aZT
@@ -130762,9 +135255,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dBG
+dyO
 cuk
 aaa
 aaa
@@ -130908,24 +135401,24 @@ aSU
 aSU
 aSU
 aSR
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
+dsW
+dsW
+dsW
+dBh
+dsW
+dsW
+dsW
+dBi
+dsW
+dsW
+dBk
+dsW
+dsW
+dsW
+dBq
+dsW
+dsW
+dsW
 ban
 baN
 cQE
@@ -131019,9 +135512,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -131276,10 +135769,10 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
-cuk
+dwX
+dwX
+dyO
+cqC
 aaa
 aaa
 aXR
@@ -131422,31 +135915,31 @@ aSN
 aSN
 aSN
 aSP
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-aYK
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-bap
+dsW
+dsW
+dsW
+dsW
+dsW
+dsW
+dsW
+dtl
+dsW
+dsW
+dBl
+dBm
+dBo
+dBp
+dBr
+dBs
+dBt
+dBu
+dBv
 cQA
-baP
-baP
+dBw
+dBx
 bcq
-baP
-baP
+dBy
+dBz
 bek
 baP
 bfX
@@ -131532,11 +136025,11 @@ aaa
 aaa
 aaa
 arw
-cqC
-aQS
-arz
-cUy
-cuk
+dwO
+dxg
+dwX
+dyO
+dwO
 abC
 abC
 aXR
@@ -131682,18 +136175,18 @@ aLm
 aXJ
 aXY
 aXY
+dtb
 aXY
 aXY
 aXY
+dtb
+aXY
+aXY
+dtb
 aXY
 aXY
 aXY
-aXY
-aXY
-aXY
-aXY
-aXY
-aXY
+dtb
 aXY
 aXY
 aZU
@@ -131790,9 +136283,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -132047,9 +136540,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -132304,9 +136797,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -132560,11 +137053,11 @@ aaa
 aaa
 aaa
 arw
-cqC
-aQS
-arz
-cUy
-cuk
+dwO
+dxb
+dwX
+dyV
+dwO
 aaa
 aaa
 aXR
@@ -132818,9 +137311,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -133075,9 +137568,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -133332,9 +137825,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -133589,9 +138082,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 abC
 abC
@@ -133845,11 +138338,11 @@ aaa
 aaa
 aaa
 arw
-cqC
-aQS
-arz
-ctC
-cuk
+dwO
+dxg
+dwX
+dyO
+dwO
 aaa
 aaa
 aXR
@@ -134103,9 +138596,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -134360,9 +138853,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -134617,9 +139110,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 abC
 abC
@@ -134874,9 +139367,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -135130,11 +139623,11 @@ aaa
 aaa
 aaa
 arw
-cqC
-aQS
-arz
-cUy
-cuk
+dwO
+dxb
+dwX
+dza
+dwO
 aaa
 aaa
 aXR
@@ -135317,7 +139810,7 @@ boB
 bal
 baP
 cSv
-bhP
+dvu
 bvU
 bxw
 cbr
@@ -135388,9 +139881,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -135645,9 +140138,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aaa
@@ -135902,9 +140395,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-dlA
+dwX
+dwX
+dyO
 cuk
 aaa
 aXR
@@ -135976,37 +140469,37 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaf
-aeh
-aeh
-aeh
-aeh
-aeh
-aeh
-aaa
-aaa
-ahT
-ajS
-ahT
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+abC
 aaa
 aaa
 aaa
@@ -136020,8 +140513,8 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -136088,7 +140581,7 @@ boE
 bal
 baP
 cSv
-bhP
+dvu
 bal
 bxz
 byS
@@ -136159,9 +140652,9 @@ aaa
 aaa
 arw
 cqC
-aQS
-arz
-cUy
+dwX
+dwX
+dyO
 cuk
 aaa
 aXR
@@ -136248,28 +140741,28 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaf
-adg
-adg
-adg
-adg
-adg
+aaa
+aaa
 aaf
 aaf
 aaf
-adg
-adg
-adg
-adg
-ajT
+aeh
+aeh
+aeh
+aeh
+aeh
+aeh
+aaa
+aaa
 ahT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ajS
+ahT
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -136277,9 +140770,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 abW
@@ -136345,7 +140838,7 @@ boF
 bal
 brr
 cSv
-bhP
+dvu
 bal
 bxA
 cMH
@@ -136502,25 +140995,25 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
+aaf
+aaf
+adg
+adg
+adg
+adg
+adg
 aaf
 aaf
 aaf
-aaf
-aaf
-adg
-adt
-adt
-adt
 adg
 adg
 adg
 adg
-adg
-adt
-adt
-adt
 ajT
-aae
+ahT
 aaa
 aaa
 aaa
@@ -136534,9 +141027,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 abW
@@ -136550,9 +141043,9 @@ abW
 aaa
 aOu
 aPm
-aQS
-arz
-aSQ
+ary
+ary
+ary
 aTC
 aUB
 aaa
@@ -136756,29 +141249,29 @@ aaa
 aaa
 aaa
 aaa
-aae
-aae
-aae
-aae
-aae
-aae
-aae
-aae
+aaa
+aaa
+aaa
+aaf
+aaf
+aaf
+aaf
+aaf
 adg
 adt
-adN
-aei
-aeH
 adt
-afz
 adt
-agV
-ahJ
-aip
+adg
+adg
+adg
+adg
+adg
 adt
-ajU
+adt
+adt
+ajT
 aae
-aae
+aaa
 aaa
 aaa
 aaa
@@ -136791,9 +141284,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -136807,9 +141300,9 @@ abW
 aaa
 arw
 aPn
-aQS
-arz
-aSQ
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -136859,7 +141352,7 @@ boH
 bpV
 aQS
 cSC
-aSQ
+dvx
 bvV
 bxB
 aZt
@@ -137008,9 +141501,9 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaf
-aaf
+aaa
+aaa
+aaa
 aaa
 aaa
 aae
@@ -137023,19 +141516,19 @@ aae
 aae
 adg
 adt
-adO
-aej
-aeI
-afd
-afA
-afd
-agW
-ahK
-aiq
+adN
+aei
+aeH
 adt
-ajT
+afz
+adt
+agV
+ahJ
+aip
+adt
+ajU
 aae
-aaf
+aae
 aaa
 aaa
 aaa
@@ -137048,9 +141541,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -137064,9 +141557,9 @@ aaa
 aaa
 arw
 aPn
-aQS
-arz
-aSQ
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -137116,7 +141609,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+dvx
 bvW
 arw
 aZt
@@ -137264,12 +141757,12 @@ aaa
 aaa
 aaa
 aaa
+aaa
 aaf
 aaf
-aae
-aae
-aae
-aae
+aaf
+aaa
+aaa
 aae
 aae
 aae
@@ -137279,22 +141772,22 @@ aae
 aae
 aae
 adg
-adu
 adt
+adO
+aej
+aeI
+afd
+afA
+afd
+agW
+ahK
+aiq
 adt
-adt
-adt
-afB
-afX
-adt
-adt
-adt
-aje
 ajT
-aaf
-aaf
-aaf
 aae
+aaf
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -137305,9 +141798,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -137321,9 +141814,9 @@ aaa
 aaa
 arw
 aPn
-aQS
-arz
-aSQ
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -137373,7 +141866,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+dvx
 bvW
 arw
 aZt
@@ -137520,15 +142013,15 @@ aaa
 aaa
 aaa
 aaa
-aae
-aae
-aae
-aae
-aae
-aae
-aae
-aae
+aaa
 aaf
+aaf
+aae
+aae
+aae
+aae
+aae
+aae
 aae
 aae
 aae
@@ -137536,23 +142029,23 @@ aae
 aae
 aae
 adg
-adv
-adP
-aek
-aeJ
-afe
-afC
-afd
-afd
-ahL
-air
-ajf
+adu
+adt
+adt
+adt
+adt
+afB
+afX
+adt
+adt
+adt
+aje
 ajT
 aaf
 aaf
 aaf
 aae
-aaf
+aaa
 aaa
 aaa
 aaa
@@ -137562,9 +142055,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -137577,11 +142070,11 @@ aaa
 aaa
 aaa
 arw
-aPn
-aQS
-arz
-aSQ
-aTD
+dAj
+dAA
+ary
+dAU
+dBa
 arw
 aaa
 aaa
@@ -137627,11 +142120,11 @@ aaa
 abC
 aaa
 arw
-bpW
-aQS
+dus
+duB
 cSC
-aSQ
-bvW
+dvA
+dwa
 arw
 aZt
 aZt
@@ -137776,7 +142269,7 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aaa
 aae
 aae
 aae
@@ -137786,28 +142279,28 @@ aae
 aae
 aae
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+aae
+aae
+aae
+aae
+aae
+aae
 adg
-adg
-adQ
-ael
-aeK
-adS
-afD
-adS
-adt
-ahM
-ais
-adg
+adv
+adP
+aek
+aeJ
+afe
+afC
+afd
+afd
+ahL
+air
+ajf
 ajT
-aae
 aaf
-aae
+aaf
+aaf
 aae
 aaf
 aaa
@@ -137819,9 +142312,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -137835,9 +142328,9 @@ aaa
 aaa
 arw
 aPn
-aQS
-arz
-aSQ
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -137887,7 +142380,7 @@ arw
 bpW
 aQS
 cSC
-buu
+dvx
 bvW
 arw
 aaa
@@ -138034,43 +142527,51 @@ aaa
 aaa
 aaa
 aaf
+aae
+aae
+aae
+aae
+aae
+aae
+aae
+aae
 aaf
 aaf
-aal
-aal
-aal
-aal
-aal
-aal
-aal
-aal
-aal
-aal
-aal
+aaf
+aaf
 aaf
 aaf
 aaf
 adg
-adR
-aem
-aeL
-adS
-afE
-adS
-adt
-adt
-adt
 adg
-ajV
+adQ
+ael
+aeK
+adS
+afD
+adS
+adt
+ahM
+ais
+adg
+ajT
 aae
-aae
+aaf
 aae
 aae
 aaf
-aaf
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
+aaa
+abC
+aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -138081,20 +142582,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-abC
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
 arw
 aPn
-aQT
-arz
-aSQ
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -138144,7 +142637,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+dvx
 bvW
 arw
 aaa
@@ -138292,8 +142785,7 @@ aaa
 aaa
 aaf
 aaf
-aal
-aal
+aaf
 aal
 aal
 aal
@@ -138307,17 +142799,18 @@ aal
 aal
 aaf
 aaf
-adw
+aaf
+adg
+adR
+aem
+aeL
 adS
+afE
 adS
-adS
-adS
-afF
-adS
-adS
-adS
-adS
-adw
+adt
+adt
+adt
+adg
 ajV
 aae
 aae
@@ -138325,7 +142818,7 @@ aae
 aae
 aaf
 aaf
-aaf
+aaa
 aaa
 aaa
 aaa
@@ -138333,9 +142826,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -138349,9 +142842,9 @@ aaa
 aaa
 arw
 aPn
-aQS
-arz
-aSQ
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -138401,7 +142894,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+dvx
 bvW
 arw
 aaa
@@ -138551,35 +143044,35 @@ aaf
 aaf
 aal
 aal
-aau
-aax
-aax
-abl
-aax
-abM
-aax
-aax
-aaw
+aal
+aal
+aal
+aal
+aal
+aal
+aal
+aal
 aal
 aal
 aal
 aaf
+aaf
 adw
-adT
-aen
-aeM
 adS
-afG
-afY
-agX
-ahN
-ait
+adS
+adS
+adS
+afF
+adS
+adS
+adS
+adS
 adw
 ajV
 aae
 aae
-aaf
-aaf
+aae
+aae
 aaf
 aaf
 aaf
@@ -138590,9 +143083,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -138606,9 +143099,9 @@ aaa
 aaa
 arw
 aPn
-aQS
-arz
-aSQ
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -138658,7 +143151,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+dvx
 bvW
 arw
 aaa
@@ -138803,34 +143296,34 @@ aaa
 aaa
 aaa
 aaa
-aae
-aae
-aae
+aaa
+aaf
+aaf
 aal
 aal
-aav
+aau
+aax
+aax
+abl
+aax
+abM
+aax
 aax
 aaw
-aaw
-abx
-aax
-aax
-aax
-aaw
-acL
-cJi
 aal
 aal
 aal
-adU
-aeo
+aaf
+adw
+adT
+aen
 aeM
-aff
-aeM
-afZ
-agY
-aeM
-aiu
+adS
+afG
+afY
+agX
+ahN
+ait
 adw
 ajV
 aae
@@ -138847,9 +143340,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -138862,11 +143355,11 @@ aaa
 aaa
 aaa
 arw
-aPn
-aQS
-arz
-aSQ
-aTD
+dAk
+ary
+ary
+dAV
+dBb
 arw
 aaa
 aaa
@@ -138912,11 +143405,11 @@ aaa
 abC
 aaa
 arw
-bpW
-aQS
+dus
+duC
 cSC
-aSQ
-bvW
+dvB
+dwa
 arw
 aaa
 aaa
@@ -139065,36 +143558,36 @@ aae
 aae
 aal
 aal
-aaw
-aaE
-aaS
-cJk
-aaX
-abN
-abZ
-acn
-acu
+aav
 aax
 aaw
+aaw
+abx
+aax
+aax
+aax
+aaw
+acL
+cJi
 aal
 aal
 aal
-aal
-aal
-aal
-aal
-aal
-aga
-agZ
-ahO
-aiv
+adU
+aeo
+aeM
+aff
+aeM
+afZ
+agY
+aeM
+aiu
 adw
-ajW
-akI
-akI
-akI
-akI
-akI
+ajV
+aae
+aae
+aaf
+aaf
+aaf
 aaf
 aaf
 aaa
@@ -139104,9 +143597,9 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -139120,9 +143613,9 @@ aaa
 aaa
 arw
 aPn
-aQS
-arz
-aSQ
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -139172,7 +143665,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+aQS
 bvW
 arw
 aaa
@@ -139321,39 +143814,39 @@ aae
 aae
 aae
 aal
-cJi
+aal
 aaw
-aaF
-aaT
-aax
-aby
+aaE
+aaS
+cJk
 aaX
-aca
+abN
+abZ
+acn
+acu
 aax
-acv
-aax
-dnz
+aaw
 aal
-adh
-adx
-adh
-adh
-adh
-adh
 aal
-agb
-aha
-ahP
-aiw
+aal
+aal
+aal
+aal
+aal
+aal
+aga
+agZ
+ahO
+aiv
 adw
-ajX
-akJ
-akJ
-akJ
-amY
+ajW
 akI
 akI
 akI
+akI
+akI
+aaf
+aaf
 aaa
 aaa
 aaa
@@ -139362,8 +143855,8 @@ aaa
 abC
 aaa
 aaa
-aaa
-aaa
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -139377,9 +143870,9 @@ aaa
 aaa
 arw
 aPn
-aQS
-arz
-aSQ
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -139429,7 +143922,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+aQS
 bvW
 arw
 aaa
@@ -139578,65 +144071,65 @@ aae
 aae
 aae
 aal
-aal
+cJi
+aaw
+aaF
+aaT
 aax
-aaG
-aaU
-abm
-abm
-abO
+aby
 aaX
+aca
 aax
 acv
 aax
-aau
+dnz
 aal
-cJi
+adh
+adx
+adh
+adh
+adh
+adh
 aal
-aal
-aal
-aal
-cJi
-aal
-agc
-ahb
-aeM
-aix
+agb
+aha
+ahP
+aiw
 adw
-ajY
-akK
-als
-als
-amZ
-anJ
-aoO
-apK
-aqI
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
+ajX
+akJ
+akJ
+akJ
+amY
+akI
+akI
+akI
+cKF
+cKF
+cKF
+cKF
+cKF
+abC
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+abC
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 arw
 aPn
-aQS
-arz
-aSQ
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -139686,7 +144179,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+aQS
 bvW
 arw
 aaa
@@ -139837,63 +144330,63 @@ aae
 aal
 aal
 aax
-aaH
-aaS
-abn
-aaS
-abP
-aax
+aaG
+aaU
+abm
+abm
+abO
 aaX
-acw
 aax
-acP
+acv
+aax
+aau
 aal
-aaw
-ady
-adV
-aaw
-ady
-aaw
+cJi
 aal
-agd
-ahc
+aal
+aal
+aal
+cJi
+aal
+agc
+ahb
+aeM
+aix
 adw
-adw
-adw
-agk
-akL
-akI
-akI
-akI
-akI
-akI
-akI
-akI
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-arx
-aPo
-aQS
-arz
-aSQ
+ajY
+akK
+als
+als
+amZ
+anJ
+aoO
+apK
+baR
+aqI
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+aPn
+ary
+ary
+ary
 aTD
 arw
 abC
@@ -139943,7 +144436,7 @@ arw
 bpW
 aQS
 cSC
-dfN
+aQS
 bvW
 arw
 aaa
@@ -140093,65 +144586,65 @@ aae
 aae
 aal
 aal
-aaw
-aaI
-aaS
-aaS
-aaS
+aax
 aaH
-aaE
 aaS
-acx
-abZ
-abZ
-acR
-adi
-adi
-adi
-adi
-aeN
-adi
-acR
-age
-ahd
-ahQ
-aiy
-ajg
-ahQ
-akM
-alt
-alt
-ana
-alt
-alt
-apL
-aqJ
+abn
+aaS
+abP
+aax
+aaX
+acw
+aax
+acP
+aal
+aaw
+ady
+adV
+aaw
+ady
+aaw
+aal
+agd
+ahc
+adw
+adw
+adw
+agk
+akL
+akI
+akI
+akI
+akI
+akI
+akI
+akI
+dzo
+dzq
+dzs
+dzu
+dzw
+dzz
+dzB
+dzD
+dzF
+dzI
+dzK
+dzM
+dzO
+dzS
+dzU
+dzW
+dzY
+dAb
+dAd
+dAf
+dAh
+dAl
+dAB
 ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-arz
-arz
-aSQ
-aTD
+dAW
+dBc
 arw
 aaa
 aaa
@@ -140197,11 +144690,11 @@ aaa
 abC
 aaa
 arw
-bpW
-aQS
+dus
+duB
 cSC
-aSQ
-bvW
+dvC
+dwa
 arw
 aaa
 aaa
@@ -140350,67 +144843,67 @@ aae
 aae
 aal
 aal
-aay
-aaJ
-aaV
+aaw
+aaI
 aaS
-abz
-abQ
-acb
-aco
-acy
-acK
-abm
-acS
-adj
-adz
-adj
-aep
-aeO
-adj
-acS
-agf
-ahe
-agk
-aiz
-ajh
-agk
-akN
-alu
-amc
-anb
-amc
-amc
-apM
-aqK
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-dbJ
+aaS
+aaS
+aaH
+aaE
+aaS
+acx
+abZ
+abZ
+acR
+adi
+adi
+adi
+adi
+aeN
+adi
+acR
+age
+ahd
+ahQ
+aiy
+ajg
+ahQ
+akM
+alt
+alt
+ana
+alt
+alt
+apL
+aqJ
+ary
+ary
+ary
+ary
+dzx
+ary
+ary
+ary
+dzG
+ary
+ary
+ary
+dzP
+ary
+ary
+ary
+dzZ
+ary
+ary
+ary
+ary
+dAm
+ary
+ary
+ary
 aTD
 arw
-aaa
+cKF
 aaa
 aaa
 aaa
@@ -140457,7 +144950,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+aQS
 bvW
 arw
 aaa
@@ -140607,64 +145100,64 @@ aae
 aae
 aal
 aal
-aaw
-aaK
-aaW
+aay
+aaJ
+aaV
 aaS
-aaS
-aaw
-aaE
-aaS
-acz
-acc
-acc
-acT
-adk
-adA
-adk
-adk
-adk
-adk
-acT
-agg
-ahf
-ahR
-aiA
-aji
-ahR
-akO
-alv
-amd
-anc
-anK
-amd
-amd
-aqL
-arA
-arA
-arA
-arA
-arA
-axa
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-aJo
-arA
-arA
-arA
-arA
-arA
-arA
-arz
-arz
-aSQ
+abz
+abQ
+acb
+aco
+acy
+acK
+abm
+acS
+adj
+adz
+adj
+aep
+aeO
+adj
+acS
+agf
+ahe
+agk
+aiz
+ajh
+agk
+akN
+alu
+amc
+anb
+amc
+amc
+apM
+aqK
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+dAT
+ary
 aTD
 arw
 aaa
@@ -140714,7 +145207,7 @@ arw
 bpW
 aQS
 cSC
-aSQ
+aQS
 bvW
 arw
 aaa
@@ -140864,64 +145357,64 @@ aae
 aae
 aal
 aal
-aax
 aaw
+aaK
+aaW
 aaS
-abo
 aaS
-abR
-aax
-aaX
-acA
-aax
-acP
-aal
-adl
-adB
 aaw
-aaw
-adB
-adl
-aal
-agh
-ahg
-agk
-agk
-agk
-agk
-akP
-akI
-akI
-akI
-akI
-akI
-akI
-akI
+aaE
+aaS
+acz
+acc
+acc
+acT
+adk
+adA
+adk
+adk
+adk
+adk
+acT
+agg
+ahf
+ahR
+aiA
+aji
+ahR
+akO
+alv
+amd
+anc
+anK
+amd
+amd
+aqL
+ary
+ary
+ary
+ary
 arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-arB
-aPp
-aQS
-arz
-aSQ
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+dzQ
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
+ary
 aTD
 arw
 aaa
@@ -140971,7 +145464,7 @@ boI
 bpX
 aQS
 cSC
-aSQ
+aQS
 bvX
 bxC
 aaa
@@ -141123,63 +145616,63 @@ aal
 aal
 aax
 aaw
-aaX
-aaw
-aaw
-aaw
-aaX
+aaS
+abo
+aaS
+abR
 aax
-acB
+aaX
+acA
 aax
-aau
+acP
 aal
+adl
+adB
+aaw
+aaw
+adB
+adl
 aal
-aal
-aal
-aal
-aal
-aal
-aal
-agi
-ahh
-ahS
-aiB
+agh
+ahg
 agk
-ajZ
-akQ
-alw
-ame
-ame
-anL
-aoP
-apN
-aqM
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
+agk
+agk
+agk
+akP
+akI
+akI
+akI
+akI
+akI
+akI
+akI
+dzp
+dzr
+dzt
+dzv
+dzy
+dzA
+dzC
+dzE
+dzH
+dzJ
+dzL
+dzN
+dzR
+dzT
+dzV
+dzX
+dAa
+dAc
+dAe
+dAg
+dAi
 aPq
-aQS
-arz
-aSQ
-aTD
+dAC
+ary
+dAX
+dBd
 arw
 aaa
 aaa
@@ -141377,65 +145870,65 @@ aae
 aae
 aae
 aal
-cJi
-aaw
-aaF
-aaT
+aal
 aax
-aby
+aaw
 aaX
-aca
+aaw
+aaw
+aaw
+aaX
 aax
 acB
 aax
-aaw
+aau
 aal
-adh
-adh
-adh
-aeq
-adh
-adh
 aal
-agj
-ahi
-cYe
+aal
+aal
+aal
+aal
+aal
+aal
+agi
+ahh
+ahS
 aiB
 agk
-ajX
-akJ
-akJ
-akJ
-akJ
-akI
-akI
-akI
-abC
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-abC
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-abC
-aaa
-aaa
-aaa
+ajZ
+akQ
+alw
+ame
+ame
+anL
+aoP
+apN
+dzn
+aqM
 arw
-aPq
-aQS
-arz
-aSQ
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+dAn
+dAD
+ary
+ary
 aTD
 arw
 aaa
@@ -141630,43 +146123,43 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaf
-aaf
+aae
+aae
+aae
 aal
-aal
+cJi
 aaw
-aaE
-aaS
-cJk
+aaF
+aaT
+aax
+aby
 aaX
-abS
-acc
-acp
-acC
+aca
+aax
+acB
 aax
 aaw
 aal
+adh
+adh
+adh
+aeq
+adh
+adh
 aal
-aal
-aal
-aal
-aal
-aal
-aal
+agj
+ahi
+cYe
+aiB
 agk
-agk
-agk
-agk
-agk
-ajW
+ajX
+akJ
+akJ
+akJ
+akJ
 akI
 akI
 akI
-akI
-akI
-aaf
-aaa
 abC
 aaa
 aaa
@@ -141689,10 +146182,10 @@ aaa
 aaa
 aaa
 arw
-aPq
-aQS
-arz
-aSQ
+dAo
+dAE
+ary
+ary
 aTD
 arw
 aaa
@@ -141887,42 +146380,50 @@ aaa
 aaa
 aaa
 aaa
+aaf
+aaf
+aaf
+aal
+aal
+aaw
+aaE
+aaS
+cJk
+aaX
+abS
+acc
+acp
+acC
+aax
+aaw
+aal
+aal
+aal
+aal
+aal
+aal
+aal
+aal
+agk
+agk
+agk
+agk
+agk
+ajW
+akI
+akI
+akI
+akI
+akI
+aaf
 aaa
-aaf
-aaf
-aal
-aal
-aaz
-aax
-aaw
-aaw
-abA
-aax
-aax
-aax
-aaw
-acL
-cJi
-aal
-aal
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-ajV
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+abC
+aaa
+aaa
+aaa
+aaa
+aaa
+cKF
 aaa
 abC
 aaa
@@ -141932,24 +146433,16 @@ aaa
 aaa
 aaa
 aaa
-abC
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
 abC
 aaa
 aaa
 aaa
 arw
-aPq
-aQS
-arz
-aSQ
+dAp
+dAF
+ary
+ary
 aTD
 arw
 aaa
@@ -142149,25 +146642,25 @@ aaf
 aaf
 aal
 aal
-aau
-aaL
+aaz
 aax
-abp
-aax
-abM
-aax
-aaL
 aaw
-aal
+aaw
+abA
+aax
+aax
+aax
+aaw
+acL
+cJi
 aal
 aal
 aaf
 aaf
-aae
-aae
-aae
-aae
-aae
+aaf
+aaf
+aaf
+aaf
 aaf
 aaf
 aaf
@@ -142203,10 +146696,10 @@ aaa
 aaa
 aaa
 arw
-aPq
-aQS
-arz
-aSQ
+dAq
+dAG
+ary
+ary
 aTD
 arw
 aaa
@@ -142406,18 +146899,18 @@ aaf
 aaf
 aal
 aal
+aau
+aaL
+aax
+abp
+aax
+abM
+aax
+aaL
+aaw
 aal
 aal
 aal
-aal
-aal
-aal
-aal
-aal
-aal
-aal
-aal
-aaf
 aaf
 aaf
 aae
@@ -142460,11 +146953,11 @@ aaa
 aaa
 aaa
 arw
-aPq
-aQS
-arz
-aSQ
-aTD
+dAr
+dAH
+ary
+dAY
+dBe
 arw
 aaa
 aaa
@@ -142659,7 +147152,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaf
 aaf
 aal
@@ -142673,24 +147165,25 @@ aal
 aal
 aal
 aal
+aal
+aal
+aaf
+aaf
+aaf
+aae
+aae
+aae
+aae
+aae
 aaf
 aaf
 aaf
 aaf
-aae
-aae
-aae
-aae
-aae
-aae
-aae
-aae
-aae
 aaf
 ajV
 aaf
-aae
-aae
+aaf
+aaf
 aaf
 aaf
 aaf
@@ -142715,12 +147208,12 @@ aaa
 abC
 aaa
 aaa
-aaa
+cKF
 arw
-aPq
-aQU
-arz
-aSQ
+dAs
+dAI
+ary
+ary
 aTD
 arw
 aaa
@@ -142919,15 +147412,17 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+aal
+aal
+aal
+aal
+aal
+aal
+aal
+aal
+aal
+aal
+aal
 aaf
 aaf
 aaf
@@ -142937,8 +147432,6 @@ aae
 aae
 aae
 aae
-aae
-aaf
 aae
 aae
 aae
@@ -142950,15 +147443,7 @@ aae
 aae
 aaf
 aaf
-aaa
-aaa
-abC
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
 aaa
 abC
 aaa
@@ -142968,16 +147453,24 @@ aaa
 aaa
 aaa
 aaa
+abC
 aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 abC
 aaa
 aaa
 aaa
 arw
-aPq
-aQS
-arz
-aSQ
+dAt
+dAJ
+ary
+ary
 aTD
 arw
 aaa
@@ -143177,18 +147670,18 @@ aaa
 aaf
 aaf
 aaf
-aae
-aae
-aae
-aae
-aae
 aaf
 aaf
 aaf
 aaf
-aae
-aae
-aae
+aaf
+aaf
+aaf
+aaf
+aaf
+aaf
+aaf
+aaf
 aae
 aae
 aae
@@ -143203,10 +147696,10 @@ aae
 aaf
 ajV
 aaf
+aae
+aae
 aaf
-aaa
-aaa
-aaa
+aaf
 aaa
 aaa
 abC
@@ -143231,10 +147724,10 @@ aaa
 aaa
 aaa
 arw
-aPq
-aQS
-arz
-aSQ
+dAu
+dAK
+ary
+ary
 aTD
 arw
 aaa
@@ -143431,11 +147924,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaf
-aaf
-aaf
 aaf
 aaf
 aaf
@@ -143444,7 +147932,10 @@ aae
 aae
 aae
 aae
-aae
+aaf
+aaf
+aaf
+aaf
 aae
 aae
 aae
@@ -143455,11 +147946,13 @@ aae
 aae
 aae
 aaf
+aae
+aae
+aae
+aae
 aaf
+ajV
 aaf
-ahT
-aka
-ahT
 aaf
 aaa
 aaa
@@ -143488,10 +147981,10 @@ aaa
 aaa
 aaa
 arw
-aPq
-aQS
-arz
-aSQ
+dAv
+dAL
+ary
+ary
 aTD
 arw
 aaa
@@ -143571,17 +148064,17 @@ bYL
 bZn
 bZn
 bZn
+dwp
 bZn
 bZn
 bZn
 bZn
+dwp
 bZn
 bZn
 bZn
 bZn
-bZn
-bZn
-bZn
+dwp
 bZn
 bZn
 bZn
@@ -143690,11 +148183,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
+aaf
+aaf
+aaf
+aaf
 aaf
 aae
 aae
@@ -143715,9 +148208,9 @@ aaf
 aaf
 aaf
 ahT
-akb
+aka
 ahT
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -143745,19 +148238,19 @@ aaa
 aaa
 aaa
 arw
-aPq
-aQS
-arz
-aSQ
-aTD
+dAw
+dAM
+ary
+dAZ
+dBf
 arw
 aaa
 aaa
-aaa
-aaa
-alx
-alx
-alx
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 aaa
 aaa
@@ -143824,25 +148317,25 @@ bVU
 buw
 bXj
 buv
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
-ary
+dwd
+dwd
+dwd
+dwd
+dwq
+dwd
+dwd
+dwd
+dwd
+dwx
+dwd
+dwd
+dwd
+dwd
+dwq
+dwd
+dwd
+dwd
+dwd
 buv
 bXj
 buw
@@ -143952,7 +148445,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaf
 aae
 aae
 aae
@@ -143970,26 +148463,26 @@ aae
 aae
 aaf
 aaf
+aaf
+ahT
+akb
+ahT
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 abC
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-alx
-alF
-alx
-alx
-alx
-alx
-alx
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 abC
-aaa
+cKF
 aaa
 aaa
 aaa
@@ -144002,16 +148495,16 @@ aaa
 aaa
 aaa
 arw
-aPq
-aQS
-arz
-aSQ
+dAx
+dAN
+ary
+ary
 aTD
 arw
 aaa
 aaa
 aaa
-alx
+aaa
 alx
 alx
 alx
@@ -144081,25 +148574,25 @@ bbs
 bbs
 bbs
 baU
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
+dwd
+dwd
+dwd
+dwd
+dwd
+dwd
+dwd
+dwd
+dwd
+dBA
+dwd
+dwd
+dwd
+dwd
+dwd
+dwd
+dwd
+dwd
+dwd
 baU
 bbs
 cgk
@@ -144210,13 +148703,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aae
+aae
+aae
+aae
+aae
+aae
+aae
+aae
+aae
 aae
 aae
 aae
@@ -144225,44 +148720,42 @@ aae
 aae
 aaf
 aaf
-aaf
-ahT
-abC
-abC
-abC
+dzk
+dzl
+dzm
 abC
 aaa
 aaa
 aaa
 aaa
+aaa
+alx
+alF
 alx
 alx
 alx
 alx
 alx
-and
-and
-alx
-alx
-alx
+aaa
+aaa
 abC
 aaa
 aaa
-alx
-alx
-alx
-alx
-alx
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 abC
 aaa
 aaa
 aaa
 arw
-aPq
-aQS
-arz
-aSQ
+dAy
+dAO
+ary
+ary
 aTD
 arw
 aaa
@@ -144271,14 +148764,14 @@ aaa
 alx
 alx
 alx
-alF
-abC
-abC
-abC
-abC
-abC
-abC
-abC
+alx
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
 abC
 aYG
 abC
@@ -144338,34 +148831,34 @@ bSZ
 bSZ
 bSZ
 bYb
-arA
-arA
-arA
-arA
-arA
-cdj
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-djU
-arA
-arA
-arA
-arA
-arA
-bYb
-bSZ
-bSZ
-bSZ
+dwd
+dwd
+dwd
+dwd
+dws
+dwd
+dwd
+dwd
+dwd
+dwy
+dwA
+dwA
+dwA
+dwA
+dwF
+dwA
+dwA
+dwA
+dwA
+dwH
+dwI
+dwI
+dwI
 cgA
 cgJ
-bSZ
-bRQ
-cLb
+dwI
+dwM
+dwN
 chu
 bkA
 bkA
@@ -144488,54 +148981,54 @@ aaa
 aaa
 abC
 abC
+aaa
+aaa
+aaa
+aaa
+alx
+alx
+alx
+alx
+alx
+and
+and
+alx
+alx
+alx
+abC
+aaa
+aaa
+alx
+alx
+alx
+alx
+alx
+aaa
 abC
 aaa
 aaa
 aaa
-alx
-alx
-and
-alx
-and
-and
-and
-alx
-alx
-and
-alF
-alx
-and
-and
-alx
-alx
-alx
-alx
-aaa
-abC
-aaa
-aaa
-aaa
-aOv
+arw
 aPr
-aQS
-arz
-aSQ
-aTE
-aUC
+dAP
+ary
+ary
+aTD
+arw
 aaa
 aaa
-akR
+aaa
 alx
 alx
 alx
-alx
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+alF
+abC
+abC
+abC
+abC
+abC
+abC
+abC
 abC
 aYG
 abC
@@ -144599,17 +149092,17 @@ bYM
 bZo
 bZo
 bZo
+dwt
 bZo
 bZo
 bZo
 bZo
+dwt
 bZo
 bZo
 bZo
 bZo
-bZo
-bZo
-bZo
+dwt
 bZo
 bZo
 bZo
@@ -144744,53 +149237,53 @@ aaa
 aaa
 aaa
 abC
+abC
+abC
 aaa
-abC
-abC
+aaa
+aaa
+alx
+alx
+and
+alx
+and
+and
+and
+alx
+alx
+and
 alF
 alx
+and
+and
 alx
-and
-and
-afV
-afV
-afS
-aez
-afV
-adZ
-aez
-afV
-afV
-aez
-aez
 alx
-and
-and
 alx
 alx
 aaa
-aaa
-aaa
-aKo
-aOw
-aKo
+abC
+cKF
+cKF
+cKF
+aOv
+dAz
 aQV
-aRP
-aSR
-aLm
-aUD
-aLm
+ary
+ary
+dBg
+aUC
+cKF
+cKF
 akR
-akR
 alx
 alx
 alx
 alx
-alx
-alx
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 aaa
 abC
@@ -145002,46 +149495,46 @@ aaa
 aaa
 abC
 aaa
-aaa
-aaa
+abC
+abC
+alF
 alx
 alx
 and
-aez
+and
+afV
+afV
+afS
 aez
 afV
-aqH
-afq
-apx
-cZd
-cYm
-aiS
-azp
-amb
-aBV
 adZ
+aez
 afV
 afV
 aez
+aez
+alx
+and
+and
 alx
 alx
-alx
-akR
-akR
+aaa
+aaa
+aaa
 aKo
-aOx
+aOw
 aKo
 aQW
-aRD
-aSS
+aRP
+aSR
 aLm
-aUE
+aUD
 aLm
+akR
+akR
 alx
 alx
 alx
-and
-and
 alx
 alx
 alx
@@ -145259,54 +149752,54 @@ aaa
 aaa
 abC
 aaa
-akR
+aaa
+aaa
+alx
 alx
 and
-and
 aez
-afS
+aez
 afV
-aoQ
+aqH
 afq
-akq
-alQ
-akq
-akq
-akp
-cYo
-akp
-cYl
-akp
+apx
+cZd
+cYm
+aiS
+azp
 amb
-cYj
+aBV
+adZ
+afV
+afV
 aez
-and
-and
+alx
+alx
+alx
+akR
+akR
 aKo
-aLo
-aLo
+aOx
 aKo
-aOy
-aKo
-aQW
+dAQ
 aRD
-aST
+aSS
 aLm
-aUF
+aUE
 aLm
-aLm
-aLm
+alx
+alx
 alx
 and
 and
 alx
 alx
 alx
-alx
-alx
 aaa
 aaa
-abC
+aaa
+aaa
+aaa
 abC
 aYG
 abC
@@ -145515,57 +150008,57 @@ aaa
 aaa
 aaa
 abC
-akR
+aaa
 akR
 alx
 and
 and
 aez
-apO
-aoR
-ahr
-ahr
-ahr
-cYY
-avL
-ahr
-ahr
-azq
-cYY
-ahr
-ahr
-aEj
 afS
 afV
+aoQ
+afq
+akq
+alQ
+akq
+akq
+akp
+cYo
+akp
+cYl
+akp
+amb
+cYj
 aez
-aez
+and
+and
 aKo
-aLp
-aMq
-aNr
-aOz
-aPs
-aQW
+aLo
+aLo
+aKo
+aOy
+aKo
+dAR
 aRD
-aSU
+aST
 aLm
-aUG
-aVj
-aVD
+aUF
+aLm
+aLm
 aLm
 alx
 and
-aXa
-aXb
-aXa
-aXa
-aYi
+and
+alx
+alx
+alx
+alx
 alx
 aaa
-aaa
+cKF
 abC
-aYF
-aYH
+abC
+aYG
 abC
 aaa
 aaa
@@ -145770,59 +150263,59 @@ aaa
 aaa
 aaa
 aaa
-ajj
-akc
-anQ
-dnE
-ajn
+aaa
+abC
+akR
+akR
+alx
+and
+and
 aez
+apO
+aoR
+ahr
+ahr
+ahr
+cYY
+avL
+ahr
+ahr
+azq
+cYY
+ahr
+ahr
+aEj
 afS
 afV
-afq
-anC
-arC
-arC
-arC
-arC
-arC
-arC
-arC
-arC
-arC
-arC
-afq
-anC
-afS
-adZ
-aIf
-adZ
+aez
+aez
 aKo
-aLq
-aMr
-aNs
-aOA
-aPt
+aLp
+aMq
+aNr
+aOz
+aPs
 aQX
 aRD
-aSV
+aSU
 aLm
-aUH
-aVk
-aVE
+aUG
+aVj
+aVD
 aLm
-afV
-afV
+alx
+and
 aXa
-aXt
-aXL
-aXZ
+aXb
+aXa
+aXa
 aYi
-aYi
-aYi
+alx
+aaa
+aaa
 abC
-abC
-aYG
-abC
+aYF
+aYH
 abC
 aaa
 aaa
@@ -146027,60 +150520,60 @@ aaa
 aaa
 aaa
 aaa
-ajk
-alE
-akd
-dnF
+ajj
+akc
+anQ
+dnE
 ajn
-ajn
-aUW
-aoQ
-aoR
-aqN
-arC
-asx
-atB
-asx
-atC
-atC
-axN
-azr
-asx
-arC
-aqH
-aEk
-amb
-akp
-cZB
+aez
 afS
-aKp
-aLr
-aMs
-aNt
-aOB
-aPu
-aQY
-aRF
-aSW
-cKe
-aUI
-aVl
-aVF
+afV
+afq
+anC
+arC
+arC
+arC
+arC
+arC
+arC
+arC
+arC
+arC
+arC
+afq
+anC
+afS
+adZ
+aIf
+adZ
+aKo
+aLq
+aMr
+aNs
+aOA
+aPt
+dAS
+aRD
+aSV
 aLm
-ajt
-aqH
-aXb
-aXu
-aXM
-aYa
-aYj
-aYr
-aYj
-aYn
-aYn
-aYH
+aUH
+aVk
+aVE
+aLm
+afV
+afV
+aXa
+aXt
+aXL
+aXZ
+aYi
+aYi
+aYi
 abC
-aaa
+abC
+aYG
+abC
+abC
 aaa
 aaa
 aaa
@@ -146284,58 +150777,58 @@ aaa
 aaa
 aaa
 aaa
-ajl
-ake
-akS
-aly
-amf
-ane
-alr
+ajk
+alE
+akd
+dnF
+ajn
+ajn
+aUW
+aoQ
 aoR
-apP
-afV
+aqN
 arC
-asy
-atC
 asx
+atB
 asx
-axb
 atC
 atC
-aAH
+axN
+azr
+asx
 arC
+aqH
+aEk
+amb
+akp
+cZB
 afS
-amI
-aCr
-aCr
-aCr
-aBA
-aKo
-aKo
-aKo
-aKo
-aKo
-aKo
-aQZ
-aRQ
-aSX
+aKp
+aLr
+aMs
+aNt
+aOB
+aPu
+aQY
+aRF
+aSW
+cKe
+aUI
+aVl
+aVF
 aLm
-aUJ
-aVe
-aVG
-aLm
-alR
-aWQ
-aXc
-aXv
-aXN
-aYb
-aYi
-aYi
-aYi
-abC
-abC
-abC
+ajt
+aqH
+aXb
+aXu
+aXM
+aYa
+aYj
+aYr
+aYj
+aYn
+aYn
+aYH
 abC
 abC
 abC
@@ -146541,59 +151034,59 @@ aaa
 aaa
 aaa
 aaa
-cJr
-akf
-akT
+ajl
+ake
+akS
 aly
-amg
-ajn
-anM
-aoS
-cYC
-adZ
-arC
-asz
-atD
-auF
-avM
-atC
-axO
-atC
-aAI
-arC
-adZ
-afS
+amf
+ane
+alr
+aoR
+apP
 afV
-aiS
-dad
-dan
-day
+arC
+asy
+atC
+asx
+asx
+axb
+atC
+atC
+aAH
+arC
+afS
+amI
+aCr
+aCr
 aCr
 aBA
-cYl
-dam
+aKo
+aKo
+aKo
+aKo
+aKo
+aKo
+aQZ
+aRQ
+aSX
 aLm
-aRa
-aRK
-aSY
+aUJ
+aVe
+aVG
 aLm
-aUK
-aVf
-aVH
-aLm
-aqH
-anC
-aXb
-aXb
-aXa
-aXb
+alR
+aWQ
+aXc
+aXv
+aXN
+aYb
 aYi
-alx
-aaa
-aaa
-aaa
-aaa
-aaa
+aYi
+aYi
+abC
+abC
+abC
+abC
 aaa
 aaa
 aaa
@@ -146798,54 +151291,54 @@ aaa
 aaa
 aaa
 aaa
-ajl
-akg
-akU
+cJr
+akf
+akT
 aly
-amh
+amg
 ajn
-anN
-aoT
-adZ
+anM
+aoS
+cYC
 adZ
 arC
-asx
+asz
+atD
+auF
+avM
 atC
-auG
-avN
-auG
-axP
 axO
+atC
 aAI
 arC
 adZ
-adZ
-cZM
-cZM
-cZM
-cZM
-cZM
-cZM
-anC
+afS
+afV
+aiS
+dad
+dan
+day
+aCr
+aBA
 cYl
-afS
-aPl
-aRb
-aRR
-aSZ
-aTF
-aUL
+dam
 aLm
+aRa
+aRK
+aSY
 aLm
+aUK
+aVf
+aVH
 aLm
-aoR
-apu
-afS
+aqH
+anC
+aXb
+aXb
+aXa
+aXb
+aYi
 alx
-alx
-alx
-alx
-alx
 aaa
 aaa
 aaa
@@ -146861,19 +151354,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cKF
 bbq
 bbq
 bbq
-baS
-baS
-baS
-baS
-baS
-baS
+bbq
+bbq
+bbq
+bbq
+bbq
+cKp
 big
 bja
-bjS
+bjP
 deo
 blC
 dpb
@@ -147056,52 +151549,52 @@ aaa
 aaa
 aaa
 ajl
-akf
+akg
 akU
-alz
-ami
+aly
+amh
 ajn
-ajn
-anV
-anV
-anV
-arC
-arC
-arC
-auH
-avO
-auH
-arC
-arC
-aAJ
-arC
-anV
-anV
-cZM
-cZV
-daf
-dap
-daA
-cZM
-amI
-ahr
-aOo
-aPv
-aRc
-aRS
-aTa
-aLm
-aLm
-aLm
+anN
+aoT
 adZ
 adZ
+arC
+asx
+atC
+auG
+avN
+auG
+axP
+axO
+aAI
+arC
+adZ
+adZ
+cZM
+cZM
+cZM
+cZM
+cZM
+cZM
 anC
-afq
+cYl
+afS
+aPl
+aRb
+aRR
+aSZ
+aTF
+aUL
 aLm
 aLm
 aLm
-aLm
-aLm
+aoR
+apu
+afS
+alx
+alx
+alx
+alx
 alx
 aaa
 aaa
@@ -147121,16 +151614,16 @@ aaa
 aaa
 bbq
 bbq
-bbo
+bbq
 baS
-bdG
-bew
-bfl
-bgl
+baS
+baS
+baS
+baS
 baS
 big
 bja
-bjP
+bjS
 dew
 bkD
 bkD
@@ -147315,51 +151808,50 @@ aaa
 ajl
 akf
 akU
-alA
-amh
-anf
+alz
+ami
 ajn
-aoU
-cYD
-aqO
-arD
-asA
-atE
-auI
-avP
-auI
-axQ
-azs
-aAK
-aBW
-aCU
-aEl
-cZO
-cZW
-dag
-daq
-daB
+ajn
+anV
+anV
+anV
+arC
+arC
+arC
+auH
+avO
+auH
+arC
+arC
+aAJ
+arC
+anV
+anV
 cZM
-daQ
-aUW
-avh
-aPw
-aRd
-aRD
-aTb
+cZV
+daf
+dap
+daA
+cZM
+amI
+ahr
+aOo
+aPv
+aRc
+aRS
+aTa
+aLm
+aLm
 aLm
 adZ
 adZ
-adZ
-aWh
-apu
-aez
+anC
+afq
 aLm
-aMo
-aMn
-aYc
 aLm
-alx
+aLm
+aLm
+aLm
 alx
 aaa
 aaa
@@ -147378,16 +151870,17 @@ aaa
 aaa
 aaa
 bbq
+bbq
 bbo
 baS
-bdH
-bex
-bex
-bgm
-bgY
-bih
-bjc
-bjR
+bdG
+bew
+bfl
+bgl
+baS
+big
+bja
+bjP
 bkD
 blD
 bmC
@@ -147569,55 +152062,55 @@ aaa
 aaa
 aaa
 aaa
-cJs
+ajl
 akf
 akU
-aly
-amj
-ang
-anO
-aoV
-apQ
-apQ
-arE
-arE
-cLT
-arE
-avQ
-apQ
-apQ
-azt
-aAL
-aBX
-cZA
-aEn
-cZP
-cZX
-dah
-dar
-daC
+alA
+amh
+anf
+ajn
+aoU
+cYD
+aqO
+arD
+asA
+atE
+auI
+avP
+auI
+axQ
+azs
+aAK
+aBW
+aCU
+aEl
+cZO
+cZW
+dag
+daq
+daB
 cZM
-afV
-aez
-afV
+daQ
+aUW
+avh
+aPw
+aRd
+aRD
+aTb
 aLm
-aRe
-aRT
-aTc
-aPv
-aUM
-ahr
-ahr
+adZ
+adZ
+adZ
+aWh
 apu
-afV
 aez
 aLm
-aNp
-aNp
-aYd
+aMo
+aMn
+aYc
 aLm
-aLm
-aLm
+alx
+alx
 aaa
 aaa
 aaa
@@ -147634,17 +152127,17 @@ aaa
 aaa
 aaa
 aaa
+bbq
+bbo
 baS
-baS
-baS
-bdI
-bey
-bey
-bgn
-baS
-big
-bbs
-bjP
+bdH
+bex
+bex
+bgm
+bgY
+bih
+bjc
+bjR
 bkD
 blE
 bmD
@@ -147826,82 +152319,82 @@ aaa
 aaa
 aaa
 aaa
-ajl
-akh
-akV
-alB
-amk
-anh
-anP
-aoW
-aoW
-aoW
-arF
-arF
-aoW
-arF
-avR
-aoU
-aoU
-aoU
-aoU
+cJs
+akf
+akU
+aly
+amj
+ang
+anO
+aoV
+apQ
+apQ
+arE
+arE
+cLT
+arE
+avQ
+apQ
+apQ
+azt
+aAL
 aBX
-aoU
+cZA
 aEn
-cZQ
+cZP
 cZX
-dai
-das
-daD
-anV
-anV
-anV
-anV
-anV
-aRd
-aRD
-aTa
-aPw
-alr
-aqH
-aoy
-afK
+dah
+dar
+daC
+cZM
+afV
+aez
+afV
+aLm
+aRe
+aRT
+aTc
+aPv
+aUM
+ahr
+ahr
+apu
 afV
 aez
 aLm
-aXw
-aXO
-aXO
-aYk
-aYs
-aYv
-aYw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-arw
-bar
-baR
-baR
-bbR
-bcv
-bbR
-bdJ
-ber
-ber
-bgo
+aNp
+aNp
+aYd
+aLm
+aLm
+aLm
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+aaa
+aaa
 baS
-bii
-bjd
-bjT
+baS
+baS
+bdI
+bey
+bey
+bgn
+baS
+big
+bja
+bjP
 bkD
 blF
 bmE
@@ -148083,82 +152576,82 @@ aaa
 aaa
 aaa
 aaa
-ajm
-aki
-akW
-alC
-alD
-ani
-ajn
+ajl
+akh
+akV
+alB
+amk
+anh
+anP
+aoW
+aoW
+aoW
+arF
+arF
+aoW
+arF
+avR
 aoU
 aoU
-aqP
-arG
-asB
-atF
-asG
-avS
-axc
-aoW
-aoW
-aoW
-aBY
-azy
-cZI
-cZR
-cZZ
-daj
-dat
-daE
+aoU
+aoU
+aBX
+aoU
+aEn
+cZQ
+cZX
+dai
+das
+daD
 anV
-aMt
-aNu
-aOC
-aPx
-aRf
-aRU
+anV
+anV
+anV
+anV
+aRd
+aRD
 aTa
+aPw
+alr
+aqH
+aoy
+afK
+afV
+aez
 aLm
-aLm
-aLm
-aLm
-aLm
-aLm
-aLm
-aLm
-aXx
-cKe
-aLm
-aLm
-aLm
-aLm
-aYx
-aYz
-aYz
-aYz
-aYz
-aYz
-aYz
-aYz
-aYz
-aYz
-aYz
-aYz
-aYz
-bas
+aXw
+aXO
+aXO
+aYk
+aYs
+aYv
+aYw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+arw
+bar
+baR
+baR
+bbR
+bcv
+bbR
+bdJ
+ber
+ber
+bgo
 baS
-baS
-baS
-baS
-baS
-baS
-baS
-baS
-cKp
-baS
-bij
-bbs
-bjU
+bii
+bjd
+bjT
 bkD
 bkD
 bkD
@@ -148340,82 +152833,82 @@ aaa
 aaa
 aaa
 aaa
-ajn
-akj
-ajn
+ajm
+aki
+akW
+alC
 alD
-aml
-anj
+ani
 ajn
 aoU
 aoU
-aoY
-arH
-asC
+aqP
+arG
+asB
+atF
+asG
+avS
+axc
+aoW
+aoW
+aoW
+aBY
+azy
+cZI
+cZR
+cZZ
+daj
+dat
+daE
 anV
-auJ
-avT
-aoY
-aoU
-aoU
-aAM
-anV
-aCW
-aEn
-anV
-anV
-anV
-anV
-anV
-anV
-aMu
-aoU
-aoU
-aBX
-aRg
-aRD
-aTd
-aTG
-aUN
-aTG
-aTG
-aWi
-aTG
-aWR
-dbP
-aXy
-aTG
-aTG
-aYl
-aYt
-cPO
-cPT
-cPT
-cPT
-cPT
-cPT
-cPT
-aYU
-cPT
-cPT
-cPT
-cPT
-cPT
-cPT
-cPT
-cQC
-bbr
-cQJ
-bcw
-cQJ
-cQJ
-cQJ
-bfm
-cQJ
-cQJ
-bik
-bbs
-bjP
+aMt
+aNu
+aOC
+aPx
+aRf
+aRU
+aTa
+aLm
+aLm
+aLm
+aLm
+aLm
+aLm
+aLm
+aLm
+aXx
+cKe
+aLm
+aLm
+aLm
+aLm
+aYx
+aYz
+aYz
+aYz
+dtr
+aYz
+aYz
+aYz
+aYz
+dtr
+aYz
+aYz
+aYz
+bas
+baS
+baS
+baS
+baS
+baS
+baS
+baS
+baS
+cKp
+baS
+bij
+bja
+bjU
 bkD
 blG
 bmF
@@ -148597,81 +153090,81 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 ajn
+akj
 ajn
-ajn
-ajn
+alD
+aml
+anj
 ajn
 aoU
 aoU
 aoY
-arI
-arM
-aoY
-arM
-arI
-aoY
-axR
-azv
-aAN
+arH
+asC
 anV
-aCX
-aEo
-aBW
-aHf
-aIg
-aJp
-aKq
-aLs
-aMv
+auJ
+avT
+aoY
+aoU
+aoU
+aAM
+anV
+aCW
+aEn
+anV
+anV
+anV
+anV
+anV
+anV
+aMu
 aoU
 aoU
 aBX
 aRg
-aRV
-aTe
 aRD
-aUO
-aRD
-aRD
-aWj
-aRD
-aTS
-aRD
-aRD
-aRD
-aRD
-aYm
-aRD
-aRP
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-arz
-baU
-bbs
-bbT
-bbs
-bbs
-bbs
-bbs
-bfn
-bbs
-bbs
-bil
-cKz
+aTd
+aTG
+aUN
+aTG
+aTG
+aWi
+aTG
+aWR
+dbP
+aXy
+aTG
+aTG
+aYl
+aYt
+cPO
+cPT
+cPT
+cPT
+cPT
+dts
+aYU
+aYU
+aYU
+aYU
+dtV
+aYU
+aYU
+aYU
+aYU
+cQC
+bbr
+cQJ
+bcw
+cQJ
+cQJ
+cQJ
+bfm
+cQJ
+cQJ
+bik
+dul
 bjP
 bkD
 blE
@@ -148856,80 +153349,80 @@ aaa
 aaa
 aaa
 aaa
-aaa
-akR
-akR
-akR
+ajn
+ajn
+ajn
+ajn
+ajn
+aoU
+aoU
+aoY
+arI
+arM
+aoY
+arM
+arI
+aoY
+axR
+azv
+aAN
 anV
-aoY
-aoY
-aoY
-arH
-asD
-aoY
-auK
-avT
-aoY
-aoY
-aoY
-aoY
-anV
-aCY
-aEp
-aFJ
-aHg
-aIh
-aoU
-aEn
-aoY
-aMw
+aCX
+aEo
+aBW
+aHf
+aIg
+aJp
+aKq
+aLs
+aMv
 aoU
 aoU
-aPy
-aRh
-aRW
-aTf
-aTH
-aUP
-aVm
-aVI
-aWk
-aWE
-aWS
-aXd
-aQN
-aXP
-aQN
-aQN
-aQN
-aQR
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-arA
-baV
-bbt
-bbU
-bcx
-bdd
-bdd
-bez
-bfo
-bdd
-bdd
-bim
-bcx
-bjV
+aBX
+aRg
+aRV
+aTe
+aRD
+aUO
+aRD
+aRD
+aWj
+aRD
+aTS
+aRD
+aRD
+aRD
+aRD
+aYm
+aRD
+aRP
+dtd
+dtd
+dtd
+dtd
+dtd
+dtd
+dBn
+dtd
+dtd
+dtd
+dtd
+dtd
+dtd
+dtd
+baU
+bbs
+bbT
+bbs
+bbs
+bbs
+bbs
+bfn
+bbs
+bbs
+bil
+cKz
+bjP
 bkD
 blF
 bmE
@@ -149114,79 +153607,79 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-abC
-arw
-aoZ
-aoZ
-aoZ
-arJ
-asE
-aoZ
-auL
-avU
-aoZ
-aoZ
-aoZ
-aaa
+akR
+akR
+akR
 anV
-aCZ
-aEq
-aFK
-aHh
+aoY
+aoY
+aoY
+arH
+asD
+aoY
+auK
+avT
+aoY
+aoY
+aoY
+aoY
+anV
+aCY
+aEp
+aFJ
+aHg
+aIh
 aoU
-aoU
-aKr
-aLt
-aMx
+aEn
+aoY
+aMw
 aoU
 aoU
 aPy
-aPy
-aRX
-aTg
-aTI
-anV
-aLm
-aLm
-aWl
-aPJ
-aPl
-aLm
-aLm
-aLm
-aLm
-aLm
-aLm
-aLm
-aYy
-aYy
-aYy
-aYy
-aYy
-aYy
-aYy
-aYy
-aYy
-aYy
-aYy
-aYy
-aYy
-aYy
-baS
-baS
-baS
-baS
-baS
-bdK
-baS
-baS
-baS
-bgZ
-bin
-baS
-bjW
+aRh
+aRW
+aTf
+aTH
+aUP
+aVm
+aVI
+aWk
+aWE
+aWS
+aXd
+aQN
+aXP
+aQN
+aQN
+aQN
+aQR
+dtd
+dtd
+dtd
+dtd
+dtu
+dtd
+dtd
+dtd
+dtd
+dtu
+dtd
+dtd
+dtd
+dtd
+baV
+bbt
+bbU
+bcx
+bdd
+bdd
+bez
+bfo
+bdd
+bdd
+bim
+bcx
+bjV
 bjW
 bjW
 bjW
@@ -149376,73 +153869,73 @@ aaa
 abC
 arw
 aoZ
-apR
-apR
-apR
-apR
-atG
-apR
-apR
-apR
-axS
 aoZ
-aAO
-aoY
-aDa
-aEr
-aBY
-aHi
-aoU
-aoU
-aKs
-aoY
-aMy
-aoU
-aoU
-aoU
-aoU
-aRY
-azA
-aTJ
+aoZ
+arJ
+asE
+aoZ
+auL
+avU
+aoZ
+aoZ
+aoZ
+aaa
 anV
-alx
+aCZ
+aEq
+aFK
+aHh
+aoU
+aoU
+aKr
+aLt
+aMx
+aoU
+aoU
+aPy
+aPy
+aRX
+aTg
+aTI
+anV
 aLm
-aWm
-aPI
-aUR
-dbQ
-aXz
 aLm
-alx
-alx
-alx
-aaa
-aaa
-abC
-aaa
-aaa
-aaa
-aaa
-abC
-aaa
-aaa
-aaa
-aaa
-abC
-aaa
-aaa
-baW
-baW
-bbo
-bbo
-bbq
-bbq
-bbq
-bbq
-bgs
-bha
-bio
-bje
+aWl
+aPJ
+aPl
+aLm
+aLm
+aLm
+aLm
+aLm
+aLm
+aLm
+aYy
+aYy
+aYy
+aYy
+dtv
+aYy
+aYy
+aYy
+aYy
+dtv
+aYy
+aYy
+aYy
+aYy
+baS
+baS
+baS
+baS
+baS
+bdK
+baS
+baS
+baS
+bgZ
+bin
+baS
 bjW
 bkE
 blH
@@ -149637,38 +154130,38 @@ apR
 apR
 apR
 apR
+atG
 apR
 apR
 apR
-apR
-apR
-azw
-aAP
+axS
+aoZ
+aAO
 aoY
-aCW
-aEs
-anV
-aHj
-aIi
-azy
-aKt
+aDa
+aEr
 aBY
-aMz
-aoW
-aoW
-aoW
-aoW
-aRZ
-cOC
+aHi
+aoU
+aoU
+aKs
+aoY
+aMy
+aoU
+aoU
+aoU
+aoU
+aRY
+azA
 aTJ
 anV
 alx
 aLm
-aWn
-aOl
-daW
-aXe
-aXA
+aWm
+aPI
+aUR
+dbQ
+aXz
 aLm
 alx
 alx
@@ -149690,16 +154183,16 @@ aaa
 aaa
 baW
 baW
-baW
+bbo
 bbo
 bbq
 bbq
 bbq
 bbq
-bgp
-bhb
-ddo
-bjf
+bgs
+bha
+bio
+bje
 bjW
 bkF
 blI
@@ -149905,46 +154398,46 @@ aoY
 aCW
 aEs
 anV
-aHk
-aCW
-aJq
-aKu
-aLu
-aMA
-aoU
-aoU
-aoU
-aoU
-aRY
-apb
+aHj
+aIi
+azy
+aKt
+aBY
+aMz
+aoW
+aoW
+aoW
+aoW
+aRZ
+cOC
 aTJ
 anV
 alx
 aLm
-aMg
-aWF
-aWT
-aXf
-aNF
+aWn
+aOl
+daW
+aXe
+aXA
 aLm
 alx
 alx
 alx
-alx
-aXR
-aXR
-aXR
 aaa
-aXR
-aXR
-aXR
-aXR
 aaa
-aXR
-aXR
-aXR
-aXR
-aXR
+abC
+aaa
+aaa
+aaa
+aaa
+abC
+aaa
+aaa
+aaa
+aaa
+abC
+aaa
+aaa
 baW
 baW
 baW
@@ -150159,49 +154652,49 @@ apR
 azw
 aAP
 aoY
-aDb
-aEt
-anV
-aHl
 aCW
+aEs
+anV
+aHk
+aCW
+aJq
+aKu
+aLu
+aMA
 aoU
-aKv
-aoY
-aMB
-aNv
-aOD
-aPz
-aRi
-aSa
-aTh
-aTK
+aoU
+aoU
+aoU
+aRY
+apb
+aTJ
 anV
 alx
 aLm
-aLm
-aLm
-aLm
-aLm
-aLm
+aMg
+aWF
+aWT
+aXf
+aNF
 aLm
 alx
 alx
 alx
 alx
+aXR
+aXR
+aXR
 aaa
+aXR
+aXR
+aXR
+aXR
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aXR
+aXR
+aXR
+aXR
+aXR
 baW
 baW
 baW
@@ -150412,35 +154905,35 @@ apR
 apR
 apR
 apR
-axS
-aoZ
-aAQ
+apR
+azw
+aAP
 aoY
+aDb
+aEt
+anV
+aHl
 aCW
-aEs
-anV
-aHm
-aCW
-aJr
-aKw
-anV
-anV
-anV
-anV
-aPA
-anV
-aSb
-avk
-anV
+aoU
+aKv
+aoY
+aMB
+aNv
+aOD
+aPz
+aRi
+aSa
+aTh
+aTK
 anV
 alx
-and
-and
-alx
-alx
-alx
-alx
-alx
+aLm
+aLm
+aLm
+aLm
+aLm
+aLm
+aLm
 alx
 alx
 alx
@@ -150661,45 +155154,45 @@ aaa
 abC
 arw
 aoZ
+apR
+apR
+apR
+apR
+apR
+apR
+apR
+apR
+axS
 aoZ
-aoZ
-arK
-arK
-aoZ
-auM
-arK
-aoZ
-aoZ
-aoZ
-aaa
-anV
-aCZ
+aAQ
+aoY
+aCW
 aEs
 anV
-aHn
+aHm
 aCW
-aoU
-daF
+aJr
+aKw
 anV
-aez
-aez
-adZ
-afV
-akp
-aSc
-cOD
-cZB
-afS
-alx
-alx
-alx
-and
+anV
+anV
+anV
+aPA
+anV
+aSb
+avk
+anV
+anV
 alx
 and
 and
-and
-and
-and
+alx
+alx
+alx
+alx
+alx
+alx
+alx
 alx
 alx
 alx
@@ -150911,54 +155404,54 @@ aaa
 aaa
 aaa
 aaa
-dnA
 aaa
-akR
-akR
-akR
+aaa
+aaa
+aaa
+abC
+arw
+aoZ
+aoZ
+aoZ
+arK
+arK
+aoZ
+auM
+arK
+aoZ
+aoZ
+aoZ
+aaa
 anV
-aoY
-aoY
-aoY
-arL
-asF
-aoY
-asF
-arL
-aoY
-aoY
-aoY
-aoY
-anV
-aCY
+aCZ
 aEs
 anV
-aHo
+aHn
 aCW
 aoU
-aKx
+daF
 anV
 aez
 aez
 adZ
-afS
-cYt
-cYK
-aiS
-afS
 afV
+akp
+aSc
+cOD
+cZB
+afS
+alx
+alx
+alx
 and
-and
-and
+alx
 and
 and
 and
 and
 and
 alx
-and
-and
-and
+alx
 alx
 alx
 aaa
@@ -151168,42 +155661,42 @@ aaa
 aaa
 aaa
 aaa
-dnB
-dnD
-dnD
-dnD
-dnD
-anT
-aoX
-aoU
-aoY
-arM
-arM
-aoY
-arM
-arM
-aoY
-axT
-azx
-aAR
+dnA
+aaa
+akR
+akR
+akR
 anV
-aCX
+aoY
+aoY
+aoY
+arL
+asF
+aoY
+asF
+arL
+aoY
+aoY
+aoY
+aoY
+anV
+aCY
 aEs
 anV
-aHp
-aIj
-aJs
-aKy
-aHp
+aHo
+aCW
+aoU
+aKx
+anV
 aez
 aez
+adZ
 afS
-cYm
-cYu
-akp
-akp
-cYg
+cYt
+cYK
+aiS
 afS
+afV
 and
 and
 and
@@ -151225,7 +155718,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cKF
 aaa
 aaa
 aaa
@@ -151425,50 +155918,50 @@ aaa
 aaa
 aaa
 aaa
-dnC
-akR
-akR
-akR
-alx
-anU
-apa
+dnB
+dnD
+dnD
+dnD
+dnD
+anT
+aoX
 aoU
 aoY
-arL
-arL
+arM
+arM
 aoY
-arL
-arL
+arM
+arM
 aoY
-aoU
-aoU
-aAM
+axT
+azx
+aAR
 anV
-aDc
+aCX
 aEs
-aFL
-aHq
-aIk
-aJt
-aKz
+anV
+aHp
+aIj
+aJs
+aKy
 aHp
 aez
 aez
-aez
-cYj
+afS
+cYm
 cYu
-aXh
+akp
+akp
+cYg
 afS
-adZ
-afS
-aez
-aez
-afV
-aez
 and
 and
-alx
-alx
+and
+and
+and
+and
+and
+and
 alx
 and
 and
@@ -151682,54 +156175,54 @@ aaa
 aaa
 aaa
 aaa
-aaa
+dnC
+akR
 akR
 akR
 alx
-alx
+anU
+apa
+aoU
+aoY
+arL
+arL
+aoY
+arL
+arL
+aoY
+aoU
+aoU
+aAM
 anV
-apb
-aoU
-aoU
-aoU
-asG
-atH
-aoW
-aoW
-aoW
-aoW
-azy
-aoW
-aBY
-aDd
+aDc
 aEs
-aFM
+aFL
 aHq
-aIl
-aJu
-aKA
+aIk
+aJt
+aKz
 aHp
-adZ
 aez
 aez
-apx
-cOz
-afV
+aez
+cYj
+cYu
+aXh
+afS
 adZ
 afS
+aez
+aez
 afV
-afS
-aWo
-afK
-afV
-afS
-afS
-afV
+aez
+and
+and
 alx
 alx
 alx
-alx
-alx
+and
+and
+and
 alx
 aaa
 aaa
@@ -151945,48 +156438,48 @@ akR
 alx
 alx
 anV
-apc
-apS
-apS
-arN
-arN
-cLU
-arN
-arN
-apS
-apS
-azz
-apS
-aBZ
-aDe
-aEu
-aFN
+apb
+aoU
+aoU
+aoU
+asG
+atH
+aoW
+aoW
+aoW
+aoW
+azy
+aoW
+aBY
+aDd
+aEs
+aFM
 aHq
-aIm
+aIl
 aJu
-aKB
+aKA
 aHp
 adZ
+aez
+aez
+apx
+cOz
 afV
-afV
-alR
-amK
-alS
-afV
-akp
-akp
-akp
-akq
-avh
-awu
-alr
-aOF
+adZ
 afS
 afV
 afS
+aWo
+afK
 afV
-akR
-akR
+afS
+afS
+afV
+alx
+alx
+alx
+alx
+alx
 akR
 aaa
 aaa
@@ -152198,50 +156691,50 @@ aaa
 aaa
 aaa
 akR
-alx
+akR
 alx
 alx
 anV
-apd
-aoU
-aoU
-arO
-arO
-aoU
-arO
-arO
-aoU
-axU
-azA
-aoU
-aBX
-aoU
-aEn
-aFO
+apc
+apS
+apS
+arN
+arN
+cLU
+arN
+arN
+apS
+apS
+azz
+apS
+aBZ
+aDe
+aEu
+aFN
 aHq
 aIm
 aJu
-aKC
+aKB
 aHp
-aHp
-aNw
-afS
-alS
-amK
-akp
-aOH
-akp
-akp
-cYl
-akp
-afp
+adZ
 afV
+afV
+alR
+amK
+alS
+afV
+akp
+akp
+akp
 akq
-akp
+avh
+awu
+alr
+aOF
 afS
-akp
-akp
-ajo
+afV
+afS
+afV
 akR
 akR
 aaa
@@ -152455,52 +156948,52 @@ aaa
 aaa
 aaa
 akR
-akR
+alx
 alx
 alx
 anV
-ape
-ape
-aqQ
-arP
-asH
-atI
-auN
-cZe
-apQ
-axV
-azB
-aAS
-aBW
-aDf
-aEv
-aFP
+apd
+aoU
+aoU
+arO
+arO
+aoU
+arO
+arO
+aoU
+axU
+azA
+aoU
+aBX
+aoU
+aEn
+aFO
 aHq
-aIn
-aJv
-aKD
-cNU
-cOb
-cOf
-aOE
-cOs
-cYK
+aIm
+aJu
+aKC
+aHp
+aHp
+aNw
 afS
-afV
-afV
-afV
-aez
-afS
-afV
-afS
+alS
+amK
 akp
-aXg
+aOH
 akp
+akp
+cYl
+akp
+afp
+afV
+akq
+akp
+afS
 akp
 akp
 ajo
-aaa
-aaa
+akR
+akR
 aaa
 aaa
 aaa
@@ -152711,49 +157204,49 @@ aaa
 aaa
 aaa
 aaa
-aaa
 akR
 akR
-ank
-ank
-apf
-apf
-aqR
-ank
-ank
-ank
-ank
-ank
-ank
-ank
-azC
-ank
-ank
+alx
+alx
 anV
-anV
-anV
-aHp
-aHp
-aHp
-aHp
-aHp
-aHp
-cYn
-aCr
-apu
-dbk
+ape
+ape
+aqQ
+arP
+asH
+atI
+auN
+cZe
+apQ
+axV
+azB
+aAS
+aBW
+aDf
+aEv
+aFP
+aHq
+aIn
+aJv
+aKD
+cNU
+cOb
+cOf
+aOE
+cOs
+cYK
 afS
-alx
-and
-and
-and
-alx
-alx
+afV
+afV
+afV
+aez
+afS
+afV
 afS
 akp
-aXh
-afV
-aXQ
+aXg
+akp
+akp
 akp
 ajo
 aaa
@@ -152969,49 +157462,49 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+akR
+akR
 ank
-anW
-apg
-apT
-aqS
-aph
 ank
-atJ
-atJ
-avV
-axd
-axW
-azD
-aAT
+apf
+apf
+aqR
 ank
-adZ
+ank
+ank
+ank
+ank
+ank
+ank
+azC
+ank
+ank
+anV
+anV
+anV
+aHp
+aHp
+aHp
+aHp
+aHp
+aHp
+cYn
+aCr
+apu
+dbk
 afS
-afV
-adZ
-adZ
-aJw
-aCr
-day
-aCr
-aNx
-aus
-afq
-afV
-aez
 alx
 and
 and
 and
-and
+alx
 alx
 afS
-aRj
-aXi
-afS
-ala
-ajr
+akp
+aXh
+afV
+aXQ
+akp
 ajo
 aaa
 aaa
@@ -153229,69 +157722,69 @@ aaa
 aaa
 aaa
 ank
-anX
+anW
+apg
+apT
+aqS
 aph
-apU
-aqT
-arQ
-asI
-atK
-auO
-auO
-auO
-avW
-azE
-avW
 ank
-cZB
-cYl
-aoR
-ahr
-aqj
-apu
-akq
-alS
-akp
-aNy
-afS
+atJ
+atJ
+avV
+axd
+axW
+azD
+aAT
+ank
 adZ
+afS
+afV
+adZ
+adZ
+aJw
+aCr
+day
+aCr
+aNx
+aus
+afq
+afV
 aez
-and
 alx
 and
 and
 and
 and
 alx
-afV
-afV
-afV
-afV
-afV
-afV
-afV
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-bbp
+afS
+aRj
+aXi
+afS
+ala
+ajr
+ajo
+aaa
+aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+bbo
 bbo
 bbq
 bgp
@@ -153483,72 +157976,72 @@ aaa
 aaa
 aaa
 aaa
-akR
-akR
+aaa
+aaa
 ank
-anY
-api
-apV
-apV
-apV
-asJ
-atL
-atL
-avX
-atL
-atL
-azF
-aAU
+anX
+aph
+apU
+aqT
+arQ
+asI
+atK
+auO
+auO
+auO
+avW
+azE
+avW
 ank
-aDg
-auE
+cZB
+cYl
+aoR
+ahr
+aqj
 apu
-aqH
-afq
-afq
-aKE
+akq
+alS
+akp
+aNy
+afS
 adZ
-adZ
+aez
+and
+alx
+and
+and
+and
+and
+alx
 afV
-adZ
-alx
-alx
-alx
-alx
-and
-and
-and
-and
-alx
-alx
-akR
-akR
-alx
-alx
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-baW
+afV
+afV
+afV
+afV
+afV
+afV
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+bbp
 bbo
 bbq
 bbq
@@ -153741,29 +158234,32 @@ aaa
 aaa
 aaa
 akR
-alx
+akR
 ank
-anZ
-apj
-apW
-aqU
-arR
+anY
+api
+apV
+apV
+apV
+asJ
+atL
+atL
+avX
+atL
+atL
+azF
+aAU
 ank
-atM
-auP
-avW
-avW
-axX
-azG
-aAV
-ank
-afK
-aUW
-aoy
-apx
-anN
+aDg
+auE
+apu
+aqH
+afq
+afq
+aKE
+adZ
+adZ
 afV
-afS
 adZ
 alx
 alx
@@ -153773,15 +158269,12 @@ and
 and
 and
 and
-and
-and
-and
+alx
 alx
 akR
 akR
-akR
-akR
-akR
+alx
+alx
 aaa
 aaa
 aaa
@@ -153996,31 +158489,31 @@ aaa
 aaa
 aaa
 aaa
-akR
+aaa
 akR
 alx
 ank
+anZ
+apj
+apW
+aqU
+arR
 ank
+atM
+auP
+avW
+avW
+axX
+azG
+aAV
 ank
-ank
-ank
-ank
-ank
-ank
-auQ
-avY
-auQ
-ank
-ank
-ank
-ank
+afK
+aUW
+aoy
+apx
+anN
 afV
 afS
-afS
-adZ
-adZ
-adZ
-adZ
 adZ
 alx
 alx
@@ -154034,7 +158527,7 @@ and
 and
 and
 alx
-alx
+akR
 akR
 akR
 akR
@@ -154254,46 +158747,46 @@ aaa
 aaa
 aaa
 akR
+akR
+alx
+ank
+ank
+ank
+ank
+ank
+ank
+ank
+ank
+auQ
+avY
+auQ
+ank
+ank
+ank
+ank
+afV
+afS
+afS
+adZ
+adZ
+adZ
+adZ
+adZ
 alx
 alx
 alx
 alx
-alx
+and
+and
+and
+and
+and
+and
+and
 alx
 alx
 akR
 akR
-atN
-auR
-avW
-avW
-atN
-akR
-akR
-alx
-alx
-and
-and
-and
-alx
-alx
-alx
-alx
-and
-and
-and
-and
-and
-and
-and
-and
-alx
-alx
-alx
-alx
-alx
-alx
-alx
 akR
 akR
 aaa
@@ -154510,32 +159003,32 @@ aaa
 aaa
 aaa
 aaa
-aaa
-alF
 akR
-alF
 alx
 alx
 alx
 alx
-aaa
+alx
+alx
+alx
+akR
 akR
 atN
-auS
+auR
 avW
-axe
+avW
 atN
-aaa
 akR
 akR
 alx
+alx
 and
 and
 and
-and
-and
-and
-and
+alx
+alx
+alx
+alx
 and
 and
 and
@@ -154551,8 +159044,8 @@ alx
 alx
 alx
 alx
-alx
-alx
+akR
+akR
 aaa
 aaa
 aaa
@@ -154768,48 +159261,48 @@ aaa
 aaa
 aaa
 aaa
-abC
-aaa
-abC
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-atN
-atN
-avZ
-atN
-atN
-aaa
+alF
+akR
+alF
+alx
+alx
+alx
+alx
 aaa
 akR
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
-alx
+atN
+auS
+avW
+axe
+atN
 aaa
+akR
+akR
+alx
+and
+and
+and
+and
+and
+and
+and
+and
+and
+and
+and
+and
+and
+and
+and
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
 aaa
 aaa
 aaa
@@ -155033,19 +159526,19 @@ aaa
 aaa
 aaa
 aaa
-asK
-asK
-asL
-awa
-asL
-asK
-asK
+aaa
+atN
+atN
+avZ
+atN
+atN
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+akR
+alx
+alx
+alx
+alx
 alx
 alx
 alx
@@ -155291,11 +159784,11 @@ aaa
 aaa
 aaa
 asK
-atO
-auT
-auT
-auU
-axY
+asK
+asL
+awa
+asL
+asK
 asK
 aaa
 aaa
@@ -155303,52 +159796,52 @@ aaa
 aaa
 aaa
 aaa
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
+alx
 aaa
 aaa
 aaa
 aaa
-alx
-alx
-alx
-alx
-alx
-and
-alx
-alx
-alx
-and
-alx
-alF
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-abC
-bbp
+aaa
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+cKF
+bbo
 bbo
 bbq
 bgs
@@ -155547,16 +160040,13 @@ aaa
 aaa
 aaa
 aaa
-asL
-atP
-auU
+asK
+atO
+auT
 auT
 auU
-axZ
-azH
-aaa
-aaa
-aaa
+axY
+asK
 aaa
 aaa
 aaa
@@ -155572,41 +160062,44 @@ alx
 alx
 alx
 alx
+and
 alx
 alx
 alx
+and
 alx
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-bbo
+alF
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+abC
+bbp
 bbq
 bgp
 bit
@@ -155804,14 +160297,13 @@ aaa
 aaa
 aaa
 aaa
-asK
-atQ
-auT
+asL
+atP
+auU
 auT
 auU
-aya
-asK
-aaa
+axZ
+azH
 aaa
 aaa
 aaa
@@ -155829,6 +160321,11 @@ alx
 alx
 alx
 alx
+alx
+alx
+alx
+alx
+alx
 aaa
 aaa
 aaa
@@ -155838,10 +160335,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aac
 aab
 aaa
 aaa
@@ -156062,11 +160555,11 @@ aaa
 aaa
 aaa
 asK
-asK
-asL
-awb
-asL
-asK
+atQ
+auT
+auT
+auU
+aya
 asK
 aaa
 aaa
@@ -156077,9 +160570,15 @@ aaa
 aaa
 aaa
 aad
-aab
-aab
-aab
+aaa
+aaa
+aaa
+aaa
+aaa
+alx
+alx
+alx
+alx
 aaa
 aaa
 aaa
@@ -156092,13 +160591,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aab
-aaa
-aaa
+aac
 aaa
 aac
 aad
@@ -156318,13 +160811,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+asK
+asK
+asL
+awb
+asL
+asK
+asK
 aaa
 aaa
 aaa
@@ -156353,7 +160846,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aab
 aaa
 aaa
 aab
