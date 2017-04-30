@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(persistence)
 	var/savefile/chisel_messages_sav
 
 	var/savefile/trophy_sav
-	var/old_trophy_list = ""
+	var/list/saved_trophies = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -111,15 +111,41 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
 	trophy_sav = new /savefile("data/npc_saves/TrophyItems.sav")
-	trophy_sav >> old_trophy_list
+	var/saved_json
+	trophy_sav >> saved_json
 
-	var/list/expanded_trophy_items = list()
+	var/decoded_json = json_decode(saved_json)
 
-	if(!isnull(old_trophy_list))
-		expanded_trophy_items = splittext(old_trophy_list,"#")
-		SetUpTrophies(expanded_trophy_items)
-	else
-		expanded_trophy_items.len = 0
+	if(!islist(decoded_json))
+		return
+
+	saved_trophies = decoded_json
+
+	SetUpTrophies(saved_trophies.Copy())
+
+/datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
+	for(var/A in GLOB.trophy_cases)
+		var/obj/structure/displaycase/trophy/T = A
+		T.added_roundstart = TRUE
+
+		var/trophy_data = pick_n_take(trophy_items)
+
+		if(!islist(trophy_data))
+			continue
+
+		var/list/chosen_trophy = trophy_data
+
+		if(!chosen_trophy || isemptylist(chosen_trophy)) //Malformed
+			continue
+
+		var/path = text2path(chosen_trophy["path"]) //If the item no longer exist, this returns null
+		if(!path)
+			continue
+
+		T.showpiece = new path
+		T.trophy_message = chosen_trophy["message"]
+		T.placer_key = chosen_trophy["placer_key"]
+		T.update_icon()
 
 
 /datum/controller/subsystem/persistence/proc/CollectData()
@@ -156,27 +182,12 @@ SUBSYSTEM_DEF(persistence)
 
 
 /datum/controller/subsystem/persistence/proc/CollectTrophies()
-	trophy_sav << old_trophy_list
+	trophy_sav << json_encode(saved_trophies)
 
 /datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
 	if(!T.added_roundstart && T.showpiece)
-		old_trophy_list += "[T.showpiece.type]|[T.trophy_message]#"
-
-/datum/controller/subsystem/persistence/proc/SetUpTrophies(list/expanded_trophy_items)
-	for(var/A in GLOB.trophy_cases)
-		var/obj/structure/displaycase/trophy/T = A
-		T.added_roundstart = TRUE
-
-		var/trophy_string = pick_n_take(expanded_trophy_items)
-
-		var/list/chosen_trophy = splittext(trophy_string,"|")
-		if(!chosen_trophy || isemptylist(chosen_trophy) || chosen_trophy.len != 2) //Malformed
-			continue
-
-		var/path = text2path(chosen_trophy[1]) //If the item no longer exist, this returns null
-		if(!path)
-			continue
-
-		T.showpiece = new path
-		T.trophy_message = chosen_trophy[2]
-		T.update_icon()
+		var/list/data = list()
+		data["path"] = T.showpiece.type
+		data["message"] = T.trophy_message
+		data["placer_key"] = T.placer_key
+		saved_trophies += list(data)

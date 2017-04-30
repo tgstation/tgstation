@@ -254,6 +254,7 @@
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
 	var/trophy_message = ""
+	var/placer_key = ""
 	var/added_roundstart = TRUE
 	alert = TRUE
 	integrity_failure = 0
@@ -296,6 +297,8 @@
 		showpiece = W
 		added_roundstart = FALSE
 		update_icon()
+
+		placer_key = user.ckey
 
 		trophy_message = W.desc //default value
 
