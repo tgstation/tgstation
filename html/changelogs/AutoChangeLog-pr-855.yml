@@ -1,0 +1,5 @@
+author: "BeeSting12"
+delete-after: True
+changes: 
+  - bugfix: "The emergency backup shuttle has lighting now."
+  - bugfix: "Plating in deltastation's aux tool storage is no longer checkered."
