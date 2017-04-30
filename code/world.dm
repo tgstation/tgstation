@@ -184,7 +184,7 @@
 			return
 
 #define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
-	for(var/client/C in clients)
+	for(var/client/C in GLOB.clients)
 		if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
 			C << "<span class='announce'>PR: [announcement]</span>"
 #undef CHAT_PULLR
