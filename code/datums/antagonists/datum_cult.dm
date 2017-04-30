@@ -5,7 +5,6 @@
 	qdel(communion)
 	return ..()
 
-<<<<<<< HEAD
 /datum/antagonist/cultist/proc/add_objectives()
 	var/list/target_candidates = list()
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
@@ -35,51 +34,16 @@
 	SSticker.mode.cult_objectives += "eldergod"
 	on_gain()
 
-/datum/antagonist/cultist/proc/special_cult_memorization(datum/mind/cult_mind)
-	for(var/obj_count in 1 to 2)
-		var/explanation
-		switch(SSticker.mode.cult_objectives[obj_count])
-			if("sacrifice")
-				if(GLOB.sac_mind)
-					explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
-				else
-					explanation = "The veil has already been weakened here, proceed to the final objective."
-			if("eldergod")
-				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes on it. You must do this after sacrificing your target."
-		to_chat(cult_mind.current, "<B>Objective #[obj_count]</B>: [explanation]")
-		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-
-
-/datum/antagonist/cultist/can_be_owned(mob/living/new_body)
-=======
 /datum/antagonist/cult/on_gain()
->>>>>>> a7603e4aba50d410795d5207e6d5e929b2401cb9
 	. = ..()
+	if(SSticker.mode.cult_objectives.len == 0)
+		add_objectives()
+		return
 	if(!owner)
 		return
 	if(jobban_isbanned(owner.current, ROLE_CULTIST))
 		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST), 0)
 	owner.current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
-
-<<<<<<< HEAD
-/datum/antagonist/cultist/on_gain()
-	if(SSticker.mode.cult_objectives.len == 0)
-		add_objectives()
-		return
-	if(SSticker && SSticker.mode && owner.mind)
-		SSticker.mode.cult += owner.mind
-		SSticker.mode.update_cult_icons_added(owner.mind)
-		if(istype(SSticker.mode, /datum/game_mode/cult))
-			var/datum/game_mode/cult/C = SSticker.mode
-			C.memorize_cult_objectives(owner.mind)
-		else
-			special_cult_memorization(owner.mind)
-		if(jobban_isbanned(owner, ROLE_CULTIST))
-			INVOKE_ASYNC(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST)
-	if(owner.mind)
-		owner.mind.special_role = "Cultist"
-	owner.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
-	..()
 
 /datum/antagonist/cultist/apply_innate_effects()
 	owner.faction |= "cult"
@@ -98,19 +62,6 @@
 		qdel(H)
 	owner.clear_alert("bloodsense")
 	..()
-=======
-/datum/antagonist/cult/apply_innate_effects()
-	. = ..()
-	owner.current.faction |= "cult"
-	owner.current.verbs += /mob/living/proc/cult_help
-	communion.Grant(owner)
-
-/datum/antagonist/cult/remove_innate_effects()
-	. = ..()
-	owner.current.faction -= "cult"
-	owner.current.verbs -= /mob/living/proc/cult_help
->>>>>>> a7603e4aba50d410795d5207e6d5e929b2401cb9
-
 
 /datum/antagonist/cult/on_removal()
 	. = ..()
