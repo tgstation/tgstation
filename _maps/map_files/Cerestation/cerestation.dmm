@@ -1922,9 +1922,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 8
@@ -1948,14 +1945,12 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 8
@@ -3744,11 +3739,15 @@
 	},
 /area/ai_monitored/security/armory)
 "ahq" = (
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	layer = 2.4;
+	on = 1
 	},
-/turf/open/floor/plating/asteroid,
-/area/security/transfer)
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
 "ahr" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -4531,20 +4530,13 @@
 	},
 /area/security/transfer)
 "aiQ" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Security Transfer Range APC";
-	pixel_x = 0;
-	pixel_y = 24
+/obj/structure/chair{
+	dir = 4
 	},
-/obj/structure/cable/orange{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating/astplate{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/prison)
 "aiR" = (
 /obj/structure/rack,
 /obj/item/weapon/pickaxe/mini,
@@ -4952,10 +4944,13 @@
 	},
 /area/security/transfer)
 "ajJ" = (
-/turf/open/floor/plating/astplate{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/prison)
 "ajK" = (
 /obj/structure/rack,
 /obj/item/weapon/shovel,
@@ -5360,20 +5355,35 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/door/airlock/security{
+	name = "Interrogation Room";
+	req_access_txt = "0";
+	req_one_access_txt = "38;2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"akC" = (
+/obj/machinery/light/small,
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/security/transfer)
-"akC" = (
-/obj/machinery/light/small,
-/turf/open/floor/plating/asteroid,
-/area/security/transfer)
 "akD" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	icon_plating = "asteroid_dug";
+	icon_state = "asteroid_dug";
+	name = "ditch"
+	},
 /area/security/transfer)
 "akE" = (
 /obj/structure/disposalpipe/segment,
@@ -5719,15 +5729,35 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plating{
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/prison)
 "alm" = (
-/turf/closed/wall/r_wall{
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Brig Cells North 2"
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/prison)
 "aln" = (
 /obj/structure/mineral_door/iron{
 	name = "Transfer Center"
@@ -5928,30 +5958,40 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/security{
-	name = "Inmate Transfer Facility";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plating{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/prison)
 "alL" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/item/weapon/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	icon_plating = "asteroid_dug";
+	icon_state = "asteroid_dug";
+	name = "ditch"
+	},
 /area/security/transfer)
 "alM" = (
 /obj/item/weapon/shovel,
-/turf/open/floor/plating/astplate{
-	baseturf = /turf/open/floor/plating/asteroid/airless
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	icon_plating = "asteroid_dug";
+	icon_state = "asteroid_dug";
+	name = "ditch"
 	},
 /area/security/transfer)
 "alN" = (
 /obj/item/weapon/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	icon_plating = "asteroid_dug";
+	icon_state = "asteroid_dug";
+	name = "ditch"
+	},
 /area/security/transfer)
 "alO" = (
 /obj/structure/closet/emcloset,
@@ -6391,9 +6431,6 @@
 	},
 /area/security/prison)
 "amA" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 4;
@@ -6404,6 +6441,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -6414,20 +6452,15 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/camera{
-	c_tag = "Brig Cells North 2"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -53296,6 +53329,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/poddoor/preopen{
+	id = "ceoffice";
+	name = "office emergency blastdoors"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -53312,6 +53349,10 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_x = 0
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "ceoffice";
+	name = "office emergency blastdoors"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -53338,6 +53379,10 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
+/obj/machinery/door/poddoor/preopen{
+	id = "ceoffice";
+	name = "office emergency blastdoors"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -53359,6 +53404,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/poddoor/preopen{
+	id = "ceoffice";
+	name = "office emergency blastdoors"
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -54297,6 +54346,13 @@
 	name = "Engineering Emergency Lockdown Control";
 	pixel_x = -24;
 	pixel_y = 8;
+	req_access_txt = "10;11"
+	},
+/obj/machinery/button/door{
+	id = "ceoffice";
+	name = "Office Emergency Lockdown";
+	pixel_x = -24;
+	pixel_y = -8;
 	req_access_txt = "10;11"
 	},
 /turf/open/floor/plasteel/neutral{
@@ -55644,6 +55700,7 @@
 /area/atmos)
 "bSJ" = (
 /obj/machinery/computer/apc_control,
+/obj/machinery/light,
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -55665,6 +55722,11 @@
 /area/crew_quarters/chief)
 "bSL" = (
 /obj/machinery/suit_storage_unit/ce,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -91711,7 +91773,6 @@
 	},
 /obj/item/weapon/stamp/ce,
 /obj/item/weapon/pen,
-/obj/machinery/light,
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -91722,10 +91783,8 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	icon_state = "alarm0";
-	pixel_y = -22
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -94369,10 +94428,10 @@
 /obj/structure/disposaloutlet{
 	dir = 8
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
 /obj/structure/lattice/catwalk,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/open/space,
 /area/space)
 "dnB" = (
@@ -96655,6 +96714,447 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/incinerator)
+"dsd" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Armory APC";
+	pixel_x = 0;
+	pixel_y = 24
+	},
+/obj/structure/cable/orange{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/rack,
+/obj/item/weapon/storage/box/chemimp{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/morphine,
+/turf/open/floor/plasteel/darkred/side{
+	icon_state = "darkred";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ai_monitored/security/armory)
+"dse" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/rack,
+/obj/item/weapon/storage/lockbox/loyalty,
+/obj/item/weapon/storage/box/trackimp,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred/side{
+	icon_state = "darkred";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ai_monitored/security/armory)
+"dsf" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ai_monitored/security/armory)
+"dsg" = (
+/obj/structure/closet/secure_closet{
+	name = "contraband locker";
+	req_access_txt = "3"
+	},
+/obj/effect/spawner/lootdrop/armory_contraband{
+	loot = list(/obj/item/weapon/gun/ballistic/automatic/pistol = 5, /obj/item/weapon/gun/ballistic/shotgun/automatic/combat = 5, /obj/item/weapon/gun/ballistic/revolver/mateba, /obj/item/weapon/gun/ballistic/automatic/pistol/deagle, /obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 3)
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ai_monitored/security/armory)
+"dsh" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsi" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsj" = (
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsk" = (
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsl" = (
+/obj/machinery/camera{
+	c_tag = "Security Interrogation";
+	dir = 9;
+	icon_state = "camera";
+	network = list("SS13");
+	tag = "null"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsm" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsn" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dso" = (
+/obj/structure/table/wood,
+/obj/item/device/flashlight/lamp,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsp" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsq" = (
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsr" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dss" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dst" = (
+/obj/structure/table/wood,
+/obj/item/device/taperecorder,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsu" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsv" = (
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsy" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsz" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsA" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsB" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door_timer{
+	id = "Cell 8";
+	name = "Cell 8";
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsC" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Security Transfer Range APC";
+	pixel_x = 0;
+	pixel_y = 24
+	},
+/obj/structure/cable/orange{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/transfer)
+"dsD" = (
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/transfer)
+"dsE" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsF" = (
+/obj/structure/mineral_door/iron{
+	name = "Transfer Center"
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/transfer)
+"dsG" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door_timer{
+	id = "Cell 7";
+	name = "Cell 7";
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsH" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/prison)
+"dsI" = (
+/obj/machinery/door/airlock/security{
+	name = "Inmate Transfer Facility";
+	req_access_txt = "2"
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/transfer)
+"dsJ" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/transfer)
+"dsK" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/transfer)
+"dsL" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/transfer)
+"dsM" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating/astplate{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/transfer)
+"dsN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "ceoffice";
+	name = "office emergency blastdoors"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/chief)
+"dsO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/glass_engineering{
+	name = "Chief Engineer's Office";
+	req_access_txt = "56"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/chief)
+"dsP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "ceoffice";
+	name = "office emergency blastdoors"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/crew_quarters/chief)
 
 (1,1,1) = {"
 aaa
@@ -109523,11 +110023,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 abC
 aaa
@@ -109780,11 +110280,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 abC
 aaa
@@ -110037,11 +110537,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 abC
 aaa
@@ -110294,11 +110794,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 abC
 aaa
@@ -110551,11 +111051,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 abC
 aaa
@@ -110808,11 +111308,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 abC
 aaa
@@ -111065,11 +111565,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cKF
+cKF
+cKF
+cKF
+cKF
 aaa
 abC
 abE
@@ -111591,7 +112091,7 @@ abE
 abW
 acH
 acH
-abW
+acO
 acO
 acO
 acO
@@ -111848,7 +112348,7 @@ abE
 abW
 acH
 acH
-abW
+acO
 acO
 acO
 acO
@@ -112105,11 +112605,11 @@ abE
 abW
 acH
 acH
-abW
 acO
 acO
 adF
 aea
+aeB
 aeB
 aeB
 aeB
@@ -112362,10 +112862,10 @@ abW
 abW
 abW
 abW
-abW
 acO
 acO
-adG
+dsd
+aec
 aeb
 aeC
 aeY
@@ -112610,7 +113110,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cKF
 aaa
 aaa
 abE
@@ -112619,11 +113119,11 @@ abW
 abW
 abW
 abW
-abW
 acO
 acO
-adH
+dse
 aec
+aeD
 aeD
 aeD
 aeD
@@ -112867,19 +113367,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cKF
 aaa
 aaa
 abE
 abE
 abE
-abW
 abW
 abW
 abW
 acO
 acO
 adI
+dsf
 aed
 aeE
 aeZ
@@ -113124,13 +113624,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cKF
 aaa
 aaa
 abE
 abE
 abE
-abW
 abW
 abW
 abW
@@ -113139,6 +113638,7 @@ acO
 adJ
 aee
 aeF
+aeD
 afa
 afu
 afO
@@ -113381,13 +113881,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cKF
 aaa
 aaa
 abE
 abE
 abE
-abW
 abW
 abW
 abW
@@ -113396,6 +113895,7 @@ acO
 adK
 aef
 aef
+aee
 afb
 aee
 afP
@@ -113647,10 +114147,10 @@ abE
 abW
 abW
 abW
-abW
 acO
 acO
-adL
+adM
+aef
 aef
 aef
 aef
@@ -113904,12 +114404,12 @@ abE
 abW
 abW
 abW
-abW
 acO
 acO
 adM
 aeg
 aeG
+dsg
 afc
 afv
 aeG
@@ -114161,10 +114661,10 @@ abE
 abW
 abW
 abW
-abW
 acO
 acO
 doV
+acO
 acO
 acO
 acO
@@ -114418,7 +114918,6 @@ abE
 abW
 abW
 acH
-acH
 acO
 acO
 acO
@@ -114428,20 +114927,21 @@ acO
 acO
 acO
 acO
-acO
-acO
-aiO
-ajI
+afr
+afr
+afr
+dsr
+dsw
 akB
 all
 alK
 amA
 ant
+apr
+apr
 aol
 apr
 apr
-apr
-aol
 asV
 apr
 apr
@@ -114684,22 +115184,22 @@ abW
 abW
 abW
 abW
-abW
-agy
-agy
-aiP
-ajJ
-ajJ
-alm
 afr
+dsh
+dsm
+dss
+ajJ
+akt
+alm
+dsA
 amB
-anp
-aom
-aps
+dsB
 aqg
 anp
-aom
-asW
+dsE
+dsG
+dsH
+anp
 aqg
 anp
 aom
@@ -114941,13 +115441,11 @@ abW
 abW
 abW
 abW
-abW
-agy
-agz
+afr
+dsi
+dsn
 aiQ
-agA
-ajJ
-ajJ
+dsx
 afr
 amC
 anu
@@ -114956,6 +115454,8 @@ alH
 amC
 ard
 aon
+alH
+dsI
 alH
 amC
 avf
@@ -115198,13 +115698,11 @@ acH
 acH
 abW
 abW
-abW
-afR
-afR
-agA
-agA
-agA
-agA
+afr
+dsj
+dso
+dst
+dsy
 afr
 amD
 ann
@@ -115213,6 +115711,8 @@ alH
 amD
 ann
 aoo
+alH
+dsJ
 alH
 amD
 ann
@@ -115454,14 +115954,12 @@ acH
 acH
 acH
 abW
-acH
-acH
-afR
-afR
-agy
-ajJ
-agA
-agA
+abW
+afr
+dsk
+dsp
+dsu
+dsz
 afr
 amE
 anv
@@ -115470,6 +115968,8 @@ alH
 aqh
 ann
 ann
+alH
+dsK
 alH
 auc
 ann
@@ -115711,14 +116211,12 @@ acH
 acH
 acH
 abW
-acH
-acH
-acH
-afR
-agz
+abW
+afr
+dsl
+dsq
+dsv
 ahq
-agA
-agA
 afr
 amF
 anw
@@ -115727,6 +116225,8 @@ alH
 aqi
 anw
 asb
+alH
+aiP
 alH
 aud
 anw
@@ -115968,14 +116468,7 @@ abW
 acH
 acH
 acH
-acH
-afR
-agy
-agy
-agA
-agA
-agA
-agA
+abW
 afr
 afr
 afr
@@ -115984,6 +116477,13 @@ afr
 afr
 afr
 afr
+afr
+afr
+afr
+afr
+afr
+afr
+dsL
 afr
 afr
 afr
@@ -116225,23 +116725,23 @@ abW
 acH
 acH
 acH
-afR
+abW
+abW
+abW
+abW
+abW
+abW
+abW
+agy
+agy
+agy
+agy
+agy
 agy
 agA
 agA
-agA
-agA
-ajJ
-agA
+aiP
 agy
-agy
-agy
-agy
-agy
-agy
-agy
-adZ
-adZ
 adZ
 adZ
 adZ
@@ -116482,26 +116982,26 @@ abW
 acH
 acH
 acH
-afR
-agz
-ahq
-agA
-agA
-agA
-agA
+acH
+acH
+acH
+acH
+acH
+acH
+acH
 agy
 aig
 agy
+agz
+dsC
+agz
+aiO
+ajI
+dsM
 agy
-agA
-agA
-agy
-agy
-afS
-afS
-afS
-afV
-afV
+adZ
+adZ
+adZ
 adZ
 adZ
 azY
@@ -116739,28 +117239,28 @@ abW
 abW
 abW
 acH
-afR
-agA
-agA
-aie
-agA
-agA
-akC
-agz
+acH
+acH
+acH
+acH
+acH
+acH
+acH
+agy
 alL
 akD
 amG
-amG
-alN
-agA
+aiP
+agz
+dsF
 agy
-afV
-asX
-aue
-avg
-afS
-axD
-afS
+agy
+agy
+adZ
+adZ
+adZ
+adZ
+adZ
 azY
 aBs
 aCi
@@ -116996,28 +117496,28 @@ abW
 abW
 abW
 acH
-afR
-agA
-agA
-agA
-agA
-agA
-akD
-aln
+acH
+acH
+acH
+acH
+acH
+acH
+acH
+agy
 alM
 amG
 anx
-amG
-amG
+dsD
+ajI
 akC
 agz
-afV
-aym
-auf
-aym
 afS
-akp
-aOF
+afS
+afS
+afV
+afV
+axD
+afS
 cJJ
 aBt
 aCj
@@ -117253,13 +117753,13 @@ abW
 abW
 abW
 acH
-afR
-agy
-agA
-aif
-aiR
-ajK
-agy
+acH
+acH
+acH
+acH
+acH
+acH
+abW
 agy
 alN
 alN
@@ -117269,11 +117769,11 @@ agA
 afR
 afR
 afV
-asY
-aym
-cYZ
-akH
-axE
+asX
+aue
+avg
+afS
+akp
 ayA
 azY
 aBu
@@ -117511,25 +118011,25 @@ abW
 abW
 acH
 acH
-agy
-agy
-aig
+abW
+abW
+acH
+acH
+acH
+acH
 afR
 afR
 afR
 afR
+aiR
+ajK
 afR
-afR
-afR
-afR
-agy
-afR
-aez
+acH
 afV
-afV
-afV
-afV
-afV
+aym
+auf
+aym
+afS
 akp
 cYo
 cJK
@@ -117768,26 +118268,26 @@ abW
 abW
 abW
 abW
-adZ
-adZ
-adZ
-aez
-aez
-aez
-aez
-aez
-aez
-aez
-aez
-adZ
-adZ
-aez
-adZ
-aez
-aez
-adZ
-afS
-akp
+abW
+abW
+abW
+acH
+acH
+acH
+acH
+acH
+acH
+acH
+acH
+abW
+abW
+acH
+afV
+asY
+aym
+cYZ
+akH
+axE
 cZm
 cJK
 aBs
@@ -118039,9 +118539,9 @@ aez
 aez
 aez
 aez
-aez
 afV
-afS
+afV
+afV
 afV
 afV
 cZj
@@ -123263,24 +123763,24 @@ bAd
 byQ
 bEj
 dpl
-dpm
+dpl
 dpn
 dpo
 dpp
 dpq
 dpr
-dps
-dpt
+dpr
+dpr
 dpu
-dpv
-dpw
-dpx
-dpy
-dpz
-dpB
-dpD
-dpF
-dpH
+dpr
+dpr
+dpu
+dpr
+dpr
+dpr
+dpr
+dpu
+dpu
 caf
 bBN
 bBN
@@ -124053,8 +124553,8 @@ bYp
 bXG
 bOM
 cbr
-dpN
-dpP
+dpJ
+dpL
 cMH
 byS
 cbr
@@ -124311,8 +124811,8 @@ bXG
 bOM
 byS
 dfU
-dpQ
-dpS
+dpJ
+dpL
 byS
 cbr
 dgD
@@ -124570,9 +125070,9 @@ bAd
 diS
 djs
 dpT
-dpW
-dpY
-dqa
+dpp
+dpq
+dpL
 cMH
 cMH
 byS
@@ -125086,7 +125586,7 @@ cMV
 cbr
 byS
 cbr
-dqc
+dqb
 djm
 bAd
 aZt
@@ -125343,7 +125843,7 @@ cbr
 dgD
 cNc
 dht
-dqd
+dqb
 djO
 byS
 aZH
@@ -125600,7 +126100,7 @@ cMW
 cbr
 cMH
 bAd
-dqe
+dqb
 djP
 djl
 aZH
@@ -125857,7 +126357,7 @@ bOM
 bOM
 bOM
 byS
-dqf
+dqb
 bAe
 cMH
 aZH
@@ -126114,13 +126614,13 @@ cbi
 cbi
 bOM
 dge
-dqg
+dqb
 dqr
-dqJ
-dqR
-dqZ
-drh
-drp
+dqr
+dqs
+dqs
+dqr
+dqr
 aaa
 aaa
 aaa
@@ -126371,13 +126871,13 @@ cbj
 cbP
 bOM
 dfU
-dqh
+dqb
 dqs
 dqK
 dqS
 dra
 dri
-drq
+dqr
 aaa
 aaa
 aaa
@@ -126628,18 +127128,18 @@ cbi
 cbi
 bOM
 cbr
-dqi
-dqt
+dqb
+dqr
 dqL
-dqT
+dqL
 drb
 drj
 drr
 drx
 drD
-drJ
-drP
-drV
+drD
+drD
+drD
 drZ
 aaa
 aaa
@@ -126892,10 +127392,10 @@ dqU
 drc
 drk
 drs
-dry
-drE
+drs
+drs
 drK
-drQ
+drO
 arw
 arw
 aaa
@@ -127143,17 +127643,17 @@ cbk
 bOM
 cbr
 dqk
-dqv
+dqr
 dqN
 dqV
 drd
 drl
 drt
 drz
-drF
+drt
 drL
-drR
-drW
+drO
+drO
 dsa
 aaa
 aaa
@@ -127399,8 +127899,8 @@ cbl
 cbQ
 bOM
 cbr
-dql
-dqw
+dqk
+dqs
 dqO
 dqW
 dre
@@ -127657,18 +128157,18 @@ cbk
 bOM
 cbr
 dqm
-dqx
+dqs
 dqP
 dqX
 drf
 drn
 drv
 drB
-drH
+drv
 drN
-drT
-drY
-dsc
+drO
+drO
+dsa
 aaa
 aaa
 aaa
@@ -127913,17 +128413,17 @@ bOM
 bOM
 bOM
 cbr
-dqn
-dqy
-dqQ
-dqY
-drg
-dro
-drw
-drC
-drI
+dqk
+dqr
+dqr
+dqr
+dqs
+dqr
+drs
+drs
+drs
 drO
-drU
+drO
 arw
 arw
 aaa
@@ -128170,7 +128670,7 @@ cbm
 cbm
 bOM
 djs
-dqo
+dqk
 dgE
 byS
 aZH
@@ -129199,7 +129699,7 @@ cbo
 bOM
 djG
 bAd
-dqB
+dqk
 bBN
 aZH
 aZt
@@ -129440,7 +129940,7 @@ bOZ
 dhQ
 did
 div
-bTM
+dsN
 bUM
 bVM
 bRs
@@ -129456,7 +129956,7 @@ cbS
 bOM
 bAd
 byS
-dqC
+dqk
 byS
 aZH
 aZH
@@ -129697,7 +130197,7 @@ dhF
 bQz
 die
 diw
-bTM
+dsO
 bUN
 bJx
 bTH
@@ -129713,7 +130213,7 @@ cbo
 bOM
 bAd
 cMH
-dqD
+dqk
 byS
 aZH
 aZH
@@ -129954,7 +130454,7 @@ bPb
 dhS
 dif
 bSM
-bTM
+dsP
 bUO
 bVN
 bWA
@@ -129970,7 +130470,7 @@ bOM
 bOM
 bAd
 bAd
-dqE
+dqk
 bBN
 aZH
 aZH
@@ -130227,7 +130727,7 @@ byS
 bAd
 byS
 cbr
-dqF
+dqk
 bBN
 aZH
 aZH
@@ -130484,7 +130984,7 @@ djv
 byS
 bPt
 byP
-dqG
+dqk
 djk
 aZH
 aZt
@@ -130730,18 +131230,18 @@ bUR
 bVQ
 bWD
 dpA
-dpC
-dpE
-dpG
-dpI
+dpA
+dpA
+dpA
+dpA
 dpK
-dpO
-dpR
+dpA
+dpA
 dpU
 djw
 byP
 byP
-dqH
+dqk
 cMH
 aZH
 aZt
@@ -130996,8 +131496,8 @@ cbr
 byP
 dpV
 dpX
-dpZ
-dqq
+dpX
+dpX
 dqI
 byS
 aZH
