@@ -323,6 +323,11 @@
 	var/mob/living/target = null
 	var/points_for_kill = 50 // (Assuming Cost is 40 and this var is default) +10 for killing the poor sod, +25 if enemy gang, +35 if they're a ganghead
 
+/obj/item/weapon/gang_hitman/examine(mob/user)
+	..()
+	if(target)
+		to_chat(user, "You see [target]'s name appear several times throughout the paper. Probably not a good sign for them.")
+
 /obj/item/weapon/gang_hitman/process()
 	if(QDELETED(target))
 		return
