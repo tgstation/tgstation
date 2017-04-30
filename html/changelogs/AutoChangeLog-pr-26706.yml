@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscdel: "Voice of God's Rest command now no longer makes listeners rest. It instead activates the sleep command."
