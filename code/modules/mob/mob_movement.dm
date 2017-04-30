@@ -180,6 +180,8 @@
 
 	for(var/obj/O in mob)
 		O.on_mob_move(direct, src)
+	for(var/obj/O in mob.held_items)
+		O.on_mob_move(direct, src)
 
 	return .
 

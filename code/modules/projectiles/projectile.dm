@@ -131,11 +131,11 @@
 
 /obj/item/projectile/Bump(atom/A, yes)
 	if(!yes) //prevents double bumps.
-		return
+		return FALSE
 	if(firer)
 		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
 			loc = A.loc
-			return 0
+			return FALSE
 
 	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
@@ -155,7 +155,7 @@
 		loc = target_turf
 		if(A)
 			permutated.Add(A)
-		return 0
+		return FALSE
 	else
 		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
@@ -167,6 +167,7 @@
 					return FALSE
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
+	return TRUE
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
@@ -292,7 +293,6 @@
 			// to_chat(world, "Pixel position: [x] [y]")
 			var/angle = Atan2(y - oy, x - ox)
 			// to_chat(world, "Angle: [angle]")
-			world << "angle [angle] origin [ox]/[oy] target [x]/[y] offset [y-oy]/[x-ox]"
 			src.Angle = angle
 	if(spread)
 		src.Angle += spread

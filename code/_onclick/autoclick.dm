@@ -1,6 +1,10 @@
 /client
 	var/list/atom/selected_target[2]
 	var/obj/item/active_mousedown_item = null
+	var/mouseParams = ""
+	var/mouseLocation = null
+	var/mouseObject = null
+	var/mouseControlObject = null
 
 /client/MouseDown(object, location, control, params)
 	var/delay = mob.CanMobAutoclick(object, location, params)
@@ -21,6 +25,10 @@
 		active_mousedown_item = null
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+	mouseParams = params
+	mouseLocation = over_location
+	mouseObject = over_object
+	mouseControlObject = over_control
 	if(selected_target[1] && over_object.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
@@ -75,3 +83,10 @@
 
 /obj/screen/click_catcher/IsAutoclickable()
 	. = 1
+
+//Please don't roast me too hard
+/client/MouseMove(object,location,control,params)
+	mouseParams = params
+	mouseLocation = location
+	mouseObject = object
+	mouseControlObject = control
