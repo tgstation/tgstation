@@ -403,7 +403,7 @@
 			SSblackbox.add_details("admin_secrets_fun_used","Chinese Cartoons")
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
 			for(var/mob/living/carbon/human/H in GLOB.mob_list)
-				H << sound('sound/AI/animes.ogg')
+				H.playsound_direct('sound/AI/animes.ogg')
 
 				if(H.dna.species.id == "human")
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")

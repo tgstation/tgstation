@@ -598,7 +598,7 @@
 /obj/mecha/proc/setInternalDamage(int_dam_flag)
 	internal_damage |= int_dam_flag
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
-	occupant << sound('sound/machines/warning-buzzer.ogg',wait=0)
+	occupant.playsound_direct('sound/machines/warning-buzzer.ogg')
 	diag_hud_set_mechstat()
 	return
 
@@ -709,7 +709,7 @@
 	icon_state = initial(icon_state)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 	if(!internal_damage)
-		occupant << sound('sound/mecha/nominal.ogg',volume=50)
+		occupant.playsound_direct('sound/mecha/nominal.ogg', 50)
 	AI.cancel_camera()
 	AI.controlled_mech = src
 	AI.remote_control = src
@@ -862,7 +862,7 @@
 		setDir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!internal_damage)
-			occupant << sound('sound/mecha/nominal.ogg',volume=50)
+			occupant.playsound_direct('sound/mecha/nominal.ogg', 50)
 		return 1
 	else
 		return 0
@@ -916,7 +916,7 @@
 	setDir(dir_in)
 	log_message("[mmi_as_oc] moved in as pilot.")
 	if(!internal_damage)
-		occupant << sound('sound/mecha/nominal.ogg',volume=50)
+		occupant.playsound_direct('sound/mecha/nominal.ogg', 50)
 	GrantActions(brainmob)
 	return TRUE
 

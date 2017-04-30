@@ -36,7 +36,7 @@
 	icon_state = "shadow_mend"
 
 /datum/status_effect/void_price/tick()
-	owner << sound('sound/magic/Summon_Karp.ogg', volume = 25)
+	owner.playsound_direct('sound/magic/Summon_Karp.ogg', 25)
 	owner.adjustBruteLoss(3)
 
 

@@ -154,7 +154,7 @@ Contents:
 		throw EXCEPTION("Ninja created with incorrect mind")
 		return
 
-	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
+	Ninja.playsound_direct('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
 	SSticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja
 	message_admins("[key_name_admin(Ninja)] has been made into a ninja by an event.")

@@ -294,7 +294,7 @@
 						// you need earmuffs, inacusiate, or replacement
 				else if(ears.ear_damage >= 5)
 					to_chat(src, "<span class='warning'>Your ears start to ring!</span>")
-				src << sound('sound/weapons/flash_ring.ogg',0,1,0,250)
+				src.playsound_direct('sound/weapons/flash_ring.ogg')
 		return effect_amount //how soundbanged we are
 
 

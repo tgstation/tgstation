@@ -342,7 +342,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				source.plane = old_plane
 	to_chat(src, "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>")
 	if(sound)
-		src << sound(sound)
+		src.playsound_direct(sound)
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"

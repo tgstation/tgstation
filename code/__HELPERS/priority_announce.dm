@@ -28,7 +28,7 @@
 		if(!isnewplayer(M) && M.can_hear())
 			to_chat(M, announcement)
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
-				M << sound(sound)
+				M.playsound_direct(sound)
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
@@ -55,6 +55,6 @@
 			to_chat(M, "<b><font size = 3><font color = red>[title]</font color><BR>[message]</font size></b><BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				if(alert)
-					M << sound('sound/misc/notice1.ogg')
+					M.playsound_direct('sound/misc/notice1.ogg')
 				else
-					M << sound('sound/misc/notice2.ogg')
+					M.playsound_direct('sound/misc/notice2.ogg')
