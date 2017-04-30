@@ -179,8 +179,8 @@
 		return
 
 	to_chat(target, "<span class='userdanger'>A freezing darkness surrounds you...</span>")
-	target.playsound_local(get_turf(target), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
-	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
+	target.playsound_direct('sound/hallucinations/i_see_you1.ogg', 50, 1)
+	user.playsound_direct('sound/effects/ghost2.ogg', 50, 1)
 	target.adjust_blindness(5)
 	addtimer(CALLBACK(src, .proc/cure_blindness, target), 40)
 	target.bodytemperature -= 200

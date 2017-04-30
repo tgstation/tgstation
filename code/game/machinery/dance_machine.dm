@@ -459,7 +459,7 @@
 		for(var/mob/M in range(10,src))
 			if(!(M in rangers))
 				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), selection.song_path, 100, channel = CHANNEL_JUKEBOX)
+				M.playsound_direct(selection.song_path, 100, channel = CHANNEL_JUKEBOX)
 			if(prob(5+(allowed(M)*4)) && M.canmove)
 				dance(M)
 		for(var/mob/L in rangers)
