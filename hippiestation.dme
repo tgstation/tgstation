@@ -2120,6 +2120,7 @@
 #include "hippiestation\code\modules\food_and_drinks\kitchen_machinery\smartfridge.dm"
 #include "hippiestation\code\modules\hydroponics\buttflower.dm"
 #include "hippiestation\code\modules\hydroponics\limbflower.dm"
+#include "hippiestation\code\modules\mob\nearcrit.dm"
 #include "hippiestation\code\modules\mob\sprite_accessories.dm"
 #include "hippiestation\code\modules\mob\living\emote.dm"
 #include "hippiestation\code\modules\mob\living\carbon\reindex_screams.dm"

@@ -18,6 +18,8 @@
 			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
 		if(legcuffed)
 			. += legcuffed.slowdown
+	if(lying)
+		(is_nearcrit()) ? (. += 30) : (. += 10)
 
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
 	if(movement_type & FLYING)

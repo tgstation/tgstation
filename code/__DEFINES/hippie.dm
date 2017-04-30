@@ -13,3 +13,6 @@ All new defines go in here!
 
 //Stamina HUD
 #define ui_stamina "EAST-1:28,CENTER-3:12"
+
+//Health
+#define HEALTH_THRESHOLD_DEEPCRIT -50
