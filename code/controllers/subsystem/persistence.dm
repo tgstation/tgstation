@@ -142,7 +142,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!path)
 			continue
 
-		T.showpiece = new path
+		T.showpiece = new /obj/item/showpiece_dummy(T, path)
 		T.trophy_message = chosen_trophy["message"]
 		T.placer_key = chosen_trophy["placer_key"]
 		T.update_icon()

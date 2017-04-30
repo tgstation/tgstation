@@ -325,3 +325,13 @@
 			QDEL_NULL(showpiece)
 		else
 			..()
+
+/obj/item/showpiece_dummy
+	name = "Cheap replica"
+
+/obj/item/showpiece_dummy/Initialize(mapload, path)
+	. = ..()
+	var/obj/item/I = path
+	name = initial(I.name)
+	icon = initial(I.icon)
+	icon_state = initial(I.icon_state)
