@@ -31,10 +31,10 @@
 
 /obj/structure/displaycase/examine(mob/user)
 	..()
-	if(showpiece)
-		to_chat(user, "<span class='notice'>There's [showpiece] inside.</span>")
 	if(alert)
 		to_chat(user, "<span class='notice'>Hooked up with an anti-theft system.</span>")
+	if(showpiece)
+		to_chat(user, "<span class='notice'>There's [showpiece] inside.</span>")
 
 
 /obj/structure/displaycase/proc/dump()
@@ -263,10 +263,8 @@
 	GLOB.trophy_cases += src
 
 /obj/structure/displaycase/trophy/Destroy()
-	if(showpiece)
-		SSpersistence.TrySaveTrophy(src)
 	GLOB.trophy_cases -= src
-	. = ..()
+	return ..()
 
 /obj/structure/displaycase/trophy/examine(mob/user)
 	..()
@@ -309,6 +307,7 @@
 			else
 				to_chat(user, "You are too far to set the plaque's text.")
 
+		SSpersistence.SaveTrophy(src)
 
 	else
 		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
@@ -322,5 +321,4 @@
 			new /obj/effect/decal/cleanable/ash(loc)
 			QDEL_NULL(showpiece)
 		else
-			SSpersistence.TrySaveTrophy(src)
 			..()
