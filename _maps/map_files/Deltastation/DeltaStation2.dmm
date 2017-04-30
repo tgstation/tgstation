@@ -44697,9 +44697,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/maintenance/starboard)
 "bGN" = (
 /obj/effect/decal/cleanable/dirt,
