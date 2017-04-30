@@ -273,9 +273,7 @@
 	return
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
+	do_sparks(5, TRUE, src)
 	..()
 
 //empty the redemption machine by stacks of at most max_amount (50 at this time) size
