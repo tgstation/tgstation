@@ -318,6 +318,7 @@
 	desc = "A nice complement to life insurance."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paperslip"
+	w_class = WEIGHT_CLASS_SMALL //dunno the default so just going to add this here
 	var/used = FALSE
 	var/datum/gang/gang_ref = null
 	var/mob/living/target = null
