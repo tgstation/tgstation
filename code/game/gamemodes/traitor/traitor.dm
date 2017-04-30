@@ -1,5 +1,6 @@
 /datum/game_mode
 	var/traitor_name = "traitor"
+	var/employer = "The Syndicate"
 	var/list/datum/mind/traitors = list()
 
 	var/datum/mind/exchange_red
@@ -213,7 +214,7 @@
 	..()
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
 
-/proc/give_codewords(mob/living/traitor_mob)
+/datum/game_mode/proc/give_codewords(mob/living/traitor_mob)
 	to_chat(traitor_mob, "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>")
 	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='danger'>[GLOB.syndicate_code_phrase]</span>")
 	to_chat(traitor_mob, "<B>Code Response</B>: <span class='danger'>[GLOB.syndicate_code_response]</span>")
@@ -260,10 +261,10 @@
 				for(var/datum/objective/objective in traitor.objectives)
 					if(objective.check_completion())
 						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+						SSblackbox.add_details("traitor_objective","[objective.type]|SUCCESS")
 					else
 						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-						feedback_add_details("traitor_objective","[objective.type]|FAIL")
+						SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
 						traitorwin = 0
 					count++
 
@@ -283,10 +284,10 @@
 
 			if(traitorwin)
 				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
-				feedback_add_details("traitor_success","SUCCESS")
+				SSblackbox.add_details("traitor_success","SUCCESS")
 			else
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
-				feedback_add_details("traitor_success","FAIL")
+				SSblackbox.add_details("traitor_success","FAIL")
 
 			text += "<br>"
 
@@ -335,7 +336,7 @@
 					uplink_loc = R
 
 	if (!uplink_loc)
-		to_chat(traitor_mob, "Unfortunately, the Syndicate wasn't able to get you an Uplink.")
+		to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
 		var/obj/item/device/uplink/U = new(uplink_loc)
@@ -345,19 +346,19 @@
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
-			to_chat(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
+			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name]).")
 
 		else if(uplink_loc == PDA)
 			PDA.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
 
-			to_chat(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
+			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name]).")
 
 		else if(uplink_loc == P)
 			P.traitor_unlock_degrees = rand(1, 360)
 
-			to_chat(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
+			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
 
 	if(!safety) // If they are not a rev. Can be added on to.

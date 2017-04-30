@@ -926,15 +926,19 @@
 		riding_datum = new /datum/riding/human(src)
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
 		return
-	if(iscarbon(M))
-		if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-			M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
-			return
-		if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
-			M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
-			return
-	. = ..(M, force, check_loc)
-	stop_pulling()
+	visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
+	if(do_after(M, 15, target = src))
+		if(iscarbon(M))
+			if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+				M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
+				return
+			if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
+				M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
+				return
+		. = ..(M, force, check_loc)
+		stop_pulling()
+	else
+		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
 
 /mob/living/carbon/human/unbuckle_mob(mob/living/M, force=FALSE)
 	if(iscarbon(M))

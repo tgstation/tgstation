@@ -211,7 +211,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Talisman Creation rune failed - already in use")
 		return
 
-	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply - /obj/item/weapon/paper/talisman/supply/weak)
+	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply - /obj/item/weapon/paper/talisman/supply/weak - /obj/item/weapon/paper/talisman/summon_tome)
 		var/obj/item/weapon/paper/talisman/J = I
 		var/talisman_cult_name = initial(J.cultist_name)
 		if(talisman_cult_name)
@@ -514,7 +514,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 //Rite of Resurrection: Requires the corpse of a cultist and that there have been less revives than the number of people GLOB.sacrificed
 /obj/effect/rune/raise_dead
-	cultist_name = "Raise Dead"
+	cultist_name = "Resurrect Cultist"
 	cultist_desc = "requires the corpse of a cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be revived."
 	invocation = null //Depends on the name of the user - see below
 	icon_state = "1"
@@ -633,9 +633,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	qdel(src) //delete before pulsing because it's a delay reee
 	empulse(E, 9*invokers.len, 12*invokers.len) // Scales now, from a single room to most of the station depending on # of chanters
 
-//Rite of Astral Communion: Separates one's spirit from their body. They will take damage while it is active.
-/obj/effect/rune/astral
-	cultist_name = "Astral Communion"
+//Rite of Spirit Sight: Separates one's spirit from their body. They will take damage while it is active.
+/obj/effect/rune/spirit
+	cultist_name = "Spirit Sight"
 	cultist_desc = "severs the link between one's spirit and body. This effect is taxing and one's physical body will take damage while this is active."
 	invocation = "Fwe'sh mah erl nyag r'ya!"
 	icon_state = "7"
@@ -644,24 +644,24 @@ structure_check() searches for nearby cultist structures required for the invoca
 	construct_invoke = 0
 	var/mob/living/affecting = null
 
-/obj/effect/rune/astral/examine(mob/user)
+/obj/effect/rune/spirit/examine(mob/user)
 	..()
 	if(affecting)
 		to_chat(user, "<span class='cultitalic'>A translucent field encases [user] above the rune!</span>")
 
-/obj/effect/rune/astral/can_invoke(mob/living/user)
+/obj/effect/rune/spirit/can_invoke(mob/living/user)
 	if(rune_in_use)
 		to_chat(user, "<span class='cultitalic'>[src] cannot support more than one body!</span>")
-		log_game("Astral Communion rune failed - more than one user")
+		log_game("Spirit Sight rune failed - more than one user")
 		return list()
 	var/turf/T = get_turf(src)
 	if(!(user in T))
 		to_chat(user, "<span class='cultitalic'>You must be standing on top of [src]!</span>")
-		log_game("Astral Communion rune failed - user not standing on rune")
+		log_game("Spirit Sight rune failed - user not standing on rune")
 		return list()
 	return ..()
 
-/obj/effect/rune/astral/invoke(var/list/invokers)
+/obj/effect/rune/spirit/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	..()
 	var/turf/T = get_turf(src)
@@ -897,45 +897,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
 			if(is_servant_of_ratvar(L))
 				L.adjustStaminaLoss(tick_damage*0.5)
-
-
-//Deals brute damage to all targets on the rune and heals the invoker for each target drained.
-/obj/effect/rune/leeching
-	cultist_name = "Drain Life"
-	cultist_desc = "drains the life of all targets on the rune, restoring life to the user."
-	invocation = "Yu'gular faras desdae. Umathar uf'kal thenar!"
-	icon_state = "3"
-	color = "#9F1C34"
-
-/obj/effect/rune/leeching/can_invoke(mob/living/user)
-	if(world.time <= user.next_move)
-		return list()
-	var/turf/T = get_turf(src)
-	var/list/potential_targets = list()
-	for(var/mob/living/carbon/M in T.contents - user)
-		if(M.stat != DEAD)
-			potential_targets += M
-	if(!potential_targets.len)
-		to_chat(user, "<span class='cultitalic'>There must be at least one valid target on the rune!</span>")
-		log_game("Leeching rune failed - no valid targets")
-		return list()
-	return ..()
-
-/obj/effect/rune/leeching/invoke(var/list/invokers)
-	var/mob/living/user = invokers[1]
-	user.changeNext_move(CLICK_CD_CLICK_ABILITY)
-	..()
-	var/turf/T = get_turf(src)
-	for(var/mob/living/carbon/M in T.contents - user)
-		if(M.stat != DEAD)
-			var/drained_amount = rand(10,20)
-			M.apply_damage(drained_amount, BRUTE, "chest")
-			user.adjustBruteLoss(-drained_amount)
-			to_chat(M, "<span class='cultitalic'>You feel extremely weak.</span>")
-	user.Beam(T,icon_state="drainbeam",time=5)
-	user.visible_message("<span class='warning'>Blood flows from the rune into [user]!</span>", \
-	"<span class='cult'>Blood flows into you, healing your wounds and revitalizing your spirit.</span>")
-
 
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
 /obj/effect/rune/manifest

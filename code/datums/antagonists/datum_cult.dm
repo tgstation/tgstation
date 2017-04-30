@@ -1,12 +1,11 @@
-/datum/antagonist/cultist
-	prevented_antag_datum_type = /datum/antagonist/cultist
-	some_flufftext = null
-	var/datum/action/innate/cultcomm/communion = new()
+/datum/antagonist/cult
+	var/datum/action/innate/cultcomm/communion = new
 
-/datum/antagonist/cultist/Destroy()
+/datum/antagonist/cult/Destroy()
 	qdel(communion)
 	return ..()
 
+<<<<<<< HEAD
 /datum/antagonist/cultist/proc/add_objectives()
 	var/list/target_candidates = list()
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
@@ -52,10 +51,17 @@
 
 
 /datum/antagonist/cultist/can_be_owned(mob/living/new_body)
+=======
+/datum/antagonist/cult/on_gain()
+>>>>>>> a7603e4aba50d410795d5207e6d5e929b2401cb9
 	. = ..()
-	if(.)
-		. = is_convertable_to_cult(new_body)
+	if(!owner)
+		return
+	if(jobban_isbanned(owner.current, ROLE_CULTIST))
+		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST), 0)
+	owner.current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 
+<<<<<<< HEAD
 /datum/antagonist/cultist/on_gain()
 	if(SSticker.mode.cult_objectives.len == 0)
 		add_objectives()
@@ -92,15 +98,23 @@
 		qdel(H)
 	owner.clear_alert("bloodsense")
 	..()
+=======
+/datum/antagonist/cult/apply_innate_effects()
+	. = ..()
+	owner.current.faction |= "cult"
+	owner.current.verbs += /mob/living/proc/cult_help
+	communion.Grant(owner)
 
-/datum/antagonist/cultist/on_remove()
-	if(owner.mind)
-		owner.mind.wipe_memory()
-		if(SSticker && SSticker.mode)
-			SSticker.mode.cult -= owner.mind
-			SSticker.mode.update_cult_icons_removed(owner.mind)
+/datum/antagonist/cult/remove_innate_effects()
+	. = ..()
+	owner.current.faction -= "cult"
+	owner.current.verbs -= /mob/living/proc/cult_help
+>>>>>>> a7603e4aba50d410795d5207e6d5e929b2401cb9
+
+
+/datum/antagonist/cult/on_removal()
+	. = ..()
 	to_chat(owner, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>")
-	owner.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
-	if(!silent_update)
-		owner.visible_message("<span class='big'>[owner] looks like [owner.p_they()] just reverted to their old faith!</span>")
-	..()
+	owner.current.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
+	if(!silent)
+		owner.current.visible_message("<span class='big'>[owner] looks like [owner.current.p_they()] just reverted to their old faith!</span>")

@@ -46,7 +46,7 @@ Credit where due:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/living/M)
-	return istype(M) && M.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
+	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
 
 /proc/is_eligible_servant(mob/living/M)
 	if(!istype(M))
@@ -65,17 +65,21 @@ Credit where due:
 	return FALSE
 
 /proc/add_servant_of_ratvar(mob/living/L, silent = FALSE)
-	var/update_type = /datum/antagonist/clockcultist
+	if(!L || !L.mind)
+		return
+	var/update_type = ANTAG_DATUM_CLOCKCULT
 	if(silent)
-		update_type = /datum/antagonist/clockcultist/silent
-	. = L.gain_antag_datum(update_type)
+		update_type = ANTAG_DATUM_CLOCKCULT_SILENT
+	. = L.mind.add_antag_datum(update_type)
 
 /proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
-	var/datum/antagonist/clockcultist/clock_datum = L.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
+	if(!L || !L.mind)
+		return
+	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(/datum/antagonist/clockcult)
 	if(!clock_datum)
 		return FALSE
-	clock_datum.silent_update = silent
-	clock_datum.on_remove()
+	clock_datum.silent = silent
+	clock_datum.on_removal()
 	return TRUE
 
 ///////////////
@@ -194,7 +198,7 @@ Credit where due:
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		if(C.check_clockwork_victory())
 			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
-			feedback_set_details("round_end_result", "win - servants completed their objective (summon ratvar)")
+			SSblackbox.set_details("round_end_result", "win - servants completed their objective (summon ratvar)")
 		else
 			var/half_victory = FALSE
 			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
@@ -203,10 +207,10 @@ Credit where due:
 			if(half_victory)
 				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway \
 				was successfully constructed!</b></span>"
-				feedback_set_details("round_end_result", "halfwin - servants constructed the gateway but their objective was not completed (summon ratvar)")
+				SSblackbox.set_details("round_end_result", "halfwin - servants constructed the gateway but their objective was not completed (summon ratvar)")
 			else
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-				feedback_set_details("round_end_result", "loss - servants failed their objective (summon ratvar)")
+				SSblackbox.set_details("round_end_result", "loss - servants failed their objective (summon ratvar)")
 		text += "<br><b>The servants' objective was:</b> <br>[CLOCKCULT_OBJECTIVE]"
 		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
 		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"

@@ -22,7 +22,7 @@
 	anchored = 1
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
-	if(SSticker.current_state != GAME_STATE_PLAYING || !loc)
+	if(!SSticker.HasRoundStarted() || !loc)
 		return
 	if(!uses)
 		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")

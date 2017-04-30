@@ -39,7 +39,7 @@
 
 	SSreligion.holy_weapon_type = holy_weapon.type
 
-	feedback_set_details("chaplain_weapon","[choice]")
+	SSblackbox.set_details("chaplain_weapon","[choice]")
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
