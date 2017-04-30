@@ -58,7 +58,7 @@
 	
 /obj/machinery/power/generator/Destroy()
 	SSair.atmos_machinery -= src
-	..()
+	return ..()
 
 /obj/machinery/power/generator/update_icon()
 
