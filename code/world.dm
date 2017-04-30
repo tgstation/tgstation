@@ -114,7 +114,7 @@
 
 		s["map_name"] = SSmapping.config.map_name
 
-		if(key_valid && SSticker && SSticker.mode)
+		if(key_valid && SSticker.HasRoundStarted())
 			s["real_mode"] = SSticker.mode.name
 			// Key-authed callers may know the truth behind the "secret"
 
