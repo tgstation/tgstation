@@ -55,7 +55,10 @@
 		stat |= BROKEN
 
 	update_icon()
-
+	
+/obj/machinery/power/generator/Destroy()
+	SSair.atmos_machinery -= src
+	..()
 
 /obj/machinery/power/generator/update_icon()
 
