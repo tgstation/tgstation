@@ -12,6 +12,8 @@
 	throw_speed = 10 //weeee
 	hitsound = 'sound/weapons/tap.ogg'
 	attack_verb = list("flogged", "poked", "jabbed", "slapped", "annoyed")
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 
 /obj/item/toy/poolnoodle/attack(target as mob, mob/living/user as mob)
 	..()
@@ -21,10 +23,13 @@
 		user.emote("spin")
 
 /obj/item/toy/poolnoodle/red
+	item_state = "rednoodle"
 
 /obj/item/toy/poolnoodle/blue
+	item_state = "bluenoodle"
 
 /obj/item/toy/poolnoodle/yellow
+	item_state = "yellownoodle"
 
 /obj/item/toy/poolnoodle/red/Initialize()
 	..()

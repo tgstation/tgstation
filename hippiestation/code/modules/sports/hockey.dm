@@ -97,6 +97,8 @@
 	icon_state = "hockeystick0"
 	name = "Ka-Nada SSF Hockey Stick"
 	desc = "A Ka-Nada specification Power Stick designed after the implement of a violent sport, it is locked to and powered by the back mounted pack."
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	force = 5
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
