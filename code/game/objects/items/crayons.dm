@@ -251,7 +251,7 @@
 		return
 
 	if(istype(target, /obj/effect/decal/cleanable))
-		target = target.loc
+		target = get_turf(target)
 
 	if(!is_type_in_list(target,validSurfaces))
 		return
@@ -483,7 +483,7 @@
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity)
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 	if(istype(target, /obj/effect/decal/cleanable))
-		target = target.loc
+		target = get_turf(target)
 	. = ..()
 	if(.)
 		var/floor_colour = rgb(rand(0,255), rand(0,255), rand(0,255))
