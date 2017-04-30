@@ -15,12 +15,16 @@
 	if(new_owner)
 		owner = new_owner
 
+/datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
+	remove_innate_effects(old_body)
+	apply_innate_effects(new_body)
+
 //This handles the application of antag huds/special abilities
-/datum/antagonist/proc/apply_innate_effects()
+/datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
 	return
 
 //This handles the removal of antag huds/special abilities
-/datum/antagonist/proc/remove_innate_effects()
+/datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	return
 
 //Proc called when the datum is given to a mind.

@@ -33,9 +33,11 @@
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		C.present_tasks(owner) //Memorize the objectives
 
-/datum/antagonist/clockcult/apply_innate_effects()
+/datum/antagonist/clockcult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
+	if(istype(mob_override))
+		current = mob_override
 	GLOB.all_clockwork_mobs += current
 	SSticker.mode.update_servant_icons_added(owner)
 	current.faction |= "ratvar"
@@ -85,9 +87,11 @@
 	update_slab_info()
 
 
-/datum/antagonist/clockcult/remove_innate_effects()
+/datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/current = owner.current
-	GLOB.all_clockwork_mobs -= owner
+	if(istype(mob_override))
+		current = mob_override
+	GLOB.all_clockwork_mobs -= current
 	current.faction -= "ratvar"
 	current.remove_language(/datum/language/ratvar)
 	current.clear_alert("clockinfo")
