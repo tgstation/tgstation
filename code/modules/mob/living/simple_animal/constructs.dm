@@ -41,14 +41,11 @@
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
 
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/construct/Destroy()
 	for(var/X in actions)
 		var/datum/action/A = X
 		qdel(A)
 	..()
-=======
->>>>>>> a7603e4aba50d410795d5207e6d5e929b2401cb9
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -288,8 +285,6 @@
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
 
 
-
-<<<<<<< HEAD
 ///////////////////////Master-Tracker///////////////////////
 
 /datum/action/innate/seek_master
@@ -320,7 +315,7 @@
 		the_construct.seeking = TRUE
 		to_chat(the_construct, "<span class='cultitalic'>You are now tracking your master.</span>")
 
-=======
+
 /////////////////////////////ui stuff/////////////////////////////
 
 /mob/living/simple_animal/hostile/construct/update_health_hud()
@@ -337,4 +332,4 @@
 			hud_used.healths.icon_state = "[icon_state]_health5"
 		else
 			hud_used.healths.icon_state = "[icon_state]_health6"
->>>>>>> a7603e4aba50d410795d5207e6d5e929b2401cb9
+
