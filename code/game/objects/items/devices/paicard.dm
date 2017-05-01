@@ -13,6 +13,7 @@
 	..()
 	SSpai.pai_card_list += src
 	add_overlay("pai-off")
+	qdel(src)
 
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
