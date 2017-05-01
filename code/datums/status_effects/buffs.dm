@@ -13,6 +13,7 @@
 /datum/status_effect/shadow_mend/on_apply()
 	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
 	playsound(owner, 'sound/magic/Teleport_app.ogg', 50, 1)
+	return ..()
 
 /datum/status_effect/shadow_mend/tick()
 	owner.adjustBruteLoss(-15)
@@ -77,6 +78,7 @@
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)
+	return ..()
 
 /datum/status_effect/vanguard_shield/tick()
 	progbar.update(duration - world.time)
@@ -129,6 +131,7 @@
 	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), 150)
 	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
+	return ..()
 
 /datum/status_effect/inathneqs_endowment/on_remove()
 	add_logs(owner, null, "lost Inath-neq's invulnerability")
@@ -180,6 +183,7 @@
 /datum/status_effect/his_grace/on_apply()
 	add_logs(owner, null, "gained His Grace's stun immunity")
 	owner.add_stun_absorption("hisgrace", INFINITY, 3, null, "His Grace protects you from the stun!")
+	return ..()
 
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
@@ -213,6 +217,7 @@
 
 /datum/status_effect/wish_granters_gift/on_apply()
 	to_chat(owner, "<span class='notice'>Death is not your end! The Wish Granter's energy suffuses you, and you begin to rise...</span>")
+	return ..()
 
 /datum/status_effect/wish_granters_gift/on_remove()
 	owner.revive(full_heal = 1, admin_revive = 1)
