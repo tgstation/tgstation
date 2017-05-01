@@ -45,14 +45,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	var/static/list/chatResources = list(
 		"code/modules/html_interface/js/jquery.min.js",
-		"goon/browserassets/js/json2.min.js",
-		"goon/browserassets/js/browserOutput.js",
+		"code/modules/goonchat/browserassets/js/json2.min.js",
+		"code/modules/goonchat/browserassets/js/browserOutput.js",
 		"tgui/assets/fonts/fontawesome-webfont.eot",
 		"tgui/assets/fonts/fontawesome-webfont.svg",
 		"tgui/assets/fonts/fontawesome-webfont.ttf",
 		"tgui/assets/fonts/fontawesome-webfont.woff",
-		"goon/browserassets/css/font-awesome.css",
-		"goon/browserassets/css/browserOutput.css"
+		"code/modules/goonchat/browserassets/css/font-awesome.css",
+		"code/modules/goonchat/browserassets/css/browserOutput.css"
 	)
 
 	// to_chat(world.log, "chatOutput: load()")
@@ -61,7 +61,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			owner << browse_rsc(file(asset))
 
 		//log_world("Sending main chat window to client [owner.ckey]")
-		owner << browse(file("goon/browserassets/html/browserOutput.html"), "window=browseroutput")
+		owner << browse(file("code/modules/goonchat/browserassets/html/browserOutput.html"), "window=browseroutput")
 		sleep(14 + (chatResources.len * 7))
 		if(!owner || loaded)
 			break
