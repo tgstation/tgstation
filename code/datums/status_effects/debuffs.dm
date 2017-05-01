@@ -109,36 +109,34 @@
 		return
 	var/span_part = severity > 50 ? "" : "_small" //let's save like one check
 	if(!(owner in viewers(7, motor))) //not being in range makes it fall off much faster
-		if(!is_servant)
-			if(!warned_outofsight)
-				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(flee_messages))]\"</span>")
-				warned_outofsight = TRUE
-			if(severity)
-				severity--
-				if(!severity)
-					qdel(src)
-					return
-			else
+		if(!is_servant && !warned_outofsight)
+			to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(flee_messages))]\"</span>")
+			warned_outofsight = TRUE
+		if(severity)
+			severity--
+			if(!severity)
 				qdel(src)
 				return
+		else
+			qdel(src)
+			return
 	else if(prob(severity * 2))
 		warned_outofsight = FALSE
 	if(!motor.active) //it being off makes it fall off much faster
-		if(!is_servant)
-			if(!warned_turnoff)
-				if(motor.total_accessable_power() > motor.mania_cost)
-					to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
-				else
-					to_chat(owner, "<span class='sevtug[span_part]'>[text2ratvar(pick(powerloss_messages))]</span>")
-				warned_turnoff = TRUE
-			if(severity)
-				severity--
-				if(!severity)
-					qdel(src)
-					return
+		if(!is_servant && !warned_turnoff)
+			if(motor.total_accessable_power() > motor.mania_cost)
+				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
 			else
+				to_chat(owner, "<span class='sevtug[span_part]'>[text2ratvar(pick(powerloss_messages))]</span>")
+			warned_turnoff = TRUE
+		if(severity)
+			severity--
+			if(!severity)
 				qdel(src)
 				return
+		else
+			qdel(src)
+			return
 	else if(prob(severity * 2))
 		warned_turnoff = FALSE
 	if(is_servant) //heals servants of braindamage, hallucination, druggy, dizziness, and confusion

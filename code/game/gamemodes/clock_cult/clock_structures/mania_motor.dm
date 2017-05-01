@@ -1,4 +1,4 @@
-//Mania Motor: A pair of antenna that, while active, cause a variefy of negative mental effects in nearby human mobs.
+//Mania Motor: A pair of antenna that, while active, cause a variety of negative mental effects in nearby human mobs.
 /obj/structure/destructible/clockwork/powered/mania_motor
 	name = "mania motor"
 	desc = "A pair of antenna with what appear to be sockets around the base. It reminds you of an antlion."
@@ -51,6 +51,8 @@
 		return
 	var/efficiency = get_efficiency_mod()
 	for(var/mob/living/carbon/human/H in viewers(7, src))
+		if(is_servant_of_ratvar(H))
+			continue
 		var/list/effects = H.has_status_effect_list(STATUS_EFFECT_MANIAMOTOR)
 		var/datum/status_effect/maniamotor/M
 		for(var/datum/status_effect/maniamotor/MM in effects)
