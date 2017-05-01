@@ -17,6 +17,16 @@
 	owner = null
 	QDEL_NULL(language_menu)
 
+/datum/language_holder/proc/copy(newowner)
+	var/datum/language_holder/copy = new(newowner)
+	copy.languages = src.languages.Copy()
+	copy.initial_languages = src.initial_languages.Copy()
+	copy.only_speaks_language = src.only_speaks_language
+	copy.selected_default_language = src.selected_default_language
+	// language menu is not copied, that's tied to the holder.
+	copy.omnitongue = src.omnitongue
+	return copy
+
 /datum/language_holder/proc/grant_language(datum/language/dt)
 	languages[dt] = TRUE
 

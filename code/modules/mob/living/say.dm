@@ -437,3 +437,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/whisper(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
 	say("#[message]", bubble_type, spans, sanitize, language)
+
+/mob/living/get_language_holder()
+	if(mind)
+		// Mind language holders shadow mob holders.
+		. = mind.language_holder
+	else
+		. = ..()
