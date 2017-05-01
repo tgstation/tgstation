@@ -76,3 +76,103 @@
 /datum/status_effect/belligerent/on_remove()
 	if(owner.m_intent == MOVE_INTENT_WALK)
 		owner.toggle_move_intent()
+
+
+/datum/status_effect/maniamotor
+	id = "maniamotor"
+	duration = -1
+	tick_interval = 10
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+	var/obj/structure/destructible/clockwork/powered/mania_motor/motor
+	var/severity = 0 //goes up to a maximum of MAX_MANIA_SEVERITY
+	var/warned_turnoff = FALSE //if we've warned that the motor is off
+	var/warned_outofsight = FALSE //if we've warned that the target is out of sight of the motor
+	var/static/list/mania_messages = list("Go nuts.", "Take a crack at crazy.", "Make a bid for insanity.", "Get kooky.", "Move towards mania.", "Become bewildered.", "Wax wild.", \
+	"Go round the bend.", "Land in lunacy.", "Try dementia.", "Strive to get a screw loose.", "Advance forward.", "Approach the transmitter.", "Touch the antennae.", \
+	"Move towards the mania motor.", "Come closer.", "Get over here already!", "Keep your eyes on the motor.")
+	var/static/list/flee_messages = list("Oh, NOW you flee.", "Get back here!", "If you were smarter, you'd come back.", "Only fools run.", "You'll be back.")
+	var/static/list/turnoff_messages = list("Why would they turn it-", "What are these idi-", "Fools, fools, all of-", "Are they trying to c-", "All this effort just f-")
+	var/static/list/powerloss_messages = list("\"Oh, the id**ts di***t s***e en**** pow**...\"", "\"D*dn't **ey mak* an **te***c*i*n le**?\"", "\"The** f**ls for**t t* make a ***** *f-\"", \
+	"\"No, *O, you **re so cl***-\"", "You hear a yell of frustration, cut off by static.")
+
+/datum/status_effect/maniamotor/Destroy()
+	motor = null
+	return ..()
+
+/datum/status_effect/maniamotor/tick()
+	var/is_servant = is_servant_of_ratvar(owner)
+	if(QDELETED(motor))
+		if(!is_servant)
+			to_chat(owner, "<span class='sevtug[severity > 75 ? "":"_small"]'>You feel a frustrated voice quietly fade from your mind...</span>")
+		qdel(src)
+		return
+	var/span_part = severity > 50 ? "" : "_small" //let's save like one check
+	if(!(owner in viewers(7, motor))) //not being in range makes it fall off much faster
+		if(!is_servant)
+			if(!warned_outofsight)
+				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(flee_messages))]\"</span>")
+				warned_outofsight = TRUE
+			if(severity)
+				severity--
+				if(!severity)
+					qdel(src)
+					return
+			else
+				qdel(src)
+				return
+	else if(prob(severity * 2))
+		warned_outofsight = FALSE
+	if(!motor.active) //it being off makes it fall off much faster
+		if(!is_servant)
+			if(!warned_turnoff)
+				if(motor.total_accessable_power() > motor.mania_cost)
+					to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
+				else
+					to_chat(owner, "<span class='sevtug[span_part]'>[text2ratvar(pick(powerloss_messages))]</span>")
+				warned_turnoff = TRUE
+			if(severity)
+				severity--
+				if(!severity)
+					qdel(src)
+					return
+			else
+				qdel(src)
+				return
+	else if(prob(severity * 2))
+		warned_turnoff = FALSE
+	if(is_servant) //heals servants of braindamage, hallucination, druggy, dizziness, and confusion
+		var/brainloss = owner.getBrainLoss()
+		if(brainloss)
+			owner.adjustBrainLoss(-brainloss)
+		if(owner.hallucination)
+			owner.hallucination = 0
+		if(owner.druggy)
+			owner.adjust_drugginess(-owner.druggy)
+		if(owner.dizziness)
+			owner.dizziness = 0
+		if(owner.confused)
+			owner.confused = 0
+		severity = 0
+	else if(!owner.null_rod_check() && owner.stat != DEAD && severity)
+		var/static/hum = get_sfx('sound/effects/screech.ogg') //same sound for every proc call
+		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
+			if(is_eligible_servant(owner))
+				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar("You are mine and his, now.")]\"</span>")
+				add_servant_of_ratvar(owner)
+			owner.Paralyse(5)
+		else
+			if(prob(severity * 0.15))
+				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(mania_messages))]\"</span>")
+			owner.playsound_local(get_turf(motor), hum, severity, 1)
+			if(owner.getBrainLoss() <= 50)
+				owner.adjustBrainLoss(severity * 0.025) //2.5% of severity per second
+			owner.adjust_drugginess(Clamp(max(0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
+			if(owner.hallucination < 50)
+				owner.hallucination = min(owner.hallucination + max(0.075, 1), 50) //7.5% of severity per second, minimum 1
+			if(owner.dizziness < 25)
+				owner.dizziness = min(owner.dizziness + Floor(severity * 0.025), 25) //2.5% of severity per second above 20 severity
+			if(owner.confused < 25)
+				owner.confused = min(owner.confused + Floor(severity * 0.025), 25) //2.5% of severity per second above 20 severity
+			owner.adjustToxLoss(severity * 0.02, TRUE, TRUE) //2% of severity per second
+		severity--
