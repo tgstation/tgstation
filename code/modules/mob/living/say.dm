@@ -435,14 +435,5 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	else
 		. = ..()
 
-/mob/living/get_default_language()
-	if(selected_default_language)
-		if(has_language(selected_default_language))
-			return selected_default_language
-		else
-			selected_default_language = null
-
-	. = ..()
-
 /mob/living/whisper(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
 	say("#[message]", bubble_type, spans, sanitize, language)

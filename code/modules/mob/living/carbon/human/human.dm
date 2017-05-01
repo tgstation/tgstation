@@ -5,11 +5,6 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 
-	 // ME TARZAN, YOU JANEBOT
-	initial_languages = list(/datum/language/common)
-
-
-
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH

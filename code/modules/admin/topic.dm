@@ -1785,8 +1785,8 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
-
-		M.open_language_menu(usr)
+		var/datum/language_holder/H = M.get_language_holder()
+		H.open_language_menu(usr)
 
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))

@@ -484,4 +484,5 @@
 		return FALSE
 	if(ismob(owner))
 		var/mob/M = owner
-		M.open_language_menu(usr)
+		var/datum/language_holder/H = M.get_language_holder()
+		H.open_language_menu(usr)

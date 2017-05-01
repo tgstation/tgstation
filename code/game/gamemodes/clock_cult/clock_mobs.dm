@@ -14,8 +14,7 @@
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
-	initial_languages = list(/datum/language/common, /datum/language/ratvar)
-	only_speaks_language = /datum/language/ratvar
+	initial_language_holder = /datum/language_holder/clockmob
 	bubble_icon = "clock"
 	light_color = "#E42742"
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
