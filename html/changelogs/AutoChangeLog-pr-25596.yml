@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Clockcult component generation will automatically focus on components needed to activate the Ark if it exists."
