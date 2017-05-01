@@ -88,16 +88,33 @@ GLOBAL_LIST_INIT(lawlorify, list (
 	var/reviveNumber = 0
 	var/form = BASIC_DEVIL
 	var/exists = 0
-	var/static/list/dont_remove_spells = list(
-	/obj/effect/proc_holder/spell/targeted/summon_contract,
-	/obj/effect/proc_holder/spell/targeted/conjure_item/violin,
-	/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
+	var/static/list/removable_devil_spells = list(
+		/obj/effect/proc_holder/spell/aimed/fireball/hellish,
+		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork,
+		/obj/effect/proc_holder/spell/aimed/fireball/hellish,
+		/obj/effect/proc_holder/spell/targeted/infernal_jaunt,
+		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater,
+		/obj/effect/proc_holder/spell/targeted/sintouch,
+		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended,
+		/obj/effect/proc_holder/spell/targeted/sintouch/ascended)
+	var/static/list/devil_spells = list(
+		/obj/effect/proc_holder/spell/aimed/fireball/hellish,
+		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork,
+		/obj/effect/proc_holder/spell/aimed/fireball/hellish,
+		/obj/effect/proc_holder/spell/targeted/infernal_jaunt,
+		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater,
+		/obj/effect/proc_holder/spell/targeted/sintouch,
+		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended,
+		/obj/effect/proc_holder/spell/targeted/sintouch/ascended,
+		/obj/effect/proc_holder/spell/targeted/summon_contract,
+		/obj/effect/proc_holder/spell/targeted/conjure_item/violin,
+		/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
 	var/ascendable = FALSE
 
 
 /datum/antagonist/devilinfo/New()
 	..()
-	dont_remove_spells = typecacheof(dont_remove_spells)
+	devil_spells = typecacheof(devil_spells)
 
 
 /proc/randomDevilInfo(name = randomDevilName())
@@ -293,7 +310,7 @@ GLOBAL_LIST_INIT(lawlorify, list (
 /datum/antagonist/devilinfo/proc/remove_spells()
 	for(var/X in owner.spell_list)
 		var/obj/effect/proc_holder/spell/S = X
-		if(!is_type_in_typecache(S, dont_remove_spells))
+		if(is_type_in_typecache(S, removable_devil_spells))
 			owner.RemoveSpell(S)
 
 /datum/antagonist/devilinfo/proc/give_summon_contract()
@@ -457,15 +474,24 @@ GLOBAL_LIST_INIT(lawlorify, list (
 			C.hud_used.devilsouldisplay.update_counter(SOULVALUE)
 
 /datum/antagonist/devilinfo/greet()
-	to_chat(owner.current, "<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>")
+	to_chat(owner.current, "<span class='warning'><b>You remember your link to the infernal.  You are [truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>")
 	to_chat(owner.current, "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>")
 	to_chat(owner.current, "You may not use violence to coerce someone into selling their soul.")
 	to_chat(owner.current, "You may not directly and knowingly physically harm a devil, other than yourself.")
-	to_chat(owner.current, GLOB.lawlorify[LAW][src.devilinfo.bane])
-	to_chat(owner.current, GLOB.lawlorify[LAW][src.devilinfo.ban])
-	to_chat(owner.current, GLOB.lawlorify[LAW][src.devilinfo.obligation])
-	to_chat(owner.current, GLOB.lawlorify[LAW][src.devilinfo.banish])
+	to_chat(owner.current, GLOB.lawlorify[LAW][bane])
+	to_chat(owner.current, GLOB.lawlorify[LAW][ban])
+	to_chat(owner.current, GLOB.lawlorify[LAW][obligation])
+	to_chat(owner.current, GLOB.lawlorify[LAW][banish])
 	to_chat(owner.current, "<br/><br/><span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>")
 
 /datum/antagonist/devilinfo/farewell()
-	return
+	return  //TODO
+
+/datum/antagonist/devilinfo/on_gain()
+	give_base_spells(1)
+
+/datum/antagonist/devilinfo/on_removal()
+	for(var/X in owner.spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		if(is_type_in_typecache(S, devil_spells))
+			owner.RemoveSpell(S)
