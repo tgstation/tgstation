@@ -101,6 +101,7 @@
 	death = FALSE
 	anchored = 0
 	density = 0
+	var/can_transfer = TRUE //if golems can switch bodies to this new shell
 	var/mob/living/owner = null //golem's owner if it has one
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
@@ -134,12 +135,26 @@
 		H.set_cloned_appearance()
 		H.real_name = H.dna.species.random_name()
 
+/obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
+	if(isgolem(user) && can_transfer)
+		var/transfer = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
+		if(!transfer)
+			return
+		log_game("[user.ckey] golem-swapped into [src]")
+		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
+		create(ckey = user.ckey, flavour = FALSE)
+		user.death()
+		return
+	..()
+
+
 /obj/effect/mob_spawn/human/golem/adamantine
 	name = "dust-caked golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
 	anchored = 1
 	density = 1
+	can_transfer = FALSE
 	mob_species = /datum/species/golem/adamantine
 
 //Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland. Ghosts become hermits with knowledge of how they got to where they are now.
