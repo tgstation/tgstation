@@ -17931,7 +17931,6 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp,
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
@@ -17939,6 +17938,7 @@
 	},
 /obj/item/stack/packageWrap,
 /obj/item/device/destTagger,
+/obj/item/weapon/stamp,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27453,6 +27453,9 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
 	icon_state = "neutralcorner";
@@ -88866,6 +88869,9 @@
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
 	icon_state = "neutralcorner";
@@ -101648,6 +101654,19 @@
 /area/construction/hallway{
 	name = "Science-Docking Bridge"
 	})
+"dBH" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (NORTH)";
+	icon_state = "neutralcorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/fore)
 
 (1,1,1) = {"
 aaa
@@ -153130,7 +153149,7 @@ aUN
 aTG
 aTG
 aWi
-aTG
+dBH
 aWR
 dbP
 aXy
