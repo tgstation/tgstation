@@ -1380,6 +1380,7 @@
 #include "code\modules\language\language_menu.dm"
 #include "code\modules\language\machine.dm"
 #include "code\modules\language\monkey.dm"
+#include "code\modules\language\plasmic.dm"
 #include "code\modules\language\ratvar.dm"
 #include "code\modules\language\slime.dm"
 #include "code\modules\language\swarmer.dm"
