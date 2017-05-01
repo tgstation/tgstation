@@ -294,7 +294,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Stat()
 	..()
 	if(statpanel("Status"))
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			for(var/datum/gang/G in SSticker.mode.gangs)
 				if(G.is_dominating)
 					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
@@ -357,7 +357,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(!A.hidden)
 			filtered += A
 	var/area/thearea  = input("Area to jump to", "BOOYEA") as null|anything in filtered
-	
+
 	if(!thearea)
 		return
 

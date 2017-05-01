@@ -3,6 +3,7 @@
 	GLOB.dead_mob_list -= src
 	GLOB.living_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
+	GLOB.mob_directory -= tag
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -22,6 +23,7 @@
 /mob/Initialize()
 	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
+	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
 		GLOB.dead_mob_list += src
 	else

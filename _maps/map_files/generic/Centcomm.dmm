@@ -20,7 +20,7 @@
 /turf/closed/indestructible/riveted,
 /area/space)
 "af" = (
-/turf/open/floor/holofloor/snow/cold,
+/turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "ag" = (
 /obj/structure/window/reinforced{
@@ -141,7 +141,7 @@
 /area/space)
 "ax" = (
 /obj/structure/flora/bush,
-/turf/open/floor/holofloor/snow/cold,
+/turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "ay" = (
 /obj/item/toy/snowball{
@@ -155,7 +155,7 @@
 /obj/item/toy/snowball{
 	pixel_x = -4
 	},
-/turf/open/floor/holofloor/snow/cold,
+/turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "az" = (
 /turf/open/floor/holofloor{
@@ -216,7 +216,7 @@
 /area/holodeck/rec_center/court)
 "aI" = (
 /obj/structure/flora/grass/brown,
-/turf/open/floor/holofloor/snow/cold,
+/turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "aJ" = (
 /obj/structure/table,
@@ -268,7 +268,7 @@
 /obj/structure/statue/snow/snowman{
 	anchored = 1
 	},
-/turf/open/floor/holofloor/snow/cold,
+/turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "aP" = (
 /obj/structure/chair/wood/normal{
@@ -282,7 +282,7 @@
 /area/holodeck/rec_center/lounge)
 "aQ" = (
 /obj/structure/chair/wood/wings,
-/turf/open/floor/holofloor/snow/cold,
+/turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "aR" = (
 /obj/structure/window/reinforced/tinted{
@@ -303,11 +303,11 @@
 /area/holodeck/rec_center/lounge)
 "aT" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/holofloor/snow/cold,
+/turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "aU" = (
 /obj/structure/chair/wood,
-/turf/open/floor/holofloor/snow/cold,
+/turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "aV" = (
 /obj/structure/table/wood,
@@ -14881,6 +14881,20 @@
 /area/centcom/evac)
 "Md" = (
 /obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Me" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Mf" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 
@@ -64444,7 +64458,7 @@ Fa
 Fh
 Fh
 Fh
-Fh
+Me
 Fh
 Fh
 Fa
@@ -65729,7 +65743,7 @@ Fa
 Md
 Fp
 FC
-Fh
+Mf
 Fh
 Fh
 Fa

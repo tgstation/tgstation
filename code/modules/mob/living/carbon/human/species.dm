@@ -73,6 +73,9 @@
 	//Ears
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 
+	//Hands
+	var/obj/item/mutanthands = null
+
 ///////////
 // PROCS //
 ///////////
@@ -139,15 +142,16 @@
 		qdel(lungs)
 		lungs = null
 
-	if(eyes)
-		qdel(eyes)
-		eyes = new mutanteyes
-		eyes.Insert(C)
+	if(C.get_bodypart("head"))
+		if(eyes)
+			qdel(eyes)
+			eyes = new mutanteyes
+			eyes.Insert(C)
 
-	if(ears)
-		qdel(ears)
-		ears = new mutantears
-		ears.Insert(C)
+		if(ears)
+			qdel(ears)
+			ears = new mutantears
+			ears.Insert(C)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
@@ -168,6 +172,21 @@
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
+
+	if(old_species.mutanthands)
+		for(var/obj/item/I in C.held_items)
+			if(istype(I, old_species.mutanthands))
+				qdel(I)
+
+	if(mutanthands)
+		// Drop items in hands
+		// If you're lucky enough to have a NODROP item, then it stays.
+		for(var/V in C.held_items)
+			var/obj/item/I = V
+			if(istype(I))
+				C.dropItemToGround(I)
+			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+				C.put_in_hands(new mutanthands())
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)

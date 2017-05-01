@@ -213,7 +213,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Make Robot"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -229,7 +229,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Make Blob"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -247,7 +247,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 
@@ -295,7 +295,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Make Alien"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -312,7 +312,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Make slime"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -423,7 +423,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Admin"
 	set name = "Grant Full Access"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))

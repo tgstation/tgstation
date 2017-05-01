@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Proselytizers can now charge from Sigils of Transmission at a rate of 1000W per second."
+  - rscadd: "Sigils of Transmission can be charged with brass at a rate of 250W per sheet."
