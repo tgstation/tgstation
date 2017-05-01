@@ -2,7 +2,7 @@
 	. = text
 	if(!config.emojis)
 		return
-	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
+	var/static/list/emojis = icon_states(icon('hippiestation/icons/emoji.dmi'))
 	var/parsed = ""
 	var/pos = 1
 	var/search = 0
