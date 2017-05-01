@@ -185,7 +185,7 @@ research holder datum.
 		if((D.build_type & SMELTER) && ("initial" in D.category))
 			AddDesign2Known(D)
 
-/datum/research/biogenerator/AddDesign2Known(datum/design/D)
+/datum/research/smelter/AddDesign2Known(datum/design/D)
 	if(!(D.build_type & SMELTER))
 		return
 	..()
