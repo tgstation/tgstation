@@ -16,10 +16,10 @@
 				C.confused += 25
 				C.Jitter(50)
 			else
-				C << sound('sound/effects/screech.ogg')
+				C.playsound_direct('sound/effects/screech.ogg')
 
 		if(issilicon(M))
-			M << sound('sound/weapons/flash.ogg')
+			M.playsound_direct('sound/weapons/flash.ogg')
 			M.Weaken(rand(5,10))
 
 	for(var/obj/machinery/light/L in range(4, user))

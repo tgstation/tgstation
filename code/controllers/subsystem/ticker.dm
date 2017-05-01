@@ -626,7 +626,7 @@ SUBSYSTEM_DEF(ticker)
 			if(living_player_count() < config.hard_popcap)
 				if(next_in_line && next_in_line.client)
 					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>")
-					next_in_line << sound('sound/misc/notice1.ogg')
+					next_in_line.playsound_direct('sound/misc/notice1.ogg')
 					next_in_line.LateChoices()
 					return
 				queued_players -= next_in_line //Client disconnected, remove he

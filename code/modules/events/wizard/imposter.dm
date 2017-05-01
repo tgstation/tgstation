@@ -55,4 +55,4 @@
 
 		I.log_message("<font color='red'>Is an imposter!</font>", INDIVIDUAL_ATTACK_LOG)
 		to_chat(I, "<B>You are an imposter! Trick and confuse the crew to misdirect malice from your handsome original!</B>")
-		I << sound('sound/effects/magic.ogg')
+		I.playsound_direct('sound/effects/magic.ogg')
