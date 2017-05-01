@@ -222,8 +222,8 @@
 	R.client_to_revive = client //If the essence reforms, the old revenant is put back in the body
 	R.revenant = src
 	invisibility = INVISIBILITY_ABSTRACT 
-	revealed=0
-	stasis=1
+	revealed = 0
+	stasis = 1
 	ghostize(0)//Don't re-enter invisible corpse
 	return
 
