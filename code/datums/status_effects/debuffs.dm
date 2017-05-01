@@ -102,12 +102,12 @@
 
 /datum/status_effect/maniamotor/tick()
 	var/is_servant = is_servant_of_ratvar(owner)
+	var/span_part = severity > 50 ? "" : "_small" //let's save like one check
 	if(QDELETED(motor))
 		if(!is_servant)
-			to_chat(owner, "<span class='sevtug[severity > 75 ? "":"_small"]'>You feel a frustrated voice quietly fade from your mind...</span>")
+			to_chat(owner, "<span class='sevtug[span_part]'>You feel a frustrated voice quietly fade from your mind...</span>")
 		qdel(src)
 		return
-	var/span_part = severity > 50 ? "" : "_small" //let's save like one check
 	if(!(owner in viewers(7, motor))) //not being in range makes it fall off much faster
 		if(!is_servant && !warned_outofsight)
 			to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(flee_messages))]\"</span>")
@@ -165,9 +165,9 @@
 			owner.playsound_local(get_turf(motor), hum, severity, 1)
 			if(owner.getBrainLoss() <= 50)
 				owner.adjustBrainLoss(severity * 0.025) //2.5% of severity per second
-			owner.adjust_drugginess(Clamp(max(0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
+			owner.adjust_drugginess(Clamp(max(severity * 0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
 			if(owner.hallucination < 50)
-				owner.hallucination = min(owner.hallucination + max(0.075, 1), 50) //7.5% of severity per second, minimum 1
+				owner.hallucination = min(owner.hallucination + max(severity * 0.075, 1), 50) //7.5% of severity per second, minimum 1
 			if(owner.dizziness < 25)
 				owner.dizziness = min(owner.dizziness + Floor(severity * 0.025), 25) //2.5% of severity per second above 20 severity
 			if(owner.confused < 25)
