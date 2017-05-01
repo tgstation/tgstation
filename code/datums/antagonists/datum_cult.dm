@@ -10,20 +10,20 @@
 	if(!owner)
 		return
 	if(jobban_isbanned(owner.current, ROLE_CULTIST))
-		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST), 0)
+		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner.current, ROLE_CULTIST, ROLE_CULTIST), 0)
 	owner.current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 
 /datum/antagonist/cult/apply_innate_effects()
 	. = ..()
 	owner.current.faction |= "cult"
 	owner.current.verbs += /mob/living/proc/cult_help
-	communion.Grant(owner)
+	communion.Grant(owner.current)
 
 /datum/antagonist/cult/remove_innate_effects()
 	. = ..()
 	owner.current.faction -= "cult"
 	owner.current.verbs -= /mob/living/proc/cult_help
-
+	communion.Remove(owner.current)
 
 /datum/antagonist/cult/on_removal()
 	. = ..()
