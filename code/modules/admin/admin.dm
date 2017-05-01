@@ -610,17 +610,17 @@
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
-	return spawn_atom_impl(object, FALSE)
+	return usr.client.spawn_atom_impl(object, FALSE)
 
 /datum/admins/proc/spawn_atom_adv(object as text)
 	set category = "Debug"
 	set desc = "(atom path) Spawn an atom with New() parameters"
 	set name = "Advanced Spawn"
 
-	return spawn_atom_impl(object, TRUE)
+	return usr.client.spawn_atom_impl(object, TRUE)
 
 
-/datum/admins/proc/spawn_atom_impl(object, params)
+/client/proc/spawn_atom_impl(object, params)
 	if(!check_rights(R_SPAWN))
 		return
 
