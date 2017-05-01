@@ -60,19 +60,6 @@
 		else
 			objective.find_target()
 
-/datum/mind/proc/announceDevilLaws()
-	if(!devilinfo)
-		return
-	to_chat(current, "<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>")
-	to_chat(current, "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>")
-	to_chat(current, "You may not use violence to coerce someone into selling their soul.")
-	to_chat(current, "You may not directly and knowingly physically harm a devil, other than yourself.")
-	to_chat(current, GLOB.lawlorify[LAW][src.devilinfo.bane])
-	to_chat(current, GLOB.lawlorify[LAW][src.devilinfo.ban])
-	to_chat(current, GLOB.lawlorify[LAW][src.devilinfo.obligation])
-	to_chat(current, GLOB.lawlorify[LAW][src.devilinfo.banish])
-	to_chat(current, "<br/><br/><span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>")
-
 /datum/game_mode/proc/printdevilinfo(datum/mind/ply)
 	if(!ply.devilinfo)
 		return "Target is not a devil."

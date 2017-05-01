@@ -58,7 +58,7 @@
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
-	var/datum/devilinfo/devilinfo //Information about the devil, if any.
+	var/datum/antagonist/devilinfo/devilinfo //Information about the devil, if any.
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/isholy = FALSE //is this person a chaplain or admin role allowed to use bibles
