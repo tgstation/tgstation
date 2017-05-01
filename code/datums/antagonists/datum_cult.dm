@@ -15,15 +15,21 @@
 
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	owner.current.faction |= "cult"
-	owner.current.verbs += /mob/living/proc/cult_help
-	communion.Grant(owner.current)
+	var/mob/living/current = owner.current
+	if(mob_override)
+		current = mob_override
+	current.faction |= "cult"
+	current.verbs += /mob/living/proc/cult_help
+	communion.Grant(current)
 
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
 	. = ..()
-	owner.current.faction -= "cult"
-	owner.current.verbs -= /mob/living/proc/cult_help
-	communion.Remove(owner.current)
+	var/mob/living/current = owner.current
+	if(mob_override)
+		current = mob_override
+	current.faction -= "cult"
+	current.verbs -= /mob/living/proc/cult_help
+	communion.Remove(current)
 
 /datum/antagonist/cult/on_removal()
 	. = ..()
