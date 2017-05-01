@@ -116,6 +116,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(GLOB.rpg_loot_items)
 		rpg_loot = new(src)
 
+	GLOB.all_items_list += src
+
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
@@ -124,6 +126,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	for(var/X in actions)
 		qdel(X)
 	QDEL_NULL(rpg_loot)
+
+	GLOB.all_items_list -= src
+
 	return ..()
 
 /obj/item/device
