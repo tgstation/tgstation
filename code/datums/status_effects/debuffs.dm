@@ -32,7 +32,7 @@
 
 /datum/status_effect/belligerent
 	id = "belligerent"
-	duration = 60
+	duration = 70
 	tick_interval = 0 //tick as fast as possible
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /obj/screen/alert/status_effect/belligerent
