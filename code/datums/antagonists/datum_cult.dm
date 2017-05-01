@@ -8,12 +8,12 @@
 /datum/antagonist/cult/proc/add_objectives()
 	var/list/target_candidates = list()
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
-		if(player.mind && !is_convertable_to_cult(player) && !owner && isliving(player))
+		if(player.mind && !is_convertable_to_cult(player) && (player != owner.current) && isliving(player))
 			target_candidates += player.mind
 	if(target_candidates.len == 0)
 		message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
-			if(player.mind && (player != owner) && isliving(player))
+			if(player.mind && (player != owner.current) && isliving(player))
 				target_candidates += player.mind
 	if(target_candidates.len > 0)
 		GLOB.sac_mind = pick(target_candidates)
@@ -62,21 +62,21 @@
 	owner.current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 
 /datum/antagonist/cult/apply_innate_effects()
-	owner.faction |= "cult"
-	owner.verbs += /mob/living/proc/cult_help
+	owner.current.faction |= "cult"
+	owner.current.verbs += /mob/living/proc/cult_help
 	if(!GLOB.cult_mastered)
-		owner.verbs += /mob/living/proc/cult_master
-	communion.Grant(owner)
-	owner.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+		owner.current.verbs += /mob/living/proc/cult_master
+	communion.Grant(owner.current)
+	owner.current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 	..()
 
 /datum/antagonist/cult/remove_innate_effects()
-	owner.faction -= "cult"
-	owner.verbs -= /mob/living/proc/cult_help
-	owner.verbs -= /mob/living/proc/cult_master
-	for(var/datum/action/innate/cultmast/H in owner.actions)
+	owner.current.faction -= "cult"
+	owner.current.verbs -= /mob/living/proc/cult_help
+	owner.current.verbs -= /mob/living/proc/cult_master
+	for(var/datum/action/innate/cultmast/H in owner.current.actions)
 		qdel(H)
-	owner.clear_alert("bloodsense")
+	owner.current.clear_alert("bloodsense")
 	..()
 
 /datum/antagonist/cult/on_removal()
