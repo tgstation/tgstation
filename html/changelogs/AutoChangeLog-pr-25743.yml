@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - rscadd: "You can now make holocalls! Simply stand on a pad, bring up the menu, and select the holopad you wish to call. Remain still until someone answers. When they do, you'll be able to act just like an AI hologram until the call ends"
