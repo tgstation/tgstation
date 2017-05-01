@@ -1,0 +1,5 @@
+author: Cuboos
+delete-after: True
+changes: 
+  -soundadd: "Wizard Spells and Wands/Staffs now have unique sounds"
+  -soundadd: "Added Title3.ogg to the start up music"
