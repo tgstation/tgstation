@@ -44,7 +44,6 @@
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
-	var/list/datum/objective/special_verbs = list()
 
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
