@@ -202,9 +202,9 @@
 		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? "":"s"] [structure_number == 1 ? "is":"are"] in range.</span>")
 		if(iscyborg(user))
 			to_chat(user, "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>")
-		else if(GLOB.ratvar_awakens)
+		else if(!GLOB.ratvar_awakens)
 			to_chat(user, "<span class='brass'>Hitting the [sigil_name] with brass sheets will convert them to power at a rate of <b>1</b> brass sheet to <b>[POWER_FLOOR]W</b> power.</span>")
-		if(GLOB.ratvar_awakens)
+		if(!GLOB.ratvar_awakens)
 			to_chat(user, "<span class='brass'>You can recharge Clockwork Proselytizers from the [sigil_name].</span>")
 
 /obj/effect/clockwork/sigil/transmission/attackby(obj/item/I, mob/living/user, params)
@@ -215,7 +215,7 @@
 		modify_charge(-(B.amount * POWER_FLOOR))
 		playsound(src, 'sound/effects/light_flicker.ogg', (B.amount * POWER_FLOOR) * 0.01, 1)
 		qdel(B)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
@@ -229,9 +229,7 @@
 	if(!cyborg_checks(cyborg))
 		return
 	to_chat(cyborg, "<span class='brass'>You start to charge from the [sigil_name]...</span>")
-	if(!do_after(cyborg, 50, target = src))
-		return
-	if(!cyborg_checks(cyborg))
+	if(!do_after(cyborg, 50, target = src, extra_checks = CALLBACK(src, .proc/cyborg_checks, cyborg, TRUE))
 		return
 	var/giving_power = min(Floor(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), power_charge) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
 	if(modify_charge(giving_power))
@@ -243,18 +241,22 @@
 		animate(cyborg, color = previous_color, time = 100)
 		addtimer(CALLBACK(cyborg, /atom/proc/update_atom_colour), 100)
 
-/obj/effect/clockwork/sigil/transmission/proc/cyborg_checks(mob/living/silicon/robot/cyborg)
+/obj/effect/clockwork/sigil/transmission/proc/cyborg_checks(mob/living/silicon/robot/cyborg, silent)
 	if(!cyborg.cell)
-		to_chat(cyborg, "<span class='warning'>You have no cell!</span>")
+		if(!silent)
+			to_chat(cyborg, "<span class='warning'>You have no cell!</span>")
 		return FALSE
 	if(!power_charge)
-		to_chat(cyborg, "<span class='warning'>The [sigil_name] has no stored power!</span>")
+		if(!silent)
+			to_chat(cyborg, "<span class='warning'>The [sigil_name] has no stored power!</span>")
 		return FALSE
 	if(cyborg.cell.charge > cyborg.cell.maxcharge - MIN_CLOCKCULT_POWER)
-		to_chat(cyborg, "<span class='warning'>You are already at maximum charge!</span>")
+		if(!silent)
+			to_chat(cyborg, "<span class='warning'>You are already at maximum charge!</span>")
 		return FALSE
 	if(cyborg.has_status_effect(STATUS_EFFECT_POWERREGEN))
-		to_chat(cyborg, "<span class='warning'>You are already regenerating power!</span>")
+		if(!silent)
+			to_chat(cyborg, "<span class='warning'>You are already regenerating power!</span>")
 		return FALSE
 	return TRUE
 
