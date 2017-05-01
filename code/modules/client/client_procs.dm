@@ -378,6 +378,17 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!SSdbcore.Connect())
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
+	var/datum/DBQuery/query_get_related_ip = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
+	query_get_related_ip.Execute()
+	related_accounts_ip = ""
+	while(query_get_related_ip.NextRow())
+		related_accounts_ip += "[query_get_related_ip.item[1]], "
+	var/datum/DBQuery/query_get_related_cid = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
+	if(!query_get_related_cid.Execute())
+		return
+	related_accounts_cid = ""
+	while (query_get_related_cid.NextRow())
+		related_accounts_cid += "[query_get_related_cid.item[1]], "
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)
 		admin_rank = src.holder.rank.name
@@ -427,7 +438,7 @@ GLOBAL_LIST(external_rsc_urls)
 	query_log_connection.Execute()
 
 /client/proc/findJoinDate()
-	var/http[] = world.Export("http://byond.com/members/[ckey]?format=text")
+	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
 	if(!http)
 		log_world("Failed to connect to byond age check for [ckey]")
 		return
