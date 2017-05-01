@@ -485,12 +485,16 @@ GLOBAL_LIST_INIT(lawlorify, list (
 	to_chat(owner.current, "<br/><br/><span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>")
 
 /datum/antagonist/devilinfo/farewell()
-	return  //TODO
 
 /datum/antagonist/devilinfo/on_gain()
-	give_base_spells(1)
 
 /datum/antagonist/devilinfo/on_removal()
+
+/datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
+	give_base_spells(1)
+	//TODO: add hud here
+
+/datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	for(var/X in owner.spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		if(is_type_in_typecache(S, devil_spells))
