@@ -43,7 +43,7 @@
       <ui-section candystripe nowrap>
         <div class='content'>#{{id}}</div>
         <div class='content'>{{object}}</div>
-        <div class='content'>{{cost}} Credits</div>
+        <div class='content'>{{cost}} Yen</div>
         <div class='content'>
           <ui-button icon='minus' action='remove' params='{"id": "{{id}}"}'/>
         </div>
@@ -82,7 +82,7 @@
     <tab name='{{name}}'>
       {{#each packs}}
         <ui-section label='{{name}}' candystripe right>
-          <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Credits</ui-button>
+          <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Yen</ui-button>
         </ui-section>
       {{/each}}
     </tab>
