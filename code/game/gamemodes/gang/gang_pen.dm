@@ -11,7 +11,7 @@
 	..()
 	last_used = world.time
 
-/obj/item/weapon/pen/gang/attack(mob/living/M, mob/user)
+/obj/item/weapon/pen/gang/attack(mob/living/M, mob/user, stealth = TRUE)
 	if(!istype(M))
 		return
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
