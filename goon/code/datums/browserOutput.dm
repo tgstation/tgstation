@@ -3,32 +3,21 @@ For the main html chat area
 *********************************/
 
 //Precaching a bunch of shit
-var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons for the browser output
-var/list/chatResources = list(
-		"code/modules/html_interface/js/jquery.min.js",
-		"goon/browserassets/js/json2.min.js",
-		"goon/browserassets/js/browserOutput.js",
-		"tgui/assets/fonts/fontawesome-webfont.eot",
-		"tgui/assets/fonts/fontawesome-webfont.svg",
-		"tgui/assets/fonts/fontawesome-webfont.ttf",
-		"tgui/assets/fonts/fontawesome-webfont.woff",
-		"goon/browserassets/css/font-awesome.css",
-		"goon/browserassets/css/browserOutput.css"
-	)
+GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of icons for the browser output
 
 //On client, created on login
 /datum/chatOutput
-	var/client/owner = null //client ref
-	var/loaded       = 0 // Has the client loaded the browser output area?
-	var/list/messageQueue = list() //If they haven't loaded chat, this is where messages will go until they do
-	var/cookieSent   = 0 // Has the client sent a cookie for analysis
-	var/list/connectionHistory = list() //Contains the connection history passed from chat cookie
+	var/client/owner	 //client ref
+	var/loaded       = FALSE // Has the client loaded the browser output area?
+	var/list/messageQueue //If they haven't loaded chat, this is where messages will go until they do
+	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
+	var/list/connectionHistory //Contains the connection history passed from chat cookie
 	var/broken       = FALSE
 
 /datum/chatOutput/New(client/C)
-	. = ..()
-
 	owner = C
+	messageQueue = list()
+	connectionHistory = list()
 	// log_world("chatOutput: New()")
 
 /datum/chatOutput/proc/start()
@@ -54,6 +43,18 @@ var/list/chatResources = list(
 	if(!owner)
 		return
 
+	var/static/list/chatResources = list(
+		"code/modules/html_interface/js/jquery.min.js",
+		"goon/browserassets/js/json2.min.js",
+		"goon/browserassets/js/browserOutput.js",
+		"tgui/assets/fonts/fontawesome-webfont.eot",
+		"tgui/assets/fonts/fontawesome-webfont.svg",
+		"tgui/assets/fonts/fontawesome-webfont.ttf",
+		"tgui/assets/fonts/fontawesome-webfont.woff",
+		"goon/browserassets/css/font-awesome.css",
+		"goon/browserassets/css/browserOutput.css"
+	)
+
 	// to_chat(world.log, "chatOutput: load()")
 	for(var/attempts in 1 to 5)
 		for(var/asset in chatResources)
@@ -65,9 +66,9 @@ var/list/chatResources = list(
 		if(!owner || loaded)
 			break
 
-	if(!loaded)
-		stack_trace("[owner] failed to load chat.")
-
+	if(owner && !loaded)
+		doneLoading() // try doing this manually
+		CRASH("[owner] failed to load chat. Attempting doneLoading() manually")
 	// log_world("chatOutput: [owner.ckey] load() completed")
 
 /datum/chatOutput/Topic(href, list/href_list)
@@ -146,7 +147,7 @@ var/list/chatResources = list(
 	if(cookie != "none")
 		var/list/connData = json_decode(cookie)
 		if (connData && islist(connData) && connData.len > 0 && connData["connData"])
-			src.connectionHistory = connData["connData"] //lol fuck
+			connectionHistory = connData["connData"] //lol fuck
 			var/list/found = new()
 			for(var/i in connectionHistory.len to 1 step -1)
 				var/list/row = src.connectionHistory[i]
@@ -174,12 +175,12 @@ var/list/chatResources = list(
 
 #ifdef TESTING
 /client/verb/debug_chat()
-	set hidden = 1
-	chatOutput.ehjax_send(data = list("firebug" = 1))
+	set hidden = TRUE
+	chatOutput.ehjax_send(data = list("firebug" = TRUE))
 #endif
 //Global chat procs
 
-/var/list/bicon_cache = list()
+GLOBAL_LIST_EMPTY(bicon_cache)
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
@@ -187,8 +188,8 @@ var/list/chatResources = list(
 /proc/icon2base64(icon/icon, iconKey = "misc")
 	if (!isicon(icon))
 		return FALSE
-	iconCache[iconKey] << icon
-	var/iconData = iconCache.ExportText(iconKey)
+	GLOB.iconCache[iconKey] << icon
+	var/iconData = GLOB.iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
@@ -206,19 +207,15 @@ var/list/chatResources = list(
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
 	var/atom/A = obj
 	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
-	if (!bicon_cache[key]) // Doesn't exist, make it.
+	if (!GLOB.bicon_cache[key]) // Doesn't exist, make it.
 		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
 		if (ishuman(obj)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
-		bicon_cache[key] = icon2base64(I, key)
+		GLOB.bicon_cache[key] = icon2base64(I, key)
 
-	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
-
-//Aliases for bicon
-/proc/bi(obj)
-	bicon(obj)
+	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[GLOB.bicon_cache[key]]'>"
 
 //Costlier version of bicon() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
 /proc/costly_bicon(obj)
@@ -259,7 +256,7 @@ var/list/chatResources = list(
 		if (C && C.chatOutput)
 			if(C.chatOutput.broken) // A player who hasn't updated his skin file.
 				to_chat(C, message)
-				return 1
+				return TRUE
 			if(!C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
 				//Client sucks at loading things, put their messages in a queue
 				C.chatOutput.messageQueue.Add(message)
