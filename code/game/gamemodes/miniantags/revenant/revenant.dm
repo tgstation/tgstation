@@ -337,8 +337,6 @@
 	addtimer(CALLBACK(src, .proc/try_reform), 600)
 
 /obj/item/weapon/ectoplasm/revenant/proc/scatter()
-	if(!QDELETED(revenant))
-		qdel(revenant)
 	qdel(src)
 
 /obj/item/weapon/ectoplasm/revenant/proc/try_reform()
