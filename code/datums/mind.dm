@@ -111,13 +111,14 @@
 // Datum antag mind procs
 /datum/mind/proc/add_antag_datum(datum_type, on_gain = TRUE)
 	if(!datum_type)
-		return
+		return FALSE
 	if(!can_hold_antag_datum(datum_type))
-		return
+		return FALSE
 	var/datum/antagonist/A = new datum_type(src)
 	antag_datums += A
 	if(on_gain)
 		A.on_gain()
+	return TRUE
 
 /datum/mind/proc/remove_antag_datum(datum_type)
 	if(!datum_type)
@@ -318,7 +319,8 @@
 		"nuclear",
 		"traitor", // "traitorchan",
 		"monkey",
-		"clockcult"
+		"clockcult",
+		"devil"
 	)
 	var/text = ""
 
@@ -589,8 +591,9 @@
 	if(SSticker.mode.config_tag == "devil")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if(src in SSticker.mode.devils)
-		if(devilinfo && !devilinfo.ascendable)
+	var/datum/antagonist/devil/devilinfo = get_devil_datum(src)
+	if(devilinfo)
+		if(!devilinfo.ascendable)
 			text += "<b>DEVIL</b>|<a href='?src=\ref[src];devil=ascendable_devil'>Ascendable Devil</a>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
 		else
 			text += "<a href='?src=\ref[src];devil=devil'>DEVIL</a>|<b>ASCENDABLE DEVIL</b>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
@@ -1150,34 +1153,14 @@
 				to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["devil"])
+		var/datum/antagonist/devil/devilinfo = get_devil_datum(src)
 		switch(href_list["devil"])
 			if("clear")
 				if(src in SSticker.mode.devils)
-					if(istype(current,/mob/living/carbon/true_devil/))
-						if(devilinfo)
-							devilinfo.regress_blood_lizard()
-						else
-							to_chat(usr, "<span class='warning'>Something went wrong with removing the devil, we were unable to find an attached devilinfo.</span>.")
-					SSticker.mode.devils -= src
-					special_role = null
-					to_chat(current, "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>")
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-					RemoveSpell(/obj/effect/proc_holder/spell/aimed/fireball/hellish)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch/ascended)
+					remove_devil(current)
 					message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
-					devilinfo = null
-					if(issilicon(current))
-						var/mob/living/silicon/S = current
-						S.clear_law_sixsixsix(current)
 					log_admin("[key_name(usr)] has de-devil'ed [current].")
-				else if(src in SSticker.mode.sintouched)
+				if(src in SSticker.mode.sintouched)
 					SSticker.mode.sintouched -= src
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
 					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
@@ -1190,12 +1173,7 @@
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
-				SSticker.mode.devils += src
-				special_role = "devil"
-				SSticker.mode.finalize_devil(src, FALSE)
-				SSticker.mode.add_devil_objectives(src, 2)
-				announceDevilLaws()
-				announce_objectives()
+				add_devil(current, FALSE)
 				message_admins("[key_name_admin(usr)] has devil'ed [current].")
 				log_admin("[key_name(usr)] has devil'ed [current].")
 			if("ascendable_devil")
@@ -1207,12 +1185,7 @@
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
-				SSticker.mode.devils += src
-				special_role = "devil"
-				SSticker.mode.finalize_devil(src, TRUE)
-				SSticker.mode.add_devil_objectives(src, 2)
-				announceDevilLaws()
-				announce_objectives()
+				add_devil(current, TRUE)
 				message_admins("[key_name_admin(usr)] has devil'ed [current].  The devil has been marked as ascendable.")
 				log_admin("[key_name(usr)] has devil'ed [current]. The devil has been marked as ascendable.")
 			if("sintouched")
@@ -1542,6 +1515,9 @@
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
 	S.action.Grant(current)
+
+/datum/mind/proc/owns_soul()
+	return soulOwner == src
 
 //To remove a specific spell from a mind
 /datum/mind/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)

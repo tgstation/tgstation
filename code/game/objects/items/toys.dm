@@ -529,7 +529,7 @@
 		"<span class='notice'>You hear a soft click.</span>")
 
 /obj/item/toy/talking/codex_gigas/generate_messages()
-	var/datum/antagonist/devilinfo/devil = randomDevilInfo()
+	var/datum/antagonist/devil/devil = randomDevilInfo()
 	var/list/messages = list()
 	messages += "Some fun facts about: [devil.truename]"
 	messages += "[GLOB.lawlorify[LORE][devil.bane]]"

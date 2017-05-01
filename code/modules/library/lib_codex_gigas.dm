@@ -47,7 +47,7 @@
 			var/usedName = devilName
 			if(!prob(correctness))
 				usedName += "x"
-			var/datum/antagonist/devilinfo/devil = devilInfo(usedName, 0)
+			var/datum/antagonist/devil/devil = devilInfo(usedName, 0)
 			user << browse("Information on [devilName]<br><br><br>[GLOB.lawlorify[LORE][devil.ban]]<br>[GLOB.lawlorify[LORE][devil.bane]]<br>[GLOB.lawlorify[LORE][devil.obligation]]<br>[GLOB.lawlorify[LORE][devil.banish]]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		inUse = 0
 		sleep(10)

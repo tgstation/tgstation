@@ -106,7 +106,7 @@
 				continuing = 1
 			else
 				for(var/mob/living/C in orange(2, get_turf(user.loc))) //Can also phase in when nearby a potential buyer.
-					if (C.mind && C.mind.soulOwner == C.mind)
+					if (C.owns_soul())
 						continuing = 1
 						break
 			if(continuing)

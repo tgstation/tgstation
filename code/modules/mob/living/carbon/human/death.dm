@@ -35,7 +35,7 @@
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
 	if(mind && mind.devilinfo)
-		INVOKE_ASYNC(mind.devilinfo, /datum/antagonist/devilinfo.proc/beginResurrectionCheck, src)
+		INVOKE_ASYNC(mind.devilinfo, /datum/antagonist/devil.proc/beginResurrectionCheck, src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED

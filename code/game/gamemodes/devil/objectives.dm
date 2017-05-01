@@ -54,7 +54,7 @@
 	var/count = 0
 	for(var/S in owner.devilinfo.soulsOwned)
 		var/datum/mind/L = S
-		if(L.soulOwner != L && L.damnation_type == contractType)
+		if(!L.owns_soul() && L.damnation_type == contractType)
 			count++
 	return count>=target_amount
 

@@ -63,3 +63,26 @@
 	add_devil_objectives(devil, objective_count) //This has to be in a separate loop, as we need devil names to be generated before we give objectives in devil agent.
 	devil.announceDevilLaws()
 	devil.announce_objectives()
+
+/proc/get_devil_datum(mob/living/M)
+	var/datum/mind
+	if(istype(M))
+		mind = M.mind
+	if(istype(M, datum/mind))
+		mind = M
+	return mind && mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+
+/proc/add_devil(mob/living/L, ascendable = FALSE)
+	if(!L || !L.mind)
+		return FALSE
+	. = L.mind.add_antag_datum(ANTAG_DATUM_DEVIL)
+	if(ascendable)
+		var/datum/antagonist/devil_datum = has_antag_datum(ANTAG_DATUM_DEVIL)
+		devil_datum.ascendable = TRUE
+
+/proc/remove_devil(mob/living/L)
+	if(!L || !L.mind)
+		return FALSE
+	var/datum/antagonist/devil_datum = L.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	devil_datum.on_removal()
+	return TRUE

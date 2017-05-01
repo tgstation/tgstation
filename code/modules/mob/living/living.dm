@@ -812,7 +812,7 @@
 /mob/living/proc/owns_soul()
 	if(mind)
 		return mind.soulOwner == mind
-	return 1
+	return TRUE
 
 /mob/living/proc/return_soul()
 	hellbound = 0
