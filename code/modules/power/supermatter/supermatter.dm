@@ -127,7 +127,7 @@
 /obj/machinery/power/supermatter_shard/make_frozen_visual()
 	return
 
-/obj/machinery/power/supermatter_shard/New()
+/obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
 	countdown = new(src)
 	countdown.start()
