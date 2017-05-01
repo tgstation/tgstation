@@ -4,7 +4,7 @@
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
 	circuit = /obj/item/weapon/circuitboard/computer/launchpad_console
-	var/sending = 1
+	var/sending = TRUE
 	var/current_pad //current pad viewed on the screen
 	var/list/obj/machinery/launchpad/launchpads
 	var/maximum_pads = 4
@@ -86,89 +86,6 @@
 	popup.set_content(t)
 	popup.open()
 
-/obj/machinery/computer/launchpad/proc/doteleport(mob/user, obj/machinery/launchpad/pad)
-	if(pad.teleporting)
-		to_chat(user, "<span class='warning'>ERROR: Launchpad busy.</span>")
-		return
-
-
-
-	if(pad)
-		var/target_x = pad.x + pad.x_offset
-		var/target_y = pad.y + pad.y_offset
-		var/turf/target = locate(target_x, target_y, pad.z)
-		var/area/A = get_area(target)
-
-		flick("pad-beam", pad)
-		playsound(get_turf(pad), 'sound/weapons/flash.ogg', 25, 1)
-		pad.teleporting = TRUE
-
-
-		sleep(pad.teleport_speed)
-
-		if(QDELETED(pad) || !pad.isAvailable())
-			return
-
-		pad.teleporting = FALSE
-
-		// use a lot of power
-		use_power(1000)
-
-		var/turf/source = target
-		var/turf/dest = get_turf(pad)
-		var/log_msg = ""
-		log_msg += ": [key_name(user)] has teleported "
-
-		if(sending)
-			source = dest
-			dest = target
-
-		flick("pad-beam", pad)
-		playsound(get_turf(pad), 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
-		for(var/atom/movable/ROI in source)
-			// if is anchored, don't let through
-			if(ROI.anchored)
-				if(isliving(ROI))
-					var/mob/living/L = ROI
-					if(L.buckled)
-						// TP people on office chairs
-						if(L.buckled.anchored)
-							continue
-
-						log_msg += "[key_name(L)] (on a chair), "
-					else
-						continue
-				else if(!isobserver(ROI))
-					continue
-			if(ismob(ROI))
-				var/mob/T = ROI
-				log_msg += "[key_name(T)], "
-			else
-				log_msg += "[ROI.name]"
-				if (istype(ROI, /obj/structure/closet))
-					var/obj/structure/closet/C = ROI
-					log_msg += " ("
-					for(var/atom/movable/Q as mob|obj in C)
-						if(ismob(Q))
-							log_msg += "[key_name(Q)], "
-						else
-							log_msg += "[Q.name], "
-					if (dd_hassuffix(log_msg, "("))
-						log_msg += "empty)"
-					else
-						log_msg = dd_limittext(log_msg, length(log_msg) - 2)
-						log_msg += ")"
-				log_msg += ", "
-			do_teleport(ROI, dest)
-
-		if (dd_hassuffix(log_msg, ", "))
-			log_msg = dd_limittext(log_msg, length(log_msg) - 2)
-		else
-			log_msg += "nothing"
-		log_msg += " [sending ? "to" : "from"] [target_x], [target_y], [pad.z] ([A ? A.name : "null area"])"
-		investigate_log(log_msg, "telesci")
-		updateDialog()
-
 /obj/machinery/computer/launchpad/proc/teleport(mob/user, obj/machinery/launchpad/pad)
 	if(QDELETED(pad))
 		to_chat(user, "<span class='warning'>ERROR: Launchpad not responding. Check launchpad integrity.</span>")
@@ -176,7 +93,7 @@
 	if(!pad.isAvailable())
 		to_chat(user, "<span class='warning'>ERROR: Launchpad not operative. Make sure the launchpad is ready and powered.</span>")
 		return
-	doteleport(user, pad)
+	pad.doteleport(user, sending)
 
 /obj/machinery/computer/launchpad/Topic(href, href_list)
 	var/obj/machinery/launchpad/pad
