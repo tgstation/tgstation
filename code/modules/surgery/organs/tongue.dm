@@ -14,6 +14,7 @@
 	languages_possible = typecacheof(list(
 		/datum/language/common,
 		/datum/language/monkey,
+		/datum/language/plasmic,
 		/datum/language/ratvar
 	))
 
@@ -128,6 +129,7 @@
 		/datum/language/xenocommon,
 		/datum/language/common,
 		/datum/language/ratvar,
+		/datum/language/plasmic,
 		/datum/language/monkey))
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
