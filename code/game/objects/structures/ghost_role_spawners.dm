@@ -120,7 +120,7 @@
 		Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost."
 		owner = creator
 
-/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
+/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn, name)
 	var/datum/species/golem/X = mob_species
 	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)
@@ -133,7 +133,10 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
-		H.real_name = H.dna.species.random_name()
+		if(!name)
+			H.real_name = H.dna.species.random_name()
+		else
+			H.real_name = name
 
 /obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
 	if(isgolem(user) && can_transfer)
@@ -142,7 +145,7 @@
 			return
 		log_game("[user.ckey] golem-swapped into [src]")
 		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
-		create(ckey = user.ckey, flavour = FALSE)
+		create(ckey = user.ckey, flavour = FALSE, name = user.real_name)
 		user.death()
 		return
 	..()

@@ -53,7 +53,7 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey, flavour = TRUE)
+/obj/effect/mob_spawn/proc/create(ckey, flavour = TRUE, name)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
@@ -77,7 +77,7 @@
 		if(objectives)
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
-		special(M)
+		special(M, name)
 		MM.name = M.real_name
 	if(uses > 0)
 		uses--

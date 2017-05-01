@@ -71,10 +71,14 @@
 	prefix = "Plasma"
 	special_names = list("Flood","Fire","Bar","Man")
 
-/datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
-	explosion(get_turf(H),0,1,2,flame_range = 5)
-	if(H)
-		H.gib()
+/datum/species/golem/plasma/spec_life(mob/living/carbon/human/H)
+	if(H.bodytemperature > 900 && H.on_fire)
+		explosion(get_turf(H),1,2,4,flame_range = 5)
+		if(H)
+			H.gib()
+	if(H.fire_stacks < 2) //flammable
+		H.adjust_fire_stacks(1)
+	..()
 
 //Harder to hurt
 /datum/species/golem/diamond
