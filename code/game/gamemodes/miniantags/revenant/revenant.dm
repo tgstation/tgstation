@@ -403,8 +403,8 @@
 			return
 
 	message_admins("[key_of_revenant] has been [client_to_revive ? "re":""]made into a revenant by reforming ectoplasm.")
--       log_game("[key_of_revenant] was [client_to_revive ? "re":""]made as a revenant by reforming ectoplasm.")
--       visible_message("<span class='revenboldnotice'>[src] suddenly rises into the air before fading away.</span>")
+	log_game("[key_of_revenant] was [client_to_revive ? "re":""]made as a revenant by reforming ectoplasm.")
+	visible_message("<span class='revenboldnotice'>[src] suddenly rises into the air before fading away.</span>")
 
 	revenant.essence = essence
 	revenant.essence_regen_cap = essence
