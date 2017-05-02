@@ -85,7 +85,7 @@
 		return
 	if(!allowed(user))
 		to_chat(user,"<span class='warning'>Error: Access Denied - Message: Only the engineering department can be trusted with this kind of power.</span>")
-		playsound_local(src,'sound/misc/compiler-failure.ogg', 25, 1)
+		user.playsound_local(src,'sound/misc/compiler-failure.ogg', 25, 1)
 		return
 	if(!Adjacent(user) && !isAI(user))
 		return

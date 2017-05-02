@@ -356,9 +356,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			for(var/i=0,i<hits,i++)
 				target.playsound_local(null, 'sound/weapons/Laser.ogg', 25, 1)
 				if(prob(75))
-					addtimer(CALLBACK(target, /atom/.proc/playsound_local, null, 'sound/weapons/sear.ogg', 25, 1), rand(10,20))
+					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/sear.ogg', 25, 1), rand(10,20))
 				else
-					addtimer(CALLBACK(target, /atom/.proc/playsound_local, null, 'sound/weapons/effects/searwall.ogg', 25, 1), rand(10,20))
+					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/effects/searwall.ogg', 25, 1), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 		if(2) //Esword fight
@@ -372,9 +372,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			for(var/i=0,i<hits,i++)
 				target.playsound_local(null, get_sfx("gunshot"), 25)
 				if(prob(75))
-					addtimer(CALLBACK(target, /atom/.proc/playsound_local, null, 'sound/weapons/pierce.ogg', 25, 1), rand(10,20))
+					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/pierce.ogg', 25, 1), rand(10,20))
 				else
-					addtimer(CALLBACK(target, /atom/.proc/playsound_local, null, "ricochet", 25, 1), rand(10,20))
+					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, "ricochet", 25, 1), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 		if(4) //Stunprod + cablecuff
