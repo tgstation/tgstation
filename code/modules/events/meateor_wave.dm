@@ -2,7 +2,6 @@
 	name = "Meteor Wave: Meaty"
 	typepath = /datum/round_event/meteor_wave/meaty
 	weight = 2
-	dead_weight_multiplier = DEAD_WEIGHT_LOW
 	max_occurrences = 1
 
 /datum/round_event/meteor_wave/meaty
