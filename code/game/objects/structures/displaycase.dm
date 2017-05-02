@@ -279,7 +279,8 @@
 		return
 
 	if(!(user.mind && user.mind.assigned_role == "Librarian"))
-		to_chat(user, "<span class='danger'>You're not sure how to work this. Maybe you should as the librarian for help.</span>")
+		to_chat(user, "<span class='danger'>You're not sure how to work this. Maybe you should ask the librarian for help.</span>")
+		return
 
 	if(!added_roundstart)
 		to_chat(user, "You've already put something new in this case.")
