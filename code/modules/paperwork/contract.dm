@@ -183,7 +183,7 @@
 		return ..()
 
 /obj/item/weapon/paper/contract/infernal/proc/attempt_signature(mob/living/carbon/human/user, blood = 0)
-	if(!user.isAdvancedToolUser() || !user.is_literate())
+	if(!user.IsAdvancedToolUser() || !user.is_literate())
 		to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
 		return 0
 	if(user.mind != target)
@@ -244,11 +244,13 @@
 /obj/item/weapon/paper/contract/infernal/proc/fulfillContract(mob/living/carbon/human/user = target.current, blood = FALSE)
 	signed = TRUE
 	if(user.mind.soulOwner != user.mind) //They already sold their soul to someone else?
+		var/datum/antagonist/devil/ownerDevilInfo = user.mind.soulOwner.has_antag_datum(ANTAG_DATUM_DEVIL)
 		user.mind.soulOwner.devilinfo.remove_soul(user.mind) //Then they lose their claim.
 	user.mind.soulOwner = owner
 	user.hellbound = contractType
 	user.mind.damnation_type = contractType
-	owner.devilinfo.add_soul(user.mind)
+	var/datum/antagonist/devil/devilInfo = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	devilInfo.add_soul(user.mind)
 	update_text(user.real_name, blood)
 	to_chat(user, "<span class='notice'>A profound emptiness washes over you as you lose ownership of your soul.</span>")
 	to_chat(user, "<span class='boldnotice'>This does NOT make you an antagonist if you were not already.</span>")

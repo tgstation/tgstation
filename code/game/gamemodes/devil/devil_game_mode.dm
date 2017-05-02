@@ -19,7 +19,6 @@
 		+	<span class='notice'>Crew</span>: Resist the lure of sin and remain pure!"
 
 /datum/game_mode/devil/pre_setup()
-
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
@@ -56,13 +55,8 @@
 	return 1
 
 /datum/game_mode/devil/proc/post_setup_finalize(datum/mind/devil)
-	set waitfor = FALSE
-	sleep(rand(10,100))
-	finalize_devil(devil, TRUE)
-	sleep(100)
-	add_devil_objectives(devil, objective_count) //This has to be in a separate loop, as we need devil names to be generated before we give objectives in devil agent.
-	devil.announceDevilLaws()
-	devil.announce_objectives()
+	devil.add_devil(devil.current, ascendable = TRUE) //Devil gamemode devils are ascendable.
+	add_devil_objectives(devil,2)
 
 /proc/is_devil(mob/living/M)
 	return M && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
