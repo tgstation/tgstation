@@ -491,7 +491,8 @@ GLOBAL_LIST_INIT(lawlorify, list (
 	owner.store_memory("Your devilic true name is [truename]<br>[GLOB.lawlorify[LAW][ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[GLOB.lawlorify[LAW][bane]]<br>[GLOB.lawlorify[LAW][obligation]]<br>[GLOB.lawlorify[LAW][banish]]<br>")
 	give_base_spells(1)
 	if(issilicon(owner.current))
-		add_law_sixsixsix(owner.current)
+		var/mob/living/silicon/robot_devil = owner.current
+		robot_devil.mark_devil_laws()
 	sleep(10)
 	devilinfo.update_hud()
 	if(owner.assigned_role == "Clown" && ishuman(owner.current))
