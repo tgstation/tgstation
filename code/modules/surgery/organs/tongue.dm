@@ -15,7 +15,7 @@
 		/datum/language/common,
 		/datum/language/monkey,
 		/datum/language/ratvar,
-		/datum/language/fly,
+		/datum/language/fly
 	))
 
 /obj/item/organ/tongue/get_spans()
