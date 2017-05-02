@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - tweak: "Mercury and Lithium make people move when not in space instead of when in space."
