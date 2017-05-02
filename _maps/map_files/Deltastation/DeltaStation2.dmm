@@ -112311,6 +112311,22 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/atmos)
+"ehO" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
+"ehP" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
+"ehQ" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
+"ehR" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
 
 (1,1,1) = {"
 aaa
@@ -143544,7 +143560,7 @@ cbA
 cdn
 ceS
 cgp
-chQ
+ehO
 cjl
 ckP
 cjl
@@ -143801,7 +143817,7 @@ cbB
 cdo
 ceS
 cgq
-chQ
+ehP
 cjl
 ckP
 cjl
@@ -144315,7 +144331,7 @@ bWi
 cdq
 ceS
 cgp
-chQ
+ehQ
 cjm
 ckP
 cmk
@@ -144572,7 +144588,7 @@ cbC
 cdr
 ceT
 cgp
-chQ
+ehR
 cjn
 ckP
 cmk

@@ -19609,7 +19609,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aRO" = (
-/obj/structure/bookcase/random/nonfiction,
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "aRP" = (
@@ -108807,7 +108807,7 @@ aIt
 aPd
 aIt
 aRO
-aIt
+aRO
 aUC
 aVP
 aXu
@@ -109064,7 +109064,7 @@ aNV
 aPd
 aIt
 aRO
-aIt
+aRO
 aIt
 aVQ
 aXu

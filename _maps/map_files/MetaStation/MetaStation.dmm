@@ -45372,12 +45372,12 @@
 	name = "Port Maintenance"
 	})
 "bBr" = (
-/obj/structure/table/wood,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23;
 	pixel_y = 0
 	},
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bBs" = (
@@ -47035,7 +47035,6 @@
 	name = "\improper Auxiliary Restrooms"
 	})
 "bEw" = (
-/obj/structure/table/wood,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32;
 	pixel_y = 0
@@ -47044,6 +47043,7 @@
 	dir = 4;
 	network = list("SS13")
 	},
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bEx" = (
@@ -95333,6 +95333,14 @@
 	icon_state = "xenomaint";
 	name = "Xeno Maintenance"
 	})
+"dmD" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
+"dmE" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
 
 (1,1,1) = {"
 aaa
@@ -114481,7 +114489,7 @@ bwa
 bxU
 bzD
 bBr
-bCT
+bSx
 bEw
 bzE
 bHR
@@ -114737,9 +114745,9 @@ bue
 bwb
 bxV
 bzE
-bBs
-bCU
-bBs
+dmD
+bzE
+dmE
 bzE
 bHR
 bJz
