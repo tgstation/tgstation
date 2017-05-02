@@ -91,14 +91,16 @@
 					if(O.zone == "mouth")
 						mouth_organs.Add(O)
 				var/organ_list = ""
-				for(var/I = 1, I <= mouth_organs.len, I++)
-					if(I > 1)
-						if(I == mouth_organs.len)
-							organ_list += ", and "
-						else
-							organ_list += ", "
-					var/obj/item/organ/O = mouth_organs[I]
-					organ_list += (O.gender == "plural" ? O.name : "\an [O.name]")
+				var/organ_count = LAZYLEN(mouth_organs)
+				if(organ_count)
+					for(var/I in 1 to organ_count)
+						if(I > 1)
+							if(I == mouth_organs.len)
+								organ_list += ", and "
+							else
+								organ_list += ", "
+						var/obj/item/organ/O = mouth_organs[I]
+						organ_list += (O.gender == "plural" ? O.name : "\an [O.name]")
 
 				var/pill_count = 0
 				for(var/datum/action/item_action/hands_free/activate_pill/AP in M.actions)
@@ -124,8 +126,8 @@
 					if(!can_use_mirror)
 						to_chat(user, "<span class='notice'>You can't see anything without a mirror.</span>")
 						return
-					if(mouth_organs.len)
-						to_chat(user, "<span class='notice'>Inside your mouth [mouth_organs.len > 1 ? "are" : "is"] [organ_list].</span>")
+					if(organ_count)
+						to_chat(user, "<span class='notice'>Inside your mouth [organ_count > 1 ? "are" : "is"] [organ_list].</span>")
 					else
 						to_chat(user, "<span class='notice'>There's nothing inside your mouth.</span>")
 					if(pill_count)
@@ -134,8 +136,8 @@
 				else
 					user.visible_message("<span class='notice'>[user] directs [src] to [M]'s mouth.</span>",\
 										 "<span class='notice'>You direct [src] to [M]'s mouth.</span>")
-					if(mouth_organs.len)
-						to_chat(user, "<span class='notice'>Inside [their] mouth [mouth_organs.len > 1 ? "are" : "is"] [organ_list].</span>")
+					if(organ_count)
+						to_chat(user, "<span class='notice'>Inside [their] mouth [organ_count > 1 ? "are" : "is"] [organ_list].</span>")
 					else
 						to_chat(user, "<span class='notice'>[M] doesn't have any organs in [their] mouth.</span>")
 					if(pill_count)
