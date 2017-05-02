@@ -37,9 +37,9 @@
 	return 1
 
 
-/obj/item/device/flashlight/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+/obj/item/device/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(on && user.zone_selected == "eyes")
+	if(istype(M) && on && user.zone_selected in list("eyes", "mouth"))
 
 		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -48,28 +48,50 @@
 			to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return
 
-		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(ishuman(M) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
-			to_chat(user, "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
+		if(!M.get_bodypart("head"))
+			to_chat(user, "<span class='warning'>[M] doesn't have a head!</span>")
 			return
 
-		if(M == user)	//they're using it on themselves
-			if(M.flash_act(visual = 1))
-				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
-			else
-				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes.</span>")
-		else
-			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
-								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
-			var/mob/living/carbon/C = M
-			if(istype(C))
-				if(C.stat == DEAD || (C.disabilities & BLIND)) //mob is dead or fully blind
-					to_chat(user, "<span class='warning'>[C] pupils don't react to the light!</span>")
-				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
-					to_chat(user, "<span class='danger'>[C] pupils give an eerie glow!</span>")
-				else //they're okay!
-					if(C.flash_act(visual = 1))
-						to_chat(user, "<span class='notice'>[C]'s pupils narrow.</span>")
+		switch(user.zone_selected)
+			if("eyes")
+				if((M.head && M.head.flags_cover & HEADCOVERSEYES) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) || (M.glasses && M.glasses.flags_cover & GLASSESCOVERSEYES))
+					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
+					return
+
+				var/obj/item/organ/eyes/E = M.getorganslot("eye_sight")
+				if(!E)
+					to_chat(user, "<span class='danger'>[M] doesn't have any eyes!</span>")
+					return
+
+				if(M == user)	//they're using it on themselves
+					if(M.flash_act(visual = 1))
+						M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
+					else
+						M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes.</span>")
+				else
+					user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
+										 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
+					if(M.stat == DEAD || (M.disabilities & BLIND) || !M.flash_act(visual = 1)) //mob is dead or fully blind
+						to_chat(user, "<span class='warning'>[M]'s pupils don't react to the light!</span>")
+					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-RAY vision
+						to_chat(user, "<span class='danger'>[M]'s pupils give an eerie glow!</span>")
+					else //they're okay!
+						to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
+
+			if("mouth")
+				if((M.head && M.head.flags_cover & HEADCOVERSMOUTH) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
+					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSMOUTH) ? "helmet" : "mask"] first.</span>")
+					return
+
+				if(M == user)
+					M.visible_message("[M] directs [src] to [M.p_their()] mouth.", "<span class='notice'>You point the flashlight into your mouth, but can't see anything.</span>")
+				else
+					user.visible_message("<span class='warning'>[user] directs [src] to [M]'s mouth.</span>",\
+										 "<span class='danger'>You direct [src] to [M]'s mouth.</span>")
+					var/obj/item/organ/tongue/T = M.getorganslot("tongue")
+					if(T)
+						to_chat(user, "<span class='notice'>Inside the mouth is \a [T.name].</span>")
+
 	else
 		return ..()
 
@@ -280,7 +302,7 @@
 	return TRUE
 
 /obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_selected == "eyes") // call original attack proc only if aiming at the eyes
+	if(on && user.zone_selected in list("eyes", "mouth")) // call original attack when examining organs
 		..()
 	return
 
