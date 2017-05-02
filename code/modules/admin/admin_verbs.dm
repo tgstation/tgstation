@@ -1,7 +1,8 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
+//the procs are cause you can't put the comments in the GLOB var define
 GLOBAL_PROTECT(admin_verbs_default)
-GLOBAL_LIST_INIT(admin_verbs_default, AVerbsDefault())
-/proc/AVerbsDefault()
+GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
+/world/proc/AVerbsDefault()
 	return list(
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/toggleannouncelogin, /*toggles if an admin's login is announced during a round*/
@@ -25,8 +26,8 @@ GLOBAL_LIST_INIT(admin_verbs_default, AVerbsDefault())
 	/client/proc/stop_sounds
 	)
 GLOBAL_PROTECT(admin_verbs_admin)
-GLOBAL_LIST_INIT(admin_verbs_admin, AVerbsAdmin())
-/proc/AVerbsAdmin()
+GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
+/world/proc/AVerbsAdmin()
 	return list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
@@ -76,9 +77,7 @@ GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel,/client/proc/DB_
 GLOBAL_PROTECT(admin_verbs_sounds)
 GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound,/client/proc/play_sound,/client/proc/set_round_end_sound))
 GLOBAL_PROTECT(admin_verbs_fun)
-GLOBAL_LIST_INIT(admin_verbs_fun, AVerbsFun())
-/proc/AVerbsFun()
-	return list(
+GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -100,12 +99,12 @@ GLOBAL_LIST_INIT(admin_verbs_fun, AVerbsFun())
 	/client/proc/polymorph_all,
 	/client/proc/show_tip,
 	/client/proc/smite
-	)
+	))
 GLOBAL_PROTECT(admin_verbs_spawn)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom,/client/proc/respawn_character))
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom,/datum/admins/proc/spawn_atom_adv,/client/proc/respawn_character))
 GLOBAL_PROTECT(admin_verbs_server)
-GLOBAL_LIST_INIT(admin_verbs_server, AVerbsServer())
-/proc/AVerbsServer()
+GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
+/world/proc/AVerbsServer()
 	return list(
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
@@ -123,8 +122,8 @@ GLOBAL_LIST_INIT(admin_verbs_server, AVerbsServer())
 	/client/proc/toggle_hub
 	)
 GLOBAL_PROTECT(admin_verbs_debug)
-GLOBAL_LIST_INIT(admin_verbs_debug, AVerbsDebug())
-/proc/AVerbsDebug()
+GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
+/world/proc/AVerbsDebug()
 	return list(
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
@@ -169,9 +168,7 @@ GLOBAL_LIST_INIT(admin_verbs_rejuv, list(/client/proc/respawn_character))
 
 //verbs which can be hidden - needs work
 GLOBAL_PROTECT(admin_verbs_hideable)
-GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
-/proc/AVerbsHideable()
-	return list(
+GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
 	/client/proc/deadmin,
@@ -240,7 +237,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 	/client/proc/debug_huds,
 	/client/proc/customiseSNPC,
 	/client/proc/resetSNPC,
-	)
+	))
 
 /client/proc/add_admin_verbs()
 	if(holder)

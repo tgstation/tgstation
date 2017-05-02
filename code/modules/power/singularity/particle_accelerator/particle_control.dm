@@ -117,8 +117,8 @@
 		strength++
 		strength_change()
 
-		message_admins("PA Control Computer increased to [strength] by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("PA Control Computer increased to [strength] by [key_name(usr)] in ([x],[y],[z])")
+		message_admins("PA Control Computer increased to [strength] by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_COORDJMP(src)]",0,1)
+		log_game("PA Control Computer increased to [strength] by [key_name(usr)] in [COORD(src)]")
 		investigate_log("increased to <font color='red'>[strength]</font> by [key_name(usr)]","singulo")
 
 
@@ -127,8 +127,8 @@
 		strength--
 		strength_change()
 
-		message_admins("PA Control Computer decreased to [strength] by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("PA Control Computer decreased to [strength] by [key_name(usr)] in ([x],[y],[z])")
+		message_admins("PA Control Computer decreased to [strength] by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_COORDJMP(src)]",0,1)
+		log_game("PA Control Computer decreased to [strength] by [key_name(usr)] in [COORD(src)]")
 		investigate_log("decreased to <font color='green'>[strength]</font> by [key_name(usr)]","singulo")
 
 

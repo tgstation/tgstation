@@ -58,9 +58,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	verbs += /mob/dead/observer/proc/dead_tele
 
-	if(config.cross_allowed)
-		verbs += /mob/dead/observer/proc/server_hop
-
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
 	else
@@ -297,7 +294,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Stat()
 	..()
 	if(statpanel("Status"))
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			for(var/datum/gang/G in SSticker.mode.gangs)
 				if(G.is_dominating)
 					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
@@ -354,9 +351,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!isobserver(usr))
 		to_chat(usr, "Not when you're not dead!")
 		return
-	var/A
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in GLOB.sortedAreas
-	var/area/thearea = A
+	var/list/filtered = list()
+	for(var/V in GLOB.sortedAreas)
+		var/area/A = V
+		if(!A.hidden)
+			filtered += A
+	var/area/thearea  = input("Area to jump to", "BOOYEA") as null|anything in filtered
+
 	if(!thearea)
 		return
 
@@ -584,29 +585,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.key = key
 	target.faction = list("neutral")
 	return 1
-
-/mob/dead/observer/proc/server_hop()
-	set category = "Ghost"
-	set name = "Server Hop!"
-	set desc= "Jump to the other server"
-	if(notransform)
-		return
-	if(!config.cross_allowed)
-		verbs -= /mob/dead/observer/proc/server_hop
-		to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
-		return
-	if (alert(src, "Jump to server running at [config.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
-		return 0
-	if (client && config.cross_allowed)
-		to_chat(src, "<span class='notice'>Sending you to [config.cross_address].</span>")
-		new /obj/screen/splash(client)
-		notransform = TRUE
-		sleep(29)	//let the animation play
-		notransform = FALSE
-		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
-		client << link(config.cross_address + "?server_hop=[key]")
-	else
-		to_chat(src, "<span class='error'>There is no other server configured!</span>")
 
 /proc/show_server_hop_transfer_screen(expected_key)
 	//only show it to incoming ghosts

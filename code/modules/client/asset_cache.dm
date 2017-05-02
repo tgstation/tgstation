@@ -172,7 +172,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
-
 /datum/asset/simple/tgui
 	assets = list(
 		"tgui.css"	= 'tgui/assets/tgui.css',
@@ -207,13 +206,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"sig_lan.gif" 				= 'icons/program_icons/sig_lan.gif',
 		"sig_none.gif" 				= 'icons/program_icons/sig_none.gif',
 	)
-
-
-
-
-
-
-
 
 /datum/asset/simple/pda
 	assets = list(
@@ -265,6 +257,26 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
 		"jquery-1.10.2.min.js" = 'html/IRV/jquery-1.10.2.min.js'
+	)
+
+/datum/asset/simple/changelog
+	assets = list(
+		"88x31.png" = 'html/88x31.png',
+		"bug-minus.png" = 'html/bug-minus.png',
+		"cross-circle.png" = 'html/cross-circle.png',
+		"hard-hat-exclamation.png" = 'html/hard-hat-exclamation.png',
+		"image-minus.png" = 'html/image-minus.png',
+		"image-plus.png" = 'html/image-plus.png',
+		"music-minus.png" = 'html/music-minus.png',
+		"music-plus.png" = 'html/music-plus.png',
+		"tick-circle.png" = 'html/tick-circle.png',
+		"wrench-screwdriver.png" = 'html/wrench-screwdriver.png',
+		"spell-check.png" = 'html/spell-check.png',
+		"burn-exclamation.png" = 'html/burn-exclamation.png',
+		"chevron.png" = 'html/chevron.png',
+		"chevron-expand.png" = 'html/chevron-expand.png',
+		"scales.png" = 'html/scales.png',
+		"changelog.css" = 'html/changelog.css'
 	)
 
 //Registers HTML Interface assets.

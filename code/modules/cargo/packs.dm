@@ -182,14 +182,14 @@
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
 	hidden = TRUE
-	cost = 14000
+	cost = 20000
 	contains = list()
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 	dangerous = TRUE
 
 /datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
-	var/crate_value = 50
+	var/crate_value = 30
 	var/list/uplink_items = get_uplink_items(SSticker.mode)
 	while(crate_value)
 		var/category = pick(uplink_items)

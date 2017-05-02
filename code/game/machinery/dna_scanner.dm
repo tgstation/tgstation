@@ -105,13 +105,14 @@
 	..()
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	if(occupant)
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
-			if(!occupant.suiciding && !(occupant.disabilities & NOCLONE) && !occupant.hellbound)
-				occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
+			if(!mob_occupant.suiciding && !(mob_occupant.disabilities & NOCLONE) && !mob_occupant.hellbound)
+				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
 		var/obj/machinery/computer/scan_consolenew/console
 		for(dir in list(NORTH,EAST,SOUTH,WEST))

@@ -29,6 +29,13 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
+	if(LAZYLEN(status_effects))
+		for(var/s in status_effects)
+			var/datum/status_effect/S = s
+			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
+				qdel(S)
+			else
+				S.be_replaced()
 	if(ranged_ability)
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
@@ -597,7 +604,7 @@
 	return name
 
 /mob/living/update_gravity(has_gravity,override = 0)
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
 		clear_alert("weightless")

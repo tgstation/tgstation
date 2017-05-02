@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
-			This deadly weapon has a massive 50-round magazine of devastating 5.56x45mm ammunition."
+			This deadly weapon has a massive 50-round magazine of devastating 1.95x129mm ammunition."
 	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
@@ -469,34 +469,34 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun/basic
-	name = "5.56x45mm Box Magazine"
-	desc = "A 50-round magazine of 5.56x45mm ammunition for use with the L6 SAW. \
+	name = "1.95x129mm Box Magazine"
+	desc = "A 50-round magazine of 1.95x129mm ammunition for use with the L6 SAW. \
 			By the time you need to use this, you'll already be on a pile of corpses."
-	item = /obj/item/ammo_box/magazine/mm556x45
+	item = /obj/item/ammo_box/magazine/mm195x129
 
 /datum/uplink_item/ammo/machinegun/bleeding
-	name = "5.56x45mm (Bleeding) Box Magazine"
-	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "1.95x129mm (Bleeding) Box Magazine"
+	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
 			to induce internal bleeding on targets."
-	item = /obj/item/ammo_box/magazine/mm556x45/bleeding
+	item = /obj/item/ammo_box/magazine/mm195x129/bleeding
 
 /datum/uplink_item/ammo/machinegun/hollow
-	name = "5.56x45mm (Hollow-Point) Box Magazine"
-	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
+	name = "1.95x129mm (Hollow-Point) Box Magazine"
+	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
 			with the unarmored masses of crew."
-	item = /obj/item/ammo_box/magazine/mm556x45/hollow
+	item = /obj/item/ammo_box/magazine/mm195x129/hollow
 
 /datum/uplink_item/ammo/machinegun/ap
-	name = "5.56x45mm (Armor Penetrating) Box Magazine"
-	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "1.95x129mm (Armor Penetrating) Box Magazine"
+	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
 			to puncture even the most durable armor."
-	item = /obj/item/ammo_box/magazine/mm556x45/ap
+	item = /obj/item/ammo_box/magazine/mm195x129/ap
 
 /datum/uplink_item/ammo/machinegun/incen
-	name = "5.56x45mm (Incendiary) Box Magazine"
-	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; tipped with a special flammable \
+	name = "1.95x129mm (Incendiary) Box Magazine"
+	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; tipped with a special flammable \
 			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
-	item = /obj/item/ammo_box/magazine/mm556x45/incen
+	item = /obj/item/ammo_box/magazine/mm195x129/incen
 
 /datum/uplink_item/ammo/sniper
 	cost = 4
@@ -1100,6 +1100,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
+	surplus = 50
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"

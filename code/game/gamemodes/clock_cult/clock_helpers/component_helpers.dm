@@ -22,6 +22,12 @@
 	else
 		for(var/i in GLOB.clockwork_component_cache)
 			.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*GLOB.clockwork_component_cache[i], 1)
+	for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
+		if(G.still_needs_components())
+			for(var/i in G.required_components)
+				if(!G.required_components[i])
+					. -= i
+		break
 	. = pickweight(.)
 
 //returns a component name from a component id
@@ -37,6 +43,8 @@
 			return "Replicant Alloy"
 		if(HIEROPHANT_ANSIBLE)
 			return "Hierophant Ansible"
+		else
+			return null
 
 //returns a component acronym from a component id
 /proc/get_component_acronym(id)
@@ -51,6 +59,8 @@
 			return "RA"
 		if(HIEROPHANT_ANSIBLE)
 			return "HA"
+		else
+			return null
 
 //returns a component id from a component name
 /proc/get_component_id(name)
@@ -65,6 +75,8 @@
 			return REPLICANT_ALLOY
 		if("Hierophant Ansible")
 			return HIEROPHANT_ANSIBLE
+		else
+			return null
 
 //returns a component spanclass from a component id
 /proc/get_component_span(id)
@@ -121,6 +133,8 @@
 			return /obj/effect/overlay/temp/ratvar/component/alloy
 		if(HIEROPHANT_ANSIBLE)
 			return /obj/effect/overlay/temp/ratvar/component/ansible
+		else
+			return null
 
 //returns a type for a component from a component id
 /proc/get_component_type(id)
@@ -135,3 +149,5 @@
 			return /obj/item/clockwork/component/replicant_alloy
 		if(HIEROPHANT_ANSIBLE)
 			return /obj/item/clockwork/component/hierophant_ansible
+		else
+			return null

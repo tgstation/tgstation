@@ -326,7 +326,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return 0
 
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		return 0
 	if(!istype(M))
 		return 0
@@ -396,7 +396,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					A.action = action
 					A.target = source
 					if(!alert_overlay)
-						alert_overlay = new(src)
+						alert_overlay = new(source)
 					alert_overlay.layer = FLOAT_LAYER
 					alert_overlay.plane = FLOAT_PLANE
 					A.add_overlay(alert_overlay)
