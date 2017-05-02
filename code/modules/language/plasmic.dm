@@ -4,7 +4,7 @@
 	speech_verb = "rattles"
 	ask_verb = "inquires"
 	exclaim_verb = "enunciates"
-	key = "o"
+	key = "p"
 	space_chance = 10
 	syllables = list("ehr", "kohr", "tsoh", "ahr", "ak", "zoh",
 					"zohr", "nah", "t", "z", "zz", "tz",
