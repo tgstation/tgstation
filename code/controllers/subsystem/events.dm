@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(events)
 	// Only alive, non-AFK human players count towards this.
 
 	var/players_amt_total = get_active_player_count(alive_check = 0, afk_check = 1, human_check = 1)
-	var/dead_players = players_amt_total - players_amt
+	var/dead_players = max(0, players_amt_total - players_amt)
 
 	var/sum_of_weights = 0
 	for(var/datum/round_event_control/E in control)
