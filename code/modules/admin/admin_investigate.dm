@@ -25,7 +25,7 @@
 	F << "<small>[time_stamp()] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
 
 //ADMINVERBS
-/client/proc/investigate_show( subject in list("hrefs","notes, memos, watchlist","singulo","wires","telesci", "gravity", "records", "cargo", "supermatter", "atmos", "experimentor", "kudzu") )
+/client/proc/investigate_show( subject in list("hrefs","notes, memos, watchlist","singulo","wires","telesci", "gravity", "records", "cargo", "supermatter", "atmos", "experimentor", "botany") )
 	set name = "Investigate"
 	set category = "Admin"
 	if(!holder)
@@ -38,8 +38,8 @@
 				return
 			src << browse(F,"window=investigate[subject];size=800x300")
 		if("hrefs")				//persistent logs and stuff
-			if(href_logfile)
-				src << browse(href_logfile,"window=investigate[subject];size=800x300")
+			if(GLOB.href_logfile)
+				src << browse(GLOB.href_logfile,"window=investigate[subject];size=800x300")
 			else if(!config.log_hrefs)
 				to_chat(src, "<span class='danger'>Href logging is off and no logfile was found.</span>")
 				return

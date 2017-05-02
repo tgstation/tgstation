@@ -1,5 +1,3 @@
-var/global/datum/getrev/revdata = new()
-
 /datum/getrev
 	var/parentcommit
 	var/commit
@@ -8,9 +6,9 @@ var/global/datum/getrev/revdata = new()
 	var/date
 
 /datum/getrev/New()
-	var/head_file = return_file_text(".git/logs/HEAD")
+	var/head_file = file2text(".git/logs/HEAD")
 	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
-		var/list/tmp = file2list("..\\prtestjob.lk")
+		var/list/tmp = world.file2list("..\\prtestjob.lk")
 		for(var/I in tmp)
 			if(I)
 				testmerge |= I
@@ -27,7 +25,7 @@ var/global/datum/getrev/revdata = new()
 		for(var/line in testmerge)
 			if(line)
 				log_world("Test merge active of PR #[line]")
-				feedback_add_details("testmerged_prs","[line]")
+				SSblackbox.add_details("testmerged_prs","[line]")
 		log_world("Based off master commit [parentcommit]")
 	else
 		log_world(parentcommit)
@@ -46,7 +44,7 @@ var/global/datum/getrev/revdata = new()
 			return
 
 		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
-		valid_HTTPSGet = TRUE
+		GLOB.valid_HTTPSGet = TRUE
 		var/json = HTTPSGet(url)
 		if(!json)
 			return
@@ -75,12 +73,12 @@ var/global/datum/getrev/revdata = new()
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
-	if(revdata.parentcommit)
-		to_chat(src, "<b>Server revision compiled on:</b> [revdata.date]")
-		if(revdata.testmerge.len)
-			to_chat(src, revdata.GetTestMergeInfo())
+	if(GLOB.revdata.parentcommit)
+		to_chat(src, "<b>Server revision compiled on:</b> [GLOB.revdata.date]")
+		if(GLOB.revdata.testmerge.len)
+			to_chat(src, GLOB.revdata.GetTestMergeInfo())
 			to_chat(src, "Based off master commit:")
-		to_chat(src, "<a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>")
+		to_chat(src, "<a href='[config.githuburl]/commit/[GLOB.revdata.parentcommit]'>[GLOB.revdata.parentcommit]</a>")
 	else
 		to_chat(src, "Revision unknown")
 	to_chat(src, "<b>Current Infomational Settings:</b>")
@@ -91,7 +89,7 @@ var/global/datum/getrev/revdata = new()
 	to_chat(src, "Enforce Continuous Rounds: [config.continuous.len] of [config.modes.len] roundtypes")
 	to_chat(src, "Allow Midround Antagonists: [config.midround_antag.len] of [config.modes.len] roundtypes")
 	if(config.show_game_type_odds)
-		if(SSticker.current_state == GAME_STATE_PLAYING)
+		if(SSticker.IsRoundInProgress())
 			var/prob_sum = 0
 			var/current_odds_differ = FALSE
 			var/list/probs = list()
@@ -107,13 +105,13 @@ var/global/datum/getrev/revdata = new()
 				probs[ctag] = 1
 				prob_sum += config.probabilities[ctag]
 			if(current_odds_differ)
-				src <<"<b>Game Mode Odds for current round:</b>"
+				to_chat(src, "<b>Game Mode Odds for current round:</b>")
 				for(var/ctag in probs)
 					if(config.probabilities[ctag] > 0)
 						var/percentage = round(config.probabilities[ctag] / prob_sum * 100, 0.1)
 						to_chat(src, "[ctag] [percentage]%")
 
-		src <<"<b>All Game Mode Odds:</b>"
+		to_chat(src, "<b>All Game Mode Odds:</b>")
 		var/sum = 0
 		for(var/ctag in config.probabilities)
 			sum += config.probabilities[ctag]

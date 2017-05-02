@@ -1,9 +1,3 @@
-var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
-	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
-	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
-	"cerulean", "sepia", "black", "pyrite")
-
-
 /mob/living/simple_animal/slime
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
@@ -24,6 +18,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("telepathically chirps")
 	bubble_icon = "slime"
+	initial_languages = list(/datum/language/common, /datum/language/slime)
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 
@@ -76,6 +71,11 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
+	var/static/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
+	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
+	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
+	"cerulean", "sepia", "black", "pyrite")
+
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
@@ -92,8 +92,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		E.Grant(src)
 	create_reagents(100)
 	set_colour(new_colour)
-	grant_language(/datum/language/slime)
-	..()
+	. = ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
@@ -119,7 +118,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(stat != DEAD)
 		icon_state = icon_text
 		if(mood && !stat)
-			add_overlay(image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]"))
+			add_overlay("aslime-[mood]")
 	else
 		icon_state = icon_dead
 	..()

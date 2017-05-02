@@ -257,7 +257,7 @@
 	return is_revolutionary(M) || is_head_revolutionary(M)
 
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
-	if(rev_mind.assigned_role in command_positions)
+	if(rev_mind.assigned_role in GLOB.command_positions)
 		return 0
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
 	if(H.isloyal())
@@ -292,26 +292,21 @@
 		rev_mind.current.log_message("<font color='red'>Has renounced the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
 
 		if(beingborged)
-			to_chat(rev_mind.current, "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>")
+			rev_mind.current.visible_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.",\
+				"<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>")
 			message_admins("[ADMIN_LOOKUPFLW(rev_mind.current)] has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 
 		else
 			rev_mind.current.Paralyse(5)
-			to_chat(rev_mind.current, "<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
-
+			rev_mind.current.visible_message("[rev_mind.current] looks like they just remembered their real allegiance!",\
+				"<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
 		update_rev_icons_removed(rev_mind)
-		for(var/mob/living/M in view(rev_mind.current))
-			if(beingborged)
-				to_chat(M, "The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.")
-
-			else
-				to_chat(M, "[rev_mind.current] looks like they just remembered their real allegiance!")
 
 /////////////////////////////////////
 //Adds the rev hud to a new convert//
 /////////////////////////////////////
 /datum/game_mode/proc/update_rev_icons_added(datum/mind/rev_mind)
-	var/datum/atom_hud/antag/revhud = huds[ANTAG_HUD_REV]
+	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
 	revhud.join_hud(rev_mind.current)
 	set_antag_hud(rev_mind.current, ((rev_mind in head_revolutionaries) ? "rev_head" : "rev"))
 
@@ -319,7 +314,7 @@
 //Removes the hud from deconverted revs//
 /////////////////////////////////////////
 /datum/game_mode/proc/update_rev_icons_removed(datum/mind/rev_mind)
-	var/datum/atom_hud/antag/revhud = huds[ANTAG_HUD_REV]
+	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
 	revhud.leave_hud(rev_mind.current)
 	set_antag_hud(rev_mind.current, null)
 
@@ -350,13 +345,13 @@
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
-		feedback_set_details("round_end_result","win - heads killed")
+		SSblackbox.set_details("round_end_result","win - heads killed")
 		to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>")
 
 		SSticker.news_report = REVS_WIN
 
 	else if(finished == 2)
-		feedback_set_details("round_end_result","loss - rev heads killed")
+		SSblackbox.set_details("round_end_result","loss - rev heads killed")
 		to_chat(world, "<span class='redtext'>The heads of staff managed to stop the revolution!</span>")
 
 		SSticker.news_report = REVS_LOSE
@@ -368,14 +363,14 @@
 	if(head_revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
 		var/num_revs = 0
 		var/num_survivors = 0
-		for(var/mob/living/carbon/survivor in living_mob_list)
+		for(var/mob/living/carbon/survivor in GLOB.living_mob_list)
 			if(survivor.ckey)
 				num_survivors++
 				if(survivor.mind)
 					if((survivor.mind in head_revolutionaries) || (survivor.mind in revolutionaries))
 						num_revs++
 		if(num_survivors)
-			to_chat(world, "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" )
+			to_chat(world, "[GLOB.TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" )
 		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
 		for(var/datum/mind/headrev in head_revolutionaries)
 			text += printplayer(headrev, 1)

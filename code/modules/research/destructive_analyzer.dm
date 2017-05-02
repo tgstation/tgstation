@@ -13,8 +13,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	icon_state = "d_analyzer"
 	var/decon_mod = 0
 
-/obj/machinery/r_n_d/destructive_analyzer/New()
-	..()
+/obj/machinery/r_n_d/destructive_analyzer/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/destructive_analyzer(null)
 	B.apply_default_parts(src)
 

@@ -132,6 +132,7 @@
 /mob/proc/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud(src)
+		update_sight()
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0,mob/viewmob)
@@ -207,7 +208,6 @@
 	mymob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 
-
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	..()
 	hidden_inventory_update(viewmob)
@@ -265,3 +265,6 @@
 		E.screen_loc = ui_equip_position(mymob)
 	if(mymob.hud_used)
 		show_hud(HUD_STYLE_STANDARD,mymob)
+
+/datum/hud/proc/update_locked_slots()
+	return

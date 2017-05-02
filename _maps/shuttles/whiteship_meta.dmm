@@ -671,10 +671,7 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bh" = (
 /turf/closed/wall/shuttle{
@@ -2121,7 +2118,7 @@ ax
 aL
 bO
 ax
-dg
+df
 ac
 bx
 dj
@@ -2151,7 +2148,7 @@ ay
 aP
 ba
 ac
-de
+dd
 bx
 bQ
 bz

@@ -22,9 +22,9 @@
 /obj/machinery/dominator/New()
 	..()
 	set_light(2)
-	poi_list |= src
+	GLOB.poi_list |= src
 	spark_system = new
-	spark_system.set_up(5, 1, src)
+	spark_system.set_up(5, TRUE, src)
 	countdown = new(src)
 
 /obj/machinery/dominator/examine(mob/user)
@@ -127,11 +127,10 @@
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
 		set_broken()
-	poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	gang = null
-	qdel(spark_system)
-	qdel(countdown)
-	countdown = null
+	QDEL_NULL(spark_system)
+	QDEL_NULL(countdown)
 	STOP_PROCESSING(SSmachines, src)
 	return ..()
 
@@ -161,7 +160,7 @@
 		return
 
 	var/time = round(determine_domination_time(tempgang)/60,0.1)
-	if(alert(user,"With [round((tempgang.territory.len/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
+	if(alert(user,"With [round((tempgang.territory.len/GLOB.start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
 		if((tempgang.is_dominating) || !tempgang.dom_attempts || !in_range(src, user) || !isturf(loc))
 			return 0
 

@@ -41,6 +41,11 @@
 		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	..()
 	update_icon()
+	PopulateContents()
+
+//USE THIS TO FILL IT, NOT INITIALIZE OR NEW
+/obj/structure/closet/proc/PopulateContents()
+	return
 
 /obj/structure/closet/Destroy()
 	dump_contents()
@@ -74,8 +79,6 @@
 	..()
 	if(anchored)
 		to_chat(user, "It is anchored to the ground.")
-	if(broken)
-		to_chat(user, "<span class='notice'>It appears to be broken.</span>")
 	else if(secure && !opened)
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
 

@@ -14,7 +14,7 @@
 	var/tables_required = 2
 	active = FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/New()
+/obj/machinery/power/emitter/energycannon/magical/Initialize()
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
@@ -60,6 +60,7 @@
 	obj_integrity = 1000
 	max_integrity = 1000
 	verb_say = "chants"
+	initial_languages = list(/datum/language/common)
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
 	var/never_spoken = TRUE
@@ -68,7 +69,6 @@
 /obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	grant_language(/datum/language/common)
 
 /obj/structure/table/abductor/wabbajack/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -151,7 +151,7 @@
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.access |= access_cent_bar
+	access_card.access |= GLOB.access_cent_bar
 	grant_all_languages(omnitongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
@@ -169,7 +169,7 @@
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
-	access_card.access |= access_cent_bar
+	access_card.access |= GLOB.access_cent_bar
 	access_card.flags |= NODROP
 
 	grant_all_languages(omnitongue=TRUE)
@@ -212,7 +212,7 @@
 			return TRUE
 
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
-	if(ID && (access_cent_bar in ID.access))
+	if(ID && (GLOB.access_cent_bar in ID.access))
 		return TRUE
 
 //Luxury Shuttle Blockers

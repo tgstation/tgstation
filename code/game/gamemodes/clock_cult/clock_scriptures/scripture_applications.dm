@@ -86,7 +86,7 @@
 		return TRUE
 	if(is_type_in_typecache(I, ratvarian_armor_typecache))
 		return FALSE
-	if(!ratvar_awakens && is_type_in_typecache(I, better_armor_typecache))
+	if(!GLOB.ratvar_awakens && is_type_in_typecache(I, better_armor_typecache))
 		return FALSE
 	return user.dropItemToGround(I)
 
@@ -106,7 +106,7 @@
 	sort_priority = 3
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
-	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in all_clockwork_mobs)
+	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in GLOB.all_clockwork_mobs)
 		if(M.host == invoker)
 			to_chat(invoker, "<span class='warning'>You can only house one marauder at a time!</span>")
 			return FALSE
@@ -214,28 +214,6 @@
 	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
 
 
-//Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures at a power cost
-/datum/clockwork_scripture/create_object/mending_motor
-	descname = "Powered Structure, Repairs Other Structures"
-	name = "Mending Motor"
-	desc = "Creates a mechanized prism that will rapidly repair damaged clockwork constructs, converted cyborgs, and clockwork structures."
-	invocations = list("May this prism...", "...mend our dents and scratches!")
-	channel_time = 80
-	consumed_components = list(VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
-	object_path = /obj/structure/destructible/clockwork/powered/mending_motor
-	creator_message = "<span class='brass'>You form a mending motor, which will rapidly repair damaged clockwork constructs, converted cyborgs, and clockwork structures.</span>"
-	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "Powerful healing but power use is somewhat inefficient, though much better than a proselytizer."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 7
-	quickbind = TRUE
-	quickbind_desc = "Creates a Mending Motor, which rapidly repairs constructs and structures at a power cost."
-
-
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
 /datum/clockwork_scripture/create_object/mania_motor
 	descname = "Powered Structure, Area Denial"
@@ -281,13 +259,13 @@
 
 /datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
 	var/servants = 0
-	for(var/mob/living/L in living_mob_list)
+	for(var/mob/living/L in GLOB.living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
-	if(servants * 0.2 < clockwork_daemons)
+	if(servants * 0.2 < GLOB.clockwork_daemons)
 		to_chat(invoker, "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>")
 		return FALSE
-	if(servants * 0.2 < clockwork_daemons+1)
+	if(servants * 0.2 < GLOB.clockwork_daemons+1)
 		to_chat(invoker, "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>")
 		return FALSE
 	return ..()

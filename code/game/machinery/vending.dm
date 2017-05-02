@@ -162,7 +162,7 @@
 
 			while(R.amount>0)
 				var/obj/O = new dump_path(loc)
-				step(O, pick(alldirs)) 	//we only drop 20% of the total of each products and spread it
+				step(O, pick(GLOB.alldirs)) 	//we only drop 20% of the total of each products and spread it
 				R.amount -= 5  			//around to not fill the turf with too many objects.
 				dump_amount++
 			if(dump_amount > 15) //so we don't drop too many items (e.g. ClothesMate)
@@ -297,7 +297,7 @@
 			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
 			cut_overlays()
 			if(panel_open)
-				add_overlay(image(icon, "[initial(icon_state)]-panel"))
+				add_overlay("[initial(icon_state)]-panel")
 			playsound(src.loc, W.usesound, 50, 1)
 			updateUsrDialog()
 		else
@@ -528,7 +528,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		new R.product_path(get_turf(src))
-		feedback_add_details("vending_machine_usage","[R.product_path]|[src.type]")
+		SSblackbox.add_details("vending_machine_usage","[src.type]|[R.product_path]")
 		vend_ready = 1
 		return
 
@@ -732,7 +732,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "sustenance"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/tofu = 24,
 					/obj/item/weapon/reagent_containers/food/drinks/ice = 12,
-					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6)
+					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6,
+					/obj/item/weapon/reagent_containers/glass/beaker/waterbottle = 10)
 	contraband = list(/obj/item/weapon/kitchen/knife = 6,
 					/obj/item/weapon/reagent_containers/food/drinks/coffee = 12,
 					/obj/item/weapon/tank/internals/emergency_oxygen = 6,
@@ -749,7 +750,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
-					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,/obj/item/weapon/reagent_containers/glass/beaker/waterbottle = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers = 6)
 	premium = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/air = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cola
@@ -1052,7 +1053,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson/engine = 2,/obj/item/device/multitool = 4,/obj/item/weapon/electronics/airlock = 10,/obj/item/weapon/electronics/apc = 10,/obj/item/weapon/electronics/airalarm = 10,/obj/item/weapon/stock_parts/cell/high = 10, /obj/item/weapon/rcd/loaded = 3, /obj/item/device/geiger_counter = 5)
+	products = list(/obj/item/clothing/glasses/meson/engine = 2,/obj/item/device/multitool = 4,/obj/item/weapon/electronics/airlock = 10,/obj/item/weapon/electronics/apc = 10,/obj/item/weapon/electronics/airalarm = 10,/obj/item/weapon/stock_parts/cell/high = 10, /obj/item/weapon/construction/rcd/loaded = 3, /obj/item/device/geiger_counter = 5)
 	contraband = list(/obj/item/weapon/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)

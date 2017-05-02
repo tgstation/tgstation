@@ -16,7 +16,7 @@
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
 	var/admin = 0
 	var/ckey = ckey(key)
-	if((ckey in admin_datums) || (ckey in deadmins))
+	if((ckey in GLOB.admin_datums) || (ckey in GLOB.deadmins))
 		admin = 1
 
 	//Whitelist
@@ -32,10 +32,10 @@
 
 	//Guest Checking
 	if(IsGuestKey(key))
-		if (!guests_allowed)
+		if (!GLOB.guests_allowed)
 			log_access("Failed Login: [key] - Guests not allowed")
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
-		if (config.panic_bunker && dbcon && dbcon.IsConnected())
+		if (config.panic_bunker && SSdbcore && SSdbcore.IsConnected())
 			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
 			return list("reason"="guest", "desc"="\nReason: Sorry but the server is currently not accepting connections from never before seen players or guests. If you have played on this server with a byond account before, please log in to the byond account you have played from.")
 
@@ -61,9 +61,9 @@
 
 		var/ckeytext = ckey(key)
 
-		if(!dbcon.Connect())
+		if(!SSdbcore.Connect())
 			log_world("Ban database connection failure. Key [ckeytext] not checked")
-			diary << "Ban database connection failure. Key [ckeytext] not checked"
+			GLOB.diary << "Ban database connection failure. Key [ckeytext] not checked"
 			return
 
 		var/ipquery = ""
@@ -74,7 +74,7 @@
 		if(computer_id)
 			cidquery = " OR computerid = '[computer_id]' "
 
-		var/DBQuery/query_ban_check = dbcon.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
+		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_ban_check.Execute())
 			return
 		while(query_ban_check.NextRow())
@@ -120,7 +120,7 @@
 			bannedckey = ban["ckey"]
 
 		var/newmatch = FALSE
-		var/client/C = directory[ckey]
+		var/client/C = GLOB.directory[ckey]
 		var/cachedban = SSstickyban.cache[bannedckey]
 
 		//rogue ban in the process of being reverted.

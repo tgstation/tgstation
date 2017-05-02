@@ -1,26 +1,5 @@
 #define MAXIMUM_EMP_WIRES 3
 
-var/list/wire_colors = list(
-	"blue",
-	"brown",
-	"crimson",
-	"cyan",
-	"gold",
-	"grey",
-	"green",
-	"magenta",
-	"orange",
-	"pink",
-	"purple",
-	"red",
-	"silver",
-	"violet",
-	"white",
-	"yellow",
-)
-var/list/wire_color_directory = list()
-var/list/wire_name_directory = list()
-
 /proc/is_wire_tool(obj/item/I)
 	if(istype(I, /obj/item/device/multitool))
 		return TRUE
@@ -57,12 +36,12 @@ var/list/wire_name_directory = list()
 	if(randomize)
 		randomize()
 	else
-		if(!wire_color_directory[holder_type])
+		if(!GLOB.wire_color_directory[holder_type])
 			randomize()
-			wire_color_directory[holder_type] = colors
-			wire_name_directory[holder_type] = proper_name
+			GLOB.wire_color_directory[holder_type] = colors
+			GLOB.wire_name_directory[holder_type] = proper_name
 		else
-			colors = wire_color_directory[holder_type]
+			colors = GLOB.wire_color_directory[holder_type]
 
 /datum/wires/Destroy()
 	holder = null
@@ -77,10 +56,29 @@ var/list/wire_name_directory = list()
 		wires += dud
 
 /datum/wires/proc/randomize()
-	var/list/possible_colors = wire_colors.Copy()
+	var/static/list/possible_colors = list(
+	"blue",
+	"brown",
+	"crimson",
+	"cyan",
+	"gold",
+	"grey",
+	"green",
+	"magenta",
+	"orange",
+	"pink",
+	"purple",
+	"red",
+	"silver",
+	"violet",
+	"white",
+	"yellow"
+	)
+	
+	var/list/my_possible_colors = possible_colors.Copy()
 
 	for(var/wire in shuffle(wires))
-		colors[pick_n_take(possible_colors)] = wire
+		colors[pick_n_take(my_possible_colors)] = wire
 
 /datum/wires/proc/shuffle_wires()
 	colors.Cut()
@@ -201,7 +199,7 @@ var/list/wire_name_directory = list()
 	return UI_CLOSE
 
 /datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = 0, \
-							datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "wires", "[holder.name] wires", 350, 150 + wires.len * 30, master_ui, state)

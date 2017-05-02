@@ -9,14 +9,14 @@
 	var/mob/living/silicon/pai/pai
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
-/obj/item/device/paicard/New()
+/obj/item/device/paicard/Initialize()
 	..()
-	pai_card_list += src
+	SSpai.pai_card_list += src
 	add_overlay("pai-off")
 
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
-	pai_card_list -= src
+	SSpai.pai_card_list -= src
 	if(!isnull(pai))
 		pai.death(0)
 	return ..()

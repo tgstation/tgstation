@@ -17,7 +17,7 @@
 	desc = "It's a storage unit for emergency breath masks and O2 tanks."
 	icon_state = "emergency"
 
-/obj/structure/closet/emcloset/New()
+/obj/structure/closet/emcloset/PopulateContents()
 	..()
 
 	if (prob(40))
@@ -63,7 +63,7 @@
 	desc = "It's a storage unit for fire-fighting supplies."
 	icon_state = "fire"
 
-/obj/structure/closet/firecloset/New()
+/obj/structure/closet/firecloset/PopulateContents()
 	..()
 
 	new /obj/item/clothing/suit/fire/firefighter(src)
@@ -72,10 +72,7 @@
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
-/obj/structure/closet/firecloset/full/New()
-	..()
-	contents = list()
-
+/obj/structure/closet/firecloset/full/PopulateContents()
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/flashlight(src)
@@ -92,7 +89,7 @@
 	icon_state = "eng"
 	icon_door = "eng_tool"
 
-/obj/structure/closet/toolcloset/New()
+/obj/structure/closet/toolcloset/PopulateContents()
 	..()
 	if(prob(40))
 		new /obj/item/clothing/suit/hazardvest(src)
@@ -135,7 +132,7 @@
 	icon_state = "eng"
 	icon_door = "eng_rad"
 
-/obj/structure/closet/radiation/New()
+/obj/structure/closet/radiation/PopulateContents()
 	..()
 	new /obj/item/device/geiger_counter(src)
 	new /obj/item/clothing/suit/radiation(src)
@@ -149,7 +146,7 @@
 	desc = "It's a storage unit for explosion-protective suits."
 	icon_state = "bomb"
 
-/obj/structure/closet/bombcloset/New()
+/obj/structure/closet/bombcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/suit/bomb_suit( src )
 	new /obj/item/clothing/under/color/black( src )
@@ -162,9 +159,7 @@
 	desc = "It's a storage unit for explosion-protective suits."
 	icon_state = "bomb"
 
-/obj/structure/closet/bombclosetsecurity/New()
-	..()
-	contents = list()
+/obj/structure/closet/bombclosetsecurity/PopulateContents()
 	new /obj/item/clothing/suit/bomb_suit/security( src )
 	new /obj/item/clothing/under/rank/security( src )
 	new /obj/item/clothing/shoes/sneakers/brown( src )
@@ -176,7 +171,7 @@
 /obj/structure/closet/ammunitionlocker
 	name = "ammunition locker"
 
-/obj/structure/closet/ammunitionlocker/New()
+/obj/structure/closet/ammunitionlocker/PopulateContents()
 	..()
 	for(var/i in 1 to 8)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)

@@ -85,12 +85,12 @@
 	var/static/active_phylacteries = 0
 
 /obj/item/phylactery/Initialize(mapload, datum/mind/newmind)
-	..()
+	. = ..()
 	mind = newmind
 	name = "phylactery of [mind.name]"
 
 	active_phylacteries++
-	poi_list |= src
+	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
 	set_light(lon_range)
 	if(initial(SSticker.mode.round_ends_with_antag_death))
@@ -99,7 +99,7 @@
 /obj/item/phylactery/Destroy(force=FALSE)
 	STOP_PROCESSING(SSobj, src)
 	active_phylacteries--
-	poi_list -= src
+	GLOB.poi_list -= src
 	if(!active_phylacteries)
 		SSticker.mode.round_ends_with_antag_death = initial(SSticker.mode.round_ends_with_antag_death)
 	. = ..()

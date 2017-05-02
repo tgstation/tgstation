@@ -44,9 +44,7 @@
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
-	var/list/datum/objective/special_verbs = list()
 
-	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
@@ -54,6 +52,7 @@
 	var/linglink
 
 	var/miming = 0 // Mime's vow of silence
+	var/list/antag_datums = list()
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
@@ -86,13 +85,13 @@
 	if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
-	if(istype(current) && islist(current.antag_datums)) //wow apparently current isn't always living good fucking job SOMEONE
-		for(var/i in current.antag_datums)
-			var/datum/antagonist/D = i
-			D.transfer_to_new_body(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
+	var/mob/living/old_current = current
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
+	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
+		var/datum/antagonist/A = a
+		A.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
@@ -107,6 +106,51 @@
 
 /datum/mind/proc/wipe_memory()
 	memory = null
+
+// Datum antag mind procs
+/datum/mind/proc/add_antag_datum(datum_type, on_gain = TRUE)
+	if(!datum_type)
+		return
+	if(!can_hold_antag_datum(datum_type))
+		return
+	var/datum/antagonist/A = new datum_type(src)
+	antag_datums += A
+	if(on_gain)
+		A.on_gain()
+
+/datum/mind/proc/remove_antag_datum(datum_type)
+	if(!datum_type)
+		return
+	var/datum/antagonist/A = has_antag_datum(datum_type)
+	if(A)
+		A.on_removal()
+
+/datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
+	for(var/a in antag_datums)
+		var/datum/antagonist/A = a
+		A.on_removal()
+
+/datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
+	if(!datum_type)
+		return
+	. = FALSE
+	for(var/a in antag_datums)
+		var/datum/antagonist/A = a
+		if(check_subtypes && istype(A, datum_type))
+			return A
+		else if(A.type == datum_type)
+			return A
+
+/datum/mind/proc/can_hold_antag_datum(datum_type)
+	if(!datum_type)
+		return
+	. = TRUE
+	if(has_antag_datum(datum_type))
+		return FALSE
+	for(var/i in antag_datums)
+		var/datum/antagonist/A = i
+		if(is_type_in_typecache(A, A.typecache_datum_blacklist))
+			return FALSE
 
 
 /*
@@ -234,7 +278,7 @@
 	creator.faction |= current.faction
 
 	if(creator.mind.special_role)
-		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
+		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
 		to_chat(current, "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>")
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
@@ -255,7 +299,7 @@
 		to_chat(recipient, "<i>[output]</i>")
 
 /datum/mind/proc/edit_memory()
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Not before round-start!", "Alert")
 		return
 
@@ -283,7 +327,7 @@
 		if (SSticker.mode.config_tag=="revolution")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (assigned_role in command_positions)
+		if (assigned_role in GLOB.command_positions)
 			text += "<b>HEAD</b>|loyal|employee|headrev|rev"
 		else if (src in SSticker.mode.head_revolutionaries)
 			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
@@ -351,7 +395,7 @@
 				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
 			text += "<BR>"
 
-		if(gang_colors_pool.len)
+		if(GLOB.gang_colors_pool.len)
 			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
 
 		sections["gang"] = text
@@ -383,7 +427,7 @@
 			text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
 			text += "<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."
 			var/code
-			for (var/obj/machinery/nuclearbomb/bombue in machines)
+			for (var/obj/machinery/nuclearbomb/bombue in GLOB.machines)
 				if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 					code = bombue.r_code
 					break
@@ -898,11 +942,11 @@
 					qdel(SC)
 
 			if("new")
-				if(gang_colors_pool.len)
-					var/list/names = list("Random") + gang_name_pool
+				if(GLOB.gang_colors_pool.len)
+					var/list/names = list("Random") + GLOB.gang_name_pool
 					var/gangname = input("Pick a gang name.","Select Name") as null|anything in names
-					if(gangname && gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
-						if(!(gangname in gang_name_pool))
+					if(gangname && GLOB.gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
+						if(!(gangname in GLOB.gang_name_pool))
 							gangname = null
 						var/datum/gang/newgang = new(null,gangname)
 						SSticker.mode.gangs += newgang
@@ -990,7 +1034,7 @@
 					log_admin("[key_name(usr)] has wizard'ed [current].")
 					SSticker.mode.update_wiz_icons_added(src)
 			if("lair")
-				current.loc = pick(wizardstart)
+				current.loc = pick(GLOB.wizardstart)
 			if("dressup")
 				SSticker.mode.equip_wizard(current)
 			if("name")
@@ -1069,7 +1113,7 @@
 					to_chat(usr, "<span class='danger'>Equipping a syndicate failed!</span>")
 			if("tellcode")
 				var/code
-				for (var/obj/machinery/nuclearbomb/bombue in machines)
+				for (var/obj/machinery/nuclearbomb/bombue in GLOB.machines)
 					if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 						code = bombue.r_code
 						break
@@ -1143,7 +1187,7 @@
 					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
-					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
+					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
 				SSticker.mode.devils += src
 				special_role = "devil"
@@ -1192,14 +1236,17 @@
 				log_admin("[key_name(usr)] turned [current] into abductor.")
 				SSticker.mode.update_abductor_icons_added(src)
 			if("equip")
+				if(!ishuman(current))
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
+					return
+
+				var/mob/living/carbon/human/H = current
 				var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
 				if(gear)
-					var/datum/game_mode/abduction/temp = new
-					temp.equip_common(current)
 					if(gear=="Agent")
-						temp.equip_agent(current)
+						H.equipOutfit(/datum/outfit/abductor/agent)
 					else
-						temp.equip_scientist(current)
+						H.equipOutfit(/datum/outfit/abductor/scientist)
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
@@ -1352,7 +1399,7 @@
 			store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 			to_chat(current, "The nuclear authorization code is: <B>[nuke_code]</B>")
 		else
-			var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+			var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
 			if(nuke)
 				store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke.r_code]", 0, 0)
 				to_chat(current, "The nuclear authorization code is: <B>nuke.r_code</B>")
@@ -1378,11 +1425,11 @@
 		SSticker.mode.wizards += src
 		special_role = "Wizard"
 		assigned_role = "Wizard"
-		if(!wizardstart.len)
-			current.loc = pick(latejoin)
+		if(!GLOB.wizardstart.len)
+			current.loc = pick(GLOB.latejoin)
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
-			current.loc = pick(wizardstart)
+			current.loc = pick(GLOB.wizardstart)
 
 		SSticker.mode.equip_wizard(current)
 		SSticker.mode.name_wizard(current)
@@ -1468,18 +1515,15 @@
 	H.set_species(/datum/species/abductor)
 	var/datum/species/abductor/S = H.dna.species
 
-	switch(role)
-		if("Agent")
-			S.agent = 1
-		if("Scientist")
-			S.scientist = 1
+	if(role == "Scientist")
+		S.scientist = TRUE
 	S.team = team
 
 	var/list/obj/effect/landmark/abductor/agent_landmarks = new
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
 	agent_landmarks.len = 4
 	scientist_landmarks.len = 4
-	for(var/obj/effect/landmark/abductor/A in landmarks_list)
+	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
 		if(istype(A,/obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
 		else if(istype(A,/obj/effect/landmark/abductor/scientist))
@@ -1489,13 +1533,10 @@
 	if(teleport=="Yes")
 		switch(role)
 			if("Agent")
-				S.agent = 1
 				L = agent_landmarks[team]
-				H.loc = L.loc
 			if("Scientist")
-				S.scientist = 1
-				L = agent_landmarks[team]
-				H.loc = L.loc
+				L = scientist_landmarks[team]
+		H.forceMove(L.loc)
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
@@ -1532,7 +1573,7 @@
 		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
-	for(var/mob/dead/observer/G in dead_mob_list)
+	for(var/mob/dead/observer/G in GLOB.dead_mob_list)
 		if(G.mind == src)
 			if(G.can_reenter_corpse || even_if_they_cant_reenter)
 				return G
