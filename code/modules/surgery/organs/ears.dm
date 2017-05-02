@@ -4,6 +4,7 @@
 	desc = "There are three parts to the ear. Inner, middle and outer. Only one of these parts should be normally visible."
 	zone = "head"
 	slot = "ears"
+	gender = PLURAL
 
 	// `deaf` measures "ticks" of deafness. While > 0, the person is unable
 	// to hear anything.
