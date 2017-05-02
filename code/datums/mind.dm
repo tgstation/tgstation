@@ -77,6 +77,12 @@
 		antag_datums = null
 	return ..()
 
+/datum/mind/proc/get_language_holder()
+	if(!language_holder)
+		language_holder = current.language_holder.copy(src)
+
+	return language_holder
+
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null

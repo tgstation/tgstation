@@ -441,6 +441,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/get_language_holder()
 	if(mind)
 		// Mind language holders shadow mob holders.
-		. = mind.language_holder
-	else
-		. = ..()
+		. = mind.get_language_holder()
+		if(.)
+			return .
+
+	. = ..()
