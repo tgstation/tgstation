@@ -76,7 +76,7 @@
 
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
-		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
+		S.falloff = falloff || FALLOFF_SOUNDS
 
 	src << S
 
