@@ -29,6 +29,7 @@
 	else if(isbrain(current) || isclockmob(current))
 		to_chat(current, "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>")
 	..()
+	SSticker.mode.update_servant_icons_added(owner)
 	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult))
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		C.present_tasks(owner) //Memorize the objectives
@@ -39,7 +40,6 @@
 	if(istype(mob_override))
 		current = mob_override
 	GLOB.all_clockwork_mobs += current
-	SSticker.mode.update_servant_icons_added(owner)
 	current.faction |= "ratvar"
 	current.grant_language(/datum/language/ratvar)
 	current.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
@@ -117,6 +117,7 @@
 
 /datum/antagonist/clockcult/on_removal()
 	. = ..()
+	SSticker.mode.update_servant_icons_removed(owner)
 	if(!silent)
 		owner.current.visible_message("<span class='big'>[owner] seems to have remembered their true allegiance!</span>", \
 		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
