@@ -138,7 +138,7 @@
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		make_plating()
 	if(..())
-
+		return
 
 /turf/open/floor/carpet
 	name = "carpet"
