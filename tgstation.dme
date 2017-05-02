@@ -1364,6 +1364,7 @@
 #include "code\modules\jobs\map_changes\map_changes.dm"
 #include "code\modules\language\common.dm"
 #include "code\modules\language\drone.dm"
+#include "code\modules\language\fly.dm"
 #include "code\modules\language\language.dm"
 #include "code\modules\language\language_menu.dm"
 #include "code\modules\language\machine.dm"
