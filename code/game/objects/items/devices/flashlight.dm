@@ -110,13 +110,13 @@
 						var/obj/structure/mirror/mirror = locate(/obj/structure/mirror, user.loc)
 						if(mirror)
 							switch(user.dir)
-								if(1)
+								if(NORTH)
 									can_use_mirror = mirror.pixel_y > 0
-								if(2)
+								if(SOUTH)
 									can_use_mirror = mirror.pixel_y < 0
-								if(4)
+								if(EAST)
 									can_use_mirror = mirror.pixel_x > 0
-								if(8)
+								if(WEST)
 									can_use_mirror = mirror.pixel_x < 0
 
 					M.visible_message("[M] directs [src] to [their] mouth.", \
@@ -137,7 +137,7 @@
 					if(mouth_organs.len)
 						to_chat(user, "<span class='notice'>Inside [their] mouth [mouth_organs.len > 1 ? "are" : "is"] [organ_list].</span>")
 					else
-						to_chat(user, "<span class='notice'>[M] doesn't have any organs in their mouth.</span>")
+						to_chat(user, "<span class='notice'>[M] doesn't have any organs in [their] mouth.</span>")
 					if(pill_count)
 						to_chat(user, "<span class='notice'>[M] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [their] teeth.")
 
