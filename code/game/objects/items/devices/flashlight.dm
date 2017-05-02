@@ -79,18 +79,67 @@
 						to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
 
 			if("mouth")
+
 				if((M.head && M.head.flags_cover & HEADCOVERSMOUTH) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSMOUTH) ? "helmet" : "mask"] first.</span>")
 					return
 
+				var/their = M.p_their()
+
+				var/list/mouth_organs = new
+				for(var/obj/item/organ/O in M.internal_organs)
+					if(O.zone == "mouth")
+						mouth_organs.Add(O)
+				var/organ_list = ""
+				for(var/I = 1, I <= mouth_organs.len, I++)
+					if(I > 1)
+						if(I == mouth_organs.len)
+							organ_list += ", and "
+						else
+							organ_list += ", "
+					var/obj/item/organ/O = mouth_organs[I]
+					organ_list += (O.gender == "plural" ? O.name : "\an [O.name]")
+
+				var/pill_count = 0
+				for(var/datum/action/item_action/hands_free/activate_pill/AP in M.actions)
+					pill_count++
+
 				if(M == user)
-					M.visible_message("[M] directs [src] to [M.p_their()] mouth.", "<span class='notice'>You point the flashlight into your mouth, but can't see anything.</span>")
+					var/can_use_mirror = FALSE
+					if(isturf(user.loc))
+						var/obj/structure/mirror/mirror = locate(/obj/structure/mirror, user.loc)
+						if(mirror)
+							switch(user.dir)
+								if(1)
+									can_use_mirror = mirror.pixel_y > 0
+								if(2)
+									can_use_mirror = mirror.pixel_y < 0
+								if(4)
+									can_use_mirror = mirror.pixel_x > 0
+								if(8)
+									can_use_mirror = mirror.pixel_x < 0
+
+					M.visible_message("[M] directs [src] to [their] mouth.", \
+					"<span class='notice'>You point [src] into your mouth.</span>")
+					if(!can_use_mirror)
+						to_chat(user, "<span class='notice'>You can't see anything without a mirror.</span>")
+						return
+					if(mouth_organs.len)
+						to_chat(user, "<span class='notice'>Inside your mouth [mouth_organs.len > 1 ? "are" : "is"] [organ_list].</span>")
+					else
+						to_chat(user, "<span class='notice'>There's nothing inside your mouth.</span>")
+					if(pill_count)
+						to_chat(user, "<span class='notice'>You have [pill_count] implanted pill[pill_count > 1 ? "s" : ""].</span>")
+
 				else
-					user.visible_message("<span class='warning'>[user] directs [src] to [M]'s mouth.</span>",\
-										 "<span class='danger'>You direct [src] to [M]'s mouth.</span>")
-					var/obj/item/organ/tongue/T = M.getorganslot("tongue")
-					if(T)
-						to_chat(user, "<span class='notice'>Inside the mouth is \a [T.name].</span>")
+					user.visible_message("<span class='notice'>[user] directs [src] to [M]'s mouth.</span>",\
+										 "<span class='notice'>You direct [src] to [M]'s mouth.</span>")
+					if(mouth_organs.len)
+						to_chat(user, "<span class='notice'>Inside [their] mouth [mouth_organs.len > 1 ? "are" : "is"] [organ_list].</span>")
+					else
+						to_chat(user, "<span class='notice'>[M] doesn't have any organs in their mouth.</span>")
+					if(pill_count)
+						to_chat(user, "<span class='notice'>[M] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [their] teeth.")
 
 	else
 		return ..()
