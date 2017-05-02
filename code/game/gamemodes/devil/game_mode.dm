@@ -45,7 +45,7 @@
 	var/datum/antagonist/devil/devilinfo = get_devil_datum(ply)
 	if(!devilinfo)
 		return "Target is not a devil."
-	var/text = "</br>The devil's true name is: [ply.devilinfo.truename]</br>"
+	var/text = "</br>The devil's true name is: [devilinfo.truename]</br>"
 	text += "The devil's bans were:</br>"
 	text += "	[GLOB.lawlorify[LORE][devilinfo.ban]]</br>"
 	text += "	[GLOB.lawlorify[LORE][devilinfo.bane]]</br>"

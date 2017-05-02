@@ -817,14 +817,14 @@
 /mob/living/proc/return_soul()
 	hellbound = 0
 	if(mind)
-		if(mind.soulOwner.devilinfo)//Not sure how this could happen, but whatever.
-			mind.soulOwner.devilinfo.remove_soul(mind)
+		var/datum/antagonist/devil/devilInfo = get_devil_datum(mind.soulOwner)
+		if(devilInfo)//Not sure how this could be null, but let's just try anyway.
+			devilInfo.remove_soul(mind)
 		mind.soulOwner = mind
 
 /mob/living/proc/has_bane(banetype)
-	if(mind)
-		if(mind.devilinfo)
-			return mind.devilinfo.bane == banetype
+	var/datum/antagonist/devil/devilInfo = get_devil_datum(src)
+		return devilInfo.bane == banetype
 	return 0
 
 /mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)

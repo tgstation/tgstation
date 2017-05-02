@@ -47,7 +47,8 @@
 	icon_state = "arch_devil"
 
 /mob/living/carbon/true_devil/proc/set_name()
-	name = mind.devilinfo.truename
+	var/datum/antagonist/devil/devilinfo = get_devil_datum(mind)
+	name = devilinfo.truename
 	real_name = name
 
 /mob/living/carbon/true_devil/Login()
@@ -60,7 +61,7 @@
 	stat = DEAD
 	..(gibbed)
 	drop_all_held_items()
-	INVOKE_ASYNC(mind.devilinfo, /datum/antagonist/devil/proc/beginResurrectionCheck, src)
+	INVOKE_ASYNC(get_devil_info(mind), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
