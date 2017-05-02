@@ -400,8 +400,8 @@
 					var/bz = air_contents.gases["bz"]
 					var/freon = air_contents.gases["freon"]
 					if(n2o || plasma || bz || freon)
-						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains the following: (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-						log_admin("[key_name(usr)] opened a canister that contains the following at [x], [y], [z]:")
+						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following: [ADMIN_JMP(src)]")
+						log_admin("[key_name(usr)] opened a canister that contains the following at [COORD(src)]:")
 						if(plasma)
 							log_admin("Plasma")
 							message_admins("Plasma")
