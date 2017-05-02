@@ -1,4 +1,4 @@
-## /tg/station server and codebase
+## /tg/station
 
 [![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)
 
