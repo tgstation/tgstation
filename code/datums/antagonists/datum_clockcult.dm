@@ -16,7 +16,7 @@
 	if(!istype(current))
 		return
 	if(jobban_isbanned(current, ROLE_SERVANT_OF_RATVAR))
-		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR), 0)
+		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, current, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR), 0)
 	owner.current.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(issilicon(current))
 		var/mob/living/silicon/S = owner
