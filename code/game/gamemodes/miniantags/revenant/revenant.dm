@@ -310,10 +310,11 @@
 /mob/living/simple_animal/revenant/proc/death_reset()
 	revealed = FALSE
 	unreveal_time = 0 
-	notransform=0
+	notransform = 0
 	unstun_time = 0
 	inhibited = FALSE
 	draining = FALSE
+	incorporeal_move = 3
 	invisibility = INVISIBILITY_REVENANT
 	alpha=255
 	stasis = 0
