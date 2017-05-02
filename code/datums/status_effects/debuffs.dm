@@ -108,20 +108,6 @@
 			to_chat(owner, "<span class='sevtug[span_part]'>You feel a frustrated voice quietly fade from your mind...</span>")
 		qdel(src)
 		return
-	if(!(owner in viewers(7, motor))) //not being in range makes it fall off much faster
-		if(!is_servant && !warned_outofsight)
-			to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(flee_messages))]\"</span>")
-			warned_outofsight = TRUE
-		if(severity)
-			severity--
-			if(!severity)
-				qdel(src)
-				return
-		else
-			qdel(src)
-			return
-	else if(prob(severity * 2))
-		warned_outofsight = FALSE
 	if(!motor.active) //it being off makes it fall off much faster
 		if(!is_servant && !warned_turnoff)
 			if(motor.total_accessable_power() > motor.mania_cost)
@@ -129,20 +115,24 @@
 			else
 				to_chat(owner, "<span class='sevtug[span_part]'>[text2ratvar(pick(powerloss_messages))]</span>")
 			warned_turnoff = TRUE
-		if(severity)
-			severity--
+		severity = max(severity - 2, 0)
+		if(!severity)
+			qdel(src)
+			return
+	else
+		if(prob(severity * 2))
+			warned_turnoff = FALSE
+		if(!(owner in viewers(7, motor))) //not being in range makes it fall off slightly faster
+			if(!is_servant && !warned_outofsight)
+				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(flee_messages))]\"</span>")
+				warned_outofsight = TRUE
+			severity = max(severity - 1, 0)
 			if(!severity)
 				qdel(src)
 				return
-		else
-			qdel(src)
-			return
-	else if(prob(severity * 2))
-		warned_turnoff = FALSE
+		else if(prob(severity * 2))
+			warned_outofsight = FALSE
 	if(is_servant) //heals servants of braindamage, hallucination, druggy, dizziness, and confusion
-		var/brainloss = owner.getBrainLoss()
-		if(brainloss)
-			owner.adjustBrainLoss(-brainloss)
 		if(owner.hallucination)
 			owner.hallucination = 0
 		if(owner.druggy)
@@ -163,14 +153,12 @@
 			if(prob(severity * 0.15))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(mania_messages))]\"</span>")
 			owner.playsound_local(get_turf(motor), hum, severity, 1)
-			if(owner.getBrainLoss() <= 50)
-				owner.adjustBrainLoss(severity * 0.025) //2.5% of severity per second
 			owner.adjust_drugginess(Clamp(max(severity * 0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
 			if(owner.hallucination < 50)
 				owner.hallucination = min(owner.hallucination + max(severity * 0.075, 1), 50) //7.5% of severity per second, minimum 1
-			if(owner.dizziness < 25)
-				owner.dizziness = min(owner.dizziness + Floor(severity * 0.025), 25) //2.5% of severity per second above 20 severity
+			if(owner.dizziness < 50)
+				owner.dizziness = min(owner.dizziness + round(severity * 0.05, 1), 50) //5% of severity per second above 10 severity
 			if(owner.confused < 25)
-				owner.confused = min(owner.confused + Floor(severity * 0.025), 25) //2.5% of severity per second above 20 severity
+				owner.confused = min(owner.confused + round(severity * 0.025, 1), 25) //2.5% of severity per second above 20 severity
 			owner.adjustToxLoss(severity * 0.02, TRUE, TRUE) //2% of severity per second
 		severity--
