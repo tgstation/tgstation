@@ -1,6 +1,7 @@
 /* In this file:
  * Wood floor
  * Grass floor
+ * Fake Basalt
  * Carpet floor
  * Fake pits
  * Fake space
@@ -112,6 +113,32 @@
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
+
+
+/turf/open/floor/grass/fakebasalt //Heart is not a real planeteer power
+	name = "aesthetic volcanic flooring"
+	desc = "Safely recreated turf for your hellplanet-scaping"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "basalt"
+	floor_tile = /obj/item/stack/tile/basalt
+	ore_type = /obj/item/weapon/ore/glass/basalt
+	slowdown = 0
+
+/turf/open/floor/grass/fakebasalt/Initialize()
+	..()
+	if(prob(15))
+		icon_state = "basalt[rand(0, 12)]"
+		set_basalt_light(src)
+
+/turf/open/floor/grass/fakebasalt/attackby(obj/item/C, mob/user, params)
+	if(istype(C, /obj/item/weapon/shovel) && params)
+		new ore_type(src)
+		new ore_type(src) //Time to collect your ashes
+		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You dig up [src].</span>")
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
+		make_plating()
+	if(..())
+
 
 /turf/open/floor/carpet
 	name = "carpet"
