@@ -205,8 +205,9 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 	if(href_list["give"])
 		var/tcamt = text2num(href_list["give"])
-		var/obj/machinery/computer/telecrystals/uplinker/A = locate(href_list["target"])
-		A.giveTC(tcamt)
+		if(TCstations.len) // sanity
+			var/obj/machinery/computer/telecrystals/uplinker/A = locate(href_list["target"]) in TCstations
+			A.giveTC(tcamt)
 
 	if(href_list["distrib"])
 		var/sanity = 0
