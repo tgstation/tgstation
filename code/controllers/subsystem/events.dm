@@ -64,6 +64,9 @@ SUBSYSTEM_DEF(events)
 	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	// Only alive, non-AFK human players count towards this.
 
+	var/players_amt_total = get_active_player_count(alive_check = 0, afk_check = 1, human_check = 1)
+	var/dead_players = players_amt_total - players_amt
+
 	var/sum_of_weights = 0
 	for(var/datum/round_event_control/E in control)
 		if(!E.canSpawnEvent(players_amt, gamemode))
@@ -71,14 +74,14 @@ SUBSYSTEM_DEF(events)
 		if(E.weight < 0)						//for round-start events etc.
 			if(TriggerEvent(E))
 				return
-		sum_of_weights += E.weight
+		sum_of_weights += E.weight*(1+dead_players*E.dead_weight_multiplier)
 
 	sum_of_weights = rand(0,sum_of_weights)	//reusing this variable. It now represents the 'weight' we want to select
 
 	for(var/datum/round_event_control/E in control)
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
-		sum_of_weights -= E.weight
+		sum_of_weights -= E.weight*(1+dead_players*E.dead_weight_multiplier)
 
 		if(sum_of_weights <= 0)				//we've hit our goal
 			if(TriggerEvent(E))
