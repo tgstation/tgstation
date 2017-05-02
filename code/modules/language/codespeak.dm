@@ -53,6 +53,7 @@
 	else
 		M.visible_message("<span class='notice'>[user] teaches [M] by beating them over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], codewords and responses flow through your mind.</span>", "<span class='italics'>You hear smacking.</span>")
 		M.grant_language(/datum/language/common/codespeak)
+		use_charge()
 
 /obj/item/weapon/codespeak_manual/proc/use_charge()
 	charges--
