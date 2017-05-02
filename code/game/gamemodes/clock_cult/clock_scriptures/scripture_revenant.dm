@@ -9,7 +9,7 @@
 	desc = "Taps the limitless power of Inath-neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all Servants in range for fifteen seconds."
 	invocations = list("I call upon you, Vanguard!!", "Let the Resonant Cogs turn once more!!", "Grant me and my allies the strength to vanquish our foes!!")
 	channel_time = 100
-	consumed_components = list(VANGUARD_COGWHEEL = 10, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 3) //10 to 19
+	consumed_components = list(VANGUARD_COGWHEEL = 10, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 3)
 	usage_tip = "Servants affected by this scripture are only weak to things that outright destroy bodies, such as bombs or the singularity."
 	tier = SCRIPTURE_REVENANT
 	primary_component = VANGUARD_COGWHEEL
