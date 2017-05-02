@@ -603,19 +603,18 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
-	if(isliving(user))
+	if(isliving(user) && user.mind && user.owns_soul() && !is_devil(user)
 		var/mob/living/U = user
-		if(U.mind && U.owns_soul() && !U.mind.devilinfo) //Burn hands unless they are a devil or have sold their soul
-			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
-				"<span class='warning'>\"As you pick up [src] your arms ignite, reminding you of all your past sins.\"</span>")
-			if(ishuman(U))
-				var/mob/living/carbon/human/H = U
-				H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
-			else
-				U.adjustFireLoss(rand(force/2,force))
+		U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
+			"<span class='warning'>\"As you pick up [src] your arms ignite, reminding you of all your past sins.\"</span>")
+		if(ishuman(U))
+			var/mob/living/carbon/human/H = U
+			H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+		else
+			U.adjustFireLoss(rand(force/2,force))
 
 /obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
-	if(user.mind && user.owns_soul() && !get_devil_datum(user))
+	if(user.mind && user.owns_soul() && !is_devil(user))
 		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 	..()

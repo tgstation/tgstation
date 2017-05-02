@@ -591,7 +591,7 @@
 	if(SSticker.mode.config_tag == "devil")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	var/datum/antagonist/devil/devilinfo = get_devil_datum(src)
+	var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
 	if(devilinfo)
 		if(!devilinfo.ascendable)
 			text += "<b>DEVIL</b>|<a href='?src=\ref[src];devil=ascendable_devil'>Ascendable Devil</a>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
@@ -1153,7 +1153,7 @@
 				to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["devil"])
-		var/datum/antagonist/devil/devilinfo = get_devil_datum(src)
+		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
 		switch(href_list["devil"])
 			if("clear")
 				if(src in SSticker.mode.devils)

@@ -94,7 +94,7 @@
 /obj/item/weapon/paper/contract/infernal/New(atom/loc, mob/living/nTarget, datum/mind/nOwner)
 	..()
 	owner = nOwner
-	devil_datum = get_devil_datum(owner)
+	devil_datum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
 	target = nTarget
 	update_text()
 
@@ -113,9 +113,6 @@
 
 /obj/item/weapon/paper/contract/infernal/update_text()
 	info = "This shouldn't be seen.  Error DEVIL:6"
-
-/obj/item/weapon/paper/contract/infernal/devil_datum()
-	return get_devil_datum(owner)
 
 /obj/item/weapon/paper/contract/infernal/power/update_text(signature = "____________", blood = 0)
 	info = "<center><B>Contract for infernal power</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for power and physical strength.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
@@ -257,7 +254,7 @@
 	to_chat(user, "<span class='boldnotice'>This does NOT make you an antagonist if you were not already.</span>")
 	return TRUE
 
-/obj/item/weapon/paper/contract/infernal/proc/signincorrectly(mob/living/carbon/human/user = target.current, blood = FALSE)
+/obj/item/weapon/paper/contract/infernal/proc/signIncorrectly(mob/living/carbon/human/user = target.current, blood = FALSE)
 	signed = 1
 	update_text("your name", blood)
 

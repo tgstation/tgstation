@@ -64,13 +64,8 @@
 	devil.announceDevilLaws()
 	devil.announce_objectives()
 
-/proc/get_devil_datum(mob/living/M)
-	var/datum/mind
-	if(istype(M))
-		mind = M.mind
-	if(istype(M, datum/mind))
-		mind = M
-	return mind && mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+/proc/is_devil(mob/living/M)
+	return M && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
 
 /proc/add_devil(mob/living/L, ascendable = FALSE)
 	if(!L || !L.mind)

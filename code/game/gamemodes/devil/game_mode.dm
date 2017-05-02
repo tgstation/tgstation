@@ -41,8 +41,8 @@
 		else
 			objective.find_target()
 
-/datum/game_mode/proc/printdevilinfo(atom/ply)
-	var/datum/antagonist/devil/devilinfo = get_devil_datum(ply)
+/datum/game_mode/proc/printdevilinfo(mob/living/ply)
+	var/datum/antagonist/devil/devilinfo = is_devil(ply)
 	if(!devilinfo)
 		return "Target is not a devil."
 	var/text = "</br>The devil's true name is: [devilinfo.truename]</br>"
