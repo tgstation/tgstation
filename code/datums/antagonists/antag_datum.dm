@@ -29,8 +29,8 @@
 			return FALSE
 
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
-	remove_innate_effects(old_body, new_body)
-	apply_innate_effects(new_body, old_body)
+	remove_innate_effects(old_body)
+	apply_innate_effects(new_body)
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)

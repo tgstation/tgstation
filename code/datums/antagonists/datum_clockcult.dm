@@ -59,7 +59,7 @@
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		C.present_tasks(owner) //Memorize the objectives
 
-/datum/antagonist/clockcult/apply_innate_effects(mob/living/mob_override, mob/living/old_body)
+/datum/antagonist/clockcult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
 	if(istype(mob_override))
@@ -116,7 +116,7 @@
 	if(!GLOB.clockwork_gateway_activated)
 		current.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
 
-/datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override, mob/living/new_body)
+/datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/current = owner.current
 	if(istype(mob_override))
 		current = mob_override
