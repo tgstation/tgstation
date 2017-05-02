@@ -10,7 +10,7 @@
 
 /obj/machinery/clonepod
 	anchored = 1
-	name = "cloning pod"
+	name = "Cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = 1
 	icon = 'icons/obj/cloning.dmi'
