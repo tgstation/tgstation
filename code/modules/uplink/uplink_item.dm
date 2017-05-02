@@ -1100,6 +1100,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
+	surplus = 50
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"

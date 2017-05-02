@@ -145,8 +145,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 
 
-/client/proc/get_callproc_args()
-	var/argnum = input("Number of arguments","Number:",0) as num|null
+/client/proc/get_callproc_args(is_atom_new = FALSE)
+	var/argnum = input("Number of arguments[is_atom_new ? " (Excluding loc)" : ""]","Number:",0) as num|null
 	if(isnull(argnum))
 		return
 
@@ -213,7 +213,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Make Robot"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -229,7 +229,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Make Blob"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -247,7 +247,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 
@@ -295,7 +295,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Make Alien"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -312,7 +312,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Make slime"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -423,7 +423,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Admin"
 	set name = "Grant Full Access"
 
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))

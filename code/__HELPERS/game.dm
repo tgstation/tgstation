@@ -489,7 +489,7 @@
 	var/time_passed = world.time
 	var/list/yes_voters = new
 	var/list/cult_total = new
-	if(world.time<1)
+	if(world.time<1800)
 		Nominee << "It would be premature to select a leader while everyone is still settling in, try again in [round((1800-world.time)/10)] seconds"
 		return
 	for(var/datum/mind/B in SSticker.mode.cult)

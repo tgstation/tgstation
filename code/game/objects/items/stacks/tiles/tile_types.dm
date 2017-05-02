@@ -13,8 +13,8 @@
 	var/turf_type = null
 	var/mineralType = null
 
-/obj/item/stack/tile/New(loc, amount)
-	..()
+/obj/item/stack/tile/Initialize(mapload, amount)
+	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
 

@@ -238,7 +238,7 @@
 		if("showgm")
 			if(!check_rights(R_ADMIN))
 				return
-			if(!SSticker || !SSticker.mode)
+			if(!SSticker.HasRoundStarted())
 				alert("The game hasn't started yet!")
 			else if (SSticker.mode)
 				alert("The game mode is [SSticker.mode.name]")
@@ -327,7 +327,7 @@
 		if("traitor_all")
 			if(!check_rights(R_FUN))
 				return
-			if(!SSticker || !SSticker.mode)
+			if(!SSticker.HasRoundStarted())
 				alert("The game hasn't started yet!")
 				return
 			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)

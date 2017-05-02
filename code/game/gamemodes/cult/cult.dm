@@ -33,10 +33,10 @@
 	antag_flag = ROLE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
-	required_players = 1
-	required_enemies = 1
-	recommended_enemies = 1
-	enemy_minimum_age = 0
+	required_players = 24
+	required_enemies = 4
+	recommended_enemies = 4
+	enemy_minimum_age = 14
 
 	announce_span = "cult"
 	announce_text = "Some crew members are trying to start a cult to Nar-Sie!\n\
@@ -110,7 +110,8 @@
 				message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
 			else
 				var/datum/job/sacjob = SSjob.GetJob(GLOB.sac_mind.assigned_role)
-				var/icon/reshape = get_flat_human_icon(null, sacjob, GLOB.sac_mind.current.client.prefs)
+				var/datum/preferences/sacface = GLOB.sac_mind.current.client.prefs
+				var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
 				reshape.Shift(SOUTH, 4)
 				reshape.Shift(EAST, 1)
 				reshape.Crop(7,4,26,31)

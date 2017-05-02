@@ -264,7 +264,7 @@
 	time = 40
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath = 1,
-		/obj/item/weapon/legion_skull = 1,
+		/obj/item/organ/hivelord_core/legion = 1,
 		/datum/reagent/consumable/ketchup = 2,
 		/datum/reagent/consumable/capsaicin = 2
 	)
