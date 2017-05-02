@@ -3,6 +3,9 @@
     <ui-section label={{name}}>
       <span>{{desc}}</span>
       <span>Key: ,{{key}}</span>
+      {{#if shadow}}
+        <span>(gained from mob)</span>
+      {{/if}}
       <span>{{can_speak ? "Can Speak" : "Cannot Speak"}}</span>
       {{#if data.is_living}}
         <ui-button
@@ -13,11 +16,11 @@
       </ui-button>
       {{/if}}
       {{#if data.admin_mode}}
-        <ui-button
-          action='remove_language'
-          params='{"language_name":"{{name}}"}'
-        >Remove
-        </ui-button>
+        {{#if shadow}}
+          <ui-button action='grant_language' params='{"language_name":"{{name}}"}'>Grant</ui-button>
+        {{else}}
+          <ui-button action='remove_language' params='{"language_name":"{{name}}"}'>Remove</ui-button>
+        {{/if}}
       {{/if}}
     </ui-section>
   {{/each}}

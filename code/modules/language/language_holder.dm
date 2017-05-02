@@ -1,6 +1,6 @@
 /datum/language_holder
-	var/list/languages = list()
-	var/list/initial_languages = list(/datum/language/common)
+	var/list/languages = list(/datum/language/common)
+	var/list/shadow_languages = list()
 	var/only_speaks_language = null
 	var/selected_default_language = null
 	var/datum/language_menu/language_menu
@@ -10,8 +10,9 @@
 
 /datum/language_holder/New(owner)
 	src.owner = owner
-	for(var/L in initial_languages)
-		grant_language(L)
+
+	languages = typecacheof(languages)
+	shadow_languages = typecacheof(shadow_languages)
 
 /datum/language_holder/Destroy()
 	owner = null
@@ -20,7 +21,7 @@
 /datum/language_holder/proc/copy(newowner)
 	var/datum/language_holder/copy = new(newowner)
 	copy.languages = src.languages.Copy()
-	copy.initial_languages = src.initial_languages.Copy()
+	// shadow languages are not copied.
 	copy.only_speaks_language = src.only_speaks_language
 	copy.selected_default_language = src.selected_default_language
 	// language menu is not copied, that's tied to the holder.
@@ -50,7 +51,14 @@
 	languages.Cut()
 
 /datum/language_holder/proc/has_language(datum/language/dt)
-	. = is_type_in_typecache(dt, languages)
+	if(is_type_in_typecache(dt, languages))
+		return LANGUAGE_KNOWN
+	else
+		var/atom/movable/AM = get_atom()
+		if(AM.language_holder != src)
+			if(is_type_in_typecache(dt, AM.language_holder.shadow_languages))
+				return LANGUAGE_SHADOWED
+	return FALSE
 
 /datum/language_holder/proc/open_language_menu(mob/user)
 	if(!language_menu)
@@ -66,34 +74,35 @@
 			. = M.current
 
 /datum/language_holder/alien
-	initial_languages = list(/datum/language/xenocommon)
+	languages = list(/datum/language/xenocommon)
 
 /datum/language_holder/monkey
-	initial_languages = list(/datum/language/monkey)
+	languages = list(/datum/language/monkey)
 
 /datum/language_holder/swarmer
-	initial_languages = list(/datum/language/swarmer)
+	languages = list(/datum/language/swarmer)
 
 /datum/language_holder/clockmob
-	initial_languages = list(/datum/language/common, /datum/language/ratvar)
+	languages = list(/datum/language/common, /datum/language/ratvar)
 	only_speaks_language = /datum/language/ratvar
 
 /datum/language_holder/drone
-	initial_languages = list(/datum/language/common, /datum/language/drone, /datum/language/machine)
+	languages = list(/datum/language/common, /datum/language/drone, /datum/language/machine)
 	only_speaks_language = /datum/language/drone
 
 /datum/language_holder/drone/syndicate
 	only_speaks_language = null
 
 /datum/language_holder/slime
-	initial_languages = list(/datum/language/common, /datum/language/slime)
+	languages = list(/datum/language/common, /datum/language/slime)
 
 /datum/language_holder/lightbringer
 	// TODO change to a lightbringer specific sign language
-	initial_languages = list(/datum/language/slime)
+	languages = list(/datum/language/slime)
 
 /datum/language_holder/synthetic
-	initial_languages = list(/datum/language/common, /datum/language/machine)
+	languages = list(/datum/language/common)
+	shadow_languages = list(/datum/language/machine)
 
 /datum/language_holder/universal/New()
 	..()

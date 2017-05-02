@@ -24,7 +24,11 @@
 		data["is_living"] = FALSE
 
 	data["languages"] = list()
-	for(var/ld in language_holder.languages)
+	for(var/ld in subtypesof(/datum/language))
+		var/result = language_holder.has_language(ld)
+		if(!result)
+			continue
+		var/shadow = result == LANGUAGE_SHADOWED
 		var/datum/language/LD = ld
 		var/list/L = list()
 
@@ -32,6 +36,7 @@
 		L["desc"] = initial(LD.desc)
 		L["key"] = initial(LD.key)
 		L["is_default"] = (LD == language_holder.selected_default_language)
+		L["shadow"] = shadow
 		if(AM)
 			L["can_speak"] = AM.can_speak_in_language(LD)
 
