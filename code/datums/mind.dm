@@ -149,18 +149,6 @@
 		else if(A.type == datum_type)
 			return A
 
-/datum/mind/proc/can_hold_antag_datum(datum_type)
-	if(!datum_type)
-		return
-	. = TRUE
-	if(has_antag_datum(datum_type))
-		return FALSE
-	for(var/i in antag_datums)
-		var/datum/antagonist/A = i
-		if(is_type_in_typecache(A, A.typecache_datum_blacklist))
-			return FALSE
-
-
 /*
 	Removes antag type's references from a mind.
 	objectives, uplinks, powers etc are all handled.
