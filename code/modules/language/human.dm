@@ -7,7 +7,8 @@
 	key = "v"
 	space_chance = 10
 	syllables = list("hamburger", "cheeseburger", "freedom", "USA", "commie", "fuck",
-					"shit", "motherfucker", "asshole", "god", "otaku", "weeaboo",
+					"shit", "motherfucker", "asshole", "god", "gun", "won", "both", "wars", "MAGA",
+					"otaku", "weeaboo",
 					"waifu", "neko", "kawaii", "uguu", "-kun", "-san")
 	default_priority = 80
 	icon_state = "human"
