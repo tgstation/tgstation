@@ -5,6 +5,11 @@
 	qdel(communion)
 	return ..()
 
+/datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
+	. = ..()
+	if(.)
+		. = is_convertable_to_cult(new_owner.current)
+
 /datum/antagonist/cult/proc/add_objectives()
 	var/mob/living/current = owner.current
 	var/list/target_candidates = list()
@@ -93,9 +98,11 @@
 	current.clear_alert("bloodsense")
 
 /datum/antagonist/cult/on_removal()
-	. = ..()
+	owner.wipe_memory()
+	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
 	to_chat(owner, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>")
 	owner.current.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(!silent)
 		owner.current.visible_message("<span class='big'>[owner] looks like [owner.current.p_they()] just reverted to their old faith!</span>")
+	. = ..()
