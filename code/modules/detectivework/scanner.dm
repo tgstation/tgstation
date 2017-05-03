@@ -51,9 +51,7 @@
 	set waitfor = 0
 	if(!scanning)
 		// Can remotely scan objects and mobs.
-		if(!in_range(A, user) && !(A in view(world.view, user)))
-			return
-		if(loc != user)
+		if((get_dist(A, user) > 8) || !(A in view(world.view , user)) || (loc != user))
 			return
 
 		scanning = 1
