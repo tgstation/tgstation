@@ -41,7 +41,7 @@
 
 
 /mob/living/carbon/true_devil/proc/convert_to_archdevil()
-	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.
+	maxHealth = 500 // not an IMPOSSIBLE amount, but still near impossible.
 	ascended = TRUE
 	health = maxHealth
 	icon_state = "arch_devil"

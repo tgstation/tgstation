@@ -635,10 +635,10 @@
 	else
 		if(params)
 			arguments = usr.client.get_callproc_args(TRUE)
-		
+
 		if(!usr)
 			return
-		
+
 		arguments = list(usr.loc) + arguments
 
 		var/atom/A = new chosen(arglist(arguments))
@@ -720,7 +720,7 @@
 		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
-	if(istype(M) && M.mind && M.mind.devilinfo)
+	if(is_devil(M))
 		to_chat(usr, SSticker.mode.printdevilinfo(M.mind))
 	else
 		to_chat(usr, "<b>[M] is not a devil.")

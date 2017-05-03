@@ -55,7 +55,7 @@
 	return 1
 
 /datum/game_mode/devil/proc/post_setup_finalize(datum/mind/devil)
-	devil.add_devil(devil.current, ascendable = TRUE) //Devil gamemode devils are ascendable.
+	add_devil(devil.current, ascendable = TRUE) //Devil gamemode devils are ascendable.
 	add_devil_objectives(devil,2)
 
 /proc/is_devil(mob/living/M)
@@ -64,10 +64,9 @@
 /proc/add_devil(mob/living/L, ascendable = FALSE)
 	if(!L || !L.mind)
 		return FALSE
-	. = L.mind.add_antag_datum(ANTAG_DATUM_DEVIL)
-	if(ascendable)
-		var/datum/antagonist/devil_datum = has_antag_datum(ANTAG_DATUM_DEVIL)
-		devil_datum.ascendable = TRUE
+	var/datum/antagonist/devil/devil_datum = L.mind.add_antag_datum(ANTAG_DATUM_DEVIL)
+	devil_datum.ascendable = ascendable
+	return devil_datum
 
 /proc/remove_devil(mob/living/L)
 	if(!L || !L.mind)

@@ -328,8 +328,9 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if(L.mind && L.mind.devilinfo)
-				L.say("[L.mind.devilinfo.truename]")
+			if(is_devil(L))
+				var/datum/antagonist/devil/devilinfo = is_devil(L)
+				L.say("[devilinfo.truename]")
 			else
 				L.say("[L.real_name]")
 			sleep(5) //So the chat flows more naturally

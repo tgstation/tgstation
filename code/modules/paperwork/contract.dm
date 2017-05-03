@@ -245,7 +245,7 @@
 	signed = TRUE
 	if(user.mind.soulOwner != user.mind) //They already sold their soul to someone else?
 		var/datum/antagonist/devil/ownerDevilInfo = user.mind.soulOwner.has_antag_datum(ANTAG_DATUM_DEVIL)
-		user.mind.soulOwner.devilinfo.remove_soul(user.mind) //Then they lose their claim.
+		ownerDevilInfo.remove_soul(user.mind) //Then they lose their claim.
 	user.mind.soulOwner = owner
 	user.hellbound = contractType
 	user.mind.damnation_type = contractType

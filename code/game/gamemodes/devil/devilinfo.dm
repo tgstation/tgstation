@@ -79,6 +79,7 @@ GLOBAL_LIST_INIT(lawlorify, list (
 		)
 	))
 /datum/antagonist/devil
+	//Don't delete upon mind destruction, otherwise soul re-selling will break.
 	delete_on_death = FALSE
 	var/obligation
 	var/ban
@@ -148,9 +149,9 @@ GLOBAL_LIST_INIT(lawlorify, list (
 			preTitle = pick("Dark ", "Hellish ", "Fiery ", "Sinful ", "Blood ")
 		title = pick("Lord ", "Fallen Prelate ", "Count ", "Viscount ", "Vizier ", "Elder ", "Adept ")
 	var/probability = 100
-	mainName = pick("Hal", "Ve", "Odr", "Neit", "Ci", "Quon", "Mya", "Folth", "Wren", "Gyer", "Geyr", "Hil", "Niet", "Twou", "Hu", "Don")
+	mainName = pick("Hal", "Ve", "Odr", "Neit", "Ci", "Quon", "Mya", "Folth", "Wren", "Geyr", "Hil", "Niet", "Twou", "Phi", "Coa")
 	while(prob(probability))
-		mainName += pick("hal", "ve", "odr", "neit", "ca", "quon", "mya", "folth", "wren", "gyer", "geyr", "hil", "niet", "twoe", "phi", "coa")
+		mainName += pick("hal", "ve", "odr", "neit", "ci", "quon", "mya", "folth", "wren", "geyr", "hil", "niet", "twou", "phi", "coa")
 		probability -= 20
 	if(prob(40))
 		suffix = pick(" the Red", " the Soulless", " the Master", ", the Lord of all things", ", Jr.")
@@ -495,7 +496,6 @@ GLOBAL_LIST_INIT(lawlorify, list (
 		var/mob/living/silicon/robot_devil = owner.current
 		robot_devil.mark_devil_laws()
 	sleep(10)
-	devilinfo.update_hud()
 	if(owner.assigned_role == "Clown" && ishuman(owner.current))
 		var/mob/living/carbon/human/S = owner.current
 		to_chat(S, "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>")
@@ -505,7 +505,8 @@ GLOBAL_LIST_INIT(lawlorify, list (
 
 /datum/antagonist/devil/apply_innate_effects(mob/living/mob_override)
 	give_base_spells(1)
-	//TODO: add hud here
+	owner.current.grant_all_languages(TRUE)
+	update_hud()
 
 /datum/antagonist/devil/remove_innate_effects(mob/living/mob_override)
 	for(var/X in owner.spell_list)
