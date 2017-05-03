@@ -657,6 +657,7 @@
 	metabolization_rate = REAGENTS_METABOLISM
 	overdose_threshold = 29
 	toxpwr = 0
+	taste_description = "vomit"
 
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/M)
 	.=..()
