@@ -660,7 +660,7 @@
 
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/M)
 	.=..()
-	if(current_cycle >=11 && prob(15) && ishuman(M))
+	if(current_cycle >=11 && prob(min(50,current_cycle)) && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.vomit(lost_nutrition = 10, blood = prob(10), stun = prob(50), distance = rand(0,4))
 		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
