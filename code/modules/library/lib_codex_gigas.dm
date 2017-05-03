@@ -32,7 +32,7 @@
 		var/speed = 300
 		var/correctness = 85
 		var/willpower = 98
-		if(U.job in list("Librarian")) // the librarian is both faster, and more accurate than normal crew members at research
+		if(U.job in list("Curator")) // the curator is both faster, and more accurate than normal crew members at research
 			speed = 45
 			correctness = 100
 			willpower = 100
