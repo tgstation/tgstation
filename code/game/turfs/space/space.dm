@@ -25,6 +25,8 @@
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
+	fields = list()
+	field_edges = list()
 
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -42,7 +44,7 @@
 
 	if (opacity)
 		has_opaque_atom = TRUE
-	
+
 	return INITIALIZE_HINT_NORMAL
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
@@ -177,7 +179,7 @@
 			ChangeTurf(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
-	
+
 /turf/open/space/ReplaceWithLattice()
 	var/dest_x = destination_x
 	var/dest_y = destination_y
@@ -186,4 +188,4 @@
 	destination_x = dest_x
 	destination_y = dest_y
 	destination_z = dest_z
-	
+
