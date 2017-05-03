@@ -78,23 +78,6 @@
 	return (cultists_to_cult.len>=required_enemies)
 
 
-/datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
-	for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
-		var/explanation
-		switch(cult_objectives[obj_count])
-			if("survive")
-				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
-			if("sacrifice")
-				if(GLOB.sac_mind)
-					explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
-				else
-					explanation = "The veil has already been weakened here, proceed to the next objective."
-					GLOB.sac_complete = TRUE
-			if("eldergod")
-				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes on it. You must do this after sacrificing your target."
-		to_chat(cult_mind.current, "<B>Objective #[obj_count]</B>: [explanation]")
-		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-
 /datum/game_mode/cult/post_setup()
 	modePlayer += cultists_to_cult
 	if("sacrifice" in cult_objectives)

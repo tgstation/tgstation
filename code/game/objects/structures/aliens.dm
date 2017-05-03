@@ -298,7 +298,7 @@
 			else
 				for(var/mob/M in range(1,src))
 					if(CanHug(M))
-						child.Attach(M)
+						child.Leap(M)
 						break
 
 /obj/structure/alien/egg/obj_break(damage_flag)

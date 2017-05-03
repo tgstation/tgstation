@@ -31,7 +31,7 @@
 					break
 
 		if(!input_plate)
-			GLOB.diary << "a [src] didn't find an input plate."
+			GLOB.world_game_log << "a [src] didn't find an input plate."
 			return
 
 /obj/machinery/gibber/autogibber/Bumped(atom/A)

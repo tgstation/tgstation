@@ -44,9 +44,7 @@
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
-	var/list/datum/objective/special_verbs = list()
 
-	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
@@ -54,7 +52,7 @@
 	var/linglink
 
 	var/miming = 0 // Mime's vow of silence
-	var/list/antag_datums = list()
+	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
@@ -71,6 +69,10 @@
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	if(islist(antag_datums))
+		for(var/i in antag_datums)
+			qdel(i)
+		antag_datums = null
 	return ..()
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
@@ -110,15 +112,16 @@
 	memory = null
 
 // Datum antag mind procs
-/datum/mind/proc/add_antag_datum(datum_type, on_gain = TRUE)
+/datum/mind/proc/add_antag_datum(datum_type)
 	if(!datum_type)
 		return
-	if(!can_hold_antag_datum(datum_type))
-		return
 	var/datum/antagonist/A = new datum_type(src)
-	antag_datums += A
-	if(on_gain)
-		A.on_gain()
+	if(!A.can_be_owned(src))
+		qdel(A)
+		return
+	LAZYADD(antag_datums, A)
+	A.on_gain()
+	return A
 
 /datum/mind/proc/remove_antag_datum(datum_type)
 	if(!datum_type)
@@ -126,6 +129,7 @@
 	var/datum/antagonist/A = has_antag_datum(datum_type)
 	if(A)
 		A.on_removal()
+		return TRUE
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
 	for(var/a in antag_datums)
@@ -142,18 +146,6 @@
 			return A
 		else if(A.type == datum_type)
 			return A
-
-/datum/mind/proc/can_hold_antag_datum(datum_type)
-	if(!datum_type)
-		return
-	. = TRUE
-	if(has_antag_datum(datum_type))
-		return FALSE
-	for(var/i in antag_datums)
-		var/datum/antagonist/A = i
-		if(is_type_in_typecache(A, A.typecache_datum_blacklist))
-			return FALSE
-
 
 /*
 	Removes antag type's references from a mind.
@@ -1443,10 +1435,10 @@
 	if(!(src in SSticker.mode.cult))
 		SSticker.mode.add_cultist(src,FALSE)
 		special_role = "Cultist"
-		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
-		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-		var/datum/game_mode/cult/cult = SSticker.mode
-		cult.memorize_cult_objectives(src)
+		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
+		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
+		var/datum/antagonist/cult/C
+		C.cult_memorization(src)
 	var/mob/living/carbon/human/H = current
 	if (!SSticker.mode.equip_cultist(current))
 		to_chat(H, "Spawning an amulet from your Master failed.")

@@ -8,6 +8,7 @@
 	icon_state = "appendix"
 	zone = "mouth"
 	slot = "vocal_cords"
+	gender = PLURAL
 	var/list/spans = null
 
 /obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords

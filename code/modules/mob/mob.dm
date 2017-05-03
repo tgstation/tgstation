@@ -350,6 +350,8 @@
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
+	if((spintime <= 1)||(speed <= 1)||!spintime||!speed)
+		return
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
