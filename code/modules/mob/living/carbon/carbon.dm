@@ -492,6 +492,17 @@
 			break
 	return 1
 
+/mob/living/carbon/proc/spew_organ(power = 5)
+	var/index = rand(0,internal_organs.len-1)
+	var/obj/item/organ/guts = internal_organs[index]
+	if(!guts)
+		return //Guess we're out of organs.
+	var/turf/T = get_step(get_turf(src),dir)
+	guts.Remove(src)
+	guts.forceMove(T)
+	var/atom/throw_target = get_edge_target_turf(guts, dir)
+	guts.throw_at(throw_target, power, 4, src)
+
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)
 	..()
