@@ -16523,6 +16523,9 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aAb" = (
@@ -16558,6 +16561,9 @@
 "aAf" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/fancy/donut_box,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -24133,6 +24139,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aME" = (
@@ -24186,6 +24195,9 @@
 /obj/structure/table/reinforced,
 /obj/machinery/status_display{
 	pixel_x = 32
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 5
@@ -41920,6 +41932,38 @@
 /area/ruin/unpowered{
 	name = "Asteroid"
 	})
+"bvO" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 1
+	},
+/area/shuttle/escape)
+"bvP" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bvQ" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bvR" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/neutral/side,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -94203,7 +94247,7 @@ aAb
 axY
 aDl
 aEi
-aEi
+bvP
 aEi
 aEi
 aEi
@@ -94715,13 +94759,13 @@ axY
 aAc
 axY
 aCp
-aDl
+bvO
 aEk
 aEj
 aGd
 aEl
 aEk
-aJf
+bvR
 aKn
 aLz
 axY
@@ -95231,7 +95275,7 @@ aAd
 aCq
 aDl
 aEm
-aEm
+bvQ
 aEm
 aEm
 aEm
