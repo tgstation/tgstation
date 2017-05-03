@@ -732,12 +732,22 @@ var/global/list/possible_items_special = list()
 	return 0
 	
 /datum/objective/traitor_group
-	var/mission_accomplished = 0 
+	explanation_text = "You shouldn't be seeing this"
+	dangerrating = 25
+	martyr_compatible = FALSE
+	var/heist_ID = null
+	var/list/heist_tools = list(/obj/item/device/encryptionkey/syndicate)
 
-/datum/objective/traitor_group/check_completion()
-	return mission_accomplished
-
-
+/datum/objective/traitor_group/Initialize()
+	switch(rand(3))
+		if(1 to 3)
+			heist_ID = clown
+			explanation_text = "Clowns represent a potent force in galactic politics. Their collective rage has toppled empires and crushed corporations. We must turn them against Nanotrasen."
+			explanation_text += "<br>We have provided you with a special camera that will upload photos that are explicitly geo-tagged to your station. We have also provided you with chameleon clothing that can imitate clown apparrel."
+			explanation_text += "<br>We require FOUR photographs of crewmembers dressed as clowns (mask, shoes, and suit at a minimum), who are in some type of restraints, and are badly wounded."
+			explanation_text += "<br>Remember to make sure the photo is focused on the "clown" and that the "clown" is not dead or braindead. Good Luck."
+			
+			
 ////////////////////////////////
 // Changeling team objectives //
 ////////////////////////////////
