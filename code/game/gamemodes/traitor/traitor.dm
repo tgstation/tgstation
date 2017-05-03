@@ -368,12 +368,12 @@
 
 /datum/game_mode/proc/assign_group_role(datum/mind/owner)
 	var/mob/living/carbon/human/mob = owner.current
+	var/where = "At your feet"
+	var/equipped_slot
 	var/list/slots = list (
 	"backpack" = slot_in_backpack,
 	"left pocket" = slot_l_store,
 	"right pocket" = slot_r_store
-	var/where = "At your feet"
-	var/equipped_slot
 	)
 	if(prob(25)) 		//Assign exchange objectives
 		//set faction
