@@ -1,5 +1,5 @@
-/datum/language/unathi
-	name = "Unathi"
+/datum/language/draconic
+	name = "Draconic"
 	desc = "The common language of lizard-people, composed of sibilant hisses and rattles."
 	speech_verb = "hisses"
 	ask_verb = "hisses"
