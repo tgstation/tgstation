@@ -46,7 +46,7 @@
 
 	var/charges = 30 //-1 or less for unlimited uses
 	var/charges_left
-	var/volume_multiplier = 1 // Increases reagent effect
+	var/volume_multiplier = 1 // Increases reagent effect, works as reagent used per charge
 
 	var/actually_paints = TRUE
 
@@ -67,6 +67,8 @@
 
 	var/pre_noise = FALSE
 	var/post_noise = FALSE
+
+	var/is_slippery = FALSE
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -242,14 +244,14 @@
 	return jointext(out,"")
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
-	if(!proximity || !check_allowed_items(target))
-		return
-
 	if(check_empty(user))
 		return
 
+	if(!proximity || !check_allowed_items(target))
+		return
+
 	if(istype(target, /obj/effect/decal/cleanable))
-		target = target.loc
+		target = get_turf(target)
 
 	if(!is_type_in_list(target,validSurfaces))
 		return
@@ -299,7 +301,7 @@
 				graf_rot = 0
 
 	if(!instant)
-		to_chat(user, "<span class='notice'>You start drawing a [temp] on the	[target.name]...</span>")
+		to_chat(user, "<span class='notice'>You start drawing a [temp] on the [target.name]...</span>")
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -320,8 +322,7 @@
 	if(length(text_buffer))
 		drawing = copytext(text_buffer,1,2)
 
-
-	var/list/turf/affected_turfs = list()
+	var/cost = 1
 
 	if(actually_paints)
 		if(gang_mode)
@@ -329,22 +330,21 @@
 			if(!can_claim_for_gang(user, target))
 				return
 			tag_for_gang(user, target)
-			affected_turfs += target
 		else
 			switch(paint_mode)
 				if(PAINT_NORMAL)
-					new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
-					affected_turfs += target
+					new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot, is_slippery)
 				if(PAINT_LARGE_HORIZONTAL)
+					cost = 5
 					var/turf/left = locate(target.x-1,target.y,target.z)
 					var/turf/right = locate(target.x+1,target.y,target.z)
 					if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
-						new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
-						affected_turfs += left
-						affected_turfs += right
-						affected_turfs += target
+						new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing + "_1", temp, graf_rot, is_slippery)
+						new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing + "_2", temp, graf_rot, is_slippery)
+						new /obj/effect/decal/cleanable/crayon(right, paint_color, drawing + "_3", temp, graf_rot, is_slippery)
 					else
 						to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
+						cost = 0
 						return
 
 	if(!instant)
@@ -359,27 +359,17 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	var/cost = 1
-	if(paint_mode == PAINT_LARGE_HORIZONTAL)
-		cost = 5
 	. = use_charges(cost)
-	var/fraction = min(1, . / reagents.maximum_volume)
-	if(affected_turfs.len)
-		fraction /= affected_turfs.len
-	for(var/t in affected_turfs)
-		reagents.reaction(t, TOUCH, fraction * volume_multiplier)
-		reagents.trans_to(t, ., volume_multiplier)
+	reagents.remove_all(. * volume_multiplier)
 	check_empty(user)
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
 		to_chat(user, "You take a bite of the [src.name]. Delicious!")
 		var/eaten = use_charges(5)
-		if(check_empty(user)) //Prevents divsion by zero
-			return
-		var/fraction = min(eaten / reagents.total_volume, 1)
-		reagents.reaction(M, INGEST, fraction * volume_multiplier)
-		reagents.trans_to(M, eaten, volume_multiplier)
+		var/fraction = min(eaten / (charges_left + eaten), 1)	//percent of remaining consumed
+		reagents.reaction(M, INGEST, fraction)
+		reagents.trans_to(M, eaten * volume_multiplier)
 		// check_empty() is called during afterattack
 	else
 		..()
@@ -492,7 +482,18 @@
 
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity)
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
+	if(istype(target, /obj/effect/decal/cleanable))
+		target = get_turf(target)
 	. = ..()
+	if(.)
+		var/floor_colour = rgb(rand(0,255), rand(0,255), rand(0,255))
+		target.add_atom_colour(floor_colour, WASHABLE_COLOUR_PRIORITY)
+		if(paint_mode == PAINT_LARGE_HORIZONTAL)
+			var/turf/left = locate(target.x-1,target.y,target.z)
+			left.add_atom_colour(floor_colour, WASHABLE_COLOUR_PRIORITY)
+			var/turf/right = locate(target.x+1,target.y,target.z)
+			right.add_atom_colour(floor_colour, WASHABLE_COLOUR_PRIORITY)
+
 
 /*
  * Crayon Box
@@ -642,8 +643,9 @@
 
 		// Caution, spray cans contain inflammable substances
 		. = use_charges(10)
-		var/fraction = min(1, . / reagents.maximum_volume)
-		reagents.reaction(C, VAPOR, fraction * volume_multiplier)
+		var/fraction = min(1, . / (charges_left + .))
+		reagents.reaction(C, VAPOR, fraction)
+		reagents.remove_all(. * volume_multiplier)	//because vapor reactions already make the mob injest
 
 		return
 
@@ -655,10 +657,7 @@
 			else
 				target.set_opacity(initial(target.opacity))
 		. = use_charges(2)
-		var/fraction = min(1, . / reagents.maximum_volume)
-		reagents.reaction(target, TOUCH, fraction * volume_multiplier)
-		reagents.trans_to(target, ., volume_multiplier)
-
+		reagents.remove_all(. * volume_multiplier)
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		return
@@ -729,6 +728,16 @@
 	reagent_contents = list("clf3" = 1)
 	actually_paints = FALSE
 	paint_color = "#000000"
+	validSurfaces = list(/turf/open/floor)
+
+/obj/item/toy/crayon/spraycan/hellcan/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(.)
+		var/turf/T = get_turf(A)
+		if(!isfloorturf(T))
+			return
+		if(!locate(/obj/effect/hotspot) in T)
+			new /obj/effect/hotspot(T)
 
 /obj/item/toy/crayon/spraycan/lubecan
 	name = "slippery spraycan"
@@ -737,6 +746,7 @@
 	icon_capped = "clowncan2_cap"
 	icon_uncapped = "clowncan2"
 	use_overlays = FALSE
+	is_slippery = TRUE
 
 	reagent_contents = list("lube" = 1, "banana" = 1)
 	volume_multiplier = 5
