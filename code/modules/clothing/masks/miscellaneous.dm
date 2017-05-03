@@ -45,6 +45,21 @@
 	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
 	icon_state = "joy"
 
+/obj/item/clothing/mask/language
+	name = "language mask"
+	desc = "Wear this mask, and be taught and forced to speak a new language."
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+	var/datum/language/forced_language
+
+/obj/item/clothing/mask/language/equipped(mob/user, slot)
+	. = ..()
+	if(slot == slot_wear_mask)
+		user.grant_language(forced_language)
+
+/obj/item/clothing/mask/language/Destroy()
+	. = ..()
+
 /obj/item/clothing/mask/pig
 	name = "pig mask"
 	desc = "A rubber pig mask."
