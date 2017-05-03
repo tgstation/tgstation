@@ -803,7 +803,7 @@ $(function() {
 	$('#saveLog').click(function(e) {
 		var saved = '';
 
-		if (window.XMLHtpRequest) {
+		if (window.XMLHttpRequest) {
 			xmlHttp = new XMLHttpRequest();
 		} else {
 			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");

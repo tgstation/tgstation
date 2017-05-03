@@ -44,32 +44,28 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		return
 
 	var/static/list/chatResources = list(
-		"code/modules/html_interface/js/jquery.min.js",
-		"code/modules/goonchat/browserassets/js/json2.min.js",
-		"code/modules/goonchat/browserassets/js/browserOutput.js",
-		"tgui/assets/fonts/fontawesome-webfont.eot",
-		"tgui/assets/fonts/fontawesome-webfont.svg",
-		"tgui/assets/fonts/fontawesome-webfont.ttf",
-		"tgui/assets/fonts/fontawesome-webfont.woff",
-		"code/modules/goonchat/browserassets/css/font-awesome.css",
-		"code/modules/goonchat/browserassets/css/browserOutput.css"
+		"jquery.min.js"            = 'code/modules/html_interface/js/jquery.min.js',
+		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
+		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
+		"fontawesome-webfont.eot"  = 'tgui/assets/fonts/fontawesome-webfont.eot',
+		"fontawesome-webfont.svg"  = 'tgui/assets/fonts/fontawesome-webfont.svg',
+		"fontawesome-webfont.ttf"  = 'tgui/assets/fonts/fontawesome-webfont.ttf',
+		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
+		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
+		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
+		"browserOutput.html"	   = 'code/modules/goonchat/browserassets/html/browserOutput.html'
 	)
 
 	// to_chat(world.log, "chatOutput: load()")
-	for(var/attempts in 1 to 5)
-		for(var/asset in chatResources)
-			owner << browse_rsc(file(asset))
+//	for(var/attempts in 1 to 5)
+	for(var/asset in chatResources)
+		owner << browse_rsc(file(chatResources[asset]), asset)
 
 		//log_world("Sending main chat window to client [owner.ckey]")
-		owner << browse(file("code/modules/goonchat/browserassets/html/browserOutput.html"), "window=browseroutput")
-		sleep(14 + (chatResources.len * 7))
-		if(!owner || loaded)
-			break
-
-	if(owner && !loaded)
-		doneLoading() // try doing this manually
-		CRASH("[owner] failed to load chat. Attempting doneLoading() manually")
-	// log_world("chatOutput: [owner.ckey] load() completed")
+	owner << browse(file("code/modules/goonchat/browserassets/html/browserOutput.html"), "window=browseroutput")
+		//sleep(14 + (chatResources.len * 7))
+	if(loaded)
+		log_world("chatOutput: [owner.ckey] load() completed")
 
 /datum/chatOutput/Topic(href, list/href_list)
 	if(usr.client != owner)
