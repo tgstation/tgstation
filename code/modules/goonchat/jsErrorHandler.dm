@@ -57,7 +57,7 @@
 	return deleted
 
 
-var/global/datum/debugFileOutput/debugFileOutput = new()
+GLOBAL_DATUM_INIT(debugFileOutput, /datum/debugFileOutput, new)
 
 /client/Topic(href, href_list)
 	..()
@@ -65,7 +65,7 @@ var/global/datum/debugFileOutput/debugFileOutput = new()
 	if (href_list["action"] && href_list["action"] == "debugFileOutput" && href_list["file"] && href_list["message"])
 		var/file = href_list["file"]
 		var/message = href_list["message"]
-		debugFileOutput.error(file, message, src)
+		GLOB.debugFileOutput.error(file, message, src)
 
 /client/proc/deleteJsLogFile(fileName as text)
 	set category = "Debug"
@@ -77,7 +77,7 @@ var/global/datum/debugFileOutput/debugFileOutput = new()
 	if (!fileName)
 		return
 
-	debugFileOutput.clear(fileName)
+	GLOB.debugFileOutput.clear(fileName)
 
 	log_admin("[key_name(usr)] deleted the '[fileName]' JS logfile")
 	message_admins("[key_name_admin(usr)] deleted the '[fileName]' JS logfile")
@@ -87,10 +87,13 @@ var/global/datum/debugFileOutput/debugFileOutput = new()
 	set name = "Delete All JS Logfiles"
 	set desc = "Delete all logfiles for JS error reporting. Be extra sure you want to do this!"
 
+	if(!holder)
+		return
+
 	if (alert("Are you really sure you want to delete every single JS logfile?", "No", "Yes") == "No")
 		return
 
-	var/list/summary = debugFileOutput.clearAll()
+	var/list/summary = GLOB.debugFileOutput.clearAll()
 	var/friendlySummary = summary.Join(", ")
 
 	log_admin("[key_name(usr)] deleted every JS logfile! ([friendlySummary])")
