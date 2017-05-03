@@ -25,6 +25,8 @@
 		else
 			external_rsc_urls.Cut(i,i+1)
 #endif
+	GLOB.config_error_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 	config = new
 	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
 	if(config.sql_enabled)
@@ -49,8 +51,10 @@
 	GLOB.world_attack_log << "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------"
 	GLOB.world_runtime_log << "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------"
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
+	if(fexists(GLOB.config_error_log))
+		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
+		fdel(GLOB.config_error_log)
 
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
