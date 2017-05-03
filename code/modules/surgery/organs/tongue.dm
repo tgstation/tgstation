@@ -15,7 +15,8 @@
 		/datum/language/common,
 		/datum/language/draconic,
 		/datum/language/monkey,
-		/datum/language/ratvar
+		/datum/language/ratvar,
+		/datum/language/human
 	))
 
 /obj/item/organ/tongue/get_spans()
@@ -35,6 +36,8 @@
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
 
 /obj/item/organ/tongue/can_speak_in_language(datum/language/dt)
+	if(istype(src, /obj/item/organ/tongue/lizard) && istype(dt, /datum/language/human))
+		return false
 	. = is_type_in_typecache(dt, languages_possible)
 
 /obj/item/organ/tongue/lizard
