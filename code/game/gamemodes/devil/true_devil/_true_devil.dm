@@ -53,7 +53,8 @@
 
 /mob/living/carbon/true_devil/Login()
 	..()
-	mind.announceDevilLaws()
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	devilinfo.greet()
 	mind.announce_objectives()
 
 

@@ -494,7 +494,8 @@ GLOBAL_LIST_INIT(lawlorify, list (
 	give_base_spells(1)
 	if(issilicon(owner.current))
 		var/mob/living/silicon/robot_devil = owner.current
-		robot_devil.mark_devil_laws()
+ 		var/laws = list("You may not use violence to coerce someone into selling their soul.", "You may not directly and knowingly physically harm a devil, other than yourself.", GLOB.lawlorify[LAW][ban], GLOB.lawlorify[LAW][obligation], "Accomplish your objectives at all costs.")
+		robot_devil.set_law_sixsixsix(laws)
 	sleep(10)
 	if(owner.assigned_role == "Clown" && ishuman(owner.current))
 		var/mob/living/carbon/human/S = owner.current
