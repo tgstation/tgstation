@@ -1,12 +1,12 @@
 /datum/game_mode
 	var/traitor_name = "traitor"
 	var/list/datum/mind/traitors = list()
-
+	var/list/heisters = list()
+	
+	var/datum/objective/traitor_group/heist
 	var/datum/mind/partner_one
 	var/datum/mind/partner_two
 	
-	var/datum/mind/P1
-	var/datum/mind/P2
 
 /datum/game_mode/traitor
 	name = "traitor"
@@ -344,7 +344,9 @@
 		var/obj/item/device/uplink/U = new(uplink_loc)
 		U.owner = "[traitor_mob.key]"
 		uplink_loc.hidden_uplink = U
-
+		if(traitor_mob in heisters)
+			U.heist = heist.heist_ID
+		
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
@@ -362,7 +364,9 @@
 
 			to_chat(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
-
+	
+	
+		
 	if(!safety) // If they are not a rev. Can be added on to.
 		give_codewords(traitor_mob)
 
@@ -385,7 +389,7 @@
 		exchange_objective.owner = owner
 		owner.objectives += exchange_objective
 
-		if(prob(20))
+		if(prob(35))
 			var/datum/objective/steal/exchange/backstab/backstab_objective = new
 			backstab_objective.set_faction(faction)
 			backstab_objective.owner = owner
@@ -402,21 +406,15 @@
 		if (equipped_slot)
 			where = "In your [equipped_slot]"
 		to_chat(mob, "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>")
-	else
-		var/datum/objective/traitor_group
-		traitor_group.owner = owner
-		owner.objectives += traitor_group
-		var/obj/item/device/encryptionkey/syndicate/key = new(mob.loc)
-		equipped_slot = mob.equip_in_one_of_slots(key, slots)
-		if (equipped_slot)
-			where = "In your [equipped_slot]"
-		to_chat(mob, "<BR><BR><span class='info'><b>[where] is a Syndicate Encryption Key that can be used on your headset to let you communicate with other Syndicate agents using the :t channel.<b></span><BR>")
-		/*
-		var/obj/item/mission_checker/checker
-		mission_checker = new/obj/item/mission_checker(mob.loc)
-		mob.equip_in_one_of_slots(mission_checker, slots)
-		to_chat(mob, "<BR><BR><span class='info'>Ya gotta get the stuff</span><BR>")
-		*/
+	else		// Heists
+		if(!heist)
+			heist = new /datum/objective/traitor_group
+		heist.owner = owner
+		owner.objectives += heist
+		heisters += owner
+		heist.loadout(mob.loc)
+		to_chat(mob, "<BR><BR><span class='info'><b>Due to the limited TC budget for this mission, it is best accomplished as a team. You will be provided the names of other agents who share this task, work with them to increase your chances of success.</b>")
+
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/traitorhud = huds[ANTAG_HUD_TRAITOR]
 	traitorhud.join_hud(traitor_mind.current)
