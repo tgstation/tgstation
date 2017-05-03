@@ -17,6 +17,7 @@
 	var/atom/movable/constant_target = null //The thing we're always focused on, if we're in the right mode
 	var/target_x = 0 //The target coordinates if we're tracking those
 	var/target_y = 0
+	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
 	var/nuke_warning = FALSE // If we've set off a miniature alarm about an armed nuke
 	var/mode = TRACK_NUKE_DISK //What are we looking for?
 
@@ -63,6 +64,8 @@
 			msg += "\"[initial(constant_target.name)]\"."
 		if(TRACK_COORDINATES)
 			msg += "\"([target_x], [target_y])\"."
+		if(TRACK_INTERNAL_AGENT_TARGET)
+			msg += "\"crime\""
 		else
 			msg = "Its tracking indicator is blank."
 	to_chat(user, msg)
@@ -111,7 +114,7 @@
 			var/mob/living/closest_operative = get_closest_atom(/mob/living/carbon/human, possible_targets, here)
 			if(closest_operative)
 				target = closest_operative
-		if(TRACK_ATOM)
+		if(TRACK_ATOM||TRACK_INTERNAL_AGENT_TARGET)
 			if(constant_target)
 				target = constant_target
 		if(TRACK_COORDINATES)
@@ -129,7 +132,7 @@
 	if(here.z != there.z)
 		icon_state = "pinon[nuke_warning ? "alert" : ""]null"
 		return
-	if(here == there)
+	if(get_dist_euclidian(here,there)<=minimum_range)
 		icon_state = "pinon[nuke_warning ? "alert" : ""]direct"
 	else
 		setDir(get_dir(here, there))
@@ -171,3 +174,22 @@
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
 	mode = TRACK_OPERATIVES
 	flags = NODROP
+
+/obj/item/weapon/pinpointer/internal //Internal agents pinpointers point towards your target, but are junk and malfunction at close range
+	name = "Internal agent pinpointer"
+	desc = "Tracks down crime"
+	mode = TRACK_INTERNAL_AGENT_TARGET
+	minimum_range = 10
+	var/datum/mind/owner = null
+
+/obj/item/weapon/pinpointer/internal/scan_for_target()
+	constant_target = null
+	if(owner)
+		if(owner.objectives)
+			for(var/datum/objective/assassinate/internal/objective in owner.objectives)
+				var/mob/current = objective.target.current
+				if(current.stat!=DEAD)
+					constant_target = current
+					break
+	target = constant_target
+

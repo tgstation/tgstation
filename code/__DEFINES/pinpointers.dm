@@ -5,3 +5,4 @@
 #define TRACK_OPERATIVES 4 //We track the closest operative, so we can regroup when we need to
 #define TRACK_ATOM 5 //We track a specified atom, so admins can make us function for events
 #define TRACK_COORDINATES 6 //We point towards the specified coordinates on our z-level, so we can navigate
+#define TRACK_INTERNAL_AGENT_TARGET 7 //Acts as TRACK_ATOM for the most part

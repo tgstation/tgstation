@@ -2,8 +2,8 @@
 	name = "Internal Affairs"
 	config_tag = "internal_affairs"
 	employer = "Internal Affairs"
-	required_players = 25
-	required_enemies = 5
+	required_players = 1
+	required_enemies = 1
 	recommended_enemies = 8
 	reroll_friendly = 0
 	traitor_name = "Nanotrasen Internal Affairs Agent"
@@ -25,7 +25,20 @@
 		if(i + 1 > traitors.len)
 			i = 0
 		target_list[traitor] = traitors[i + 1]
+		if(traitor.current)
+			traitor.current.disabilities|=NOCLONE //makes things a little less messy
 	..()
+
+
+
+/datum/objective/assassinate/internal/proc/give_pinpointer()
+	if(owner && owner.current)
+		if(ishuman(owner.current))
+			var/mob/living/carbon/human/H = owner.current
+			var/list/slots = list ("backpack" = slot_in_backpack)
+			var/obj/item/weapon/pinpointer/internal/pinpointer = new
+			pinpointer.owner=owner
+			H.equip_in_one_of_slots(pinpointer, slots)
 
 /datum/game_mode/traitor/internal_affairs/forge_traitor_objectives(datum/mind/traitor)
 
@@ -40,11 +53,13 @@
 			destroy_objective.update_explanation_text()
 			traitor.objectives += destroy_objective
 		else
-			var/datum/objective/assassinate/kill_objective = new
+			var/datum/objective/assassinate/internal/kill_objective = new
 			kill_objective.owner = traitor
 			kill_objective.target = target_mind
 			kill_objective.update_explanation_text()
 			traitor.objectives += kill_objective
+			if(!issilicon(traitor.current))
+				kill_objective.give_pinpointer()
 
 		// Escape
 		if(issilicon(traitor.current))
