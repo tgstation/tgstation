@@ -31,7 +31,7 @@
 					break
 
 		if(!input_plate)
-			GLOB.diary << "a [src] didn't find an input plate."
+			GLOB.world_game_log << "a [src] didn't find an input plate."
 			return
 
 /obj/machinery/gibber/autogibber/Bumped(atom/A)
@@ -168,13 +168,14 @@
 
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-	var/sourcename = src.occupant.real_name
+	var/mob/living/mob_occupant = occupant
+	var/sourcename = mob_occupant.real_name
 	var/sourcejob
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
 		sourcejob = gibee.job
-	var/sourcenutriment = src.occupant.nutrition / 15
-	var/sourcetotalreagents = src.occupant.reagents.total_volume
+	var/sourcenutriment = mob_occupant.nutrition / 15
+	var/sourcetotalreagents = mob_occupant.reagents.total_volume
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
 	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
 	var/typeofskin = /obj/item/stack/sheet/animalhide/human
@@ -212,8 +213,8 @@
 		allskin = newskin
 
 	add_logs(user, occupant, "gibbed")
-	src.occupant.death(1)
-	src.occupant.ghostize()
+	mob_occupant.death(1)
+	mob_occupant.ghostize()
 	qdel(src.occupant)
 	spawn(src.gibtime)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)

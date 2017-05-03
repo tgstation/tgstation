@@ -488,3 +488,15 @@
 			L1[key] += other_value
 		else
 			L1[key] = other_value
+
+/proc/print_single_line(list/L)
+	. = "list("
+	for(var/I in 1 to L.len)
+		var/key = L[I]
+		. += "[key]"
+		var/val = L[key]
+		if(!isnull(val))
+			. += " => [val]"
+		if(I < L.len)
+			. += ", "
+	. += ")"

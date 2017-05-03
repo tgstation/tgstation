@@ -79,6 +79,7 @@ GLOBAL_LIST_INIT(lawlorify, list (
 		)
 	))
 /datum/antagonist/devil
+	delete_on_death = FALSE
 	var/obligation
 	var/ban
 	var/bane
