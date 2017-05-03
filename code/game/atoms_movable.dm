@@ -576,7 +576,11 @@
 
 /* Language procs */
 /atom/movable/proc/get_language_holder()
-	. = language_holder
+	if(language_holder)
+		return language_holder
+	else
+		language_holder = new initial_language_holder(src)
+		return language_holder
 
 /atom/movable/proc/grant_language(datum/language/dt)
 	var/datum/language_holder/H = get_language_holder()
