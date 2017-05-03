@@ -10,7 +10,7 @@
 	It will penetrate mindshield implants once before disappearing."
 	invocations = list("Divinity, enslave...", "...all who trespass here!")
 	channel_time = 70
-	consumed_components = list(BELLIGERENT_EYE = 3, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 2)
+	consumed_components = list(BELLIGERENT_EYE = 4, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 2)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission/accession
 	prevent_path = /obj/effect/clockwork/sigil/submission
@@ -32,7 +32,7 @@
 	It grows faster to invoke with more adjacent Servants."
 	invocations = list("Shield us...", "...with the...", "... fragments of Engine!")
 	channel_time = 100
-	consumed_components = list(VANGUARD_COGWHEEL = 3, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
+	consumed_components = list(VANGUARD_COGWHEEL = 4, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
 	usage_tip = "This scripture will replace all weaker armor worn by affected Servants."
 	tier = SCRIPTURE_APPLICATION
 	multiple_invokers_used = TRUE
@@ -99,7 +99,7 @@
 	If it remains close to you, you will gradually regain health up to a low amount, but it will die if it goes too far from you."
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
-	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 3)
+	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 4)
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors."
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
@@ -160,7 +160,7 @@
 	and exceptional speed, though taking damage will temporarily slow it down."
 	invocations = list("Call forth...", "...the soldiers of Armorer.")
 	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 3)
+	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 4)
 	object_path = /obj/structure/destructible/clockwork/shell/fragment
 	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptacle.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
@@ -179,7 +179,7 @@
 	desc = "Places a sigil that stores energy to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
-	consumed_components = list(VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 3)
+	consumed_components = list(VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 4)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
 	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it.</span>"
