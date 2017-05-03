@@ -653,7 +653,7 @@
 	id = "spewium"
 	description = "A powerful emetic, causes uncontrollable vomiting.  May result in vomiting organs at high doses."
 	reagent_state = LIQUID
-	color = "#188018"
+	color = "#2f6617" //A sickly green color
 	metabolization_rate = REAGENTS_METABOLISM
 	overdose_threshold = 29
 	toxpwr = 0
@@ -674,7 +674,7 @@
 		var/mob/living/carbon/human/H = M
 		H.spew_organ()
 		H.vomit(lost_nutrition = 0, blood = 1, stun = 1, distance = 4)
-		to_chat(H, "<span class='userdanger'>You feel something lumpy come up as you vomit</span>")
+		to_chat(H, "<span class='userdanger'>You feel something lumpy come up as you vomit.</span>")
 
 /datum/reagent/toxin/curare
 	name = "Curare"
