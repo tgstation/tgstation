@@ -43,10 +43,8 @@
 	var/log_attack = 0					// log attack messages
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_pda = 0						// log pda messages
-	var/log_hrefs = 0					// log all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_twitter = 0					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 	var/log_world_topic = 0				// log all world.Topic() calls
-	var/log_runtimes = FALSE			// log runtimes into a file
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -271,7 +269,7 @@
 
 		if(M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
-				GLOB.diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
+				GLOB.config_error_log << "Adding game mode [M.name] ([M.config_tag]) to configuration."
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
@@ -360,8 +358,6 @@
 					log_adminchat = 1
 				if("log_pda")
 					log_pda = 1
-				if("log_hrefs")
-					log_hrefs = 1
 				if("log_twitter")
 					log_twitter = 1
 				if("log_world_topic")
@@ -495,12 +491,6 @@
 					ipintel_save_bad = text2num(value)
 				if("aggressive_changelog")
 					aggressive_changelog = 1
-				if("log_runtimes")
-					log_runtimes = TRUE
-					var/newlog = file("data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log")
-					if(GLOB.runtime_diary != newlog)
-						world.log << "Now logging runtimes to data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log"
-						GLOB.runtime_diary = newlog
 				if("autoconvert_notes")
 					autoconvert_notes = 1
 				if("allow_webclient")
@@ -544,7 +534,7 @@
 				if("error_msg_delay")
 					error_msg_delay = text2num(value)
 				else
-					GLOB.diary << "Unknown setting in configuration: '[name]'"
+					GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
 
 		else if(type == "game_options")
 			switch(name)
@@ -607,13 +597,13 @@
 					if(mode_name in modes)
 						continuous[mode_name] = 1
 					else
-						GLOB.diary << "Unknown continuous configuration definition: [mode_name]."
+						GLOB.config_error_log << "Unknown continuous configuration definition: [mode_name]."
 				if("midround_antag")
 					var/mode_name = lowertext(value)
 					if(mode_name in modes)
 						midround_antag[mode_name] = 1
 					else
-						GLOB.diary << "Unknown midround antagonist configuration definition: [mode_name]."
+						GLOB.config_error_log << "Unknown midround antagonist configuration definition: [mode_name]."
 				if("midround_antag_time_check")
 					midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
@@ -629,9 +619,9 @@
 						if(mode_name in modes)
 							min_pop[mode_name] = text2num(mode_value)
 						else
-							GLOB.diary << "Unknown minimum population configuration definition: [mode_name]."
+							GLOB.config_error_log << "Unknown minimum population configuration definition: [mode_name]."
 					else
-						GLOB.diary << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
+						GLOB.config_error_log << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
 				if("max_pop")
 					var/pop_pos = findtext(value, " ")
 					var/mode_name = null
@@ -643,9 +633,9 @@
 						if(mode_name in modes)
 							max_pop[mode_name] = text2num(mode_value)
 						else
-							GLOB.diary << "Unknown maximum population configuration definition: [mode_name]."
+							GLOB.config_error_log << "Unknown maximum population configuration definition: [mode_name]."
 					else
-						GLOB.diary << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
+						GLOB.config_error_log << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
 				if("shuttle_refuel_delay")
 					shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -673,9 +663,9 @@
 						if(prob_name in modes)
 							probabilities[prob_name] = text2num(prob_value)
 						else
-							GLOB.diary << "Unknown game mode probability configuration definition: [prob_name]."
+							GLOB.config_error_log << "Unknown game mode probability configuration definition: [prob_name]."
 					else
-						GLOB.diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+						GLOB.config_error_log << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
 
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
@@ -722,7 +712,7 @@
 					// Value is in the form "LAWID,NUMBER"
 					var/list/L = splittext(value, ",")
 					if(L.len != 2)
-						GLOB.diary << "Invalid LAW_WEIGHT: " + t
+						GLOB.config_error_log << "Invalid LAW_WEIGHT: " + t
 						continue
 					var/lawid = L[1]
 					var/weight = text2num(L[2])
@@ -777,7 +767,7 @@
 				if("mice_roundstart")
 					mice_roundstart = text2num(value)
 				else
-					GLOB.diary << "Unknown setting in configuration: '[name]'"
+					GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
 
 	fps = round(fps)
 	if(fps <= 0)
@@ -831,7 +821,7 @@
 				maplist[currentmap.map_name] = currentmap
 				currentmap = null
 			else
-				GLOB.diary << "Unknown command in map vote config: '[command]'"
+				GLOB.config_error_log << "Unknown command in map vote config: '[command]'"
 
 
 /datum/configuration/proc/loadsql(filename)
@@ -875,7 +865,7 @@
 			if("feedback_tableprefix")
 				global.sqlfdbktableprefix = value
 			else
-				GLOB.diary << "Unknown setting in configuration: '[name]'"
+				GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
 
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up

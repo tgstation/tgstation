@@ -114,6 +114,9 @@ SUBSYSTEM_DEF(persistence)
 	var/saved_json
 	trophy_sav >> saved_json
 
+	if(!saved_json)
+		return
+
 	var/decoded_json = json_decode(saved_json)
 
 	if(!islist(decoded_json))

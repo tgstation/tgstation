@@ -162,7 +162,7 @@
 			. = TRUE
 		if("inject")
 			var/chem = params["chem"]
-			if(!is_operational() || mob_occupant)
+			if(!is_operational() || !mob_occupant)
 				return
 			if(mob_occupant.health < min_health && chem != "epinephrine")
 				return

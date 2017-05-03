@@ -83,5 +83,5 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "beefnoodle"
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 6)
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 6, "liquidgibs" = 3)
 	tastes = list("noodle" = 1, "meat" = 1)
