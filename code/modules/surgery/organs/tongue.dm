@@ -37,7 +37,7 @@
 
 /obj/item/organ/tongue/can_speak_in_language(datum/language/dt)
 	if(istype(src, /obj/item/organ/tongue/lizard) && istype(dt, /datum/language/human))
-		return false
+		return FALSE
 	. = is_type_in_typecache(dt, languages_possible)
 
 /obj/item/organ/tongue/lizard
