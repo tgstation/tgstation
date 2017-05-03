@@ -118,6 +118,9 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	var/wetness = 30 //Reduced when exposed to high temperautres
 	var/drying_threshold_temperature = 500 //Kelvin to start drying
 
+/*
+ * Leather SHeet
+ */
 /obj/item/stack/sheet/leather
 	name = "leather"
 	desc = "The by-product of mob grinding."
@@ -127,19 +130,22 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/weapon/storage/wallet, 1), \
-	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2), \  //I ate his liver with some fava beans and a nice chianti
+	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2), \
 	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3), \
 	new/datum/stack_recipe("toolbelt", /obj/item/weapon/storage/belt/utility, 4), \
 	new/datum/stack_recipe("leather satchel", /obj/item/weapon/storage/backpack/satchel, 5), \
 	new/datum/stack_recipe("bandolier", /obj/item/weapon/storage/belt/bandolier, 5), \
 	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7), \
 	new/datum/stack_recipe("leather overcoat", /obj/item/clothing/suit/jacket/leather/overcoat, 10), \
-	))
+))
 
 /obj/item/stack/sheet/leather/Initialize(mapload, new_amount, merge = TRUE)
-		recipes = GLOB.leather_recipes
-		return ..()
+	recipes = GLOB.leather_recipes
+	return ..()
 
+/*
+ * Sinew
+ */
 /obj/item/stack/sheet/sinew
 	name = "watcher sinew"
 	icon = 'icons/obj/mining.dmi'
@@ -151,11 +157,12 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	new/datum/stack_recipe("sinew restraints", /obj/item/weapon/restraints/handcuffs/sinew, 1, on_floor = 1), \
-	))
+))
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.sinew_recipes
 	return ..()
+
 		/*
  * Plates
  		*/
