@@ -15,6 +15,7 @@ var/global/list/uplinks = list()
 	var/telecrystals = 20
 	var/selected_cat = null
 	var/owner = null
+	var/heist = null
 	var/datum/game_mode/gamemode = null
 	var/spent_telecrystals = 0
 	var/purchase_log = ""
