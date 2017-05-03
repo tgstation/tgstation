@@ -125,6 +125,21 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	icon_state = "sheet-leather"
 	origin_tech = "materials=2"
 
+GLOBAL_LIST_INIT(leather_recipes, list ( \
+	new/datum/stack_recipe("wallet", /obj/item/weapon/storage/wallet, 1), \
+	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2), \  //I ate his liver with some fava beans and a nice chianti
+	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3), \
+	new/datum/stack_recipe("toolbelt", /obj/item/weapon/storage/belt/utility, 4), \
+	new/datum/stack_recipe("leather satchel", /obj/item/weapon/storage/backpack/satchel, 5), \
+	new/datum/stack_recipe("bandolier", /obj/item/weapon/storage/belt/bandolier, 5), \
+	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7), \
+	new/datum/stack_recipe("leather overcoat", /obj/item/clothing/suit/jacket/leather/overcoat, 10), \
+	))
+
+/obj/item/stack/sheet/leather/Initialize(mapload, new_amount, merge = TRUE)
+		recipes = GLOB.leather_recipes
+		return ..()
+
 /obj/item/stack/sheet/sinew
 	name = "watcher sinew"
 	icon = 'icons/obj/mining.dmi'
