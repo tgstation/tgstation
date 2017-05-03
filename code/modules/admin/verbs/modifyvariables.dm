@@ -213,7 +213,14 @@ GLOBAL_PROTECT(VVpixelmovement)
 				.["class"] = null
 				return
 			.["type"] = type
-			.["value"] = new type()
+			
+			var/list/arguments
+			if(alert(usr, "Would you like to add arguments?", "New Atom", "No", "Yes") == "Yes")
+				arguments = get_callproc_args(FALSE)
+			else
+				arguments = list()
+
+			.["value"] = new type(arglist(arguments))
 
 		if (VV_NEW_DATUM)
 			var/type = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
@@ -221,7 +228,13 @@ GLOBAL_PROTECT(VVpixelmovement)
 				.["class"] = null
 				return
 			.["type"] = type
-			.["value"] = new type()
+			var/list/arguments
+			if(alert(usr, "Would you like to add arguments?", "New Atom", "No", "Yes") == "Yes")
+				arguments = get_callproc_args(FALSE)
+			else
+				arguments = list()
+
+			.["value"] = new type(arglist(arguments))
 
 		if (VV_NEW_TYPE)
 			var/type = current_value
@@ -237,7 +250,14 @@ GLOBAL_PROTECT(VVpixelmovement)
 				.["class"] = null
 				return
 			.["type"] = type
-			.["value"] = new type()
+
+			var/list/arguments
+			if(alert(usr, "Would you like to add arguments?", "New Atom", "No", "Yes") == "Yes")
+				arguments = get_callproc_args(FALSE);
+			else
+				arguments = list()
+
+			.["value"] = new type(arglist(arguments))
 
 
 		if (VV_NEW_LIST)

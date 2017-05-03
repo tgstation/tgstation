@@ -44,9 +44,7 @@
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
-	var/list/datum/objective/special_verbs = list()
 
-	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
@@ -54,7 +52,7 @@
 	var/linglink
 
 	var/miming = 0 // Mime's vow of silence
-	var/list/antag_datums = list()
+	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
@@ -71,6 +69,10 @@
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	if(islist(antag_datums))
+		for(var/i in antag_datums)
+			qdel(i)
+		antag_datums = null
 	return ..()
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
@@ -110,15 +112,16 @@
 	memory = null
 
 // Datum antag mind procs
-/datum/mind/proc/add_antag_datum(datum_type, on_gain = TRUE)
+/datum/mind/proc/add_antag_datum(datum_type)
 	if(!datum_type)
 		return
-	if(!can_hold_antag_datum(datum_type))
-		return
 	var/datum/antagonist/A = new datum_type(src)
-	antag_datums += A
-	if(on_gain)
-		A.on_gain()
+	if(!A.can_be_owned(src))
+		qdel(A)
+		return
+	LAZYADD(antag_datums, A)
+	A.on_gain()
+	return A
 
 /datum/mind/proc/remove_antag_datum(datum_type)
 	if(!datum_type)
@@ -126,6 +129,7 @@
 	var/datum/antagonist/A = has_antag_datum(datum_type)
 	if(A)
 		A.on_removal()
+		return TRUE
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
 	for(var/a in antag_datums)
@@ -142,18 +146,6 @@
 			return A
 		else if(A.type == datum_type)
 			return A
-
-/datum/mind/proc/can_hold_antag_datum(datum_type)
-	if(!datum_type)
-		return
-	. = TRUE
-	if(has_antag_datum(datum_type))
-		return FALSE
-	for(var/i in antag_datums)
-		var/datum/antagonist/A = i
-		if(is_type_in_typecache(A, A.typecache_datum_blacklist))
-			return FALSE
-
 
 /*
 	Removes antag type's references from a mind.
@@ -280,7 +272,7 @@
 	creator.faction |= current.faction
 
 	if(creator.mind.special_role)
-		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
+		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
 		to_chat(current, "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>")
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)

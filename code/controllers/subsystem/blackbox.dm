@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(blackbox)
 	msg_service = SSblackbox.msg_service
 	msg_cargo = SSblackbox.msg_cargo
 	msg_other = SSblackbox.msg_other
-	
+
 	feedback = SSblackbox.feedback
 
 //no touchie
@@ -84,25 +84,13 @@ SUBSYSTEM_DEF(blackbox)
 	if (!SSdbcore.Connect())
 		return
 
-	var/round_id
-
-	var/datum/DBQuery/query_feedback_max_id = SSdbcore.NewQuery("SELECT MAX(round_id) AS round_id FROM [format_table_name("feedback")]")
-	if(!query_feedback_max_id.Execute())
-		return
-	while (query_feedback_max_id.NextRow())
-		round_id = query_feedback_max_id.item[1]
-
-	if (!isnum(round_id))
-		round_id = text2num(round_id)
-	round_id++
-
 	var/sqlrowlist = ""
 
 	for (var/datum/feedback_variable/FV in feedback)
 		if (sqlrowlist != "")
 			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
 
-		sqlrowlist += "(null, Now(), [round_id], \"[sanitizeSQL(FV.get_variable())]\", [FV.get_value()], \"[sanitizeSQL(FV.get_details())]\")"
+		sqlrowlist += "(null, Now(), [GLOB.round_id], \"[sanitizeSQL(FV.get_variable())]\", [FV.get_value()], \"[sanitizeSQL(FV.get_details())]\")"
 
 	if (sqlrowlist == "")
 		return
