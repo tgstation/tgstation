@@ -1,6 +1,0 @@
-author: "Jordie0608"
-delete-after: True
-changes: 
-  - rscadd: "Investigate logs are now persistent."
-  - tweak: "Game logs are now stored per-round; use .getserverlog to access previous rounds."
-  - rscdel: ".giveruntimelog and .getruntimelog removed."
