@@ -493,10 +493,10 @@
 	return 1
 
 /mob/living/carbon/proc/spew_organ(power = 5)
+	if(internal_organs.len <= 0)
+		return //Guess we're out of organs
 	var/index = rand(0,internal_organs.len-1)
 	var/obj/item/organ/guts = internal_organs[index]
-	if(!guts)
-		return //Guess we're out of organs.
 	var/turf/T = get_step(get_turf(src),dir)
 	guts.Remove(src)
 	guts.forceMove(T)
