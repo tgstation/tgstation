@@ -283,7 +283,7 @@
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
 		if(added_roundstart)
 			is_locked = !is_locked
-			to_chat(user, "You [!is_locked ? "un" : ""]lock the case."
+			to_chat(user, "You [!is_locked ? "un" : ""]lock the case.")
 		else
 			to_chat(user, "<span class='danger'>The lock is stuck shut!</span>")
 		return
