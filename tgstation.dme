@@ -1379,6 +1379,7 @@
 #include "code\modules\language\common.dm"
 #include "code\modules\language\draconic.dm"
 #include "code\modules\language\drone.dm"
+#include "code\modules\language\human.dm"
 #include "code\modules\language\language.dm"
 #include "code\modules\language\language_menu.dm"
 #include "code\modules\language\machine.dm"
