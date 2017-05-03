@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - balance: "Clockwork component generation is twice as fast."
+  - balance: "Scriptures cost up to twice as much; Driver scriptures are unaffected, meaning they cost 50% less, Script scriptures cost 25% less, Application scriptures cost about 12.5% less, and Revenant scriptures cost about 5% less."
