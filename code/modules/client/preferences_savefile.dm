@@ -267,7 +267,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		pref_species = new newtype()
 	else
 		var/rando_race = pick(config.roundstart_races)
-		pref_species = new rando_race()
+		if (rando_race)
+			pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		S["features["mcolor"]"]	<< "#FFF"
