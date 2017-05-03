@@ -372,8 +372,10 @@
 	"backpack" = slot_in_backpack,
 	"left pocket" = slot_l_store,
 	"right pocket" = slot_r_store
+	var/where = "At your feet"
+	var/equipped_slot
 	)
-	if(prob(35)) 		//Assign exchange objectives
+	if(prob(25)) 		//Assign exchange objectives
 		//set faction
 		var/faction = "red"
 		if(owner == partner_two)
@@ -396,8 +398,7 @@
 		else
 			folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
 			
-		var/where = "At your feet"
-		var/equipped_slot = mob.equip_in_one_of_slots(folder, slots)
+		equipped_slot = mob.equip_in_one_of_slots(folder, slots)
 		if (equipped_slot)
 			where = "In your [equipped_slot]"
 		to_chat(mob, "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>")
@@ -405,6 +406,11 @@
 		var/datum/objective/traitor_group
 		traitor_group.owner = owner
 		owner.objectives += traitor_group
+		var/obj/item/device/encryptionkey/syndicate/key = new(mob.loc)
+		equipped_slot = mob.equip_in_one_of_slots(key, slots)
+		if (equipped_slot)
+			where = "In your [equipped_slot]"
+		to_chat(mob, "<BR><BR><span class='info'><b>[where] is a Syndicate Encryption Key that can be used on your headset to let you communicate with other Syndicate agents using the :t channel.<b></span><BR>")
 		/*
 		var/obj/item/mission_checker/checker
 		mission_checker = new/obj/item/mission_checker(mob.loc)
