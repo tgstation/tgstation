@@ -623,7 +623,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		chemicals -= 250
 		to_chat(src, "<span class='notice'>You send a jolt of energy to your host, reviving them!</span>")
 		victim.grab_ghost(force = TRUE) //brings the host back, no eggscape
-		victim <<"<span class='notice'>You bolt upright, gasping for breath!</span>"
+		to_chat(victim, "<span class='notice'>You bolt upright, gasping for breath!</span>")
 
 /mob/living/simple_animal/borer/verb/bond_brain()
 	set category = "Borer"
@@ -667,7 +667,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	if(!bonding)
 		return
 	if(docile)
-		src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
+		to_chat(src, "<span class='warning'>You are feeling far too docile to do that.</span>")
 		return
 	if(is_servant_of_ratvar(victim) || iscultist(victim) || victim.isloyal())
 		to_chat(src, "<span class='warning'>[victim]'s mind seems to be blocked by some unknown force!</span>")

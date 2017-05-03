@@ -136,7 +136,7 @@
 	return FALSE
 
 //For spawning mineral sheets; internal use only
-/datum/material_container/proc/retrieve(sheet_amt, datum/material/M)
+/datum/material_container/proc/retrieve(sheet_amt, datum/material/M, target = null)
 	if(!M.sheet_type)
 		return 0
 	if(sheet_amt > 0)
@@ -149,26 +149,28 @@
 			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)
 			sheet_amt -= MAX_STACK_SIZE
 		if(round((sheet_amt * MINERAL_MATERIAL_AMOUNT) / MINERAL_MATERIAL_AMOUNT))
-			new M.sheet_type(get_turf(owner), sheet_amt)
+			var/obj/item/stack/sheet/s = new M.sheet_type(get_turf(owner), sheet_amt)
+			if(target)
+				s.forceMove(target)
 			count += sheet_amt
 			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)
 		return count
 	return 0
 
-/datum/material_container/proc/retrieve_sheets(sheet_amt, id)
+/datum/material_container/proc/retrieve_sheets(sheet_amt, id, target = null)
 	if(materials[id])
-		return retrieve(sheet_amt, materials[id])
+		return retrieve(sheet_amt, materials[id], target)
 	return 0
 
-/datum/material_container/proc/retrieve_amount(amt, id)
-	return retrieve_sheets(amount2sheet(amt), id)
+/datum/material_container/proc/retrieve_amount(amt, id, target)
+	return retrieve_sheets(amount2sheet(amt), id, target)
 
-/datum/material_container/proc/retrieve_all()
+/datum/material_container/proc/retrieve_all(target = null)
 	var/result = 0
 	var/datum/material/M
 	for(var/MAT in materials)
 		M = materials[MAT]
-		result += retrieve_sheets(amount2sheet(M.amount), MAT)
+		result += retrieve_sheets(amount2sheet(M.amount), MAT, target)
 	return result
 
 /datum/material_container/proc/has_space(amt = 0)

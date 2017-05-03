@@ -31,5 +31,6 @@
 /////////////
 
 #define STATUS_EFFECT_SIGILMARK /datum/status_effect/sigil_mark
+#define STATUS_EFFECT_BELLIGERENT /datum/status_effect/belligerent //forces the affected to walk, doing damage if they try to run
 
 #define STATUS_EFFECT_HISWRATH /datum/status_effect/his_wrath //His Wrath.

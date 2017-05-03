@@ -111,7 +111,8 @@
 	var/datum/gas_mixture/air1 = AIR1
 	var/turf/T = get_turf(src)
 	if(occupant)
-		if(occupant.health >= 100) // Don't bother with fully healed people.
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant.health >= 100) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
@@ -120,15 +121,15 @@
 				radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
 				open_machine()
 			return
-		else if(occupant.stat == DEAD) // We don't bother with dead people.
+		else if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 			return
 			if(autoeject) // Eject if configured.
 				open_machine()
 			return
 		if(air1.gases.len)
-			if(occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-				occupant.Sleeping((occupant.bodytemperature / sleep_factor) * 100)
-				occupant.Paralyse((occupant.bodytemperature / paralyze_factor) * 100)
+			if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
+				mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 100)
+				mob_occupant.Paralyse((mob_occupant.bodytemperature / paralyze_factor) * 100)
 
 			if(beaker)
 				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
@@ -149,19 +150,20 @@
 		update_icon()
 		return
 	if(occupant)
+		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
 		var/mob/living/carbon/human/H = occupant
 		if(istype(H))
 			cold_protection = H.get_cold_protection(air1.temperature)
 
-		var/temperature_delta = air1.temperature - occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
+		var/temperature_delta = air1.temperature - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
 			var/heat = ((1 - cold_protection) / 10 + conduction_coefficient) \
 						* temperature_delta * \
 						(air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
 			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
-			occupant.bodytemperature = max(occupant.bodytemperature + heat / heat_capacity, TCMB)
+			mob_occupant.bodytemperature = max(mob_occupant.bodytemperature + heat / heat_capacity, TCMB)
 
 		air1.gases["o2"][MOLES] -= 0.5 / efficiency // Magically consume gas? Why not, we run on cryo magic.
 
@@ -254,16 +256,17 @@
 
 	var/list/occupantData = list()
 	if(occupant)
-		occupantData["name"] = occupant.name
-		occupantData["stat"] = occupant.stat
-		occupantData["health"] = occupant.health
-		occupantData["maxHealth"] = occupant.maxHealth
+		var/mob/living/mob_occupant = occupant
+		occupantData["name"] = mob_occupant.name
+		occupantData["stat"] = mob_occupant.stat
+		occupantData["health"] = mob_occupant.health
+		occupantData["maxHealth"] = mob_occupant.maxHealth
 		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
-		occupantData["bruteLoss"] = occupant.getBruteLoss()
-		occupantData["oxyLoss"] = occupant.getOxyLoss()
-		occupantData["toxLoss"] = occupant.getToxLoss()
-		occupantData["fireLoss"] = occupant.getFireLoss()
-		occupantData["bodyTemperature"] = occupant.bodytemperature
+		occupantData["bruteLoss"] = mob_occupant.getBruteLoss()
+		occupantData["oxyLoss"] = mob_occupant.getOxyLoss()
+		occupantData["toxLoss"] = mob_occupant.getToxLoss()
+		occupantData["fireLoss"] = mob_occupant.getFireLoss()
+		occupantData["bodyTemperature"] = mob_occupant.bodytemperature
 	data["occupant"] = occupantData
 
 

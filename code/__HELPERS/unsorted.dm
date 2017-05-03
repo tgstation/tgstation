@@ -582,7 +582,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return 0
 
 //Repopulates sortedAreas list
-/proc/SortAreas()
+/proc/repopulate_sorted_areas()
 	GLOB.sortedAreas = list()
 
 	for(var/area/A in world)

@@ -28,7 +28,7 @@
 		//Holopad
 		if(istype(ai.current, /obj/machinery/holopad))
 			var/obj/machinery/holopad/H = ai.current
-			H.move_hologram(ai)
+			H.move_hologram(ai, T)
 
 /mob/camera/aiEye/Move()
 	return 0

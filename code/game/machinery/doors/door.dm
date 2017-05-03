@@ -229,8 +229,6 @@
 		return 1
 	if(operating)
 		return
-	if(!SSticker || !SSticker.mode)
-		return 0
 	operating = 1
 	do_animate("opening")
 	set_opacity(0)

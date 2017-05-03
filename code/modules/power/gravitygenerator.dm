@@ -303,17 +303,17 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	use_power = on ? 2 : 1
 	// Sound the alert if gravity was just enabled or disabled.
 	var/alert = 0
-	var/area/area = get_area(src)
+	var/area/A = get_area(src)
 	if(on && SSticker.IsRoundInProgress()) // If we turned on and the game is live.
 		if(gravity_in_level() == 0)
 			alert = 1
 			investigate_log("was brought online and is now producing gravity for this level.", "gravity")
-			message_admins("The gravity generator was brought online. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
+			message_admins("The gravity generator was brought online [A][ADMIN_COORDJMP(src)]")
 	else
 		if(gravity_in_level() == 1)
 			alert = 1
 			investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
-			message_admins("The gravity generator was brought offline with no backup generator. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
+			message_admins("The gravity generator was brought offline with no backup generator. [A][ADMIN_COORDJMP(src)]")
 
 	update_icon()
 	update_list()
