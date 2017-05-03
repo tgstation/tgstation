@@ -5586,7 +5586,7 @@
 /area/centcom/ferry)
 "ot" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/under/rank/librarian/curator,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
 /obj/item/clothing/under/skirt/black,
 /obj/item/clothing/under/shorts/black,
 /obj/item/clothing/under/pants/track,

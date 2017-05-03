@@ -53664,6 +53664,12 @@
 	pixel_x = 30;
 	pixel_y = 0
 	},
+/obj/structure/closet/crate,
+/obj/item/clothing/shoes/workboots/mining,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
+/obj/item/clothing/suit/curator,
+/obj/item/clothing/head/curator,
+/obj/item/weapon/storage/backpack/satchel/explorer,
 /turf/open/floor/engine/cult,
 /area/library)
 "bPY" = (
@@ -114747,7 +114753,7 @@ bxV
 bzE
 dmD
 bzE
-dmE
+dmD
 bzE
 bHR
 bJz

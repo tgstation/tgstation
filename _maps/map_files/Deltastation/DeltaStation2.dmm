@@ -62918,7 +62918,7 @@
 "cpl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/clipboard,
-/obj/item/toy/figure/librarian,
+/obj/item/toy/figure/curator,
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
@@ -64356,10 +64356,12 @@
 /turf/open/floor/plasteel/black,
 /area/library)
 "crP" = (
-/obj/structure/dresser,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -32
-	},
+/obj/structure/closet/crate,
+/obj/item/clothing/shoes/workboots/mining,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
+/obj/item/clothing/suit/curator,
+/obj/item/clothing/head/curator,
+/obj/item/weapon/storage/backpack/satchel/explorer,
 /turf/open/floor/plasteel/black,
 /area/library)
 "crQ" = (
@@ -67498,7 +67500,7 @@
 	desc = "This looks awfully familiar...";
 	icon_state = "curator"
 	},
-/obj/item/clothing/under/rank/librarian/curator,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
 /turf/open/floor/carpet,
 /area/crew_quarters/sleep)
 "cxC" = (
@@ -105516,7 +105518,7 @@
 /area/library/abandoned_library)
 "dSu" = (
 /obj/structure/table/wood,
-/obj/item/clothing/under/rank/librarian,
+/obj/item/clothing/under/rank/curator,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
@@ -143817,7 +143819,7 @@ cbB
 cdo
 ceS
 cgq
-ehP
+ehO
 cjl
 ckP
 cjl
@@ -144331,7 +144333,7 @@ bWi
 cdq
 ceS
 cgp
-ehQ
+ehO
 cjm
 ckP
 cmk
@@ -144588,7 +144590,7 @@ cbC
 cdr
 ceT
 cgp
-ehR
+ehO
 cjn
 ckP
 cmk

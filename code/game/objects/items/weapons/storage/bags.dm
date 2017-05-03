@@ -291,16 +291,6 @@
 	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/book, /obj/item/weapon/spellbook)
 	resistance_flags = FLAMMABLE
 
-/obj/item/weapon/storage/bag/books/curator/New()
-	..()
-	new /obj/item/clothing/shoes/workboots/mining(src)
-	new /obj/item/clothing/head/curator(src)
-	new /obj/item/clothing/suit/curator(src)
-	new /obj/item/clothing/under/rank/librarian/curator(src)
-	new /obj/item/weapon/melee/curator_whip(src)
-	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
-
-
 /*
  * Trays - Agouri
  */

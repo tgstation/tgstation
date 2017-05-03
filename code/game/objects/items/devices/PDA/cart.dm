@@ -108,7 +108,7 @@
 	access_mime = 1
 	var/mime_charges = 5
 
-/obj/item/weapon/cartridge/librarian
+/obj/item/weapon/cartridge/curator
 	name = "\improper Lib-Tweet cartridge"
 	icon_state = "cart-s"
 	access_newscaster = 1

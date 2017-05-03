@@ -278,8 +278,8 @@
 	if(!user.Adjacent(src)) //no TK museology
 		return
 
-	if(!(user.mind && user.mind.assigned_role == "Librarian"))
-		to_chat(user, "<span class='danger'>You're not sure how to work this. Maybe you should ask the librarian for help.</span>")
+	if(!(user.mind && user.mind.assigned_role == "Curator"))
+		to_chat(user, "<span class='danger'>You're not sure how to work this. Maybe you should ask the curator for help.</span>")
 		return
 
 	if(!added_roundstart)
