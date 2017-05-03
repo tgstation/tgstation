@@ -1,7 +1,0 @@
-author: "Kor, Profakos, Iamgoofball"
-delete-after: True
-changes: 
-  - rscadd: "The Librarian has been replaced by the Curator."
-  - rscadd: "Persistent trophy cases have been added to the library on Meta, Delta, and Box. These are only usable by the Curator."
-  - rscadd: "The Curator now starts with his whip."
-  - rscadd: "The Curator now has access to his treasure hunter outfit, stashed in his private office."
