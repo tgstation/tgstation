@@ -328,6 +328,9 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	if(chaos)
+		setDir(pick(cardinal))
+
 
 //////////////
 //DISCONNECT//

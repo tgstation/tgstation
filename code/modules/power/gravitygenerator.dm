@@ -14,6 +14,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 #define GRAV_NEEDS_PLASTEEL 2
 #define GRAV_NEEDS_WRENCH 3
 
+var/global/chaos = FALSE
+
 //
 // Abstract Generator
 //
@@ -27,6 +29,44 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	use_power = 0
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
+
+/obj/machinery/gravity_generator/emag_act()
+	if(emagged)
+		return
+	emagged = TRUE
+	if(chaos)
+		return
+	priority_announce("WARNING: GENERATION PARAMETERS COR!#$!$ !@#$-BZZTTT!!", "Gravity Generator", TRUE)
+	sleep(50)
+	priority_announce("WARNING: GRAVITATIONAL ANOMALY DETECTED!", "Subspace Sensor Network", TRUE)
+	sleep(50)
+	fuck_my_shit_up()
+	sleep(1200)
+	restore_my_shit()
+	emagged = FALSE
+
+/obj/machinery/gravity_generator/proc/fuck_my_shit_up()
+	chaos = TRUE
+	for(var/client/C in clients)
+		C.setDir(pick(cardinal))
+	for(var/mob/M in world)
+		M << "<span class='userdanger'>You feel sick as your feet leave the ground and you're flung across the room!</span>"
+		if(isliving(M))
+			M.throw_at(get_edge_target_turf(src, pick(cardinal)), 14, 3)
+			M.Weaken(5)
+
+/obj/machinery/gravity_generator/proc/restore_my_shit()
+	chaos = FALSE
+	for(var/client/C in clients)
+		if(prob(5))
+			C.setDir(pick(cardinal))
+		else
+			C.setDir(NORTH)
+	for(var/mob/M in world)
+		M << "<span class='userdanger'>You're once more flung across the room as gravity returns back to normal.. Or.. is it normal?!</span>"
+		if(isliving(M))
+			M.throw_at(get_edge_target_turf(src, pick(cardinal)), 14, 3)
+			M.Weaken(5)
 
 /obj/machinery/gravity_generator/throw_at()
 	return FALSE
