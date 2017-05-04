@@ -19,6 +19,8 @@
 
 /datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H.grant_language(/datum/language/draconic)
+	if(prob(60))	//some lizards are educated
+		H.remove_language(/datum/language/common)
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
