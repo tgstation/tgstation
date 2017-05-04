@@ -19,6 +19,9 @@ but essentially loses their ability to interact in any meaningful way that doesn
 	burnmod = 0.35
 	heatmod = 1.8
 	stunmod = 0.15
+	var/rage_rate = 600 //8 minutes to start with
+	var/rage_time = 0
+	var/rage_add = 1800 //3 minutes added per corpse eaten
 
 /datum/species/rage/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
@@ -44,6 +47,11 @@ but essentially loses their ability to interact in any meaningful way that doesn
 	H.resize = 1.25
 	H.mind.objectives += new/datum/objective("<span class='userdanger'>CRUSH. KILL. DESTROY. FEAST UPON THE BLOOD OF THE WEAK.</span>") //unstable war machine, kill or be killed
 	H.mind.announce_objectives()
+
+
+/datum/species/rage/spec_life(mob/living/carbon/H)
+	. = ..()
+	H.a_intent = INTENT_HARM //RRAAAAAAAUGGHHH!!!
 
 /datum/species/rage/on_species_loss(mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[H] convulses and contorts violently as their body rapidly changes, exploding into a shower of gibs!</span>")
