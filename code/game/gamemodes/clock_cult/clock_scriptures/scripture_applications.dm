@@ -218,22 +218,22 @@
 /datum/clockwork_scripture/create_object/mania_motor
 	descname = "Powered Structure, Area Denial"
 	name = "Mania Motor"
-	desc = "Creates a mania motor which will cause brain damage and hallucinations in nearby non-Servant humans. It will also try to convert humans directly adjecent to the motor."
+	desc = "Creates a mania motor which causes minor damage and a variety of negative mental effects in nearby non-Servant humans, potentially up to and including conversion."
 	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
 	channel_time = 80
 	consumed_components = list(GEIS_CAPACITOR = 5, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
 	object_path = /obj/structure/destructible/clockwork/powered/mania_motor
-	creator_message = "<span class='brass'>You form a mania motor which will cause brain damage and hallucinations in nearby humans while active.</span>"
+	creator_message = "<span class='brass'>You form a mania motor, which causes minor damage and negative mental effects in non-Servants.</span>"
 	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
-	usage_tip = "Eligible non-Servant humans next to the motor will be converted at an additional power cost. It will also cure hallucinations and brain damage in nearby Servants."
+	usage_tip = "It will also cure hallucinations and brain damage in nearby Servants."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 8
 	quickbind = TRUE
-	quickbind_desc = "Creates a Mania Motor, which can convert adjacent non-Servants with power."
+	quickbind_desc = "Creates a Mania Motor, which causes minor damage and negative mental effects in non-Servants."
 
 
 //Tinkerer's Daemon: Creates an efficient machine that rapidly produces components at a power cost.
