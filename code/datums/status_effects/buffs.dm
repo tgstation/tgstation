@@ -236,7 +236,7 @@
 	alert_type = null
 	var/alive = TRUE
 
-/datum/status/cult_master/deathrattle()
+/datum/status/cult_master/proc/deathrattle()
 	var/area/A = get_area(owner)
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(isliving(B.current))
