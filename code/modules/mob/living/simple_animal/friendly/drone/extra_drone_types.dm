@@ -108,7 +108,7 @@
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
-	verb_whisper = "insinuates"
+	verb_whisper = "imparts"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
 	initial_languages = list(/datum/language/common, /datum/language/ratvar)
