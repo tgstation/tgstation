@@ -211,6 +211,7 @@
 	userturf = get_turf(user)
 	if(userturf.z == 1) //Check one more time that they are on station.
 		if(SSshuttle.cancelEvac(user))
+			gang.recalls -= 1 
 			return 1
 
 	to_chat(loc, "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>")
