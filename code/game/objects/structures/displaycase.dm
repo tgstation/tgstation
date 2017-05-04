@@ -145,8 +145,7 @@
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
-		if(user.drop_item())
-			W.loc = src
+		if(user.transferItemToLoc(W, src))
 			showpiece = W
 			to_chat(user, "<span class='notice'>You put [W] on display</span>")
 			update_icon()
@@ -305,14 +304,13 @@
 			to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
 			return
 
-	if(user.drop_item())
+	if(user.transferItemToLoc(W, src))
 
 		if(showpiece)
 			to_chat(user, "You press a button, and [showpiece] descends into the floor of the case.")
 			QDEL_NULL(showpiece)
 
 		to_chat(user, "You insert [W] into the case.")
-		W.forceMove(src)
 		showpiece = W
 		added_roundstart = FALSE
 		update_icon()
