@@ -108178,7 +108178,7 @@
 /area/maintenance/fpmaint2/aft_port_maintenance)
 "dXu" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/spellbook/oneuse/smoke,
+/obj/item/weapon/spellbook/oneuse/smoke/lesser,
 /obj/item/weapon/nullrod,
 /obj/item/organ/heart,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,

@@ -82489,7 +82489,7 @@
 /area/chapel/office)
 "cMa" = (
 /obj/structure/table/wood,
-/obj/item/weapon/spellbook/oneuse/smoke{
+/obj/item/weapon/spellbook/oneuse/smoke/lesser{
 	name = "mysterious old book of "
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
