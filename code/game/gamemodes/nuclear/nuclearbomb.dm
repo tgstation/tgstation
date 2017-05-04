@@ -62,6 +62,7 @@
 	if(countdown)
 		qdel(countdown)
 	countdown = null
+	SSshuttle.horrible_things -= src
 	. = ..()
 
 /obj/machinery/nuclearbomb/examine(mob/user)
@@ -385,7 +386,7 @@
 		for(var/obj/item/weapon/pinpointer/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
-		SSshuttle.force_shuttle = 1
+		SSshuttle.horrible_things += src
 	else
 		bomb_set = FALSE
 		detonation_timer = null
@@ -394,6 +395,7 @@
 			S.switch_mode_to(initial(S.mode))
 			S.nuke_warning = FALSE
 		countdown.stop()
+		SSshuttle.horrible_things -= src
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/get_time_left()

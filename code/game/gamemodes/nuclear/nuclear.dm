@@ -169,9 +169,9 @@
 	for(var/datum/mind/operative_mind in syndicates)
 		if(ismob(operative_mind.current))
 			var/mob/M = operative_mind.current
-			if(!M.stat && isarea(M.loc) && M.loc in the_station_areas)
-				syndies_made_contact = 1
-				SSshuttle.force_shuttle = 1
+			if(!M.stat && isarea(M.loc) && M.loc in GLOB.the_station_areas)
+				syndies_made_contact = TRUE
+				SSshuttle.horrible_things += "nuclear operatives on station"
 
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)

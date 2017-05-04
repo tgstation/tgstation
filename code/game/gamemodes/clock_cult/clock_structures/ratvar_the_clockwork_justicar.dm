@@ -28,7 +28,7 @@
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	SSshuttle.force_shuttle = 1
+	SSshuttle.horrible_things += src
 	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
@@ -36,6 +36,7 @@
 	for(var/obj/O in GLOB.all_clockwork_objects)
 		O.ratvar_act()
 	STOP_PROCESSING(SSobj, src)
+	SSshuttle.horrible_things -= src
 	send_to_playing_players("<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>")
 	return ..()
 
