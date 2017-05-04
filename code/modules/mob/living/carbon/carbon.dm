@@ -484,7 +484,7 @@
 				adjustBruteLoss(3)
 		else
 			if(T)
-				T.add_vomit_floor(src, 0)//toxic barf looks different
+				T.add_vomit_floor(src, toxic)//toxic barf looks different
 			nutrition -= lost_nutrition
 			adjustToxLoss(-3)
 		T = get_step(T, dir)
