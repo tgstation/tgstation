@@ -167,6 +167,9 @@
 	if(recalling)
 		to_chat(usr, "<span class='warning'>Error: Recall already in progress.</span>")
 		return 0
+	
+	if(!gang.recalls)
+		to_chat(usr, "<span class='warning'>Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
 
 	gang.message_gangtools("[usr] is attempting to recall the emergency shuttle.")
 	recalling = 1
