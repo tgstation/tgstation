@@ -44,10 +44,6 @@
 		return FALSE
 	return ..()
 
-/atom/movable/Initialize(mapload)
-	. = ..()
-	language_holder = new initial_language_holder(src)
-
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
 	var/atom/oldloc = loc
