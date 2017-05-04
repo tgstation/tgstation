@@ -145,8 +145,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 
 
-/client/proc/get_callproc_args(is_atom_new = FALSE)
-	var/argnum = input("Number of arguments[is_atom_new ? " (Excluding loc)" : ""]","Number:",0) as num|null
+/client/proc/get_callproc_args()
+	var/argnum = input("Number of arguments","Number:",0) as num|null
 	if(isnull(argnum))
 		return
 
