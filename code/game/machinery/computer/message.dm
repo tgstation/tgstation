@@ -413,10 +413,10 @@
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[src]'>[customsender]</a> ([customjob]):</b></i><br>[custommessage]<br>"
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
+								customrecepient.audible_message("[bicon(customrecepient)] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
-									to_chat(H, "\icon[customrecepient] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
+									to_chat(H, "[bicon(customrecepient)] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
 								log_pda("[usr]/([usr.ckey]) (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
 								customrecepient.cut_overlays()
 								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
@@ -426,10 +426,10 @@
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[PDARec]'>[PDARec.owner]</a> ([customjob]):</b></i><br>[custommessage]<br>"
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
+								customrecepient.audible_message("[bicon(customrecepient)] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
-									to_chat(H, "\icon[customrecepient] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
+									to_chat(H, "[bicon(customrecepient)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
 								log_pda("[usr]/([usr.ckey]) (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
 								customrecepient.cut_overlays()
 								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
