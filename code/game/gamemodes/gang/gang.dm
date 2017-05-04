@@ -256,9 +256,11 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		if(isliving(M) && !M.stat==DEAD && (!M.mind in get_all_gangsters())
 			normies++
 	if(normies < (GLOB.joined_player_list*.35))
-		priority_announce("Catastrophic casualties detected: Dispatching critical emergency shuttle and jamming recall signals across all frequencies")
-		SSshuttle.emergency.request(null, set_coefficient = 0.4)
+		priority_announce("Catastrophic casualties detected: Critical shuttle protocols activated - jamming recall signals across all frequencies.")
 		forced_shuttle = TRUE
+		if(SSshuttle.emergency.timeLeft(1) < emergencyCallTime * 0.4)
+			SSshuttle.emergency.request(null, set_coefficient = 0.4)
+		
 		
 /proc/determine_domination_time(var/datum/gang/G)
 	return max(180,900 - (round((G.territory.len/start_state.num_territories)*100, 1) * 12))
