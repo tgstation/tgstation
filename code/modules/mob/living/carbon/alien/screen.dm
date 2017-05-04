@@ -18,7 +18,6 @@
 			return
 		var/Qdir = get_dir(src, Q)
 		var/Qdist = get_dist(src, Q)
-		image(icon,loc,icon_state,layer,dir)
 		var/finder_icon = "finder_center" //Overlay showed when adjacent to or on top of the queen!
 		switch(Qdist)
 			if(2 to 7)
@@ -27,7 +26,7 @@
 				finder_icon = "finder_med"
 			if(21 to INFINITY)
 				finder_icon = "finder_far"
-		var/image/finder_eye = image('icons/mob/screen_alien.dmi', icon_state = finder_icon, dir = Qdir)
+		var/image/finder_eye = image('icons/mob/screen_alien.dmi', finder_icon, dir = Qdir)
 		hud_used.alien_queen_finder.add_overlay(finder_eye)
 
 /mob/living/carbon/alien/humanoid/royal/queen/findQueen()

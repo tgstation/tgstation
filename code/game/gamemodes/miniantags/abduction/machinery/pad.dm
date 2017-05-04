@@ -12,7 +12,7 @@
 
 /obj/machinery/abductor/pad/proc/Send()
 	if(teleport_target == null)
-		teleport_target = teleportlocs[pick(teleportlocs)]
+		teleport_target = GLOB.teleportlocs[pick(GLOB.teleportlocs)]
 	flick("alien-pad", src)
 	for(var/mob/living/target in loc)
 		target.forceMove(teleport_target)
@@ -47,8 +47,8 @@
 	icon_state = "teleport"
 	duration = 80
 
-/obj/effect/overlay/temp/teleport_abductor/New()
+/obj/effect/overlay/temp/teleport_abductor/Initialize()
+	. = ..()
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(10,0,loc)
 	S.start()
-	..()

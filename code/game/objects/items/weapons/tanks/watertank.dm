@@ -370,7 +370,7 @@
 	cut_overlays()
 
 	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpack-10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpack-10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -388,7 +388,7 @@
 	. = list()
 	//inhands + reagent_filling
 	if(!isinhands && reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpackmob-10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpackmob-10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -431,11 +431,6 @@
 	reagents.trans_to(user,used_amount,multiplier=usage_ratio)
 	update_filling()
 	user.update_inv_back() //for overlays update
-
-/obj/item/weapon/reagent_containers/chemtank/stim/New()
-	..()
-	reagents.add_reagent("stimulants_longterm", 300)
-	update_filling()
 
 //Operator backpack spray
 /obj/item/weapon/watertank/operator

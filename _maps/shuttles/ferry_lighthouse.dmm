@@ -87,7 +87,7 @@
 /area/shuttle/transport)
 "at" = (
 /obj/machinery/door/airlock,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "au" = (
 /turf/open/floor/wood,
@@ -99,7 +99,7 @@
 "aw" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "ax" = (
 /turf/closed/wall/shuttle{
@@ -129,7 +129,7 @@
 	icon_state = "brokengrille"
 	},
 /obj/structure/window/fulltile,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aC" = (
 /obj/structure/table/wood,
@@ -206,7 +206,7 @@
 "aQ" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aR" = (
 /obj/structure/chair/office/dark{
@@ -246,7 +246,7 @@
 "aY" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "aZ" = (
 /turf/closed/wall/mineral/titanium/overspace,

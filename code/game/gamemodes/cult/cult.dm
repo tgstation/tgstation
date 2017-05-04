@@ -5,11 +5,11 @@
 	var/list/cult_objectives = list()
 
 /proc/iscultist(mob/living/M)
-	return istype(M) && M.has_antag_datum(/datum/antagonist/cultist, TRUE)
+	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CULT)
 
 /proc/is_sacrifice_target(datum/mind/mind)
-	if(ticker.mode.name == "cult")
-		var/datum/game_mode/cult/cult_mode = ticker.mode
+	if(SSticker.mode.name == "cult")
+		var/datum/game_mode/cult/cult_mode = SSticker.mode
 		if(mind == cult_mode.sacrifice_target)
 			return 1
 	return 0
@@ -104,7 +104,7 @@
 		var/list/possible_targets = get_unconvertables()
 		if(!possible_targets.len)
 			message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
-			for(var/mob/living/carbon/human/player in player_list)
+			for(var/mob/living/carbon/human/player in GLOB.player_list)
 				if(player.mind && !(player.mind in cultists_to_cult))
 					possible_targets += player.mind
 		if(possible_targets.len > 0)
@@ -158,35 +158,35 @@
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun) //BASE
 	if (!istype(cult_mind))
 		return 0
-	if(cult_mind.current.gain_antag_datum(/datum/antagonist/cultist))
+	if(cult_mind.add_antag_datum(ANTAG_DATUM_CULT))
 		if(stun)
 			cult_mind.current.Paralyse(5)
 		return 1
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
 	if(cult_mind.current)
-		var/datum/antagonist/cultist/cult_datum = cult_mind.current.has_antag_datum(/datum/antagonist/cultist, TRUE)
+		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(ANTAG_DATUM_CULT)
 		if(!cult_datum)
 			return FALSE
-		cult_datum.silent_update = show_message
-		cult_datum.on_remove()
+		cult_datum.silent = show_message
+		cult_datum.on_removal()
 		if(stun)
 			cult_mind.current.Paralyse(5)
 		return TRUE
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
+	var/datum/atom_hud/antag/culthud = GLOB.huds[ANTAG_HUD_CULT]
 	culthud.join_hud(cult_mind.current)
 	set_antag_hud(cult_mind.current, "cult")
 
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
+	var/datum/atom_hud/antag/culthud = GLOB.huds[ANTAG_HUD_CULT]
 	culthud.leave_hud(cult_mind.current)
 	set_antag_hud(cult_mind.current, null)
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
-	for(var/mob/living/carbon/human/player in player_list)
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
 		if(player.mind && !is_convertable_to_cult(player) && !(player.mind in cultists_to_cult))
 			ucs += player.mind
 	return ucs
@@ -198,7 +198,7 @@
 	if(cult_objectives.Find("eldergod"))
 		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
 	if(cult_objectives.Find("sacrifice"))
-		if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
+		if(sacrifice_target && !GLOB.sacrificed.Find(sacrifice_target)) //if the target has been GLOB.sacrificed, ignore this step. otherwise, add 1 to cult_fail
 			cult_fail++
 	return cult_fail //if any objectives aren't met, failure
 
@@ -218,12 +218,12 @@
 /datum/game_mode/cult/declare_completion()
 
 	if(!check_cult_victory())
-		feedback_set_details("round_end_result","win - cult win")
-		feedback_set("round_end_result",acolytes_survived)
+		SSblackbox.set_details("round_end_result","win - cult win")
+		SSblackbox.set_val("round_end_result",acolytes_survived)
 		to_chat(world, "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>")
 	else
-		feedback_set_details("round_end_result","loss - staff stopped the cult")
-		feedback_set("round_end_result",acolytes_survived)
+		SSblackbox.set_details("round_end_result","loss - staff stopped the cult")
+		SSblackbox.set_val("round_end_result",acolytes_survived)
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
 
 	var/text = ""
@@ -236,32 +236,32 @@
 				if("survive")
 					if(!check_survive())
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='greenannounce'>Success!</span>"
-						feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
-						ticker.news_report = CULT_ESCAPE
+						SSblackbox.add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
+						SSticker.news_report = CULT_ESCAPE
 					else
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='boldannounce'>Fail.</span>"
-						feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
-						ticker.news_report = CULT_FAILURE
+						SSblackbox.add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
+						SSticker.news_report = CULT_FAILURE
 				if("sacrifice")
 					if(sacrifice_target)
-						if(sacrifice_target in sacrificed)
+						if(sacrifice_target in GLOB.sacrificed)
 							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span class='greenannounce'>Success!</span>"
-							feedback_add_details("cult_objective","cult_sacrifice|SUCCESS")
+							SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
 						else if(sacrifice_target && sacrifice_target.current)
 							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span class='boldannounce'>Fail.</span>"
-							feedback_add_details("cult_objective","cult_sacrifice|FAIL")
+							SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
 						else
 							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span class='boldannounce'>Fail (Gibbed).</span>"
-							feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
+							SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
 				if("eldergod")
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
-						feedback_add_details("cult_objective","cult_narsie|SUCCESS")
-						ticker.news_report = CULT_SUMMON
+						SSblackbox.add_details("cult_objective","cult_narsie|SUCCESS")
+						SSticker.news_report = CULT_SUMMON
 					else
 						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
-						feedback_add_details("cult_objective","cult_narsie|FAIL")
-						ticker.news_report = CULT_FAILURE
+						SSblackbox.add_details("cult_objective","cult_narsie|FAIL")
+						SSticker.news_report = CULT_FAILURE
 
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 	to_chat(world, text)
@@ -270,7 +270,7 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_cult()
-	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
+	if( cult.len || (SSticker && istype(SSticker.mode,/datum/game_mode/cult)) )
 		var/text = "<br><font size=3><b>The cultists were:</b></font>"
 		for(var/datum/mind/cultist in cult)
 			text += printplayer(cultist)

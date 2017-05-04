@@ -305,11 +305,11 @@
 /area/shuttle/escape)
 "aC" = (
 /obj/machinery/ai_status_display,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aD" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aE" = (
 /obj/effect/turf_decal/delivery,
@@ -371,7 +371,7 @@
 /area/shuttle/escape)
 "aK" = (
 /obj/structure/extinguisher_cabinet,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/bed/roller,
@@ -602,7 +602,7 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/door/airlock/shuttle{
@@ -675,7 +675,7 @@
 	name = "Holding Area";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bu" = (
 /obj/machinery/door/airlock/glass_command{
@@ -700,16 +700,16 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "bw" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "by" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bz" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -758,7 +758,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/red/corner{
@@ -811,18 +811,18 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bN" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bO" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/lockbox/loyalty,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bP" = (
 /obj/structure/table/reinforced,
@@ -862,7 +862,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bV" = (
 /obj/structure/table/reinforced,
@@ -872,7 +872,7 @@
 	pixel_x = 0;
 	pixel_y = -26
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bW" = (
 /obj/structure/table/reinforced,
@@ -1154,7 +1154,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "cH" = (
 /obj/effect/turf_decal/bot,
@@ -1210,7 +1210,7 @@ an
 av
 av
 av
-cE
+cA
 aE
 af
 bw
@@ -1383,7 +1383,7 @@ ag
 ac
 ac
 af
-cz
+cy
 ao
 aw
 aw
@@ -1674,7 +1674,7 @@ aZ
 bd
 bi
 cC
-cD
+cC
 ah
 bs
 af

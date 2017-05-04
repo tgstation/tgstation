@@ -10,7 +10,7 @@
 	It will penetrate mindshield implants once before disappearing."
 	invocations = list("Divinity, enslave...", "...all who trespass here!")
 	channel_time = 70
-	consumed_components = list(BELLIGERENT_EYE = 2, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(BELLIGERENT_EYE = 3, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 2)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission/accession
 	prevent_path = /obj/effect/clockwork/sigil/submission
@@ -32,7 +32,7 @@
 	It grows faster to invoke with more adjacent Servants."
 	invocations = list("Shield us...", "...with the...", "... fragments of Engine!")
 	channel_time = 100
-	consumed_components = list(VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(VANGUARD_COGWHEEL = 3, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
 	usage_tip = "This scripture will replace all weaker armor worn by affected Servants."
 	tier = SCRIPTURE_APPLICATION
 	multiple_invokers_used = TRUE
@@ -86,7 +86,7 @@
 		return TRUE
 	if(is_type_in_typecache(I, ratvarian_armor_typecache))
 		return FALSE
-	if(!ratvar_awakens && is_type_in_typecache(I, better_armor_typecache))
+	if(!GLOB.ratvar_awakens && is_type_in_typecache(I, better_armor_typecache))
 		return FALSE
 	return user.dropItemToGround(I)
 
@@ -99,14 +99,14 @@
 	If it remains close to you, you will gradually regain health up to a low amount, but it will die if it goes too far from you."
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
-	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
+	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 3)
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors."
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 3
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
-	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in all_clockwork_mobs)
+	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in GLOB.all_clockwork_mobs)
 		if(M.host == invoker)
 			to_chat(invoker, "<span class='warning'>You can only house one marauder at a time!</span>")
 			return FALSE
@@ -160,7 +160,7 @@
 	and exceptional speed, though taking damage will temporarily slow it down."
 	invocations = list("Call forth...", "...the soldiers of Armorer.")
 	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 2)
+	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 3)
 	object_path = /obj/structure/destructible/clockwork/shell/fragment
 	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptacle.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
@@ -179,7 +179,7 @@
 	desc = "Places a sigil that stores energy to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
-	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
+	consumed_components = list(VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 2, HIEROPHANT_ANSIBLE = 3)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
 	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it.</span>"
@@ -199,7 +199,7 @@
 	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission or the area's APC."
 	invocations = list("May this totem...", "...shroud the false suns!")
 	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 3, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(BELLIGERENT_EYE = 5, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
 	object_path = /obj/structure/destructible/clockwork/powered/interdiction_lens
 	creator_message = "<span class='brass'>You form an interdiction lens, which disrupts cameras and radios and drains power.</span>"
 	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
@@ -214,28 +214,6 @@
 	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
 
 
-//Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures at a power cost
-/datum/clockwork_scripture/create_object/mending_motor
-	descname = "Powered Structure, Repairs Other Structures"
-	name = "Mending Motor"
-	desc = "Creates a mechanized prism that will rapidly repair damaged clockwork constructs, converted cyborgs, and clockwork structures."
-	invocations = list("May this prism...", "...mend our dents and scratches!")
-	channel_time = 80
-	consumed_components = list(VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
-	object_path = /obj/structure/destructible/clockwork/powered/mending_motor
-	creator_message = "<span class='brass'>You form a mending motor, which will rapidly repair damaged clockwork constructs, converted cyborgs, and clockwork structures.</span>"
-	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "Powerful healing but power use is somewhat inefficient, though much better than a proselytizer."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 7
-	quickbind = TRUE
-	quickbind_desc = "Creates a Mending Motor, which rapidly repairs constructs and structures at a power cost."
-
-
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
 /datum/clockwork_scripture/create_object/mania_motor
 	descname = "Powered Structure, Area Denial"
@@ -243,7 +221,7 @@
 	desc = "Creates a mania motor which will cause brain damage and hallucinations in nearby non-Servant humans. It will also try to convert humans directly adjecent to the motor."
 	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
 	channel_time = 80
-	consumed_components = list(GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(GEIS_CAPACITOR = 5, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
 	object_path = /obj/structure/destructible/clockwork/powered/mania_motor
 	creator_message = "<span class='brass'>You form a mania motor which will cause brain damage and hallucinations in nearby humans while active.</span>"
 	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
@@ -266,7 +244,7 @@
 	and there is at least one existing cache."
 	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 3)
+	consumed_components = list(BELLIGERENT_EYE = 2, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 5)
 	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
 	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
 	invokers_required = 2
@@ -281,13 +259,13 @@
 
 /datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
 	var/servants = 0
-	for(var/mob/living/L in living_mob_list)
+	for(var/mob/living/L in GLOB.living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
-	if(servants * 0.2 < clockwork_daemons)
+	if(servants * 0.2 < GLOB.clockwork_daemons)
 		to_chat(invoker, "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>")
 		return FALSE
-	if(servants * 0.2 < clockwork_daemons+1)
+	if(servants * 0.2 < GLOB.clockwork_daemons+1)
 		to_chat(invoker, "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>")
 		return FALSE
 	return ..()
@@ -300,7 +278,7 @@
 	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living Servant or clockwork obelisk."
 	invocations = list("May this obelisk...", "...take us to all places!")
 	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 3)
+	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, HIEROPHANT_ANSIBLE = 5)
 	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
 	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
 	observer_message = "<span class='warning'>A brass obelisk appears hanging in midair!</span>"

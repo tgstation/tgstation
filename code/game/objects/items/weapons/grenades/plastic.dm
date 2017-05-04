@@ -7,7 +7,7 @@
 	det_time = 10
 	display_timer = 0
 	var/atom/target = null
-	var/image_overlay = null
+	var/mutable_appearance/plastic_overlay
 	var/obj/item/device/assembly_holder/nadeassembly = null
 	var/assemblyattacher
 	var/directional = FALSE
@@ -15,7 +15,7 @@
 	var/boom_sizes = list(0, 0, 3)
 
 /obj/item/weapon/grenade/plastic/New()
-	image_overlay = image('icons/obj/grenade.dmi', "[item_state]2")
+	plastic_overlay = mutable_appearance(icon, "[item_state]2")
 	..()
 
 /obj/item/weapon/grenade/plastic/Destroy()
@@ -50,7 +50,7 @@
 	if(target)
 		if(!QDELETED(target))
 			location = get_turf(target)
-			target.cut_overlay(image_overlay, TRUE)
+			target.cut_overlay(plastic_overlay, TRUE)
 	else
 		location = get_turf(src)
 	if(location)
@@ -111,7 +111,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
 
-		target.add_overlay(image_overlay, 1)
+		target.add_overlay(plastic_overlay, 1)
 		if(!nadeassembly)
 			to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>")
 			addtimer(CALLBACK(src, .proc/prime), det_time*10)
@@ -119,8 +119,8 @@
 			qdel(src)	//How?
 
 /obj/item/weapon/grenade/plastic/suicide_act(mob/user)
-	message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) suicided with [src] at ([user.x],[user.y],[user.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)",0,1)
-	message_admins("[key_name(user)] suicided with [src] at ([user.x],[user.y],[user.z])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_COORDJMP(user)]",0,1)
+	log_game("[key_name(user)] suicided with [src] at [COORD(user)]")
 	user.visible_message("<span class='suicide'>[user] activates the [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)

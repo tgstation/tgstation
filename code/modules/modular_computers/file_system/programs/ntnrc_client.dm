@@ -37,7 +37,7 @@
 		if("PRG_joinchannel")
 			. = 1
 			var/datum/ntnet_conversation/C
-			for(var/datum/ntnet_conversation/chan in ntnet_global.chat_channels)
+			for(var/datum/ntnet_conversation/chan in GLOB.ntnet_global.chat_channels)
 				if(chan.id == text2num(params["id"]))
 					C = chan
 					break
@@ -83,7 +83,7 @@
 					channel = null
 				return 1
 			var/mob/living/user = usr
-			if(can_run(usr, 1, access_network))
+			if(can_run(usr, 1, GLOB.access_network))
 				if(channel)
 					var/response = alert(user, "Really engage admin-mode? You will be disconnected from your current channel!", "NTNRC Admin mode", "Yes", "No")
 					if(response == "Yes")
@@ -180,7 +180,7 @@
 		channel = null
 	..()
 
-/datum/computer_file/program/chatclient/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/datum/computer_file/program/chatclient/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
@@ -196,7 +196,7 @@
 
 
 /datum/computer_file/program/chatclient/ui_data(mob/user)
-	if(!ntnet_global || !ntnet_global.chat_channels)
+	if(!GLOB.ntnet_global || !GLOB.ntnet_global.chat_channels)
 		return
 
 	var/list/data = list()
@@ -225,7 +225,7 @@
 
 	else // Channel selection screen
 		var/list/all_channels[0]
-		for(var/C in ntnet_global.chat_channels)
+		for(var/C in GLOB.ntnet_global.chat_channels)
 			var/datum/ntnet_conversation/conv = C
 			if(conv && conv.title)
 				all_channels.Add(list(list(

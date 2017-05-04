@@ -112,6 +112,7 @@
 	var/scanning = 0
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
+	..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)

@@ -110,8 +110,7 @@
 	casing_ejector = 0
 	var/obj/item/weapon/minigunpack/ammo_pack
 
-/obj/item/weapon/gun/ballistic/minigun/Initialize(mapload)
-	..()
+/obj/item/weapon/gun/ballistic/minigun/New()
 	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 
 	if(!ammo_pack)

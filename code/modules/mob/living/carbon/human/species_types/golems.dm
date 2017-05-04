@@ -9,7 +9,7 @@
 	punchdamagelow = 5
 	punchdamagehigh = 14
 	punchstunthreshold = 11 //about 40% chance to stun
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
 	nojumpsuit = 1
 	sexes = 1
 	damage_overlay_type = ""
@@ -26,11 +26,11 @@
 	var/list/special_names
 
 /datum/species/golem/random_name(gender,unique,lastname)
-	var/golem_surname = pick(golem_names)
+	var/golem_surname = pick(GLOB.golem_names)
 	// 3% chance that our golem has a human surname, because
 	// cultural contamination
 	if(prob(3))
-		golem_surname = pick(last_names)
+		golem_surname = pick(GLOB.last_names)
 	else if(special_names && prob(5))
 		golem_surname = pick(special_names)
 
@@ -71,10 +71,14 @@
 	prefix = "Plasma"
 	special_names = list("Flood","Fire","Bar","Man")
 
-/datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
-	explosion(get_turf(H),0,1,2,flame_range = 5)
-	if(H)
-		H.gib()
+/datum/species/golem/plasma/spec_life(mob/living/carbon/human/H)
+	if(H.bodytemperature > 900 && H.on_fire)
+		explosion(get_turf(H),1,2,4,flame_range = 5)
+		if(H)
+			H.gib()
+	if(H.fire_stacks < 2) //flammable
+		H.adjust_fire_stacks(1)
+	..()
 
 //Harder to hurt
 /datum/species/golem/diamond
@@ -444,7 +448,7 @@
 	var/active = null
 
 /datum/species/golem/bananium/random_name(gender,unique,lastname)
-	var/clown_name = pick(clown_names)
+	var/clown_name = pick(GLOB.clown_names)
 	var/golem_name = "[uppertext(clown_name)]"
 	return golem_name
 
@@ -501,6 +505,7 @@
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder God Nar'Sie."
 	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER) //no mutcolors
+	prefix = "Runic"
 
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem/phase_shift
 	var/obj/effect/proc_holder/spell/targeted/abyssal_gaze/abyssal_gaze

@@ -6,6 +6,10 @@
 	metabolization_rate = 5 //fast rate so it disappears fast.
 	taste_description = "iron"
 	taste_mult = 1.3
+	glass_icon_state = "glass_red"
+	glass_name = "glass of tomato juice"
+	glass_desc = "Are you sure this is tomato juice?"
+	shot_glass_icon_state = "shotglassred"
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
@@ -81,6 +85,7 @@
 	color = "#FF9966"
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
+	shot_glass_icon_state = "shotglassred"
 
 /datum/reagent/vaccine
 	//data must contain virus type
@@ -107,6 +112,10 @@
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
 	var/cooling_temperature = 2
+	glass_icon_state = "glass_clear"
+	glass_name = "glass of Water"
+	glass_desc = "The father of all refreshments."
+	shot_glass_icon_state = "shotglassclear"
 
 /*
  *	Water reaction to turf
@@ -168,6 +177,9 @@
 	id = "holywater"
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
+	glass_icon_state  = "glass_clear"
+	glass_name = "glass of Holy Water"
+	glass_desc = "A glass of holy water."
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(is_servant_of_ratvar(M))
@@ -197,7 +209,7 @@
 	if(data >= 75)	// 30 units, 135 seconds
 		if(iscultist(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
-				ticker.mode.remove_cultist(M.mind, 1, 1)
+				SSticker.mode.remove_cultist(M.mind, 1, 1)
 			else if(is_servant_of_ratvar(M))
 				remove_servant_of_ratvar(M)
 			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
@@ -384,22 +396,24 @@
 
 /datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
+	if(!istype(H))
+		return
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
-	spawn(30)
-		if(!H || QDELETED(H))
-			return
+	addtimer(CALLBACK(src, .proc/mutate, H), 30)
+	return
 
-		var/current_species = H.dna.species.type
-		var/datum/species/mutation = race
-		if(mutation && mutation != current_species)
-			to_chat(H, mutationtext)
-			H.set_species(mutation)
-		else
-			to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
-
-	return 1
+/datum/reagent/stableslimetoxin/proc/mutate(mob/living/carbon/human/H)
+	if(QDELETED(H))
+		return
+	var/current_species = H.dna.species.type
+	var/datum/species/mutation = race
+	if(mutation && mutation != current_species)
+		to_chat(H, mutationtext)
+		H.set_species(mutation)
+	else
+		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
 
 /datum/reagent/stableslimetoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
@@ -644,8 +658,8 @@
 	taste_mult = 0 // apparently tasteless.
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
-	if(M.canmove && isspaceturf(M.loc))
-		step(M, pick(cardinal))
+	if(M.canmove && !isspaceturf(M.loc))
+		step(M, pick(GLOB.cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	M.adjustBrainLoss(2)
@@ -724,8 +738,8 @@
 	taste_description = "metal"
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
-	if(M.canmove && isspaceturf(M.loc))
-		step(M, pick(cardinal))
+	if(M.canmove && !isspaceturf(M.loc))
+		step(M, pick(GLOB.cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	..()
@@ -858,7 +872,7 @@
 		to_chat(M, "<span class='warning'>You feel unstable...</span>")
 		M.Jitter(2)
 		current_cycle = 1
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/do_teleport, M, get_turf(M), 5, asoundin = 'sound/effects/phasein.ogg'), 30)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/do_teleport, M, get_turf(M), 5, null, null, null, 'sound/effects/phasein.ogg'), 30)
 	..()
 
 /datum/reagent/aluminium
@@ -883,6 +897,9 @@
 	description = "Required for welders. Flamable."
 	color = "#660000" // rgb: 102, 0, 0
 	taste_description = "gross metal"
+	glass_icon_state = "dr_gibb_glass"
+	glass_name = "glass of welder fuel"
+	glass_desc = "Unless you're an industrial tool, this is probably not safe for consumption."
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(!isliving(M))
@@ -1111,7 +1128,7 @@
 //For colouring in /proc/mix_color_from_reagents
 
 
-/datum/reagent/crayonpowder
+/datum/reagent/colorful_reagent/crayonpowder
 	name = "Crayon Powder"
 	id = "crayon powder"
 	var/colorname = "none"
@@ -1120,50 +1137,72 @@
 	color = "#FFFFFF" // rgb: 207, 54, 0
 	taste_description = "the back of class"
 
-/datum/reagent/crayonpowder/New()
+/datum/reagent/colorful_reagent/crayonpowder/New()
 	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
 
 
-/datum/reagent/crayonpowder/red
+/datum/reagent/colorful_reagent/crayonpowder/red
 	name = "Red Crayon Powder"
 	id = "redcrayonpowder"
 	colorname = "red"
+	color = "#DA0000" // red
+	random_color_list = list("#DA0000")
 
-/datum/reagent/crayonpowder/orange
+/datum/reagent/colorful_reagent/crayonpowder/orange
 	name = "Orange Crayon Powder"
 	id = "orangecrayonpowder"
 	colorname = "orange"
 	color = "#FF9300" // orange
+	random_color_list = list("#FF9300")
 
-/datum/reagent/crayonpowder/yellow
+/datum/reagent/colorful_reagent/crayonpowder/yellow
 	name = "Yellow Crayon Powder"
 	id = "yellowcrayonpowder"
 	colorname = "yellow"
 	color = "#FFF200" // yellow
+	random_color_list = list("#FFF200")
 
-/datum/reagent/crayonpowder/green
+/datum/reagent/colorful_reagent/crayonpowder/green
 	name = "Green Crayon Powder"
 	id = "greencrayonpowder"
 	colorname = "green"
 	color = "#A8E61D" // green
+	random_color_list = list("#A8E61D")
 
-/datum/reagent/crayonpowder/blue
+/datum/reagent/colorful_reagent/crayonpowder/blue
 	name = "Blue Crayon Powder"
 	id = "bluecrayonpowder"
 	colorname = "blue"
 	color = "#00B7EF" // blue
+	random_color_list = list("#00B7EF")
 
-/datum/reagent/crayonpowder/purple
+/datum/reagent/colorful_reagent/crayonpowder/purple
 	name = "Purple Crayon Powder"
 	id = "purplecrayonpowder"
 	colorname = "purple"
 	color = "#DA00FF" // purple
+	random_color_list = list("#DA00FF")
 
-/datum/reagent/crayonpowder/invisible
+/datum/reagent/colorful_reagent/crayonpowder/invisible
 	name = "Invisible Crayon Powder"
 	id = "invisiblecrayonpowder"
 	colorname = "invisible"
 	color = "#FFFFFF00" // white + no alpha
+	random_color_list = list(null)	//because using the powder color turns things invisible
+
+/datum/reagent/colorful_reagent/crayonpowder/black
+	name = "Black Crayon Powder"
+	id = "blackcrayonpowder"
+	colorname = "black"
+	color = "#1C1C1C" // not quite black
+	random_color_list = list("#404040")
+
+/datum/reagent/colorful_reagent/crayonpowder/white
+	name = "White Crayon Powder"
+	id = "whitecrayonpowder"
+	colorname = "white"
+	color = "#FFFFFF" // white
+	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
 
 
 
@@ -1353,8 +1392,8 @@
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/datum/sprite_accessory/hair/picked_hair = pick(hair_styles_list)
-			var/datum/sprite_accessory/facial_hair/picked_beard = pick(facial_hair_styles_list)
+			var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hair_styles_list)
+			var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hair_styles_list)
 			H.hair_style = picked_hair
 			H.facial_hair_style = picked_beard
 			H.update_hair()
@@ -1494,7 +1533,9 @@
 
 /datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
 	// Silently add the zombie infection organ to be activated upon death
-	new /obj/item/organ/zombie_infection(H)
+	if(!H.getorganslot("zombie_infection"))
+		var/obj/item/organ/zombie_infection/ZI = new()
+		ZI.Insert(H)
 	..()
 
 /datum/reagent/growthserum

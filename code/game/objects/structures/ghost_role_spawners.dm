@@ -101,25 +101,26 @@
 	death = FALSE
 	anchored = 0
 	density = 0
+	var/can_transfer = TRUE //if golems can switch bodies to this new shell
 	var/mob/living/owner = null //golem's owner if it has one
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
 
-/obj/effect/mob_spawn/human/golem/New(loc, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
+/obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
 	..()
 	if(species)
 		name += " ([initial(species.prefix)])"
 		mob_species = species
 	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("\A [initial(species.id)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+	if(!mapload && A)
+		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 	if(has_owner && creator)
 		flavour_text = "You are a golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
 		Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost."
 		owner = creator
 
-/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
+/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn, name)
 	var/datum/species/golem/X = mob_species
 	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)
@@ -132,7 +133,23 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
-		H.real_name = H.dna.species.random_name()
+		if(!name)
+			H.real_name = H.dna.species.random_name()
+		else
+			H.real_name = name
+
+/obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
+	if(isgolem(user) && can_transfer)
+		var/transfer = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
+		if(!transfer)
+			return
+		log_game("[user.ckey] golem-swapped into [src]")
+		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
+		create(ckey = user.ckey, flavour = FALSE, name = user.real_name)
+		user.death()
+		return
+	..()
+
 
 /obj/effect/mob_spawn/human/golem/adamantine
 	name = "dust-caked golem shell"
@@ -140,6 +157,7 @@
 	mob_name = "a free golem"
 	anchored = 1
 	density = 1
+	can_transfer = FALSE
 	mob_species = /datum/species/golem/adamantine
 
 //Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland. Ghosts become hermits with knowledge of how they got to where they are now.

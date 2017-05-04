@@ -17,13 +17,13 @@
 	timeout_time = 50
 
 /datum/clockwork_scripture/ranged_ability/linked_vanguard/check_special_requirements()
-	if(!ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
+	if(!GLOB.ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
 		to_chat(invoker, "<span class='warning'>You are already shielded by a Vanguard!</span>")
 		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/ranged_ability/linked_vanguard/scripture_effects()
-	if(ratvar_awakens) //hey, ratvar's up! give everybody stun immunity.
+	if(GLOB.ratvar_awakens) //hey, ratvar's up! give everybody stun immunity.
 		for(var/mob/living/L in view(7, get_turf(invoker)))
 			if(L.stat != DEAD && is_servant_of_ratvar(L))
 				L.apply_status_effect(STATUS_EFFECT_VANGUARD)

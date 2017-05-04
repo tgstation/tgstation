@@ -304,17 +304,17 @@
 	build_path = /obj/machinery/computer/gulag_teleporter_computer
 
 /obj/item/weapon/circuitboard/computer/rdconsole
-	name = "RD Console (Computer Board)"
+	name = "R&D Console (Computer Board)"
 	build_path = /obj/machinery/computer/rdconsole/core
 
 /obj/item/weapon/circuitboard/computer/rdconsole/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/rdconsole/core)
-			name = "RD Console - Robotics (Computer Board)"
+			name = "R&D Console - Robotics (Computer Board)"
 			build_path = /obj/machinery/computer/rdconsole/robotics
 			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
 		else
-			name = "RD Console (Computer Board)"
+			name = "R&D Console (Computer Board)"
 			build_path = /obj/machinery/computer/rdconsole/core
 			to_chat(user, "<span class='notice'>Defaulting access protocols.</span>")
 	else

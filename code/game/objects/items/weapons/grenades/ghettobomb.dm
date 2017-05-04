@@ -19,8 +19,8 @@
 
 /obj/item/weapon/grenade/iedcasing/New(loc)
 	..()
-	add_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled"))
-	add_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired"))
+	add_overlay("improvised_grenade_filled")
+	add_overlay("improvised_grenade_wired")
 	times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
 	det_time = text2num(pickweight(times))
 	if(det_time < 0) //checking for 'duds'
@@ -33,13 +33,10 @@
 	..()
 	var/obj/item/weapon/reagent_containers/food/drinks/soda_cans/can = locate() in contents
 	if(can)
-		var/muh_layer = can.layer
-		var/muh_plane = can.plane
-		can.layer = FLOAT_LAYER
-		can.plane = FLOAT_PLANE
-		underlays += can
-		can.layer = muh_layer
-		can.plane = muh_plane
+		var/mutable_appearance/can_underlay = new(can)
+		can_underlay.layer = FLOAT_LAYER
+		can_underlay.plane = FLOAT_PLANE
+		underlays += can_underlay
 
 
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user) //
@@ -47,7 +44,7 @@
 		if(clown_check(user))
 			to_chat(user, "<span class='warning'>You light the [name]!</span>")
 			active = 1
-			cut_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled"), TRUE)	//this line make no sense
+			cut_overlay("improvised_grenade_filled")
 			icon_state = initial(icon_state) + "_active"
 			add_fingerprint(user)
 			var/turf/bombturf = get_turf(src)
