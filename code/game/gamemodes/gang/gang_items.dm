@@ -172,7 +172,7 @@
 	cost = 5
 	item_path = /obj/item/toy/crayon/spraycan/gang
 	
-/obj/item/weapon/sharpener
+/datum/gang_item/equipment/sharpener
 	name = "Sharpener"
 	id = "whetstone"
 	cost = 3
