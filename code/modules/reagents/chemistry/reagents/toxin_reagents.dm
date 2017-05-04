@@ -663,7 +663,7 @@
 	.=..()
 	if(current_cycle >=11 && prob(min(50,current_cycle)) && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.vomit(lost_nutrition = 10, blood = prob(10), stun = prob(50), distance = rand(0,4))
+		H.vomit(lost_nutrition = 10, blood = prob(10), stun = prob(50), distance = rand(0,4), message = TRUE, toxic = prob(30))
 		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 			if(R != src)
 				H.reagents.remove_reagent(R.id,1)
