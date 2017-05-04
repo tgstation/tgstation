@@ -736,16 +736,26 @@ var/global/list/possible_items_special = list()
 	dangerrating = 25
 	martyr_compatible = FALSE
 	var/heist_ID = null
+	var/payday = 20
 	var/list/heist_tools = list(/obj/item/device/encryptionkey/syndicate)
 
 /datum/objective/traitor_group/Initialize()
-	switch(rand(1,3))
-		if(1 to 3)
+	switch(rand(1,2))
+		if(1)
+			payday = 20
 			heist_ID = "clown"
 			explanation_text = "Clowns represent a potent force in galactic politics. Their collective might has toppled empires and crushed corporations. We must turn them against Nanotrasen."
 			explanation_text += "<br>We have provided you with a special camera that will upload photos directly to Nanotrasen's social media channels. We have also provided you with chameleon clothing that can imitate clown apparel."
 			explanation_text += "<br>We require FOUR photographs of crewmembers dressed as clowns (mask, shoes, and suit at a minimum), who are in some type of restraints, and are badly wounded."
-			explanation_text += "<br>Remember to make sure the photo is focused on the "clown" and that the "clown" is not dead or braindead. Good Luck."
+			explanation_text += "<br>Remember to make sure the photo is focused on the "clown" and that the "clown" is not dead or braindead. You will receive [payday] telecrystal and Two Staffs of Honk for completing this mission."
+		
+		if(2)
+			payday = 30
+			heist_ID = "vault"
+			explanation_text = "This job is straightforward: Break into your station's vault, siphon the credits, and extract it via the provided duffelbag on a hacked shuttle escape pod."
+			explanation_text = "We expect at least 15,000 credits from this heist, but if that kind of cash isn't available then stealing the full balance of the station's credit will suffice."
+			explanation_text += "Your PDA contains a simple program to hijack and launch an escape pod of your choice to our designated rendevous location."
+			explanation_text += "Be advised that the station's security algorithms are likely to detect that an escape pod is being hijacked. You will receive [payday] telecrystals for completing this heist."
 
 			
 ////////////////////////////////
