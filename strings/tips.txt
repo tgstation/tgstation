@@ -102,8 +102,8 @@ As the Bartender, the drinks you start with only give you the basics. If you wan
 As the Bartender, you can use a circular saw on your shotgun to make it easier to store.
 As a Janitor, if someone steals your janicart, you can instead use your space cleaner spray, grenades, water sprayer or order another from Cargo.
 As a Janitor, mousetraps can be used to create bombs or booby-trap containers.
-As the Librarian, you are not completely defenseless. Your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
-As the Librarian, be sure to keep the shelves stocked and the library clean for crew.
+As the Curator, you are not completely defenseless. Your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
+As the Curator, be sure to keep the shelves stocked and the library clean for crew.
 As a Cargo Technician, you can hack MULEbots to make them faster, run over people in their way, and even let you ride them!
 As a Cargo Technician, you can order contraband items from the supply shuttle console by de-constructing it and using a multitool on the circuit board, the re-assembling it.
 As a Cargo Technician, you can earn more cargo points by shipping back crates from maintenance, liquid containers, plasma sheets, rare seeds from hydroponics, and more!

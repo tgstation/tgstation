@@ -9,7 +9,7 @@
 	desc = "Taps the limitless power of Inath-neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all Servants in range for fifteen seconds."
 	invocations = list("I call upon you, Vanguard!!", "Let the Resonant Cogs turn once more!!", "Grant me and my allies the strength to vanquish our foes!!")
 	channel_time = 100
-	consumed_components = list(VANGUARD_COGWHEEL = 4, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 2)
+	consumed_components = list(VANGUARD_COGWHEEL = 10, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 3)
 	usage_tip = "Servants affected by this scripture are only weak to things that outright destroy bodies, such as bombs or the singularity."
 	tier = SCRIPTURE_REVENANT
 	primary_component = VANGUARD_COGWHEEL
@@ -44,7 +44,7 @@
 	for all non-servant humans on the same z-level as them. The power of this scripture falls off somewhat with distance, and certain things may reduce its effects."
 	invocations = list("I call upon you, Fright!!", "Let your power shatter the sanity of the weak-minded!!", "Let your tendrils hold sway over all!!")
 	channel_time = 150
-	consumed_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 6, HIEROPHANT_ANSIBLE = 3)
+	consumed_components = list(BELLIGERENT_EYE = 6, VANGUARD_COGWHEEL = 6, GEIS_CAPACITOR = 10, HIEROPHANT_ANSIBLE = 6)
 	usage_tip = "Causes brain damage, hallucinations, confusion, and dizziness in massive amounts."
 	tier = SCRIPTURE_REVENANT
 	sort_priority = 3
@@ -108,7 +108,7 @@
 	clockwork proselytizers will charge very rapidly."
 	invocations = list("I call upon you, Armorer!!", "Let your machinations reign on this miserable station!!", "Let your power flow through the tools of your master!!")
 	channel_time = 150
-	consumed_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 6)
+	consumed_components = list(BELLIGERENT_EYE = 6, VANGUARD_COGWHEEL = 6, GEIS_CAPACITOR = 6, REPLICANT_ALLOY = 10)
 	usage_tip = "Ocular wardens will become empowered, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
 	and interdiction lenses, mania motors, tinkerer's daemons, and clockwork obelisks will all require no power."
 	tier = SCRIPTURE_REVENANT
@@ -153,7 +153,7 @@
 	will be struck by devastating lightning bolts."
 	invocations = list("I call upon you, Amperage!!", "Let your energy flow through me!!", "Let your boundless power shatter stars!!")
 	channel_time = 100
-	consumed_components = list(BELLIGERENT_EYE = 2, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 4)
+	consumed_components = list(BELLIGERENT_EYE = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 10)
 	usage_tip = "Struck targets will also be knocked down for about sixteen seconds."
 	tier = SCRIPTURE_REVENANT
 	primary_component = HIEROPHANT_ANSIBLE

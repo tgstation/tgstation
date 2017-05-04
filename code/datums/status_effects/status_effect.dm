@@ -103,3 +103,11 @@
 		for(var/datum/status_effect/S in status_effects)
 			if(initial(S1.id) == S.id)
 				return S
+
+/mob/living/proc/has_status_effect_list(effect) //returns a list of effects with matching IDs that the mod owns; use for effects there can be multiple of
+	. = list()
+	if(status_effects)
+		var/datum/status_effect/S1 = effect
+		for(var/datum/status_effect/S in status_effects)
+			if(initial(S1.id) == S.id)
+				. += S

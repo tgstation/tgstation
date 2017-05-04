@@ -18,7 +18,7 @@
 	var/static/mutable_appearance/component_glow = mutable_appearance('icons/obj/clockwork_objects.dmi', "t_random_component")
 	var/component_id_to_produce
 	var/production_time = 0 //last time we produced a component
-	var/production_cooldown = 120
+	var/production_cooldown = 60
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/Initialize()
 	. = ..()
