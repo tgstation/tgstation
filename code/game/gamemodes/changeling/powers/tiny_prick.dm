@@ -40,6 +40,9 @@
 		return
 	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = 0))
 		return
+	if(target.mind && target.mind.changeling)
+		sting_feedback(user, target)
+		user.mind.changeling.chem_charges -= chemical_cost
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
