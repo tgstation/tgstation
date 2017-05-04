@@ -2,10 +2,10 @@
 	name = "paper cutter"
 	desc = "Standard office equipment. Precisely cuts paper using a large blade."
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "papercutter-cutter"
+	icon_state = "papercutter"
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/obj/item/weapon/paper/storedpaper = null
 	var/obj/item/weapon/hatchet/cutterblade/storedcutter = null
 	var/cuttersecured = TRUE
@@ -15,6 +15,7 @@
 /obj/item/weapon/papercutter/New()
 	..()
 	storedcutter = new /obj/item/weapon/hatchet/cutterblade(src)
+	update_icon()
 
 
 /obj/item/weapon/papercutter/suicide_act(mob/user)
@@ -46,7 +47,7 @@
 		if(!user.drop_item())
 			return
 		playsound(loc, "pageturn", 60, 1)
-		user << "<span class='notice'>You place [P] in [src].</span>"
+		to_chat(user, "<span class='notice'>You place [P] in [src].</span>")
 		P.loc = src
 		storedpaper = P
 		update_icon()
@@ -54,14 +55,14 @@
 	if(istype(P, /obj/item/weapon/hatchet/cutterblade) && !storedcutter)
 		if(!user.drop_item())
 			return
-		user << "<span class='notice'>You replace [src]'s [P].</span>"
+		to_chat(user, "<span class='notice'>You replace [src]'s [P].</span>")
 		P.loc = src
 		storedcutter = P
 		update_icon()
 		return
 	if(istype(P, /obj/item/weapon/screwdriver) && storedcutter)
 		playsound(src, P.usesound, 50, 1)
-		user << "<span class='notice'>[storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>"
+		to_chat(user, "<span class='notice'>[storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>")
 		cuttersecured = !cuttersecured
 		return
 	..()
@@ -70,18 +71,18 @@
 /obj/item/weapon/papercutter/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(!storedcutter)
-		user << "<span class='notice'>The cutting blade is gone! You can't use [src] now.</span>"
+		to_chat(user, "<span class='notice'>The cutting blade is gone! You can't use [src] now.</span>")
 		return
 
 	if(!cuttersecured)
-		user << "<span class='notice'>You remove [src]'s [storedcutter].</span>"
+		to_chat(user, "<span class='notice'>You remove [src]'s [storedcutter].</span>")
 		user.put_in_hands(storedcutter)
 		storedcutter = null
 		update_icon()
 
 	if(storedpaper)
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1)
-		user << "<span class='notice'>You neatly cut [storedpaper].</span>"
+		to_chat(user, "<span class='notice'>You neatly cut [storedpaper].</span>")
 		storedpaper = null
 		qdel(storedpaper)
 		new /obj/item/weapon/paperslip(get_turf(src))
@@ -99,10 +100,7 @@
 
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!remove_item_from_storage(M))
-			if(!M.unEquip(src))
-				return
-		M.put_in_hand(src, H.held_index)
+		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 	add_fingerprint(M)
 
 

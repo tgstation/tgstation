@@ -30,9 +30,10 @@
 /obj/structure/spider/stickyweb
 	icon_state = "stickyweb1"
 
-/obj/structure/spider/stickyweb/New()
+/obj/structure/spider/stickyweb/Initialize()
 	if(prob(50))
 		icon_state = "stickyweb2"
+	. = ..()
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
@@ -40,7 +41,7 @@
 		return 1
 	else if(isliving(mover))
 		if(prob(50))
-			mover << "<span class='danger'>You get stuck in \the [src] for a moment.</span>"
+			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
@@ -56,10 +57,11 @@
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
-/obj/structure/spider/eggcluster/New()
+/obj/structure/spider/eggcluster/Initialize()
 	pixel_x = rand(3,-3)
 	pixel_y = rand(3,-3)
 	START_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/structure/spider/eggcluster/process()
 	amount_grown += rand(0,2)
@@ -90,10 +92,11 @@
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
-/obj/structure/spider/spiderling/New()
+/obj/structure/spider/spiderling/Initialize()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
 	START_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/structure/spider/spiderling/hunter
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
@@ -187,14 +190,15 @@
 	icon_state = "cocoon1"
 	obj_integrity = 60
 
-/obj/structure/spider/cocoon/New()
+/obj/structure/spider/cocoon/Initialize()
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
+	. = ..()
 
 /obj/structure/spider/cocoon/container_resist(mob/living/user)
 	var/breakout_time = 1
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You struggle against the tight bonds... (This will take about [breakout_time] minutes.)</span>"
+	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [breakout_time] minutes.)</span>")
 	visible_message("You see something struggling and writhing in \the [src]!")
 	if(do_after(user,(breakout_time*60*10), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)

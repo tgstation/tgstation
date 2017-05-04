@@ -8,25 +8,26 @@
 			adjustBruteLoss(damage * hit_percent)
 		if(BURN)
 			adjustFireLoss(damage * hit_percent)
+		if(OXY)
+			if(damage < 0) //we shouldn't be taking oxygen damage through this proc, but we'll let it heal.
+				adjustOxyLoss(damage * hit_percent)
 	return 1
 
 
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
-	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
+	return 0 //The only effect that can hit them atm is flashes and they still directly edit so this works for now
 
+/mob/living/silicon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE) //immune to tox damage
+	return FALSE
 
+/mob/living/silicon/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
+	return FALSE
 
-/mob/living/silicon/adjustToxLoss(amount, updating_health=1) //immune to tox damage
-	return 0
+/mob/living/silicon/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE) //immune to clone damage
+	return FALSE
 
-/mob/living/silicon/setToxLoss(amount, updating_health=1)
-	return 0
-
-/mob/living/silicon/adjustCloneLoss(amount) //immune to clone damage
-	return 0
-
-/mob/living/silicon/setCloneLoss(amount, updating_health=1)
-	return 0
+/mob/living/silicon/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
+	return FALSE
 
 /mob/living/silicon/adjustStaminaLoss(amount, updating_stamina = 1)//immune to stamina damage.
 	return

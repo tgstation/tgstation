@@ -34,14 +34,14 @@
 		var/blocked = getarmor(null, "rad")
 
 		if(!silent)
-			src << "Your skin feels warm."
+			to_chat(src, "Your skin feels warm.")
 
 		apply_effect(amount, IRRADIATE, blocked)
 		for(var/obj/I in src) //Radiation is also applied to items held by the mob
 			I.rad_act(amount)
 
 /mob/living/carbon/rad_act(amount, silent = 0)
-	if(dna && (RADIMMUNE in dna.species.specflags))
+	if(dna && (RADIMMUNE in dna.species.species_traits))
 		silent = TRUE
 	..()
 
@@ -50,4 +50,7 @@
 	. = ..(amount, TRUE)
 
 /mob/living/simple_animal/bot/rad_act(amount)
+	. = ..(amount, TRUE)
+
+/mob/living/simple_animal/drone/rad_act(amount)
 	. = ..(amount, TRUE)

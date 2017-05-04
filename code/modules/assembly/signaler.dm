@@ -1,6 +1,6 @@
 /obj/item/device/assembly/signaler
 	name = "remote signaling device"
-	desc = "Used to remotely activate devices."
+	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another."
 	icon_state = "signaller"
 	item_state = "signaler"
 	materials = list(MAT_METAL=400, MAT_GLASS=120)
@@ -25,14 +25,10 @@
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
-	if(cooldown > 0)
-		return 0
-	cooldown = 2
-	spawn(10)
-		process_cooldown()
-
+	if(!..())//cooldown processing
+		return FALSE
 	signal()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/signaler/update_icon()
 	if(holder)
@@ -100,6 +96,15 @@ Code:
 
 	return
 
+/obj/item/device/assembly/signaler/attackby(obj/item/weapon/W, mob/user, params)
+	if(issignaler(W))
+		var/obj/item/device/assembly/signaler/signaler2 = W
+		if(secured && signaler2.secured)
+			code = signaler2.code
+			frequency = signaler2.frequency
+			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
+	else
+		..()
 
 /obj/item/device/assembly/signaler/proc/signal()
 	if(!radio_connection) return
@@ -113,7 +118,7 @@ Code:
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 	if(usr)
-		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+		GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
 
 	return
@@ -148,7 +153,7 @@ Code:
 		return
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_CHAT)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 	return
 
 // Embedded signaller used in grenade construction.
@@ -188,4 +193,10 @@ Code:
 		A.anomalyNeutralize()
 
 /obj/item/device/assembly/signaler/anomaly/attack_self()
+	return
+
+/obj/item/device/assembly/signaler/cyborg
+	origin_tech = null
+
+/obj/item/device/assembly/signaler/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return

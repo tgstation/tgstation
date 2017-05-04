@@ -35,7 +35,7 @@
 	desc = "A die with six sides. Basic and servicable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/sides = 6
 	var/result = null
 	var/list/special_faces = list() //entries should match up to sides var if used
@@ -45,6 +45,7 @@
 /obj/item/weapon/dice/New()
 	result = rand(1, sides)
 	update_icon()
+	..()
 
 /obj/item/weapon/dice/d1
 	name = "d1"
@@ -146,7 +147,7 @@
 /obj/item/weapon/dice/attack_self(mob/user)
 	diceroll(user)
 
-/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(!..())
 		return
 	diceroll(thrower)
@@ -171,21 +172,21 @@
 		user.visible_message("[user] has thrown [src]. It lands on [result]. [comment]", \
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='italics'>You hear [src] rolling, it sounds like a [fake_result].</span>")
-	else if(src.throwing == 0) //Dice was thrown and is coming to rest
+	else if(!src.throwing) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
 /obj/item/weapon/dice/d4/Crossed(mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)
-		if(PIERCEIMMUNE in H.dna.species.specflags)
+		if(PIERCEIMMUNE in H.dna.species.species_traits)
 			return 0
-		H << "<span class='userdanger'>You step on the D4!</span>"
+		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
 		H.Weaken(3)
 
 /obj/item/weapon/dice/update_icon()
 	cut_overlays()
 	add_overlay("[src.icon_state][src.result]")
-	
+
 /obj/item/weapon/dice/microwave_act(obj/machinery/microwave/M)
 	if(can_be_rigged)
 		rigged = result

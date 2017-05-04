@@ -9,7 +9,7 @@
 	item_state = "syringe_kit"
 	materials = list(MAT_METAL=30000)
 	throwforce = 2
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	var/list/stored_ammo = list()
@@ -85,7 +85,7 @@
 
 	if(num_loaded)
 		if(!silent)
-			user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		A.update_icon()
 		update_icon()
 
@@ -95,7 +95,7 @@
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
 		user.put_in_hands(A)
-		user << "<span class='notice'>You remove a round from \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You remove a round from \the [src]!</span>")
 		update_icon()
 
 /obj/item/ammo_box/update_icon()

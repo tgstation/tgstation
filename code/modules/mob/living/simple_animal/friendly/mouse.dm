@@ -18,14 +18,14 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 	density = 0
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = 2
 	var/chew_probability = 1
 
-/mob/living/simple_animal/mouse/New()
+/mob/living/simple_animal/mouse/Initialize()
 	..()
 	if(!body_color)
 		body_color = pick( list("brown","gray","white") )
@@ -56,7 +56,7 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			M << "<span class='notice'>\icon[src] Squeek!</span>"
+			to_chat(M, "<span class='notice'>\icon[src] Squeek!</span>")
 			playsound(src, 'sound/effects/mousesqueek.ogg', 100, 1)
 	..()
 

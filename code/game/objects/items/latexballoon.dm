@@ -5,7 +5,7 @@
 	item_state = "lgloves"
 	force = 0
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 7
 	var/state
@@ -17,7 +17,7 @@
 	icon_state = "latexballon_blow"
 	item_state = "latexballon"
 	user.update_inv_hands()
-	user << "<span class='notice'>You blow up [src] with [tank].</span>"
+	to_chat(user, "<span class='notice'>You blow up [src] with [tank].</span>")
 	air_contents = tank.remove_air_volume(3)
 
 /obj/item/latexballon/proc/burst()

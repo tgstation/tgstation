@@ -60,7 +60,7 @@
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
-		if(do_after(user, 50/W.toolspeed, target = src))
+		if(do_after(user, 50*W.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
 			deconstruct(TRUE)
@@ -103,9 +103,9 @@
 	..()
 	cut_overlays()
 	if(stat & BROKEN)
-		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "solar_panel-b", FLY_LAYER))
 	else
-		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "solar_panel", FLY_LAYER))
 		src.setDir(angle2dir(adir))
 
 //calculates the fraction of the sunlight that the panel recieves
@@ -184,7 +184,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	item_state = "electropack"
-	w_class = 4 // Pretty big!
+	w_class = WEIGHT_CLASS_BULKY // Pretty big!
 	anchored = 0
 	var/tracker = 0
 	var/glass_type = null
@@ -207,7 +207,7 @@
 /obj/item/solar_assembly/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && isturf(loc))
 		if(isinspace())
-			user << "<span class='warning'>You can't secure [src] here.</span>"
+			to_chat(user, "<span class='warning'>You can't secure [src] here.</span>")
 			return
 		anchored = !anchored
 		if(anchored)
@@ -220,7 +220,7 @@
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
 		if(!anchored)
-			user << "<span class='warning'>You need to secure the assembly before you can add glass.</span>"
+			to_chat(user, "<span class='warning'>You need to secure the assembly before you can add glass.</span>")
 			return
 		var/obj/item/stack/sheet/S = W
 		if(S.use(2))
@@ -232,7 +232,7 @@
 			else
 				new /obj/machinery/power/solar(get_turf(src), src)
 		else
-			user << "<span class='warning'>You need two sheets of glass to put them into a solar panel!</span>"
+			to_chat(user, "<span class='warning'>You need two sheets of glass to put them into a solar panel!</span>")
 			return
 		return 1
 
@@ -281,11 +281,10 @@
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
-
-/obj/machinery/power/solar_control/New()
-	..()
-	if(ticker)
-		initialize()
+/obj/machinery/power/solar_control/Initialize()
+	. = ..()
+	if(powernet)
+		set_panels(currentdir)
 	connect_to_network()
 
 /obj/machinery/power/solar_control/Destroy()
@@ -335,12 +334,6 @@
 	set_panels(currentdir)
 	updateDialog()
 
-
-/obj/machinery/power/solar_control/initialize()
-	..()
-	if(!powernet) return
-	set_panels(currentdir)
-
 /obj/machinery/power/solar_control/update_icon()
 	cut_overlays()
 	if(stat & NOPOWER)
@@ -352,10 +345,11 @@
 	else
 		add_overlay(icon_screen)
 	if(currentdir > -1)
-		add_overlay(image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(currentdir)))
+		setDir(angle2dir(currentdir))
+		add_overlay(mutable_appearance(icon, "solcon-o", FLY_LAYER))
 
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-												datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "solar_control", name, 500, 400, master_ui, state)
@@ -417,9 +411,9 @@
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, I.usesound, 50, 1)
-		if(do_after(user, 20/I.toolspeed, target = src))
+		if(do_after(user, 20*I.toolspeed, target = src))
 			if (src.stat & BROKEN)
-				user << "<span class='notice'>The broken glass falls out.</span>"
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				new /obj/item/weapon/shard( src.loc )
 				var/obj/item/weapon/circuitboard/computer/solar_control/M = new /obj/item/weapon/circuitboard/computer/solar_control( A )
@@ -431,7 +425,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				user << "<span class='notice'>You disconnect the monitor.</span>"
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				var/obj/item/weapon/circuitboard/computer/solar_control/M = new /obj/item/weapon/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
@@ -441,7 +435,7 @@
 				A.icon_state = "4"
 				A.anchored = 1
 				qdel(src)
-	else if(user.a_intent != "harm" && !(I.flags & NOBLUDGEON))
+	else if(user.a_intent != INTENT_HARM && !(I.flags & NOBLUDGEON))
 		src.attack_hand(user)
 	else
 		return ..()

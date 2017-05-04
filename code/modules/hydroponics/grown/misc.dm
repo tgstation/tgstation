@@ -11,9 +11,8 @@
 	production = 1
 	yield = -1
 	potency = -1
-	oneharvest = 1
 	growthstages = 4
-	plant_type = PLANT_WEED
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 
 
 // Cabbage
@@ -31,6 +30,7 @@
 	yield = 4
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/replicapod)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
@@ -51,6 +51,7 @@
 	species = "sugarcane"
 	plantname = "Sugarcane"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 60
 	endurance = 50
 	maturation = 3
@@ -73,8 +74,9 @@
 	desc = "These seeds grow into .357 revolvers."
 	icon_state = "seed-gatfruit"
 	species = "gatfruit"
-	plantname = "gatfruit"
+	plantname = "Gatfruit Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 20
 	endurance = 20
 	maturation = 40
@@ -121,14 +123,14 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
 	var/area/A = get_area(user)
 	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
-	message_admins("[user] ([user.key ? user.key : "no key"]) primed a cherry bomb for detonation at [A] ([user.x], [user.y], [user.z]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>(JMP)</a>")
-	log_game("[user] ([user.key ? user.key : "no key"]) primed a cherry bomb for detonation at [A] ([user.x],[user.y],[user.z]).")
+	message_admins("[ADMIN_LOOKUPFLW(user)] primed a cherry bomb for detonation at [A] [ADMIN_COORDJMP(user)]")
+	log_game("[key_name(user)] primed a cherry bomb for detonation at [A] [COORD(user)].")
 	prime()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		prime()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)

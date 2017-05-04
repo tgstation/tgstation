@@ -103,6 +103,9 @@
 		else
 			msg += "[t_He] [t_has] \icon[wear_mask] \a [wear_mask] on [t_his] face.\n"
 
+	if (wear_neck && !(slot_neck in obscured))
+		msg += "[t_He] [t_is] wearing \icon[src.wear_neck] \a [src.wear_neck] around [t_his] neck.\n"
+
 	//eyes
 	if(glasses && !(slot_glasses in obscured))
 		if(glasses.blood_DNA)
@@ -116,16 +119,6 @@
 
 	//ID
 	if(wear_id)
-		/*var/id
-		if(istype(wear_id, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = wear_id
-			id = pda.owner
-		else if(istype(wear_id, /obj/item/weapon/card/id)) //just in case something other than a PDA/ID card somehow gets in the ID slot :[
-			var/obj/item/weapon/card/id/idcard = wear_id
-			id = idcard.registered_name
-		if(id && (id != real_name) && (get_dist(src, user) <= 1) && prob(10))
-			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_id] \a [wear_id] yet something doesn't seem right...</span>\n"
-		else*/
 		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
 
 	//Jitters
@@ -140,16 +133,16 @@
 	var/appears_dead = 0
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		appears_dead = 1
-		if(getorgan(/obj/item/organ/brain))//Only perform these checks if there is no brain
-			if(suiciding)
-				msg += "<span class='warning'>[t_He] appear[p_s()] to have commited suicide... there is no hope of recovery.</span>\n"
-			if(hellbound)
-				msg += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>\n"
-			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
+		if(suiciding)
+			msg += "<span class='warning'>[t_He] appear[p_s()] to have commited suicide... there is no hope of recovery.</span>\n"
+		if(hellbound)
+			msg += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>\n"
+		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
+		if(getorgan(/obj/item/organ/brain))
 			if(!key)
 				var/foundghost = 0
 				if(mind)
-					for(var/mob/dead/observer/G in player_list)
+					for(var/mob/dead/observer/G in GLOB.player_list)
 						if(G.mind == mind)
 							foundghost = 1
 							if (G.can_reenter_corpse == 0)
@@ -157,9 +150,10 @@
 							break
 				if(!foundghost)
 					msg += " and [t_his] soul has departed"
-			msg += "...</span>\n"
-		else if(get_bodypart("head")) //Brain is gone, doesn't matter if they are AFK or present. Check for head first tho. Decapitation has similar message.
-			msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
+		msg += "...</span>\n"
+
+	if(get_bodypart("head") && !getorgan(/obj/item/organ/brain))
+		msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
 
 	var/temp = getBruteLoss() //no need to calculate each of these twice
 
@@ -236,7 +230,7 @@
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
-	if(bleed_rate)
+	else if(bleed_rate)
 		if(reagents.has_reagent("heparin"))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
 		else
@@ -285,7 +279,7 @@
 			else if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
-				msg += "[t_He] [t_has] a vacant, braindead stare...\n"
+				msg += "[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.\n"
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
@@ -296,7 +290,7 @@
 		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || CIH)
 			var/perpname = get_face_name(get_id_name(""))
 			if(perpname)
-				var/datum/data/record/R = find_record("name", perpname, data_core.general)
+				var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.general)
 				if(R)
 					msg += "<span class='deptradio'>Rank:</span> [R.fields["rank"]]<br>"
 					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
@@ -314,7 +308,7 @@
 						msg += "<a href='?src=\ref[src];hud=m;p_stat=1'>\[[health_r]\]</a>"
 						health_r = R.fields["m_stat"]
 						msg += "<a href='?src=\ref[src];hud=m;m_stat=1'>\[[health_r]\]</a><br>"
-					R = find_record("name", perpname, data_core.medical)
+					R = find_record("name", perpname, GLOB.data_core.medical)
 					if(R)
 						msg += "<a href='?src=\ref[src];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
 
@@ -324,7 +318,7 @@
 					//|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 						var/criminal = "None"
 
-						R = find_record("name", perpname, data_core.security)
+						R = find_record("name", perpname, GLOB.data_core.security)
 						if(R)
 							criminal = R.fields["criminal"]
 
@@ -335,4 +329,4 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)

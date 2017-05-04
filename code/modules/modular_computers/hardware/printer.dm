@@ -4,18 +4,18 @@
 	power_usage = 100
 	origin_tech = "programming=2;engineering=2"
 	icon_state = "printer"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	device_type = MC_PRINT
 	var/stored_paper = 20
 	var/max_paper = 30
 
 /obj/item/weapon/computer_hardware/printer/diagnostics(mob/living/user)
 	..()
-	user << "Paper level: [stored_paper]/[max_paper]"
+	to_chat(user, "Paper level: [stored_paper]/[max_paper]")
 
 /obj/item/weapon/computer_hardware/printer/examine(mob/user)
 	..()
-	user << "<span class='notice'>Paper level: [stored_paper]/[max_paper]</span>"
+	to_chat(user, "<span class='notice'>Paper level: [stored_paper]/[max_paper]</span>")
 
 
 /obj/item/weapon/computer_hardware/printer/proc/print_text(var/text_to_print, var/paper_title = "")
@@ -34,20 +34,20 @@
 	if(paper_title)
 		P.name = paper_title
 	P.update_icon()
+	P.reload_fields()
 	stored_paper--
 	P = null
 	return TRUE
 
 /obj/item/weapon/computer_hardware/printer/try_insert(obj/item/I, mob/living/user = null)
 	if(istype(I, /obj/item/weapon/paper))
-		if(user && !user.unEquip(I))
-			return FALSE
-
 		if(stored_paper >= max_paper)
-			user << "<span class='warning'>You try to add \the [I] into [src], but its paper bin is full!</span>"
+			to_chat(user, "<span class='warning'>You try to add \the [I] into [src], but its paper bin is full!</span>")
 			return FALSE
 
-		user << "<span class='notice'>You insert \the [I] into [src]'s paper recycler.</span>"
+		if(user && !user.temporarilyRemoveItemFromInventory(I))
+			return FALSE
+		to_chat(user, "<span class='notice'>You insert \the [I] into [src]'s paper recycler.</span>")
 		qdel(I)
 		stored_paper++
 		return TRUE
@@ -58,6 +58,6 @@
 	desc = "A small printer with paper recycling module."
 	power_usage = 50
 	icon_state = "printer_mini"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	stored_paper = 5
 	max_paper = 15

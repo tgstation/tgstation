@@ -15,7 +15,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	flags = NOBLUDGEON
 	throwforce = 0
 	throw_speed = 3
@@ -44,7 +44,7 @@
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
 	user.visible_message("<span class='suicide'>[user] lifts [src] to their mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!")
-	PoolOrNew(/obj/effect/particle_effect/foam, loc)
+	new /obj/effect/particle_effect/foam(loc)
 	return (TOXLOSS)
 
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
@@ -58,11 +58,11 @@
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
-		user << "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>"
+		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target,/obj/effect/decal/cleanable))
 		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
-			user << "<span class='notice'>You scrub \the [target.name] out.</span>"
+			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
 	else if(ishuman(target) && user.zone_selected == "mouth")
 		var/mob/living/carbon/human/H = user
@@ -73,13 +73,13 @@
 	else if(istype(target, /obj/structure/window))
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
-			user << "<span class='notice'>You clean \the [target.name].</span>"
+			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			target.SetOpacity(initial(target.opacity))
+			target.set_opacity(initial(target.opacity))
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
-			user << "<span class='notice'>You clean \the [target.name].</span>"
+			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -101,11 +101,11 @@
 	item_state = "bike_horn"
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
-	var/spam_flag = 0
+	var/next_usable = 0
 	var/honksound = 'sound/items/bikehorn.ogg'
 	var/cooldowntime = 20
 
@@ -115,18 +115,15 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!spam_flag)
+	if(!(next_usable > world.time))
 		playsound(loc, honksound, 50, 1, -1) //plays instead of tap.ogg!
 	return ..()
 
 /obj/item/weapon/bikehorn/attack_self(mob/user)
-	if(!spam_flag)
-		spam_flag = 1
+	if(!(next_usable > world.time))
+		next_usable = world.time + cooldowntime
 		playsound(src.loc, honksound, 50, 1)
 		src.add_fingerprint(user)
-		spawn(cooldowntime)
-			spam_flag = 0
-	return
 
 /obj/item/weapon/bikehorn/Crossed(mob/living/L)
 	if(isliving(L))
@@ -156,12 +153,12 @@
 	..()
 
 /obj/item/weapon/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
-	if (!spam_flag)
+	if(!(next_usable > world.time))
 		var/turf/T = get_turf(src)
 		for(M in ohearers(7, T))
-			if(ishuman(M))
+			if(ishuman(M) && M.can_hear())
 				var/mob/living/carbon/human/H = M
-				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
+				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 					continue
 			M.emote("flip")
 

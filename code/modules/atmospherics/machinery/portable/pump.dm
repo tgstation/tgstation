@@ -15,7 +15,7 @@
 
 	volume = 1000
 
-/obj/machinery/portable_atmospherics/pump/New()
+/obj/machinery/portable_atmospherics/pump/Initialize()
 	..()
 	pump = new(src, FALSE)
 	pump.on = TRUE
@@ -70,7 +70,7 @@
 
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-														datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "portable_pump", name, 420, 415, master_ui, state)
@@ -103,8 +103,9 @@
 				var/plasma = air_contents.gases["plasma"]
 				var/n2o = air_contents.gases["n2o"]
 				if(n2o || plasma)
-					message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [x], [y], [z]")
+					var/area/A = get_area(src)
+					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [A][ADMIN_JMP(src)]")
+					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [A][COORD(src)]")
 			. = TRUE
 		if("direction")
 			if(direction == PUMP_OUT)

@@ -13,7 +13,7 @@
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
 	icon_state = "multitool"
 	force = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
@@ -53,13 +53,13 @@
 
 /obj/item/device/multitool/ai_detect/proc/multitool_detect()
 	var/turf/our_turf = get_turf(src)
-	for(var/mob/living/silicon/ai/AI in ai_list)
+	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 		if(AI.cameraFollow == src)
 			detect_state = PROXIMITY_ON_SCREEN
 			break
 
-	if(!detect_state && cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
-		var/datum/camerachunk/chunk = cameranet.getCameraChunk(our_turf.x, our_turf.y, our_turf.z)
+	if(!detect_state && GLOB.cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
+		var/datum/camerachunk/chunk = GLOB.cameranet.getCameraChunk(our_turf.x, our_turf.y, our_turf.z)
 		if(chunk)
 			if(chunk.seenby.len)
 				for(var/mob/camera/aiEye/A in chunk.seenby)
@@ -78,7 +78,7 @@
 /obj/item/device/multitool/ai_detect/admin/multitool_detect()
 	var/turf/our_turf = get_turf(src)
 	for(var/mob/J in urange(rangewarning,our_turf))
-		if(admin_datums[J.ckey])
+		if(GLOB.admin_datums[J.ckey])
 			detect_state = PROXIMITY_NEAR
 			var/turf/detect_turf = get_turf(J)
 			if(get_dist(our_turf, detect_turf) < rangealert)
@@ -88,5 +88,12 @@
 /obj/item/device/multitool/cyborg
 	name = "multitool"
 	desc = "Optimised and stripped-down version of a regular multitool."
-	icon = 'icons/obj/items_cyborg.dmi'
-	toolspeed = 2
+	toolspeed = 0.5
+
+/obj/item/device/multitool/abductor
+	name = "alien multitool"
+	desc = "An omni-technological interface."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "multitool"
+	toolspeed = 0.1
+	origin_tech = "magnets=5;engineering=5;abductor=3"

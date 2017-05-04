@@ -239,7 +239,7 @@
 	W.update_label()
 
 	var/obj/item/device/radio/headset/R = H.ears
-	R.set_frequency(CENTCOM_FREQ)
+	R.set_frequency(GLOB.CENTCOM_FREQ)
 	R.freqlock = 1
 
 /datum/outfit/wizard
@@ -247,7 +247,7 @@
 
 	uniform = /obj/item/clothing/under/color/lightpurple
 	suit = /obj/item/clothing/suit/wizrobe
-	shoes = /obj/item/clothing/shoes/sandal
+	shoes = /obj/item/clothing/shoes/sandal/magic
 	ears = /obj/item/device/radio/headset
 	head = /obj/item/clothing/head/wizard
 	r_pocket = /obj/item/weapon/teleportation_scroll
@@ -355,7 +355,7 @@
 		return
 
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(CENTCOM_FREQ)
+	R.set_frequency(GLOB.CENTCOM_FREQ)
 	R.freqlock = 1
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn

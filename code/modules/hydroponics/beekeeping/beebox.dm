@@ -25,7 +25,7 @@
 
 /obj/structure/beebox
 	name = "apiary"
-	desc = "Dr Miles Manners is just your average Wasp themed super hero by day, but by night he becomes DR BEES!"
+	desc = "Dr Miles Manners is just your average wasp-themed super hero by day, but by night he becomes DR BEES!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "beebox"
 	anchored = 1
@@ -63,7 +63,7 @@
 	var/datum/reagent/R = null
 	if(random_reagent)
 		R = pick(subtypesof(/datum/reagent))
-		R = chemical_reagents_list[initial(R.id)]
+		R = GLOB.chemical_reagents_list[initial(R.id)]
 
 	queen_bee = new(src)
 	queen_bee.beehome = src
@@ -123,22 +123,22 @@
 	..()
 
 	if(!queen_bee)
-		user << "<span class='warning'>There is no queen bee! There won't bee any honeycomb without a queen!</span>"
+		to_chat(user, "<span class='warning'>There is no queen bee! There won't bee any honeycomb without a queen!</span>")
 
 	var/half_bee = get_max_bees()*0.5
 	if(half_bee && (bees.len >= half_bee))
-		user << "<span class='notice'>This place is a BUZZ with activity... there are lots of bees!</span>"
+		to_chat(user, "<span class='notice'>This place is aBUZZ with activity... there are lots of bees!</span>")
 
-	user << "<span class='notice'>[bee_resources]/100 resource supply.</span>"
-	user << "<span class='notice'>[bee_resources]% towards a new honeycomb.</span>"
-	user << "<span class='notice'>[bee_resources*2]% towards a new bee.</span>"
+	to_chat(user, "<span class='notice'>[bee_resources]/100 resource supply.</span>")
+	to_chat(user, "<span class='notice'>[bee_resources]% towards a new honeycomb.</span>")
+	to_chat(user, "<span class='notice'>[bee_resources*2]% towards a new bee.</span>")
 
 	if(honeycombs.len)
 		var/plural = honeycombs.len > 1
-		user << "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>"
+		to_chat(user, "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>")
 
 	if(honeycombs.len >= get_max_honeycomb())
-		user << "<span class='warning'>there's no room for more honeycomb!</span>"
+		to_chat(user, "<span class='warning'>there's no room for more honeycomb!</span>")
 
 
 /obj/structure/beebox/attackby(obj/item/I, mob/user, params)
@@ -146,11 +146,11 @@
 		var/obj/item/honey_frame/HF = I
 		if(honey_frames.len < BEEBOX_MAX_FRAMES)
 			visible_message("<span class='notice'>[user] adds a frame to the apiary.</span>")
-			user.unEquip(HF)
-			HF.loc = src
+			if(!user.transferItemToLoc(HF, src))
+				return
 			honey_frames += HF
 		else
-			user << "<span class='warning'>There's no room for anymore frames in the apiary!</span>"
+			to_chat(user, "<span class='warning'>There's no room for any more frames in the apiary!</span>")
 
 	if(istype(I, /obj/item/weapon/wrench))
 		if(default_unfasten_wrench(user, I, time = 20))
@@ -158,13 +158,13 @@
 
 	if(istype(I, /obj/item/queen_bee))
 		if(queen_bee)
-			user << "<span class='warning'>This hive already has a queen!</span>"
+			to_chat(user, "<span class='warning'>This hive already has a queen!</span>")
 			return
 
 		var/obj/item/queen_bee/qb = I
-		user.unEquip(qb)
+		user.temporarilyRemoveItemFromInventory(qb)
 
-		qb.queen.loc = src
+		qb.queen.forceMove(src)
 		bees += qb.queen
 		queen_bee = qb.queen
 		qb.queen = null
@@ -181,10 +181,10 @@
 						B.loc = get_turf(src)
 					relocated++
 			if(relocated)
-				user << "<span class='warning'>This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!</span>"
+				to_chat(user, "<span class='warning'>This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!</span>")
 
 		else
-			user << "<span class='warning'>The queen bee disappeared! bees disappearing has been in the news lately...</span>"
+			to_chat(user, "<span class='warning'>The queen bee disappeared! Disappearing bees have been in the news lately...</span>")
 
 		qdel(qb)
 
@@ -204,13 +204,13 @@
 		if(bees)
 			visible_message("<span class='danger'>[user] disturbs the bees!</span>")
 	else
-		var/option = alert(user, "What Action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
+		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
 		if(!Adjacent(user))
 			return
 		switch(option)
 			if("Remove a Honey Frame")
 				if(!honey_frames.len)
-					user << "<span class='warning'>There are no honey frames to remove!</span>"
+					to_chat(user, "<span class='warning'>There are no honey frames to remove!</span>")
 					return
 
 				var/obj/item/honey_frame/HF = pick_n_take(honey_frames)
@@ -233,7 +233,7 @@
 
 			if("Remove the Queen Bee")
 				if(!queen_bee || queen_bee.loc != src)
-					user << "<span class='warning'>There is no queen bee to remove!</span>"
+					to_chat(user, "<span class='warning'>There is no queen bee to remove!</span>")
 					return
 				var/obj/item/queen_bee/QB = new()
 				queen_bee.loc = QB

@@ -21,6 +21,7 @@
 	var/sheetAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/mineral_door/New(location)
 	..()
@@ -60,9 +61,6 @@
 		return !opacity
 	return !density
 
-/obj/structure/mineral_door/CanAtmosPass()
-	return !density
-
 /obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
 	if(isSwitchingStates)
 		return
@@ -99,7 +97,7 @@
 	isSwitchingStates = 0
 
 	if(close_delay != -1)
-		addtimer(src, "Close", close_delay)
+		addtimer(CALLBACK(src, .proc/Close), close_delay)
 
 /obj/structure/mineral_door/proc/Close()
 	if(isSwitchingStates || state != 1)
@@ -127,11 +125,11 @@
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
-		user << "<span class='notice'>You start digging the [name]...</span>"
+		to_chat(user, "<span class='notice'>You start digging the [name]...</span>")
 		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)
-			user << "<span class='notice'>You finish digging.</span>"
+			to_chat(user, "<span class='notice'>You finish digging.</span>")
 			deconstruct(TRUE)
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		attack_hand(user)
 	else
 		return ..()
@@ -167,7 +165,7 @@
 	sheetType = /obj/item/stack/sheet/mineral/uranium
 	obj_integrity = 300
 	max_integrity = 300
-	luminosity = 2
+	light_range = 2
 
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"
@@ -190,8 +188,9 @@
 
 /obj/structure/mineral_door/transparent/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.is_hot())
-		message_admins("Plasma mineral door ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma mineral door ignited by [key_name(user)] in ([x],[y],[z])")
+		var/turf/T = get_turf(src)
+		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Plasma mineral door ignited by [key_name(user)] in [COORD(T)]")
 		TemperatureAct()
 	else
 		return ..()

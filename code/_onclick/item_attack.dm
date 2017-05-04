@@ -1,7 +1,18 @@
 
+/proc/melee_item_attack_chain(mob/user, obj/item/I, atom/target, params)
+	if(I.pre_attackby(target, user, params))
+		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
+		var/resolved = target.attackby(I,user,params)
+		if(!resolved && target && I)
+			I.afterattack(target, user, 1, params) // 1: clicking something Adjacent
+
+
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	return
+
+/obj/item/proc/pre_attackby(atom/A, mob/living/user, params) //do stuff before attackby!
+	return TRUE //return FALSE to avoid calling attackby after this proc does stuff
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
@@ -12,10 +23,10 @@
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.a_intent == "harm" && stat == DEAD && butcher_results) //can we butcher it?
+	if(user.a_intent == INTENT_HARM && stat == DEAD && butcher_results) //can we butcher it?
 		var/sharpness = I.is_sharp()
 		if(sharpness)
-			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 			if(do_mob(user, src, 80/sharpness))
 				harvest(user)
@@ -48,8 +59,6 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
-
-
 
 /atom/movable/proc/attacked_by()
 	return

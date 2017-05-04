@@ -6,7 +6,7 @@
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 80, acid = 80)
@@ -29,7 +29,7 @@
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
 	..()
 	//Only mob/living types have stun handling
-	if(status && prob(throw_hit_chance) && isliving(hit_atom))
+	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
 		baton_stun(hit_atom)
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
@@ -60,24 +60,23 @@
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()
 	if(bcell)
-		user <<"<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>"
+		to_chat(user, "<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>")
 	else
-		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
+		to_chat(user, "<span class='warning'>The baton does not have a power source installed.</span>")
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
-			user << "<span class='notice'>[src] already has a cell.</span>"
+			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 		else
 			if(C.maxcharge < hitcost)
-				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
+				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
 				return
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			bcell = W
-			user << "<span class='notice'>You install a cell in [src].</span>"
+			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
@@ -85,7 +84,7 @@
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
 			bcell = null
-			user << "<span class='notice'>You remove the cell from [src].</span>"
+			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 			status = 0
 			update_icon()
 	else
@@ -94,14 +93,14 @@
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
 		status = !status
-		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
+		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
 		playsound(loc, "sparks", 75, 1, -1)
 	else
 		status = 0
 		if(!bcell)
-			user << "<span class='warning'>[src] does not have a power source!</span>"
+			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
-			user << "<span class='warning'>[src] is out of charge.</span>"
+			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
 	update_icon()
 	add_fingerprint(user)
 
@@ -117,24 +116,23 @@
 		..()
 		return
 
-	var/mob/living/carbon/human/L = M
-	if(!istype(L))
-		return
 
-	if(check_martial_counter(L, user))
-		return 
+	if(ishuman(M))
+		var/mob/living/carbon/human/L = M
+		if(check_martial_counter(L, user))
+			return
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		if(status)
-			if(baton_stun(L, user))
-				user.do_attack_animation(L)
+			if(baton_stun(M, user))
+				user.do_attack_animation(M)
 				return
 		else
-			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
+			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
-			baton_stun(L, user)
+			baton_stun(M, user)
 		..()
 
 
@@ -166,7 +164,7 @@
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		H.forcesay(hit_appends)
+		H.forcesay(GLOB.hit_appends)
 
 
 	return 1
@@ -181,7 +179,7 @@
 	desc = "An improvised stun baton."
 	icon_state = "stunprod_nocell"
 	item_state = "prod"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
 	stunforce = 5

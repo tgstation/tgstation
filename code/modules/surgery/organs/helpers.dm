@@ -28,7 +28,3 @@
 
 /mob/living/carbon/getorganslot(slot)
 	return internal_organs_slot[slot]
-
-
-/proc/isorgan(atom/A)
-	return istype(A, /obj/item/organ)

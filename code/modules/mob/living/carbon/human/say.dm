@@ -1,12 +1,9 @@
-/mob/living/carbon/human/say_quote(input, spans)
-	if(!input)
-		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+/mob/living/carbon/human/say_mod(input, message_mode)
 	verb_say = dna.species.say_mod
-	if(src.slurring)
-		input = attach_spans(input, spans)
-		return "slurs, \"[input]\""
-
-	return ..()
+	if(slurring)
+		return "slurs"
+	else
+		. = ..()
 
 /mob/living/carbon/human/treat_message(message)
 	message = dna.species.handle_speech(message,src)
@@ -51,7 +48,7 @@
 	CHECK_DNA_AND_SPECIES(src)
 
 	// how do species that don't breathe talk? magic, that's what.
-	if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
+	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
 		return 0
 	if(mind)
 		return !mind.miming
@@ -75,7 +72,7 @@
 		if(!istype(dongle)) return 0
 		if(dongle.translate_binary) return 1
 
-/mob/living/carbon/human/radio(message, message_mode, list/spans)
+/mob/living/carbon/human/radio(message, message_mode, list/spans, language)
 	. = ..()
 	if(. != 0)
 		return .
@@ -83,17 +80,17 @@
 	switch(message_mode)
 		if(MODE_HEADSET)
 			if (ears)
-				ears.talk_into(src, message, , spans)
+				ears.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
 			if (ears)
-				ears.talk_into(src, message, message_mode, spans)
+				ears.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
-	if(message_mode in radiochannels)
+	if(message_mode in GLOB.radiochannels)
 		if(ears)
-			ears.talk_into(src, message, message_mode, spans)
+			ears.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
 	return 0

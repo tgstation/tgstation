@@ -7,7 +7,7 @@
 	density = 0
 	var/active = 1
 
-/obj/structure/firepit/initialize()
+/obj/structure/firepit/Initialize()
 	..()
 	toggleFirepit()
 
@@ -17,7 +17,6 @@
 		toggleFirepit()
 	else
 		..()
-
 
 /obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
 	if(!active)
@@ -33,10 +32,10 @@
 
 /obj/structure/firepit/proc/toggleFirepit()
 	if(active)
-		SetLuminosity(8)
+		set_light(8)
 		icon_state = "firepit-active"
 	else
-		SetLuminosity(0)
+		set_light(0)
 		icon_state = "firepit"
 
 /obj/structure/firepit/extinguish()
@@ -90,7 +89,7 @@
 	if(istype(T,/turf/open/floor/plating/asteroid/snow))
 		return ..(T)
 	return 0
-	
+
 /datum/mapGeneratorModule/bottomlayer/snow
 	spawnableTurfs = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)
 
@@ -118,3 +117,7 @@
 
 /obj/effect/landmark/mapGenerator/snowy
 	mapGeneratorType = /datum/mapGenerator/snowy
+	endTurfX = 159
+	endTurfY = 157
+	startTurfX = 37
+	startTurfY = 35

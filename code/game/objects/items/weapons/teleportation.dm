@@ -17,7 +17,7 @@
 	var/broadcasting = null
 	var/listening = 1
 	flags = CONDUCT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 7
@@ -49,7 +49,7 @@ Frequency:
 		return
 	var/turf/current_location = get_turf(usr)//What turf is the user on?
 	if(!current_location||current_location.z==2)//If turf was not found or they're on z level 2.
-		usr << "The [src] is malfunctioning."
+		to_chat(usr, "The [src] is malfunctioning.")
 		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)))
 		usr.set_machine(src)
@@ -60,7 +60,7 @@ Frequency:
 			if (sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
-				for(var/obj/item/device/radio/beacon/W in teleportbeacons)
+				for(var/obj/item/device/radio/beacon/W in GLOB.teleportbeacons)
 					if (W.frequency == src.frequency)
 						var/turf/tr = get_turf(W)
 						if (tr.z == sr.z && tr)
@@ -78,8 +78,8 @@ Frequency:
 							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in tracked_implants)
-					if (!W.implanted || !ismob(W.loc))
+				for (var/obj/item/weapon/implant/tracking/W in GLOB.tracked_implants)
+					if (!W.imp_in || !ismob(W.loc))
 						continue
 					else
 						var/mob/M = W.loc
@@ -129,7 +129,7 @@ Frequency:
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=10000)
@@ -142,13 +142,13 @@ Frequency:
 	var/turf/current_location = get_turf(user)//What turf is the user on?
 	var/area/current_area = current_location.loc
 	if(!current_location || current_area.noteleport || current_location.z > ZLEVEL_SPACEMAX || !isturf(user.loc))//If turf was not found or they're on z level 2 or >7 which does not currently exist. or if user is not located on a turf
-		user << "<span class='notice'>\The [src] is malfunctioning.</span>"
+		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	var/list/L = list(  )
-	for(var/obj/machinery/computer/teleporter/com in machines)
+	for(var/obj/machinery/computer/teleporter/com in GLOB.machines)
 		if(com.target)
 			var/area/A = get_area(com.target)
-			if(A.noteleport)
+			if(!A || A.noteleport)
 				continue
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[get_area(com.target)] (Active)"] = com.target
@@ -175,7 +175,7 @@ Frequency:
 	var/atom/T = L[t1]
 	var/area/A = get_area(T)
 	if(A.noteleport)
-		user << "<span class='notice'>\The [src] is malfunctioning.</span>"
+		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	user.show_message("<span class='notice'>Locked In.</span>", 2)
 	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(src), T, src)

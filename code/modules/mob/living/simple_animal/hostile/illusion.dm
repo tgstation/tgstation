@@ -8,7 +8,7 @@
 	gender = NEUTER
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	attacktext = "gores"
 	maxHealth = 100
 	health = 100
@@ -48,8 +48,8 @@
 
 
 /mob/living/simple_animal/hostile/illusion/AttackingTarget()
-	..()
-	if(isliving(target) && prob(multiply_chance))
+	. = ..()
+	if(. && isliving(target) && prob(multiply_chance))
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			return
@@ -71,4 +71,4 @@
 
 
 /mob/living/simple_animal/hostile/illusion/escape/AttackingTarget()
-	return
+	return FALSE

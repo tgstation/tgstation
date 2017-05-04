@@ -33,8 +33,8 @@
 	icon_state = "trashbag"
 	item_state = "trashbag"
 
-	w_class = 4
-	max_w_class = 2
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_SMALL
 	max_combined_w_class = 30
 	storage_slots = 30
 	can_hold = list() // any
@@ -83,10 +83,10 @@
 	icon_state = "satchel"
 	origin_tech = "engineering=2"
 	slot_flags = SLOT_BELT | SLOT_POCKET
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	storage_slots = 50
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
-	max_w_class = 3
+	max_w_class = WEIGHT_CLASS_NORMAL
 	can_hold = list(/obj/item/weapon/ore)
 
 /obj/item/weapon/storage/bag/ore/cyborg
@@ -94,7 +94,7 @@
 
 /obj/item/weapon/storage/bag/ore/holding //miners, your messiah has arrived
 	name = "mining satchel of holding"
-	desc = "A revolution in convenience, this satchel allows for infinite ore storage. It's been outfitted with anti-malfunction safety measures."
+	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	storage_slots = INFINITY
 	max_combined_w_class = INFINITY
 	origin_tech = "bluespace=4;materials=3;engineering=3"
@@ -110,9 +110,9 @@
 	icon_state = "plantbag"
 	storage_slots = 100; //the number of plant pieces it can carry.
 	max_combined_w_class = 100 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
-	max_w_class = 3
-	w_class = 1
-	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown,/obj/item/weapon/reagent_containers/food/snacks/ash_flora)
+	max_w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_TINY
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown,/obj/item/weapon/reagent_containers/food/snacks/ash_flora,/obj/item/weapon/reagent_containers/honeycomb)
 	resistance_flags = FLAMMABLE
 
 ////////
@@ -147,26 +147,21 @@
 	icon_state = "sheetsnatcher"
 
 	var/capacity = 300; //the number of sheets it can carry.
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 	allow_quick_empty = 1 // this function is superceded
-
-/obj/item/weapon/storage/bag/sheetsnatcher/New()
-	..()
-	//verbs -= /obj/item/weapon/storage/verb/quick_empty
-	//verbs += /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty
 
 /obj/item/weapon/storage/bag/sheetsnatcher/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/mineral/wood))
 		if(!stop_messages)
-			usr << "The snatcher does not accept [W]."
+			to_chat(usr, "The snatcher does not accept [W].")
 		return 0 //I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu
 	var/current = 0
 	for(var/obj/item/stack/sheet/S in contents)
 		current += S.amount
 	if(capacity == current)//If it's full, you're done
 		if(!stop_messages)
-			usr << "<span class='danger'>The snatcher is full.</span>"
+			to_chat(usr, "<span class='danger'>The snatcher is full.</span>")
 		return 0
 	return 1
 
@@ -194,7 +189,7 @@
 			break
 
 	if(!inserted || !S.amount)
-		usr.unEquip(S)
+		usr.dropItemToGround(S)
 		if (usr.client && usr.s_active != src)
 			usr.client.screen -= S
 		S.dropped(usr)
@@ -291,8 +286,8 @@
 	display_contents_with_number = 0 //This would look really stupid otherwise
 	storage_slots = 7
 	max_combined_w_class = 21
-	max_w_class = 3
-	w_class = 4 //Bigger than a book because physics
+	max_w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY //Bigger than a book because physics
 	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/book, /obj/item/weapon/spellbook)
 	resistance_flags = FLAMMABLE
 
@@ -308,7 +303,7 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	flags = CONDUCT
 	materials = list(MAT_METAL=3000)
 	preposition = "on"
@@ -339,14 +334,14 @@
 /obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()
 	cut_overlays()
 	for(var/obj/item/I in contents)
-		add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
+		add_overlay(mutable_appearance(I.icon, I.icon_state))
 
 /obj/item/weapon/storage/bag/tray/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
 	rebuild_overlays()
 
 /obj/item/weapon/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
+	add_overlay(mutable_appearance(I.icon, I.icon_state))
 	. = ..()
 
 
@@ -361,7 +356,7 @@
 	desc = "A bag for storing pills, patches, and bottles."
 	storage_slots = 50
 	max_combined_w_class = 200
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	preposition = "in"
 	can_hold = list(/obj/item/weapon/reagent_containers/pill, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
 	resistance_flags = FLAMMABLE
@@ -377,7 +372,7 @@
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
 	storage_slots = 25
 	max_combined_w_class = 200
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	preposition = "in"
 	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse, /obj/item/weapon/reagent_containers/food/snacks/monkeycube)
 	resistance_flags = FLAMMABLE

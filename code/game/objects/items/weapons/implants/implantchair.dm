@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/machinery/implantchair
 	name = "mindshield implanter"
 	desc = "Used to implant occupants with mindshield implants."
@@ -29,7 +27,7 @@
 
 
 /obj/machinery/implantchair/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -44,8 +42,9 @@
 
 	data["occupant"] = list()
 	if(occupant)
-		data["occupant"]["name"] = occupant.name
-		data["occupant"]["stat"] = occupant.stat
+		var/mob/living/mob_occupant = occupant
+		data["occupant"]["name"] = mob_occupant.name
+		data["occupant"]["stat"] = mob_occupant.stat
 
 	data["special_name"] = special ? special_name : null
 	data["ready_implants"]  = ready_implants
@@ -68,7 +67,7 @@
 			implant(occupant,usr)
 			. = TRUE
 
-/obj/machinery/implantchair/proc/implant(mob/living/carbon/M,mob/user)
+/obj/machinery/implantchair/proc/implant(mob/living/M,mob/user)
 	if (!istype(M))
 		return
 	if(!ready_implants || !ready)
@@ -77,15 +76,15 @@
 		ready_implants--
 		if(!replenishing && auto_replenish)
 			replenishing = TRUE
-			addtimer(src,"replenish",replenish_cooldown)
+			addtimer(CALLBACK(src,"replenish"),replenish_cooldown)
 		if(injection_cooldown > 0)
 			ready = FALSE
-			addtimer(src,"set_ready",injection_cooldown)
+			addtimer(CALLBACK(src,"set_ready"),injection_cooldown)
 	else
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, 1)
 	update_icon()
 
-/obj/machinery/implantchair/proc/implant_action(mob/living/carbon/M)
+/obj/machinery/implantchair/proc/implant_action(mob/living/M)
 	var/obj/item/weapon/implant/I = new implant_type
 	if(I.implant(M))
 		visible_message("<span class='warning'>[M] has been implanted by the [name].</span>")
@@ -106,7 +105,7 @@
 	if(ready_implants < max_implants)
 		ready_implants++
 	if(ready_implants < max_implants)
-		addtimer(src,"replenish",replenish_cooldown)
+		addtimer(CALLBACK(src,"replenish"),replenish_cooldown)
 	else
 		replenishing = FALSE
 
@@ -119,25 +118,25 @@
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about about a minute.)</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about about a minute.)</span>")
 	audible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>",hearing_distance = 2)
 
 	if(do_after(user, 600, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
 		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
 /obj/machinery/implantchair/relaymove(mob/user)
 	container_resist(user)
 
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
 
-/obj/machinery/implantchair/close_machine(mob/user)
+/obj/machinery/implantchair/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open)
 		..(user)
 		if(auto_inject && ready && ready_implants > 0)
@@ -171,8 +170,8 @@
 	var/objective = "Obey the law. Praise Nanotrasen."
 	var/custom = FALSE
 
-/obj/machinery/implantchair/brainwash/implant_action(mob/living/carbon/C,mob/user)
-	if(!istype(C) || !C.mind)
+/obj/machinery/implantchair/brainwash/implant_action(mob/living/C,mob/user)
+	if(!istype(C) || !C.mind) // I don't know how this makes any sense for silicons but laws trump objectives anyway.
 		return 0
 	if(custom)
 		if(!user || !user.Adjacent(src))

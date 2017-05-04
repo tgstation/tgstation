@@ -8,7 +8,7 @@ The regular pipe you see everywhere, including bent ones.
 	icon_state = "intact"
 
 	name = "pipe"
-	desc = "A one meter section of regular pipe"
+	desc = "A one meter section of regular pipe."
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
@@ -16,7 +16,7 @@ The regular pipe you see everywhere, including bent ones.
 	device_type = BINARY
 
 /obj/machinery/atmospherics/pipe/simple/SetInitDirections()
-	if(dir in diagonals)
+	if(dir in GLOB.diagonals)
 		initialize_directions = dir
 	switch(dir)
 		if(NORTH,SOUTH)
@@ -109,4 +109,14 @@ The regular pipe you see everywhere, including bent ones.
 	level = 2
 
 /obj/machinery/atmospherics/pipe/simple/green/hidden
+	level = 1
+
+/obj/machinery/atmospherics/pipe/simple/orange
+	pipe_color=rgb(255,127,39)
+	color=rgb(255,127,39)
+
+/obj/machinery/atmospherics/pipe/simple/orange/visible
+	level = 2
+
+/obj/machinery/atmospherics/pipe/simple/orange/hidden
 	level = 1

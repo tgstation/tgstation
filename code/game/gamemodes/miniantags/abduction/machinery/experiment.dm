@@ -1,6 +1,6 @@
 /obj/machinery/abductor/experiment
 	name = "experimentation machine"
-	desc = "A large man-sized tube sporting a complex array of surgical apparatus."
+	desc = "A large man-sized tube sporting a complex array of surgical machinery."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
 	density = 0
@@ -37,35 +37,57 @@
 	if(state_open && !panel_open)
 		..(target)
 
+/obj/machinery/abductor/experiment/relaymove(mob/user)
+	if(user.stat != CONSCIOUS)
+		return
+	container_resist(user)
+
+/obj/machinery/abductor/experiment/container_resist(mob/living/user)
+	var/breakout_time = 600
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>")
+	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
+
+	if(do_after(user,(breakout_time), target = src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
+			return
+
+		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
+
+		open_machine()
+
+
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 	if(!config.mutant_races || H.dna.species.use_skintones)
-		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]_s")
+		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]")
 	else
-		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]_s")
+		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]")
 		photo.Blend("#[H.dna.features["mcolor"]]", ICON_MULTIPLY)
 
-	var/icon/eyes_s
-	if(EYECOLOR in H.dna.species.specflags)
-		eyes_s = icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[H.dna.species.eyes]_s")
-		eyes_s.Blend("#[H.eye_color]", ICON_MULTIPLY)
+	var/icon/eyes
+	if(EYECOLOR in H.dna.species.species_traits)
+		eyes = icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes")
+		eyes.Blend("#[H.eye_color]", ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/S
-	S = hair_styles_list[H.hair_style]
-	if(S && (HAIR in H.dna.species.specflags))
-		var/icon/hair_s = icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
-		hair_s.Blend("#[H.hair_color]", ICON_MULTIPLY)
-		eyes_s.Blend(hair_s, ICON_OVERLAY)
+	S = GLOB.hair_styles_list[H.hair_style]
+	if(S && (HAIR in H.dna.species.species_traits))
+		var/icon/hair = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
+		hair.Blend("#[H.hair_color]", ICON_MULTIPLY)
+		eyes.Blend(hair, ICON_OVERLAY)
 
-	S = facial_hair_styles_list[H.facial_hair_style]
-	if(S && (FACEHAIR in H.dna.species.specflags))
-		var/icon/facial_s = icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
-		facial_s.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
-		eyes_s.Blend(facial_s, ICON_OVERLAY)
+	S = GLOB.facial_hair_styles_list[H.facial_hair_style]
+	if(S && (FACEHAIR in H.dna.species.species_traits))
+		var/icon/facial = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
+		facial.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
+		eyes.Blend(facial, ICON_OVERLAY)
 
-	if(eyes_s)
-		photo.Blend(eyes_s, ICON_OVERLAY)
+	if(eyes)
+		photo.Blend(eyes, ICON_OVERLAY)
 
 	var/icon/splat = icon("icon" = 'icons/mob/dam_mob.dmi',"icon_state" = "chest30")
 	photo.Blend(splat,ICON_OVERLAY)
@@ -94,12 +116,13 @@
 	else
 		dat += "<h3>Subject Status : </h3>"
 		dat += "[occupant.name] => "
-		switch(occupant.stat)
-			if(0)
+		var/mob/living/mob_occupant = occupant
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
 				dat += "<span class='good'>Conscious</span>"
-			if(1)
+			if(UNCONSCIOUS)
 				dat += "<span class='average'>Unconscious</span>"
-			else
+			else // DEAD
 				dat += "<span class='bad'>Deceased</span>"
 	dat += "<br>"
 	dat += "[flash]"
@@ -124,9 +147,11 @@
 	if(href_list["close"])
 		close_machine()
 		return
-	if(occupant && occupant.stat != DEAD)
-		if(href_list["experiment"])
-			flash = Experiment(occupant,href_list["experiment"])
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant.stat != DEAD)
+			if(href_list["experiment"])
+				flash = Experiment(occupant,href_list["experiment"])
 	updateUsrDialog()
 	add_fingerprint(usr)
 
@@ -138,7 +163,7 @@
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "<span class='bad'>Specimen deceased.</span>"
-	var/obj/item/organ/gland/GlandTest = locate() in H.internal_organs
+	var/obj/item/organ/heart/gland/GlandTest = locate() in H.internal_organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
@@ -149,21 +174,21 @@
 		sleep(5)
 		switch(text2num(type))
 			if(1)
-				H << "<span class='warning'>You feel violated.</span>"
+				to_chat(H, "<span class='warning'>You feel violated.</span>")
 			if(2)
-				H << "<span class='warning'>You feel yourself being sliced apart and put back together.</span>"
+				to_chat(H, "<span class='warning'>You feel yourself being sliced apart and put back together.</span>")
 			if(3)
-				H << "<span class='warning'>You feel intensely watched.</span>"
+				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
-		H << "<span class='warning'><b>Your mind snaps!</b></span>"
+		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		var/objtype = pick(subtypesof(/datum/objective/abductee/))
 		var/datum/objective/abductee/O = new objtype()
-		ticker.mode.abductees += H.mind
+		SSticker.mode.abductees += H.mind
 		H.mind.objectives += O
 		H.mind.announce_objectives()
-		ticker.mode.update_abductor_icons_added(H.mind)
+		SSticker.mode.update_abductor_icons_added(H.mind)
 
-		for(var/obj/item/organ/gland/G in H.internal_organs)
+		for(var/obj/item/organ/heart/gland/G in H.internal_organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)
@@ -177,7 +202,7 @@
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
 	else
-		say("Brain activity nonexistant - disposing sample...")
+		say("Brain activity nonexistent - disposing sample...")
 		open_machine()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed.</span>"
@@ -191,7 +216,7 @@
 		H.uncuff()
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	H.forceMove(pick(latejoin))
+	H.forceMove(pick(GLOB.latejoin))
 	H.uncuff()
 	return
 

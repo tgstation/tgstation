@@ -16,8 +16,8 @@ Contains:
 
 	//Death squad armored space suits, not hardsuits!
 /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
-	name = "deathsquad helmet"
-	desc = "That's not red paint. That's real blood."
+	name = "MK.III SWAT Helmet"
+	desc = "An advanced tactical space helmet."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
@@ -30,8 +30,8 @@ Contains:
 	return
 
 /obj/item/clothing/suit/space/hardsuit/deathsquad
-	name = "deathsquad suit"
-	desc = "A heavily armored, advanced space suit that protects against most forms of damage."
+	name = "MK.III SWAT Suit"
+	desc = "A prototype designed to replace the ageing MK.II SWAT suit. Based on the streamlined MK.II model, the traditional ceramic and graphene plate construction was replaced with plasteel, allowing superior armor against most threats. There's room for some kind of energy projection device on the back."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
@@ -44,8 +44,8 @@ Contains:
 
 	//NEW SWAT suit
 /obj/item/clothing/suit/space/swat
-	name = "SWAT armor"
-	desc = "Space-proof tactical SWAT armor."
+	name = "MK.I SWAT Suit"
+	desc = "A tactical space suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 20XX for military space operations. A tried and true workhorse, it is very difficult to move in but offers robust protection against all threats!"
 	icon_state = "heavy"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
@@ -72,7 +72,7 @@ Contains:
 	blood_overlay_type = "coat"
 	slowdown = 0
 	flags_inv = 0
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
@@ -132,7 +132,7 @@ Contains:
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = 0
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals, /obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 	slowdown = 0
@@ -308,3 +308,33 @@ Contains:
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "hardsuit0-beserker"
 	item_state = "hardsuit0-beserker"
+
+/obj/item/clothing/head/helmet/space/fragile
+	name = "emergency space helmet"
+	desc = "A bulky, air-tight helmet meant to protect the user during emergency situations. It doesn't look very durable."
+	icon_state = "syndicate-helm-orange"
+	item_state = "syndicate-helm-orange"
+	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
+	strip_delay = 65
+
+/obj/item/clothing/suit/space/fragile
+	name = "emergency space suit"
+	desc = "A bulky, air-tight suit meant to protect the user during emergency situations. It doesn't look very durable."
+	var/torn = FALSE
+	icon_state = "syndicate-orange"
+	item_state = "syndicate-orange"
+	slowdown = 2
+	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
+	strip_delay = 65
+
+/obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(!torn && prob(50))
+		to_chat(owner, "<span class='warning'>[src] tears from the damage, breaking the air-tight seal!</span>")
+		src.flags -= STOPSPRESSUREDMAGE
+		src.name = "torn [src]."
+		src.desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
+		src.torn = TRUE
+		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
+		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+
+

@@ -96,9 +96,8 @@
 	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
 
-	using = new/obj/screen/wheel/talk
-	using.screen_loc = ui_borg_talk_wheel
-	wheels += using
+	using = new/obj/screen/language_menu
+	using.screen_loc = ui_borg_language_menu
 	static_inventory += using
 
 //Radio
@@ -151,10 +150,9 @@
 	mymobR.thruster_button = using
 
 //Intent
-	using = new /obj/screen/act_intent/robot()
-	using.icon_state = mymob.a_intent
-	static_inventory += using
-	action_intent = using
+	action_intent = new /obj/screen/act_intent/robot()
+	action_intent.icon_state = mymob.a_intent
+	static_inventory += action_intent
 
 //Health
 	healths = new /obj/screen/healths/robot()
@@ -199,12 +197,15 @@
 	if(!R.module)
 		return
 
+	if(!R.client)
+		return
+
 	if(R.shown_robot_modules && screenmob.hud_used.hud_shown)
 		//Modules display is shown
 		screenmob.client.screen += module_store_icon	//"store" icon
 
 		if(!R.module.modules)
-			usr << "<span class='danger'>Selected module has no modules to select</span>"
+			to_chat(usr, "<span class='danger'>Selected module has no modules to select</span>")
 			return
 
 		if(!R.robot_modules_background)
@@ -247,7 +248,7 @@
 		hud_used = new /datum/hud/robot(src)
 
 
-/datum/hud/robot/persistant_inventory_update(mob/viewer)
+/datum/hud/robot/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	var/mob/living/silicon/robot/R = mymob

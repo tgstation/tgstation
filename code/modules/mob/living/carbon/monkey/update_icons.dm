@@ -34,8 +34,7 @@
 			hair_hidden = 1
 	if(!hair_hidden)
 		if(!getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
-			var/image/I = image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
-			overlays_standing[HAIR_LAYER] = I
+			overlays_standing[HAIR_LAYER] = mutable_appearance('icons/mob/human_face.dmi', "debrained", -HAIR_LAYER)
 			apply_overlay(HAIR_LAYER)
 
 
@@ -45,9 +44,9 @@
 /mob/living/carbon/monkey/update_inv_legcuffed()
 	remove_overlay(LEGCUFF_LAYER)
 	if(legcuffed)
-		var/image/standing = image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
-		standing.pixel_y = 8
-		overlays_standing[LEGCUFF_LAYER] = standing
+		var/mutable_appearance/legcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		legcuff_overlay.pixel_y = 8
+		overlays_standing[LEGCUFF_LAYER] = legcuff_overlay
 	apply_overlay(LEGCUFF_LAYER)
 
 
@@ -68,7 +67,7 @@
 //update whether our neck item appears on our hud.
 /mob/living/carbon/monkey/update_hud_neck(obj/item/I)
 	if(client && hud_used && hud_used.hud_shown)
-		I.screen_loc = ui_monkey_mask
+		I.screen_loc = ui_monkey_neck
 		client.screen += I
 
 //update whether our back item appears on our hud.

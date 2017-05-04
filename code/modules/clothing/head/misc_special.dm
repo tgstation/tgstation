@@ -28,16 +28,8 @@
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/head/welding/attack_self()
-	toggle()
-
-
-/obj/item/clothing/head/welding/verb/toggle()
-	set category = "Object"
-	set name = "Adjust welding helmet"
-	set src in usr
-
-	weldingvisortoggle()
+/obj/item/clothing/head/welding/attack_self(mob/user)
+	weldingvisortoggle(user)
 
 
 /*
@@ -58,7 +50,7 @@
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
-	if(istype(location, /mob/))
+	if(ishuman(location))
 		var/mob/living/carbon/human/M = location
 		if(M.is_holding(src) || M.head == src)
 			location = M.loc
@@ -104,12 +96,12 @@
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
 		earflaps = 0
-		user << "<span class='notice'>You raise the ear flaps on the ushanka.</span>"
+		to_chat(user, "<span class='notice'>You raise the ear flaps on the ushanka.</span>")
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
 		earflaps = 1
-		user << "<span class='notice'>You lower the ear flaps on the ushanka.</span>"
+		to_chat(user, "<span class='notice'>You lower the ear flaps on the ushanka.</span>")
 
 /*
  * Pumpkin head

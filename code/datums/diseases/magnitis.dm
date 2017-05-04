@@ -16,7 +16,7 @@
 	switch(stage)
 		if(2)
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a slight shock course through your body.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a slight shock course through your body.</span>")
 			if(prob(2))
 				for(var/obj/M in orange(2,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
@@ -27,9 +27,9 @@
 					step_towards(S,affected_mob)
 		if(3)
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a strong shock course through your body.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a strong shock course through your body.</span>")
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel like clowning around.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel like clowning around.</span>")
 			if(prob(4))
 				for(var/obj/M in orange(4,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
@@ -46,9 +46,9 @@
 						step_towards(S,affected_mob)
 		if(4)
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a powerful shock course through your body.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a powerful shock course through your body.</span>")
 			if(prob(2))
-				affected_mob << "<span class='danger'>You query upon the nature of miracles.</span>"
+				to_chat(affected_mob, "<span class='danger'>You query upon the nature of miracles.</span>")
 			if(prob(8))
 				for(var/obj/M in orange(6,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))

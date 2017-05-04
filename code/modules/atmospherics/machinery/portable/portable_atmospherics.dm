@@ -22,7 +22,6 @@
 	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	air_contents.holder = src
 
 	return 1
 
@@ -62,6 +61,11 @@
 	anchored = 1 //Prevent movement
 	return 1
 
+/obj/machinery/portable_atmospherics/Move()
+	. = ..()
+	if(.)
+		disconnect()
+
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
 		return 0
@@ -86,7 +90,7 @@
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 				user.visible_message( \
 					"[user] disconnects [src].", \
 					"<span class='notice'>You unfasten [src] from the port.</span>", \
@@ -96,12 +100,12 @@
 			else
 				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 				if(!possible_port)
-					user << "<span class='notice'>Nothing happens.</span>"
+					to_chat(user, "<span class='notice'>Nothing happens.</span>")
 					return
 				if(!connect(possible_port))
-					user << "<span class='notice'>[name] failed to connect to the port.</span>"
+					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 				user.visible_message( \
 					"[user] connects [src].", \
 					"<span class='notice'>You fasten [src] to the port.</span>", \

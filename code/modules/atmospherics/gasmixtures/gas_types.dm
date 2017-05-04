@@ -1,4 +1,4 @@
-var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases, which were at one time hardcoded
+GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main four gases, which were at one time hardcoded
 
 /proc/meta_gas_list()
 	. = new /list
@@ -87,7 +87,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	specific_heat = 20
 	name = "BZ"
 
-/obj/effect/overlay/gas/
+/obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
 	mouse_opacity = 0
 	layer = FLY_LAYER

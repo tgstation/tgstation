@@ -3,22 +3,20 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	using = new /obj/screen/act_intent()
-	using.icon = ui_style
-	using.icon_state = mymob.a_intent
-	using.screen_loc = ui_acti
-	static_inventory += using
-	action_intent = using
+	action_intent = new /obj/screen/act_intent()
+	action_intent.icon = ui_style
+	action_intent.icon_state = mymob.a_intent
+	action_intent.screen_loc = ui_acti
+	static_inventory += action_intent
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
 	static_inventory += using
 
-	using = new/obj/screen/wheel/talk
+	using = new/obj/screen/language_menu
 	using.icon = ui_style
-	wheels += using
 	static_inventory += using
 
 	using = new /obj/screen/drop()
@@ -71,8 +69,7 @@
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
-	inv_box.icon_full = "template_small"
-	inv_box.screen_loc = ui_back
+	inv_box.screen_loc = ui_monkey_back
 	inv_box.slot_id = slot_back
 	static_inventory += inv_box
 
@@ -118,14 +115,14 @@
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
 
-/datum/hud/monkey/persistant_inventory_update()
+/datum/hud/monkey/persistent_inventory_update()
 	if(!mymob)
 		return
 	var/mob/living/carbon/monkey/M = mymob
 
 	if(hud_shown)
 		if(M.back)
-			M.back.screen_loc = ui_back
+			M.back.screen_loc = ui_monkey_back
 			M.client.screen += M.back
 		if(M.wear_mask)
 			M.wear_mask.screen_loc = ui_monkey_mask

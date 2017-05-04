@@ -4,14 +4,14 @@
 	robust_searching = 1
 	stat_attack = 1
 	status_flags = 0
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	gender = NEUTER
 	var/list/boss_abilities = list() //list of /datum/action/boss
 	var/datum/boss_active_timed_battle/atb
 	var/point_regen_delay = 1
 
 
-/mob/living/simple_animal/hostile/boss/New()
+/mob/living/simple_animal/hostile/boss/Initialize()
 	..()
 
 	atb = new()
@@ -36,7 +36,7 @@
 		AB.boss = null
 		AB.Remove(src)
 		qdel(AB)
-	del(boss_abilities)
+	boss_abilities.Cut()
 	return ..()
 
 
@@ -90,7 +90,7 @@
 
 /datum/boss_active_timed_battle/New()
 	..()
-	SSobj.processing.Add(src)
+	START_PROCESSING(SSobj, src)
 
 
 /datum/boss_active_timed_battle/proc/assign_abilities(list/L)

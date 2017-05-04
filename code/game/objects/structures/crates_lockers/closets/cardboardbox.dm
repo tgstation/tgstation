@@ -14,6 +14,7 @@
 	cutting_sound = 'sound/items/poster_ripped.ogg'
 	material_drop = /obj/item/stack/sheet/cardboard
 	delivery_icon = "deliverybox"
+	anchorable = FALSE
 	var/move_speed_multiplier = 1
 	var/move_delay = 0
 	var/egged = 0
@@ -40,7 +41,7 @@
 		if(Snake)
 			alerted = viewers(7,src)
 	..()
-	if(alerted.len)
+	if(LAZYLEN(alerted))
 		egged = world.time + SNAKE_SPAM_TICKS
 		for(var/mob/living/L in alerted)
 			if(!L.stat)
@@ -50,13 +51,8 @@
 		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
 /mob/living/proc/do_alert_animation(atom/A)
-	var/image/I
-	I = image('icons/obj/closet.dmi', A, "cardboard_special", A.layer+1)
-	var/list/viewing = list()
-	for(var/mob/M in viewers(A))
-		if(M.client)
-			viewing |= M.client
-	flick_overlay(I,viewing,8)
+	var/image/I = image('icons/obj/closet.dmi', A, "cardboard_special", A.layer+1)
+	flick_overlay_view(I, A, 8)
 	I.alpha = 0
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
 

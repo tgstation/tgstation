@@ -82,9 +82,9 @@
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			addtimer(src, "do_effect", 0, TIMER_NORMAL, location, effect)
+			INVOKE_ASYNC(src, .proc/do_effect, location, effect)
 		if(sound)
-			addtimer(src, "do_sound", 0, TIMER_NORMAL, location, sound)
+			INVOKE_ASYNC(src, .proc/do_sound, location, sound)
 
 /datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
 	src = null
@@ -169,12 +169,12 @@
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
-			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
+			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
 	return 1
 
 // Safe location finder
 
-/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels)
+/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels, extended_safety_checks = FALSE)
 	if(!zlevels)
 		zlevels = list(zlevel)
 	var/cycles = 1000
@@ -195,7 +195,7 @@
 		var/list/A_gases = A.gases
 		var/trace_gases
 		for(var/id in A_gases)
-			if(id in hardcoded_gases)
+			if(id in GLOB.hardcoded_gases)
 				continue
 			trace_gases = TRUE
 			break
@@ -216,6 +216,12 @@
 		var/pressure = A.return_pressure()
 		if((pressure <= 20) || (pressure >= 550))
 			continue
+
+		if(extended_safety_checks)
+			if(istype(F, /turf/open/floor/plating/lava)) //chasms aren't /floor, and so are pre-filtered
+				var/turf/open/floor/plating/lava/L = F
+				if(!L.is_safe())
+					continue
 
 		// DING! You have passed the gauntlet, and are "probably" safe.
 		return F

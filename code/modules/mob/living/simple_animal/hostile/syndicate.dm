@@ -12,6 +12,7 @@
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
 	desc = "Death to Nanotrasen."
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "syndicate"
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
@@ -31,7 +32,7 @@
 	melee_damage_upper = 10
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
@@ -59,11 +60,10 @@
 	if(!Proj)
 		return
 	if(prob(50))
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			src.adjustHealth(Proj.damage)
+		return ..()
 	else
 		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-	return 0
+		return 0
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
@@ -74,9 +74,6 @@
 	name = "Syndicate Commando"
 	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
-
-/mob/living/simple_animal/hostile/syndicate/melee/space/noloot
-	loot = list()
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -112,9 +109,6 @@
 	minbodytemp = 0
 	speed = 1
 	loot = list(/obj/effect/gibspawner/human)
-
-/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot
-	loot = list()
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
 	return 1

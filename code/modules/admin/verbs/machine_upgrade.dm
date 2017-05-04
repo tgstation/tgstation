@@ -7,4 +7,4 @@
 			P.rating = new_rating
 		M.RefreshParts()
 
-	feedback_add_details("admin_verb","MU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Machine Upgrade|[new_rating]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -1,4 +1,3 @@
-
 /obj/item/weapon/implant/abductor
 	name = "recall implant"
 	desc = "Returns you to the mothership."
@@ -15,7 +14,7 @@
 		cooldown = 0
 		START_PROCESSING(SSobj, src)
 	else
-		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
+		to_chat(imp_in, "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>")
 
 /obj/item/weapon/implant/abductor/process()
 	if(cooldown < initial(cooldown))
@@ -23,11 +22,11 @@
 		if(cooldown == initial(cooldown))
 			STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/implant/abductor/implant(var/mob/source, var/mob/user)
+/obj/item/weapon/implant/abductor/implant(mob/living/target, mob/user)
 	if(..())
 		var/obj/machinery/abductor/console/console
-		if(ishuman(source))
-			var/mob/living/carbon/human/H = source
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
 			if(H.dna.species.id == "abductor")
 				var/datum/species/abductor/S = H.dna.species
 				console = get_team_console(S.team)
@@ -40,7 +39,7 @@
 
 /obj/item/weapon/implant/abductor/proc/get_team_console(var/team)
 	var/obj/machinery/abductor/console/console
-	for(var/obj/machinery/abductor/console/c in machines)
+	for(var/obj/machinery/abductor/console/c in GLOB.machines)
 		if(c.team == team)
 			console = c
 			break

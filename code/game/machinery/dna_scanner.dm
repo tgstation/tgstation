@@ -19,7 +19,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/clonescanner
-	name = "circuit board (Cloning Scanner)"
+	name = "Cloning Scanner (Machine Board)"
 	build_path = /obj/machinery/dna_scannernew
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
@@ -65,7 +65,7 @@
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user)
 	if(panel_open)
-		user << "<span class='notice'>Close the maintenance panel first.</span>"
+		to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
 		return
 
 	if(state_open)
@@ -73,7 +73,7 @@
 		return
 
 	else if(locked)
-		user << "<span class='notice'>The bolts are locked down, securing the door shut.</span>"
+		to_chat(user, "<span class='notice'>The bolts are locked down, securing the door shut.</span>")
 		return
 
 	open_machine()
@@ -85,7 +85,7 @@
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [breakout_time] minutes.)</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [breakout_time] minutes.)</span>")
 	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
@@ -94,7 +94,7 @@
 
 		locked = 0
 		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 
 		open_machine()
 
@@ -105,13 +105,14 @@
 	..()
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	if(occupant)
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
-			if(!occupant.suiciding && !(occupant.disabilities & NOCLONE) && !occupant.hellbound)
-				occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
+			if(!mob_occupant.suiciding && !(mob_occupant.disabilities & NOCLONE) && !mob_occupant.hellbound)
+				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
 		var/obj/machinery/computer/scan_consolenew/console
 		for(dir in list(NORTH,EAST,SOUTH,WEST))

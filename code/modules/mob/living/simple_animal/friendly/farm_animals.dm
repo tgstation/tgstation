@@ -29,7 +29,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
 
-/mob/living/simple_animal/hostile/retaliate/goat/New()
+/mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
 	..()
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
@@ -62,7 +62,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
-	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in \his eye.</span>")
+	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in [p_their()] eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
@@ -106,7 +106,7 @@
 	gold_core_spawnable = 2
 	blood_volume = BLOOD_VOLUME_NORMAL
 
-/mob/living/simple_animal/cow/New()
+/mob/living/simple_animal/cow/Initialize()
 	udder = new()
 	..()
 
@@ -128,10 +128,10 @@
 		udder.generateMilk()
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
+	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
-		src << "<span class='userdanger'>You are tipped over by [M]!</span>"
+		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
 		Weaken(30)
 		icon_state = icon_dead
 		spawn(rand(20,50))
@@ -175,13 +175,13 @@
 	attacktext = "kicks"
 	health = 3
 	maxHealth = 3
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 2
 
-/mob/living/simple_animal/chick/New()
+/mob/living/simple_animal/chick/Initialize()
 	..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
@@ -199,9 +199,6 @@
 /mob/living/simple_animal/chick/holo/Life()
 	..()
 	amount_grown = 0
-
-var/const/MAX_CHICKENS = 50
-var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
@@ -226,7 +223,7 @@ var/global/chicken_count = 0
 	attacktext = "kicks"
 	health = 15
 	maxHealth = 15
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	var/eggsleft = 0
 	var/eggsFertile = TRUE
 	var/body_color
@@ -237,8 +234,9 @@ var/global/chicken_count = 0
 	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = 2
+	var/static/chicken_count = 0
 
-/mob/living/simple_animal/chicken/New()
+/mob/living/simple_animal/chicken/Initialize()
 	..()
 	if(!body_color)
 		body_color = pick(validColors)
@@ -247,11 +245,11 @@ var/global/chicken_count = 0
 	icon_dead = "[icon_prefix]_[body_color]_dead"
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
-	chicken_count += 1
+	++chicken_count
 
-/mob/living/simple_animal/chicken/death(gibbed)
-	..(gibbed)
-	chicken_count -= 1
+/mob/living/simple_animal/chicken/Destroy()
+	--chicken_count
+	return ..()
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
 	if(istype(O, food_type)) //feedin' dem chickens
@@ -261,9 +259,9 @@ var/global/chicken_count = 0
 			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
-			//world << eggsleft
+			//to_chat(world, eggsleft)
 		else
-			user << "<span class='warning'>[name] doesn't seem hungry!</span>"
+			to_chat(user, "<span class='warning'>[name] doesn't seem hungry!</span>")
 	else
 		..()
 
@@ -297,10 +295,11 @@ var/global/chicken_count = 0
 /obj/item/udder
 	name = "udder"
 
-/obj/item/udder/New()
+/obj/item/udder/Initialize()
 	reagents = new(50)
 	reagents.my_atom = src
 	reagents.add_reagent("milk", 20)
+	..()
 
 /obj/item/udder/proc/generateMilk()
 	if(prob(5))
@@ -309,14 +308,10 @@ var/global/chicken_count = 0
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/weapon/reagent_containers/glass/G = O
 	if(G.reagents.total_volume >= G.volume)
-		user << "<span class='danger'>[O] is full.</span>"
+		to_chat(user, "<span class='danger'>[O] is full.</span>")
 		return
 	var/transfered = reagents.trans_to(O, rand(5,10))
 	if(transfered)
 		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
-		user << "<span class='danger'>The udder is dry. Wait a bit longer...</span>"
-
-/obj/item/udder/Destroy()
-	qdel(reagents)
-	return ..()
+		to_chat(user, "<span class='danger'>The udder is dry. Wait a bit longer...</span>")

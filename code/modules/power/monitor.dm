@@ -3,6 +3,7 @@
 	desc = "It monitors power levels across the station."
 	icon_screen = "power"
 	icon_keyboard = "power_key"
+	light_color = LIGHT_COLOR_YELLOW
 	use_power = 2
 	idle_power_usage = 20
 	active_power_usage = 100
@@ -38,17 +39,19 @@
 		next_record = world.time + record_interval
 
 		var/list/supply = history["supply"]
-		supply += attached.powernet.viewavail
+		if(attached.powernet)
+			supply += attached.powernet.viewavail
 		if(supply.len > record_size)
 			supply.Cut(1, 2)
 
 		var/list/demand = history["demand"]
-		demand += attached.powernet.viewload
+		if(attached.powernet)
+			demand += attached.powernet.viewload
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
 
 /obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "power_monitor", name, 1200, 1000, master_ui, state)
@@ -59,28 +62,28 @@
 	data["stored"] = record_size
 	data["interval"] = record_interval / 10
 	data["attached"] = attached ? TRUE : FALSE
+	data["history"] = history
+	data["areas"] = list()
+
 	if(attached)
 		data["supply"] = attached.powernet.viewavail
 		data["demand"] = attached.powernet.viewload
-	data["history"] = history
-
-	data["areas"] = list()
-	for(var/obj/machinery/power/terminal/term in attached.powernet.nodes)
-		var/obj/machinery/power/apc/A = term.master
-		if(istype(A))
-			var/cell_charge
-			if(!A.cell)
-				cell_charge = 0
-			else
-				cell_charge = A.cell.percent()
-			data["areas"] += list(list(
-				"name" = A.area.name,
-				"charge" = cell_charge,
-				"load" = A.lastused_total,
-				"charging" = A.charging,
-				"eqp" = A.equipment,
-				"lgt" = A.lighting,
-				"env" = A.environ
-			))
+		for(var/obj/machinery/power/terminal/term in attached.powernet.nodes)
+			var/obj/machinery/power/apc/A = term.master
+			if(istype(A))
+				var/cell_charge
+				if(!A.cell)
+					cell_charge = 0
+				else
+					cell_charge = A.cell.percent()
+				data["areas"] += list(list(
+					"name" = A.area.name,
+					"charge" = cell_charge,
+					"load" = A.lastused_total,
+					"charging" = A.charging,
+					"eqp" = A.equipment,
+					"lgt" = A.lighting,
+					"env" = A.environ
+				))
 
 	return data

@@ -96,7 +96,7 @@
 	desc = "Your excitement boils away as you realize it's just colored glass. Why would someone hoard these things?"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "rupee"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_GLASS = 500)
 
 /obj/item/rupee/New()

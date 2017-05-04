@@ -9,7 +9,7 @@
 	endurance = 40 // tuff like a toiger
 	yield = 4
 	growthstages = 5
-	plant_type = PLANT_WEED
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
 	reagents_add = list("sacid" = 0.5)
 
@@ -23,6 +23,7 @@
 	endurance = 25
 	maturation = 8
 	yield = 2
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging)
 	mutatelist = list()
 	reagents_add = list("facid" = 0.5, "sacid" = 0.5)
 	rarity = 20
@@ -36,7 +37,7 @@
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "combat=3"
@@ -58,7 +59,7 @@
 	if(affecting)
 		if(affecting.receive_damage(0, force))
 			C.update_damage_overlays()
-	C << "<span class='userdanger'>The nettle burns your bare hand!</span>"
+	to_chat(C, "<span class='userdanger'>The nettle burns your bare hand!</span>")
 	return 1
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
@@ -66,8 +67,7 @@
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
-		usr << "All the leaves have fallen off the nettle from violent whacking."
-		usr.unEquip(src)
+		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		qdel(src)
 
 /obj/item/weapon/grown/nettle/basic
@@ -94,12 +94,13 @@
 	if(..())
 		if(prob(50))
 			user.Paralyse(5)
-			user << "<span class='userdanger'>You are stunned by the Deathnettle when you try picking it up!</span>"
+			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle when you try picking it up!</span>")
 
 /obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
-	if(!..()) return
+	if(!..())
+		return
 	if(isliving(M))
-		M << "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>"
+		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>")
 		add_logs(user, M, "attacked", src)
 
 		M.adjust_blurriness(force/7)

@@ -39,7 +39,7 @@ Contents:
 	//selecting a spawn_loc
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
-		for(var/obj/effect/landmark/L in landmarks_list)
+		for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				switch(L.name)
 					if("ninjaspawn","carpspawn")
@@ -64,12 +64,12 @@ Contents:
 
 	//generate objectives - You'll generally get 6 objectives (Ninja is meant to be hardmode!)
 	var/list/possible_targets = list()
-	for(var/datum/mind/M in ticker.minds)
+	for(var/datum/mind/M in SSticker.minds)
 		if(M.current && M.current.stat != DEAD)
 			if(ishuman(M.current))
 				if(M.special_role)
 					possible_targets[M] = 0						//bad-guy
-				else if(M.assigned_role in command_positions)
+				else if(M.assigned_role in GLOB.command_positions)
 					possible_targets[M] = 1						//good-guy
 
 	var/list/objectives = list(1,2,3,4)
@@ -134,7 +134,7 @@ Contents:
 
 	//add some RP-fluff
 	Mind.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
-	Mind.store_memory("Suprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
+	Mind.store_memory("Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	Mind.store_memory("Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
 
 	//spawn the ninja and assign the candidate
@@ -155,10 +155,10 @@ Contents:
 		return
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
-	ticker.mode.update_ninja_icons_added(Ninja)
+	SSticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja
-	message_admins("[key] has been made into a ninja by an event.")
-	log_game("[key] was spawned as a ninja by an event.")
+	message_admins("[key_name_admin(Ninja)] has been made into a ninja by an event.")
+	log_game("[key_name(Ninja)] was spawned as a ninja by an event.")
 
 	return SUCCESSFUL_SPAWN
 
@@ -168,7 +168,7 @@ Contents:
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
-	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
+	A.real_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
 	A.copy_to(new_ninja)
 	new_ninja.dna.update_dna_identity()
 	new_ninja.equip_space_ninja()
@@ -179,7 +179,7 @@ Contents:
 	var/datum/mind/Mind = new /datum/mind(key)
 	Mind.assigned_role = "Space Ninja"
 	Mind.special_role = "Space Ninja"
-	ticker.mode.traitors |= Mind			//Adds them to current traitor list. Which is really the extra antagonist list.
+	SSticker.mode.traitors |= Mind			//Adds them to current traitor list. Which is really the extra antagonist list.
 	return Mind
 
 
@@ -216,11 +216,11 @@ Contents:
 	return 1
 
 /datum/game_mode/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
-	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_NINJA]
+	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
 	ninjahud.join_hud(ninja)
 	set_antag_hud(ninja, "ninja")
 
 /datum/game_mode/proc/update_ninja_icons_removed(datum/mind/ninja_mind)
-	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_NINJA]
+	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
 	ninjahud.leave_hud(ninja_mind.current)
 	set_antag_hud(ninja_mind.current, null)

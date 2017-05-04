@@ -5,7 +5,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
@@ -34,7 +34,7 @@
 	set name = "Toggle Mister"
 	set category = "Object"
 	if (usr.get_item_by_slot(usr.getBackSlot()) != src)
-		usr << "<span class='warning'>The watertank must be worn properly to use!</span>"
+		to_chat(usr, "<span class='warning'>The watertank must be worn properly to use!</span>")
 		return
 	if(usr.incapacitated())
 		return
@@ -48,7 +48,7 @@
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
 			on = 0
-			user << "<span class='warning'>You need a free hand to hold the mister!</span>"
+			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
 		noz.loc = user
 	else
@@ -67,14 +67,12 @@
 /obj/item/weapon/watertank/proc/remove_noz()
 	if(ismob(noz.loc))
 		var/mob/M = noz.loc
-		M.unEquip(noz, 1)
+		M.temporarilyRemoveItemFromInventory(noz, TRUE)
 	return
 
 /obj/item/weapon/watertank/Destroy()
 	if (on)
-		remove_noz()
 		qdel(noz)
-		noz = null
 	return ..()
 
 /obj/item/weapon/watertank/attack_hand(mob/user)
@@ -87,10 +85,7 @@
 	var/mob/M = src.loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!M.unEquip(src))
-			return
-		M.put_in_hand(src, H.held_index)
-
+		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
@@ -109,11 +104,12 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags = NODROP | OPENCONTAINER | NOBLUDGEON
+	flags = NODROP | NOBLUDGEON
+	container_type = OPENCONTAINER
 	slot_flags = 0
 
 	var/obj/item/weapon/watertank/tank
@@ -128,7 +124,7 @@
 
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user)
 	..()
-	user << "<span class='notice'>The mister snaps back onto the watertank.</span>"
+	to_chat(user, "<span class='notice'>The mister snaps back onto the watertank.</span>")
 	tank.on = 0
 	loc = tank
 
@@ -137,8 +133,7 @@
 
 /proc/check_tank_exists(parent_tank, mob/living/carbon/human/M, obj/O)
 	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
-		M.unEquip(O)
-		qdel(0)
+		qdel(O)
 		return 0
 	else
 		return 1
@@ -178,7 +173,7 @@
 
 /obj/item/weapon/reagent_containers/spray/mister/janitor/attack_self(var/mob/user)
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
-	user << "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
+	to_chat(user, "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
 
 //ATMOS FIRE FIGHTING BACKPACK
 
@@ -218,7 +213,7 @@
 	power = 8
 	precision = 1
 	cooling_power = 5
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	flags = NODROP //Necessary to ensure that the nozzle and tank never seperate
 	var/obj/item/weapon/watertank/tank
 	var/nozzle_mode = 0
@@ -226,12 +221,13 @@
 	var/nanofrost_cooldown = 0
 
 /obj/item/weapon/extinguisher/mini/nozzle/New(parent_tank)
+	..()
 	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
 		reagents = tank.reagents
 		max_water = tank.volume
 		loc = tank
-	return
+
 
 /obj/item/weapon/extinguisher/mini/nozzle/Move()
 	..()
@@ -244,23 +240,23 @@
 		if(EXTINGUISHER)
 			nozzle_mode = NANOFROST
 			tank.icon_state = "waterbackpackatmos_1"
-			user << "Swapped to nanofrost launcher"
+			to_chat(user, "Swapped to nanofrost launcher")
 			return
 		if(NANOFROST)
 			nozzle_mode = METAL_FOAM
 			tank.icon_state = "waterbackpackatmos_2"
-			user << "Swapped to metal foam synthesizer"
+			to_chat(user, "Swapped to metal foam synthesizer")
 			return
 		if(METAL_FOAM)
 			nozzle_mode = EXTINGUISHER
 			tank.icon_state = "waterbackpackatmos_0"
-			user << "Swapped to water extinguisher"
+			to_chat(user, "Swapped to water extinguisher")
 			return
 	return
 
 /obj/item/weapon/extinguisher/mini/nozzle/dropped(mob/user)
 	..()
-	user << "<span class='notice'>The nozzle snaps back onto the tank!</span>"
+	to_chat(user, "<span class='notice'>The nozzle snaps back onto the tank!</span>")
 	tank.on = 0
 	loc = tank
 
@@ -276,10 +272,10 @@
 			return //Safety check so you don't blast yourself trying to refill your tank
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
-			user << "<span class='warning'>You need at least 100 units of water to use the nanofrost launcher!</span>"
+			to_chat(user, "<span class='warning'>You need at least 100 units of water to use the nanofrost launcher!</span>")
 			return
 		if(nanofrost_cooldown)
-			user << "<span class='warning'>Nanofrost launcher is still recharging...</span>"
+			to_chat(user, "<span class='warning'>Nanofrost launcher is still recharging...</span>")
 			return
 		nanofrost_cooldown = 1
 		R.remove_any(100)
@@ -298,13 +294,13 @@
 		if(!Adj|| !isturf(target))
 			return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/particle_effect/foam/metal/F = PoolOrNew(/obj/effect/particle_effect/foam/metal, get_turf(target))
+			var/obj/effect/particle_effect/foam/metal/F = new /obj/effect/particle_effect/foam/metal(get_turf(target))
 			F.amount = 0
 			metal_synthesis_cooldown++
 			spawn(100)
 				metal_synthesis_cooldown--
 		else
-			user << "<span class='warning'>Metal foam mix is still being synthesized...</span>"
+			to_chat(user, "<span class='warning'>Metal foam mix is still being synthesized...</span>")
 			return
 
 /obj/effect/nanofrost_container
@@ -336,7 +332,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpackatmos"
 	item_state = "waterbackpackatmos"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
@@ -346,7 +342,7 @@
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	spillable = 0
 	possible_transfer_amounts = list(5,10,15)
 
@@ -362,7 +358,7 @@
 	if(!istype(user))
 		return
 	if (user.get_item_by_slot(slot_back) != src)
-		user << "<span class='warning'>The chemtank needs to be on your back before you can activate it!</span>"
+		to_chat(user, "<span class='warning'>The chemtank needs to be on your back before you can activate it!</span>")
 		return
 	if(on)
 		turn_off()
@@ -374,7 +370,7 @@
 	cut_overlays()
 
 	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpack-10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpack-10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -392,7 +388,7 @@
 	. = list()
 	//inhands + reagent_filling
 	if(!isinhands && reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpackmob-10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpackmob-10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -410,13 +406,13 @@
 	on = 1
 	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
-		loc << "<span class='notice'>[src] turns on.</span>"
+		to_chat(loc, "<span class='notice'>[src] turns on.</span>")
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
 	on = 0
 	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
-		loc << "<span class='notice'>[src] turns off.</span>"
+		to_chat(loc, "<span class='notice'>[src] turns off.</span>")
 
 /obj/item/weapon/reagent_containers/chemtank/process()
 	if(!ishuman(loc))
@@ -436,18 +432,13 @@
 	update_filling()
 	user.update_inv_back() //for overlays update
 
-/obj/item/weapon/reagent_containers/chemtank/stim/New()
-	..()
-	reagents.add_reagent("stimulants_longterm", 300)
-	update_filling()
-
 //Operator backpack spray
 /obj/item/weapon/watertank/operator
 	name = "backpack water tank"
 	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	volume = 2000
 	slowdown = 0
 
@@ -467,7 +458,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 100
 	possible_transfer_amounts = list(75,100,150)
 

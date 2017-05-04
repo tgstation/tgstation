@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /obj/machinery/field/containment
 	name = "containment field"
@@ -123,9 +123,7 @@
 	if(hasShocked)
 		return 0
 	hasShocked = 1
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, AM.loc)
-	s.start()
+	do_sparks(5, TRUE, AM.loc)
 	var/atom/target = get_edge_target_turf(AM, get_dir(src, get_step_away(AM, src)))
 	AM.throw_at(target, 200, 4)
-	addtimer(src, "clear_shock", 5)
+	addtimer(CALLBACK(src, .proc/clear_shock), 5)

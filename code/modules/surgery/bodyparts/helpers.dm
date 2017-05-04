@@ -245,12 +245,12 @@
 		if((!O.use_digitigrade && swap_back == FALSE) || (O.use_digitigrade && swap_back == TRUE))
 			if(O.body_part == LEG_LEFT)
 				if(swap_back == TRUE)
-					N = new /obj/item/bodypart/l_leg/
+					N = new /obj/item/bodypart/l_leg
 				else
 					N = new /obj/item/bodypart/l_leg/digitigrade
 			else if(O.body_part == LEG_RIGHT)
 				if(swap_back == TRUE)
-					N = new /obj/item/bodypart/r_leg/
+					N = new /obj/item/bodypart/r_leg
 				else
 					N = new /obj/item/bodypart/r_leg/digitigrade
 		if(!N)
@@ -270,4 +270,4 @@
 					U.adjusted = DIGITIGRADE_STYLE
 				H.update_inv_w_uniform()
 		if(H.shoes && !swap_back)
-			H.unEquip(H.shoes)
+			H.dropItemToGround(H.shoes)

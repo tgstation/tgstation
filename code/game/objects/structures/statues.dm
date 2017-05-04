@@ -10,18 +10,19 @@
 	anchored = 0
 	obj_integrity = 100
 	max_integrity = 100
-	var/oreAmount = 7
+	var/oreAmount = 5
 	var/material_drop_type = /obj/item/stack/sheet/metal
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("[user] is loosening the [name]'s bolts.", \
 								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
-			if(do_after(user,40/W.toolspeed, target = src))
+			if(do_after(user,40*W.toolspeed, target = src))
 				if(!src.loc || !anchored)
 					return
 				user.visible_message("[user] loosened the [name]'s bolts!", \
@@ -31,10 +32,10 @@
 			if(!isfloorturf(src.loc))
 				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
 				return
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("[user] is securing the [name]'s bolts...", \
 								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				if(!src.loc || anchored)
 					return
 				user.visible_message("[user] has secured the [name]'s bolts.", \
@@ -45,7 +46,7 @@
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		user.visible_message("[user] is slicing apart the [name]...", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user,30, target = src))
+		if(do_after(user,40*W.toolspeed, target = src))
 			if(!src.loc)
 				return
 			user.visible_message("[user] slices apart the [name].", \
@@ -62,10 +63,10 @@
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored)
-		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+		playsound(loc, W.usesound, 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user, 40/W.toolspeed, target = src))
+		if(do_after(user, 40*W.toolspeed, target = src))
 			if(!src.loc)
 				return
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -80,9 +81,6 @@
 	add_fingerprint(user)
 	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
 						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>")
-
-/obj/structure/statue/CanAtmosPass()
-	return !density
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
@@ -99,7 +97,7 @@
 
 /obj/structure/statue/uranium
 	obj_integrity = 300
-	luminosity = 2
+	light_range = 2
 	material_drop_type = /obj/item/stack/sheet/mineral/uranium
 	var/last_event = 0
 	var/active = null
@@ -165,18 +163,20 @@
 		PlasmaBurn(500)
 		burn = TRUE
 	if(burn)
+		var/turf/T = get_turf(src)
 		if(Proj.firer)
-			message_admins("Plasma statue ignited by [key_name_admin(Proj.firer)](<A HREF='?_src_=holder;adminmoreinfo=\ref[Proj.firer]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Proj.firer]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-			log_game("Plasma statue ignited by [key_name(Proj.firer)] in ([x],[y],[z])")
+			message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(Proj.firer)] in [ADMIN_COORDJMP(T)]",0,1)
+			log_game("Plasma statue ignited by [key_name(Proj.firer)] in [COORD(T)]")
 		else
-			message_admins("Plasma statue ignited by [Proj]. No known firer.(<A HREF='?_src_=holder;adminmoreinfo=\ref[Proj.firer]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Proj.firer]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-			log_game("Plasma statue ignited by [Proj] in ([x],[y],[z]). No known firer.")
+			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_COORDJMP(T)]",0,1)
+			log_game("Plasma statue ignited by [Proj] in [COORD(T)]. No known firer.")
 	..()
 
 /obj/structure/statue/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma statue ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma statue ignited by [key_name(user)] in ([x],[y],[z])")
+		var/turf/T = get_turf(src)
+		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Plasma statue ignited by [key_name(user)] in [COORD(T)]")
 		ignite(W.is_hot())
 	else
 		return ..()

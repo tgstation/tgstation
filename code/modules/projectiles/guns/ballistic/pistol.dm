@@ -2,7 +2,7 @@
 	name = "stechkin pistol"
 	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "combat=3;materials=2;syndicate=4"
 	mag_type = /obj/item/ammo_box/magazine/m10mm
 	can_suppress = 1
@@ -19,7 +19,7 @@
 	name = "\improper M1911"
 	desc = "A classic .45 handgun with a small magazine capacity."
 	icon_state = "m1911"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = 0
 
@@ -33,7 +33,12 @@
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	if(magazine)
+		cut_overlays()
+		add_overlay("deagle_magazine")
+	else
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated desert eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
@@ -49,7 +54,7 @@
 	name = "stechkin APS pistol"
 	desc = "The original russian version of a widely used Syndicate sidearm. Uses 9mm ammo."
 	icon_state = "aps"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "combat=3;materials=2;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
 	can_suppress = 0
@@ -64,13 +69,12 @@
 	origin_tech = "combat=3;materials=2;abductor=3"
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/stickman/pickup(mob/living/user)
-	user << "<span class='notice'>As you try to pick up [src], it slips out of your grip..</span>"
+	to_chat(user, "<span class='notice'>As you try to pick up [src], it slips out of your grip..</span>")
 	if(prob(50))
-		user << "<span class='notice'>..and vanishes from your vision! Where the hell did it go?</span>"
-		user.unEquip(src)
+		to_chat(user, "<span class='notice'>..and vanishes from your vision! Where the hell did it go?</span>")
 		qdel(src)
 		user.update_icons()
 	else
-		user << "<span class='notice'>..and falls into view. Whew, that was a close one.</span>"
-		user.unEquip(src)
+		to_chat(user, "<span class='notice'>..and falls into view. Whew, that was a close one.</span>")
+		user.dropItemToGround(src)
 

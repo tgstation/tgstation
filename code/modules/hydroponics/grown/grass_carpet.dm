@@ -14,6 +14,7 @@
 	growthstages = 2
 	icon_grow = "grass-grow"
 	icon_dead = "grass-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/grass/carpet)
 	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05)
 
@@ -28,7 +29,7 @@
 	var/tile_coefficient = 0.02 // 1/50
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass/attack_self(mob/user)
-	user << "<span class='notice'>You prepare the astroturf.</span>"
+	to_chat(user, "<span class='notice'>You prepare the astroturf.</span>")
 	var/grassAmt = 1 + round(seed.potency * tile_coefficient) // The grass we're holding
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/grass/G in user.loc) // The grass on the floor
 		if(G.type != type)

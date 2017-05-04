@@ -50,13 +50,13 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		usr << "<span class='danger'>This mob type cannot throw items.</span>"
+		to_chat(usr, "<span class='danger'>This mob type cannot throw items.</span>")
 	return
 
 
 /client/Northwest()
 	if(!usr.get_active_held_item())
-		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
+		to_chat(usr, "<span class='warning'>You have nothing to drop in your hand!</span>")
 		return
 	usr.drop_item()
 
@@ -65,7 +65,7 @@
 	set hidden = 1
 
 	if(!usr.pulling)
-		usr << "<span class='notice'>You are not pulling anything.</span>"
+		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
 		return
 	usr.stop_pulling()
 
@@ -127,6 +127,8 @@
 		return 0
 	if(moving)
 		return 0
+	if(mob.force_moving)
+		return 0
 	if(isliving(mob))
 		var/mob/living/L = mob
 		if(L.incorporeal_move)	//Move though walls
@@ -161,7 +163,7 @@
 
 	if(mob.confused)
 		if(mob.confused > 40)
-			step(mob, pick(cardinal))
+			step(mob, pick(GLOB.cardinal))
 		else if(prob(mob.confused * 1.5))
 			step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
 		else if(prob(mob.confused * 3))
@@ -173,7 +175,8 @@
 
 	moving = 0
 	if(mob && .)
-		mob.throwing = 0
+		if(mob.throwing)
+			mob.throwing.finalize(FALSE)
 
 	for(var/obj/O in mob)
 		O.on_mob_move(direct, src)
@@ -191,7 +194,7 @@
 			return 1
 		else if(mob.restrained(ignore_grab = 1))
 			move_delay = world.time + 10
-			src << "<span class='warning'>You're restrained! You can't move!</span>"
+			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
 			return 1
 		else
 			return mob.resist_grab(1)
@@ -239,25 +242,25 @@
 				L.loc = locate(locx,locy,mobloc.z)
 				var/limit = 2//For only two trailing shadows.
 				for(var/turf/T in getline(mobloc, L.loc))
-					PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/shadow, list(T, L.dir))
+					new /obj/effect/overlay/temp/dir_setting/ninja/shadow(T, L.dir)
 					limit--
 					if(limit<=0)
 						break
 			else
-				PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/shadow, list(mobloc, L.dir))
+				new /obj/effect/overlay/temp/dir_setting/ninja/shadow(mobloc, L.dir)
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
 		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
-				L << "<span class='warning'>[S] bars your passage!</span>"
-				if(istype(L, /mob/living/simple_animal/revenant))
+				to_chat(L, "<span class='warning'>[S] bars your passage!</span>")
+				if(isrevenant(L))
 					var/mob/living/simple_animal/revenant/R = L
 					R.reveal(20)
 					R.stun(20)
 				return
 			if(stepTurf.flags & NOJAUNT)
-				L << "<span class='warning'>Holy energies block your path.</span>"
+				to_chat(L, "<span class='warning'>Holy energies block your path.</span>")
 			else
 				L.loc = get_step(L, direct)
 				L.setDir(direct)
@@ -275,7 +278,7 @@
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-				src << "<span class='info'>You push off of [backup] to propel yourself.</span>"
+				to_chat(src, "<span class='info'>You push off of [backup] to propel yourself.</span>")
 		return 1
 	return 0
 
@@ -309,14 +312,19 @@
 
 //moves the mob/object we're pulling
 /mob/proc/Move_Pulled(atom/A)
-	if (!pulling)
+	if(!pulling)
 		return
-	if (pulling.anchored || !pulling.Adjacent(src))
+	if(pulling.anchored || !pulling.Adjacent(src))
 		stop_pulling()
 		return
-	if (A == loc && pulling.density)
+	if(isliving(pulling))
+		var/mob/living/L = pulling
+		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
+			stop_pulling()
+			return
+	if(A == loc && pulling.density)
 		return
-	if (!Process_Spacemove(get_dir(pulling.loc, A)))
+	if(!Process_Spacemove(get_dir(pulling.loc, A)))
 		return
 	step(pulling, get_dir(pulling.loc, A))
 
@@ -416,7 +424,8 @@
 
 /client/verb/toggle_walk_run()
 	set name = "toggle-walk-run"
-	set hidden = 1
+	set hidden = TRUE
+	set instant = TRUE
 	if(mob)
 		mob.toggle_move_intent()
 

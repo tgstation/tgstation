@@ -6,7 +6,7 @@
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/obj/item/weapon/implantcase/case = null
 	var/broadcasting = null
 	var/listening = 1
@@ -35,9 +35,8 @@
 /obj/item/weapon/implantpad/attackby(obj/item/weapon/implantcase/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/implantcase))
 		if(!case)
-			if(!user.unEquip(C))
+			if(!user.transferItemToLoc(C, src))
 				return
-			C.loc = src
 			case = C
 		update_icon()
 	else

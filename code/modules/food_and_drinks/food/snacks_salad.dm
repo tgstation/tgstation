@@ -4,8 +4,9 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bitesize = 3
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	list_reagents = list("nutriment" = 7, "vitamin" = 2)
+	tastes = list("leaves" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/New()
 	..()
@@ -17,6 +18,7 @@
 	icon_state = "aesirsalad"
 	bonus_reagents = list("omnizine" = 2, "vitamin" = 6)
 	list_reagents = list("nutriment" = 8, "omnizine" = 8, "vitamin" = 6)
+	tastes = list("leaves" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/herbsalad
 	name = "herb salad"
@@ -24,6 +26,7 @@
 	icon_state = "herbsalad"
 	bonus_reagents = list("vitamin" = 4)
 	list_reagents = list("nutriment" = 8, "vitamin" = 2)
+	tastes = list("leaves" = 1, "apple" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/validsalad
 	name = "valid salad"
@@ -31,6 +34,7 @@
 	icon_state = "validsalad"
 	bonus_reagents = list("doctorsdelight" = 5, "vitamin" = 4)
 	list_reagents = list("nutriment" = 8, "doctorsdelight" = 5, "vitamin" = 2)
+	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/oatmeal
 	name = "oatmeal"
@@ -38,12 +42,14 @@
 	icon_state = "oatmeal"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
 	list_reagents = list("nutriment" = 7, "milk" = 10, "vitamin" = 2)
+	tastes = list("oats" = 1, "milk" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/fruit
 	name = "fruit salad"
 	desc = "Your standard fruit salad."
 	icon_state = "fruitsalad"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 4)
+	tastes = list("fruit" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/jungle
 	name = "jungle salad"
@@ -51,6 +57,7 @@
 	icon_state = "junglesalad"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
 	list_reagents = list("nutriment" = 7, "banana" = 5, "vitamin" = 4)
+	tastes = list("fruit" = 1, "the jungle" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/citrusdelight
 	name = "citrus delight"
@@ -58,6 +65,7 @@
 	icon_state = "citrusdelight"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
 	list_reagents = list("nutriment" = 7, "vitamin" = 5)
+	tastes = list("sourness" = 1, "leaves" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/ricebowl
 	name = "ricebowl"
@@ -65,6 +73,7 @@
 	icon_state = "ricebowl"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/salad/boiledrice
 	list_reagents = list("nutriment" = 4)
+	tastes = list("rice" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/boiledrice
 	name = "boiled rice"
@@ -72,21 +81,25 @@
 	icon_state = "boiledrice"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	tastes = list("rice" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/ricepudding
 	name = "rice pudding"
 	desc = "Everybody loves rice pudding!"
 	icon_state = "ricepudding"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 2)
+	tastes = list("rice" = 1, "sweetness" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/ricepork
 	name = "rice and pork"
 	desc = "Well, it looks like pork..."
 	icon_state = "riceporkbowl"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
+	tastes = list("rice" = 1, "meat" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/eggbowl
 	name = "egg bowl"
 	desc = "A bowl of rice with a fried egg."
 	icon_state = "eggbowl"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
+	tastes = list("rice" = 1, "egg" = 1)

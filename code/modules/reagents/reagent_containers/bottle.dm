@@ -9,8 +9,8 @@
 	volume = 30
 
 
-/obj/item/weapon/reagent_containers/glass/bottle/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/Initialize()
+	. = ..()
 	if(!icon_state)
 		icon_state = "bottle"
 	update_icon()
@@ -21,7 +21,7 @@
 /obj/item/weapon/reagent_containers/glass/bottle/update_icon()
 	cut_overlays()
 	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]-10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]-10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -37,7 +37,7 @@
 				filling.icon_state = "[icon_state]100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine
@@ -139,8 +139,8 @@
 	icon_state = "bottle16"
 	var/extra_reagent = null
 
-/obj/item/weapon/reagent_containers/glass/bottle/traitor/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/traitor/Initialize()
+	. = ..()
 	extra_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
 	reagents.add_reagent("[extra_reagent]", 3)
 
@@ -233,6 +233,12 @@
 	desc = "A small bottle of atropine."
 	icon_state = "bottle12"
 	list_reagents = list("atropine" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/romerol
+	name = "romerol bottle"
+	desc = "A small bottle of Romerol. The REAL zombie powder."
+	icon_state = "bottle12"
+	list_reagents = list("romerol" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"

@@ -27,7 +27,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
  then the player gets the profit from selling his own wasted time.
 */
 /proc/export_item_and_contents(atom/movable/AM, contraband, emagged, dry_run=FALSE)
-	if(!exports_list.len)
+	if(!GLOB.exports_list.len)
 		setupExports()
 
 	var/sold_str = ""
@@ -38,7 +38,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	// We go backwards, so it'll be innermost objects sold first
 	for(var/i in reverseRange(contents))
 		var/atom/movable/thing = i
-		for(var/datum/export/E in exports_list)
+		for(var/datum/export/E in GLOB.exports_list)
 			if(!E)
 				continue
 			if(E.applies_to(thing, contraband, emagged))
@@ -91,6 +91,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	if(!get_cost(O, contr, emag))
 		return FALSE
+	if(HAS_SECONDARY_FLAG(O, HOLOGRAM))
+		return FALSE
 	return TRUE
 
 // Called only once, when the object is actually sold by the datum.
@@ -101,8 +103,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/amount = get_amount(O)
 	total_cost += cost
 	total_amount += amount
-	feedback_add_details("export_sold_amount","[O.type]|[amount]")
-	feedback_add_details("export_sold_cost","[O.type]|[cost]")
+	SSblackbox.add_details("export_sold_amount","[O.type]|[amount]")
+	SSblackbox.add_details("export_sold_cost","[O.type]|[cost]")
 
 // Total printout for the cargo console.
 // Called before the end of current export cycle.
@@ -132,10 +134,10 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	total_cost = 0
 	total_amount = 0
 
-var/list/exports_list = list()
+GLOBAL_LIST_EMPTY(exports_list)
 
 /proc/setupExports()
 	for(var/subtype in subtypesof(/datum/export))
 		var/datum/export/E = new subtype
 		if(E.export_types && E.export_types.len) // Exports without a type are invalid/base types
-			exports_list += E
+			GLOB.exports_list += E

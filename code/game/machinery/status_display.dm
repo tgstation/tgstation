@@ -44,14 +44,9 @@
 	// new display
 	// register for radio system
 
-/obj/machinery/status_display/New()
+/obj/machinery/status_display/Initialize()
 	..()
-	if(SSradio)
-		SSradio.add_object(src, frequency)
-
-/obj/machinery/status_display/initialize()
-	if(SSradio)
-		SSradio.add_object(src, frequency)
+	SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
 	if(SSradio)
@@ -128,7 +123,9 @@
 	. = ..()
 	switch(mode)
 		if(1,2,4,5)
-			user << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+			to_chat(user, "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>")
+	if(mode == 1 && SSshuttle.emergency)
+		to_chat(user, "Current Shuttle: [SSshuttle.emergency.name]")
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
@@ -149,7 +146,7 @@
 /obj/machinery/status_display/proc/set_picture(state)
 	picture_state = state
 	remove_display()
-	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
+	add_overlay(picture_state)
 
 /obj/machinery/status_display/proc/update_display(line1, line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
@@ -157,8 +154,7 @@
 		maptext = new_text
 
 /obj/machinery/status_display/proc/remove_display()
-	if(overlays.len)
-		cut_overlays()
+	cut_overlays()
 	if(maptext)
 		maptext = ""
 
@@ -184,27 +180,20 @@
 
 
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
-
+	if(supply_display)
+		mode = 4
+		return
 	switch(signal.data["command"])
 		if("blank")
 			mode = 0
-
 		if("shuttle")
 			mode = 1
-
 		if("message")
 			mode = 2
 			set_message(signal.data["msg1"], signal.data["msg2"])
-
 		if("alert")
 			mode = 3
 			set_picture(signal.data["picture_state"])
-
-		if("supply")
-			if(supply_display)
-				mode = 4
-
-
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
@@ -288,9 +277,8 @@
 
 /obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
-	if(overlays.len)
-		cut_overlays()
-	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
+	cut_overlays()
+	add_overlay(picture_state)
 
 #undef CHARS_PER_LINE
 #undef FOND_SIZE

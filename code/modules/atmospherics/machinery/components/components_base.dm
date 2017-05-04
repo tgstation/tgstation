@@ -7,12 +7,12 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/welded = 0 //Used on pumps and scrubbers
 	var/showpipe = 0
 
-	var/list/datum/pipeline/parents = list()
-	var/list/datum/gas_mixture/airs = list()
+	var/list/datum/pipeline/parents
+	var/list/datum/gas_mixture/airs
 
 /obj/machinery/atmospherics/components/New()
-	parents.len = device_type
-	airs.len = device_type
+	parents = new(device_type)
+	airs = new(device_type)
 	..()
 
 	for(DEVICE_TYPE_LOOP)
@@ -31,7 +31,7 @@ Iconnery
 
 /obj/machinery/atmospherics/components/proc/icon_addbroken(var/connected = 0)
 	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinal)
 		if(unconnected & direction)
 			underlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_exposed", direction)
 
@@ -167,6 +167,6 @@ UI Stuff
 /obj/machinery/atmospherics/components/ui_status(mob/user)
 	if(allowed(user))
 		return ..()
-	user << "<span class='danger'>Access denied.</span>"
+	to_chat(user, "<span class='danger'>Access denied.</span>")
 	return UI_CLOSE
 

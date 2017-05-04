@@ -6,7 +6,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/fire_sound = null						//What sound should play when this ammo is fired
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
@@ -25,7 +25,7 @@
 		BB = new projectile_type(src)
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
-	setDir(pick(alldirs))
+	setDir(pick(GLOB.alldirs))
 	update_icon()
 
 /obj/item/ammo_casing/update_icon()
@@ -53,8 +53,8 @@
 					continue
 			if (boolets > 0)
 				box.update_icon()
-				user << "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>"
+				to_chat(user, "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>")
 			else
-				user << "<span class='warning'>You fail to collect anything!</span>"
+				to_chat(user, "<span class='warning'>You fail to collect anything!</span>")
 	else
 		return ..()

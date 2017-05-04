@@ -1,5 +1,3 @@
-var/global/ntnet_card_uid = 1
-
 /obj/item/weapon/computer_hardware/network_card
 	name = "network card"
 	desc = "A basic wireless network card for usage with standard NTNet frequencies."
@@ -12,22 +10,22 @@ var/global/ntnet_card_uid = 1
 	var/ethernet = 0 // Hard-wired, therefore always on, ignores NTNet wireless checks.
 	malfunction_probability = 1
 	device_type = MC_NET
+	var/global/ntnet_card_uid = 1
 
 /obj/item/weapon/computer_hardware/network_card/diagnostics(var/mob/user)
 	..()
-	user << "NIX Unique ID: [identification_id]"
-	user << "NIX User Tag: [identification_string]"
-	user << "Supported protocols:"
-	user << "511.m SFS (Subspace) - Standard Frequency Spread"
+	to_chat(user, "NIX Unique ID: [identification_id]")
+	to_chat(user, "NIX User Tag: [identification_string]")
+	to_chat(user, "Supported protocols:")
+	to_chat(user, "511.m SFS (Subspace) - Standard Frequency Spread")
 	if(long_range)
-		user << "511.n WFS/HB (Subspace) - Wide Frequency Spread/High Bandiwdth"
+		to_chat(user, "511.n WFS/HB (Subspace) - Wide Frequency Spread/High Bandiwdth")
 	if(ethernet)
-		user << "OpenEth (Physical Connection) - Physical network connection port"
+		to_chat(user, "OpenEth (Physical Connection) - Physical network connection port")
 
 /obj/item/weapon/computer_hardware/network_card/New(var/l)
-	..(l)
-	identification_id = ntnet_card_uid
-	ntnet_card_uid++
+	..()
+	identification_id = ntnet_card_uid++
 
 // Returns a string identifier of this network card
 /obj/item/weapon/computer_hardware/network_card/proc/get_network_tag()
@@ -44,7 +42,7 @@ var/global/ntnet_card_uid = 1
 	if(ethernet) // Computer is connected via wired connection.
 		return 3
 
-	if(!ntnet_global || !ntnet_global.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
+	if(!GLOB.ntnet_global || !GLOB.ntnet_global.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
 		return 0
 
 	if(holder)
@@ -70,7 +68,7 @@ var/global/ntnet_card_uid = 1
 	origin_tech = "programming=4;engineering=2"
 	power_usage = 100 // Better range but higher power usage.
 	icon_state = "radio"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/computer_hardware/network_card/wired
 	name = "wired network card"
@@ -79,4 +77,4 @@ var/global/ntnet_card_uid = 1
 	origin_tech = "programming=5;engineering=3"
 	power_usage = 100 // Better range but higher power usage.
 	icon_state = "net_wired"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL

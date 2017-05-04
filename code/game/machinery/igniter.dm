@@ -60,6 +60,7 @@
 	var/base_state = "migniter"
 	var/datum/effect_system/spark_spread/spark_system
 	anchored = 1
+	resistance_flags = FIRE_PROOF
 
 /obj/machinery/sparker/New()
 	..()

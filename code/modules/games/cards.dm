@@ -11,7 +11,7 @@
 	desc = "A simple deck of playing cards."
 	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "deck"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = NOBLUDGEON
 
 	var/list/cards = list()
@@ -121,7 +121,7 @@
 	desc           = "Some playing cards."
 	icon = 'icons/obj/playing_cards.dmi'
 	icon_state     = "empty"
-	w_class        = 1
+	w_class        = WEIGHT_CLASS_TINY
 
 	var/concealed  = 0
 	var/blank = 0
@@ -145,7 +145,7 @@
 	if(cards.len == 1 && istype(O, /obj/item/weapon/pen))
 		var/datum/playingcard/P = cards[1]
 		if(!blank)
-			user << "You cannot write on that card."
+			to_chat(user, "You cannot write on that card.")
 			return
 		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Writing") as text|null, 50)
 		if(!cardtext)
@@ -230,35 +230,34 @@
 			name = "a playing card"
 			desc = "A playing card."
 
-		overlays.len = 0
+		cut_overlays()
 
 		if (cards.len == 1)
 			var/datum/playingcard/P = cards[1]
-			var/image/I             = new(src.icon, (concealed ? "card_back" : "[P.card_icon]") )
+			var/mutable_appearance/card_overlay = mutable_appearance(icon, (concealed ? "card_back" : "[P.card_icon]") )
 
-			I.pixel_x               = I.pixel_x + (-5 + rand(10))
-			I.pixel_y               = I.pixel_y + (-5 + rand(10))
+			card_overlay.pixel_x = card_overlay.pixel_x + (-5 + rand(10))
+			card_overlay.pixel_y = card_overlay.pixel_y + (-5 + rand(10))
 
-			overlays.Add(I)
+			add_overlay(card_overlay)
 		else
-			var/origin              = -12
-			var/offset              = round(32 / cards.len)
+			var/origin = -12
+			var/offset = round(32 / cards.len)
 
-			var/i                   = 0
-			var/image/I
+			var/i = 0
+			var/mutable_appearance/card_overlay
 
 			for(var/datum/playingcard/P in cards)
-				I                   = new(src.icon, (concealed ? "card_back" : "[P.card_icon]") )
-				I.pixel_x           = origin + (offset * i)
+				card_overlay = mutable_appearance(icon, (concealed ? "card_back" : P.card_icon))
+				card_overlay.pixel_x = origin + (offset * i)
 
-				overlays.Add(I)
+				add_overlay(card_overlay)
+				i = i + 1
 
-				i                   = i + 1
-
-		var/html                    = ""
+		var/html = ""
 
 		for(var/datum/playingcard/card in cards)
-			html                    = html + "<a href=\"byond://?src=\ref[src.hi]&action=play_card&card=\ref[card]\" class=\"card [card.suit] [card.number]\"></a>"
+			html = html + "<a href=\"byond://?src=\ref[src.hi]&action=play_card&card=\ref[card]\" class=\"card [card.suit] [card.number]\"></a>"
 
 		src.hi.updateContent("hand", html)
 

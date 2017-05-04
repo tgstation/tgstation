@@ -2,14 +2,13 @@
 
 
 /client/proc/join_date_check(y,m,d)
-	var/DBQuery/query = dbcon.NewQuery("SELECT DATEDIFF(Now(),'[y]-[m]-[d]')")
+	var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),'[y]-[m]-[d]')")
 
-	if(!query.Execute())
-		world.log << "SQL ERROR doing datediff. Error : \[[query.ErrorMsg()]\]\n"
+	if(!query_datediff.Execute())
 		return FALSE
 
-	if(query.NextRow())
-		var/diff = text2num(query.item[1])
+	if(query_datediff.NextRow())
+		var/diff = text2num(query_datediff.item[1])
 		if(config.use_account_age_for_jobs)
 			player_age = max(0,diff)	//So job code soesn't freak out if they are time traveling.
 		if(diff < YOUNG)
@@ -24,7 +23,7 @@
 /client/proc/findJoinDate()
 	var/http[] = world.Export("http://byond.com/members/[src.ckey]?format=text")
 	if(!http)
-		world.log << "Failed to connect to byond age check for [src.ckey]"
+		log_world("Failed to connect to byond age check for [src.ckey]")
 		return FALSE
 
 	var/F = file2text(http["CONTENT"])

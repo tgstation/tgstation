@@ -59,12 +59,12 @@
 
 /obj/structure/transit_tube/station/attack_hand(mob/user)
 	if(!pod_moving)
-		if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+		if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 			if(open_status == STATION_TUBE_OPEN)
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)
 					if(GM.buckled || GM.has_buckled_mobs())
-						user << "<span class='warning'>[GM] is attached to something!</span>"
+						to_chat(user, "<span class='warning'>[GM] is attached to something!</span>")
 						return
 					for(var/obj/structure/transit_tube_pod/pod in loc)
 						pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
@@ -146,7 +146,7 @@
 		open_animation()
 		sleep(OPEN_DURATION + 2)
 		pod_moving = 0
-		if(!qdeleted(pod))
+		if(!QDELETED(pod))
 			pod.air_contents.share(loc.return_air()) //mix the pod's gas mixture with the tile it's on
 
 /obj/structure/transit_tube/station/init_tube_dirs()

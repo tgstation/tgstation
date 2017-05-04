@@ -6,7 +6,7 @@
 		..()
 
 /mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
 		adjustBruteLoss(15)
 		var/hitverb = "punched"
