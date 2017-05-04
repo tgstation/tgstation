@@ -47,3 +47,46 @@
 	icon_state = "spacecash1000"
 	desc = "It's worth 1000 credits."
 	value = 1000
+	
+/obj/item/stack/spacecash/fake //Always has a value of 0
+	name = "space cash" //Even though it's fake, the name and desc is still the same, you can tell if it's fake by trying to use it on a ATM
+	desc = "It's worth 1 credit."
+	singular_name = "bill"
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "spacecash"
+	amount = 1
+	max_amount = 20
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 2
+	w_class = WEIGHT_CLASS_TINY
+	resistance_flags = FLAMMABLE
+	value = 0
+	
+/obj/item/stack/spacecash/fake/c10
+	icon_state = "spacecash10"
+	desc = "It's worth 10 credits."
+
+/obj/item/stack/spacecash/fake/c20
+	icon_state = "spacecash20"
+	desc = "It's worth 20 credits."
+
+/obj/item/stack/spacecash/fake/c50
+	icon_state = "spacecash50"
+	desc = "It's worth 50 credits."
+
+/obj/item/stack/spacecash/fake/c100
+	icon_state = "spacecash100"
+	desc = "It's worth 100 credits."
+
+/obj/item/stack/spacecash/fake/c200
+	icon_state = "spacecash200"
+	desc = "It's worth 200 credits."
+
+/obj/item/stack/spacecash/fake/c500
+	icon_state = "spacecash500"
+	desc = "It's worth 500 credits."
+
+/obj/item/stack/spacecash/fake/c1000
+	icon_state = "spacecash1000"
+	desc = "It's worth 1000 credits."
