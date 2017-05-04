@@ -24,7 +24,7 @@
 	if(!C || !user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin removing rods...</span>"
+		to_chat(user, "<span class='notice'>You begin removing rods...</span>")
 		playsound(src, C.usesound, 80, 1)
 		if(do_after(user, 30*C.toolspeed, target = src))
 			if(!istype(src, /turf/open/floor/engine))

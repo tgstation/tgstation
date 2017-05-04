@@ -47,7 +47,7 @@
 			return 1
 		else
 			if(!user.transferItemToLoc(O, src))
-				user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
+				to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return 0
 			beaker = O
 			src.verbs += /obj/machinery/juicer/verb/detach
@@ -55,10 +55,10 @@
 			src.updateUsrDialog()
 			return 0
 	if (!is_type_in_list(O, allowed_items))
-		user << "This object contains no fluid or extractable reagents."
+		to_chat(user, "This object contains no fluid or extractable reagents.")
 		return 1
 	if(!user.transferItemToLoc(O, src))
-		user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
+		to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 		return 0
 	src.updateUsrDialog()
 	return 0

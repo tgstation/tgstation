@@ -12,9 +12,9 @@
 	var/disease_amount = 20
 	var/spillable = 0
 
-/obj/item/weapon/reagent_containers/New(location, vol = 0)
-	..()
-	if (isnum(vol) && vol > 0)
+/obj/item/weapon/reagent_containers/Initialize(mapload, vol)
+	. = ..()
+	if(isnum(vol) && vol > 0)
 		volume = vol
 	create_reagents(volume)
 	if(spawned_disease)
@@ -38,7 +38,7 @@
 					amount_per_transfer_from_this = possible_transfer_amounts[i+1]
 				else
 					amount_per_transfer_from_this = possible_transfer_amounts[1]
-				user << "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>"
+				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
 				return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
@@ -67,7 +67,7 @@
 		covered = "mask"
 	if(covered)
 		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
-		user << "<span class='warning'>You have to remove [who] [covered] first!</span>"
+		to_chat(user, "<span class='warning'>You have to remove [who] [covered] first!</span>")
 		return 0
 	return 1
 

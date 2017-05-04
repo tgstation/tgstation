@@ -52,13 +52,13 @@
 		if(istype(I, /obj/item/device/multitool))
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
-			user << "<span class='notice'>You save the data in the [I.name]'s buffer.</span>"
+			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
 			return 1
 	else if(istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = I
 		if(istype(M.buffer, /obj/machinery/quantumpad))
 			linked_pad = M.buffer
-			user << "<span class='notice'>You link the [src] to the one in the [I.name]'s buffer.</span>"
+			to_chat(user, "<span class='notice'>You link the [src] to the one in the [I.name]'s buffer.</span>")
 			return 1
 
 	if(exchange_parts(user, I))
@@ -71,27 +71,27 @@
 
 /obj/machinery/quantumpad/attack_hand(mob/user)
 	if(panel_open)
-		user << "<span class='warning'>The panel must be closed before operating this machine!</span>"
+		to_chat(user, "<span class='warning'>The panel must be closed before operating this machine!</span>")
 		return
 
 	if(!linked_pad || QDELETED(linked_pad))
-		user << "<span class='warning'>There is no linked pad!</span>"
+		to_chat(user, "<span class='warning'>There is no linked pad!</span>")
 		return
 
 	if(world.time < last_teleport + teleport_cooldown)
-		user << "<span class='warning'>[src] is recharging power. Please wait [round((last_teleport + teleport_cooldown - world.time) / 10)] seconds.</span>"
+		to_chat(user, "<span class='warning'>[src] is recharging power. Please wait [round((last_teleport + teleport_cooldown - world.time) / 10)] seconds.</span>")
 		return
 
 	if(teleporting)
-		user << "<span class='warning'>[src] is charging up. Please wait.</span>"
+		to_chat(user, "<span class='warning'>[src] is charging up. Please wait.</span>")
 		return
 
 	if(linked_pad.teleporting)
-		user << "<span class='warning'>Linked pad is busy. Please wait.</span>"
+		to_chat(user, "<span class='warning'>Linked pad is busy. Please wait.</span>")
 		return
 
 	if(linked_pad.stat & NOPOWER)
-		user << "<span class='warning'>Linked pad is not responding to ping.</span>"
+		to_chat(user, "<span class='warning'>Linked pad is not responding to ping.</span>")
 		return
 	src.add_fingerprint(user)
 	doteleport(user)
@@ -116,11 +116,11 @@
 				teleporting = 0
 				return
 			if(stat & NOPOWER)
-				user << "<span class='warning'>[src] is unpowered!</span>"
+				to_chat(user, "<span class='warning'>[src] is unpowered!</span>")
 				teleporting = 0
 				return
 			if(!linked_pad || QDELETED(linked_pad) || linked_pad.stat & NOPOWER)
-				user << "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>"
+				to_chat(user, "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>")
 				teleporting = 0
 				return
 

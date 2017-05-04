@@ -174,11 +174,11 @@
 			src.anchored = 0
 			disconnect_from_network()
 		else
-			user << "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>"
+			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
 
 	else if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
-			user << "<span class='warning'>There is already a [fueljar] inside!</span>"
+			to_chat(user, "<span class='warning'>There is already a [fueljar] inside!</span>")
 			return
 
 		if(!user.transferItemToLoc(W, src))

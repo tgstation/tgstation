@@ -282,7 +282,7 @@ Bonus
 	var/amt_healed = 1
 	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
-	var/list/unclean_mutations = (not_good_mutations|bad_mutations) - mutations_list[RACEMUT]
+	var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations) - GLOB.mutations_list[RACEMUT]
 	M.dna.remove_mutation_group(unclean_mutations)
 	M.radiation = max(M.radiation - (2 * amt_healed), 0)
 	return 1

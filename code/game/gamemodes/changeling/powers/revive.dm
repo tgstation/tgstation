@@ -24,10 +24,9 @@
 		user.emote("scream")
 		user.regenerate_limbs(0, list("head"))
 		user.regenerate_organs()
-	user << "<span class='notice'>We have revived ourselves.</span>"
+	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
 	user.mind.changeling.purchasedpowers -= src
-	feedback_add_details("changeling_powers","CR")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/revive/can_be_used_by(mob/user)
 	if((user.stat != DEAD) && !(user.status_flags & FAKEDEATH))

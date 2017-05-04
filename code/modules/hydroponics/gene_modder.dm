@@ -15,11 +15,12 @@
 
 	var/datum/plant_gene/target
 	var/operation = ""
-	var/rating = 0
-	var/max_extract_pot = 50
-	// The cap on potency gene extraction.
-	// This number is for T1, each upgraded part adds 5% for a tech level above T1.
-	// At T4, it reaches 95%.
+	var/max_potency = 50 // See RefreshParts() for how these work
+	var/max_yield = 2
+	var/min_production = 12
+	var/max_endurance = 10 // IMPT: ALSO AFFECTS LIFESPAN
+	var/min_wchance = 67
+	var/min_wrate = 10
 
 /obj/machinery/plantgenes/New()
 	..()
@@ -36,15 +37,35 @@
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/scanning_module = 1)
 
-/obj/machinery/plantgenes/RefreshParts()
-	rating = 0
-	for(var/I in component_parts)
-		if(istype(I, /obj/item/weapon/stock_parts))
-			var/obj/item/weapon/stock_parts/S = I
-			rating += S.rating-1
-		else if(istype(I, /obj/item/weapon/circuitboard/machine/plantgenes/vault))
-			rating += 5 // Having original alien board is +25%
-	max_extract_pot = initial(max_extract_pot) + rating*5
+/obj/machinery/plantgenes/RefreshParts() // Comments represent the max you can set per tier, respectively. seeds.dm [219] clamps these for us but we don't want to mislead the viewer.
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		if(M.rating > 3)
+			max_potency = 95
+		else
+			max_potency = initial(max_potency) + (M.rating**3) // 53,59,77,95 	 Clamps at 100
+
+		max_yield = initial(max_yield) + (M.rating*2) // 4,6,8,10 	Clamps at 10
+
+	for(var/obj/item/weapon/stock_parts/scanning_module/SM in component_parts)
+		if(SM.rating > 3) //If you create t5 parts I'm a step ahead mwahahaha!
+			min_production = 1
+		else
+			min_production = 12 - (SM.rating * 3) //9,6,3,1. Requires if to avoid going below clamp [1]
+
+		max_endurance = initial(max_endurance) + (SM.rating * 25) // 35,60,85,100	Clamps at 10min 100max
+
+	for(var/obj/item/weapon/stock_parts/micro_laser/ML in component_parts)
+		var/wratemod = ML.rating * 2.5
+		min_wrate = Floor(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
+		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
+	for(var/obj/item/weapon/circuitboard/machine/plantgenes/vaultcheck in component_parts)
+		if(istype(vaultcheck, /obj/item/weapon/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS
+			max_potency = 100
+			max_yield = 10
+			min_production = 1
+			max_endurance = 100
+			min_wchance = 0
+			min_wrate = 0
 
 /obj/machinery/plantgenes/update_icon()
 	..()
@@ -71,23 +92,23 @@
 
 	if(istype(I, /obj/item/seeds))
 		if(seed)
-			user << "<span class='warning'>A sample is already loaded into the machine!</span>"
+			to_chat(user, "<span class='warning'>A sample is already loaded into the machine!</span>")
 		else
 			if(!user.drop_item())
 				return
 			insert_seed(I)
-			user << "<span class='notice'>You add [I] to the machine.</span>"
+			to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
 			interact(user)
 		return
 	else if(istype(I, /obj/item/weapon/disk/plantgene))
 		if(disk)
-			user << "<span class='warning'>A data disk is already loaded into the machine!</span>"
+			to_chat(user, "<span class='warning'>A data disk is already loaded into the machine!</span>")
 		else
 			if(!user.drop_item())
 				return
 			disk = I
 			disk.loc = src
-			user << "<span class='notice'>You add [I] to the machine.</span>"
+			to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
 			interact(user)
 	else
 		..()
@@ -130,11 +151,37 @@
 			if("extract")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene from \the <span class='highlight'>[seed]</span>?<br>"
 				dat += "<span class='bad'>The sample will be destroyed in process!</span>"
-				if(istype(target, /datum/plant_gene/core/potency))
+				if(istype(target, /datum/plant_gene/core))
 					var/datum/plant_gene/core/gene = target
-					if(gene.value > max_extract_pot)
-						dat += "<br><br>This device's extraction capabilities are currently limited to [max_extract_pot] potency. "
-						dat += "Target gene will be degraded to [max_extract_pot] potency on extraction."
+					if(istype(target, /datum/plant_gene/core/potency))
+						if(gene.value > max_potency)
+							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_potency]</span> potency. "
+							dat += "Target gene will be degraded to <span class='highlight'>[max_potency]</span> potency on extraction."
+					else if(istype(target, /datum/plant_gene/core/lifespan))
+						if(gene.value > max_endurance)
+							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_endurance]</span> lifespan. "
+							dat += "Target gene will be degraded to <span class='highlight'>[max_endurance]</span> Lifespan on extraction."
+					else if(istype(target, /datum/plant_gene/core/endurance))
+						if(gene.value > max_endurance)
+							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_endurance]</span> endurance. "
+							dat += "Target gene will be degraded to <span class='highlight'>[max_endurance]</span> endurance on extraction."
+					else if(istype(target, /datum/plant_gene/core/yield))
+						if(gene.value > max_yield)
+							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_yield]</span> yield. "
+							dat += "Target gene will be degraded to <span class='highlight'>[max_yield]</span> yield on extraction."
+					else if(istype(target, /datum/plant_gene/core/production))
+						if(gene.value < min_production)
+							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_production]</span> production. "
+							dat += "Target gene will be degraded to <span class='highlight'>[min_production]</span> production on extraction."
+					else if(istype(target, /datum/plant_gene/core/weed_rate))
+						if(gene.value < min_wrate)
+							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_wrate]</span> weed rate. "
+							dat += "Target gene will be degraded to <span class='highlight'>[min_wrate]</span> weed rate on extraction."
+					else if(istype(target, /datum/plant_gene/core/weed_chance))
+						if(gene.value < min_wchance)
+							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_wchance]</span> weed chance. "
+							dat += "Target gene will be degraded to <span class='highlight'>[min_wchance]</span> weed chance on extraction."
+
 			if("replace")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene with <span class='highlight'>[disk.gene.get_name()]</span>?<br>"
 			if("insert")
@@ -239,7 +286,7 @@
 				if(!usr.drop_item())
 					return
 				insert_seed(I)
-				usr << "<span class='notice'>You add [I] to the machine.</span>"
+				to_chat(usr, "<span class='notice'>You add [I] to the machine.</span>")
 		update_icon()
 	else if(href_list["eject_disk"] && !operation)
 		if (disk)
@@ -254,7 +301,7 @@
 					return
 				disk = I
 				disk.loc = src
-				usr << "<span class='notice'>You add [I] to the machine.</span>"
+				to_chat(usr, "<span class='notice'>You add [I] to the machine.</span>")
 	else if(href_list["op"] == "insert" && disk && disk.gene && seed)
 		if(!operation) // Wait for confirmation
 			operation = "insert"
@@ -289,9 +336,22 @@
 				if("extract")
 					if(disk && !disk.read_only)
 						disk.gene = G
-						if(istype(G, /datum/plant_gene/core/potency))
+						if(istype(G, /datum/plant_gene/core))
 							var/datum/plant_gene/core/gene = G
-							gene.value = min(gene.value, max_extract_pot)
+							if(istype(G, /datum/plant_gene/core/potency))
+								gene.value = min(gene.value, max_potency)
+							else if(istype(G, /datum/plant_gene/core/lifespan))
+								gene.value = min(gene.value, max_endurance) //INTENDED
+							else if(istype(G, /datum/plant_gene/core/endurance))
+								gene.value = min(gene.value, max_endurance)
+							else if(istype(G, /datum/plant_gene/core/production))
+								gene.value = max(gene.value, min_production)
+							else if(istype(G, /datum/plant_gene/core/yield))
+								gene.value = min(gene.value, max_yield)
+							else if(istype(G, /datum/plant_gene/core/weed_rate))
+								gene.value = max(gene.value, min_wrate)
+							else if(istype(G, /datum/plant_gene/core/weed_chance))
+								gene.value = max(gene.value, min_wchance)
 						disk.update_name()
 						qdel(seed)
 						seed = null
@@ -309,6 +369,7 @@
 						if(istype(disk.gene, /datum/plant_gene/reagent))
 							seed.reagents_from_genes()
 						repaint_seed()
+
 
 			update_genes()
 			operation = ""
@@ -347,6 +408,7 @@
 
 		for(var/datum/plant_gene/reagent/G in seed.genes)
 			reagent_genes += G
+
 		for(var/datum/plant_gene/trait/G in seed.genes)
 			trait_genes += G
 
@@ -383,10 +445,11 @@
 /obj/item/weapon/disk/plantgene
 	name = "plant data disk"
 	desc = "A disk for storing plant genetic data."
-	icon_state = "datadisk2"
+	icon_state = "datadisk_hydro"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/plant_gene/gene
 	var/read_only = 0 //Well, it's still a floppy disk
+	unique_rename = 1
 
 /obj/item/weapon/disk/plantgene/New()
 	..()
@@ -394,42 +457,16 @@
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
-/obj/item/weapon/disk/plantgene/attackby(obj/item/weapon/W, mob/user, params)
-	..()
-	if(istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_held_item() != W)
-			return
-		if(!in_range(src, user) && loc != user)
-			return
-		if(t)
-			name = "plant data disk - '[t]'"
-		else
-			name = "plant data disk"
-
 /obj/item/weapon/disk/plantgene/proc/update_name()
 	if(gene)
-		name = "plant data disk - '[gene.get_name()]'"
+		name = "[gene.get_name()] (Plant Data Disk)"
 	else
 		name = "plant data disk"
 
 /obj/item/weapon/disk/plantgene/attack_self(mob/user)
 	read_only = !read_only
-	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
+	to_chat(user, "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/weapon/disk/plantgene/examine(mob/user)
 	..()
-	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
-
-
-/*
- *  Plant DNA Disks Box
- */
-/obj/item/weapon/storage/box/disks_plantgene
-	name = "plant data disks box"
-	icon_state = "disk_kit"
-
-/obj/item/weapon/storage/box/disks_plantgene/New()
-	..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/disk/plantgene(src)
+	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")

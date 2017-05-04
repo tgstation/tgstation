@@ -1,4 +1,14 @@
-#define MC_TICK_CHECK ( ( world.tick_usage > CURRENT_TICKLIMIT || src.state != SS_RUNNING ) ? pause() : 0 )
+#define MC_TICK_CHECK ( ( world.tick_usage > GLOB.CURRENT_TICKLIMIT || src.state != SS_RUNNING ) ? pause() : 0 )
+
+#define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = GLOB.CURRENT_TICKLIMIT; var/split_tick_phases = ##phase_count
+#define MC_SPLIT_TICK \
+    if(split_tick_phases > 1){\
+        GLOB.CURRENT_TICKLIMIT = ((original_tick_limit - world.tick_usage) / split_tick_phases) + world.tick_usage;\
+        --split_tick_phases;\
+    } else {\
+        GLOB.CURRENT_TICKLIMIT = original_tick_limit;\
+    }
+
 // Used to smooth out costs to try and avoid oscillation.
 #define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
 #define MC_AVERAGE(average, current) (0.8 * (average) + 0.2 * (current))
@@ -52,18 +62,16 @@
 #define SS_SLEEPING 4	//fire() slept.
 #define SS_PAUSING 5 	//in the middle of pausing
 
+#define SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/##X);\
+/datum/controller/subsystem/##X/New(){\
+    NEW_SS_GLOBAL(SS##X);\
+    PreInit();\
+}\
+/datum/controller/subsystem/##X
 
-//Timing subsystem
-//Don't run if there is an identical unique timer active
-#define TIMER_UNIQUE		0x1
-//For unique timers: Replace the old timer rather then not start this one
-#define TIMER_OVERRIDE		0x2
-//Timing should be based on how timing progresses on clients, not the sever.
-//	tracking this is more expensive,
-//	should only be used in conjuction with things that have to progress client side, such as animate() or sound()
-#define TIMER_CLIENT_TIME	0x4
-//Timer can be stopped using deltimer()
-#define TIMER_STOPPABLE		0x8
-//To be used with TIMER_UNIQUE
-//prevents distinguishing identical timers with the wait variable
-#define TIMER_NO_HASH_WAIT  0x10
+#define PROCESSING_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/processing/##X);\
+/datum/controller/subsystem/processing/##X/New(){\
+    NEW_SS_GLOBAL(SS##X);\
+    PreInit();\
+}\
+/datum/controller/subsystem/processing/##X

@@ -14,15 +14,15 @@
 	throw_range = 0
 	throw_speed = 0
 
-/obj/item/weapon/melee/touch_attack/New(var/spell)
-	attached_spell = spell
-	..()
+/obj/item/weapon/melee/touch_attack/Initialize()
+	attached_spell = loc
+	. = ..()
 
 /obj/item/weapon/melee/touch_attack/attack(mob/target, mob/living/carbon/user)
 	if(!iscarbon(user)) //Look ma, no hands
 		return
 	if(user.lying || user.handcuffed)
-		user << "<span class='warning'>You can't reach out!</span>"
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
 	..()
 
@@ -50,9 +50,7 @@
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
 		return
 	var/mob/M = target
-	var/datum/effect_system/spark_spread/sparks = new
-	sparks.set_up(4, 0, M.loc) //no idea what the 0 is
-	sparks.start()
+	do_sparks(4, FALSE, M.loc)
 	M.gib()
 	..()
 
@@ -68,7 +66,7 @@
 	if(!proximity || target == user || !isliving(target) || !iscarbon(user) || user.lying || user.handcuffed) //getting hard after touching yourself would also be bad
 		return
 	if(user.lying || user.handcuffed)
-		user << "<span class='warning'>You can't reach out!</span>"
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
 	var/mob/living/M = target
 	M.Stun(2)

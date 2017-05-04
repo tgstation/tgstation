@@ -5,7 +5,7 @@
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/weapon/circuitboard/computer/cloning
-	req_access = list(access_heads) //Only used for record deletion right now.
+	req_access = list(GLOB.access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
@@ -17,6 +17,8 @@
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
+
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/cloning/Initialize()
 	..()
@@ -63,7 +65,7 @@
 
 	for(var/datum/data/record/R in records)
 		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
-			
+
 		if(!pod)
 			return
 
@@ -120,25 +122,25 @@
 				return
 			W.loc = src
 			src.diskette = W
-			user << "<span class='notice'>You insert [W].</span>"
+			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
 	else if(istype(W,/obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
-		
+
 		if(istype(P.buffer, /obj/machinery/clonepod))
 			if(get_area(P.buffer) != get_area(src))
-				user << "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>"
+				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
 				P.buffer = null
 				return
-			user << "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>"
+			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
 			var/obj/machinery/clonepod/pod = P.buffer
 			if(pod.connected)
 				pod.connected.DetachCloner(pod)
 			AttachCloner(pod)
 		else
 			P.buffer = src
-			user << "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
+			to_chat(user, "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>")
 		return
 	else
 		return ..()
@@ -159,7 +161,7 @@
 
 	var/dat = ""
 	dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a>"
-	
+
 	if(scanner && HasEfficientPod() && scanner.scan_level > 2)
 		if(!autoprocess)
 			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Autoprocess</a>"
@@ -184,21 +186,23 @@
 			// Scanner
 			if (!isnull(src.scanner))
 
+				var/mob/living/scanner_occupant = scanner.occupant
+
 				dat += "<h3>Scanner Functions</h3>"
 
 				dat += "<div class='statusDisplay'>"
-				if (!src.scanner.occupant)
+				if(!scanner_occupant)
 					dat += "Scanner Unoccupied"
 				else if(loading)
-					dat += "[src.scanner.occupant] => Scanning..."
+					dat += "[scanner_occupant] => Scanning..."
 				else
-					if (src.scanner.occupant.ckey != scantemp_ckey)
+					if(scanner_occupant.ckey != scantemp_ckey)
 						scantemp = "Ready to Scan"
-						scantemp_ckey = src.scanner.occupant.ckey
-					dat += "[src.scanner.occupant] => [scantemp]"
+						scantemp_ckey = scanner_occupant.ckey
+					dat += "[scanner_occupant] => [scantemp]"
 				dat += "</div>"
 
-				if (src.scanner.occupant)
+				if(scanner_occupant)
 					dat += "<a href='byond://?src=\ref[src];scan=1'>Start Scan</a>"
 					dat += "<br><a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"
 				else

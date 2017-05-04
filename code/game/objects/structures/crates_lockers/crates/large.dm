@@ -11,7 +11,7 @@
 	if(manifest)
 		tear_manifest(user)
 	else
-		user << "<span class='warning'>You need a crowbar to pry this open!</span>"
+		to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
 
 /obj/structure/closet/crate/large/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/crowbar))

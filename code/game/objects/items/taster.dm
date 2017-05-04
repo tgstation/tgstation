@@ -17,4 +17,4 @@
 
 	if(O.reagents)
 		var/message = O.reagents.generate_taste_message(taste_sensitivity)
-		user << "<span class='notice'>[src] tastes <span class='italics'>[message]</span> in [O].</span>"
+		to_chat(user, "<span class='notice'>[src] tastes <span class='italics'>[message]</span> in [O].</span>")

@@ -581,7 +581,7 @@
 	id = "rcd"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/weapon/rcd
+	build_path = /obj/item/weapon/construction/rcd
 	category = list("hacked", "Construction")
 
 /datum/design/rpd
@@ -614,6 +614,14 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 500)
 	build_path = /obj/item/weapon/restraints/handcuffs
+	category = list("hacked", "Security")
+
+/datum/design/receiver
+	name = "Modular Receiver"
+	id = "reciever"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000)
+	build_path = /obj/item/weaponcrafting/receiver
 	category = list("hacked", "Security")
 
 /datum/design/shotgun_slug

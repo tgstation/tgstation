@@ -1,5 +1,3 @@
-
-
 /obj/item/weapon/storage/lockbox
 	name = "lockbox"
 	desc = "A locked box."
@@ -9,7 +7,7 @@
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 4
-	req_access = list(access_armory)
+	req_access = list(GLOB.access_armory)
 	var/locked = 1
 	var/broken = 0
 	var/icon_locked = "lockbox+l"
@@ -20,31 +18,31 @@
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.GetID())
 		if(broken)
-			user << "<span class='danger'>It appears to be broken.</span>"
+			to_chat(user, "<span class='danger'>It appears to be broken.</span>")
 			return
 		if(allowed(user))
 			locked = !locked
 			if(locked)
 				icon_state = icon_locked
-				user << "<span class='danger'>You lock the [src.name]!</span>"
+				to_chat(user, "<span class='danger'>You lock the [src.name]!</span>")
 				close_all()
 				return
 			else
 				icon_state = icon_closed
-				user << "<span class='danger'>You unlock the [src.name]!</span>"
+				to_chat(user, "<span class='danger'>You unlock the [src.name]!</span>")
 				return
 		else
-			user << "<span class='danger'>Access Denied.</span>"
+			to_chat(user, "<span class='danger'>Access Denied.</span>")
 			return
 	if(!locked)
 		return ..()
 	else
-		user << "<span class='danger'>It's locked!</span>"
+		to_chat(user, "<span class='danger'>It's locked!</span>")
 
 /obj/item/weapon/storage/lockbox/MouseDrop(over_object, src_location, over_location)
 	if (locked)
 		src.add_fingerprint(usr)
-		usr << "<span class='warning'>It's locked!</span>"
+		to_chat(usr, "<span class='warning'>It's locked!</span>")
 		return 0
 	..()
 
@@ -59,7 +57,7 @@
 			return
 /obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)
-		user << "<span class='warning'>It's locked!</span>"
+		to_chat(user, "<span class='warning'>It's locked!</span>")
 	else
 		..()
 	return
@@ -67,7 +65,7 @@
 //Check the destination item type for contentto.
 /obj/item/weapon/storage/lockbox/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(locked)
-		user << "<span class='warning'>It's locked!</span>"
+		to_chat(user, "<span class='warning'>It's locked!</span>")
 		return 0
 	return ..()
 
@@ -78,10 +76,9 @@
 
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "lockbox of mindshield implants"
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)
 
-/obj/item/weapon/storage/lockbox/loyalty/New()
-	..()
+/obj/item/weapon/storage/lockbox/loyalty/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/implantcase/mindshield(src)
 	new /obj/item/weapon/implanter/mindshield(src)
@@ -90,10 +87,9 @@
 /obj/item/weapon/storage/lockbox/clusterbang
 	name = "lockbox of clusterbangs"
 	desc = "You have a bad feeling about opening this."
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)
 
-/obj/item/weapon/storage/lockbox/clusterbang/New()
-	..()
+/obj/item/weapon/storage/lockbox/clusterbang/PopulateContents()
 	new /obj/item/weapon/grenade/clusterbuster(src)
 
 /obj/item/weapon/storage/lockbox/medal
@@ -104,13 +100,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_w_class = WEIGHT_CLASS_SMALL
 	storage_slots = 10
-	req_access = list(access_captain)
+	req_access = list(GLOB.access_captain)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 
-/obj/item/weapon/storage/lockbox/medal/New()
-	..()
+/obj/item/weapon/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/tie/medal/silver/valor(src)
 	new /obj/item/clothing/tie/medal/bronze_heart(src)
 	for(var/i in 1 to 3)

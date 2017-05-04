@@ -7,6 +7,9 @@
 
 	status_flags = CANPUSH
 
+	// goats bray, cows go moo, and the fox says Geckers
+	initial_languages = list(/datum/language/common)
+
 	var/icon_living = ""
 	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
@@ -85,8 +88,9 @@
 	//domestication
 	var/tame = 0
 
-/mob/living/simple_animal/New()
+/mob/living/simple_animal/Initialize()
 	..()
+	GLOB.simple_animals += src
 	handcrafting = new()
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -95,23 +99,12 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 
+
 /mob/living/simple_animal/Login()
 	if(src && src.client)
 		src.client.screen = list()
 		client.screen += client.void
 	..()
-
-/mob/living/simple_animal/Life()
-	if(..()) //alive
-		if(!ckey)
-			if(stat != DEAD)
-				handle_automated_movement()
-			if(stat != DEAD)
-				handle_automated_action()
-			if(stat != DEAD)
-				handle_automated_speech()
-		if(stat != DEAD)
-			return 1
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -134,21 +127,24 @@
 		stuttering = 0
 
 /mob/living/simple_animal/proc/handle_automated_action()
+	set waitfor = FALSE
 	return
 
 /mob/living/simple_animal/proc/handle_automated_movement()
+	set waitfor = FALSE
 	if(!stop_automated_movement && wander)
 		if((isturf(src.loc) || allow_movement_on_non_turfs) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(cardinal)
+					var/anydir = pick(GLOB.cardinal)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
 			return 1
 
 /mob/living/simple_animal/proc/handle_automated_speech(var/override)
+	set waitfor = FALSE
 	if(speak_chance)
 		if(prob(speak_chance) || override)
 			if(speak && speak.len)
@@ -193,7 +189,7 @@
 		var/turf/open/ST = src.loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(arglist(hardcoded_gases))
+			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
 			var/tox = ST_gases["plasma"][MOLES]
 			var/oxy = ST_gases["o2"][MOLES]
@@ -235,7 +231,7 @@
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
+			//to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
@@ -258,10 +254,10 @@
 	if(icon_gib)
 		new /obj/effect/overlay/temp/gib_animation/animal(loc, icon_gib)
 
-/mob/living/simple_animal/say_quote(input, list/spans)
+/mob/living/simple_animal/say_mod(input, message_mode)
 	if(speak_emote && speak_emote.len)
 		verb_say = pick(speak_emote)
-	return ..()
+	. = ..()
 
 /mob/living/simple_animal/emote(act, m_type=1, message = null)
 	if(stat)
@@ -344,7 +340,7 @@
 		. = 1
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
+	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
 		return
 	next_scan_time = world.time + 400
 	var/alone = 1
@@ -361,7 +357,7 @@
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
 
-		else if(isliving(M) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
+		else if(isliving(M) && !faction_check_mob(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			return //we never mate when not alone, so just abort early
 
 	if(alone && partner && children < 3)
@@ -377,7 +373,7 @@
 		if(be_close && !in_range(M, src))
 			return 0
 	else
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	return 1
 
@@ -423,6 +419,7 @@
 	if(nest)
 		nest.spawned_mobs -= src
 	nest = null
+	GLOB.simple_animals -= src
 	return ..()
 
 
@@ -446,6 +443,7 @@
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
+	sync_lighting_plane_alpha()
 
 /mob/living/simple_animal/get_idcard()
 	return access_card
@@ -486,7 +484,7 @@
 		if(istype(held_item, /obj/item/weapon/twohanded))
 			var/obj/item/weapon/twohanded/T = held_item
 			if(T.wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [T.name].</span>")
 				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
@@ -540,11 +538,10 @@
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 
-/mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
+/mob/living/simple_animal/Moved()
 	. = ..()
 	if(riding_datum)
-		riding_datum.handle_vehicle_layer()
-		riding_datum.handle_vehicle_offsets()
+		riding_datum.on_vehicle_move()
 
 
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)

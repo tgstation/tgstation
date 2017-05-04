@@ -21,10 +21,8 @@
 		if(!charge && !panel_open)
 			panel_open = TRUE
 			icon_state = "[initial(icon_state)]-o"
-			var/datum/effect_system/spark_spread/spks = new(get_turf(src))
-			spks.set_up(10, 0, get_turf(src))
-			spks.start()
-			visible_message("<span class='warning'>[src]'s panel flies open with a flurry of spark</span>")
+			do_sparks(10, FALSE, src)
+			visible_message("<span class='warning'>[src]'s panel flies open with a flurry of sparks!</span>")
 		update_icon()
 
 /obj/item/weapon/stock_parts/cell/power_drain(clockcult_user)
@@ -45,7 +43,7 @@
 		. = min(cell.charge, 250)
 		cell.use(.)
 		if(prob(20))
-			src << "<span class='userdanger'>ERROR: Power loss detected!</span>"
+			to_chat(src, "<span class='userdanger'>ERROR: Power loss detected!</span>")
 		spark_system.start()
 
 /obj/mecha/power_drain(clockcult_user)

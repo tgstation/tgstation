@@ -1,6 +1,6 @@
 #define NUKESCALINGMODIFIER 1
 
-var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
+GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner"))
 
 /obj/machinery/computer/telecrystals
 	name = "\improper Telecrystal assignment station"
@@ -11,6 +11,8 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	clockwork = TRUE //it'd look weird, at least if ratvar ever got there
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+	light_color = LIGHT_COLOR_RED
+
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
 	name = "\improper Telecrystal upload/receive station"
@@ -19,20 +21,17 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	var/obj/item/uplinkholder = null
 	var/obj/machinery/computer/telecrystals/boss/linkedboss = null
 
-/obj/machinery/computer/telecrystals/uplinker/New()
+/obj/machinery/computer/telecrystals/uplinker/Initialize()
 	..()
 
-	var/ID
-	if(possible_uplinker_IDs.len)
-		ID = pick(possible_uplinker_IDs)
-		possible_uplinker_IDs -= ID
-		name = "[name] [ID]"
-	else
-		name = "[name] [rand(1,999)]"
+	var/ID = pick_n_take(GLOB.possible_uplinker_IDs)
+	if(!ID)
+		ID = rand(1,999)
+	name = "[name] [ID]"
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
 	if(uplinkholder)
-		user << "<span class='notice'>The [src] already has an uplink in it.</span>"
+		to_chat(user, "<span class='notice'>The [src] already has an uplink in it.</span>")
 		return
 	if(O.hidden_uplink)
 		var/obj/item/I = user.get_active_held_item()
@@ -44,7 +43,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		update_icon()
 		updateUsrDialog()
 	else
-		user << "<span class='notice'>The [O] doesn't appear to be an uplink...</span>"
+		to_chat(user, "<span class='notice'>The [O] doesn't appear to be an uplink...</span>")
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
 	..()
@@ -145,8 +144,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
-	var/danger
-	danger = joined_player_list.len - ticker.mode.syndicates.len
+	var/danger = GLOB.joined_player_list.len - SSticker.mode.syndicates.len
 	danger = Ceiling(danger, 10)
 	scaleTC(danger)
 

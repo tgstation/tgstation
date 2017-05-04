@@ -27,7 +27,7 @@
 	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
 			stabilizers = !stabilizers
-			user << "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>"
+			to_chat(user, "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>")
 	else
 		toggle_internals(user)
 
@@ -38,10 +38,10 @@
 
 	if(!on)
 		turn_on()
-		user << "<span class='notice'>You turn the jetpack on.</span>"
+		to_chat(user, "<span class='notice'>You turn the jetpack on.</span>")
 	else
 		turn_off()
-		user << "<span class='notice'>You turn the jetpack off.</span>"
+		to_chat(user, "<span class='notice'>You turn the jetpack off.</span>")
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -154,12 +154,12 @@
 
 /obj/item/weapon/tank/jetpack/suit/cycle(mob/user)
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit))
-		user << "<span class='warning'>\The [src] must be connected to a hardsuit!</span>"
+		to_chat(user, "<span class='warning'>\The [src] must be connected to a hardsuit!</span>")
 		return
 
 	var/mob/living/carbon/human/H = user
 	if(!istype(H.s_store, /obj/item/weapon/tank/internals))
-		user << "<span class='warning'>You need a tank in your suit storage!</span>"
+		to_chat(user, "<span class='warning'>You need a tank in your suit storage!</span>")
 		return
 	..()
 
@@ -191,7 +191,7 @@
 
 //Return a jetpack that the mob can use
 //Back worn jetpacks, hardsuit internal packs, and so on.
-//Used in Process_Spacemove() and wherever you want to check for/get a jetpack
+//Used in Process_Spacemove() and wherever you want to check for/get a jetpack	
 
 /mob/proc/get_jetpack()
 	return
@@ -207,3 +207,9 @@
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	return J
+
+/mob/has_gravity(turf/T)
+	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
+	if(J && J.on)
+		return FALSE
+	return ..()

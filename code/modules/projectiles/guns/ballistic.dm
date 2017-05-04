@@ -58,23 +58,23 @@
 		if (!magazine && istype(AM, mag_type))
 			if(user.transferItemToLoc(AM, src))
 				magazine = AM
-				user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+				to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 				chamber_round()
 				A.update_icon()
 				update_icon()
 				return 1
 			else
-				user << "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>"
+				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 				return
 		else if (magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	if(istype(A, /obj/item/weapon/suppressor))
 		var/obj/item/weapon/suppressor/S = A
 		if(can_suppress)
 			if(!suppressed)
 				if(!user.transferItemToLoc(A, src))
 					return
-				user << "<span class='notice'>You screw [S] onto [src].</span>"
+				to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
 				suppressed = A
 				S.oldsound = fire_sound
 				S.initial_w_class = w_class
@@ -83,10 +83,10 @@
 				update_icon()
 				return
 			else
-				user << "<span class='warning'>[src] already has a suppressor!</span>"
+				to_chat(user, "<span class='warning'>[src] already has a suppressor!</span>")
 				return
 		else
-			user << "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>"
+			to_chat(user, "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>")
 			return
 	return 0
 
@@ -97,7 +97,7 @@
 			if(!user.is_holding(src))
 				..()
 				return
-			user << "<span class='notice'>You unscrew [suppressed] from [src].</span>"
+			to_chat(user, "<span class='notice'>You unscrew [suppressed] from [src].</span>")
 			user.put_in_hands(suppressed)
 			fire_sound = S.oldsound
 			w_class = S.initial_w_class
@@ -113,21 +113,21 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
+		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
 	else if(chambered)
 		AC.loc = get_turf(src)
 		AC.SpinAnimation(10, 1)
 		chambered = null
-		user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
+		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
 	else
-		user << "<span class='notice'>There's no magazine in \the [src].</span>"
+		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()
 	return
 
 
 /obj/item/weapon/gun/ballistic/examine(mob/user)
 	..()
-	user << "Has [get_ammo()] round\s remaining."
+	to_chat(user, "Has [get_ammo()] round\s remaining.")
 
 /obj/item/weapon/gun/ballistic/proc/get_ammo(countchambered = 1)
 	var/boolets = 0 //mature var names for mature people
@@ -157,7 +157,7 @@
 
 /obj/item/weapon/gun/ballistic/proc/sawoff(mob/user)
 	if(sawn_state == SAWN_OFF)
-		user << "<span class='warning'>\The [src] is already shortened!</span>"
+		to_chat(user, "<span class='warning'>\The [src] is already shortened!</span>")
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")

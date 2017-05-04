@@ -54,7 +54,7 @@
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			if(T.examine_line)
-				user << T.examine_line
+				to_chat(user, T.examine_line)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()
@@ -65,14 +65,14 @@
 		var/reag_txt = ""
 		if(seed)
 			for(var/reagent_id in seed.reagents_add)
-				var/datum/reagent/R  = chemical_reagents_list[reagent_id]
+				var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
 				var/amt = reagents.get_reagent_amount(reagent_id)
 				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
 
 		if(reag_txt)
 			msg += reag_txt
 			msg += "<br><span class='info'>*---------*</span>"
-		user << msg
+		to_chat(user, msg)
 	else
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
@@ -111,6 +111,7 @@
 		for(var/datum/plant_gene/trait/trait in seed.genes)
 			trait.on_squash(src, target)
 
+	reagents.reaction(T)
 	for(var/A in T)
 		reagents.reaction(A)
 
@@ -130,30 +131,6 @@
 	..()
 
 
-// Glow gene procs
-/obj/item/weapon/reagent_containers/food/snacks/grown/Destroy()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G && ismob(loc))
-			loc.AddLuminosity(-G.get_lum(seed))
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/pickup(mob/user)
-	..()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G)
-			SetLuminosity(0)
-			user.AddLuminosity(G.get_lum(seed))
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/dropped(mob/user)
-	..()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G)
-			user.AddLuminosity(-G.get_lum(seed))
-			SetLuminosity(G.get_lum(seed))
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/generate_trash(atom/location)
 	if(trash && ispath(trash, /obj/item/weapon/grown))
 		. = new trash(location, seed)
@@ -166,7 +143,6 @@
 	var/obj/item/T
 	if(trash)
 		T = generate_trash()
-	qdel(src)
-	if(trash)
-		user.put_in_hands(T)
-		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
+		qdel(src)
+		user.putItemFromInventoryInHandIfPossible(T, user.active_hand_index, TRUE)
+		to_chat(user, "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>")

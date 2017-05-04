@@ -87,7 +87,7 @@
 		..()
 
 /obj/machinery/power/tesla_coil/proc/zap()
-	if((last_zap + zap_cooldown) > world.time)
+	if((last_zap + zap_cooldown) > world.time || !powernet)
 		return FALSE
 	last_zap = world.time
 	var/coeff = (20 - ((input_power_multiplier - 1) * 3))

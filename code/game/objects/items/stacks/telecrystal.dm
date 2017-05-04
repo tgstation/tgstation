@@ -15,7 +15,7 @@
 			if(I && I.imp_in)
 				I.hidden_uplink.telecrystals += amount
 				use(amount)
-				user << "<span class='notice'>You press [src] onto yourself and charge your hidden uplink.</span>"
+				to_chat(user, "<span class='notice'>You press [src] onto yourself and charge your hidden uplink.</span>")
 
 /obj/item/stack/telecrystal/afterattack(obj/item/I, mob/user, proximity)
 	if(!proximity)
@@ -24,7 +24,7 @@
 		if(I.hidden_uplink && I.hidden_uplink.active) //No metagaming by using this on every PDA around just to see if it gets used up.
 			I.hidden_uplink.telecrystals += amount
 			use(amount)
-			user << "<span class='notice'>You slot [src] into the [I] and charge its internal uplink.</span>"
+			to_chat(user, "<span class='notice'>You slot [src] into the [I] and charge its internal uplink.</span>")
 
 /obj/item/stack/telecrystal/five
 	amount = 5

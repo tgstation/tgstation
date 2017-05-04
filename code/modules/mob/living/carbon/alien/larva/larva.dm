@@ -18,7 +18,7 @@
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/larva/New()
+/mob/living/carbon/alien/larva/Initialize()
 
 	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
 	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
@@ -60,9 +60,9 @@
 	return
 
 /mob/living/carbon/alien/larva/stripPanelUnequip(obj/item/what, mob/who)
-	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return
 
 /mob/living/carbon/alien/larva/stripPanelEquip(obj/item/what, mob/who)
-	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return

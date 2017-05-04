@@ -22,23 +22,23 @@
 	switch(stage)
 		if(1)
 			if (prob(stage_prob) && stage1)
-				affected_mob << pick(stage1)
+				to_chat(affected_mob, pick(stage1))
 		if(2)
 			if (prob(stage_prob) && stage2)
-				affected_mob << pick(stage2)
+				to_chat(affected_mob, pick(stage2))
 		if(3)
 			if (prob(stage_prob*2) && stage3)
-				affected_mob << pick(stage3)
+				to_chat(affected_mob, pick(stage3))
 		if(4)
 			if (prob(stage_prob*2) && stage4)
-				affected_mob << pick(stage4)
+				to_chat(affected_mob, pick(stage4))
 		if(5)
 			do_disease_transformation(affected_mob)
 
 /datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
 	if(istype(affected_mob, /mob/living/carbon) && affected_mob.stat != DEAD)
 		if(stage5)
-			affected_mob << pick(stage5)
+			to_chat(affected_mob, pick(stage5))
 		if(jobban_isbanned(affected_mob, new_form))
 			affected_mob.death(1)
 			return
@@ -90,7 +90,7 @@
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
 	if(!ismonkey(affected_mob))
-		ticker.mode.add_monkey(affected_mob.mind)
+		SSticker.mode.add_monkey(affected_mob.mind)
 		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/disease/transformation/jungle_fever/stage_act()
@@ -98,17 +98,17 @@
 	switch(stage)
 		if(2)
 			if(prob(2))
-				affected_mob << "<span class='notice'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>"
+				to_chat(affected_mob, "<span class='notice'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>")
 		if(3)
 			if(prob(4))
-				affected_mob << "<span class='danger'>You feel a stabbing pain in your head.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
 				affected_mob.confused += 10
 		if(4)
 			if(prob(3))
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."))
 
 /datum/disease/transformation/jungle_fever/cure()
-	ticker.mode.remove_monkey(affected_mob.mind)
+	SSticker.mode.remove_monkey(affected_mob.mind)
 	..()
 
 
@@ -137,7 +137,7 @@
 			if (prob(8))
 				affected_mob.say(pick("Beep, boop", "beep, beep!", "Boop...bop"))
 			if (prob(4))
-				affected_mob << "<span class='danger'>You feel a stabbing pain in your head.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
 				affected_mob.Paralyse(2)
 		if(4)
 			if (prob(20))
@@ -166,7 +166,7 @@
 	switch(stage)
 		if(3)
 			if (prob(4))
-				affected_mob << "<span class='danger'>You feel a stabbing pain in your head.</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
 				affected_mob.Paralyse(2)
 		if(4)
 			if (prob(20))

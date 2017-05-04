@@ -7,22 +7,18 @@
 /obj/item/weapon/his_grace
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
-	icon_state = "green"
+	icon_state = "his_grace"
 	item_state = "artistic_toolbox"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	origin_tech = "combat=4;engineering=4;syndicate=2"
 	force = 12
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
-	var/ascended = FALSE
-	var/awakened = 0
-	var/victims_needed = 20 //how many victims needed to ascend
+	var/awakened = FALSE
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
-	var/ascend_bonus = 15
-	var/list/warning_messages = list("peckish", "hungry", "famished", "starving", "consume") //Messages that have NOT been shown
 
 /obj/item/weapon/his_grace/New()
 	..()
@@ -41,8 +37,6 @@
 /obj/item/weapon/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)
 		consume(M)
-		if(LAZYLEN(contents) >= victims_needed && !ascended)
-			ascend()
 	else
 		..()
 
@@ -54,19 +48,19 @@
 	if(awakened)
 		switch(bloodthirst)
 			if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
-				user << "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>"
+				to_chat(user, "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>")
 			if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
-				user << "<span class='his_grace'>[src] would like a snack.</span>"
+				to_chat(user, "<span class='his_grace'>[src] would like a snack.</span>")
 			if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
-				user << "<span class='his_grace'>[src] is quite hungry now.</span>"
+				to_chat(user, "<span class='his_grace'>[src] is quite hungry now.</span>")
 			if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-				user << "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>"
+				to_chat(user, "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>")
 			if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
-				user << "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>"
+				to_chat(user, "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>")
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				user << "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>"
+				to_chat(user, "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>")
 	else
-		user << "<span class='his_grace'>[src] is latched closed.</span>"
+		to_chat(user, "<span class='his_grace'>[src] is latched closed.</span>")
 
 /obj/item/weapon/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
@@ -131,10 +125,10 @@
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)
-	icon_state = "green_awakened"
+	icon_state = "his_grace_awakened"
 
 /obj/item/weapon/his_grace/proc/drowse() //Good night, Mr. Grace.
-	if(!awakened || ascended)
+	if(!awakened)
 		return
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still, His latch snapping closed.</span>")
@@ -209,15 +203,3 @@
 			if(prev_bloodthirst >= HIS_GRACE_PECKISH)
 				master.visible_message("<span class='warning'>[src] is satiated.</span>", "<span class='his_grace big'>[src]'s hunger recedes...</span>")
 	force = initial(force) + force_bonus
-
-/obj/item/weapon/his_grace/proc/ascend()
-	var/mob/living/carbon/human/master = loc
-	force_bonus += ascend_bonus
-	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three quaking latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
-	icon_state = "gold"
-	item_state = "toolbox_gold"
-	ascended = TRUE
-	playsound(master, 'sound/effects/his_grace_ascend.ogg', 100)
-	if(istype(master))
-		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>God will be watching.</span>")
-		name = "[master]'s mythical toolbox of three powers"

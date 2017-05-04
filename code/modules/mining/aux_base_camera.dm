@@ -6,9 +6,9 @@
 	icon_state = "construction_drone"
 	var/area/starting_area
 
-mob/camera/aiEye/remote/base_construction/New(loc)
-	starting_area = get_area(loc)
+/mob/camera/aiEye/remote/base_construction/Initialize()
 	..()
+	starting_area = get_area(loc)
 
 /mob/camera/aiEye/remote/base_construction/setLoc(var/t)
 	var/area/curr_area = get_area(t)
@@ -20,25 +20,17 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	dir = direct //This camera eye is visible as a drone, and needs to keep the dir updated
 	..()
 
-/obj/item/weapon/rcd/internal //Base console's internal RCD. Roundstart consoles are filled, rebuilt cosoles start empty.
+/obj/item/weapon/construction/rcd/internal //Base console's internal RCD. Roundstart consoles are filled, rebuilt cosoles start empty.
 	name = "internal RCD"
 	max_matter = 600 //Bigger container and faster speeds due to being specialized and stationary.
 	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
-	walldelay = 10
-	grilledelay = 5
-	windowdelay = 5
-	airlockdelay = 20
-	decongirderdelay = 10
-	deconwalldelay = 20
-	deconfloordelay = 30
-	deconwindowdelay = 20
-	deconairlockdelay = 20
+	delay_mod = 0.5
 
 /obj/machinery/computer/camera_advanced/base_construction
 	name = "base contruction console"
 	desc = "An industrial computer integrated with a camera-assisted rapid construction drone."
 	networks = list("SS13")
-	var/obj/item/weapon/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
+	var/obj/item/weapon/construction/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
 	circuit = /obj/item/weapon/circuitboard/computer/base_construction
 	off_action = new/datum/action/innate/camera_off/base_construction
 	var/datum/action/innate/aux_base/switch_mode/switch_mode_action = new //Action for switching the RCD's build modes
@@ -54,9 +46,11 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
 
+	light_color = LIGHT_COLOR_PINK
+
 /obj/machinery/computer/camera_advanced/base_construction/New()
 	..()
-	RCD = new /obj/item/weapon/rcd/internal(src)
+	RCD = new /obj/item/weapon/construction/rcd/internal(src)
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	..()
@@ -68,11 +62,13 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 /obj/machinery/computer/camera_advanced/base_construction/CreateEye()
 
 	var/spawn_spot
-	if(!found_aux_console)
-		found_aux_console = locate(/obj/machinery/computer/auxillary_base) in machines
+	for(var/obj/machinery/computer/auxillary_base/ABC in GLOB.machines)
+		if(istype(get_area(ABC), /area/shuttle/auxillary_base))
+			found_aux_console = ABC
+			break
 
-		if(found_aux_console)
-			spawn_spot = found_aux_console
+	if(found_aux_console)
+		spawn_spot = found_aux_console
 	else
 		spawn_spot = src
 
@@ -121,7 +117,7 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	remote_eye = C.remote_control
 	B = target
 	if(!B.RCD) //The console must always have an RCD.
-		B.RCD = new /obj/item/weapon/rcd/internal(src) //If the RCD is lost somehow, make a new (empty) one!
+		B.RCD = new /obj/item/weapon/construction/rcd/internal(src) //If the RCD is lost somehow, make a new (empty) one!
 
 /datum/action/innate/aux_base/proc/check_spot()
 //Check a loction to see if it is inside the aux base at the station. Camera visbility checks omitted so as to not hinder construction.
@@ -129,12 +125,12 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	var/area/build_area = get_area(build_target)
 
 	if(!istype(build_area, /area/shuttle/auxillary_base))
-		owner << "<span class='warning'>You can only build within the mining base!</span>"
+		to_chat(owner, "<span class='warning'>You can only build within the mining base!</span>")
 		return FALSE
 
 
 	if(build_target.z != ZLEVEL_STATION)
-		owner << "<span class='warning'>The mining base has launched and can no longer be modified.</span>"
+		to_chat(owner, "<span class='warning'>The mining base has launched and can no longer be modified.</span>")
 		return FALSE
 
 	return TRUE
@@ -200,7 +196,7 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	var/list/buildlist = list("Walls and Floors" = 1,"Airlocks" = 2,"Deconstruction" = 3,"Windows and Grilles" = 4)
 	var/buildmode = input("Set construction mode.", "Base Console", null) in buildlist
 	B.RCD.mode = buildlist[buildmode]
-	owner << "Build mode is now [buildmode]."
+	to_chat(owner, "Build mode is now [buildmode].")
 
 /datum/action/innate/aux_base/airlock_type
 	name = "Select Airlock Type"
@@ -233,19 +229,19 @@ datum/action/innate/aux_base/place_fan/Activate()
 	var/turf/fan_turf = get_turf(remote_eye)
 
 	if(!B.fans_remaining)
-		owner << "<span class='warning'>[B] is out of fans!</span>"
+		to_chat(owner, "<span class='warning'>[B] is out of fans!</span>")
 		return
 
 	if(!check_spot())
 		return
 
 	if(fan_turf.density)
-		owner << "<span class='warning'>Fans may only be placed on a floor.</span>"
+		to_chat(owner, "<span class='warning'>Fans may only be placed on a floor.</span>")
 		return
 
 	new /obj/structure/fans/tiny(fan_turf)
 	B.fans_remaining--
-	owner << "<span class='notice'>Tiny fan placed. [B.fans_remaining] remaining.</span>"
+	to_chat(owner, "<span class='notice'>Tiny fan placed. [B.fans_remaining] remaining.</span>")
 	playsound(fan_turf, 'sound/machines/click.ogg', 50, 1)
 
 datum/action/innate/aux_base/install_turret
@@ -260,13 +256,13 @@ datum/action/innate/aux_base/install_turret/Activate()
 		return
 
 	if(!B.turret_stock)
-		owner << "<span class='warning'>Unable to construct additional turrets.</span>"
+		to_chat(owner, "<span class='warning'>Unable to construct additional turrets.</span>")
 		return
 
 	var/turf/turret_turf = get_turf(remote_eye)
 
 	if(is_blocked_turf(turret_turf))
-		owner << "<span class='warning'>Location is obtructed by something. Please clear the location and try again.</span>"
+		to_chat(owner, "<span class='warning'>Location is obtructed by something. Please clear the location and try again.</span>")
 		return
 
 	var/obj/machinery/porta_turret/aux_base/T = new /obj/machinery/porta_turret/aux_base(turret_turf)
@@ -274,5 +270,5 @@ datum/action/innate/aux_base/install_turret/Activate()
 		B.found_aux_console.turrets += T //Add new turret to the console's control
 
 	B.turret_stock--
-	owner << "<span class='notice'>Turret installation complete!</span>"
+	to_chat(owner, "<span class='notice'>Turret installation complete!</span>")
 	playsound(turret_turf, 'sound/items/drill_use.ogg', 65, 1)

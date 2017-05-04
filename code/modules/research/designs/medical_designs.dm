@@ -119,7 +119,7 @@
 	name = "Alien Scalpel"
 	desc = "An advanced scalpel obtained through Abductor technology."
 	id = "alien_scalpel"
-	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	req_tech = list("biotech" = 4, "materials" = 4, "abductor" = 3)
 	build_path = /obj/item/weapon/scalpel/alien
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
@@ -129,7 +129,7 @@
 	name = "Alien Hemostat"
 	desc = "An advanced hemostat obtained through Abductor technology."
 	id = "alien_hemostat"
-	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	req_tech = list("biotech" = 4, "materials" = 4, "abductor" = 3)
 	build_path = /obj/item/weapon/hemostat/alien
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
@@ -139,7 +139,7 @@
 	name = "Alien Retractor"
 	desc = "An advanced retractor obtained through Abductor technology."
 	id = "alien_retractor"
-	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	req_tech = list("biotech" = 4, "materials" = 4, "abductor" = 3)
 	build_path = /obj/item/weapon/retractor/alien
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
@@ -149,7 +149,7 @@
 	name = "Alien Circular Saw"
 	desc = "An advanced surgical saw obtained through Abductor technology."
 	id = "alien_saw"
-	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	req_tech = list("biotech" = 4, "materials" = 4, "abductor" = 3)
 	build_path = /obj/item/weapon/circular_saw/alien
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
@@ -159,7 +159,7 @@
 	name = "Alien Drill"
 	desc = "An advanced drill obtained through Abductor technology."
 	id = "alien_drill"
-	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	req_tech = list("biotech" = 4, "materials" = 4, "abductor" = 3)
 	build_path = /obj/item/weapon/surgicaldrill/alien
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
@@ -169,7 +169,7 @@
 	name = "Alien Cautery"
 	desc = "An advanced cautery obtained through Abductor technology."
 	id = "alien_cautery"
-	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	req_tech = list("biotech" = 4, "materials" = 4, "abductor" = 3)
 	build_path = /obj/item/weapon/cautery/alien
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)

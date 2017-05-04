@@ -54,7 +54,7 @@
 	idle_power_usage = 4
 	active_power_usage = 8
 	power_channel = ENVIRON
-	req_access = list(access_atmospherics)
+	req_access = list(GLOB.access_atmospherics)
 	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 80
@@ -152,13 +152,13 @@
 
 /obj/machinery/airalarm/ui_status(mob/user)
 	if(user.has_unlimited_silicon_privilege && aidisabled)
-		user << "AI control has been disabled."
+		to_chat(user, "AI control has been disabled.")
 	else if(!shorted)
 		return ..()
 	return UI_CLOSE
 
 /obj/machinery/airalarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "airalarm", name, 440, 650, master_ui, state)
@@ -277,11 +277,11 @@
 		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max1", "selected" = selected.max1))
 		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.max2))
 
-		for(var/gas_id in meta_gas_info)
+		for(var/gas_id in GLOB.meta_gas_info)
 			if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 				continue
 			selected = TLV[gas_id]
-			thresholds += list(list("name" = meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
+			thresholds += list(list("name" = GLOB.meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.max1))
@@ -389,7 +389,7 @@
 /obj/machinery/airalarm/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_TO_AIRALARM)
 
 /obj/machinery/airalarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
@@ -403,8 +403,8 @@
 	signal.data["tag"] = target
 	signal.data["sigtype"] = "command"
 
-	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
-//			world << text("Signal [] Broadcasted to []", command, target)
+	radio_connection.post_signal(src, signal, GLOB.RADIO_FROM_AIRALARM)
+//			to_chat(world, text("Signal [] Broadcasted to []", command, target))
 
 	return 1
 
@@ -631,7 +631,7 @@
 		if(2)
 			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && wires.is_all_cut())
 				playsound(src.loc, W.usesound, 50, 1)
-				user << "<span class='notice'>You cut the final wires.</span>"
+				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
 				update_icon()
@@ -639,18 +639,18 @@
 			else if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
 				playsound(src.loc, W.usesound, 50, 1)
 				panel_open = !panel_open
-				user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
+				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 				update_icon()
 				return
 			else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
-					user << "<span class='warning'>It does nothing!</span>"
+					to_chat(user, "<span class='warning'>It does nothing!</span>")
 				else
 					if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 						locked = !locked
-						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>"
+						to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
 					else
-						user << "<span class='danger'>Access denied.</span>"
+						to_chat(user, "<span class='danger'>Access denied.</span>")
 				return
 			else if(panel_open && is_wire_tool(W))
 				wires.interact(user)
@@ -662,7 +662,7 @@
 				playsound(src.loc, W.usesound, 50, 1)
 				if (do_after(user, 20*W.toolspeed, target = src))
 					if (buildstage == 1)
-						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
+						to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
 						new /obj/item/weapon/electronics/airalarm( src.loc )
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						buildstage = 0
@@ -672,14 +672,14 @@
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
 				if(cable.get_amount() < 5)
-					user << "<span class='warning'>You need five lengths of cable to wire the fire alarm!</span>"
+					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the fire alarm!</span>")
 					return
 				user.visible_message("[user.name] wires the air alarm.", \
 									"<span class='notice'>You start wiring the air alarm...</span>")
 				if (do_after(user, 20, target = src))
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)
-						user << "<span class='notice'>You wire the air alarm.</span>"
+						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
 						wires.repair()
 						aidisabled = 0
 						locked = 1
@@ -692,14 +692,14 @@
 		if(0)
 			if(istype(W, /obj/item/weapon/electronics/airalarm))
 				if(user.temporarilyRemoveItemFromInventory(W))
-					user << "<span class='notice'>You insert the circuit.</span>"
+					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
 					buildstage = 1
 					update_icon()
 					qdel(W)
 				return
 
 			if(istype(W, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You detach \the [src] from the wall.</span>"
+				to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
 				playsound(src.loc, W.usesound, 50, 1)
 				new /obj/item/wallframe/airalarm( user.loc )
 				qdel(src)
@@ -730,3 +730,14 @@
 			I.obj_integrity = I.max_integrity * 0.5
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
+
+#undef AALARM_MODE_SCRUBBING
+#undef AALARM_MODE_VENTING
+#undef AALARM_MODE_PANIC
+#undef AALARM_MODE_REPLACEMENT
+#undef AALARM_MODE_OFF
+#undef AALARM_MODE_FLOOD
+#undef AALARM_MODE_SIPHON
+#undef AALARM_MODE_CONTAMINATED
+#undef AALARM_MODE_REFILL
+#undef AALARM_REPORT_TIMEOUT

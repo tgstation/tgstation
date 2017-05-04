@@ -46,7 +46,7 @@
 	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>")
 	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time), target = src))
@@ -54,7 +54,7 @@
 			return
 
 		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 
 		open_machine()
 
@@ -74,13 +74,13 @@
 		eyes.Blend("#[H.eye_color]", ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/S
-	S = hair_styles_list[H.hair_style]
+	S = GLOB.hair_styles_list[H.hair_style]
 	if(S && (HAIR in H.dna.species.species_traits))
 		var/icon/hair = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
 		hair.Blend("#[H.hair_color]", ICON_MULTIPLY)
 		eyes.Blend(hair, ICON_OVERLAY)
 
-	S = facial_hair_styles_list[H.facial_hair_style]
+	S = GLOB.facial_hair_styles_list[H.facial_hair_style]
 	if(S && (FACEHAIR in H.dna.species.species_traits))
 		var/icon/facial = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
 		facial.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
@@ -116,12 +116,13 @@
 	else
 		dat += "<h3>Subject Status : </h3>"
 		dat += "[occupant.name] => "
-		switch(occupant.stat)
-			if(0)
+		var/mob/living/mob_occupant = occupant
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
 				dat += "<span class='good'>Conscious</span>"
-			if(1)
+			if(UNCONSCIOUS)
 				dat += "<span class='average'>Unconscious</span>"
-			else
+			else // DEAD
 				dat += "<span class='bad'>Deceased</span>"
 	dat += "<br>"
 	dat += "[flash]"
@@ -146,9 +147,11 @@
 	if(href_list["close"])
 		close_machine()
 		return
-	if(occupant && occupant.stat != DEAD)
-		if(href_list["experiment"])
-			flash = Experiment(occupant,href_list["experiment"])
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant.stat != DEAD)
+			if(href_list["experiment"])
+				flash = Experiment(occupant,href_list["experiment"])
 	updateUsrDialog()
 	add_fingerprint(usr)
 
@@ -171,19 +174,19 @@
 		sleep(5)
 		switch(text2num(type))
 			if(1)
-				H << "<span class='warning'>You feel violated.</span>"
+				to_chat(H, "<span class='warning'>You feel violated.</span>")
 			if(2)
-				H << "<span class='warning'>You feel yourself being sliced apart and put back together.</span>"
+				to_chat(H, "<span class='warning'>You feel yourself being sliced apart and put back together.</span>")
 			if(3)
-				H << "<span class='warning'>You feel intensely watched.</span>"
+				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
-		H << "<span class='warning'><b>Your mind snaps!</b></span>"
+		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		var/objtype = pick(subtypesof(/datum/objective/abductee/))
 		var/datum/objective/abductee/O = new objtype()
-		ticker.mode.abductees += H.mind
+		SSticker.mode.abductees += H.mind
 		H.mind.objectives += O
 		H.mind.announce_objectives()
-		ticker.mode.update_abductor_icons_added(H.mind)
+		SSticker.mode.update_abductor_icons_added(H.mind)
 
 		for(var/obj/item/organ/heart/gland/G in H.internal_organs)
 			G.Start()
@@ -213,7 +216,7 @@
 		H.uncuff()
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	H.forceMove(pick(latejoin))
+	H.forceMove(pick(GLOB.latejoin))
 	H.uncuff()
 	return
 

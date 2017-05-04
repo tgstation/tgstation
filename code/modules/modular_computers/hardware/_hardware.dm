@@ -34,19 +34,19 @@
 /obj/item/weapon/computer_hardware/attackby(obj/item/I, mob/living/user)
 	// Multitool. Runs diagnostics
 	if(istype(I, /obj/item/device/multitool))
-		user << "***** DIAGNOSTICS REPORT *****"
+		to_chat(user, "***** DIAGNOSTICS REPORT *****")
 		diagnostics(user)
-		user << "******************************"
+		to_chat(user, "******************************")
 		return 1
 
 	// Cable coil. Works as repair method, but will probably require multiple applications and more cable.
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/S = I
 		if(obj_integrity == max_integrity)
-			user << "<span class='warning'>\The [src] doesn't seem to require repairs.</span>"
+			to_chat(user, "<span class='warning'>\The [src] doesn't seem to require repairs.</span>")
 			return 1
 		if(S.use(1))
-			user << "<span class='notice'>You patch up \the [src] with a bit of \the [I].</span>"
+			to_chat(user, "<span class='notice'>You patch up \the [src] with a bit of \the [I].</span>")
 			obj_integrity = min(obj_integrity + 10, max_integrity)
 		return 1
 
@@ -57,7 +57,7 @@
 
 // Called on multitool click, prints diagnostic information to the user.
 /obj/item/weapon/computer_hardware/proc/diagnostics(var/mob/user)
-	user << "Hardware Integrity Test... (Corruption: [damage]/[max_damage]) [damage > damage_failure ? "FAIL" : damage > damage_malfunction ? "WARN" : "PASS"]"
+	to_chat(user, "Hardware Integrity Test... (Corruption: [damage]/[max_damage]) [damage > damage_failure ? "FAIL" : damage > damage_malfunction ? "WARN" : "PASS"]")
 
 // Handles damage checks
 /obj/item/weapon/computer_hardware/proc/check_functionality()
@@ -76,11 +76,11 @@
 /obj/item/weapon/computer_hardware/examine(var/mob/user)
 	. = ..()
 	if(damage > damage_failure)
-		user << "<span class='danger'>It seems to be severely damaged!</span>"
+		to_chat(user, "<span class='danger'>It seems to be severely damaged!</span>")
 	else if(damage > damage_malfunction)
-		user << "<span class='warning'>It seems to be damaged!</span>"
+		to_chat(user, "<span class='warning'>It seems to be damaged!</span>")
 	else if(damage)
-		user << "<span class='notice'>It seems to be slightly damaged.</span>"
+		to_chat(user, "<span class='notice'>It seems to be slightly damaged.</span>")
 
 // Component-side compatibility check.
 /obj/item/weapon/computer_hardware/proc/can_install(obj/item/device/modular_computer/M, mob/living/user = null)

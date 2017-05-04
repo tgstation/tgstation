@@ -3,8 +3,9 @@
 	desc = "A black web of pus and vicera."
 	zone = "head"
 	slot = "zombie_infection"
+	icon_state = "blacktumor"
 	origin_tech = "biotech=5"
-	var/datum/species/old_species
+	var/datum/species/old_species = /datum/species/human
 	var/living_transformation_time = 3
 	var/converts_living = FALSE
 
@@ -12,14 +13,14 @@
 	var/revive_time_max = 700
 	var/timer_id
 
-/obj/item/organ/zombie_infection/New(loc)
+/obj/item/organ/zombie_infection/Initialize()
 	. = ..()
 	if(iscarbon(loc))
 		Insert(loc)
-	zombie_infection_list += src
+	GLOB.zombie_infection_list += src
 
 /obj/item/organ/zombie_infection/Destroy()
-	zombie_infection_list -= src
+	GLOB.zombie_infection_list -= src
 	. = ..()
 
 /obj/item/organ/zombie_infection/Insert(var/mob/living/carbon/M, special = 0)
@@ -35,9 +36,9 @@
 		deltimer(timer_id)
 
 /obj/item/organ/zombie_infection/on_find(mob/living/finder)
-	finder << "<span class='warning'>Inside the head is a disgusting black \
+	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black \
 		web of pus and vicera, bound tightly around the brain like some \
-		biological harness.</span>"
+		biological harness.</span>")
 
 /obj/item/organ/zombie_infection/process()
 	if(!owner)
@@ -50,9 +51,9 @@
 	if(owner.stat != DEAD && !converts_living)
 		return
 	if(!iszombie(owner))
-		owner << "<span class='narsiesmall'>You can feel your heart stopping, but something isn't right... \
+		to_chat(owner, "<span class='narsiesmall'>You can feel your heart stopping, but something isn't right... \
 		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
-		not even death can stop, you will rise again!</span>"
+		not even death can stop, you will rise again!</span>")
 	var/revive_time = rand(revive_time_min, revive_time_max)
 	var/flags = TIMER_STOPPABLE
 	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags)
@@ -62,6 +63,7 @@
 
 	if(!iszombie(owner))
 		old_species = owner.dna.species.type
+		owner.set_species(/datum/species/zombie/infectious)
 
 	if(!converts_living && owner.stat != DEAD)
 		return
@@ -69,10 +71,9 @@
 	var/stand_up = (owner.stat == DEAD) || (owner.stat == UNCONSCIOUS)
 
 	owner.grab_ghost()
-	owner.set_species(/datum/species/zombie/infectious)
 	owner.revive(full_heal = TRUE)
 	owner.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!</span>", "<span class='alien'>You HUNGER!</span>")
 	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 	owner.do_jitter_animation(living_transformation_time * 10)
 	owner.Stun(living_transformation_time)
-	owner << "<span class='alertalien'>You are now a zombie!</span>"
+	to_chat(owner, "<span class='alertalien'>You are now a zombie!</span>")

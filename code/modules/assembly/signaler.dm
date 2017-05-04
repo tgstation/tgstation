@@ -102,7 +102,7 @@ Code:
 		if(secured && signaler2.secured)
 			code = signaler2.code
 			frequency = signaler2.frequency
-			user << "You transfer the frequency and code of \the [signaler2.name] to \the [name]"
+			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
 	else
 		..()
 
@@ -118,7 +118,7 @@ Code:
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 	if(usr)
-		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+		GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
 
 	return
@@ -153,7 +153,7 @@ Code:
 		return
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_CHAT)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 	return
 
 // Embedded signaller used in grenade construction.

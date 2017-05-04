@@ -426,7 +426,7 @@
 	use_power = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	damage_deflection = 30
-	normal_integrity = 400
+	normal_integrity = 240
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
 /obj/machinery/door/airlock/clockwork/New()
@@ -445,12 +445,14 @@
 	var/gear_text = "The cogwheel is flickering and twisting wildly. Report this to a coder."
 	switch(construction_state)
 		if(GEAR_SECURE)
-			gear_text = "<span class='brass'>The cogwheel is solidly <b>screwed</b> to the brass around it.</span>"
-		if(GEAR_UNFASTENED)
-			gear_text = "<span class='brass'>The cogwheel is <i>unscrewed</i>, but is still <b>wrenched</b> to the brass.</span>"
+			gear_text = "<span class='brass'>The cogwheel is solidly <b>wrenched</b> to the brass around it.</span>"
 		if(GEAR_LOOSE)
 			gear_text = "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
-	user << gear_text
+	to_chat(user, gear_text)
+
+/obj/machinery/door/airlock/clockwork/emp_act(severity)
+	if(prob(80/severity))
+		open()
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
 	return (is_servant_of_ratvar(user) && !isAllPowerCut())
@@ -495,34 +497,11 @@
 /obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
 	if(!I || !user || !user.canUseTopic(src))
 		return 0
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(construction_state == GEAR_SECURE)
-			user.visible_message("<span class='notice'>[user] begins unfastening [src]'s cogwheel...</span>", "<span class='notice'>You begin unfastening [src]'s cogwheel...</span>")
-			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100*I.toolspeed, target = src) || construction_state != GEAR_SECURE)
-				return 1 //Returns 1 so as not to have extra interactions with the tools used (i.e. prying open)
-			user.visible_message("<span class='notice'>[user] unfastens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel shifts slightly with a pop.</span>")
-			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
-			construction_state = GEAR_UNFASTENED
-		else if(construction_state == GEAR_UNFASTENED)
-			user.visible_message("<span class='notice'>[user] begins fastening [src]'s cogwheel...</span>", "<span class='notice'>You begin fastening [src]'s cogwheel...</span>")
-			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_UNFASTENED)
-				return 1
-			user.visible_message("<span class='notice'>[user] fastens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel shifts back into place.</span>")
-			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
-			construction_state = GEAR_SECURE
-		else if(construction_state == GEAR_LOOSE)
-			user << "<span class='warning'>The gear isn't secure enough to fasten!</span>"
-		return 1
 	else if(istype(I, /obj/item/weapon/wrench))
 		if(construction_state == GEAR_SECURE)
-			user << "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't get a solid grip!</span>"
-			return 0
-		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s cogwheel...</span>", "<span class='notice'>You begin loosening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100*I.toolspeed, target = src) || construction_state != GEAR_UNFASTENED)
+			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_SECURE)
 				return 1
 			user.visible_message("<span class='notice'>[user] loosens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel pops off and dangles loosely.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -534,16 +513,16 @@
 				return 1
 			user.visible_message("<span class='notice'>[user] tightens [src]'s cogwheel!</span>", "<span class='notice'>You firmly tighten [src]'s cogwheel into place.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-			construction_state = GEAR_UNFASTENED
+			construction_state = GEAR_SECURE
 		return 1
 	else if(istype(I, /obj/item/weapon/crowbar))
-		if(construction_state == GEAR_SECURE || construction_state == GEAR_UNFASTENED)
-			user << "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>"
+		if(construction_state == GEAR_SECURE)
+			to_chat(user, "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>")
 			return 1
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s cogwheel...</span>", "<span class='notice'>You slowly begin lifting off [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100*I.toolspeed, target = src) || construction_state != GEAR_LOOSE)
+			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_LOOSE)
 				return 1
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s cogwheel, causing it to fall apart!</span>", \
 			"<span class='notice'>You lift off [src]'s cogwheel, causing it to fall apart!</span>")

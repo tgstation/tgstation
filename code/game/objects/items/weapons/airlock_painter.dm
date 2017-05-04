@@ -34,10 +34,10 @@
 //because you're expecting user input.
 /obj/item/weapon/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		user << "<span class='notice'>There is no toner cartridge installed in [src]!</span>"
+		to_chat(user, "<span class='notice'>There is no toner cartridge installed in [src]!</span>")
 		return 0
 	else if(ink.charges < 1)
-		user << "<span class='notice'>[src] is out of ink!</span>"
+		to_chat(user, "<span class='notice'>[src] is out of ink!</span>")
 		return 0
 	else
 		return 1
@@ -92,7 +92,7 @@
 /obj/item/weapon/airlock_painter/examine(mob/user)
 	..()
 	if(!ink)
-		user << "<span class='notice'>It doesn't have a toner cartridge installed.</span>"
+		to_chat(user, "<span class='notice'>It doesn't have a toner cartridge installed.</span>")
 		return
 	var/ink_level = "high"
 	if(ink.charges < 1)
@@ -101,17 +101,17 @@
 		ink_level = "low"
 	else if((ink.charges/ink.max_charges) > 1) //Over 100% (admin var edit)
 		ink_level = "dangerously high"
-	user << "<span class='notice'>Its ink levels look [ink_level].</span>"
+	to_chat(user, "<span class='notice'>Its ink levels look [ink_level].</span>")
 
 
 /obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/toner))
 		if(ink)
-			user << "<span class='notice'>[src] already contains \a [ink].</span>"
+			to_chat(user, "<span class='notice'>[src] already contains \a [ink].</span>")
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
-		user << "<span class='notice'>You install [W] into [src].</span>"
+		to_chat(user, "<span class='notice'>You install [W] into [src].</span>")
 		ink = W
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	else
@@ -122,5 +122,5 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		ink.loc = user.loc
 		user.put_in_hands(ink)
-		user << "<span class='notice'>You remove [ink] from [src].</span>"
+		to_chat(user, "<span class='notice'>You remove [ink] from [src].</span>")
 		ink = null

@@ -1,0 +1,208 @@
+Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
+You can catch thrown items by toggling on your throw mode with an empty hand active.
+To crack the safe in the vault, use a stethoscope on it.
+You can climb onto a table by dragging yourself onto one. This takes time and drops the items in your hands on the table.
+You can drag other players onto yourself to open the strip menu, letting you remove their equipment or force them to wear something. Note that exosuits or helmets will block your access to the clothing beneath them, and that certain items take longer to strip or put on than others.
+Clicking on a windoor rather then bumping into it will keep it open, you can click it again to close it.
+You can spray a fire extinguisher or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
+You can change the control scheme by pressing tab. One is WASD, the other is the arrow keys. Keep in mind that hotkeys are also changed with this.
+All vending machines can be hacked to obtain some contraband items from them, and some can be fed with coins to gain access to premium items.
+Firesuits and winter coats offer mild protection from the cold, allowing you to spend longer periods of time near breaches and space than if wearing nothing at all.
+Glass shards can be welded to make glass, and metal rods can be welded to make metal. Ores can be welded too, but this takes a lot of fuel.
+If you need to drag multiple people either to safety or to space, bring a locker over and stuff them all in before hauling them off.
+You can grab someone by clicking on them with the grab intent, then upgrade the grab by clicking on the grab button in your active hand. An aggressive grab will allow you to place someone on a table by clicking on it, or throw them by toggling on throwing.
+Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than right clicking.
+The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
+You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
+You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
+Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
+Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
+There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
+On some maps, you can use a machine in the vault to deposit space cash for cargo points or rob cargo blind.
+As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
+As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe, such as the Head of Security.
+As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
+As the Captain, you can purchase a new emergency shuttle using a communications console. Some require credits, while others give you credits in exchange.
+As the Chief Medical Officer, your hypospray is like an instant injection syringe that can hold 30 units as opposed to the standard 15.
+As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and geneticists during a nuclear emergency, blob infestation, or some other crisis to keep people alive and fighting.
+As a Medical Doctor, you can attempt to drain blood from a husk with a syringe to determine the cause. If you can extract blood, it was caused by extreme temperatures or lasers, if there is no blood to extract, you have confirmed the presence of changelings.
+As a Medical Doctor, charcoal will not only heal toxin damage dealt by poisons, but will actively remove them.
+As a Medical Doctor, you can surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
+As a Medical Doctor, you must target the correct limb and be on help intent when trying to perform surgery on someone.
+As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
+As a Chemist, some chemicals can only be synthesized by heating up the contents in the chemical heater.
+As a Geneticist, you can eject someone from cloning early by disabling power in genetics. Note that they will suffer more genetic damage from this.
+As a Geneticist, becoming a hulk makes you capable of dealing high melee damage, stunlocking people, and punching through walls. However, you can't fire guns, will lose your hulk status if you take too much damage, and are not considered a human by the AI while you are a hulk.
+As the Virologist, your viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
+As the Virologist, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
+As the Research Director, you can take AIs out of their cores by loading them into an intelliCard, and then from there into an AI system integrity restorer computer to revive and/or repair them.
+As the Research Director, you can lock down cyborgs instead of blowing them up. Then you can have their laws reset or if that doesn't work, safely dismantled.
+As a Scientist, you can inject yourself with the mutation toxin extracted from green slimes to become one of many races, including a slimeperson, who will never be attacked by slimes, can split and even regenerate limbs!
+As a Scientist, you can maximize the number of uses you get out of a slime by feeding it slime steroid, created from purple slimes, while alive. You can then apply extract enhancer, created from cerulean slimes, on each extract.
+As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signalling device. This will leave behind an anomaly core, which is good for research or the construction of a Phazon mech!
+As a Scientist, researchable machine parts can seriously improve the efficiency and speed of machines around the station. In some cases, it can even unlock new functions.
+As a Scientist, with high enough bluespace research, you can build machines that can teleport objects and people all around the station! Look into setting up a telescience department if you can.
+As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on an anomaly core, you can build a Phazon mech!
+As a Roboticist, you can repair your cyborgs with a welding tool. If they have taken burn damage from lasers, you can remove their battery, expose the wiring with a screwdriver and replace their wires with a cable coil.
+As the AI, you can click on people's names to look at them. This only works if there are cameras that can see them.
+As the AI, you can quickly open and close doors by holding shift while clicking them, bolt them when holding ctrl, and even shock them while holding alt.
+As the AI, you can take pictures with your camera and upload them to newscasters.
+As a Cyborg, choose your module carefully, as only a roboticist can let you repick it. If possible, refrain from choosing a module until a situation that requires one occurs.
+As a Cyborg, you are immune to most forms of stunning, and excel at almost everything far better than humans. However, flashes can easily stunlock you and you cannot do any precision work as you lack hands.
+As a Cyborg, you are impervious to fires and heat. If you are rogue, you can release plasma fires everywhere and walk through them without a care in the world!
+As a Cyborg, you are extremely vulnerable to EMPs as EMPs both stun you and damage you. The ion rifle in the armory or a traitor with an EMP kit can kill you in seconds.
+As the Chief Engineer, you can rename areas or create entirely new ones using your station blueprints.
+As the Chief Engineer, your hardsuit is significantly better than everybody else's. It boasts better protection, and is completely heat and fire proof.
+As the Chief Engineer, you can spy on and even forge PDA communications with the message monitor console! The key is in your office.
+As an Engineer, the supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you.
+As an Engineer, you can electrify grilles by placing wire "nodes" beneath them: the big seemingly unconnected bulges from a half completed wiring job.
+As an Engineer, return to Engineering once in a while to check on the singularity or energy ball and the SMES cells. It's always a good idea to make sure containment isn't compromised.
+As an Engineer, you can power the station solely with the solar arrays. While uninteresting, it is a much safer alternative to the singularity engine.
+As an Engineer, you can repair windows by using a welding tool on them while on any intent other than harm.
+As an Engineer, your construction permit allows you to create a new area, but has only one use.
+As an Engineer, you can lock emitters using your ID card to prevent others from disabling them.
+As an Atmospheric Technician, you can unwrench a pipe regardless of the pressures of the gases inside, but if they're too high they can burst out and injure you!
+As an Atmospheric Technician, look into replacing your gas pumps with volumetric gas pumps, as those move air in flat numerical amounts, rather than percentages which leave trace gases.
+As an Atmospheric Technician, you are better suited to fighting fires than anyone else. As such, you have access to better firesuits, nanofrost sprays, and a completely heat and fire proof rigsuit.
+As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the station. Sometimes it means making use of the armory to handle a blob, sometimes it means being ruthless during a revolution or cult.
+As the Head of Security, you can call for executions or forced cyborgization, but may require the Captain's approval.
+As the Head of Security, don't let the power go to your head. You may have high access, great equipment, and a miniature army at your side, but being a terrible person without a good reason is grounds for banning.
+As the Warden, your duty is to be the watchdog of the brig and handler of prisoners when little is happening, and to hand out equipment and weapons to the security officers when a crisis strikes.
+As the Warden, keep a close eye on the armory at all times, as it is a favored strike point of nuclear operatives and cocky traitors.
+As the Warden, if a prisoner's crimes are heinous enough you can put them in permabrig or the gulag. Make sure to check on them once in a while!
+As the Warden, you can implant criminals you suspect might re-offend with devices that will track their location and allow you to remotely inject them with disabling chemicals. 
+As the Warden, you can use handcuffs on orange prisoner shoes to turn them into cuffed shoes, forcing prisoners to walk and potentially thwarting an escape.
+As a Security Officer, communicate and coordinate with your fellow officers using the security channel (:s) to avoid confusion.
+As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are loyalty implanted. Use this to your advantage in a revolution to definitively tell who is on your side!
+As a Security Officer, loyalty implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
+As a Security Officer, examining someone while wearing sechuds or HUDsunglasses will let you set their arrest level, which will cause Beepsky and other security bots to chase after them.
+As a Security Officer, implanting a gang member the first time will deconvert them, but destroy the implant. You must implant them a second time to protect them from further conversion attempts. Keep in mind that gang members have ways to destroy implants in people!
+As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
+As the Detective, you can use your forensics scanner from a distance.
+As the Lawyer, try to negotiate with the Warden if sentences seem too high for the crime.
+As the Lawyer, you can try to convince the captain and Head of Security to hold trials for prisoners in the courtroom.
+As the Head of Personnel, you are not higher ranking than other heads of staff, even though you are expected to take the Captain's place first should he go missing. If the situation seems too rough for you, consider allowing another head to become temporary Captain.
+As the Head of Personnel, you are just as large a target as the Captain because of the potential power your ID and computer can hand out.
+As the Mime, your invisible wall power blocks people as well as projectiles. You can use it in a pinch to delay your pursuer.
+As the Mime, you can use :r and :l to speak through your ventriloquist dummy.
+As the Mime, your oath of silence is your source of power. Breaking it robs you of your powers and of your honor.
+As the Clown, if you lose your banana peel, you can still slip people with your PDA! Honk!
+As the Clown, eating bananas heals you slightly. Honk!
+As the Clown, your Holy Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
+As the Chaplain, your null rod has a lot of functions: it can convert water into holy water, which if spread on the ground prevents wizards from jaunting away, can destroy cultist runes by hitting them, and is a very powerful weapon to boot!
+As the Chaplain, your bible is also a container that can store small items. Depending on your god, your starting bible may come with a surprise!
+As the Chaplain, you are much more likely to get a response by praying to the gods than most people. To boost your chances, make altars with colorful crayon runes, lit candles, and wire art.
+As a Botanist, you can hack the MegaSeed Vendor to get access to more exotic seeds. These seeds can alternatively be ordered from cargo.
+As a Botanist, you can mutate the plants growing in your hydroponics trays with unstable mutagen or, as an alternative, crude radioactives from chemistry to get special variations.
+As a Botanist, you should look into increasing the potency of your plants. This increases the size, amount of chemicals, points gained from grinding them in the biogenerator, and lets people know you are a proficient botanist.
+As a Cook, you can load your food into snack vending machines.
+As a Cook, you can rename your custom made food with a pen.
+As a Cook, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.
+As the Bartender, the drinks you start with only give you the basics. If you want more advanced mixtures, look into working with chemistry, hydroponics, or even mining for things to grind up and throw in!
+As the Bartender, you can use a circular saw on your shotgun to make it easier to store.
+As a Janitor, if someone steals your janicart, you can instead use your space cleaner spray, grenades, water sprayer or order another from Cargo.
+As a Janitor, mousetraps can be used to create bombs or booby-trap containers.
+As the Curator, you are not completely defenseless. Your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
+As the Curator, be sure to keep the shelves stocked and the library clean for crew.
+As a Cargo Technician, you can hack MULEbots to make them faster, run over people in their way, and even let you ride them!
+As a Cargo Technician, you can order contraband items from the supply shuttle console by de-constructing it and using a multitool on the circuit board, the re-assembling it.
+As a Cargo Technician, you can earn more cargo points by shipping back crates from maintenance, liquid containers, plasma sheets, rare seeds from hydroponics, and more!
+As the Quartermaster, be sure to check the manifests on crates you receive to make sure all the info is correct. If there's a mistake, stamp the manifest DENIED and send it back in a crate with the items untouched for a refund!
+As a Shaft Miner, the northern side of Lavaland has a lot more rare minerals than on the south.
+As a Shaft Miner, every monster on Lavaland has a pattern you can exploit to minimize damage from the encounters.
+As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your explorer's suit with them, greatly reducing incoming melee damage.
+As a Shaft Miner, always have a GPS on you, so a fellow miner or cyborg can come to save you if you die.
+As a Traitor, the cryptographic sequencer (emag) can not only open doors, but also lockers, crates, APCs and more. It can hack cyborgs, and even cause bots to go berserk. Use it on the right machines, and you can even order more traitor gear or contact the Syndicate. Experiment!
+As a Traitor, subverting the AI to serve you can make it an extremely powerful ally. However, be careful of the wording in the laws you give it, as it may use your poorly written laws against you!
+As a Traitor, the Captain and the Head of Security are two of the most difficult to kill targets on the station. If either one is your target, plan carefully.
+As a Traitor, you can manufacture and recycle revolver bullets at a hacked autolathe, making the revolver an extremely powerful tool.
+As a Traitor, you may sometimes be assigned to hunt other traitors, and in turn be hunted by others.
+As a Traitor, the syndicate encryption key is very useful for coordinating plans with your fellow traitors -- or, of course, betraying them.
+As a Nuclear Operative, communication is key! Use :t or :h to speak to your fellow operatives and coordinate an attack plan.
+As a Nuclear Operative, you should look into purchasing a syndicate cyborg, as they can provide heavy fire support, full access, are immune to conventional stuns, and can easily take down the AI.
+As a Nuclear Operative, stick together! While your equipment is robust, your fellow operatives are much better at saving your life: they can drag you away from danger while stunned and provide cover fire.
+As a Nuclear Operative, you might end up in a situation where the AI has bolted you into a room. Having some spare C4 in your pocket can save your life.
+As a Monkey, you can crawl through air or scrubber vents by alt+left clicking them. You must drop everything you are wearing and holding to do this, however.
+As a Monkey, you can still wear a few human items, such as backpacks, gas masks and hats, and still have two free hands.
+As the Malfunctioning AI, you can shunt to an APC if the situation gets bad. This can allow the clock to tick down long enough for you to win, but keep in mind the crew's pinpointer will point to you when you do this.
+As the Malfunctioning AI, you should either order your cyborgs to dismantle the robotics console or blow it up yourself in order to protect them.
+As the Malfunctioning AI, look into flooding the station with plasma fires to kill off large portions of the crew, letting you pick off the remaining few with space suits who escaped.
+As an Alien, your melee prowess is unmatched, but your ranged abilities are sorely lacking. Make use of corners to force a melee confrontation!
+As an Alien, you take double damage from all burn attacks, such as lasers, welding tools, and fires. Furthermore, fire can destroy your resin and eggs. Expose areas to space to starve away any flamethrower fires before they can do damage!
+As an Alien, resin floors not only regenerate your plasma supply, but also passively heal you. Fight on resin floors to gain a home turf advantage!
+As an Alien, the facehugger is by far your most powerful weapon because of its ability to instantly win a fight. Remember however that certain helmets, such as biohoods or space helmets will completely block facehugger attacks.
+As an Alien, you are unable to pick up or use any human items or machinery. Instead, you should focus on sabotaging APCs, computers, cameras and either stowing, spacing, or melting any weapons you find.
+When fighting the Blob, you can hit it with an analyzer to check its chemical effects and the type of blob analyzed. Examining it with a research scanner or medical hud active will also reveal this information.
+As the Blob, you can place your core at any clear, unobserved, spot you can move to after 3 minutes have passed. If you wait too long, you will be automatically placed at a random location. Use this wait time to coordinate with any other overminds.
+As the Blob, keep your core some distance from space, as it is both expensive to expand onto space, easy to be attacked from, and does not count towards your win condition. Emitter platforms built in space are especially dangerous.
+As the Blob, you can randomly repick your reagent type if the crew has adapted and protected themselves against your current one.
+As the Blob, you fight a war of attrition: Take out medbay and fight in chokepoints to prevent continued assaults and coordinated burst damage attacks!
+As the Blob, you can attack anything next to a blob tile, but can only expand in cardinal directions, and diagonal attacks are slightly weaker.
+As the Blob, don't neglect the creation of factories. These create spores that carry your reagent and can chase crewmembers far further than you. Spores can also be rallied to swarm the crew and cause panic, and can even take over corpses to create much more dangerous blob zombies!
+As the Blob, you can produce a Blobbernaut from a factory for 40 resources. Blobbernauts are player-controlled, gradually regenerate near nodes, and apply your chemical when attacking, but die when too far from the blob or if their factory is killed. However, the factory used becomes fragile and stops spawning spores.
+As the Blob, you can expand by clicking, create strong blobs with ctrl-click, rally spores with middle-click, and remove blobs with alt-click. You do not need to have your camera over the tile to do this.
+As the Blob, removing strong blobs, resource nodes, factories, and nodes will give you 4, 15, 25, and 25 resources back, respectively.
+As the Blob, talking will send a message to all other overminds and all Blobbernauts, allowing you to direct attacks and coordinate.
+As a Blobbernaut, you can communicate with overminds and other Blobbernauts via :b.
+As a Blobbernaut, your HUD shows your health and the core health of the overmind that created you.
+As a Revolutionary, you cannot convert a head of staff or someone who has a loyalty implant, such as a security officer or those they implant. Implants can however be surgically removed, and do not carry over with cloning. Take control of medbay to keep control of conversions!
+As a Revolutionary, cargo can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armor, in the worst case scenario security will take control and order a limitless number of loyalty implants to turn your fellow revolutionaries against you.
+As a Revolutionary, your main power comes from how quickly you spread. Convert people as fast as you can and overwhelm the heads of staff before security can arm up.
+As a Changeling, the Extract DNA sting counts for your genome absorb objective, but does not let you respec your powers.
+As a Changeling, you can absorb someone by strangling them and using the Absorb verb; this gives you the ability to rechoose your powers, the DNA of whoever you absorbed, the memory of the absorbed, and some samples of things the absorbed said.
+As a Cultist, invest in taking over xenobio, an adamantine golem army can quickly be converted into cultists and constructs.
+As a Cultist, do not cause too much chaos before your objective is completed. If the shuttle gets called too soon, you may not have enough time to win.
+As a Cultist, your team starts off very weak, but if necessary can quickly convert everything they have into raw power. Make sure you have the numbers and equipment to support going loud, or the cult will fall flat on its face.
+As a Cultist, the Blood Boil rune will deal massive amounts of brute damage to non-cultists, stamina damage to Ratvarian scum, and some damage to fellow cultists of Nar-Sie nearby, but will create a fire where the rune stands on use.
+As a Cultist, you can create an army of manifested goons using a combination of the Manifest rune, which creates homunculi from ghosts, and the Blood Drain rune, which drains life from anyone standing on any blood drain rune.
+As a Servant, your Clockwork Slab fits in pockets and does not need to be held to communicate with other Servants.
+As a Servant, remember that while the selection of scripture and tools Servant cyborgs get is limited, it is still extremely useful, and some of it is unique; for example, engineering and janitor cyborgs get a proselytizer that can use their own power in addition to its own.
+As a Servant, the Judicial Visor is an effective defensive combat tool in small spaces, as it stuns and mutes anyone still on it after 3 seconds. It is also useful for stunning already-stunned enemies for long enough to convert them or finish them off.
+As a Servant, making, and protecting, Tinkerer's Caches is extremely important, as caches are required to unlock scripture and share components.
+As a Servant, Ocular Wardens, while fragile, do very high, rapid damage to a target non-servant that can see them and will even attack mechs that contain heretics. Place them behind objects that don't block vision to get the most use out of them.
+As a Servant, Clockwork Structures that require power will draw power from the APC if they cannot find a different source of power, and most power-using Structures will rapidly drain the APC.
+As a Servant, you can repair Servant cyborgs, Clockwork Constructs, and Clockwork Structures with a Clockwork Proselytizer at a rate of 25W power to 1 health.
+As a Servant, securing a reliable source of component generation is high-priority, as simply handing out slabs will slowly become inefficient. Try placing Tinkerer's Caches near clockwork walls or creating and powering Tinkerer's Daemons.
+As a Servant, only a single held Clockwork Slab will generate components, no matter how many you're holding. In addition, slabs will generate components slower with large amounts of servants; you can see the exact time with Recollection.
+As a Servant, you can use Geis to easily convert single targets, as it binds them in place, preventing escape unless they react quickly enough. Having another Servant apply Geis to someone already bound will prevent their escape and mute them, even if they reacted quickly.
+As a Servant, placing components in a slab or cache places those components in a globally-accessable storage that slabs will draw from to invoke scripture.
+As a Servant, you can stack different types of Sigils on the same turf; try stacking a Sigil of Transgression and a Sigil of Submission for a subtle conversion trap.
+As a Servant, you can deconstruct a Clockwork Wall with a Clockwork Proselytizer to regain 1000W power. You can also construct Clockwork Walls on Clockwork Floors for a cost of 1000W power.
+As a Servant, Volt Void will drain power from nearby Sigils of Transmission to up to double the damage of each volt ray. It'll even use your own power if you happen to be a cyborg!
+As a Servant, Fellowship Armory invokes much faster for each nearby servant and attempts to provide each affected servant with powerful armor against melee, bullet, and bomb attacks. The gauntlets provided are also immune to elecricity.
+As a Servant, Spatial Gateway can teleport to any living Servant or Clockwork Obelisk, and gains additional uses and duration for each Servant assisting in the invocation.
+As a Servant, creating and activating the Gateway to the Celestial Derelict is your ultimate goal, and you must defend it with all the tools you have available.
+As a Servant, once Ratvar has arrived, all of your tools gain a massive boost in power and will, in general, have no cost and work at double speed.
+As a Servant, you can impale human targets with a Ratvarian Spear by pulling them, then attacking them. This does massive damage and stuns them, and should effectively win the fight.
+As a Servant, Sentinel's Compromise can instantly return you or another Servant to a fighting state by converting half of all their brute, burn, and oxygen damage to toxin, effectively halving the damage they have. Clockwork Floors will also rapidly heal toxin damage in Servants, allowing the Compromise more effectiveness.
+As a Servant, Belligerent and Taunting Tirade are extremely powerful for disabling and disrupting large groups of enemies, though they render you somewhat vulnerable, as Belligerent requires that you stand still, and Taunting Tirade makes you extremely obvious.
+As a Servant, Soul Vessels can be placed in cyborg shells, mecha, Cogscarab shells, and Anima Fragment shells.
+As a Servant, you can unwrench Clockwork Structures, but doing so will damage them, severely weakening them until repaired with a Proselytizer or Mending Mantra. Damage from other sources will also similarly weaken structures.
+You can deconvert Cultists of Nar-Sie and Servants of Ratvar by feeding them large amounts of holy water.
+As a Wizard, you can turn people to stone, then animate the resulting statue with a staff of animation to create an extremely powerful minion, for all of 5 minutes at least.
+As a Wizard, the fireball spell performs very poorly at close range, as it can easily catch you in the blast. It is best used as a form of artillery down long hallways.
+As a Wizard, summoning guns will turn a large portion of the crew against themselves, but will also give everyone anything from a pea shooter to a BFG 9000. Use at your own risk!
+As a Wizard, the staff of chaos can fire any type of bolts from the magical wands. This can range from bolts of instant death to healing or reviving someone.
+As a Wizard, most spells become unusable if you are not wearing your robe, hat, and sandals.
+As a Gangster, you can destroy loyalty implants with an implant breaker, letting you reconvert that person.
+As a Gangster, your influence is based on how many areas you have tagged and how many people are wearing your gang's outfit; more areas and more people wearing the outfit will give you more influence.
+As a Gangster, your gang outfits are very robust, giving moderate resistances to most direct damage at the cost of stealth.
+As a Gang Boss, don't wait too long to promote lieutenants! If you get caught by security or enemy gangsters, hopefully you have a backup.
+As an Abductor, you can select where your victims will be sent on the ship control console.
+As an Abductor Agent, the combat mode vest has much higher resistance to every kind of weapon, and your helmet prevents the AI from tracking you.
+As an Abductor, the baton can cycle between four modes: stun, sleep, cuff and probe.
+As a Revenant, the Chaplain is your worst enemy, as they can damage you massively with the null rod and make large swaths of the station impassable with holy water.
+As a Revenant, your essence is also your health, so revealing yourself in front of humans to harvest the essence of the living is much safer if you've already stocked up on essences from poorly guarded corpses.
+As a Revenant, your Defile ability removes holy water from tiles in a small radius, allowing you to reclaim the station from the chaplain if they've been covering the station in holy water.
+As a Revenant, your Overload Lights ability will only shock humans with lights if the lights are still on after a brief delay.
+As a Revenant, your Malfunction ability in general damages machinery and mechanical objects, possibly even emagging some objects. Experiment!
+As a Revenant, the illness inflicted on humans by Blight can be easily cured by lying down or with holy water, making it best used on targets that have no time to lie down, such as humans in combat.
+As a Swarmer, you can deconstruct more things than you think. Try deconstructing light switches, buttons, air alarms and more. Experiment!
+As a Swarmer, you can teleport fellow swarmers away if you think they are in danger.
+As a Morph, you can talk while disguised, but your words have a chance of being slurred, giving you away!
+As a Drone, you can ping other drones to alert them of areas in the station in need of repair.
+As a Ghost, you can see the inside of a container on the ground by clicking on it.
+As a Ghost, you can double click on people, bots, or the singularity to follow them.
+As a Devil, you gain power for every three souls you control, however you also become more obvious.
+As a Devil, as long as you control at least one other soul, you will automatically resurrect, as long as a banishment ritual is not performed.
+At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth. 

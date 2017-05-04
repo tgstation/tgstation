@@ -16,7 +16,7 @@
 
 /obj/item/weapon/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
-	image_overlay = image('icons/obj/grenade.dmi', "plastic-explosive2")
+	plastic_overlay = mutable_appearance(icon, "plastic-explosive2")
 	..()
 
 /obj/item/weapon/c4/Destroy()
@@ -39,8 +39,6 @@
 				message_say = "FOR NAR-SIE!"
 			else if(role == "revolutionary" || role == "head revolutionary")
 				message_say = "VIVA LA REVOLUTION!"
-			else if(user.mind.gang_datum)
-				message_say = "[uppertext(user.mind.gang_datum.name)] RULES!"
 	user.say(message_say)
 	target = user
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)
@@ -52,7 +50,7 @@
 /obj/item/weapon/c4/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
-		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
+		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 	else if(is_wire_tool(I))
 		wires.interact(user)
 	else
@@ -63,7 +61,7 @@
 	if(user.get_active_held_item() == src)
 		newtime = Clamp(newtime, 10, 60000)
 		timer = newtime
-		user << "Timer set for [timer] seconds."
+		to_chat(user, "Timer set for [timer] seconds.")
 
 /obj/item/weapon/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
@@ -79,7 +77,7 @@
 		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
 			return
 
-	user << "<span class='notice'>You start planting the bomb...</span>"
+	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
 
 	if(do_after(user, 50, target = AM))
 		if(!user.temporarilyRemoveItemFromInventory(src))
@@ -88,12 +86,12 @@
 		forceMove(null)
 
 		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [timer] second fuse"
-		bombers += message
+		GLOB.bombers += message
 		message_admins(message,0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
 
-		target.add_overlay(image_overlay, 1)
-		user << "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>"
+		target.add_overlay(plastic_overlay, 1)
+		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>")
 		addtimer(CALLBACK(src, .proc/explode), timer * 10)
 
 /obj/item/weapon/c4/proc/explode()
@@ -103,7 +101,7 @@
 	if(target)
 		if(!QDELETED(target))
 			location = get_turf(target)
-			target.cut_overlay(image_overlay, TRUE)
+			target.cut_overlay(plastic_overlay, TRUE)
 	else
 		location = get_turf(src)
 	if(location)

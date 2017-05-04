@@ -99,7 +99,7 @@
 	taste_description = "sweetness"
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
-	M << "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
+	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
 	M.AdjustSleeping(30, 0)
 	. = 1
 
@@ -326,6 +326,9 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "creamy chocolate"
+	glass_icon_state  = "chocolateglass"
+	glass_name = "glass of chocolate"
+	glass_desc = "Tasty."
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
@@ -553,10 +556,10 @@
 	taste_description = "tingling mushroom"
 
 /datum/reagent/consumable/tinlux/reaction_mob(mob/living/M)
-	M.AddLuminosity(2)
+	M.set_light(2)
 
 /datum/reagent/consumable/tinlux/on_mob_delete(mob/living/M)
-	M.AddLuminosity(-2)
+	M.set_light(-2)
 
 /datum/reagent/consumable/vitfro
 	name = "Vitrium Froth"

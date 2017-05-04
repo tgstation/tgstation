@@ -3,7 +3,7 @@ Research Director
 */
 /datum/job/rd
 	title = "Research Director"
-	flag = RD
+	flag = RD_JF
 	department_head = list("Captain")
 	department_flag = MEDSCI
 	head_announce = list("Science")
@@ -17,16 +17,16 @@ Research Director
 
 	outfit = /datum/outfit/job/rd
 
-	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
-			            access_tox_storage, access_teleporter, access_sec_doors,
-			            access_research, access_robotics, access_xenobiology, access_ai_upload,
-			            access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom,
-			            access_tech_storage, access_minisat, access_maint_tunnels, access_network)
-	minimal_access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
-			            access_tox_storage, access_teleporter, access_sec_doors,
-			            access_research, access_robotics, access_xenobiology, access_ai_upload,
-			            access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom,
-			            access_tech_storage, access_minisat, access_maint_tunnels, access_network)
+	access = list(GLOB.access_rd, GLOB.access_heads, GLOB.access_tox, GLOB.access_genetics, GLOB.access_morgue,
+			            GLOB.access_tox_storage, GLOB.access_teleporter, GLOB.access_sec_doors,
+			            GLOB.access_research, GLOB.access_robotics, GLOB.access_xenobiology, GLOB.access_ai_upload,
+			            GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_gateway, GLOB.access_mineral_storeroom,
+			            GLOB.access_tech_storage, GLOB.access_minisat, GLOB.access_maint_tunnels, GLOB.access_network)
+	minimal_access = list(GLOB.access_rd, GLOB.access_heads, GLOB.access_tox, GLOB.access_genetics, GLOB.access_morgue,
+			            GLOB.access_tox_storage, GLOB.access_teleporter, GLOB.access_sec_doors,
+			            GLOB.access_research, GLOB.access_robotics, GLOB.access_xenobiology, GLOB.access_ai_upload,
+			            GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_gateway, GLOB.access_mineral_storeroom,
+			            GLOB.access_tech_storage, GLOB.access_minisat, GLOB.access_maint_tunnels, GLOB.access_network)
 
 /datum/outfit/job/rd
 	name = "Research Director"
@@ -70,8 +70,8 @@ Scientist
 
 	outfit = /datum/outfit/job/scientist
 
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage, access_genetics)
-	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom)
+	access = list(GLOB.access_robotics, GLOB.access_tox, GLOB.access_tox_storage, GLOB.access_research, GLOB.access_xenobiology, GLOB.access_mineral_storeroom, GLOB.access_tech_storage, GLOB.access_genetics)
+	minimal_access = list(GLOB.access_tox, GLOB.access_tox_storage, GLOB.access_research, GLOB.access_xenobiology, GLOB.access_mineral_storeroom)
 
 /datum/outfit/job/scientist
 	name = "Scientist"
@@ -102,8 +102,8 @@ Roboticist
 
 	outfit = /datum/outfit/job/roboticist
 
-	access = list(access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research, access_mineral_storeroom, access_xenobiology, access_genetics)
-	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research, access_mineral_storeroom)
+	access = list(GLOB.access_robotics, GLOB.access_tox, GLOB.access_tox_storage, GLOB.access_tech_storage, GLOB.access_morgue, GLOB.access_research, GLOB.access_mineral_storeroom, GLOB.access_xenobiology, GLOB.access_genetics)
+	minimal_access = list(GLOB.access_robotics, GLOB.access_tech_storage, GLOB.access_morgue, GLOB.access_research, GLOB.access_mineral_storeroom)
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"

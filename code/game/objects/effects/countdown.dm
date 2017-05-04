@@ -20,7 +20,7 @@
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	user << "This countdown is displaying: [displayed_text]"
+	to_chat(user, "This countdown is displaying: [displayed_text]")
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
@@ -96,21 +96,6 @@
 	else if(C.occupant)
 		var/completion = round(C.get_completion())
 		return completion
-
-/obj/effect/countdown/dominator
-	name = "dominator countdown"
-	text_size = 1
-	color = "#ff00ff" // Overwritten when the dominator starts
-
-/obj/effect/countdown/dominator/get_value()
-	var/obj/machinery/dominator/D = attached_to
-	if(!istype(D))
-		return
-	else if(D.gang && D.gang.is_dominating)
-		var/timer = D.gang.domination_time_remaining()
-		return timer
-	else
-		return "OFFLINE"
 
 /obj/effect/countdown/clockworkgate
 	name = "gateway countdown"
