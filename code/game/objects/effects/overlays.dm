@@ -323,11 +323,30 @@
 /obj/effect/overlay/temp/ratvar/grille/broken
 	icon_state = "ratvarbrokengrilleglow"
 
+/obj/effect/overlay/temp/ratvar/mending_mantra
+	layer = ABOVE_MOB_LAYER
+	duration = 20
+	alpha = 200
+	icon_state = "mending_mantra"
+	light_range = 1.5
+	light_color = "#1E8CE1"
+
+/obj/effect/overlay/temp/ratvar/mending_mantra/Initialize(mapload)
+	. = ..()
+	transform = matrix()*2
+	var/matrix/M = transform
+	M.Turn(90)
+	animate(src, alpha = 20, time = duration, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	animate(src, transform = M, time = duration, flags = ANIMATION_PARALLEL)
+
 /obj/effect/overlay/temp/ratvar/volt_hit
 	name = "volt blast"
 	layer = ABOVE_MOB_LAYER
 	duration = 5
 	icon_state = "volt_hit"
+	light_range = 1.5
+	light_power = 2
+	light_color = LIGHT_COLOR_ORANGE
 	var/mob/user
 	var/damage = 20
 
@@ -336,7 +355,6 @@
 		damage *= multiplier
 	duration = max(round(damage * 0.2), 1)
 	. = ..()
-	set_light(1.5, 2, LIGHT_COLOR_ORANGE)
 
 /obj/effect/overlay/temp/ratvar/volt_hit/true/Initialize(mapload, caster, multiplier)
 	. = ..()

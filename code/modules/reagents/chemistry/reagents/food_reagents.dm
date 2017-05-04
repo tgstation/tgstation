@@ -60,7 +60,10 @@
 	// data for nutriment is one or more (flavour -> ratio)
 	// where all the ratio values adds up to 1
 
-	var/list/taste_amounts = data.Copy()
+	var/list/taste_amounts = list()
+	if(data)
+		taste_amounts = data.Copy()
+
 	counterlist_scale(taste_amounts, volume)
 
 	var/list/other_taste_amounts = newdata.Copy()

@@ -253,7 +253,7 @@
 /datum/spellbook_entry/the_traps
 	name = "The Traps!"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
-	category = "Offensive"
+	category = "Defensive"
 	cost = 1
 
 
@@ -778,6 +778,9 @@
 	icon_state ="booksmoke"
 	desc = "This book is overflowing with the dank arts."
 
+/obj/item/weapon/spellbook/oneuse/smoke/lesser //Chaplain smoke book
+	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
+
 /obj/item/weapon/spellbook/oneuse/smoke/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
@@ -785,6 +788,7 @@
 		user.nutrition -= 200
 		if(user.nutrition <= 0)
 			user.nutrition = 0
+
 
 /obj/item/weapon/spellbook/oneuse/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind

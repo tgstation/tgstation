@@ -105,13 +105,13 @@
 				probs[ctag] = 1
 				prob_sum += config.probabilities[ctag]
 			if(current_odds_differ)
-				src <<"<b>Game Mode Odds for current round:</b>"
+				to_chat(src, "<b>Game Mode Odds for current round:</b>")
 				for(var/ctag in probs)
 					if(config.probabilities[ctag] > 0)
 						var/percentage = round(config.probabilities[ctag] / prob_sum * 100, 0.1)
 						to_chat(src, "[ctag] [percentage]%")
 
-		src <<"<b>All Game Mode Odds:</b>"
+		to_chat(src, "<b>All Game Mode Odds:</b>")
 		var/sum = 0
 		for(var/ctag in config.probabilities)
 			sum += config.probabilities[ctag]

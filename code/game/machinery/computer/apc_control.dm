@@ -108,7 +108,7 @@
 		if(!authenticated) //Check for emags
 			var/obj/item/weapon/card/emag/E = usr.get_active_held_item()
 			if(E && istype(E) && usr.Adjacent(src))
-				usr << "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>"
+				to_chat(usr, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 				authenticated = TRUE
 				log_activity("logged in") //Auth ID doesn't change, hinting that it was illicit
 	if(href_list["log_out"])

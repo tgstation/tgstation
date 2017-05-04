@@ -85,7 +85,6 @@
 		SSblackbox.set_details("game_mode","[SSticker.mode]")
 	if(GLOB.revdata.commit)
 		SSblackbox.set_details("revision","[GLOB.revdata.commit]")
-	SSblackbox.set_details("server_ip","[world.internet_address]:[world.port]")
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
@@ -539,7 +538,6 @@
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
 	SSticker.mode.remove_cultist(newborgie, 0, 0)
 	SSticker.mode.remove_revolutionary(newborgie, 0)
-	SSticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()
