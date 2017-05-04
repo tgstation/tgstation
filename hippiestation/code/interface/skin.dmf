@@ -104,10 +104,6 @@ macro "default"
 		command = "a-intent right"
 		is-disabled = false
 	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
 		name = "CTRL+O"
 		command = "ooc"
 		is-disabled = false
@@ -194,6 +190,10 @@ macro "default"
 	elem 
 		name = "F5"
 		command = "Aghost"
+		is-disabled = false
+	elem 
+		name = "F4"
+		command = "msay"
 		is-disabled = false
 	elem 
 		name = "F6"
@@ -370,14 +370,6 @@ macro "hotkeys"
 		command = "a-intent right"
 		is-disabled = false
 	elem 
-		name = "H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
 		name = "M"
 		command = "me"
 		is-disabled = false
@@ -506,6 +498,10 @@ macro "hotkeys"
 		command = "Aghost"
 		is-disabled = false
 	elem 
+		name = "F4"
+		command = "msay"
+		is-disabled = false
+	elem 
 		name = "F6"
 		command = "Player-Panel"
 		is-disabled = false
@@ -620,10 +616,6 @@ macro "robot-default"
 		command = "resist"
 		is-disabled = false
 	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
 		name = "CTRL+O"
 		command = "ooc"
 		is-disabled = false
@@ -710,6 +702,10 @@ macro "robot-default"
 	elem 
 		name = "F5"
 		command = "Aghost"
+		is-disabled = false
+	elem 
+		name = "F4"
+		command = "msay"
 		is-disabled = false
 	elem 
 		name = "F6"
@@ -841,14 +837,6 @@ macro "robot-hotkeys"
 		name = "CTRL+B"
 		command = "resist"
 		is-disabled = false	
-	elem 
-		name = "H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
-		is-disabled = false
 	elem 
 		name = "M"
 		command = "me"
@@ -984,6 +972,10 @@ macro "robot-hotkeys"
 	elem 
 		name = "F5"
 		command = "Aghost"
+		is-disabled = false
+	elem 
+		name = "F4"
+		command = "msay"
 		is-disabled = false
 	elem 
 		name = "F6"
@@ -1759,4 +1751,3 @@ window "statwindow"
 		on-tab = ""
 		prefix-color = none
 		suffix-color = none
-

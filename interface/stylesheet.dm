@@ -23,6 +23,8 @@ em						{font-style: normal;	font-weight: bold;}
 
 .adminobserver			{color: #996600;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
+.mentoradmin			{color: #8A2BE2;	font-weight: bold;}
+.mentor					{color: #E236D8;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
 
