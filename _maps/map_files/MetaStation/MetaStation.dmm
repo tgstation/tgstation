@@ -1910,8 +1910,8 @@
 /area/shuttle/pod_3)
 "adG" = (
 /obj/docking_port/stationary/random{
-	id = "pod_asteroid2";
-	name = "asteroid"
+	id = "pod_lavaland2";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -1927,7 +1927,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
-	possible_destinations = "pod_asteroid2";
+	possible_destinations = "pod_lavaland2";
 	shuttleId = "pod2"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -23696,7 +23696,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid3";
+	possible_destinations = "pod_lavaland3";
 	shuttleId = "pod3"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -34140,8 +34140,8 @@
 "bii" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid3";
-	name = "asteroid"
+	id = "pod_lavaland3";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -86090,8 +86090,8 @@
 /area/toxins/xenobiology)
 "cSP" = (
 /obj/docking_port/stationary/random{
-	id = "pod_asteroid1";
-	name = "asteroid"
+	id = "pod_lavaland1";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -86181,7 +86181,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
-	possible_destinations = "pod_asteroid1";
+	possible_destinations = "pod_lavaland1";
 	shuttleId = "pod1"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -86374,7 +86374,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid4";
+	possible_destinations = "pod_lavaland4";
 	shuttleId = "pod4"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -87168,8 +87168,8 @@
 "cUL" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid4";
-	name = "asteroid"
+	id = "pod_lavaland4";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
