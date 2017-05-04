@@ -496,7 +496,7 @@
 	if(!internal_organs.len)
 		return //Guess we're out of organs
 	var/obj/item/organ/guts = pick(internal_organs)
-	var/turf/T = get_step(get_turf(src),dir)
+	var/turf/T = get_turf(src)
 	guts.Remove(src)
 	guts.forceMove(T)
 	var/atom/throw_target = get_edge_target_turf(guts, dir)
