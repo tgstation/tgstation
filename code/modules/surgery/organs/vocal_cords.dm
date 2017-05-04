@@ -8,6 +8,7 @@
 	icon_state = "appendix"
 	zone = "mouth"
 	slot = "vocal_cords"
+	gender = PLURAL
 	var/list/spans = null
 
 /obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
@@ -175,7 +176,7 @@
 
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/weaken_words = regex("drop|fall|trip|weaken")
-	var/static/regex/sleep_words = regex("sleep|slumber")
+	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/vomit_words = regex("vomit|throw up")
 	var/static/regex/silence_words = regex("shut up|silence|ssh|quiet|hush")
 	var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
@@ -206,7 +207,6 @@
 	var/static/regex/throwmode_words = regex("throw|catch")
 	var/static/regex/flip_words = regex("flip|rotate|revolve|roll|somersault")
 	var/static/regex/speak_words = regex("speak|say something")
-	var/static/regex/rest_words = regex("rest")
 	var/static/regex/getup_words = regex("get up")
 	var/static/regex/sit_words = regex("sit")
 	var/static/regex/stand_words = regex("stand")
@@ -248,7 +248,7 @@
 	else if((findtext(message, silence_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
-			if(user.mind && (user.mind.assigned_role == "Librarian" || user.mind.assigned_role == "Mime"))
+			if(user.mind && (user.mind.assigned_role == "Curator" || user.mind.assigned_role == "Mime"))
 				power_multiplier *= 3
 			C.silent += (10 * power_multiplier)
 
@@ -443,17 +443,9 @@
 			L.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 			sleep(5) //So the chat flows more naturally
 
-	//REST
-	else if((findtext(message, rest_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			if(!L.resting)
-				L.lay_down()
-
 	//GET UP
 	else if((findtext(message, getup_words)))
-		cooldown = COOLDOWN_DAMAGE
+		cooldown = COOLDOWN_DAMAGE //because stun removal
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(L.resting)

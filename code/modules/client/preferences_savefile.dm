@@ -265,9 +265,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(config.mutant_races && species_id && (species_id in GLOB.roundstart_species))
 		var/newtype = GLOB.roundstart_species[species_id]
 		pref_species = new newtype()
-	else
+	else if (config.roundstart_races.len)
 		var/rando_race = pick(config.roundstart_races)
-		pref_species = new rando_race()
+		if (rando_race)
+			pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		S["features["mcolor"]"]	<< "#FFF"

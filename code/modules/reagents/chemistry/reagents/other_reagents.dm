@@ -667,7 +667,7 @@
 	taste_mult = 0 // apparently tasteless.
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
-	if(M.canmove && isspaceturf(M.loc))
+	if(M.canmove && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -747,7 +747,7 @@
 	taste_description = "metal"
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
-	if(M.canmove && isspaceturf(M.loc))
+	if(M.canmove && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -1542,7 +1542,9 @@
 
 /datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
 	// Silently add the zombie infection organ to be activated upon death
-	new /obj/item/organ/zombie_infection(H)
+	if(!H.getorganslot("zombie_infection"))
+		var/obj/item/organ/zombie_infection/ZI = new()
+		ZI.Insert(H)
 	..()
 
 /datum/reagent/growthserum

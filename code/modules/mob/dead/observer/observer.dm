@@ -118,6 +118,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 
 	grant_all_languages()
+	GLOB.dead_mob_list += src
 	..()
 
 /mob/dead/observer/narsie_act()
@@ -294,10 +295,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Stat()
 	..()
 	if(statpanel("Status"))
-		if(SSticker && SSticker.mode)
-			for(var/datum/gang/G in SSticker.mode.gangs)
-				if(G.is_dominating)
-					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
+		if(SSticker.HasRoundStarted())
 			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
@@ -357,7 +355,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(!A.hidden)
 			filtered += A
 	var/area/thearea  = input("Area to jump to", "BOOYEA") as null|anything in filtered
-	
+
 	if(!thearea)
 		return
 

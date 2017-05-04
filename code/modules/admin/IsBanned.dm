@@ -63,7 +63,7 @@
 
 		if(!SSdbcore.Connect())
 			log_world("Ban database connection failure. Key [ckeytext] not checked")
-			GLOB.diary << "Ban database connection failure. Key [ckeytext] not checked"
+			GLOB.world_game_log << "Ban database connection failure. Key [ckeytext] not checked"
 			return
 
 		var/ipquery = ""
