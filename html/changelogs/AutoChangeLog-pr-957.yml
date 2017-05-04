@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - bugfix: "revenants now properly resurrect from ectoplasm, as opposed to ectoplasm merely spawning a new grief ghost"
