@@ -6,6 +6,7 @@
   )
 
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
+#define CULT_POLL_WAIT 2400
 
 /proc/get_area(atom/A)
 	if (!istype(A))
@@ -489,41 +490,38 @@
 	var/time_passed = world.time
 	var/list/yes_voters = new
 	var/list/cult_total = new
-	if(world.time<1800)
-		Nominee << "It would be premature to select a leader while everyone is still settling in, try again in [round((1800-world.time)/10)] seconds"
+	if(world.time < CULT_POLL_WAIT)
+		Nominee << "It would be premature to select a leader while everyone is still settling in, try again in [round((CULT_POLL_WAIT-world.time)/10)] seconds"
 		return
 	for(var/datum/mind/B in SSticker.mode.cult)
-		if(!isliving(B.current))
-			continue
 		var/mob/living/M = B.current
-		if(isliving(M))
+		if(!M.incapacitated())
 			M << 'sound/hallucinations/im_here1.ogg'
 			M.verbs -= /mob/living/proc/cult_master
 			to_chat(M, "<span class='cultlarge'>Acolyte [Nominee] has asserted that they are worthy of leading the cult. A vote will be called shortly.</span>")
 	sleep(250)
 	for(var/datum/mind/B in SSticker.mode.cult)
-		if(!isliving(B.current))
-			continue
 		var/mob/living/M = B.current
-		M << 'sound/magic/exit_blood.ogg'
-		switch(askuser(M,"[Nominee] seeks to lead your cult, do you support  them?","Please answer in 20 seconds!","Yes","No","Abstain", StealFocus=0, Timeout=200))
-			if(1)
-				if((world.time-time_passed)>500)
-					M << "<span class='danger'>Sorry, your vote came too late!</span>"
-					M << 'sound/machines/buzz-sigh.ogg'
-				else
-					M << "<span class='notice'>Choice registered: Yes.</span>"
-					yes_voters += M
-					cult_total += M
-			if(2)
-				if((world.time-time_passed)>500)
-					M << "<span class='danger'>Sorry, your vote came too late!</span>"
-					M << 'sound/machines/buzz-sigh.ogg'
-				else
-					M << "<span class='danger'>Choice registered: No.</span>"
-					cult_total += M
-			if(3)
-				M << "<span class='danger'>Choice registered: Abstain.</span>"
+		if(!M.incapacitated())
+			M << 'sound/magic/exit_blood.ogg'
+			switch(askuser(M,"[Nominee] seeks to lead your cult, do you support  them?","Please answer in 20 seconds!","Yes","No","Abstain", StealFocus=0, Timeout=200))
+				if(1)
+					if((world.time-time_passed)>500)
+						to_chat(M, "<span class='danger'>Sorry, your vote came too late!</span>")
+						M << 'sound/machines/buzz-sigh.ogg'
+					else
+						M << "<span class='notice'>Choice registered: Yes.</span>"
+						yes_voters += M
+						cult_total += M
+				if(2)
+					if((world.time-time_passed)>500)
+						to_chat(M, "<span class='danger'>Sorry, your vote came too late!</span>")
+						M << 'sound/machines/buzz-sigh.ogg'
+					else
+						to_chat(M, "<span class='danger'>Choice registered: No.</span>")
+						cult_total += M
+				if(3)
+					to_chat(M, "<span class='danger'>Choice registered: Abstain.</span>")
 	sleep(300)
 	if(yes_voters.len > (cult_total.len/2))
 		var/datum/action/innate/cultmast/finalreck/FinalReckoning = new()
@@ -532,16 +530,17 @@
 		Mark.Grant(Nominee)
 		Nominee.mind.special_role = "Cult Master"
 		Nominee.update_action_buttons_icon()
+		Nominee.apply_status_effect(/datum/status_effect/cult_master)
 		SSticker.mode.set_antag_hud(Nominee,"cultmaster")
 		GLOB.cult_mastered = TRUE
 		for(var/datum/mind/B in SSticker.mode.cult)
-			if(isliving(B.current))
-				B.current << "<span class='cultlarge'>[Nominee] has the cult's support and is now their master. Follow their orders to the best of your ability!"
+			if(!B.current.incapacitated())
+				to_chat(B.current,"<span class='cultlarge'>[Nominee] has the cult's support and is now their master. Follow their orders to the best of your ability!")
 		return TRUE
 	else
 		for(var/datum/mind/B in SSticker.mode.cult)
-			if(isliving(B.current))
-				B.current << "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte."
+			if(!B.current.incapacitated())
+				to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.")
 				B.current.verbs += /mob/living/proc/cult_master
 		return FALSE
 

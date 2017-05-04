@@ -283,7 +283,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/bloodsense/process()
 	var/atom/blood_target
 	if(GLOB.blood_target)
-		blood_target = GLOB.blood_target
+		if(!get_turf(GLOB.blood_target))
+			GLOB.blood_target = null
+		else
+			blood_target = GLOB.blood_target
 	if(Cviewer)
 		if(Cviewer.seeking && Cviewer.master)
 			blood_target = Cviewer.master

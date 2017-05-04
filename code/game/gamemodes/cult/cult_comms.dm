@@ -1,3 +1,5 @@
+// Contains cult communion, guide, and cult master abilities
+#define MARK_COOLDOWN
 
 /datum/action/innate/cultcomm
 	name = "Communion"
@@ -73,7 +75,7 @@
 /mob/living/proc/cult_master()
 	set category = "Cultist"
 	set name = "Assert Leadership"
-	pollCultists(src)
+	pollCultists(src)  // This proc handles the distribution of cult master actions
 
 /datum/action/innate/cultmast
 	background_icon_state = "bg_demon"
@@ -87,19 +89,20 @@
 
 /datum/action/innate/cultmast/finalreck
 	name = "Final Reckoning"
-	desc = "A single use spell that brings the entire cult to the master's location"
+	desc = "A single-use spell that brings the entire cult to the master's location"
 	button_icon_state = "sintouch"
 
 /datum/action/innate/cultmast/finalreck/Activate()
 	var/list/destinations = list()
 	for(var/turf/T in orange(1,owner))
-		destinations += T
+		if(istype(T, /turf/open))
+			destinations += T
 	for(var/i in 1 to 4)
 		owner.chant(i)
 		if(do_after(owner, 30, target = owner))
 			for(var/datum/mind/B in SSticker.mode.cult)
-				if(isliving(B.current) && istype(B.current, /mob/living))
-					var/mob/living/M = B.current
+				var/mob/living/M = B.current
+				if(isliving(M) && M.stat != DEAD)
 					var/turf/mobloc = get_turf(M)
 					switch(i)
 						if (1)
@@ -161,8 +164,7 @@
 	return ..()
 
 /datum/action/innate/cultmast/cultmark/Destroy()
-	qdel(CM)
-	CM = null
+	QDEL_NULL(CM)
 	return ..()
 
 /datum/action/innate/cultmast/cultmark/Activate()
@@ -199,17 +201,19 @@
 		var/area/A = get_area(target)
 		for(var/datum/mind/B in SSticker.mode.cult)
 			var/mob/living/M = B.current
-			M << "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [GLOB.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>"
-			M << pick(sound('sound/hallucinations/over_here2.ogg',0,1,75), sound('sound/hallucinations/over_here3.ogg',0,1,75))
-			var/image/cult_marker = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
-			M.client.images |= cult_marker
-			addtimer(CALLBACK(M, /mob/living/proc/reset_blood_image, cult_marker), 900, TIMER_OVERRIDE)
+			if(M.stat != DEAD)
+				to_chat(M, "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [GLOB.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
+				M << pick(sound('sound/hallucinations/over_here2.ogg',0,1,75), sound('sound/hallucinations/over_here3.ogg',0,1,75))
+				var/image/cult_marker = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+				M.client.images |= cult_marker
+				addtimer(CALLBACK(M, /mob/living/proc/reset_blood_image, cult_marker), 900, TIMER_OVERRIDE)
 		return TRUE
 	return FALSE
 
 /mob/living/proc/reset_blood_image(var/image/cult_marker)
-	to_chat(src,"<span class='cultlarge'><b>The blood mark on [GLOB.blood_target] has ended!</b></span>")
+	if(GLOB.blood_target && src.stat!=DEAD)
+		to_chat(src,"<span class='cultlarge'><b>The blood mark has expired!</b></span>")
 	if(client)
 		client.images.Remove(cult_marker)
-	cult_marker = null
+	QDEL_NULL(cult_marker)
 	GLOB.blood_target = null

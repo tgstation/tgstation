@@ -65,6 +65,7 @@
 	cult_memorization(owner)
 	if(jobban_isbanned(current, ROLE_CULTIST))
 		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, current, ROLE_CULTIST, ROLE_CULTIST), 0)
+	SSticker.mode.update_cult_icons_added(owner)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 	current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 
