@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Mania Motors now do minor toxin damage over time and will convert those affected if the toxin damage is high enough."
+  - balance: "The effects of a Mania Motor continue to apply to targets after they leave its range, though they will fall off extremely quickly."
+  - rscdel: "Mania Motors no longer cause brain damage."
