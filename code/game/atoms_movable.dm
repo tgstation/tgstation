@@ -571,7 +571,7 @@
 
 
 /* Language procs */
-/atom/movable/proc/get_language_holder()
+/atom/movable/proc/get_language_holder(shadow=TRUE)
 	if(language_holder)
 		return language_holder
 	else

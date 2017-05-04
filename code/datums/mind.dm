@@ -79,7 +79,8 @@
 
 /datum/mind/proc/get_language_holder()
 	if(!language_holder)
-		language_holder = current.language_holder.copy(src)
+		var/datum/language_holder/L = current.get_language_holder(shadow=FALSE)
+		language_holder = L.copy(src)
 
 	return language_holder
 

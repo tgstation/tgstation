@@ -55,8 +55,9 @@
 		return LANGUAGE_KNOWN
 	else
 		var/atom/movable/AM = get_atom()
-		if(AM.language_holder != src)
-			if(is_type_in_typecache(dt, AM.language_holder.shadow_languages))
+		var/datum/language_holder/L = AM.get_language_holder(shadow=FALSE)
+		if(L != src)
+			if(is_type_in_typecache(dt, L.shadow_languages))
 				return LANGUAGE_SHADOWED
 	return FALSE
 
