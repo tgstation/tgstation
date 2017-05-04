@@ -30560,7 +30560,7 @@
 /area/maintenance/starboard)
 "aXL" = (
 /obj/machinery/door/morgue{
-	name = "Librarian's Study";
+	name = "Curator's Study";
 	req_access_txt = "37"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
