@@ -8,6 +8,7 @@ Sneezing
 	Doesn't increase stage speed.
 	Very transmittable.
 	Low Level.
+	Forces you to drop held items.
 
 Bonus
 	Forces a spread type of AIRBORNE
@@ -35,5 +36,13 @@ Bonus
 				M.emote("sniff")
 			else
 				M.emote("sneeze")
-				A.spread(A.holder, 5)
+				Spreadzone(M, A)
+				var/obj/item/I = M.get_active_hand()
+				if(I)
+					M.drop_item()
 	return
+
+/datum/symptom/sneeze/proc/Spreadzone(mob/living/M, datum/disease/advance/A)
+	var/sneeze_zone = ((sqrt(21+A.totalResistance()))+(sqrt(21+A.totalTransmittable()))/2)
+	A.spread(A.holder, sneeze_zone)
+	return 1
