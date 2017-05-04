@@ -104,12 +104,8 @@
 
 	authorized += ID
 
-	message_admins("[key_name_admin(user.client)] \
-		(<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) \
-		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) \
-		has authorized early shuttle launch", 0, 1)
-	log_game("[key_name(user)] has authorized early shuttle launch in \
-		([x],[y],[z])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has authorized early shuttle launch", 0, 1)
+	log_game("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
 	// Now check if we're on our way
 	. = TRUE
 	process()
@@ -207,8 +203,17 @@
 
 	. = ..()
 
-/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, coefficient=1, area/signalOrigin, reason, redAlert)
-	var/call_time = SSshuttle.emergencyCallTime * coefficient
+/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signalOrigin, reason, redAlert, set_coefficient=null)
+	if(!isnum(set_coefficient))
+		var/security_num = seclevel2num(get_security_level())
+		switch(security_num)
+			if(SEC_LEVEL_GREEN)
+				set_coefficient = 2
+			if(SEC_LEVEL_BLUE)
+				set_coefficient = 1
+			else
+				set_coefficient = 0.5
+	var/call_time = SSshuttle.emergencyCallTime * set_coefficient
 	switch(mode)
 		// The shuttle can not normally be called while "recalling", so
 		// if this proc is called, it's via admin fiat
@@ -290,7 +295,7 @@
 				setTimer(SSshuttle.emergencyDockTime)
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-				feedback_add_details("emergency_shuttle", src.name)
+				SSblackbox.add_details("emergency_shuttle", src.name)
 
 				// Gangs only have one attempt left if the shuttle has
 				// docked with the station to prevent suffering from
@@ -412,8 +417,8 @@
 		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
 		return 1
 
-/obj/docking_port/mobile/pod/New()
-	..()
+/obj/docking_port/mobile/pod/Initialize()
+	. = ..()
 	if(id == "pod")
 		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
 
@@ -450,7 +455,7 @@
 	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
 /obj/docking_port/stationary/random/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 
@@ -492,8 +497,7 @@
 	icon_state = "safe"
 	var/unlocked = FALSE
 
-/obj/item/weapon/storage/pod/New()
-	..()
+/obj/item/weapon/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/suit/space/orange(src)
@@ -533,13 +537,13 @@
 	dir = EAST
 	roundstart_move = "backup_away"
 
-/obj/docking_port/mobile/emergency/backup/New()
+/obj/docking_port/mobile/emergency/backup/Initialize()
 	// We want to be a valid emergency shuttle
 	// but not be the main one, keep whatever's set
 	// valid.
 	// backup shuttle ignores `timid` because THERE SHOULD BE NO TOUCHING IT
 	var/current_emergency = SSshuttle.emergency
-	..()
+	. = ..()
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 

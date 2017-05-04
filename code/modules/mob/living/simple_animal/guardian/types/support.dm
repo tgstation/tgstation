@@ -16,7 +16,7 @@
 	var/toggle = FALSE
 
 /mob/living/simple_animal/hostile/guardian/healer/Initialize()
-	..()
+	. = ..()
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.add_hud_to(src)
 

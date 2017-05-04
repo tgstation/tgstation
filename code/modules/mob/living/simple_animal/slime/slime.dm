@@ -92,7 +92,7 @@
 		E.Grant(src)
 	create_reagents(100)
 	set_colour(new_colour)
-	..()
+	. = ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
@@ -118,7 +118,7 @@
 	if(stat != DEAD)
 		icon_state = icon_text
 		if(mood && !stat)
-			add_overlay(image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]"))
+			add_overlay("aslime-[mood]")
 	else
 		icon_state = icon_dead
 	..()

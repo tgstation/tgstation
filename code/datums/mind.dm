@@ -44,9 +44,7 @@
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
-	var/list/datum/objective/special_verbs = list()
 
-	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
@@ -54,6 +52,7 @@
 	var/linglink
 
 	var/miming = 0 // Mime's vow of silence
+	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
@@ -70,6 +69,10 @@
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	if(islist(antag_datums))
+		for(var/i in antag_datums)
+			qdel(i)
+		antag_datums = null
 	return ..()
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
@@ -86,13 +89,13 @@
 	if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
-	if(istype(current) && islist(current.antag_datums)) //wow apparently current isn't always living good fucking job SOMEONE
-		for(var/i in current.antag_datums)
-			var/datum/antagonist/D = i
-			D.transfer_to_new_body(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
+	var/mob/living/old_current = current
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
+	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
+		var/datum/antagonist/A = a
+		A.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
@@ -108,6 +111,41 @@
 /datum/mind/proc/wipe_memory()
 	memory = null
 
+// Datum antag mind procs
+/datum/mind/proc/add_antag_datum(datum_type)
+	if(!datum_type)
+		return
+	var/datum/antagonist/A = new datum_type(src)
+	if(!A.can_be_owned(src))
+		qdel(A)
+		return
+	LAZYADD(antag_datums, A)
+	A.on_gain()
+	return A
+
+/datum/mind/proc/remove_antag_datum(datum_type)
+	if(!datum_type)
+		return
+	var/datum/antagonist/A = has_antag_datum(datum_type)
+	if(A)
+		A.on_removal()
+		return TRUE
+
+/datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
+	for(var/a in antag_datums)
+		var/datum/antagonist/A = a
+		A.on_removal()
+
+/datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
+	if(!datum_type)
+		return
+	. = FALSE
+	for(var/a in antag_datums)
+		var/datum/antagonist/A = a
+		if(check_subtypes && istype(A, datum_type))
+			return A
+		else if(A.type == datum_type)
+			return A
 
 /*
 	Removes antag type's references from a mind.
@@ -234,7 +272,7 @@
 	creator.faction |= current.faction
 
 	if(creator.mind.special_role)
-		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
+		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
 		to_chat(current, "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>")
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
@@ -255,7 +293,7 @@
 		to_chat(recipient, "<i>[output]</i>")
 
 /datum/mind/proc/edit_memory()
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Not before round-start!", "Alert")
 		return
 
@@ -1143,7 +1181,7 @@
 					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
-					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
+					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
 				SSticker.mode.devils += src
 				special_role = "devil"
@@ -1192,14 +1230,17 @@
 				log_admin("[key_name(usr)] turned [current] into abductor.")
 				SSticker.mode.update_abductor_icons_added(src)
 			if("equip")
+				if(!ishuman(current))
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
+					return
+
+				var/mob/living/carbon/human/H = current
 				var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
 				if(gear)
-					var/datum/game_mode/abduction/temp = new
-					temp.equip_common(current)
 					if(gear=="Agent")
-						temp.equip_agent(current)
+						H.equipOutfit(/datum/outfit/abductor/agent)
 					else
-						temp.equip_scientist(current)
+						H.equipOutfit(/datum/outfit/abductor/scientist)
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
@@ -1468,11 +1509,8 @@
 	H.set_species(/datum/species/abductor)
 	var/datum/species/abductor/S = H.dna.species
 
-	switch(role)
-		if("Agent")
-			S.agent = 1
-		if("Scientist")
-			S.scientist = 1
+	if(role == "Scientist")
+		S.scientist = TRUE
 	S.team = team
 
 	var/list/obj/effect/landmark/abductor/agent_landmarks = new
@@ -1489,13 +1527,10 @@
 	if(teleport=="Yes")
 		switch(role)
 			if("Agent")
-				S.agent = 1
 				L = agent_landmarks[team]
-				H.loc = L.loc
 			if("Scientist")
-				S.scientist = 1
-				L = agent_landmarks[team]
-				H.loc = L.loc
+				L = scientist_landmarks[team]
+		H.forceMove(L.loc)
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S

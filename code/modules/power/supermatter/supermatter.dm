@@ -127,8 +127,9 @@
 /obj/machinery/power/supermatter_shard/make_frozen_visual()
 	return
 
-/obj/machinery/power/supermatter_shard/New()
+/obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
+	SSair.atmos_machinery += src
 	countdown = new(src)
 	countdown.start()
 	GLOB.poi_list |= src
@@ -139,6 +140,7 @@
 
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", "supermatter")
+	SSair.atmos_machinery -= src
 	QDEL_NULL(radio)
 	GLOB.poi_list -= src
 	QDEL_NULL(countdown)
@@ -181,7 +183,7 @@
 			E.energy = power
 		qdel(src)
 
-/obj/machinery/power/supermatter_shard/process()
+/obj/machinery/power/supermatter_shard/process_atmos()
 	var/turf/T = loc
 
 	if(isnull(T))		// We have a null turf...something is wrong, stop processing this entity.
@@ -296,6 +298,7 @@
 
 	if(produces_gas)
 		env.merge(removed)
+		air_update_turf()
 
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
@@ -341,7 +344,7 @@
 				lastwarning = REALTIMEOFDAY
 				if(!has_reached_emergency)
 					investigate_log("has reached the emergency point for the first time.", "supermatter")
-					message_admins("[src] has reached the emergency point <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+					message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 					has_reached_emergency = 1
 			else if(damage >= damage_archived) // The damage is still going up
 				SPEAK("[warning_alert] Instability: [stability]%")
@@ -388,7 +391,7 @@
 		power += Proj.damage * config_bullet_energy
 		if(!has_been_powered)
 			investigate_log("has been powered for the first time.", "supermatter")
-			message_admins("[src] has been powered for the first time <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+			message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
 			has_been_powered = 1
 	else if(takes_damage)
 		damage += Proj.damage * config_bullet_energy
@@ -487,7 +490,7 @@
 /obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
 	if(isliving(AM))
 		var/mob/living/user = AM
-		message_admins("[src] has consumed [key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		matter_power += 200

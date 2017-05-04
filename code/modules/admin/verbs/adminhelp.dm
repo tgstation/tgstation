@@ -67,7 +67,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
 		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A HREF='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.name]</A></span><br>"
-		
+
 	usr << browse(dat.Join(), "window=ahelp_list[state];size=600x480")
 
 //Tickets statpanel
@@ -253,7 +253,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(state == AHELP_ACTIVE)
 		to_chat(usr, "<span class='warning'>This ticket is already open.</span>")
 		return
-	
+
 	if(GLOB.ahelp_tickets.CKey2ActiveTicket(initiator_ckey))
 		to_chat(usr, "<span class='warning'>This user already has an active ticket, cannot reopen this one.</span>")
 		return
@@ -264,9 +264,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.resolved_tickets -= src
 	switch(state)
 		if(AHELP_CLOSED)
-			feedback_dec("ahelp_close")
+			SSblackbox.dec("ahelp_close")
 		if(AHELP_RESOLVED)
-			feedback_dec("ahelp_resolve")
+			SSblackbox.dec("ahelp_resolve")
 	state = AHELP_ACTIVE
 	closed_at = null
 	if(initiator)
@@ -276,7 +276,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].</span>"
 	message_admins(msg)
 	log_admin_private(msg)
-	feedback_inc("ahelp_reopen")
+	SSblackbox.inc("ahelp_reopen")
 	TicketPanel()	//can only be done from here, so refresh it
 
 //private
@@ -298,7 +298,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.ListInsert(src)
 	AddInteraction("<font color='red'>Closed by [key_name].</font>")
 	if(!silent)
-		feedback_inc("ahelp_close")
+		SSblackbox.inc("ahelp_close")
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
 		message_admins(msg)
 		log_admin_private(msg)
@@ -310,13 +310,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	RemoveActive()
 	state = AHELP_RESOLVED
 	GLOB.ahelp_tickets.ListInsert(src)
-	
+
 	if(initiator)
 		initiator.giveadminhelpverb()
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
 	if(!silent)
-		feedback_inc("ahelp_resolve")
+		SSblackbox.inc("ahelp_resolve")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
 		message_admins(msg)
 		log_admin_private(msg)
@@ -325,7 +325,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/Reject(key_name = key_name_admin(usr))
 	if(state != AHELP_ACTIVE)
 		return
-	
+
 	if(initiator)
 		initiator.giveadminhelpverb()
 
@@ -335,7 +335,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
 		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
 
-	feedback_inc("ahelp_reject")
+	SSblackbox.inc("ahelp_reject")
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
@@ -354,7 +354,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		to_chat(initiator, msg)
 
-	feedback_inc("ahelp_icissue")
+	SSblackbox.inc("ahelp_icissue")
 	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
@@ -472,14 +472,14 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(!msg)
 		return
 
-	feedback_add_details("admin_verb","Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(current_ticket)
 		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
 			if(current_ticket)
 				current_ticket.MessageNoRecipient(msg)
 				current_ticket.TimeoutVerb()
 				return
-			else 
+			else
 				to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>")
 		else
 			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
@@ -494,7 +494,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	if(!check_rights(R_ADMIN, TRUE))
 		return
-	
+
 	var/browse_to
 
 	switch(input("Display which ticket list?") as null|anything in list("Active Tickets", "Closed Tickets", "Resolved Tickets"))
@@ -506,7 +506,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			browse_to = AHELP_RESOLVED
 		else
 			return
-	
+
 	GLOB.ahelp_tickets.BrowseTickets(browse_to)
 
 //
@@ -591,7 +591,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		admin_keys += "[C][C.holder.fakekey ? "(Stealth)" : ""][C.is_afk() ? "(AFK)" : ""]"
 
 	for(var/admin in admin_keys)
-		if(LAZYLEN(admin_keys) > 1)
+		if(LAZYLEN(message) > 1)
 			message += ", [admin]"
 		else
 			message += "[admin]"

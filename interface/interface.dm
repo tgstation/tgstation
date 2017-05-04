@@ -78,29 +78,13 @@ Admin:
 	mob.hotkey_help()
 
 	if(holder)
-		src << adminhotkeys
+		to_chat(src, adminhotkeys)
 
 /client/verb/changelog()
 	set name = "Changelog"
 	set category = "OOC"
-	getFiles(
-		'html/88x31.png',
-		'html/bug-minus.png',
-		'html/cross-circle.png',
-		'html/hard-hat-exclamation.png',
-		'html/image-minus.png',
-		'html/image-plus.png',
-		'html/music-minus.png',
-		'html/music-plus.png',
-		'html/tick-circle.png',
-		'html/wrench-screwdriver.png',
-		'html/spell-check.png',
-		'html/burn-exclamation.png',
-		'html/chevron.png',
-		'html/chevron-expand.png',
-		'html/changelog.css',
-		'html/changelog.html'
-		)
+	var/datum/asset/changelog = get_asset_datum(/datum/asset/simple/changelog)
+	changelog.send(src)
 	src << browse('html/changelog.html', "window=changes;size=675x650")
 	if(prefs.lastchangelog != GLOB.changelog_hash)
 		prefs.lastchangelog = GLOB.changelog_hash
@@ -165,8 +149,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+Numpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
 </font>"}
 
-	src << hotkey_mode
-	src << other
+	to_chat(src, hotkey_mode)
+	to_chat(src, other)
 
 /mob/living/silicon/robot/hotkey_help()
 	//h = talk-wheel has a nonsense tag in it because \th is an escape sequence in BYOND.
@@ -217,8 +201,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tPGDN = activate held object
 </font>"}
 
-	src << hotkey_mode
-	src << other
+	to_chat(src, hotkey_mode)
+	to_chat(src, other)
 
 // Needed to circumvent a bug where .winset does not work when used on the window.on-size event in skins.
 // Used by /datum/html_interface/nanotrasen (code/modules/html_interface/nanotrasen/nanotrasen.dm)

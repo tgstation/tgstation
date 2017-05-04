@@ -2184,7 +2184,8 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Fore)
 "ge" = (
-/turf/closed/mineral/random,
+/obj/machinery/door/airlock/silver,
+/turf/open/floor/plating,
 /area/awaymission/BMPship/Midship)
 "gf" = (
 /obj/machinery/light{

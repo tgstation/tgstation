@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "config/away
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
-	var/list/Lines = file2list(filename)
+	var/list/Lines = world.file2list(filename)
 
 	if(!Lines.len)
 		return

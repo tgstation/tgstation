@@ -22,9 +22,9 @@
 		if(R.glass_icon_state)
 			icon_state = R.glass_icon_state
 		else
-			var/image/I = image(icon, "glassoverlay")
-			I.color = mix_color_from_reagents(reagents.reagent_list)
-			add_overlay(I)
+			var/mutable_appearance/reagent_overlay = mutable_appearance(icon, "glassoverlay")
+			reagent_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+			add_overlay(reagent_overlay)
 	else
 		icon_state = "glass_empty"
 		name = "drinking glass"
@@ -64,9 +64,9 @@
 			icon_state = largest_reagent.shot_glass_icon_state
 		else
 			icon_state = "shotglassclear"
-			var/image/I = image(icon, "shotglassoverlay")
-			I.color = mix_color_from_reagents(reagents.reagent_list)
-			add_overlay(I)
+			var/mutable_appearance/shot_overlay = mutable_appearance(icon, "shotglassoverlay")
+			shot_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+			add_overlay(shot_overlay)
 
 
 	else

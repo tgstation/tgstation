@@ -90,7 +90,7 @@
 	update_icon()
 
 	if(skin)
-		add_overlay(image('icons/mob/aibots.dmi', "medskin_[skin]"))
+		add_overlay("medskin_[skin]")
 
 	var/datum/job/doctor/J = new /datum/job/doctor
 	access_card.access += J.get_access()
@@ -530,9 +530,7 @@
 	if(emagged && prob(25))
 		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)
 
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
+	do_sparks(3, TRUE, src)
 	..()
 
 /mob/living/simple_animal/bot/medbot/proc/declare(crit_patient)

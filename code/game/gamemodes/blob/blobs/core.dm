@@ -33,12 +33,11 @@
 /obj/structure/blob/core/update_icon()
 	cut_overlays()
 	color = null
-	var/image/I = new('icons/mob/blob.dmi', "blob")
+	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
 	if(overmind)
-		I.color = overmind.blob_reagent_datum.color
-	add_overlay(I)
-	var/image/C = new('icons/mob/blob.dmi', "blob_core_overlay")
-	add_overlay(C)
+		blob_overlay.color = overmind.blob_reagent_datum.color
+	add_overlay(blob_overlay)
+	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay"))
 
 /obj/structure/blob/core/Destroy()
 	GLOB.blob_cores -= src

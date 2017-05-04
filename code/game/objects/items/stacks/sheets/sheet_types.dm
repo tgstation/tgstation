@@ -78,6 +78,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
 
+/obj/item/stack/sheet/metal/twenty
+	amount = 20
+
 /obj/item/stack/sheet/metal/five
 	amount = 5
 
@@ -325,7 +328,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.brass_recipes
-	..()
+	. = ..()
 	pixel_x = 0
 	pixel_y = 0
 

@@ -14,7 +14,7 @@
 	var/tables_required = 2
 	active = FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/New()
+/obj/machinery/power/emitter/energycannon/magical/Initialize()
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
