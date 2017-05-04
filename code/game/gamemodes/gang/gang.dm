@@ -258,7 +258,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(normies < (GLOB.joined_player_list*0.35))
 		priority_announce("Catastrophic casualties detected: Critical shuttle protocols activated - jamming recall signals across all frequencies.")
 		forced_shuttle = TRUE
-		if(SSshuttle.emergency.timeLeft(1) < emergencyCallTime * 0.4)
+		if(SSshuttle.emergency.timeLeft(1) < (SSshuttle.emergencyCallTime * 0.4))
 			SSshuttle.emergency.request(null, set_coefficient = 0.4)
 		
 		
