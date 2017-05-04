@@ -167,11 +167,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	spans += get_spans()
 
 	if(language)
-		var/datum/language/L = GLOB.language_datums[language]
-		if(!istype(L))
-			L = new language
-			GLOB.language_datums[language] = L
-
+		var/datum/language/L = GLOB.language_datum_instances[language]
 		spans |= L.spans
 
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
@@ -308,13 +304,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return GLOB.department_radio_keys[key_symbol]
 
 /mob/living/proc/get_message_language(message)
-	var/static/list/langlist
-	if(!langlist)
-		langlist = subtypesof(/datum/language)
-
 	if(copytext(message, 1, 2) == ",")
 		var/key = copytext(message, 2, 3)
-		for(var/ld in langlist)
+		for(var/ld in GLOB.all_languages)
 			var/datum/language/LD = ld
 			if(initial(LD.key) == key)
 				return LD

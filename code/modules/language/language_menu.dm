@@ -24,7 +24,7 @@
 		data["is_living"] = FALSE
 
 	data["languages"] = list()
-	for(var/ld in subtypesof(/datum/language))
+	for(var/ld in GLOB.all_languages)
 		var/result = language_holder.has_language(ld)
 		if(!result)
 			continue
@@ -47,7 +47,7 @@
 		data["omnitongue"] = language_holder.omnitongue
 
 		data["unknown_languages"] = list()
-		for(var/ld in subtypesof(/datum/language))
+		for(var/ld in GLOB.all_languages)
 			if(language_holder.has_language(ld))
 				continue
 			var/datum/language/LD = ld
@@ -68,7 +68,7 @@
 
 	var/language_name = params["language_name"]
 	var/datum/language/language_datum
-	for(var/ld in subtypesof(/datum/language))
+	for(var/ld in GLOB.all_languages)
 		var/datum/language/LD = ld
 		if(language_name == initial(LD.name))
 			language_datum = LD

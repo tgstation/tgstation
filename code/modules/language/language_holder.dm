@@ -32,7 +32,7 @@
 	languages[dt] = TRUE
 
 /datum/language_holder/proc/grant_all_languages(omnitongue=FALSE)
-	for(var/la in subtypesof(/datum/language))
+	for(var/la in GLOB.all_languages)
 		grant_language(la)
 
 	if(omnitongue)
