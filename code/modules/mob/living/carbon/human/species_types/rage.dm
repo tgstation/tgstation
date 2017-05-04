@@ -19,9 +19,7 @@ but essentially loses their ability to interact in any meaningful way that doesn
 	burnmod = 0.35
 	heatmod = 1.8
 	stunmod = 0.15
-	var/rage_rate = 600 //8 minutes to start with
-	var/rage_time = 0
-	var/rage_add = 1800 //3 minutes added per corpse eaten
+	mutanthands = /obj/item/weapon/melee/buff_arm
 
 /datum/species/rage/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
@@ -33,15 +31,7 @@ but essentially loses their ability to interact in any meaningful way that doesn
 			H.say("AAAAAARGGHH!!!")
 			H.gib()
 			return
-	for(var/V in H.held_items)
-		var/obj/item/I = V
-		if(istype(I))
-			if(H.dropItemToGround(I))
-				var/obj/item/weapon/melee/buff_arm/h = new /obj/item/weapon/melee/buff_arm()
-				H.put_in_hands(h)
-		else
-			var/obj/item/weapon/melee/buff_arm/h = new /obj/item/weapon/melee/buff_arm()
-			H.put_in_hands(h)
+
 	H.visible_message("<span class='danger'>[H]'s arms rapidly expand and contort into throbbing masses of muscle, their faces contorting into that of some wild, bloodlusting beast!</span>")
 	H.AddSpell(new /obj/effect/proc_holder/spell/aimed/groundpound)
 	H.resize = 1.25
