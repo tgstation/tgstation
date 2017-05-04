@@ -96,25 +96,10 @@
 				T.gib()
 				U.emote("burp")
 
- //shameless copy from armblade please don't hurt me, allows prying open unbolted doors
+ //attempt to pry open airlocks
 	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = target
-		if(!A.requiresID() || A.allowed(user))
-			return
-
-		if(A.locked)
-			to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
-			return
-
-		if(A.hasPower())
-			user.visible_message("<span class='warning'>[user] jams their hands into the central section of the airlock, trying to pry it open!</span>", "<span class='warning'>You start prying open the door..</span>", \
-			"<span class='italics'>You hear a metal screeching sound.</span>")
-			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
-			if(!do_after(user, 100, target = A))
-				return
-		user.visible_message("<span class='warning'>[user] forces the airlock to open with their [src]!</span>", "<span class='warning'>You managed to pry the door open.</span>", \
-		"<span class='italics'>You hear a metal screeching sound.</span>")
-		A.open(2)
+		A.force_pry(user)
 
 	else if(prob(25))
 		user.say(pick(";RAAAAAARRGH!!!",";GRRRRAAAUGGH!!!",";AAAAAARGGHH!!!"))
