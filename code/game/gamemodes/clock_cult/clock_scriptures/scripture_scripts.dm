@@ -177,6 +177,7 @@
 					new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
 				else
 					break
+	new /obj/effect/overlay/temp/ratvar/mending_mantra(get_turf(invoker))
 	return TRUE
 
 
