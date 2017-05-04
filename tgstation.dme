@@ -72,7 +72,6 @@
 #include "code\__HELPERS\_logging.dm"
 #include "code\__HELPERS\_string_lists.dm"
 #include "code\__HELPERS\AStar.dm"
-#include "code\__HELPERS\bandetect.dm"
 #include "code\__HELPERS\cmp.dm"
 #include "code\__HELPERS\files.dm"
 #include "code\__HELPERS\flags.dm"
