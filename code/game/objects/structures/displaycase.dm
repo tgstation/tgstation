@@ -1,3 +1,4 @@
+
 /obj/structure/displaycase
 	name = "display case"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -13,6 +14,7 @@
 	var/obj/item/showpiece = null
 	var/alert = 0
 	var/open = 0
+	var/openable = 1
 	var/obj/item/weapon/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
 
@@ -113,7 +115,7 @@
 	return
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
-	if(W.GetID() && !broken)
+	if(W.GetID() && !broken && openable)
 		if(allowed(user))
 			to_chat(user,  "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
 			toggle_lock(user)
@@ -258,6 +260,7 @@
 	var/added_roundstart = TRUE
 	alert = TRUE
 	integrity_failure = 0
+	openable = 0
 
 /obj/structure/displaycase/trophy/Initialize()
 	. = ..()
@@ -276,6 +279,14 @@
 /obj/structure/displaycase/trophy/attackby(obj/item/weapon/W, mob/user, params)
 
 	if(!user.Adjacent(src)) //no TK museology
+		return
+
+	if(user.a_intent == INTENT_HARM)
+		//take_damage(W.force)
+		//visible_message("[user] desecrates [src] with [W]","You hear the sound of a museum under siege")
+		//play_attack_sound(W.force)
+		//user.changeNext_move(CLICK_CD_MELEE)
+		..()
 		return
 
 	if(!(user.mind && user.mind.assigned_role == "Curator"))
