@@ -250,7 +250,7 @@
 /world/proc/RoundEndAnimation(round_end_sound_sent)
 	set waitfor = FALSE
 	var/round_end_sound
-	if(!SSticker && SSticker.round_end_sound)
+	if(SSticker.round_end_sound)
 		round_end_sound = SSticker.round_end_sound
 		if (!round_end_sound_sent)
 			for(var/thing in GLOB.clients)
