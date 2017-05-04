@@ -255,7 +255,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	for(var/mob/living/M in GLOB.player_list)
 		if(isliving(M) && !M.stat==DEAD && (!M.mind in get_all_gangsters())
 			normies++
-	if(normies < (GLOB.joined_player_list*.35))
+	if(normies < (GLOB.joined_player_list*0.35))
 		priority_announce("Catastrophic casualties detected: Critical shuttle protocols activated - jamming recall signals across all frequencies.")
 		forced_shuttle = TRUE
 		if(SSshuttle.emergency.timeLeft(1) < emergencyCallTime * 0.4)
