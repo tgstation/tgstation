@@ -1,0 +1,4 @@
+author: "BeeSting12"
+delete-after: True
+changes: 
+  - bugfix: "Omega shuttle now has lighting."
