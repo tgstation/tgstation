@@ -39,8 +39,6 @@
 				message_say = "FOR NAR-SIE!"
 			else if(role == "revolutionary" || role == "head revolutionary")
 				message_say = "VIVA LA REVOLUTION!"
-			else if(user.mind.gang_datum)
-				message_say = "[uppertext(user.mind.gang_datum.name)] RULES!"
 	user.say(message_say)
 	target = user
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)
