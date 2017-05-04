@@ -25,7 +25,7 @@
 
 TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_ears)()
 	set name = "Show/Hide GhostEars"
-	set category = ""
+	set category = "Preferences"
 	set desc = "See All Speech"
 	usr.client.prefs.chat_toggles ^= CHAT_GHOSTEARS
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"].")
@@ -36,7 +36,7 @@ TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_ears)()
 
 TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_sight)()
 	set name = "Show/Hide GhostSight"
-	set category = ""
+	set category = "Preferences"
 	set desc = "See All Emotes"
 	usr.client.prefs.chat_toggles ^= CHAT_GHOSTSIGHT
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"].")
@@ -47,7 +47,7 @@ TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_sight)()
 
 TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_whispers)()
 	set name = "Show/Hide GhostWhispers"
-	set category = ""
+	set category = "Preferences"
 	set desc = "See All Whispers"
 	usr.client.prefs.chat_toggles ^= CHAT_GHOSTWHISPER
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"].")
@@ -58,7 +58,7 @@ TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_whispers)()
 
 TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_radio)()
 	set name = "Show/Hide GhostRadio"
-	set category = ""
+	set category = "Preferences"
 	set desc = "See All Radio Chatter"
 	usr.client.prefs.chat_toggles ^= CHAT_GHOSTRADIO
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTRADIO) ? "see radio chatter" : "not see radio chatter"].")
@@ -69,7 +69,7 @@ TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_radio)()
 
 TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_pda)()
 	set name = "Show/Hide GhostPDA"
-	set category = ""
+	set category = "Preferences"
 	set desc = "See All PDA Messages"
 	usr.client.prefs.chat_toggles ^= CHAT_GHOSTPDA
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"].")
@@ -84,7 +84,7 @@ TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_pda)()
 //please be aware that the following two verbs have inverted stat output, so that "Toggle Deathrattle|1" still means you activated it
 TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox/Events, toggle_deathrattle)()
 	set name = "Toggle Deathrattle"
-	set category = ""
+	set category = "Preferences"
 	set desc = "Death"
 	usr.client.prefs.toggles ^= DISABLE_DEATHRATTLE
 	usr.client.prefs.save_preferences()
@@ -95,7 +95,7 @@ TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox/Events, toggle_deathrattle
 
 TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox/Events, toggle_arrivalrattle)()
 	set name = "Toggle Arrivalrattle"
-	set category = ""
+	set category = "Preferences"
 	set desc = "New Player Arrival"
 	usr.client.prefs.toggles ^= DISABLE_ARRIVALRATTLE
 	to_chat(usr, "You will [(usr.client.prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get messages when someone joins the station.")
@@ -106,7 +106,7 @@ TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox/Events, toggle_arrivalratt
 
 TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost, togglemidroundantag)()
 	set name = "Toggle Midround Antagonist"
-	set category = ""
+	set category = "Preferences"
 	set desc = "Midround Antagonist"
 	usr.client.prefs.toggles ^= MIDROUND_ANTAG
 	usr.client.prefs.save_preferences()

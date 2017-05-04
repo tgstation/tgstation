@@ -427,6 +427,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
 
+#ifdef TESTING
 //DEBUG
 //Some crude tools for testing savefiles
 //path is the savefile path
@@ -438,3 +439,4 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/savefile/S = new /savefile(path)
 	S.ImportText("/",file("[path].txt"))
 
+#endif
