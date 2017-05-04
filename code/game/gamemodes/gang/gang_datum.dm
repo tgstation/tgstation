@@ -14,6 +14,7 @@
 	var/list/territory_new = list()
 	var/list/territory_lost = list()
 	var/dom_attempts = 2
+	var/recalls = 1
 	var/points = 15
 	var/datum/atom_hud/antag/gang/ganghud
 	var/is_deconvertible = TRUE //Can you deconvert normal gangsters from the gang
