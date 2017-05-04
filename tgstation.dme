@@ -1255,6 +1255,7 @@
 #include "code\modules\events\wizard\shuffle.dm"
 #include "code\modules\events\wizard\summons.dm"
 #include "code\modules\fields\fields.dm"
+#include "code\modules\fields\peaceborg_dampener.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
 #include "code\modules\flufftext\TextFilters.dm"

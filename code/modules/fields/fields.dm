@@ -12,16 +12,15 @@
 /proc/make_field(field_type, list/field_params, override_checks = FALSE, start_field = TRUE)
 	var/datum/field/F = new field_type()
 	if(!F.assume_params(field_params) && !override_checks)
-		world << "DEBUG: Field failed to properly assume params"
 		QDEL_NULL(F)
 	if(!F.check_variables() && !override_checks)
 		QDEL_NULL(F)
-		world << "DEBUG: Field failed variables check"
 	if(start_field && (F || override_checks))
 		F.Initialize()
 	return F
 
 /datum/field
+	var/name = "\improper Energy Field"
 	var/turf/center = null
 	var/last_x = 0
 	var/last_y = 0
@@ -57,26 +56,20 @@
 /datum/field/proc/assume_params(list/field_params)
 	var/pass_check = TRUE
 	for(var/param in field_params)
-		world << "DEBUG: Attempting to set var [param] to [field_params[param]]"
 		if(vars[param] || isnull(vars[param]) || (param in vars))
 			vars[param] = field_params[param]
-			world << "DEBUG: vars [param] being set to [field_params[param]]"
 		else
 			pass_check = FALSE
-			world << "DEBUG: [param] not in vars!"
 	return pass_check
 
 /datum/field/proc/check_variables()
 	var/pass = TRUE
 	if(field_shape == FIELD_NO_SHAPE)	//If you're going to make a manually updated field you shouldn't be using automatic checks so don't.
 		pass = FALSE
-		world << "DEBUG: Field has no shape"
 	if(square_radius < 0 || square_height < 0 || square_width < 0 || square_depth_up < 0 || square_depth_down < 0)
 		pass = FALSE
-		world << "DEBUG: Field radius error"
 	if(!istype(center))
 		pass = FALSE
-		world << "DEBUG: No center of field!"
 	return pass
 
 /datum/field/process()
@@ -90,10 +83,8 @@
 			CHECK_TICK	//Same here.
 
 /datum/field/proc/process_inner_turf(turf/T)
-	return
 
 /datum/field/proc/process_edge_turf(turf/T)
-	return
 
 /datum/field/proc/Initialize()
 	setup_field()
@@ -121,16 +112,20 @@
 				field_turfs -= T
 			else
 				needs_setup -= T
+			CHECK_TICK
 		for(var/turf/T in needs_setup)
 			setup_field_turf(T)
 			field_turfs += T
+			CHECK_TICK
 	if(setup_edge_turfs)
 		for(var/turf/T in edge_turfs)
 			cleanup_edge_turf(T)
 			edge_turfs -= T
+			CHECK_TICK
 		for(var/turf/T in edge_turfs_new)
 			setup_edge_turf(T)
 			edge_turfs += T
+			CHECK_TICK
 
 /datum/field/proc/on_move_field_turf(atom/movable/AM, turf/entering, atom/exiting)	//Exiting is an atom because turfs allow for all atoms to be "forget"/oldturf.
 	return TRUE	//Return FALSE to prevent movement.
@@ -144,7 +139,6 @@
 		recalculate_field()
 
 /datum/field/proc/post_setup_field()
-	return
 
 /datum/field/proc/setup_field()
 	update_new_turfs()
@@ -161,23 +155,15 @@
 
 /datum/field/proc/cleanup_field_turf(turf/T)
 	T.fields -= src
-	return
 
 /datum/field/proc/cleanup_edge_turf(turf/T)
 	T.field_edges -= src
-	return
 
 /datum/field/proc/setup_field_turf(turf/T)
-	if(src in T.fields)
-		world << "DEBUG: [src] ALREADY IN [T] FIELDS!"
 	T.fields += src
-	return
 
 /datum/field/proc/setup_edge_turf(turf/T)
-	if(src in T.field_edges)
-		world << "DEBUG: [src] ALREADY IN [T] FIELD EDGES!"
 	T.field_edges += src
-	return
 
 /datum/field/proc/update_new_turfs()
 	if(!istype(center))
@@ -211,13 +197,60 @@
 				for(var/turf/T in center_turfs)
 					edge_turfs_new -= T
 
+//Gets edge direction/corner, only works with square radius/WDH fields!
+/datum/field/proc/get_edgeturf_direction(turf/T, turf/center_override = null)
+	var/turf/checking_from = center
+	if(istype(center_override))
+		checking_from = center_override
+	if(field_shape != FIELD_SHAPE_RADIUS_SQUARE && field_shape != FIELD_SHAPE_CUSTOM_SQUARE)
+		return
+	if(!(T in edge_turfs))
+		return
+	switch(field_shape)
+		if(FIELD_SHAPE_RADIUS_SQUARE)
+			if(((T.x == (checking_from.x + square_radius)) || (T.x == (checking_from.x - square_radius))) && ((T.y == (checking_from.y + square_radius)) || (T.y == (checking_from.y - square_radius))))
+				return get_dir(checking_from, T)
+			if(T.x == (checking_from.x + square_radius))
+				return EAST
+			if(T.x == (checking_from.x - square_radius))
+				return WEST
+			if(T.y == (checking_from.y - square_radius))
+				return SOUTH
+			if(T.y == (checking_from.y + square_radius))
+				return NORTH
+		if(FIELD_SHAPE_CUSTOM_SQUARE)
+			if(((T.x == (checking_from.x + square_width)) || (T.x == (checking_from.x - square_width))) && ((T.y == (checking_from.y + square_height)) || (T.y == (checking_from.y - square_height))))
+				return get_dir(checking_from, T)
+			if(T.x == (checking_from.x + square_width))
+				return EAST
+			if(T.x == (checking_from.x - square_width))
+				return WEST
+			if(T.y == (checking_from.y - square_height))
+				return SOUTH
+			if(T.y == (checking_from.y + square_height))
+				return NORTH
+
 //DEBUG FIELDS
 /datum/field/debug
+	name = "\improper Color Matrix Field"
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
 	square_radius = 5
 	var/set_fieldturf_color = "#aaffff"
 	var/set_edgeturf_color = "#ffaaff"
 	setup_field_turfs = TRUE
+	setup_edge_turfs = TRUE
+	var/fieldturfs_setup = 0
+	var/edgeturfs_setup = 0
+
+/datum/field/debug/recalculate_field()
+	..()
+	world << "[fieldturfs_setup] fieldturfs set up"
+	fieldturfs_setup = 0
+
+/datum/field/debug/post_setup_field()
+	..()
+	world << "[fieldturfs_setup] fieldturfs set up"
+	fieldturfs_setup = 0
 
 /datum/field/debug/setup_edge_turf(turf/T)
 	T.color = set_edgeturf_color
@@ -228,6 +261,7 @@
 	..()
 
 /datum/field/debug/setup_field_turf(turf/T)
+	fieldturfs_setup++
 	T.color = set_fieldturf_color
 	..()
 
