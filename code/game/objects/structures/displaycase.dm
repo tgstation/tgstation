@@ -1,4 +1,3 @@
-
 /obj/structure/displaycase
 	name = "display case"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -12,9 +11,9 @@
 	max_integrity = 200
 	integrity_failure = 50
 	var/obj/item/showpiece = null
-	var/alert = 0
-	var/open = 0
-	var/openable = 1
+	var/alert = TRUE
+	var/open = FALSE
+	var/openable = TRUE
 	var/obj/item/weapon/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
 
@@ -134,7 +133,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
-	else if(!alert && istype(W,/obj/item/weapon/crowbar)) //Only applies to the lab cage and player made display cases
+	else if(!alert && istype(W,/obj/item/weapon/crowbar) && openable) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, "<span class='notice'>Remove the displayed object first.</span>")
@@ -260,7 +259,7 @@
 	var/added_roundstart = TRUE
 	alert = TRUE
 	integrity_failure = 0
-	openable = 0
+	openable = FALSE
 
 /obj/structure/displaycase/trophy/Initialize()
 	. = ..()
@@ -282,10 +281,6 @@
 		return
 
 	if(user.a_intent == INTENT_HARM)
-		//take_damage(W.force)
-		//visible_message("[user] desecrates [src] with [W]","You hear the sound of a museum under siege")
-		//play_attack_sound(W.force)
-		//user.changeNext_move(CLICK_CD_MELEE)
 		..()
 		return
 
