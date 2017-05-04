@@ -6,18 +6,16 @@ SUBSYSTEM_DEF(server_maint)
 	flags = SS_POST_FIRE_TIMING|SS_FIRE_IN_LOBBY
 	priority = 10
 	var/list/currentrun
-	var/triggertime = null
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (config.hub)
 		world.visibility = 1
-	triggertime = REALTIMEOFDAY
 	..()
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
 	if(!resumed)
 		src.currentrun = GLOB.clients.Copy()
-	
+
 	var/list/currentrun = src.currentrun
 	var/round_started = SSticker.HasRoundStarted()
 
@@ -39,8 +37,3 @@ SUBSYSTEM_DEF(server_maint)
 			return
 
 #undef PING_BUFFER_TIME
-	if(config.sql_enabled)
-		sql_poll_population()
-		if(config.use_exp_tracking)
-			if(REALTIMEOFDAY > (triggertime +3000))	//server maint fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire
-				update_exp(10,0)

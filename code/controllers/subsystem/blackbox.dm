@@ -29,6 +29,11 @@ SUBSYSTEM_DEF(blackbox)
 	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON('[world.internet_address]'), '[world.port]')")
 	query_record_playercount.Execute()
 
+	if(config.use_exp_tracking)
+		//if(world.time > (triggertime +3000))	//server maint fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire
+		update_exp(10,0)
+
+
 /datum/controller/subsystem/blackbox/Recover()
 	msg_common = SSblackbox.msg_common
 	msg_science = SSblackbox.msg_science

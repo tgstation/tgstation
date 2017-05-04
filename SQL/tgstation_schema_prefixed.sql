@@ -260,24 +260,13 @@ CREATE TABLE `SS13_messages` (
 DROP TABLE IF EXISTS `SS13_role_time`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SS13_role_time` (
-  `ckey` varchar(32) NOT NULL,
-  `living` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `crew` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `command` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `engineering` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `medical` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `science` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `supply` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `security` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `silicon` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `service` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `special` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `ghost` mediumint(11) unsigned NOT NULL DEFAULT '0',
-  `exempt` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ckey`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE `SS13_role_time` 
+( `ckey` VARCHAR(32) NOT NULL ,
+ `job` VARCHAR(128) NOT NULL ,
+ `minutes` INT UNSIGNED NOT NULL,
+ PRIMARY KEY (`ckey`, `job`) 
+ ) ENGINE = InnoDB;
 
 --
 -- Table structure for table `SS13_player`

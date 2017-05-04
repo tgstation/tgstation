@@ -533,7 +533,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				continue
 			var/available_in_playtime = job.available_in_playtime(user.client)
 			if(available_in_playtime)
-				HTML += "<font color=red>[rank]<//font></td><td><font color=red> \[ " + get_exp_format(available_in_playtime) + " as " + job.get_exp_req_type()  + "\] </font></td></tr>"
+				HTML += "<font color=red>[rank]<//font></td><td><font color=red> \[ [get_exp_format(available_in_playtime)] as [job.get_exp_req_type()] \] </font></td></tr>"
 				continue
 			if(!job.player_old_enough(user.client))
 				var/available_in_days = job.available_in_days(user.client)
