@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
 	if(!G || (gangster_mind in get_all_gangsters()) || (gangster_mind.enslaved_to && !is_gangster(gangster_mind.enslaved_to)))
 		return 0
-	if(check && gangster_mind.current.isloyal()) //Check to see if the potential gangster is implanted
+	if(check && (gangster_mind.current.isloyal() || (gangster_mind in G.prev_targets)) ) //Check to see if the potential gangster is implanted or was a target of a hit.
 		return 1
 	G.gangsters += gangster_mind
 	gangster_mind.gang_datum = G
