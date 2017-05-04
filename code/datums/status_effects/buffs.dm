@@ -236,22 +236,24 @@
 	alert_type = null
 	var/alive = TRUE
 
-/datum/status_effect/cult_master/tick()
-	if(!owner)
-		src.Destroy()
-		return
-	if(owner.stat != DEAD && !alive)
-		alive = TRUE
-		return
-	if(owner.stat == DEAD && alive)
-		alive = FALSE
-		on_remove()
-
-/datum/status_effect/cult_master/on_remove()
+/datum/status/cult_master/deathrattle()
 	var/area/A = get_area(owner)
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(isliving(B.current))
 			var/mob/living/M = B.current
 			M << 'sound/hallucinations/veryfar_noise.ogg'
 			to_chat(M, "<span class='cultlarge'>The Cult's Master, [owner], has fallen in the [A]!")
+			
+			
+/datum/status_effect/cult_master/tick()
+	if(owner.stat != DEAD && !alive)
+		alive = TRUE
+		return
+	if(owner.stat == DEAD && alive)
+		alive = FALSE
+		deathrattle()
+
+/datum/status_effect/cult_master/on_remove()
+	deathrattle()
+	. = ..()
 
