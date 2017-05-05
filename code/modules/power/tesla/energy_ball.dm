@@ -54,6 +54,11 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 
 	. = ..()
 
+/obj/singularity/energy_ball/admin_investigate_setup()
+	if(istype(loc, /obj/singularity/energy_ball))
+		return
+	..()
+
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
 		handle_energy()
