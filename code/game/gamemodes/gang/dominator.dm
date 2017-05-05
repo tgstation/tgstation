@@ -51,7 +51,7 @@
 		if(time_remaining > 0)
 			var/open = 0
 			for(var/turf/T in circleviewturfs(center=user,radius=3) 
-				if(!istype(T, /turf/closed)
+				if(!istype(T, /turf/closed))
 					open++
 			if(open < 40)
 				gang.domination_timer += 2
