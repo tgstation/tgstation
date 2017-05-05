@@ -5,17 +5,22 @@
 				<span>Launchpad closed.</span>
 			</ui-section>
 		{{else}}
-			<ui-section>
-				<span><b>{{data.pad_name}}</b></span><br>
-				<ui-button icon="pencil" action='rename'>Rename</ui-button>
-				<ui-button icon="remove" style="danger" action='remove'>Remove</ui-button>
+			<ui-section label="Launchpad">
+			<span><b>{{data.pad_name}}</b></span><br>
+			<ui-button icon="pencil" action='rename'>Rename</ui-button>
+			<ui-button icon="remove" style="danger" action='remove'>Remove</ui-button>
 			</ui-section>
 
 			<ui-section label='Set Target'>
-				<span>      </span><ui-button icon='toggle-up' action='raisey'></ui-button><br>
-				<ui-button icon='toggle-left' action='lowerx'></ui-button>
-				<ui-button icon='toggle-right' action='raisex'></ui-button><br>
-				<span>      </span><ui-button icon='toggle-down' action='lowery'></ui-button>
+				<ui-button action='up-left'>↖</ui-button>
+				<ui-button action='up'>↑</ui-button>
+				<ui-button action='up-right'>↗</ui-button><br>
+				<ui-button action='left'>←</ui-button>
+				<ui-button action='reset'>R</ui-button>
+				<ui-button action='right'>→</ui-button><br>
+				<ui-button action='down-left'>↙</ui-button>
+				<ui-button action='down'>↓</ui-button>
+				<ui-button action='down-right'>↘</ui-button><br>
 			</ui-section>
 			<ui-section label='Current Target'>
 				<span>{{data.abs_y}} {{data.north_south}}</span><br>
@@ -25,6 +30,7 @@
 				<ui-button action='launch' tooltip='Teleport everything on the pad to the target.' tooltip-side='down'>Launch</ui-button>
 				<ui-button action='pull' tooltip='Teleport everything from the target to the pad.' tooltip-side='down'>Pull</ui-button>
 			</ui-section>
+
 		{{/if}}
 
 	{{else}}

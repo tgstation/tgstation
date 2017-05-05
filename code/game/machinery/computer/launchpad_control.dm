@@ -70,10 +70,15 @@
 			t += "<div class='statusDisplay'><b>[pad.display_name]</b></div>"
 			t += "<A href='?src=\ref[src];change_name=1;pad=[current_pad]'>Rename</A>"
 			t += "<A href='?src=\ref[src];remove=1;pad=[current_pad]'>Remove</A><BR><BR>"
-			t += "  <A href='?src=\ref[src];raisey=1;pad=[current_pad]'>^</A><BR>"
-			t += "<A href='?src=\ref[src];lowerx=1;pad=[current_pad]'><</A>"
-			t += "<A href='?src=\ref[src];raisex=1;pad=[current_pad]'>></A><BR>"
-			t += "  <A href='?src=\ref[src];lowery=1;pad=[current_pad]'>v</A><BR>"
+			t += "<A href='?src=\ref[src];raisey=1;lowerx=1;pad=[current_pad]'>O</A>" //up-left
+			t += "<A href='?src=\ref[src];raisey=1;pad=[current_pad]'>^</A>" //up
+			t += "<A href='?src=\ref[src];raisey=1;raisex=1;pad=[current_pad]'>O</A><BR>" //up-right
+			t += "<A href='?src=\ref[src];lowerx=1;pad=[current_pad]'><</A>"//left
+			t += "<A href='?src=\ref[src];reset=1;pad=[current_pad]'>R</A>"//reset to 0
+			t += "<A href='?src=\ref[src];raisex=1;pad=[current_pad]'>></A><BR>"//right
+			t += "<A href='?src=\ref[src];lowery=1;lowerx=1;pad=[current_pad]'>O</A>"//down-left
+			t += "<A href='?src=\ref[src];lowery=1;pad=[current_pad]'>v</A>"//down
+			t += "<A href='?src=\ref[src];lowery=1;raisex=1;pad=[current_pad]'>O</A><BR>"//down-right
 			t += "<BR>"
 			t += "<div class='statusDisplay'>Current offset:</div><BR>"
 			t += "<div class='statusDisplay'>[abs(pad.y_offset)] [pad.y_offset > 0 ? "N":"S"]</div><BR>"
@@ -124,6 +129,10 @@
 	if(href_list["lowery"])
 		if(pad.y_offset > (pad.range * -1))
 			pad.y_offset--
+
+	if(href_list["reset"])
+		pad.y_offset = 0
+		pad.x_offset = 0
 
 	if(href_list["change_name"])
 		var/new_name = stripped_input(usr, "How do you want to rename the launchpad?", "Launchpad", pad.display_name, 15) as text|null

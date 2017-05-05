@@ -2,14 +2,15 @@
 	name = "bluespace launchpad"
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
 	icon = 'icons/obj/telescience.dmi'
-	icon_state = "qpad-idle"
-	var/icon_teleport = "pad-beam"
+	icon_state = "lpad-idle"
+	var/icon_teleport = "lpad-beam"
 	anchored = TRUE
 	use_power = TRUE
 	idle_power_usage = 200
 	active_power_usage = 2500
+	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
-	var/teleport_speed = 40 //30 due to base parts
+	var/teleport_speed = 35
 	var/range = 5
 	var/teleporting = FALSE //if it's in the process of teleporting
 	var/power_efficiency = 1
@@ -31,28 +32,29 @@
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
 /obj/machinery/launchpad/RefreshParts()
-	var/E = 0
+	var/E = -1 //to make default parts have the base value
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		E += M.rating
-	teleport_speed = initial(teleport_speed)
-	teleport_speed -= (E*10)
+	range = initial(range)
+	range += E
 
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "pad-idle-o", "qpad-idle", I))
-		return
+	if(stationary)
+		if(default_deconstruction_screwdriver(user, "lpad-idle-o", "lpad-idle", I))
+			return
 
-	if(panel_open)
-		if(istype(I, /obj/item/device/multitool))
-			var/obj/item/device/multitool/M = I
-			M.buffer = src
-			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
-			return 1
+		if(panel_open)
+			if(istype(I, /obj/item/device/multitool))
+				var/obj/item/device/multitool/M = I
+				M.buffer = src
+				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
+				return 1
 
-	if(exchange_parts(user, I))
-		return
+		if(exchange_parts(user, I))
+			return
 
-	if(default_deconstruction_crowbar(I))
-		return
+		if(default_deconstruction_crowbar(I))
+			return
 
 	return ..()
 
@@ -97,7 +99,7 @@
 		source = dest
 		dest = target
 
-	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
+	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1)
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
@@ -154,8 +156,9 @@
 	use_power = FALSE
 	idle_power_usage = 0
 	active_power_usage = 0
-	teleport_speed = 30 //20 due to base parts
+	teleport_speed = 20
 	range = 3
+	stationary = FALSE
 	var/closed = TRUE
 	var/obj/item/briefcase_launchpad/briefcase
 
@@ -236,7 +239,7 @@
 	name = "\improper Launchpad Control Remote"
 	desc = "Used to teleport objects to and from a portable launchpad."
 	icon = 'icons/obj/telescience.dmi'
-	icon_state = "gps-c"
+	icon_state = "blpad-remote"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=3;magnets=2;bluespace=4;syndicate=3"
@@ -246,7 +249,8 @@
 /obj/item/device/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 500, 500, master_ui, state) //width, height
+		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 550, 400, master_ui, state) //width, height
+		ui.set_style("syndicate")
 		ui.open()
 
 	ui.set_autoupdate(TRUE)
@@ -279,24 +283,57 @@
 	if(..())
 		return
 	switch(action)
-		if("raisex")
+		if("right")
 			if(pad.x_offset < pad.range)
 				pad.x_offset++
 			. = TRUE
 
-		if("lowerx")
+		if("left")
 			if(pad.x_offset > (pad.range * -1))
 				pad.x_offset--
 			. = TRUE
 
-		if("raisey")
+		if("up")
 			if(pad.y_offset < pad.range)
 				pad.y_offset++
 			. = TRUE
 
-		if("lowery")
+		if("down")
 			if(pad.y_offset > (pad.range * -1))
 				pad.y_offset--
+			. = TRUE
+
+		if("up-right")
+			if(pad.y_offset < pad.range)
+				pad.y_offset++
+			if(pad.x_offset < pad.range)
+				pad.x_offset++
+			. = TRUE
+
+		if("up-left")
+			if(pad.y_offset < pad.range)
+				pad.y_offset++
+			if(pad.x_offset > (pad.range * -1))
+				pad.x_offset--
+			. = TRUE
+
+		if("down-right")
+			if(pad.y_offset > (pad.range * -1))
+				pad.y_offset--
+			if(pad.x_offset < pad.range)
+				pad.x_offset++
+			. = TRUE
+
+		if("down-left")
+			if(pad.y_offset > (pad.range * -1))
+				pad.y_offset--
+			if(pad.x_offset > (pad.range * -1))
+				pad.x_offset--
+			. = TRUE
+
+		if("reset")
+			pad.y_offset = 0
+			pad.x_offset = 0
 			. = TRUE
 
 		if("rename")
