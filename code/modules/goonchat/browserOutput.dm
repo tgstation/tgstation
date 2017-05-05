@@ -13,8 +13,12 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
 	var/list/connectionHistory //Contains the connection history passed from chat cookie
 	var/broken       = FALSE
+	var/static/debug_log
 
 /datum/chatOutput/New(client/C)
+	if(!debug_log)
+		debug_log = file("[GLOB.log_directory]/goonchat.log")
+
 	owner = C
 	messageQueue = list()
 	connectionHistory = list()
@@ -72,6 +76,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(usr.client != owner)
 		return TRUE
 
+	debug_log << "[owner.ckey] >> [href]"
+
 	// Build arguments.
 	// Arguments are in the form "param[paramname]=thing"
 	var/list/params = list()
@@ -124,6 +130,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))
 		data = json_encode(data)
+	debug_log << "[C.ckey] << [data]"
 	C << output("[data]", "[window]:ehjaxCallback")
 
 //Sends client connection details to the chat to handle and save
@@ -170,11 +177,16 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /datum/chatOutput/proc/debug(error)
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
-#ifdef TESTING
+/datum/chatOutput/proc/Broke()
+	debug_log << "THE CHAT BROKE FOR [usr.client.ckey]"
+
 /client/verb/debug_chat()
 	set hidden = TRUE
 	chatOutput.ehjax_send(data = list("firebug" = TRUE))
-#endif
+
+/client/verb/chat_broke()
+	chatOutput.Broke()
+
 //Global chat procs
 
 GLOBAL_LIST_EMPTY(bicon_cache)
