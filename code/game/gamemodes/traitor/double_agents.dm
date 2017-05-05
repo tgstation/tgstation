@@ -109,6 +109,7 @@
 	if(!owner.current||owner.current.stat==DEAD) //Should already be guaranteed if this is only called from steal_targets_timer_func, but better to be safe code than sorry code 
 		return
 	var/already_traitored = traitored
+	to_chat(owner.current, "<B><font size=3 color=red> Target eliminated: [victim.name]</font></B>")
 	for(var/objective_ in victim.objectives)
 		if(istype(objective_, /datum/objective/assassinate/internal))
 			var/datum/objective/assassinate/internal/objective = objective_
