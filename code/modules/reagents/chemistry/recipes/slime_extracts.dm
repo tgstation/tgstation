@@ -481,7 +481,7 @@
 /datum/chemical_reaction/slime/adamantine
 	name = "Adamantine"
 	id = "adamantine"
-	required_reagents = list("iron" = 1)
+	required_reagents = list("plasma" = 1)
 	required_container = /obj/item/slime_extract/adamantine
 	required_other = 1
 
