@@ -287,7 +287,7 @@
 	
 	var/open = 0
 	for(var/turf/T in circleviewturfs(center=user,radius=3) 
-		if(!istype(T, /turf/closed)
+		if(!istype(T, /turf/closed))
 			open++
 	if(open < 40)
 		to_chat(user, "<span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires an open space so that walls do not interfere with the signal.</span>")
