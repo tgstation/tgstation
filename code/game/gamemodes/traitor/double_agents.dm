@@ -52,7 +52,7 @@
 		if(istype(objective_, /datum/objective/assassinate/internal))
 			var/datum/objective/assassinate/internal/objective = objective_
 			if(objective.target==owner)
-				to_chat(owner.current,"<B><font size=3 color=red> Now that all the loyalist agents have been purged, your syndicate sleeper training activates - YOU ARE THE TRAITOR! You now have no limits on collateral damage.</font></B>")
+				to_chat(owner.current,"<B><font size=3 color=red> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</font></B>")
 				traitored = TRUE
 			else
 				var/datum/objective/assassinate/internal/new_objective = new
@@ -104,7 +104,7 @@
 				if(objective.stolen)
 					var/fail_msg = "<B><font size=3 color=red>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </font></B>"
 					if(traitored)
-						fail_msg += "<B><font size=3 color=red>As a safety measure, the syndicate have wiped your memories and reinstated your belief that you are an internal affairs agent. </font><B><font size=5 color=red>While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>"
+						fail_msg += "<B><font size=3 color=red> The truth could still slip out!</font><B><font size=5 color=red>Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>"
 						traitored = FALSE
 					to_chat(owner.current, fail_msg)
 					objective.stolen=0
