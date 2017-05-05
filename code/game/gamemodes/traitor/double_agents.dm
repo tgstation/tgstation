@@ -1,5 +1,6 @@
 #define PINPOINTER_MINIMUM_RANGE 15 
 #define PINPOINTER_EXTRA_RANDOM_RANGE 10
+#define PINPOINTER_PING_TIME 40
 
 /datum/game_mode/traitor/internal_affairs
 	name = "Internal Affairs"
@@ -90,7 +91,7 @@
 	scan_for_target()
 	point_to_target()
 	var/datum/callback/C = new(src, .pinpointer_ping_func)
-	addtimer(C, 100)
+	addtimer(C, PINPOINTER_PING_TIME)
 
 /proc/give_pinpointer(datum/mind/owner)
 	if(owner && owner.current)
@@ -278,3 +279,4 @@
 
 #undef PINPOINTER_EXTRA_RANDOM_RANGE
 #undef PINPOINTER_MINIMUM_RANGE
+#undef PINPOINTER_PING_TIME
