@@ -34,7 +34,7 @@
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
 
-/obj/item/organ/tongue/can_speak_in_language(datum/language/dt)
+/obj/item/organ/tongue/could_speak_in_language(datum/language/dt)
 	. = is_type_in_typecache(dt, languages_possible)
 
 /obj/item/organ/tongue/lizard
