@@ -1,4 +1,0 @@
-author: "Incoming"
-delete-after: True
-changes: 
-  - tweak: "Display cases now require a key to open, which the curator spawns with"

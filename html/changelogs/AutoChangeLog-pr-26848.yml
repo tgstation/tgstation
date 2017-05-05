@@ -1,6 +1,0 @@
-author: "lordpidey"
-delete-after: True
-changes: 
-  - rscadd: "There is a new traitor poison, spewium.  It will cause uncontrollable vomiting, which gets worse the longer it's in your system.  An overdose can cause vomiting of organs."
-  - tweak: "Committing suicide with a gas pump can now shoot out random organs."
-  - bugfix: "Toxic vomit now shows up as intended."

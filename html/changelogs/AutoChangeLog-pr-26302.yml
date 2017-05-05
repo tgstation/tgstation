@@ -1,6 +1,0 @@
-author: "LanCartwright"
-delete-after: True
-changes: 
-  - rscadd: "Lesser smoke book to Delta and Metastation"
-  - rscdel: "Normal smoke book from Delta and Metastation"
-  - tweak: "Civilian smoke book now has a 360 max cooldown (from 120) and halved smoke output."
