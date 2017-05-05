@@ -91,7 +91,7 @@ Credit where due:
 	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 
 /datum/game_mode/clockwork_cult
-	name = "clockwork cult"
+	name = "Clockwork Cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	required_players = 24
