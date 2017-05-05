@@ -78,6 +78,12 @@ GLOBAL_LIST_INIT(lawlorify, list (
 			BANISH_FUNERAL_GARB = "If your corpse is clad in funeral garments, you will be unable to resurrect."
 		)
 	))
+
+//These are also used in the codex gigas, so let's declare them globally.
+GLOBAL_LIST_INIT(devil_pre_title, list("Dark ", "Hellish ", "Fallen ", "Fiery ", "Sinful ", "Blood ", "Fluffy "))
+GLOBAL_LIST_INIT(devil_title, list("Lord ", "Prelate ", "Count ", "Viscount ", "Vizier ", "Elder ", "Adept "))
+GLOBAL_LIST_INIT(devil_syllable, list("hal", "ve", "odr", "neit", "ci", "quon", "mya", "folth", "wren", "geyr", "hil", "niet", "twou", "phi", "coa"))
+GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", ", the Lord of all things", ", Jr."))
 /datum/antagonist/devil
 	//Don't delete upon mind destruction, otherwise soul re-selling will break.
 	delete_on_death = FALSE
@@ -140,22 +146,19 @@ GLOBAL_LIST_INIT(lawlorify, list (
 
 
 /proc/randomDevilName()
-	var/preTitle = ""
-	var/title = ""
-	var/mainName = ""
-	var/suffix = ""
+	var/name = ""
 	if(prob(65))
 		if(prob(35))
-			preTitle = pick("Dark ", "Hellish ", "Fiery ", "Sinful ", "Blood ")
-		title = pick("Lord ", "Fallen Prelate ", "Count ", "Viscount ", "Vizier ", "Elder ", "Adept ")
+			name = pick(GLOB.devil_pre_title)
+		name += pick(GLOB.devil_title)
 	var/probability = 100
-	mainName = pick("Hal", "Ve", "Odr", "Neit", "Ci", "Quon", "Mya", "Folth", "Wren", "Geyr", "Hil", "Niet", "Twou", "Phi", "Coa")
+	name += pick(GLOB.devil_syllable)
 	while(prob(probability))
-		mainName += pick("hal", "ve", "odr", "neit", "ci", "quon", "mya", "folth", "wren", "geyr", "hil", "niet", "twou", "phi", "coa")
+		name += pick(GLOB.devil_syllable)
 		probability -= 20
 	if(prob(40))
-		suffix = pick(" the Red", " the Soulless", " the Master", ", the Lord of all things", ", Jr.")
-	return preTitle + title + mainName + suffix
+		name += pick(GLOB.devil_suffix)
+	return name
 
 /proc/randomdevilobligation()
 	return pick(OBLIGATION_FOOD, OBLIGATION_FIDDLE, OBLIGATION_DANCEOFF, OBLIGATION_GREET, OBLIGATION_PRESENCEKNOWN, OBLIGATION_SAYNAME, OBLIGATION_ANNOUNCEKILL, OBLIGATION_ANSWERTONAME)
