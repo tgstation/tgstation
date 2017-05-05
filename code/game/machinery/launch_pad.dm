@@ -146,7 +146,7 @@
 	investigate_log(log_msg, "telesci")
 	updateDialog()
 
-
+//Starts in the briefcase. Don't spawn this directly, or it will runtime when closing.
 /obj/machinery/launchpad/briefcase
 	name = "briefcase launchpad"
 	desc = "A portable bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations. Controlled via remote."
@@ -196,6 +196,7 @@
 	else
 		return ..()
 
+//Briefcase item that contains the launchpad.
 /obj/item/briefcase_launchpad
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
