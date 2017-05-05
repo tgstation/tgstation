@@ -35,7 +35,7 @@
 
 /datum/action/agent_pinpointer
 	name = "Internal Affairs Integrated Pinpointer"
-	desc = "Even stealthier than a normal implant"
+	desc = "Even stealthier than a normal implant."
 	icon_icon = 'icons/obj/device.dmi'
 	button_icon_state = "pinon"
 	var/minimum_range = PINPOINTER_MINIMUM_RANGE
