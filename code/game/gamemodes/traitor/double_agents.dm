@@ -1,5 +1,5 @@
-#define PINPOINTER_MINIMUM_RANGE = 15 
-#define PINPOINTER_EXTRA_RANDOM_RANGE = 10
+#define PINPOINTER_MINIMUM_RANGE 15 
+#define PINPOINTER_EXTRA_RANDOM_RANGE 10
 
 /datum/game_mode/traitor/internal_affairs
 	name = "Internal Affairs"
