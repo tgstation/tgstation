@@ -36,6 +36,7 @@
 
 /datum/field/peaceborg_dampener/setup_edge_turf(turf/T)
 	var/dir_found = get_edgeturf_direction(T)
+	world << "DEBUG: dir_found [dir_found]"
 	T.add_overlay(get_edgeturf_overlay(dir_found))
 	turf_overlay_tracker[T] = dir_found
 	..()
@@ -80,4 +81,4 @@
 				release_projectile(AM)
 			else
 				capture_projectile(AM, FALSE)	//If you shoot from inside it your projectiles are going to be weaker on exiting it for balance..
-	..()
+	return ..()

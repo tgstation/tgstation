@@ -527,6 +527,11 @@
 	var/image/projectile_effect
 	var/field_radius = 3
 
+/obj/item/borg/projectile_dampen/debug
+	maxenergy = 50000
+	energy = 50000
+	energy_recharge = 50
+
 /obj/item/borg/projectile_dampen/Initialize()
 	..()
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
@@ -558,6 +563,7 @@
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
+	visible_message("<span class='warning'>The [src] shuts off!</span>")
 	for(var/obj/item/projectile/P in tracked)
 		restore_projectile(P)
 
@@ -581,6 +587,7 @@
 	energy -= usage
 	if(energy <= 0)
 		deactivate_field()
+		visible_message("<span class='warning'>The [src] blinks \"ENERGY DEPLETED\"</span>")
 
 /obj/item/borg/projectile_dampen/proc/process_recharge()
 	if(!istype(host))
