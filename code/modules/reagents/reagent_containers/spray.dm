@@ -135,6 +135,23 @@
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
 		src.reagents.clear_reagents()
+		if(reagents.has_reagent("sacid"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped sulphuric acid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped sulphuric acid from \a [src] at [area] ([T.x], [T.y], [T.z]).")
+		if(reagents.has_reagent("facid"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped Fluacid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped Fluacid from \a [src] at [area] [COORD(T)].")
+		if(reagents.has_reagent("lube"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped Space lube from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped Space lube from \a [src] at [area] [COORD(T)].")
+		if(reagents.has_reagent("clf3"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped CLF3 from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped CLF3 from \a [src] at [area] [COORD(T)].")
+		if(reagents.has_reagent("phlogiston"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped phlogiston from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped phlogiston from \a [src] at [area] [COORD(T)].")
+		return		
+
 
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
