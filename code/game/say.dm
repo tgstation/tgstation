@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
 
 	var/languageicon = ""
-	var/datum/language/D = get_language_instance(message_language)
+	var/datum/language/D = GLOB.language_datum_instances[message_language]
 	if(D.display_icon(src))
 		languageicon = "[D.get_icon()] "
 
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 			return speaker.say_quote(raw_message, spans, message_mode)
 	else if(language)
 		var/atom/movable/AM = speaker.GetSource()
-		var/datum/language/D = get_language_instance(language)
+		var/datum/language/D = GLOB.language_datum_instances[language]
 		raw_message = D.scramble(raw_message)
 		if(AM)
 			return AM.say_quote(raw_message, spans, message_mode)

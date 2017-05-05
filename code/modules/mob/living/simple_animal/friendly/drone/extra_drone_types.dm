@@ -17,6 +17,7 @@
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
 	health = 30
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	initial_language_holder = /datum/language_holder/drone/syndicate
 	faction = list("syndicate")
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
@@ -111,8 +112,7 @@
 	verb_whisper = "imparts"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
-	initial_languages = list(/datum/language/common, /datum/language/ratvar)
-	only_speaks_language = /datum/language/ratvar
+	initial_language_holder = /datum/language_holder/clockmob
 	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
