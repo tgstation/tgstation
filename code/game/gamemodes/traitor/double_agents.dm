@@ -18,18 +18,15 @@
 	var/list/target_list = list()
 	var/list/late_joining_list = list()
 
+
 /datum/game_mode/traitor/internal_affairs/post_setup()
 	var/i = 0
 	for(var/datum/mind/traitor in traitors)
 		i++
 		if(i + 1 > traitors.len)
 			i = 0
-		target_list[traitor] = traitors[i + 1]
-		if(traitor.current)
-			traitor.current.disabilities|=NOCLONE //makes things a little less messy
+		target_list[traitor] = traitors[i+1]	
 	..()
-
-
 
 /datum/objective/assassinate/internal/proc/give_pinpointer()
 	if(owner && owner.current)
@@ -40,6 +37,82 @@
 			pinpointer.owner=owner
 			H.equip_in_one_of_slots(pinpointer, slots)
 
+
+
+/proc/steal_targets(datum/mind/owner,datum/mind/victim)
+	if(!owner.current||owner.current.stat==DEAD) //Should already be guaranteed if this is only called from steal_targets_timer_func, but better to be safe code than sorry code 
+		return
+	var/traitored = 0
+	for(var/objective_ in victim.objectives)
+		if(istype(objective_, /datum/objective/assassinate/internal))
+			var/datum/objective/assassinate/internal/objective = objective_
+			if(objective.target==owner)
+				to_chat(owner.current,"<B><font size=3 color=red> Now that all the loyalist agents have been purged, your syndicate sleeper training activates - YOU ARE THE TRAITOR! You now have no limits on collateral damage.</font></B>")
+				traitored = 1
+			else
+				var/datum/objective/assassinate/internal/new_objective = new
+				new_objective.owner = owner
+				new_objective.target = objective.target
+				new_objective.update_explanation_text()
+				owner.objectives += new_objective
+				var/status_text = objective.check_completion() ? "neutralised" : "active"
+				to_chat(owner.current, "<B><font size=3 color=red> New target added to database: [objective.target.name] ([status_text]) </font></B>")
+		else if(istype(objective_, /datum/objective/destroy/internal))
+			var/datum/objective/destroy/internal/objective = objective_
+			var/datum/objective/destroy/internal/new_objective = new
+			if(objective.target==owner)
+				to_chat(owner.current,"<B><font size=3 color=red> Now that all the loyalist agents have been purged, your syndicate sleeper training activates - YOU ARE THE TRAITOR! You now have no limits on collateral damage.</font></B>")
+				traitored = 1
+			else
+				new_objective.owner = owner
+				new_objective.target = objective.target
+				new_objective.update_explanation_text()
+				owner.objectives += new_objective
+				var/status_text = objective.check_completion() ? "neutralised" : "active"
+				to_chat(owner.current, "<B><font size=3 color=red> New target added to database: [objective.target.name] ([status_text]) </font></B>")
+	if(traitored)
+		for(var/objective_ in victim.objectives)
+			if(!(istype(objective_, /datum/objective/assassinate/internal)||istype(objective_,/datum/objective/destroy/internal)))
+				continue
+			var/datum/objective/assassinate/internal/objective = objective_
+			objective.traitored = 1
+			
+	
+/proc/steal_targets_timer_func(datum/mind/owner)
+	if(owner&&owner.current&&owner.current.stat!=DEAD)
+		var/undo_traitored = 0
+		for(var/objective_ in owner.objectives)
+			if(!(istype(objective_, /datum/objective/assassinate/internal)||istype(objective_,/datum/objective/destroy/internal)))
+				continue
+			var/datum/objective/assassinate/internal/objective = objective_
+			if(!objective.target)
+				continue
+			if(objective.check_completion())
+				if(objective.stolen)
+					continue
+				else
+					steal_targets(owner,objective.target)
+					objective.stolen=1
+			else
+				if(objective.stolen)
+					var/fail_msg = "<B><font size=3 color=red>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </font></B>"
+					if(objective.traitored)
+						fail_msg += "<B><font size=3 color=red>As a safety measure, the syndicate have wiped your memories and reinstated your belief that you are an internal affairs agent. </font><B><font size=5 color=red>While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>"
+						undo_traitored = 1
+					to_chat(owner.current, fail_msg)
+					objective.stolen=0
+		if(undo_traitored)
+			for(var/objective_ in owner.objectives)
+				if(!(istype(objective_, /datum/objective/assassinate/internal)||istype(objective_,/datum/objective/destroy/internal)))
+					continue
+				var/datum/objective/assassinate/internal/objective = objective_
+				objective.traitored = 0
+	add_steal_targets_timer(owner)
+
+/proc/add_steal_targets_timer(datum/mind/owner)
+	var/datum/callback/C = new(null, /proc/steal_targets_timer_func, owner)
+	addtimer(C, 30)
+
 /datum/game_mode/traitor/internal_affairs/forge_traitor_objectives(datum/mind/traitor)
 
 	if(target_list.len && target_list[traitor]) // Is a double agent
@@ -47,7 +120,7 @@
 		// Assassinate
 		var/datum/mind/target_mind = target_list[traitor]
 		if(issilicon(target_mind.current))
-			var/datum/objective/destroy/destroy_objective = new
+			var/datum/objective/destroy/internal/destroy_objective = new
 			destroy_objective.owner = traitor
 			destroy_objective.target = target_mind
 			destroy_objective.update_explanation_text()
@@ -70,6 +143,7 @@
 			var/datum/objective/escape/escape_objective = new
 			escape_objective.owner = traitor
 			traitor.objectives += escape_objective
+		add_steal_targets_timer(traitor)
 
 	else
 		..() // Give them standard objectives.

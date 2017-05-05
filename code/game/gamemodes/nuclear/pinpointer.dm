@@ -65,7 +65,14 @@
 		if(TRACK_COORDINATES)
 			msg += "\"([target_x], [target_y])\"."
 		if(TRACK_INTERNAL_AGENT_TARGET)
-			msg += "\"crime\""
+			if(!target)
+				msg+= "\"criminals\""
+			else
+				if(!istype(target,/mob))
+					msg+="ERROR, REPORT TO NANOTRASEN"
+				else
+					var/mob/mob_target = target
+					msg += "\"[mob_target.real_name]\""
 		else
 			msg = "Its tracking indicator is blank."
 	to_chat(user, msg)
