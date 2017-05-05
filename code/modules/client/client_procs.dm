@@ -421,7 +421,7 @@ GLOBAL_LIST(external_rsc_urls)
 				if(!account_join_date)
 					account_age = -1
 				else
-					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),accountjoindate)")
+					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),[account_join_date])")
 					if(!query_datediff.Execute())
 						return
 					if(query_datediff.NextRow())
