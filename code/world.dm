@@ -266,7 +266,12 @@
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
+		'sound/roundend/disappointed.ogg'
+		'sound/roundend/G@ME of W33D - MLG Airhorn Remix.ogg'
+		'sound/roundend/Pokemon - MLG Airhorn Remix.ogg'
+		'sound/roundend/Skyrim - MLG Airhorn Remix.ogg'
+		'sound/roundend/Spooky Scary Skeletons - MLG Airhorn Remix [SPOOK WARNING].ogg'
+		'sound/roundend/Star Wars Duel of the Fates - MLG Airhorn Remix.ogg'\
 		)
 
 	for(var/thing in GLOB.clients)
