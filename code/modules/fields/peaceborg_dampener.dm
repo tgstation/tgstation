@@ -6,30 +6,21 @@
 	requires_processing = TRUE
 	setup_edge_turfs = TRUE
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
-	var/image/edgeturf_north
-	var/image/edgeturf_south
-	var/image/edgeturf_west
-	var/image/edgeturf_east
-	var/image/northwest_corner
-	var/image/southwest_corner
-	var/image/northeast_corner
-	var/image/southeast_corner
+	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
+	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
+	var/static/image/edgeturf_west = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west")
+	var/static/image/edgeturf_east = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_east")
+	var/static/image/northwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northwest")
+	var/static/image/southwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southwest")
+	var/static/image/northeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast")
+	var/static/image/southeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
 	var/list/turf/turf_overlay_tracker
 	var/obj/item/borg/projectile_dampen/projector = null
 	var/list/obj/item/projectile/tracked
 
-/datum/field/peaceborg_dampener/Initialize()
-	edgeturf_south = image('icons/effects/fields.dmi', "projectile_dampen_south")
-	edgeturf_north = image('icons/effects/fields.dmi', "projectile_dampen_north")
-	edgeturf_west = image('icons/effects/fields.dmi', "projectile_dampen_west")
-	edgeturf_east = image('icons/effects/fields.dmi', "projectile_dampen_east")
-	northwest_corner = image('icons/effects/fields.dmi', "projectile_dampen_northwest")
-	southwest_corner = image('icons/effects/fields.dmi', "projectile_dampen_southwest")
-	northeast_corner = image('icons/effects/fields.dmi', "projectile_dampen_northeast")
-	southeast_corner = image('icons/effects/fields.dmi', "projectile_dampen_southeast")
+/datum/field/peaceborg_dampener/New()
 	turf_overlay_tracker = list()
 	tracked = list()
-	..()
 
 /datum/field/peaceborg_dampener/process()
 	if(!istype(projector))
@@ -88,5 +79,5 @@
 			if(AM in tracked)
 				release_projectile(AM)
 			else
-				capture_projectile(AM)	//If you shoot from inside it your projectiles are going to be weaker on exiting it for balance..
+				capture_projectile(AM, FALSE)	//If you shoot from inside it your projectiles are going to be weaker on exiting it for balance..
 	..()

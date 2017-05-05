@@ -513,7 +513,7 @@
 	icon_state = "shield"
 	var/maxenergy = 1000
 	var/energy = 1000
-	var/energy_recharge = 20
+	var/energy_recharge = 10
 	var/energy_recharge_cyborg_drain_coefficient = 0.5
 	var/cyborg_cell_critical_percentage = 0.05
 	var/mob/living/silicon/robot/host = null
