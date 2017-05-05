@@ -656,7 +656,7 @@
 
 /datum/species/golem/plastic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.ventcrawler = VENTCRAWLER_ALWAYS
+	C.ventcrawler = VENTCRAWLER_NUDE
 
 /datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
 	. = ..()
