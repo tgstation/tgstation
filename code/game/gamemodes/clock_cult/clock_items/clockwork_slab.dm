@@ -326,13 +326,19 @@
 		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
 			production_text_addon = ", which increases for each human or silicon servant above <b>[SCRIPT_SERVANT_REQ]</b>"
 		production_time = production_time/600
-		var/production_text = "<b>[round(production_time)] minute\s"
+		var/list/production_text
+		if(round(production_time))
+			production_text = list("<b>[round(production_time)] minute\s")
 		if(production_time != round(production_time))
 			production_time -= round(production_time)
 			production_time *= 60
-			production_text += " and [round(production_time, 1)] second\s"
+			if(!LAZYLEN(production_text))
+				production_text = list("<b>[round(production_time, 1)] second\s")
+			else
+				production_text += " and [round(production_time, 1)] second\s"
 		production_text += "</b>"
 		production_text += production_text_addon
+		production_text = production_text.Join()
 
 		textlist = list("<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br>\
 		\

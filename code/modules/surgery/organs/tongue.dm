@@ -13,6 +13,7 @@
 	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/common,
+		/datum/language/draconic,
 		/datum/language/monkey,
 		/datum/language/ratvar
 	))
@@ -127,6 +128,7 @@
 	languages_possible = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
+		/datum/language/draconic,
 		/datum/language/ratvar,
 		/datum/language/monkey))
 
@@ -183,16 +185,8 @@
 	attack_verb = list("beeped", "booped")
 	taste_sensitivity = 25 // not as good as an organic tongue
 
-/obj/item/organ/tongue/robot/Initialize(mapload)
-	. = ..()
-	languages_possible = typecacheof(list(
-		/datum/language/xenocommon,
-		/datum/language/common,
-		/datum/language/ratvar,
-		/datum/language/monkey,
-		/datum/language/drone,
-		/datum/language/machine,
-		/datum/language/swarmer))
+/obj/item/organ/tongue/robot/can_speak_in_language(datum/language/dt)
+	. = TRUE // THE MAGIC OF ELECTRONICS
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT

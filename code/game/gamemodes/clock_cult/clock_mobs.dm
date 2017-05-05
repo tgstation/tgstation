@@ -13,6 +13,7 @@
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
+	verb_whisper = "imparts"
 	verb_yell = "harangues"
 	initial_languages = list(/datum/language/common, /datum/language/ratvar)
 	only_speaks_language = /datum/language/ratvar

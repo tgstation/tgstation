@@ -36,7 +36,7 @@
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
-	var/list/mutant_organs = list(/obj/item/organ/tongue)		//Internal organs that are unique to this race.
+	var/list/mutant_organs = list()		//Internal organs that are unique to this race.
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
 	var/brutemod = 1	// multiplier for brute damage
@@ -66,15 +66,10 @@
 	//Flight and floating
 	var/override_float = 0
 
-
-	//Eyes
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
-
-	//Ears
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
-
-	//Hands
 	var/obj/item/mutanthands = null
+	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
 
 ///////////
 // PROCS //
@@ -132,6 +127,7 @@
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
 	var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
 	var/obj/item/organ/ears/ears = C.getorganslot("ears")
+	var/obj/item/organ/tongue/tongue = C.getorganslot("tongue")
 
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
@@ -154,6 +150,11 @@
 			qdel(ears)
 			ears = new mutantears
 			ears.Insert(C)
+
+		if(tongue)
+			qdel(tongue)
+			tongue = new mutanttongue
+			tongue.Insert(C)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
@@ -363,7 +364,7 @@
 		var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
 		if(undershirt)
 			if(H.dna.species.sexes && H.gender == FEMALE)
-				standing += wear_female_version(undershirt.icon_state, undershirt.icon, -BODY_LAYER)
+				standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 			else
 				standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 

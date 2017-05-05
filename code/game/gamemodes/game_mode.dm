@@ -538,7 +538,6 @@
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
 	SSticker.mode.remove_cultist(newborgie, 0, 0)
 	SSticker.mode.remove_revolutionary(newborgie, 0)
-	SSticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()
