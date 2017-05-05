@@ -19,9 +19,6 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
-	var/T = null //For logging and stuff
-	var/area = null
-
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user)
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
@@ -49,8 +46,8 @@
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
-	T = get_turf(src)
-	area = get_area(src)
+	var/turf/T = get_turf(src)
+	var/area/area = get_area(src)
 	if(reagents.has_reagent("sacid"))
 		message_admins("[ADMIN_LOOKUPFLW(user)] fired sulphuric acid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
 		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [area] ([T.x], [T.y], [T.z]).")
@@ -140,8 +137,8 @@
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
 		src.reagents.clear_reagents()
-		T = get_turf(src)
-		area = get_area(src)
+		var/turf/T = get_turf(src)
+		var/turf/area = get_area(src)
 		if(reagents.has_reagent("sacid"))
 			message_admins("[ADMIN_LOOKUPFLW(user)] dumped sulphuric acid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
 			log_game("[key_name(user)] dumped sulphuric acid from \a [src] at [area] ([T.x], [T.y], [T.z]).")
