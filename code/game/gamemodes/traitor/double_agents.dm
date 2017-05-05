@@ -40,6 +40,7 @@
 /datum/internal_agent_state
 	var/traitored = FALSE
 	var/datum/mind/owner = null
+	var/list/datum/mind/targets_stolen = list()
 
 /proc/is_internal_objective(datum/objective/O)
 	return (istype(O, /datum/objective/assassinate/internal)||istype(O, /datum/objective/destroy/internal))
@@ -54,24 +55,26 @@
 			var/datum/objective/assassinate/internal/objective = objective_
 			if(objective.target==owner)
 				traitored = TRUE
-			else
+			else if(targets_stolen.Find(objective.target) == 0)
 				var/datum/objective/assassinate/internal/new_objective = new
 				new_objective.owner = owner
 				new_objective.target = objective.target
 				new_objective.update_explanation_text()
 				owner.objectives += new_objective
+				targets_stolen += objective.target
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
 				to_chat(owner.current, "<B><font size=3 color=red> New target added to database: [objective.target.name] ([status_text]) </font></B>")
 		else if(istype(objective_, /datum/objective/destroy/internal))
 			var/datum/objective/destroy/internal/objective = objective_
 			var/datum/objective/destroy/internal/new_objective = new
-			if(objective.target==owner&&can_traitor)
+			if(objective.target==owner)
 				traitored = TRUE
-			else
+			else if(targets_stolen.Find(objective.target) == 0)
 				new_objective.owner = owner
 				new_objective.target = objective.target
 				new_objective.update_explanation_text()
 				owner.objectives += new_objective
+				targets_stolen += objective.target
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
 				to_chat(owner.current, "<B><font size=3 color=red> New target added to database: [objective.target.name] ([status_text]) </font></B>")
 	if(traitored&&!already_traitored)
