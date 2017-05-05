@@ -44,14 +44,14 @@
 /proc/steal_targets(datum/mind/owner,datum/mind/victim)
 	if(!owner.current||owner.current.stat==DEAD) //Should already be guaranteed if this is only called from steal_targets_timer_func, but better to be safe code than sorry code 
 		return
-	var/traitored = 0
-	var/failed_traitored = 0
+	var/traitored = FALSE
+	var/failed_traitored = FALSE
 	for(var/objective_ in victim.objectives)
 		if(istype(objective_, /datum/objective/assassinate/internal))
 			var/datum/objective/assassinate/internal/objective = objective_
 			if(objective.target==owner)
 				to_chat(owner.current,"<B><font size=3 color=red> Now that all the loyalist agents have been purged, your syndicate sleeper training activates - YOU ARE THE TRAITOR! You now have no limits on collateral damage.</font></B>")
-				traitored = 1
+				traitored = TRUE
 			else
 				var/datum/objective/assassinate/internal/new_objective = new
 				new_objective.owner = owner
@@ -64,7 +64,7 @@
 			var/datum/objective/destroy/internal/objective = objective_
 			var/datum/objective/destroy/internal/new_objective = new
 			if(objective.target==owner)
-				traitored = 1
+				traitored = TRUE
 			else
 				new_objective.owner = owner
 				new_objective.target = objective.target
@@ -78,22 +78,22 @@
 				continue
 			var/datum/objective/assassinate/internal/objective = objective_
 			if(!objective.check_completion())
-				failed_traitored = 1
+				failed_traitored = TRUE
 				break
-			objective.traitored = 1
+			objective.traitored = TRUE
 		to_chat(owner.current,"<B><font size=3 color=red> Now that all the loyalist agents have been purged, your syndicate sleeper training activates - YOU ARE THE TRAITOR! You now have no limits on collateral damage.</font></B>")
 	if(failed_traitored)
 		for(var/objective_ in victim.objectives)
 			if(!is_internal_objective(objective_))
 				continue
 			var/datum/objective/assassinate/internal/objective = objective_
-			objective.traitored = 0
+			objective.traitored = FALSE
 		
 			
 	
 /proc/steal_targets_timer_func(datum/mind/owner)
 	if(owner&&owner.current&&owner.current.stat!=DEAD)
-		var/undo_traitored = 0
+		var/undo_traitored = FALSE
 		for(var/objective_ in owner.objectives)
 			if(!is_internal_objective(objective_))
 				continue
@@ -111,7 +111,7 @@
 					var/fail_msg = "<B><font size=3 color=red>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </font></B>"
 					if(objective.traitored)
 						fail_msg += "<B><font size=3 color=red>As a safety measure, the syndicate have wiped your memories and reinstated your belief that you are an internal affairs agent. </font><B><font size=5 color=red>While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>"
-						undo_traitored = 1
+						undo_traitored = TRUE
 					to_chat(owner.current, fail_msg)
 					objective.stolen=0
 		if(undo_traitored)
@@ -119,7 +119,7 @@
 				if(!is_internal_objective(objective_))
 					continue
 				var/datum/objective/assassinate/internal/objective = objective_
-				objective.traitored = 0
+				objective.traitored = FALSE
 	add_steal_targets_timer(owner)
 
 /proc/add_steal_targets_timer(datum/mind/owner)
