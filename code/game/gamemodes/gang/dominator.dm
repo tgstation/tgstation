@@ -13,6 +13,7 @@
 	var/datum/gang/gang
 	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
+	var/spam_prevention = 100
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/effect/countdown/dominator/countdown
 
@@ -48,6 +49,20 @@
 	if(gang && gang.is_dominating)
 		var/time_remaining = gang.domination_time_remaining()
 		if(time_remaining > 0)
+			var/open = 0
+			for(var/turf/T in circleviewturfs(center=user,radius=3) 
+				if(!istype(T, /turf/closed)
+					open++
+			if(open < 40)
+				gang.domination_timer += 2
+				playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+				if(spam_prevention < 6)
+					spam_prevention++
+				else
+					gang.message_gangtools("Warning: There are too many walls around your dominator, its signal is being blocked!")
+					say("Warning: There are too many walls around your dominator, its signal is being blocked!")
+					spam_prevention = 0
+				return
 			. = TRUE
 			playsound(loc, 'sound/items/timer.ogg', 10, 0)
 			if(!warned && (time_remaining < 180))
