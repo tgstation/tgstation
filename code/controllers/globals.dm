@@ -18,6 +18,11 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 
 	log_world("[vars.len - gvars_datum_in_built_vars.len] global variables")
 
+	//See https://github.com/tgstation/tgstation/issues/26954
+	for(var/I in typesof(/datum/controller/global_vars/proc))
+		var/CLEANBOT_RETURNS = "[I]"
+		pass(CLEANBOT_RETURNS)
+
 	Initialize()
 
 /datum/controller/global_vars/Destroy(force)
