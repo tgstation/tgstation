@@ -113,7 +113,7 @@
 	if(!owner.current||owner.current.stat==DEAD) //Should already be guaranteed if this is only called from steal_targets_timer_func, but better to be safe code than sorry code 
 		return
 	var/already_traitored = traitored
-	to_chat(owner.current, "<B><font size=3 color=red> Target eliminated: [victim.name]</font></B>")
+	to_chat(owner.current, "<span class='userdanger'> Target eliminated: [victim.name]</span>")
 	for(var/objective_ in victim.objectives)
 		if(istype(objective_, /datum/objective/assassinate/internal))
 			var/datum/objective/assassinate/internal/objective = objective_
@@ -127,7 +127,7 @@
 				owner.objectives += new_objective
 				targets_stolen += objective.target
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
-				to_chat(owner.current, "<B><font size=3 color=red> New target added to database: [objective.target.name] ([status_text]) </font></B>")
+				to_chat(owner.current, "<span class='userdanger'> New target added to database: [objective.target.name] ([status_text]) </span>")
 		else if(istype(objective_, /datum/objective/destroy/internal))
 			var/datum/objective/destroy/internal/objective = objective_
 			var/datum/objective/destroy/internal/new_objective = new
@@ -140,7 +140,7 @@
 				owner.objectives += new_objective
 				targets_stolen += objective.target
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
-				to_chat(owner.current, "<B><font size=3 color=red> New target added to database: [objective.target.name] ([status_text]) </font></B>")
+				to_chat(owner.current, "<span class='userdanger'> New target added to database: [objective.target.name] ([status_text]) </span>")
 	if(traitored&&!already_traitored)
 		for(var/objective_ in owner.objectives)
 			if(!is_internal_objective(objective_))
@@ -149,7 +149,7 @@
 			if(!objective.check_completion())
 				traitored = FALSE
 				return
-		to_chat(owner.current,"<B><font size=3 color=red> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</font></B>")
+		to_chat(owner.current,"<span class='userdanger'> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</span>")
 		
 			
 	
@@ -169,9 +169,9 @@
 					objective.stolen = TRUE
 			else
 				if(objective.stolen)
-					var/fail_msg = "<B><font size=3 color=red>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </font></B>"
+					var/fail_msg = "<span class='userdanger'>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </span>"
 					if(traitored)
-						fail_msg += "<B><font size=3 color=red> The truth could still slip out!</font><B><font size=5 color=red> Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>"
+						fail_msg += "<span class='userdanger'> The truth could still slip out!</font><B><font size=5 color=red> Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</span>"
 						traitored = FALSE
 					to_chat(owner.current, fail_msg)
 					objective.stolen = FALSE
@@ -265,11 +265,11 @@
 
 /datum/game_mode/traitor/internal_affairs/greet_traitor(datum/mind/traitor)
 	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting their manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
-	to_chat(traitor.current, "<B><font size=3 color=red>You are the [traitor_name].</font></B>")
-	to_chat(traitor.current, "<B><font size=3 color=red>Your target is suspected of [crime], and you have been tasked with eliminating them by any means necessary to avoid a costly and embarrassing public trial.</font></B>")
+	to_chat(traitor.current, "<span class='userdanger'>You are the [traitor_name].</span>")
+	to_chat(traitor.current, "<span class='userdanger'>Your target is suspected of [crime], and you have been tasked with eliminating them by any means necessary to avoid a costly and embarrassing public trial.</span>")
 	to_chat(traitor.current, "<B><font size=5 color=red>While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>")
-	to_chat(traitor.current, "<B><font size=3 color=red>For the sake of plausible deniability, you have been equipped with an array of captured Syndicate weaponry available via uplink.</font></B>")
-	to_chat(traitor.current, "<B><font size=3 color=red>Finally, watch your back. Your target has friends in high places, and intel suggests someone may have taken out a contract of their own to protect them.</font></B>")
+	to_chat(traitor.current, "<span class='userdanger'>For the sake of plausible deniability, you have been equipped with an array of captured Syndicate weaponry available via uplink.</span>")
+	to_chat(traitor.current, "<span class='userdanger'>Finally, watch your back. Your target has friends in high places, and intel suggests someone may have taken out a contract of their own to protect them.</span>")
 	traitor.announce_objectives()
 
 
