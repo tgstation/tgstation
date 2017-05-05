@@ -45,21 +45,6 @@
 	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
 	icon_state = "joy"
 
-/obj/item/clothing/mask/language
-	name = "language mask"
-	desc = "Wear this mask, and be taught and forced to speak a new language."
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	w_class = WEIGHT_CLASS_SMALL
-	var/datum/language/forced_language
-
-/obj/item/clothing/mask/language/equipped(mob/user, slot)
-	. = ..()
-	if(slot == slot_wear_mask)
-		user.grant_language(forced_language)
-
-/obj/item/clothing/mask/language/Destroy()
-	. = ..()
-
 /obj/item/clothing/mask/pig
 	name = "pig mask"
 	desc = "A rubber pig mask."
@@ -77,49 +62,6 @@
 /obj/item/clothing/mask/pig/speechModification(message)
 	if(voicechange)
 		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
-	return message
-
-/obj/item/clothing/mask/spig //needs to be different otherwise you could turn the speedmodification off and on
-	name = "Pig face"
-	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!" //It's only ever going to be attached to your face.
-	icon_state = "pig"
-	item_state = "pig"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	w_class = WEIGHT_CLASS_SMALL
-	var/voicechange = 1
-
-/obj/item/clothing/mask/spig/speechModification(message)
-	if(voicechange)
-		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
-	return message
-
-/obj/item/clothing/mask/cowmask
-	name = "Cowface"
-	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
-	icon = 'icons/mob/mask.dmi'
-	icon_state = "cowmask"
-	item_state = "cowmask"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	w_class = WEIGHT_CLASS_SMALL
-	var/voicechange = 1
-
-/obj/item/clothing/mask/cowmask/speechModification(message)
-	if(voicechange)
-		message = pick("Moooooooo!","Moo!","Moooo!")
-	return message
-
-/obj/item/clothing/mask/horsehead
-	name = "horse head mask"
-	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
-	icon_state = "horsehead"
-	item_state = "horsehead"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEYES|HIDEEARS
-	w_class = WEIGHT_CLASS_SMALL
-	var/voicechange = 1
-
-/obj/item/clothing/mask/horsehead/speechModification(message)
-	if(voicechange)
-		message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	return message
 
 /obj/item/clothing/mask/rat

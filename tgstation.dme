@@ -1149,6 +1149,7 @@
 #include "code\modules\clothing\masks\breath.dm"
 #include "code\modules\clothing\masks\gasmask.dm"
 #include "code\modules\clothing\masks\hailer.dm"
+#include "code\modules\clothing\masks\language_masks.dm"
 #include "code\modules\clothing\masks\miscellaneous.dm"
 #include "code\modules\clothing\neck\ties.dm"
 #include "code\modules\clothing\outfits\ert.dm"

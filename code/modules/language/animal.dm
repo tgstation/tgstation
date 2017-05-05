@@ -20,7 +20,7 @@
 	name = "Cat"
 	desc = "Cats use meowing and hissing in order to determine where mice can be located to eat."
 	syllables = list("meow", "esp", "purr", "HSSSSS")
-	key "+"
+	key = "+"
 
 /datum/language/animal/fox
 	name = "Fox"

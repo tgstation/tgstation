@@ -865,10 +865,9 @@
 /obj/item/weapon/spellbook/oneuse/barnyard/recoil(mob/living/carbon/user)
 	if(ishuman(user))
 		to_chat(user,"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>")
-		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
+		var/obj/item/clothing/mask/cursed_language/horse/magichead = new(user)
 		magichead.flags |= NODROP		//curses!
 		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
-		magichead.voicechange = 1	//NEEEEIIGHH
 		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
