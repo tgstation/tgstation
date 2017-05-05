@@ -29,6 +29,7 @@ Mineral Sheets
 GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 2, 4, 20), \
 	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Breakdown into sand", /obj/item/weapon/ore/glass, 1, one_per_turf = 0, on_floor = 1), \
 /*	new/datum/stack_recipe("sandstone wall", ???), \
@@ -335,11 +336,19 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 /*
  * Adamantine
  */
+GLOBAL_LIST_INIT(adamantine_recipes, list(
+	new /datum/stack_recipe("artificial golem shell", /obj/item/golem_shell/artificial, req_amount=1, res_amount=1),
+	))
+
 /obj/item/stack/sheet/mineral/adamantine
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
 	singular_name = "adamantine sheet"
 	origin_tech = "materials=4"
+
+/obj/item/stack/sheet/mineral/adamantine/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.adamantine_recipes
+	..()
 
 /*
  * Mythril

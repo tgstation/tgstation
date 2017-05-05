@@ -18,7 +18,7 @@
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("telepathically chirps")
 	bubble_icon = "slime"
-	initial_languages = list(/datum/language/common, /datum/language/slime)
+	initial_language_holder = /datum/language_holder/slime
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 

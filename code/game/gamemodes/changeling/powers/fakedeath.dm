@@ -5,8 +5,6 @@
 	dna_cost = 0
 	req_dna = 1
 	req_stat = DEAD
-	max_genetic_damage = 100
-
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)

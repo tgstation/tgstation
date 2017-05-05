@@ -20,7 +20,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
-	initial_languages = list(/datum/language/common, /datum/language/machine)
+	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon" , "turret")

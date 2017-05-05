@@ -43,7 +43,7 @@
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
-	
+
 	var/list/created = SSatoms.created_atoms
 	if(created)
 		created += src

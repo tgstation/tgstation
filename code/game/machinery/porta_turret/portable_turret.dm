@@ -364,6 +364,10 @@
 	var/list/targets = list()
 	var/turretview = view(scan_range, base)
 	for(var/A in turretview)
+		var/atom/AA = A
+		if(AA.invisibility>SEE_INVISIBLE_LIVING)
+			continue
+
 		if(check_anomalies)//if it's set to check for simple animals
 			if(istype(A, /mob/living/simple_animal))
 				var/mob/living/simple_animal/SA = A

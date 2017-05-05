@@ -145,8 +145,7 @@
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
-		if(user.drop_item())
-			W.loc = src
+		if(user.transferItemToLoc(W, src))
 			showpiece = W
 			to_chat(user, "<span class='notice'>You put [W] on display</span>")
 			update_icon()
@@ -256,6 +255,8 @@
 	var/trophy_message = ""
 	var/placer_key = ""
 	var/added_roundstart = TRUE
+	var/is_locked = TRUE
+
 	alert = TRUE
 	integrity_failure = 0
 
@@ -278,8 +279,16 @@
 	if(!user.Adjacent(src)) //no TK museology
 		return
 
-	if(!(user.mind && user.mind.assigned_role == "Curator"))
-		to_chat(user, "<span class='danger'>You're not sure how to work this. Maybe you should ask the curator for help.</span>")
+	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
+		if(added_roundstart)
+			is_locked = !is_locked
+			to_chat(user, "You [!is_locked ? "un" : ""]lock the case.")
+		else
+			to_chat(user, "<span class='danger'>The lock is stuck shut!</span>")
+		return
+
+	if(is_locked)
+		to_chat(user, "<span class='danger'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
 		return
 
 	if(!added_roundstart)
@@ -295,14 +304,13 @@
 			to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
 			return
 
-	if(user.drop_item())
+	if(user.transferItemToLoc(W, src))
 
 		if(showpiece)
 			to_chat(user, "You press a button, and [showpiece] descends into the floor of the case.")
 			QDEL_NULL(showpiece)
 
 		to_chat(user, "You insert [W] into the case.")
-		W.forceMove(src)
 		showpiece = W
 		added_roundstart = FALSE
 		update_icon()
@@ -335,6 +343,10 @@
 			QDEL_NULL(showpiece)
 		else
 			..()
+
+/obj/item/key/displaycase
+	name = "display case key"
+	desc = "The key to the curator's display cases."
 
 /obj/item/showpiece_dummy
 	name = "Cheap replica"

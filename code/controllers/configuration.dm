@@ -127,6 +127,7 @@
 	var/forbid_peaceborg = 0
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
 	var/notify_new_player_age = 0		// how long do we notify admins of a new player
+	var/notify_new_player_account_age = 0		// how long do we notify admins of a new byond account
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
@@ -474,6 +475,8 @@
 					panic_bunker = 1
 				if("notify_new_player_age")
 					notify_new_player_age = text2num(value)
+				if("notify_new_player_account_age")
+					notify_new_player_account_age = text2num(value)
 				if("irc_first_connection_alert")
 					irc_first_connection_alert = 1
 				if("check_randomizer")
