@@ -58,8 +58,13 @@
 	if(reagents.has_reagent("lube"))
 		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [area] [ADMIN_COORDJMP(T)].")
 		log_game("[key_name(user)] fired Space lube from \a [src] at [area] [COORD(T)].")
+	if(reagents.has_reagent("clf3"))
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired CLF3 from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+		log_game("[key_name(user)] fired CLF3 from \a [src] at [area] [COORD(T)].")
+	if(reagents.has_reagent("phlogiston"))
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired phlogiston from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+		log_game("[key_name(user)] fired phlogiston from \a [src] at [area] [COORD(T)].")
 	return
-
 
 /obj/item/weapon/reagent_containers/spray/proc/spray(atom/A)
 	var/range = max(min(current_range, get_dist(src, A)), 1)
