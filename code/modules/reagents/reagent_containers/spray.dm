@@ -19,8 +19,8 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
-	var/T = null
-	var/area = null
+	var/turf/T = null
+	var/area/area = null
 	
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user)
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
