@@ -217,6 +217,8 @@
 
 	var/launch_status = NOLAUNCH
 
+	var/knockdown = TRUE //Will it knock down mobs when it docks?
+
 	// A timid shuttle will not register itself with the shuttle subsystem
 	// All shuttle templates are timid
 	var/timid = FALSE
@@ -517,7 +519,7 @@
 
 			//move mobile to new location
 			for(var/atom/movable/AM in T0)
-				if(AM.onShuttleMove(T1, rotation, force))
+				if(AM.onShuttleMove(T1, rotation, knockdown))
 					moved_atoms += AM
 
 		if(rotation)
@@ -578,7 +580,7 @@
 					if(M.pulledby)
 						M.pulledby.stop_pulling()
 					M.stop_pulling()
-					M.visible_message("<span class='warning'>[src] slames into [M]!</span>"
+					M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
 					if(M.key || M.get_ghost(TRUE))
 						SSblackbox.add_details("shuttle_gib", "[type]")
 					else

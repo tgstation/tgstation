@@ -3,7 +3,7 @@
 	return
 
 // Called when shuttle attempts to move an atom.
-/atom/movable/proc/onShuttleMove(turf/T1, rotation, force = FALSE)
+/atom/movable/proc/onShuttleMove(turf/T1, rotation, knockdown = TRUE)
 	if(rotation)
 		shuttleRotate(rotation)
 	loc = T1
@@ -51,7 +51,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!buckled && !force)
+	if(!buckled && knockdown)
 		Weaken(3)
 
 /obj/effect/abstract/proximity_checker/onShuttleMove()
