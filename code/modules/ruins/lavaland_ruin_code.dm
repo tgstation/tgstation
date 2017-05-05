@@ -104,6 +104,9 @@
 		if(istype(O, /obj/item/stack/medical/gauze) || istype(O, /obj/item/stack/sheet/cloth))
 			species = /datum/species/golem/cloth
 
+		if(istype(O, /obj/item/stack/sheet/mineral/adamantine))
+			species = /datum/species/golem/adamantine
+
 		if(species)
 			if(O.use(10))
 				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
