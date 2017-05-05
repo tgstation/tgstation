@@ -32850,10 +32850,6 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bnU" = (
-/obj/machinery/door/airlock/research{
-	name = "Kill Room Access";
-	req_access_txt = "55"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
