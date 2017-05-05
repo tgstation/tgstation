@@ -48,11 +48,11 @@
 /datum/internal_agent_state/proc/steal_targets(datum/mind/victim)
 	if(!owner.current||owner.current.stat==DEAD) //Should already be guaranteed if this is only called from steal_targets_timer_func, but better to be safe code than sorry code 
 		return
+	var/already_traitored = traitored
 	for(var/objective_ in victim.objectives)
 		if(istype(objective_, /datum/objective/assassinate/internal))
 			var/datum/objective/assassinate/internal/objective = objective_
 			if(objective.target==owner)
-				to_chat(owner.current,"<B><font size=3 color=red> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</font></B>")
 				traitored = TRUE
 			else
 				var/datum/objective/assassinate/internal/new_objective = new
@@ -65,7 +65,7 @@
 		else if(istype(objective_, /datum/objective/destroy/internal))
 			var/datum/objective/destroy/internal/objective = objective_
 			var/datum/objective/destroy/internal/new_objective = new
-			if(objective.target==owner)
+			if(objective.target==owner&&can_traitor)
 				traitored = TRUE
 			else
 				new_objective.owner = owner
@@ -74,7 +74,7 @@
 				owner.objectives += new_objective
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
 				to_chat(owner.current, "<B><font size=3 color=red> New target added to database: [objective.target.name] ([status_text]) </font></B>")
-	if(traitored)
+	if(traitored&&!already_traitored)
 		for(var/objective_ in victim.objectives)
 			if(!is_internal_objective(objective_))
 				continue
@@ -82,7 +82,7 @@
 			if(!objective.check_completion())
 				traitored = FALSE
 				break
-		to_chat(owner.current,"<B><font size=3 color=red> Now that all the loyalist agents have been purged, your syndicate sleeper training activates - YOU ARE THE TRAITOR! You now have no limits on collateral damage.</font></B>")
+		to_chat(owner.current,"<B><font size=3 color=red> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</font></B>")
 		
 			
 	
@@ -99,7 +99,7 @@
 					continue
 				else
 					steal_targets(objective.target)
-					objective.stolen=1
+					objective.stolen = TRUE
 			else
 				if(objective.stolen)
 					var/fail_msg = "<B><font size=3 color=red>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </font></B>"
@@ -107,7 +107,7 @@
 						fail_msg += "<B><font size=3 color=red> The truth could still slip out!</font><B><font size=5 color=red>Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>"
 						traitored = FALSE
 					to_chat(owner.current, fail_msg)
-					objective.stolen=0
+					objective.stolen = FALSE
 	add_steal_targets_timer(owner)
 
 /datum/internal_agent_state/proc/add_steal_targets_timer()
