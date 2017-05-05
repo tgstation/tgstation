@@ -650,3 +650,8 @@
 	set waitfor = FALSE
 	if(!anchored && has_gravity())
 		step(src, movedir)
+
+/atom/movable/proc/HandleTurfChange(turf/T)
+	. = ..()
+	if(anchored && istype(T, /turf/open/space))
+		anchored = FALSE
