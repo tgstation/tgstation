@@ -158,8 +158,8 @@
 			message_admins("[ADMIN_LOOKUPFLW(user)] dumped phlogiston from \a [src] at [area] [ADMIN_COORDJMP(T)].")
 			log_game("[key_name(user)] dumped phlogiston from \a [src] at [area] [COORD(T)].")
 		if(reagents.has_reagent("plasma"))
-			message_admins("[ADMIN_LOOKUPFLW(user)] fired plasma from \a [src] at [area] [ADMIN_COORDJMP(T)].")
-			log_game("[key_name(user)] fired plasma from \a [src] at [area] [COORD(T)].")
+			message_admins("[ADMIN_LOOKUPFLW(user)] fired dumped from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped plasma from \a [src] at [area] [COORD(T)].")
 		return		
 
 
