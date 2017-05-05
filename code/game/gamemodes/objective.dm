@@ -104,6 +104,10 @@
 /datum/objective/assassinate/internal
 	var/stolen = 0 		//Have we already eliminated this target?
 
+/datum/objective/assassinate/internal/update_explanation_text()
+	..()
+	if(target && !target.current)
+		explanation_text = "Assassinate [target.name], who was obliterated"
 
 
 /datum/objective/mutiny

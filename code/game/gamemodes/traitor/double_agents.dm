@@ -78,7 +78,7 @@
 						continue
 					var/datum/objective/assassinate/internal/objective = objective_
 					var/mob/current = objective.target.current
-					if(current.stat!=DEAD)
+					if(current&&current.stat!=DEAD)
 						scan_target = current
 					break
 					
@@ -170,7 +170,7 @@
 				if(objective.stolen)
 					var/fail_msg = "<B><font size=3 color=red>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </font></B>"
 					if(traitored)
-						fail_msg += "<B><font size=3 color=red> The truth could still slip out!</font><B><font size=5 color=red>Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>"
+						fail_msg += "<B><font size=3 color=red> The truth could still slip out!</font><B><font size=5 color=red> Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>"
 						traitored = FALSE
 					to_chat(owner.current, fail_msg)
 					objective.stolen = FALSE
