@@ -1,12 +1,11 @@
 /datum/game_mode
 	var/traitor_name = "traitor"
 	var/list/datum/mind/traitors = list()
-	var/list/heisters = list()
-	
-	var/datum/objective/traitor_group/heist
+	var/list/datum/mind/heisters = list()
+	var/datum/objective/traitor_heist/heist
 	var/datum/mind/partner_one
 	var/datum/mind/partner_two
-	
+
 
 /datum/game_mode/traitor
 	name = "traitor"
@@ -15,8 +14,8 @@
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 0
-	required_enemies = 1
-	recommended_enemies = 4
+	required_enemies = 0
+	recommended_enemies = 0
 	reroll_friendly = 1
 	enemy_minimum_age = 0
 
@@ -66,8 +65,8 @@
 		spawn(rand(10,100))
 			finalize_traitor(traitor)
 			greet_traitor(traitor)
-	if(!partner_two)
-		partner_two = -1 //Block latejoiners from getting group objectives
+//	if(!partner_two)
+//		partner_two = -1 //Block latejoiners from getting group objectives
 	modePlayer += traitors
 	..()
 	return 1
@@ -135,15 +134,16 @@
 	else
 		var/is_hijacker = prob(10)
 		var/martyr_chance = prob(20)
-		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
-		if(!partner_two && traitors.len >= 6) 	//Set up a multi-traitor objective if there are enough traitors
-			if(!partner_one)
-				partner_one = traitor
-			else
-				partner_two = traitor
-				assign_group_role(partner_one)
-				assign_group_role(partner_two)
-			objective_count += 1					//Group objective counts toward number of objectives
+		var/objective_count = is_hijacker
+		//if(!partner_two && traitors.len >= 6) 	//Set up a multi-traitor objective if there are enough traitors
+		if(!partner_one)
+			partner_one = traitor
+			objective_count += 1
+		else
+			partner_two = traitor
+			objective_count += 1
+			assign_group_role(partner_one)
+			assign_group_role(partner_two)
 		var/list/active_ais = active_ais()
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 			if(prob(50))
@@ -346,7 +346,7 @@
 		uplink_loc.hidden_uplink = U
 		if(traitor_mob in heisters)
 			U.heist = heist.heist_ID
-		
+
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
@@ -364,9 +364,9 @@
 
 			to_chat(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
-	
-	
-		
+
+
+
 	if(!safety) // If they are not a rev. Can be added on to.
 		give_codewords(traitor_mob)
 
@@ -379,7 +379,7 @@
 	"left pocket" = slot_l_store,
 	"right pocket" = slot_r_store
 	)
-	if(prob(25)) 		//Assign exchange objectives
+	if(prob(1)) 		//Assign exchange objectives
 		//set faction
 		var/faction = "red"
 		if(owner == partner_two)
@@ -401,18 +401,19 @@
 			folder = new/obj/item/weapon/folder/syndicate/red(mob.loc)
 		else
 			folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
-			
+
 		equipped_slot = mob.equip_in_one_of_slots(folder, slots)
 		if (equipped_slot)
 			where = "In your [equipped_slot]"
 		to_chat(mob, "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>")
 	else		// Heists
 		if(!heist)
-			heist = new /datum/objective/traitor_group
-		heist.owner = owner
+			heist = new /datum/objective/traitor_heist
 		owner.objectives += heist
 		heisters += owner
-		heist.loadout(mob.loc)
+		for(var/obj/O in heist.heist_tools)
+			O = new(mob.loc)
+			mob.equip_in_one_of_slots(O, slots)
 		to_chat(mob, "<BR><BR><span class='info'><b>Due to the limited TC budget for this mission, it is best accomplished as a team. You will be provided the names of other agents who share this task, work with them to increase your chances of success.</b>")
 
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
