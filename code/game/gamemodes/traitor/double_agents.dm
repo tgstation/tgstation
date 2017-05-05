@@ -31,11 +31,6 @@
 		target_list[traitor] = traitors[i+1]	
 	..()
 
-/datum/objective/assassinate/internal/proc/give_pinpointer()
-	if(owner && owner.current)
-		var/datum/action/agent_pinpointer/pinp = new
-		pinp.Grant(owner.current)
-		pinp.pinpointer_ping_func()
 
 /datum/action/agent_pinpointer
 	name = "Internal Affairs Integrated Pinpointer"
@@ -83,14 +78,22 @@
 					if(current.stat!=DEAD)
 						scan_target = current
 					break
+					
 
-/datum/action/agent_pinpointer/pinpointer_ping_func()
-	if(!owner||!owner.current||owner.current.stat==DEAD)
+/datum/action/agent_pinpointer/proc/pinpointer_ping_func()
+	if(!owner)
+		qdel(src)
 		return
 	scan_for_target()
 	point_to_target()
 	var/datum/callback/C = new(src, .pinpointer_ping_func)
 	addtimer(C, 100)
+
+/datum/objective/assassinate/internal/proc/give_pinpointer()
+	if(owner && owner.current)
+		var/datum/action/agent_pinpointer/pinp = new
+		pinp.Grant(owner.current)
+		pinp.pinpointer_ping_func()
 
 
 /datum/internal_agent_state
