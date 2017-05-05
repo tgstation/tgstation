@@ -625,10 +625,10 @@
 	results = list("laughter" = 10) // Fuck it. I'm not touching this one.
 	required_reagents = list("sugar" = 1, "banana" = 1)
 
-datum/chemical_reation/plastic_polymers
+/datum/chemical_reaction/plastic_polymers
 	name = "plastic polymers"
 	id = "plastic_polymers"
-	required reagents = list ("oil" = 5, "sodiumchloride" = 2, "ash" = 3)
+	required_reagents = list("oil" = 5, "sodiumchloride" = 2, "ash" = 3)
 	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
 
 /datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, created_volume)
