@@ -64,15 +64,6 @@
 			msg += "\"[initial(constant_target.name)]\"."
 		if(TRACK_COORDINATES)
 			msg += "\"([target_x], [target_y])\"."
-		if(TRACK_INTERNAL_AGENT_TARGET)
-			if(!target)
-				msg+= "\"criminals\""
-			else
-				if(!istype(target,/mob))
-					msg+="ERROR, REPORT TO NANOTRASEN"
-				else
-					var/mob/mob_target = target
-					msg += "\"[mob_target.real_name]\""
 		else
 			msg = "Its tracking indicator is blank."
 	to_chat(user, msg)
@@ -121,7 +112,7 @@
 			var/mob/living/closest_operative = get_closest_atom(/mob/living/carbon/human, possible_targets, here)
 			if(closest_operative)
 				target = closest_operative
-		if(TRACK_ATOM||TRACK_INTERNAL_AGENT_TARGET)
+		if(TRACK_ATOM)
 			if(constant_target)
 				target = constant_target
 		if(TRACK_COORDINATES)
@@ -182,21 +173,5 @@
 	mode = TRACK_OPERATIVES
 	flags = NODROP
 
-/obj/item/weapon/pinpointer/internal //Internal agents pinpointers point towards your target, but are junk and malfunction at close range
-	name = "Internal agent pinpointer"
-	desc = "Tracks down crime"
-	mode = TRACK_INTERNAL_AGENT_TARGET
-	minimum_range = 10
-	var/datum/mind/owner = null
 
-/obj/item/weapon/pinpointer/internal/scan_for_target()
-	constant_target = null
-	if(owner)
-		if(owner.objectives)
-			for(var/datum/objective/assassinate/internal/objective in owner.objectives)
-				var/mob/current = objective.target.current
-				if(current.stat!=DEAD)
-					constant_target = current
-					break
-	target = constant_target
 

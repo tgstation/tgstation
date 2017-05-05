@@ -1,9 +1,12 @@
+#define PINPOINTER_MINIMUM_RANGE = 15 
+#define PINPOINTER_EXTRA_RANDOM_RANGE = 10
+
 /datum/game_mode/traitor/internal_affairs
 	name = "Internal Affairs"
 	config_tag = "internal_affairs"
 	employer = "Internal Affairs"
-	required_players = 25
-	required_enemies = 5
+	required_players = 1
+	required_enemies = 1
 	recommended_enemies = 8
 	reroll_friendly = 0
 	traitor_name = "Nanotrasen Internal Affairs Agent"
@@ -30,12 +33,65 @@
 
 /datum/objective/assassinate/internal/proc/give_pinpointer()
 	if(owner && owner.current)
-		if(ishuman(owner.current))
-			var/mob/living/carbon/human/H = owner.current
-			var/list/slots = list ("backpack" = slot_in_backpack)
-			var/obj/item/weapon/pinpointer/internal/pinpointer = new
-			pinpointer.owner=owner
-			H.equip_in_one_of_slots(pinpointer, slots)
+		var/datum/action/agent_pinpointer/pinp = new
+		pinp.Grant(owner.current)
+		pinp.pinpointer_ping_func()
+
+/datum/action/agent_pinpointer
+	name = "Internal Affairs Integrated Pinpointer"
+	desc = "Even stealthier than a normal implant"
+	icon_icon = 'icons/obj/device.dmi'
+	button_icon_state = "pinon"
+	var/minimum_range = PINPOINTER_MINIMUM_RANGE
+	var/mob/scan_target = null
+
+/datum/action/agent_pinpointer/ApplyIcon(obj/screen/movable/action_button/current_button) //overridden to update direction properly
+	if(icon_icon && button_icon_state)
+		current_button.cut_overlays(TRUE)
+		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
+		current_button.button_icon_state = button_icon_state
+
+/datum/action/agent_pinpointer/proc/point_to_target() //If we found what we're looking for, show the distance and direction
+	if(!scan_target)
+		button_icon_state = "pinonnull"
+		return
+	var/turf/here = get_turf(owner)
+	var/turf/there = get_turf(scan_target)
+	if(here.z != there.z)
+		button_icon_state = "pinonnull"
+		return
+	if(get_dist_euclidian(here,there)<=minimum_range + rand(0, PINPOINTER_EXTRA_RANDOM_RANGE))
+		button_icon_state = "pinondirect"
+	else
+		button.setDir(get_dir(here, there))
+		switch(get_dist(here, there))
+			if(1 to 8)
+				button_icon_state = "pinonclose"
+			if(9 to 16)
+				button_icon_state = "pinonmedium"
+			if(16 to INFINITY)
+				button_icon_state = "pinonfar"
+	UpdateButtonIcon()
+
+/datum/action/agent_pinpointer/proc/scan_for_target()
+	scan_target = null
+	if(owner)
+		if(owner.mind)
+			if(owner.mind.objectives)
+				for(var/datum/objective/assassinate/internal/objective in owner.mind.objectives)
+					var/mob/current = objective.target.current
+					if(current.stat!=DEAD)
+						scan_target = current
+					break
+
+/datum/action/agent_pinpointer/pinpointer_ping_func()
+	if(!owner||!owner.current||owner.current.stat==DEAD)
+		return
+	scan_for_target()
+	point_to_target()
+	var/datum/callback/C = new(src, .pinpointer_ping_func)
+	addtimer(C, 100)
+
 
 /datum/internal_agent_state
 	var/traitored = FALSE
@@ -212,3 +268,6 @@
 
 /datum/game_mode/traitor/internal_affairs/give_codewords(mob/living/traitor_mob)
 	return
+
+#undef PINPOINTER_EXTRA_RANDOM_RANGE
+#undef PINPOINTER_MINIMUM_RANGE
