@@ -205,10 +205,10 @@
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	if(issilicon(traitor.current))
 		add_law_zero(traitor.current)
-		traitor.current.playsound_direct('sound/ambience/antag/Malf.ogg',100,0)
+		traitor.current.playsound_local('sound/ambience/antag/Malf.ogg',100,0)
 	else
 		equip_traitor(traitor.current)
-		traitor.current.playsound_direct('sound/ambience/antag/TatorAlert.ogg',100,0)
+		traitor.current.playsound_local('sound/ambience/antag/TatorAlert.ogg',100,0)
 	SSticker.mode.update_traitor_icons_added(traitor)
 	return
 
