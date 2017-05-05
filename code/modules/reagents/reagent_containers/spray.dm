@@ -68,6 +68,9 @@
 	if(reagents.has_reagent("plasma"))
 		message_admins("[ADMIN_LOOKUPFLW(user)] fired plasma from \a [src] at [area] [ADMIN_COORDJMP(T)].")
 		log_game("[key_name(user)] fired plasma from \a [src] at [area] [COORD(T)].")
+	if(reagents.has_reagent("blackpowder"))
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired black powder from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+		log_game("[key_name(user)] fired black powder from \a [src] at [area] [COORD(T)].")
 	return
 
 /obj/item/weapon/reagent_containers/spray/proc/spray(atom/A)
