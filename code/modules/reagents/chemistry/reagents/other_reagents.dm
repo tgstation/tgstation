@@ -1549,14 +1549,9 @@
 /datum/reagent/plastic_polymers
 	name = "plastic polymers"
 	id = "plastic_polymers"
-	description = "the petroleum based components of plastic"
+	description = "the petroleum based components of plastic, contact a coder if you can actually see this" 
 	color = "#f7eded"
 	taste_description = "plastic"
-
-/datum/reagent/plastic_polymers/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1, 0)
-	. = 1
-	..()
 
 /datum/reagent/glitter
 	name = "generic glitter"
