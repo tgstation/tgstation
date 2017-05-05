@@ -138,13 +138,13 @@
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
 				to_chat(owner.current, "<B><font size=3 color=red> New target added to database: [objective.target.name] ([status_text]) </font></B>")
 	if(traitored&&!already_traitored)
-		for(var/objective_ in victim.objectives)
+		for(var/objective_ in owner.objectives)
 			if(!is_internal_objective(objective_))
 				continue
 			var/datum/objective/assassinate/internal/objective = objective_
 			if(!objective.check_completion())
 				traitored = FALSE
-				break
+				return
 		to_chat(owner.current,"<B><font size=3 color=red> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</font></B>")
 		
 			
