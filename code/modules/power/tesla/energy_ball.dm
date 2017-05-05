@@ -55,18 +55,9 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	. = ..()
 
 /obj/singularity/energy_ball/admin_investigate_setup()
-	last_warning = world.time
-	var/notify = FALSE
-	var/containment_count = 0
-	for(var/obj/machinery/field/containment in urange(30, src, 1))
-		containment_count++
-	if(!containment_count)
-		notify = TRUE
-	if(istype(loc, /obj/singularity/energy_ball))	//We're an orbitting mini-ball.
-		notify = FALSE
-	if(notify)
-		message_admins("A tesla energy ball has been created without containment fields active ([x],[y],[z])",1)
-	investigate_log("was created with [containment_count? "<span class='boldwarning'>":""][containment_count] containment segments in range.</span>","singulo")
+	if(istype(loc, /obj/singularity/energy_ball))
+		return
+	..()
 
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
