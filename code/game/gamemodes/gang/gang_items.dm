@@ -286,7 +286,7 @@
 			return FALSE
 	
 	var/open = 0
-	for(var/turf/T in circleviewturfs(center=user,radius=3) 
+	for(var/turf/T in circleviewturfs(center=user,radius=3))
 		if(!istype(T, /turf/closed))
 			open++
 	if(open < 40)
