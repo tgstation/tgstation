@@ -2,8 +2,8 @@
 	name = "Internal Affairs"
 	config_tag = "internal_affairs"
 	employer = "Internal Affairs"
-	required_players = 1
-	required_enemies = 1
+	required_players = 25
+	required_enemies = 5
 	recommended_enemies = 8
 	reroll_friendly = 0
 	traitor_name = "Nanotrasen Internal Affairs Agent"
@@ -37,6 +37,8 @@
 			pinpointer.owner=owner
 			H.equip_in_one_of_slots(pinpointer, slots)
 
+/proc/is_internal_objective(datum/objective/O)
+	return (istype(O, /datum/objective/assassinate/internal)||istype(O, /datum/objective/destroy/internal))
 
 
 /proc/steal_targets(datum/mind/owner,datum/mind/victim)
@@ -72,7 +74,7 @@
 				to_chat(owner.current, "<B><font size=3 color=red> New target added to database: [objective.target.name] ([status_text]) </font></B>")
 	if(traitored)
 		for(var/objective_ in victim.objectives)
-			if(!(istype(objective_, /datum/objective/assassinate/internal)||istype(objective_,/datum/objective/destroy/internal)))
+			if(!is_internal_objective(objective_))
 				continue
 			var/datum/objective/assassinate/internal/objective = objective_
 			objective.traitored = 1
@@ -82,7 +84,7 @@
 	if(owner&&owner.current&&owner.current.stat!=DEAD)
 		var/undo_traitored = 0
 		for(var/objective_ in owner.objectives)
-			if(!(istype(objective_, /datum/objective/assassinate/internal)||istype(objective_,/datum/objective/destroy/internal)))
+			if(!is_internal_objective(objective_))
 				continue
 			var/datum/objective/assassinate/internal/objective = objective_
 			if(!objective.target)
@@ -103,7 +105,7 @@
 					objective.stolen=0
 		if(undo_traitored)
 			for(var/objective_ in owner.objectives)
-				if(!(istype(objective_, /datum/objective/assassinate/internal)||istype(objective_,/datum/objective/destroy/internal)))
+				if(!is_internal_objective(objective_))
 					continue
 				var/datum/objective/assassinate/internal/objective = objective_
 				objective.traitored = 0
