@@ -27,6 +27,7 @@
 	if(mob_override)
 		current = mob_override
 	current.faction |= "cult"
+	current.grant_language(/datum/language/narsie)
 	current.verbs += /mob/living/proc/cult_help
 	communion.Grant(current)
 
@@ -36,6 +37,7 @@
 	if(mob_override)
 		current = mob_override
 	current.faction -= "cult"
+	current.remove_language(/datum/language/narsie)
 	current.verbs -= /mob/living/proc/cult_help
 	communion.Remove(current)
 

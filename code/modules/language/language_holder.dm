@@ -87,6 +87,10 @@
 	languages = list(/datum/language/common, /datum/language/ratvar)
 	only_speaks_language = /datum/language/ratvar
 
+/datum/language_holder/construct
+	languages = list(/datum/language/common, /datum/language/narsie)
+	only_speaks_language = /datum/language/narsie
+
 /datum/language_holder/drone
 	languages = list(/datum/language/common, /datum/language/drone, /datum/language/machine)
 	only_speaks_language = /datum/language/drone

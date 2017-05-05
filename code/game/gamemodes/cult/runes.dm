@@ -136,7 +136,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(invocation)
 		for(var/M in invokers)
 			var/mob/living/L = M
-			L.say(invocation)
+			L.say(invocation, language = /datum/language/common)
 	do_invoke_glow()
 
 /obj/effect/rune/proc/do_invoke_glow()
@@ -516,7 +516,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/raise_dead
 	cultist_name = "Resurrect Cultist"
 	cultist_desc = "requires the corpse of a cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be revived."
-	invocation = null //Depends on the name of the user - see below
+	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
 	color = "#C80000"
 	var/static/revives_used = 0
@@ -556,9 +556,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	rune_in_use = 1
 	if(user.name == "Herbert West")
-		user.say("To life, to life, I bring them!")
+		invocation = "To life, to life, I bring them!"
 	else
-		user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
+		invocation = initial(invocation)
 	..()
 	revives_used++
 	mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
