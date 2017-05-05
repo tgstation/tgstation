@@ -15105,7 +15105,7 @@
 /area/maintenance/apmaint)
 "aEl" = (
 /obj/structure/closet/coffin,
-/obj/item/toy/figure/librarian,
+/obj/item/toy/figure/curator,
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "aEm" = (
@@ -32850,10 +32850,6 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bnU" = (
-/obj/machinery/door/airlock/research{
-	name = "Kill Room Access";
-	req_access_txt = "55"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},

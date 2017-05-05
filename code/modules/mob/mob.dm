@@ -3,6 +3,7 @@
 	GLOB.dead_mob_list -= src
 	GLOB.living_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
+	GLOB.mob_directory -= tag
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -22,6 +23,7 @@
 /mob/Initialize()
 	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
+	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
 		GLOB.dead_mob_list += src
 	else
@@ -348,6 +350,8 @@
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
+	if((spintime < 1)||(speed < 1)||!spintime||!speed)
+		return
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -738,7 +742,6 @@
 	client.move_delay += movement_delay()
 	return 1
 
-
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
@@ -1001,3 +1004,10 @@
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
+
+/mob/verb/open_language_menu()
+	set name = "Open Language Menu"
+	set category = "IC"
+
+	var/datum/language_holder/H = get_language_holder()
+	H.open_language_menu(usr)

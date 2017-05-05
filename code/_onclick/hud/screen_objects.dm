@@ -91,10 +91,9 @@
 	screen_loc = ui_language_menu
 
 /obj/screen/language_menu/Click()
-	var/mob/living/L = usr
-	if(!istype(L))
-		return
-	L.open_language_menu(usr)
+	var/mob/M = usr
+	var/datum/language_holder/H = M.get_language_holder()
+	H.open_language_menu(usr)
 
 /obj/screen/inventory
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
@@ -530,6 +529,12 @@
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_revenant"
 	screen_loc = ui_health
+	mouse_opacity = 0
+
+/obj/screen/healths/construct
+	icon = 'icons/mob/screen_construct.dmi'
+	icon_state = "artificer_health0"
+	screen_loc = ui_construct_health
 	mouse_opacity = 0
 
 /obj/screen/healthdoll

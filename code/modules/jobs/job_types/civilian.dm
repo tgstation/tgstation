@@ -112,11 +112,11 @@ Mime
 		H.mind.miming = 1
 
 /*
-Librarian
+Curator
 */
-/datum/job/librarian
-	title = "Librarian"
-	flag = LIBRARIAN
+/datum/job/curator
+	title = "Curator"
+	flag = CURATOR
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
@@ -125,23 +125,34 @@ Librarian
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
-	outfit = /datum/outfit/job/librarian
+	outfit = /datum/outfit/job/curator
 
 	access = list(GLOB.access_library)
 	minimal_access = list(GLOB.access_library)
 
-/datum/outfit/job/librarian
-	name = "Librarian"
-	jobtype = /datum/job/librarian
+/datum/outfit/job/curator
+	name = "Curator"
+	jobtype = /datum/job/curator
 
-	belt = /obj/item/device/pda/librarian
-	uniform = /obj/item/clothing/under/rank/librarian
+	belt = /obj/item/device/pda/curator
+	uniform = /obj/item/clothing/under/rank/curator
 	l_hand = /obj/item/weapon/storage/bag/books
-	r_pocket = /obj/item/weapon/barcodescanner
+	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
 	backpack_contents = list(
-		/obj/item/soapstone = 1
+		/obj/item/weapon/melee/curator_whip = 1,
+		/obj/item/soapstone = 1,
+		/obj/item/weapon/barcodescanner = 1
 	)
+
+
+/datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	H.grant_all_languages(omnitongue=TRUE)
 
 /*
 Lawyer

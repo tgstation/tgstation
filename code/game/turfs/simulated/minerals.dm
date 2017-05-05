@@ -407,14 +407,14 @@
 		if(z != 5)
 			notify_admins = 1
 			if(!triggered_by_explosion)
-				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has triggered a gibtonite deposit reaction at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("[ADMIN_LOOKUPFLW(user)] has triggered a gibtonite deposit reaction at [A.name] [ADMIN_JMP(bombturf)].")
 			else
-				message_admins("An explosion has triggered a gibtonite deposit reaction at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("An explosion has triggered a gibtonite deposit reaction at [A.name] [ADMIN_JMP(bombturf)].")
 
 		if(!triggered_by_explosion)
-			log_game("[key_name(user)] has triggered a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z]).")
+			log_game("[key_name(user)] has triggered a gibtonite deposit reaction at [A.name] [ADMIN_JMP(bombturf)].")
 		else
-			log_game("An explosion has triggered a gibtonite deposit reaction at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+			log_game("An explosion has triggered a gibtonite deposit reaction at [A.name] [COORD(bombturf)]")
 
 		countdown(notify_admins)
 

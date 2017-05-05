@@ -5,7 +5,7 @@
 	var/list/cult_objectives = list()
 
 /proc/iscultist(mob/living/M)
-	return istype(M) && M.has_antag_datum(/datum/antagonist/cultist, TRUE)
+	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CULT)
 
 /proc/is_sacrifice_target(datum/mind/mind)
 	if(SSticker.mode.name == "cult")
@@ -158,18 +158,18 @@
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun) //BASE
 	if (!istype(cult_mind))
 		return 0
-	if(cult_mind.current.gain_antag_datum(/datum/antagonist/cultist))
+	if(cult_mind.add_antag_datum(ANTAG_DATUM_CULT))
 		if(stun)
 			cult_mind.current.Paralyse(5)
 		return 1
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
 	if(cult_mind.current)
-		var/datum/antagonist/cultist/cult_datum = cult_mind.current.has_antag_datum(/datum/antagonist/cultist, TRUE)
+		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(ANTAG_DATUM_CULT)
 		if(!cult_datum)
 			return FALSE
-		cult_datum.silent_update = show_message
-		cult_datum.on_remove()
+		cult_datum.silent = show_message
+		cult_datum.on_removal()
 		if(stun)
 			cult_mind.current.Paralyse(5)
 		return TRUE

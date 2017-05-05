@@ -218,6 +218,14 @@
 		for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			var/obj/item/I = X
 			owner.dropItemToGround(I, TRUE)
+
+	//Handle dental implants
+	for(var/datum/action/item_action/hands_free/activate_pill/AP in owner.actions)
+		AP.Remove(owner)
+		var/obj/pill = AP.target
+		if(pill)
+			pill.forceMove(src)
+
 	name = "[owner.real_name]'s head"
 	..()
 
@@ -254,6 +262,8 @@
 		if(held_index > C.hand_bodyparts.len)
 			C.hand_bodyparts.len = held_index
 		C.hand_bodyparts[held_index] = src
+		if(C.dna.species.mutanthands && !is_pseudopart)
+			C.put_in_hand(new C.dna.species.mutanthands(), held_index)
 		if(C.hud_used)
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
@@ -268,6 +278,9 @@
 				C.surgeries -= S
 				qdel(S)
 				break
+
+	for(var/obj/item/organ/O in contents)
+		O.Insert(C)
 
 	update_bodypart_damage_state()
 
@@ -300,6 +313,14 @@
 		C.real_name = real_name
 	real_name = ""
 	name = initial(name)
+
+	//Handle dental implants
+	for(var/obj/item/weapon/reagent_containers/pill/P in src)
+		for(var/datum/action/item_action/hands_free/activate_pill/AP in P.actions)
+			P.forceMove(C)
+			AP.Grant(C)
+			break
+
 	..()
 
 
