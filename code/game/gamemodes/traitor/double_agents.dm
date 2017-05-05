@@ -89,7 +89,7 @@
 	var/datum/callback/C = new(src, .pinpointer_ping_func)
 	addtimer(C, 100)
 
-/datum/objective/assassinate/internal/proc/give_pinpointer()
+/proc/give_pinpointer(datum/mind/owner)
 	if(owner && owner.current)
 		var/datum/action/agent_pinpointer/pinp = new
 		pinp.Grant(owner.current)
@@ -195,8 +195,6 @@
 			kill_objective.target = target_mind
 			kill_objective.update_explanation_text()
 			traitor.objectives += kill_objective
-			if(!issilicon(traitor.current))
-				kill_objective.give_pinpointer()
 
 		// Escape
 		if(issilicon(traitor.current))
@@ -210,6 +208,8 @@
 		var/datum/internal_agent_state/state = new
 		state.owner=traitor
 		state.add_steal_targets_timer()
+		if(!issilicon(traitor.current))
+			give_pinpointer(traitor)
 
 	else
 		..() // Give them standard objectives.
