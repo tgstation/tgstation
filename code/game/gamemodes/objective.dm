@@ -103,7 +103,6 @@
 
 /datum/objective/assassinate/internal
 	var/stolen = 0 		//Have we already eliminated this target?
-	var/traitored = 0	//Will we stop being the traitor if this target is killed?
 
 
 
@@ -701,7 +700,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	
 /datum/objective/destroy/internal
 	var/stolen = FALSE 		//Have we already eliminated this target?
-	var/traitored = FALSE	//Will we stop being the traitor if this target is killed?
 
 /datum/objective/steal_five_of_type
 	explanation_text = "Steal at least five items!"
