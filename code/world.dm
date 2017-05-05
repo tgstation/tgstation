@@ -42,7 +42,7 @@
 		else
 			log_world("Your server failed to establish a connection with the database.")
 	if(!GLOB.round_id)
-		GLOB.log_directory += "[time_stamp()]"
+		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
 	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
 	GLOB.world_runtime_log = file("[GLOB.log_directory]/runtime.log")
