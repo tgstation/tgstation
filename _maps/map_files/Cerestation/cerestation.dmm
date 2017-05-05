@@ -1073,23 +1073,23 @@
 /area/ai_monitored/turret_protected/ai)
 "acq" = (
 /obj/structure/table,
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = 2;
 	pixel_y = -5
 	},
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = 2;
 	pixel_y = -3
 	},
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = 3;
 	pixel_y = 3
 	},
