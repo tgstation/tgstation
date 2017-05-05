@@ -152,6 +152,8 @@
 	if(ishuman(A) && ishuman(loc) && proximity)
 		var/mob/living/carbon/human/shaker = loc
 		var/mob/living/carbon/human/shakee = A
+		if(!(shaker.a_intent == INTENT_HELP))
+			return ..()
 		shaker.visible_message("<span class='notice'>[shaker] formally shakes hands with [shakee]!</span>")
 	return ..()
 
