@@ -69,7 +69,7 @@
 
 		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 
-		if(bleed_rate && !bleedsuppress && !(status_flags | FAKEDEATH))
+		if(bleed_rate && !bleedsuppress && !(status_flags & FAKEDEATH))
 			bleed(bleed_rate)
 
 //Makes a blood drop, leaking amt units of blood from the mob
