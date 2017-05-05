@@ -276,6 +276,10 @@
 		telefail()
 		temp_msg = "ERROR! Sector is outside known time and space!"
 		return
+	if(A.teleporter_blocked)
+		telefail()
+		temp_msg = "ERROR! Sector is teleporter blocked!"
+		return
 	if(teles_left > 0)
 		doteleport(user)
 	else

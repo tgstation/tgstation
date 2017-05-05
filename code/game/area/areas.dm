@@ -9,7 +9,7 @@
 	layer = AREA_LAYER
 	mouse_opacity = 0
 	invisibility = INVISIBILITY_LIGHTING
-
+	var/teleporter_blocked = FALSE
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
 	var/valid_territory = 1 // If it's a valid territory for gangs to claim
