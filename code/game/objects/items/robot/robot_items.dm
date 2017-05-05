@@ -510,9 +510,9 @@
 	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second \
 		while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "shield0"
-	var/maxenergy = 2000
-	var/energy = 2000
+	icon_state = "shield"
+	var/maxenergy = 1000
+	var/energy = 1000
 	var/energy_recharge = 20
 	var/energy_recharge_cyborg_drain_coefficient = 0.5
 	var/cyborg_cell_critical_percentage = 0.05
@@ -525,12 +525,13 @@
 	var/current_damage_dampening = 0
 	var/list/obj/item/projectile/tracked
 	var/image/projectile_effect
-	var/field_radius = 4
+	var/field_radius = 3
 
 /obj/item/borg/projectile_dampen/Initialize()
 	..()
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
 	tracked = list()
+	icon_state = "shield0"
 
 /obj/item/borg/projectile_dampen/New()
 	..()
@@ -589,15 +590,20 @@
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
 		energy += energy_recharge
 
-/obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/item/projectile/P)
+/obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/item/projectile/P, track_projectile = TRUE)
+	if(!P.damage || P.nodamage)
+		return
+	if(track_projectile)
+		tracked += P
+		current_damage_dampening += P.damage
 	P.damage *= projectile_damage_coefficient
 	P.speed *= projectile_speed_coefficient
-	current_damage_dampening += P.damage
 	P.add_overlay(projectile_effect)
 
 /obj/item/borg/projectile_dampen/proc/restore_projectile(obj/item/projectile/P)
 	if(P in tracked)
 		return
+	tracked -= P
 	P.damage *= (1/projectile_damage_coefficient)
 	P.speed *= (1/projectile_speed_coefficient)
 	P.cut_overlay(projectile_effect)

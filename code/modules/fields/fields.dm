@@ -46,12 +46,11 @@
 
 /datum/field/New()
 	SSfields.register_new_field(src)
-	..()
 
 /datum/field/Destroy()
 	SSfields.unregister_field(src)
 	full_cleanup()
-	..()
+	return ..()
 
 /datum/field/proc/assume_params(list/field_params)
 	var/pass_check = TRUE
@@ -107,24 +106,20 @@
 	var/list/turf/needs_setup = field_turfs_new.Copy()
 	if(setup_field_turfs)
 		for(var/turf/T in field_turfs)
-			if(!(T in field_turfs_new))
+			if(!(T in needs_setup))
 				cleanup_field_turf(T)
-				field_turfs -= T
 			else
 				needs_setup -= T
 			CHECK_TICK
 		for(var/turf/T in needs_setup)
 			setup_field_turf(T)
-			field_turfs += T
 			CHECK_TICK
 	if(setup_edge_turfs)
 		for(var/turf/T in edge_turfs)
 			cleanup_edge_turf(T)
-			edge_turfs -= T
 			CHECK_TICK
 		for(var/turf/T in edge_turfs_new)
 			setup_edge_turf(T)
-			edge_turfs += T
 			CHECK_TICK
 
 /datum/field/proc/on_move_field_turf(atom/movable/AM, turf/entering, atom/exiting)	//Exiting is an atom because turfs allow for all atoms to be "forget"/oldturf.
@@ -145,25 +140,27 @@
 	if(setup_field_turfs)
 		for(var/turf/T in field_turfs_new)
 			setup_field_turf(T)
-			field_turfs |= T
 			CHECK_TICK
 	if(setup_edge_turfs)
 		for(var/turf/T in edge_turfs_new)
 			setup_edge_turf(T)
-			edge_turfs |= T
 			CHECK_TICK
 
 /datum/field/proc/cleanup_field_turf(turf/T)
 	T.fields -= src
+	field_turfs -= T
 
 /datum/field/proc/cleanup_edge_turf(turf/T)
 	T.field_edges -= src
+	edge_turfs -= T
 
 /datum/field/proc/setup_field_turf(turf/T)
 	T.fields += src
+	field_turfs += T
 
 /datum/field/proc/setup_edge_turf(turf/T)
 	T.field_edges += src
+	edge_turfs += T
 
 /datum/field/proc/update_new_turfs()
 	if(!istype(center))
@@ -239,18 +236,12 @@
 	var/set_edgeturf_color = "#ffaaff"
 	setup_field_turfs = TRUE
 	setup_edge_turfs = TRUE
-	var/fieldturfs_setup = 0
-	var/edgeturfs_setup = 0
 
 /datum/field/debug/recalculate_field()
 	..()
-	world << "[fieldturfs_setup] fieldturfs set up"
-	fieldturfs_setup = 0
 
 /datum/field/debug/post_setup_field()
 	..()
-	world << "[fieldturfs_setup] fieldturfs set up"
-	fieldturfs_setup = 0
 
 /datum/field/debug/setup_edge_turf(turf/T)
 	T.color = set_edgeturf_color
@@ -259,9 +250,10 @@
 /datum/field/debug/cleanup_edge_turf(turf/T)
 	T.color = initial(T.color)
 	..()
+	if(T in field_turfs)
+		T.color = set_fieldturf_color
 
 /datum/field/debug/setup_field_turf(turf/T)
-	fieldturfs_setup++
 	T.color = set_fieldturf_color
 	..()
 
