@@ -47,7 +47,7 @@
 		else
 			shake_camera(src, 7, 1)
 
-/mob/living/carbon/onShuttleMove()
+/mob/living/carbon/onShuttleMove(turf/T1, rotation, knockdown = TRUE)
 	. = ..()
 	if(!.)
 		return
