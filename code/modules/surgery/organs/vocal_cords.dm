@@ -25,8 +25,7 @@
 	desc = "Fragments of adamantine exists in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
 	zone = "head"
 	slot = "adamantine_resonator"
-	icon_state = "appendix"
-	color = "#40E0D0"
+	icon_state = "adamantine_resonator"
 
 /obj/item/organ/vocal_cords/adamantine
 	name = "adamantine vocal cords"
@@ -34,8 +33,7 @@
 	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
 	zone = "mouth"
 	slot = "vocal_cords"
-	icon_state = "voice_of_god"
-	color = "#40E0D0"
+	icon_state = "adamantine_cords"
 
 /datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger()
 	if(!IsAvailable())
