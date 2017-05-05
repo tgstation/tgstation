@@ -146,6 +146,8 @@ Credit where due:
 	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
 	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
 	to_chat(M, greeting_text)
+	//M << sound('sound/ambience/antag/ClockCult.ogg') //playsound_direct() doesn't work with this one, please foward your bitching to somewhere else
+	M.playsound_direct('sound/ambience/antag/ClockCult.ogg',100,0)
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component

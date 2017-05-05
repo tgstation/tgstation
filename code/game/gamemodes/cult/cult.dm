@@ -96,6 +96,7 @@
 			if("eldergod")
 				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes on it. You must do this after sacrificing your target."
 		to_chat(cult_mind.current, "<B>Objective #[obj_count]</B>: [explanation]")
+		cult.current.playsound_direct('sound/ambience/antag/bloodcult.ogg',100,0)
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 
 /datum/game_mode/cult/post_setup()
