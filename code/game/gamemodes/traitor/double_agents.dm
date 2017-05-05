@@ -73,7 +73,10 @@
 	if(owner)
 		if(owner.mind)
 			if(owner.mind.objectives)
-				for(var/datum/objective/assassinate/internal/objective in owner.mind.objectives)
+				for(var/datum/objective/objective_ in owner.mind.objectives)
+					if(!is_internal_objective(objective_))
+						continue
+					var/datum/objective/assassinate/internal/objective = objective_
 					var/mob/current = objective.target.current
 					if(current.stat!=DEAD)
 						scan_target = current
