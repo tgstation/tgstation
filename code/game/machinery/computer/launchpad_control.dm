@@ -49,12 +49,12 @@
 	return pad
 
 /obj/machinery/computer/launchpad/interact(mob/user)
-	var/t
+	var/list/t = list()
 	if(!LAZYLEN(launchpads))
 		in_use = FALSE     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
 		t += "<div class='statusDisplay'>No launchpad located.</div><BR>"
 	else
-		for(var/i=1, i<=LAZYLEN(launchpads), i++)
+		for(var/i in 1 to LAZYLEN(launchpads))
 			if(pad_exists(i))
 				var/obj/machinery/launchpad/pad = get_pad(i)
 				if(pad.stat & NOPOWER)
@@ -88,7 +88,8 @@
 			t += " <A href='?src=\ref[src];pull=1;pad=[current_pad]'>Pull</A>"
 
 	var/datum/browser/popup = new(user, "launchpad", name, 300, 500)
-	popup.set_content(t)
+	var/content = t.Join()
+	popup.set_content(content)
 	popup.open()
 
 /obj/machinery/computer/launchpad/proc/teleport(mob/user, obj/machinery/launchpad/pad)
@@ -135,7 +136,7 @@
 		pad.x_offset = 0
 
 	if(href_list["change_name"])
-		var/new_name = stripped_input(usr, "How do you want to rename the launchpad?", "Launchpad", pad.display_name, 15) as text|null
+		var/new_name = stripped_input(usr, "What do you wish to name the launchpad?", "Launchpad", pad.display_name, 15) as text|null
 		if(!new_name)
 			return
 		pad.display_name = new_name

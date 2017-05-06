@@ -92,7 +92,7 @@
 
 	var/turf/source = target
 	var/turf/dest = get_turf(src)
-	var/log_msg = ""
+	var/list/log_msg = list()
 	log_msg += ": [key_name(user)] has teleported "
 
 	if(sending)
@@ -143,7 +143,8 @@
 	else
 		log_msg += "nothing"
 	log_msg += " [sending ? "to" : "from"] [target_x], [target_y], [z] ([A ? A.name : "null area"])"
-	investigate_log(log_msg, "telesci")
+	var/output = log_msg.Join()
+	investigate_log(output, "telesci")
 	updateDialog()
 
 //Starts in the briefcase. Don't spawn this directly, or it will runtime when closing.
@@ -168,6 +169,7 @@
 		briefcase = loc
 	else
 		log_game("[src] has been spawned without a briefcase.")
+		qdel(src)
 
 /obj/machinery/launchpad/briefcase/isAvailable()
 	if(closed)

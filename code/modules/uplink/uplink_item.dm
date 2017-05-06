@@ -963,7 +963,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			Also includes a remote control. Touch the briefcase with the remote to link it."
 	surplus = 0
 	item = /obj/item/briefcase_launchpad
-	cost = 10
+	cost = 6
 
 /datum/uplink_item/device_tools/briefcase_launchpad/buy(mob/user, obj/item/device/uplink/U)
 	var/obj/item/device/launchpad_remote/L = new(get_turf(user)) //free remote
