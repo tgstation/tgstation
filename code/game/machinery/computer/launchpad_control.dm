@@ -88,8 +88,7 @@
 			t += " <A href='?src=\ref[src];pull=1;pad=[current_pad]'>Pull</A>"
 
 	var/datum/browser/popup = new(user, "launchpad", name, 300, 500)
-	var/content = t.Join()
-	popup.set_content(content)
+	popup.set_content(t.Join())
 	popup.open()
 
 /obj/machinery/computer/launchpad/proc/teleport(mob/user, obj/machinery/launchpad/pad)
