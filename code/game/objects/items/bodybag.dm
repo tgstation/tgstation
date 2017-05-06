@@ -100,7 +100,7 @@
 	if(oldturf != get_turf(src))
 		breaking_out = FALSE
 		STOP_PROCESSING(SSobj, src)
-		for(mob/M in contents)
+		for(var/mob/M in contents)
 			to_chat(M, "<span class='boldwarning'>A hidden display panel in the fabric flashes \'RELEASE HALTED: MOTION TRIGGER.\'</span>")
 		return
 	if(breakout >= world.time)

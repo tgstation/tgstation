@@ -535,7 +535,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/kidnap/check_completion()
 	var/mob/current_mob = owner.current
 	var/mob/target_mob = target.current
-	var/list/all_items = owner.current.GetAllContents()
+	var/list/all_items = owner.current_mob.GetAllContents()
 	for(var/atom/A in all_items)
 		if(A == target_mob)	//How the fuck did you accomplish this?!
 			return check_state(target_mob)
@@ -543,10 +543,12 @@ GLOBAL_LIST_EMPTY(possible_items)
 			return check_state(target_mob)
 	return FALSE
 
-/datum/objective/kidnap/proc/check_state(mob/M)
+/datum/objective/kidnap/proc/check_state(mob/living/carbon/M)
+	if(!istype(M))
+		return FALSE	//This is not intact!
 	if(M.stat == DEAD)	//We need them alive!
 		return FALSE
-	if((M.get_num_arms < 2) || (M.get_num_legs < 2))	//Why'd you cut them up?
+	if((M.get_num_arms() < 2) || (M.get_num_legs() < 2))	//Why'd you cut them up?
 		return FALSE
 	//Could probably use organ checks and whatever else is necessary to prevent people from just disabling someone forever and leaving them in a corner of maint...
 	return TRUE
@@ -554,15 +556,15 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/kidnap/update_explanation_text()
 	. = ..()
 	if(target && target.current)
-		explanation_text = "Kidnap [target.name], the [!target_role_type ? target.assigned_role : target.special_role]. They must be alive for the most part, well and intact for our purposes! \
+		explanation_text = "Kidnap [target.name], the [target.assigned_role]. They must be alive for the most part, well and intact for our purposes! \
 		It is recommended you use the syndicate bluespace body bag you are provided with, but in the case of loss of your equipment, any bluespace body bag, or any other way of carrying a living human \
 		inside a container that you can carry on you or hold on to will suffice."
 	else
 		explanation_text = "Free objective"
 
-/datum/objective/kidnap/set_target()
-	. = ..()
+/datum/objective/kidnap/find_target()
 	give_special_equipment()
+	. = ..()
 
 /datum/objective/kidnap/give_special_equipment()
 	if(owner && owner.current)
