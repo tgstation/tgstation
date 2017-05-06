@@ -575,7 +575,7 @@
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
-	if(client && client.holder)
+	if(client && check_rights_for(client, R_ADMIN))
 		if(statpanel("MC"))
 			stat("Location:", "([x], [y], [z])")
 			stat("CPU:", "[world.cpu]")

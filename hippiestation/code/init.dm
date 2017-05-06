@@ -3,6 +3,4 @@
 
 /proc/hippie_initialize()
 	load_hippie_config("hippiestation/config/config.txt")
-	load_mentors()
-
-
+	LAZYCLEARLIST(mentor_datums)

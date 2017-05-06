@@ -199,13 +199,6 @@ GLOBAL_LIST(external_rsc_urls)
 		GLOB.admins |= src
 		holder.owner = src
 
-	//Mentor Authorisation
-	var/mentor = mentor_datums[ckey]
-	if(mentor)
-		verbs += /client/proc/cmd_mentor_say
-		verbs += /client/proc/show_mentor_memo
-		GLOB.mentors += src
-
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
@@ -289,9 +282,8 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
-
-	if(mentor && !holder)
-		mentor_memo_output("Show")
+		if(!check_rights_for(src, R_ADMIN) && check_rights_for(src, R_MENTOR))
+			mentor_memo_output("Show")
 
 
 	add_verbs_from_config(tdata)

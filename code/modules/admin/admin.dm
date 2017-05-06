@@ -2,11 +2,17 @@
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg)
+	for(var/X in GLOB.admins)
+		var/client/C = X
+		if(check_rights_for(C, R_ADMIN))
+			to_chat(C, msg)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg)
+	for(var/X in GLOB.admins)
+		var/client/C = X
+		if(check_rights_for(C, R_ADMIN))
+			to_chat(C, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels

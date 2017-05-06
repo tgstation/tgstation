@@ -1,6 +1,6 @@
 /client/verb/mentorhelp(msg as text)
 	set category = "Mentor"
-	set name = "mentorhelp"
+	set name = "Mentorhelp"
 
 	//remove out adminhelp verb temporarily to prevent spamming of mentors.
 	src.verbs -= /client/verb/mentorhelp
@@ -17,25 +17,25 @@
 	var/mentor_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 1, show_char)]</b>: [msg]</font></span>"
 	log_mentor("MENTORHELP: [key_name_mentor(src, 0, 0, 0, 0)]: [msg]")
 
-	for(var/client/X in GLOB.mentors)
+	for(var/client/X in GLOB.admins)
 		X << 'sound/items/bikehorn.ogg'
 		to_chat(X, mentor_msg)
-
-	for(var/client/A in GLOB.admins)
-		A << 'sound/items/bikehorn.ogg'
-		to_chat(A, mentor_msg)
 
 	to_chat(src, "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>")
 	return
 
 /proc/get_mentor_counts()
 	. = list("total" = 0, "afk" = 0, "present" = 0)
-	for(var/client/X in GLOB.mentors)
-		.["total"]++
-		if(X.is_afk())
-			.["afk"]++
-		else
-			.["present"]++
+	for(var/X in GLOB.admins)
+		var/client/C = X
+		if(check_rights_for(C, R_ADMIN))
+			return
+		if(check_rights_for(C, R_MENTOR))
+			.["total"]++
+			if(C.is_afk())
+				.["afk"]++
+			else
+				.["present"]++
 
 /proc/key_name_mentor(var/whom, var/include_link = null, var/include_name = 0, var/include_follow = 0, var/char_name_only = 0)
 	var/mob/M

@@ -480,7 +480,7 @@
 
 
 	for(var/mob/M in GLOB.mob_list)
-		if(M.client && M.client.holder)
+		if(M.client && check_rights_for(M.client, R_ADMIN))
 			to_chat(M, msg)
 
 /datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
