@@ -79514,8 +79514,13 @@
 	name = "Medbay Central"
 	})
 "cUf" = (
-/obj/machinery/smartfridge/chemistry,
-/turf/closed/wall,
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemisttop";
+	name = "Chemisty Lobby Shutters"
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
 /area/medical/medbay{
 	name = "Medbay Central"
 	})
@@ -79538,14 +79543,9 @@
 	name = "Medbay Central"
 	})
 "cUh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chemisttop";
-	name = "Chemisty Lobby Shutters"
-	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
+/obj/machinery/smartfridge/chemistry,
+/turf/closed/wall,
 /area/medical/medbay{
 	name = "Medbay Central"
 	})
@@ -82191,6 +82191,7 @@
 /obj/item/weapon/grenade/chem_grenade,
 /obj/item/weapon/grenade/chem_grenade,
 /obj/item/weapon/grenade/chem_grenade,
+/obj/item/weapon/screwdriver,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	icon_state = "whiteyellowcorner";
 	dir = 8
@@ -96355,7 +96356,6 @@
 	},
 /area/medical/morgue)
 "dAn" = (
-/turf/open/floor/plating,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	icon_state = "manifold";
