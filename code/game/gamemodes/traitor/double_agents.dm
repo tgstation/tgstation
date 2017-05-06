@@ -93,7 +93,7 @@
 
 /proc/give_pinpointer(datum/mind/owner)
 	if(owner && owner.current)
-		new/datum/status_effect/agent_pinpointer(owner.current)
+		owner.current.apply_status_effect(/datum/status_effect/agent_pinpointer)
 
 
 /datum/internal_agent_state
