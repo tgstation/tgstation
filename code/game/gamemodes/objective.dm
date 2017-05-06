@@ -516,15 +516,67 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 	for(var/obj/I in all_items) //Check for items
 		if(istype(I, steal_target))
-			if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
-				return 1
-			else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
-				return 1
+			if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return TRUE.
+				return TRUE
+			else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return TRUE if the conditions are fulfilled.
+				return TRUE
 
 		if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
-			if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
-				return 1
-	return 0
+			if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return FALSE if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
+				return TRUE
+	return FALSE
+
+
+////////////////////////////////////////////
+/datum/objective/kidnap
+	dangerrating = 10
+	martyr_compatible = FALSE
+
+/datum/objective/kidnap/check_completion()
+	var/mob/current_mob = owner.current
+	var/mob/target_mob = target.current
+	var/list/all_items = owner.current.GetAllContents()
+	for(var/atom/A in all_items)
+		if(A == target_mob)	//How the fuck did you accomplish this?!
+			return check_state(target_mob)
+		if(target_mob in A)
+			return check_state(target_mob)
+	return FALSE
+
+/datum/objective/kidnap/proc/check_state(mob/M)
+	if(M.stat == DEAD)	//We need them alive!
+		return FALSE
+	if((M.get_num_arms < 2) || (M.get_num_legs < 2))	//Why'd you cut them up?
+		return FALSE
+	//Could probably use organ checks and whatever else is necessary to prevent people from just disabling someone forever and leaving them in a corner of maint...
+	return TRUE
+
+/datum/objective/kidnap/update_explanation_text()
+	. = ..()
+	if(target && target.current)
+		explanation_text = "Kidnap [target.name], the [!target_role_type ? target.assigned_role : target.special_role]. They must be alive for the most part, well and intact for our purposes! \
+		It is recommended you use the syndicate bluespace body bag you are provided with, but in the case of loss of your equipment, any bluespace body bag, or any other way of carrying a living human \
+		inside a container that you can carry on you or hold on to will suffice."
+	else
+		explanation_text = "Free objective"
+
+/datum/objective/kidnap/set_target()
+	. = ..()
+	give_special_equipment()
+
+/datum/objective/kidnap/give_special_equipment()
+	if(owner && owner.current)
+		if(ishuman(owner.current))
+			var/mob/living/carbon/human/H = owner.current
+			var/list/slots = list ("backpack" = slot_in_backpack)
+			var/obj/O = new /obj/item/bodybag/bluespace/syndicate
+			H.equip_in_one_of_slots(O, slots)
+
+/////////////////////////////////////////
+
+
+
+
 
 
 GLOBAL_LIST_EMPTY(possible_items_special)
@@ -701,7 +753,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
-	
+
 /datum/objective/destroy/internal
 	var/stolen = FALSE 		//Have we already eliminated this target?
 
