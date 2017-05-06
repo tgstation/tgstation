@@ -1,3 +1,5 @@
+// Contains cult communion, guide, and cult master abilities
+#define MARK_COOLDOWN
 
 /datum/action/innate/cultcomm
 	name = "Communion"
@@ -19,11 +21,15 @@
 	cultist_commune(usr, input)
 
 /proc/cultist_commune(mob/living/user, message)
+	var/my_message
 	if(!message)
 		return
 	user.whisper("O bidai nabora se[pick("'","`")]sma!")
 	user.whisper(html_decode(message))
-	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
+	if (user.mind.special_role == "Cult Master")
+		my_message = "<span class='cultlarge'><b>[(ishuman(user) ? "Master" : "Lord")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
+	else
+		my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
 	for(var/mob/M in GLOB.mob_list)
 		if(iscultist(M))
 			to_chat(M, my_message)
@@ -65,3 +71,149 @@
 	popup.set_content(text)
 	popup.open()
 	return 1
+
+/mob/living/proc/cult_master()
+	set category = "Cultist"
+	set name = "Assert Leadership"
+	pollCultists(src)  // This proc handles the distribution of cult master actions
+
+/datum/action/innate/cultmast
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+
+/datum/action/innate/cultmast/IsAvailable()
+	if(owner.mind.special_role != "Cult Master")
+		return 0
+	return ..()
+
+/datum/action/innate/cultmast/finalreck
+	name = "Final Reckoning"
+	desc = "A single-use spell that brings the entire cult to the master's location"
+	button_icon_state = "sintouch"
+
+/datum/action/innate/cultmast/finalreck/Activate()
+	var/list/destinations = list()
+	for(var/turf/T in orange(1,owner))
+		if(istype(T, /turf/open))
+			destinations += T
+	for(var/i in 1 to 4)
+		owner.chant(i)
+		if(do_after(owner, 30, target = owner))
+			for(var/datum/mind/B in SSticker.mode.cult)
+				var/mob/living/M = B.current
+				if(isliving(M) && M.stat != DEAD)
+					var/turf/mobloc = get_turf(M)
+					switch(i)
+						if (1)
+							new /obj/effect/overlay/temp/cult/sparks(mobloc, M.dir)
+							playsound(mobloc, "sparks", 50, 1)
+						if (2)
+							new /obj/effect/overlay/temp/dir_setting/cult/phase/out(mobloc, M.dir)
+							playsound(mobloc, "sparks", 75, 1)
+						if (3)
+							new /obj/effect/overlay/temp/dir_setting/cult/phase(mobloc, M.dir)
+							playsound(mobloc, "sparks", 100, 1)
+						if (4)
+							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, 1)
+							if(M != owner)
+								var/turf/final = pick(destinations)
+								new /obj/effect/overlay/temp/cult/blood(final)
+								addtimer(CALLBACK(M, /mob/.proc/reckon, final), 10)
+							else
+								for(var/datum/action/innate/cultmast/finalreck/H in owner.actions)
+									qdel(H)
+		else
+			return
+
+/mob/proc/reckon(var/turf/final)
+	new /obj/effect/overlay/temp/cult/blood/out(get_turf(src))
+	forceMove(final)
+
+/mob/proc/chant(var/i)
+	switch(i)
+		if (1)
+			say("C'arta Forbici!")
+		if (2)
+			say("Pleggh E'ntrath!")
+			playsound(get_turf(src),'sound/magic/clockwork/narsie_attack.ogg', 50, 1)
+		if (3)
+			say("Barhah hra Zar'garis!")
+			playsound(get_turf(src),'sound/magic/clockwork/narsie_attack.ogg', 75, 1)
+		if (4)
+			say("N'ath reth Sh'yro eth D'rekkathnor!!!")
+			playsound(get_turf(src),'sound/magic/clockwork/narsie_attack.ogg', 100, 1)
+
+/datum/action/innate/cultmast/cultmark
+	name = "Mark Target"
+	desc = "Marks a target for the cult"
+	button_icon_state = "cult_mark"
+	var/obj/effect/proc_holder/cultmark/CM
+	var/time = 0
+
+/datum/action/innate/cultmast/cultmark/New()
+    CM = new()
+    ..()
+
+/datum/action/innate/cultmast/cultmark/IsAvailable()
+	if(owner.mind.special_role != "Cult Master")
+		return 0
+	if((world.time - time)<1200 && !CM.active)
+		owner << "<span class='cultlarge'><b>You need to wait [round((1200-(world.time-time))/10)] seconds before you can mark another target!</b></span>"
+		return 0
+	return ..()
+
+/datum/action/innate/cultmast/cultmark/Destroy()
+	QDEL_NULL(CM)
+	return ..()
+
+/datum/action/innate/cultmast/cultmark/Activate()
+	CM.toggle(owner) //the important bit
+	if(!active)
+		time = world.time
+	else
+		time = 0
+	return TRUE
+
+/obj/effect/proc_holder/cultmark
+    active = FALSE
+    ranged_mousepointer = 'icons/effects/cult_target.dmi'
+
+
+/obj/effect/proc_holder/cultmark/proc/toggle(mob/user)
+    if(active)
+        remove_ranged_ability("You cease the marking ritual...")
+    else
+        add_ranged_ability(user, "You prepare to mark a target for your cult...")
+
+/obj/effect/proc_holder/cultmark/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return
+	if(ranged_ability_user.incapacitated())
+		remove_ranged_ability()
+		return
+	var/turf/T = get_turf(ranged_ability_user)
+	if(!isturf(T))
+		return FALSE
+	if(target in view(7, get_turf(ranged_ability_user)))
+		remove_ranged_ability(caller, "The marking rite is complete! It will last for 90 seconds.")
+		GLOB.blood_target = target
+		var/area/A = get_area(target)
+		for(var/datum/mind/B in SSticker.mode.cult)
+			var/mob/living/M = B.current
+			if(M.stat != DEAD)
+				to_chat(M, "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [GLOB.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
+				M << pick(sound('sound/hallucinations/over_here2.ogg',0,1,75), sound('sound/hallucinations/over_here3.ogg',0,1,75))
+				var/image/cult_marker = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+				M.client.images |= cult_marker
+				addtimer(CALLBACK(M, /mob/living/proc/reset_blood_image, cult_marker), 900, TIMER_OVERRIDE)
+		return TRUE
+	return FALSE
+
+/mob/living/proc/reset_blood_image(var/image/cult_marker)
+	if(GLOB.blood_target && src.stat!=DEAD)
+		to_chat(src,"<span class='cultlarge'><b>The blood mark has expired!</b></span>")
+	if(client)
+		client.images.Remove(cult_marker)
+	QDEL_NULL(cult_marker)
+	GLOB.blood_target = null
