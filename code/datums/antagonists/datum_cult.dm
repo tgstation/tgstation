@@ -9,7 +9,7 @@
 	. = ..()
 	if(!owner)
 		return
-	if(jobban_isbanned(owner.current, ROLE_CULTIST) || jobban_isbanned(current, CLUWNEBAN) || jobban_isbanned(current, CATBAN))
+	if(jobban_isbanned(owner.current, ROLE_CULTIST) || jobban_isbanned(owner.current, CLUWNEBAN) || jobban_isbanned(owner.current, CATBAN))
 		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST), 0)
 	owner.current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 
