@@ -91,7 +91,6 @@
 	},
 /obj/item/weapon/storage/bag/ore,
 /obj/item/weapon/pickaxe,
-/obj/item/weapon/extinguisher/mini,
 /obj/item/device/flashlight,
 /obj/item/clothing/glasses/meson,
 /turf/open/floor/plasteel{
