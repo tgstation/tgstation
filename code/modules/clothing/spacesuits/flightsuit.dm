@@ -678,6 +678,9 @@
 		flight = FALSE
 		if(suit.shoes)
 			suit.shoes.toggle(FALSE)
+		if(isturf(wearer.loc))
+			var/turf/T = wearer.loc
+			T.Entered(src)
 	else
 		if(override_safe)
 			disable_flight(TRUE)
