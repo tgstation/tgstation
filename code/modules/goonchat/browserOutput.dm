@@ -99,6 +99,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			data = ping(arglist(params))
 			doLog = FALSE
 
+		if("pong" || "pang")
+			doLog = FALSE
+
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
@@ -191,7 +194,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 GLOBAL_LIST_EMPTY(broken_ckeys)
 /client/verb/chat_broke()
 	set category = "OOC"
-	set name = "CHAT BROKE"
+	set name = "MY CHAT BROKE!"
 	if(GLOB.broken_ckeys[ckey])
 		return
 	if(alert(usr, "HEY LISTEN! We are debugging the new chat system and you can only use this command once! HAS YOUR CHAT BOX ACTUALLY BROKEN?",, "Yes", "No") != "Yes")
