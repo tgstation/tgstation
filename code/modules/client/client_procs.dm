@@ -291,9 +291,9 @@ GLOBAL_LIST(external_rsc_urls)
 	if(config.use_account_age_for_jobs && account_age >= 0)
 		player_age = account_age
 	if(account_age >= 0 && account_age < config.notify_new_player_account_age)
-		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account day[(account_age==1?"":"s")] old, created on [account_join_date].")
+		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 		if (config.irc_first_connection_alert)
-			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account day[(account_age==1?"":"s")] old, created on [account_join_date].")
+			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 	else //We failed to get an age for this user, let admins know they need to keep an eye on them
 		message_admins("Failed to get BYOND account age for [key_name_admin(src)]")
 	get_message_output("watchlist entry", ckey)
@@ -409,13 +409,14 @@ GLOBAL_LIST(external_rsc_urls)
 		if(!account_join_date)
 			account_join_date = "Error"
 			account_age = -1
-	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),firstseen), DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())
 		return
 	if(query_get_client_age.NextRow())
 		player_age = text2num(query_get_client_age.item[1])
 		if(!account_join_date)
-			account_age = query_get_client_age.item[2]
+			account_join_date = query_get_client_age.item[2]
+			account_age = text2num(query_get_client_age.item[3])
 			if(!account_age)
 				account_join_date = sanitizeSQL(findJoinDate())
 				if(!account_join_date)
