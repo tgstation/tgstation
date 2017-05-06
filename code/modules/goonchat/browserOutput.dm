@@ -190,7 +190,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 GLOBAL_LIST_EMPTY(broken_ckeys)
 /client/verb/chat_broke()
+	set category = "OOC"
 	if(broken_ckeys[ckey])
+		return
+	if(alert(usr, "HEY LISTEN! We are debugging the new chat system and you can only use this command once! HAS YOUR CHAT BOX ACTUALLY BROKEN?",, "Yes", "No") != "Yes")
 		return
 	broken_ckeys[ckey] = TRUE
 	message_admins("The chat broke for [ckey]!")
