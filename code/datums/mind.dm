@@ -63,7 +63,7 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
-	var/datum/language_holder
+	var/datum/language_holder/language_holder
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -90,7 +90,8 @@
 		SStgui.on_transfer(current, new_character)
 
 	if(!language_holder)
-		language_holder = new_character.language_holder.copy(src)
+		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
+		language_holder = mob_holder.copy(src)
 
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours

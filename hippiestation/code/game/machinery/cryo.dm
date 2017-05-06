@@ -279,7 +279,8 @@
 			. = TRUE
 		if("door")
 			if(state_open)
-				close_machine()
+				if (close_machine() == usr)
+					on = TRUE
 			else
 				open_machine()
 			. = TRUE
