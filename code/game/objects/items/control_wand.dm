@@ -31,6 +31,8 @@
 /obj/item/weapon/door_remote/afterattack(obj/machinery/door/airlock/D, mob/user)
 	if(!istype(D))
 		return
+	if(!D.allow_remote)
+		return
 	if(!(D.hasPower()))
 		to_chat(user, "<span class='danger'>[D] has no power!</span>")
 		return
