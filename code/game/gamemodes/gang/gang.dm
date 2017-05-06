@@ -249,7 +249,8 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	return gang_bosses
 
 /proc/determine_domination_time(var/datum/gang/G)
-	return max(180,900 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 12))
+	return max(180,480 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 9))
+
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//

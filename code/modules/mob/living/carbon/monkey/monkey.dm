@@ -2,7 +2,7 @@
 	name = "monkey"
 	voice_name = "monkey"
 	verb_say = "chimpers"
-	initial_languages = list(/datum/language/monkey)
+	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = ""
 	gender = NEUTER

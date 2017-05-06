@@ -6,7 +6,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(!istype(E)) //Something threw an unusual exception
 		log_world("\[[time_stamp()]] Uncaught exception: [E]")
 		return ..()
-	
+
 	var/static/list/error_last_seen = list()
 	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
 												If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
@@ -107,9 +107,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		if (split[i] != "")
 			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
 	E.desc = jointext(split, "\n")
-	if(config && config.log_runtimes)
-		world.log = GLOB.runtime_diary
-		..(E)
+	world.log = GLOB.world_runtime_log
+	..(E)
 
 	world.log = null
 

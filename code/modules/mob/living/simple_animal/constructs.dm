@@ -31,6 +31,8 @@
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
+	var/master = null
+	var/seeking = FALSE
 
 
 /mob/living/simple_animal/hostile/construct/Initialize()
@@ -39,6 +41,11 @@
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
 
+/mob/living/simple_animal/hostile/construct/Destroy()
+	for(var/X in actions)
+		var/datum/action/A = X
+		qdel(A)
+	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -278,6 +285,36 @@
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
 
 
+///////////////////////Master-Tracker///////////////////////
+
+/datum/action/innate/seek_master
+	name = "Seek your Master"
+	desc = "You and your master share a soul-link that informs you of their location"
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+	button_icon_state = "cult_mark"
+	var/tracking = FALSE
+	var/mob/living/simple_animal/hostile/construct/the_construct
+
+/datum/action/innate/seek_master/Grant(var/mob/living/C)
+	the_construct = C
+	..()
+
+/datum/action/innate/seek_master/Activate()
+	if(!the_construct.master)
+		to_chat(the_construct, "<span class='cultitalic'>You have no master to seek!</span>")
+		the_construct.seeking = FALSE
+		return
+	if(tracking)
+		tracking = FALSE
+		the_construct.seeking = FALSE
+		to_chat(the_construct, "<span class='cultitalic'>You are no longer tracking your master.</span>")
+		return
+	else
+		tracking = TRUE
+		the_construct.seeking = TRUE
+		to_chat(the_construct, "<span class='cultitalic'>You are now tracking your master.</span>")
+
 
 /////////////////////////////ui stuff/////////////////////////////
 
@@ -295,3 +332,4 @@
 			hud_used.healths.icon_state = "[icon_state]_health5"
 		else
 			hud_used.healths.icon_state = "[icon_state]_health6"
+

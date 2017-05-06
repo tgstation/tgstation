@@ -107,7 +107,7 @@
 	icon_state = "mecha_ion"
 	origin_tech = "materials=4;engineering=4;combat=6;magnets=6"
 	energy_drain = 500
-	projectile = /obj/item/projectile/energy/tesla_cannon
+	projectile = /obj/item/projectile/energy/tesla/cannon
 	fire_sound = 'sound/magic/lightningbolt.ogg'
 
 

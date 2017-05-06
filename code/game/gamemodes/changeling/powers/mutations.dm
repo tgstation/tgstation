@@ -16,7 +16,6 @@
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
 	dna_cost = -1
-	genetic_damage = 1000
 
 	var/silent = FALSE
 	var/weapon_type
@@ -67,7 +66,6 @@
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
 	dna_cost = -1
-	genetic_damage = 1000
 
 	var/helmet_type = /obj/item
 	var/suit_type = /obj/item
@@ -89,7 +87,7 @@
 		return 1
 	var/mob/living/carbon/human/H = user
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
-		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
+		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple].</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
 		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
 		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_inv_wear_suit()
@@ -100,7 +98,6 @@
 			H.add_splatter_floor()
 			playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
 
-		changeling.geneticdamage += genetic_damage //Casting off a space suit leaves you weak for a few seconds.
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		return 1
 
@@ -139,9 +136,7 @@
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
 	chemical_cost = 20
 	dna_cost = 2
-	genetic_damage = 10
 	req_human = 1
-	max_genetic_damage = 20
 	weapon_type = /obj/item/weapon/melee/arm_blade
 	weapon_name_simple = "blade"
 
@@ -217,9 +212,7 @@
 	and Harm will stun it, and stab it if we're also holding a sharp weapon. Cannot be used while in lesser form."
 	chemical_cost = 10
 	dna_cost = 2
-	genetic_damage = 5
 	req_human = 1
-	max_genetic_damage = 10
 	weapon_type = /obj/item/weapon/gun/magic/tentacle
 	weapon_name_simple = "tentacle"
 	silent = TRUE
@@ -381,9 +374,7 @@
 	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
 	chemical_cost = 20
 	dna_cost = 1
-	genetic_damage = 12
 	req_human = 1
-	max_genetic_damage = 20
 
 	weapon_type = /obj/item/weapon/shield/changeling
 	weapon_name_simple = "shield"
@@ -430,12 +421,10 @@
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
 	desc = "We grow an organic suit to protect ourselves from space exposure."
-	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Retreating the suit damages our genomes. Cannot be used in lesser form."
+	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Cannot be used in lesser form."
 	chemical_cost = 20
 	dna_cost = 2
-	genetic_damage = 8
 	req_human = 1
-	max_genetic_damage = 20
 
 	suit_type = /obj/item/clothing/suit/space/changeling
 	helmet_type = /obj/item/clothing/head/helmet/space/changeling
@@ -477,12 +466,10 @@
 /obj/effect/proc_holder/changeling/suit/armor
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage."
-	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
+	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form."
 	chemical_cost = 20
 	dna_cost = 1
-	genetic_damage = 11
 	req_human = 1
-	max_genetic_damage = 20
 	recharge_slowdown = 0.25
 
 	suit_type = /obj/item/clothing/suit/armor/changeling

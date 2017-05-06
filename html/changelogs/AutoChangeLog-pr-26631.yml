@@ -1,0 +1,10 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "Blood Cultists can now attempt to claim the position of Cult Master with the approval of a majority of their brethren."
+  - rscadd: "The Cult Master has access to unique blood magic that will aid them in leading the cult to victory:"
+  - rscadd: "The Cult Master can mark targets, allowing the entire cult to track them down."
+  - rscadd: "The Cult Master has single-use, noisy, and overt channeled spell that will summon the entire cult to their location."
+  - rscadd: "All cultists gain a HUD alert that will assist them in completing their objectives."
+  - rscadd: "Constructs created by soul shards will now be able to track their master."
+  - rscadd: "Cultists created outside of cult mode will now get a working sacrifice and summon objective and the summon rune will no longer fail outside of cult mode."

@@ -104,6 +104,12 @@
 		if(istype(O, /obj/item/stack/medical/gauze) || istype(O, /obj/item/stack/sheet/cloth))
 			species = /datum/species/golem/cloth
 
+		if(istype(O, /obj/item/stack/sheet/mineral/adamantine))
+			species = /datum/species/golem/adamantine
+
+		if(istype(O, /obj/item/stack/sheet/plastic))
+			species = /datum/species/golem/plastic
+
 		if(species)
 			if(O.use(10))
 				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
@@ -118,7 +124,6 @@
 /obj/item/golem_shell/artificial
 	name = "incomplete artificial golem shell"
 	has_owner = TRUE
-
 
 ///Syndicate Listening Post
 /obj/effect/mob_spawn/human/lavaland_syndicate
@@ -136,7 +141,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	has_id = 1
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
 	id_access_list = list(GLOB.access_syndicate)
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
@@ -144,9 +149,5 @@
 	r_hand = /obj/item/weapon/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/armor/vest
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. \n +\
-					Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. <u> Do not abandon the base, activate the self destruct device if you are compromised.</u></b> \n +\
-					Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail.\n +\
-					<u> Remember, an enemy of our enemy is a friend, so also provide support to those that hinder Nanotrasen unless commanded otherwise by HQ. \n +\
-					Do not let the base fall into enemy hands!</u></font>"
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
 	pocket2 = /obj/item/weapon/card/id/syndicate/anyone

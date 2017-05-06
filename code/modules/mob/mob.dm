@@ -350,7 +350,7 @@
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
-	if((spintime <= 1)||(speed <= 1)||!spintime||!speed)
+	if((spintime < 1)||(speed < 1)||!spintime||!speed)
 		return
 	while(spintime >= speed)
 		sleep(speed)
@@ -742,7 +742,6 @@
 	client.move_delay += movement_delay()
 	return 1
 
-
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
@@ -1005,3 +1004,10 @@
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
+
+/mob/verb/open_language_menu()
+	set name = "Open Language Menu"
+	set category = "IC"
+
+	var/datum/language_holder/H = get_language_holder()
+	H.open_language_menu(usr)

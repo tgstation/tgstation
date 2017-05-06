@@ -33,4 +33,4 @@
 			if ("mentor_legacy_system")
 				config.mentor_legacy_system = 1
 		else
-			GLOB.diary << "Unknown setting in configuration: '[name]'"
+			GLOB.world_game_log << "Unknown setting in configuration: '[name]'"
