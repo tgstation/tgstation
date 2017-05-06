@@ -99,13 +99,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			data = ping(arglist(params))
 			doLog = FALSE
 
-		if("pong" || "pang")
-			doLog = FALSE
-
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
-	if(doLog)
+	if(doLog && href != "pong" && href != "pang")
 		debug_log << "[owner.ckey] >> [href]"
 
 	if(data)
