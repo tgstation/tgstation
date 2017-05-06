@@ -1959,6 +1959,7 @@
 #include "code\modules\shuttle\arrivals.dm"
 #include "code\modules\shuttle\assault_pod.dm"
 #include "code\modules\shuttle\computer.dm"
+#include "code\modules\shuttle\elevator.dm"
 #include "code\modules\shuttle\emergency.dm"
 #include "code\modules\shuttle\ferry.dm"
 #include "code\modules\shuttle\manipulator.dm"
