@@ -72,10 +72,10 @@
 
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
-	name = "An Asteroid With Engines Strapped To It"
-	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
+	name = "Asteroid Theme Park"
+	description = "Asteroid funland! You can mine your own rocks just like a shaft miner! or pet our 'friendly' goliaths and other mining creatures fun for the whole family!"
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
-	credit_cost = -5000
+	credit_cost = 7500
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
