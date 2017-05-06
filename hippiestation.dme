@@ -13,8 +13,8 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\basemap.dm"
-#include "_maps\loadallmaps.dm"
+#include "_maps\basemaphippie.dm"
+#include "_maps\loadallmapshippie.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\globals.dm"
