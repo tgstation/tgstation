@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(menulist)
 			entry["group"] = "[verb_true_parent.type]"
 		.[verbpath] = list2params(entry)
 
-/datum/menu/proc/Get_checked(client/C, default)
+/datum/menu/proc/Get_checked(client/C)
 	return C.prefs.menuoptions[type] || default || FALSE
 
 /datum/menu/proc/Load_checked(client/C) //Loads the checked menu item into a new client. Used by icon menus to invoke the checked item.
