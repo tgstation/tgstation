@@ -318,8 +318,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/area/A = get_area(P)
 	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
 		return
-	desc = "You are currently tracking [blood_target] in [A.name]"
-	var/target_angle = Get_Angle(mob_viewer, blood_target)
+	desc = "You are currently tracking [blood_target] in [A.name]."
+	var/target_angle = Get_Angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
 	switch(target_dist)
