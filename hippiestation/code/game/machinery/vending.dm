@@ -27,6 +27,7 @@
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/list/display_records
+	var/refill_count = 3
 
 	var/vendsound = 'hippiestation/sound/misc/vend.ogg'
 
@@ -89,7 +90,9 @@
 							/obj/machinery/vending/cola = "Robust Softdrinks",
 							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
 							/obj/machinery/vending/autodrobe = "AutoDrobe",
-							/obj/machinery/vending/clothing = "ClothesMate")
+							/obj/machinery/vending/clothing = "ClothesMate",
+							/obj/machinery/vending/medical = "NanoMed Plus",
+							/obj/machinery/vending/wallmed = "NanoMed")
 
 /obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -105,7 +108,7 @@
 /obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
 	build_path = typepath
 	name = "[names_paths[build_path]] Vendor (Machine Board)"
-	req_components = list(initial(typepath.refill_canister) = 3)
+	req_components = list(initial(typepath.refill_canister) = initial(typepath.refill_count))
 
 /obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
 	for(var/typepath in names_paths)

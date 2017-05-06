@@ -640,6 +640,7 @@ NANOMED
 	premium = list(/obj/item/weapon/storage/box/hug/medical = 1,/obj/item/weapon/reagent_containers/hypospray/medipen = 3, /obj/item/weapon/storage/belt/medical = 3, /obj/item/weapon/wrench/medical = 1)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/weapon/vending_refill/medical
 	products = list(
 		/obj/item/weapon/reagent_containers/syringe = 12,
 		/obj/item/weapon/reagent_containers/dropper = 3,
@@ -680,6 +681,8 @@ WALLMED
 	height = 300
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/weapon/vending_refill/medical
+	refill_count = 1
 	products = list(
 		/obj/item/weapon/reagent_containers/syringe = 3,
 		/obj/item/weapon/reagent_containers/pill/patch/styptic = 5,
