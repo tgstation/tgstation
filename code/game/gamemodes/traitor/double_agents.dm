@@ -104,6 +104,32 @@
 /proc/is_internal_objective(datum/objective/O)
 	return (istype(O, /datum/objective/assassinate/internal)||istype(O, /datum/objective/destroy/internal))
 
+/proc/replace_escape_objective(datum/mind/owner)
+	if(!owner||!owner.objectives)
+		return
+	for (var/objective_ in owner.objectives)
+		if(!(istype(objective_, /datum/objective/escape)||istype(objective_,/datum/objective/survive)))
+			continue
+		owner.objectives -= objective_
+	var/datum/objective/martyr/martyr_objective = new
+	martyr_objective.owner = owner
+	owner.objectives += martyr_objective
+
+/proc/reinstate_escape_objective(datum/mind/owner)
+	if(!owner||!owner.objectives)
+		return
+	for (var/objective_ in owner.objectives)
+		if(!istype(objective_, /datum/objective/martyr))
+			continue
+		owner.objectives -= objective_
+	if(issilicon(owner))	
+		var/datum/objective/survive/survive_objective = new
+		survive_objective.owner = owner
+		owner.objectives += survive_objective
+	else
+		var/datum/objective/escape/escape_objective = new
+		escape_objective.owner = owner
+		owner.objectives += escape_objective
 
 /datum/internal_agent_state/proc/steal_targets(datum/mind/victim)
 	if(!owner.current||owner.current.stat==DEAD) //Should already be guaranteed if this is only called from steal_targets_timer_func, but better to be safe code than sorry code 
@@ -146,6 +172,7 @@
 				traitored = FALSE
 				return
 		to_chat(owner.current,"<span class='userdanger'> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</span>")
+		replace_escape_objective(owner)
 		
 			
 	
@@ -168,6 +195,7 @@
 					var/fail_msg = "<span class='userdanger'>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </span>"
 					if(traitored)
 						fail_msg += "<span class='userdanger'> The truth could still slip out!</font><B><font size=5 color=red> Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</span>"
+						reinstate_escape_objective(owner)
 						traitored = FALSE
 					to_chat(owner.current, fail_msg)
 					objective.stolen = FALSE
