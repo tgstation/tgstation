@@ -6,6 +6,11 @@
 */
 
 GLOBAL_LIST_EMPTY(menulist)
+
+/world/proc/load_menu()
+	for (var/typepath in subtypesof(/datum/menu))
+		new typepath()
+
 /datum/menu
 	var/name
 	var/list/children

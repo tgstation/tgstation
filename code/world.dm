@@ -346,7 +346,3 @@
 
 /world/proc/has_round_started()
 	return SSticker.HasRoundStarted()
-
-/world/proc/load_menu()
-	for (var/typepath in (typesof(/datum/menu)-/datum/menu))
-		new typepath()
