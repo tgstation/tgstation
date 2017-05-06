@@ -284,7 +284,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		//Lockdown airlocks
 		for(var/obj/machinery/door/DOOR in RA)
 			close_and_lock_door(DOOR)
-			DOOR.allow_remote = FALSE
+			if(istype(DOOR,/obj/machinery/door/airlock))
+				var/obj/machinery/door/airlock/airlock = DOOR
+				airlock.aiDisabledIdScanner = TRUE
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 

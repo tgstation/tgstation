@@ -31,7 +31,6 @@
 	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
-	var/allow_remote = TRUE //allows use of door remotes
 
 /obj/machinery/door/New()
 	..()
