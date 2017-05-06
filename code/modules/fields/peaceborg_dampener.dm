@@ -35,14 +35,14 @@
 	..()
 
 /datum/field/peaceborg_dampener/setup_edge_turf(turf/T)
+	..()
 	var/dir_found = get_edgeturf_direction(T)
-	world << "DEBUG: dir_found [dir_found]"
 	T.add_overlay(get_edgeturf_overlay(dir_found))
 	turf_overlay_tracker[T] = dir_found
-	..()
 
 /datum/field/peaceborg_dampener/cleanup_edge_turf(turf/T)
 	T.cut_overlay(get_edgeturf_overlay(turf_overlay_tracker[T]))
+	turf_overlay_tracker -= T
 	..()
 
 /datum/field/peaceborg_dampener/proc/get_edgeturf_overlay(direction)
