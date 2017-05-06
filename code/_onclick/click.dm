@@ -160,7 +160,7 @@
 /obj/item/weapon/storage/CanReachStorage(atom/target,user,depth)
 	while(target && depth > 0)
 		target = target.loc
-		depth --
+		depth--
 		if(target == src)
 			return TRUE
 	return FALSE
