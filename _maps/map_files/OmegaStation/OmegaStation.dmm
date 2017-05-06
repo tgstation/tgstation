@@ -27036,7 +27036,7 @@
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "aRh" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/chemistry)
 "aRi" = (
@@ -37373,7 +37373,7 @@
 /turf/open/floor/plasteel,
 /area/toxins/xenobiology)
 "bjb" = (
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /obj/machinery/light{
 	dir = 1
 	},
