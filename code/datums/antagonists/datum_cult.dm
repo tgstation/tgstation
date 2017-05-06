@@ -111,7 +111,7 @@
 	var/datum/action/innate/cultmast/finalreck/FinalReckoning = new
 	var/datum/action/innate/cultmast/cultmark/Mark = new
 
-/datum/antagonist/cult/Destroy()
+/datum/antagonist/cult/master/Destroy()
 	QDEL_NULL(FinalReckoning)
 	QDEL_NULL(Mark)
 	return ..()
