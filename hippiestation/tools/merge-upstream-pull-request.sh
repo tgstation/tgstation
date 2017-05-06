@@ -19,10 +19,10 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-# Ensure wget exists and is available in the current context
+# Ensure curl exists and is available in the current context
 type curl >/dev/null 2>&1 || { echo >&2 "Error: This script requires curl, please ensure curl is installed and exists in the current PATH"; exit 1; }
 
-# Ensure wget exists and is available in the current context
+# Ensure jq exists and is available in the current context
 type jq >/dev/null 2>&1 || { echo >&2 "Error: This script requires jq, please ensure jq is installed and exists in the current PATH"; exit 1; }
 
 # Make sure we have our upstream remote
@@ -43,12 +43,14 @@ git branch | grep -v "master" | xargs git branch -D
 # Create a new branch
 git checkout -b "$BASE_BRANCH_NAME$1"
 
+# Grab the SHA of the merge commit
 MERGE_SHA=$(curl --silent "$BASE_PULL_URL/$1" | jq '.merge_commit_sha' -r)
 
 # Cherry pick onto the new branch
 CHERRY_PICK_OUTPUT=$(git cherry-pick -m 1 -X ignore-all-space "$MERGE_SHA" 2>&1)
 echo "$CHERRY_PICK_OUTPUT"
 
+# If it's a squash commit, you can't use -m 1, you need to remove it
 if echo "$CHERRY_PICK_OUTPUT" | grep 'error: mainline was specified but commit'; then
   echo "Commit was a squash, retrying"
   git cherry-pick -X ignore-all-space "$MERGE_SHA"
