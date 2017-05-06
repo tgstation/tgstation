@@ -774,7 +774,6 @@
 #include "code\game\objects\items\weapons\defib.dm"
 #include "code\game\objects\items\weapons\dice.dm"
 #include "code\game\objects\items\weapons\dna_injector.dm"
-#include "code\game\objects\items\weapons\explosives.dm"
 #include "code\game\objects\items\weapons\extinguisher.dm"
 #include "code\game\objects\items\weapons\flamethrower.dm"
 #include "code\game\objects\items\weapons\gift.dm"

@@ -828,6 +828,14 @@
 					/obj/item/weapon/defibrillator/loaded)
 	crate_name = "defibrillator crate"
 
+/datum/supply_pack/medical/vending
+	name = "Medical Vending Crate"
+	cost = 2000
+	contains = list(/obj/item/weapon/vending_refill/medical,
+					/obj/item/weapon/vending_refill/medical,
+					/obj/item/weapon/vending_refill/medical)
+	crate_name = "medical vending crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
