@@ -121,10 +121,12 @@
 
 /obj/machinery/clonepod/examine(mob/user)
 	..()
+	var/mob/living/mob_occupant = occupant
 	if(mess)
 		to_chat(user, "It's filled with blood and viscera. You swear you can see it moving...")
-	if (is_operational() && (!isnull(occupant)) && (occupant.stat != DEAD))
-		to_chat(user, "Current clone cycle is [round(get_completion())]% complete.")
+	if(is_operational() && mob_occupant)
+		if(mob_occupant.stat != DEAD)
+			to_chat(user, "Current clone cycle is [round(get_completion())]% complete.")
 
 /obj/machinery/clonepod/return_air()
 	// We want to simulate the clone not being in contact with
@@ -136,7 +138,10 @@
 	return GM
 
 /obj/machinery/clonepod/proc/get_completion()
-	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
+	. = FALSE
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
+		. = (100 * ((mob_occupant.health + 100) / (heal_level + 100)))
 
 /obj/machinery/clonepod/attack_ai(mob/user)
 	return examine(user)
@@ -223,25 +228,26 @@
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
+	var/mob/living/mob_occupant = occupant
 
 	if(!is_operational()) //Autoeject if power is lost
-		if (occupant)
+		if(mob_occupant)
 			go_out()
 			connected_message("Clone Ejected: Loss of power.")
 
-	else if((occupant) && (occupant.loc == src))
-		if((occupant.stat == DEAD) || (occupant.suiciding) || occupant.hellbound)  //Autoeject corpses and suiciding dudes.
+	else if(mob_occupant && (mob_occupant.loc == src))
+		if((mob_occupant.stat == DEAD) || (mob_occupant.suiciding) || mob_occupant.hellbound)  //Autoeject corpses and suiciding dudes.
 			connected_message("Clone Rejected: Deceased.")
-			SPEAK("The cloning of [occupant.real_name] has been \
+			SPEAK("The cloning of [mob_occupant.real_name] has been \
 				aborted due to unrecoverable tissue failure.")
 			go_out()
 
-		else if(occupant.cloneloss > (100 - heal_level))
-			occupant.Paralyse(4)
+		else if(mob_occupant.cloneloss > (100 - heal_level))
+			mob_occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
-			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
-			var/progress = CLONE_INITIAL_DAMAGE - occupant.getCloneLoss()
+			mob_occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
+			var/progress = CLONE_INITIAL_DAMAGE - mob_occupant.getCloneLoss()
 			// To avoid the default cloner making incomplete clones
 			progress += (100 - MINIMUM_HEAL_LEVEL)
 			var/milestone = CLONE_INITIAL_DAMAGE / flesh_number
@@ -252,24 +258,24 @@
 				var/obj/item/I = pick_n_take(unattached_flesh)
 				if(isorgan(I))
 					var/obj/item/organ/O = I
-					O.Insert(occupant)
+					O.Insert(mob_occupant)
 				else if(isbodypart(I))
 					var/obj/item/bodypart/BP = I
-					BP.attach_limb(occupant)
+					BP.attach_limb(mob_occupant)
 
 			//Premature clones may have brain damage.
-			occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier))
+			mob_occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier))
 
 			check_brine()
 
 			use_power(7500) //This might need tweaking.
 
-		else if((occupant.cloneloss <= (100 - heal_level)))
+		else if((mob_occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
-			SPEAK("The cloning cycle of [occupant.real_name] is complete.")
+			SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
 			go_out()
 
-	else if ((!occupant) || (occupant.loc != src))
+	else if (!mob_occupant || mob_occupant.loc != src)
 		occupant = null
 		if (!mess && !panel_open)
 			icon_state = "pod_0"
@@ -305,11 +311,12 @@
 			to_chat(user, "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>")
 		return
 
+	var/mob/living/mob_occupant = occupant
 	if(W.GetID())
 		if(!check_access(W))
 			to_chat(user, "<span class='danger'>Access Denied.</span>")
 			return
-		if(!(occupant || mess))
+		if(!(mob_occupant || mess))
 			to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
 			return
 		else
@@ -339,6 +346,7 @@
 
 /obj/machinery/clonepod/proc/go_out()
 	countdown.stop()
+	var/mob/living/mob_occupant = occupant
 
 	if(mess) //Clean that mess and dump those gibs!
 		mess = FALSE
@@ -347,22 +355,25 @@
 		icon_state = "pod_0"
 		return
 
-	if(!occupant)
+	if(!mob_occupant)
 		return
 
+
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
-		occupant.grab_ghost()
+		mob_occupant.grab_ghost()
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
-		occupant.flash_act()
+		mob_occupant.flash_act()
 
 	var/turf/T = get_turf(src)
 	occupant.forceMove(T)
 	icon_state = "pod_0"
-	occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
+	mob_occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
+
 	occupant = null
 
 /obj/machinery/clonepod/proc/malfunction()
-	if(occupant)
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		connected_message("Critical Error!")
 		SPEAK("Critical error! Please contact a Thinktronic Systems \
 			technician, as your warranty may be affected.")
@@ -370,23 +381,24 @@
 		for(var/obj/item/O in unattached_flesh)
 			qdel(O)
 		icon_state = "pod_g"
-		if(occupant.mind != clonemind)
-			clonemind.transfer_to(occupant)
-		occupant.grab_ghost() // We really just want to make you suffer.
-		flash_color(occupant, flash_color="#960000", flash_time=100)
-		to_chat(occupant, "<span class='warning'><b>Agony blazes across your consciousness as your body is torn apart.</b><br><i>Is this what dying is like? Yes it is.</i></span>")
+		if(mob_occupant.mind != clonemind)
+			clonemind.transfer_to(mob_occupant)
+		mob_occupant.grab_ghost() // We really just want to make you suffer.
+		flash_color(mob_occupant, flash_color="#960000", flash_time=100)
+		to_chat(mob_occupant, "<span class='warning'><b>Agony blazes across your consciousness as your body is torn apart.</b><br><i>Is this what dying is like? Yes it is.</i></span>")
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
-		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
-		QDEL_IN(occupant, 40)
+		mob_occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
+		QDEL_IN(mob_occupant, 40)
 
 /obj/machinery/clonepod/relaymove(mob/user)
 	if(user.stat == CONSCIOUS)
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
-	if((occupant || mess) && prob(100/(severity*efficiency)))
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant && prob(100/(severity*efficiency)))
 		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
-		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [clonemind.name] prematurely." ,0))
+		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
 		go_out()
 	..()
 

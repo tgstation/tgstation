@@ -1,26 +1,19 @@
 
 #define MEDAL_PREFIX "Colossus"
 /*
-
 COLOSSUS
-
 The colossus spawns randomly wherever a lavaland creature is able to spawn. It is powerful, ancient, and extremely deadly.
 The colossus has a degree of sentience, proving this in speech during its attacks.
-
 It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
-
 The colossus' true danger lies in its ranged capabilities. It fires immensely damaging death bolts that penetrate all armor in a variety of ways:
  1. The colossus fires death bolts in alternating patterns: the cardinal directions and the diagonal directions.
  2. The colossus fires death bolts in a shotgun-like pattern, instantly downing anything unfortunate enough to be hit by all of them.
  3. The colossus fires a spiral of death bolts.
 At 33% health, the colossus gains an additional attack:
  4. The colossus fires two spirals of death bolts, spinning in opposite directions.
-
 When a colossus dies, it leaves behind a chunk of glowing crystal known as a black box. Anything placed inside will carry over into future rounds.
 For instance, you could place a bag of holding into the black box, and then kill another colossus next round and retrieve the bag of holding from inside.
-
 Difficulty: Very Hard
-
 */
 
 /mob/living/simple_animal/hostile/megafauna/colossus
@@ -401,7 +394,7 @@ Difficulty: Very Hard
 		to_chat(user, observer_desc)
 		to_chat(user, "It is activated by [activation_method].")
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -647,8 +640,7 @@ Difficulty: Very Hard
 	verb_ask = "floats inquisitively"
 	verb_exclaim = "zaps"
 	verb_yell = "bangs"
-	initial_languages = list(/datum/language/common, /datum/language/slime)
-	only_speaks_language = /datum/language/slime
+	initial_language_holder = /datum/language_holder/lightbringer
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	light_range = 4
 	faction = list("neutral")

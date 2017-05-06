@@ -2,7 +2,7 @@
 	name = "devil"
 	config_tag = "devil"
 	antag_flag = ROLE_DEVIL
-	protected_jobs = list("Lawyer", "Librarian", "Chaplain", "Head of Security", "Captain", "AI")
+	protected_jobs = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4

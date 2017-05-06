@@ -52,6 +52,7 @@
 	var/linglink
 
 	var/miming = 0 // Mime's vow of silence
+	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
@@ -62,18 +63,34 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
+	var/datum/language_holder
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	if(islist(antag_datums))
+		for(var/i in antag_datums)
+			qdel(i)
+		antag_datums = null
 	return ..()
+
+/datum/mind/proc/get_language_holder()
+	if(!language_holder)
+		var/datum/language_holder/L = current.get_language_holder(shadow=FALSE)
+		language_holder = L.copy(src)
+
+	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
+
+	if(!language_holder)
+		language_holder = new_character.language_holder.copy(src)
 
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -84,13 +101,13 @@
 	if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
-	if(istype(current) && islist(current.antag_datums)) //wow apparently current isn't always living good fucking job SOMEONE
-		for(var/i in current.antag_datums)
-			var/datum/antagonist/D = i
-			D.transfer_to_new_body(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
+	var/mob/living/old_current = current
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
+	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
+		var/datum/antagonist/A = a
+		A.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
@@ -106,6 +123,41 @@
 /datum/mind/proc/wipe_memory()
 	memory = null
 
+// Datum antag mind procs
+/datum/mind/proc/add_antag_datum(datum_type)
+	if(!datum_type)
+		return
+	var/datum/antagonist/A = new datum_type(src)
+	if(!A.can_be_owned(src))
+		qdel(A)
+		return
+	LAZYADD(antag_datums, A)
+	A.on_gain()
+	return A
+
+/datum/mind/proc/remove_antag_datum(datum_type)
+	if(!datum_type)
+		return
+	var/datum/antagonist/A = has_antag_datum(datum_type)
+	if(A)
+		A.on_removal()
+		return TRUE
+
+/datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
+	for(var/a in antag_datums)
+		var/datum/antagonist/A = a
+		A.on_removal()
+
+/datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
+	if(!datum_type)
+		return
+	. = FALSE
+	for(var/a in antag_datums)
+		var/datum/antagonist/A = a
+		if(check_subtypes && istype(A, datum_type))
+			return A
+		else if(A.type == datum_type)
+			return A
 
 /*
 	Removes antag type's references from a mind.

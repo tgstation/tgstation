@@ -12,7 +12,8 @@
 	var/exclaim_verb = "exclaims"     // Used when sentence ends in a !
 	var/whisper_verb = "whispers"     // Optional. When not specified speech_verb + quietly/softly is used instead.
 	var/list/signlang_verb = list("signs", "gestures") // list of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
-	var/key = "x"                     // Character used to speak in language
+	var/key                           // Character used to speak in language
+	// If key is null, then the language isn't real or learnable.
 	var/flags                         // Various language flags.
 	var/list/syllables                // Used when scrambling text for a non-speaker.
 	var/list/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.

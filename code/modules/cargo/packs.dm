@@ -1681,8 +1681,8 @@
 	crate_name = "art supply crate"
 
 /datum/supply_pack/misc/soapstone
-	name = "Librarian Engraving/Scribbling Crate"
-	crate_name = "librarian engraving/scribbling crate"
+	name = "Curator Engraving/Scribbling Crate"
+	crate_name = "curator engraving/scribbling crate"
 	cost = 3000
 	contains = list(/obj/item/soapstone)
 	access = GLOB.access_library

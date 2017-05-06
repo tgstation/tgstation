@@ -307,7 +307,10 @@
 		if(panel_open)
 			attack_hand(user)
 		return
-	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
+	else if(istype(W, /obj/item/weapon/coin))
+		if(!premium.len)
+			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
+			return
 		if(!user.drop_item())
 			return
 		W.loc = src

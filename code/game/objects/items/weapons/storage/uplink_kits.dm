@@ -220,6 +220,7 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/venom(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/neurotoxin2(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/formaldehyde(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/spewium(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/histamine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/initropidril(src)

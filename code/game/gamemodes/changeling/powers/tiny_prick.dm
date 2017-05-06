@@ -41,9 +41,8 @@
 	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = 0))
 		return
 	if(target.mind && target.mind.changeling)
-		sting_feedback(user,target)
-		take_chemical_cost(user.mind.changeling)
-		return
+		sting_feedback(user, target)
+		user.mind.changeling.chem_charges -= chemical_cost
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
@@ -62,7 +61,6 @@
 	sting_icon = "sting_transform"
 	chemical_cost = 40
 	dna_cost = 3
-	genetic_damage = 100
 	var/datum/changelingprofile/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -117,8 +115,6 @@
 	sting_icon = "sting_armblade"
 	chemical_cost = 20
 	dna_cost = 1
-	genetic_damage = 20
-	max_genetic_damage = 10
 
 /obj/item/weapon/melee/arm_blade/false
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."

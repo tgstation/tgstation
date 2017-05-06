@@ -30,10 +30,9 @@
 /datum/status_effect/proc/start_ticking()
 	if(!src)
 		return
-	if(!owner)
+	if(!owner || !on_apply())
 		qdel(src)
 		return
-	on_apply()
 	if(duration != -1)
 		duration = world.time + initial(duration)
 	tick_interval = world.time + initial(tick_interval)
@@ -52,7 +51,8 @@
 	if(duration != -1 && duration < world.time)
 		qdel(src)
 
-/datum/status_effect/proc/on_apply() //Called whenever the buff is applied.
+/datum/status_effect/proc/on_apply() //Called whenever the buff is applied; returning FALSE will cause it to autoremove itself.
+	return TRUE
 /datum/status_effect/proc/tick() //Called every tick.
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed; do note that at the point this is called, it is out of the owner's status_effects but owner is not yet null
 /datum/status_effect/proc/be_replaced() //Called instead of on_remove when a status effect is replaced by itself or when a status effect with on_remove_on_mob_delete = FALSE has its mob deleted
@@ -103,3 +103,11 @@
 		for(var/datum/status_effect/S in status_effects)
 			if(initial(S1.id) == S.id)
 				return S
+
+/mob/living/proc/has_status_effect_list(effect) //returns a list of effects with matching IDs that the mod owns; use for effects there can be multiple of
+	. = list()
+	if(status_effects)
+		var/datum/status_effect/S1 = effect
+		for(var/datum/status_effect/S in status_effects)
+			if(initial(S1.id) == S.id)
+				. += S
