@@ -12,15 +12,23 @@
 			</ui-section>
 
 			<ui-section label='Set Target'>
-				<ui-button action='up-left'>↖</ui-button>
-				<ui-button action='up'>↑</ui-button>
-				<ui-button action='up-right'>↗</ui-button><br>
-				<ui-button action='left'>←</ui-button>
-				<ui-button action='reset'>R</ui-button>
-				<ui-button action='right'>→</ui-button><br>
-				<ui-button action='down-left'>↙</ui-button>
-				<ui-button action='down'>↓</ui-button>
-				<ui-button action='down-right'>↘</ui-button><br>
+			<table>
+			<tr>
+				<td><ui-button action='up-left'>↖</ui-button></td>
+				<td><ui-button action='up'>↑</ui-button></td>
+				<td><ui-button action='up-right'>↗</ui-button></td>
+			</tr>
+			<tr>
+				<td><ui-button action='left'>←</ui-button></td>
+				<td><ui-button action='reset'>R</ui-button></td>
+				<td><ui-button action='right'>→</ui-button></td>
+			</tr>
+			<tr>
+				<td><ui-button action='down-left'>↙</ui-button></td>
+				<td><ui-button action='down'>↓</ui-button></td>
+				<td><ui-button action='down-right'>↘</ui-button></td>
+			</tr>
+			</table>
 			</ui-section>
 			<ui-section label='Current Target'>
 				<span>{{data.abs_y}} {{data.north_south}}</span><br>
