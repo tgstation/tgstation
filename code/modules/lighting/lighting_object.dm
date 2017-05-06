@@ -75,10 +75,10 @@ GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 	var/datum/lighting_corner/cb = dummy_lighting_corner
 	var/datum/lighting_corner/ca = dummy_lighting_corner
 	if (corners) //done this way for speed
-		cr = T.corners[3] || dummy_lighting_corner
-		cg = T.corners[2] || dummy_lighting_corner
-		cb = T.corners[4] || dummy_lighting_corner
-		ca = T.corners[1] || dummy_lighting_corner
+		cr = corners[3] || dummy_lighting_corner
+		cg = corners[2] || dummy_lighting_corner
+		cb = corners[4] || dummy_lighting_corner
+		ca = corners[1] || dummy_lighting_corner
 
 	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
 
