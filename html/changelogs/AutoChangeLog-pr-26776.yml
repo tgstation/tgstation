@@ -1,9 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "If you know more than the usual number of languages, you'll now remember them after you get cloned."
-  - rscdel: "Humans turning into monkeys will not suddenly be able to speak the monkey language, and will continue to understand and speak human."
-  - rscadd: "Ghosts can now modify their own understood languages with the
-language menu."
-  - rscadd: "Any mob can also open their language menu with the IC->Open Language Menu verb."
-  - rscadd: "Silicons can now understand Draconic as part of their internal databases."

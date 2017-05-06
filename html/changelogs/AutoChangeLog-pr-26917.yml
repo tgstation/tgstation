@@ -1,6 +1,0 @@
-author: "BeeSting12"
-delete-after: True
-changes: 
-  - rscadd: "Deltastation's chemistry now has a screwdriver."
-  - bugfix: "Deltastation's morgue no longer has a blue tile."
-  - bugfix: "Deltastation's chemistry smart fridge is no longer blocked by a disposal unit."
