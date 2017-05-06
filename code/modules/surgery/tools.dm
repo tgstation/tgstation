@@ -111,12 +111,8 @@
 	if(contents.len)
 		to_chat(user, "<span class='notice'>[src] already has something inside it.</span>")
 		return
-	if(isorgan(I))
-		var/obj/item/organ/O = I
-	else if(isbodypart(I))
-		var/obj/item/bodypart/BP = I
-	else
-		return
+    if(!isorgan(I) || !isbodypart(I))
+    return
 		
 	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>")
 	icon_state = "evidence"
