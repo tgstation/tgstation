@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "It is now possible to make plastic golems, who are made of a material
+flexible enough to crawl through vents (while not carrying equipment). They also can pass through plastic flaps."
