@@ -108,12 +108,12 @@
 	. = ..()
 
 /datum/antagonist/cult/master
-	var/datum/action/innate/cultmast/finalreck/FinalReckoning = new
-	var/datum/action/innate/cultmast/cultmark/Mark = new
+	var/datum/action/innate/cultmast/finalreck/reckoning = new
+	var/datum/action/innate/cultmast/cultmark/bloodmark = new
 
 /datum/antagonist/cult/master/Destroy()
-	QDEL_NULL(FinalReckoning)
-	QDEL_NULL(Mark)
+	QDEL_NULL(reckoning)
+	QDEL_NULL(bloodmark)
 	return ..()
 
 /datum/antagonist/cult/master/on_gain()
@@ -132,8 +132,8 @@
 	if(mob_override)
 		current = mob_override
 	if(!GLOB.reckoning_complete)
-		FinalReckoning.Grant(current)
-	Mark.Grant(current)
+		reckoning.Grant(current)
+	bloodmark.Grant(current)
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
 
@@ -142,7 +142,7 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	FinalReckoning.Remove(current)
-	Mark.Remove(current)
+	reckoning.Remove(current)
+	bloodmark.Remove(current)
 	current.update_action_buttons_icon()
 	current.remove_status_effect(/datum/status_effect/cult_master)
