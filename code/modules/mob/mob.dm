@@ -577,6 +577,7 @@
 
 	if(client && client.holder)
 		if(statpanel("MC"))
+			stat("Round ID:", "[GLOB.round_id ? GLOB.round_id : "NULL"]"
 			stat("Location:", "([x], [y], [z])")
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[world.contents.len]")
