@@ -14,19 +14,19 @@
 			<ui-section label='Set Target'>
 			<table>
 			<tr>
-				<td><ui-button action='up-left'>↖</ui-button></td>
-				<td><ui-button action='up'>↑</ui-button></td>
-				<td><ui-button action='up-right'>↗</ui-button></td>
+				<td style="width:25px!important"><ui-button action='up-left'>↖</ui-button></td>
+				<td style="width:25px!important; text-align:center"><ui-button action='up'>↑</ui-button></td>
+				<td style="width:25px!important; text-align:right"><ui-button action='up-right'>↗</ui-button></td>
 			</tr>
 			<tr>
-				<td><ui-button action='left'>←</ui-button></td>
-				<td><ui-button action='reset'>R</ui-button></td>
-				<td><ui-button action='right'>→</ui-button></td>
+				<td style="width:25px!important"><ui-button action='left' style="width:35px!important">←</ui-button></td>
+				<td style="width:25px!important; text-align:center"><ui-button action='reset'>R</ui-button></td>
+				<td style="width:25px!important; text-align:right"><ui-button action='right'>→</ui-button></td>
 			</tr>
 			<tr>
-				<td><ui-button action='down-left'>↙</ui-button></td>
-				<td><ui-button action='down'>↓</ui-button></td>
-				<td><ui-button action='down-right'>↘</ui-button></td>
+				<td style="width:25px!important"><ui-button action='down-left'>↙</ui-button></td>
+				<td style="width:25px!important; text-align:center"><ui-button action='down'>↓</ui-button></td>
+				<td style="width:25px!important; text-align:right"><ui-button action='down-right'>↘</ui-button></td>
 			</tr>
 			</table>
 			</ui-section>
