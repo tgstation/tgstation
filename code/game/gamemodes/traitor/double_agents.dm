@@ -6,8 +6,8 @@
 	name = "Internal Affairs"
 	config_tag = "internal_affairs"
 	employer = "Internal Affairs"
-	required_players = 1
-	required_enemies = 1
+	required_players = 25
+	required_enemies = 5
 	recommended_enemies = 8
 	reroll_friendly = 0
 	traitor_name = "Nanotrasen Internal Affairs Agent"
@@ -33,43 +33,43 @@
 	..()
 
 
-/datum/action/agent_pinpointer
-	name = "Internal Affairs Integrated Pinpointer"
-	desc = "Even stealthier than a normal implant."
-	icon_icon = 'icons/obj/device.dmi'
-	button_icon_state = "pinon"
+/datum/status_effect/agent_pinpointer
+	id = "agent_pinpointer"
+	duration = -1
+	tick_interval = PINPOINTER_PING_TIME
+	alert_type = /obj/screen/alert/status_effect/agent_pinpointer
 	var/minimum_range = PINPOINTER_MINIMUM_RANGE
 	var/mob/scan_target = null
 
-/datum/action/agent_pinpointer/ApplyIcon(obj/screen/movable/action_button/current_button) //overridden to update direction properly
-	if(icon_icon && button_icon_state)
-		current_button.cut_overlays(TRUE)
-		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
-		current_button.button_icon_state = button_icon_state
+/obj/screen/alert/status_effect/agent_pinpointer
+	name = "Internal Affairs Integrated Pinpointer"
+	desc = "Even stealthier than a normal implant."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "pinon"
 
-/datum/action/agent_pinpointer/proc/point_to_target() //If we found what we're looking for, show the distance and direction
+/datum/status_effect/agent_pinpointer/proc/point_to_target() //If we found what we're looking for, show the distance and direction
 	if(!scan_target)
-		button_icon_state = "pinonnull"
+		linked_alert.icon_state = "pinonnull"
 		return
 	var/turf/here = get_turf(owner)
 	var/turf/there = get_turf(scan_target)
 	if(here.z != there.z)
-		button_icon_state = "pinonnull"
+		linked_alert.icon_state = "pinonnull"
 		return
 	if(get_dist_euclidian(here,there)<=minimum_range + rand(0, PINPOINTER_EXTRA_RANDOM_RANGE))
-		button_icon_state = "pinondirect"
+		linked_alert.icon_state = "pinondirect"
 	else
-		button.setDir(get_dir(here, there))
+		linked_alert.setDir(get_dir(here, there))
 		switch(get_dist(here, there))
 			if(1 to 8)
-				button_icon_state = "pinonclose"
+				linked_alert.icon_state = "pinonclose"
 			if(9 to 16)
-				button_icon_state = "pinonmedium"
+				linked_alert.icon_state = "pinonmedium"
 			if(16 to INFINITY)
-				button_icon_state = "pinonfar"
-	UpdateButtonIcon()
+				linked_alert.icon_state = "pinonfar"
+		
 
-/datum/action/agent_pinpointer/proc/scan_for_target()
+/datum/status_effect/agent_pinpointer/proc/scan_for_target()
 	scan_target = null
 	if(owner)
 		if(owner.mind)
@@ -84,20 +84,16 @@
 					break
 					
 
-/datum/action/agent_pinpointer/proc/pinpointer_ping_func()
+/datum/status_effect/agent_pinpointer/tick()
 	if(!owner)
 		qdel(src)
 		return
 	scan_for_target()
 	point_to_target()
-	var/datum/callback/C = new(src, .pinpointer_ping_func)
-	addtimer(C, PINPOINTER_PING_TIME)
 
 /proc/give_pinpointer(datum/mind/owner)
 	if(owner && owner.current)
-		var/datum/action/agent_pinpointer/pinp = new
-		pinp.Grant(owner.current)
-		pinp.pinpointer_ping_func()
+		new/datum/status_effect/agent_pinpointer(owner.current)
 
 
 /datum/internal_agent_state
