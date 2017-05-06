@@ -109,13 +109,3 @@
 	return speech_verb
 
 #undef SCRAMBLE_CACHE_LEN
-
-/proc/get_language_instance(langtype)
-	if(!ispath(langtype, /datum/language))
-		return
-
-	if(!GLOB.language_datums[langtype])
-		var/datum/language/langdatum = new langtype
-		GLOB.language_datums[langtype] = langdatum
-
-	. = GLOB.language_datums[langtype]

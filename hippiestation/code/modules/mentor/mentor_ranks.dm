@@ -7,7 +7,7 @@
 		SSdbcore.Connect()
 		if(!SSdbcore.IsConnected())
 			log_world("Failed to connect to database in load_mentors().")
-			GLOB.diary << "Failed to connect to database in load_mentors()."
+			GLOB.world_game_log << "Failed to connect to database in load_mentors()."
 			config.mentor_legacy_system = 1
 			load_mentors()
 			return
