@@ -188,7 +188,12 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	set hidden = TRUE
 	chatOutput.ehjax_send(data = list("firebug" = TRUE))
 
+GLOBAL_LIST_EMPTY(broken_ckeys)
 /client/verb/chat_broke()
+	if(broken_ckeys[ckey])
+		return
+	broken_ckeys[ckey] = TRUE
+	message_admins("The chat broke for [ckey]!")
 	chatOutput.Broke()
 
 //Global chat procs
