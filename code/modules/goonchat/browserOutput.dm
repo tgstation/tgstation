@@ -76,8 +76,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(usr.client != owner)
 		return TRUE
 
-	debug_log << "[owner.ckey] >> [href]"
-
+	var/doLog = TRUE
 	// Build arguments.
 	// Arguments are in the form "param[paramname]=thing"
 	var/list/params = list()
@@ -98,12 +97,17 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 		if("ping")
 			data = ping(arglist(params))
+			doLog = FALSE
 
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
+	if(doLog)
+		debug_log << "[owner.ckey] >> [href]"
+
 	if(data)
 		ehjax_send(data = data)
+
 
 //Called on chat output done-loading by JS.
 /datum/chatOutput/proc/doneLoading()
