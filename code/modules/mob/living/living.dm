@@ -17,8 +17,6 @@
 	medhud.add_to_hud(src)
 	faction += "\ref[src]"
 
-	language_menu = new(src)
-
 
 /mob/living/prepare_huds()
 	..()
@@ -49,8 +47,6 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
-
-	QDEL_NULL(language_menu)
 
 	return ..()
 
@@ -733,6 +729,9 @@
 
 	if(statpanel("Status"))
 		if(SSticker && SSticker.mode)
+			for(var/datum/gang/G in SSticker.mode.gangs)
+				if(G.is_dominating)
+					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)

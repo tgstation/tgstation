@@ -398,23 +398,23 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
+	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			to_chat(M, "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>")
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
 		return FALSE
-	var/sacrifice_fulfilled = FALSE
-
 	if(sacrificial.mind)
 		GLOB.sacrificed += sacrificial.mind
 		if(is_sacrifice_target(sacrificial.mind))
-			sacrifice_fulfilled = TRUE
+			GLOB.sac_complete = TRUE
+			big_sac = TRUE
 	else
 		GLOB.sacrificed += sacrificial
 
 	new /obj/effect/overlay/temp/cult/sac(get_turf(src))
 	for(var/M in invokers)
-		if(sacrifice_fulfilled)
+		if(big_sac)
 			to_chat(M, "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>")
 		else
 			if(ishuman(sacrificial) || iscyborg(sacrificial))
@@ -451,7 +451,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	scribe_delay = 450 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	var/used
-	var/ignore_gamemode = FALSE
+	var/ignore_gamemode = TRUE
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
@@ -490,7 +490,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	//BEGIN THE SUMMONING
 	used = 1
 	..()
-	send_to_playing_players('sound/effects/dimensional_rend.ogg') //There used to be a message for this but every time it was changed it got edgier so I removed it
+	send_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)

@@ -58,6 +58,12 @@
 	icon_state = "bottle12"
 	list_reagents = list("cyanide" = 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/spewium
+	name = "spewium bottle"
+	desc = "A small bottle of spewium."
+	icon_state = "bottle12"
+	list_reagents = list("spewium" = 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/morphine
 	name = "morphine bottle"
 	desc = "A small bottle of morphine."

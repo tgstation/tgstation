@@ -94,6 +94,13 @@
 				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				new/datum/round_event/ghost_role/blob(TRUE, strength)
+			if("gangs")
+				if(src.makeGangsters())
+					message_admins("[key_name(usr)] created gangs.")
+					log_admin("[key_name(usr)] created gangs.")
+				else
+					message_admins("[key_name(usr)] tried to create gangs. Unfortunately, there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed create gangs.")
 			if("centcom")
 				message_admins("[key_name(usr)] is creating a Centcom response team...")
 				if(src.makeEmergencyresponseteam())
@@ -1504,6 +1511,17 @@
 
 		usr.client.cmd_admin_animalize(M)
 
+	else if(href_list["gangpoints"])
+		var/datum/gang/G = locate(href_list["gangpoints"]) in SSticker.mode.gangs
+		if(G)
+			var/newpoints = input("Set [G.name ] Gang's influence.","Set Influence",G.points) as null|num
+			if(!newpoints)
+				return
+			message_admins("[key_name_admin(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
+			log_admin("[key_name(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
+			G.points = newpoints
+			G.message_gangtools("Your gang now has [G.points] influence.")
+
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
@@ -1781,12 +1799,12 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/mob/living/L = locate(href_list["languagemenu"]) in GLOB.mob_list
-		if(!isliving(L))
-			to_chat(usr, "This can only be used on instances of type /mob/living.")
+		var/mob/M = locate(href_list["languagemenu"]) in GLOB.mob_list
+		if(!ismob(M))
+			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
-
-		L.open_language_menu(usr)
+		var/datum/language_holder/H = M.get_language_holder()
+		H.open_language_menu(usr)
 
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))

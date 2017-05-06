@@ -63,6 +63,8 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
+	var/datum/language_holder/language_holder
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
@@ -75,10 +77,21 @@
 		antag_datums = null
 	return ..()
 
+/datum/mind/proc/get_language_holder()
+	if(!language_holder)
+		var/datum/language_holder/L = current.get_language_holder(shadow=FALSE)
+		language_holder = L.copy(src)
+
+	return language_holder
+
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
+
+	if(!language_holder)
+		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
+		language_holder = mob_holder.copy(src)
 
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -215,6 +228,11 @@
 	remove_objectives()
 	remove_antag_equip()
 
+
+/datum/mind/proc/remove_gang()
+		SSticker.mode.remove_gangster(src,0,1,1)
+		remove_objectives()
+
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
@@ -233,17 +251,24 @@
 	remove_wizard()
 	remove_cultist()
 	remove_rev()
+	remove_gang()
 	SSticker.mode.update_changeling_icons_removed(src)
 	SSticker.mode.update_traitor_icons_removed(src)
 	SSticker.mode.update_wiz_icons_removed(src)
 	SSticker.mode.update_cult_icons_removed(src)
 	SSticker.mode.update_rev_icons_removed(src)
+	if(gang_datum)
+		gang_datum.remove_gang_hud(src)
+
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
 
 /datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
 	if(iscultist(creator))
 		SSticker.mode.add_cultist(src)
+
+	else if(is_gangster(creator))
+		SSticker.mode.add_gangster(src, creator.mind.gang_datum, TRUE)
 
 	else if(is_revolutionary_in_general(creator))
 		SSticker.mode.add_revolutionary(src)
@@ -341,6 +366,46 @@
 			text += "|Disabled in Prefs"
 
 		sections["revolution"] = text
+
+		/** GANG ***/
+		text = "gang"
+		if (SSticker.mode.config_tag=="gang")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		text += "[current.isloyal() ? "<B>LOYAL</B>" : "loyal"]|"
+		if(src in SSticker.mode.get_all_gangsters())
+			text += "<a href='?src=\ref[src];gang=clear'>none</a>"
+		else
+			text += "<B>NONE</B>"
+
+		if(current && current.client && (ROLE_GANG in current.client.prefs.be_special))
+			text += "|Enabled in Prefs<BR>"
+		else
+			text += "|Disabled in Prefs<BR>"
+
+		for(var/datum/gang/G in SSticker.mode.gangs)
+			text += "<i>[G.name]</i>: "
+			if(src in (G.gangsters))
+				text += "<B>GANGSTER</B>"
+			else
+				text += "<a href='?src=\ref[src];gangster=\ref[G]'>gangster</a>"
+			text += "|"
+			if(src in (G.bosses))
+				text += "<B>GANG LEADER</B>"
+				text += "|Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
+				var/list/L = current.get_contents()
+				var/obj/item/device/gangtool/gangtool = locate() in L
+				if (gangtool)
+					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
+
+			else
+				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
+			text += "<BR>"
+
+		if(GLOB.gang_colors_pool.len)
+			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
+
+		sections["gang"] = text
 
 		/** Abductors **/
 		text = "Abductor"
@@ -854,6 +919,75 @@
 					flash.crit_fail = 0
 					flash.update_icon()
 
+
+
+//////////////////// GANG MODE
+
+	else if (href_list["gang"])
+		switch(href_list["gang"])
+			if("clear")
+				remove_gang()
+				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
+				log_admin("[key_name(usr)] has de-gang'ed [current].")
+
+			if("equip")
+				switch(SSticker.mode.equip_gang(current,gang_datum))
+					if(1)
+						to_chat(usr, "<span class='warning'>Unable to equip territory spraycan!</span>")
+					if(2)
+						to_chat(usr, "<span class='warning'>Unable to equip recruitment pen and spraycan!</span>")
+					if(3)
+						to_chat(usr, "<span class='warning'>Unable to equip gangtool, pen, and spraycan!</span>")
+
+			if("takeequip")
+				var/list/L = current.get_contents()
+				for(var/obj/item/weapon/pen/gang/pen in L)
+					qdel(pen)
+				for(var/obj/item/device/gangtool/gangtool in L)
+					qdel(gangtool)
+				for(var/obj/item/toy/crayon/spraycan/gang/SC in L)
+					qdel(SC)
+
+			if("new")
+				if(GLOB.gang_colors_pool.len)
+					var/list/names = list("Random") + GLOB.gang_name_pool
+					var/gangname = input("Pick a gang name.","Select Name") as null|anything in names
+					if(gangname && GLOB.gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
+						if(!(gangname in GLOB.gang_name_pool))
+							gangname = null
+						var/datum/gang/newgang = new(null,gangname)
+						SSticker.mode.gangs += newgang
+						message_admins("[key_name_admin(usr)] has created the [newgang.name] Gang.")
+						log_admin("[key_name(usr)] has created the [newgang.name] Gang.")
+
+	else if (href_list["gangboss"])
+		var/datum/gang/G = locate(href_list["gangboss"]) in SSticker.mode.gangs
+		if(!G || (src in G.bosses))
+			return
+		SSticker.mode.remove_gangster(src,0,2,1)
+		G.bosses += src
+		gang_datum = G
+		special_role = "[G.name] Gang Boss"
+		G.add_gang_hud(src)
+		to_chat(current, "<FONT size=3 color=red><B>You are a [G.name] Gang Boss!</B></FONT>")
+		message_admins("[key_name_admin(usr)] has added [current] to the [G.name] Gang leadership.")
+		log_admin("[key_name(usr)] has added [current] to the [G.name] Gang leadership.")
+		SSticker.mode.forge_gang_objectives(src)
+		SSticker.mode.greet_gang(src,0)
+
+	else if (href_list["gangster"])
+		var/datum/gang/G = locate(href_list["gangster"]) in SSticker.mode.gangs
+		if(!G || (src in G.gangsters))
+			return
+		SSticker.mode.remove_gangster(src,0,2,1)
+		SSticker.mode.add_gangster(src,G,0)
+		message_admins("[key_name_admin(usr)] has added [current] to the [G.name] Gang (A).")
+		log_admin("[key_name(usr)] has added [current] to the [G.name] Gang (A).")
+
+/////////////////////////////////
+
+
+
 	else if (href_list["cult"])
 		switch(href_list["cult"])
 			if("clear")
@@ -1314,17 +1448,10 @@
 	if(!(src in SSticker.mode.cult))
 		SSticker.mode.add_cultist(src,FALSE)
 		special_role = "Cultist"
-		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
-		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-		var/datum/game_mode/cult/cult = SSticker.mode
-
-		if (istype(cult))
-			cult.memorize_cult_objectives(src)
-		else
-			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
-			to_chat(current, "<B>Objective #1</B>: [explanation]")
-			memory += "<B>Objective #1</B>: [explanation]<BR>"
-
+		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
+		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
+		var/datum/antagonist/cult/C
+		C.cult_memorization(src)
 	var/mob/living/carbon/human/H = current
 	if (!SSticker.mode.equip_cultist(current))
 		to_chat(H, "Spawning an amulet from your Master failed.")
@@ -1355,6 +1482,16 @@
 	var/fail = 0
 //	fail |= !SSticker.mode.equip_traitor(current, 1)
 	fail |= !SSticker.mode.equip_revolutionary(current)
+
+
+/datum/mind/proc/make_Gang(datum/gang/G)
+	special_role = "[G.name] Gang Boss"
+	G.bosses += src
+	gang_datum = G
+	G.add_gang_hud(src)
+	SSticker.mode.forge_gang_objectives(src)
+	SSticker.mode.greet_gang(src)
+	SSticker.mode.equip_gang(current,G)
 
 /datum/mind/proc/make_Abductor()
 	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
