@@ -25,8 +25,6 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	var/cache_b  = LIGHTING_SOFT_THRESHOLD
 	var/cache_mx = 0
 
-	var/update_gen = 0
-
 /datum/lighting_corner/New(var/turf/new_turf, var/diagonal)
 	. = ..()
 
