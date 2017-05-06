@@ -31,7 +31,7 @@
 	if(bodytemperature >= 225 && !(disabilities & NOCLONE)) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
-		if(blood_volume < BLOOD_VOLUME_NORMAL)
+		if(blood_volume < BLOOD_VOLUME_NORMAL && !(NOHUNGER in dna.species.species_traits))
 			var/nutrition_ratio = 0
 			switch(nutrition)
 				if(0 to NUTRITION_LEVEL_STARVING)
