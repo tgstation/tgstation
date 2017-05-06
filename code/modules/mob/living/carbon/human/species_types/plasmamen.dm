@@ -50,6 +50,9 @@
 	H.update_internals_hud_icon(1)
 	return 0
 
+/datum/species/plasmaman/after_equip_job(datum/job/J, mob/living/carbon/human/H)
+	H.grant_language(/datum/language/plasmic)
+
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
 	if(rank in GLOB.security_positions)
 		return 0
