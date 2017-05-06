@@ -102,7 +102,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
-	if(doLog && href != "pong" && href != "pang")
+	if(doLog)
 		debug_log << "[owner.ckey] >> [href]"
 
 	if(data)
@@ -134,7 +134,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))
 		data = json_encode(data)
-	debug_log << "[C.ckey] << [data]"
+	if(data != "pong" && data != "pang" && data != "softPang")
+		debug_log << "[C.ckey] << [data]"
 	C << output("[data]", "[window]:ehjaxCallback")
 
 //Sends client connection details to the chat to handle and save
