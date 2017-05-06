@@ -535,7 +535,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/kidnap/check_completion()
 	var/mob/current_mob = owner.current
 	var/mob/target_mob = target.current
-	var/list/all_items = owner.current_mob.GetAllContents()
+	var/list/all_items = current_mob.GetAllContents()
 	for(var/atom/A in all_items)
 		if(A == target_mob)	//How the fuck did you accomplish this?!
 			return check_state(target_mob)
