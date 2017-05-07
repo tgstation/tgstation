@@ -40086,7 +40086,7 @@
 	},
 /area/medical/virology)
 "brX" = (
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plasteel/whitegreen/side{
 	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
@@ -47853,7 +47853,7 @@
 	},
 /area/medical/chemistry)
 "bEN" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -76429,7 +76429,7 @@
 	},
 /area/toxins/xenobiology)
 "cCm" = (
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
