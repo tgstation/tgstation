@@ -5,6 +5,10 @@
 	mutanttongue = /obj/item/organ/tongue/fly
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 
+/datum/species/fly/after_equip_job(datum/job/J, mob/living/carbon/human/H)
+	H.grant_language(/datum/language/fly)
+
+
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
 		H.adjustToxLoss(3)
