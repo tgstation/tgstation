@@ -232,7 +232,7 @@
 	else
 		var/P = get_turf_pixel(top_atom)
 		if (P != pixel_turf)
-			pixel_turf = get_turf_pixel(top_atom)
+			pixel_turf = P
 			update = TRUE
 
 	if (light_range && light_power && !applied)
@@ -256,13 +256,15 @@
 	var/thing
 	var/datum/lighting_corner/C
 	var/turf/T
-
-	FOR_DVIEW(T, Ceiling(light_range), source_turf, 0)
-		for (thing in T.get_corners(source_turf))
-			C = thing
-			corners[C] = 0
-		turfs += T
-	FOR_DVIEW_END
+	if (source_turf)
+		var/oldlum = source_turf.luminosity
+		source_turf.luminosity = Ceiling(light_range)
+		for(T in view(Ceiling(light_range), source_turf))
+			for (thing in T.get_corners(source_turf))
+				C = thing
+				corners[C] = 0
+			turfs += T
+		source_turf.luminosity = oldlum
 
 	LAZYINITLIST(affecting_turfs)
 	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
