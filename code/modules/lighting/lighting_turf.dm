@@ -33,7 +33,7 @@
 		return
 
 	var/area/A = loc
-	if (!IS_DYNAMIC_LIGHTING(A))
+	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
 		return
 
 	if (!lighting_corners_initialised)
@@ -113,7 +113,7 @@
 			lighting_clear_overlay()
 
 /turf/proc/get_corners()
-	if (!IS_DYNAMIC_LIGHTING(src))
+	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
 		return null
 	if (!lighting_corners_initialised)
 		generate_missing_corners()
@@ -123,7 +123,7 @@
 	return corners
 
 /turf/proc/generate_missing_corners()
-	if (!IS_DYNAMIC_LIGHTING(src))
+	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
 		return
 	lighting_corners_initialised = TRUE
 	if (!corners)
