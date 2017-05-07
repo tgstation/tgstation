@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Ash walkers now know and speak Draconic by default, but still know
+Galactic Common. Remember, Galcom's language key is \",0\" and you can
+review your known languages with the Language Menu."
