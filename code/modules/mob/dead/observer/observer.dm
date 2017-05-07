@@ -800,6 +800,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Process_Spacemove(movement_dir)
 	return 1
 
+/mob/dead/observer/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == "invisibility")
+		set_invisibility(invisibility) // updates light
+
 /proc/set_observer_default_invisibility(amount, message=null)
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		G.set_invisibility(amount)
