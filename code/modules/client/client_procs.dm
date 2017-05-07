@@ -294,8 +294,6 @@ GLOBAL_LIST(external_rsc_urls)
 		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 		if (config.irc_first_connection_alert)
 			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
-	else //We failed to get an age for this user, let admins know they need to keep an eye on them
-		message_admins("Failed to get BYOND account age for [key_name_admin(src)]")
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 
