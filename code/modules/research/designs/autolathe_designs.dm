@@ -786,7 +786,7 @@
 	
 /datum/design/slime_scanner
 	name = "Slime Scanner"
-	id = "healthanalyzer"
+	id = "slime_scanner"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
 	build_path = /obj/item/device/slime_scanner
