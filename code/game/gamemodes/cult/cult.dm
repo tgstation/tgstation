@@ -187,7 +187,7 @@
 	if(cult_objectives.Find("eldergod"))
 		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
 	if(cult_objectives.Find("sacrifice"))
-		if(GLOB.sac_mind && GLOB.sac_complete) //if the target has been GLOB.sacrificed, ignore this step. otherwise, add 1 to cult_fail
+		if(GLOB.sac_mind && !GLOB.sac_complete) //if the target has been GLOB.sacrificed, ignore this step. otherwise, add 1 to cult_fail
 			cult_fail++
 	return cult_fail //if any objectives aren't met, failure
 
