@@ -92,6 +92,7 @@
 		current = mob_override
 	current.faction -= "cult"
 	current.remove_language(/datum/language/narsie)
+	current.verbs -= /mob/living/proc/cult_help
 	vote.Remove(current)
 	communion.Remove(current)
 	current.clear_alert("bloodsense")
