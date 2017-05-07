@@ -88,6 +88,14 @@
 	turf_type = /turf/open/floor/wood
 	resistance_flags = FLAMMABLE
 
+//Basalt
+/obj/item/stack/tile/basalt
+	name = "basalt tile"
+	singular_name = "basalt floor tile"
+	desc = "Artificially made ashy soil themed on a hostile enviroment."
+	icon_state = "tile_basalt"
+	origin_tech = "materials=1"
+	turf_type = /turf/open/floor/grass/fakebasalt
 
 //Carpets
 /obj/item/stack/tile/carpet

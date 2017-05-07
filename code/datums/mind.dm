@@ -63,6 +63,8 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
+	var/datum/language_holder/language_holder
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
@@ -75,10 +77,21 @@
 		antag_datums = null
 	return ..()
 
+/datum/mind/proc/get_language_holder()
+	if(!language_holder)
+		var/datum/language_holder/L = current.get_language_holder(shadow=FALSE)
+		language_holder = L.copy(src)
+
+	return language_holder
+
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
+
+	if(!language_holder)
+		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
+		language_holder = mob_holder.copy(src)
 
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -1435,17 +1448,10 @@
 	if(!(src in SSticker.mode.cult))
 		SSticker.mode.add_cultist(src,FALSE)
 		special_role = "Cultist"
-		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
-		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-		var/datum/game_mode/cult/cult = SSticker.mode
-
-		if (istype(cult))
-			cult.memorize_cult_objectives(src)
-		else
-			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
-			to_chat(current, "<B>Objective #1</B>: [explanation]")
-			memory += "<B>Objective #1</B>: [explanation]<BR>"
-
+		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
+		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
+		var/datum/antagonist/cult/C
+		C.cult_memorization(src)
 	var/mob/living/carbon/human/H = current
 	if (!SSticker.mode.equip_cultist(current))
 		to_chat(H, "Spawning an amulet from your Master failed.")

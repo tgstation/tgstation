@@ -251,6 +251,10 @@ EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, f
 ##	Requres database
 NOTIFY_NEW_PLAYER_AGE 0
 
+## Notify admins when a player connects if their byond account was created in the last X days
+## Requires database
+NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
+
 ## Notify the irc channel when a new player makes their first connection
 ##	Requres database
 #IRC_FIRST_CONNECTION_ALERT

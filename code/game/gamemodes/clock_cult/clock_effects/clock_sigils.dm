@@ -54,8 +54,11 @@
 	clockwork_desc = "A sigil that will stun the next non-Servant to cross it."
 	icon_state = "sigildull"
 	layer = HIGH_SIGIL_LAYER
-	alpha = 60
+	alpha = 75
 	color = "#FAE48C"
+	light_range = 1.4
+	light_power = 0.4
+	light_color = "#FAE48C"
 	sigil_name = "Sigil of Transgression"
 
 /obj/effect/clockwork/sigil/transgression/sigil_effects(mob/living/L)

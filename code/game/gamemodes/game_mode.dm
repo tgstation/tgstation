@@ -257,6 +257,8 @@
 	if(escaped_total > 0)
 		SSblackbox.set_val("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
+	if(cult.len && !istype(SSticker.mode,/datum/game_mode/cult))
+		datum_cult_completion()
 	return 0
 
 

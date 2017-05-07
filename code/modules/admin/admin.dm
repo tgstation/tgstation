@@ -37,6 +37,10 @@
 	else
 		body += " \[<A href='?_src_=holder;revive=\ref[M]'>Heal</A>\] "
 
+	if(M.client)
+		body += "<br>\[<b>Player Age:</b> [M.client.player_age]\]\[<b>Byond Age:</b> [M.client.account_age]\]"
+
+
 	body += "<br><br>\[ "
 	body += "<a href='?_src_=vars;Vars=\ref[M]'>VV</a> - "
 	body += "<a href='?_src_=holder;traitor=\ref[M]'>TP</a> - "
@@ -610,41 +614,20 @@
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
-	return usr.client.spawn_atom_impl(object, FALSE)
-
-/datum/admins/proc/spawn_atom_adv(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn an atom with New() parameters"
-	set name = "Advanced Spawn"
-
-	return usr.client.spawn_atom_impl(object, TRUE)
-
-
-/client/proc/spawn_atom_impl(object, params)
 	if(!check_rights(R_SPAWN))
 		return
 
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
-
-	var/list/arguments
 	if(ispath(chosen,/turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
-		if(params)
-			arguments = usr.client.get_callproc_args(TRUE)
-		
-		if(!usr)
-			return
-		
-		arguments = list(usr.loc) + arguments
-
-		var/atom/A = new chosen(arglist(arguments))
+		var/atom/A = new chosen(usr.loc)
 		A.admin_spawned = TRUE
 
-	log_admin("[key_name(usr)] spawned [chosen] at [COORD(usr)][LAZYLEN(arguments) > 1 ? " with parameters [print_single_line(arguments)]": ""]")
+	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	SSblackbox.add_details("admin_verb","Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
