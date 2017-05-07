@@ -59,7 +59,11 @@
 	load_mode()
 	load_motd()
 	load_admins()
+<<<<<<< HEAD
 	hippie_initialize()
+=======
+	load_menu()
+>>>>>>> ca815ef61f... Merge pull request #23201 from MrStonedOne/clientimprovements
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -343,6 +347,7 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+
 
 /world/proc/has_round_started()
 	return SSticker.HasRoundStarted()
