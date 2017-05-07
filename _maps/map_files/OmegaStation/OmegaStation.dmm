@@ -7303,7 +7303,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central{
@@ -25976,7 +25975,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
