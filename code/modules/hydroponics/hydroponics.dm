@@ -867,6 +867,7 @@
 			qdel(myseed)
 			myseed = null
 		weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
+		harvest = 0	//Ze plantz iz dedz
 		update_icon()
 
 	else
