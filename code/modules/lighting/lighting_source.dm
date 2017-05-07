@@ -192,7 +192,7 @@
 	effect_str = null
 
 /datum/light_source/proc/recalc_corner(var/datum/lighting_corner/C)
-	if (effect_str.Find(C)) // Already have one.
+	if (effect_str && effect_str[C]) // Already have one.
 		REMOVE_CORNER(C)
 
 	APPLY_CORNER(C)
@@ -280,20 +280,38 @@
 		LAZYREMOVE(T.affecting_lights, src)
 
 	LAZYINITLIST(effect_str)
-	for (thing in (needs_update == LIGHTING_VIS_UPDATE ? corners - effect_str : corners)) // New corners
-		C = thing
-		LAZYADD(C.affecting, src)
-		if (!C.active)
-			effect_str[C] = 0
-			continue
+	if (needs_update == LIGHTING_VIS_UPDATE)
+		for (thing in  corners - effect_str) // New corners
+			C = thing
+			LAZYADD(C.affecting, src)
+			if (!C.active)
+				effect_str[C] = 0
+				continue
+			APPLY_CORNER(C)
+	else
+		L = corners - effect_str
+		for (thing in L) // New corners
+			C = thing
+			LAZYADD(C.affecting, src)
+			if (!C.active)
+				effect_str[C] = 0
+				continue
+			APPLY_CORNER(C)
 
-		APPLY_CORNER(C)
+		for (thing in corners - L) // Existing corners
+			C = thing
+			if (!C.active)
+				effect_str[C] = 0
+				continue
+			APPLY_CORNER(C)
 
-	for (thing in effect_str - corners) // Old, now gone, corners.
+	L = effect_str - corners
+	effect_str -= corners
+	for (thing in L) // Old, now gone, corners.
 		C = thing
 		REMOVE_CORNER(C)
 		LAZYREMOVE(C.affecting, src)
-		effect_str -= C
+
 
 	applied_lum_r = lum_r
 	applied_lum_g = lum_g
