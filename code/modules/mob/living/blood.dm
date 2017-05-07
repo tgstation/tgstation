@@ -31,8 +31,23 @@
 	if(bodytemperature >= 225 && !(disabilities & NOCLONE)) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
-		if(blood_volume < BLOOD_VOLUME_NORMAL)
-			blood_volume += 0.1 // regenerate blood VERY slowly
+		if(blood_volume < BLOOD_VOLUME_NORMAL && !(NOHUNGER in dna.species.species_traits))
+			var/nutrition_ratio = 0
+			switch(nutrition)
+				if(0 to NUTRITION_LEVEL_STARVING)
+					nutrition_ratio = 0.2
+				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+					nutrition_ratio = 0.4
+				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+					nutrition_ratio = 0.6
+				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+					nutrition_ratio = 0.8
+				else
+					nutrition_ratio = 1
+			if(satiety > 80)
+				nutrition_ratio *= 1.25
+			nutrition = max(0, nutrition - nutrition_ratio * HUNGER_FACTOR)
+			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
