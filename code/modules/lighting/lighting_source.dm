@@ -122,7 +122,7 @@
 	(                                        \
 		(. * lum_r) - (OLD * applied_lum_r), \
 		(. * lum_g) - (OLD * applied_lum_g), \
-		(. * lum_g) - (OLD * applied_lum_g)  \
+		(. * lum_b) - (OLD * applied_lum_b)  \
 	);
 
 
