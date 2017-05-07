@@ -109,14 +109,13 @@
 			if(!B.current.incapacitated())
 				B.current << 'sound/hallucinations/im_here1.ogg'
 				to_chat(B.current, "<span class='cultlarge'>Acolyte [Nominee] has asserted that they are worthy of leading the cult. A vote will be called shortly.</span>")
-	sleep(150)
+	sleep(100)
 	var/list/asked_cultists = list()
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(B.current && B.current != Nominee && !B.current.incapacitated())
 			B.current << 'sound/magic/exit_blood.ogg'
 			asked_cultists += B.current
-	var/list/yes_voters = pollCandidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 600, group = asked_cultists)
-	sleep(150)
+	var/list/yes_voters = pollCandidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 300, group = asked_cultists)
 	if(QDELETED(Nominee) || Nominee.incapacitated())
 		GLOB.cult_vote_called = FALSE
 		for(var/datum/mind/B in SSticker.mode.cult)
@@ -131,7 +130,7 @@
 			if(B.current)
 				B.current.update_action_buttons_icon()
 				if(!B.current.incapacitated())
-					to_chat(B.current,"<span class='cultlarge'>[Nominee] has gone insane and catatonic in the process of attempting to win the cult's support!")
+					to_chat(B.current,"<span class='cultlarge'>[Nominee] has gone catatonic in the process of attempting to win the cult's support!")
 		return FALSE
 	if(LAZYLEN(yes_voters) <= LAZYLEN(asked_cultists) * 0.5)
 		GLOB.cult_vote_called = FALSE

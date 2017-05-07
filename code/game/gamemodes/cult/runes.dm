@@ -450,8 +450,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	pixel_y = -32
 	scribe_delay = 450 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
-	var/used
-	var/ignore_gamemode = TRUE
+	var/used = FALSE
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
@@ -470,33 +469,20 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(z != ZLEVEL_STATION)
 		return
 
-	var/datum/game_mode/cult/cult_mode
-
-	if(SSticker.mode.name == "cult")
-		cult_mode = SSticker.mode
-
-	if(!cult_mode && !ignore_gamemode)
-		for(var/M in invokers)
-			to_chat(M, "<span class='warning'>Nar-Sie does not respond!</span>")
-		fail_invoke()
-		log_game("Summon Nar-Sie rune failed - gametype is not cult")
-		return
-
 	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Nar-Sie is already on this plane!</span>")
 		log_game("Summon Nar-Sie rune failed - already summoned")
 		return
 	//BEGIN THE SUMMONING
-	used = 1
+	used = TRUE
 	..()
 	send_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)
 		color = "#FF0000"
-	if(cult_mode)
-		cult_mode.eldergod = 0
+	SSticker.mode.eldergod = 0
 	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
