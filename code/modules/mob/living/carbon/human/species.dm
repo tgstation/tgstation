@@ -1268,7 +1268,8 @@
 			def_zone = ran_zone(def_zone)
 		BP = H.get_bodypart(check_zone(def_zone))
 		if(!BP)
-			BP = H.bodyparts[1]
+			//fall back to chest
+			BP = H.get_bodypart("chest")
 
 	switch(damagetype)
 		if(BRUTE)
