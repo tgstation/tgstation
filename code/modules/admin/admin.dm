@@ -38,7 +38,7 @@
 		body += " \[<A href='?_src_=holder;revive=\ref[M]'>Heal</A>\] "
 
 	if(M.client)
-		body += "<br>\[<b>Player Age:</b> [M.client.player_age]\]\[<b>Byond Age:</b> [M.client.account_age]\]"
+		body += "<br>\[<b>Player Age:</b> [M.client.player_join_date]\]\[<b>Byond Age:</b> [M.client.account_join_date]\]"
 
 
 	body += "<br><br>\[ "
