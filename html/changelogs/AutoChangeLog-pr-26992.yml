@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Smartfridges no longer magically gain medicines if deconstructed
+and rebuilt."
