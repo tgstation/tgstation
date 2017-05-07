@@ -265,3 +265,36 @@
 	for(var/obj/structure/spacevine/SV in src)
 		if(!QDESTROYING(SV))//Helps avoid recursive loops
 			qdel(SV)
+
+/turf/open/floor/plasteel/acid_spray
+	floor_tile = /obj/item/stack/tile/acid_spray
+	var/spray_amount = 35
+	var/cooldown = 150
+	var/last_spray = 0
+	var/primed = FALSE
+	
+/turf/open/floor/plasteel/acid_spray/New()
+	..()
+	last_spray = world.time
+	primed = TRUE //prevents firing immediately when placed
+
+/turf/open/floor/plasteel/acid_spray/Entered(atom/movable/AM)
+	..()
+	if(!(isobj(AM) || isliving(AM)) || (AM.flags & ABSTRACT) || !primed)
+		return
+	if((world.time > last_spray + cooldown) && !broken && !burnt)
+		spray()
+		
+/turf/open/floor/plasteel/acid_spray/proc/spray()
+	playsound(src, 'sound/effects/spray2.ogg', 40, 1, -6)
+	var/obj/effect/decal/chempuff/A = new /obj/effect/decal/chempuff(src)
+	A.create_reagents(spray_amount)
+	A.reagents.add_reagent("facid", spray_amount)
+	A.color = mix_color_from_reagents(A.reagents.reagent_list)
+	for(var/atom/T in src)
+		if(T == A || T.invisibility)
+			continue
+		A.reagents.reaction(T, VAPOR)
+	spawn(2)
+		qdel(A)
+	last_spray = world.time
