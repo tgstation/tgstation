@@ -39,6 +39,9 @@
 
 	if(M.client)
 		body += "<br>\[<b>Player Age:</b> [M.client.player_age]\]\[<b>Byond Age:</b> [M.client.account_age]\]"
+		body += "<br><b>Show related accounts by:</b> "
+		body += "\[ <a href='?_src_=holder;showrelatedacc=cid;client=\ref[M.client]'>CID</a> | "
+		body += "<a href='?_src_=holder;showrelatedacc=ip;client=\ref[M.client]'>IP</a> \]"
 
 
 	body += "<br><br>\[ "
