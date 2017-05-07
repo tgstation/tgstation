@@ -1,89 +1,88 @@
-//Beam
+//gwyn
+
 /obj/effect/ebeam/chain
 	name = "lightning chain"
 	layer = LYING_MOB_LAYER
 
-/mob/living/simple_animal/hostile/guardian/beam
-	melee_damage_lower = 7
-	melee_damage_upper = 7
-	attacktext = "shocks"
-	melee_damage_type = BURN
-	attack_sound = 'sound/machines/defib_zap.ogg'
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
-	range = 7
-	playstyle_string = "<span class='holoparasite'>As a <b>lightning</b> type, you will apply lightning chains to targets on attack and have a lightning chain to your summoner. Lightning chains will shock anyone near them.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Tesla, a shocking, lethal source of power.</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Lightning modules active. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a lightning carp! Everyone else goes zap zap.</span>"
-	var/datum/beam/summonerchain
-	var/list/enemychains = list()
+/datum/guardian_abilities/lightning
+	id = "lightning"
+	name = "Controlled Current"
+	value = 7
+	var/datum/beam/userchain
+	var/list/enemychains
 	var/successfulshocks = 0
 
-/mob/living/simple_animal/hostile/guardian/beam/AttackingTarget()
-	. = ..()
-	if(. && isliving(target) && target != src && target != summoner)
+/datum/guardian_abilities/lightning/handle_stats()
+
+	guardian.melee_damage_lower += 4
+	guardian.melee_damage_upper += 4
+	guardian.attacktext = "shocks"
+	guardian.melee_damage_type = BURN
+	guardian.attack_sound = 'sound/machines/defib_zap.ogg'
+	for(var/i in guardian.damage_coeff)
+		guardian.damage_coeff[i] -= 0.15
+	guardian.range += 4
+
+/datum/guardian_abilities/lightning/recall_act()
+	..()
+	removechains()
+
+/datum/guardian_abilities/lightning/ability_act()
+	if(isliving(guardian.target) && guardian.target != guardian && guardian.target != user)
 		cleardeletedchains()
 		for(var/chain in enemychains)
 			var/datum/beam/B = chain
-			if(B.target == target)
+			if(B.target == guardian.target)
 				return //oh this guy already HAS a chain, let's not chain again
 		if(enemychains.len > 2)
 			var/datum/beam/C = pick(enemychains)
 			qdel(C)
 			enemychains -= C
-		enemychains += Beam(target, "lightning[rand(1,12)]", time=70, maxdistance=7, beam_type=/obj/effect/ebeam/chain)
+		enemychains += guardian.Beam(guardian.target, "lightning[rand(1,12)]", time=70, maxdistance=7, beam_type=/obj/effect/ebeam/chain)
 
-/mob/living/simple_animal/hostile/guardian/beam/Destroy()
+/datum/guardian_abilities/lightning/Destroy()
 	removechains()
 	return ..()
 
-/mob/living/simple_animal/hostile/guardian/beam/Manifest()
-	. = ..()
+/datum/guardian_abilities/lightning/manifest_act()
 	if(.)
-		if(summoner)
-			summonerchain = Beam(summoner, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
-		while(loc != summoner)
+		if(user)
+			userchain = guardian.Beam(user, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
+		while(guardian.loc != user)
 			if(successfulshocks > 5)
 				successfulshocks = 0
 			if(shockallchains())
 				successfulshocks++
 			sleep(3)
 
-/mob/living/simple_animal/hostile/guardian/beam/Recall()
-	. = ..()
-	if(.)
-		removechains()
 
-/mob/living/simple_animal/hostile/guardian/beam/proc/cleardeletedchains()
-	if(summonerchain && QDELETED(summonerchain))
-		summonerchain = null
+
+/datum/guardian_abilities/lightning/proc/cleardeletedchains()
+	if(userchain && QDELETED(userchain))
+		userchain = null
 	if(enemychains.len)
 		for(var/chain in enemychains)
 			var/datum/cd = chain
 			if(!chain || QDELETED(cd))
 				enemychains -= chain
 
-/mob/living/simple_animal/hostile/guardian/beam/proc/shockallchains()
+/datum/guardian_abilities/lightning/proc/shockallchains()
 	. = 0
 	cleardeletedchains()
-	if(summoner)
-		if(!summonerchain)
-			summonerchain = Beam(summoner, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
-		. += chainshock(summonerchain)
+	if(user)
+		if(!userchain)
+			userchain = guardian.Beam(user, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
+		. += chainshock(userchain)
 	if(enemychains.len)
 		for(var/chain in enemychains)
 			. += chainshock(chain)
 
-/mob/living/simple_animal/hostile/guardian/beam/proc/removechains()
-	if(summonerchain)
-		qdel(summonerchain)
-		summonerchain = null
+/datum/guardian_abilities/lightning/proc/removechains()
+	QDEL_NULL(userchain)
 	if(enemychains.len)
-		for(var/chain in enemychains)
-			qdel(chain)
-		enemychains = list()
+		enemychains.Cut()
 
-/mob/living/simple_animal/hostile/guardian/beam/proc/chainshock(datum/beam/B)
+/datum/guardian_abilities/lightning/proc/chainshock(datum/beam/B)
 	. = 0
 	var/list/turfs = list()
 	for(var/E in B.elements)
@@ -97,8 +96,8 @@
 	for(var/turf in turfs)
 		var/turf/T = turf
 		for(var/mob/living/L in T)
-			if(L.stat != DEAD && L != src && L != summoner)
-				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
+			if(L.stat != DEAD && L != guardian && L != user)
+				if(guardian.hasmatchingsummoner(L)) //if the user matches don't hurt them
 					continue
 				if(successfulshocks > 4)
 					if(iscarbon(L))
@@ -107,7 +106,7 @@
 							var/mob/living/carbon/human/H = C
 							H.electrocution_animation(20)
 						C.jitteriness += 1000
-						C.do_jitter_animation(jitteriness)
+						C.do_jitter_animation(guardian.jitteriness)
 						C.stuttering += 1
 						spawn(20)
 							if(C)

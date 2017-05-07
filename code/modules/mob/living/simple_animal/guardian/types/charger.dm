@@ -1,73 +1,81 @@
-//Charger
-/mob/living/simple_animal/hostile/guardian/charger
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	ranged = 1 //technically
-	ranged_message = "charges"
-	ranged_cooldown_time = 40
-	speed = -1
-	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
-	playstyle_string = "<span class='holoparasite'>As a <b>charger</b> type you do medium damage, have medium damage resistance, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Hunter, an alien master of rapid assault.</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Charge modules loaded. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...</span>"
-	var/charging = 0
+//screeeeeeeeeeeeee
+
+/datum/guardian_abilities/charge
+	id = "charge"
+	name = "Stampede Force"
+	value = 7
+	var/charging = FALSE
 	var/obj/screen/alert/chargealert
 
-/mob/living/simple_animal/hostile/guardian/charger/Life()
+/datum/guardian_abilities/charge/Destroy()
+	QDEL_NULL(chargealert)
+	return ..()
+
+/datum/guardian_abilities/charge/proc/charging_end()
+	charging = FALSE
+
+/datum/guardian_abilities/charge/handle_stats()
 	. = ..()
-	if(ranged_cooldown <= world.time)
+	guardian.melee_damage_lower += 9
+	guardian.melee_damage_upper += 9
+	guardian.ranged = TRUE //technically
+	guardian.ranged_message = "charges"
+	guardian.ranged_cooldown_time += 20
+	guardian.speed -= 1
+	for(var/i in guardian.damage_coeff)
+		guardian.damage_coeff[i] -= 0.2
+
+/datum/guardian_abilities/charge/openfire_act(atom/A)
+	if(!charging)
+		guardian.visible_message("<span class='danger'><b>[guardian]</b> [guardian.ranged_message] at [A]!</span>")
+		guardian.ranged_cooldown = world.time + guardian.ranged_cooldown_time
+		guardian.clear_alert("charge")
+		chargealert = null
+		guardian.Shoot(A)
+
+/datum/guardian_abilities/charge/life_act()
+	if(guardian.ranged_cooldown <= world.time)
 		if(!chargealert)
-			chargealert = throw_alert("charge", /obj/screen/alert/cancharge)
+			chargealert = guardian.throw_alert("charge", /obj/screen/alert/cancharge)
 	else
-		clear_alert("charge")
+		guardian.clear_alert("charge")
 		chargealert = null
 
-/mob/living/simple_animal/hostile/guardian/charger/OpenFire(atom/A)
-	if(!charging)
-		visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
-		ranged_cooldown = world.time + ranged_cooldown_time
-		clear_alert("charge")
-		chargealert = null
-		Shoot(A)
-
-/mob/living/simple_animal/hostile/guardian/charger/Shoot(atom/targeted_atom)
+/datum/guardian_abilities/charge/ranged_attack(atom/targeted_atom)
 	charging = 1
-	throw_at(targeted_atom, range, 1, src, 0, callback = CALLBACK(src, .proc/charging_end))
+	guardian.throw_at(targeted_atom, guardian.range, 1, guardian, 0, callback = CALLBACK(guardian, .proc/charging_end))
 
-/mob/living/simple_animal/hostile/guardian/charger/proc/charging_end()
-	charging = 0
 
-/mob/living/simple_animal/hostile/guardian/charger/Move()
+/datum/guardian_abilities/charge/move_act()
 	if(charging)
-		new /obj/effect/overlay/temp/decoy/fading(loc,src)
-	. = ..()
+		new /obj/effect/overlay/temp/decoy/fading(guardian.loc,guardian)
+	. = guardian.Move()
 
-/mob/living/simple_animal/hostile/guardian/charger/snapback()
+/datum/guardian_abilities/charge/impact_act(atom/A)
 	if(!charging)
-		..()
-
-/mob/living/simple_animal/hostile/guardian/charger/throw_impact(atom/A)
-	if(!charging)
-		return ..()
+		return
 
 	else if(A)
-		if(isliving(A) && A != summoner)
+		if(isliving(A) && A != user)
 			var/mob/living/L = A
-			var/blocked = 0
-			if(hasmatchingsummoner(A)) //if the summoner matches don't hurt them
-				blocked = 1
+			var/blocked = FALSE
+			if(guardian.hasmatchingsummoner(A)) //if the user matches don't hurt them
+				blocked = TRUE
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(90, "[name]", src, attack_type = THROWN_PROJECTILE_ATTACK))
-					blocked = 1
+				if(H.check_shields(90, "[guardian.name]", guardian, attack_type = THROWN_PROJECTILE_ATTACK))
+					blocked = TRUE
 			if(!blocked)
 				L.drop_all_held_items()
-				L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
+				L.visible_message("<span class='danger'>[guardian] slams into [L]!</span>", "<span class='userdanger'>[guardian] slams into you!</span>")
 				L.apply_damage(20, BRUTE)
 				playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
 				shake_camera(L, 4, 3)
-				shake_camera(src, 2, 3)
+				shake_camera(guardian, 2, 3)
 
-		charging = 0
+		charging = FALSE
 
+/datum/guardian_abilities/charge/snapback_act()
+	..()
+	if(!charging)
+		. = guardian.snapback()

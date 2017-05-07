@@ -1,50 +1,51 @@
-//Bomb
-/mob/living/simple_animal/hostile/guardian/bomb
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
-	range = 13
-	playstyle_string = "<span class='holoparasite'>As an <b>explosive</b> type, you have moderate close combat abilities, may explosively teleport targets on attack, and are capable of converting nearby items and objects into disguised bombs via alt click.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Scientist, master of explosive death.</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Explosive modules active. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.</span>"
+//killed queem u bad cat
+
+/datum/guardian_abilities/bomb
+	id = "bomb"
+	name = "Remote Explosives"
 	var/bomb_cooldown = 0
+	value = 6
 
-/mob/living/simple_animal/hostile/guardian/bomb/Stat()
-	..()
-	if(statpanel("Status"))
-		if(bomb_cooldown >= world.time)
-			stat(null, "Bomb Cooldown Remaining: [max(round((bomb_cooldown - world.time)*0.1, 0.1), 0)] seconds")
-
-/mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
+/datum/guardian_abilities/bomb/handle_stats()
 	. = ..()
-	if(. && prob(40) && isliving(target))
-		var/mob/living/M = target
-		if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
-			new /obj/effect/overlay/temp/guardian/phase/out(get_turf(M))
-			do_teleport(M, M, 10)
-			for(var/mob/living/L in range(1, M))
-				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
-					continue
-				if(L != src && L != summoner)
-					L.apply_damage(15, BRUTE)
-			new /obj/effect/overlay/temp/explosion(get_turf(M))
+	guardian.melee_damage_lower += 7
+	guardian.melee_damage_upper += 7
+	for(var/i in guardian.damage_coeff)
+		guardian.damage_coeff[i] -= 0.2
+	guardian.range += 6
 
-/mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
+/datum/guardian_abilities/bomb/ability_act()
+	if(prob(40))
+		if(isliving(guardian.target))
+			var/mob/living/M = guardian.target
+			if(!M.anchored && M != user && !guardian.hasmatchingsummoner(M))
+				new /obj/effect/overlay/temp/guardian/phase/out(get_turf(M))
+				do_teleport(M, M, 10)
+				for(var/mob/living/L in range(1, M))
+					if(guardian.hasmatchingsummoner(L)) //if the user matches don't hurt them
+						continue
+					if(L != guardian && L != user)
+						L.apply_damage(15, BRUTE)
+						guardian.say("[battlecry]!!")
+				new /obj/effect/overlay/temp/explosion(get_turf(M))
+
+
+/datum/guardian_abilities/bomb/alt_ability_act(atom/movable/A)
 	if(!istype(A))
 		return
-	if(src.loc == summoner)
-		to_chat(src, "<span class='danger'><B>You must be manifested to create bombs!</span></B>")
+	if(guardian.loc == user)
+		to_chat(guardian,"<span class='danger'><B>You must be manifested to create bombs!</span></B>")
 		return
 	if(isobj(A))
-		if(bomb_cooldown <= world.time && !stat)
-			var/obj/guardian_bomb/B = new /obj/guardian_bomb(get_turf(A))
-			to_chat(src, "<span class='danger'><B>Success! Bomb armed!</span></B>")
+		if(bomb_cooldown <= world.time && !guardian.stat)
+			var/obj/guardian_bomb/B = new/obj/guardian_bomb(get_turf(A))
+			to_chat(guardian,"<span class='danger'><B>Success! Bomb armed!</span></B>")
+			guardian.say("[battlecry]!!")
 			bomb_cooldown = world.time + 200
-			B.spawner = src
+			B.spawner = guardian
 			B.disguise(A)
 		else
-			to_chat(src, "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>")
+			to_chat(guardian,"<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>")
 
 /obj/guardian_bomb
 	name = "bomb"
@@ -70,8 +71,8 @@
 /obj/guardian_bomb/proc/detonate(mob/living/user)
 	if(isliving(user))
 		if(user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
-			to_chat(user, "<span class='danger'><B>The [src] was boobytrapped!</span></B>")
-			to_chat(spawner, "<span class='danger'><B>Success! Your trap caught [user]</span></B>")
+			to_chat(user,"<span class='danger'><B>The [src] was boobytrapped!</span></B>")
+			to_chat(spawner,"<span class='danger'><B>Success! Your trap caught [user]</span></B>")
 			var/turf/T = get_turf(src)
 			stored_obj.forceMove(T)
 			playsound(T,'sound/effects/Explosion2.ogg', 200, 1)
@@ -79,7 +80,7 @@
 			user.ex_act(2)
 			qdel(src)
 		else
-			to_chat(user, "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>")
+			to_chat(user,"<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>")
 
 /obj/guardian_bomb/Bump(atom/A)
 	detonate(A)
@@ -94,4 +95,4 @@
 /obj/guardian_bomb/examine(mob/user)
 	stored_obj.examine(user)
 	if(get_dist(user,src)<=2)
-		to_chat(user, "<span class='holoparasite'>It glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>!</span>")
+		to_chat(user,"<span class='holoparasite'>It glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>!</span>")
