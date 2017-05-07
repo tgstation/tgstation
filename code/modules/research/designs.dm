@@ -595,7 +595,17 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL=200, MAT_GLASS=100)
 	build_path = /obj/item/weapon/disk/plantgene
 	category = list("Electronics")
-
+	
+/datum/design/slime_scanner
+	name = "Slime scanner"
+	desc = "A device that analyzes a slime's internal composition and measures its stats."
+	id = "slime_scanner"
+	req_tech = list("biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL=300, MAT_GLASS=200)
+	build_path = /obj/item/device/slime_scanner
+	category = list("Equipment")
+	
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
