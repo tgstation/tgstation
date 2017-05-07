@@ -25418,7 +25418,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bfF" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/chemistry)
 "bfG" = (
 /obj/structure/grille,
@@ -27263,7 +27263,7 @@
 /area/assembly/chargebay)
 "bjQ" = (
 /obj/machinery/smartfridge/chemistry,
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/medical/chemistry)
 "bjR" = (
 /obj/structure/table/glass,
@@ -30167,6 +30167,10 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bpN" = (
@@ -30684,6 +30688,11 @@
 	pixel_x = 0
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 1
 	},
