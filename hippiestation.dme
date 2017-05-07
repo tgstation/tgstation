@@ -2145,6 +2145,7 @@
 #include "hippiestation\code\modules\mob\nearcrit.dm"
 #include "hippiestation\code\modules\mob\sprite_accessories.dm"
 #include "hippiestation\code\modules\mob\living\emote.dm"
+#include "hippiestation\code\modules\mob\living\carbon\carbon_defense.dm"
 #include "hippiestation\code\modules\mob\living\carbon\reindex_screams.dm"
 #include "hippiestation\code\modules\mob\living\carbon\human\emote.dm"
 #include "hippiestation\code\modules\mob\living\carbon\human\life.dm"
