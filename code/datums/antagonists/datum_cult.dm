@@ -48,7 +48,7 @@
 			if("eldergod")
 				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes on it. You must do this after sacrificing your target."
 		if(!silent)
-		to_chat(current, "<B>Objective #[obj_count]</B>: [explanation]")
+			to_chat(current, "<B>Objective #[obj_count]</B>: [explanation]")
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 
 /datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
