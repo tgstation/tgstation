@@ -305,7 +305,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			desc = "The sacrifice is complete, prepare to summon Nar-Sie!"
 		else
 			desc = "The summoning is complete, Glory to Nar-Sie!"
-		return
 		if(icon_state == "runed_sense1")
 			return
 		animate(src, transform = null, time = 1, loop = 0)
@@ -313,6 +312,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		cut_overlays()
 		icon_state = "runed_sense1"
 		add_overlay(narnar)
+		return
 	if(!blood_target)
 		return
 	var/turf/P = get_turf(blood_target)
