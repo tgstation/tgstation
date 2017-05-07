@@ -46,6 +46,7 @@
 #include "code\__DEFINES\maps.dm"
 #include "code\__DEFINES\math.dm"
 #include "code\__DEFINES\MC.dm"
+#include "code\__DEFINES\menu.dm"
 #include "code\__DEFINES\misc.dm"
 #include "code\__DEFINES\mobs.dm"
 #include "code\__DEFINES\monkeys.dm"
@@ -961,6 +962,7 @@
 #include "code\modules\admin\admin_investigate.dm"
 #include "code\modules\admin\admin_ranks.dm"
 #include "code\modules\admin\admin_verbs.dm"
+#include "code\modules\admin\adminmenu.dm"
 #include "code\modules\admin\banjob.dm"
 #include "code\modules\admin\create_mob.dm"
 #include "code\modules\admin\create_object.dm"
@@ -2179,5 +2181,6 @@
 #include "hippiestation\code\modules\uplink\uplink_item.dm"
 #include "hippiestation\code\modules\vehicles\pimpin_ride.dm"
 #include "interface\interface.dm"
+#include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 // END_INCLUDE
