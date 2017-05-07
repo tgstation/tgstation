@@ -37,6 +37,7 @@
 /datum/status_effect/cursed_language_mask
 	id = "cursed_language_mask"
 	duration = -1
+	alert_type = null
 	var/datum/language/forced_language
 
 /datum/status_effect/cursed_language_mask/pig
@@ -61,7 +62,7 @@
 	var/datum/language_holder/H = owner.get_language_holder()
 	H.grant_language(forced_language)
 	H.only_speaks_language = forced_language
-	
+
 /datum/status_effect/cursed_language_mask/on_remove()
 	if(!QDELETED(owner))
 		var/datum/language_holder/H = owner.get_language_holder()

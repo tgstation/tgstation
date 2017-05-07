@@ -13,6 +13,7 @@
 	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/common,
+		/datum/language/animal,
 		/datum/language/draconic,
 		/datum/language/monkey,
 		/datum/language/narsie,
@@ -126,12 +127,8 @@
 
 /obj/item/organ/tongue/alien/Initialize(mapload)
 	. = ..()
-	languages_possible = typecacheof(list(
-		/datum/language/xenocommon,
-		/datum/language/common,
-		/datum/language/draconic,
-		/datum/language/ratvar,
-		/datum/language/monkey))
+	// inherit languages possible from regular tongues
+	languages_possible[/datum/language/xenocommon] = TRUE
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)
