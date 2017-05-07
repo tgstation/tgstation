@@ -10753,7 +10753,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/storage)
@@ -11240,7 +11240,7 @@
 /area/quartermaster/storage)
 "awJ" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/storage)
@@ -31236,7 +31236,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/miningdock{
@@ -52475,7 +52475,7 @@
 	name = "Queue Shutters"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -104160,7 +104160,7 @@
 	name = "emergency shower"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 4
 	},
 /area/shuttle/escape)

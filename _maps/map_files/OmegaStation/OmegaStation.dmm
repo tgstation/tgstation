@@ -9154,7 +9154,7 @@
 	},
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/miningdock)
