@@ -69,7 +69,6 @@
 	GLOB.data_core = new /datum/datacore()
 
 	Master.Initialize(10, FALSE)
-	return
 
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
