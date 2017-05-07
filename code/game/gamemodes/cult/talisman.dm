@@ -28,7 +28,7 @@
 	. = successfuluse
 	if(successfuluse) //if the calling whatever says we succeed, do the fancy stuff
 		if(invocation)
-			user.whisper(invocation)
+			user.whisper(invocation, language = /datum/language/common)
 		if(health_cost && iscarbon(user))
 			var/mob/living/carbon/C = user
 			C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
