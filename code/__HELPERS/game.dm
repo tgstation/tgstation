@@ -517,8 +517,7 @@
 		if(B.current && B.current != Nominee && !B.current.incapacitated())
 			B.current << 'sound/magic/exit_blood.ogg'
 			asked_cultists += B.current
-	var/list/yes_voters = pollCandidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 1200, group = asked_cultists)
-	sleep(300)
+	var/list/yes_voters = pollCandidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 300, group = asked_cultists)
 	if(QDELETED(Nominee) || Nominee.incapacitated())
 		for(var/datum/mind/B in SSticker.mode.cult)
 			if(B.current)
@@ -531,7 +530,7 @@
 			if(B.current)
 				B.current.verbs += /mob/living/proc/cult_master
 				if(!B.current.incapacitated())
-					to_chat(B.current,"<span class='cultlarge'>[Nominee] has gone insane and catatonic in the process of attempting to win the cult's support!")
+					to_chat(B.current,"<span class='cultlarge'>[Nominee] has gone catatonic in the process of attempting to win the cult's support!")
 		return FALSE
 	if(LAZYLEN(yes_voters) <= LAZYLEN(asked_cultists) * 0.5)
 		for(var/datum/mind/B in SSticker.mode.cult)
