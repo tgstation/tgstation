@@ -127,7 +127,8 @@
 	to_chat(owner.current, "Use these abilities to direct the cult to victory at any cost.")
 
 /datum/antagonist/cult/master/apply_innate_effects(mob/living/mob_override)
-	. = ..()	var/mob/living/current = owner.current
+	. = ..()
+	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
 	if(!GLOB.reckoning_complete)
