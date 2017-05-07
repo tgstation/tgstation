@@ -297,16 +297,6 @@
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 				SSblackbox.add_details("emergency_shuttle", src.name)
 
-				// Gangs only have one attempt left if the shuttle has
-				// docked with the station to prevent suffering from
-				// endless dominator delays
-				for(var/datum/gang/G in SSticker.mode.gangs)
-					if(G.is_dominating)
-						G.dom_attempts = 0
-					else
-						G.dom_attempts = min(1,G.dom_attempts)
-
-
 		if(SHUTTLE_DOCKED)
 			if(time_left <= ENGINES_START_TIME)
 				mode = SHUTTLE_IGNITING

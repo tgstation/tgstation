@@ -18,7 +18,6 @@
 #define ROLE_BLOB				"blob"
 #define ROLE_NINJA				"space ninja"
 #define ROLE_MONKEY				"monkey"
-#define ROLE_GANG				"gangster"
 #define ROLE_ABDUCTOR			"abductor"
 #define ROLE_REVENANT			"revenant"
 #define ROLE_DEVIL				"devil"
