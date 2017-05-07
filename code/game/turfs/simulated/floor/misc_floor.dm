@@ -295,6 +295,5 @@
 		if(T == A || T.invisibility)
 			continue
 		A.reagents.reaction(T, VAPOR)
-	spawn(2)
-		qdel(A)
+	QDEL_IN(src, 2)
 	last_spray = world.time

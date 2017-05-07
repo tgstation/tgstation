@@ -1259,7 +1259,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/stack/tile/acid_spray/ten
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-	restricted_roles = list("Station Engineer")
+	restricted_roles = list("Station Engineer", "Chief Engineer")
 
 // Pointless
 /datum/uplink_item/badass
