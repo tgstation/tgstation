@@ -281,10 +281,20 @@
 	if(!user.Adjacent(src)) //no TK museology
 		return
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 4295b9c268622f17682bf9130f487e21b52d243b
 	if(user.a_intent == INTENT_HARM)
 		..()
 		return
 
+<<<<<<< HEAD
+=======
+	if(!(user.mind && user.mind.assigned_role == "Curator"))
+		to_chat(user, "<span class='danger'>You're not sure how to work this. Maybe you should ask the curator for help.</span>")
+=======
+>>>>>>> 4295b9c268622f17682bf9130f487e21b52d243b
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
 		if(added_roundstart)
 			is_locked = !is_locked
@@ -295,7 +305,11 @@
 
 	if(is_locked)
 		to_chat(user, "<span class='danger'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
+<<<<<<< HEAD
 
+=======
+>>>>>>> f9404510d7d88f32e9061012b2dc6f6be63528d7
+>>>>>>> 4295b9c268622f17682bf9130f487e21b52d243b
 		return
 
 	if(!added_roundstart)
