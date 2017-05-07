@@ -157,8 +157,7 @@
 		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(ANTAG_DATUM_CULT)
 		if(!cult_datum)
 			return FALSE
-		if(silent)
-			cult_datum.silent = show_message
+		cult_datum.silent = silent
 		cult_datum.on_removal()
 		if(stun)
 			cult_mind.current.Paralyse(5)
