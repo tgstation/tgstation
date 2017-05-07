@@ -14,7 +14,7 @@
 	icon_state = "captain"
 	item_state = "b_suit"
 	item_color = "captain"
-	sensor_mode = SENSOR_COORDS
+	sensor_mode = 3
 	random_sensor = 0
 
 /obj/item/clothing/under/rank/cargo
