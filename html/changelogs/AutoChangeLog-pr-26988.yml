@@ -1,0 +1,4 @@
+author: "Penguaro"
+delete-after: True
+changes: 
+  - bugfix: "Anywhere there was lava below a tile on the station is now space."
