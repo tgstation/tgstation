@@ -180,17 +180,26 @@
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
 	var/issrcobelisk = istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
-	if(issrcobelisk && !anchored)
-		to_chat(invoker, "<span class='warning'>[src] is no longer secured!</span>")
-		return FALSE
+	if(issrcobelisk)
+		if(!anchored)
+			to_chat(invoker, "<span class='warning'>[src] is no longer secured!</span>")
+			return FALSE
+		var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/CO = src //foolish as I am, how I set this proc up makes substypes unfeasible
+		if(CO.active)
+			to_chat(invoker, "<span class='warning'>[src] is now sustaining a gateway!</span>")
+			return FALSE
 	if(istargetobelisk)
 		if(!target.anchored)
 			to_chat(invoker, "<span class='warning'>That [target.name] is no longer secured!</span>")
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 		var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/CO = target
+		if(CO.active)
+			to_chat(invoker, "<span class='warning'>That [target.name] is sustaining a gateway, and cannot recieve another!</span>")
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 		var/efficiency = CO.get_efficiency_mod()
 		gateway_uses = round(gateway_uses * (2 * efficiency), 1)
 		time_duration = round(time_duration * (2 * efficiency), 1)
+		CO.active = TRUE //you'd be active in a second but you should update immediately
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
 	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
 	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
