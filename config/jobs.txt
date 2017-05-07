@@ -9,7 +9,7 @@ Chief Engineer=1,1
 Research Director=1,1
 Chief Medical Officer=1,1
 
-Assistant=-1,-1
+Assistant=0,0
 
 Quartermaster=1,1
 Cargo Technician=3,2
@@ -20,7 +20,7 @@ Cook=2,1
 Botanist=3,2
 Janitor=2,1
 
-Clown=1,1
+Clown=-1,-1
 Mime=1,1
 Curator=1,1
 Lawyer=2,2
