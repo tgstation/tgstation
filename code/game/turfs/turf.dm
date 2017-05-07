@@ -23,8 +23,6 @@
 	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
-	var/list/datum/field/fields
-	var/list/datum/field/field_edges
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -36,8 +34,6 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
-	fields = list()
-	field_edges = list()
 
 	levelupdate()
 	if(smooth)
@@ -157,13 +153,6 @@
 		mover.Bump(tompost_bump,1)
 		return FALSE
 
-	for(var/datum/field/F in fields)		//Check for fields blocking/special effects..
-		if(!F.on_move_field_turf(mover, src, forget))
-			return FALSE
-	for(var/datum/field/F in field_edges)
-		if(!F.on_move_edge_turf(mover, src, forget))
-			return FALSE
-
 	return TRUE //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/AM)
@@ -236,10 +225,6 @@
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
-
-	for(var/datum/field/F in fields)
-
-	for(var/datum/field/F in field_edges)
 
 	return W
 

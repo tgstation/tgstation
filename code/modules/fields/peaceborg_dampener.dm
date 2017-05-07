@@ -64,21 +64,29 @@
 		if(SOUTHWEST)
 			return southwest_corner
 
-/datum/field/peaceborg_dampener/proc/capture_projectile(obj/item/projectile/P)
-	projector.dampen_projectile(P)
-	tracked += P
+/datum/field/peaceborg_dampener/proc/capture_projectile(obj/item/projectile/P, track_projectile = TRUE)
+	if(P in tracked)
+		return
+	projector.dampen_projectile(P, track_projectile)
+	if(track_projectile)
+		tracked += P
+	world << "Captured [P] tracking [track_projectile]"
 
 /datum/field/peaceborg_dampener/proc/release_projectile(obj/item/projectile/P)
 	projector.restore_projectile(P)
 	tracked -= P
+	world << "Releasing [P]"
 
-/datum/field/peaceborg_dampener/on_move_edge_turf(atom/movable/AM, turf/entering, turf/exiting)
-	if(istype(AM, /obj/item/projectile))
-		if((src in entering.field_edges) && (!(src in exiting.fields)))
-			capture_projectile(AM)
-		else if((src in exiting.field_edges) && (!(src in entering.fields)))
+/datum/field/peaceborg_dampener/field_edge_uncrossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
+	if(!is_turf_in_field(get_turf(AM), src))
+		if(istype(AM, /obj/item/projectile))
 			if(AM in tracked)
 				release_projectile(AM)
 			else
-				capture_projectile(AM, FALSE)	//If you shoot from inside it your projectiles are going to be weaker on exiting it for balance..
+				capture_projectile(AM, FALSE)
+	return ..()
+
+/datum/field/peaceborg_dampener/field_edge_crossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
+	if(!AM in tracked)
+		capture_projectile(AM)
 	return ..()

@@ -584,7 +584,7 @@
 	for(var/I in tracked)
 		usage += projectile_tick_speed_ecost
 	usage += (current_damage_dampening * projectile_damage_tick_ecost_coefficient)
-	energy -= usage
+	energy = Clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
 		visible_message("<span class='warning'>The [src] blinks \"ENERGY DEPLETED\"</span>")
@@ -598,6 +598,8 @@
 		energy += energy_recharge
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/item/projectile/P, track_projectile = TRUE)
+	if(P in tracked)
+		return
 	if(!P.damage || P.nodamage)
 		return
 	if(track_projectile)
@@ -608,8 +610,6 @@
 	P.add_overlay(projectile_effect)
 
 /obj/item/borg/projectile_dampen/proc/restore_projectile(obj/item/projectile/P)
-	if(P in tracked)
-		return
 	tracked -= P
 	P.damage *= (1/projectile_damage_coefficient)
 	P.speed *= (1/projectile_speed_coefficient)

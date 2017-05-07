@@ -25,8 +25,6 @@
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
-	fields = list()
-	field_edges = list()
 
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")

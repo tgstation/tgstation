@@ -92,12 +92,8 @@
 /datum/field/proc/full_cleanup()	 //Full cleanup for when you change something that would require complete resetting.
 	for(var/turf/T in edge_turfs)
 		cleanup_edge_turf(T)
-	edge_turfs = list()
 	for(var/turf/T in field_turfs)
 		cleanup_field_turf(T)
-	field_turfs = list()
-	edge_turfs_new = list()
-	field_turfs = list()
 
 /datum/field/proc/recalculate_field(ignore_movement_check = FALSE)	//Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
 	if(!(ignore_movement_check || ((last_x != center.x || last_y != center.y || last_z != center.z) && (field_shape != FIELD_NO_SHAPE))))
@@ -122,11 +118,29 @@
 			setup_edge_turf(T)
 			CHECK_TICK
 
-/datum/field/proc/on_move_field_turf(atom/movable/AM, turf/entering, atom/exiting)	//Exiting is an atom because turfs allow for all atoms to be "forget"/oldturf.
-	return TRUE	//Return FALSE to prevent movement.
+/datum/field/proc/field_turf_cross(atom/movable/AM, atom/movable/field_object/field_turf/F)
+	return TRUE
 
-/datum/field/proc/on_move_edge_turf(atom/movable/AM, turf/entering, atom/exiting)
-	return TRUE	//Return FALSE to prevent movement.
+/datum/field/proc/field_turf_uncross(atom/movable/AM, atom/movable/field_object/field_turf/F)
+	return TRUE
+
+/datum/field/proc/field_turf_crossed(atom/movable/AM, atom/movable/field_object/field_turf/F)
+	return TRUE
+
+/datum/field/proc/field_turf_uncrossed(atom/movable/AM, atom/movable/field_object/field_turf/F)
+	return TRUE
+
+/datum/field/proc/field_edge_cross(atom/movable/AM, atom/movable/field_object/field_edge/F)
+	return TRUE
+
+/datum/field/proc/field_edge_uncross(atom/movable/AM, atom/movable/field_object/field_edge/F)
+	return TRUE
+
+/datum/field/proc/field_edge_crossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
+	return TRUE
+
+/datum/field/proc/field_edge_uncrossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
+	return TRUE
 
 /datum/field/proc/update_center(turf/T, recalculate_field = TRUE)
 	center = T
@@ -147,20 +161,18 @@
 			CHECK_TICK
 
 /datum/field/proc/cleanup_field_turf(turf/T)
-	T.fields -= src
+	qdel(field_turfs[T])
 	field_turfs -= T
 
 /datum/field/proc/cleanup_edge_turf(turf/T)
-	T.field_edges -= src
+	qdel(edge_turfs[T])
 	edge_turfs -= T
 
 /datum/field/proc/setup_field_turf(turf/T)
-	T.fields += src
-	field_turfs += T
+	field_turfs[T] = new /atom/movable/field_object/field_turf
 
 /datum/field/proc/setup_edge_turf(turf/T)
-	T.field_edges += src
-	edge_turfs += T
+	edge_turfs[T] = new /atom/movable/field_object/field_edge
 
 /datum/field/proc/update_new_turfs()
 	if(!istype(center))
