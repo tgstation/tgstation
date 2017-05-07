@@ -152,12 +152,13 @@
 			cult_mind.current.Paralyse(5)
 		return 1
 
-/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
+/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
 	if(cult_mind.current)
 		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(ANTAG_DATUM_CULT)
 		if(!cult_datum)
 			return FALSE
-		cult_datum.silent = show_message
+		if(silent)
+			cult_datum.silent = show_message
 		cult_datum.on_removal()
 		if(stun)
 			cult_mind.current.Paralyse(5)
