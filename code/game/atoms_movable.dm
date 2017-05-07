@@ -612,7 +612,9 @@
 
 	if(!H.has_language(dt))
 		return FALSE
-	else if(H.omnitongue || could_speak_in_language(dt))
+	else if(H.omnitongue)
+		return TRUE
+	else if(could_speak_in_language(dt) && (!H.only_speaks_language || H.only_speaks_language == dt))
 		return TRUE
 	else
 		return FALSE
