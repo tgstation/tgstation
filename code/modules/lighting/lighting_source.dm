@@ -309,7 +309,7 @@
 			APPLY_CORNER(C)
 
 	L = effect_str - corners
-	effect_str -= corners
+	effect_str -= L
 	for (thing in L) // Old, now gone, corners.
 		C = thing
 		REMOVE_CORNER(C)
