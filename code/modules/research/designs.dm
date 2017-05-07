@@ -597,7 +597,7 @@ other types of metals and chemistry for reagents).
 	category = list("Electronics")
 	
 /datum/design/slime_scanner
-	name = "Slime scanner"
+	name = "Slime Scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	id = "slime_scanner"
 	req_tech = list("biotech" = 2)
