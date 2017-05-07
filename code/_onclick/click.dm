@@ -141,9 +141,9 @@
 		else
 			RangedAttack(A,params)
 
-/mob/proc/CanReach(atom/target,obj/item/tool,view_only = FALSE)
+/atom/movable/proc/CanReach(atom/target,obj/item/tool,view_only = FALSE)
 	if(isturf(target) || isturf(target.loc) || DirectAccess(target)) //Directly accessible atoms
-		if(Adjacent(target) || (tool && CheckReach(src, target, tool.reach))) //Adjacent or reaching attacks
+		if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 			return TRUE
 	else
 		//Things inside storage insde another storage
@@ -165,10 +165,14 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/DirectAccess(atom/target)
+/atom/movable/proc/DirectAccess(atom/target)
 	if(target == src)
 		return TRUE
 	if(target == loc)
+		return TRUE
+
+/mob/DirectAccess(atom/target)
+	if(..())
 		return TRUE
 	if(target in contents) //This could probably use moving down and restricting to inventory only
 		return TRUE
@@ -186,25 +190,23 @@
 /turf/AllowClick()
 	return TRUE
 
-/proc/CheckReach(atom/movable/here, atom/movable/there, reach)
+/proc/CheckToolReach(atom/movable/here, atom/movable/there, reach)
 	if(!here || !there)
 		return
 	switch(reach)
 		if(0)
-			return here.loc == there.loc
+			return FALSE
 		if(1)
-			return here.Adjacent(there)
+			return FALSE //here.Adjacent(there)
 		if(2 to INFINITY)
-			var/obj/dummy = new(get_turf(here)) //We'll try to move this every tick, failing if we can't
+			var/obj/dummy = new(get_turf(here))
 			dummy.pass_flags |= PASSTABLE
+			dummy.invisibility = INVISIBILITY_ABSTRACT
 			for(var/i in 1 to reach) //Limit it to that many tries
 				var/turf/T = get_step(dummy, get_dir(dummy, there))
-				if(dummy.loc == there.loc)
+				if(dummy.CanReach(there))
 					qdel(dummy)
-					return 1
-				if(there.density && dummy in range(1, there)) //For windows and suchlike
-					qdel(dummy)
-					return 1
+					return TRUE
 				if(!dummy.Move(T)) //we're blocked!
 					qdel(dummy)
 					return
