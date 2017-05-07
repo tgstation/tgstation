@@ -79542,7 +79542,7 @@
 	})
 "cUh" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/medbay{
 	name = "Medbay Central"
@@ -81189,7 +81189,7 @@
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "cXc" = (
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /obj/machinery/light_switch{
 	pixel_x = -26
 	},
@@ -84274,7 +84274,7 @@
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
 "ddg" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/chemistry)
 "ddh" = (
@@ -104905,7 +104905,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
