@@ -40,7 +40,7 @@
 	category = list("Imported")
 
 /obj/item/golem_shell
-	name = "incomplete golem shell"
+	name = "incomplete free golem shell"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
@@ -121,9 +121,9 @@
 			to_chat(user, "You can't build a golem out of this kind of material.")
 
 //made with xenobiology, the golem obeys its creator
-/obj/item/golem_shell/artificial
-	name = "incomplete artificial golem shell"
-	shell_type = /obj/effect/mob_spawn/human/golem/artificial
+/obj/item/golem_shell/servant
+	name = "incomplete servant golem shell"
+	shell_type = /obj/effect/mob_spawn/human/golem/servant
 
 ///Syndicate Listening Post
 /obj/effect/mob_spawn/human/lavaland_syndicate
