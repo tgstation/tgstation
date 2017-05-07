@@ -1549,7 +1549,7 @@
 /datum/reagent/plastic_polymers
 	name = "plastic polymers"
 	id = "plastic_polymers"
-	description = "the petroleum based components of plastic, contact a coder if you can actually see this" 
+	description = "the petroleum based components of plastic."
 	color = "#f7eded"
 	taste_description = "plastic"
 
