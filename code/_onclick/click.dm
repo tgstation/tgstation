@@ -149,6 +149,8 @@
 		//Things inside storage insde another storage
 		//Eg Contents of a box in a backpack
 		var/atom/outer_storage = get_atom_on_turf(target)
+		if(outer_storage == target) //whatever that is we don't want infinite loop.
+			return FALSE
 		if(outer_storage && CanReach(outer_storage,tool) && outer_storage.CanReachStorage(target,src,view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH))
 			return TRUE
 	return FALSE
