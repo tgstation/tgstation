@@ -135,7 +135,7 @@
 	if(!check_special_requirements())
 		return FALSE
 	to_chat(invoker, "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>")
-	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50, POLL_IGNORE_CLOCKWORK_MARAUDER)
+	var/list/marauder_candidates = pollGhostCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50, POLL_IGNORE_CLOCKWORK_MARAUDER)
 	if(!check_special_requirements())
 		return FALSE
 	if(!marauder_candidates.len)
