@@ -192,10 +192,13 @@
 	effect_str = null
 
 /datum/light_source/proc/recalc_corner(var/datum/lighting_corner/C)
-	if (effect_str && effect_str[C]) // Already have one.
+	LAZYINITLIST(effect_str)
+	if (effect_str[C]) // Already have one.
 		REMOVE_CORNER(C)
+		effect_str[C] = 0
 
 	APPLY_CORNER(C)
+	UNSETEMPTY(effect_str)
 
 /datum/light_source/proc/update_corners()
 	var/update = FALSE
