@@ -251,6 +251,7 @@
 
 	if (update)
 		needs_update = LIGHTING_CHECK_UPDATE
+		applied = TRUE
 	else if (needs_update == LIGHTING_CHECK_UPDATE)
 		return //nothing's changed
 
@@ -309,12 +310,11 @@
 			APPLY_CORNER(C)
 
 	L = effect_str - corners
-	effect_str -= L
 	for (thing in L) // Old, now gone, corners.
 		C = thing
 		REMOVE_CORNER(C)
 		LAZYREMOVE(C.affecting, src)
-
+	effect_str -= L
 
 	applied_lum_r = lum_r
 	applied_lum_g = lum_g
