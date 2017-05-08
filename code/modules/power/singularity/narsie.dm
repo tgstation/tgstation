@@ -39,8 +39,8 @@
 
 	narsie_spawn_animation()
 
-	sleep(70)
-	SSshuttle.emergency.request(null, set_coefficient = 0.1) // Cannot recall
+	sleep(19)
+	SSshuttle.emergency.request(null, set_coefficient = 0) //instantly arrives
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
