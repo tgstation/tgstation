@@ -625,7 +625,7 @@
 	var/datum/language_holder/H = get_language_holder()
 
 	if(H.selected_default_language)
-		if(H.has_language(H.selected_default_language))
+		if(can_speak_in_language(H.selected_default_language))
 			return H.selected_default_language
 		else
 			H.selected_default_language = null
