@@ -2169,6 +2169,7 @@
 #include "hippiestation\code\modules\reagents\chemistry\reagents\medicine_reagents.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents\other_reagents.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents\toxin_reagents.dm"
+#include "hippiestation\code\modules\reagents\reagent_containers\patch.dm"
 #include "hippiestation\code\modules\reagents\reagent_containers\syringes.dm"
 #include "hippiestation\code\modules\research\designs\medical_designs.dm .dm"
 #include "hippiestation\code\modules\sports\bowling.dm"
