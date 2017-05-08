@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
  * Adamantine
  */
 GLOBAL_LIST_INIT(adamantine_recipes, list(
-	new /datum/stack_recipe("artificial golem shell", /obj/item/golem_shell/artificial, req_amount=1, res_amount=1),
+	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=1, res_amount=1),
 	))
 
 /obj/item/stack/sheet/mineral/adamantine
