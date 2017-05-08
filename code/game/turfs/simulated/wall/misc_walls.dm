@@ -15,9 +15,6 @@
 /turf/closed/wall/mineral/cult/devastate_wall()
 	new sheet_type(get_turf(src), sheet_amount)
 
-/turf/closed/wall/mineral/cult/narsie_act()
-	return
-
 /turf/closed/wall/mineral/cult/ratvar_act()
 	. = ..()
 	if(istype(src, /turf/closed/wall/mineral/cult)) //if we haven't changed type

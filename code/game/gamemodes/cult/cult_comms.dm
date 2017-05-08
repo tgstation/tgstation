@@ -288,7 +288,7 @@
 				B.current.client.images += GLOB.blood_target_image
 		attached_action.owner.update_action_buttons_icon()
 		remove_ranged_ability("<span class='cult'>The marking rite is complete! It will last for 90 seconds.</span>")
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_blood_target), 900, TIMER_OVERRIDE)
+		GLOB.blood_target_reset_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_blood_target), 900, TIMER_STOPPABLE)
 		return TRUE
 	return FALSE
 

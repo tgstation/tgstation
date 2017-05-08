@@ -35,18 +35,11 @@
 	var/master = null
 	var/seeking = FALSE
 
-
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	update_health_hud()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
-
-/mob/living/simple_animal/hostile/construct/Destroy()
-	for(var/X in actions)
-		var/datum/action/A = X
-		qdel(A)
-	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -267,23 +260,32 @@
 	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
 	icon_state = "harvester"
 	icon_living = "harvester"
-	maxHealth = 60
-	health = 60
-	melee_damage_lower = 1
-	melee_damage_upper = 5
-	retreat_distance = 2 //AI harvesters will move in and out of combat, like wraiths, but shittier
-	attacktext = "prods"
-	environment_smash = 3
-	attack_sound = 'sound/weapons/tap.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/targeted/smoke/disable)
-	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
+	maxHealth = 50
+	health = 50
+	melee_damage_lower = 20
+	melee_damage_upper = 35
+	attacktext = "butchers"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion)
+	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
-/mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
-	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+/mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		var/list/parts = list()
+		for(var/X in C.bodyparts)
+			var/obj/item/bodypart/BP = X
+			if(BP.body_part != HEAD && BP.body_part != CHEST && BP.dismemberable)
+				parts += BP
+		if(!LAZYLEN(parts))
+			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
+			return FALSE
+		do_attack_animation(C)
+		var/obj/item/bodypart/BP = pick(parts)
+		BP.dismember()
+		return FALSE
+	. = ..()
 
 
 ///////////////////////Master-Tracker///////////////////////

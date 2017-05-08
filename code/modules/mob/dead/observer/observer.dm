@@ -126,22 +126,21 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/observer/narsie_act()
 	var/old_color = color
 	color = "#960000"
-	animate(src, color = old_color, time = 10)
+	animate(src, color = old_color, time = 10, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/ratvar_act()
 	var/old_color = color
 	color = "#FAE48C"
-	animate(src, color = old_color, time = 10)
+	animate(src, color = old_color, time = 10, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
+/mob/dead/observer/Destroy()
 	GLOB.ghost_images_default -= ghostimage_default
-	qdel(ghostimage_default)
-	ghostimage_default = null
+	QDEL_NULL(ghostimage_default)
 
 	GLOB.ghost_images_simple -= ghostimage_simple
-	qdel(ghostimage_simple)
-	ghostimage_simple = null
+	QDEL_NULL(ghostimage_simple)
 
 	updateallghostimages()
 	return ..()
