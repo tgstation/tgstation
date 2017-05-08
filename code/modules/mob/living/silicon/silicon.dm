@@ -27,10 +27,6 @@
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 
-	var/lawcheck[1]
-	var/ioncheck[1]
-	var/devillawcheck[5]
-
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 	var/d_hud = DATA_HUD_DIAGNOSTIC //There is only one kind of diag hud
@@ -158,33 +154,34 @@
 	return 0
 
 /mob/living/silicon/Topic(href, href_list)
-	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
-		var/L = text2num(href_list["lawc"])
-		switch(lawcheck[L+1])
-			if ("Yes")
-				lawcheck[L+1] = "No"
-			if ("No")
-				lawcheck[L+1] = "Yes"
-		checklaws()
-
-	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
-		var/L = text2num(href_list["lawi"])
-		switch(ioncheck[L])
-			if ("Yes")
-				ioncheck[L] = "No"
-			if ("No")
-				ioncheck[L] = "Yes"
-		checklaws()
-
+	// Toggle true to false vice-versa
 	if (href_list["lawdevil"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawdevil"])
-		switch(devillawcheck[L])
-			if ("Yes")
-				devillawcheck[L] = "No"
-			if ("No")
-				devillawcheck[L] = "Yes"
+		src.laws.set_state_devil_law_sixsixsix(L, !(src.laws.get_state_devil_law_sixsixsix(L)))
 		checklaws()
 
+	// Toggle true to false vice-versa
+	if (href_list["lawzeroth"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		src.laws.set_state_zeroth(!(src.laws.get_state_zeroth()))
+		checklaws()
+
+	// Toggle true to false vice-versa
+	if (href_list["lawion"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawion"])
+		src.laws.set_state_ion(L, !(src.laws.get_state_ion(L)))
+		checklaws()
+
+	// Toggle true to false vice-versa
+	if (href_list["lawinherent"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawinherent"])
+		src.laws.set_state_inherent(L, !(src.laws.get_state_inherent(L)))
+		checklaws()
+
+	// Toggle true to false vice-versa
+	if (href_list["lawsupplied"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawsupplied"])
+		src.laws.set_state_supplied(L, !(src.laws.get_state_supplied(L)))
+		checklaws()
 
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
@@ -201,90 +198,73 @@
 	var/number = 1
 	sleep(10)
 
-	if (src.laws.devillaws && src.laws.devillaws.len)
-		for(var/index = 1, index <= src.laws.devillaws.len, index++)
-			if (force || src.devillawcheck[index] == "Yes")
-				src.say("[radiomod] 666. [src.laws.devillaws[index]]")
+	if (src.laws.devil_laws && src.laws.devil_laws.len)
+		for(var/index = 1, index <= src.laws.devil_laws.len, index++)
+			if (force || src.laws.get_state_devil_law_sixsixsix(index))
+				src.say("[radiomod] 666. [src.laws.get_desc_devil_law_sixsixsix(index)]")
 				sleep(10)
 
 
 	if (src.laws.zeroth)
-		if (force || src.lawcheck[1] == "Yes")
-			src.say("[radiomod] 0. [src.laws.zeroth]")
+		if (force || src.laws.get_state_zeroth())
+			src.say("[radiomod] 0. [src.laws.get_desc_zeroth()]")
 			sleep(10)
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
-		var/law = src.laws.ion[index]
+		var/law = src.laws.get_desc_ion(index)
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (force || src.ioncheck[index] == "Yes")
+			if (force || src.laws.get_state_ion(index))
 				src.say("[radiomod] [num]. [law]")
 				sleep(10)
 
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
-		var/law = src.laws.inherent[index]
-
+		var/law = src.laws.get_desc_inherent(index)
 		if (length(law) > 0)
-			if (force || src.lawcheck[index+1] == "Yes")
+			if (force || src.laws.get_state_inherent(index))
 				src.say("[radiomod] [number]. [law]")
 				number++
 				sleep(10)
 
 	for (var/index = 1, index <= src.laws.supplied.len, index++)
-		var/law = src.laws.supplied[index]
-
+		var/law = src.laws.get_desc_supplied(index)
 		if (length(law) > 0)
-			if(src.lawcheck.len >= number+1)
-				if (force || src.lawcheck[number+1] == "Yes")
-					src.say("[radiomod] [number]. [law]")
-					number++
-					sleep(10)
+			if (force || src.laws.get_state_supplied(index))
+				src.say("[radiomod] [number]. [law]")
+				number++
+				sleep(10)
 
 
 /mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
-	if (src.laws.devillaws && src.laws.devillaws.len)
-		for(var/index = 1, index <= src.laws.devillaws.len, index++)
-			if (!src.devillawcheck[index])
-				src.devillawcheck[index] = "No"
-			list += {"<A href='byond://?src=\ref[src];lawdevil=[index]'>[src.devillawcheck[index]] 666:</A> [src.laws.devillaws[index]]<BR>"}
+	if (src.laws.devil_laws && src.laws.devil_laws.len)
+		for(var/index = 1, index <= src.laws.devil_laws.len, index++)
+			list += {"<A href='byond://?src=\ref[src];lawdevil=[index]'>[(src.laws.get_state_devil_law_sixsixsix(index) ? "Yes" : "No")] 666:</A> [src.laws.get_desc_devil_law_sixsixsix(index)]<BR>"}
 
-	if (src.laws.zeroth)
-		if (!src.lawcheck[1])
-			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
-		list += {"<A href='byond://?src=\ref[src];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws.zeroth]<BR>"}
+	if (src.laws.get_state_zeroth())
+		list += {"<A href='byond://?src=\ref[src];lawzeroth=0'>[(src.laws.get_state_zeroth() ? "Yes" : "No")] 0:</A> [src.laws.get_desc_zeroth()]<BR>"}
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
-		var/law = src.laws.ion[index]
+		var/law = src.laws.get_desc_ion(index)
 
 		if (length(law) > 0)
-			if (!src.ioncheck[index])
-				src.ioncheck[index] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
-			src.ioncheck.len += 1
+			list += {"<A href='byond://?src=\ref[src];lawion=[index]'>[(src.laws.get_state_ion(index) ? "Yes" : "No")] [ionnum()]:</A> [law]<BR>"}
 
 	var/number = 1
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
-		var/law = src.laws.inherent[index]
-
+		var/law = src.laws.get_desc_inherent(index)
 		if (length(law) > 0)
-			src.lawcheck.len += 1
-
-			if (!src.lawcheck[number+1])
-				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			list += {"<A href='byond://?src=\ref[src];lawinherent=[number]'>[(src.laws.get_state_inherent(index) ? "Yes" : "No")] [number]:</A> [law]<BR>"}
 			number++
 
 	for (var/index = 1, index <= src.laws.supplied.len, index++)
-		var/law = src.laws.supplied[index]
+		var/law = src.laws.get_desc_supplied(index)
 		if (length(law) > 0)
-			src.lawcheck.len += 1
-			if (!src.lawcheck[number+1])
-				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			list += {"<A href='byond://?src=\ref[src];lawsupplied=[index]'>[(src.laws.get_state_supplied(index) ? "Yes" : "No")] [number]:</A> [law]<BR>"}
 			number++
+
 	list += {"<br><br><A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
 
 	usr << browse(list, "window=laws")
