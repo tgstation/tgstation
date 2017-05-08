@@ -69,6 +69,9 @@
 		user.Paralyse(5)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
+	release_shades(user)
+
+/obj/item/device/soulstone/proc/release_shades(mob/user)
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.status_flags &= ~GODMODE
 		A.canmove = 1

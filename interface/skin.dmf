@@ -1039,60 +1039,6 @@ menu "menu"
 		is-disabled = false
 		saved-params = "is-checked"
 	elem 
-		name = "&Icons"
-		command = ""
-		category = ""
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "auto"
-		name = "&Auto (stretch-to-fit)"
-		command = ".winset \"mapwindow.map.icon-size=0\""
-		category = "&Icons"
-		is-checked = true
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon96"
-		name = "&96x96 (3x)"
-		command = ".winset \"mapwindow.map.icon-size=96\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon64"
-		name = "&64x64 (2x)"
-		command = ".winset \"mapwindow.map.icon-size=64\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon48"
-		name = "&48x48 (1.5x)"
-		command = ".winset \"mapwindow.map.icon-size=48\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon32"
-		name = "&32x32"
-		command = ".winset \"mapwindow.map.icon-size=32\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem 
 		name = "&Help"
 		command = ""
 		category = ""
@@ -1359,6 +1305,7 @@ window "mapwindow"
 		on-show = ""
 		on-hide = ""
 		style = ""
+		zoom-mode = "distort"
 
 window "infowindow"
 	elem "infowindow"

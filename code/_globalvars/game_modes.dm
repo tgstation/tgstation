@@ -9,6 +9,7 @@ GLOBAL_VAR_INIT(blood_target, null) // Cult Master's target or Construct's Maste
 GLOBAL_DATUM(blood_target_image, /image)
 GLOBAL_DATUM(sac_mind, /datum/mind)
 GLOBAL_VAR_INIT(sac_image, null)
+GLOBAL_VAR_INIT(cult_vote_called, FALSE)
 GLOBAL_VAR_INIT(cult_mastered, FALSE)
 GLOBAL_VAR_INIT(reckoning_complete, FALSE)
 GLOBAL_VAR_INIT(sac_complete, FALSE)
