@@ -87,6 +87,10 @@
 	name = "paper- contract for knowledge"
 	contractType = CONTRACT_KNOWLEDGE
 
+/obj/item/weapon/paper/contract/infernal/friend
+	name = "paper- contract for a friend"
+	contractType = CONTRACT_FRIEND
+
 /obj/item/weapon/paper/contract/infernal/unwilling
 	name = "paper- infernal contract"
 	contractType = CONTRACT_UNWILLING
@@ -97,8 +101,6 @@
 	devil_datum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
 	target = nTarget
 	update_text()
-
-/obj/item/weapon/paper/contract/infernal
 
 /obj/item/weapon/paper/contract/infernal/suicide_act(mob/user)
 	if(signed && (user == target.current) && istype(user,/mob/living/carbon/human/))
@@ -151,6 +153,13 @@
 
 /obj/item/weapon/paper/contract/infernal/knowledge/update_text(signature = "____________", blood = 0)
 	info = "<center><B>Contract for knowledge</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for boundless knowledge.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	if(blood)
+		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
+	else
+		info += "<i>[signature]</i>"
+
+/obj/item/weapon/paper/contract/infernal/friend/update_text(signature = "____________", blood = 0)
+	info = "<center><B>Contract for a friend</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [devil_datum.truename], in exchange for a friend.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
 	if(blood)
 		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
 	else
@@ -310,7 +319,7 @@
 /obj/item/weapon/paper/contract/infernal/magic/fulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind)
 		return -1
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/robeless(null))
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	return ..()
 
@@ -319,4 +328,10 @@
 		return -1
 	user.dna.add_mutation(XRAY)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/view_range(null))
+	return ..()
+
+/obj/item/weapon/paper/contract/infernal/friend/fulfillContract(mob/living/user = target.current, blood = 0)
+	if(!istype(user) || !user.mind)
+		return -1
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_friend(null))
 	return ..()
