@@ -48,7 +48,10 @@
 			brain = null
 			update_icon_dropped()
 		else
-			I.loc = T
+			if(istype(I, /obj/item/weapon/reagent_containers/pill))
+				for(var/datum/action/item_action/hands_free/activate_pill/AP in I.actions)
+					qdel(AP)
+			I.forceMove(T)
 
 /obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/source)
 	var/mob/living/carbon/C

@@ -143,14 +143,14 @@
 		qdel(S.mmi)
 
 	qdel(AM)
-	
+
 	if(AM && !QDELETED(AM))	//It's indestructible
 		visible_message("<span class='boldwarning'>[src] spits out the [AM]!</span>")
 		AM.alpha = oldalpha
 		AM.color = oldcolor
 		AM.transform = oldtransform
 		AM.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
-	
+
 /turf/open/chasm/straight_down/lava_land_surface/normal_air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
@@ -158,3 +158,17 @@
 
 /turf/open/chasm/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
+
+
+
+//Jungle
+
+/turf/open/chasm/jungle
+	icon = 'icons/turf/floors/junglechasm.dmi'
+	planetary_atmos = TRUE
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+
+/turf/open/chasm/straight_down/jungle
+	icon = 'icons/turf/floors/junglechasm.dmi'
+	planetary_atmos = TRUE
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"

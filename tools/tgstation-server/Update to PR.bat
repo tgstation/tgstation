@@ -65,7 +65,7 @@ if defined PUSHCHANGELOGTOGIT (
 )
 
 cd gitrepo
-git fetch origin pull/%PR%/head:pr-%PR%
+git fetch -f origin pull/%PR%/head:pr-%PR%
 git merge pr-%PR%
 if %ERRORLEVEL% neq 0 (
 	git reset --hard

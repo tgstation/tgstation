@@ -111,6 +111,11 @@
 		var/obj/machinery/holopad/Holo = I
 		LAZYREMOVE(Holo.holo_calls, src)
 		dialed_holopads -= Holo
+	
+	for(var/I in H.holo_calls)
+		var/datum/holocall/HC = I
+		if(HC != src)
+			HC.Disconnect(H)
 
 	if(!Check())
 		return

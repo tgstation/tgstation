@@ -103,6 +103,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/uplink_spawn_loc = UPLINK_PDA
 
 	var/exp
+	var/list/menuoptions
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -126,6 +127,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
+	menuoptions = list()
 	return
 
 

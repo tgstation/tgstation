@@ -151,4 +151,5 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 .drone					{color: #848482;}
 .monkey					{color: #975032;}
 .swarmer				{color: #2C75FF;}
+.resonate				{color: #298F85;}
 </style>"}

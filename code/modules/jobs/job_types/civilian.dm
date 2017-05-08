@@ -137,11 +137,12 @@ Curator
 	belt = /obj/item/device/pda/curator
 	uniform = /obj/item/clothing/under/rank/curator
 	l_hand = /obj/item/weapon/storage/bag/books
-	r_pocket = /obj/item/weapon/barcodescanner
+	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
 	backpack_contents = list(
 		/obj/item/weapon/melee/curator_whip = 1,
-		/obj/item/soapstone = 1
+		/obj/item/soapstone = 1,
+		/obj/item/weapon/barcodescanner = 1
 	)
 
 

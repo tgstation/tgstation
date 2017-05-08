@@ -350,7 +350,7 @@
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
-	if((spintime <= 1)||(speed <= 1)||!spintime||!speed)
+	if((spintime < 1)||(speed < 1)||!spintime||!speed)
 		return
 	while(spintime >= speed)
 		sleep(speed)
@@ -567,6 +567,7 @@
 		var/datum/map_config/cached = SSmapping.next_map_config
 		if(cached)
 			stat(null, "Next Map: [cached.map_name]")
+		stat("Round ID:", "[GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
 		stat(null, "Station Time: [worldtime2text()]")
 		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
@@ -741,7 +742,6 @@
 	setDir(SOUTH)
 	client.move_delay += movement_delay()
 	return 1
-
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
@@ -1005,3 +1005,10 @@
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
+
+/mob/verb/open_language_menu()
+	set name = "Open Language Menu"
+	set category = "IC"
+
+	var/datum/language_holder/H = get_language_holder()
+	H.open_language_menu(usr)

@@ -17,8 +17,6 @@
 	medhud.add_to_hud(src)
 	faction += "\ref[src]"
 
-	language_menu = new(src)
-
 
 /mob/living/prepare_huds()
 	..()
@@ -49,8 +47,6 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
-
-	QDEL_NULL(language_menu)
 
 	return ..()
 
@@ -450,7 +446,7 @@
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
+	if (s_active && !(CanReach(s_active,view_only = TRUE)))
 		s_active.close(src)
 
 /mob/living/movement_delay(ignorewalk = 0)

@@ -12,6 +12,10 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 
+		if(H.dna && H.dna.species && (NO_UNDERWEAR in H.dna.species.species_traits))
+			to_chat(user, "<span class='warning'>You are not capable of wearing underwear.</span>")
+			return
+
 		var/choice = input(user, "Underwear, Undershirt, or Socks?", "Changing") as null|anything in list("Underwear","Undershirt","Socks")
 
 		if(!Adjacent(user))

@@ -10,6 +10,7 @@
 	var/status_type = STATUS_EFFECT_UNIQUE //How many of the effect can be on one mob, and what happens when you try to add another
 	var/on_remove_on_mob_delete = FALSE //if we call on_remove() when the mob is deleted
 	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
+	var/obj/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
 
 /datum/status_effect/New(mob/living/new_owner)
 	if(new_owner)
@@ -39,6 +40,7 @@
 	if(alert_type)
 		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
 		A.attached_effect = src //so the alert can reference us, if it needs to
+		linked_alert = A //so we can reference the alert, if we need to
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/status_effect/process()
@@ -103,3 +105,11 @@
 		for(var/datum/status_effect/S in status_effects)
 			if(initial(S1.id) == S.id)
 				return S
+
+/mob/living/proc/has_status_effect_list(effect) //returns a list of effects with matching IDs that the mod owns; use for effects there can be multiple of
+	. = list()
+	if(status_effects)
+		var/datum/status_effect/S1 = effect
+		for(var/datum/status_effect/S in status_effects)
+			if(initial(S1.id) == S.id)
+				. += S
