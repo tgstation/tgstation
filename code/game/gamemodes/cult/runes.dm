@@ -497,7 +497,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(src)
 		color = "#FF0000"
 	GLOB.blood_target = new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
-	for(var/datum/mind/cult_mind in cult)
+	for(var/datum/mind/cult_mind in SSticker.mode.cult)
 		if(istype(cult_mind.current, /mob/living/carbon/human))
 			var/mob/living/M = cult_mind.current
 			M.narsie_act()
