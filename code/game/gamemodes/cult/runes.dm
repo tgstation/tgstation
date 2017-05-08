@@ -29,13 +29,13 @@ To draw a rune, use an arcane tome.
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
 	var/req_cultists_text //if we have a description override for required cultists to invoke
-	var/rune_in_use = 0 // Used for some runes, this is for when you want a rune to not be usable when in use.
+	var/rune_in_use = FALSE // Used for some runes, this is for when you want a rune to not be usable when in use.
 
 	var/scribe_delay = 50 //how long the rune takes to create
 	var/scribe_damage = 0.1 //how much damage you take doing it
 
-	var/allow_excess_invokers = 0 //if we allow excess invokers when being invoked
-	var/construct_invoke = 1 //if constructs can invoke it
+	var/allow_excess_invokers = FALSE //if we allow excess invokers when being invoked
+	var/construct_invoke = TRUE //if constructs can invoke it
 
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
@@ -229,14 +229,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/obj/item/weapon/paper/paper_to_imbue = papers_on_rune[1]
 	..()
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!</span>")
-	rune_in_use = 1
-	if(!do_after(user, initial(talisman_type.creation_time), target = paper_to_imbue))
-		rune_in_use = 0
-		return
-	new talisman_type(get_turf(src))
-	visible_message("<span class='warning'>[src] glows with power, and bloody images form themselves on [paper_to_imbue].</span>")
-	qdel(paper_to_imbue)
-	rune_in_use = 0
+	rune_in_use = TRUE
+	if(do_after(user, initial(talisman_type.creation_time), target = paper_to_imbue))
+		new talisman_type(get_turf(src))
+		visible_message("<span class='warning'>[src] glows with power, and bloody images form themselves on [paper_to_imbue].</span>")
+		qdel(paper_to_imbue)
+	rune_in_use = FALSE
 
 /obj/effect/rune/imbue/proc/checkpapers()
 	. = list()
@@ -250,7 +248,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Sas'so c'arta forbici!"
 	icon_state = "2"
 	color = "#551A8B"
-	req_keyword = 1
+	req_keyword = TRUE
 	var/listkey
 
 /obj/effect/rune/teleport/Initialize(mapload, set_keyword)
@@ -297,15 +295,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 		fail_invoke()
 		return
-	var/movedsomething = 0
-	var/moveuserlater = 0
+	var/movedsomething = FALSE
+	var/moveuserlater = FALSE
 	for(var/atom/movable/A in T)
 		if(A == user)
-			moveuserlater = 1
-			movedsomething = 1
+			moveuserlater = TRUE
+			movedsomething = TRUE
 			continue
 		if(!A.anchored)
-			movedsomething = 1
+			movedsomething = TRUE
 			A.forceMove(target)
 	if(movedsomething)
 		..()
@@ -326,7 +324,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "3"
 	color = "#FFFFFF"
 	req_cultists = 1
-	allow_excess_invokers = 1
+	allow_excess_invokers = TRUE
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/do_invoke_glow()
@@ -482,7 +480,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	sleep(40)
 	if(src)
 		color = "#FF0000"
-	SSticker.mode.eldergod = 0
+	SSticker.mode.eldergod = FALSE
 	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.

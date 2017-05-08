@@ -8,7 +8,7 @@
 
 /datum/action/innate/cult/IsAvailable()
 	if(!iscultist(owner))
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/innate/cult/comm
@@ -92,7 +92,7 @@
 
 /datum/action/innate/cult/mastervote/IsAvailable()
 	if(GLOB.cult_vote_called)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/innate/cult/mastervote/Activate()
@@ -233,11 +233,11 @@
 
 /datum/action/innate/cult/master/cultmark/IsAvailable()
 	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
-		return 0
+		return FALSE
 	if(cooldown > world.time)
 		if(!CM.active)
 			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>"
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/innate/cult/master/cultmark/Destroy()
