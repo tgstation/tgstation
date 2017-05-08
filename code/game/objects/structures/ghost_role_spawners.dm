@@ -331,6 +331,7 @@
 		soullink(/datum/soullink/oneway, owner.current, L)
 		spell.friend = L
 		spell.charge_counter = spell.charge_max
+		L.mind.hasSoul = FALSE
 	else
 		to_chat(L, "<span class='userdanger'>Your owner is already dead!  You will soon perish.</span>)")
 		addtimer(CALLBACK(L, /mob.proc/dust, 150)) //Give em a few seconds as a mercy.

@@ -204,6 +204,9 @@
 	if(signed)
 		to_chat(user, "<span class='notice'>This contract has already been signed.  It may not be signed again.</span>")
 		return 0
+	if(!user.mind.hasSoul)
+		to_chat(user, "<span class='notice'>You do not possess a soul.</span>")
+		return 0
 	if(prob(user.getBrainLoss()))
 		to_chat(user, "<span class='notice'>You quickly scrawl 'your name' on the contract.</span>")
 		signIncorrectly()
