@@ -30,6 +30,8 @@
 /datum/job/proc/available_in_playtime(client/C)
 	if(!C)
 		return 0
+	if(!config.use_exp_tracking)
+		return 0
 	if(!exp_requirements || !exp_type)
 		return 0
 	if(!job_is_xp_locked(src.title))
@@ -135,14 +137,16 @@
 			if(L.inactivity >= 6000)
 				continue
 
-				addtimer(L.update_exp_client(mins, ann),10)
+			addtimer(L.update_exp_client(mins, ann),10)
 			CHECK_TICK
 
 
 /client/proc/update_exp_client(var/minutes, var/announce_changes = 0)
-	if(!src ||!ckey)
+	if(!src ||!ckey || !config.use_exp_tracking)
 		return
-	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = [sanitizeSQL(ckey)]")
+	if(!SSdbcore.Connect())
+		return -1
+	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
 	if(!exp_read.Execute())
 		var/err = exp_read.ErrorMsg()
 		log_game("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
@@ -178,9 +182,11 @@
 	prefs.exp = play_records
 
 	for(var/jtype in play_records)
-
 		var jobname = jtype
 		var time = play_records[jtype]
 		var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(ckey)]', '[jobname]', '[time]') ON DUPLICATE KEY UPDATE time = '[time]'")
 		if(!update_query.Execute())
+			var/err = update_query.ErrorMsg()
+			log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
+			message_admins("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
 			return
