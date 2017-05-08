@@ -152,12 +152,12 @@
 			cult_mind.current.Paralyse(5)
 		return 1
 
-/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
+/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
 	if(cult_mind.current)
 		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(ANTAG_DATUM_CULT)
 		if(!cult_datum)
 			return FALSE
-		cult_datum.silent = show_message
+		cult_datum.silent = silent
 		cult_datum.on_removal()
 		if(stun)
 			cult_mind.current.Paralyse(5)
@@ -187,7 +187,7 @@
 	if(cult_objectives.Find("eldergod"))
 		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
 	if(cult_objectives.Find("sacrifice"))
-		if(GLOB.sac_mind && GLOB.sac_complete) //if the target has been GLOB.sacrificed, ignore this step. otherwise, add 1 to cult_fail
+		if(GLOB.sac_mind && !GLOB.sac_complete) //if the target has been GLOB.sacrificed, ignore this step. otherwise, add 1 to cult_fail
 			cult_fail++
 	return cult_fail //if any objectives aren't met, failure
 
