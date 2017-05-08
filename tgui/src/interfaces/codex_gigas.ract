@@ -6,3 +6,58 @@
     <span>{{adata.var}}</span>
   </ui-section>
 </ui-display>
+
+
+GLOBAL_LIST_INIT(devil_pre_title, list("Dark ", "Hellish ", "Fallen ", "Fiery ", "Sinful ", "Blood ", "Fluffy "))
+GLOBAL_LIST_INIT(devil_title, list("Lord ", "Prelate ", "Count ", "Viscount ", "Vizier ", "Elder ", "Adept "))
+GLOBAL_LIST_INIT(devil_syllable, list("hal", "ve", "odr", "neit", "ci", "quon", "mya", "folth", "wren", "geyr", "hil", "niet", "twou", "phi", "coa"))
+GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", ", the Lord of all things", ", Jr."))
+
+
+<ui-display title='Codex Gigas'>
+    <ui-section label='Prefix'>
+		<ui-button  state='{{currentSection == PRE_TITLE ? null : "disabled"}}' action='Dark '>Dark</ui-button>
+		<ui-button  state='{{currentSection == PRE_TITLE ? null : "disabled"}}' action='Hellish '>Hellish</ui-button>
+		<ui-button  state='{{currentSection == PRE_TITLE ? null : "disabled"}}' action='Fallen '>Fallen</ui-button>
+		<ui-button  state='{{currentSection == PRE_TITLE ? null : "disabled"}}' action='Fiery '>Fiery</ui-button>
+		<ui-button  state='{{currentSection == PRE_TITLE ? null : "disabled"}}' action='Sinful '>Sinful</ui-button>
+		<ui-button  state='{{currentSection == PRE_TITLE ? null : "disabled"}}' action='Blood '>Blood</ui-button>
+		<ui-button  state='{{currentSection == PRE_TITLE ? null : "disabled"}}' action='Fluffy '>Fluffy</ui-button>
+    </ui-section>
+    <ui-section label='Title'>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='Lord '>Lord</ui-button>
+		<ui-button  state='{{currentSection <= TITLE ? null : "disabled"}}' action='Prelate '>Prelate</ui-button>
+		<ui-button  state='{{currentSection <= TITLE ? null : "disabled"}}' action='Count '>Count</ui-button>
+		<ui-button  state='{{currentSection <= TITLE ? null : "disabled"}}' action='Viscount '>Viscount</ui-button>
+		<ui-button  state='{{currentSection <= TITLE ? null : "disabled"}}' action='Vizier '>Vizier</ui-button>
+		<ui-button  state='{{currentSection <= TITLE ? null : "disabled"}}' action='Elder '>Elder</ui-button>
+		<ui-button  state='{{currentSection <= TITLE ? null : "disabled"}}' action='Adept '>Adept</ui-button>
+    </ui-section>
+    <ui-section label='Name'>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='hal '>hal</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='ve '>ve</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='odr '>odr</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='neit '>neit</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='ci '>ci</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='quon '>quon</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='mya '>mya</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='folth '>folth</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='wren '>wren</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='geyr '>geyr</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='hil '>hil</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='niet '>niet</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='twou '>twou</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='phi '>phi</ui-button>
+		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='coa '>coa</ui-button>
+    </ui-section>
+    <ui-section label='suffix'>
+		<ui-button  state='{{currentSection == MULTIPLE_SYLLABLE ? null : "disabled"}}' action=' the Red'>the Red</ui-button>
+		<ui-button  state='{{currentSection == MULTIPLE_SYLLABLE ? null : "disabled"}}' action=' the Soulless'>the Soulless</ui-button>
+		<ui-button  state='{{currentSection == MULTIPLE_SYLLABLE ? null : "disabled"}}' action=' the Master'>the Master</ui-button>
+		<ui-button  state='{{currentSection == MULTIPLE_SYLLABLE ? null : "disabled"}}' action=', the Lord of all things'>the Lord of all things</ui-button>
+		<ui-button  state='{{currentSection == MULTIPLE_SYLLABLE ? null : "disabled"}}' action=', Jr.'>jr</ui-button>
+    </ui-section>
+	<ui-section label ='submit'>
+		<ui-button state='{{currentSection >= MULTIPLE_SYLLABLE ? null : "disabled"}}' action='search'>search</ui-button>
+	<ui-section>
+</ui-display>

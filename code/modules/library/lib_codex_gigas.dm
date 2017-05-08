@@ -31,17 +31,15 @@
 		if(U.check_acedia())
 			to_chat(user, "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>")
 			return
-	inUse = TRUE
-	perform_research(user)
 	user.visible_message("[user] opens [title] and begins reading intently.")
-	inUse = FALSE
+	ask_name(user)
 
 
-/obj/item/weapon/book/codex_gigas/proc/perform_research(mob/user)
-	var/devilName = ask_name(user)
+/obj/item/weapon/book/codex_gigas/proc/perform_research(mob/user, devilName)
 	if(!devilName)
 		user.visible_message("[user] closes [title] without looking anything up.")
 		return
+	inUse = TRUE
 	var/speed = 300
 	var/correctness = 85
 	if(ishuman(user))
@@ -56,14 +54,16 @@
 		if(!prob(correctness))
 			usedName += "x"
 		var/datum/antagonist/devil/devil = devilInfo(usedName, 0)
-		display_devil(devil, user)
+		display_devil(devil, user, usedName)
 	sleep(10)
 	onclose(user, "book")
+	inUse = FALSE
 
-/obj/item/weapon/book/codex_gigas/proc/display_devil(var/datum/antagonist/devil/devil, mob/reader)
+/obj/item/weapon/book/codex_gigas/proc/display_devil(datum/antagonist/devil/devil, mob/reader, devilName)
+	reader << browse("Information on [devilName]<br><br><br>[GLOB.lawlorify[LORE][devil.ban]]<br>[GLOB.lawlorify[LORE][devil.bane]]<br>[GLOB.lawlorify[LORE][devil.obligation]]<br>[GLOB.lawlorify[LORE][devil.banish]]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 
 /obj/item/weapon/book/codex_gigas/proc/ask_name(mob/reader)
-	ui_interact()
+	ui_interact(reader)
 
 /obj/item/weapon/book/codex_gigas/ui_act(action, params)
 	if(!action)
@@ -86,9 +86,9 @@
 		currentSection = SUFFIX
 	return currentSection != oldSection
 
-/obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/item/weapon/book/codex_gigas/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "firealarm", name, 300, 150, master_ui, state)
+		ui = new(user, src, ui_key, "codex_gigas", name, 300, 150, master_ui, state)
 		ui.open()
