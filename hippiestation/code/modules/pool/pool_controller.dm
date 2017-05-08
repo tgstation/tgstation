@@ -29,6 +29,7 @@
 	var/tempunlocked = FALSE
 	var/canplus = TRUE
 	var/canminus = TRUE
+	resistance_flags = INDESTRUCTIBLE|UNACIDABLE
 
 /obj/machinery/poolcontroller/Initialize()
 	..()
@@ -56,11 +57,10 @@
 		shock(user,50)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (istype(W,/obj/item/weapon/reagent_containers/glass/beaker/large))
+	if (istype(W,/obj/item/weapon/reagent_containers/glass/beaker))
 		if(beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
-
 		if(W.reagents.total_volume >= 100 && W.reagents.reagent_list.len == 1) //check if full and allow one reageant only.
 			beaker =  W
 			user.drop_item()
@@ -74,18 +74,16 @@
 					log_say("[key_name(user)] has changed the pool's chems to [R.name]")
 					message_admins("[key_name_admin(user)] has changed the pool's chems to [R.name].")
 			timer = 15
-
-
 		else
 			to_chat(user, "<span class='notice'>This machine only accepts full large beakers of one reagent.</span>")
 		return
 
 	if (istype(W,/obj/item/weapon/screwdriver))
+		cut_overlays()
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
-		cut_overlays()
 		if(panel_open)
-			overlays += image(icon, "wires")
+			add_overlay("wires")
 		return
 	else
 		return attack_hand(user)

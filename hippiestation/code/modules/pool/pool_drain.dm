@@ -10,6 +10,7 @@
 	var/timer = 0
 	var/cooldown
 	var/obj/machinery/poolcontroller/poolcontrol = null
+	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
 
 /obj/machinery/drain/Initialize()
 	..()
@@ -121,6 +122,7 @@
 	icon_state = "filter"
 	desc = "The part of the pool that swallows dangerous stuff and ID's"
 	anchored = TRUE
+	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
 
 /obj/machinery/poolfilter/emag_act(user as mob)
 	if(!emagged)

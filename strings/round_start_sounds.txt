@@ -1,6 +1,4 @@
-sound/ambience/title1.ogg
-sound/ambience/title2.ogg
-sound/ambience/title3.ogg
-sound/ambience/title4.ogg
-sound/misc/i_did_not_grief_them.ogg
-sound/ambience/clown.ogg
+hippiestation/sound/lobby/title1.ogg
+hippiestation/sound/lobby/title2.ogg
+hippiestation/sound/lobby/title3.ogg
+hippiestation/sound/lobby/title4.ogg

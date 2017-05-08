@@ -259,6 +259,7 @@
 	name = "pool"
 	icon = 'hippiestation/icons/turf/pool.dmi'
 	anchored = 1
+	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
 
 /obj/structure/pool/ladder
 	name = "Ladder"
