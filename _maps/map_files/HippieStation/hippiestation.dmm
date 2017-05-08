@@ -7034,7 +7034,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aoJ" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -7508,7 +7508,7 @@
 "apX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "apY" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/carpet,
@@ -7725,7 +7725,7 @@
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aqs" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -7733,7 +7733,7 @@
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aqt" = (
 /obj/structure/grille,
 /obj/effect/landmark/syndicate_breach_area,
@@ -7742,7 +7742,7 @@
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aqu" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -7750,7 +7750,7 @@
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aqv" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
@@ -8037,7 +8037,7 @@
 /area/crew_quarters/sleep)
 "arj" = (
 /turf/closed/wall,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "ark" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
@@ -8046,36 +8046,29 @@
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
 "arl" = (
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 2
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 9
-	},
-/area/crew_quarters/fitness)
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/crew_quarters/pool)
 "arm" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "arn" = (
-/obj/structure/closet/athletic_mixed,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 1
-	},
-/area/crew_quarters/fitness)
+/turf/open/floor/plasteel,
+/area/crew_quarters/pool)
 "aro" = (
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
@@ -8386,14 +8379,14 @@
 	},
 /area/hallway/primary/fore)
 "asb" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
 	},
-/obj/machinery/disposal/bin,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 1
-	},
-/area/crew_quarters/fitness)
+/turf/open/floor/plasteel,
+/area/crew_quarters/pool)
 "asc" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -8520,30 +8513,20 @@
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
 "asq" = (
-/obj/machinery/camera{
-	c_tag = "Fitness Room"
-	},
-/obj/structure/closet/masks,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 1
-	},
-/area/crew_quarters/fitness)
-"asr" = (
-/obj/structure/closet/boxinggloves,
 /obj/machinery/light{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/pool)
+"asr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/clothing/shoes/jackboots,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 1
-	},
-/area/crew_quarters/fitness)
+/turf/open/floor/plasteel,
+/area/crew_quarters/pool)
 "ass" = (
 /obj/structure/closet/lasertag/red,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -8554,14 +8537,11 @@
 	},
 /area/crew_quarters/fitness)
 "ast" = (
-/obj/structure/closet/lasertag/blue,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral/side{
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/area/crew_quarters/fitness)
+/turf/open/floor/plasteel,
+/area/crew_quarters/pool)
 "asu" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/red,
@@ -8691,25 +8671,23 @@
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
 "asM" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/neutral/side{
+/obj/machinery/light{
+	icon_state = "tube1";
 	dir = 8
 	},
-/area/crew_quarters/fitness)
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/yellowsiding/corner,
+/area/crew_quarters/pool)
 "asN" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/obj/machinery/poolcontroller,
+/turf/open/floor/plasteel/yellowsiding,
+/area/crew_quarters/pool)
 "asO" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
@@ -8741,16 +8719,8 @@
 /turf/open/floor/plasteel,
 /area/security/vacantoffice2)
 "asV" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/turf/open/floor/plasteel/yellowsiding,
+/area/crew_quarters/pool)
 "asW" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -8773,15 +8743,13 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "asZ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/yellowsiding/corner{
+	dir = 8
 	},
-/turf/open/floor/plasteel/red/side{
-	dir = 4
-	},
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "ata" = (
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -8935,9 +8903,9 @@
 /turf/open/floor/plating,
 /area/security/vacantoffice2)
 "att" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/obj/structure/pool/Lboard,
+/turf/open/pool,
+/area/crew_quarters/pool)
 "atu" = (
 /obj/machinery/camera{
 	c_tag = "Vacant Office B";
@@ -9116,22 +9084,17 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "atV" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23;
-	pixel_y = 0
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 4
 	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "atW" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
@@ -9154,12 +9117,13 @@
 	name = "Holodeck Door"
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aua" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 8
 	},
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aub" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/yellow/side,
@@ -9303,27 +9267,15 @@
 /turf/closed/wall,
 /area/security/vacantoffice2)
 "aur" = (
-/obj/machinery/door/window/eastright{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
-	name = "Fitness Ring"
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plasteel/black,
-/area/crew_quarters/fitness)
+/turf/open/pool,
+/area/crew_quarters/pool)
 "aus" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+/obj/machinery/poolfilter{
+	pixel_x = -2;
+	pixel_y = 18
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/turf/open/pool,
+/area/crew_quarters/pool)
 "aut" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -9388,7 +9340,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "auz" = (
 /obj/machinery/camera{
 	c_tag = "Holodeck"
@@ -9402,7 +9354,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "auA" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -9411,12 +9363,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "auB" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "auC" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating,
@@ -9807,7 +9759,7 @@
 /obj/structure/grille,
 /obj/structure/window/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "avy" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -9815,10 +9767,9 @@
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/fitness)
 "avz" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/crew_quarters/fitness)
+/obj/machinery/drain,
+/turf/open/pool,
+/area/crew_quarters/pool)
 "avA" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -9843,11 +9794,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "avD" = (
 /obj/machinery/computer/holodeck,
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "avE" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "maint3"
@@ -10289,24 +10240,20 @@
 	name = "Fitness"
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "awA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/holopad,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/obj/structure/pool/ladder,
+/turf/open/pool,
+/area/crew_quarters/pool)
 "awB" = (
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/plasteel/green/side{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
 	},
-/area/crew_quarters/fitness)
+/obj/structure/pool/Rboard,
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 8
+	},
+/area/crew_quarters/pool)
 "awC" = (
 /obj/structure/table,
 /obj/item/weapon/paper{
@@ -10315,7 +10262,7 @@
 	name = "Holodeck Disclaimer"
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "awD" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -10914,14 +10861,22 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "axQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
-	d1 = 4;
+	d1 = 2;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 4
+	},
+/area/crew_quarters/pool)
 "axR" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -10933,7 +10888,7 @@
 	name = "Fitness"
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "axS" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -10994,10 +10949,13 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "axY" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
 	},
-/area/crew_quarters/fitness)
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 8
+	},
+/area/crew_quarters/pool)
 "axZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -11007,14 +10965,14 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aya" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	on = 1
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "ayb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -11492,7 +11450,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "azh" = (
 /obj/machinery/camera{
 	c_tag = "Fitness Room South";
@@ -11569,7 +11527,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "azq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -11952,6 +11910,9 @@
 /turf/open/floor/plating,
 /area/security/checkpoint2)
 "aAk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -11959,27 +11920,30 @@
 	pixel_x = 0
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 4
 	},
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/crew_quarters/pool)
+"aAl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral/side,
-/area/crew_quarters/fitness)
-"aAl" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
+/obj/machinery/light,
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 10
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
 	},
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aAm" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -12019,13 +11983,17 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/fitness)
 "aAo" = (
-/obj/structure/reagent_dispensers/water_cooler,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/neutral/side{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/area/crew_quarters/fitness)
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/crew_quarters/pool)
 "aAp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -12035,11 +12003,10 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
 	},
-/turf/open/floor/plasteel/neutral/side,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aAq" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
@@ -12994,7 +12961,7 @@
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aCv" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -13002,7 +12969,7 @@
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aCw" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -13010,7 +12977,7 @@
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/fitness)
+/area/crew_quarters/pool)
 "aCx" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/plating,
@@ -65003,6 +64970,66 @@
 "cMP" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"cMQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/pool)
+"cMR" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	external_pressure_bound = 101.325;
+	on = 1;
+	pressure_checks = 1
+	},
+/turf/open/floor/plasteel/yellowsiding,
+/area/crew_quarters/pool)
+"cMS" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/pool)
+"cMT" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Holodeck Door"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/pool)
+"cMU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plasteel/yellowsiding/corner{
+	dir = 4
+	},
+/area/crew_quarters/pool)
+"cMV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	pixel_y = 0
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/yellowsiding/corner{
+	dir = 1
+	},
+/area/crew_quarters/pool)
 
 (1,1,1) = {"
 aaa
@@ -99029,11 +99056,11 @@ apv
 arl
 asM
 atV
-avw
-awy
+atV
+atV
 axQ
-azj
-arj
+atV
+cMU
 aAh
 aAh
 aAh
@@ -99286,10 +99313,10 @@ ahn
 asb
 asV
 aus
-aus
+aur
 awA
-axT
-azl
+aur
+aur
 aAl
 arj
 aCq
@@ -99541,12 +99568,12 @@ anD
 aoI
 apX
 arn
-asN
+asV
 aur
-avy
-avy
-axS
-azk
+aur
+aur
+aur
+aur
 aAk
 arj
 aCf
@@ -99799,12 +99826,12 @@ ahn
 arj
 asr
 asN
-aut
-avz
-aXF
-axU
-azn
-aAn
+aur
+aur
+aur
+aur
+aur
+aAk
 arj
 aCh
 aEc
@@ -100055,13 +100082,13 @@ apw
 aqp
 arj
 asq
-asN
-aut
+asV
+aur
+aur
 avz
-avz
-axU
-azm
-aAm
+aur
+aur
+aAk
 arj
 aCr
 aEb
@@ -100312,12 +100339,12 @@ apy
 aqq
 arj
 ast
-asN
-auv
-avA
-avA
-axW
-azo
+cMR
+aur
+aur
+aur
+aur
+aur
 aAp
 aBC
 aCt
@@ -100568,13 +100595,13 @@ ahn
 ahn
 ahn
 arj
-ass
-asX
-auu
+asr
+asV
+aur
+aur
 att
-att
-att
-azf
+aur
+aur
 aAo
 aBB
 aBB
@@ -100825,14 +100852,14 @@ aaa
 aaa
 aaf
 arj
-arj
+cMQ
 asZ
 aua
 aua
 awB
 axY
-azh
-arj
+aua
+cMV
 arj
 aaf
 aaa
@@ -101086,8 +101113,8 @@ arm
 asY
 atZ
 auB
-auB
-atZ
+cMS
+cMT
 azg
 azp
 azp
@@ -102886,7 +102913,7 @@ arj
 auA
 avD
 awC
-ayb
+asr
 arj
 alP
 alP

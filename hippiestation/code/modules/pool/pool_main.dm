@@ -1,22 +1,45 @@
 /area/crew_quarters/pool
+	icon = 'hippiestation/icons/turf/pool.dmi'
 	name = "\improper Pool"
-	icon_state = "pool"
+	icon_state = "area"
 
 /area/centcom/pool
 	name = "\improper Centcomm Pool"
 	icon_state = "pool"
 
-/mob
-  var/swimming = 0
-
 /turf/open/pool
-	name = "pool"
 	icon = 'hippiestation/icons/turf/pool.dmi'
-	var/drained = 0 //Keeps track if the pool is empty or not
-	var/splashed = 0 //Making sure they don't get splashed too much
+	var/filled = TRUE
+	name = "poolwater"
+	desc = "You're safer here than in the deep."
+	icon_state = "deep"
+	var/splashed = 0
+	var/obj/effect/overlay/water/watereffect
 
-/turf/open/floor/blob_act()
-	return
+/turf/open/pool/proc/update_icon()
+	if(!filled)
+		name = "drained pool"
+		desc = "No diving!"
+		qdel(watereffect)
+		watereffect = null
+		icon_state = "drained"
+	else
+		name = "poolwater"
+		desc = "You're safer here than in the deep."
+		icon_state = "deep"
+		watereffect = new /obj/effect/overlay/water(src)
+
+/obj/effect/overlay/water
+	name = "Water"
+	icon = 'hippiestation/icons/turf/pool.dmi'
+	icon_state = "overlay"
+	density = 0
+	mouse_opacity = 0
+	layer = ABOVE_MOB_LAYER
+	anchored = 1
+
+
+/mob/var/swimming = 0
 
 //Put people out of the water
 /turf/open/floor/MouseDrop_T(mob/M as mob, mob/user as mob)
@@ -58,61 +81,18 @@
 			return ..()
 		if (istype(A, /obj/structure) && istype(A.pulledby, /mob/living/carbon/human))
 			return ..()
-		if(istype(get_turf(A), /turf/open/pool/water) && !istype(T, /turf/open/pool/water)) //!(locate(/obj/structure/pool/ladder) in get_turf(A).loc)
+		if(istype(get_turf(A), /turf/open/pool) && !istype(T, /turf/open/pool)) //!(locate(/obj/structure/pool/ladder) in get_turf(A).loc)
 			return 0
 	return ..()
 
-/turf/open/pool/water/Exited(mob/M)
+/turf/open/pool/Initialize()
 	..()
-	var/turf/T = get_turf(M)
-	if(istype(M) && istype(watereffect) && istype(T) && src.y != T.y) //We're checking for y variable here so layering isn't fucked when you move horizontally
-		watereffect.layer = M.layer - 0.1 //Always a step behind!
-		spawn(3)
-			watereffect.layer = initial(watereffect.layer)
+	watereffect = new /obj/effect/overlay/water(src)
 
+/turf/open/pool/ex_act(severity, target)
+	return
 
-/obj/overlay/water
-	name = "Water"
-	icon = 'hippiestation/icons/turf/pool.dmi'
-	icon_state = "overlay"
-	density = 0
-	mouse_opacity = 0
-	layer = 5
-	anchored = 1
-
-/turf/open/pool/water
-	name = "poolwater"
-	desc = "You're safer here than in the deep."
-	icon_state = "turf"
-	var/obj/overlay/water/watereffect
-
-/turf/open/pool/water/Initialize()
-	..()
-	for(var/obj/overlay/water/W in src)
-		if(W)
-			qdel(W)
-	watereffect = new /obj/overlay/water(src)
-
-
-/turf/open/pool/water/ex_act(severity, target)
-	..()
-	switch(severity)
-		if(1)
-			src.ReplaceWithLattice()
-		if(2)
-			src.ChangeTurf(/turf/open/floor/plating)
-		if(3)
-			return
-
-/turf/open/pool/water/Exited(mob/M)
-	..()
-	var/turf/T = get_turf(M)
-	if(istype(M) && istype(watereffect) && istype(T) && src.y != T.y) //We're checking for y variable here so layering isn't fucked when you move horizontally
-		watereffect.layer = M.layer - 0.1 //Always a step behind!
-		spawn(3)
-			watereffect.layer = initial(watereffect.layer)
-
-/turf/open/pool/water/proc/wash_mob(mob/living/L)
+/turf/open/pool/proc/wash_mob(mob/living/L)
 	L.wash_cream()
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
@@ -185,21 +165,8 @@
 	else
 		L.clean_blood()
 
-/turf/open/pool/water/ChangeTurf(path)
-	if(!path)			return
-	if(path == type)	return src
-
-	SSair.remove_from_active(src)
-	src.watereffect = null
-	var/turf/W = new path(src)
-	if(istype(W, /turf/open))
-		W:Assimilate_Air()
-		W.RemoveLattice()
-	W.levelupdate()
-	W.CalculateAdjacentTurfs()
-
 //put people in water, including you
-/turf/open/pool/water/MouseDrop_T(mob/M as mob, mob/user as mob)
+/turf/open/pool/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!has_gravity(src))
 		return
 	if(user.stat || user.lying || !Adjacent(user) || !M.Adjacent(user)|| !iscarbon(M))
@@ -226,11 +193,11 @@
 				return
 
 //What happens if you don't drop in it like a good person would, you fool.
-/turf/open/pool/water/Entered(atom/A, turf/OL)
+/turf/open/pool/Entered(atom/A, turf/OL)
 	..()
 	if(!has_gravity(src)) //Fairly important
 		return
-	else if(drained) //KATHUNKS
+	if(!filled)
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
 			if(H.swimming == 0)
@@ -259,9 +226,7 @@
 				H.Weaken(2)
 				H.swimming = 1
 				playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
-
-	else //BLUBLUB
-		..()
+	else
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
 			H.adjustStaminaLoss(1)
@@ -443,8 +408,8 @@
 			else
 				return
 
-/turf/open/pool/water/attack_hand(mob/user)
-	if(!user.stat && !user.lying && Adjacent(user) && user.swimming && !src.drained && !src.splashed) //not drained, user alive and close, and user in water.
+/turf/open/pool/attack_hand(mob/user)
+	if(!user.stat && !user.lying && Adjacent(user) && user.swimming && filled && !src.splashed) //not drained, user alive and close, and user in water.
 		if(user.x == src.x && user.y == src.y)
 			return
 		else
@@ -463,12 +428,11 @@
 					L.emote("cough")
 				L.adjustStaminaLoss(4) //You need to give em a break!
 
-/turf/open/pool/water/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/mop))
+/turf/open/pool/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/mop) && filled)
 		W.reagents.add_reagent("water", 5)
 		to_chat(user, "<span class='notice'>You wet [W] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-
 
 /obj/effect/splash
 	name = "splash"
@@ -476,9 +440,6 @@
 	icon = 'hippiestation/icons/turf/pool.dmi'
 	icon_state = "splash"
 	layer = MOB_LAYER + 0.1
-
-
-
 
 /proc/reverse_direction(var/dir) // Could not find an equivalent in this new TGcode.
 	switch(dir)

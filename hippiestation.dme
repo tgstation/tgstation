@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\basemaphippie.dm"
+#include "_maps\hippiestation.dm"
 #include "_maps\loadallmapshippie.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
