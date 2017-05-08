@@ -34,6 +34,8 @@
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
 	var/seeking = FALSE
+	var/can_repair_constructs = FALSE
+	var/can_repair_self = FALSE
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
@@ -62,7 +64,10 @@
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+	if(isconstruct(M)) //is it a construct?
+		var/mob/living/simple_animal/hostile/construct/C = M
+		if(!C.can_repair_constructs || (C == src && !C.can_repair_self))
+			return
 		if(health < maxHealth)
 			adjustHealth(-5)
 			if(src != M)
@@ -201,6 +206,8 @@
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
+	can_repair_constructs = TRUE
+	can_repair_self = TRUE
 
 /mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
 	if(isconstruct(A)) //is it a construct?
@@ -269,6 +276,7 @@
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion)
 	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
+	can_repair_constructs = TRUE
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
