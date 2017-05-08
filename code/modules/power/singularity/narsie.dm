@@ -27,6 +27,11 @@
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
+/obj/singularity/narsie/large/cult
+	var/list/souls_needed = list()
+	var/soul_goal = 0
+	var/souls = 0
+
 /obj/singularity/narsie/large/Initialize()
 	. = ..()
 	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
@@ -38,9 +43,28 @@
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 
 	narsie_spawn_animation()
-
 	sleep(70)
 	SSshuttle.emergency.request(null, set_coefficient = 0.1) // Cannot recall
+
+/obj/singularity/narsie/large/cult/proc/resize(var/ratio)
+	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
+	ntransform.Scale(ratio)
+	animate(src, transform = ntransform, time = 40, easing = EASE_IN|EASE_OUT)
+
+/obj/singularity/narsie/large/cult/Initialize()
+	. = ..()
+	resize(0.5)
+	for(var/datum/mind/cult_mind in SSticker.mode.cult)
+		if(ishuman(cult_mind.current))
+			var/mob/living/M = cult_mind.current
+			M.narsie_act()
+	for(var/mob/living/player in GLOB.player_list)
+		if(player.stat != DEAD && player.loc.z == 1)
+			souls_needed += player
+	soul_goal = LAZYLEN(souls_needed) * 0.666
+
+/obj/singularity/narsie/large/cult/consume(atom/A)
+	A.narsie_act(src)
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
@@ -134,7 +158,7 @@
 		return
 	to_chat(target, "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>")
 	target = food
-	if(isliving(target))
+	if(ishuman(target))
 		to_chat(target, "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>")
 	else
 		to_chat(target, "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>")
@@ -163,4 +187,6 @@
 	sleep(11)
 	move_self = 1
 	icon = initial(icon)
+
+
 

@@ -200,7 +200,7 @@ SUBSYSTEM_DEF(ticker)
 	transfer_characters()	//transfer keys to the new mobs
 
 	Master.RoundStart()	//let the party begin...
-	
+
 	for(var/I in round_start_events)
 		var/datum/callback/cb = I
 		cb.InvokeAsync()
@@ -286,6 +286,10 @@ SUBSYSTEM_DEF(ticker)
 					station_explosion_detonation(bomb)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
+				if("cult")
+					flick("station_corrupted",cinematic)
+					actually_blew_up = FALSE
+					sleep(70)
 				if("gang war") //Gang Domination (just show the override screen)
 					cinematic.icon_state = "intro_malf_still"
 					flick("intro_malf",cinematic)
