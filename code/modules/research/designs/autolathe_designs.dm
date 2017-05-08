@@ -783,3 +783,12 @@
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/device/modular_computer/tablet
 	category = list("initial","Misc")
+	
+/datum/design/slime_scanner
+	name = "Slime Scanner"
+	id = "slime_scanner"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
+	build_path = /obj/item/device/slime_scanner
+	category = list("initial", "Misc")
+	

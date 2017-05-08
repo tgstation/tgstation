@@ -38,7 +38,7 @@
 			return
 
 		// this must come before the screen objects only block, dunno why it wasn't before
-		if(over_object == M && (src.ClickAccessible(M, depth=STORAGE_VIEW_DEPTH) || Adjacent(M)))
+		if(over_object == M && M.CanReach(src,view_only = TRUE))
 			orient2hud(M)
 			if(M.s_active)
 				M.s_active.close(M)
