@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1, frequency = null, channel = 0)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1, frequency = null, channel = 0, pressure_affected = TRUE)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -10,23 +10,28 @@
 		frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
+	//allocate a channel if necessary now so its the same for everyone
+	channel = channel || open_sound_channel()
+
  	// Looping through the player list has the added bonus of working for mobs inside containers
-	for (var/P in player_list)
+	for (var/P in GLOB.player_list)
 		var/mob/M = P
 		if(!M || !M.client)
 			continue
 		if(get_dist(M, turf_source) <= world.view + extrarange)
 			var/turf/T = get_turf(M)
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround, channel)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround, channel, pressure_affected)
 
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0, pressure_affected = TRUE)
+	if(!client || !can_hear())
+		return
 
-/atom/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0)
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
 	S.wait = 0 //No queue
-	S.channel = channel
+	S.channel = channel || open_sound_channel()
 	S.volume = vol
 
 	if (vary)
@@ -38,27 +43,28 @@
 	if(isturf(turf_source))
 		var/turf/T = get_turf(src)
 
-		//Atmosphere affects sound
-		var/pressure_factor = 1
-		var/datum/gas_mixture/hearer_env = T.return_air()
-		var/datum/gas_mixture/source_env = turf_source.return_air()
+		if(pressure_affected)
+			//Atmosphere affects sound
+			var/pressure_factor = 1
+			var/datum/gas_mixture/hearer_env = T.return_air()
+			var/datum/gas_mixture/source_env = turf_source.return_air()
 
-		if(hearer_env && source_env)
-			var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
-			if(pressure < ONE_ATMOSPHERE)
-				pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
-		else //space
-			pressure_factor = 0
+			if(hearer_env && source_env)
+				var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
+				if(pressure < ONE_ATMOSPHERE)
+					pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
+			else //space
+				pressure_factor = 0
 
-		var/distance = get_dist(T, turf_source)
-		if(distance <= 1)
-			pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
+			var/distance = get_dist(T, turf_source)
+			if(distance <= 1)
+				pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
 
-		S.volume *= pressure_factor
-		//End Atmosphere affecting sound
+			S.volume *= pressure_factor
+			//End Atmosphere affecting sound
 
-		if(S.volume <= 0)
-			return //No sound
+			if(S.volume <= 0)
+				return //No sound
 
 		// 3D sounds, the technology is here!
 		if (surround)
@@ -70,23 +76,24 @@
 
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
-		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
+		S.falloff = falloff || FALLOFF_SOUNDS
 
 	src << S
 
-/mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0)
-	if(!client || ear_deaf > 0)
-		return
-	..()
+/proc/open_sound_channel()
+	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
+	. = ++next_channel
+	if(next_channel > CHANNEL_HIGHEST_AVAILABLE)
+		next_channel = 1
 
 /mob/proc/stop_sound_channel(chan)
 	src << sound(null, repeat = 0, wait = 0, channel = chan)
 
 /client/proc/playtitlemusic()
-	UNTIL(ticker.login_music) //wait for ticker init to set the login music
+	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
-		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = CHANNEL_LOBBYMUSIC) // MAD JAMS
+		src << sound(SSticker.login_music, repeat = 0, wait = 0, volume = 85, channel = CHANNEL_LOBBYMUSIC) // MAD JAMS
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
@@ -125,5 +132,5 @@
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)
-	for(var/V in clients)
+	for(var/V in GLOB.clients)
 		V << sound(file, repeat, wait, channel, volume)

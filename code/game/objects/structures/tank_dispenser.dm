@@ -18,13 +18,14 @@
 /obj/structure/tank_dispenser/plasma
 	oxygentanks = 0
 
-/obj/structure/tank_dispenser/New()
+/obj/structure/tank_dispenser/Initialize()
+	. = ..()
 	for(var/i in 1 to oxygentanks)
 		new /obj/item/weapon/tank/internals/oxygen(src)
 	for(var/i in 1 to plasmatanks)
 		new /obj/item/weapon/tank/internals/plasma(src)
 	update_icon()
-	..()
+	
 /obj/structure/tank_dispenser/update_icon()
 	cut_overlays()
 	switch(oxygentanks)
@@ -69,7 +70,7 @@
 	update_icon()
 
 /obj/structure/tank_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "tank_dispenser", name, 275, 100, master_ui, state)

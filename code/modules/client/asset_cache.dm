@@ -41,7 +41,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	if(client.cache.Find(asset_name) || client.sending.Find(asset_name))
 		return 0
 
-	client << browse_rsc(SSasset.cache[asset_name], asset_name)
+	client << browse_rsc(SSassets.cache[asset_name], asset_name)
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
 		if (client)
 			client.cache += asset_name
@@ -91,8 +91,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	if (unreceived.len >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
 		to_chat(client, "Sending Resources...")
 	for(var/asset in unreceived)
-		if (asset in SSasset.cache)
-			client << browse_rsc(SSasset.cache[asset], asset)
+		if (asset in SSassets.cache)
+			client << browse_rsc(SSassets.cache[asset], asset)
 
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
 		if (client)
@@ -136,21 +136,21 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
 /proc/register_asset(var/asset_name, var/asset)
-	SSasset.cache[asset_name] = asset
+	SSassets.cache[asset_name] = asset
 
 //These datums are used to populate the asset cache, the proc "register()" does this.
 
 //all of our asset datums, used for referring to these later
-/var/global/list/asset_datums = list()
+GLOBAL_LIST_EMPTY(asset_datums)
 
 //get a assetdatum or make a new one
 /proc/get_asset_datum(var/type)
-	if (!(type in asset_datums))
+	if (!(type in GLOB.asset_datums))
 		return new type()
-	return asset_datums[type]
+	return GLOB.asset_datums[type]
 
 /datum/asset/New()
-	asset_datums[type] = src
+	GLOB.asset_datums[type] = src
 
 /datum/asset/proc/register()
 	return
@@ -171,7 +171,6 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
-
 
 /datum/asset/simple/tgui
 	assets = list(
@@ -207,13 +206,6 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"sig_lan.gif" 				= 'icons/program_icons/sig_lan.gif',
 		"sig_none.gif" 				= 'icons/program_icons/sig_none.gif',
 	)
-
-
-
-
-
-
-
 
 /datum/asset/simple/pda
 	assets = list(
@@ -265,6 +257,26 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
 		"jquery-1.10.2.min.js" = 'html/IRV/jquery-1.10.2.min.js'
+	)
+
+/datum/asset/simple/changelog
+	assets = list(
+		"88x31.png" = 'html/88x31.png',
+		"bug-minus.png" = 'html/bug-minus.png',
+		"cross-circle.png" = 'html/cross-circle.png',
+		"hard-hat-exclamation.png" = 'html/hard-hat-exclamation.png',
+		"image-minus.png" = 'html/image-minus.png',
+		"image-plus.png" = 'html/image-plus.png',
+		"music-minus.png" = 'html/music-minus.png',
+		"music-plus.png" = 'html/music-plus.png',
+		"tick-circle.png" = 'html/tick-circle.png',
+		"wrench-screwdriver.png" = 'html/wrench-screwdriver.png',
+		"spell-check.png" = 'html/spell-check.png',
+		"burn-exclamation.png" = 'html/burn-exclamation.png',
+		"chevron.png" = 'html/chevron.png',
+		"chevron-expand.png" = 'html/chevron-expand.png',
+		"scales.png" = 'html/scales.png',
+		"changelog.css" = 'html/changelog.css'
 	)
 
 //Registers HTML Interface assets.

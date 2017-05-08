@@ -30,7 +30,7 @@
 	var/turf/location = C.loc
 	if(istype(location))
 		C.add_splatter_floor(location)
-	var/direction = pick(cardinal)
+	var/direction = pick(GLOB.cardinal)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
 	for(var/i in 1 to t_range-1)
@@ -86,6 +86,7 @@
 	var/mob/living/carbon/C = owner
 	update_limb(1)
 	C.bodyparts -= src
+
 	if(held_index)
 		C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
 		C.hand_bodyparts[held_index] = null
@@ -125,6 +126,9 @@
 	C.update_body()
 	C.update_hair()
 	C.update_canmove()
+	if(is_pseudopart)
+		drop_organs(C)	//Psuedoparts shouldn't have organs, but just in case
+		qdel(src)
 
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
@@ -133,14 +137,10 @@
 	loc = LB
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
-	if(C.mind && C.mind.changeling)
-		LB.brain = new //changeling doesn't lose its real brain organ, we drop a decoy.
-		LB.brain.loc = LB
-		LB.brain.decoy_override = TRUE
-	else			//if not a changeling, we put the brain organ inside the dropped head
-		Remove(C)	//and put the player in control of the brainmob
-		loc = LB
-		LB.brain = src
+	Remove(C)	//Changeling brain concerns are now handled in Remove
+	loc = LB
+	LB.brain = src
+	if(brainmob)
 		LB.brainmob = brainmob
 		brainmob = null
 		LB.brainmob.loc = LB
@@ -218,6 +218,14 @@
 		for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			var/obj/item/I = X
 			owner.dropItemToGround(I, TRUE)
+
+	//Handle dental implants
+	for(var/datum/action/item_action/hands_free/activate_pill/AP in owner.actions)
+		AP.Remove(owner)
+		var/obj/pill = AP.target
+		if(pill)
+			pill.forceMove(src)
+
 	name = "[owner.real_name]'s head"
 	..()
 
@@ -254,6 +262,8 @@
 		if(held_index > C.hand_bodyparts.len)
 			C.hand_bodyparts.len = held_index
 		C.hand_bodyparts[held_index] = src
+		if(C.dna.species.mutanthands && !is_pseudopart)
+			C.put_in_hand(new C.dna.species.mutanthands(), held_index)
 		if(C.hud_used)
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
@@ -268,6 +278,9 @@
 				C.surgeries -= S
 				qdel(S)
 				break
+
+	for(var/obj/item/organ/O in contents)
+		O.Insert(C)
 
 	update_bodypart_damage_state()
 
@@ -300,6 +313,14 @@
 		C.real_name = real_name
 	real_name = ""
 	name = initial(name)
+
+	//Handle dental implants
+	for(var/obj/item/weapon/reagent_containers/pill/P in src)
+		for(var/datum/action/item_action/hands_free/activate_pill/AP in P.actions)
+			P.forceMove(C)
+			AP.Grant(C)
+			break
+
 	..()
 
 

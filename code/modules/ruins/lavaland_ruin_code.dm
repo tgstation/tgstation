@@ -24,8 +24,8 @@
 	icon_state = "datadisk1"
 	max_blueprints = 1
 
-/obj/item/weapon/disk/design_disk/golem_shell/New()
-	..()
+/obj/item/weapon/disk/design_disk/golem_shell/Initialize()
+	. = ..()
 	var/datum/design/golem_shell/G = new
 	blueprints[1] = G
 
@@ -40,7 +40,7 @@
 	category = list("Imported")
 
 /obj/item/golem_shell
-	name = "incomplete golem shell"
+	name = "incomplete free golem shell"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
@@ -50,8 +50,8 @@
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
 	var/species
-	if(istype(I, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/O = I
+	if(istype(I, /obj/item/stack/))
+		var/obj/item/stack/O = I
 
 		if(istype(O, /obj/item/stack/sheet/metal))
 			species = /datum/species/golem
@@ -104,10 +104,16 @@
 		if(istype(O, /obj/item/stack/medical/gauze) || istype(O, /obj/item/stack/sheet/cloth))
 			species = /datum/species/golem/cloth
 
+		if(istype(O, /obj/item/stack/sheet/mineral/adamantine))
+			species = /datum/species/golem/adamantine
+
+		if(istype(O, /obj/item/stack/sheet/plastic))
+			species = /datum/species/golem/plastic
+
 		if(species)
 			if(O.use(10))
 				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
-				new shell_type(get_turf(src), species, has_owner, user)
+				new shell_type(get_turf(src), species, user)
 				qdel(src)
 			else
 				to_chat(user, "You need at least ten sheets to finish a golem.")
@@ -115,10 +121,9 @@
 			to_chat(user, "You can't build a golem out of this kind of material.")
 
 //made with xenobiology, the golem obeys its creator
-/obj/item/golem_shell/artificial
-	name = "incomplete artificial golem shell"
-	has_owner = TRUE
-
+/obj/item/golem_shell/servant
+	name = "incomplete servant golem shell"
+	shell_type = /obj/effect/mob_spawn/human/golem/servant
 
 ///Syndicate Listening Post
 /obj/effect/mob_spawn/human/lavaland_syndicate
@@ -136,13 +141,13 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	has_id = 1
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
-	id_access_list = list(access_syndicate)
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
+	id_access_list = list(GLOB.access_syndicate)
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
 	r_hand = /obj/item/weapon/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/armor/vest
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
 	pocket2 = /obj/item/weapon/card/id/syndicate/anyone

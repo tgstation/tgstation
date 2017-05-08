@@ -41,7 +41,7 @@
 			to_chat(src, "<span class='warning'>It is too early to place your blob core!</span>")
 			return 0
 	else if(placement_override == 1)
-		var/turf/T = pick(blobstart)
+		var/turf/T = pick(GLOB.blobstart)
 		loc = T //got overrided? you're somewhere random, motherfucker
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
@@ -65,10 +65,10 @@
 	set category = "Blob"
 	set name = "Jump to Node"
 	set desc = "Move your camera to a selected node."
-	if(blob_nodes.len)
+	if(GLOB.blob_nodes.len)
 		var/list/nodes = list()
-		for(var/i in 1 to blob_nodes.len)
-			var/obj/structure/blob/node/B = blob_nodes[i]
+		for(var/i in 1 to GLOB.blob_nodes.len)
+			var/obj/structure/blob/node/B = GLOB.blob_nodes[i]
 			nodes["Blob Node #[i] ([B.overmind ? "[B.overmind.blob_reagent_datum.name]":"No Chemical"])"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
@@ -175,7 +175,7 @@
 		blobber << 'sound/effects/attackblob.ogg'
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
 		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob or if the factory that made you is killed.")
-		to_chat(blobber, "You can communicate with other blobbernauts and overminds via <b>:b</b>")
+		to_chat(blobber, "You can communicate with other blobbernauts and GLOB.overminds via <b>:b</b>")
 		to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!")
 		to_chat(blobber, "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]")
 	if(blobber)
@@ -267,7 +267,7 @@
 			var/list/diagonalblobs = list()
 			for(var/I in possibleblobs)
 				var/obj/structure/blob/IB = I
-				if(get_dir(IB, T) in cardinal)
+				if(get_dir(IB, T) in GLOB.cardinal)
 					cardinalblobs += IB
 				else
 					diagonalblobs += IB
@@ -331,7 +331,7 @@
 	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new BC
 	color = blob_reagent_datum.complementary_color
-	for(var/BL in blobs)
+	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
 		B.update_icon()
 	for(var/BLO in blob_mobs)
@@ -363,7 +363,7 @@
 	to_chat(src, "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs.")
 	to_chat(src, "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>")
 	to_chat(src, "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob")
-	to_chat(src, "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them.")
+	to_chat(src, "Attempting to talk will send a message to all other GLOB.overminds, allowing you to coordinate with them.")
 	if(!placed && autoplace_max_time <= world.time)
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>")
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen.</font></span>")

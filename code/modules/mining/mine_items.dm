@@ -18,9 +18,7 @@
 	name = "mining wardrobe"
 	icon_door = "mixed"
 
-/obj/structure/closet/wardrobe/miner/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/miner/PopulateContents()
 	new /obj/item/weapon/storage/backpack/dufflebag(src)
 	new /obj/item/weapon/storage/backpack/explorer(src)
 	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
@@ -37,9 +35,9 @@
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
 	icon_state = "mining"
-	req_access = list(access_mining)
+	req_access = list(GLOB.access_mining)
 
-/obj/structure/closet/secure_closet/miner/New()
+/obj/structure/closet/secure_closet/miner/PopulateContents()
 	..()
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/weapon/storage/box/emptysandbags(src)
@@ -68,7 +66,7 @@
 	var/global/list/dumb_rev_heads = list()
 
 /obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
-	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in ticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
+	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in SSticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
 		to_chat(user, "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>")
 		dumb_rev_heads += user.mind
 		return
@@ -280,8 +278,8 @@
 
 		var/turf/T = deploy_location
 		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
-			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
-			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
+			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [get_area(T)][COORD(T)]")
 		template.load(deploy_location, centered = TRUE)
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
@@ -297,7 +295,7 @@
 	icon = 'icons/obj/smooth_structures/pod_window.dmi'
 	icon_state = "smooth"
 	smooth = SMOOTH_MORE
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
 
 //Door
 /obj/machinery/door/airlock/survival_pod
@@ -389,16 +387,18 @@
 	name = "dusty survival pod storage"
 	desc = "A heated storage unit. This one's seen better days."
 
-/obj/machinery/smartfridge/survival_pod/empty/New()
-	return()
+/obj/machinery/smartfridge/survival_pod/empty/Initialize(mapload)
+	..(mapload, TRUE)
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
 		return 1
 	return 0
 
-/obj/machinery/smartfridge/survival_pod/New()
+/obj/machinery/smartfridge/survival_pod/Initialize(mapload, empty)
 	..()
+	if(empty)
+		return
 	for(var/i in 1 to 5)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
 		load(W)

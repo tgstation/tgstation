@@ -2,7 +2,7 @@
 	name = "devil"
 	config_tag = "devil"
 	antag_flag = ROLE_DEVIL
-	protected_jobs = list("Lawyer", "Librarian", "Chaplain", "Head of Security", "Captain", "AI")
+	protected_jobs = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -50,12 +50,16 @@
 
 /datum/game_mode/devil/post_setup()
 	for(var/datum/mind/devil in devils)
-		spawn(rand(10,100))
-			finalize_devil(devil, TRUE)
-			spawn(100)
-				add_devil_objectives(devil, objective_count) //This has to be in a separate loop, as we need devil names to be generated before we give objectives in devil agent.
-				devil.announceDevilLaws()
-				devil.announce_objectives()
+		post_setup_finalize(devil)
 	modePlayer += devils
 	..()
 	return 1
+
+/datum/game_mode/devil/proc/post_setup_finalize(datum/mind/devil)
+	set waitfor = FALSE
+	sleep(rand(10,100))
+	finalize_devil(devil, TRUE)
+	sleep(100)
+	add_devil_objectives(devil, objective_count) //This has to be in a separate loop, as we need devil names to be generated before we give objectives in devil agent.
+	devil.announceDevilLaws()
+	devil.announce_objectives()

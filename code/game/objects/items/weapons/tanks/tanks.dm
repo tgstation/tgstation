@@ -116,11 +116,11 @@
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
-	if (H && !QDELETED(H))
+	if (!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
 		for(var/obj/item/W in H)
 			H.dropItemToGround(W)
 			if(prob(50))
-				step(W, pick(alldirs))
+				step(W, pick(GLOB.alldirs))
 		H.status_flags |= DISFIGURED
 		H.bleed_rate = 5
 		H.gib_animation()
@@ -143,7 +143,7 @@
 		. = ..()
 
 /obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "tanks", name, 420, 200, master_ui, state)

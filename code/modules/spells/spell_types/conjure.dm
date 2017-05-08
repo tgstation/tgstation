@@ -42,6 +42,11 @@
 			if(summon_lifespan)
 				QDEL_IN(summoned_object, summon_lifespan)
 
+			post_summon(summoned_object, user)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/proc/post_summon(atom/summoned_object, mob/user)
+	return
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/summonEdSwarm //test purposes - Also a lot of fun
 	name = "Dispense Wizard Justice"
 	desc = "This spell dispenses wizard justice."

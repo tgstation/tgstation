@@ -28,7 +28,8 @@
 	status_flags = CANPUSH
 	movement_type = FLYING
 	loot = list(/obj/item/weapon/ectoplasm)
-	del_on_death = 1
+	del_on_death = TRUE
+	initial_language_holder = /datum/language_holder/construct
 
 /mob/living/simple_animal/shade/death()
 	deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
@@ -52,7 +53,7 @@
 		else
 			to_chat(M, "<span class='cult'>You cannot heal <b>[src]</b>, as [p_they()] [p_are()] unharmed!</span>")
 	else if(src != M)
-		..()
+		return ..()
 
 /mob/living/simple_animal/shade/attackby(obj/item/O, mob/user, params)  //Marker -Agouri
 	if(istype(O, /obj/item/device/soulstone))

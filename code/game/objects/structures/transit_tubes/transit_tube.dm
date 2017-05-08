@@ -129,7 +129,7 @@
 
 /obj/structure/transit_tube/proc/generate_tube_overlays()
 	for(var/direction in tube_dirs)
-		if(direction in diagonals)
+		if(direction in GLOB.diagonals)
 			if(direction & NORTH)
 				create_tube_overlay(direction ^ 3, NORTH)
 
@@ -143,21 +143,21 @@
 
 
 /obj/structure/transit_tube/proc/create_tube_overlay(direction, shift_dir)
-	var/image/I
+	var/image/tube_overlay = new(dir = direction)
 	if(shift_dir)
-		I = image(loc = src, icon_state = "decorative_diag", dir = direction)
+		tube_overlay.icon_state = "decorative_diag"
 		switch(shift_dir)
 			if(NORTH)
-				I.pixel_y = 32
+				tube_overlay.pixel_y = 32
 			if(SOUTH)
-				I.pixel_y = -32
+				tube_overlay.pixel_y = -32
 			if(EAST)
-				I.pixel_x = 32
+				tube_overlay.pixel_x = 32
 			if(WEST)
-				I.pixel_x = -32
+				tube_overlay.pixel_x = -32
 	else
-		I = image(loc = src, icon_state = "decorative", dir = direction)
-	add_overlay(I)
+		tube_overlay.icon_state = "decorative"
+	add_overlay(tube_overlay)
 
 
 

@@ -55,7 +55,7 @@
 	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
 	INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
 
-	feedback_add_details("gun_fired","[src.type]")
+	SSblackbox.add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/medbeam/process()
 

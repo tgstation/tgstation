@@ -1,12 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /obj/item/weapon/circular_saw,
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ac" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/BMPship/Aft)
@@ -65,8 +65,8 @@
 /area/awaymission/BMPship/Aft)
 "am" = (
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "an" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -847,7 +847,7 @@
 /area/awaymission/BMPship/Aft)
 "cF" = (
 /turf/closed/wall/mineral/titanium/overspace,
-/area/space)
+/area/template_noop)
 "cG" = (
 /turf/open/floor/carpet,
 /turf/closed/wall/mineral/titanium/interior,
@@ -1131,7 +1131,7 @@
 	dir = 4;
 	icon_state = "propulsion"
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/awaymission/BMPship/Aft)
 "dt" = (
 /obj/structure/table,
@@ -1940,7 +1940,7 @@
 /area/awaymission/BMPship/Fore)
 "fu" = (
 /obj/structure/lattice,
-/turf/open/space,
+/turf/template_noop,
 /area/awaymission/BMPship/Fore)
 "fv" = (
 /turf/open/floor/plating/airless{
@@ -2184,7 +2184,8 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Fore)
 "ge" = (
-/turf/closed/mineral/random,
+/obj/machinery/door/airlock/silver,
+/turf/open/floor/plating,
 /area/awaymission/BMPship/Midship)
 "gf" = (
 /obj/machinery/light{
@@ -2483,8 +2484,8 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ha" = (
 /turf/open/floor/plating/airless{
 	broken = 1;

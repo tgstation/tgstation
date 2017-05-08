@@ -66,7 +66,7 @@
 /mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
 	var/spanned_message = say_quote(msg, get_spans())
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
-	for(var/M in mob_list)
+	for(var/M in GLOB.mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			to_chat(M, rendered)
 		if(isobserver(M))
@@ -136,9 +136,9 @@
 	icon_state = "zombie"
 	H.hair_style = null
 	H.update_hair()
-	update_icons()
 	H.forceMove(src)
 	oldguy = H
+	update_icons()
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
@@ -179,11 +179,11 @@
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	if(is_zombie)
 		copy_overlays(oldguy, TRUE)
-		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
+		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/blob.dmi', "blob_head")
 		if(overmind)
-			I.color = overmind.blob_reagent_datum.complementary_color
+			blob_head_overlay.color = overmind.blob_reagent_datum.complementary_color
 		color = initial(color)//looks better.
-		add_overlay(I)
+		add_overlay(blob_head_overlay)
 
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"
@@ -218,8 +218,8 @@
 	force_threshold = 10
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
@@ -255,13 +255,11 @@
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round((health / maxHealth) * 100, 0.5)]%</font></div>"
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
-	if(isliving(target))
-		if(overmind)
-			var/mob/living/L = target
-			var/mob_protection = L.get_permeability_protection()
-			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
-	if(target)
-		..()
+	. = ..()
+	if(. && isliving(target) && overmind)
+		var/mob/living/L = target
+		var/mob_protection = L.get_permeability_protection()
+		overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()
