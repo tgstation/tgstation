@@ -301,13 +301,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		add_overlay(GLOB.sac_image)
 		return
 	if(!blood_target && GLOB.sac_complete)
+		if(SSticker.mode.eldergod)
+			desc = "The sacrifice is complete, prepare to summon Nar-Sie!"
+		else
+			desc = "The summoning is complete, Glory to Nar-Sie!"
 		if(icon_state == "runed_sense1")
 			return
 		animate(src, transform = null, time = 1, loop = 0)
 		angle = 0
 		cut_overlays()
 		icon_state = "runed_sense1"
-		desc = "The sacrifice is complete, prepare to summon Nar-Sie!"
 		add_overlay(narnar)
 		return
 	if(!blood_target)
