@@ -1540,6 +1540,25 @@
 				ae.loc = src.loc
 	qdel(src)
 
+/obj/machinery/door/airlock/proc/force_pry(mob/user)
+	var/time = 100
+	if(!requiresID() || allowed(user))
+		return
+
+	if(locked)
+		to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
+		return
+
+	if(hasPower())
+		user.visible_message("<span class='warning'>[user] jams themselves between the airlock, trying to pry it open!</span>", "<span class='warning'>You start prying open the door..</span>", \
+		"<span class='italics'>You hear a metal screeching sound.</span>")
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+		if(!do_after(user, time, target = src))
+			return
+	user.visible_message("<span class='warning'>[user] forces the airlock to open!</span>", "<span class='warning'>You managed to pry the door open.</span>", \
+	"<span class='italics'>You hear a metal screeching sound.</span>")
+	open(2)
+
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)

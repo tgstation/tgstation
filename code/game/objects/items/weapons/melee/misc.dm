@@ -42,6 +42,68 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
+/obj/item/weapon/melee/buff_arm
+	name = "extremely buff arm"
+	desc = "An extremely buff mass of muscle that on closer inspection seems to be trying to imitate an arm. You probably don't \
+		want to be on the receiving end of this."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "buff_arm"
+	item_state = "buff_arm"
+	flags = NODROP|ABSTRACT|DROPDEL
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	w_class = WEIGHT_CLASS_HUGE
+	force = 45 //5 hit kill on unarmored opponents
+	hitsound = 'sound/weapons/punch3.ogg'
+	attack_verb = list("smashed", "pummeled", "punched", "mashed", "demolished", "destroyed")
+
+/obj/item/weapon/melee/buff_arm/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == THROWN_PROJECTILE_ATTACK)
+		final_block_chance += 20 //40% against thrown items
+	if(attack_type == UNARMED_ATTACK) //unarmed and xeno leaps fully blocked.
+		final_block_chance = 100
+	if(attack_type == LEAP_ATTACK)
+		final_block_chance = 100
+	return ..()
+
+ //at least look cool when accidently hitting yourself
+/obj/item/weapon/melee/buff_arm/afterattack(target, mob/user)
+	if(user && target == user)
+		user.visible_message("<span class='danger'>[user] beats their chest in a fit of primal rage!</span>")
+		user.say(pick(";GRRAAAGHHH!!!", ";RAAAAAAGHH!!!", ";AAAAAGGRHHHH!!!"))
+		playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+		return
+
+//random special weaken when attacking
+	else if(iscarbon(target))
+		var/mob/living/carbon/T = target
+		if(!T.lying && prob(35)) //don't want stun locking, not like you'd survive long enough for it to happen in the first place
+			T.visible_message("<span class='warning'>[T] cries out in pain as [user] slams them into the ground!</span>", \
+							 "<span class='danger'>You cry out in vain as [T] slams you into the ground, knocking the air out of your lungs!</span>")
+			T.emote("gasp")
+			T.adjustOxyLoss(-25)
+			T.Weaken(4)
+			for(var/mob/M in range(5, src))
+				shake_camera(M, 5, 1)
+
+//eating corpses, 15 second delay for 25 brute/burn heal.
+		if(T.stat == DEAD)
+			var/mob/living/carbon/U = user
+			user.visible_message("<span class='warning'>[user] starts trying to devour [T]!", "<span class='notice'>You start to devour [T]..</span>")
+			if(do_after(user, 100, target = T )) //10 seconds to consume
+				U.adjustBruteLoss(-25)
+				U.adjustFireLoss(-25)
+				user.visible_message("<span class='danger'>[user] devours [T]!", "<span class='notice'>You devour[T].</span>")
+				T.gib()
+				U.emote("burp")
+
+ //attempt to pry open airlocks
+	else if(istype(target, /obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/A = target
+		A.force_pry(user)
+
+	else if(prob(25))
+		user.say(pick(";RAAAAAARRGH!!!",";GRRRRAAAUGGH!!!",";AAAAAARGGHH!!!"))
+
 /obj/item/weapon/melee/sabre
 	name = "officer's sabre"
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."

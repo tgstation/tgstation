@@ -1253,6 +1253,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	restricted_roles = list("Curator")
 	limited_stock = 1 // please don't spam deadchat
 
+/datum/uplink_item/role_restricted/rage_serum
+	name = "Unstable Rage Mutation Serum"
+	desc = "An experimental mutation serum engineered by Syndicate researchers, based on stolen research on the Hulk gene discovered by Nanotrasen's Genetics division. The serum heavily modifies the user's DNA and turns even the most timid person into a raging war-machine,\
+		 giving them inhuman strength and an unnatural thirst for blood. The effects are irreversible once you've injected it, as attempting to reverse the user's already-unstable DNA almost always causes internal collapse, killing them."
+	item = /obj/item/weapon/reagent_containers/syringe/rage
+	cost = 20 //go big or go home
+	restricted_roles = list("Geneticist")
+	surplus = 3
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"

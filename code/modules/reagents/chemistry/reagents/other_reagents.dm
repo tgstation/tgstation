@@ -505,6 +505,15 @@
 	race = /datum/species/lizard/ashwalker
 	mutationtext = "<span class='danger'>The pain subsides. You feel... savage.</span>"
 
+/datum/reagent/stableslimetoxin/rage
+	name = "Rage Mutation Toxin"
+	id = "ragemutationtoxin"
+	description = "An unstable serum, designed to irreversibly mutate the user into an inhuman beast of carnage and death."
+	color = "#BD1313" //RGB: 189, 19, 19
+	race = /datum/species/rage
+	mutationtext = "<span class='danger'>The pain doesn't subside. The pain only grows, engulfing your entire being, only dulled by an unnatural rage and thirst for \
+		destruction.</span>"
+
 
 //DANGEROUS RACES
 /datum/reagent/stableslimetoxin/shadow
