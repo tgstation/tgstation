@@ -70,7 +70,7 @@ This file contains the arcane tome files.
 /obj/item/weapon/tome/proc/read_tome(mob/user)
 	var/text = ""
 	text += "<center><font color='red' size=3><b><i>Archives of the Dark One</i></b></font></center><br><br><br>"
-	text += "A rune's name and effects can be revealed by examining the rune.<<br><br>"
+	text += "A rune's name and effects can be revealed by examining the rune.<br><br>"
 
 	text += "<font color='red'><b>Create Talisman</b></font><br>This rune is one of the most important runes the cult has, being the only way to create new talismans. A blank sheet of paper must be on top of the rune. After \
 	invoking it and choosing which talisman you desire, the paper will be converted, after some delay into a talisman.<br><br>"
