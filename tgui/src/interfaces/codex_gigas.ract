@@ -1,0 +1,8 @@
+<ui-display title='Codex Gigas'>
+  <ui-section label='Var'>
+    <span>{{data.var}}</span>
+  </ui-section>
+  <ui-section label='Animated Var'>
+    <span>{{adata.var}}</span>
+  </ui-section>
+</ui-display>

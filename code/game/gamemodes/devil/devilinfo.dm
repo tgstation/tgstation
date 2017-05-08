@@ -125,25 +125,14 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	devil_spells = typecacheof(devil_spells)
 
 
-/proc/randomDevilInfo(name = randomDevilName())
-	var/datum/antagonist/devil/devil = new
-	devil.truename = name
-	devil.bane = randomdevilbane()
-	devil.obligation = randomdevilobligation()
-	devil.ban = randomdevilban()
-	devil.banish = randomdevilbanish()
-	return devil
-
-/proc/devilInfo(name, saveDetails = 0)
+/proc/devilInfo(name, makeReal = 0)
 	if(GLOB.allDevils[lowertext(name)])
 		return GLOB.allDevils[lowertext(name)]
 	else
-		var/datum/antagonist/devil/devil = randomDevilInfo(name)
+		var/datum/antagonist/devil/devil = /datum/fakeDevil
+		devil.truename = name
 		GLOB.allDevils[lowertext(name)] = devil
-		devil.exists = saveDetails
 		return devil
-
-
 
 /proc/randomDevilName()
 	var/name = ""
@@ -517,3 +506,18 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		var/obj/effect/proc_holder/spell/S = X
 		if(is_type_in_typecache(S, devil_spells))
 			owner.RemoveSpell(S)
+
+//A simple super light weight datum for the codex gigas.
+/datum/fakeDevil
+	var/truename
+	var/bane
+	var/obligation
+	var/ban
+	var/banish
+
+/datum/fakeDevil/New()
+	truename = randomDevilName()
+	bane = randomdevilbane()
+	obligation = randomdevilobligation()
+	ban = randomdevilban()
+	banish = randomdevilbanish()
