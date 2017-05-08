@@ -80,7 +80,7 @@
 "bB" = (/turf/open/floor/plasteel/brown{tag = "icon-brown (WEST)"; icon_state = "brown"; dir = 8},/area/shuttle/escape)
 "bC" = (/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/shuttle/escape)
 "bD" = (/obj/effect/turf_decal/delivery,/obj/structure/closet/crate,/turf/open/floor/plasteel/brown{tag = "icon-brown (EAST)"; icon_state = "brown"; dir = 4},/area/shuttle/escape)
-"bE" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plating,/area/shuttle/escape)
+"bE" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dwidth = 15; height = 20; name = "Cere emergency shuttle"; port_angle = 90; preferred_direction = 2; width = 42},/turf/open/floor/plating,/area/shuttle/escape)
 "bF" = (/obj/structure/closet/crate/bin,/turf/open/floor/plasteel/neutral,/area/shuttle/escape)
 "bG" = (/obj/structure/table,/obj/item/weapon/storage/box/cups,/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 0; pixel_y = 27},/turf/open/floor/plasteel/neutral,/area/shuttle/escape)
 "bH" = (/obj/structure/reagent_dispensers/water_cooler,/turf/open/floor/plasteel/neutral,/area/shuttle/escape)
@@ -100,7 +100,7 @@
 "bV" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/machinery/light{dir = 4},/turf/open/floor/plasteel,/area/shuttle/escape)
 "bW" = (/obj/structure/chair{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/open/floor/plasteel/neutral,/area/shuttle/escape)
 "bX" = (/obj/structure/chair{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/open/floor/plasteel/neutral,/area/shuttle/escape)
-"bY" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dwidth = 21; height = 20; name = "Cere emergency shuttle"; port_angle = 90; preferred_direction = 2; width = 42},/obj/docking_port/stationary{dir = 4; dwidth = 21; height = 20; id = "emergency_home"; name = "CereStation emergency evac bay"; turf_type = /turf/open/space; width = 42},/turf/open/floor/plating,/area/shuttle/escape)
+"bY" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plating,/area/shuttle/escape)
 "bZ" = (/obj/structure/extinguisher_cabinet{pixel_x = -28},/turf/open/floor/plasteel,/area/shuttle/escape)
 "ca" = (/obj/item/weapon/twohanded/required/kirbyplants{icon_state = "plant-21"; layer = 4.1},/turf/open/floor/plasteel,/area/shuttle/escape)
 "cb" = (/obj/structure/sign/bluecross_2{pixel_x = 32; pixel_y = -32},/turf/open/floor/plasteel,/area/shuttle/escape)
@@ -205,7 +205,7 @@ aaacbcbabWbXbTbWbXaZbabWbXbTbWbXaZbcacaa
 abadbQbabWbXbTbWbXaZbabWbXbTbWbXaZbcacaa
 bYbcbcbabWbXbTbWbXaZbabWbXbTbWbXaZbcacaa
 abbZbcbabWbXbTbWbXaZbabWbXbTbWbXaZbcacaa
-bEbcbcbabWbXbTbWbXaZbabWbXbTbWbXaZbcacaa
+bYbcbcbabWbXbTbWbXaZbabWbXbTbWbXaZbcacaa
 abadbQbabWbXbTbWbXaZbabWbXbTbWbXaZbcacaa
 aaabcabcbRbRbRbRbRbccbbRccbRbRbRbccdabaa
 aaabcabcbTbTbTbTbTbcbcadabceacabacababaa

@@ -66161,17 +66161,22 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Box emergency shuttle";
-	timid = 0
+	dheight = 0;
+	dwidth = 15;
+	height = 20;
+	name = "Cere emergency shuttle";
+	port_angle = 90;
+	preferred_direction = 2;
+	width = 42
 	},
 /obj/docking_port/stationary{
 	dir = 4;
-	dwidth = 12;
-	height = 18;
+	dwidth = 15;
+	height = 20;
 	id = "emergency_home";
-	name = "BoxStation emergency evac bay";
+	name = "CereStation emergency evac bay";
 	turf_type = /turf/open/space;
-	width = 32
+	width = 42
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -104518,127 +104523,112 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dIE" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
-	dheight = 0;
-	dwidth = 21;
-	height = 20;
-	name = "Cere emergency shuttle";
-	port_angle = 90;
-	preferred_direction = 2;
-	width = 42
-	},
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 21;
-	height = 20;
-	id = "emergency_home";
-	name = "CereStation emergency evac bay";
-	turf_type = /turf/open/space;
-	width = 42
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dIF" = (
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (EAST)";
 	icon_state = "neutral";
 	dir = 4
 	},
 /area/shuttle/escape)
-"dIG" = (
+"dIF" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dIG" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dIH" = (
 /obj/structure/chair{
-	dir = 4
+	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dII" = (
 /obj/structure/chair{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dIJ" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral,
-/area/shuttle/escape)
-"dIK" = (
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (EAST)";
 	icon_state = "neutral";
 	dir = 4
 	},
 /area/shuttle/escape)
-"dIL" = (
+"dIK" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dIL" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dIM" = (
 /obj/structure/chair{
-	dir = 4
+	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dIN" = (
 /obj/structure/chair{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dIO" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral,
-/area/shuttle/escape)
-"dIP" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
-"dIQ" = (
+"dIP" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dIQ" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
@@ -104742,22 +104732,13 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJc" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral,
-/area/shuttle/escape)
-"dJd" = (
 /obj/structure/sign/bluecross_2{
 	pixel_x = 32;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
-"dJe" = (
+"dJd" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (NORTH)";
@@ -104765,7 +104746,7 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"dJf" = (
+"dJe" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -104775,13 +104756,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
-"dJg" = (
+"dJf" = (
 /obj/machinery/door/airlock/glass_medical{
 	name = "Emergency Shuttle Medbay"
 	},
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dJh" = (
+"dJg" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
@@ -104791,6 +104772,15 @@
 	icon_state = "neutralcorner";
 	dir = 8
 	},
+/area/shuttle/escape)
+"dJh" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJi" = (
 /obj/structure/chair{
@@ -104802,21 +104792,12 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJj" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral,
-/area/shuttle/escape)
-"dJk" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
-"dJl" = (
+"dJk" = (
 /mob/living/simple_animal/bot/medbot{
 	name = "Speedy* Recovery"
 	},
@@ -104826,14 +104807,14 @@
 	dir = 9
 	},
 /area/shuttle/escape)
-"dJm" = (
+"dJl" = (
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (NORTH)";
 	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
-"dJn" = (
+"dJm" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/whiteblue/side{
@@ -104842,7 +104823,7 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"dJo" = (
+"dJn" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (NORTH)";
@@ -104850,7 +104831,7 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"dJp" = (
+"dJo" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (NORTH)";
@@ -104858,7 +104839,7 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"dJq" = (
+"dJp" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/weapon/wrench,
@@ -104868,8 +104849,17 @@
 	dir = 5
 	},
 /area/shuttle/escape)
-"dJr" = (
+"dJq" = (
 /obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dJr" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJs" = (
@@ -104882,31 +104872,22 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJt" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral,
-/area/shuttle/escape)
-"dJu" = (
 /obj/machinery/door/airlock/glass_medical{
 	name = "Emergency Shuttle Medbay"
 	},
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dJv" = (
+"dJu" = (
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (WEST)";
 	icon_state = "whiteblue";
 	dir = 8
 	},
 /area/shuttle/escape)
-"dJw" = (
+"dJv" = (
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
-"dJx" = (
+"dJw" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	tag = "icon-intact (NORTHEAST)";
 	icon_state = "intact";
@@ -104914,11 +104895,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
-"dJy" = (
+"dJx" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
-"dJz" = (
+"dJy" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	tag = "icon-intact (NORTHWEST)";
 	icon_state = "intact";
@@ -104926,14 +104907,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
-"dJA" = (
+"dJz" = (
 /turf/open/floor/plasteel/whiteblue/corner{
 	tag = "icon-whitebluecorner (EAST)";
 	icon_state = "whitebluecorner";
 	dir = 4
 	},
 /area/shuttle/escape)
-"dJB" = (
+"dJA" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8
@@ -104947,8 +104928,17 @@
 	dir = 5
 	},
 /area/shuttle/escape)
-"dJC" = (
+"dJB" = (
 /obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dJC" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJD" = (
@@ -104961,41 +104951,32 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJE" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral,
-/area/shuttle/escape)
-"dJF" = (
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (SOUTHWEST)";
 	icon_state = "whiteblue";
 	dir = 10
 	},
 /area/shuttle/escape)
+"dJF" = (
+/turf/open/floor/plasteel/whiteblue/side,
+/area/shuttle/escape)
 "dJG" = (
 /turf/open/floor/plasteel/whiteblue/side,
 /area/shuttle/escape)
 "dJH" = (
-/turf/open/floor/plasteel/whiteblue/side,
-/area/shuttle/escape)
-"dJI" = (
 /turf/open/floor/plasteel/whiteblue/corner{
 	tag = "icon-whitebluecorner (WEST)";
 	icon_state = "whitebluecorner";
 	dir = 8
 	},
 /area/shuttle/escape)
+"dJI" = (
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
 "dJJ" = (
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "dJK" = (
-/turf/open/floor/plasteel/white,
-/area/shuttle/escape)
-"dJL" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = 2;
@@ -105007,8 +104988,17 @@
 	dir = 4
 	},
 /area/shuttle/escape)
-"dJM" = (
+"dJL" = (
 /obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dJM" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJN" = (
@@ -105021,25 +105011,16 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJO" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral,
-/area/shuttle/escape)
-"dJP" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dJQ" = (
+"dJP" = (
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dJR" = (
+"dJQ" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	pixel_x = 0
@@ -105051,20 +105032,20 @@
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dJS" = (
+"dJR" = (
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (WEST)";
 	icon_state = "whiteblue";
 	dir = 8
 	},
 /area/shuttle/escape)
+"dJS" = (
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
 "dJT" = (
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "dJU" = (
-/turf/open/floor/plasteel/white,
-/area/shuttle/escape)
-"dJV" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8
@@ -105075,8 +105056,17 @@
 	dir = 4
 	},
 /area/shuttle/escape)
-"dJW" = (
+"dJV" = (
 /obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dJW" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJX" = (
@@ -105089,15 +105079,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dJY" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral,
-/area/shuttle/escape)
-"dJZ" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/weapon/reagent_containers/blood/empty,
 /obj/item/weapon/reagent_containers/blood/empty,
@@ -105121,10 +105102,10 @@
 /obj/item/weapon/reagent_containers/blood/random,
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dKa" = (
+"dJZ" = (
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dKb" = (
+"dKa" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -105142,20 +105123,20 @@
 /obj/item/weapon/retractor,
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dKc" = (
+"dKb" = (
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (WEST)";
 	icon_state = "whiteblue";
 	dir = 8
 	},
 /area/shuttle/escape)
+"dKc" = (
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
 "dKd" = (
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "dKe" = (
-/turf/open/floor/plasteel/white,
-/area/shuttle/escape)
-"dKf" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/crowbar,
@@ -105165,8 +105146,17 @@
 	dir = 4
 	},
 /area/shuttle/escape)
-"dKg" = (
+"dKf" = (
 /obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"dKg" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dKh" = (
@@ -105179,23 +105169,14 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "dKi" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral,
-/area/shuttle/escape)
-"dKj" = (
 /obj/machinery/computer/operating,
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dKk" = (
+"dKj" = (
 /obj/structure/table/optable,
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dKl" = (
+"dKk" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -105208,7 +105189,7 @@
 /obj/item/weapon/razor,
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
-"dKm" = (
+"dKl" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/o2,
 /obj/item/weapon/storage/firstaid/toxin,
@@ -105218,14 +105199,14 @@
 	dir = 10
 	},
 /area/shuttle/escape)
-"dKn" = (
+"dKm" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side,
 /area/shuttle/escape)
-"dKo" = (
+"dKn" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 0;
@@ -105233,7 +105214,7 @@
 	},
 /turf/open/floor/plasteel/whiteblue/side,
 /area/shuttle/escape)
-"dKp" = (
+"dKo" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8
@@ -105244,11 +105225,11 @@
 	dir = 6
 	},
 /area/shuttle/escape)
-"dKq" = (
+"dKp" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
-"dKr" = (
+"dKq" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (NORTH)";
@@ -105256,7 +105237,7 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"dKs" = (
+"dKr" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
 	pixel_y = -30
@@ -105267,23 +105248,26 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"dKt" = (
+"dKs" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
-"dKu" = (
+"dKt" = (
 /obj/machinery/door/airlock/glass_engineering{
 	name = "Engine Room";
 	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/plasteel/yellow,
 /area/shuttle/escape)
-"dKv" = (
+"dKu" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
 	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"dKv" = (
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "dKw" = (
@@ -105299,15 +105283,12 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "dKA" = (
-/turf/open/floor/plasteel/freezer,
-/area/shuttle/escape)
-"dKB" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
-"dKC" = (
+"dKB" = (
 /obj/structure/toilet{
 	icon_state = "toilet00";
 	dir = 8
@@ -105317,12 +105298,19 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
-"dKD" = (
+"dKC" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (NORTHWEST)";
 	icon_state = "yellow";
 	dir = 9
+	},
+/area/shuttle/escape)
+"dKD" = (
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (NORTH)";
+	icon_state = "yellow";
+	dir = 1
 	},
 /area/shuttle/escape)
 "dKE" = (
@@ -105333,6 +105321,10 @@
 	},
 /area/shuttle/escape)
 "dKF" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/computer/monitor,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
@@ -105340,10 +105332,6 @@
 	},
 /area/shuttle/escape)
 "dKG" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/computer/monitor,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
@@ -105359,19 +105347,12 @@
 /area/shuttle/escape)
 "dKI" = (
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTH)";
-	icon_state = "yellow";
-	dir = 1
-	},
-/area/shuttle/escape)
-"dKJ" = (
-/turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (NORTHEAST)";
 	icon_state = "yellow";
 	dir = 5
 	},
 /area/shuttle/escape)
-"dKK" = (
+"dKJ" = (
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
@@ -105381,6 +105362,9 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"dKK" = (
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "dKL" = (
@@ -105390,15 +105374,12 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "dKN" = (
-/turf/open/floor/plasteel/freezer,
-/area/shuttle/escape)
-"dKO" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
-"dKP" = (
+"dKO" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (SOUTHWEST)";
@@ -105406,21 +105387,21 @@
 	dir = 10
 	},
 /area/shuttle/escape)
-"dKQ" = (
+"dKP" = (
 /turf/open/floor/plasteel/yellow/corner{
 	tag = "icon-yellowcorner (WEST)";
 	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/shuttle/escape)
-"dKR" = (
+"dKQ" = (
 /turf/open/floor/plasteel/yellow/corner{
 	tag = "icon-yellowcorner (EAST)";
 	icon_state = "yellowcorner";
 	dir = 4
 	},
 /area/shuttle/escape)
-"dKS" = (
+"dKR" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/metalfoam,
 /turf/open/floor/plasteel/yellow/side{
@@ -105429,7 +105410,7 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"dKT" = (
+"dKS" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/yellow/side{
@@ -105438,7 +105419,7 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"dKU" = (
+"dKT" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/yellow/side{
@@ -105447,7 +105428,7 @@
 	dir = 5
 	},
 /area/shuttle/escape)
-"dKV" = (
+"dKU" = (
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
@@ -105456,6 +105437,12 @@
 	},
 /obj/structure/mirror{
 	pixel_x = -28
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"dKV" = (
+/obj/structure/urinal{
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
@@ -105472,28 +105459,22 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "dKY" = (
-/obj/structure/urinal{
-	pixel_y = -32
-	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "dKZ" = (
-/turf/open/floor/plasteel/freezer,
-/area/shuttle/escape)
-"dLa" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
-"dLb" = (
+"dLa" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
-"dLc" = (
+"dLb" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (SOUTHWEST)";
@@ -105501,14 +105482,14 @@
 	dir = 10
 	},
 /area/shuttle/escape)
-"dLd" = (
+"dLc" = (
 /turf/open/floor/plasteel/yellow/corner{
 	tag = "icon-yellowcorner (WEST)";
 	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/shuttle/escape)
-"dLe" = (
+"dLd" = (
 /obj/structure/sign/electricshock{
 	pixel_x = 32
 	},
@@ -105518,7 +105499,7 @@
 	dir = 4
 	},
 /area/shuttle/escape)
-"dLf" = (
+"dLe" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/yellow/side{
@@ -105527,20 +105508,20 @@
 	dir = 10
 	},
 /area/shuttle/escape)
-"dLg" = (
+"dLf" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/weapon/storage/toolbox/electrical,
 /turf/open/floor/plasteel/yellow/side,
 /area/shuttle/escape)
-"dLh" = (
+"dLg" = (
 /obj/structure/table,
 /obj/structure/sign/enginesafety{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/shuttle/escape)
-"dLi" = (
+"dLh" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 0;
@@ -105548,19 +105529,19 @@
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/shuttle/escape)
+"dLi" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plasteel/yellow/side,
+/area/shuttle/escape)
 "dLj" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/yellow/side,
 /area/shuttle/escape)
 "dLk" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/yellow/side,
-/area/shuttle/escape)
-"dLl" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/yellow/side,
 /area/shuttle/escape)
-"dLm" = (
+"dLl" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
 	pixel_y = -30
@@ -105571,17 +105552,17 @@
 	dir = 6
 	},
 /area/shuttle/escape)
-"dLn" = (
+"dLm" = (
 /obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dLn" = (
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dLo" = (
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dLp" = (
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dLq" = (
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (NORTH)";
 	icon_state = "bulb1";
@@ -105589,31 +105570,31 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"dLr" = (
+"dLq" = (
 /obj/machinery/power/terminal{
 	tag = "icon-term (EAST)";
 	icon_state = "term";
 	dir = 4
 	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dLr" = (
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dLs" = (
-/obj/machinery/power/smes/engineering,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dLt" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"dLu" = (
+"dLt" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"dLv" = (
+"dLu" = (
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"dLw" = (
+"dLv" = (
 /obj/machinery/power/terminal{
 	tag = "icon-term (EAST)";
 	icon_state = "term";
@@ -105621,11 +105602,11 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"dLx" = (
+"dLw" = (
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"dLy" = (
+"dLx" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space/basic,
 /area/space)
@@ -161072,13 +161053,13 @@ chm
 chm
 ckh
 chm
+cly
+chm
+cKF
+cKF
+cKF
+chm
 cpu
-chm
-cKF
-cKF
-cKF
-chm
-dIE
 chm
 cpu
 chm
@@ -161336,21 +161317,21 @@ chn
 chn
 ckK
 clz
-dIP
+dIO
 clz
 ckK
 chm
 chm
 ckK
-dJr
-dJC
-dJM
-dJW
-dKg
-dKq
+dJq
+dJB
+dJL
+dJV
+dKf
+dKp
 chm
-dKD
-dKP
+dKC
+dKO
 ckK
 chm
 chm
@@ -161598,7 +161579,7 @@ clz
 cra
 csY
 csY
-dJh
+dJg
 cmb
 cmb
 cmb
@@ -161606,9 +161587,9 @@ cmb
 cmb
 cmb
 chn
-dKE
-dKQ
-dLc
+dKD
+dKP
+dLb
 ckK
 chm
 chm
@@ -161849,7 +161830,7 @@ clz
 dHZ
 dIj
 dIu
-dIF
+dIE
 cqm
 cqm
 cqm
@@ -161863,10 +161844,10 @@ cqm
 cqm
 clz
 chn
-dKF
+dKE
 clz
-dLd
-dLf
+dLc
+dLe
 chm
 ctV
 cuO
@@ -162106,8 +162087,8 @@ dHV
 dIa
 dIk
 dIv
-dIG
-dIQ
+dIF
+dIP
 cqn
 cqn
 cma
@@ -162118,12 +162099,12 @@ cqn
 cqn
 cqn
 cqn
-dKr
+dKq
 chm
-dKG
+dKF
 clz
 clz
-dLg
+dLf
 chm
 ctV
 cuO
@@ -162363,24 +162344,24 @@ dHW
 dIb
 dIl
 dIw
-dIH
-dIR
-dIV
-dIZ
+dIG
+dIQ
+dIU
+dIY
 cma
 clZ
-dJi
-dJs
-dJD
-dJN
-dJX
-dKh
+dJh
+dJr
+dJC
+dJM
+dJW
+dKg
 cma
 chn
-dKH
+dKG
 clz
 clz
-dLh
+dLg
 chm
 ctV
 cuO
@@ -162633,11 +162614,11 @@ clZ
 clZ
 clZ
 cma
-dKu
-dKI
+dKt
+dKH
 clz
 clz
-dLi
+dLh
 chm
 ctV
 cuO
@@ -162877,7 +162858,7 @@ clZ
 dIc
 dIm
 dIx
-dII
+dIH
 cqn
 cqn
 cqn
@@ -162891,10 +162872,10 @@ cqn
 cqn
 cma
 chn
-dKJ
-dKR
+dKI
+dKQ
 clz
-dLj
+dLi
 chm
 ctV
 cuO
@@ -163134,24 +163115,24 @@ clZ
 dId
 dIn
 dIy
-dIJ
-dIS
-dIW
-dJa
+dII
+dIR
+dIV
+dIZ
 cma
 clZ
-dJj
-dJt
-dJE
-dJO
-dJY
-dKi
-dKs
+dJi
+dJs
+dJD
+dJN
+dJX
+dKh
+dKr
 ckK
 ckK
-dKS
+dKR
 clz
-dLk
+dLj
 chm
 ctV
 cuO
@@ -163406,9 +163387,9 @@ cmb
 clz
 csY
 chm
-dKT
+dKS
 clz
-dLl
+dLk
 chm
 ckK
 ckK
@@ -163648,24 +163629,24 @@ clz
 dIe
 dIo
 dIz
-dIK
+dIJ
 cqm
 cqm
 cqm
-dJd
+dJc
 clz
-dJk
-clz
-clz
+dJj
 clz
 clz
 clz
-dKt
+clz
+clz
+dKs
 clz
 chm
-dKU
-dLe
-dLm
+dKT
+dLd
+dLl
 chm
 ckK
 ckK
@@ -163905,24 +163886,24 @@ clZ
 dIf
 dIp
 dIA
-dIL
+dIK
 cqn
 cqn
 cqn
 cma
 ckK
 chm
-dJu
+dJt
 chm
 chm
 chm
 chm
 chm
-dKv
+dKu
 chm
 chm
 chm
-dLn
+dLm
 ckK
 ctV
 cuO
@@ -164162,25 +164143,25 @@ clZ
 dIg
 dIq
 dIB
-dIM
-dIT
-dIX
-dJb
-dJe
+dIL
+dIS
+dIW
+dJa
+dJd
 chm
-dJl
-dJv
-dJF
-dJP
-dJZ
-dKj
+dJk
+dJu
+dJE
+dJO
+dJY
+dKi
 chm
-dKw
-dKK
-dKV
+dKv
+dKJ
+dKU
 chm
-dLo
-dLt
+dLn
+dLs
 ctV
 cuO
 aaa
@@ -164424,20 +164405,20 @@ clZ
 clZ
 clZ
 cma
-dJg
-dJm
-dJw
-dJG
-dJQ
-dKa
-dKk
+dJf
+dJl
+dJv
+dJF
+dJP
+dJZ
+dKj
 chm
-dKx
-dKL
-dKW
+dKw
+dKK
+dKV
 chm
-dLp
-dLu
+dLo
+dLt
 ctV
 cuO
 aaa
@@ -164676,25 +164657,25 @@ clZ
 dIh
 dIr
 dIC
-dIN
+dIM
 cqn
 cqn
 cqn
 cma
 chn
-dJn
-dJx
-dJH
-dJR
-dKb
-dKl
+dJm
+dJw
+dJG
+dJQ
+dKa
+dKk
 chm
-dKy
-dKM
-dKX
+dKx
+dKL
+dKW
 chm
-dLq
-dLv
+dLp
+dLu
 ctV
 cuO
 cKF
@@ -164933,25 +164914,25 @@ clZ
 dIi
 dIs
 dID
-dIO
-dIU
-dIY
-dJc
+dIN
+dIT
+dIX
+dJb
 cma
 chm
-dJo
-dJy
-dJI
-dJS
-dKc
-dKm
+dJn
+dJx
+dJH
+dJR
+dKb
+dKl
 chm
-dKz
-dKN
-dKY
+dKy
+dKM
+dKX
 chm
-dLr
-dLw
+dLq
+dLv
 ctV
 cuO
 cKF
@@ -165196,19 +165177,19 @@ cmb
 cmb
 clz
 chn
-dJp
-dJz
-dJJ
-dJT
-dKd
-dKn
+dJo
+dJy
+dJI
+dJS
+dKc
+dKm
 chm
-dKA
-dKO
-dKZ
+dKz
+dKN
+dKY
 chm
-dLs
-dLx
+dLr
+dLw
 ctV
 cuO
 cKF
@@ -165451,18 +165432,18 @@ clz
 clz
 clz
 clz
-dJf
+dJe
 chm
-dJq
-dJA
-dJK
-dJU
-dKe
-dKo
+dJp
+dJz
+dJJ
+dJT
+dKd
+dKn
 chm
-dKB
+dKA
 chm
-dLa
+dKZ
 chm
 chm
 chm
@@ -165711,15 +165692,15 @@ chn
 chm
 chm
 ckK
-dJB
-dJL
-dJV
-dKf
-dKp
+dJA
+dJK
+dJU
+dKe
+dKo
 chm
-dKC
+dKB
 chm
-dLb
+dLa
 chm
 chm
 chm
@@ -167264,7 +167245,7 @@ cKF
 cKF
 cKF
 cKF
-dLy
+dLx
 cKF
 cKF
 cKF
