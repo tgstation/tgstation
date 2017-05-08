@@ -1,8 +1,10 @@
 /datum/antagonist/cult
-	var/datum/action/innate/cultcomm/communion = new
+	var/datum/action/innate/cult/comm/communion = new
+	var/datum/action/innate/cult/mastervote/vote = new
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
+	QDEL_NULL(vote)
 	return ..()
 
 /datum/antagonist/cult/proc/add_objectives()
@@ -79,7 +81,7 @@
 	current.grant_language(/datum/language/narsie)
 	current.verbs += /mob/living/proc/cult_help
 	if(!GLOB.cult_mastered)
-		current.verbs += /mob/living/proc/cult_master
+		vote.Grant(current)
 	communion.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 
@@ -91,10 +93,8 @@
 	current.faction -= "cult"
 	current.remove_language(/datum/language/narsie)
 	current.verbs -= /mob/living/proc/cult_help
+	vote.Remove(current)
 	communion.Remove(current)
-	owner.current.verbs -= /mob/living/proc/cult_master
-	for(var/datum/action/innate/cultmast/H in owner.current.actions)
-		qdel(H)
 	current.clear_alert("bloodsense")
 
 /datum/antagonist/cult/on_removal()
@@ -110,8 +110,8 @@
 	. = ..()
 
 /datum/antagonist/cult/master
-	var/datum/action/innate/cultmast/finalreck/reckoning = new
-	var/datum/action/innate/cultmast/cultmark/bloodmark = new
+	var/datum/action/innate/cult/master/finalreck/reckoning = new
+	var/datum/action/innate/cult/master/cultmark/bloodmark = new
 
 /datum/antagonist/cult/master/Destroy()
 	QDEL_NULL(reckoning)

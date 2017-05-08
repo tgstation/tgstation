@@ -424,7 +424,7 @@
 	switch(ignore_category ? askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 		if(1)
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
-			if((world.time-time_passed)>poll_time)
+			if(time_passed + poll_time <= world.time)
 				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
 				M << 'sound/machines/buzz-sigh.ogg'
 				candidates -= M
@@ -500,53 +500,6 @@
 		else
 			++i
 	return L
-
-/proc/pollCultists(var/mob/living/Nominee) // Cult Master Poll
-	if(world.time < CULT_POLL_WAIT)
-		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [round((CULT_POLL_WAIT-world.time)/10)] seconds.")
-		return
-	for(var/datum/mind/B in SSticker.mode.cult)
-		if(B.current)
-			B.current.verbs -= /mob/living/proc/cult_master
-			if(!B.current.incapacitated())
-				B.current << 'sound/hallucinations/im_here1.ogg'
-				to_chat(B.current, "<span class='cultlarge'>Acolyte [Nominee] has asserted that they are worthy of leading the cult. A vote will be called shortly.</span>")
-	sleep(250)
-	var/list/asked_cultists = list()
-	for(var/datum/mind/B in SSticker.mode.cult)
-		if(B.current && B.current != Nominee && !B.current.incapacitated())
-			B.current << 'sound/magic/exit_blood.ogg'
-			asked_cultists += B.current
-	var/list/yes_voters = pollCandidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 1200, group = asked_cultists)
-	sleep(300)
-	if(QDELETED(Nominee) || Nominee.incapacitated())
-		for(var/datum/mind/B in SSticker.mode.cult)
-			if(B.current)
-				B.current.verbs += /mob/living/proc/cult_master
-				if(!B.current.incapacitated())
-					to_chat(B.current,"<span class='cultlarge'>[Nominee] has died in the process of attempting to win the cult's support!")
-		return FALSE
-	if(!Nominee.mind)
-		for(var/datum/mind/B in SSticker.mode.cult)
-			if(B.current)
-				B.current.verbs += /mob/living/proc/cult_master
-				if(!B.current.incapacitated())
-					to_chat(B.current,"<span class='cultlarge'>[Nominee] has gone insane and catatonic in the process of attempting to win the cult's support!")
-		return FALSE
-	if(LAZYLEN(yes_voters) <= LAZYLEN(asked_cultists) * 0.5)
-		for(var/datum/mind/B in SSticker.mode.cult)
-			if(B.current)
-				B.current.verbs += /mob/living/proc/cult_master
-				if(!B.current.incapacitated())
-					to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.")
-		return FALSE
-	SSticker.mode.remove_cultist(Nominee.mind, FALSE)
-	Nominee.mind.add_antag_datum(ANTAG_DATUM_CULT_MASTER)
-	GLOB.cult_mastered = TRUE
-	for(var/datum/mind/B in SSticker.mode.cult)
-		if(!B.current.incapacitated())
-			to_chat(B.current,"<span class='cultlarge'>[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!")
-	return TRUE
 
 /proc/poll_helper(var/mob/living/M)
 
