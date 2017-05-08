@@ -8540,6 +8540,10 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/structure/closet/athletic_mixed,
+/obj/item/toy/poolnoodle/blue,
+/obj/item/toy/poolnoodle/red,
+/obj/item/toy/poolnoodle/yellow,
 /turf/open/floor/plasteel,
 /area/crew_quarters/pool)
 "asu" = (
@@ -11861,6 +11865,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -25
 	},
+/obj/structure/closet/boxinggloves,
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/sleep)
 "aAe" = (
@@ -11882,6 +11887,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
+/obj/structure/closet/masks,
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/sleep)
 "aAh" = (
@@ -12813,7 +12819,6 @@
 /area/crew_quarters/sleep)
 "aCe" = (
 /obj/effect/landmark/xeno_spawn,
-/obj/item/weapon/bikehorn/rubberducky,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -64974,6 +64979,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/structure/closet/lasertag/red,
 /turf/open/floor/plasteel,
 /area/crew_quarters/pool)
 "cMR" = (
@@ -65029,6 +65035,17 @@
 /turf/open/floor/plasteel/yellowsiding/corner{
 	dir = 1
 	},
+/area/crew_quarters/pool)
+"cMW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/closet/lasertag/blue,
+/turf/open/floor/plasteel,
+/area/crew_quarters/pool)
+"cMX" = (
+/obj/item/weapon/bikehorn/rubberducky,
+/turf/open/pool,
 /area/crew_quarters/pool)
 
 (1,1,1) = {"
@@ -99829,7 +99846,7 @@ asN
 aur
 aur
 aur
-aur
+cMX
 aur
 aAk
 arj
@@ -100595,7 +100612,7 @@ ahn
 ahn
 ahn
 arj
-asr
+cMW
 asV
 aur
 aur
@@ -101115,7 +101132,7 @@ atZ
 auB
 cMS
 cMT
-azg
+cMS
 azp
 azp
 aCu
