@@ -238,6 +238,11 @@
 			pixel_turf = P
 			update = TRUE
 
+	if (!isturf(source_turf))
+		if (applied)
+			remove_lum()
+		return
+
 	if (light_range && light_power && !applied)
 		update = TRUE
 
