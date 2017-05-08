@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Fixes various mobs speaking languages that they were only supposed
-to understand."
