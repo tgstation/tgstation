@@ -115,9 +115,23 @@
 	build_path = /obj/item/stack/sheet/cloth
 	category = list("initial","Leather and Cloth")
 
+<<<<<<< HEAD
+/datum/design/wallet
+	name = "Wallet"
+	id = "wallet"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 100)
+	build_path = /obj/item/weapon/storage/wallet
+	category = list("initial","Leather and Cloth")
+
+/datum/design/botany_gloves
+	name = "Botanical Gloves"
+	id = "botany_gloves"
+=======
 /datum/design/leather
 	name = "Sheet of Leather"
 	id = "leather"
+>>>>>>> c12e4081acb19312e5b31af8addeb2266f831709
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 150)
 	build_path = /obj/item/stack/sheet/leather
@@ -140,12 +154,24 @@
 	category = list("initial","Leather and Cloth")
 
 /datum/design/janibelt
+	name = "Janitorial Belt"
 	id = "janibelt"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/weapon/storage/belt/janitor
 	category = list("initial","Leather and Cloth")
 
+<<<<<<< HEAD
+/datum/design/bandolier
+	name = "Bandolier Belt"
+	id = "bandolier"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 300)
+	build_path = /obj/item/weapon/storage/belt/bandolier
+	category = list("initial","Leather and Cloth")
+
+=======
+>>>>>>> c12e4081acb19312e5b31af8addeb2266f831709
 /datum/design/s_holster
 	name = "Shoulder Holster"
 	id = "s_holster"
@@ -154,6 +180,33 @@
 	build_path = /obj/item/weapon/storage/belt/holster
 	category = list("initial","Leather and Cloth")
 
+<<<<<<< HEAD
+/datum/design/leather_satchel
+	name = "Leather Satchel"
+	id = "leather_satchel"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 400)
+	build_path = /obj/item/weapon/storage/backpack/satchel
+	category = list("initial","Leather and Cloth")
+
+/datum/design/leather_jacket
+	name = "Leather Jacket"
+	id = "leather_jacket"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 500)
+	build_path = /obj/item/clothing/suit/jacket/leather
+	category = list("initial","Leather and Cloth")
+
+/datum/design/leather_overcoat
+	name = "Leather Overcoat"
+	id = "leather_overcoat"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 1000)
+	build_path = /obj/item/clothing/suit/jacket/leather/overcoat
+	category = list("initial","Leather and Cloth")
+
+=======
+>>>>>>> c12e4081acb19312e5b31af8addeb2266f831709
 /datum/design/rice_hat
 	name = "Rice Hat"
 	id = "rice_hat"

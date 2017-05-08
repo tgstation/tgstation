@@ -30296,7 +30296,7 @@
 	},
 /area/medical/chemistry)
 "bjk" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/chemistry)
 "bjl" = (
@@ -30534,7 +30534,7 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bjH" = (
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
 	},
@@ -40057,9 +40057,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bBf" = (
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
 	dir = 4
 	},
@@ -50530,7 +50529,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bXR" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/open/floor/plasteel/black,
 /area/medical/chemistry)
 "bXS" = (
