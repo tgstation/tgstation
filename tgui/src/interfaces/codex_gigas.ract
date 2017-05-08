@@ -1,20 +1,4 @@
 <ui-display title='Codex Gigas'>
-  <ui-section label='Var'>
-    <span>{{data.var}}</span>
-  </ui-section>
-  <ui-section label='Animated Var'>
-    <span>{{adata.var}}</span>
-  </ui-section>
-</ui-display>
-
-
-GLOBAL_LIST_INIT(devil_pre_title, list("Dark ", "Hellish ", "Fallen ", "Fiery ", "Sinful ", "Blood ", "Fluffy "))
-GLOBAL_LIST_INIT(devil_title, list("Lord ", "Prelate ", "Count ", "Viscount ", "Vizier ", "Elder ", "Adept "))
-GLOBAL_LIST_INIT(devil_syllable, list("hal", "ve", "odr", "neit", "ci", "quon", "mya", "folth", "wren", "geyr", "hil", "niet", "twou", "phi", "coa"))
-GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", ", the Lord of all things", ", Jr."))
-
-
-<ui-display title='Codex Gigas'>
     <ui-section label='Prefix'>
 		<ui-button  state='{{currentSection == PRE_TITLE ? null : "disabled"}}' action='Dark '>Dark</ui-button>
 		<ui-button  state='{{currentSection == PRE_TITLE ? null : "disabled"}}' action='Hellish '>Hellish</ui-button>
@@ -25,7 +9,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		<ui-button  state='{{currentSection == PRE_TITLE ? null : "disabled"}}' action='Fluffy '>Fluffy</ui-button>
     </ui-section>
     <ui-section label='Title'>
-		<ui-button  state='{{currentSection <= SUFFIX ? null : "disabled"}}' action='Lord '>Lord</ui-button>
+		<ui-button  state='{{currentSection <= TITLE ? null : "disabled"}}' action='Lord '>Lord</ui-button>
 		<ui-button  state='{{currentSection <= TITLE ? null : "disabled"}}' action='Prelate '>Prelate</ui-button>
 		<ui-button  state='{{currentSection <= TITLE ? null : "disabled"}}' action='Count '>Count</ui-button>
 		<ui-button  state='{{currentSection <= TITLE ? null : "disabled"}}' action='Viscount '>Viscount</ui-button>
