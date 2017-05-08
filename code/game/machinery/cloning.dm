@@ -273,6 +273,17 @@
 		else if((mob_occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
 			SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
+
+			// If the cloner is upgraded to debugging high levels, sometimes
+			// organs and limbs can be missing.
+			for(var/i in unattached_flesh)
+				if(isorgan(i))
+					var/obj/item/organ/O = i
+					O.Insert(mob_occupant)
+				else if(isbodypart(i))
+					var/obj/item/bodypart/BP = i
+					BP.attach_limb(mob_occupant)
+
 			go_out()
 
 	else if (!mob_occupant || mob_occupant.loc != src)
