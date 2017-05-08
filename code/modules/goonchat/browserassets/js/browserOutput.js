@@ -803,31 +803,25 @@ $(function() {
 	});
 
 	$('#saveLog').click(function(e) {
-		var saved = '';
+		$.ajax({
+			type: 'GET',
+			url: 'browserOutput.css',
+			success: function(styleData) {
+				var win;
 
-		if (window.XMLHttpRequest) {
-			xmlHttp = new XMLHttpRequest();
-		} else {
-			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlHttp.open('GET', 'browserOutput.css', false);
-		xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		xmlHttp.send();
-		saved += '<style>'+xmlHttp.responseText+'</style>';
+				try {
+					win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=600, top=' + (screen.height/2 - 635/2) + ', left=' + (screen.width/2 - 780/2));
+				} catch (e) {
+					return;
+				}
 
-		saved += $messages.html();
-		saved = saved.replace(/&/g, '&amp;');
-		saved = saved.replace(/</g, '&lt;');
-
-		var win;
-		try {
-			win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=200, top='+(screen.height-400)+', left='+(screen.width-840));
-		} catch (e) {
-			return;
-		}
-		if (win && win.document && window.document.body) {
-			win.document.body.innerHTML = saved;
-		}
+				if (win) {
+					win.document.head.innerHTML = '<title>Chat Log</title>';
+					win.document.head.innerHTML += '<style>' + styleData + '</style>';
+					win.document.body.innerHTML = $messages.html();
+				}
+			}
+		});
 	});
 
 	$('#highlightTerm').click(function(e) {
