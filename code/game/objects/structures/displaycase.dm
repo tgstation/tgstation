@@ -11,8 +11,9 @@
 	max_integrity = 200
 	integrity_failure = 50
 	var/obj/item/showpiece = null
-	var/alert = 0
-	var/open = 0
+	var/alert = TRUE
+	var/open = FALSE
+	var/openable = TRUE
 	var/obj/item/weapon/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
 
@@ -113,7 +114,7 @@
 	return
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
-	if(W.GetID() && !broken)
+	if(W.GetID() && !broken && openable)
 		if(allowed(user))
 			to_chat(user,  "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
 			toggle_lock(user)
@@ -132,7 +133,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
-	else if(!alert && istype(W,/obj/item/weapon/crowbar)) //Only applies to the lab cage and player made display cases
+	else if(!alert && istype(W,/obj/item/weapon/crowbar) && openable) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, "<span class='notice'>Remove the displayed object first.</span>")
@@ -259,6 +260,7 @@
 
 	alert = TRUE
 	integrity_failure = 0
+	openable = FALSE
 
 /obj/structure/displaycase/trophy/Initialize()
 	. = ..()
@@ -278,6 +280,8 @@
 
 	if(!user.Adjacent(src)) //no TK museology
 		return
+	if(user.a_intent == INTENT_HARM)
+		return ..()
 
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
 		if(added_roundstart)

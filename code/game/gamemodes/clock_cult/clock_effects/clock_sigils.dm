@@ -57,7 +57,7 @@
 	alpha = 75
 	color = "#FAE48C"
 	light_range = 1.4
-	light_power = 0.4
+	light_power = 1
 	light_color = "#FAE48C"
 	sigil_name = "Sigil of Transgression"
 
@@ -95,10 +95,6 @@
 	var/delete_on_finish = TRUE
 	sigil_name = "Sigil of Submission"
 	var/glow_type
-
-/obj/effect/clockwork/sigil/submission/New()
-	..()
-	update_light()
 
 /obj/effect/clockwork/sigil/submission/proc/post_channel(mob/living/L)
 
@@ -285,7 +281,7 @@
 	if(!power_charge)
 		set_light(0)
 	else
-		set_light(round(alpha*0.02, 1), round(alpha*0.005, 1))
+		set_light(max(alpha*0.02, 1.4), max(alpha*0.01, 0.1))
 
 //Vitality Matrix: Drains health from non-servants to heal or even revive servants.
 /obj/effect/clockwork/sigil/vitality

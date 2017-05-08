@@ -3,6 +3,7 @@
 	name = "Golem"
 	id = "iron golem"
 	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
+	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
@@ -54,8 +55,9 @@
 	name = "Adamantine Golem"
 	id = "adamantine golem"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
+	mutant_organs = list(/obj/item/organ/adamantine_resonator, /obj/item/organ/vocal_cords/adamantine)
 	fixed_mut_color = "4ed"
-	info_text = "As an <span class='danger'>Adamantine Golem</span>, you don't have any special traits."
+	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems."
 	prefix = "Adamantine"
 
 //Explodes on death
@@ -644,3 +646,18 @@
 	if(P.is_hot())
 		visible_message("<span class='danger'>[src] bursts into flames!</span>")
 		fire_act()
+
+/datum/species/golem/plastic
+	name = "Plastic"
+	id = "plastic golem"
+	prefix = "Plastic"
+	fixed_mut_color = "fff"
+	info_text = "As a <span class='danger'>Plastic Golem</span>, you are capable of ventcrawling, and passing through plastic flaps."
+
+/datum/species/golem/plastic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.ventcrawler = VENTCRAWLER_NUDE
+
+/datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.ventcrawler = initial(C.ventcrawler)

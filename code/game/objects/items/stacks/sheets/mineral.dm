@@ -336,11 +336,19 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 /*
  * Adamantine
  */
+GLOBAL_LIST_INIT(adamantine_recipes, list(
+	new /datum/stack_recipe("artificial golem shell", /obj/item/golem_shell/artificial, req_amount=1, res_amount=1),
+	))
+
 /obj/item/stack/sheet/mineral/adamantine
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
 	singular_name = "adamantine sheet"
 	origin_tech = "materials=4"
+
+/obj/item/stack/sheet/mineral/adamantine/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.adamantine_recipes
+	..()
 
 /*
  * Mythril

@@ -108,10 +108,16 @@
 /datum/gang_item/weapon/ammo/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return "&nbsp;&#8627;" + ..() //this is pretty hacky but it looks nice on the popup
 
+/datum/gang_item/weapon/shuriken
+	name = "Shuriken"
+	id = "shuriken"
+	cost = 3
+	item_path = /obj/item/weapon/throwing_star
+
 /datum/gang_item/weapon/switchblade
 	name = "Switchblade"
 	id = "switchblade"
-	cost = 10
+	cost = 5
 	item_path = /obj/item/weapon/switchblade
 
 /datum/gang_item/weapon/pistol
@@ -125,6 +131,18 @@
 	id = "pistol_ammo"
 	cost = 10
 	item_path = /obj/item/ammo_box/magazine/m10mm
+	
+/datum/gang_item/weapon/sniper
+	name = ".50cal Sniper Rifle"
+	id = "sniper"
+	cost = 40
+	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
+
+/datum/gang_item/weapon/ammo/sniper_ammo
+	name = "Standard .50cal Sniper Rounds"
+	id = "sniper_ammo"
+	cost = 15
+	item_path = /obj/item/ammo_box/magazine/sniper_rounds
 
 /datum/gang_item/weapon/uzi
 	name = "Uzi SMG"
@@ -138,30 +156,8 @@
 	id = "uzi_ammo"
 	cost = 40
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
-
-//SLEEPING CARP
-
-/datum/gang_item/weapon/bostaff
-	name = "Bo Staff"
-	id = "bostaff"
-	cost = 10
-	item_path = /obj/item/weapon/twohanded/bostaff
-
-/datum/gang_item/weapon/sleeping_carp_scroll
-	name = "Sleeping Carp Scroll (one-use)"
-	id = "sleeping_carp_scroll"
-	cost = 30
-	item_path = /obj/item/weapon/sleeping_carp_scroll
-	spawn_msg = "<span class='notice'>Anyone who reads the <b>sleeping carp scroll</b> will learn secrets of the sleeping carp martial arts style.</span>"
-
-/datum/gang_item/weapon/wrestlingbelt
-	name = "Wrestling Belt"
-	id = "wrastling_belt"
-	cost = 20
-	item_path = /obj/item/weapon/storage/belt/champion/wrestling
-	spawn_msg = "<span class='notice'>Anyone wearing the <b>wresting belt</b> will know how to be effective with wrestling.</span>"
-
-
+	
+	
 ///////////////////
 //EQUIPMENT
 ///////////////////
@@ -175,6 +171,12 @@
 	id = "spraycan"
 	cost = 5
 	item_path = /obj/item/toy/crayon/spraycan/gang
+	
+/datum/gang_item/equipment/sharpener
+	name = "Sharpener"
+	id = "whetstone"
+	cost = 3
+	item_path = /obj/item/weapon/sharpener
 
 /datum/gang_item/equipment/necklace
 	name = "Gold Necklace"
@@ -182,11 +184,30 @@
 	cost = 1
 	item_path = /obj/item/clothing/neck/necklace/dope
 
+
+/datum/gang_item/equipment/emp
+	name = "EMP Grenade"
+	id = "EMP"
+	cost = 5
+	item_path = /obj/item/weapon/grenade/empgrenade
+
 /datum/gang_item/equipment/c4
 	name = "C4 Explosive"
 	id = "c4"
-	cost = 10
+	cost = 7
 	item_path = /obj/item/weapon/grenade/plastic/c4
+
+/datum/gang_item/equipment/frag
+	name = "Fragmentation Grenade"
+	id = "frag nade"
+	cost = 10
+	item_path = /obj/item/weapon/grenade/syndieminibomb/concussion/frag
+
+/datum/gang_item/equipment/stimpack
+	name = "Black Market Stimulants"
+	id = "stimpack"
+	cost = 15
+	item_path = /obj/item/weapon/reagent_containers/syringe/stimulants
 
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"

@@ -5,6 +5,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/Initialize()
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 
