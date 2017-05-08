@@ -1,8 +1,0 @@
-author: "Moonlighting Mac says"
-delete-after: True
-changes: 
-  - tweak: "After a recent trade fair, employees have took it upon themselves to learn how to craft leather objects out of finished leather sheets, for novices they are pretty good at it! Try it yourself!"
-  - rscadd: "Muzzles to silence people are now craftable out of leather sheets."
-  - rscdel: "You can no longer print off designs from a bio-generator that can now be crafted out of leather sheets."
-  - tweak: "Complete sheets of leather can be printed from the bio-generator for 150 biomass to accommodate for a loss of designs."
-  - experiment: "Specialist objects from the leather & cloth category bio-generator category were not removed as to encourage interdepartmental interaction & balance."
