@@ -21,7 +21,7 @@
 	if(is_blind(user))
 		to_chat(user, "<span class='warning'>As you are trying to read, you suddenly feel very stupid.</span>")
 		return
-	if(ismonkey(user))
+	if(!user.is_literate())
 		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
 		return
 	if(inUse)
@@ -53,7 +53,7 @@
 		var/usedName = devilName
 		if(!prob(correctness))
 			usedName += "x"
-		var/datum/antagonist/devil/devil = devilInfo(usedName, 0)
+		var/datum/antagonist/devil/devil = devilInfo(usedName)
 		display_devil(devil, user, usedName)
 	sleep(10)
 	onclose(user, "book")
@@ -66,10 +66,16 @@
 	ui_interact(reader)
 
 /obj/item/weapon/book/codex_gigas/ui_act(action, params)
+	if(..())
+		return
 	if(!action)
 		return FALSE
 	if(action == "search")
-
+		SStgui.close_uis(src)
+		addtimer(CALLBACK(src, .proc/perform_research, usr, currentName), 0)
+		currentName = ""
+		currentSection = PRE_TITLE
+		return FALSE
 	else
 		currentName += action
 	var/oldSection = currentSection
@@ -82,13 +88,21 @@
 			currentSection = MULTIPLE_SYLLABLE
 		else
 			currentSection = SYLLABLE
-	else
+	else if(GLOB.devil_suffix.Find(action))
 		currentSection = SUFFIX
+	else
+		to_chat(world, "Codex gigas failure [action]")
 	return currentSection != oldSection
 
 /obj/item/weapon/book/codex_gigas/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "codex_gigas", name, 300, 150, master_ui, state)
+		ui = new(user, src, ui_key, "codex_gigas", name, 450, 450, master_ui, state)
 		ui.open()
+
+/obj/item/weapon/book/codex_gigas/ui_data(mob/user)
+	var/list/data = list()
+	data["name"]=currentName
+	data["currentSection"]=currentSection
+	return data

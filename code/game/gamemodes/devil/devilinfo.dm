@@ -123,14 +123,19 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 /datum/antagonist/devil/New()
 	..()
 	devil_spells = typecacheof(devil_spells)
+	truename = randomDevilName()
+	ban = randomdevilban()
+	bane = randomdevilbane()
+	obligation = randomdevilobligation()
+	banish = randomdevilbanish()
+	GLOB.allDevils[lowertext(truename)] = src
 
 
-/proc/devilInfo(name, makeReal = 0)
+/proc/devilInfo(name)
 	if(GLOB.allDevils[lowertext(name)])
 		return GLOB.allDevils[lowertext(name)]
 	else
-		var/datum/antagonist/devil/devil = /datum/fakeDevil
-		devil.truename = name
+		var/datum/fakeDevil/devil = new /datum/fakeDevil(name)
 		GLOB.allDevils[lowertext(name)] = devil
 		return devil
 
@@ -481,7 +486,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 /datum/antagonist/devil/farewell()
 
 /datum/antagonist/devil/on_gain()
-	truename= randomDevilName()
 	owner.store_memory("Your devilic true name is [truename]<br>[GLOB.lawlorify[LAW][ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[GLOB.lawlorify[LAW][bane]]<br>[GLOB.lawlorify[LAW][obligation]]<br>[GLOB.lawlorify[LAW][banish]]<br>")
 	give_base_spells(1)
 	if(issilicon(owner.current))
@@ -515,8 +519,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/ban
 	var/banish
 
-/datum/fakeDevil/New()
-	truename = randomDevilName()
+/datum/fakeDevil/New(name = randomDevilName())
+	truename = name
 	bane = randomdevilbane()
 	obligation = randomdevilobligation()
 	ban = randomdevilban()
