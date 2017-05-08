@@ -265,20 +265,20 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Allows you to sense blood that is manipulated by dark magicks."
 	icon_state = "cult_sense"
 	alerttooltipstyle = "cult"
-	var/image/sacimage
+	var/static/image/narnar
 	var/angle = 0
 	var/mob/living/simple_animal/hostile/construct/Cviewer = null
 
 /obj/screen/alert/bloodsense/Initialize()
-	..()
-	sacimage = GLOB.sac_image
+	. = ..()
+	if(!narnar)
+		narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
 	START_PROCESSING(SSprocessing, src)
 
 /obj/screen/alert/bloodsense/Destroy()
-    sacimage = null
-    Cviewer = null
-    STOP_PROCESSING(SSprocessing, src)
-    return ..()
+	Cviewer = null
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
 
 /obj/screen/alert/bloodsense/process()
 	var/atom/blood_target
@@ -290,36 +290,36 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(Cviewer)
 		if(Cviewer.seeking && Cviewer.master)
 			blood_target = Cviewer.master
-	if(!blood_target && !GLOB.sac_complete)
-		if(icon_state == "runed_sense0")
-			return
-		animate(src, transform = null, time = 1, loop = 0)
-		angle = 0
-		cut_overlays()
-		icon_state = "runed_sense0"
-		desc = "Nar-Sie demands that [GLOB.sac_mind] be sacrificed before the summoning ritual can begin."
-		add_overlay(sacimage)
-		return
-	if(!blood_target && GLOB.sac_complete)
-		if(icon_state == "runed_sense1")
-			return
-		animate(src, transform = null, time = 1, loop = 0)
-		angle = 0
-		cut_overlays()
-		icon_state = "runed_sense1"
-		var/image/narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
-		desc = "The sacrifice is complete, prepare to summon Nar-Sie!"
-		add_overlay(narnar)
-		return
 	if(!blood_target)
+		if(!GLOB.sac_complete)
+			if(icon_state == "runed_sense0")
+				return
+			animate(src, transform = null, time = 1, loop = 0)
+			angle = 0
+			cut_overlays()
+			icon_state = "runed_sense0"
+			desc = "Nar-Sie demands that [GLOB.sac_mind] be sacrificed before the summoning ritual can begin."
+			add_overlay(GLOB.sac_image)
+		else
+			if(SSticker.mode.eldergod)
+				desc = "The sacrifice is complete, prepare to summon Nar-Sie!"
+			else
+				desc = "The summoning is complete, glory to Nar-Sie!"
+			if(icon_state == "runed_sense1")
+				return
+			animate(src, transform = null, time = 1, loop = 0)
+			angle = 0
+			cut_overlays()
+			icon_state = "runed_sense1"
+			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)
 	var/turf/Q = get_turf(mob_viewer)
 	var/area/A = get_area(P)
 	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
 		return
-	desc = "You are currently tracking [blood_target] in [A.name]"
-	var/target_angle = Get_Angle(mob_viewer, blood_target)
+	desc = "You are currently tracking [blood_target] in [A.name]."
+	var/target_angle = Get_Angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
 	switch(target_dist)

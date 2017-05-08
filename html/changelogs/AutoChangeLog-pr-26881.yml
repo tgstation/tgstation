@@ -1,5 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - tweak: "Gang Dominator max time is now 8 minutes down from 15m"
-  - tweak: "Gang Tagging now reduces the timer by 9 seconds per territory, down from 12 seconds."
