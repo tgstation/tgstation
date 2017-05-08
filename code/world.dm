@@ -306,15 +306,15 @@
 		s += "<br>Hosted by <b>[config.hostedby]</b>."
 
 	s += "<br>("
-	s += "<a href=\"http://hippiestation.com\">"
+	s += "<a href=\"[config.forumurl]\">"
 	s += "Forums"
 	s += "</a>"
 	s += ")"
 	s += " ("
-	s += "<a href=\"https://github.com/HippieStation/HippieStation13\">"
+	s += "<a href=\"[config.githuburl]\">"
 	s += "Github"
 	s += "</a>"
-	s += ")"
+	s += ") "
 	if(SSticker)
 		if(GLOB.master_mode)
 			s += GLOB.master_mode
