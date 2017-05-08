@@ -141,7 +141,7 @@
 					to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.")
 		return FALSE
 	GLOB.cult_mastered = TRUE
-	SSticker.mode.remove_cultist(Nominee.mind, FALSE)
+	SSticker.mode.remove_cultist(Nominee.mind, TRUE)
 	Nominee.mind.add_antag_datum(ANTAG_DATUM_CULT_MASTER)
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(B.current)

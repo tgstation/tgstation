@@ -267,11 +267,11 @@
 	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
 	icon_state = "harvester"
 	icon_living = "harvester"
-	maxHealth = 50
-	health = 50
+	maxHealth = 60
+	health = 60
 	sight = SEE_MOBS
-	melee_damage_lower = 20
-	melee_damage_upper = 35
+	melee_damage_lower = 15
+	melee_damage_upper = 20
 	attacktext = "butchers"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
@@ -279,6 +279,11 @@
 	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 	can_repair_constructs = TRUE
+
+/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
+	. = ..()
+	if(istype(AM, /turf/closed/wall/mineral/cult)) //we can go through cult walls
+		forceMove(AM)
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
