@@ -269,11 +269,13 @@
 	icon_living = "harvester"
 	maxHealth = 50
 	health = 50
+	sight = SEE_MOBS
 	melee_damage_lower = 20
 	melee_damage_upper = 35
 	attacktext = "butchers"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion)
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
 	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 	can_repair_constructs = TRUE
