@@ -306,7 +306,10 @@
 			reagents.add_reagent("heparin", 5)
 		return FALSE
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+		if(iscultist(src))
+			makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester/chosen, src, null, 1)
+		else
+			makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
 	else
 		switch(rand(1, 10))
 			if(1)
