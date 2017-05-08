@@ -71,13 +71,10 @@
 		computerid = bancid
 		ip = banip
 
-	var/datum/DBQuery/query_add_ban_get_id = SSdbcore.NewQuery("SELECT id FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
-	if(!query_add_ban_get_id.warn_execute())
+	var/datum/DBQuery/query_add_ban_get_ckey = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
+	if(!query_add_ban_get_ckey.warn_execute())
 		return
-	var/validckey = 0
-	if(query_add_ban_get_id.NextRow())
-		validckey = 1
-	if(!validckey)
+	if(!query_add_ban_get_ckey.NextRow())
 		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
 			message_admins("<font color='red'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
 			return
