@@ -1342,6 +1342,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //This prevents RCEs from badmins
 //kevinz000 if you touch this I will hunt you down
 GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
+GLOBAL_PROTECT(valid_HTTPSGet)
 /proc/HTTPSGet(url)
 	if(findtext(url, "\""))
 		GLOB.valid_HTTPSGet = FALSE

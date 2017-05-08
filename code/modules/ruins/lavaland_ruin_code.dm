@@ -107,6 +107,9 @@
 		if(istype(O, /obj/item/stack/sheet/mineral/adamantine))
 			species = /datum/species/golem/adamantine
 
+		if(istype(O, /obj/item/stack/sheet/plastic))
+			species = /datum/species/golem/plastic
+
 		if(species)
 			if(O.use(10))
 				to_chat(user, "You finish up the golem shell with ten sheets of [O].")

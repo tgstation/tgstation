@@ -27963,7 +27963,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -28813,7 +28812,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -63164,7 +63162,7 @@
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "cfY" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/chemistry)
 "cfZ" = (
@@ -77232,7 +77230,7 @@
 	},
 /area/medical/virology)
 "cDH" = (
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/machinery/airalarm{
 	frequency = 1439;
 	pixel_y = 23
@@ -91081,7 +91079,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
