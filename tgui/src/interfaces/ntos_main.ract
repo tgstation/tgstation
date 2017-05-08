@@ -1,0 +1,14 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+	<i>No program loaded. Please select program from list below.</i>
+	<table>
+		{{#each data.programs}}
+			<tr><td><ui-button action='PC_runprogram' params='{"name": "{{name}}"}'>
+				{{desc}}
+			</ui-button>
+			<td><ui-button state='{{running ? null : "disabled"}}' icon='close' action='PC_killprogram' params='{"name": "{{name}}"}'></ui-button>
+		{{/each}}
+	</table>
+</ui-display>
