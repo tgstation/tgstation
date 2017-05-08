@@ -265,8 +265,8 @@ GLOBAL_LIST(external_rsc_urls)
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
 
-	add_verbs_from_config(tdata)
-	set_client_age_from_db()
+	add_verbs_from_config()
+	set_client_age_from_db(tdata)
 	var/cached_player_age = player_age //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
@@ -294,8 +294,6 @@ GLOBAL_LIST(external_rsc_urls)
 		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 		if (config.irc_first_connection_alert)
 			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
-	else //We failed to get an age for this user, let admins know they need to keep an eye on them
-		message_admins("Failed to get BYOND account age for [key_name_admin(src)]")
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 
@@ -329,6 +327,26 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	var/list/topmenus = GLOB.menulist[/datum/menu]
+	for (var/thing in topmenus)
+		var/datum/menu/topmenu = thing
+		var/topmenuname = "[topmenu]"
+		if (topmenuname == "[topmenu.type]")
+			var/list/tree = splittext(topmenuname, "/")
+			topmenuname = tree[tree.len]
+		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
+		var/list/entries = topmenu.Generate_list(src)
+		for (var/child in entries)
+			winset(src, "[url_encode(child)]", "[entries[child]]")
+			if (!ispath(child, /datum/menu))
+				var/atom/verb/verbpath = child
+				if (copytext(verbpath.name,1,2) != "@")
+					new child(src)
+
+	for (var/thing in prefs.menuoptions)
+		var/datum/menu/menuitem = GLOB.menulist[thing]
+		if (menuitem)
+			menuitem.Load_checked(src)
 
 //////////////
 //DISCONNECT//
@@ -403,7 +421,7 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!query_client_in_db.NextRow())
 		new_player = 1
 		account_join_date = sanitizeSQL(findJoinDate())
-		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] VALUES ('[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
+		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `lastseen`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
 		if(!query_add_player.Execute())
 			return
 		if(!account_join_date)

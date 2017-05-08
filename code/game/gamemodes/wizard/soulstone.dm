@@ -69,6 +69,9 @@
 		user.Paralyse(5)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
+	release_shades(user)
+
+/obj/item/device/soulstone/proc/release_shades(mob/user)
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.status_flags &= ~GODMODE
 		A.canmove = 1
@@ -253,7 +256,7 @@
 			break
 
 	if(!chosen_ghost)	//Failing that, we grab a ghost
-		var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, poll_time = 50)
+		var/list/consenting_candidates = pollGhostCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, poll_time = 50)
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
 	if(!T)

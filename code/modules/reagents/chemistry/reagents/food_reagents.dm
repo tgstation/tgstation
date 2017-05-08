@@ -29,16 +29,11 @@
 
 	var/brute_heal = 1
 	var/burn_heal = 0
-	var/blood_gain = 0.4
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
 	if(prob(50))
 		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
 		. = 1
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-			C.blood_volume += blood_gain
 	..()
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
@@ -82,7 +77,6 @@
 
 	brute_heal = 1
 	burn_heal = 1
-	blood_gain = 0.5
 
 /datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/M)
 	if(M.satiety < 600)
