@@ -166,7 +166,7 @@
 	name = "Cere Station Emergency Shuttle"
 	description = "The large, beefed-up version of the box-standard shuttle. Includes an expanded brig, fully stocked medbay, enhanced cargo storage with mech chargers, \
 		an engine room stocked with various supplies, and a crew capacity of 80+ to top it all off. Live large, live Cere."
-	credit_cost = 6500
+	can_be_bought = FALSE
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
