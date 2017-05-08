@@ -132,6 +132,6 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 		icon = blank
 		user.visible_message("<span class='notice'>[user] cleans the canvas.</span>","<span class='notice'>You clean the canvas.</span>")
 
-
+// Also permabans then from /tg/station
 
 #undef AMT_OF_CANVASES
