@@ -932,11 +932,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	SSticker.mode.add_cultist(new_human.mind, 0)
 	to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>")
 
-	while(user in T)
-		if(user.stat)
+	while((user in T) && new_human)
+		if(user.stat || new_human.stat)
 			break
 		user.apply_damage(0.1, BRUTE)
-		sleep(3)
+		sleep(1)
 
 	qdel(N)
 	if(new_human)
