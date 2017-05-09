@@ -146,20 +146,18 @@
 	if(plantname = "Money Tree")
 		var/cashpotency = potency
 		switch(cashpotency)
-			if(0 to 15)
+			if(0 to 20)
 				product = /obj/item/stack/spacecash
-			if(16 to 30)
+			if(21 to 40)
 				product = /obj/item/stack/spacecash/c10
-			if(31 to 45)
+			if(41 to 60)
 				product = /obj/item/stack/spacecash/c20
-			if(46 to 60)
+			if(61 to 80)
 				product = /obj/item/stack/spacecash/c50
-			if(61 to 75)
+			if(81 to 99)
 				product = /obj/item/stack/spacecash/c100
-			if(76 to 90)
-				product = /obj/item/stack/spacecash/c200
 			else
-				product = /obj/item/stack/spacecash/c500
+				product = /obj/item/stack/spacecash/c200
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
 		result.Add(t_prod) // User gets a consumable
