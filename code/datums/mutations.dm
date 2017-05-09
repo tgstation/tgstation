@@ -286,6 +286,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	owner.update_transform()
 	owner.pass_flags |= PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
+	owner.dna.species.speedmod += 1
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -294,6 +295,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	owner.update_transform()
 	owner.pass_flags &= ~PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
+	owner.dna.species.speedmod -= 1
 
 /datum/mutation/human/clumsy
 
