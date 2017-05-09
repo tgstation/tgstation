@@ -68,7 +68,6 @@
 #error You need version 511 or higher
 #endif
 
-
-#ifndef SERVERTOOLS
-#define SERVERTOOLS 0
-#endif
+//keep these in sync with TGS3
+#define SERVER_SERVICE_PARAM "server_service"
+#define PR_TEST_JSON "..\\..\\prtestjob.json"	

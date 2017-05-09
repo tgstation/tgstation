@@ -6,7 +6,7 @@
 #SQL_ENABLED
 
 ## Server the MySQL database can be found at.
-# Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
+## Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
 ADDRESS localhost
 
 ## MySQL server port (default is 3306).

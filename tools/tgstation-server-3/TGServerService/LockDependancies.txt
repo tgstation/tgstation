@@ -1,0 +1,12 @@
+﻿RepoLock protects the repo for the full duration of short operations
+RepoBusy protects the repo for long operations
+
+lock RepoLock and check RepoBusy to see if you can use the repo
+
+configLock is only for atomically reading and writing the config directory
+
+compilerLock protects the compilerCurrentStatus and lastCompilerError vars
+
+byondLock protects the updateStat and lastError vars
+
+watchdogLock protects the currentStatus var

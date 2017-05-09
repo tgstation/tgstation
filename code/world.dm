@@ -55,7 +55,6 @@
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
 
-	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
 	load_admins()
@@ -70,14 +69,17 @@
 
 	Master.Initialize(10, FALSE)
 
-#define IRC_STATUS_THROTTLE 50
+	if(config.irc_announce_new_game)
+		IRCBroadcast("New round starting on [SSmapping.config.map_name]!")
+
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
 		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
+	if(input["serviceCommsKey"])
+		return ServiceCommand(input)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
-	var/static/last_irc_status = 0
 
 	if("ping" in input)
 		var/x = 1
@@ -91,16 +93,6 @@
 			if(M.client)
 				n++
 		return n
-
-	else if("ircstatus" in input)
-		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
-			return
-		var/list/adm = get_admin_counts()
-		var/list/allmins = adm["total"]
-		var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
-		status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [SSticker.mode.name]."
-		send2irc("Status", status)
-		last_irc_status = world.time
 
 	else if("status" in input)
 		var/list/s = list()
@@ -161,24 +153,6 @@
 			if(input["crossmessage"] == "News_Report")
 				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
-	else if("adminmsg" in input)
-		if(!key_valid)
-			return "Bad Key"
-		else
-			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
-
-	else if("namecheck" in input)
-		if(!key_valid)
-			return "Bad Key"
-		else
-			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
-			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
-			return keywords_lookup(input["namecheck"],1)
-	else if("adminwho" in input)
-		if(!key_valid)
-			return "Bad Key"
-		else
-			return ircadminwho()
 	else if("server_hop" in input)
 		show_server_hop_transfer_screen(input["server_hop"])
 
@@ -201,7 +175,13 @@
 			C << "<span class='announce'>PR: [announcement]</span>"
 #undef CHAT_PULLR
 
-#define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
+#define WORLD_REBOOT(X) \
+	if(GLOB.reboot_mode)\
+		ServiceReboot();\
+	log_world("World rebooted at [time_stamp()]");\
+	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>");\
+	..(X);\
+	return;
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
@@ -242,7 +222,6 @@
 	Master.Shutdown()	//run SS shutdowns
 	RoundEndAnimation(round_end_sound_sent)
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 	for(var/thing in GLOB.clients)
 		var/client/C = thing
 		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite

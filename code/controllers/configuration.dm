@@ -83,7 +83,6 @@
 	var/githubrepoid
 
 	var/forbid_singulo_possession = 0
-	var/useircbot = 0
 
 	var/check_randomizer = 0
 
@@ -261,6 +260,8 @@
 
 	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
 
+	var/irc_announce_new_game = FALSE
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -423,8 +424,6 @@
 					popup_admin_pm = 1
 				if("allow_holidays")
 					allow_holidays = 1
-				if("useircbot")
-					useircbot = 1
 				if("ticklag")
 					var/ticklag = text2num(value)
 					if(ticklag > 0)
@@ -536,6 +535,8 @@
 					error_silence_time = text2num(value)
 				if("error_msg_delay")
 					error_msg_delay = text2num(value)
+				if("irc_announce_new_game")
+					irc_announce_new_game = TRUE
 				else
 					GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
 
@@ -822,6 +823,8 @@
 				defaultmap = currentmap
 			if ("endmap")
 				maplist[currentmap.map_name] = currentmap
+				currentmap = null
+			if ("disabled")
 				currentmap = null
 			else
 				GLOB.config_error_log << "Unknown command in map vote config: '[command]'"
