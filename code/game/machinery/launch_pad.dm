@@ -19,7 +19,7 @@
 
 /obj/machinery/launchpad/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/launchpad(null)
+	var/obj/item/weapon/circuitboard/machine/B = new
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/launchpad
@@ -170,6 +170,12 @@
 		log_game("[src] has been spawned without a briefcase.")
 		qdel(src)
 
+/obj/machinery/launchpad/briefcase/Destroy()
+	if(!QDELETED(briefcase))
+		qdel(briefcase)
+	briefcase = null
+	return ..()
+
 /obj/machinery/launchpad/briefcase/isAvailable()
 	if(closed)
 		return FALSE
@@ -217,7 +223,13 @@
 
 /obj/item/briefcase_launchpad/Initialize()
 	. = ..()
-	pad = new /obj/machinery/launchpad/briefcase(src)
+	pad = new(src)
+
+/obj/item/briefcase_launchpad/Destroy()
+	if(!QDELETED(pad))
+		qdel(pad)
+	pad = null
+	return ..()
 
 /obj/item/briefcase_launchpad/attack_self(mob/user)
 	if(!isturf(user.loc)) //no setting up in a locker
