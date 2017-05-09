@@ -273,8 +273,8 @@
 	var/last_spray = 0
 	var/primed = FALSE
 	
-/turf/open/floor/plasteel/acid_spray/New()
-	..()
+/turf/open/floor/plasteel/acid_spray/Initialize()
+	. = ..()
 	last_spray = world.time
 	primed = TRUE //prevents firing immediately when placed
 
@@ -295,5 +295,5 @@
 		if(T == A || T.invisibility)
 			continue
 		A.reagents.reaction(T, VAPOR)
-	QDEL_IN(src, 2)
+	QDEL_IN(A, 2)
 	last_spray = world.time
