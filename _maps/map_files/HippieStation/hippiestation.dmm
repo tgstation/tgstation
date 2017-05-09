@@ -6484,6 +6484,9 @@
 	name = "HIGH VOLTAGE";
 	pixel_y = 32
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
@@ -6497,6 +6500,9 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
@@ -6516,6 +6522,9 @@
 	},
 /obj/structure/sign/securearea{
 	pixel_y = 32
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 4
@@ -65047,6 +65056,251 @@
 /obj/item/weapon/bikehorn/rubberducky,
 /turf/open/pool,
 /area/crew_quarters/pool)
+"cMY" = (
+/obj/machinery/disposal/trapdoor{
+	id = "Cell 1"
+	},
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/plasteel/floorgrime,
+/area/security/brig)
+"cMZ" = (
+/obj/machinery/disposal/trapdoor{
+	id = "Cell 2"
+	},
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/plasteel/floorgrime,
+/area/security/brig)
+"cNa" = (
+/obj/machinery/disposal/trapdoor{
+	id = "Cell 3"
+	},
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/plasteel/floorgrime,
+/area/security/brig)
+"cNb" = (
+/obj/machinery/disposal/trapdoor{
+	id = "Cell 4"
+	},
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/plasteel/floorgrime,
+/area/security/brig)
+"cNc" = (
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/grille,
+/obj/machinery/door/poddoor/preopen{
+	id = "Secure Gate";
+	name = "brig shutters"
+	},
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/security/brig)
+"cNd" = (
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/grille,
+/obj/machinery/door/poddoor/preopen{
+	id = "Secure Gate";
+	name = "brig shutters"
+	},
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/security/brig)
+"cNe" = (
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/grille,
+/obj/machinery/door/poddoor/preopen{
+	id = "Secure Gate";
+	name = "brig shutters"
+	},
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/security/brig)
+"cNf" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/r_wall,
+/area/security/brig)
+"cNg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNh" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNj" = (
+/obj/structure/disposalpipe/junction{
+	icon_state = "pipe-j2";
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNk" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNm" = (
+/obj/structure/disposalpipe/junction{
+	icon_state = "pipe-j2";
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNn" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNo" = (
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'HIGH VOLTAGE'";
+	icon_state = "shock";
+	name = "HIGH VOLTAGE";
+	pixel_y = 32
+	},
+/obj/structure/disposalpipe/junction{
+	dir = 2;
+	icon_state = "pipe-y"
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNp" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNr" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/fore)
+"cNs" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
+"cNt" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
+"cNu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 4
+	},
+/area/hallway/primary/fore)
+"cNv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 4
+	},
+/area/hallway/primary/fore)
+"cNw" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
+"cNx" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 2
+	},
+/area/hallway/primary/fore)
+"cNy" = (
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 2
+	},
+/area/hallway/primary/fore)
 
 (1,1,1) = {"
 aaa
@@ -91609,9 +91863,9 @@ auj
 akl
 akO
 alx
-alx
-amR
-anw
+cMY
+cNc
+cNg
 anz
 aox
 cCi
@@ -91868,7 +92122,7 @@ akN
 alw
 amg
 amR
-anw
+cNh
 anR
 aow
 apg
@@ -92382,7 +92636,7 @@ akP
 aly
 amh
 amR
-anw
+cNi
 anz
 aov
 aph
@@ -92637,9 +92891,9 @@ ajg
 akl
 akR
 alx
-alx
-amR
-anw
+cMZ
+cNd
+cNj
 anz
 aov
 aph
@@ -92896,7 +93150,7 @@ akN
 alw
 ami
 amR
-anw
+cNk
 anz
 aov
 api
@@ -93410,7 +93664,7 @@ akP
 aly
 amj
 amR
-anw
+cNl
 anz
 aov
 aph
@@ -93665,9 +93919,9 @@ ajI
 akl
 akT
 aww
-alx
-amR
-anw
+cNa
+cNe
+cNm
 anz
 aov
 apk
@@ -93924,7 +94178,7 @@ akS
 alw
 amk
 amR
-anw
+cNn
 anS
 aoy
 apj
@@ -94181,9 +94435,9 @@ akQ
 agj
 agj
 amS
-anx
-anz
-aoz
+cNo
+cNw
+cNx
 apm
 aqd
 anA
@@ -94438,9 +94692,9 @@ akU
 alz
 aml
 amT
-anw
+cNp
 anz
-aoz
+cNy
 apl
 aqc
 aqc
@@ -94695,7 +94949,7 @@ akV
 alB
 amn
 amV
-anw
+cNq
 anz
 aoz
 aod
@@ -94952,7 +95206,7 @@ akQ
 alA
 amm
 amU
-anw
+cNr
 anT
 aoA
 apn
@@ -95209,7 +95463,7 @@ akX
 alC
 alC
 amX
-anz
+cNs
 anz
 aoB
 aod
@@ -95466,7 +95720,7 @@ akW
 aiG
 amo
 amW
-anz
+cNt
 anz
 aoz
 aod
@@ -95980,7 +96234,7 @@ akY
 alx
 amp
 aiX
-anA
+cNu
 anz
 aoC
 aod
@@ -96234,10 +96488,10 @@ aiR
 ajB
 akv
 ala
-akz
 alf
-aiX
-anA
+cNb
+cNf
+cNv
 anz
 aoF
 apo

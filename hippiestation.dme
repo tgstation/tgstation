@@ -2104,6 +2104,7 @@
 #include "hippiestation\code\game\gamemodes\wizard\spellbook.dm"
 #include "hippiestation\code\game\gamemodes\wizard\spellbook_darkness.dm"
 #include "hippiestation\code\game\machinery\cryo.dm"
+#include "hippiestation\code\game\machinery\trapdoors.dm"
 #include "hippiestation\code\game\machinery\vending.dm"
 #include "hippiestation\code\game\machinery\vending_types.dm"
 #include "hippiestation\code\game\machinery\computer\arcade.dm"
