@@ -957,6 +957,24 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/weapon/aiModule/syndicate
 	cost = 14
 
+/datum/uplink_item/device_tools/briefcase_launchpad
+	name = "Briefcase Launchpad"
+	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to three tiles away from the briefcase. \
+			Also includes a remote control. Touch the briefcase with the remote to link it."
+	surplus = 0
+	item = /obj/item/briefcase_launchpad
+	cost = 6
+
+/datum/uplink_item/device_tools/briefcase_launchpad/buy(mob/user, obj/item/device/uplink/U)
+	var/obj/item/device/launchpad_remote/L = new(get_turf(user)) //free remote
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.put_in_hands(L))
+			to_chat(H, "[L] materializes into your hands!")
+		else
+			to_chat(H, "\The [L] materializes onto the floor.")
+	return ..()
+
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
 	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station \
