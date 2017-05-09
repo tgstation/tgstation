@@ -2243,3 +2243,20 @@
 			error_viewer.show_to(owner, locate(href_list["viewruntime_backto"]), href_list["viewruntime_linear"])
 		else
 			error_viewer.show_to(owner, null, href_list["viewruntime_linear"])
+
+	else if(href_list["showrelatedacc"])
+		var/client/C = locate(href_list["client"]) in GLOB.clients
+		var/list/thing_to_check
+		if(href_list["showrelatedacc"] == "cid")
+			thing_to_check = C.related_accounts_cid
+		else
+			thing_to_check = C.related_accounts_ip
+		thing_to_check = splittext(thing_to_check, ", ")
+
+
+		var/dat = "Related accounts by [uppertext(href_list["showrelatedacc"])]:<br>"
+		for(var/thing in thing_to_check)
+			dat += "[thing]<br>"
+
+		usr << browse(dat, "size=420x300")
+

@@ -75,10 +75,12 @@
 
 	if(GLOB.revdata.parentcommit)
 		to_chat(src, "<b>Server revision compiled on:</b> [GLOB.revdata.date]")
+		var/prefix = ""
 		if(GLOB.revdata.testmerge.len)
 			to_chat(src, GLOB.revdata.GetTestMergeInfo())
-			to_chat(src, "Based off master commit:")
-		to_chat(src, "<a href='[config.githuburl]/commit/[GLOB.revdata.parentcommit]'>[GLOB.revdata.parentcommit]</a>")
+			prefix = "Based off master commit: "
+		var/pc = GLOB.revdata.parentcommit
+		to_chat(src, "[prefix]<a href='[config.githuburl]/commit/[pc]'>[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")
 	to_chat(src, "<b>Current Infomational Settings:</b>")
