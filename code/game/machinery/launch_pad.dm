@@ -19,7 +19,7 @@
 
 /obj/machinery/launchpad/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new
+	var/obj/item/weapon/circuitboard/machine/launchpad/B = new
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/launchpad
