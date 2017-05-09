@@ -276,11 +276,16 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
-			pocketed when inactive. Activating it produces a loud, distinctive noise. One can combine two \
-			energy swords to create a double energy sword, which must be wielded in two hands but is more robust \
-			and deflects all energy projectiles."
+			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword/saber
 	cost = 8
+
+/datum/uplink_item/dangerous/doublesword
+	name = "Double-Bladed Energy Sword"
+	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
+			all energy projectiles, but requires two hands to wield."
+	item = /obj/item/weapon/twohanded/dualsaber
+	cost = 16
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
