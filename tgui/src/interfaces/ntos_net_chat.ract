@@ -1,38 +1,6 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
 
-<div style="float: left">
-	<div class='item'>
-		<table><tr>
-		{{#if data.PC_batteryicon && data.PC_showbatteryicon}}
-			<td><img src='{{data.PC_batteryicon}}'>
-		{{/if}}
-		{{#if data.PC_batterypercent && data.PC_showbatteryicon}}
-			<td><b>{{data.PC_batterypercent}}</b>
-		{{/if}}
-		{{#if data.PC_ntneticon}}
-			<td><img src='{{data.PC_ntneticon}}'>
-		{{/if}}
-		{{#if data.PC_apclinkicon}}
-			<td><img src='{{data.PC_apclinkicon}}'>
-		{{/if}}
-		{{#if data.PC_stationtime}}
-			<td><b>{{data.PC_stationtime}}<b>
-		{{/if}}
-		{{#each data.PC_programheaders}}
-			<td><img src='{{icon}}'>
-		{{/each}}
-		</table>
-	</div>
-</div>
-<div style="float: right">
-	<table><tr>
-		<td><ui-button action='PC_shutdown'>Shutdown</ui-button>
-		{{#if data.PC_showexitprogram}}
-			<td><ui-button action='PC_exit'>EXIT PROGRAM</ui-button>
-			<td><ui-button action='PC_minimize'>Minimize Program</ui-button>
-		{{/if}}
-	</table>
-</div>
-<div style="clear: both">
 <ui-display>
 	{{#if data.adminmode}}
 		<h1>ADMINISTRATIVE MODE</h1>
