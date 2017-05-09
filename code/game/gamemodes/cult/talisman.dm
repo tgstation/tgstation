@@ -126,7 +126,7 @@
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
 	for(var/R in GLOB.teleport_runes)
-		var/obj/effect/rune/teleport/T = R
+		var/obj/effect/rune/cleanable/teleport/T = R
 		potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 
 	if(!potential_runes.len)
@@ -140,7 +140,7 @@
 		return ..(user, 0)
 
 	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
-	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
+	var/obj/effect/rune/cleanable/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune)
 		return ..(user, 0)
 	var/turf/target = get_turf(actual_selected_rune)

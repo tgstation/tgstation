@@ -187,14 +187,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return 0
 
 //Rite of Binding: A paper on top of the rune to a talisman.
-/obj/effect/rune/imbue
+/obj/effect/rune/cleanable/imbue
 	cultist_name = "Create Talisman"
 	cultist_desc = "transforms paper into powerful magic talismans."
 	invocation = "H'drak v'loso, mir'kanas verbot!"
 	icon_state = "3"
 	color = "#0000FF"
 
-/obj/effect/rune/imbue/invoke(var/list/invokers)
+/obj/effect/rune/cleanable/imbue/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1] //the first invoker is always the user
 	var/list/papers_on_rune = checkpapers()
 	var/entered_talisman_name
@@ -236,13 +236,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 		qdel(paper_to_imbue)
 	rune_in_use = FALSE
 
-/obj/effect/rune/imbue/proc/checkpapers()
+/obj/effect/rune/cleanable/imbue/proc/checkpapers()
 	. = list()
 	for(var/obj/item/weapon/paper/P in get_turf(src))
 		if(!P.info && !istype(P, /obj/item/weapon/paper/talisman))
 			. |= P
 
-/obj/effect/rune/teleport
+/obj/effect/rune/cleanable/teleport
 	cultist_name = "Teleport"
 	cultist_desc = "warps everything above it to another chosen teleport rune."
 	invocation = "Sas'so c'arta forbici!"
@@ -251,23 +251,23 @@ structure_check() searches for nearby cultist structures required for the invoca
 	req_keyword = TRUE
 	var/listkey
 
-/obj/effect/rune/teleport/Initialize(mapload, set_keyword)
+/obj/effect/rune/cleanable/teleport/Initialize(mapload, set_keyword)
 	. = ..()
 	var/area/A = get_area(src)
 	var/locname = initial(A.name)
 	listkey = set_keyword ? "[set_keyword] [locname]":"[locname]"
 	GLOB.teleport_runes += src
 
-/obj/effect/rune/teleport/Destroy()
+/obj/effect/rune/cleanable/teleport/Destroy()
 	GLOB.teleport_runes -= src
 	return ..()
 
-/obj/effect/rune/teleport/invoke(var/list/invokers)
+/obj/effect/rune/cleanable/teleport/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1] //the first invoker is always the user
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
 	for(var/R in GLOB.teleport_runes)
-		var/obj/effect/rune/teleport/T = R
+		var/obj/effect/rune/cleanable/teleport/T = R
 		if(T != src && (T.z <= ZLEVEL_SPACEMAX))
 			potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 
@@ -284,7 +284,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 
 	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
-	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
+	var/obj/effect/rune/cleanable/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated() || !actual_selected_rune)
 		fail_invoke()
 		return
@@ -316,7 +316,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 
 //Rite of Offering: Converts or sacrifices a target.
-/obj/effect/rune/convert
+/obj/effect/rune/cleanable/convert
 	cultist_name = "Offer"
 	cultist_desc = "offers a noncultist above it to Nar-Sie, either converting them or sacrificing them."
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
@@ -327,10 +327,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	allow_excess_invokers = TRUE
 	rune_in_use = FALSE
 
-/obj/effect/rune/convert/do_invoke_glow()
+/obj/effect/rune/cleanable/convert/do_invoke_glow()
 	return
 
-/obj/effect/rune/convert/invoke(var/list/invokers)
+/obj/effect/rune/cleanable/convert/invoke(var/list/invokers)
 	if(rune_in_use)
 		return
 	var/list/myriad_targets = list()
@@ -367,7 +367,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 	rune_in_use = FALSE
 
-/obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
+/obj/effect/rune/cleanable/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>You need more invokers to convert [convertee]!</span>")
@@ -395,7 +395,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	</b></span>")
 	return 1
 
-/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
+/obj/effect/rune/cleanable/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
@@ -497,7 +497,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			..()
 
 //Rite of Resurrection: Requires the corpse of a cultist and that there have been less revives than the number of people GLOB.sacrificed
-/obj/effect/rune/raise_dead
+/obj/effect/rune/cleanable/raise_dead
 	cultist_name = "Resurrect Cultist"
 	cultist_desc = "requires the corpse of a cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be revived."
 	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
@@ -505,7 +505,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = "#C80000"
 	var/static/revives_used = 0
 
-/obj/effect/rune/raise_dead/examine(mob/user)
+/obj/effect/rune/cleanable/raise_dead/examine(mob/user)
 	..()
 	if(iscultist(user) || user.stat == DEAD)
 		var/revive_number = 0
@@ -513,7 +513,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			revive_number = GLOB.sacrificed.len - revives_used
 		to_chat(user, "<b>Revives Remaining:</b> [revive_number]")
 
-/obj/effect/rune/raise_dead/invoke(var/list/invokers)
+/obj/effect/rune/cleanable/raise_dead/invoke(var/list/invokers)
 	var/turf/T = get_turf(src)
 	var/mob/living/mob_to_revive
 	var/list/potential_revive_mobs = list()
@@ -552,7 +552,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 								  "<span class='cultlarge'>You awaken suddenly from the void. You're alive!</span>")
 	rune_in_use = 0
 
-/obj/effect/rune/raise_dead/proc/validness_checks(mob/living/target_mob, mob/living/user)
+/obj/effect/rune/cleanable/raise_dead/proc/validness_checks(mob/living/target_mob, mob/living/user)
 	var/turf/T = get_turf(src)
 	if(!user)
 		return 0
@@ -579,7 +579,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return 0
 	return 1
 
-/obj/effect/rune/raise_dead/fail_invoke()
+/obj/effect/rune/cleanable/raise_dead/fail_invoke()
 	..()
 	for(var/mob/living/M in range(1,src))
 		if(iscultist(M) && M.stat == DEAD)
@@ -587,7 +587,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 
 //Rite of Disruption: Emits an EMP blast.
-/obj/effect/rune/emp
+/obj/effect/rune/cleanable/emp
 	cultist_name = "Electromagnetic Disruption"
 	cultist_desc = "emits a large electromagnetic pulse, increasing in size for each cultist invoking it, hindering electronics and disabling silicons."
 	invocation = "Ta'gh fara'qha fel d'amar det!"
@@ -595,7 +595,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	allow_excess_invokers = 1
 	color = "#4D94FF"
 
-/obj/effect/rune/emp/invoke(var/list/invokers)
+/obj/effect/rune/cleanable/emp/invoke(var/list/invokers)
 	var/turf/E = get_turf(src)
 	..()
 	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
@@ -618,7 +618,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	empulse(E, 9*invokers.len, 12*invokers.len) // Scales now, from a single room to most of the station depending on # of chanters
 
 //Rite of Spirit Sight: Separates one's spirit from their body. They will take damage while it is active.
-/obj/effect/rune/spirit
+/obj/effect/rune/cleanable/spirit
 	cultist_name = "Spirit Sight"
 	cultist_desc = "severs the link between one's spirit and body. This effect is taxing and one's physical body will take damage while this is active."
 	invocation = "Fwe'sh mah erl nyag r'ya!"
@@ -628,12 +628,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	construct_invoke = 0
 	var/mob/living/affecting = null
 
-/obj/effect/rune/spirit/examine(mob/user)
+/obj/effect/rune/cleanable/spirit/examine(mob/user)
 	..()
 	if(affecting)
 		to_chat(user, "<span class='cultitalic'>A translucent field encases [user] above the rune!</span>")
 
-/obj/effect/rune/spirit/can_invoke(mob/living/user)
+/obj/effect/rune/cleanable/spirit/can_invoke(mob/living/user)
 	if(rune_in_use)
 		to_chat(user, "<span class='cultitalic'>[src] cannot support more than one body!</span>")
 		log_game("Spirit Sight rune failed - more than one user")
@@ -645,7 +645,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return list()
 	return ..()
 
-/obj/effect/rune/spirit/invoke(var/list/invokers)
+/obj/effect/rune/cleanable/spirit/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	..()
 	var/turf/T = get_turf(src)
@@ -689,7 +689,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	rune_in_use = 0
 
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
-/obj/effect/rune/wall
+/obj/effect/rune/cleanable/wall
 	cultist_name = "Form Barrier"
 	cultist_desc = "when invoked, makes a temporary invisible wall to block passage. Can be invoked again to reverse this."
 	invocation = "Khari'd! Eske'te tannin!"
@@ -699,25 +699,25 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/density_timer
 	var/recharging = FALSE
 
-/obj/effect/rune/wall/Initialize(mapload, set_keyword)
+/obj/effect/rune/cleanable/wall/Initialize(mapload, set_keyword)
 	. = ..()
 	GLOB.wall_runes += src
 
-/obj/effect/rune/wall/examine(mob/user)
+/obj/effect/rune/cleanable/wall/examine(mob/user)
 	..()
 	if(density)
 		to_chat(user, "<span class='cultitalic'>There is a barely perceptible shimmering of the air above [src].</span>")
 
-/obj/effect/rune/wall/Destroy()
+/obj/effect/rune/cleanable/wall/Destroy()
 	density = 0
 	GLOB.wall_runes -= src
 	air_update_turf(1)
 	return ..()
 
-/obj/effect/rune/wall/BlockSuperconductivity()
+/obj/effect/rune/cleanable/wall/BlockSuperconductivity()
 	return density
 
-/obj/effect/rune/wall/invoke(var/list/invokers)
+/obj/effect/rune/cleanable/wall/invoke(var/list/invokers)
 	if(recharging)
 		return
 	var/mob/living/user = invokers[1]
@@ -732,16 +732,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/mob/living/carbon/C = user
 		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
 
-/obj/effect/rune/wall/proc/spread_density()
+/obj/effect/rune/cleanable/wall/proc/spread_density()
 	for(var/R in GLOB.wall_runes)
-		var/obj/effect/rune/wall/W = R
+		var/obj/effect/rune/cleanable/wall/W = R
 		if(W.z == z && get_dist(src, W) <= 2 && !W.density && !W.recharging)
 			W.density = TRUE
 			W.update_state()
 			W.spread_density()
 	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900, TIMER_STOPPABLE)
 
-/obj/effect/rune/wall/proc/lose_density()
+/obj/effect/rune/cleanable/wall/proc/lose_density()
 	if(density)
 		recharging = TRUE
 		density = FALSE
@@ -751,11 +751,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		animate(src, color = oldcolor, time = 50, easing = EASE_IN)
 		addtimer(CALLBACK(src, .proc/recharge), 50)
 
-/obj/effect/rune/wall/proc/recharge()
+/obj/effect/rune/cleanable/wall/proc/recharge()
 	recharging = FALSE
 	add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
 
-/obj/effect/rune/wall/proc/update_state()
+/obj/effect/rune/cleanable/wall/proc/update_state()
 	deltimer(density_timer)
 	air_update_turf(1)
 	if(density)
@@ -770,7 +770,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
 
 //Rite of Joined Souls: Summons a single cultist.
-/obj/effect/rune/summon
+/obj/effect/rune/cleanable/summon
 	cultist_name = "Summon Cultist"
 	cultist_desc = "summons a single cultist to the rune. Requires 2 invokers."
 	invocation = "N'ath reth sh'yro eth d'rekkathnor!"
@@ -779,7 +779,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "5"
 	color = "#00FF00"
 
-/obj/effect/rune/summon/invoke(var/list/invokers)
+/obj/effect/rune/cleanable/summon/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	var/list/cultists = list()
 	for(var/datum/mind/M in SSticker.mode.cult)
@@ -817,7 +817,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
-/obj/effect/rune/blood_boil
+/obj/effect/rune/cleanable/blood_boil
 	cultist_name = "Boil Blood"
 	cultist_desc = "boils the blood of non-believers who can see the rune, rapidly dealing extreme amounts of damage. Requires 3 invokers."
 	invocation = "Dedo ol'btoh!"
@@ -829,10 +829,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/tick_damage = 25
 	rune_in_use = FALSE
 
-/obj/effect/rune/blood_boil/do_invoke_glow()
+/obj/effect/rune/cleanable/blood_boil/do_invoke_glow()
 	return
 
-/obj/effect/rune/blood_boil/invoke(var/list/invokers)
+/obj/effect/rune/cleanable/blood_boil/invoke(var/list/invokers)
 	if(rune_in_use)
 		return
 	..()
@@ -872,7 +872,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	new /obj/effect/hotspot(T)
 	qdel(src)
 
-/obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)
+/obj/effect/rune/cleanable/blood_boil/proc/do_area_burn(turf/T, multiplier)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
 			var/obj/item/weapon/nullrod/N = L.null_rod_check()
@@ -883,7 +883,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				L.adjustStaminaLoss(tick_damage*0.5)
 
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
-/obj/effect/rune/manifest
+/obj/effect/rune/cleanable/manifest
 	cultist_name = "Manifest Spirit"
 	cultist_desc = "manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
@@ -891,11 +891,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	construct_invoke = 0
 	color = "#C80000"
 
-/obj/effect/rune/manifest/New(loc)
+/obj/effect/rune/cleanable/manifest/New(loc)
 	..()
 	notify_ghosts("Manifest rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 
-/obj/effect/rune/manifest/can_invoke(mob/living/user)
+/obj/effect/rune/cleanable/manifest/can_invoke(mob/living/user)
 	if(!(user in get_turf(src)))
 		to_chat(user, "<span class='cultitalic'>You must be standing on [src]!</span>")
 		fail_invoke()
@@ -912,7 +912,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return list()
 	return ..()
 
-/obj/effect/rune/manifest/invoke(var/list/invokers)
+/obj/effect/rune/cleanable/manifest/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	var/list/ghosts_on_rune = list()
 	for(var/mob/dead/observer/O in get_turf(src))
