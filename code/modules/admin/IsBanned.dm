@@ -64,7 +64,7 @@
 		if(!SSdbcore.Connect())
 			var/msg = "Ban database connection failure. Key [ckeytext] not checked"
 			log_world(msg)
-			log_game(msg)
+			message_admins(msg)
 			return
 
 		var/ipquery = ""
