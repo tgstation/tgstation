@@ -1,11 +1,15 @@
 /datum/computer_file/program/card_mod
 	filename = "cardmod"
-	filedesc = "ID card modification program"
+	filedesc = "ID Card Modification"
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
 	transfer_access = GLOB.access_heads
 	requires_ntnet = 0
 	size = 8
+	tgui_id = "ntos_card"
+	ui_x = 600
+	ui_y = 700
+
 	var/mod_mode = 1
 	var/is_centcom = 0
 	var/show_assignments = 0
@@ -71,20 +75,6 @@
 				return -2
 			return 0
 	return 0
-
-
-/datum/computer_file/program/card_mod/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "identification_computer", "ID card modification program", 600, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
-
 
 /datum/computer_file/program/card_mod/proc/format_jobs(list/jobs)
 	var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]

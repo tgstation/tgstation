@@ -17429,7 +17429,6 @@
 /area/hallway/primary/central)
 "aMf" = (
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -17935,7 +17934,6 @@
 /area/hallway/primary/central)
 "aNB" = (
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -27262,7 +27260,7 @@
 /turf/open/floor/plasteel,
 /area/assembly/chargebay)
 "bjQ" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bjR" = (
@@ -41268,7 +41266,7 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bMo" = (
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bMp" = (
@@ -45237,7 +45235,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bVa" = (
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 8
 	},
@@ -53951,23 +53949,23 @@
 /area/maintenance/asmaint2)
 "cnI" = (
 /obj/structure/table,
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = 2;
 	pixel_y = -5
 	},
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = 2;
 	pixel_y = -3
 	},
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = 3;
 	pixel_y = 3
 	},

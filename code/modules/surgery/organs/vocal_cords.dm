@@ -51,7 +51,7 @@
 			if(C.getorganslot("adamantine_resonator"))
 				to_chat(C, msg)
 		if(isobserver(m))
-			var/link = FOLLOW_LINK(m, src)
+			var/link = FOLLOW_LINK(m, owner)
 			to_chat(m, "[link] [msg]")
 
 //Colossus drop, forces the listeners to obey certain commands

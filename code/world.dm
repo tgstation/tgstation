@@ -59,6 +59,7 @@
 	load_mode()
 	load_motd()
 	load_admins()
+	load_menu()
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -340,6 +341,7 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+
 
 /world/proc/has_round_started()
 	return SSticker.HasRoundStarted()

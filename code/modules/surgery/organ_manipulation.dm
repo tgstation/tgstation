@@ -106,7 +106,7 @@
 			"<span class='notice'>You begin to mend the incision in [target]'s [parse_zone(target_zone)]...</span>")
 
 	else if(istype(tool, /obj/item/weapon/reagent_containers/food/snacks/organ))
-		to_chat(user, "<span class='warning'>[tool] was biten by someone! It's too damaged to use!</span>")
+		to_chat(user, "<span class='warning'>[tool] was bitten by someone! It's too damaged to use!</span>")
 		return -1
 
 /datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
