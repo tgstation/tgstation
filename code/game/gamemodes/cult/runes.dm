@@ -891,8 +891,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	construct_invoke = 0
 	color = "#C80000"
 
-/obj/effect/rune/manifest/New(loc)
-	..()
+/obj/effect/rune/manifest/Initialize()
+	. = ..()
 	notify_ghosts("Manifest rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
@@ -922,8 +922,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/carbon/human/new_human = new(get_turf(src))
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent
+	new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 	..()
-	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
+	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
 	to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 	var/turf/T = get_turf(src)
 	var/obj/structure/emergency_shield/invoker/N = new(T)
@@ -943,5 +944,5 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 								  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
 		for(var/obj/I in new_human)
-			new_human.dropItemToGround(I)
+			new_human.dropItemToGround(I, TRUE)
 		new_human.dust()
