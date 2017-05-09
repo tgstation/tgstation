@@ -36,7 +36,9 @@
 /obj/effect/proc_holder/spell/aimed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return FALSE
-	var/ignore = (current_amount <= 0)
+	var/ignore = FALSE
+	if(current_amount >= 1)
+		ignore = TRUE
 	if(!cast_check(ignore, ranged_ability_user))
 		remove_ranged_ability()
 		return FALSE
