@@ -78,7 +78,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 /datum/export/Destroy()
 	SSprocessing.processing -= src
-	..()
+	return ..()
 
 /datum/export/process()
 	..()
@@ -122,6 +122,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	total_amount += amount
 	
 	cost -= (the_cost * (0.01*amount))
+	if(cost < 1)
+		cost = 1
 	SSblackbox.add_details("export_sold_amount","[O.type]|[amount]")
 	SSblackbox.add_details("export_sold_cost","[O.type]|[the_cost]")
 
