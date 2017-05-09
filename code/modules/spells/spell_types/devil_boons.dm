@@ -58,7 +58,7 @@
 
 /obj/effect/proc_holder/spell/targeted/summon_friend/cast(list/targets, mob/user = usr)
 	if(!QDELETED(friend))
-		to_chat("<span = 'userdanger'>Your master has deemed you a poor friend.  Your durance in hell will now resume.</span>")
+		to_chat(friend, "<span class='userdanger'>Your master has deemed you a poor friend.  Your durance in hell will now resume.</span>")
 		friend.dust(TRUE)
 		qdel(friendShell)
 		return
@@ -67,7 +67,7 @@
 		return
 	for(var/C in targets)
 		var/mob/living/L = C
-		new /obj/effect/mob_spawn/human/demonic_friend(L.loc, L.mind, src)
+		friendShell = new /obj/effect/mob_spawn/human/demonic_friend(L.loc, L.mind, src)
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/robeless
 	clothes_req = FALSE

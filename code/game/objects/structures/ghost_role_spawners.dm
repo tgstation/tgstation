@@ -332,7 +332,12 @@
 		spell.friend = L
 		spell.charge_counter = spell.charge_max
 		L.mind.hasSoul = FALSE
+		var/mob/living/carbon/human/H = L
+		var/obj/item/worn = H.wear_id
+		var/obj/item/weapon/card/id/id = worn.GetID()
+		id.registered_name = L.real_name
+		id.update_label()
 	else
-		to_chat(L, "<span class='userdanger'>Your owner is already dead!  You will soon perish.</span>)")
+		to_chat(L, "<span class='userdanger'>Your owner is already dead!  You will soon perish.</span>")
 		addtimer(CALLBACK(L, /mob.proc/dust, 150)) //Give em a few seconds as a mercy.
 

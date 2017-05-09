@@ -481,13 +481,11 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	to_chat(owner.current, GLOB.lawlorify[LAW][ban])
 	to_chat(owner.current, GLOB.lawlorify[LAW][obligation])
 	to_chat(owner.current, GLOB.lawlorify[LAW][banish])
-	to_chat(owner.current, "<br/><br/><span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>")
-
-/datum/antagonist/devil/farewell()
+	to_chat(owner.current, "<span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>")
+	.=..()
 
 /datum/antagonist/devil/on_gain()
 	owner.store_memory("Your devilic true name is [truename]<br>[GLOB.lawlorify[LAW][ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[GLOB.lawlorify[LAW][bane]]<br>[GLOB.lawlorify[LAW][obligation]]<br>[GLOB.lawlorify[LAW][banish]]<br>")
-	give_base_spells(1)
 	if(issilicon(owner.current))
 		var/mob/living/silicon/robot_devil = owner.current
 		var/laws = list("You may not use violence to coerce someone into selling their soul.", "You may not directly and knowingly physically harm a devil, other than yourself.", GLOB.lawlorify[LAW][ban], GLOB.lawlorify[LAW][obligation], "Accomplish your objectives at all costs.")
@@ -497,19 +495,24 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		var/mob/living/carbon/human/S = owner.current
 		to_chat(S, "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>")
 		S.dna.remove_mutation(CLOWNMUT)
+	.=..()
 
 /datum/antagonist/devil/on_removal()
+	to_chat(owner.current, "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>")
+	.=..()
 
 /datum/antagonist/devil/apply_innate_effects(mob/living/mob_override)
 	give_base_spells(1)
 	owner.current.grant_all_languages(TRUE)
 	update_hud()
+	.=..()
 
 /datum/antagonist/devil/remove_innate_effects(mob/living/mob_override)
 	for(var/X in owner.spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		if(is_type_in_typecache(S, devil_spells))
 			owner.RemoveSpell(S)
+	.=..()
 
 //A simple super light weight datum for the codex gigas.
 /datum/fakeDevil
