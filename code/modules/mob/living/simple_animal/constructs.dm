@@ -282,22 +282,30 @@
 
 /mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
 	. = ..()
-	if(istype(AM, /turf/closed/wall/mineral/cult)) //we can go through cult walls
+	if(istype(AM, /turf/closed/wall/mineral/cult) && AM != loc) //we can go through cult walls
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
+			stored_pulling.setDir(get_dir(stored_pulling.loc, loc))
 			stored_pulling.forceMove(loc)
 		forceMove(AM)
-		pulling = stored_pulling //drag anything we're pulling through the wall with us by magic
+		if(stored_pulling)
+			start_pulling(stored_pulling, TRUE) //drag anything we're pulling through the wall with us by magic
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		var/list/parts = list()
+		var/undismembermerable_limbs = 0
 		for(var/X in C.bodyparts)
 			var/obj/item/bodypart/BP = X
-			if(BP.body_part != HEAD && BP.body_part != CHEST && BP.dismemberable)
-				parts += BP
+			if(BP.body_part != HEAD && BP.body_part != CHEST)
+				if(BP.dismemberable)
+					parts += BP
+				else
+					undismembermerable_limbs++
 		if(!LAZYLEN(parts))
+			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
+				return ..()
 			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
 			return FALSE
 		do_attack_animation(C)

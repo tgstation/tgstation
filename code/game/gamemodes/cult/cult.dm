@@ -279,12 +279,13 @@
 			var/explanation
 			switch(cult_objectives[obj_count])
 				if("sacrifice")
-					if(GLOB.sac_complete)
-						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
-					else
-						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
+					if(GLOB.sac_mind)
+						if(GLOB.sac_complete)
+							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
+							SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
+						else
+							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
+							SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
 				if("eldergod")
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
