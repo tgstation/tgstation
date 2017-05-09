@@ -90,7 +90,14 @@ namespace TGServerService
 				string fullString = stringPacket.ToString();
 				var packet = Encoding.ASCII.GetBytes(fullString);
 				packet[1] = 0x83;
-				packet[3] = (byte)(packet.Length - 4);
+				var FinalLength = packet.Length - 4;
+				if (FinalLength > UInt16.MaxValue)
+					return "Error: Topic too long";
+
+				var lengthBytes = BitConverter.GetBytes((ushort)FinalLength);
+
+				packet[2] = lengthBytes[1];	//fucking endianess
+				packet[3] = lengthBytes[0];
 
 				topicSender.Send(packet);
 
