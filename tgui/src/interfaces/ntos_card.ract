@@ -1,37 +1,5 @@
-<div style="float: left">
-	<div class='item'>
-		<table><tr>
-		{{#if data.PC_batteryicon && data.PC_showbatteryicon}}
-			<td><img src='{{data.PC_batteryicon}}'>
-		{{/if}}
-		{{#if data.PC_batterypercent && data.PC_showbatteryicon}}
-			<td><b>{{data.PC_batterypercent}}</b>
-		{{/if}}
-		{{#if data.PC_ntneticon}}
-			<td><img src='{{data.PC_ntneticon}}'>
-		{{/if}}
-		{{#if data.PC_apclinkicon}}
-			<td><img src='{{data.PC_apclinkicon}}'>
-		{{/if}}
-		{{#if data.PC_stationtime}}
-			<td><b>{{data.PC_stationtime}}<b>
-		{{/if}}
-		{{#each data.PC_programheaders}}
-			<td><img src='{{icon}}'>
-		{{/each}}
-		</table>
-	</div>
-</div>
-<div style="float: right">
-	<table><tr>
-		<td><ui-button action='PC_shutdown'>Shutdown</ui-button>
-		{{#if data.PC_showexitprogram}}
-			<td><ui-button action='PC_exit'>EXIT PROGRAM</ui-button>
-			<td><ui-button action='PC_minimize'>Minimize Program</ui-button>
-		{{/if}}
-	</table>
-</div>
-<div style="clear: both">
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
 
 {{#if data.have_id_slot}}
 <ui-button action='PRG_switchm' icon='home' params='{"target" : "mod"}' state='{{data.mmode == 1 ? "disabled" : null}}'>Access Modification</ui-button>
@@ -151,12 +119,14 @@
 	  <div id="all-value.jobs">
 		<table>
 		  <tr>
-			<th></th><th>Command</th>
+			<th>Command</th>
+			<td>
+			  <ui-button action='PRG_assign' params='{"assign_target" : "Captain"}' state='{{data.id_rank == "Captain" ? "selected" : null}}'>Captain</ui-button>
+			</td>
 		  </tr>
 		  <tr>
 			<th>Special</th>
 			<td>
-			  <ui-button action='PRG_assign' params='{"assign_target" : "Captain"}' state='{{data.id_rank == "Captain" ? "selected" : null}}'>Captain</ui-button>
 			  <ui-button action='PRG_assign' params='{"assign_target" : "Custom"}'>Custom</ui-button>
 			</td>
 		  </tr>
@@ -210,10 +180,9 @@
 		  </tr>
 		  {{#if data.centcom_access}}
 			<tr>
-			  <th style="color: '#A52A2A';">CentCom</th>
+			  <th style="color: '#A52A2A';">Centcom</th>
 			  <td>
 				{{#each data.centcom_jobs}}
-
 				  <ui-button action='PRG_assign' params='{"assign_target" : "{{job}}"}' state='{{data.id_rank == job ? "selected" : null}}'>{{display_name}}</ui-button>
 				{{/each}}
 			  </td>
