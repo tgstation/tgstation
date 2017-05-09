@@ -81,6 +81,24 @@
 	icon_state = "lemon"
 	filling_color = "#FFD700"
 
+//Cash tree, formally known as the cash lemon
+/obj/item/seeds/cash
+	name = "pack of money seeds"
+	desc = "When life gives you lemons, mutate them into cash trees."
+	icon_state = "seed-cash"
+	species = "cashtree"
+	plantname = "Money Tree"
+	product = /obj/item/stack/spacecash
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_grow = "lime-grow"
+	icon_dead = "lime-dead"
+	lifespan = 55
+	endurance = 45
+	yield = 4
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	reagents_add = list("nutriment" = 0.05)
+	rarity = 50  // Nanotrasen still approves...	
+
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon
 	name = "pack of combustible lemon seeds"
