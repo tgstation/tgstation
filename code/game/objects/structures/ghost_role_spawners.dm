@@ -96,7 +96,7 @@
 
 //Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
 /obj/effect/mob_spawn/human/golem
-	name = "inert golem shell"
+	name = "inert free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
 	icon = 'icons/obj/wizard.dmi'
@@ -106,13 +106,14 @@
 	death = FALSE
 	anchored = 0
 	density = 0
+	var/has_owner = FALSE
 	var/can_transfer = TRUE //if golems can switch bodies to this new shell
 	var/mob/living/owner = null //golem's owner if it has one
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
 
-/obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
+/obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
 	..()
 	if(species)
 		name += " ([initial(species.prefix)])"
@@ -155,13 +156,15 @@
 		return
 	..()
 
+/obj/effect/mob_spawn/human/golem/servant
+	has_owner = TRUE
+	name = "inert servant golem shell"
+
 
 /obj/effect/mob_spawn/human/golem/adamantine
-	name = "dust-caked golem shell"
+	name = "dust-caked free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
-	anchored = 1
-	density = 1
 	can_transfer = FALSE
 	mob_species = /datum/species/golem/adamantine
 
