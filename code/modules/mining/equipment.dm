@@ -318,6 +318,9 @@
 						log_game("[user] has revived hostile mob [target] with a malfunctioning lazarus injector")
 					else
 						H.attack_same = 0
+				M.grab_ghost(force=TRUE)
+				M << "<span class='notice'>You rise with a start, \
+					you're alive!!!</span>"
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
 				SSblackbox.add_details("lazarus_injector", "[M.type]")
