@@ -16,6 +16,7 @@
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
 	dangerous_possession = TRUE
+	gender = PLURAL
 
 /obj/structure/destructible/clockwork/massive/ratvar/Initialize()
 	. = ..()
