@@ -16,6 +16,8 @@
 	var/gasPerThrow = 3 //How much gas is drawn from a tank's pressure to fire
 	var/list/loadedItems = list() //The items loaded into the cannon that will be fired out
 	var/pressureSetting = 1 //How powerful the cannon is - higher pressure = more gas but more powerful throws
+	var/checktank = TRUE
+	var/range_multiplier = 1
 
 
 /obj/item/weapon/pneumatic_cannon/examine(mob/user)
@@ -87,7 +89,7 @@
 	if(!loadedItems || !loadedWeightClass)
 		to_chat(user, "<span class='warning'>\The [src] has nothing loaded.</span>")
 		return
-	if(!tank)
+	if(!tank && checktank)
 		to_chat(user, "<span class='warning'>\The [src] can't fire without a source of gas.</span>")
 		return
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
@@ -106,16 +108,27 @@
 		user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
 				    		 "<span class='danger'>You fire \the [src]!</span>")
 	add_logs(user, target, "fired at", src)
+	var/turf/T = get_target(target, get_turf(src))
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	for(var/obj/item/ITD in loadedItems) //Item To Discharge
 		loadedItems.Remove(ITD)
 		loadedWeightClass -= ITD.w_class
 		ITD.throw_speed = pressureSetting * 2
 		ITD.loc = get_turf(src)
-		ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2,user)
+		ITD.throw_at(T, pressureSetting * 5 * (2 * range_multiplier), pressureSetting * 2,user)
 	if(pressureSetting >= 3 && user)
 		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
 		user.Weaken(3)
+
+/obj/item/weapon/pneumatic_cannon/proc/get_target(turf/target, turf/starting)
+	if(range_multiplier == 1)
+		return target
+	var/x_o = (starting.x - target.x)
+	var/y_o = (starting.y - target.y)
+	var/new_x = Clamp((starting + (x_o * range_multiplier)), 0, world.maxx)
+	var/new_y = Clamp((starting + (y_o * range_multiplier)), 0, world.maxy)
+	var/turf/newtarget = locate(new_x, new_y, starting.z)
+	return newtarget
 
 /obj/item/weapon/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
 	name = "improvised pneumatic cannon"
@@ -161,7 +174,6 @@
 	add_overlay(tank.icon_state)
 	src.update_icon()
 
-
 /obj/item/weapon/pneumatic_cannon/pie
 	name = "pie cannon"
 	desc = "Load cream pie for optimal results"
@@ -169,6 +181,7 @@
 	icon_state = "piecannon"
 	item_state = "powerfist"
 	gasPerThrow = 0
+	checktank = FALSE
 
 /obj/item/weapon/pneumatic_cannon/pie/attackby(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pie))
