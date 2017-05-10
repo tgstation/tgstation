@@ -521,6 +521,12 @@
 		M.heal_bodypart_damage(3,1)
 	..()
 
+/datum/reagent/consumable/mayonnaise
+	name = "Mayonnaise"
+	id = "mayonnaise"
+	description = "An white and oily mixture of mixed egg yolks."
+	color = "#DFDFDF"
+	taste_description = "mayonnaise"
 
 ////Lavaland Flora Reagents////
 
