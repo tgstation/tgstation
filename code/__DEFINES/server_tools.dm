@@ -1,4 +1,4 @@
-#define REBOOT_MODE_NORMAL 0    //keep as 0
+#define REBOOT_MODE_NORMAL 0
 #define REBOOT_MODE_HARD 1
 #define REBOOT_MODE_SHUTDOWN 2
 

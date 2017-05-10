@@ -10,6 +10,7 @@ GLOBAL_PROTECT(reboot_mode)
 /world/proc/IRCBroadcast(msg)
 	ExportService("irc [msg]")
 
+//called at the exact moment the world is supposed to reboot
 /world/proc/ServiceReboot()
 	switch(GLOB.reboot_mode)
 		if(REBOOT_MODE_HARD)

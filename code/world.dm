@@ -175,9 +175,9 @@
 			C << "<span class='announce'>PR: [announcement]</span>"
 #undef CHAT_PULLR
 
+//ServiceReboot handles alternative actions if necessary
 #define WORLD_REBOOT(X) \
-	if(GLOB.reboot_mode)\
-		ServiceReboot();\
+	ServiceReboot();\
 	log_world("World rebooted at [time_stamp()]");\
 	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>");\
 	..(X);\
