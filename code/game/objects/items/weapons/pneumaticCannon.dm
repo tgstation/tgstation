@@ -19,7 +19,6 @@
 	var/checktank = TRUE
 	var/range_multiplier = 1
 
-
 /obj/item/weapon/pneumatic_cannon/examine(mob/user)
 	..()
 	if(!in_range(user, src))
@@ -123,10 +122,10 @@
 /obj/item/weapon/pneumatic_cannon/proc/get_target(turf/target, turf/starting)
 	if(range_multiplier == 1)
 		return target
-	var/x_o = (starting.x - target.x)
-	var/y_o = (starting.y - target.y)
-	var/new_x = Clamp((starting + (x_o * range_multiplier)), 0, world.maxx)
-	var/new_y = Clamp((starting + (y_o * range_multiplier)), 0, world.maxy)
+	var/x_o = (target.x - starting.x)
+	var/y_o = (target.y - starting.y)
+	var/new_x = Clamp((starting.x + (x_o * range_multiplier)), 0, world.maxx)
+	var/new_y = Clamp((starting.y + (y_o * range_multiplier)), 0, world.maxy)
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
 
@@ -179,9 +178,9 @@
 	desc = "Load cream pie for optimal results"
 	force = 10
 	icon_state = "piecannon"
-	item_state = "powerfist"
 	gasPerThrow = 0
 	checktank = FALSE
+	range_multiplier = 3
 
 /obj/item/weapon/pneumatic_cannon/pie/attackby(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pie))
