@@ -34,19 +34,14 @@
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
 	var/seeking = FALSE
-
+	var/can_repair_constructs = FALSE
+	var/can_repair_self = FALSE
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	update_health_hud()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
-
-/mob/living/simple_animal/hostile/construct/Destroy()
-	for(var/X in actions)
-		var/datum/action/A = X
-		qdel(A)
-	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -69,7 +64,10 @@
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+	if(isconstruct(M)) //is it a construct?
+		var/mob/living/simple_animal/hostile/construct/C = M
+		if(!C.can_repair_constructs || (C == src && !C.can_repair_self))
+			return
 		if(health < maxHealth)
 			adjustHealth(-5)
 			if(src != M)
@@ -208,6 +206,8 @@
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
+	can_repair_constructs = TRUE
+	can_repair_self = TRUE
 
 /mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
 	if(isconstruct(A)) //is it a construct?
@@ -269,21 +269,50 @@
 	icon_living = "harvester"
 	maxHealth = 60
 	health = 60
-	melee_damage_lower = 1
-	melee_damage_upper = 5
-	retreat_distance = 2 //AI harvesters will move in and out of combat, like wraiths, but shittier
-	attacktext = "prods"
-	environment_smash = 3
-	attack_sound = 'sound/weapons/tap.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/targeted/smoke/disable)
-	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
+	sight = SEE_MOBS
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	attacktext = "butchers"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
+	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
+	can_repair_constructs = TRUE
 
-/mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
-	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
+	. = ..()
+	if(istype(AM, /turf/closed/wall/mineral/cult) && AM != loc) //we can go through cult walls
+		var/atom/movable/stored_pulling = pulling
+		if(stored_pulling)
+			stored_pulling.setDir(get_dir(stored_pulling.loc, loc))
+			stored_pulling.forceMove(loc)
+		forceMove(AM)
+		if(stored_pulling)
+			start_pulling(stored_pulling, TRUE) //drag anything we're pulling through the wall with us by magic
+
+/mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		var/list/parts = list()
+		var/undismembermerable_limbs = 0
+		for(var/X in C.bodyparts)
+			var/obj/item/bodypart/BP = X
+			if(BP.body_part != HEAD && BP.body_part != CHEST)
+				if(BP.dismemberable)
+					parts += BP
+				else
+					undismembermerable_limbs++
+		if(!LAZYLEN(parts))
+			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
+				return ..()
+			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
+			return FALSE
+		do_attack_animation(C)
+		var/obj/item/bodypart/BP = pick(parts)
+		BP.dismember()
+		return FALSE
+	. = ..()
 
 
 ///////////////////////Master-Tracker///////////////////////

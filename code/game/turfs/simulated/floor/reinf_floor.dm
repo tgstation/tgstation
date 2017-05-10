@@ -125,9 +125,6 @@
 	qdel(realappearence)
 	realappearence = null
 
-/turf/open/floor/engine/cult/narsie_act()
-	return
-
 /turf/open/floor/engine/cult/ratvar_act()
 	. = ..()
 	if(istype(src, /turf/open/floor/engine/cult)) //if we haven't changed type
