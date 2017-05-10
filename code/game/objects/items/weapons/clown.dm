@@ -17,11 +17,13 @@
 	return ..()
 
 /obj/item/weapon/pie_cannon/afterattack(atom/target, mob/living/user, flag, params)
-	if(!P)
+	if(!loaded)
 		return ..()
-	var/obj/item/projectile/launched = new /obj/item/projectile/pie
+	var/obj/item/projectile/pie/launched = new /obj/item/projectile/pie(src)
 	launched.P = loaded
 	loaded.forceMove(launched)
+	launched.appearence = loaded.appearence
+	loaded = null
 	launched.preparePixelProjectile(target, get_turf(target), user, params, 0)
 	launched.forceMove(get_turf(src))
 	launched.fire()
@@ -36,3 +38,7 @@
 	if(P)
 		P.forceMove(get_turf(A))
 		P.throw_impact(A)
+	if(ismovableatom(A))
+		var/atom/movable/AM = A
+		if(!AM.anchored)
+			AM.throw_at(get_edge_target_turf(get_dir(src, AM), 3, 2))
