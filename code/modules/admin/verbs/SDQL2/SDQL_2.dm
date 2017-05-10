@@ -451,7 +451,7 @@
 		v = expression[start]
 	if(long)
 		if(expression[start + 1] == ".")
-			return world.SDQL_var(v, expression[start + 2], source = source)
+			return SDQL_var(v, expression[start + 2], source = source)
 		else if(expression[start + 1] == ":")
 			return SDQL_function(object, v, expression[start + 2], source)
 		else if(expression[start + 1] == "\[" && islist(v))
