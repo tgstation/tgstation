@@ -165,3 +165,6 @@
 
 /datum/objective/abductee/pairoff
 	explanation_text = "Being alone and in large groups are both frightening.  Try to be alone with only one other person whenever possible."
+
+/datum/objective/abductee/takeblame
+	explanation_text = "Try to get formally executed for a crime you didn't commit, without a false confession."
