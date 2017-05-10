@@ -53,14 +53,16 @@ GLOBAL_PROTECT(reboot_mode)
 				return "No message set!"
 			to_chat(src, "<span class='boldannounce'>[html_encode(msg)]</span>")
 		if("irc_check")
-			if(time - last_irc_status < IRC_STATUS_THROTTLE)
+			var/rtod = REALTIMEOFDAY
+			if(rtod - last_irc_status < IRC_STATUS_THROTTLE)
 				return
-			last_irc_status = time
+			last_irc_status = rtod
 			return "[GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [config.server ? config.server : "byond://[address]:[port]"]" 
 		if("irc_status")
-			if(time - last_irc_status < IRC_STATUS_THROTTLE)
+			var/rtod = REALTIMEOFDAY
+			if(rtod - last_irc_status < IRC_STATUS_THROTTLE)
 				return
-			last_irc_status = time
+			last_irc_status = rtod
 			var/list/adm = get_admin_counts()
 			var/list/allmins = adm["total"]
 			var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
