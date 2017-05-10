@@ -26,8 +26,11 @@
 /datum/field/peaceborg_dampener/process()
 	if(!istype(projector))
 		qdel(src)
+	var/list/ranged = list()
+	for(var/obj/item/projectile/P in range(square_radius, center))
+		ranged += P
 	for(var/obj/item/projectile/P in tracked)
-		if(!P.loc)
+		if(!P in ranged)
 			release_projectile(P)
 	for(var/mob/living/silicon/robot/R in range(square_radius, center))
 		if(R.buckled_mobs)

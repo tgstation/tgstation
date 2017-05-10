@@ -511,9 +511,9 @@
 		while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield"
-	var/maxenergy = 1000
-	var/energy = 1000
-	var/energy_recharge = 10
+	var/maxenergy = 1500
+	var/energy = 1500
+	var/energy_recharge = 15
 	var/energy_recharge_cyborg_drain_coefficient = 0.5
 	var/cyborg_cell_critical_percentage = 0.05
 	var/mob/living/silicon/robot/host = null
@@ -521,11 +521,36 @@
 	var/projectile_damage_coefficient = 0.5
 	var/projectile_damage_tick_ecost_coefficient = 2	//Lasers get half their damage chopped off, drains 50 power/tick. Note that fields are processed 5 times per second.
 	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
-	var/projectile_tick_speed_ecost = 20
+	var/projectile_tick_speed_ecost = 10
 	var/current_damage_dampening = 0
 	var/list/obj/item/projectile/tracked
 	var/image/projectile_effect
 	var/field_radius = 3
+
+/* Calculations
+Ticking at fastprocess = 5 ticks/second
+
+Recharge = 15/tick. 15*5 = 75 energy/second recharge.
+75*cell_drain_coefficient(0.5) = 37.5
+Draining 37.5 from cyborg cell per second.
+
+1500 maxenergy
+takes 20 seconds to fully recharge projectile field
+
+Regular laser: 20 damage burn energy beam
+coeff = 0.5 || 20 damage --> 10 damage
+10 damage drained, damage tick coefficient = 2.
+20 energy/tick drain on projector
+tick speed ecost = 10
+10 energy/tick
+Draining: 20*5 + 10*5 = 150 energy/second.
+
+@ 150 energy/second: 10 seconds to fully drain projectile field without recharging.
+20 seconds to fully drain projectile field with recharging.
+Each laser stays approximately 2 seconds in projectile field.
+10 lasers fully drain cyborg.
+
+*/
 
 /obj/item/borg/projectile_dampen/debug
 	maxenergy = 50000
