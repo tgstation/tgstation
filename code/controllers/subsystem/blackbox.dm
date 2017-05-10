@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(blackbox)
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
+	. = ..()
 
 
 //poll population
@@ -35,7 +36,7 @@ SUBSYSTEM_DEF(blackbox)
 	query_record_playercount.Execute()
 
 	if(config.use_exp_tracking)
-		if((triggertime < 0) || (world.time > (triggertime +3000)))	//server maint fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire
+		if((triggertime < 0) || (world.time > (triggertime +3000)))	//server maint fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
 			update_exp(10,0)
 
 
@@ -107,6 +108,7 @@ SUBSYSTEM_DEF(blackbox)
 
 	var/datum/DBQuery/query_feedback_save = SSdbcore.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
 	query_feedback_save.Execute()
+	update_exp_db()
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(blackbox_msg, freq)
 	switch(freq)

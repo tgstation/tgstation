@@ -1,5 +1,7 @@
-// Admin Verbs
+GLOBAL_LIST_INIT(exp_to_update, list())
+GLOBAL_PROTECT(exp_to_update)
 
+// Admin Verbs
 /client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
 	set category = "Admin"
 	set name = "Check Player Playtime"
@@ -10,7 +12,6 @@
 		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg, "window=Player_playtime_check")
-
 
 /datum/admins/proc/cmd_show_exp_panel(var/client/C)
 	if(!C)
@@ -72,7 +73,7 @@
 		return "Tracking is disabled in the server configuration file."
 	var/list/play_records = prefs.exp
 	if(!play_records.len)
-		update_exp_client(0, 0)
+		set_exp_from_db()
 		play_records = prefs.exp
 		if(!play_records.len)
 			return "[key] has no records."
@@ -88,8 +89,8 @@
 			if(dep == EXP_TYPE_EXEMPT)
 				return_text += "<LI>Exempt (all jobs auto-unlocked)</LI>"
 			else if(exp_data[EXP_TYPE_LIVING] > 0)
-				var/my_pc = num2text(round(exp_data[dep]/exp_data[EXP_TYPE_LIVING]*100))
-				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] ([my_pc]%)</LI>"
+				var/percentage = num2text(round(exp_data[dep]/exp_data[EXP_TYPE_LIVING]*100))
+				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] ([percentage]%)</LI>"
 			else
 				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] </LI>"
 	if(config.use_exp_restrictions_admin_bypass && check_rights(R_ADMIN, 0, mob))
@@ -132,17 +133,14 @@
 /proc/update_exp(var/mins, var/ann = 0)
 	if(!SSdbcore.Connect())
 		return -1
-//	spawn(0)
 	for(var/client/L in GLOB.clients)
 		if(L.inactivity >= 6000)
 			continue
-		addtimer(L.update_exp_client(mins, ann),10)
+		addtimer(L.update_exp_list(mins, ann),10)
 		CHECK_TICK
 
-
+//Manual incrementing/updating
 /client/proc/update_exp_client(var/minutes, var/announce_changes = 0)
-	to_chat(world,"Activated. Amount: [minutes]")
-	log_world("Activated. Amount: [minutes]")
 	if(!src ||!ckey || !config.use_exp_tracking)
 		return
 	if(!SSdbcore.Connect())
@@ -185,9 +183,92 @@
 	for(var/jtype in play_records)
 		var jobname = jtype
 		var time = play_records[jtype]
-		var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(ckey)]', '[jobname]', '[time]') ON DUPLICATE KEY UPDATE minutes = '[time]'")
+		var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(jobname)]', '[sanitizeSQL(time)]') ON DUPLICATE KEY UPDATE minutes = '[sanitizeSQL(time)]'")
 		if(!update_query.Execute())
 			var/err = update_query.ErrorMsg()
 			log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
 			message_admins("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
 			return
+
+
+
+/client/proc/update_exp_list(var/minutes, var/announce_changes = 0)
+	if(!src ||!ckey || !config.use_exp_tracking)
+		return
+
+	var/list/play_records = prefs.exp
+	var/list/old_records = prefs.exp.Copy()
+
+	for(var/rtype in GLOB.exp_jobsmap)
+		if(!play_records[rtype])
+			play_records[rtype] = 0
+	if(mob.stat == CONSCIOUS && mob.mind.assigned_role)
+		play_records[EXP_TYPE_LIVING] += minutes
+		if(announce_changes)
+			to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!")
+		for(var/category in GLOB.exp_jobsmap)
+			if(GLOB.exp_jobsmap[category]["titles"])
+				if(mob.mind.assigned_role in GLOB.exp_jobsmap[category]["titles"])
+					play_records[category] += minutes
+					if(announce_changes)
+						to_chat(mob,"<span class='notice'>You got: [minutes] [category] EXP!")
+		if(mob.mind.special_role)
+			play_records[EXP_TYPE_SPECIAL] += minutes
+			if(announce_changes)
+				to_chat(mob,"<span class='notice'>You got: [minutes] Special EXP!")
+	else if(isobserver(mob))
+		play_records[EXP_TYPE_GHOST] += minutes
+		if(announce_changes)
+			to_chat(mob,"<span class='notice'>You got: [minutes] Ghost EXP!")
+	else if(minutes)	//Let "refresh" checks go through
+		return
+
+	for(var/jtype in play_records)
+		if(play_records[jtype] != old_records[jtype])
+			LAZYINITLIST(GLOB.exp_to_update[ckey])
+			LAZYINITLIST(GLOB.exp_to_update[ckey][jtype])
+			GLOB.exp_to_update[ckey][jtype] = play_records[jtype]
+	prefs.exp = play_records
+
+
+
+
+//resets a client's exp to what was in the db.
+/client/proc/set_exp_from_db()
+	if(!src ||!ckey || !config.use_exp_tracking)
+		return
+	if(!SSdbcore.Connect())
+		return -1
+	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
+	if(!exp_read.Execute())
+		var/err = exp_read.ErrorMsg()
+		log_game("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
+		message_admins("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
+		return
+	var/list/play_records = list()
+	while(exp_read.NextRow())
+		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
+
+	for(var/rtype in GLOB.exp_jobsmap)
+		if(!play_records[rtype])
+			play_records[rtype] = 0
+
+	prefs.exp = play_records
+
+//writes everything in the exp_to_update list to the db
+/proc/update_exp_db()
+	if(!config.use_exp_tracking)
+		return
+	if(!SSdbcore.Connect())
+		return -1
+	for(var/keys in GLOB.exp_to_update)
+		var/keyname = keys
+		for(var/jtype in GLOB.exp_to_update[keyname])
+			var jobname = jtype
+			var time = GLOB.exp_to_update[keyname][jtype]
+			var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(keyname)]', '[sanitizeSQL(jobname)]', '[sanitizeSQL(time)]') ON DUPLICATE KEY UPDATE minutes = '[sanitizeSQL(time)]'")
+			if(!update_query.Execute())
+				var/err = update_query.ErrorMsg()
+				log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
+				message_admins("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
+				return
