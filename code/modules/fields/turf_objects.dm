@@ -9,6 +9,11 @@
 	flags = ABSTRACT
 	var/datum/field/parent = null
 
+/atom/movable/field_object/New(newparent = null)
+	if(!isnull(newparent))
+		parent = newparent
+	return ..()
+
 /atom/movable/field_object/field_turf
 	name = "energy field"
 	desc = "Get off my turf!"

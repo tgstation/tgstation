@@ -169,10 +169,10 @@
 	edge_turfs -= T
 
 /datum/field/proc/setup_field_turf(turf/T)
-	field_turfs[T] = new /atom/movable/field_object/field_turf
+	field_turfs[T] = new /atom/movable/field_object/field_turf(T, newparent = src)
 
 /datum/field/proc/setup_edge_turf(turf/T)
-	edge_turfs[T] = new /atom/movable/field_object/field_edge
+	edge_turfs[T] = new /atom/movable/field_object/field_edge(T, newparent = src)
 
 /datum/field/proc/update_new_turfs()
 	if(!istype(center))

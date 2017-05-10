@@ -530,7 +530,7 @@
 /obj/item/borg/projectile_dampen/debug
 	maxenergy = 50000
 	energy = 50000
-	energy_recharge = 50
+	energy_recharge = 5000
 
 /obj/item/borg/projectile_dampen/Initialize()
 	..()

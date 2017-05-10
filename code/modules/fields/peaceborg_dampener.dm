@@ -5,6 +5,7 @@
 	name = "\improper Hyperkinetic Dampener Field"
 	requires_processing = TRUE
 	setup_edge_turfs = TRUE
+	setup_field_turfs = TRUE
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
 	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
 	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
@@ -25,6 +26,9 @@
 /datum/field/peaceborg_dampener/process()
 	if(!istype(projector))
 		qdel(src)
+	for(var/obj/item/projectile/P in tracked)
+		if(!P.loc)
+			release_projectile(P)
 	for(var/mob/living/silicon/robot/R in range(square_radius, center))
 		if(R.buckled_mobs)
 			for(var/mob/living/L in R.buckled_mobs)
@@ -87,6 +91,6 @@
 	return ..()
 
 /datum/field/peaceborg_dampener/field_edge_crossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
-	if(!AM in tracked)
+	if(istype(AM, /obj/item/projectile) && !(AM in tracked))
 		capture_projectile(AM)
 	return ..()
