@@ -11492,7 +11492,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/pool)
+/area/hippie/pool)
 "azh" = (
 /obj/machinery/camera{
 	c_tag = "Fitness Room South";
