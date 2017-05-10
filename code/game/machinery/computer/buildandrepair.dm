@@ -159,6 +159,10 @@
 	name = "Turbine Computer (Computer Board)"
 	build_path = /obj/machinery/computer/turbine_computer
 	origin_tech = "programming=4;engineering=4;powerstorage=4"
+/obj/item/weapon/circuitboard/computer/launchpad_console
+	name = "Launchpad Control Console (Computer Board)"
+	build_path = /obj/machinery/computer/launchpad
+	origin_tech = "programming=3;bluespace=3;plasmatech=2"
 /obj/item/weapon/circuitboard/computer/message_monitor
 	name = "Message Monitor (Computer Board)"
 	build_path = /obj/machinery/computer/message_monitor
