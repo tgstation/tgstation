@@ -60,7 +60,6 @@ GLOBAL_LIST_INIT(nonhuman_positions, list(
 	"pAI"))
 
 GLOBAL_LIST_INIT(exp_jobsmap, list(
-	EXP_TYPE_LIVING = list(), // all living mobs
 	EXP_TYPE_CREW = list(titles = command_positions | engineering_positions | medical_positions | science_positions | supply_positions | security_positions | civilian_positions | list("AI","Cyborg")), // crew positions
 	EXP_TYPE_COMMAND = list(titles = command_positions),
 	EXP_TYPE_ENGINEERING = list(titles = engineering_positions),
@@ -70,6 +69,10 @@ GLOBAL_LIST_INIT(exp_jobsmap, list(
 	EXP_TYPE_SECURITY = list(titles = security_positions),
 	EXP_TYPE_SILICON = list(titles = list("AI","Cyborg")),
 	EXP_TYPE_SERVICE = list(titles = civilian_positions),
+))
+
+GLOBAL_LIST_INIT(exp_specialmap, list(
+	EXP_TYPE_LIVING = list(), // all living mobs
 	EXP_TYPE_SPECIAL = list(), // antags, ERT, etc
 	EXP_TYPE_GHOST = list(), // dead people, observers
 	EXP_TYPE_EXEMPT = list() // special grandfather setting

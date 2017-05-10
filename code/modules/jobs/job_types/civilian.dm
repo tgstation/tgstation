@@ -11,9 +11,6 @@ Clown
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	exp_requirements = 30
-	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_SECURITY	//HONK
 
 	outfit = /datum/outfit/job/clown
 

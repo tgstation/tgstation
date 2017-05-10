@@ -130,12 +130,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	menuoptions = list()
 	return
 
-/datum/preferences/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("exp")
-	if(var_name in banned_edits)
-		return FALSE
-	return ..()
-
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return

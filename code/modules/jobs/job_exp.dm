@@ -56,7 +56,7 @@
 	var/isexempt = C.prefs.exp[EXP_TYPE_EXEMPT]
 	if(isexempt)
 		return 0
-	var/my_exp = C.prefs.exp[get_exp_req_type()]
+	var/my_exp = calc_exp_type(C,get_exp_req_type())
 	var/job_requirement = get_exp_req_amount()
 	if(my_exp >= job_requirement)
 		return 0
@@ -82,6 +82,17 @@
 		return 0
 	return 1
 
+/proc/calc_exp_type(client/C,exptype)
+	var/list/explist = C.prefs.exp.Copy()
+	var/amount = 0
+	var/list/typelist = GLOB.exp_jobsmap[exptype]
+	if(!typelist)
+		return -1
+	for(var/job in typelist["titles"])
+		if(job in explist)
+			amount += explist[job]
+	return amount
+
 /client/proc/get_exp_report()
 	if(!config.use_exp_tracking)
 		return "Tracking is disabled in the server configuration file."
@@ -94,7 +105,12 @@
 	var/return_text = list()
 	return_text += "<UL>"
 	var/list/exp_data = list()
-	for(var/category in GLOB.exp_jobsmap)
+	for(var/category in SSjob.name_occupations)
+		if(play_records[category])
+			exp_data[category] = text2num(play_records[category])
+		else
+			exp_data[category] = 0
+	for(var/category in GLOB.exp_specialmap)
 		if(play_records[category])
 			exp_data[category] = text2num(play_records[category])
 		else
@@ -121,7 +137,7 @@
 				jobs_unlocked += job.title
 			else
 				var/xp_req = job.get_exp_req_amount()
-				jobs_locked += "[job.title] [get_exp_format(text2num(play_records[job.get_exp_req_type()]))] / [get_exp_format(xp_req)] as [job.get_exp_req_type()])"
+				jobs_locked += "[job.title] [get_exp_format(text2num(calc_exp_type(src,job.get_exp_req_type())))] / [get_exp_format(xp_req)] as [job.get_exp_req_type()])"
 	if(jobs_unlocked.len)
 		return_text += "<BR><BR>Jobs Unlocked:<UL><LI>"
 		return_text += jobs_unlocked.Join("</LI><LI>")
@@ -170,7 +186,10 @@
 	while(exp_read.NextRow())
 		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
 
-	for(var/rtype in GLOB.exp_jobsmap)
+	for(var/rtype in SSjob.name_occupations)
+		if(!play_records[rtype])
+			play_records[rtype] = 0
+	for(var/rtype in GLOB.exp_specialmap)
 		if(!play_records[rtype])
 			play_records[rtype] = 0
 	var/list/old_records = play_records.Copy()
@@ -178,12 +197,11 @@
 		play_records[EXP_TYPE_LIVING] += minutes
 		if(announce_changes)
 			to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!")
-		for(var/category in GLOB.exp_jobsmap)
-			if(GLOB.exp_jobsmap[category]["titles"])
-				if(mob.mind.assigned_role in GLOB.exp_jobsmap[category]["titles"])
-					play_records[category] += minutes
-					if(announce_changes)
-						to_chat(mob,"<span class='notice'>You got: [minutes] [category] EXP!")
+		for(var/job in SSjob.name_occupations)
+			if(mob.mind.assigned_role == job)
+				play_records[job] += minutes
+				if(announce_changes)
+					to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!")
 		if(mob.mind.special_role)
 			play_records[EXP_TYPE_SPECIAL] += minutes
 			if(announce_changes)
@@ -200,7 +218,7 @@
 		if(play_records[jtype] != old_records[jtype])
 			var jobname = jtype
 			var time = play_records[jtype]
-			var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(jobname)]', '[sanitizeSQL(time)]') ON DUPLICATE KEY UPDATE minutes = VALUES('[sanitizeSQL(time)]')")
+			var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(jobname)]', '[sanitizeSQL(time)]') ON DUPLICATE KEY UPDATE minutes = VALUES(minutes)")
 			if(!update_query.Execute())
 				var/err = update_query.ErrorMsg()
 				log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
@@ -223,7 +241,10 @@
 	while(exp_read.NextRow())
 		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
 
-	for(var/rtype in GLOB.exp_jobsmap)
+	for(var/rtype in SSjob.name_occupations)
+		if(!play_records[rtype])
+			play_records[rtype] = 0
+	for(var/rtype in GLOB.exp_specialmap)
 		if(!play_records[rtype])
 			play_records[rtype] = 0
 
@@ -237,9 +258,9 @@
 	if(!SSdbcore.Connect())
 		return -1
 
-	var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(C.ckey)]', '[EXP_TYPE_EXEMPT]', '[sanitizeSQL(exempt)]') ON DUPLICATE KEY UPDATE minutes = VALUES('[sanitizeSQL(exempt)]')")
+	var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(C.ckey)]', '[EXP_TYPE_EXEMPT]', '[sanitizeSQL(exempt)]') ON DUPLICATE KEY UPDATE minutes = VALUES(minutes)")
 	if(!update_query.Execute())
 		var/err = update_query.ErrorMsg()
-		log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
+		log_game("SQL ERROR during exp_exempt update. Error : \[[err]\]\n")
+		message_admins("SQL ERROR during exp_exempt. Error : \[[err]\]\n")
 		return
