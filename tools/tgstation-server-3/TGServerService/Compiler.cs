@@ -11,7 +11,7 @@ namespace TGServerService
 	partial class TGStationServer : ITGCompiler
 	{
 		#region Win32 Shit
-		[DllImport("kernel32.dll")]
+		[DllImport("kernel32.dll", SetLastError = true)]
 		static extern bool CreateSymbolicLink(string lpSymlinkFileName, string lpTargetFileName, SymbolicLink dwFlags);
 		enum SymbolicLink
 		{
@@ -89,7 +89,7 @@ namespace TGServerService
 		void CreateSymlink(string link, string target)
 		{
 			if (!CreateSymbolicLink(new DirectoryInfo(link).FullName, new DirectoryInfo(target).FullName, File.Exists(target) ? SymbolicLink.File : SymbolicLink.Directory))
-				throw new Exception(String.Format("Failed to create symlink from {0} to {1}!", target, link));
+				throw new Exception(String.Format("Failed to create symlink from {0} to {1}! Error: {2}", target, link, Marshal.GetLastWin32Error()));
 		}
 
 		//requires CompilerLock to be locked
