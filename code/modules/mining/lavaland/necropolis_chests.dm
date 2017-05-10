@@ -10,7 +10,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,25)
+	var/loot = rand(1,26)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -33,7 +33,7 @@
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/grant_omnitongue(src)
+			new /obj/item/organ/heart/cursed/wizard(src)
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
@@ -65,6 +65,8 @@
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
 		if(25)
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
+		if(26)
+			new /obj/item/book_of_babel(src)
 
 
 
@@ -347,15 +349,15 @@
 
 //Book of Babel
 
-/obj/item/grant_omnitongue
+/obj/item/book_of_babel
 	name = "Book of Babel"
 	desc = "An ancient tome written in countless tongues."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "book1"
 	w_class = 2
 
-/obj/item/grant_omnitongue/attack_self(mob/user)
-	to_chat(user, "You flip through the pages of the book, quickly and conviently learning every language in existence. Somewhat less convienently, the aging book crumbles to dust in the process. Whoops.")
+/obj/item/book_of_babel/attack_self(mob/user)
+	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
 	user.grant_all_languages(omnitongue=TRUE)
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
