@@ -69,7 +69,7 @@
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+	if(istype(M, /mob/living/simple_animal/hostile/construct/builder) || istype(M, /mob/living/simple_animal/hostile/construct/harvester/chosen))
 		if(health < maxHealth)
 			adjustHealth(-5)
 			if(src != M)
@@ -284,6 +284,51 @@
 /mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
+
+/////////////////////////////Chosen Harvester/////////////////////////
+/mob/living/simple_animal/hostile/construct/harvester/chosen
+	name = "Chosen Harvester"
+	real_name = "Chosen Harvester"
+	desc = "A chosen construct, bestowed upon the most faithful of Nar-Sie. It will be all over soon."
+	icon_state = "chosen"
+	icon_living = "chosen"
+	obj_damage = 90
+	maxHealth = 120
+	health = 120
+	force_threshold = 11
+	melee_damage_lower = 45
+	melee_damage_upper = 50
+	attacktext = "butchers"
+	environment_smash = 3
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
+	playstyle_string = "<B>You are a Chosen Harvester. You have razor-sharp pincers, the ability to repair your bretheren, and an arsenal of magic: \
+						Find those who still cling to this illusory, cut them to pieces, and bring them back to the Geometer so they may know Truth.</B>"
+
+/mob/living/simple_animal/hostile/construct/harvester/chosen/AttackingTarget()
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = target
+		var/list/parts = list()
+		parts = H.bodyparts.Copy(3,0)
+		var/obj/item/bodypart/RIP
+		do_attack_animation(H)
+		if(LAZYLEN(parts) == 0)
+			H.Weaken(30)
+			visible_message("<span class='danger'>[src] feints a deathblow against [H], they are frozen in terror!</span>")
+			return 0
+		RIP = pick(parts)
+		RIP.dismember()
+		return 0
+	. = ..()
+
+/mob/living/simple_animal/hostile/construct/harvester/chosen/hostile //actually hostile, will move around, hit things
+	AIStatus = AI_ON
+	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
+
 
 
 ///////////////////////Master-Tracker///////////////////////
