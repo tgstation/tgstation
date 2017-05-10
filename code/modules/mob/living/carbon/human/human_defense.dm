@@ -88,6 +88,8 @@
 
 				return -1 // complete projectile permutation
 
+		LAssailant = P.firer
+
 		if(check_shields(P.damage, "the [P.name]", P, PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone)
 			return 2
@@ -137,6 +139,7 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = I.throwforce
+		LAssailant = I.thrownby
 		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
 			return ..()
 	if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
@@ -174,6 +177,8 @@
 /mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
 	if(!I || !user)
 		return 0
+
+	LAssailant = user
 
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected)) //what we're actually ending up trying to hit.
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
