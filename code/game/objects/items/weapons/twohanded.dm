@@ -266,7 +266,7 @@
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
 /obj/item/weapon/twohanded/dualsaber/Initialize()
-	..()
+	. = ..()
 	if(LAZYLEN(possible_colors))
 		item_color = pick(possible_colors)
 		switch(item_color)
