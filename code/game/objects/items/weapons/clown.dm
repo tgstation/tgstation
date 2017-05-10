@@ -22,7 +22,7 @@
 	var/obj/item/projectile/pie/launched = new /obj/item/projectile/pie(src)
 	launched.P = loaded
 	loaded.forceMove(launched)
-	launched.appearence = loaded.appearence
+	launched.appearance = loaded.appearance
 	loaded = null
 	launched.preparePixelProjectile(target, get_turf(target), user, params, 0)
 	launched.forceMove(get_turf(src))
