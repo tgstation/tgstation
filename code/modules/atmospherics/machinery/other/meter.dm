@@ -16,7 +16,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 40, acid = 0)
 
 
-/obj/machinery/meter/Initialize()
+/obj/machinery/meter/Initialize(mapload)
 	. = ..()
 	SSair.atmos_machinery += src
 	if (mapload && !target)
