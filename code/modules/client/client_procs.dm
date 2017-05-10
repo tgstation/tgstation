@@ -427,14 +427,15 @@ GLOBAL_LIST(external_rsc_urls)
 		if(!account_join_date)
 			account_join_date = "Error"
 			account_age = -1
-	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())
 		return
 	if(query_get_client_age.NextRow())
-		player_age = text2num(query_get_client_age.item[1])
+		player_join_date = query_get_client_age.item[1]
+		player_age = text2num(query_get_client_age.item[2])
 		if(!account_join_date)
-			account_join_date = query_get_client_age.item[2]
-			account_age = text2num(query_get_client_age.item[3])
+			account_join_date = query_get_client_age.item[3]
+			account_age = text2num(query_get_client_age.item[4])
 			if(!account_age)
 				account_join_date = sanitizeSQL(findJoinDate())
 				if(!account_join_date)

@@ -38,9 +38,6 @@
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 	narsie_spawn_animation()
 
-
-
-
 /obj/singularity/narsie/large/cult  // For the new cult ending, guaranteed to end the round within 3 minutes
 	var/list/souls_needed = list()
 	var/soul_goal = 0
@@ -65,7 +62,9 @@
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.6)
 	sleep(50)
 	priority_announce("Acausal dimensional event detected in your sector. Analysis indicates sterile neutrino scattering and an anomaly possessing internal teleonomy that is inimicable to all organic life - event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating possible solutions. SOLUTION ETA: 60 SECONDS.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
-	sleep(600)
+	sleep(550)
+  priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: TWO MINUTES. ","Central Command Higher Dimensional Affairs")
+  sleep(50)
 	set_security_level("delta")
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.lockdown = TRUE
@@ -88,8 +87,7 @@
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
-	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, null, 0, loc_override = src.loc)
-	new /obj/effect/particle_effect/smoke/sleeping(src.loc)
+	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, cultoverride = TRUE, loc_override = src.loc)
 
 
 /obj/singularity/narsie/process()
@@ -126,7 +124,8 @@
 
 
 /obj/singularity/narsie/consume(atom/A)
-	A.narsie_act()
+	if(isturf(A))
+		A.narsie_act()
 
 
 /obj/singularity/narsie/ex_act() //No throwing bombs at her either.

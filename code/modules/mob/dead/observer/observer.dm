@@ -54,7 +54,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/deadchat_name
 
 /mob/dead/observer/Initialize()
-	invisibility = GLOB.observer_default_invisibility
+	set_invisibility(GLOB.observer_default_invisibility)
 
 	verbs += /mob/dead/observer/proc/dead_tele
 
@@ -126,22 +126,21 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/observer/narsie_act()
 	var/old_color = color
 	color = "#960000"
-	animate(src, color = old_color, time = 10)
+	animate(src, color = old_color, time = 10, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/ratvar_act()
 	var/old_color = color
 	color = "#FAE48C"
-	animate(src, color = old_color, time = 10)
+	animate(src, color = old_color, time = 10, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
+/mob/dead/observer/Destroy()
 	GLOB.ghost_images_default -= ghostimage_default
-	qdel(ghostimage_default)
-	ghostimage_default = null
+	QDEL_NULL(ghostimage_default)
 
 	GLOB.ghost_images_simple -= ghostimage_simple
-	qdel(ghostimage_simple)
-	ghostimage_simple = null
+	QDEL_NULL(ghostimage_simple)
 
 	updateallghostimages()
 	return ..()
@@ -789,13 +788,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!invisibility)
 		to_chat(user, "It seems extremely obvious.")
 
+/mob/dead/observer/proc/set_invisibility(value)
+	invisibility = value
+	if(!value)
+		set_light(1, 2)
+	else
+		set_light(0, 0)
+
 // Ghosts have no momentum, being massless ectoplasm
 /mob/dead/observer/Process_Spacemove(movement_dir)
 	return 1
 
+/mob/dead/observer/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == "invisibility")
+		set_invisibility(invisibility) // updates light
+
 /proc/set_observer_default_invisibility(amount, message=null)
 	for(var/mob/dead/observer/G in GLOB.player_list)
-		G.invisibility = amount
+		G.set_invisibility(amount)
 		if(message)
 			to_chat(G, message)
 	GLOB.observer_default_invisibility = amount
