@@ -19,6 +19,16 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/effect/countdown/dominator/countdown
 
+/proc/dominator_excessive_walls(atom/A)
+	var/open = 0
+	for(var/turf/T in circleviewturfs(center=A,radius=3))
+		if(!istype(T, /turf/closed))
+			open++
+	if(open < 40)
+		return TRUE
+	else 
+		return FALSE
+
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
 
@@ -51,11 +61,7 @@
 	if(gang && gang.is_dominating)
 		var/time_remaining = gang.domination_time_remaining()
 		if(time_remaining > 0)
-			var/open = 0
-			for(var/turf/T in circleviewturfs(center=src,radius=3))
-				if(!istype(T, /turf/closed))
-					open++
-			if(open < 40)
+			if(dominator_excessive_walls(src))
 				gang.domination_timer += 2
 				playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 				if(spam_prevention < DOM_BLOCKED_SPAM_CAP)
@@ -64,7 +70,7 @@
 					gang.message_gangtools("Warning: There are too many walls around your gang's dominator, its signal is being blocked!")
 					say("Error: Takeover signal is currently blocked! There are too many walls within 3 standard units of this device.")
 					spam_prevention = 0
-				return
+					return
 			. = TRUE
 			playsound(loc, 'sound/items/timer.ogg', 10, 0)
 			if(!warned && (time_remaining < 180))
