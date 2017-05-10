@@ -1126,7 +1126,7 @@
             // 
             // WorldStatusTimer
             // 
-            this.WorldStatusTimer.Interval = 5000;
+            this.WorldStatusTimer.Interval = 10000;
             this.WorldStatusTimer.Tick += new System.EventHandler(this.WorldStatusTimer_Tick);
             // 
             // FullUpdateWorker
