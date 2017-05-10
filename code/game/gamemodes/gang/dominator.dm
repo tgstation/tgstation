@@ -1,3 +1,5 @@
+#define DOM_BLOCKED_SPAM_CAP 6
+
 /obj/machinery/dominator
 	name = "dominator"
 	desc = "A visibly sinister device. Looks like you can break it if you hit it enough."
@@ -13,7 +15,7 @@
 	var/datum/gang/gang
 	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
-	var/spam_prevention = 100
+	var/spam_prevention = DOM_BLOCKED_SPAM_CAP //first message is immediate
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/effect/countdown/dominator/countdown
 
@@ -56,11 +58,11 @@
 			if(open < 40)
 				gang.domination_timer += 2
 				playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
-				if(spam_prevention < 6)
+				if(spam_prevention < DOM_BLOCKED_SPAM_CAP)
 					spam_prevention++
 				else
-					gang.message_gangtools("Warning: There are too many walls around your dominator, its signal is being blocked!")
-					say("Warning: There are too many walls around your dominator, its signal is being blocked!")
+					gang.message_gangtools("Warning: There are too many walls around your gang's dominator, its signal is being blocked!")
+					say("Error: Takeover signal is currently blocked! There are too many walls within 3 standard units of this device.")
 					spam_prevention = 0
 				return
 			. = TRUE
