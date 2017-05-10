@@ -285,13 +285,7 @@
 			to_chat(user, "<span class='warning'>There's not enough room here!</span>")
 			return FALSE
 	
-	var/open = 0
-	for(var/turf/T in circleviewturfs(center=user,radius=3))
-		if(!istype(T, /turf/closed))
-			open++
-	if(open < 40)
-		to_chat(user, "<span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires an open space so that walls do not interfere with the signal.</span>")
-		return FALSE
+	dominator_area_check(user)
 
 	if(!(usrarea.type in gang.territory|gang.territory_new))
 		to_chat(user, "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>")
