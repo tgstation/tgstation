@@ -20,8 +20,9 @@
 
 //SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 
+//deprecated, can be replaced
 //subsystem should fire during pre-game lobby.
-#define SS_FIRE_IN_LOBBY 1
+//#define SS_FIRE_IN_LOBBY 1
 
 //subsystem does not initialize.
 #define SS_NO_INIT 2
@@ -40,7 +41,7 @@
 
 //Treat wait as a tick count, not DS, run every wait ticks.
 //	(also forces it to run first in the tick, above even SS_NO_TICK_CHECK subsystems)
-//	(implies SS_FIRE_IN_LOBBY because of how it works)
+//	(implies all runlevels because of how it works)
 //	(overrides SS_BACKGROUND)
 //	This is designed for basically anything that works as a mini-mc (like SStimer)
 #define SS_TICKER 32

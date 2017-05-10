@@ -2,6 +2,8 @@ SUBSYSTEM_DEF(inbounds)
 	name = "Inbounds"
 	priority = 40
 	flags = SS_NO_INIT
+	runlevel_min = RUNLEVEL_GAME
+	runlevel_max = RUNLEVEL_GAME
 
 	var/list/processing = list()
 	var/list/currentrun = list()

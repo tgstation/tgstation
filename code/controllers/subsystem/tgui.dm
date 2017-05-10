@@ -1,8 +1,9 @@
 SUBSYSTEM_DEF(tgui)
 	name = "tgui"
 	wait = 9
-	flags = SS_NO_INIT|SS_FIRE_IN_LOBBY
+	flags = SS_NO_INIT
 	priority = 110
+	runlevel_min = RUNLEVEL_LOBBY
 
 	var/list/currentrun = list()
 	var/list/open_uis = list() // A list of open UIs, grouped by src_object and ui_key.

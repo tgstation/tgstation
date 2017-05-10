@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(mobs)
 	name = "Mobs"
 	priority = 100
 	flags = SS_KEEP_TIMING|SS_NO_INIT
+	runlevel_min = RUNLEVEL_GAME
 
 	var/list/currentrun = list()
 

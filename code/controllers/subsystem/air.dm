@@ -12,6 +12,7 @@ SUBSYSTEM_DEF(air)
 	priority = 20
 	wait = 5
 	flags = SS_BACKGROUND
+	runlevel_min = RUNLEVEL_GAME
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
