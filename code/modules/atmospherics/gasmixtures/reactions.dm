@@ -230,5 +230,24 @@
 		//to_chat(world, "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]])
 		return REACTING
 
+//applies the frozen visual to things under FREEZE_TEMPERATURE
+/datum/gas_reaction/freezing
+	name = "Freezing"
+	id = "freezing"
+	priority = 0
+
+/datum/gas_reaction/freezing/init_reqs()
+	max_requirements = list(
+		"TEMP" = FREEZE_TEMPERATURE
+	)
+
+/datum/gas_reaction/freezing/react(datum/gas_mixture/air, atom/location)
+	. = NO_REACTION	//we don't need to garbage collect anything
+	if(!location)
+		return
+	for(var/obj/I in location)
+		if(!HAS_SECONDARY_FLAG(I, FROZEN)) //let it go
+			I.make_frozen_visual()
+
 #undef REACTING
 #undef NO_REACTION

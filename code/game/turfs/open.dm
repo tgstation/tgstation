@@ -108,9 +108,6 @@
 	air_update_turf()
 
 /turf/open/proc/freon_gas_act()
-	for(var/obj/I in contents)
-		if(!HAS_SECONDARY_FLAG(I, FROZEN)) //let it go
-			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50)
 			L.apply_status_effect(/datum/status_effect/freon)
