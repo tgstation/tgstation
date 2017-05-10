@@ -75,7 +75,7 @@ Credit where due:
 /proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
 	if(!L || !L.mind)
 		return
-	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(/datum/antagonist/clockcult)
+	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
 	if(!clock_datum)
 		return FALSE
 	clock_datum.silent = silent

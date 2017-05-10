@@ -234,10 +234,6 @@
 	to_chat(killer, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 	killer.add_malf_picker()
 
-/datum/game_mode/proc/add_law_sixsixsix(mob/living/silicon/devil)
-	var/laws = list("You may not use violence to coerce someone into selling their soul.", "You may not directly and knowingly physically harm a devil, other than yourself.", GLOB.lawlorify[LAW][devil.mind.devilinfo.ban], GLOB.lawlorify[LAW][devil.mind.devilinfo.obligation], "Accomplish your objectives at all costs.")
-	devil.set_law_sixsixsix(laws)
-
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
 		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
