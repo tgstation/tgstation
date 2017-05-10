@@ -67,15 +67,12 @@
 		loadedItems.Add(IW)
 		loadedWeightClass += IW.w_class
 
-
-
 /obj/item/weapon/pneumatic_cannon/afterattack(atom/target, mob/living/carbon/human/user, flag, params)
 	if(flag && user.a_intent == INTENT_HARM) //melee attack
 		return
 	if(!istype(user))
 		return
 	Fire(user, target)
-
 
 /obj/item/weapon/pneumatic_cannon/proc/Fire(mob/living/carbon/human/user, var/atom/target)
 	if(!istype(user) && !target)
@@ -120,7 +117,6 @@
 		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
 		user.Weaken(3)
 
-
 /obj/item/weapon/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
 	name = "improvised pneumatic cannon"
 	desc = "A gas-powered, object-firing cannon made out of common parts."
@@ -164,3 +160,16 @@
 		return
 	add_overlay(tank.icon_state)
 	src.update_icon()
+
+
+/obj/item/weapon/pneumatic_cannon/pie
+	name = "pie cannon"
+	desc = "Load cream pie for optimal results"
+	force = 10
+	icon_state = "piecannon"
+	item_state = "powerfist"
+	gasPerThrow = 0
+
+/obj/item/weapon/pneumatic_cannon/pie/attackby(obj/item/I, mob/living/L)
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pie))
+		return ..()
