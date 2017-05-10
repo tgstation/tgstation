@@ -4,11 +4,12 @@
 	set name = "Check Player Playtime"
 	if(!check_rights(R_ADMIN))
 		return
-	var/msg = "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
+	var/list/msg = list()
+	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/C in GLOB.clients)
 		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
-	src << browse(msg, "window=Player_playtime_check")
+	src << browse(msg.Join(), "window=Player_playtime_check")
 
 /datum/admins/proc/cmd_show_exp_panel(var/client/C)
 	if(!C)
