@@ -104,12 +104,12 @@
 	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
-	var/use_exp_tracking = 0
-	var/use_exp_restrictions_heads = 0
+	var/use_exp_tracking = FALSE
+	var/use_exp_restrictions_heads = FALSE
 	var/use_exp_restrictions_heads_hours = 0
-	var/use_exp_restrictions_heads_department = 0
-	var/use_exp_restrictions_other = 0
-	var/use_exp_restrictions_admin_bypass = 0
+	var/use_exp_restrictions_heads_department = FALSE
+	var/use_exp_restrictions_other = FALSE
+	var/use_exp_restrictions_admin_bypass = FALSE
 
 	//Population cap vars
 	var/soft_popcap				= 0
@@ -337,17 +337,17 @@
 				if("use_account_age_for_jobs")
 					use_account_age_for_jobs = 1
 				if("use_exp_tracking")
-					use_exp_tracking = 1
+					use_exp_tracking = TRUE
 				if("use_exp_restrictions_heads")
-					use_exp_restrictions_heads = 1
+					use_exp_restrictions_heads = TRUE
 				if("use_exp_restrictions_heads_hours")
 					use_exp_restrictions_heads_hours = text2num(value)
 				if("use_exp_restrictions_heads_department")
-					use_exp_restrictions_heads_department = 1
+					use_exp_restrictions_heads_department = TRUE
 				if("use_exp_restrictions_other")
-					use_exp_restrictions_other = 1
+					use_exp_restrictions_other = TRUE
 				if("use_exp_restrictions_admin_bypass")
-					use_exp_restrictions_admin_bypass = 1
+					use_exp_restrictions_admin_bypass = TRUE
 				if("lobby_countdown")
 					lobby_countdown = text2num(value)
 				if("round_end_countdown")

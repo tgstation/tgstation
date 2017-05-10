@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(exp_to_update, list())
+GLOBAL_LIST_EMPTY(exp_to_update)
 GLOBAL_PROTECT(exp_to_update)
 
 // Admin Verbs
@@ -19,10 +19,11 @@ GLOBAL_PROTECT(exp_to_update)
 		return
 	if(!check_rights(R_ADMIN))
 		return
-	var/body = "<html><head><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
+	var/list/body = list()
+	body += "<html><head><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
 	body += C.get_exp_report()
 	body += "</BODY></HTML>"
-	usr << browse(body, "window=playerplaytime[C.ckey];size=550x615")
+	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
 
 
 // Procs
@@ -77,7 +78,8 @@ GLOBAL_PROTECT(exp_to_update)
 		play_records = prefs.exp
 		if(!play_records.len)
 			return "[key] has no records."
-	var/return_text = "<UL>"
+	var/return_text = list()
+	return_text += "<UL>"
 	var/list/exp_data = list()
 	for(var/category in GLOB.exp_jobsmap)
 		if(play_records[category])
@@ -136,7 +138,7 @@ GLOBAL_PROTECT(exp_to_update)
 	for(var/client/L in GLOB.clients)
 		if(L.inactivity >= 6000)
 			continue
-		addtimer(L.update_exp_list(mins, ann),10)
+		addtimer(CALLBACK(L,/client/proc/update_exp_list,mins,ann),10)
 		CHECK_TICK
 
 //Manual incrementing/updating
@@ -266,7 +268,7 @@ GLOBAL_PROTECT(exp_to_update)
 		for(var/jtype in GLOB.exp_to_update[keyname])
 			var jobname = jtype
 			var time = GLOB.exp_to_update[keyname][jtype]
-			var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(keyname)]', '[sanitizeSQL(jobname)]', '[sanitizeSQL(time)]') ON DUPLICATE KEY UPDATE minutes = '[sanitizeSQL(time)]'")
+			var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(keyname)]', '[sanitizeSQL(jobname)]', '[sanitizeSQL(time)]') ON DUPLICATE KEY UPDATE minutes = VALUES('[sanitizeSQL(time)]')")
 			if(!update_query.Execute())
 				var/err = update_query.ErrorMsg()
 				log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")

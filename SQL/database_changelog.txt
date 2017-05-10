@@ -2,11 +2,6 @@
 
 Added role_time table to track time spent playing departments. see the schema.
 
-To grandfather in all players, run this 
-
-INSERT INTO `role_time` (ckey) SELECT ckey FROM `player`;
-UPDATE role_time SET exempt = "1";
-
 ----------------------------------------------------
 
 21 April 2017, by Jordie0608
