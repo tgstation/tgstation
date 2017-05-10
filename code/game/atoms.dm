@@ -271,6 +271,7 @@
 	return
 
 /atom/proc/contents_explosion(severity, target)
+	set waitfor = FALSE
 	return
 
 /atom/proc/ex_act(severity, target)
