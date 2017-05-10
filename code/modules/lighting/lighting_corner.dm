@@ -6,8 +6,8 @@
 GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST))
 
 /datum/lighting_corner
-	var/list/turf/masters                 = list()
-	var/list/datum/light_source/affecting = list() // Light sources affecting us.
+	var/list/turf/masters
+	var/list/datum/light_source/affecting // Light sources affecting us.
 	var/active                            = FALSE  // TRUE if one of our masters has dynamic lighting.
 
 	var/x     = 0
@@ -25,11 +25,9 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	var/cache_b  = LIGHTING_SOFT_THRESHOLD
 	var/cache_mx = 0
 
-	var/update_gen = 0
-
 /datum/lighting_corner/New(var/turf/new_turf, var/diagonal)
 	. = ..()
-
+	masters = list()
 	masters[new_turf] = turn(diagonal, 180)
 	z = new_turf.z
 
