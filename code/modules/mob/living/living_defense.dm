@@ -306,10 +306,13 @@
 			reagents.add_reagent("heparin", 5)
 		return FALSE
 	if(src in NS.souls_needed)
+		NS.souls_needed -= src
 		NS.souls += 1
 		NS.resize(1.1)
-		if(NS.souls == NS.soul_goal)
-			SSticker.station_explosion_cinematic(1,"cult")
+		if((NS.souls == NS.soul_goal) && (NS.resolved == FALSE))
+			NS.resolved = TRUE
+			SSticker.station_explosion_cinematic(1,"cult", null)
+			sleep(200)
 			SSticker.force_ending = 1
 	if(client)
 		if(iscultist(src))

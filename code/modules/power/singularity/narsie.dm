@@ -27,11 +27,6 @@
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
-/obj/singularity/narsie/large/cult
-	var/list/souls_needed = list()
-	var/soul_goal = 0
-	var/souls = 0
-
 /obj/singularity/narsie/large/Initialize()
 	. = ..()
 	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
@@ -41,10 +36,16 @@
 	if(A)
 		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/effects.dmi', "ghostalertsie")
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
-
 	narsie_spawn_animation()
-	sleep(70)
-	SSshuttle.emergency.request(null, set_coefficient = 0.1) // Cannot recall
+
+
+
+
+/obj/singularity/narsie/large/cult  // For the new cult ending, guaranteed to end the round within 3 minutes
+	var/list/souls_needed = list()
+	var/soul_goal = 0
+	var/souls = 0
+	var/resolved = FALSE
 
 /obj/singularity/narsie/large/cult/proc/resize(var/ratio)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -59,9 +60,23 @@
 			var/mob/living/M = cult_mind.current
 			M.narsie_act()
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.stat != DEAD && player.loc.z == 1)
+		if(player.stat != DEAD && player.loc.z == 1 && !iscultist(player))
 			souls_needed += player
-	soul_goal = LAZYLEN(souls_needed) * 0.666
+	soul_goal = round(LAZYLEN(souls_needed) * 0.666)
+	sleep(600)
+	set_security_level("delta")
+	SSshuttle.registerHostileEnvironment(src)
+	SSshuttle.lockdown = TRUE
+	sleep(1200)
+	if(resolved == FALSE)
+		var/bomb
+		for(var/obj/machinery/nuclearbomb/nuke in GLOB.poi_list)
+			if(istype(/obj/machinery/nuclearbomb/selfdestruct, nuke))
+				bomb = nuke
+		SSticker.station_explosion_cinematic(0,"cult", bomb)
+		sleep(100)
+		SSticker.force_ending = 1
+
 
 /obj/singularity/narsie/large/cult/consume(atom/A)
 	A.narsie_act(src)
