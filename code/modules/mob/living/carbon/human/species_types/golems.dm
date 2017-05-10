@@ -111,9 +111,12 @@
 	button_icon_state = "sacredflame"
 
 /datum/action/innate/ignite/Activate()
-	to_chat(owner, "<span class='notice'>You ignite yourself!</span>")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
+		if(H.fire_stacks)
+			to_chat(owner, "<span class='notice'>You ignite yourself!</span>")
+		else
+			to_chat(owner, "<span class='warning'>You try ignite yourself, but fail!</span>")
 		H.IgniteMob() //firestacks are already there passively
 
 //Harder to hurt
