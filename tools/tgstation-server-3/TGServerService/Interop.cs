@@ -14,7 +14,6 @@ namespace TGServerService
 	partial class TGStationServer
 	{
 		QueuedLock topicLock = new QueuedLock();
-		Socket topicSender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) { SendTimeout = 5000, ReceiveTimeout = 5000 };
 
 		const int CommsKeyLen = 64;
 		string serviceCommsKey; //regenerated every DD restart
@@ -74,65 +73,60 @@ namespace TGServerService
 		}
 
 		//Fuckery to diddle byond with the right packet to accept our girth
-		string SendTopic(string topicdata, ushort port, bool retry = false)
+		string SendTopic(string topicdata, ushort port)
 		{
-			if (!retry)
-				topicLock.Enter();
-			try
-			{
-				if (!topicSender.Connected)
-					topicSender.Connect(IPAddress.Loopback, port);
-
-				StringBuilder stringPacket = new StringBuilder();
-				stringPacket.Append((char)'\x00', 8);
-				stringPacket.Append('?' + topicdata);
-				stringPacket.Append((char)'\x00');
-				string fullString = stringPacket.ToString();
-				var packet = Encoding.ASCII.GetBytes(fullString);
-				packet[1] = 0x83;
-				var FinalLength = packet.Length - 4;
-				if (FinalLength > UInt16.MaxValue)
-					return "Error: Topic too long";
-
-				var lengthBytes = BitConverter.GetBytes((ushort)FinalLength);
-
-				packet[2] = lengthBytes[1];	//fucking endianess
-				packet[3] = lengthBytes[0];
-
-				topicSender.Send(packet);
-
-				string returnedString = "NULL";
-				try
+			lock (topicLock) {
+				using (var topicSender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) { SendTimeout = 5000, ReceiveTimeout = 5000 })
 				{
-					var returnedData = new byte[512];
-					topicSender.Receive(returnedData);
-					var raw_string = Encoding.ASCII.GetString(returnedData);
-					if (raw_string.Length > 6)
-						returnedString = raw_string.Substring(5, raw_string.Length - 6);
-				}
-				catch {
-					returnedString = "Topic recieve error!";
-				}
+					try
+					{
+						topicSender.Connect(IPAddress.Loopback, port);
 
-				TGServerService.ActiveService.EventLog.WriteEntry("Topic: \"" + topicdata + "\" Returned: " + returnedString);
-				return returnedString;
-			}
-			catch
-			{
-				if (topicSender.Connected)
-					topicSender.Disconnect(true);
-				if (!retry)
-					return SendTopic(topicdata, port, true);
-				else
-				{
-					TGServerService.ActiveService.EventLog.WriteEntry("Failed to send topic: " + topicdata, EventLogEntryType.Error);
-					return "Topic delivery failed!";
+						StringBuilder stringPacket = new StringBuilder();
+						stringPacket.Append((char)'\x00', 8);
+						stringPacket.Append('?' + topicdata);
+						stringPacket.Append((char)'\x00');
+						string fullString = stringPacket.ToString();
+						var packet = Encoding.ASCII.GetBytes(fullString);
+						packet[1] = 0x83;
+						var FinalLength = packet.Length - 4;
+						if (FinalLength > UInt16.MaxValue)
+							return "Error: Topic too long";
+
+						var lengthBytes = BitConverter.GetBytes((ushort)FinalLength);
+
+						packet[2] = lengthBytes[1]; //fucking endianess
+						packet[3] = lengthBytes[0];
+
+						topicSender.Send(packet);
+
+						string returnedString = "NULL";
+						try
+						{
+							var returnedData = new byte[512];
+							topicSender.Receive(returnedData);
+							var raw_string = Encoding.ASCII.GetString(returnedData);
+							if (raw_string.Length > 6)
+								returnedString = raw_string.Substring(5, raw_string.Length - 6);
+						}
+						catch
+						{
+							returnedString = "Topic recieve error!";
+						}
+						finally
+						{
+							topicSender.Shutdown(SocketShutdown.Both);
+						}
+
+						TGServerService.ActiveService.EventLog.WriteEntry("Topic: \"" + topicdata + "\" Returned: " + returnedString);
+						return returnedString;
+					}
+					catch
+					{
+						TGServerService.ActiveService.EventLog.WriteEntry("Failed to send topic: " + topicdata, EventLogEntryType.Error);
+						return "Topic delivery failed!";
+					}
 				}
-			}
-			finally
-			{
-				if(!retry)
-					topicLock.Exit();
 			}
 		}
 
