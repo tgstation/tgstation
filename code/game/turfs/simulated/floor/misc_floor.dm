@@ -268,6 +268,7 @@
 
 /turf/open/floor/plasteel/acid_spray
 	floor_tile = /obj/item/stack/tile/acid_spray
+	var/spray_reagent = "facid"
 	var/spray_amount = 35
 	var/cooldown = 150
 	var/last_spray = 0
@@ -289,11 +290,11 @@
 	playsound(src, 'sound/effects/spray2.ogg', 40, 1, -6)
 	var/obj/effect/decal/chempuff/A = new /obj/effect/decal/chempuff(src)
 	A.create_reagents(spray_amount)
-	A.reagents.add_reagent("facid", spray_amount)
+	A.reagents.add_reagent(spray_reagent, spray_amount)
 	A.color = mix_color_from_reagents(A.reagents.reagent_list)
-	for(var/atom/T in src)
-		if(T == A || T.invisibility)
-			continue
-		A.reagents.reaction(T, VAPOR)
+	for(var/mob/living/L in contents)
+		A.reagents.reaction(L, VAPOR)
+	for(var/obj/O in contents)
+		A.reagents.reaction(O, VAPOR)
 	QDEL_IN(A, 2)
 	last_spray = world.time
