@@ -313,7 +313,9 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 				G.domination(0.5)
 			priority_announce("Multiple station takeover attempts have made simultaneously. Conflicting takeover attempts appears to have restarted.","Network Alert")
 		else
+			G.is_dominating = FALSE
 			SSticker.mode.explosion_in_progress = 1
-			SSticker.station_explosion_cinematic(1)
+			SSticker.station_explosion_cinematic(1,"gang war", null)
 			SSticker.mode.explosion_in_progress = 0
 			SSticker.force_ending = pick(winners)
+
