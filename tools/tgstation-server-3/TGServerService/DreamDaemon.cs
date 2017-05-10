@@ -53,7 +53,7 @@ namespace TGServerService
 		{
 			if (DaemonStatus() == TGDreamDaemonStatus.Online)
 			{
-				SendCommand(SCWorldAnnounce + ";message=Server service stopped");
+				WorldAnnounce("Server service stopped");
 				Thread.Sleep(1000);
 			}
 			Stop();

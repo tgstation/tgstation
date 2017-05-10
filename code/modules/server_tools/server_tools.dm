@@ -53,6 +53,7 @@ GLOBAL_PROTECT(reboot_mode)
 			if(!istext(msg) || !msg)
 				return "No message set!"
 			to_chat(src, "<span class='boldannounce'>[html_encode(msg)]</span>")
+			return "SUCCESS"
 		if("irc_check")
 			var/rtod = REALTIMEOFDAY
 			if(rtod - last_irc_status < IRC_STATUS_THROTTLE)
