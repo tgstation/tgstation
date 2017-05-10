@@ -31,18 +31,15 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 
 /datum/gas/oxygen
 	id = "o2"
-	specific_heat = 20
-	name = "Oxygen"
+	parent_type = /datum/gas/plasma
 
 /datum/gas/nitrogen
 	id = "n2"
-	specific_heat = 20
-	name = "Nitrogen"
+	parent_type = /datum/gas/plasma
 
 /datum/gas/carbon_dioxide //what the fuck is this?
 	id = "co2"
-	specific_heat = 30
-	name = "Carbon Dioxide"
+	parent_type = /datum/gas/plasma
 
 /datum/gas/plasma
 	id = "plasma"
@@ -53,39 +50,26 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 
 /datum/gas/water_vapor
 	id = "water_vapor"
-	specific_heat = 40
-	name = "Water Vapor"
-	gas_overlay = "water_vapor"
-	moles_visible = MOLES_PLASMA_VISIBLE
+	parent_type = /datum/gas/plasma
 
 /datum/gas/freon
 	id = "freon"
-	specific_heat = 2000
-	name = "Freon"
-	gas_overlay = "freon"
-	moles_visible = MOLES_PLASMA_VISIBLE
+	parent_type = /datum/gas/plasma
 
 /datum/gas/nitrous_oxide
 	id = "n2o"
-	specific_heat = 40
-	name = "Nitrous Oxide"
-	gas_overlay = "nitrous_oxide"
-	moles_visible = 1
+	parent_type = /datum/gas/plasma
 
 /datum/gas/oxygen_agent_b
 	id = "agent_b"
-	specific_heat = 300
-	name = "Oxygen Agent B"
+	parent_type = /datum/gas/plasma
 
 /datum/gas/volatile_fuel
-	id = "v_fuel"
-	specific_heat = 30
-	name = "Volatile Fuel"
+	parent_type = /datum/gas/plasma
 
 /datum/gas/bz
 	id = "bz"
-	specific_heat = 20
-	name = "BZ"
+	parent_type = /datum/gas/plasma
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
