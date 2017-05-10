@@ -292,9 +292,9 @@
 	A.create_reagents(spray_amount)
 	A.reagents.add_reagent(spray_reagent, spray_amount)
 	A.color = mix_color_from_reagents(A.reagents.reagent_list)
-	for(var/mob/living/L in contents)
-		A.reagents.reaction(L, VAPOR)
-	for(var/obj/O in contents)
-		A.reagents.reaction(O, VAPOR)
+	for(var/atom/T in contents)
+		if((!isliving(T) && !isobj(T)) || T == A)
+			continue
+		A.reagents.reaction(T, VAPOR)
 	QDEL_IN(A, 2)
 	last_spray = world.time
