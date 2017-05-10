@@ -172,7 +172,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
-	var/attack_refund = 5 //half a second per attack
+	var/attack_refund = 10 //1 second per attack
 	var/crit_refund = 50 //5 seconds when putting a target into critical
 	var/kill_refund = 250 //full refund on kills
 
