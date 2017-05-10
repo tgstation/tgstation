@@ -248,3 +248,9 @@
 	suffix = "dragoontomb.dmm"
 	name = "Sky Bulge Tomb"
 	description = "A tomb of a dice-loving dragoon in space. Turns out he got too good and jumped too high. Contains the Sky Bulge, which when thrown, warps the thrower."
+
+datum/map_template/ruin/space/spacepirates
+	id = "spacepirates"
+	suffix = "spacepirates.dmm"
+	name = "Space Pirates"
+	description = "Yar har! Somehow, a pirate ship crashed into an asteroid. The ship now houses an group of space bandits that cosplay as pirates. Terrifying."
