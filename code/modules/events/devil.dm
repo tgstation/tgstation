@@ -32,11 +32,7 @@
 
 	var/mob/living/carbon/human/devil = create_event_devil(spawn_loc)
 	Mind.transfer_to(devil)
-	SSticker.mode.finalize_devil(Mind, FALSE)
-	SSticker.mode.add_devil_objectives(src, 2)
-	Mind.announceDevilLaws()
-	Mind.announce_objectives()
-
+	add_devil(devil, ascendable = FALSE)
 
 	spawned_mobs += devil
 	message_admins("[key_name_admin(devil)] has been made into a devil by an event.")
