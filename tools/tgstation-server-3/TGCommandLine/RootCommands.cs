@@ -102,6 +102,7 @@ namespace TGCommandLine
 	{
 		public TestmergeCommand()
 		{
+			Keyword = "testmerge";
 			RequiredParameters = 1;
 		}
 		public override ExitCode Run(IList<string> parameters)
