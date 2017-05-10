@@ -128,7 +128,7 @@ Curator
 	outfit = /datum/outfit/job/curator
 
 	access = list(GLOB.access_library)
-	minimal_access = list(GLOB.access_library)
+	minimal_access = list(GLOB.access_library, GLOB.access_construction,GLOB.access_mining_station)
 
 /datum/outfit/job/curator
 	name = "Curator"

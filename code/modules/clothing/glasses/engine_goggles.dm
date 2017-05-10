@@ -18,6 +18,7 @@
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
+		lighting_alpha = null
 		to_chat(user, "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>")
 	else
 		STOP_PROCESSING(SSobj, src)

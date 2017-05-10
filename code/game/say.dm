@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	var/languageicon = ""
 	var/datum/language/D = GLOB.language_datum_instances[message_language]
-	if(D.display_icon(src))
+	if(istype(D) && D.display_icon(src))
 		languageicon = "[D.get_icon()] "
 
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"

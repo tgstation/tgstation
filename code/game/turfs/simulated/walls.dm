@@ -238,8 +238,9 @@
 		if(prob(30))
 			dismantle_wall()
 
-/turf/closed/wall/narsie_act()
-	if(prob(20))
+/turf/closed/wall/narsie_act(force, ignore_mobs, probability = 20)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
 /turf/closed/wall/ratvar_act(force, ignore_mobs)
