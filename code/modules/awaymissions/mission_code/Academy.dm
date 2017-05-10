@@ -64,7 +64,7 @@
 		next_check = world.time + cooldown
 
 /obj/structure/academy_wizard_spawner/proc/give_control()
-	set waitfor = 0
+	set waitfor = FALSE
 	
 	if(!current_wizard)
 		return
