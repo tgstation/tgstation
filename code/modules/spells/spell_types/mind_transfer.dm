@@ -9,8 +9,8 @@
 	invocation_type = "whisper"
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
-	var/paralysis_amount_caster = 15 //how much the caster is paralysed for after the spell
-	var/paralysis_amount_victim = 20 //how much the victim is paralysed for after the spell
+	var/paralysis_amount_caster = 10 //how much the caster is paralysed for after the spell
+	var/paralysis_amount_victim = 10 //how much the victim is paralysed for after the spell
 
 	action_icon_state = "mindswap"
 
