@@ -27,7 +27,7 @@
 // Procs
 
 
-/datum/job/proc/available_in_playtime(client/C)
+/datum/job/proc/required_playtime_remaining(client/C)
 	if(!C)
 		return 0
 	if(!config.use_exp_tracking)
@@ -101,7 +101,7 @@
 		if(job.exp_requirements && job.exp_type)
 			if(!job_is_xp_locked(job.title))
 				continue
-			else if(!job.available_in_playtime(mob.client))
+			else if(!job.required_playtime_remaining(mob.client))
 				jobs_unlocked += job.title
 			else
 				var/xp_req = job.get_exp_req_amount()
@@ -132,16 +132,17 @@
 /proc/update_exp(var/mins, var/ann = 0)
 	if(!SSdbcore.Connect())
 		return -1
-	spawn(0)
-		for(var/client/L in GLOB.clients)
-			if(L.inactivity >= 6000)
-				continue
-
-			addtimer(L.update_exp_client(mins, ann),10)
-			CHECK_TICK
+//	spawn(0)
+	for(var/client/L in GLOB.clients)
+		if(L.inactivity >= 6000)
+			continue
+		addtimer(L.update_exp_client(mins, ann),10)
+		CHECK_TICK
 
 
 /client/proc/update_exp_client(var/minutes, var/announce_changes = 0)
+	to_chat(world,"Activated. Amount: [minutes]")
+	log_world("Activated. Amount: [minutes]")
 	if(!src ||!ckey || !config.use_exp_tracking)
 		return
 	if(!SSdbcore.Connect())
@@ -154,7 +155,7 @@
 		return
 	var/list/play_records = list()
 	while(exp_read.NextRow())
-		play_records[exp_read.item[1]] = exp_read.item[2]
+		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
 
 	for(var/rtype in GLOB.exp_jobsmap)
 		if(!play_records[rtype])
@@ -184,7 +185,7 @@
 	for(var/jtype in play_records)
 		var jobname = jtype
 		var time = play_records[jtype]
-		var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(ckey)]', '[jobname]', '[time]') ON DUPLICATE KEY UPDATE time = '[time]'")
+		var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(ckey)]', '[jobname]', '[time]') ON DUPLICATE KEY UPDATE minutes = '[time]'")
 		if(!update_query.Execute())
 			var/err = update_query.ErrorMsg()
 			log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")

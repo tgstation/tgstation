@@ -291,7 +291,7 @@
 		return 0
 	if(!job.player_old_enough(src.client))
 		return 0
-	if(job.available_in_playtime(client))
+	if(job.required_playtime_remaining(client))
 		return 0
 	if(config.enforce_human_authority && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
 		return 0

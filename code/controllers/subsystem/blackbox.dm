@@ -16,6 +16,11 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/msg_other = list()
 
 	var/list/feedback = list()	//list of datum/feedback_variable
+	var/triggertime = 0
+
+/datum/controller/subsystem/blackbox/Initialize()
+	triggertime = world.time
+
 
 //poll population
 /datum/controller/subsystem/blackbox/fire()
@@ -30,8 +35,8 @@ SUBSYSTEM_DEF(blackbox)
 	query_record_playercount.Execute()
 
 	if(config.use_exp_tracking)
-		//if(world.time > (triggertime +3000))	//server maint fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire
-		update_exp(10,0)
+		if((triggertime < 0) || (world.time > (triggertime +3000)))	//server maint fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire
+			update_exp(10,0)
 
 
 /datum/controller/subsystem/blackbox/Recover()
