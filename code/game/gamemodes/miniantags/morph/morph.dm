@@ -73,6 +73,8 @@
 		return 0
 	if(istype(A,/mob/living/simple_animal/hostile/morph))
 		return 0
+	if(istype(A,/obj/effect/decal/cleanable))
+		return 0
 	return 1
 
 /mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
