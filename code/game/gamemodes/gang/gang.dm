@@ -318,5 +318,5 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 			SSticker.mode.explosion_in_progress = 1
 			SSticker.station_explosion_cinematic(1,"gang war", null)
 			SSticker.mode.explosion_in_progress = 0
-			SSticker.force_ending = pick(winners)
+			SSticker.force_ending = TRUE
 
