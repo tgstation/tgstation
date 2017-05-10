@@ -73,6 +73,8 @@
             this.MajorVersionNumeric = new System.Windows.Forms.NumericUpDown();
             this.UpdateProgressBar = new System.Windows.Forms.ProgressBar();
             this.ServerPanel = new System.Windows.Forms.TabPage();
+            this.ProjectPathLabel = new System.Windows.Forms.Label();
+            this.projectNameText = new System.Windows.Forms.TextBox();
             this.PortLabel = new System.Windows.Forms.Label();
             this.PortSelector = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -678,6 +680,8 @@
             // ServerPanel
             // 
             this.ServerPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.ServerPanel.Controls.Add(this.ProjectPathLabel);
+            this.ServerPanel.Controls.Add(this.projectNameText);
             this.ServerPanel.Controls.Add(this.PortLabel);
             this.ServerPanel.Controls.Add(this.PortSelector);
             this.ServerPanel.Controls.Add(this.label1);
@@ -705,6 +709,28 @@
             this.ServerPanel.Size = new System.Drawing.Size(868, 366);
             this.ServerPanel.TabIndex = 2;
             this.ServerPanel.Text = "Server";
+            // 
+            // ProjectPathLabel
+            // 
+            this.ProjectPathLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ProjectPathLabel.AutoSize = true;
+            this.ProjectPathLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ProjectPathLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ProjectPathLabel.Location = new System.Drawing.Point(242, 162);
+            this.ProjectPathLabel.Name = "ProjectPathLabel";
+            this.ProjectPathLabel.Size = new System.Drawing.Size(115, 18);
+            this.ProjectPathLabel.TabIndex = 30;
+            this.ProjectPathLabel.Text = "Project Path:";
+            this.ProjectPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // projectNameText
+            // 
+            this.projectNameText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.projectNameText.Location = new System.Drawing.Point(382, 160);
+            this.projectNameText.Name = "projectNameText";
+            this.projectNameText.Size = new System.Drawing.Size(296, 20);
+            this.projectNameText.TabIndex = 29;
+            this.projectNameText.TextChanged += new System.EventHandler(this.ProjectNameText_TextChanged);
             // 
             // PortLabel
             // 
@@ -1245,6 +1271,8 @@
 		private System.Windows.Forms.TabPage GameConfigPanel;
 		private System.Windows.Forms.Label PortLabel;
 		private System.Windows.Forms.NumericUpDown PortSelector;
+		private System.Windows.Forms.Label ProjectPathLabel;
+		private System.Windows.Forms.TextBox projectNameText;
 	}
 }
 

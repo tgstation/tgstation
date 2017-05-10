@@ -55,5 +55,19 @@ namespace TGServiceInterface
 		/// <returns>the error message of the last operation if it failed or null if it succeeded</returns>
 		[OperationContract]
 		string CompileError();
+
+		/// <summary>
+		/// Returns the relative path of the dme the compiler will look for without the .dme part
+		/// </summary>
+		/// <returns>The relative path of the dme the compiler will look for without the .dme part</returns>
+		[OperationContract]
+		string ProjectName();
+
+		/// <summary>
+		/// Sets the relative path of the dme the compiler will look for without the .dme part
+		/// </summary>
+		/// <param name="projectName">The relative path of the dme the compiler will look for without the .dme part</param>
+		[OperationContract]
+		void SetProjectName(string projectName);
 	}
 }

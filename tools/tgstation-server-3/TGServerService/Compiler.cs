@@ -363,10 +363,24 @@ namespace TGServerService
 
 				SendMessage("DM: Repo copy complete, compiling...");
 
+				var dmeName = ProjectName() + ".dme";
+				var dmePath = resurrectee + "/" + dmeName; 
+				if (!File.Exists(dmePath))
+				{
+					var errorMsg = String.Format("Could not find {0}!", dmeName);
+					SendMessage("DM: " + errorMsg);
+					lock (CompilerLock)
+					{
+						lastCompilerError = errorMsg;
+						compilerCurrentStatus = TGCompilerStatus.Initialized;
+						return;
+					}
+				}
+
 				using (var DM = new Process())  //will kill the process if the thread is terminated
 				{
 					DM.StartInfo.FileName = ByondDirectory + "/bin/dm.exe";
-					DM.StartInfo.Arguments = resurrectee + "/" + Properties.Settings.Default.ProjectName + ".dme";
+					DM.StartInfo.Arguments = dmePath;
 					DM.StartInfo.UseShellExecute = false;
 					try
 					{
@@ -400,7 +414,7 @@ namespace TGServerService
 						lock (CompilerLock)
 						{
 							lastCompilerError = "DM compile failure";
-							compilerCurrentStatus = TGCompilerStatus.Initialized;   //still fairly valid
+							compilerCurrentStatus = TGCompilerStatus.Initialized;
 						}
 					}
 				}
@@ -435,6 +449,24 @@ namespace TGServerService
 				CompilerThread.Start();
 			}
 			return true;
+		}
+
+		//public api
+		public string ProjectName()
+		{
+			lock (CompilerLock)
+			{
+				return Properties.Settings.Default.ProjectName;
+			}
+		}
+
+		//public api
+		public void SetProjectName(string projectName)
+		{
+			lock (CompilerLock)
+			{
+				Properties.Settings.Default.ProjectName = projectName;
+			}
 		}
 	}
 }

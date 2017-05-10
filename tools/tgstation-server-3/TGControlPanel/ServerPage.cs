@@ -17,7 +17,7 @@ namespace TGControlPanel
 		FullUpdateAction fuAction;
 		int testmergePR;
 		string updateError;
-		bool updatingPort = true;
+		bool updatingFields = true;
 
 		string DDStatusString = null;
 		void InitServerPage()
@@ -53,10 +53,11 @@ namespace TGControlPanel
 			var DM = Server.GetComponent<ITGCompiler>();
 			var DD = Server.GetComponent<ITGDreamDaemon>();
 
+			updatingFields = true;
 			AutostartCheckbox.Checked = DD.Autostart();
-			updatingPort = true;
 			PortSelector.Value = DD.Port();
-			updatingPort = false;
+			projectNameText.Text = DM.ProjectName();
+			updatingFields = false;
 
 			switch (DM.GetStatus())
 			{
@@ -100,10 +101,15 @@ namespace TGControlPanel
 		{
 			LoadServerPage();
 		}
+		private void ProjectNameText_TextChanged(object sender, EventArgs e)
+		{
+			if (!updatingFields)
+				Server.GetComponent<ITGCompiler>().SetProjectName(projectNameText.Text);
+		}
 
 		private void PortSelector_ValueChanged(object sender, EventArgs e)
 		{
-			if(!updatingPort)
+			if(!updatingFields)
 				Server.GetComponent<ITGDreamDaemon>().SetPort((ushort)PortSelector.Value);
 		}
 
@@ -163,9 +169,8 @@ namespace TGControlPanel
 
 		private void AutostartCheckbox_CheckedChanged(object sender, System.EventArgs e)
 		{
-			var DD = Server.GetComponent<ITGDreamDaemon>();
-			if(DD.Autostart() != AutostartCheckbox.Checked)
-				DD.SetAutostart(AutostartCheckbox.Checked);
+			if(!updatingFields)
+				Server.GetComponent<ITGDreamDaemon>().SetAutostart(AutostartCheckbox.Checked);
 		}
 		private void ServerStartButton_Click(object sender, System.EventArgs e)
 		{

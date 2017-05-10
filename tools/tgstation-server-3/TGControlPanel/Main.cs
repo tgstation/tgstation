@@ -30,5 +30,6 @@ namespace TGControlPanel
 		{
 			Properties.Settings.Default.LastPageIndex = Panels.SelectedIndex;
 		}
+
 	}
 }

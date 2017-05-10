@@ -10,7 +10,7 @@ namespace TGCommandLine
 		public DMCommand()
 		{
 			Keyword = "dm";
-			Children = new Command[] { new DMCompileCommand(), new DMInitializeCommand(), new DMStatusCommand() };
+			Children = new Command[] { new DMCompileCommand(), new DMInitializeCommand(), new DMStatusCommand(), new DMSetProjectNameCommand() };
 		}
 		public override void PrintHelp()
 		{
@@ -85,8 +85,10 @@ namespace TGCommandLine
 
 		public override ExitCode Run(IList<string> parameters)
 		{
+			var DM = Server.GetComponent<ITGCompiler>();
+			Console.WriteLine(String.Format("Target Project: /{0}.dme", DM.ProjectName()));
 			Console.Write("Compilier is currently: ");
-			switch (Server.GetComponent<ITGCompiler>().GetStatus())
+			switch (DM.GetStatus())
 			{
 				case TGCompilerStatus.Compiling:
 					Console.WriteLine("Compiling...");
@@ -112,6 +114,24 @@ namespace TGCommandLine
 		public override void PrintHelp()
 		{
 			Console.WriteLine("status\t-\tGet the current status of the compiler");
+		}
+	}
+
+	class DMSetProjectNameCommand : Command
+	{
+		public DMSetProjectNameCommand()
+		{
+			Keyword = "project-name";
+			RequiredParameters = 1;
+		}
+		public override void PrintHelp()
+		{
+			Console.WriteLine("project-name\t-\tSet the relative path of the .dme to compile");
+		}
+		public override ExitCode Run(IList<string> parameters)
+		{
+			Server.GetComponent<ITGCompiler>().SetProjectName(parameters[0]);
+			return ExitCode.Normal;
 		}
 	}
 
