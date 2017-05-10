@@ -287,7 +287,7 @@ SUBSYSTEM_DEF(ticker)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
 				if("cult")
-					icon_state= NULL
+					cinematic.icon_state = null
 					flick("intro_cult",cinematic)
 					sleep(25)
 					world << sound('sound/magic/enter_blood.ogg')
@@ -348,7 +348,7 @@ SUBSYSTEM_DEF(ticker)
 				if("cult") //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
-					flick("cult_nuked",cinematic)
+					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_cult"

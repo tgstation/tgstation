@@ -54,7 +54,7 @@
 
 /obj/singularity/narsie/large/cult/Initialize()
 	. = ..()
-	resize(0.5)
+	resize(0.6)
 	for(var/datum/mind/cult_mind in SSticker.mode.cult)
 		if(ishuman(cult_mind.current))
 			var/mob/living/M = cult_mind.current
@@ -62,24 +62,29 @@
 	for(var/mob/living/player in GLOB.player_list)
 		if(player.stat != DEAD && player.loc.z == 1 && !iscultist(player))
 			souls_needed += player
-	soul_goal = round(LAZYLEN(souls_needed) * 0.666)
+	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.6)
+	sleep(50)
+	priority_announce("Acausal dimensional event detected in your sector. Analysis indicates sterile neutrino scattering and an anomaly possessing internal teleonomy that is inimicable to all organic life - event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating possible solutions. SOLUTION ETA: 60 SECONDS.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
 	sleep(600)
 	set_security_level("delta")
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.lockdown = TRUE
-	sleep(1200)
+	sleep(1150)
 	if(resolved == FALSE)
-		var/bomb
-		for(var/obj/machinery/nuclearbomb/nuke in GLOB.poi_list)
-			if(istype(/obj/machinery/nuclearbomb/selfdestruct, nuke))
-				bomb = nuke
-		SSticker.station_explosion_cinematic(0,"cult", bomb)
-		sleep(100)
-		SSticker.force_ending = 1
+		world << sound('sound/machines/Alarm.ogg')
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 220)
+
 
 
 /obj/singularity/narsie/large/cult/consume(atom/A)
 	A.narsie_act(src)
+
+/proc/ending_helper()
+	SSticker.force_ending = 1
+
+/proc/cult_ending_helper(var/no_explosion = 0)
+	SSticker.station_explosion_cinematic(no_explosion, "cult", null)
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
