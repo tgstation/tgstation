@@ -287,16 +287,15 @@ SUBSYSTEM_DEF(ticker)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
 				if("cult")
+					icon_state= NULL
 					flick("intro_cult",cinematic)
-					sleep(17)
+					sleep(25)
 					world << sound('sound/magic/enter_blood.ogg')
-					sleep(24)
+					sleep(25)
 					world << sound('sound/machines/terminal_off.ogg')
 					sleep(20)
 					flick("station_corrupted",cinematic)
 					world << sound('sound/effects/ghost.ogg')
-					sleep(90)
-					world << sound('sound/effects/pope_entry.ogg')
 					actually_blew_up = FALSE
 				if("gang war") //Gang Domination (just show the override screen)
 					cinematic.icon_state = "intro_malf_still"

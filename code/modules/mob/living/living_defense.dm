@@ -308,13 +308,14 @@
 	if(src in NS.souls_needed)
 		NS.souls_needed -= src
 		NS.souls += 1
-		NS.resize(1.1)
+
 		if((NS.souls == NS.soul_goal) && (NS.resolved == FALSE))
 			NS.resolved = TRUE
 			SSticker.station_explosion_cinematic(1,"cult", null)
 			sleep(200)
 			SSticker.force_ending = 1
 	if(client)
+		NS.resize(1.1)
 		if(iscultist(src))
 			makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester/chosen, src, null, 1)
 		else
