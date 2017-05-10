@@ -287,7 +287,7 @@ SUBSYSTEM_DEF(ticker)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
 				if("cult")
-					icon_state= NULL
+					cinematic.icon_state = null
 					flick("intro_cult",cinematic)
 					sleep(25)
 					world << sound('sound/magic/enter_blood.ogg')
