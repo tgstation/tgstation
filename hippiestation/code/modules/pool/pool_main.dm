@@ -1,12 +1,3 @@
-/area/crew_quarters/pool
-	icon = 'hippiestation/icons/turf/pool.dmi'
-	name = "\improper Pool"
-	icon_state = "area"
-
-/area/centcom/pool
-	name = "\improper Centcomm Pool"
-	icon_state = "pool"
-
 /turf/open/pool
 	icon = 'hippiestation/icons/turf/pool.dmi'
 	var/filled = TRUE
