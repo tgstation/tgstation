@@ -288,6 +288,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
 			all energy projectiles, but requires two hands to wield."
 	item = /obj/item/weapon/twohanded/dualsaber
+	player_minimum = 25
 	cost = 16
 
 /datum/uplink_item/dangerous/doublesword/get_discount()
