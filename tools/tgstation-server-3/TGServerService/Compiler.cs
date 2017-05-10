@@ -368,8 +368,17 @@ namespace TGServerService
 					DM.StartInfo.FileName = ByondDirectory + "/bin/dm.exe";
 					DM.StartInfo.Arguments = resurrectee + "/" + Properties.Settings.Default.ProjectName + ".dme";
 					DM.StartInfo.UseShellExecute = false;
-					DM.Start();
-					DM.WaitForExit();
+					try
+					{
+						DM.Start();
+						DM.WaitForExit();
+					}
+					catch
+					{
+						if (!DM.HasExited)
+							DM.Kill();
+						throw;
+					}
 
 					if (DM.ExitCode == 0)
 					{
