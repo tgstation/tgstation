@@ -108,7 +108,6 @@ SUBSYSTEM_DEF(blackbox)
 
 	var/datum/DBQuery/query_feedback_save = SSdbcore.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
 	query_feedback_save.Execute()
-	update_exp_db()
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(blackbox_msg, freq)
 	switch(freq)
