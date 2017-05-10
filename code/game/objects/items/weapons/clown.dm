@@ -10,7 +10,7 @@
 /obj/item/weapon/pie_cannon/attackby(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pie))
 		if(!loaded)
-			I.forceMove(src)
+			L.transferItemToLoc(I, src)
 			loaded = I
 			to_chat(L, "<span class='notice'>You load the [I] into the [src]!</span>")
 			return
