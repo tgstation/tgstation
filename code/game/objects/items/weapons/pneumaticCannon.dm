@@ -24,6 +24,10 @@
 	var/range_multiplier = 1
 	var/throw_amount = 20	//How many items to throw per fire
 	var/fire_mode = PCANNON_FIREALL
+	var/automatic = FALSE
+
+/obj/item/weapon/pneumatic_cannon/CanItemAutoclick()
+	return automatic
 
 /obj/item/weapon/pneumatic_cannon/examine(mob/user)
 	..()
@@ -62,17 +66,26 @@
 		to_chat(user, "<span class='warning'>\The [src] can't hold any more items!</span>")
 	else if(istype(W, /obj/item))
 		var/obj/item/IW = W
-		if((loadedWeightClass + IW.w_class) > maxWeightClass)
-			to_chat(user, "<span class='warning'>\The [IW] won't fit into \the [src]!</span>")
-			return
-		if(IW.w_class > src.w_class)
-			to_chat(user, "<span class='warning'>\The [IW] is too large to fit into \the [src]!</span>")
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		to_chat(user, "<span class='notice'>You load \the [IW] into \the [src].</span>")
-		loadedItems.Add(IW)
-		loadedWeightClass += IW.w_class
+		load_item(IW, user)
+
+/obj/item/weapon/pneumatic_cannon/proc/load_item(obj/item/I, mob/user)
+	if((loadedWeightClass + I.w_class) > maxWeightClass)	//Only make messages if there's a user
+		if(user)
+			to_chat(user, "<span class='warning'>\The [I] won't fit into \the [src]!</span>")
+		return FALSE
+	if(I.w_class > src.w_class)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [I] is too large to fit into \the [src]!</span>")
+			return FALSE
+	if(user)		//Only use transfer proc if there's a user, otherwise just set loc.
+		if(!user.transferItemToLoc(I, src))
+			return FALSE
+		to_chat(user, "<span class='notice'>You load \the [I] into \the [src].</span>")
+	else
+		I.forceMove(src)
+	loadedItems.Add(I)
+	loadedWeightClass += I.w_class
+	return TRUE
 
 /obj/item/weapon/pneumatic_cannon/afterattack(atom/target, mob/living/carbon/human/user, flag, params)
 	if(flag && user.a_intent == INTENT_HARM) //melee attack
@@ -205,6 +218,14 @@
 	add_overlay(tank.icon_state)
 	src.update_icon()
 
+/obj/item/weapon/pneumatic_cannon/proc/fill_with_type(type, amount)
+	if(!ispath(type, /obj/item))
+		return FALSE
+	for(var/i = 0, i < amount, i++)
+		var/obj/item/I = new type
+		if(!load_item(I, null))
+			return TRUE
+
 /obj/item/weapon/pneumatic_cannon/pie
 	name = "pie cannon"
 	desc = "Load cream pie for optimal results"
@@ -215,6 +236,7 @@
 	range_multiplier = 3
 	fire_mode = PCANNON_FIFO
 	throw_amount = 1
+	maxWeightClass = 100	//50 pies. :^)
 
 /obj/item/weapon/pneumatic_cannon/pie/attackby(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pie))
