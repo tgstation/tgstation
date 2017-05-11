@@ -1,8 +1,0 @@
-author: "Joan, Robustin"
-delete-after: True
-changes: 
-  - rscdel: "Harvesters can no longer break walls, construct walls, convert floors, or emit paralyzing smoke."
-  - rscadd: "Harvesters now remove the limbs of humans when attacking, can heal OTHER constructs, have thermal vision, and can move through cult walls."
-  - rscadd: "Harvesters can now convert turfs in a small area around them and can create a wall of force."
-  - tweak: "Harvesters are now cultists."
-  - rscadd: "When Nar-Sie is summoned, she will convert all living non-construct cultists to harvesters, who will automatically track her."
