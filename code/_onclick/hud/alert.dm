@@ -315,7 +315,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/area/A = get_area(P)
 	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
 		icon_state = "runed_sense2"
-		desc = "[blood target] is no longer in your sector, you can longer sense their presence here"
+		desc = "[blood_target] is no longer in your sector, you cannot sense their presence here"
 		return
 	desc = "You are currently tracking [blood_target] in [A.name]."
 	var/target_angle = Get_Angle(Q, P)
