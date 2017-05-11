@@ -27,6 +27,8 @@ namespace TGControlPanel
 			WorldStatusChecker.RunWorkerAsync();
 			WorldStatusChecker.RunWorkerCompleted += WorldStatusChecker_RunWorkerCompleted;
 			FullUpdateWorker.RunWorkerCompleted += FullUpdateWorker_RunWorkerCompleted;
+			ServerPathTextbox.LostFocus += ServerPathTextbox_LostFocus;
+			projectNameText.LostFocus += ProjectNameText_LostFocus;
 		}
 
 		private void FullUpdateWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -56,6 +58,16 @@ namespace TGControlPanel
 			LoadServerPage();
 		}
 
+		private void ServerPathTextbox_LostFocus(object sender, EventArgs e)
+		{
+			if (updatingFields)
+				return;
+			var DialogResult = MessageBox.Show("This will move the entire server installation.", "Confim", MessageBoxButtons.YesNo);
+			if (DialogResult != DialogResult.Yes)
+				return;
+			MessageBox.Show(Server.GetComponent<ITGConfig>().MoveServer(ServerPathTextbox.Text) ?? "Success!");
+		}
+
 		void LoadServerPage()
 		{
 			var DM = Server.GetComponent<ITGCompiler>();
@@ -63,8 +75,12 @@ namespace TGControlPanel
 
 			updatingFields = true;
 			AutostartCheckbox.Checked = DD.Autostart();
-			PortSelector.Value = DD.Port();
-			projectNameText.Text = DM.ProjectName();
+			if(!PortSelector.Focused)
+				PortSelector.Value = DD.Port();
+			if(!projectNameText.Focused)
+				projectNameText.Text = DM.ProjectName();
+			if(!ServerPathTextbox.Focused)
+				ServerPathTextbox.Text = Server.GetComponent<ITGConfig>().ServerDirectory();
 			updatingFields = false;
 
 			switch (DM.GetStatus())
@@ -114,7 +130,7 @@ namespace TGControlPanel
 		{
 			LoadServerPage();
 		}
-		private void ProjectNameText_TextChanged(object sender, EventArgs e)
+		private void ProjectNameText_LostFocus(object sender, EventArgs e)
 		{
 			if (!updatingFields)
 				Server.GetComponent<ITGCompiler>().SetProjectName(projectNameText.Text);

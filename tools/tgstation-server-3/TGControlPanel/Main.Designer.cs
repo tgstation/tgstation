@@ -73,6 +73,9 @@
             this.MajorVersionNumeric = new System.Windows.Forms.NumericUpDown();
             this.UpdateProgressBar = new System.Windows.Forms.ProgressBar();
             this.ServerPanel = new System.Windows.Forms.TabPage();
+            this.ServerPathLabel = new System.Windows.Forms.Label();
+            this.ServerPathTextbox = new System.Windows.Forms.TextBox();
+            this.CompileCancelButton = new System.Windows.Forms.Button();
             this.ProjectPathLabel = new System.Windows.Forms.Label();
             this.projectNameText = new System.Windows.Forms.TextBox();
             this.PortLabel = new System.Windows.Forms.Label();
@@ -113,7 +116,6 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
-            this.CompileCancelButton = new System.Windows.Forms.Button();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -679,6 +681,8 @@
             // ServerPanel
             // 
             this.ServerPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.ServerPanel.Controls.Add(this.ServerPathLabel);
+            this.ServerPanel.Controls.Add(this.ServerPathTextbox);
             this.ServerPanel.Controls.Add(this.CompileCancelButton);
             this.ServerPanel.Controls.Add(this.ProjectPathLabel);
             this.ServerPanel.Controls.Add(this.projectNameText);
@@ -710,13 +714,46 @@
             this.ServerPanel.TabIndex = 2;
             this.ServerPanel.Text = "Server";
             // 
+            // ServerPathLabel
+            // 
+            this.ServerPathLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ServerPathLabel.AutoSize = true;
+            this.ServerPathLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerPathLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ServerPathLabel.Location = new System.Drawing.Point(15, 165);
+            this.ServerPathLabel.Name = "ServerPathLabel";
+            this.ServerPathLabel.Size = new System.Drawing.Size(109, 18);
+            this.ServerPathLabel.TabIndex = 33;
+            this.ServerPathLabel.Text = "Server Path:";
+            this.ServerPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ServerPathTextbox
+            // 
+            this.ServerPathTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ServerPathTextbox.Location = new System.Drawing.Point(136, 163);
+            this.ServerPathTextbox.Name = "ServerPathTextbox";
+            this.ServerPathTextbox.Size = new System.Drawing.Size(296, 20);
+            this.ServerPathTextbox.TabIndex = 32;
+            // 
+            // CompileCancelButton
+            // 
+            this.CompileCancelButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.CompileCancelButton.Enabled = false;
+            this.CompileCancelButton.Location = new System.Drawing.Point(737, 302);
+            this.CompileCancelButton.Name = "CompileCancelButton";
+            this.CompileCancelButton.Size = new System.Drawing.Size(69, 31);
+            this.CompileCancelButton.TabIndex = 31;
+            this.CompileCancelButton.Text = "Cancel";
+            this.CompileCancelButton.UseVisualStyleBackColor = true;
+            this.CompileCancelButton.Click += new System.EventHandler(this.CompileCancelButton_Click);
+            // 
             // ProjectPathLabel
             // 
-            this.ProjectPathLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ProjectPathLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ProjectPathLabel.AutoSize = true;
             this.ProjectPathLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ProjectPathLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.ProjectPathLabel.Location = new System.Drawing.Point(242, 162);
+            this.ProjectPathLabel.Location = new System.Drawing.Point(445, 165);
             this.ProjectPathLabel.Name = "ProjectPathLabel";
             this.ProjectPathLabel.Size = new System.Drawing.Size(115, 18);
             this.ProjectPathLabel.TabIndex = 30;
@@ -725,12 +762,11 @@
             // 
             // projectNameText
             // 
-            this.projectNameText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.projectNameText.Location = new System.Drawing.Point(382, 160);
+            this.projectNameText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.projectNameText.Location = new System.Drawing.Point(566, 163);
             this.projectNameText.Name = "projectNameText";
             this.projectNameText.Size = new System.Drawing.Size(296, 20);
             this.projectNameText.TabIndex = 29;
-            this.projectNameText.TextChanged += new System.EventHandler(this.ProjectNameText_TextChanged);
             // 
             // PortLabel
             // 
@@ -1132,6 +1168,7 @@
             // 
             // ServerTimer
             // 
+            this.ServerTimer.Interval = 10000;
             this.ServerTimer.Tick += new System.EventHandler(this.ServerTimer_Tick);
             // 
             // WorldStatusChecker
@@ -1148,18 +1185,6 @@
             // FullUpdateWorker
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
-            // 
-            // CompileCancelButton
-            // 
-            this.CompileCancelButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.CompileCancelButton.Enabled = false;
-            this.CompileCancelButton.Location = new System.Drawing.Point(737, 302);
-            this.CompileCancelButton.Name = "CompileCancelButton";
-            this.CompileCancelButton.Size = new System.Drawing.Size(69, 31);
-            this.CompileCancelButton.TabIndex = 31;
-            this.CompileCancelButton.Text = "Cancel";
-            this.CompileCancelButton.UseVisualStyleBackColor = true;
-            this.CompileCancelButton.Click += new System.EventHandler(this.CompileCancelButton_Click);
             // 
             // Main
             // 
@@ -1275,6 +1300,8 @@
 		private System.Windows.Forms.Label ProjectPathLabel;
 		private System.Windows.Forms.TextBox projectNameText;
 		private System.Windows.Forms.Button CompileCancelButton;
+		private System.Windows.Forms.Label ServerPathLabel;
+		private System.Windows.Forms.TextBox ServerPathTextbox;
 	}
 }
 
