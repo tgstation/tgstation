@@ -192,7 +192,12 @@ namespace TGCommandLine
 		{
 			var res = Server.GetComponent<ITGCompiler>().Cancel();
 			Console.WriteLine(res ?? "Success!");
-			return res == null ? ExitCode.Normal : ExitCode.ServerError;
+			return ExitCode.Normal;	//because failing cancellation implys it's already cancelled
+		}
+
+		public override void PrintHelp()
+		{
+			Console.WriteLine("cancel\t-\tCancels the current compilation job");
 		}
 	}
 }
