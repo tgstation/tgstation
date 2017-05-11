@@ -481,7 +481,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	sleep(40)
 	if(src)
 		color = "#FF0000"
-	SSticker.mode.eldergod = FALSE
 	deltimer(GLOB.blood_target_reset_timer)
 	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn and makes it the blood target even if the rune has been removed
 
