@@ -139,7 +139,7 @@
 			if(!throw_item(target, ITD, user))
 				break
 	else
-		for(var/i = 0, i < throw_amount, i++)
+		for(var/i in 1 to throw_amount)
 			if(!loadedItems.len)
 				break
 			var/obj/item/I = loadedItems[1]
@@ -150,7 +150,6 @@
 
 /obj/item/weapon/pneumatic_cannon/proc/throw_item(turf/target, obj/item/I, mob/user)
 	if(!istype(I))
-		stack_trace()
 		return FALSE
 	loadedItems.Remove(I)
 	loadedWeightClass -= I.w_class
