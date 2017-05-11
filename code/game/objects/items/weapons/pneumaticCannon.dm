@@ -134,25 +134,19 @@
 		user.Weaken(3)
 
 /obj/item/weapon/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
-	switch(fire_mode)
-		if(PCANNON_FIREALL)
-			for(var/obj/item/ITD in loadedItems) //Item To Discharge
-				if(!throw_item(target, ITD, user))
-					break
-		if(PCANNON_FILO)
-			for(var/i = 0, i < throw_amount, i++)
-				if(!loadedItems.len)
-					break
-				var/obj/item/I = loadedItems[loadedItems.len]
-				if(!throw_item(target, I, user))
-					break
-		if(PCANNON_FIFO)
-			for(var/i = 0, i < throw_amount, i++)
-				if(!loadedItems.len)
-					break
-				var/obj/item/I = loadedItems[1]
-				if(!throw_item(target, I, user))
-					break
+	if(fire_mode == PCANNON_FIREALL)
+		for(var/obj/item/ITD in loadedItems) //Item To Discharge
+			if(!throw_item(target, ITD, user))
+				break
+	else
+		for(var/i = 0, i < throw_amount, i++)
+			if(!loadedItems.len)
+				break
+			var/obj/item/I = loadedItems[1]
+			if(fire_mode == PCANNON_FILO)
+				I = loadedItems[loadedItems.len]
+			if(!throw_item(target, I, user))
+				break
 
 /obj/item/weapon/pneumatic_cannon/proc/throw_item(turf/target, obj/item/I, mob/user)
 	if(!istype(I))
