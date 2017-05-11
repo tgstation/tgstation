@@ -198,9 +198,9 @@
 	var/avail_heat = air.temperature - TCMB
 	
 	//3 degrees required per one tenth of a canister
-	var/max_moles = min(cached_gases["plasma"][MOLES], cached_gases["n2o"][MOLES], MOLES_CELLSTANDARD / 25, avail_heat / 3)	
+	var/max_moles = min(cached_gases["plasma"][MOLES], cached_gases["n2o"][MOLES], MOLES_CELLSTANDARD / 25, avail_heat / 0.03)	
 	
-	air.temperature -= max_moles * 3
+	air.temperature -= max_moles * 0.03
 	air.assert_gas("bz")
 	cached_gases["bz"][MOLES] += max_moles * 1.5
 	cached_gases["plasma"][MOLES] -= max_moles
