@@ -1,7 +1,7 @@
 
 #define PCANNON_FIREALL 1
 #define PCANNON_FILO 2
-#define PCANNON_FOFO 3
+#define PCANNON_FIFO 3
 /obj/item/weapon/pneumatic_cannon
 	name = "pneumatic cannon"
 	desc = "A gas-powered cannon that can fire any object loaded into it."
@@ -135,7 +135,7 @@
 					break
 		if(PCANNON_FIFO)
 			for(var/i = 0, i < throw_amount, i++)
-				if(!loadeditems.len)
+				if(!loadedItems.len)
 					break
 				var/obj/item/I = loadedItems[1]
 				if(!throw_item(target, I, user))
@@ -214,7 +214,7 @@
 	checktank = FALSE
 	range_multiplier = 3
 	fire_mode = PCANNON_FIFO
-	throw_amoutn = 1
+	throw_amount = 1
 
 /obj/item/weapon/pneumatic_cannon/pie/attackby(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pie))
