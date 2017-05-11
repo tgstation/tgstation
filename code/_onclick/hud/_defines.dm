@@ -104,13 +104,16 @@
 #define ui_health "EAST-1:28,CENTER-1:15"
 #define ui_internal "EAST-1:28,CENTER:17"
 
-//borgs 
+//borgs
 #define ui_borg_health "EAST-1:28,CENTER-1:15"		//borgs have the health display where humans have the pressure damage indicator.
 
 //aliens
 #define ui_alien_health "EAST,CENTER-1:15"	//aliens have the health display where humans have the pressure damage indicator.
 #define ui_alienplasmadisplay "EAST,CENTER-2:15"
 #define ui_alien_queen_finder "EAST,CENTER-3:15"
+
+//reagent indicator for dwarves, lets them know how much alcohol they have in their system
+#define ui_alcohol_amount "EAST,CENTER-4:15"
 
 //constructs
 #define ui_construct_pull "EAST,CENTER-2:15"

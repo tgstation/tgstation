@@ -1,0 +1,50 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/open/indestructible/necropolis,/area/lavaland/surface/outdoors)
+"c" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"d" = (/turf/closed/indestructible/necropolis,/area/lavaland/surface/outdoors)
+"e" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"f" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"g" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/ruin)
+"h" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"i" = (/turf/open/indestructible/necropolis,/area/ruin)
+"j" = (/turf/closed/indestructible/necropolis,/area/ruin)
+"k" = (/turf/closed/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin)
+"l" = (/obj/structure/glowshroom/single,/turf/open/indestructible/necropolis,/area/ruin)
+"m" = (/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; name = "sand"},/area/ruin)
+"n" = (/obj/structure/table/wood,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/glowshroom,/obj/item/seeds/glowshroom,/turf/open/indestructible/necropolis,/area/ruin)
+"o" = (/obj/structure/table/wood,/obj/item/weapon/cultivator,/obj/item/weapon/cultivator,/obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/indestructible/necropolis,/area/ruin)
+"p" = (/obj/machinery/migrant_spawner,/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; name = "sand"},/area/ruin)
+"q" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"r" = (/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/turf/open/indestructible/necropolis,/area/ruin)
+"s" = (/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/turf/open/indestructible/necropolis,/area/ruin)
+"t" = (/obj/structure/sink/puddle,/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; name = "sand"},/area/ruin)
+"u" = (/turf/closed/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/lavaland/surface/outdoors)
+"v" = (/obj/structure/glowshroom/single,/turf/open/indestructible/necropolis,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aaaaaaaaaaabcbaaaaaaaaaaa
+aaaaaaaaaaabdbaaaaaaaaaaa
+aaaaeeeeeeacbbeaaaaaaaaaa
+aaaaeebeeeebcbeebaaaabaaa
+aaaaeebeeeebbfeeeeeeeeaaa
+aaaaeeeggeebbheeheebbbbba
+aaadeeeggggiiggghebceecba
+aaeeeeggggggigggiebbbeebb
+baeeeegggjjkfkjiggbebbbcd
+aeeebhijiiilmnojggeeeeebb
+aeebbbijiimmpmqrjgeebeeaa
+aeebccgjiiimmiisjeeeeeaaa
+aabbbeggkgjfmmflkgebeeaba
+bbcbeeegkgjfmtjikgebeeaaa
+bdbeeeegkiiifmkggeeeeadaa
+abbeebeggfljijkggeeeeaaaa
+abeeeeeebbuubdveeeeabaaaa
+aaeebeeebbhhbbeeeeeaaaaaa
+aaeeeebbbbeebbeeebaaaaaba
+aabeeebcbeeeeebcbaaaaaaaa
+aaaaeebbeeeeeebbbaaaaaaaa
+aaaababbeeeeeeeebbbaaaaaa
+aaaaabcbbeeddeebbabaaaaaa
+aaaaabbaaeebaabaaaaaaaaaa
+aaaaaabaaaaaaaaaaaaaaaaaa
+"}

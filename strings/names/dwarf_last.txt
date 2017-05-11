@@ -1,0 +1,45 @@
+Brightjaw
+Steelbrew
+Grimtank
+Mudback
+Brickbane
+Smeltmaster
+Lavabrow
+Woldtoe
+Deephelm
+Earthpike
+Berylshield
+Asharmour
+Caskspine
+Rubygrip
+Noblemaster
+Flintgrip
+Thunderchest
+Ignotchest
+Cragborg
+Jadearm
+Hornbelt
+Fierygranite
+Twilightbane
+Leadforge
+Kragthane
+Oakenaxe
+Beastback
+Coinbender
+Bronzejaw
+Mithrilrock
+Barrelhood
+Grumblesphere
+Graybane
+Flattoe
+Steelmaker
+Bronzebeard
+Kragcloak
+Magmaborn
+Gravelbasher
+Whitbrew
+
+	syllables = list(
+		"b", "bl", "th", "nd", "f", "d", "m", "kh", "sh", "g", "n", "h", "z",
+		"?", "-", ",", "I", "L", "y", "u"
+	)
