@@ -236,15 +236,28 @@ namespace TGControlPanel
 					ForeColor = Color.FromArgb(248, 248, 242),
 					Text = setting.Comment
 				});
-			
-			var IsSwitch = setting.DefaultValue == "" || setting.DefaultValue == null;
 
-			if (!IsSwitch || !setting.ExistsInRepo)
-				flow.Controls.Add(new ConfigAddRemoveButton(setting, this, type));			
+			if (setting.IsMultiKey)
+			{
+				flow.Controls.Add(new Label()
+				{
+					Text = "MANUAL EDIT REQUIRED!",
+					AutoSize = true,
+					Font = new Font("Verdana", 10.0f),
+					ForeColor = Color.FromArgb(248, 248, 242)
+				});
+			}
+			else
+			{
 
-			if(IsSwitch || setting.ExistsInStatic)
-				flow.Controls.Add(IsSwitch ? (Control)new ConfigCheckBox(setting, changelist) : new ConfigTextBox(setting, changelist));
+				var IsSwitch = setting.DefaultValue == "" || setting.DefaultValue == null;
 
+				if (!IsSwitch || !setting.ExistsInRepo)
+					flow.Controls.Add(new ConfigAddRemoveButton(setting, this, type));
+
+				if (IsSwitch || setting.ExistsInStatic)
+					flow.Controls.Add(IsSwitch ? (Control)new ConfigCheckBox(setting, changelist) : new ConfigTextBox(setting, changelist));
+			}
 			flow.Controls.Add(new Label()); //line break
 		}
 	}
