@@ -12,9 +12,9 @@ namespace TGCommandLine
 			Keyword = "byond";
 			Children = new Command[] { new BYONDUpdateCommand(), new BYONDVersionCommand(), new BYONDStatusCommand() };
 		}
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("byond\t-\tManage BYOND installation");
+			return "Manage BYOND installation";
 		}
 	}
 
@@ -29,9 +29,14 @@ namespace TGCommandLine
 			Console.WriteLine(Server.GetComponent<ITGByond>().GetVersion(parameters.Count > 0 && parameters[0] == "--staged") ?? "Unistalled");
 			return ExitCode.Normal;
 		}
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("version [--staged]\t-\tPrint the currently installed BYOND version");
+			return "[--staged]";
+		}
+
+		protected override string GetHelpText()
+		{
+			return "Print the currently installed BYOND version";
 		}
 	}
 
@@ -70,9 +75,9 @@ namespace TGCommandLine
 			}
 			return ExitCode.Normal;
 		}
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("status\t-\tPrint the current status of the BYOND updater");
+			return "Print the current status of the BYOND updater";
 		}
 	}
 
@@ -115,9 +120,13 @@ namespace TGCommandLine
 			Console.WriteLine(res ?? (stat == TGByondStatus.Staged ? "Update staged and will apply next DD reboot" : "Update finished"));
 			return res == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("update <Major> <Minor>\t-\tUpdates the BYOND installation to the specified version");
+			return "<Major> <Minor>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Updates the BYOND installation to the specified version";
 		}
 	}
 }

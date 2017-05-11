@@ -11,9 +11,9 @@ namespace TGCommandLine
 			Keyword = "dd";
 			Children = new Command[] { new DDStartCommand(), new DDStopCommand(), new DDRestartCommand(), new DDStatusCommand(), new DDAutostartCommand(), new DDPortCommand(), new DDVisibilityCommand(), new DDSecurityCommand() };
 		}
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("dd\t-\tManage DreamDaemon");
+			return "Manage DreamDaemon";
 		}
 	}
 
@@ -24,9 +24,9 @@ namespace TGCommandLine
 			Keyword = "start";
 		}
 
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("start\t-\tStarts the server and watchdog");
+			return "Starts the server and watchdog";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
@@ -43,10 +43,14 @@ namespace TGCommandLine
 		{
 			Keyword = "stop";
 		}
-
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("stop [--graceful]\t-\tStops the server and watchdog optionally waiting for the current round to end");
+			return "[--graceful]";
+		}
+
+		protected override string GetHelpText()
+		{
+			return "Stops the server and watchdog optionally waiting for the current round to end";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
@@ -74,11 +78,10 @@ namespace TGCommandLine
 			Keyword = "restart";
 		}
 
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("restart [--graceful]\t-\tRestarts the server and watchdog optionally waiting for the current round to end");
+			return "[--graceful]";
 		}
-
 		public override ExitCode Run(IList<string> parameters)
 		{
 			var DD = Server.GetComponent<ITGDreamDaemon>();
@@ -96,6 +99,11 @@ namespace TGCommandLine
 			Console.WriteLine(res ?? "Success!");
 			return res == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
+
+		protected override string GetHelpText()
+		{
+			return "Restarts the server and watchdog optionally waiting for the current round to end";
+		}
 	}
 	class DDStatusCommand : Command
 	{
@@ -104,9 +112,9 @@ namespace TGCommandLine
 			Keyword = "status";
 		}
 
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("status\t-\tGets the current status of the watchdog");
+			return "Gets the current status of the watchdog and server";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
@@ -145,9 +153,13 @@ namespace TGCommandLine
 			return ExitCode.Normal;
 		}
 
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("autostart <on|off|check>\t-\tChange or check autostarting of the game server");
+			return "<on|off|check>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Change or check autostarting of the game server with the service";
 		}
 	}
 	class DDPortCommand : Command
@@ -175,9 +187,14 @@ namespace TGCommandLine
 			return ExitCode.Normal;
 		}
 
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("set-port <number>\t-\tSets the port DreamDaemon will open the server on. Requires a server restart to apply");
+			return "<number>";
+		}
+
+		protected override string GetHelpText()
+		{
+			return "Sets the port DreamDaemon will open the server on. Requires a server restart to apply and queues a graceful one up";
 		}
 	}
 
@@ -214,9 +231,14 @@ namespace TGCommandLine
 			return ExitCode.Normal;
 		}
 
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("set-visiblity <public|private|invisible>\t-\tSets the visibility option for the DreamDaemon world");
+			return "Sets the visibility option for the DreamDaemon world. Requires a server restart to apply and queues a graceful one up";
+		}
+
+		protected override string GetArgumentString()
+		{
+			return "<public|private|invisible>";
 		}
 	}
 
@@ -252,9 +274,14 @@ namespace TGCommandLine
 			return ExitCode.Normal;
 		}
 
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("set-visiblity <public|private|invisible>\t-\tSets the visibility option for the DreamDaemon world");
+			return "<safe|ultrasafe|trusted>";
+		}
+
+		protected override string GetHelpText()
+		{
+			return "Sets the visibility option for the DreamDaemon world";
 		}
 	}
 }

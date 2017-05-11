@@ -12,9 +12,9 @@ namespace TGCommandLine
 			Keyword = "dm";
 			Children = new Command[] { new DMCompileCommand(), new DMInitializeCommand(), new DMStatusCommand(), new DMSetProjectNameCommand(), new DMCancelCommand() };
 		}
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("dm\t-\tManage compiling the server");
+			return "Manage compiling the server";
 		}
 	}
 
@@ -64,9 +64,14 @@ namespace TGCommandLine
 			return ExitCode.Normal;
 		}
 
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("compile [--wait]\t-\tStarts a compile/update job optionally waiting for completion");
+			return "[--wait]";
+		}
+
+		protected override string GetHelpText()
+		{
+			return "Starts a compile/update job optionally waiting for completion";
 		}
 	}
 	class DMStatusCommand : Command
@@ -111,9 +116,9 @@ namespace TGCommandLine
 			return ExitCode.Normal;
 		}
 
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("status\t-\tGet the current status of the compiler");
+			return "Get the current status of the compiler";
 		}
 	}
 
@@ -124,10 +129,16 @@ namespace TGCommandLine
 			Keyword = "project-name";
 			RequiredParameters = 1;
 		}
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("project-name\t-\tSet the relative path of the .dme to compile");
+			return "<path>";
 		}
+
+		protected override string GetHelpText()
+		{
+			return "Set the relative path of the .dme/.dmb to compile/run";
+		}
+
 		public override ExitCode Run(IList<string> parameters)
 		{
 			Server.GetComponent<ITGCompiler>().SetProjectName(parameters[0]);
@@ -142,10 +153,14 @@ namespace TGCommandLine
 			Keyword = "initialize";
 		}
 
-
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("initialize [--wait]\t-\tStarts an initialization job optionally waiting for completion");
+			return "[--wait]";
+		}
+
+		protected override string GetHelpText()
+		{
+			return "Starts an initialization job optionally waiting for completion";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
@@ -195,9 +210,9 @@ namespace TGCommandLine
 			return ExitCode.Normal;	//because failing cancellation implys it's already cancelled
 		}
 
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("cancel\t-\tCancels the current compilation job");
+			return "Cancels the current compilation job";
 		}
 	}
 }

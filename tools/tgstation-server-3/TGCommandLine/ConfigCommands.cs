@@ -12,9 +12,9 @@ namespace TGCommandLine
 			Keyword = "config";
 			Children = new Command[] { new ConfigMoveServerCommand(), new ConfigServerDirectoryCommand(), new ConfigDownloadCommand(), new ConfigUploadCommand() };
 		}
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("config\t-\tManage settings");
+			return "Manage settings";
 		}
 	}
 
@@ -33,9 +33,14 @@ namespace TGCommandLine
 			return res == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
 
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("move-server <new-path>\t-\tMove the server installation (BYOND, Repo, Game) to a new location. Nothing else may be running for this task to complete");
+			return "<new path>";
+		}
+
+		protected override string GetHelpText()
+		{
+			return "Move the server installation (BYOND, Repo, Game) to a new location. Nothing else may be running for this task to complete";
 		}
 	}
 
@@ -51,10 +56,10 @@ namespace TGCommandLine
 			Console.WriteLine(Server.GetComponent<ITGConfig>().ServerDirectory());
 			return ExitCode.Normal;
 		}
-
-		public override void PrintHelp()
+		
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("server-dir\t-\tPrint the directory the server is installed in");
+			return "Print the directory the server is installed in";
 		}
 	}
 
@@ -86,10 +91,13 @@ namespace TGCommandLine
 
 			return ExitCode.Normal;
 		}
-
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("download <source config file> <out file> --repo\t-\tDownloads the specified file from the config tree and writes it to out file. --repo will fetch it from the repository instead of the game config");
+			return "<source config file> <out file>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Downloads the specified file from the config tree and writes it to out file. --repo will fetch it from the repository instead of the game config";
 		}
 	}
 	
@@ -119,9 +127,14 @@ namespace TGCommandLine
 			return ExitCode.Normal;
 		}
 
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("upload <destination config file> <source file> --repo\t-\tUploads the specified file to the config tree from source file");
+			return "<destination config file> <source file> [--repo]";
+		}
+
+		protected override string GetHelpText()
+		{
+			return "Uploads the specified file to the config tree from source file";
 		}
 	}
 }

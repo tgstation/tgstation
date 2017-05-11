@@ -27,14 +27,12 @@ namespace TGCommandLine
 				{
 					case "help":
 					case "?":
-						if (IsRealRoot())
-							PrintHelp();
-						else {
+						if (!IsRealRoot())
+						{
 							Console.WriteLine(Keyword + " commands:");
 							Console.WriteLine();
-							foreach (var c in Children)
-								c.PrintHelp();
 						}
+						PrintHelp();
 						return ExitCode.Normal;
 					default:
 						foreach (var c in Children)
@@ -62,6 +60,11 @@ namespace TGCommandLine
 			Console.WriteLine("Avaiable commands (type '?' or 'help' after command for more info):");
 			Console.WriteLine();
 			base.PrintHelp();
+		}
+
+		protected override string GetHelpText()
+		{
+			throw new NotImplementedException();
 		}
 	}
 
@@ -92,9 +95,15 @@ namespace TGCommandLine
 			Console.WriteLine(result ?? "Compilation started!");
 			return result == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
-		public override void PrintHelp()
+
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("testmerge <pull request #>\t-\tMerges the specified pull request and updates the server");
+			return "<pull request #>";
+		}
+
+		protected override string GetHelpText()
+		{
+			return "Merges the specified pull request and updates the server";
 		}
 	}
 
@@ -123,9 +132,15 @@ namespace TGCommandLine
 			Console.WriteLine(result ?? "Compilation started!");
 			return result == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
-		public override void PrintHelp()
+
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("update <merge|hard> [--cl]\t-\tUpdates the server fully, optionally generating and pushing a changelog. Runs asynchronously once compilation starts");
+			return "<merge|hard> [--cl]";
+		}
+
+		protected override string GetHelpText()
+		{
+			return "Updates the server fully, optionally generating and pushing a changelog. Runs asynchronously once compilation starts";
 		}
 	}
 }

@@ -21,9 +21,32 @@ namespace TGCommandLine
 		public abstract ExitCode Run(IList<string> parameters);
 		public virtual void PrintHelp()
 		{
+			var Prefixes = new List<string>();
+			var Postfixes = new List<string>();
+			int MaxPrefixLen = 0;
 			foreach (var c in Children)
-				c.PrintHelp();
+			{
+				var ns = c.Keyword + " " + c.GetArgumentString();
+				MaxPrefixLen = Math.Max(MaxPrefixLen, ns.Length);
+				Prefixes.Add(ns);
+				Postfixes.Add(c.GetHelpText());
+			}
+
+			var Final = new List<string>();
+			for(var I = 0; I < Prefixes.Count; ++I)
+			{
+				var lp = Prefixes[I];
+				for (; lp.Length < MaxPrefixLen + 1; lp += " ") ;
+				Final.Add(lp + "- " + Postfixes[I]);
+			}
+			Final.Sort();
+			Final.ForEach(Console.WriteLine);
 		}
+		protected virtual string GetArgumentString()
+		{
+			return "";
+		}
+		protected abstract string GetHelpText();
 	}
 
 	class Program

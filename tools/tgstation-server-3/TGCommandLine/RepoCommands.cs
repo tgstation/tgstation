@@ -11,9 +11,9 @@ namespace TGCommandLine
 			Keyword = "repo";
 			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand() };
 		}
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("repo\t-\tManage the git repository");
+			return "Manage the git repository";
 		}
 	}
 
@@ -34,9 +34,13 @@ namespace TGCommandLine
 			Console.WriteLine("Setting up repo. This will take a while...");
 			return ExitCode.Normal;
 		}
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("setup <git-url> [branchname]\t-\tClean up everything and clones the repo at git-url with optional branch name");
+			return "<git-url> [branchname]";
+		}
+		protected override string GetHelpText()
+		{
+			return "Clean up everything and clones the repo at git-url with optional branch name";
 		}
 	}
 
@@ -66,9 +70,13 @@ namespace TGCommandLine
 			Console.WriteLine(res ?? "Success");
 			return res == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("update <hard|merge>\t-\tUpdates the current branch the repo is on either via a merge or hard reset");
+			return "Updates the current branch the repo is on either via a merge or hard reset";
+		}
+		protected override string GetArgumentString()
+		{
+			return "<hard|merge>";
 		}
 	}
 	class RepoChangelogCommand : Command
@@ -85,9 +93,10 @@ namespace TGCommandLine
 				Console.WriteLine(result);
 			return error == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
-		public override void PrintHelp()
+
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("gen-changelog\t-\tCompiles the html changelog");
+			return "Compiles the html changelog";
 		}
 	}
 	class RepoCommitCommand : Command
@@ -95,17 +104,24 @@ namespace TGCommandLine
 		public RepoCommitCommand()
 		{
 			Keyword = "commit";
-			RequiredParameters = 1;
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
-			var res = Server.GetComponent<ITGRepository>().Commit(parameters[0]);
+			string res;
+			if(parameters.Count > 1)
+				res = Server.GetComponent<ITGRepository>().Commit(parameters[0]);
+			else
+				res = Server.GetComponent<ITGRepository>().Commit();
 			Console.WriteLine(res ?? "Success");
 			return res == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("commit <message>\t-\tCommits all current changes to the repository using the configured identity");
+			return "[message]";
+		}
+		protected override string GetHelpText()
+		{
+			return "Commits all current changes to the repository using the configured identity. By default, uses the automatic changelog compile message";
 		}
 	}
 	class RepoPushCommand : Command
@@ -120,9 +136,10 @@ namespace TGCommandLine
 			Console.WriteLine(res ?? "Success");
 			return res == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
-		public override void PrintHelp()
+
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("push\t-\tPushes commits to the origin branch using the configured credentials");
+			return "Pushes commits to the origin branch using the configured credentials";
 		}
 	}
 	class RepoSetEmailCommand : Command
@@ -137,9 +154,14 @@ namespace TGCommandLine
 			Server.GetComponent<ITGRepository>().SetCommitterEmail(parameters[0]);
 			return ExitCode.Normal;
 		}
-		public override void PrintHelp()
+
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("set-email <e-mail>\t-\tSet the e-mail used for commits");
+			return "<e-mail>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Set the e-mail used for commits";
 		}
 	}
 	class RepoSetNameCommand : Command
@@ -154,9 +176,13 @@ namespace TGCommandLine
 			Server.GetComponent<ITGRepository>().SetCommitterName(parameters[0]);
 			return ExitCode.Normal;
 		}
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("set-name <name>\t-\tSet the name used for commits");
+			return "<name>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Set the name used for commits";
 		}
 	}
 	class RepoPythonPathCommand : Command
@@ -171,9 +197,13 @@ namespace TGCommandLine
 			Server.GetComponent<ITGRepository>().SetPythonPath(parameters[0]);
 			return ExitCode.Normal;
 		}
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("python-path <path>\t-\tSet the path to the folder containing the python 2.7 installation");
+			return "<path>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Set the path to the folder containing the python 2.7 installation";
 		}
 	}
 	class RepoSetCredentialsCommand : Command
@@ -201,9 +231,13 @@ namespace TGCommandLine
 			Server.GetComponent<ITGRepository>().SetCredentials(user, pass);
 			return ExitCode.Normal;
 		}
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("set-credentials\t-\tSet the credentials used for pushing commits");
+			return "<path>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Set the credentials used for pushing commits";
 		}
 	}
 
@@ -231,10 +265,14 @@ namespace TGCommandLine
 			Console.WriteLine(res ?? "Success");
 			return res == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
-
-		public override void PrintHelp()
+		
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("merge-pr <pr #>\t-\tMerge the given pull request from the origin repository into the current branch");
+			return "<pr #>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Merge the given pull request from the origin repository into the current branch. Only supported with github remotes";
 		}
 	}
 }

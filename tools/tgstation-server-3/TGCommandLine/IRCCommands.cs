@@ -11,9 +11,9 @@ namespace TGCommandLine
 			Keyword = "irc";
 			Children = new Command[] { new IRCNickCommand(), new IRCJoinCommand(), new IRCPartCommand(), new IRCAnnounceCommand(), new IRCStatusCommand(), new IRCAdminCommand(), new IRCEnableCommand(), new IRCDisableCommand(), new IRCReconnectCommand(), new IRCListAdminsCommand(), new IRCAddminCommand(), new IRCDeadminCommand(), new IRCAuthCommand(), new IRCDisableAuthCommand() };
 		}
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("irc\t-\tManage the IRC bot");
+			return "Manages the IRC bot";
 		}
 	}
 	class IRCNickCommand : Command
@@ -23,10 +23,14 @@ namespace TGCommandLine
 			Keyword = "nick";
 			RequiredParameters = 1;
 		}
-
-		public override void PrintHelp()
+		
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("nick <name>\t-\tSets the IRC nickname");
+			return "<name>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Sets the IRC nickname";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
@@ -44,9 +48,13 @@ namespace TGCommandLine
 			RequiredParameters = 1;
 		}
 
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("join <channel>\t-\tJoins a channel");
+			return "<channel>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Joins a channel";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
@@ -76,12 +84,15 @@ namespace TGCommandLine
 			Keyword = "part";
 			RequiredParameters = 1;
 		}
-
-		public override void PrintHelp()
+		
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("part <channel>\t-\tLeaves a channel");
+			return "<channel>";
 		}
-
+		protected override string GetHelpText()
+		{
+			return "Leaves a channel";
+		}
 		public override ExitCode Run(IList<string> parameters)
 		{
 			var IRC = Server.GetComponent<ITGIRC>();
@@ -110,10 +121,13 @@ namespace TGCommandLine
 			Keyword = "announce";
 			RequiredParameters = 1;
 		}
-
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("announce <message>\t-\tSends a message to all connected channels");
+			return "<message>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Sends a message to all connected channels";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
@@ -133,12 +147,12 @@ namespace TGCommandLine
 		{
 			Keyword = "list-admins";
 		}
-
-		public override void PrintHelp()
+		
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("list-admins\t-\tList users which can use restricted commands in the admin channel");
+			return "List users which can use restricted commands in the admin channel";
 		}
-
+		
 		public override ExitCode Run(IList<string> parameters)
 		{
 			var res = Server.GetComponent<ITGIRC>().ListAdmins();
@@ -153,10 +167,10 @@ namespace TGCommandLine
 		{
 			Keyword = "reconnect";
 		}
-
-		public override void PrintHelp()
+		
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("reconnect\t-\tRestablish the IRC connection");
+			return "Restablish the IRC connection";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
@@ -177,12 +191,15 @@ namespace TGCommandLine
 			Keyword = "addmin";
 			RequiredParameters = 1;
 		}
-
-		public override void PrintHelp()
+		
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("addmin [nick]\t-\tAdd a user which can use restricted commands in the admin channel");
+			return "[nick]";
 		}
-
+		protected override string GetHelpText()
+		{
+			return "Add a user which can use restricted commands in the admin channel";
+		}
 		public override ExitCode Run(IList<string> parameters)
 		{
 			var IRC = Server.GetComponent<ITGIRC>();
@@ -208,12 +225,14 @@ namespace TGCommandLine
 			Keyword = "deadmin";
 			RequiredParameters = 1;
 		}
-
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("deadmin [nick]\t-\tRemove a user which can use restricted commands in the admin channel");
+			return "[nick]";
 		}
-
+		protected override string GetHelpText()
+		{
+			return "Remove a user which can use restricted commands in the admin channel";
+		}
 		public override ExitCode Run(IList<string> parameters)
 		{
 			var IRC = Server.GetComponent<ITGIRC>();
@@ -241,11 +260,14 @@ namespace TGCommandLine
 			RequiredParameters = 2;
 		}
 
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("setup-auth <target> <message>\t-\tSet the authentication message to send to target for identification. e.g. <NickServ> <identify hunter2>");
+			return "<target> <message>";
 		}
-
+		protected override string GetHelpText()
+		{
+			return "Set the authentication message to send to target for identification. e.g. NickServ \"identify hunter2\"";
+		}
 		public override ExitCode Run(IList<string> parameters)
 		{
 			Server.GetComponent<ITGIRC>().SetupAuth(parameters[0], parameters[1]);
@@ -258,13 +280,11 @@ namespace TGCommandLine
 		public IRCDisableAuthCommand()
 		{
 			Keyword = "disable-auth";
-		}
-
-		public override void PrintHelp()
+		}		
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("disable-auth\t-\tTurns off IRC authentication");
+			return "Turns off IRC authentication";
 		}
-
 		public override ExitCode Run(IList<string> parameters)
 		{
 			Server.GetComponent<ITGIRC>().SetupAuth(null, null);
@@ -278,12 +298,10 @@ namespace TGCommandLine
 		{
 			Keyword = "status";
 		}
-
-		public override void PrintHelp()
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("status\t-\tLists channels and connections status");
+			return "Lists channels and connections status";
 		}
-
 		public override ExitCode Run(IList<string> parameters)
 		{
 			var IRC = Server.GetComponent<ITGIRC>();
@@ -302,12 +320,14 @@ namespace TGCommandLine
 			Keyword = "admin";
 			RequiredParameters = 1;
 		}
-
-		public override void PrintHelp()
+		protected override string GetArgumentString()
 		{
-			Console.WriteLine("admin\t-\tSets the admin IRC channel");
+			return "<channel>";
 		}
-
+		protected override string GetHelpText()
+		{
+			return "Sets the admin IRC channel";
+		}
 		public override ExitCode Run(IList<string> parameters)
 		{
 			Server.GetComponent<ITGIRC>().Setup(null, 0, null, null, parameters[0]);
@@ -320,10 +340,10 @@ namespace TGCommandLine
 		{
 			Keyword = "enable";
 		}
-
-		public override void PrintHelp()
+		
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("enable\t-\tEnables the IRC bot");
+			return "Enables the IRC bot";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
@@ -338,10 +358,10 @@ namespace TGCommandLine
 		{
 			Keyword = "disable";
 		}
-
-		public override void PrintHelp()
+	
+		protected override string GetHelpText()
 		{
-			Console.WriteLine("disable\t-\tDisables the IRC bot");
+			return "Disables the IRC bot";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
