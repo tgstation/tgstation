@@ -98,13 +98,14 @@ namespace TGCommandLine
 
 		protected override string GetArgumentString()
 		{
-			return "<pull request #>";
+			return "<merge|hard> [--cl]";
 		}
 
 		protected override string GetHelpText()
 		{
-			return "Merges the specified pull request and updates the server";
+			return "Updates the server fully, optionally generating and pushing a changelog. Runs asynchronously once compilation starts";
 		}
+
 	}
 
 	class TestmergeCommand : Command
@@ -132,15 +133,14 @@ namespace TGCommandLine
 			Console.WriteLine(result ?? "Compilation started!");
 			return result == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
-
 		protected override string GetArgumentString()
 		{
-			return "<merge|hard> [--cl]";
+			return "<pull request #>";
 		}
 
 		protected override string GetHelpText()
 		{
-			return "Updates the server fully, optionally generating and pushing a changelog. Runs asynchronously once compilation starts";
+			return "Merges the specified pull request and updates the server";
 		}
 	}
 }
