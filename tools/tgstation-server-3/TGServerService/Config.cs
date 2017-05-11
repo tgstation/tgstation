@@ -448,6 +448,7 @@ namespace TGServerService
 				{
 					if (RepoBusy)
 						return "Repo busy!";
+					DisposeRepo();
 					if (!Monitor.TryEnter(ByondLock))
 						return "BYOND locked";
 					try
@@ -495,10 +496,10 @@ namespace TGServerService
 											Directory.Move(Config.ServerDirectory, new_location);
 											Environment.CurrentDirectory = new_location;
 										}
-										catch
+										catch (Exception e)
 										{
 											Environment.CurrentDirectory = Config.ServerDirectory;
-											throw;
+											return e.ToString();
 										}
 									}
 									Config.ServerDirectory = new_location;
@@ -531,7 +532,6 @@ namespace TGServerService
 				return e.ToString();
 			}
 		}
-
 		//public api
 		public ushort NudgePort(out string error)
 		{
