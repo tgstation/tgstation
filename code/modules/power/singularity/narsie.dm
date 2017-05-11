@@ -51,33 +51,35 @@
 
 /obj/singularity/narsie/large/cult/Initialize()
 	. = ..()
+	GLOB.cult_narsie = src
+	GLOB.blood_target = src
 	resize(0.6)
 	for(var/datum/mind/cult_mind in SSticker.mode.cult)
-		if(ishuman(cult_mind.current))
-			var/mob/living/M = cult_mind.current
-			M.narsie_act()
+		if(isliving(cult_mind.current))
+			var/mob/living/L = cult_mind.current
+			L.narsie_act()
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.stat != DEAD && player.loc.z == 1 && !iscultist(player))
+		if(player.stat != DEAD && player.loc.z == 1 && !iscultist(player) && isliving(player))
 			souls_needed += player
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.6)
 	sleep(50)
-	priority_announce("Acausal dimensional event detected in your sector. Analysis indicates sterile neutrino scattering and an anomaly possessing internal teleonomy that is inimicable to all organic life - event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating possible solutions. SOLUTION ETA: 60 SECONDS.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
+	priority_announce("Acausal dimensional event detected in your sector. Analysis indicates sterile neutrino scattering and an anomaly possessing internal teleonomy that is inimicable to all organic life. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating possible solutions. SOLUTION ETA: 60 SECONDS.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
 	sleep(550)
-  priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: TWO MINUTES. ","Central Command Higher Dimensional Affairs")
-  sleep(50)
+	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: TWO MINUTES. ","Central Command Higher Dimensional Affairs")
+	sleep(50)
 	set_security_level("delta")
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.lockdown = TRUE
 	sleep(1150)
 	if(resolved == FALSE)
+		resolved = TRUE
 		world << sound('sound/machines/Alarm.ogg')
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 220)
 
-
-
-/obj/singularity/narsie/large/cult/consume(atom/A)
-	A.narsie_act(src)
+/obj/singularity/narsie/large/cult/Destroy()
+	GLOB.cult_narsie = null
+	return ..()
 
 /proc/ending_helper()
 	SSticker.force_ending = 1

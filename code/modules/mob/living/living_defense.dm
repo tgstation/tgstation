@@ -295,7 +295,7 @@
 	gib()
 	return(gain)
 
-/mob/living/narsie_act(var/obj/singularity/narsie/large/cult/NS)
+/mob/living/narsie_act()
 	if(status_flags & GODMODE)
 		return
 
@@ -305,12 +305,12 @@
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
 		return FALSE
-	if(NS && (src in NS.souls_needed))
-		NS.resize(1.1)
-		NS.souls_needed -= src
-		NS.souls += 1
-		if((NS.souls == NS.soul_goal) && (NS.resolved == FALSE))
-			NS.resolved = TRUE
+	if(GLOB.cult_narsie && (src in GLOB.cult_narsie.souls_needed))
+		GLOB.cult_narsie.resize(1.1)
+		GLOB.cult_narsie.souls_needed -= src
+		GLOB.cult_narsie.souls += 1
+		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
+			GLOB.cult_narsie.resolved = TRUE
 			world << sound('sound/machines/Alarm.ogg')
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
