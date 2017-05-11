@@ -233,12 +233,17 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			timer += world.tick_lag * rand(1, 5)
 			SS.next_fire = timer
 			continue
-		var/ss_max_runlevel = SS.runlevel_max
-		while(runlevel_sorted_subsystems.len < ss_max_runlevel)
-			runlevel_sorted_subsystems += list(list())
 		
-		for(var/I in SS.runlevel_min to ss_max_runlevel)
-			runlevel_sorted_subsystems[I] += SS
+		var/ss_runlevels = SS.runlevels
+		var/added_to_any = FALSE
+		for(var/I in 1 to GLOB.bitflags.len)
+			if(ss_runlevels & GLOB.bitflags[I])
+				while(runlevel_sorted_subsystems.len < I)
+					runlevel_sorted_subsystems += list(list())
+				runlevel_sorted_subsystems[I] += SS
+				added_to_any = TRUE
+		if(!added_to_any)
+			WARNING("[SS.name] subsystem is not SS_NO_FIRE but also does not have any runlevels set!")
 
 	queue_head = null
 	queue_tail = null

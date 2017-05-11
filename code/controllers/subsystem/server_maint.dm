@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(server_maint)
 	wait = 6
 	flags = SS_POST_FIRE_TIMING
 	priority = 10
-	runlevel_min = RUNLEVEL_LOBBY
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)

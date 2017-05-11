@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(parallax)
 	wait = 2
 	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
 	priority = 65
-	runlevel_min = RUNLEVEL_LOBBY
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
 
 /datum/controller/subsystem/parallax/fire(resumed = 0)

@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(vote)
 
 	flags = SS_KEEP_TIMING|SS_NO_INIT
 	
-	runlevel_min = RUNLEVEL_LOBBY
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/initiator = null
 	var/started_time = null

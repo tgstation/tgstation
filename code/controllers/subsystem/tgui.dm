@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(tgui)
 	wait = 9
 	flags = SS_NO_INIT
 	priority = 110
-	runlevel_min = RUNLEVEL_LOBBY
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/list/currentrun = list()
 	var/list/open_uis = list() // A list of open UIs, grouped by src_object and ui_key.

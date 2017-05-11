@@ -6,8 +6,7 @@ SUBSYSTEM_DEF(ticker)
 
 	priority = 200
 	flags = SS_KEEP_TIMING
-	runlevel_min = RUNLEVEL_LOBBY
-	runlevel_max = RUNLEVEL_GAME
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention

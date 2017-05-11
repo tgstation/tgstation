@@ -28,8 +28,7 @@
 	var/datum/controller/subsystem/queue_next
 	var/datum/controller/subsystem/queue_prev
 
-	var/runlevel_min = RUNLEVEL_MIN_DEFAULT	//the minimum runlevel at which this subsystem will fire
-	var/runlevel_max = RUNLEVEL_MAX_DEFAULT	//the maximum runlevel at which this subsystem will fire
+	var/runlevels = RUNLEVELS_DEFAULT	//points of the game at which the SS can fire
 
 	var/static/failure_strikes = 0 //How many times we suspect this subsystem has crashed the MC, 3 strikes and you're out!
 

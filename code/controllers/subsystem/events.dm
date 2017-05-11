@@ -1,8 +1,7 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
 	init_order = INIT_ORDER_EVENTS
-	runlevel_min = RUNLEVEL_GAME
-	runlevel_max = RUNLEVEL_GAME
+	runlevels = RUNLEVEL_GAME
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event

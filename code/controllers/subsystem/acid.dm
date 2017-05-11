@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(acid)
 	name = "Acid"
 	priority = 40
 	flags = SS_NO_INIT|SS_BACKGROUND
-	runlevel_min = RUNLEVEL_GAME
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
 	var/list/processing = list()
