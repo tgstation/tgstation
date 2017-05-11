@@ -17,10 +17,10 @@
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
-	
+
 	var/face_y_offset = 0
 	var/hair_y_offset = 0
-	
+
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 
@@ -69,6 +69,7 @@
 
 	//Eyes
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
+	var/eye_style = "human" //human_face.dmi
 	///////////
 	// PROCS //
 	///////////
@@ -319,7 +320,7 @@
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD && has_eyes)
-			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
+			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_[eye_style]", "layer" = -BODY_LAYER)
 			img_eyes.color = "#" + H.eye_color
 			img_eyes.pixel_y += face_y_offset
 			standing	+= img_eyes
@@ -485,6 +486,8 @@
 					S = wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = legs_list[H.dna.features["legs"]]
+				if("caps")
+					S = caps_list[H.dna.features["caps"]]
 
 			if(!S || S.icon_state == "none")
 				continue

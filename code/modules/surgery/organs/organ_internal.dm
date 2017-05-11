@@ -870,7 +870,7 @@
 
 /obj/item/organ/eyes/robotic/flashlight
 	name = "flashlight eyes"
-	desc = "It's two flashlights rigged together with some wire. Why would you put these in someones head?"
+	desc = "It's two flashlights rigged together with some wire. Why would you put these in someone's head?"
 	eye_color ="fee5a3"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight_eyes"
