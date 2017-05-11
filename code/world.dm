@@ -39,7 +39,6 @@
 			if(query_feedback_max_id.NextRow())
 				GLOB.round_id = query_feedback_max_id.item[1]
 				GLOB.log_directory += "[GLOB.round_id]"
-				log_game("Round ID: [GLOB.round_id]")
 		else
 			log_world("Your server failed to establish a connection with the database.")
 	if(!GLOB.round_id)
@@ -55,6 +54,9 @@
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
+	
+	if(GLOB.round_id)
+		log_game("Round ID: [GLOB.round_id]")
 
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
