@@ -39,7 +39,7 @@
 	species = "ambrosiadeus"
 	plantname = "Ambrosia Deus"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus
-	mutatelist = list(/obj/item/seeds/ambrosia/gaia)
+	mutatelist = list()
 	reagents_add = list("omnizine" = 0.15, "synaptizine" = 0.15, "space_drugs" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05)
 	rarity = 40
 
