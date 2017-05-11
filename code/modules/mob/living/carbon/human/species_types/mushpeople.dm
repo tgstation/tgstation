@@ -25,8 +25,6 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision
 	use_skintones = FALSE
 
-	var/datum/action/innate/mushroom/infect/fungal_infect
-
 
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -34,9 +32,6 @@
 	C.faction |= "mushroom"
 	var/datum/language/mushroom/M = new
 	C.initial_languages |= M
-	if(ishuman(C))
-		fungal_infect = new
-		fungal_infect.Grant(C)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
@@ -55,22 +50,3 @@
 	forced_colour = FALSE
 	..()
 
-//actions
-/datum/action/innate/mushroom
-	name = "Mushroom Ability"
-	check_flags = AB_CHECK_CONSCIOUS
-	background_icon_state = "bg_mush"
-
-//Fungal Infection
-
-
-/datum/action/innate/mushroom/infect
-	name = "Fungal Infection"
-	button_icon_state = "shoeonhead"
-	var/infect_range = 5
-
-/datum/action/innate/mushroom/infect/Activate()
-	for(var/mob/living/carbon/human/H in view(src, 5))
-		if(!(istype(H.dna.species, /datum/species/mush)))
-			world << "lmao equip fired"
-			H.equip_to_slot_or_del(new/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/mushroomman(null), slot_head)
