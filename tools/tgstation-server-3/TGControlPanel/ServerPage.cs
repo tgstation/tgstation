@@ -48,6 +48,14 @@ namespace TGControlPanel
 			WorldStatusTimer.Start();
 		}
 
+		private void CompileCancelButton_Click(object sender, EventArgs e)
+		{
+			var res = Server.GetComponent<ITGCompiler>().Cancel();
+			if (res != null)
+				MessageBox.Show(res);
+			LoadServerPage();
+		}
+
 		void LoadServerPage()
 		{
 			var DM = Server.GetComponent<ITGCompiler>();
@@ -66,30 +74,35 @@ namespace TGControlPanel
 					compilerProgressBar.Style = ProgressBarStyle.Marquee;
 					compileButton.Enabled = false;
 					initializeButton.Enabled = false;
+					CompileCancelButton.Enabled = true;
 					break;
 				case TGCompilerStatus.Initializing:
 					CompilerStatusLabel.Text = "Initializing...";
 					compilerProgressBar.Style = ProgressBarStyle.Marquee;
 					compileButton.Enabled = false;
 					initializeButton.Enabled = false;
+					CompileCancelButton.Enabled = false;
 					break;
 				case TGCompilerStatus.Initialized:
 					CompilerStatusLabel.Text = "Idle";
 					compilerProgressBar.Style = ProgressBarStyle.Blocks;
 					initializeButton.Enabled = true;
 					compileButton.Enabled = true;
+					CompileCancelButton.Enabled = false;
 					break;
 				case TGCompilerStatus.Uninitialized:
 					CompilerStatusLabel.Text = "Uninitialized";
 					compilerProgressBar.Style = ProgressBarStyle.Blocks;
 					compileButton.Enabled = false;
 					initializeButton.Enabled = true;
+					CompileCancelButton.Enabled = false;
 					break;
 				default:
 					CompilerStatusLabel.Text = "Unknown!";
 					compilerProgressBar.Style = ProgressBarStyle.Blocks;
 					initializeButton.Enabled = true;
 					compileButton.Enabled = true;
+					CompileCancelButton.Enabled = true;
 					break;
 			}
 			var error = DM.CompileError();

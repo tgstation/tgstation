@@ -10,7 +10,7 @@ namespace TGCommandLine
 		public DMCommand()
 		{
 			Keyword = "dm";
-			Children = new Command[] { new DMCompileCommand(), new DMInitializeCommand(), new DMStatusCommand(), new DMSetProjectNameCommand() };
+			Children = new Command[] { new DMCompileCommand(), new DMInitializeCommand(), new DMStatusCommand(), new DMSetProjectNameCommand(), new DMCancelCommand() };
 		}
 		public override void PrintHelp()
 		{
@@ -178,6 +178,21 @@ namespace TGCommandLine
 					return ExitCode.ServerError;
 			}
 			return ExitCode.Normal;
+		}
+	}
+	
+	class DMCancelCommand : Command
+	{
+		public DMCancelCommand()
+		{
+			Keyword = "cancel";
+		}
+
+		public override ExitCode Run(IList<string> parameters)
+		{
+			var res = Server.GetComponent<ITGCompiler>().Cancel();
+			Console.WriteLine(res ?? "Success!");
+			return res == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
 	}
 }

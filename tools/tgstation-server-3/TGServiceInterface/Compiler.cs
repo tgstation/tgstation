@@ -42,6 +42,13 @@ namespace TGServiceInterface
 		bool Compile();
 
 		/// <summary>
+		/// Cancels the current compilation
+		/// </summary>
+		/// <returns>null on success, error message on failure</returns>
+		[OperationContract]
+		string Cancel();
+
+		/// <summary>
 		/// Returns the current compiler status
 		/// </summary>
 		/// <returns>The current compiler status</returns>

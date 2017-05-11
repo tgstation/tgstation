@@ -113,6 +113,7 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
+            this.CompileCancelButton = new System.Windows.Forms.Button();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -678,6 +679,7 @@
             // ServerPanel
             // 
             this.ServerPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.ServerPanel.Controls.Add(this.CompileCancelButton);
             this.ServerPanel.Controls.Add(this.ProjectPathLabel);
             this.ServerPanel.Controls.Add(this.projectNameText);
             this.ServerPanel.Controls.Add(this.PortLabel);
@@ -963,7 +965,7 @@
             this.compilerProgressBar.Location = new System.Drawing.Point(110, 302);
             this.compilerProgressBar.MarqueeAnimationSpeed = 50;
             this.compilerProgressBar.Name = "compilerProgressBar";
-            this.compilerProgressBar.Size = new System.Drawing.Size(650, 31);
+            this.compilerProgressBar.Size = new System.Drawing.Size(618, 31);
             this.compilerProgressBar.TabIndex = 10;
             // 
             // ServerStatusLabel
@@ -1147,6 +1149,18 @@
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
             // 
+            // CompileCancelButton
+            // 
+            this.CompileCancelButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.CompileCancelButton.Enabled = false;
+            this.CompileCancelButton.Location = new System.Drawing.Point(737, 302);
+            this.CompileCancelButton.Name = "CompileCancelButton";
+            this.CompileCancelButton.Size = new System.Drawing.Size(69, 31);
+            this.CompileCancelButton.TabIndex = 31;
+            this.CompileCancelButton.Text = "Cancel";
+            this.CompileCancelButton.UseVisualStyleBackColor = true;
+            this.CompileCancelButton.Click += new System.EventHandler(this.CompileCancelButton_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1260,6 +1274,7 @@
 		private System.Windows.Forms.NumericUpDown PortSelector;
 		private System.Windows.Forms.Label ProjectPathLabel;
 		private System.Windows.Forms.TextBox projectNameText;
+		private System.Windows.Forms.Button CompileCancelButton;
 	}
 }
 

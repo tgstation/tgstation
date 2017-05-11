@@ -44,7 +44,9 @@ namespace TGServerService
 		string lastCompilerError;
 		
 		Thread CompilerThread;
-	
+		bool compilationCancellationRequestation = false;
+		bool canCancelCompilation = false;
+
 		//deletes leftovers and checks current status
 		void InitCompiler()
 		{
@@ -361,8 +363,6 @@ namespace TGServerService
 					Monitor.Exit(RepoLock);
 				}
 
-				SendMessage("DM: Repo copy complete, compiling...");
-
 				var dmeName = ProjectName() + ".dme";
 				var dmePath = resurrectee + "/" + dmeName; 
 				if (!File.Exists(dmePath))
@@ -384,14 +384,35 @@ namespace TGServerService
 					DM.StartInfo.UseShellExecute = false;
 					try
 					{
+						lock (CompilerLock)
+						{
+							if (compilationCancellationRequestation)
+								return;
+							canCancelCompilation = true;
+						}
+
+						SendMessage("DM: Compiling...");
 						DM.Start();
 						DM.WaitForExit();
+
+						lock (CompilerLock)
+						{
+							canCancelCompilation = false;
+							compilationCancellationRequestation = false;
+						}
 					}
 					catch
 					{
 						if (!DM.HasExited)
 							DM.Kill();
 						throw;
+					}
+					finally
+					{
+						lock (CompilerLock)
+						{
+							canCancelCompilation = false;
+						}
 					}
 
 					if (DM.ExitCode == 0)
@@ -434,6 +455,19 @@ namespace TGServerService
 					compilerCurrentStatus = TGCompilerStatus.Initialized;   //still fairly valid
 				}
 			}
+			finally
+			{
+				lock (CompilerLock)
+				{
+					canCancelCompilation = false;
+					if (compilationCancellationRequestation)
+					{
+						compilerCurrentStatus = TGCompilerStatus.Initialized;
+						compilationCancellationRequestation = false;
+						SendMessage("Compile cancelled!");
+					}
+				}
+			}
 		}
 		//kicks off the compiler thread
 		//public api
@@ -466,6 +500,21 @@ namespace TGServerService
 			lock (CompilerLock)
 			{
 				Properties.Settings.Default.ProjectName = projectName;
+			}
+		}
+
+		public string Cancel()
+		{
+			lock (CompilerLock)
+			{
+				if (compilerCurrentStatus != TGCompilerStatus.Compiling)
+					return "Invalid state for cancellation!";
+				compilationCancellationRequestation = true;
+				if (canCancelCompilation)
+					CompilerThread.Abort();
+				else
+					return "Compilation will be cancelled when the repo copy is complete";
+				return null;
 			}
 		}
 	}
