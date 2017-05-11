@@ -9,7 +9,7 @@ namespace TGCommandLine
 		public RepoCommand()
 		{
 			Keyword = "repo";
-			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand() };
+			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand() };
 		}
 		public override void PrintHelp()
 		{
@@ -204,6 +204,37 @@ namespace TGCommandLine
 		public override void PrintHelp()
 		{
 			Console.WriteLine("set-credentials\t-\tSet the credentials used for pushing commits");
+		}
+	}
+
+	class RepoMergePRCommand : Command
+	{
+		public RepoMergePRCommand()
+		{
+			Keyword = "merge-pr";
+			RequiredParameters = 1;
+		}
+
+		public override ExitCode Run(IList<string> parameters)
+		{
+			ushort PR;
+			try
+			{
+				PR = Convert.ToUInt16(parameters[0]);
+			}
+			catch
+			{
+				Console.WriteLine("Invalid PR Number!");
+				return ExitCode.BadCommand;
+			}
+			var res = Server.GetComponent<ITGRepository>().MergePullRequest(PR);
+			Console.WriteLine(res ?? "Success");
+			return res == null ? ExitCode.Normal : ExitCode.ServerError;
+		}
+
+		public override void PrintHelp()
+		{
+			Console.WriteLine("merge-pr <pr #>\t-\tMerge the given pull request from the origin repository into the current branch");
 		}
 	}
 }
