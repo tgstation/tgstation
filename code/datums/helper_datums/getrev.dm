@@ -2,7 +2,6 @@
 	var/parentcommit
 	var/commit
 	var/list/testmerge = list()
-	var/has_pr_details = FALSE	//example data in a testmerge entry when this is true: https://api.github.com/repositories/3234987/pulls/22586
 	var/date
 
 /datum/getrev/New()
@@ -19,7 +18,7 @@
 		log_world(commit)
 		for(var/line in testmerge)
 			if(line)
-				var/tmcommit = testmerge[line]
+				var/tmcommit = testmerge[line]["commit"]
 				log_world("Test merge active of PR #[line] commit [tmcommit]")
 				SSblackbox.add_details("testmerged_prs","[line][tmcommit]")
 		log_world("Based off master commit [parentcommit]")
@@ -31,11 +30,7 @@
 		return ""
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
-		var/details = ""
-		if(has_pr_details)
-			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"] + " at commit " + html_encode(testmerge[line]["prtestjobcommit"]))
-		else
-			details = " at commit [testmerge[line]]"
+		var/details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(testmerge[line]["commit"])
 		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br>"
 
 /client/verb/showrevinfo()

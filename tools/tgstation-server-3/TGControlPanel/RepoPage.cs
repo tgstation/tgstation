@@ -110,8 +110,10 @@ namespace TGControlPanel
 					else
 					{
 						TestMergeListLabel.Text = "";
-						foreach (var I in PRs)
-							TestMergeListLabel.Text += String.Format("#{0} at commit {1}\r\n", I.Key, I.Value);
+						foreach (var I in PRs) {
+							var innerDick = I.Value;
+							TestMergeListLabel.Text += String.Format("#{0}: {2} by {3} at commit {1}\r\n", I.Key, innerDick["commit"], innerDick["title"], innerDick["author"]);
+						}
 					}
 				}
 				else

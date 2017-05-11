@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Security.Cryptography;
@@ -380,17 +381,17 @@ namespace TGServerService
 		}
 
 		//json_decode(file2text())
-		IDictionary<string, string> GetCurrentPRList()
+		IDictionary<string, IDictionary<string, string>> GetCurrentPRList()
 		{
 			if (!File.Exists(PRJobFile))
-				return new Dictionary<string, string>();
+				return new Dictionary<string, IDictionary<string, string>>();
 			var rawdata = File.ReadAllText(PRJobFile);
 			var Deserializer = new JavaScriptSerializer();
-			return Deserializer.Deserialize<Dictionary<string, string>>(rawdata);
+			return Deserializer.Deserialize<IDictionary<string, IDictionary<string, string>>>(rawdata);
 		}
 
 		//text2file(json_encode())
-		void SetCurrentPRList(IDictionary<string, string> list)
+		void SetCurrentPRList(IDictionary<string, IDictionary<string, string>> list)
 		{
 			var Serializer = new JavaScriptSerializer();
 			var rawdata = Serializer.Serialize(list);
@@ -409,7 +410,8 @@ namespace TGServerService
 				try
 				{
 					//only supported with github
-					if (!Repo.Network.Remotes.First().Url.Contains("github"))
+					var remoteUrl = Repo.Network.Remotes.First().Url;
+					if (!remoteUrl.Contains("github.com"))
 						return "Only supported with Github based repositories.";
 
 
@@ -445,11 +447,40 @@ namespace TGServerService
 
 					if (Result == null)
 					{
-						var CurrentPRs = GetCurrentPRList();
-						var PRNumberString = PRNumber.ToString();
-						CurrentPRs.Remove(PRNumberString);
-						CurrentPRs.Add(PRNumberString, branch.Tip.Sha);
-						SetCurrentPRList(CurrentPRs);
+						try
+						{
+							var CurrentPRs = GetCurrentPRList();
+							var PRNumberString = PRNumber.ToString();
+							CurrentPRs.Remove(PRNumberString);
+							var newPR = new Dictionary<string, string>();
+
+							//do some excellent remote fuckery here to get the api page
+							var prAPI = remoteUrl;
+							prAPI = prAPI.Replace("/.git", "");
+							prAPI = prAPI.Replace(".git", "");
+							prAPI = prAPI.Replace("github.com", "api.github.com/repos");
+							prAPI += "/pulls/" + PRNumberString + ".json";
+							string json;
+							using (var wc = new WebClient())
+							{
+								wc.Headers.Add("user-agent", "TGStationServerService");
+								json = wc.DownloadString(prAPI);
+							}
+
+							var Deserializer = new JavaScriptSerializer();
+							var dick = Deserializer.DeserializeObject(json) as IDictionary<string, object>;
+							var user = dick["user"] as IDictionary<string, object>;
+
+							newPR.Add("commit", branch.Tip.Sha);
+							newPR.Add("author", (string)user["login"]);
+							newPR.Add("title", (string)dick["title"]);
+							CurrentPRs.Add(PRNumberString, newPR);
+							SetCurrentPRList(CurrentPRs);
+						}
+						catch(Exception e)
+						{
+							return "PR Merged, JSON update failed: " + e.ToString();
+						}
 					}
 					return Result;
 				}
@@ -462,7 +493,7 @@ namespace TGServerService
 		}
 
 		//public api
-		public IDictionary<string, string> MergedPullRequests(out string error)
+		public IDictionary<string, IDictionary<string, string>> MergedPullRequests(out string error)
 		{
 			lock (RepoLock)
 			{
