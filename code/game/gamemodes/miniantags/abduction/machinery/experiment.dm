@@ -183,8 +183,8 @@
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
-		var/objtype = (prob(72) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/)))
-		var/datum/objective/abductee/O = new objtype() //45 possible objectives as of the time of this. 40 (88%) are under random. 90% - [1/6 * 100]% ~= 73%
+		var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
+		var/datum/objective/abductee/O = new objtype()
 		SSticker.mode.abductees += H.mind
 		H.mind.objectives += O
 		H.mind.announce_objectives()
