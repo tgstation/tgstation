@@ -214,7 +214,7 @@
 /obj/item/weapon/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj/item))
 		return FALSE
-	for(var/i = 0, i < amount, i++)
+	for(var/i in 1 to amount)
 		var/obj/item/I = new type
 		if(!load_item(I, null))
 			return TRUE
