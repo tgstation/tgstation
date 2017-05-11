@@ -310,7 +310,8 @@
 			C.Weaken(30)
 			visible_message("<span class='danger'>[src] feints a deathblow against [C], they freeze in terror!</span>")
 			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
-			do_attack_animation(C)
+			return FALSE
+		do_attack_animation(C)
 		var/obj/item/bodypart/BP = pick(parts)
 		BP.dismember()
 		return FALSE
