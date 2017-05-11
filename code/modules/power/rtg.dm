@@ -34,7 +34,7 @@
 		/obj/item/stack/sheet/mineral/uranium = 10) // We have no Pu-238, and this is the closest thing to it.
 
 /obj/machinery/power/rtg/Initialize()
-	..()
+	. = ..()
 	connect_to_network()
 
 /obj/machinery/power/rtg/process()

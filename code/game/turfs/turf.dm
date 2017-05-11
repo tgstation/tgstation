@@ -13,8 +13,6 @@
 
 	flags = CAN_BE_DIRTY
 
-	var/list/proximity_checkers
-
 	var/image/obscured	//camerachunks
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
@@ -58,6 +56,7 @@
 
 	if (opacity)
 		has_opaque_atom = TRUE
+	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
@@ -156,10 +155,6 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/AM)
-	for(var/A in proximity_checkers)
-		var/atom/B = A
-		B.HasProximity(AM)
-
 	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
 
@@ -217,7 +212,7 @@
 /turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE)
 	if(!path)
 		return
-	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
+	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
 	var/old_baseturf = baseturf
@@ -353,7 +348,7 @@
 
 /turf/proc/visibilityChanged()
 	if(SSticker)
-		cameranet.updateVisibility(src)
+		GLOB.cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
 
@@ -380,6 +375,15 @@
 			A.ex_act(severity, target)
 			CHECK_TICK
 
+/turf/narsie_act(force, ignore_mobs, probability = 20)
+	. = (prob(probability) || force)
+	for(var/I in src)
+		var/atom/A = I
+		if(ignore_mobs && ismob(A))
+			continue
+		if(ismob(A) || .)
+			A.narsie_act()
+
 /turf/ratvar_act(force, ignore_mobs, probability = 40)
 	. = (prob(probability) || force)
 	for(var/I in src)
@@ -403,7 +407,7 @@
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
-	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
+	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
 /turf/proc/empty(turf_type=/turf/open/space)
@@ -460,6 +464,8 @@
 			O = new()
 			O.underlays.Add(T)
 		T.ChangeTurf(type)
+		for(var/group in decals)
+			T.add_decal(decals[group],group)
 		if(underlays.len)
 			T.underlays = O.underlays
 	if(T.icon_state != icon_state)

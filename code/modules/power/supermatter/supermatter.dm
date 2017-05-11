@@ -127,11 +127,12 @@
 /obj/machinery/power/supermatter_shard/make_frozen_visual()
 	return
 
-/obj/machinery/power/supermatter_shard/New()
+/obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
+	SSair.atmos_machinery += src
 	countdown = new(src)
 	countdown.start()
-	poi_list |= src
+	GLOB.poi_list |= src
 	radio = new(src)
 	radio.listening = 0
 	investigate_log("has been created.", "supermatter")
@@ -139,8 +140,9 @@
 
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", "supermatter")
+	SSair.atmos_machinery -= src
 	QDEL_NULL(radio)
-	poi_list -= src
+	GLOB.poi_list -= src
 	QDEL_NULL(countdown)
 	. = ..()
 
@@ -162,7 +164,7 @@
 
 /obj/machinery/power/supermatter_shard/proc/explode()
 	var/turf/T = get_turf(src)
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(M.z == z)
 			M << 'sound/magic/Charge.ogg'
 			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
@@ -175,13 +177,13 @@
 	else
 		investigate_log("has exploded.", "supermatter")
 		explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
-		if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
+		if(power > POWER_PENALTY_THRESHOLD)
 			investigate_log("has spawned additional energy balls.", "supermatter")
 			var/obj/singularity/energy_ball/E = new(T)
 			E.energy = power
 		qdel(src)
 
-/obj/machinery/power/supermatter_shard/process()
+/obj/machinery/power/supermatter_shard/process_atmos()
 	var/turf/T = loc
 
 	if(isnull(T))		// We have a null turf...something is wrong, stop processing this entity.
@@ -296,6 +298,7 @@
 
 	if(produces_gas)
 		env.merge(removed)
+		air_update_turf()
 
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
@@ -341,7 +344,7 @@
 				lastwarning = REALTIMEOFDAY
 				if(!has_reached_emergency)
 					investigate_log("has reached the emergency point for the first time.", "supermatter")
-					message_admins("[src] has reached the emergency point <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+					message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 					has_reached_emergency = 1
 			else if(damage >= damage_archived) // The damage is still going up
 				SPEAK("[warning_alert] Instability: [stability]%")
@@ -360,7 +363,7 @@
 				SPEAK("Warning: Critical coolant mass reached.")
 
 		if(damage > explosion_point)
-			for(var/mob in living_mob_list)
+			for(var/mob in GLOB.living_mob_list)
 				var/mob/living/L = mob
 				if(istype(L) && L.z == z)
 					if(ishuman(mob))
@@ -382,13 +385,13 @@
 	if(!istype(L))		// We don't run process() when we are in space
 		return 0	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
-
-
+	if(!istype(Proj.firer, /obj/machinery/power/emitter))
+		investigate_log("has been hit by [Proj] fired by [Proj.firer]", "supermatter")
 	if(Proj.flag != "bullet")
 		power += Proj.damage * config_bullet_energy
 		if(!has_been_powered)
 			investigate_log("has been powered for the first time.", "supermatter")
-			message_admins("[src] has been powered for the first time <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+			message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
 			has_been_powered = 1
 	else if(takes_damage)
 		damage += Proj.damage * config_bullet_energy
@@ -399,7 +402,7 @@
 	investigate_log("Supermatter shard consumed by singularity.","singulo")
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(M.z == z)
 			M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
 			to_chat(M, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")
@@ -451,7 +454,7 @@
 	Consume(user)
 
 /obj/machinery/power/supermatter_shard/proc/transfer_energy()
-	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
+	for(var/obj/machinery/power/rad_collector/R in GLOB.rad_collectors)
 		if(R.z == z && get_dist(R, src) <= 15) //Better than using orange() every process
 			R.receive_pulse(power * (1 + power_transmission_bonus)/10 * freon_transmit_modifier)
 
@@ -487,10 +490,12 @@
 /obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
 	if(isliving(AM))
 		var/mob/living/user = AM
-		message_admins("[src] has consumed [key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		matter_power += 200
+	else if(istype(AM, /obj/singularity))
+		return
 	else if(isobj(AM) && !istype(AM, /obj/effect))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)

@@ -80,8 +80,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Asteroid - Artifact"
 	icon_state = "cave"
 
-/area/asteroid/artifactroom/New()
-	..()
+/area/asteroid/artifactroom/Initialize()
+	. = ..()
 	set_dynamic_lighting()
 
 /area/planet/clown
@@ -1002,7 +1002,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 */
 
 //SPACE STATION 13
-var/list/the_station_areas = list (
+GLOBAL_LIST_INIT(the_station_areas, list (
 	/area/atmos,
 	/area/maintenance,
 	/area/hallway,
@@ -1031,4 +1031,4 @@ var/list/the_station_areas = list (
 	/area/ai_monitored/turret_protected/ai_upload, //do not try to simplify to "/area/ai_monitored/turret_protected" --rastaf0
 	/area/ai_monitored/turret_protected/ai_upload_foyer,
 	/area/ai_monitored/turret_protected/ai,
-)
+))

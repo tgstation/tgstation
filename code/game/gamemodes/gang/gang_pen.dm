@@ -11,7 +11,7 @@
 	..()
 	last_used = world.time
 
-/obj/item/weapon/pen/gang/attack(mob/living/M, mob/user)
+/obj/item/weapon/pen/gang/attack(mob/living/M, mob/user, stealth = TRUE)
 	if(!istype(M))
 		return
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
@@ -36,6 +36,7 @@
 	..()
 
 /obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
+	set waitfor = FALSE
 	var/cooldown_time = 600+(600*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
 
 	cooldown = 1
@@ -52,8 +53,8 @@
 
 	if(charges)
 		cooldown_time = 50
-	spawn(cooldown_time)
-		cooldown = 0
-		icon_state = "pen"
-		var/mob/M = get(src, /mob)
-		to_chat(M, "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")
+	sleep(cooldown_time)
+	cooldown = 0
+	icon_state = "pen"
+	var/mob/M = get(src, /mob)
+	to_chat(M, "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")

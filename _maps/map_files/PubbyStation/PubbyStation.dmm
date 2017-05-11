@@ -15105,7 +15105,7 @@
 /area/maintenance/apmaint)
 "aEl" = (
 /obj/structure/closet/coffin,
-/obj/item/toy/figure/librarian,
+/obj/item/toy/figure/curator,
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "aEm" = (
@@ -26127,7 +26127,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "baF" = (
-/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/start{
+	name = "Assistant"
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	external_pressure_bound = 101.325;
@@ -26599,7 +26601,9 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "bbt" = (
-/obj/effect/landmark/observer_start,
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "bbu" = (
@@ -29586,9 +29590,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	dir = 9;
-	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "icon-whiteblue (NORTHWEST)"
+	dir = 9
 	},
 /area/medical/medbay3)
 "bhO" = (
@@ -29627,9 +29629,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	dir = 9;
-	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "icon-whiteblue (NORTHWEST)"
+	dir = 9
 	},
 /area/medical/medbay)
 "bhS" = (
@@ -30296,7 +30296,7 @@
 	},
 /area/medical/chemistry)
 "bjk" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/chemistry)
 "bjl" = (
@@ -30534,19 +30534,17 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bjH" = (
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
 	},
 /area/toxins/xenobiology)
 "bjI" = (
-/obj/machinery/shieldwallgen{
-	req_access_txt = "55"
-	},
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "bjJ" = (
@@ -30637,9 +30635,6 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "bjO" = (
-/obj/machinery/shieldwallgen{
-	req_access_txt = "55"
-	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
@@ -30649,6 +30644,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "bjP" = (
@@ -32854,10 +32850,6 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bnU" = (
-/obj/machinery/door/airlock/research{
-	name = "Kill Room Access";
-	req_access_txt = "55"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -40065,9 +40057,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bBf" = (
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
 	dir = 4
 	},
@@ -44083,6 +44074,7 @@
 	dir = 2;
 	network = list("SS13")
 	},
+/mob/living/simple_animal/parrot/Poly,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -48651,17 +48643,23 @@
 	pixel_y = 24
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTt" = (
 /obj/machinery/power/terminal{
 	icon_state = "term";
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTu" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTv" = (
 /obj/machinery/telecomms/bus/preset_three,
@@ -48725,20 +48723,28 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/darkred/side,
+/turf/open/floor/plasteel/darkred/side{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTD" = (
-/turf/open/floor/plasteel/darkpurple/side,
+/turf/open/floor/plasteel/darkpurple/side{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTE" = (
-/turf/open/floor/plasteel/darkgreen/side,
+/turf/open/floor/plasteel/darkgreen/side{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTF" = (
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
 	},
-/turf/open/floor/plasteel/darkgreen/side,
+/turf/open/floor/plasteel/darkgreen/side{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bTG" = (
 /turf/closed/indestructible{
@@ -48825,17 +48831,20 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	dir = 1
+	dir = 1;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTS" = (
 /turf/open/floor/plasteel/darkblue/side{
-	dir = 1
+	dir = 1;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTT" = (
 /turf/open/floor/plasteel/darkyellow/side{
-	dir = 1
+	dir = 1;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTU" = (
@@ -48844,7 +48853,8 @@
 	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	dir = 1
+	dir = 1;
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bTV" = (
@@ -48895,7 +48905,9 @@
 /obj/item/weapon/stock_parts/subspace/amplifier,
 /obj/item/weapon/stock_parts/subspace/analyzer,
 /obj/item/weapon/stock_parts/subspace/analyzer,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUc" = (
 /obj/structure/table,
@@ -48903,7 +48915,9 @@
 /obj/item/weapon/stock_parts/subspace/ansible,
 /obj/item/weapon/stock_parts/subspace/crystal,
 /obj/item/weapon/stock_parts/subspace/crystal,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUd" = (
 /obj/structure/table,
@@ -48911,7 +48925,9 @@
 /obj/item/weapon/stock_parts/subspace/filter,
 /obj/item/weapon/stock_parts/subspace/transmitter,
 /obj/item/weapon/stock_parts/subspace/transmitter,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUe" = (
 /obj/machinery/camera/motion{
@@ -48920,7 +48936,6 @@
 	network = list("SS13","Telecoms")
 	},
 /turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
@@ -48930,7 +48945,9 @@
 /obj/item/weapon/stock_parts/subspace/treatment,
 /obj/item/weapon/stock_parts/manipulator,
 /obj/item/weapon/stock_parts/manipulator,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUg" = (
 /obj/structure/table,
@@ -48938,13 +48955,17 @@
 /obj/item/weapon/stock_parts/console_screen,
 /obj/item/weapon/stock_parts/micro_laser,
 /obj/item/weapon/stock_parts/micro_laser,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUh" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/scanning_module,
 /obj/item/weapon/stock_parts/scanning_module,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black{
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
 /area/tcommsat/server)
 "bUi" = (
 /obj/machinery/camera/motion{
@@ -50235,7 +50256,9 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/latejoin,
+/obj/effect/landmark{
+	name = "JoinLate"
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
 	pixel_y = 0
@@ -50506,7 +50529,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bXR" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/open/floor/plasteel/black,
 /area/medical/chemistry)
 "bXS" = (
@@ -83824,33 +83847,33 @@ bQl
 bQC
 bQN
 bQZ
-bRg
-bRg
-bRg
-bRE
-bRg
-bRg
-bRg
-bRg
-bRE
-bRg
-bRg
-bRg
-bRg
-bRE
-bRg
-bRg
-bRg
-bRg
-bRE
-bRg
-bRg
-bRg
-bRg
-bRE
-bRg
-bRg
-bRg
+aeZ
+aeZ
+aeZ
+afy
+aeZ
+aeZ
+aeZ
+aeZ
+afy
+aeZ
+aeZ
+aeZ
+aeZ
+afy
+aeZ
+aeZ
+aeZ
+aeZ
+afy
+aeZ
+aeZ
+aeZ
+aeZ
+afy
+aeZ
+aeZ
+aeZ
 bSp
 bSu
 bSC
@@ -97892,7 +97915,7 @@ aaa
 aaa
 aGT
 aOx
-cii
+aPw
 aKE
 aPw
 aSs

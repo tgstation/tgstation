@@ -39,7 +39,7 @@ Contents:
 	//selecting a spawn_loc
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
-		for(var/obj/effect/landmark/L in landmarks_list)
+		for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				switch(L.name)
 					if("ninjaspawn","carpspawn")
@@ -69,7 +69,7 @@ Contents:
 			if(ishuman(M.current))
 				if(M.special_role)
 					possible_targets[M] = 0						//bad-guy
-				else if(M.assigned_role in command_positions)
+				else if(M.assigned_role in GLOB.command_positions)
 					possible_targets[M] = 1						//good-guy
 
 	var/list/objectives = list(1,2,3,4)
@@ -168,7 +168,7 @@ Contents:
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
-	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
+	A.real_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
 	A.copy_to(new_ninja)
 	new_ninja.dna.update_dna_identity()
 	new_ninja.equip_space_ninja()
@@ -216,11 +216,11 @@ Contents:
 	return 1
 
 /datum/game_mode/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
-	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_NINJA]
+	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
 	ninjahud.join_hud(ninja)
 	set_antag_hud(ninja, "ninja")
 
 /datum/game_mode/proc/update_ninja_icons_removed(datum/mind/ninja_mind)
-	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_NINJA]
+	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
 	ninjahud.leave_hud(ninja_mind.current)
 	set_antag_hud(ninja_mind.current, null)

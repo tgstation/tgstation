@@ -15,37 +15,31 @@
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/nullrod/attack_self(mob/user)
-	if(reskinned)
-		return
-	if(user.mind && (user.mind.isholy))
+	if(user.mind && (user.mind.isholy) && !reskinned)
 		reskin_holy_weapon(user)
 
 /obj/item/weapon/nullrod/proc/reskin_holy_weapon(mob/M)
+	if(SSreligion.holy_weapon_type)
+		return
 	var/obj/item/weapon/nullrod/holy_weapon
+	var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
+	var/list/display_names = list()
+	for(var/V in holy_weapons_list)
+		var/atom/A = V
+		display_names += initial(A.name)
 
-	if(SSreligion.holy_weapon)
-		holy_weapon = new SSreligion.holy_weapon
-		to_chat(M, "<span class='notice'>The null rod suddenly morphs into your religions already chosen holy weapon.</span>")
-	else
-		var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
-		var/list/display_names = list()
-		for(var/V in holy_weapons_list)
-			var/atom/A = V
-			display_names += initial(A.name)
+	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+		return
 
-		var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-		if(!src || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
-			return
+	var/index = display_names.Find(choice)
+	var/A = holy_weapons_list[index]
 
-		var/index = display_names.Find(choice)
-		var/A = holy_weapons_list[index]
+	holy_weapon = new A
 
-		holy_weapon = new A
+	SSreligion.holy_weapon_type = holy_weapon.type
 
-		SSreligion.holy_weapon = holy_weapon.type
-
-		feedback_set_details("chaplain_weapon","[choice]")
-
+	SSblackbox.set_details("chaplain_weapon","[choice]")
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
@@ -77,7 +71,7 @@
 /obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
 	. = list()
 	if(isinhands)
-		. += image(layer = MOB_LAYER+0.01, icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
+		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
 
 /obj/item/weapon/nullrod/staff/blue
 	name = "blue holy staff"
@@ -220,7 +214,7 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	var/mob/dead/observer/theghost = null
 
 	if(LAZYLEN(candidates))

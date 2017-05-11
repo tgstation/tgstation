@@ -8,7 +8,6 @@
 	origin_tech = "materials=3;magnets=3;engineering=3;plasmatech=3"
 
 	var/mode = 0	//0 - regular mesons mode	1 - t-ray mode
-	var/invis_objects = list()
 	var/range = 1
 
 /obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
@@ -19,14 +18,14 @@
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
+		lighting_alpha = null
 		to_chat(user, "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>")
 	else
 		STOP_PROCESSING(SSobj, src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
-		invis_view = SEE_INVISIBLE_MINIMUM
+		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		to_chat(loc, "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>")
-		invis_update()
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -43,39 +42,32 @@
 		return
 
 	if(!ishuman(loc))
-		invis_update()
 		return
 
 	var/mob/living/carbon/human/user = loc
 	if(user.glasses != src)
-		invis_update()
 		return
 
 	scan()
 
 /obj/item/clothing/glasses/meson/engine/proc/scan()
 	for(var/turf/T in range(range, loc))
-
-		if(!T.intact)
-			continue
-
 		for(var/obj/O in T.contents)
 			if(O.level != 1)
 				continue
 
 			if(O.invisibility == INVISIBILITY_MAXIMUM)
-				O.invisibility = 0
-				invis_objects += O
+				flick_sonar(O)
 
-	addtimer(CALLBACK(src, .proc/invis_update), 5)
-
-/obj/item/clothing/glasses/meson/engine/proc/invis_update()
-	for(var/obj/O in invis_objects)
-		if(!t_ray_on() || !(O in range(range, loc)))
-			invis_objects -= O
-			var/turf/T = O.loc
-			if(T && T.intact)
-				O.invisibility = INVISIBILITY_MAXIMUM
+/obj/item/clothing/glasses/meson/engine/proc/flick_sonar(obj/pipe)
+	if(ismob(loc))
+		var/mob/M = loc
+		var/image/I = new(loc = get_turf(pipe))
+		var/mutable_appearance/MA = new(pipe)
+		MA.alpha = 128
+		I.appearance = MA
+		if(M.client)
+			flick_overlay(I, list(M.client), 8)
 
 /obj/item/clothing/glasses/meson/engine/proc/t_ray_on()
 	if(!ishuman(loc))
@@ -125,7 +117,6 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 		to_chat(user, "<span class='notice'>You turn the goggles off.</span>")
-		invis_update()
 
 	update_icon()
 	for(var/X in actions)

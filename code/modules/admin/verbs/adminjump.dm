@@ -1,4 +1,4 @@
-/client/proc/jumptoarea(area/A in sortedAreas)
+/client/proc/jumptoarea(area/A in GLOB.sortedAreas)
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
@@ -23,7 +23,7 @@
 	usr.forceMove(T)
 	log_admin("[key_name(usr)] jumped to [A]")
 	message_admins("[key_name_admin(usr)] jumped to [A]")
-	feedback_add_details("admin_verb","JA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Jump To Area") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/jumptoturf(turf/T in world)
 	set name = "Jump to Turf"
@@ -35,10 +35,10 @@
 	log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
 	message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
 	usr.loc = T
-	feedback_add_details("admin_verb","JT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Jump To Turf") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/client/proc/jumptomob(mob/M in mob_list)
+/client/proc/jumptomob(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Jump to Mob"
 
@@ -52,7 +52,7 @@
 		var/mob/A = src.mob
 		var/turf/T = get_turf(M)
 		if(T && isturf(T))
-			feedback_add_details("admin_verb","JM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			SSblackbox.add_details("admin_verb","Jump To Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 			A.forceMove(M.loc)
 		else
 			to_chat(A, "This mob is not located in the game world.")
@@ -70,7 +70,7 @@
 		A.x = tx
 		A.y = ty
 		A.z = tz
-		feedback_add_details("admin_verb","JC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","Jump To Coordiate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("[key_name_admin(usr)] jumped to coordinates [tx], [ty], [tz]")
 
 /client/proc/jumptokey()
@@ -82,7 +82,7 @@
 		return
 
 	var/list/keys = list()
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		keys += M.client
 	var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 	if(!selection)
@@ -94,9 +94,9 @@
 
 	usr.forceMove(M.loc)
 
-	feedback_add_details("admin_verb","JK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Jump To Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/Getmob(mob/M in mob_list)
+/client/proc/Getmob(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
@@ -104,10 +104,13 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	log_admin("[key_name(usr)] teleported [key_name(M)]")
-	message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)]")
-	M.forceMove(get_turf(usr))
-	feedback_add_details("admin_verb","GM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/atom/loc = get_turf(usr)
+	log_admin("[key_name(usr)] teleported [key_name(M)] to [COORD(loc)]")
+	var/msg = "[key_name_admin(usr)] teleported [key_name_admin(M)] to [ADMIN_COORDJMP(loc)]"
+	message_admins(msg)
+	admin_ticket_log(M, msg)
+	M.forceMove(loc)
+	SSblackbox.add_details("admin_verb","Get Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/Getkey()
 	set category = "Admin"
@@ -119,21 +122,23 @@
 		return
 
 	var/list/keys = list()
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		keys += M.client
-	var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
+	var/client/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 	if(!selection)
 		return
-	var/mob/M = selection:mob
+	var/mob/M = selection.mob
 
 	if(!M)
 		return
 	log_admin("[key_name(usr)] teleported [key_name(M)]")
-	message_admins("[key_name_admin(usr)] teleported [key_name(M)]")
+	var/msg = "[key_name_admin(usr)] teleported [key_name_admin(M)]"
+	message_admins(msg)
+	admin_ticket_log(M, msg)
 	if(M)
 		M.forceMove(get_turf(usr))
 		usr.loc = M.loc
-		feedback_add_details("admin_verb","GK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","Get Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/sendmob(mob/M in sortmobs())
 	set category = "Admin"
@@ -141,12 +146,14 @@
 	if(!src.holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in sortedAreas|null
+	var/area/A = input(usr, "Pick an area.", "Pick an area") in GLOB.sortedAreas|null
 	if(A && istype(A))
 		if(M.forceMove(safepick(get_area_turfs(A))))
 
 			log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
-			message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")
+			var/msg = "[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]"
+			message_admins(msg)
+			admin_ticket_log(M, msg)
 		else
 			to_chat(src, "Failed to move mob to a valid location.")
-		feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","Send Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

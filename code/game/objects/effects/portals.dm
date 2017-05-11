@@ -30,7 +30,7 @@
 
 /obj/effect/portal/New(loc, turf/target, creator=null, lifespan=300)
 	..()
-	portals += src
+	GLOB.portals += src
 	src.target = target
 	src.creator = creator
 
@@ -42,7 +42,7 @@
 		QDEL_IN(src, lifespan)
 
 /obj/effect/portal/Destroy()
-	portals -= src
+	GLOB.portals -= src
 	if(istype(creator, /obj/item/weapon/hand_tele))
 		var/obj/item/weapon/hand_tele/O = creator
 		O.active_portals--
@@ -63,7 +63,7 @@
 		return
 	if (istype(M, /atom/movable))
 		if(ismegafauna(M))
-			message_admins("[M] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) has teleported through [src].")
+			message_admins("[M] [ADMIN_FLW(M)] has teleported through [src].")
 		do_teleport(M, target, precision) ///You will appear adjacent to the beacon
 
 

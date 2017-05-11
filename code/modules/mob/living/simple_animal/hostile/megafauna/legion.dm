@@ -51,7 +51,7 @@ Difficulty: Medium
 	mouse_opacity = 1
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
-	..()
+	. = ..()
 	internal = new/obj/item/device/gps/internal/legion(src)
 
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
@@ -117,7 +117,7 @@ Difficulty: Medium
 		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
 		var/last_legion = TRUE
-		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in mob_list)
+		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in GLOB.mob_list)
 			if(other != src)
 				last_legion = FALSE
 				break

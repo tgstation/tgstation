@@ -129,8 +129,6 @@
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
-	if(!SSticker || !SSticker.mode)
-		return 0
 	if(!forced)
 		if(!hasPower())
 			return 0
@@ -344,7 +342,7 @@
 		open()
 
 /obj/machinery/door/window/clockwork/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		obj_integrity = max_integrity
 
 /obj/machinery/door/window/clockwork/hasPower()

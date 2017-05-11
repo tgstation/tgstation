@@ -21,9 +21,9 @@
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
-var/list/chemical_mob_spawn_meancritters = list() // list of possible hostile mobs
-var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
+	var/static/list/chemical_mob_spawn_meancritters = list() // list of possible hostile mobs
+	var/static/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 	if(holder && holder.my_atom)
 		if (chemical_mob_spawn_meancritters.len <= 0 || chemical_mob_spawn_nicecritters.len <= 0)
 			for (var/T in typesof(/mob/living/simple_animal))
@@ -36,12 +36,12 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
-		var/message = "A [reaction_name] reaction has occurred in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+		var/message = "A [reaction_name] reaction has occurred in [my_area.name] [ADMIN_COORDJMP(T)]"
 		message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
 		if(M)
-			message += " - Carried By: [key_name_admin(M)](<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>)"
+			message += " - Carried By: [ADMIN_LOOKUPFLW(M)]"
 		else
 			message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
 

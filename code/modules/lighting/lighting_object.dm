@@ -1,4 +1,4 @@
-/var/list/all_lighting_objects = list() // Global list of lighting objects.
+GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 
 /atom/movable/lighting_object
 	name          = ""
@@ -6,6 +6,7 @@
 	anchored      = TRUE
 
 	icon             = LIGHTING_ICON
+	icon_state       = "transparent"
 	color            = LIGHTING_BASE_MATRIX
 	plane            = LIGHTING_PLANE
 	mouse_opacity    = 0
@@ -16,10 +17,10 @@
 
 	var/needs_update = FALSE
 
-/atom/movable/lighting_object/Initialize(mapload, var/no_update = FALSE)
+/atom/movable/lighting_object/Initialize(mapload)
 	. = ..()
 	verbs.Cut()
-	global.all_lighting_objects += src
+	GLOB.all_lighting_objects += src
 
 	var/turf/T         = loc // If this runtimes atleast we'll know what's creating overlays in things that aren't turfs.
 	T.lighting_object = src
@@ -28,15 +29,13 @@
 	for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
 
-	if (no_update)
-		return
-
-	update()
+	needs_update = TRUE
+	GLOB.lighting_update_objects += src
 
 /atom/movable/lighting_object/Destroy(var/force)
 	if (force)
-		global.all_lighting_objects        -= src
-		global.lighting_update_objects     -= src
+		GLOB.all_lighting_objects        -= src
+		GLOB.lighting_update_objects     -= src
 
 		var/turf/T   = loc
 		if (istype(T))
@@ -68,10 +67,18 @@
 	// Including with these comments.
 
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
-	var/datum/lighting_corner/cr  = T.corners[3] || dummy_lighting_corner
-	var/datum/lighting_corner/cg  = T.corners[2] || dummy_lighting_corner
-	var/datum/lighting_corner/cb  = T.corners[4] || dummy_lighting_corner
-	var/datum/lighting_corner/ca  = T.corners[1] || dummy_lighting_corner
+	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
+
+	var/list/corners = T.corners
+	var/datum/lighting_corner/cr = dummy_lighting_corner
+	var/datum/lighting_corner/cg = dummy_lighting_corner
+	var/datum/lighting_corner/cb = dummy_lighting_corner
+	var/datum/lighting_corner/ca = dummy_lighting_corner
+	if (corners) //done this way for speed
+		cr = corners[3] || dummy_lighting_corner
+		cg = corners[2] || dummy_lighting_corner
+		cb = corners[4] || dummy_lighting_corner
+		ca = corners[1] || dummy_lighting_corner
 
 	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
 
@@ -94,7 +101,7 @@
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
 	#else
-	// Because of floating points™?, it won't even be a flat 0.
+	// Because of floating pointsï¿½?, it won't even be a flat 0.
 	// This number is mostly arbitrary.
 	var/set_luminosity = max > 1e-6
 	#endif
