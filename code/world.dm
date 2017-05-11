@@ -42,7 +42,7 @@
 		else
 			log_world("Your server failed to establish a connection with the database.")
 	if(!GLOB.round_id)
-		GLOB.log_directory += "[time_stamp()]"
+		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
 	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
 	GLOB.world_runtime_log = file("[GLOB.log_directory]/runtime.log")
@@ -59,6 +59,7 @@
 	load_mode()
 	load_motd()
 	load_admins()
+	load_menu()
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -250,7 +251,7 @@
 /world/proc/RoundEndAnimation(round_end_sound_sent)
 	set waitfor = FALSE
 	var/round_end_sound
-	if(!SSticker && SSticker.round_end_sound)
+	if(SSticker.round_end_sound)
 		round_end_sound = SSticker.round_end_sound
 		if (!round_end_sound_sent)
 			for(var/thing in GLOB.clients)
@@ -340,6 +341,7 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+
 
 /world/proc/has_round_started()
 	return SSticker.HasRoundStarted()

@@ -482,6 +482,7 @@
 /datum/action/language_menu/Trigger()
 	if(!..())
 		return FALSE
-	if(isliving(owner))
-		var/mob/living/L = owner
-		L.open_language_menu(usr)
+	if(ismob(owner))
+		var/mob/M = owner
+		var/datum/language_holder/H = M.get_language_holder()
+		H.open_language_menu(usr)

@@ -38,7 +38,7 @@ call python bot\nudge.py %UPDATE_LOG_CHANNEL% "PR test job started. Merging PR #
 
 
 cd gitrepo
-git fetch origin pull/%PR%/head:pr-%PR%
+git fetch -f origin pull/%PR%/head:pr-%PR%
 if %ERRORLEVEL% neq 0 (
 	cd ..
 	echo git fetch failed. Aborting test merge.
