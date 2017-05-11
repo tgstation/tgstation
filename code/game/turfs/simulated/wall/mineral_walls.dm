@@ -158,9 +158,6 @@
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
 	girder_type = null
-	
-/turf/closed/wall/mineral/snow/devastate_wall()
-	new sheet_type(src, sheet_amount)
 
 /turf/closed/wall/mineral/abductor
 	name = "alien wall"
