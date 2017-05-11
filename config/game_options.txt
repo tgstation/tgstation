@@ -6,10 +6,10 @@ DAMAGE_MULTIPLIER 1
 ### REVIVAL ###
 
 # whether pod plants work or not
-REVIVAL_POD_PLANTS 1
+REVIVAL_POD_PLANTS
 
 # whether cloning tubes work or not
-REVIVAL_CLONING 1
+REVIVAL_CLONING
 
 # amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
@@ -482,8 +482,8 @@ Space_Budget 16
 #Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
 ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
-#Set this to 1 to prevent late join players from spawning if the arrivals shuttle is depressurized
-ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN 0
+#Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
+#ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
 
 # How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
 

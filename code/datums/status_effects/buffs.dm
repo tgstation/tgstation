@@ -13,6 +13,7 @@
 /datum/status_effect/shadow_mend/on_apply()
 	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
 	playsound(owner, 'sound/magic/Teleport_app.ogg', 50, 1)
+	return ..()
 
 /datum/status_effect/shadow_mend/tick()
 	owner.adjustBruteLoss(-15)
@@ -72,9 +73,12 @@
 	add_logs(owner, null, "gained Vanguard stun immunity")
 	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
+	owner.SetStunned(0, FALSE)
+	owner.SetWeakened(0)
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)
+	return ..()
 
 /datum/status_effect/vanguard_shield/tick()
 	progbar.update(duration - world.time)
@@ -127,6 +131,7 @@
 	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), 150)
 	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
+	return ..()
 
 /datum/status_effect/inathneqs_endowment/on_remove()
 	add_logs(owner, null, "lost Inath-neq's invulnerability")
@@ -178,6 +183,7 @@
 /datum/status_effect/his_grace/on_apply()
 	add_logs(owner, null, "gained His Grace's stun immunity")
 	owner.add_stun_absorption("hisgrace", INFINITY, 3, null, "His Grace protects you from the stun!")
+	return ..()
 
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
@@ -211,6 +217,7 @@
 
 /datum/status_effect/wish_granters_gift/on_apply()
 	to_chat(owner, "<span class='notice'>Death is not your end! The Wish Granter's energy suffuses you, and you begin to rise...</span>")
+	return ..()
 
 /datum/status_effect/wish_granters_gift/on_remove()
 	owner.revive(full_heal = 1, admin_revive = 1)
@@ -221,3 +228,32 @@
 	name = "Wish Granter's Immortality"
 	desc = "You are being resurrected!"
 	icon_state = "wish_granter"
+
+/datum/status_effect/cult_master
+	id = "The Cult Master"
+	duration = -1
+	tick_interval = 100
+	alert_type = null
+	var/alive = TRUE
+
+/datum/status_effect/cult_master/proc/deathrattle()
+	var/area/A = get_area(owner)
+	for(var/datum/mind/B in SSticker.mode.cult)
+		if(isliving(B.current))
+			var/mob/living/M = B.current
+			M << 'sound/hallucinations/veryfar_noise.ogg'
+			to_chat(M, "<span class='cultlarge'>The Cult's Master, [owner], has fallen in the [A]!")
+			
+			
+/datum/status_effect/cult_master/tick()
+	if(owner.stat != DEAD && !alive)
+		alive = TRUE
+		return
+	if(owner.stat == DEAD && alive)
+		alive = FALSE
+		deathrattle()
+
+/datum/status_effect/cult_master/on_remove()
+	deathrattle()
+	. = ..()
+

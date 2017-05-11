@@ -28,7 +28,7 @@
 	. = successfuluse
 	if(successfuluse) //if the calling whatever says we succeed, do the fancy stuff
 		if(invocation)
-			user.whisper(invocation)
+			user.whisper(invocation, language = /datum/language/common)
 		if(health_cost && iscarbon(user))
 			var/mob/living/carbon/C = user
 			C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
@@ -293,12 +293,12 @@
 	invocation = "Lo'Nab Na'Dm!"
 	creation_time = 80
 
-/obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
-	if(iscultist(user))
-		to_chat(user, "<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
+/obj/item/weapon/paper/talisman/horror/afterattack(mob/living/target, mob/living/user)
+	if(iscultist(user) && (get_dist(user, target) < 7))
+		to_chat(user, "<span class='cultitalic'>You disturb [target] with visions of madness!</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
-			H.reagents.add_reagent("mindbreaker", 25)
+			H.reagents.add_reagent("mindbreaker", 12)
 			if(is_servant_of_ratvar(target))
 				to_chat(target, "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>")
 				target.emote("scream")

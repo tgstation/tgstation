@@ -20,6 +20,7 @@
 	var/oxy_damage = 0
 	density = 1
 	anchored = 1
+	var/banType = "lavaland"
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc)
@@ -27,7 +28,7 @@
 	if(!uses)
 		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
 		return
-	if(jobban_isbanned(user, "lavaland"))
+	if(jobban_isbanned(user, banType))
 		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
@@ -53,7 +54,7 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey)
+/obj/effect/mob_spawn/proc/create(ckey, flavour = TRUE, name)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
@@ -71,12 +72,13 @@
 
 	if(ckey)
 		M.ckey = ckey
-		to_chat(M, "[flavour_text]")
+		if(flavour)
+			to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
 		if(objectives)
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
-		special(M)
+		special(M, name)
 		MM.name = M.real_name
 	if(uses > 0)
 		uses--

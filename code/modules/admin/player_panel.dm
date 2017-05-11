@@ -567,13 +567,14 @@
 			for(var/X in SSticker.mode.devils)
 				var/datum/mind/devil = X
 				var/mob/M = devil.current
+				var/datum/antagonist/devil/devilinfo = devil.has_antag_datum(ANTAG_DATUM_DEVIL)
 				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name] : [devil.devilinfo.truename]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name] : [devilinfo.truename]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
 					dat += "<td><A HREF='?_src_=holder;admincheckdevilinfo=\ref[M]'>Show all devil info</A></td></tr>"
 				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[devil]'>[devil.name] :  [devil.devilinfo.truename] ([devil.key])</a><i>devil body destroyed!</i></td></tr>"
+					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[devil]'>[devil.name] :  [devilinfo.truename] ([devil.key])</a><i>devil body destroyed!</i></td></tr>"
 					dat += "<td><A href='?priv_msg=[devil.key]'>PM</A></td>"
 			dat += "</table>"
 

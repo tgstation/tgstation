@@ -13,6 +13,7 @@
 	var/list/territory = list()
 	var/list/territory_new = list()
 	var/list/territory_lost = list()
+	var/recalls = 1
 	var/dom_attempts = 2
 	var/points = 15
 	var/datum/atom_hud/antag/gang/ganghud

@@ -16,10 +16,10 @@
 #define LIGHTING_BASE_MATRIX \
 	list                     \
 	(                        \
-		LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, 0, \
-		LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, 0, \
-		LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, 0, \
-		LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, 0, \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
 		0, 0, 0, 1           \
 	)                        \
 
@@ -79,3 +79,10 @@
 #define DYNAMIC_LIGHTING_FORCED 2 //dynamic lighting enabled even if the area doesn't require power
 #define DYNAMIC_LIGHTING_IFSTARLIGHT 3 //dynamic lighting enabled only if starlight is.
 #define IS_DYNAMIC_LIGHTING(A) A.dynamic_lighting
+
+
+//code assumes higher numbers override lower numbers.
+#define LIGHTING_NO_UPDATE 0
+#define LIGHTING_VIS_UPDATE 1
+#define LIGHTING_CHECK_UPDATE 2
+#define LIGHTING_FORCE_UPDATE 3

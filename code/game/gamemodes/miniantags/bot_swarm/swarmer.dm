@@ -62,7 +62,7 @@
 	icon = 'icons/mob/swarmer.dmi'
 	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
-	initial_languages = list(/datum/language/swarmer)
+	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
 	health = 40
 	maxHealth = 40

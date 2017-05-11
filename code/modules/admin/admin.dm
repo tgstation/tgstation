@@ -37,6 +37,13 @@
 	else
 		body += " \[<A href='?_src_=holder;revive=\ref[M]'>Heal</A>\] "
 
+	if(M.client)
+		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
+		body += "<br><b>Show related accounts by:</b> "
+		body += "\[ <a href='?_src_=holder;showrelatedacc=cid;client=\ref[M.client]'>CID</a> | "
+		body += "<a href='?_src_=holder;showrelatedacc=ip;client=\ref[M.client]'>IP</a> \]"
+
+
 	body += "<br><br>\[ "
 	body += "<a href='?_src_=vars;Vars=\ref[M]'>VV</a> - "
 	body += "<a href='?_src_=holder;traitor=\ref[M]'>TP</a> - "
@@ -699,7 +706,7 @@
 		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
-	if(istype(M) && M.mind && M.mind.devilinfo)
+	if(is_devil(M))
 		to_chat(usr, SSticker.mode.printdevilinfo(M.mind))
 	else
 		to_chat(usr, "<b>[M] is not a devil.")
