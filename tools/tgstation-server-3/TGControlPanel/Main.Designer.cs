@@ -96,7 +96,6 @@
             this.compilerProgressBar = new System.Windows.Forms.ProgressBar();
             this.ServerStatusLabel = new System.Windows.Forms.Label();
             this.ServerStatusTitle = new System.Windows.Forms.Label();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.IRCPanel = new System.Windows.Forms.TabPage();
             this.ConfigPanel = new System.Windows.Forms.TabPage();
             this.ConfigDownloadRepo = new System.Windows.Forms.Button();
@@ -135,7 +134,6 @@
             this.Panels.Controls.Add(this.RepoPanel);
             this.Panels.Controls.Add(this.BYONDPanel);
             this.Panels.Controls.Add(this.ServerPanel);
-            this.Panels.Controls.Add(this.tabPage3);
             this.Panels.Controls.Add(this.IRCPanel);
             this.Panels.Controls.Add(this.ConfigPanel);
             this.Panels.Location = new System.Drawing.Point(12, 12);
@@ -992,16 +990,6 @@
             this.ServerStatusTitle.Text = "Server Status:";
             this.ServerStatusTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(868, 366);
-            this.tabPage3.TabIndex = 3;
-            this.tabPage3.Text = "Logs";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // IRCPanel
             // 
             this.IRCPanel.Location = new System.Drawing.Point(4, 22);
@@ -1213,7 +1201,6 @@
 		private System.Windows.Forms.Label CurrentRevisionTitle;
 		private System.Windows.Forms.TabPage BYONDPanel;
 		private System.Windows.Forms.TabPage ServerPanel;
-		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TextBox TestMergeListLabel;
 		private System.Windows.Forms.Button UpdateButton;
 		private System.Windows.Forms.NumericUpDown MinorVersionNumeric;
