@@ -1,9 +1,9 @@
 /datum/language/dwarvish
 	name = "koganusan"
 	desc = "The secret language of the Dwarves."
-	speech_verb = "hisses"
-	ask_verb = "hisses"
-	exclaim_verb = "roars"
+	speech_verb = "says"
+	ask_verb = "inquiries"
+	exclaim_verb = "yells"
 	key = "5"
 	flags = TONGUELESS_SPEECH
 	space_chance = 30

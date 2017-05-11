@@ -55,7 +55,7 @@
 
 /datum/map_template/ruin/lavaland/dwarf
 	name = "Strange Dorf Portal"
-	id = "ash-walker"
+	id = "dorf-man"
 	description = "A portal emitting other-worldly energies, strange pixelated images fade in and out from inside its blocky frame."
 	suffix = "lavaland_surface_dwarf.dmm"
 	cost = 20

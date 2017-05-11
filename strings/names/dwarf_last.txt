@@ -38,8 +38,3 @@ Kragcloak
 Magmaborn
 Gravelbasher
 Whitbrew
-
-	syllables = list(
-		"b", "bl", "th", "nd", "f", "d", "m", "kh", "sh", "g", "n", "h", "z",
-		"?", "-", ",", "I", "L", "y", "u"
-	)
