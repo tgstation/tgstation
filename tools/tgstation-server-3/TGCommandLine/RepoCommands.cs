@@ -9,7 +9,7 @@ namespace TGCommandLine
 		public RepoCommand()
 		{
 			Keyword = "repo";
-			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand() };
+			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand(), new RepoListPRsCommand() };
 		}
 		protected override string GetHelpText()
 		{
@@ -273,6 +273,36 @@ namespace TGCommandLine
 		protected override string GetHelpText()
 		{
 			return "Merge the given pull request from the origin repository into the current branch. Only supported with github remotes";
+		}
+	}
+
+	class RepoListPRsCommand : Command
+	{
+		public RepoListPRsCommand()
+		{
+			Keyword = "list-prs";
+		}
+		protected override string GetHelpText()
+		{
+			return "Lists currently merge pull requests";
+		}
+		public override ExitCode Run(IList<string> parameters)
+		{
+			var data = Server.GetComponent<ITGRepository>().MergedPullRequests(out string error);
+			if(data == null)
+			{
+				Console.WriteLine(error);
+				return ExitCode.ServerError;
+			}
+			if (data.Count == 0)
+				Console.WriteLine("None!");
+			else
+				foreach (var I in data)
+				{
+					var innerDick = I.Value;
+					Console.WriteLine(String.Format("#{0}: {2} by {3} at commit {1}\r\n", I.Key, innerDick["commit"], innerDick["title"], innerDick["author"]));
+				}
+			return ExitCode.Normal;
 		}
 	}
 }
