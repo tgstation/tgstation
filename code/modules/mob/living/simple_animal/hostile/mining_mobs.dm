@@ -800,11 +800,12 @@
 	del_on_death = 1
 	stat_attack = 1
 	robust_searching = 1
+	var/can_infest_dead = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
 	if(isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
-			if(H.stat == UNCONSCIOUS)
+			if(H.stat == UNCONSCIOUS || (can_infest_dead && H.stat == DEAD))
 				infest(H)
 	..()
 
@@ -817,6 +818,57 @@
 	L.stored_mob = H
 	H.forceMove(L)
 	qdel(src)
+
+//Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/advanced
+	stat_attack = 2
+	maxHealth = 120
+	health = 120
+	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
+	stat_attack = 2
+	can_infest_dead = TRUE
+
+//Legion that spawns Legions
+
+/mob/living/simple_animal/hostile/spawner/legion
+	name = "legion"
+	desc = "One of many."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "legion"
+	icon_living = "legion"
+	icon_dead = "legion"
+	health = 450
+	maxHealth = 450
+	max_mobs = 3
+	spawn_time = 200
+	spawn_text = "peels itself off from"
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	anchored = FALSE
+	AIStatus = AI_ON
+	stop_automated_movement = FALSE
+	wander = TRUE
+	maxbodytemp = INFINITY
+	layer = MOB_LAYER
+	del_on_death = TRUE
+	sentience_type = SENTIENCE_BOSS
+	loot = list(/obj/item/organ/hivelord_core/legion = 3, /obj/effect/mob_spawn/human/corpse/damaged = 5)
+	move_to_delay = 14
+	vision_range = 5
+	aggro_vision_range = 9
+	idle_vision_range = 5
+	speed = 3
+	faction = list("mining")
+	weather_immunities = list("lava","ash")
+	obj_damage = 30
+	environment_smash = 1
+	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+//Organ
 
 /obj/item/organ/hivelord_core/legion
 	name = "legion's soul"
