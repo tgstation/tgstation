@@ -20,7 +20,7 @@
 	explanation_text = "Your brain is broken... you can only communicate in"
 
 /datum/objective/abductee/speech/New()
-	var/style = pick(list("pantomime", "rhyme", "haiku", "extended metaphors", "riddles", "extremely literal terms", "sound effects", "military jargon"))
+	var/style = pick(list("pantomime", "rhyme", "haiku", "extended metaphors", "riddles", "extremely literal terms", "sound effects", "military jargon", "three word sentences"))
 	explanation_text+= " [style]."
 
 /datum/objective/abductee/capture
@@ -146,3 +146,25 @@
 
 /datum/objective/abductee/sixthsense
 	explanation_text = "You died back there and went to heaven... or is it hell? No one here seems to know they're dead. Convince them, and maybe you can escape this limbo."
+
+/datum/objective/abductee/toupefallacy
+	explanation_text = "There are alien parasites masquerading as people's hair.  Save people from this invasion."
+
+/datum/objective/abductee/everyoneisthesame
+	explanation_text = "There is only one other person in existence, he is just really good at pretending to be multiple people."
+
+/datum/objective/abductee/forbiddennumber
+	explanation_text = "Numbers, how do they work?" //Shouldn't ever see this.
+
+/datum/objective/abductee/forbiddennumber/New()
+	var/number = rand(2,10)
+	explanation_text = "Ignore anything in a set of [number], they don't exist."
+
+/datum/objective/abductee/foreignname
+	explanation_text = "No matter how they say it, other people keep mispronouncing your name.  Be sure to correct them whenever possible."
+
+/datum/objective/abductee/pairoff
+	explanation_text = "Being alone and in large groups are both frightening.  Try to be alone with only one other person whenever possible."
+
+/datum/objective/abductee/takeblame
+	explanation_text = "Try to get formally executed for a crime you didn't commit, without a false confession."
