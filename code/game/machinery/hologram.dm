@@ -61,6 +61,7 @@ GLOBAL_LIST_EMPTY(holopads)
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
 		LAZYADD(holo_calls, outgoing_call)
+		outgoing_call = null
 
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
