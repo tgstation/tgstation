@@ -60,7 +60,7 @@
 	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems."
 	prefix = "Adamantine"
 
-//Explodes on death
+//The suicide bombers of golemkind
 /datum/species/golem/plasma
 	name = "Plasma Golem"
 	id = "plasma golem"
@@ -68,19 +68,56 @@
 	meat = /obj/item/weapon/ore/plasma
 	//Can burn and takes damage from heat
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
-	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!"
-	burnmod = 1.5
+	info_text = "As a <span class='danger'>Plasma Golem</span>, you burn easily. Be careful, if you get hot enough while burning, you'll blow up!"
+	heatmod = 0 //fine until they blow up
 	prefix = "Plasma"
 	special_names = list("Flood","Fire","Bar","Man")
+	var/boom_warning = FALSE
+	var/datum/action/innate/ignite/ignite
 
 /datum/species/golem/plasma/spec_life(mob/living/carbon/human/H)
-	if(H.bodytemperature > 900 && H.on_fire)
+	if(H.bodytemperature > 750)
+		if(!boom_warning && H.on_fire)
+			to_chat(H, "<span class='userdanger'>You feel like you could blow up at any moment!<span>")
+			boom_warning = TRUE
+	else
+		if(boom_warning)
+			to_chat(H, "<span class='notice'>You feel more stable.<span>")
+			boom_warning = FALSE
+
+	if(H.bodytemperature > 850 && H.on_fire && prob(25))
 		explosion(get_turf(H),1,2,4,flame_range = 5)
 		if(H)
 			H.gib()
 	if(H.fire_stacks < 2) //flammable
 		H.adjust_fire_stacks(1)
 	..()
+
+/datum/species/golem/plasma/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	if(ishuman(C))
+		ignite = new
+		ignite.Grant(C)
+
+/datum/species/golem/plasma/on_species_loss(mob/living/carbon/C)
+	if(ignite)
+		ignite.Remove(C)
+	..()
+
+/datum/action/innate/ignite
+	name = "Ignite"
+	desc = "Set yourself aflame, bringing yourself closer to exploding!"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "sacredflame"
+
+/datum/action/innate/ignite/Activate()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.fire_stacks)
+			to_chat(owner, "<span class='notice'>You ignite yourself!</span>")
+		else
+			to_chat(owner, "<span class='warning'>You try ignite yourself, but fail!</span>")
+		H.IgniteMob() //firestacks are already there passively
 
 //Harder to hurt
 /datum/species/golem/diamond
