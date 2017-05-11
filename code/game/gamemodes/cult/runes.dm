@@ -477,8 +477,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	send_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/T = get_turf(src)
-	SSticker.mode.eldergod = 0
 	sleep(40)
+	SSticker.mode.eldergod = 0
 	if(src)
 		color = "#FF0000"
 	deltimer(GLOB.blood_target_reset_timer)
