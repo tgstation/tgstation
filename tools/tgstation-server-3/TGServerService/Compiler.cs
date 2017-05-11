@@ -417,17 +417,47 @@ namespace TGServerService
 
 					if (DM.ExitCode == 0)
 					{
-						//these two lines should be atomic but this is the best we can do
-						if (Directory.Exists(GameDirLive))
-							Directory.Delete(GameDirLive);
-						CreateSymlink(GameDirLive, resurrectee);
-
+						lock (watchdogLock)
+						{
+							try
+							{
+								//gotta go fast
+								if (currentStatus == TGDreamDaemonStatus.Online)
+								{
+									Thread.CurrentThread.Priority = ThreadPriority.Highest;
+									Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;
+									try
+									{
+										Proc.PriorityClass = ProcessPriorityClass.Idle;
+									}
+									catch { }
+								}
+								if (Directory.Exists(GameDirLive))
+									//these two lines should be atomic but this is the best we can do
+									Directory.Delete(GameDirLive);
+								CreateSymlink(GameDirLive, resurrectee);
+							}
+							finally
+							{
+								if (currentStatus == TGDreamDaemonStatus.Online)
+								{
+									try
+									{
+										Proc.PriorityClass = ProcessPriorityClass.Normal;
+									}
+									catch { }
+									Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
+									Thread.CurrentThread.Priority = ThreadPriority.Normal;
+								}
+							}
+						}
 						SendMessage(String.Format("DM: Compile complete!{0}", DaemonStatus() == TGDreamDaemonStatus.Offline ? "" : " Server will update next round."));
 						lock (CompilerLock)
 						{
 							lastCompilerError = null;
 							compilerCurrentStatus = TGCompilerStatus.Initialized;   //still fairly valid
 						}
+
 					}
 					else
 					{
