@@ -122,28 +122,29 @@ namespace TGServerService
 					File.Delete(RevisionDownloadPath);
 				Program.DeleteDirectory(StagingDirectory);
 
-				var client = new WebClient();
 				var vi = (VersionInfo)param;
-				SendMessage(String.Format("BYOND: Updating to version {0}.{1}...", vi.major, vi.minor));
-
-				//DOWNLOADING
-
-				try
+				using (var client = new WebClient())
 				{
-					client.DownloadFile(String.Format(ByondRevisionsURL, vi.major, vi.minor), RevisionDownloadPath);
-				}
-				catch
-				{
-					SendMessage("BYOND: Update download failed. Does the specified version exist?");
-					lastError = String.Format("Download of BYOND version {0}.{1} failed! Does it exist?", vi.major, vi.minor);
-					TGServerService.ActiveService.EventLog.WriteEntry(String.Format("Failed to update BYOND to version {0}.{1}!", vi.major, vi.minor), EventLogEntryType.Warning);
-					lock (ByondLock)
+					SendMessage(String.Format("BYOND: Updating to version {0}.{1}...", vi.major, vi.minor));
+
+					//DOWNLOADING
+
+					try
 					{
-						updateStat = TGByondStatus.Idle;
+						client.DownloadFile(String.Format(ByondRevisionsURL, vi.major, vi.minor), RevisionDownloadPath);
 					}
-					return;
+					catch
+					{
+						SendMessage("BYOND: Update download failed. Does the specified version exist?");
+						lastError = String.Format("Download of BYOND version {0}.{1} failed! Does it exist?", vi.major, vi.minor);
+						TGServerService.ActiveService.EventLog.WriteEntry(String.Format("Failed to update BYOND to version {0}.{1}!", vi.major, vi.minor), EventLogEntryType.Warning);
+						lock (ByondLock)
+						{
+							updateStat = TGByondStatus.Idle;
+						}
+						return;
+					}
 				}
-
 				lock (ByondLock)
 				{
 					updateStat = TGByondStatus.Staging;
