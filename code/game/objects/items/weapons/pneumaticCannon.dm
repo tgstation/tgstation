@@ -25,6 +25,7 @@
 	var/throw_amount = 20	//How many items to throw per fire
 	var/fire_mode = PCANNON_FIREALL
 	var/automatic = FALSE
+	var/clumsyCheck = TRUE
 
 /obj/item/weapon/pneumatic_cannon/CanItemAutoclick()
 	return automatic
@@ -113,7 +114,7 @@
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
-	if(user.disabilities & CLUMSY && prob(75))
+	if(user.disabilities & CLUMSY && prob(75) && clumsyCheck)
 		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
 		user.drop_item()
 		if(prob(10))
@@ -230,6 +231,7 @@
 	fire_mode = PCANNON_FIFO
 	throw_amount = 1
 	maxWeightClass = 100	//50 pies. :^)
+	clumsyCheck = FALSE
 
 /obj/item/weapon/pneumatic_cannon/pie/attackby(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pie))
