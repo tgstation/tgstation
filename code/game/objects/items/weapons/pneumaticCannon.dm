@@ -1,3 +1,7 @@
+
+#define PCANNON_FIREALL 1
+#define PCANNON_FILO 2
+#define PCANNON_FOFO 3
 /obj/item/weapon/pneumatic_cannon
 	name = "pneumatic cannon"
 	desc = "A gas-powered cannon that can fire any object loaded into it."
@@ -18,6 +22,8 @@
 	var/pressureSetting = 1 //How powerful the cannon is - higher pressure = more gas but more powerful throws
 	var/checktank = TRUE
 	var/range_multiplier = 1
+	var/throw_amount = 20	//How many items to throw per fire
+	var/fire_mode = PCANNON_FIREALL
 
 /obj/item/weapon/pneumatic_cannon/examine(mob/user)
 	..()
@@ -109,15 +115,41 @@
 	add_logs(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
-	for(var/obj/item/ITD in loadedItems) //Item To Discharge
-		loadedItems.Remove(ITD)
-		loadedWeightClass -= ITD.w_class
-		ITD.throw_speed = pressureSetting * 2
-		ITD.loc = get_turf(src)
-		ITD.throw_at(T, pressureSetting * 5 * (2 * range_multiplier), pressureSetting * 2,user)
+	fire_items(T, user)
 	if(pressureSetting >= 3 && user)
 		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
 		user.Weaken(3)
+
+/obj/item/weapon/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
+	switch(fire_mode)
+		if(PCANNON_FIREALL)
+			for(var/obj/item/ITD in loadedItems) //Item To Discharge
+				if(!throw_item(target, ITD, user))
+					break
+		if(PCANNON_FILO)
+			for(var/i = 0, i < throw_amount, i++)
+				if(!loadedItems.len)
+					break
+				var/obj/item/I = loadedItems[loadedItems.len]
+				if(!throw_item(target, I, user))
+					break
+		if(PCANNON_FIFO)
+			for(var/i = 0, i < throw_amount, i++)
+				if(!loadeditems.len)
+					break
+				var/obj/item/I = loadedItems[1]
+				if(!throw_item(target, I, user))
+					break
+
+/obj/item/weapon/pneumatic_cannon/proc/throw_item(turf/target, obj/item/I, mob/user)
+	if(!istype(I))
+		stack_trace()
+		return FALSE
+	loadedItems.Remove(I)
+	loadedWeightClass -= I.w_class
+	I.loc = get_turf(src)
+	I.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user)
+	return TRUE
 
 /obj/item/weapon/pneumatic_cannon/proc/get_target(turf/target, turf/starting)
 	if(range_multiplier == 1)
@@ -181,6 +213,8 @@
 	gasPerThrow = 0
 	checktank = FALSE
 	range_multiplier = 3
+	fire_mode = PCANNON_FIFO
+	throw_amoutn = 1
 
 /obj/item/weapon/pneumatic_cannon/pie/attackby(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pie))
