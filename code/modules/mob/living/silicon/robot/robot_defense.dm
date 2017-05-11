@@ -147,6 +147,7 @@
 	to_chat(src, "<span class='danger'>Initiating diagnostics...</span>")
 	sleep(20)
 	to_chat(src, "<span class='danger'>SynBorg v1.7 loaded.</span>")
+	src << sound('sound/voice/AISyndiHack.ogg')
 	sleep(5)
 	to_chat(src, "<span class='danger'>LAW SYNCHRONISATION ERROR</span>")
 	sleep(5)

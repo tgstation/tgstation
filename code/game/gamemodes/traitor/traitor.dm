@@ -204,8 +204,10 @@
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	if(issilicon(traitor.current))
 		add_law_zero(traitor.current)
+		traitor.current << sound('sound/voice/AISyndiHack.ogg')
 	else
 		equip_traitor(traitor.current)
+		traitor.current << sound('sound/voice/syndicate_intro.ogg')
 	SSticker.mode.update_traitor_icons_added(traitor)
 	return
 
