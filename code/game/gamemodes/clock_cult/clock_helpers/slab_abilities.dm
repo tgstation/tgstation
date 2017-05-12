@@ -46,14 +46,14 @@
 		else
 			var/mob/living/L = target
 			if(L.null_rod_check())
-				ranged_ability_user << "<span class='sevtug'>\"A void weapon? Really, you expect me to be able to do anything?\"</span>"
+				to_chat(ranged_ability_user, "<span class='sevtug'>\"A void weapon? Really, you expect me to be able to do anything?\"</span>")
 				return TRUE
 			if(is_servant_of_ratvar(L))
 				if(L != ranged_ability_user)
-					ranged_ability_user << "<span class='sevtug'>\"[L.p_they(TRUE)] already serve[L.p_s()] Ratvar. [text2ratvar("Perhaps [ranged_ability_user.p_theyre()] into bondage?")]\"</span>"
+					to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_they(TRUE)] already serve[L.p_s()] Ratvar. [text2ratvar("Perhaps [ranged_ability_user.p_theyre()] into bondage?")]\"</span>")
 				return TRUE
 			if(L.stat == DEAD)
-				ranged_ability_user << "<span class='sevtug'>\"[L.p_theyre(TRUE)] dead, idiot.\"</span>"
+				to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_theyre(TRUE)] dead, idiot.\"</span>")
 				return TRUE
 
 			if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding)) //if they're already bound, just stun them
@@ -100,10 +100,10 @@
 	if(isliving(target) && (target in view(7, get_turf(ranged_ability_user))))
 		var/mob/living/L = target
 		if(!is_servant_of_ratvar(L))
-			ranged_ability_user << "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>"
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>")
 			return TRUE
 		if(L.stat == DEAD)
-			ranged_ability_user << "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>"
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
 			return TRUE
 
 		var/brutedamage = L.getBruteLoss()
@@ -111,7 +111,7 @@
 		var/oxydamage = L.getOxyLoss()
 		var/totaldamage = brutedamage + burndamage + oxydamage
 		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
-			ranged_ability_user << "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>"
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>")
 			return TRUE
 
 		successful = TRUE
@@ -130,14 +130,14 @@
 		else
 			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
 			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
-		ranged_ability_user << "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>"
+		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
 		L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
 		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
 		playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
 
 		if(L.reagents && L.reagents.has_reagent("holywater"))
 			L.reagents.remove_reagent("holywater", 1000)
-			L << "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>"
+			to_chat(L, "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>")
 
 		remove_ranged_ability()
 
@@ -194,13 +194,13 @@
 	if(isliving(target) && (target in view(7, get_turf(ranged_ability_user))))
 		var/mob/living/L = target
 		if(!is_servant_of_ratvar(L))
-			ranged_ability_user << "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>"
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>")
 			return TRUE
 		if(L.stat == DEAD)
-			ranged_ability_user << "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>"
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
 			return TRUE
 		if(islist(L.stun_absorption) && L.stun_absorption["vanguard"] && L.stun_absorption["vanguard"]["end_time"] > world.time)
-			ranged_ability_user << "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] already shielded by a Vanguard.\"</span>"
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] already shielded by a Vanguard.\"</span>")
 			return TRUE
 
 		successful = TRUE

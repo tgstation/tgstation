@@ -24,11 +24,11 @@
 /obj/item/weapon/implant/chem/New()
 	..()
 	create_reagents(50)
-	tracked_chem_implants += src
+	GLOB.tracked_chem_implants += src
 
 /obj/item/weapon/implant/chem/Destroy()
 	. = ..()
-	tracked_chem_implants -= src
+	GLOB.tracked_chem_implants -= src
 
 /obj/item/weapon/implant/chem/trigger(emote, mob/source)
 	if(emote == "deathgasp")
@@ -44,9 +44,9 @@
 	else
 		injectamount = cause
 	reagents.trans_to(R, injectamount)
-	R << "<span class='italics'>You hear a faint beep.</span>"
+	to_chat(R, "<span class='italics'>You hear a faint beep.</span>")
 	if(!reagents.total_volume)
-		R << "<span class='italics'>You hear a faint click from your chest.</span>"
+		to_chat(R, "<span class='italics'>You hear a faint click from your chest.</span>")
 		qdel(src)
 
 
@@ -57,7 +57,7 @@
 
 /obj/item/weapon/implantcase/chem/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/reagent_containers/syringe) && imp)
-		W.afterattack(imp, user, params)
+		W.afterattack(imp, user, TRUE, params)
 		return TRUE
 	else
 		return ..()

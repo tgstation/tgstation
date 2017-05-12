@@ -98,12 +98,12 @@
 	..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			user << "<span class='warning'>It's on fire!</span>"
+			to_chat(user, "<span class='warning'>It's on fire!</span>")
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				user <<  "It looks slightly damaged."
+				to_chat(user,  "It looks slightly damaged.")
 			if(25 to 50)
-				user <<  "It appears heavily damaged."
+				to_chat(user,  "It appears heavily damaged.")
 			if(0 to 25)
-				user <<  "<span class='warning'>It's falling apart!</span>"
+				to_chat(user,  "<span class='warning'>It's falling apart!</span>")

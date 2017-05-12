@@ -169,7 +169,7 @@
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
-			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
+			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
 	return 1
 
 // Safe location finder
@@ -195,7 +195,7 @@
 		var/list/A_gases = A.gases
 		var/trace_gases
 		for(var/id in A_gases)
-			if(id in hardcoded_gases)
+			if(id in GLOB.hardcoded_gases)
 				continue
 			trace_gases = TRUE
 			break

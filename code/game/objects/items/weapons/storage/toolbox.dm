@@ -13,22 +13,23 @@
 	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
-	var/hinges = "single_hinge"
-	var/has_hinges = TRUE
+	var/latches = "single_latch"
+	var/has_latches = TRUE
 
 /obj/item/weapon/storage/toolbox/Initialize()
 	..()
-	if(has_hinges)
+	if(has_latches)
 		if(prob(10))
-			hinges = "double_hinge"
+			latches = "double_latch"
 		else if(prob(1))
-			hinges = "triple_hinge"
+			latches = "triple_latch"
 	update_icon()
 
 /obj/item/weapon/storage/toolbox/update_icon()
 	..()
 	cut_overlays()
-	add_overlay(image('icons/obj/storage.dmi', "[hinges]"))
+	if(has_latches)
+		add_overlay(latches)
 
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
@@ -40,29 +41,30 @@
 	icon_state = "red"
 	item_state = "toolbox_red"
 
-/obj/item/weapon/storage/toolbox/emergency/New()
-	..()
+/obj/item/weapon/storage/toolbox/emergency/PopulateContents()
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/weldingtool/mini(src)
 	new /obj/item/weapon/extinguisher/mini(src)
-	if(prob(50))
-		new /obj/item/device/flashlight(src)
-	else
-		new /obj/item/device/flashlight/flare(src)
+	switch(rand(1,3))
+		if(1)
+			new /obj/item/device/flashlight(src)
+		if(2)
+			new /obj/item/device/flashlight/glowstick(src)
+		if(3)
+			new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/radio/off(src)
 
 /obj/item/weapon/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
-	has_hinges = FALSE
+	has_latches = FALSE
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
 
-/obj/item/weapon/storage/toolbox/mechanical/New()
-	..()
+/obj/item/weapon/storage/toolbox/mechanical/PopulateContents()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
@@ -73,15 +75,14 @@
 /obj/item/weapon/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
-	has_hinges = FALSE
+	has_latches = FALSE
 
 /obj/item/weapon/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
 	item_state = "toolbox_yellow"
 
-/obj/item/weapon/storage/toolbox/electrical/New()
-	..()
+/obj/item/weapon/storage/toolbox/electrical/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wirecutters(src)
@@ -103,8 +104,7 @@
 	force = 15
 	throwforce = 18
 
-/obj/item/weapon/storage/toolbox/syndicate/New()
-	..()
+/obj/item/weapon/storage/toolbox/syndicate/PopulateContents()
 	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool/largetank(src)
@@ -118,8 +118,7 @@
 	icon_state = "blue"
 	item_state = "toolbox_blue"
 
-/obj/item/weapon/storage/toolbox/drone/New()
-	..()
+/obj/item/weapon/storage/toolbox/drone/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
@@ -134,7 +133,7 @@
 	desc = "A huge brass box with several indentations in its surface."
 	icon_state = "brassbox"
 	item_state = null
-	has_hinges = FALSE
+	has_latches = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	max_w_class = WEIGHT_CLASS_NORMAL
@@ -143,8 +142,7 @@
 	attack_verb = list("robusted", "crushed", "smashed")
 	var/proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab
 
-/obj/item/weapon/storage/toolbox/brass/prefilled/New()
-	..()
+/obj/item/weapon/storage/toolbox/brass/prefilled/PopulateContents()
 	new proselytizer_type(src)
 	new /obj/item/weapon/screwdriver/brass(src)
 	new /obj/item/weapon/wirecutters/brass(src)
@@ -155,7 +153,7 @@
 /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
 	var/slab_type = /obj/item/clockwork/slab/scarab
 
-/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/New()
+/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/PopulateContents()
 	..()
 	new slab_type(src)
 
@@ -173,8 +171,7 @@
 	storage_slots = 10
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 
-/obj/item/weapon/storage/toolbox/artistic/New()
-	..()
+/obj/item/weapon/storage/toolbox/artistic/PopulateContents()
 	new/obj/item/weapon/storage/crayons(src)
 	new/obj/item/weapon/crowbar(src)
 	new/obj/item/stack/cable_coil/red(src)

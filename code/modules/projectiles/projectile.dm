@@ -104,7 +104,7 @@
 			organ_hit_text = " in \the [parse_zone(limb_hit)]"
 		if(suppressed)
 			playsound(loc, hitsound, 5, 1, -1)
-			L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
+			to_chat(L, "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>")
 		else
 			if(hitsound)
 				var/volume = vol_by_damage()
@@ -179,6 +179,8 @@
 		return
 	if(setAngle)
 		Angle = setAngle
+	var/old_pixel_x = pixel_x
+	var/old_pixel_y = pixel_y
 	if(!legacy) //new projectiles
 		set waitfor = 0
 		var/next_run = world.time
@@ -199,31 +201,32 @@
 			M.Turn(Angle)
 			transform = M
 
-			var/Pixel_x=round(sin(Angle)+16*sin(Angle)*2)
-			var/Pixel_y=round(cos(Angle)+16*cos(Angle)*2)
-			var/pixel_x_offset = pixel_x + Pixel_x
-			var/pixel_y_offset = pixel_y + Pixel_y
+			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
+			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
+			var/pixel_x_offset = old_pixel_x + Pixel_x
+			var/pixel_y_offset = old_pixel_y + Pixel_y
 			var/new_x = x
 			var/new_y = y
 
 			while(pixel_x_offset > 16)
 				pixel_x_offset -= 32
-				pixel_x -= 32
+				old_pixel_x -= 32
 				new_x++// x++
 			while(pixel_x_offset < -16)
 				pixel_x_offset += 32
-				pixel_x += 32
+				old_pixel_x += 32
 				new_x--
-
 			while(pixel_y_offset > 16)
 				pixel_y_offset -= 32
-				pixel_y -= 32
+				old_pixel_y -= 32
 				new_y++
 			while(pixel_y_offset < -16)
 				pixel_y_offset += 32
-				pixel_y += 32
+				old_pixel_y += 32
 				new_y--
-
+				
+			pixel_x = old_pixel_x
+			pixel_y = old_pixel_y
 			step_towards(src, locate(new_x, new_y, z))
 			next_run += max(world.tick_lag, speed)
 			var/delay = next_run - world.time
@@ -232,7 +235,9 @@
 				pixel_y = pixel_y_offset
 			else
 				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
-
+			old_pixel_x = pixel_x_offset
+			old_pixel_y = pixel_y_offset
+			
 			if(original && (original.layer>=2.75) || ismob(original))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
@@ -279,7 +284,7 @@
 
 			//Split Y+Pixel_Y up into list(Y, Pixel_Y)
 			var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
-			// world << "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]"
+			// to_chat(world, "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]")
 			var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
 			var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
 
@@ -288,9 +293,9 @@
 
 			var/ox = round(screenview/2) //"origin" x
 			var/oy = round(screenview/2) //"origin" y
-			// world << "Pixel position: [x] [y]"
+			// to_chat(world, "Pixel position: [x] [y]")
 			var/angle = Atan2(y - oy, x - ox)
-			// world << "Angle: [angle]"
+			// to_chat(world, "Angle: [angle]")
 			src.Angle = angle
 	if(spread)
 		src.Angle += spread

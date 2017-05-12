@@ -1,3 +1,6 @@
+#define DOM_BLOCKED_SPAM_CAP 6
+#define DOM_REQUIRED_TURFS 30
+
 /obj/machinery/dominator
 	name = "dominator"
 	desc = "A visibly sinister device. Looks like you can break it if you hit it enough."
@@ -13,18 +16,29 @@
 	var/datum/gang/gang
 	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
+	var/spam_prevention = DOM_BLOCKED_SPAM_CAP //first message is immediate
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/effect/countdown/dominator/countdown
+
+/proc/dominator_excessive_walls(atom/A)
+	var/open = 0
+	for(var/turf/T in view(3, A))
+		if(!isclosedturf(T))
+			open++
+	if(open < DOM_REQUIRED_TURFS)
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
 
 /obj/machinery/dominator/New()
 	..()
-	SetLuminosity(2)
-	poi_list |= src
+	set_light(2)
+	GLOB.poi_list |= src
 	spark_system = new
-	spark_system.set_up(5, 1, src)
+	spark_system.set_up(5, TRUE, src)
 	countdown = new(src)
 
 /obj/machinery/dominator/examine(mob/user)
@@ -36,30 +50,40 @@
 	if(gang && gang.is_dominating)
 		time = gang.domination_time_remaining()
 		if(time > 0)
-			user << "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>"
+			to_chat(user, "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>")
 		else
-			user << "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>"
+			to_chat(user, "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>")
 	else
-		user << "<span class='notice'>System on standby.</span>"
-	user << "<span class='danger'>System Integrity: [round((obj_integrity/max_integrity)*100,1)]%</span>"
+		to_chat(user, "<span class='notice'>System on standby.</span>")
+	to_chat(user, "<span class='danger'>System Integrity: [round((obj_integrity/max_integrity)*100,1)]%</span>")
 
 /obj/machinery/dominator/process()
 	..()
 	if(gang && gang.is_dominating)
 		var/time_remaining = gang.domination_time_remaining()
 		if(time_remaining > 0)
+			if(dominator_excessive_walls(src))
+				gang.domination_timer += 20
+				playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+				if(spam_prevention < DOM_BLOCKED_SPAM_CAP)
+					spam_prevention++
+				else
+					gang.message_gangtools("Warning: There are too many walls around your gang's dominator, its signal is being blocked!")
+					say("Error: Takeover signal is currently blocked! There are too many walls within 3 standard units of this device.")
+					spam_prevention = 0
+				return
 			. = TRUE
 			playsound(loc, 'sound/items/timer.ogg', 10, 0)
 			if(!warned && (time_remaining < 180))
 				warned = 1
 				var/area/domloc = get_area(loc)
 				gang.message_gangtools("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!")
-				for(var/datum/gang/G in ticker.mode.gangs)
+				for(var/datum/gang/G in SSticker.mode.gangs)
 					if(G != gang)
 						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 
 	if(!.)
-		STOP_PROCESSING(SSmachine, src)
+		STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -102,7 +126,7 @@
 		gang.is_dominating = FALSE
 
 		var/takeover_in_progress = 0
-		for(var/datum/gang/G in ticker.mode.gangs)
+		for(var/datum/gang/G in SSticker.mode.gangs)
 			if(G.is_dominating)
 				takeover_in_progress = 1
 				break
@@ -117,22 +141,21 @@
 
 		gang.message_gangtools("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]",1,1)
 
-	SetLuminosity(0)
+	set_light(0)
 	icon_state = "dominator-broken"
 	cut_overlays()
 	operating = 0
 	stat |= BROKEN
-	STOP_PROCESSING(SSmachine, src)
+	STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
 		set_broken()
-	poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	gang = null
-	qdel(spark_system)
-	qdel(countdown)
-	countdown = null
-	STOP_PROCESSING(SSmachine, src)
+	QDEL_NULL(spark_system)
+	QDEL_NULL(countdown)
+	STOP_PROCESSING(SSmachines, src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
@@ -146,22 +169,22 @@
 
 	var/datum/gang/tempgang
 
-	if(user.mind in ticker.mode.get_all_gangsters())
+	if(user.mind in SSticker.mode.get_all_gangsters())
 		tempgang = user.mind.gang_datum
 	else
 		examine(user)
 		return
 
 	if(tempgang.is_dominating)
-		user << "<span class='warning'>Error: Hostile Takeover is already in progress.</span>"
+		to_chat(user, "<span class='warning'>Error: Hostile Takeover is already in progress.</span>")
 		return
 
 	if(!tempgang.dom_attempts)
-		user << "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>"
+		to_chat(user, "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>")
 		return
 
 	var/time = round(determine_domination_time(tempgang)/60,0.1)
-	if(alert(user,"With [round((tempgang.territory.len/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
+	if(alert(user,"With [round((tempgang.territory.len/GLOB.start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
 		if((tempgang.is_dominating) || !tempgang.dom_attempts || !in_range(src, user) || !isturf(loc))
 			return 0
 
@@ -180,14 +203,10 @@
 		countdown.color = gang.color_hex
 		countdown.start()
 
-		SetLuminosity(3)
-		START_PROCESSING(SSmachine, src)
+		set_light(3)
+		START_PROCESSING(SSmachines, src)
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
-		for(var/datum/gang/G in ticker.mode.gangs)
+		for(var/datum/gang/G in SSticker.mode.gangs)
 			if(G != gang)
 				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
-
-
-
-

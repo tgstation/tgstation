@@ -142,6 +142,9 @@
 	name = "cultist boots"
 	icon_state = "cultalt"
 
+/obj/item/clothing/shoes/cult/alt/ghost
+	flags = NODROP|DROPDEL
+
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume."
@@ -178,6 +181,7 @@
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
+	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
 	var/recharging_time = 0 //time until next dash
 	var/jumping = FALSE //are we mid-jump?
@@ -190,7 +194,7 @@
 		return
 
 	if(recharging_time > world.time)
-		usr << "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>"
+		to_chat(usr, "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>")
 		return
 
 	var/atom/target = get_edge_target_turf(usr, usr.dir) //gets the user's direction
@@ -198,7 +202,7 @@
 	jumping = TRUE
 	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
 	usr.visible_message("<span class='warning'>[usr] dashes foward into the air!</span>")
-	usr.throw_at(target, jumpdistance, 1, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
+	usr.throw_at(target, jumpdistance, jumpspeed, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
 
 /obj/item/clothing/shoes/bhop/proc/hop_end()
 	jumping = FALSE

@@ -63,9 +63,9 @@ Difficulty: Hard
 	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))
-			step(B, pick(cardinal))
+			step(B, pick(GLOB.cardinal))
 		else
-			B.setDir(pick(cardinal))
+			B.setDir(pick(GLOB.cardinal))
 
 /obj/effect/decal/cleanable/blood/gibs/bubblegum
 	name = "thick blood"
@@ -103,12 +103,12 @@ Difficulty: Hard
 				INVOKE_ASYNC(src, .proc/warp_charge)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/New()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	..()
-	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in mob_list)
+	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_list)
 		if(B != src)
 			qdel(src) //There can be only one
-			break
+			return
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
@@ -126,7 +126,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
 	if(!charging)
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
 	if(!charging)
@@ -150,7 +150,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(target)
 	if(!T || T == loc)
 		return
-	new /obj/effect/overlay/temp/dragon_swoop(T)
+	new /obj/effect/overlay/temp/dragon_swoop/bubblegum(T)
 	charging = TRUE
 	DestroySurroundings()
 	walk(src, 0)
@@ -251,7 +251,7 @@ Difficulty: Hard
 	sleep(2.5)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
-			L << "<span class='userdanger'>[src] rends you!</span>"
+			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, 1, -1)
 			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
@@ -267,7 +267,7 @@ Difficulty: Hard
 	sleep(6)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
-			L << "<span class='userdanger'>[src] drags you through the blood!</span>"
+			to_chat(L, "<span class='userdanger'>[src] drags you through the blood!</span>")
 			playsound(T, 'sound/magic/enter_blood.ogg', 100, 1, -1)
 			var/turf/targetturf = get_step(src, dir)
 			L.forceMove(targetturf)
@@ -275,6 +275,9 @@ Difficulty: Hard
 			if(L.stat != CONSCIOUS)
 				addtimer(CALLBACK(src, .proc/devour, L), 2)
 	sleep(1)
+
+/obj/effect/overlay/temp/dragon_swoop/bubblegum
+	duration = 10
 
 /obj/effect/overlay/temp/bubblegum_hands
 	icon = 'icons/effects/bubblegum.dmi'
@@ -326,7 +329,7 @@ Difficulty: Hard
 	pools_to_remove = get_pools(get_turf(target), 1)
 	pools -= pools_to_remove
 	if(pools.len)
-		shuffle(pools)
+		shuffle_inplace(pools)
 		found_bloodpool = pick(pools)
 	if(found_bloodpool)
 		visible_message("<span class='danger'>[src] sinks into the blood...</span>")

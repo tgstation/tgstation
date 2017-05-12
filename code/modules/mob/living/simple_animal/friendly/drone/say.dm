@@ -18,17 +18,17 @@
 
 //Base proc for anything to call
 /proc/_alert_drones(msg, dead_can_hear = 0, mob/living/faction_checked_mob, exact_faction_match)
-	for(var/W in mob_list)
+	for(var/W in GLOB.mob_list)
 		var/mob/living/simple_animal/drone/M = W
 		if(istype(M) && M.stat != DEAD)
 			if(faction_checked_mob)
 				if(M.faction_check_mob(faction_checked_mob, exact_faction_match))
-					M << msg
+					to_chat(M, msg)
 			else
-				M << msg
-		if(dead_can_hear && (M in dead_mob_list))
-			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [msg]"
+				to_chat(M, msg)
+		if(dead_can_hear && (M in GLOB.dead_mob_list))
+			var/link = FOLLOW_LINK(M, faction_checked_mob)
+			to_chat(M, "[link] [msg]")
 
 
 //Wrapper for drones to handle factions

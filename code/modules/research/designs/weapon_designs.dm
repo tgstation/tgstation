@@ -3,7 +3,7 @@
 /////////////////////////////////////////
 
 /datum/design/pin_testing
-	name = "test-range firing pin"
+	name = "Test-Range Firing Pin"
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
 	id = "pin_testing"
 	req_tech = list("combat" = 2, "materials" = 2)
@@ -13,7 +13,7 @@
 	category = list("Firing Pins")
 
 /datum/design/pin_mindshield
-	name = "mindshield firing pin"
+	name = "Mindshield Firing Pin"
 	desc = "This is a security firing pin which only authorizes users who are mindshield-implanted."
 	id = "pin_loyalty"
 	req_tech = list("combat" = 5, "materials" = 6)
@@ -175,16 +175,6 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 2000, MAT_METAL = 5000, MAT_DIAMOND = 2000, MAT_BLUESPACE = 3000)
 	build_path = /obj/item/weapon/gun/energy/wormhole_projector
-	category = list("Weapons")
-
-/datum/design/reciever
-	name = "Modular Receiver"
-	desc = "A prototype modular receiver and trigger assembly for a variety of firearms."
-	id = "reciever"
-	req_tech = list("combat" = 4, "materials" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6500, MAT_SILVER = 500)
-	build_path = /obj/item/weaponcrafting/reciever
 	category = list("Weapons")
 
 //WT550 Mags

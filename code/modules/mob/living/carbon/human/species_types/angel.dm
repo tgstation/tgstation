@@ -50,7 +50,7 @@
 	if(H.stat || H.stunned || H.weakened)
 		return 0
 	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
-		H << "Your suit blocks your wings from extending!"
+		to_chat(H, "Your suit blocks your wings from extending!")
 		return 0
 	var/turf/T = get_turf(H)
 	if(!T)
@@ -58,7 +58,7 @@
 
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment && !(environment.return_pressure() > 30))
-		H << "<span class='warning'>The atmosphere is too thin for you to fly!</span>"
+		to_chat(H, "<span class='warning'>The atmosphere is too thin for you to fly!</span>")
 		return 0
 	else
 		return 1
@@ -73,11 +73,11 @@
 	var/datum/species/angel/A = H.dna.species
 	if(A.CanFly(H))
 		if(H.movement_type & FLYING)
-			H << "<span class='notice'>You settle gently back onto the ground...</span>"
+			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
 			A.ToggleFlight(H,0)
 			H.update_canmove()
 		else
-			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
+			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
 			H.resting = 0
 			A.ToggleFlight(H,1)
 			H.update_canmove()
@@ -87,7 +87,7 @@
 	if(H.buckled)
 		buckled_obj = H.buckled
 
-	H << "<span class='notice'>Your wings spazz out and launch you!</span>"
+	to_chat(H, "<span class='notice'>Your wings spazz out and launch you!</span>")
 
 	playsound(H.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 

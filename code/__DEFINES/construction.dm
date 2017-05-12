@@ -9,7 +9,6 @@
 #define GIRDER_DISPLACED 3
 #define GIRDER_DISASSEMBLED 4
 
-
 //rwall construction states
 #define INTACT 0
 #define SUPPORT_LINES 1
@@ -18,6 +17,11 @@
 #define BOLTS 4
 #define SUPPORT_RODS 5
 #define SHEATH 6
+
+//window construction states
+#define WINDOW_OUT_OF_FRAME 0
+#define WINDOW_IN_FRAME 1
+#define WINDOW_SCREWED_TO_FRAME 2
 
 //plastic flaps construction states
 #define PLASTIC_FLAPS_NORMAL 0
@@ -55,6 +59,12 @@
 //Construction defines for the pinion airlock
 #define GEAR_SECURE 1
 #define GEAR_LOOSE 2
+
+//floodlights because apparently we use defines now
+#define FLOODLIGHT_NEEDS_WIRES 0
+#define FLOODLIGHT_NEEDS_LIGHTS 1
+#define FLOODLIGHT_NEEDS_SECURING 2
+#define FLOODLIGHT_NEEDS_WRENCHING 3
 
 //other construction-related things
 
@@ -103,3 +113,8 @@
 #define CAT_SANDWICH	"Sandwiches"
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
+
+#define RCD_FLOORWALL 1
+#define RCD_AIRLOCK 2
+#define RCD_DECONSTRUCT 3
+#define RCD_WINDOWGRILLE 4

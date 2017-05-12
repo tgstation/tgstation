@@ -21,29 +21,29 @@
 		return FALSE
 
 	if(battery)
-		user << "<span class='warning'>You try to connect \the [I] to \the [src], but its connectors are occupied.</span>"
+		to_chat(user, "<span class='warning'>You try to connect \the [I] to \the [src], but its connectors are occupied.</span>")
 		return FALSE
 
 	if(I.w_class > holder.max_hardware_size)
-		user << "<span class='warning'>This power cell is too large for \the [holder]!</span>"
+		to_chat(user, "<span class='warning'>This power cell is too large for \the [holder]!</span>")
 		return FALSE
 
 	if(user && !user.transferItemToLoc(I, src))
 		return FALSE
 
 	battery = I
-	user << "<span class='notice'>You connect \the [I] to \the [src].</span>"
+	to_chat(user, "<span class='notice'>You connect \the [I] to \the [src].</span>")
 
 	return TRUE
 
 
 /obj/item/weapon/computer_hardware/battery/try_eject(slot=0, mob/living/user = null, forced = 0)
 	if(!battery)
-		user << "<span class='warning'>There is no power cell connected to \the [src].</span>"
+		to_chat(user, "<span class='warning'>There is no power cell connected to \the [src].</span>")
 		return FALSE
 	else
 		battery.forceMove(get_turf(src))
-		user << "<span class='notice'>You detach \the [battery] from \the [src].</span>"
+		to_chat(user, "<span class='notice'>You detach \the [battery] from \the [src].</span>")
 		battery = null
 
 		if(holder)

@@ -14,9 +14,8 @@
 		revert_cast()
 		return
 	invocation(thearea,user)
-	spawn(0)
-		if(charge_type == "recharge" && recharge)
-			start_recharge()
+	if(charge_type == "recharge" && recharge)
+		INVOKE_ASYNC(src, .proc/start_recharge)
 	cast(targets,thearea,user)
 	after_cast(targets)
 
@@ -24,12 +23,12 @@
 	var/A = null
 
 	if(!randomise_selection)
-		A = input("Area to teleport to", "Teleport", A) as null|anything in teleportlocs
+		A = input("Area to teleport to", "Teleport", A) as null|anything in GLOB.teleportlocs
 	else
-		A = pick(teleportlocs)
+		A = pick(GLOB.teleportlocs)
 	if(!A)
 		return
-	var/area/thearea = teleportlocs[A]
+	var/area/thearea = GLOB.teleportlocs[A]
 
 	return thearea
 
@@ -48,7 +47,7 @@
 					L+=T
 
 		if(!L.len)
-			usr <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
+			to_chat(usr, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 			return
 
 		if(target && target.buckled)

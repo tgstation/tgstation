@@ -51,7 +51,7 @@
 		playsound(loc, trigger_sound, 50, 1)
 		if(isliving(AM))
 			var/mob/living/L = AM
-			L << "<span class='warning'>You feel something click back into place as you step off [loc]!</span>"
+			to_chat(L, "<span class='warning'>You feel something click back into place as you step off [loc]!</span>")
 		addtimer(CALLBACK(src, .proc/trigger), trigger_delay)
 	. = ..()
 
@@ -60,7 +60,7 @@
 		sigdev.signal()
 
 /obj/item/device/pressure_plate/proc/step_living(mob/living/L)
-	L << "<span class='warning'>You feel a click under your feet!</span>"
+	to_chat(L, "<span class='warning'>You feel a click under your feet!</span>")
 
 /obj/item/device/pressure_plate/proc/step_item(atom/movable/AM)
 	return
@@ -68,12 +68,12 @@
 /obj/item/device/pressure_plate/attackby(obj/item/I, mob/living/L)
 	if(istype(I, /obj/item/device/assembly/signaler) && !istype(sigdev) && removable_signaller && L.transferItemToLoc(I, src))
 		sigdev = I
-		L << "<span class='notice'>You attach [I] to [src]!</span>"
+		to_chat(L, "<span class='notice'>You attach [I] to [src]!</span>")
 	. = ..()
 
 /obj/item/device/pressure_plate/attack_self(mob/living/L)
 	if(removable_signaller && istype(sigdev))
-		L << "<span class='notice'>You remove [sigdev] from [src]</span>"
+		to_chat(L, "<span class='notice'>You remove [sigdev] from [src]</span>")
 		if(!L.put_in_hands(sigdev))
 			sigdev.forceMove(get_turf(src))
 		sigdev = null

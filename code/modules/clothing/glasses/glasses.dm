@@ -23,7 +23,7 @@
 		var/mob/living/carbon/human/H = src.loc
 		if(!(H.disabilities & BLIND))
 			if(H.glasses == src)
-				H << "<span class='danger'>The [src] overloads and blinds you!</span>"
+				to_chat(H, "<span class='danger'>The [src] overloads and blinds you!</span>")
 				H.flash_act(visual = 1)
 				H.blind_eyes(3)
 				H.blur_eyes(5)
@@ -37,7 +37,7 @@
 	origin_tech = "magnets=1;engineering=2"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/meson/night
@@ -47,6 +47,7 @@
 	item_state = "nvgmeson"
 	origin_tech = "magnets=4;engineering=5;plasmatech=4"
 	darkness_view = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/meson/gar
@@ -84,7 +85,7 @@
 	item_state = "glasses"
 	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
 	darkness_view = 8
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/eyepatch
@@ -322,7 +323,7 @@
 	darkness_view = 8
 	scan_reagents = 1
 	flags = NODROP
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)
@@ -334,7 +335,7 @@
 				var/mob/living/carbon/C = user
 				C.update_inv_wear_mask()
 		else
-			user << "<span class='notice'>The eye winks at you and vanishes into the abyss, you feel really unlucky.</span>"
+			to_chat(user, "<span class='notice'>The eye winks at you and vanishes into the abyss, you feel really unlucky.</span>")
 		qdel(src)
 	..()
 
@@ -346,9 +347,9 @@
 				if(src == H.glasses)
 					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
 					if(H.client.prefs.uses_glasses_colour)
-						H << "You will now see glasses colors."
+						to_chat(H, "You will now see glasses colors.")
 					else
-						H << "You will no longer see glasses colors."
+						to_chat(H, "You will no longer see glasses colors.")
 					H.update_glasses_color(src, 1)
 	else
 		return ..()

@@ -57,7 +57,7 @@
 			newtype = heater
 		name = initial(newtype.name)
 		build_path = initial(newtype.build_path)
-		user << "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>"
+		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
 	else
 		return ..()
 
@@ -146,7 +146,7 @@
 	return UI_CLOSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "thermomachine", name, 400, 240, master_ui, state)

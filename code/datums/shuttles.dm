@@ -47,7 +47,7 @@
 
 /datum/map_template/shuttle/emergency/airless/prerequisites_met()
 	// first 10 minutes only
-	return world.time - round_start_time < 6000
+	return world.time - SSticker.round_start_time < 6000
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
@@ -72,7 +72,7 @@
 
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
-	name = "An Asteroid With Engines Strapped To It"
+	name = "Asteroid With Engines Strapped To It"
 	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = -5000
@@ -161,6 +161,12 @@
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
 	credit_cost = 1000
 
+/datum/map_template/shuttle/emergency/cere
+	suffix = "cere"
+	name = "Cere Station Emergency Shuttle"
+	description = "The large, beefed-up version of the box-standard shuttle. Includes an expanded brig, fully stocked medbay, enhanced cargo storage with mech chargers, \
+		an engine room stocked with various supplies, and a crew capacity of 80+ to top it all off. Live large, live Cere."
+
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
 	name = "Hyperfractal Gigashuttle"
@@ -230,6 +236,10 @@
 	suffix = "pubby"
 	name = "NT White UFO"
 
+/datum/map_template/shuttle/whiteship/cere
+	suffix = "cere"
+	name = "NT Construction Vessel"
+
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"
@@ -244,3 +254,10 @@
 	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
 	admin_notes = "Go big or go home."
 	credit_cost = 7500
+
+/datum/map_template/shuttle/emergency/raven
+	suffix = "raven"
+	name = "Centcomm Raven Battlecruiser"
+	description = "The Centcomm Raven Battlecruiser is currently docked at the Centcomm ship bay awaiting a mission, this Battlecruiser has been reassigned as an emergency escape shuttle for currently unknown reasons. The Centcomm Raven Battlecruiser should comfortably fit a medium to large crew size crew and is complete with all required facitlities including a top of the range Centcomm Medical Bay."
+	admin_notes = "The long way home"
+	credit_cost = 12500

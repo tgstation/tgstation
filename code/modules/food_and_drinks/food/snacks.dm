@@ -53,7 +53,7 @@
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
-		user << "<span class='notice'>None of [src] left, oh no!</span>"
+		to_chat(user, "<span class='notice'>None of [src] left, oh no!</span>")
 		qdel(src)
 		return 0
 	if(iscarbon(M))
@@ -66,19 +66,19 @@
 
 		if(M == user)								//If you're eating it yourself.
 			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
-				M << "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>"
+				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
 				return 0
 
 			else if(fullness <= 50)
-				M << "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>"
+				to_chat(M, "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
 			else if(fullness > 50 && fullness < 150)
-				M << "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>"
+				to_chat(M, "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>")
 			else if(fullness > 150 && fullness < 500)
-				M << "<span class='notice'>You [eatverb] \the [src].</span>"
+				to_chat(M, "<span class='notice'>You [eatverb] \the [src].</span>")
 			else if(fullness > 500 && fullness < 600)
-				M << "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>"
+				to_chat(M, "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				M << "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>"
+				to_chat(M, "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
 				return 0
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
@@ -97,7 +97,7 @@
 									"<span class='userdanger'>[user] forces [M] to eat [src].</span>")
 
 			else
-				user << "<span class='warning'>[M] doesn't seem to have a mouth!</span>"
+				to_chat(user, "<span class='warning'>[M] doesn't seem to have a mouth!</span>")
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.
@@ -124,11 +124,11 @@
 	if(bitecount == 0)
 		return
 	else if(bitecount == 1)
-		user << "[src] was bitten by someone!"
+		to_chat(user, "[src] was bitten by someone!")
 	else if(bitecount <= 3)
-		user << "[src] was bitten [bitecount] times!"
+		to_chat(user, "[src] was bitten [bitecount] times!")
 	else
-		user << "[src] was bitten multiple times!"
+		to_chat(user, "[src] was bitten multiple times!")
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user, params)
@@ -139,13 +139,13 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(custom_food_type && ispath(custom_food_type))
 			if(S.w_class > WEIGHT_CLASS_SMALL)
-				user << "<span class='warning'>[S] is too big for [src]!</span>"
+				to_chat(user, "<span class='warning'>[S] is too big for [src]!</span>")
 				return 0
 			if(!S.customfoodfilling || istype(W, /obj/item/weapon/reagent_containers/food/snacks/customizable) || istype(W, /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom) || istype(W, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom))
-				user << "<span class='warning'>[src] can't be filled with [S]!</span>"
+				to_chat(user, "<span class='warning'>[src] can't be filled with [S]!</span>")
 				return 0
 			if(contents.len >= 20)
-				user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+				to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 				return 0
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
@@ -170,7 +170,7 @@
 					if(istype(A, B))
 						continue contents_loop
 				qdel(A)
-	feedback_add_details("food_made","[type]")
+	SSblackbox.add_details("food_made","[type]")
 
 	if(bonus_reagents && bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
@@ -190,7 +190,7 @@
 			!(locate(/obj/structure/table/optable) in src.loc) && \
 			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
 		)
-		user << "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>"
+		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>")
 		return 1
 
 	var/slices_lost = 0
@@ -215,6 +215,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
 	slice.create_reagents(slice.volume)
 	reagents.trans_to(slice,reagents_per_slice)
+	if( name != initial(name) || desc != initial(desc) )
+		slice.name = "slice of [src]"
+		slice.desc = "[desc]"
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/generate_trash(atom/location)
 	if(trash)
@@ -231,13 +234,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 	cut_overlays()
-	var/image/I = new(src.icon, "[initial(icon_state)]_filling")
+	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
-		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
+		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 	else
-		I.color = S.filling_color
+		filling.color = S.filling_color
 
-	add_overlay(I)
+	add_overlay(filling)
 
 // initialize_cooked_food() is called when microwaving the food
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency = 1)
@@ -259,7 +262,7 @@
 			initialize_cooked_food(S, M.efficiency)
 		else
 			initialize_cooked_food(S, 1)
-		feedback_add_details("food_made","[type]")
+		SSblackbox.add_details("food_made","[type]")
 	else
 		new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
 		if(M && M.dirty < 100)
@@ -334,9 +337,9 @@
 		if(!iscarbon(user))
 			return 0
 		if(contents.len >= 20)
-			user << "<span class='warning'>[src] is full.</span>"
+			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return 0
-		user << "<span class='notice'>You slip [W] inside [src].</span>"
+		to_chat(user, "<span class='notice'>You slip [W] inside [src].</span>")
 		user.transferItemToLoc(W, src)
 		add_fingerprint(user)
 		contents += W

@@ -11,6 +11,28 @@ UPDATE `[database]`.`[table]` SET `[column]` = LEAST(`[column]`, [max column siz
 To truncate a text field you would have to use SUBSTRING(), however I don't suggest you truncate any text fields.
 If you wish to instead preserve this data you will need to modify the schema and queries to accomodate.
 
+Additionally, you may encounter the error "Error Code: 1411. Incorrect string value: '[query]' for function inet_aton".
+This is due to a bug with the default sql_mode in MySQL version 5.7, wherein a value of '' cannot be passed to INET_ATON() without error, see here for reference: https://bugs.mysql.com/bug.php?id=82280
+The INET_ATON() function inteprets any abnormal data as being '', examples are:
+' 127.0.0.1' - contains a whitespace character such as space, tab or newline.
+'127.a.$,1' - contains non-numeric characters
+'300.0.0.1' - ipv4 octets must be within a range of 0 to 255
+Note that '127.0.1' and '127.0..1' are both valid data formats but will not equate to the correct ip address.
+
+If you get this error there are steps you can take to deal with the invalid data:
+To get a list of all unique fields that aren't valid ipv4 addresses, run the query:
+SELECT DISTINCT [column] FROM [table] WHERE [column] NOT REGEXP '^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+Note this will only retrieve the first 1000 results, if you want more append to the query:
+LIMIT 0, [max result]
+Now inspect your results for any data that is invalid and correct them.
+If you prefer, you can also automatically replace invalid data with 0 using a similar query:
+UPDATE [table] SET [column] = '0' WHERE [column] NOT REGEXP '^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+This will replace all invalid data, even data that could potentially be corrected.
+Finally, per the bug report, you can have MySQL ignore the errors and instead produce warnings while continuing with the query.
+To do so, run the query:
+SET @@sql_mode=''
+Do not use this method unless you are sure about it; This setting will persist until your MySQL server is restarted, potentially affecting the data integrity of this and future queries.
+
 Take note some columns have been renamed, removed or changed type. Any services relying on these columns will have to be updated per changes.
 
 ----------------------------------------------------*/
@@ -30,11 +52,11 @@ ALTER TABLE `feedback`.`ban`
 , ADD COLUMN `unbanned_ipTEMP` INT UNSIGNED NULL DEFAULT NULL AFTER `unbanned_ip`;
 SET SQL_SAFE_UPDATES = 0;
 UPDATE `feedback`.`ban`
- SET `server_ip` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`serverip`, ':', 1)), ''), INET_ATON('0.0.0.0'))
+ SET `server_ip` = INET_ATON(SUBSTRING_INDEX(IF(`serverip` = '', '0', IF(SUBSTRING_INDEX(`serverip`, ':', 1) LIKE '%_._%', `serverip`, '0')), ':', 1))
 , `server_port` = IF(`serverip` LIKE '%:_%', CAST(SUBSTRING_INDEX(`serverip`, ':', -1) AS UNSIGNED), '0')
-, `ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`ip`, ':', 1)), ''), INET_ATON('0.0.0.0'))
-, `a_ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`a_ip`, ':', 1)), ''), INET_ATON('0.0.0.0'))
-, `unbanned_ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`unbanned_ip`, ':', 1)), ''), INET_ATON('0.0.0.0'));
+, `ipTEMP` = INET_ATON(IF(`ip` LIKE '%_._%', `ip`, '0'))
+, `a_ipTEMP` = INET_ATON(IF(`a_ip` LIKE '%_._%', `a_ip`, '0'))
+, `unbanned_ipTEMP` = INET_ATON(IF(`unbanned_ip` LIKE '%_._%', `unbanned_ip`, '0'));
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `feedback`.`ban`
  DROP COLUMN `unbanned_ip`
@@ -53,9 +75,9 @@ ALTER TABLE `feedback`.`connection_log`
 , ADD COLUMN `ipTEMP` INT UNSIGNED NOT NULL AFTER `ip`;
 SET SQL_SAFE_UPDATES = 0;
 UPDATE `feedback`.`connection_log`
- SET `server_ip` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`serverip`, ':', 1)), ''), INET_ATON('0.0.0.0'))
+ SET `server_ip` = INET_ATON(SUBSTRING_INDEX(IF(`serverip` = '', '0', IF(SUBSTRING_INDEX(`serverip`, ':', 1) LIKE '%_._%', `serverip`, '0')), ':', 1))
 , `server_port` = IF(`serverip` LIKE '%:_%', CAST(SUBSTRING_INDEX(`serverip`, ':', -1) AS UNSIGNED), '0')
-, `ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`ip`, ':', 1)), ''), INET_ATON('0.0.0.0'));
+, `ipTEMP` = INET_ATON(IF(`ip` LIKE '%_._%', `ip`, '0'));
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `feedback`.`connection_log`
  DROP COLUMN `ip`
@@ -88,7 +110,7 @@ ALTER TABLE `feedback`.`death`
 , ADD COLUMN `server_ip` INT UNSIGNED NOT NULL AFTER `server`
 , ADD COLUMN `server_port` SMALLINT UNSIGNED NOT NULL AFTER `server_ip`;
 UPDATE `feedback`.`death`
- SET `server_ip` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`server`, ':', 1)), ''), INET_ATON('0.0.0.0'))
+ SET `server_ip` = INET_ATON(SUBSTRING_INDEX(IF(`server` = '', '0', IF(SUBSTRING_INDEX(`server`, ':', 1) LIKE '%_._%', `server`, '0')), ':', 1))
 , `server_port` = IF(`server` LIKE '%:_%', CAST(SUBSTRING_INDEX(`server`, ':', -1) AS UNSIGNED), '0');
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `feedback`.`death`
@@ -111,7 +133,7 @@ ALTER TABLE `feedback`.`player`
  ADD COLUMN `ipTEMP` INT UNSIGNED NOT NULL AFTER `ip`;
 SET SQL_SAFE_UPDATES = 0;
 UPDATE `feedback`.`player`
- SET `ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`ip`, ':', 1)), ''), INET_ATON('0.0.0.0'));
+ SET `ipTEMP` = INET_ATON(IF(`ip` LIKE '%_._%', `ip`, '0'));
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `feedback`.`player`
  DROP COLUMN `ip`
@@ -128,7 +150,7 @@ ALTER TABLE `feedback`.`poll_question`
 , DROP COLUMN `for_trialmin`;
 SET SQL_SAFE_UPDATES = 0;
 UPDATE `feedback`.`poll_question`
- SET `createdby_ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`createdby_ip`, ':', 1)), ''), INET_ATON('0.0.0.0'));
+ SET `createdby_ipTEMP` = INET_ATON(IF(`createdby_ip` LIKE '%_._%', `createdby_ip`, '0'));
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `feedback`.`poll_question`
  DROP COLUMN `createdby_ip`
@@ -141,7 +163,7 @@ ALTER TABLE `feedback`.`poll_textreply`
 , ADD COLUMN `ipTEMP` INT UNSIGNED NOT NULL AFTER `ip`;
 SET SQL_SAFE_UPDATES = 0;
 UPDATE `feedback`.`poll_textreply`
- SET `ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`ip`, ':', 1)), ''), INET_ATON('0.0.0.0'));
+ SET `ipTEMP` = INET_ATON(IF(`ip` LIKE '%_._%', `ip`, '0'));
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `feedback`.`poll_textreply`
  DROP COLUMN `ip`
@@ -154,7 +176,7 @@ ALTER TABLE `feedback`.`poll_vote`
 , ADD COLUMN `ipTEMP` INT UNSIGNED NOT NULL AFTER `ip`;
 SET SQL_SAFE_UPDATES = 0;
 UPDATE `feedback`.`poll_vote`
- SET `ipTEMP` = COALESCE(NULLIF(INET_ATON(SUBSTRING_INDEX(`ip`, ':', 1)), ''), INET_ATON('0.0.0.0'));
+ SET `ipTEMP` = INET_ATON(IF(`ip` LIKE '%_._%', `ip`, '0'));
 SET SQL_SAFE_UPDATES = 1;
 ALTER TABLE `feedback`.`poll_vote`
  DROP COLUMN `ip`

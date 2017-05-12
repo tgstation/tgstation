@@ -1,4 +1,4 @@
-var/obj/machinery/gateway/centerstation/the_gateway = null
+GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 /obj/machinery/gateway
 	name = "gateway"
@@ -16,8 +16,13 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/can_link = FALSE	//Is this the centerpiece?
 
 /obj/machinery/gateway/Initialize()
+	randomspawns = GLOB.awaydestinations
+	update_icon()
+	if(!istype(src, /obj/machinery/gateway/centerstation) && !istype(src, /obj/machinery/gateway/centeraway))
+		switch(dir)
+			if(SOUTH,SOUTHEAST,SOUTHWEST)
+				density = 0
 	..()
-	randomspawns = awaydestinations
 
 /obj/machinery/gateway/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -33,7 +38,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/turf/T = loc
 	var/ready = FALSE
 
-	for(var/i in alldirs)
+	for(var/i in GLOB.alldirs)
 		T = get_step(loc, i)
 		var/obj/machinery/gateway/G = locate(/obj/machinery/gateway) in T
 		if(G)
@@ -48,14 +53,6 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if((linked.len == 8) || !checkparts)
 		ready = TRUE
 	return ready
-
-/obj/machinery/gateway/Initialize()
-	..()
-	update_icon()
-	switch(dir)
-		if(SOUTH,SOUTHEAST,SOUTHWEST)
-			density = 0
-
 
 /obj/machinery/gateway/update_icon()
 	if(active)
@@ -80,12 +77,12 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 /obj/machinery/gateway/centerstation/New()
 	..()
-	if(!the_gateway)
-		the_gateway = src
+	if(!GLOB.the_gateway)
+		GLOB.the_gateway = src
 
 /obj/machinery/gateway/centerstation/Destroy()
-	if(the_gateway == src)
-		the_gateway = null
+	if(GLOB.the_gateway == src)
+		GLOB.the_gateway = null
 	return ..()
 
 //this is da important part wot makes things go
@@ -126,10 +123,10 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(!powered())
 		return
 	if(!awaygate)
-		user << "<span class='notice'>Error: No destination found.</span>"
+		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
 		return
 	if(world.time < wait)
-		user << "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>"
+		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>")
 		return
 
 	for(var/obj/machinery/gateway/G in linked)
@@ -166,10 +163,10 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
 	if(istype(W,/obj/item/device/multitool))
 		if(calibrated)
-			user << "\black The gate is already calibrated, there is no work for you to do here."
+			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
 			return
 		else
-			user << "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target."
+			to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
 			calibrated = TRUE
 			return
 
@@ -200,7 +197,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(!detect())
 		return
 	if(!stationgate)
-		user << "<span class='notice'>Error: No destination found.</span>"
+		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
 		return
 
 	for(var/obj/machinery/gateway/G in linked)
@@ -208,6 +205,12 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		G.update_icon()
 	active = 1
 	update_icon()
+
+/obj/machinery/gateway/centeraway/proc/check_exile_implant(mob/living/carbon/C)
+	for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
+		to_chat(C, "\black The station gate has detected your exile implant and is blocking your entry.")
+		return TRUE
+	return FALSE
 
 /obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
 	if(!detect())
@@ -217,10 +220,18 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(!stationgate || QDELETED(stationgate))
 		return
 	if(istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/C = AM
-		for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
-			AM << "\black The station gate has detected your exile implant and is blocking your entry."
+		if(check_exile_implant(AM))
 			return
+	else
+		for(var/mob/living/carbon/C in AM.contents)
+			if(check_exile_implant(C))
+				say("Rejecting [AM]: Exile implant detected in contained lifeform.")
+				return
+	if(AM.has_buckled_mobs())
+		for(var/mob/living/carbon/C in AM.buckled_mobs)
+			if(check_exile_implant(C))
+				say("Rejecting [AM]: Exile implant detected in close proximity lifeform.")
+				return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
 	AM.setDir(SOUTH)
 	if (ismob(AM))

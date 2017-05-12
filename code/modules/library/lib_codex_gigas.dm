@@ -1,3 +1,9 @@
+#define PRE_TITLE 1
+#define TITLE 2
+#define SYLLABLE 3
+#define MULTIPLE_SYLLABLE 4
+#define SUFFIX 5
+
 /obj/item/weapon/book/codex_gigas
 	name = "Codex Gigas"
 	icon_state ="demonomicon"
@@ -8,50 +14,95 @@
 	unique = 1
 	title = "The codex gigas"
 	var/inUse = 0
-
-
-
-
+	var/currentName = ""
+	var/currentSection = PRE_TITLE
 
 /obj/item/weapon/book/codex_gigas/attack_self(mob/user)
 	if(is_blind(user))
-		user << "<span class='warning'>As you are trying to read, you suddenly feel very stupid.</span>"
+		to_chat(user, "<span class='warning'>As you are trying to read, you suddenly feel very stupid.</span>")
 		return
-	if(ismonkey(user))
-		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
+	if(!user.is_literate())
+		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
 		return
 	if(inUse)
-		user << "<span class='notice'>Someone else is reading it.</span>"
+		to_chat(user, "<span class='notice'>Someone else is reading it.</span>")
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.check_acedia())
-			user << "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>"
+			to_chat(user, "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>")
 			return
-		inUse = 1
-		var/devilName = copytext(sanitize(input(user, "What infernal being do you wish to research?", "Codex Gigas", null)  as text),1,MAX_MESSAGE_LEN)
-		var/speed = 300
-		var/correctness = 85
-		var/willpower = 98
-		if(U.job in list("Librarian")) // the librarian is both faster, and more accurate than normal crew members at research
-			speed = 45
+	user.visible_message("[user] opens [title] and begins reading intently.")
+	ask_name(user)
+
+
+/obj/item/weapon/book/codex_gigas/proc/perform_research(mob/user, devilName)
+	if(!devilName)
+		user.visible_message("[user] closes [title] without looking anything up.")
+		return
+	inUse = TRUE
+	var/speed = 300
+	var/correctness = 85
+	if(ishuman(user))
+		var/mob/living/carbon/human/U = user
+		if(U.job in list("Curator")) // the curator is both faster, and more accurate than normal crew members at research
+			speed = 100
 			correctness = 100
-			willpower = 100
-		if(U.job in list("Captain", "Security Officer", "Head of Security", "Detective", "Warden"))
-			willpower = 99
-		if(U.job in list("Clown")) // WHO GAVE THE CLOWN A DEMONOMICON?  BAD THINGS WILL HAPPEN!
-			willpower = 25
 		correctness -= U.getBrainLoss() *0.5 //Brain damage makes researching hard.
 		speed += U.getBrainLoss() * 3
-		user.visible_message("[user] opens [title] and begins reading intently.")
-		if(do_after(U, speed, 0, U))
-			var/usedName = devilName
-			if(!prob(correctness))
-				usedName += "x"
-			var/datum/devilinfo/devil = devilInfo(usedName, 0)
-			user << browse("Information on [devilName]<br><br><br>[lawlorify[LORE][devil.ban]]<br>[lawlorify[LORE][devil.bane]]<br>[lawlorify[LORE][devil.obligation]]<br>[lawlorify[LORE][devil.banish]]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-		inUse = 0
-		sleep(10)
-		if(!prob(willpower))
-			U.influenceSin()
-		onclose(user, "book")
+	if(do_after(user, speed, 0, user))
+		var/usedName = devilName
+		if(!prob(correctness))
+			usedName += "x"
+		var/datum/antagonist/devil/devil = devilInfo(usedName)
+		display_devil(devil, user, usedName)
+	sleep(10)
+	onclose(user, "book")
+	inUse = FALSE
 
+/obj/item/weapon/book/codex_gigas/proc/display_devil(datum/antagonist/devil/devil, mob/reader, devilName)
+	reader << browse("Information on [devilName]<br><br><br>[GLOB.lawlorify[LORE][devil.ban]]<br>[GLOB.lawlorify[LORE][devil.bane]]<br>[GLOB.lawlorify[LORE][devil.obligation]]<br>[GLOB.lawlorify[LORE][devil.banish]]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+
+/obj/item/weapon/book/codex_gigas/proc/ask_name(mob/reader)
+	ui_interact(reader)
+
+/obj/item/weapon/book/codex_gigas/ui_act(action, params)
+	if(..())
+		return
+	if(!action)
+		return FALSE
+	if(action == "search")
+		SStgui.close_uis(src)
+		addtimer(CALLBACK(src, .proc/perform_research, usr, currentName), 0)
+		currentName = ""
+		currentSection = PRE_TITLE
+		return FALSE
+	else
+		currentName += action
+	var/oldSection = currentSection
+	if(GLOB.devil_pre_title.Find(action))
+		currentSection = TITLE
+	else if(GLOB.devil_title.Find(action))
+		currentSection = SYLLABLE
+	else if(GLOB.devil_syllable.Find(action))
+		if (currentSection>=SYLLABLE)
+			currentSection = MULTIPLE_SYLLABLE
+		else
+			currentSection = SYLLABLE
+	else if(GLOB.devil_suffix.Find(action))
+		currentSection = SUFFIX
+	else
+		to_chat(world, "Codex gigas failure [action]")
+	return currentSection != oldSection
+
+/obj/item/weapon/book/codex_gigas/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "codex_gigas", name, 450, 450, master_ui, state)
+		ui.open()
+
+/obj/item/weapon/book/codex_gigas/ui_data(mob/user)
+	var/list/data = list()
+	data["name"]=currentName
+	data["currentSection"]=currentSection
+	return data

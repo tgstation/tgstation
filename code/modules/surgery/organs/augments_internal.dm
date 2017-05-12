@@ -11,7 +11,7 @@
 	if(iscarbon(M))
 		src.Insert(M)
 	if(implant_overlay)
-		var/image/overlay = new /image(icon, implant_overlay)
+		var/mutable_appearance/overlay = mutable_appearance(icon, implant_overlay)
 		overlay.color = implant_color
 		add_overlay(overlay)
 	return ..()
@@ -33,7 +33,7 @@
 		return
 	var/stun_amount = 5 + (severity-1 ? 0 : 5)
 	owner.Stun(stun_amount)
-	owner << "<span class='warning'>Your body seizes up!</span>"
+	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
 	return stun_amount
 
 
@@ -56,17 +56,17 @@
 
 		var/list/L = owner.get_empty_held_indexes()
 		if(LAZYLEN(L) == owner.held_items.len)
-			owner << "<span class='notice'>You are not holding any items, your hands relax...</span>"
+			to_chat(owner, "<span class='notice'>You are not holding any items, your hands relax...</span>")
 			active = 0
 			stored_items = list()
 		else
 			for(var/obj/item/I in stored_items)
-				owner << "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>"
+				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>")
 				I.flags |= NODROP
 
 	else
 		release_items()
-		owner << "<span class='notice'>Your hands relax...</span>"
+		to_chat(owner, "<span class='notice'>Your hands relax...</span>")
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
@@ -80,7 +80,7 @@
 	for(var/obj/item/I in stored_items)
 		A = pick(oview(range))
 		I.throw_at(A, range, 2)
-		owner << "<span class='warning'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))] spasms and throws the [I.name]!</span>"
+		to_chat(owner, "<span class='warning'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))] spasms and throws the [I.name]!</span>")
 	stored_items = list()
 
 
@@ -117,6 +117,7 @@
 		return
 	crit_fail = TRUE
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
+	..()
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
@@ -136,7 +137,7 @@
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	if(prob(60/severity))
-		owner << "<span class='warning'>Your breathing tube suddenly closes!</span>"
+		to_chat(owner, "<span class='warning'>Your breathing tube suddenly closes!</span>")
 		owner.losebreath += 2
 
 
@@ -144,28 +145,18 @@
 //BOX O' IMPLANTS
 
 /obj/item/weapon/storage/box/cyber_implants
-	name = "boxed cybernetic implant"
+	name = "boxed cybernetic implants"
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
-
-/obj/item/weapon/storage/box/cyber_implants/New(loc, implant)
-	..()
-	new /obj/item/device/autoimplanter(src)
-	if(ispath(implant))
-		new implant(src)
-
-/obj/item/weapon/storage/box/cyber_implants/bundle
-	name = "boxed cybernetic implants"
 	var/list/boxed = list(
-		/obj/item/organ/eyes/robotic/xray,
-		/obj/item/organ/eyes/robotic/thermals,
-		/obj/item/organ/cyberimp/brain/anti_stun,
-		/obj/item/organ/cyberimp/chest/reviver)
+		/obj/item/device/autosurgeon/thermal_eyes,
+		/obj/item/device/autosurgeon/xray_eyes,
+		/obj/item/device/autosurgeon/anti_stun,
+		/obj/item/device/autosurgeon/reviver)
 	var/amount = 5
 
-/obj/item/weapon/storage/box/cyber_implants/bundle/New()
-	..()
+/obj/item/weapon/storage/box/cyber_implants/PopulateContents()
 	var/implant
-	while(contents.len <= amount + 1) // +1 for the autoimplanter.
+	while(contents.len <= amount)
 		implant = pick(boxed)
 		new implant(src)

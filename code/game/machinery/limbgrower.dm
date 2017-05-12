@@ -75,7 +75,7 @@
 
 /obj/machinery/limbgrower/attackby(obj/item/O, mob/user, params)
 	if (busy)
-		user << "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>"
+		to_chat(user, "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>")
 		return
 
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", O))
@@ -124,7 +124,7 @@
 				addtimer(CALLBACK(src, .proc/build_item),32*prod_coeff)
 
 	else
-		usr << "<span class=\"alert\">The limb grower is busy. Please wait for completion of previous operation.</span>"
+		to_chat(usr, "<span class=\"alert\">The limb grower is busy. Please wait for completion of previous operation.</span>")
 
 	updateUsrDialog()
 	return
@@ -238,5 +238,5 @@
 	for(var/datum/design/D in files.possible_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
 			files.AddDesign2Known(D)
-	user << "A warning flashes onto the screen, stating that safety overrides have been deactivated"
+	to_chat(user, "A warning flashes onto the screen, stating that safety overrides have been deactivated")
 	emag = TRUE

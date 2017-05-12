@@ -7,6 +7,7 @@ add: Added new things
 add: Added more things
 del: Removed old things
 tweak: tweaked a few things
+balance: rebalanced something
 fix: fixed a few things
 wip: added a few works in progress
 soundadd: added a new sound thingy
@@ -17,4 +18,4 @@ spellcheck: fixed a few typos
 experiment: added an experimental thingy
 /:cl:
 
-[]: # (Please add a short description of why you think these changes would benefit the game. If you can't justify it in words, it might not be worth adding:)
+[why]: # (Please add a short description [on the next line] of why you think these changes would benefit the game. If you can't justify it in words, it might not be worth adding:) 

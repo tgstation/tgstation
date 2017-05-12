@@ -38,7 +38,7 @@
 			return
 
 		// this must come before the screen objects only block, dunno why it wasn't before
-		if(over_object == M && (src.ClickAccessible(M, depth=STORAGE_VIEW_DEPTH) || Adjacent(M)))
+		if(over_object == M && M.CanReach(src,view_only = TRUE))
 			orient2hud(M)
 			if(M.s_active)
 				M.s_active.close(M)
@@ -268,23 +268,23 @@
 		return 0 //Means the item is already in the storage item
 	if(contents.len >= storage_slots)
 		if(!stop_messages)
-			usr << "<span class='warning'>[src] is full, make some space!</span>"
+			to_chat(usr, "<span class='warning'>[src] is full, make some space!</span>")
 		return 0 //Storage item is full
 
 	if(can_hold.len)
 		if(!is_type_in_typecache(W, can_hold))
 			if(!stop_messages)
-				usr << "<span class='warning'>[src] cannot hold [W]!</span>"
+				to_chat(usr, "<span class='warning'>[src] cannot hold [W]!</span>")
 			return 0
 
 	if(is_type_in_typecache(W, cant_hold)) //Check for specific items which this container can't hold.
 		if(!stop_messages)
-			usr << "<span class='warning'>[src] cannot hold [W]!</span>"
+			to_chat(usr, "<span class='warning'>[src] cannot hold [W]!</span>")
 		return 0
 
 	if(W.w_class > max_w_class)
 		if(!stop_messages)
-			usr << "<span class='warning'>[W] is too big for [src]!</span>"
+			to_chat(usr, "<span class='warning'>[W] is too big for [src]!</span>")
 		return 0
 
 	var/sum_w_class = W.w_class
@@ -293,17 +293,17 @@
 
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			usr << "<span class='warning'>[W] won't fit in [src], make some space!</span>"
+			to_chat(usr, "<span class='warning'>[W] won't fit in [src], make some space!</span>")
 		return 0
 
 	if(W.w_class >= w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
-				usr << "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>"
+				to_chat(usr, "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>")
 			return 0 //To prevent the stacking of same sized storage items.
 
 	if(W.flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
-		usr << "<span class='warning'>\the [W] is stuck to your hand, you can't put it in \the [src]!</span>"
+		to_chat(usr, "<span class='warning'>\the [W] is stuck to your hand, you can't put it in \the [src]!</span>")
 		return 0
 
 	return 1
@@ -341,7 +341,7 @@
 		if(!prevent_warning)
 			for(var/mob/M in viewers(usr, null))
 				if(M == usr)
-					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
+					to_chat(usr, "<span class='notice'>You put [W] [preposition]to [src].</span>")
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 				else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
@@ -405,6 +405,9 @@
 	if(iscyborg(user))
 		return	//Robots can't interact with storage items.
 
+	if(contents.len >= storage_slots) //don't use items on the backpack if they don't fit
+		return 1
+
 	if(!can_be_inserted(W, 0 , user))
 		return 0
 
@@ -456,11 +459,11 @@
 	collection_mode = (collection_mode+1)%3
 	switch (collection_mode)
 		if(2)
-			usr << "[src] now picks up all items of a single type at once."
+			to_chat(usr, "[src] now picks up all items of a single type at once.")
 		if(1)
-			usr << "[src] now picks up all items in a tile at once."
+			to_chat(usr, "[src] now picks up all items in a tile at once.")
 		if(0)
-			usr << "[src] now picks up one item at a time."
+			to_chat(usr, "[src] now picks up one item at a time.")
 
 // Empty all the contents onto the current turf
 /obj/item/weapon/storage/verb/quick_empty()
@@ -498,7 +501,7 @@
 		remove_from_storage(I, T)
 
 
-/obj/item/weapon/storage/New()
+/obj/item/weapon/storage/Initialize(mapload)
 	..()
 
 	can_hold = typecacheof(can_hold)
@@ -527,6 +530,8 @@
 	closer.layer = ABOVE_HUD_LAYER
 	closer.plane = ABOVE_HUD_PLANE
 	orient2hud()
+
+	PopulateContents()
 
 
 /obj/item/weapon/storage/Destroy()
@@ -561,3 +566,7 @@
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
 		CHECK_TICK
+
+//Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
+
+/obj/item/weapon/storage/proc/PopulateContents()

@@ -13,8 +13,6 @@
 
 	flags = CAN_BE_DIRTY
 
-	var/list/proximity_checkers
-
 	var/image/obscured	//camerachunks
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
@@ -26,8 +24,9 @@
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
 
-/turf/SDQL_update(const/var_name, new_value)
-	if(var_name == "x" || var_name == "y" || var_name == "z")
+/turf/vv_edit_var(var_name, new_value)
+	var/static/list/banned_edits = list("x", "y", "z")
+	if(var_name in banned_edits)
 		return FALSE
 	. = ..()
 
@@ -44,23 +43,43 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
+	var/area/A = loc
+	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
+		add_overlay(/obj/effect/fullbright)
+
 	if(requires_activation)
 		CalculateAdjacentTurfs()
 		SSair.add_to_active(src)
+
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity)
+		has_opaque_atom = TRUE
+	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
 /turf/Destroy(force)
+	. = QDEL_HINT_IWILLGC
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
+	if(force)
+		..()
+		//this will completely wipe turf state
+		var/turf/B = new world.turf(src)
+		for(var/A in B.contents)
+			qdel(A)
+		for(var/I in B.vars)
+			B.vars[I] = null
+		return
 	SSair.remove_from_active(src)
 	visibilityChanged()
 	initialized = FALSE
 	requires_activation = FALSE
 	..()
-	return QDEL_HINT_IWILLGC
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -110,7 +129,7 @@
 	var/list/large_dense = list()
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
-		if(border_obstacle.flags&ON_BORDER)
+		if(border_obstacle.flags & ON_BORDER)
 			if(!border_obstacle.CanPass(mover, mover.loc, 1) && (forget != border_obstacle))
 				mover.Bump(border_obstacle, 1)
 				return 0
@@ -123,17 +142,19 @@
 		return 0
 
 	//Finally, check objects/mobs to block entry that are not on the border
+	var/atom/movable/tompost_bump
+	var/top_layer = 0
 	for(var/atom/movable/obstacle in large_dense)
 		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
-			mover.Bump(obstacle, 1)
-			return 0
+			if(obstacle.layer > top_layer)
+				tompost_bump = obstacle
+				top_layer = obstacle.layer
+	if(tompost_bump)
+		mover.Bump(tompost_bump,1)
+		return 0
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/AM)
-	for(var/A in proximity_checkers)
-		var/atom/B = A
-		B.HasProximity(AM)
-
 	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
 
@@ -160,7 +181,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(O.is_frozen)
+		if(HAS_SECONDARY_FLAG(O, FROZEN))
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
@@ -191,12 +212,15 @@
 /turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE)
 	if(!path)
 		return
-	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
+	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
+	var/old_baseturf = baseturf
 	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
+
+	W.baseturf = old_baseturf
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
@@ -219,6 +243,8 @@
 			FD.CalculateAffectingAreas()
 
 	queue_smooth_neighbors(src)
+
+	HandleTurfChange(src)
 
 /turf/open/AfterChange(ignore_air)
 	..()
@@ -255,7 +281,6 @@
 		air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 
 	air.temperature /= turf_count
-	air.holder = src
 	SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
@@ -276,7 +301,7 @@
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(src_object.contents.len)
-		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
 		if(!do_after(usr,20,target=src_object))
 			return 0
 
@@ -322,8 +347,8 @@
 	return can_have_cabling() & !intact
 
 /turf/proc/visibilityChanged()
-	if(ticker)
-		cameranet.updateVisibility(src)
+	if(SSticker)
+		GLOB.cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
 
@@ -350,6 +375,15 @@
 			A.ex_act(severity, target)
 			CHECK_TICK
 
+/turf/narsie_act(force, ignore_mobs, probability = 20)
+	. = (prob(probability) || force)
+	for(var/I in src)
+		var/atom/A = I
+		if(ignore_mobs && ismob(A))
+			continue
+		if(ismob(A) || .)
+			A.narsie_act()
+
 /turf/ratvar_act(force, ignore_mobs, probability = 40)
 	. = (prob(probability) || force)
 	for(var/I in src)
@@ -373,7 +407,7 @@
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
-	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
 /turf/proc/empty(turf_type=/turf/open/space)
@@ -392,7 +426,6 @@
 
 	T0.ChangeTurf(turf_type)
 
-	T0.redraw_lighting()
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)
@@ -431,6 +464,8 @@
 			O = new()
 			O.underlays.Add(T)
 		T.ChangeTurf(type)
+		for(var/group in decals)
+			T.add_decal(decals[group],group)
 		if(underlays.len)
 			T.underlays = O.underlays
 	if(T.icon_state != icon_state)
@@ -463,3 +498,17 @@
 	LAZYINITLIST(decals)
 	cut_overlay(decals[group])
 	decals[group] = null
+
+/turf/proc/photograph(limit=20)
+	var/image/I = new()
+	I.overlays += src
+	for(var/V in contents)
+		var/atom/A = V
+		if(A.invisibility)
+			continue
+		I.overlays += A
+		if(limit)
+			limit--
+		else
+			return I
+	return I

@@ -6,7 +6,7 @@
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/mergeable_decal = 1 //when two of these are on a same tile or do we need to merge them into just one?
 
-/obj/effect/decal/cleanable/New()
+/obj/effect/decal/cleanable/Initialize(mapload)
 	if (random_icon_states && length(src.random_icon_states) > 0)
 		src.icon_state = pick(src.random_icon_states)
 	create_reagents(300)
@@ -27,12 +27,12 @@
 		if(src.reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)
-				user << "<span class='notice'>[src] isn't thick enough to scoop up!</span>"
+				to_chat(user, "<span class='notice'>[src] isn't thick enough to scoop up!</span>")
 				return
 			if(W.reagents.total_volume >= W.reagents.maximum_volume)
-				user << "<span class='notice'>[W] is full!</span>"
+				to_chat(user, "<span class='notice'>[W] is full!</span>")
 				return
-			user << "<span class='notice'>You scoop up [src] into [W]!</span>"
+			to_chat(user, "<span class='notice'>You scoop up [src] into [W]!</span>")
 			reagents.trans_to(W, reagents.total_volume)
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
@@ -45,7 +45,7 @@
 			var/added_heat = (hotness / 100)
 			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
 			src.reagents.handle_reactions()
-			user << "<span class='notice'>You heat [src] with [W]!</span>"
+			to_chat(user, "<span class='notice'>You heat [src] with [W]!</span>")
 	else
 		return ..()
 

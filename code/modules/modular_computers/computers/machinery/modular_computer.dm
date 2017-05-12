@@ -1,6 +1,3 @@
-// Global var to track modular computers
-var/list/global_modular_computers = list()
-
 // Modular Computer - device that runs various programs and operates with hardware
 // DO NOT SPAWN THIS TYPE. Use /laptop/ or /console/ instead.
 /obj/machinery/modular_computer
@@ -34,7 +31,6 @@ var/list/global_modular_computers = list()
 	..()
 	cpu = new(src)
 	cpu.physical = src
-	global_modular_computers.Add(src)
 
 /obj/machinery/modular_computer/Destroy()
 	if(cpu)
@@ -58,9 +54,9 @@ var/list/global_modular_computers = list()
 			add_overlay(screen_icon_screensaver)
 		else
 			icon_state = icon_state_unpowered
-		SetLuminosity(0)
+		set_light(0)
 	else
-		SetLuminosity(light_strength)
+		set_light(light_strength)
 		if(cpu.active_program)
 			add_overlay(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
 		else

@@ -124,7 +124,7 @@
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/M)
 	if(prob(10))
-		M << "<span class='danger'>Your insides are burning!</span>"
+		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
 	else if(prob(40))
@@ -304,6 +304,9 @@
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "piss water"
+	glass_icon_state = "beerglass"
+	glass_name = "glass of beer"
+	glass_desc = "A freezing pint of beer."
 
 /datum/reagent/toxin/beer2/on_mob_life(mob/living/M)
 	switch(current_cycle)
@@ -383,7 +386,7 @@
 	if(prob(50))
 		switch(pick(1, 2, 3, 4))
 			if(1)
-				M << "<span class='danger'>You can barely see!</span>"
+				to_chat(M, "<span class='danger'>You can barely see!</span>")
 				M.blur_eyes(3)
 			if(2)
 				M.emote("cough")
@@ -391,7 +394,7 @@
 				M.emote("sneeze")
 			if(4)
 				if(prob(75))
-					M << "You scratch at an itch."
+					to_chat(M, "You scratch at an itch.")
 					M.adjustBruteLoss(2*REM, 0)
 					. = 1
 	..()
@@ -470,7 +473,7 @@
 	if(prob(5))
 		M.losebreath += 1
 	if(prob(8))
-		M << "You feel horrendously weak!"
+		to_chat(M, "You feel horrendously weak!")
 		M.Stun(2, 0)
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
@@ -500,15 +503,15 @@
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
 	if(prob(15))
-		M << "You scratch at your head."
+		to_chat(M, "You scratch at your head.")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(15))
-		M << "You scratch at your leg."
+		to_chat(M, "You scratch at your leg.")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(15))
-		M << "You scratch at your arm."
+		to_chat(M, "You scratch at your arm.")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(3))
@@ -644,6 +647,34 @@
 /datum/reagent/toxin/coniine/on_mob_life(mob/living/M)
 	M.losebreath += 5
 	return ..()
+
+/datum/reagent/toxin/spewium
+	name = "Spewium"
+	id = "spewium"
+	description = "A powerful emetic, causes uncontrollable vomiting.  May result in vomiting organs at high doses."
+	reagent_state = LIQUID
+	color = "#2f6617" //A sickly green color
+	metabolization_rate = REAGENTS_METABOLISM
+	overdose_threshold = 29
+	toxpwr = 0
+	taste_description = "vomit"
+
+/datum/reagent/toxin/spewium/on_mob_life(mob/living/M)
+	.=..()
+	if(current_cycle >=11 && prob(min(50,current_cycle)) && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.vomit(lost_nutrition = 10, blood = prob(10), stun = prob(50), distance = rand(0,4), message = TRUE, toxic = prob(30))
+		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+			if(R != src)
+				H.reagents.remove_reagent(R.id,1)
+
+/datum/reagent/toxin/spewium/overdose_process(mob/living/M)
+	. = ..()
+	if(current_cycle >=33 && prob(15) && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.spew_organ()
+		H.vomit(lost_nutrition = 0, blood = 1, stun = 1, distance = 4)
+		to_chat(H, "<span class='userdanger'>You feel something lumpy come up as you vomit.</span>")
 
 /datum/reagent/toxin/curare
 	name = "Curare"
@@ -822,7 +853,7 @@
 	if(M.dizziness < 6)
 		M.dizziness = Clamp(M.dizziness + 3, 0, 5)
 	if(prob(20))
-		M << "You feel confused and disorientated."
+		to_chat(M, "You feel confused and disorientated.")
 	..()
 
 /datum/reagent/toxin/peaceborg/tire
@@ -838,7 +869,7 @@
 	if(M.staminaloss < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
 	if(prob(30))
-		M << "You should sit down and take a rest..."
+		to_chat(M, "You should sit down and take a rest...")
 	..()
 
 /datum/reagent/toxin/delayed

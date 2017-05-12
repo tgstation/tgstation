@@ -25,7 +25,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	idle_vision_range = 1 // Only attack when target is close
 	wander = 0
 	attacktext = "glomps"
@@ -47,7 +47,7 @@
 	if(morphed)
 		form.examine(user) // Refactor examine to return desc so it's static? Not sure if worth it
 		if(get_dist(user,src)<=3)
-			user << "<span class='warning'>It doesn't look quite right...</span>"
+			to_chat(user, "<span class='warning'>It doesn't look quite right...</span>")
 	else
 		..()
 	return
@@ -90,7 +90,7 @@
 		if(istype(A) && allowed(A))
 			assume(A)
 	else
-		src << "<span class='warning'>Your chameleon skin is still repairing itself!</span>"
+		to_chat(src, "<span class='warning'>Your chameleon skin is still repairing itself!</span>")
 		..()
 
 /mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
@@ -151,7 +151,7 @@
 	for(var/atom/movable/AM in src)
 		AM.loc = loc
 		if(prob(90))
-			step(AM, pick(alldirs))
+			step(AM, pick(GLOB.alldirs))
 
 /mob/living/simple_animal/hostile/morph/wabbajack_act(mob/living/new_mob)
 	barf_contents()
@@ -193,7 +193,7 @@
 			if(do_after(src, 20, target = I))
 				eat(I)
 			return
-	target.attack_animal(src)
+	return ..()
 
 //Spawn Event
 
@@ -216,14 +216,14 @@
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = 1
-	if(!xeno_spawn)
+	if(!GLOB.xeno_spawn)
 		return MAP_ERROR
-	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(xeno_spawn))
+	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
-	ticker.mode.traitors |= player_mind
-	S << S.playstyle_string
+	SSticker.mode.traitors |= player_mind
+	to_chat(S, S.playstyle_string)
 	S << 'sound/magic/Mutate.ogg'
 	message_admins("[key_name_admin(S)] has been made into a morph by an event.")
 	log_game("[key_name(S)] was spawned as a morph by an event.")

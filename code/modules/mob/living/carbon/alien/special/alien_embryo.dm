@@ -10,9 +10,9 @@
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
 	if(stage < 4)
-		finder << "It's small and weak, barely the size of a foetus."
+		to_chat(finder, "It's small and weak, barely the size of a foetus.")
 	else
-		finder << "It's grown quite large, and writhes slightly as you look at it."
+		to_chat(finder, "It's grown quite large, and writhes slightly as you look at it.")
 		if(prob(10))
 			AttemptGrow(0)
 
@@ -29,24 +29,24 @@
 			if(prob(2))
 				owner.emote("cough")
 			if(prob(2))
-				owner << "<span class='danger'>Your throat feels sore.</span>"
+				to_chat(owner, "<span class='danger'>Your throat feels sore.</span>")
 			if(prob(2))
-				owner << "<span class='danger'>Mucous runs down the back of your throat.</span>"
+				to_chat(owner, "<span class='danger'>Mucous runs down the back of your throat.</span>")
 		if(4)
 			if(prob(2))
 				owner.emote("sneeze")
 			if(prob(2))
 				owner.emote("cough")
 			if(prob(4))
-				owner << "<span class='danger'>Your muscles ache.</span>"
+				to_chat(owner, "<span class='danger'>Your muscles ache.</span>")
 				if(prob(20))
 					owner.take_bodypart_damage(1)
 			if(prob(4))
-				owner << "<span class='danger'>Your stomach hurts.</span>"
+				to_chat(owner, "<span class='danger'>Your stomach hurts.</span>")
 				if(prob(20))
 					owner.adjustToxLoss(1)
 		if(5)
-			owner << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
+			to_chat(owner, "<span class='danger'>You feel something tearing its way out of your stomach...</span>")
 			owner.adjustToxLoss(10)
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
@@ -69,7 +69,7 @@
 
 	bursting = TRUE
 
-	var/list/candidates = pollCandidates("Do you want to play as an alien larva that will burst out of [owner]?", ROLE_ALIEN, null, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
+	var/list/candidates = pollGhostCandidates("Do you want to play as an alien larva that will burst out of [owner]?", ROLE_ALIEN, null, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
 
 	if(QDELETED(src) || QDELETED(owner))
 		return
@@ -81,7 +81,7 @@
 
 	var/mob/dead/observer/ghost = pick(candidates)
 
-	var/overlay = image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
+	var/mutable_appearance/overlay = mutable_appearance('icons/mob/alien.dmi', "burst_lie")
 	owner.add_overlay(overlay)
 
 	var/atom/xeno_loc = get_turf(owner)
@@ -117,7 +117,7 @@ Proc: AddInfectionImages(C)
 Des: Adds the infection image to all aliens for this embryo
 ----------------------------------------*/
 /obj/item/organ/body_egg/alien_embryo/AddInfectionImages()
-	for(var/mob/living/carbon/alien/alien in player_list)
+	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		if(alien.client)
 			var/I = image('icons/mob/alien.dmi', loc = owner, icon_state = "infected[stage]")
 			alien.client.images += I
@@ -127,7 +127,7 @@ Proc: RemoveInfectionImage(C)
 Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
 /obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
-	for(var/mob/living/carbon/alien/alien in player_list)
+	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		if(alien.client)
 			for(var/image/I in alien.client.images)
 				if(dd_hasprefix_case(I.icon_state, "infected") && I.loc == owner)

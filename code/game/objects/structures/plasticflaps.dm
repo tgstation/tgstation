@@ -13,9 +13,9 @@
 	. = ..()
 	switch(state)
 		if(PLASTIC_FLAPS_NORMAL)
-			user << "<span class='notice'>[src] are <b>screwed</b> to the floor.</span>"
+			to_chat(user, "<span class='notice'>[src] are <b>screwed</b> to the floor.</span>")
 		if(PLASTIC_FLAPS_DETACHED)
-			user << "<span class='notice'>[src] are no longer <i>screwed</i> to the floor, and the flaps can be <b>cut</b> apart.</span>"
+			to_chat(user, "<span class='notice'>[src] are no longer <i>screwed</i> to the floor, and the flaps can be <b>cut</b> apart.</span>")
 
 /obj/structure/plasticflaps/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -28,7 +28,7 @@
 					return
 				state = PLASTIC_FLAPS_DETACHED
 				anchored = FALSE
-				user << "<span class='notice'>You unscrew [src] from the floor.</span>"
+				to_chat(user, "<span class='notice'>You unscrew [src] from the floor.</span>")
 		else if(state == PLASTIC_FLAPS_DETACHED)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
@@ -37,7 +37,7 @@
 					return
 				state = PLASTIC_FLAPS_NORMAL
 				anchored = TRUE
-				user << "<span class='notice'>You screw [src] from the floor.</span>"
+				to_chat(user, "<span class='notice'>You screw [src] from the floor.</span>")
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(state == PLASTIC_FLAPS_DETACHED)
 			playsound(src.loc, W.usesound, 100, 1)
@@ -45,7 +45,7 @@
 			if(do_after(user, 50*W.toolspeed, target = src))
 				if(state != PLASTIC_FLAPS_DETACHED)
 					return
-				user << "<span class='notice'>You cut apart [src].</span>"
+				to_chat(user, "<span class='notice'>You cut apart [src].</span>")
 				var/obj/item/stack/sheet/plastic/five/P = new(loc)
 				P.add_fingerprint(user)
 				qdel(src)

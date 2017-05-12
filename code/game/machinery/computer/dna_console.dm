@@ -38,6 +38,8 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
@@ -45,7 +47,7 @@
 				return
 			I.loc = src
 			src.diskette = I
-			user << "<span class='notice'>You insert [I].</span>"
+			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			src.updateUsrDialog()
 			return
 	else
@@ -399,12 +401,12 @@
 							if(buffer_slot["SE"])
 								I = new /obj/item/weapon/dnainjector/timed(loc)
 								var/powers = 0
-								for(var/datum/mutation/human/HM in good_mutations + bad_mutations + not_good_mutations)
+								for(var/datum/mutation/human/HM in GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations)
 									if(HM.check_block_string(buffer_slot["SE"]))
 										I.add_mutations.Add(HM)
-										if(HM in good_mutations)
+										if(HM in GLOB.good_mutations)
 											powers += 1
-										if(HM in bad_mutations + not_good_mutations)
+										if(HM in GLOB.bad_mutations + GLOB.not_good_mutations)
 											powers -= 1 //To prevent just unlocking everything to get all powers to a syringe for max tech
 									else
 										I.remove_mutations.Add(HM)
@@ -572,7 +574,7 @@
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
-	connected.occupant << "<span class='notice'>[src] activates!</span>"
+	to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
 	if(delayed_action)
 		apply_buffer(delayed_action["action"],delayed_action["buffer"])
 		delayed_action = null //or make it stick + reset button ?

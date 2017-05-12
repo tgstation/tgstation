@@ -145,6 +145,9 @@ CREATE TABLE `death` (
   `brainloss` smallint(5) unsigned NOT NULL,
   `fireloss` smallint(5) unsigned NOT NULL,
   `oxyloss` smallint(5) unsigned NOT NULL,
+  `toxloss` smallint(5) unsigned NOT NULL,
+  `cloneloss` smallint(5) unsigned NOT NULL,
+  `staminaloss` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -195,6 +198,8 @@ CREATE TABLE `legacy_population` (
   `playercount` int(11) DEFAULT NULL,
   `admincount` int(11) DEFAULT NULL,
   `time` datetime NOT NULL,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -256,15 +261,14 @@ DROP TABLE IF EXISTS `player`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `player` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `firstseen` datetime NOT NULL,
   `lastseen` datetime NOT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ckey` (`ckey`),
+  `accountjoindate` DATE DEFAULT NULL,
+  PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

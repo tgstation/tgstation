@@ -1,11 +1,5 @@
 
 
-var/const/TOUCH = 1 //splashing
-var/const/INGEST = 2 //ingestion
-var/const/VAPOR = 3 //foam, spray, blob attack
-var/const/PATCH = 4 //patches
-var/const/INJECT = 5 //injection
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagents
@@ -26,21 +20,21 @@ var/const/INJECT = 5 //injection
 		START_PROCESSING(SSobj, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
-	if(!chemical_reagents_list)
+	if(!GLOB.chemical_reagents_list)
 		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 		var/paths = subtypesof(/datum/reagent)
-		chemical_reagents_list = list()
+		GLOB.chemical_reagents_list = list()
 		for(var/path in paths)
 			var/datum/reagent/D = new path()
-			chemical_reagents_list[D.id] = D
-	if(!chemical_reactions_list)
+			GLOB.chemical_reagents_list[D.id] = D
+	if(!GLOB.chemical_reactions_list)
 		//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 		// It is filtered into multiple lists within a list.
 		// For example:
 		// chemical_reaction_list["plasma"] is a list of all reactions relating to plasma
 
 		var/paths = subtypesof(/datum/chemical_reaction)
-		chemical_reactions_list = list()
+		GLOB.chemical_reactions_list = list()
 
 		for(var/path in paths)
 
@@ -53,9 +47,9 @@ var/const/INJECT = 5 //injection
 
 			// Create filters based on each reagent id in the required reagents list
 			for(var/id in reaction_ids)
-				if(!chemical_reactions_list[id])
-					chemical_reactions_list[id] = list()
-				chemical_reactions_list[id] += D
+				if(!GLOB.chemical_reactions_list[id])
+					GLOB.chemical_reactions_list[id] = list()
+				GLOB.chemical_reactions_list[id] += D
 				break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
 /datum/reagents/Destroy()
@@ -131,6 +125,18 @@ var/const/INJECT = 5 //injection
 			id = R.id
 
 	return id
+
+/datum/reagents/proc/get_master_reagent()
+	var/list/cached_reagents = reagent_list
+	var/datum/reagent/master
+	var/max_volume = 0
+	for(var/reagent in cached_reagents)
+		var/datum/reagent/R = reagent
+		if(R.volume > max_volume)
+			max_volume = R.volume
+			master = R
+
+	return master
 
 /datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	var/list/cached_reagents = reagent_list
@@ -232,7 +238,7 @@ var/const/INJECT = 5 //injection
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(!R.holder)
+		if(QDELETED(R.holder))
 			continue
 		if(!C)
 			C = R.holder.my_atom
@@ -273,7 +279,7 @@ var/const/INJECT = 5 //injection
 						if(30 to 40)
 							need_mob_update += R.addiction_act_stage4(C)
 						if(40 to INFINITY)
-							C << "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>"
+							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
 							cached_addictions.Remove(R)
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
@@ -318,7 +324,7 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/proc/handle_reactions()
 	var/list/cached_reagents = reagent_list
-	var/list/cached_reactions = chemical_reactions_list
+	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
 	if(flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
@@ -390,7 +396,7 @@ var/const/INJECT = 5 //injection
 						remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
 
 					for(var/P in C.results)
-						feedback_add_details("chemical_reaction", "[P]|[cached_results[P]*multiplier]")
+						SSblackbox.add_details("chemical_reaction", "[P]|[cached_results[P]*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
 						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
@@ -400,14 +406,14 @@ var/const/INJECT = 5 //injection
 							if(C.mix_sound)
 								playsound(get_turf(cached_my_atom), C.mix_sound, 80, 1)
 							for(var/mob/M in seen)
-								M << "<span class='notice'>\icon[my_atom] [C.mix_message]</span>"
+								to_chat(M, "<span class='notice'>\icon[my_atom] [C.mix_message]</span>")
 
 						if(istype(cached_my_atom, /obj/item/slime_extract))
 							var/obj/item/slime_extract/ME2 = my_atom
 							ME2.Uses--
 							if(ME2.Uses <= 0) // give the notification that the slime core is dead
 								for(var/mob/M in seen)
-									M << "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>"
+									to_chat(M, "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>")
 									ME2.name = "used slime extract"
 									ME2.desc = "This extract has been used up."
 
@@ -513,6 +519,11 @@ var/const/INJECT = 5 //injection
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
 
+/datum/reagents/proc/holder_full()
+	if(total_volume >= maximum_volume)
+		return TRUE
+	return FALSE
+
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)
 		return FALSE
@@ -538,7 +549,7 @@ var/const/INJECT = 5 //injection
 				handle_reactions()
 			return TRUE
 
-	var/datum/reagent/D = chemical_reagents_list[reagent]
+	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
 	if(D)
 
 		var/datum/reagent/R = new D.type(data)
@@ -657,7 +668,7 @@ var/const/INJECT = 5 //injection
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
-			//world << "proffering a data-carrying reagent ([reagent_id])"
+			//to_chat(world, "proffering a data-carrying reagent ([reagent_id])")
 			return R.data
 
 /datum/reagents/proc/set_data(reagent_id, new_data)
@@ -665,7 +676,7 @@ var/const/INJECT = 5 //injection
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
-			//world << "reagent data set ([reagent_id])"
+			//to_chat(world, "reagent data set ([reagent_id])")
 			R.data = new_data
 
 /datum/reagents/proc/copy_data(datum/reagent/current_reagent)

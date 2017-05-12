@@ -15,7 +15,7 @@
 	var/obj/item/weapon/pen/bin_pen
 
 /obj/item/weapon/paper_bin/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 	var/obj/item/weapon/pen/P = locate(/obj/item/weapon/pen) in src.loc
@@ -24,7 +24,7 @@
 		bin_pen = P
 		update_icon()
 		var/static/warned = FALSE
-		if(!warned)
+		if(P.type == /obj/item/weapon/pen && !warned)
 			warning("one or more paperbins ate a pen duing initialize()")
 			warned = TRUE
 
@@ -73,7 +73,7 @@
 		var/obj/item/weapon/pen/P = bin_pen
 		P.loc = user.loc
 		user.put_in_hands(P)
-		user << "<span class='notice'>You take [P] out of \the [src].</span>"
+		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 		bin_pen = null
 		update_icon()
 	else if(total_paper >= 1)
@@ -86,7 +86,7 @@
 			papers.Remove(P)
 		else
 			P = new papertype(src)
-			if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
+			if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 				if(prob(30))
 					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 					P.rigged = 1
@@ -94,9 +94,9 @@
 
 		P.loc = user.loc
 		user.put_in_hands(P)
-		user << "<span class='notice'>You take [P] out of \the [src].</span>"
+		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 	else
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 	add_fingerprint(user)
 
@@ -106,7 +106,7 @@
 		var/obj/item/weapon/paper/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
-		user << "<span class='notice'>You put [P] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		papers.Add(P)
 		total_paper++
 		update_icon()
@@ -114,7 +114,7 @@
 		var/obj/item/weapon/pen/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
-		user << "<span class='notice'>You put [P] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		bin_pen = P
 		update_icon()
 	else
@@ -123,9 +123,9 @@
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()
 	if(total_paper)
-		user << "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+"."
+		to_chat(user, "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+".")
 	else
-		user << "It doesn't contain anything."
+		to_chat(user, "It doesn't contain anything.")
 
 
 /obj/item/weapon/paper_bin/update_icon()
@@ -135,7 +135,7 @@
 		icon_state = "[initial(icon_state)]"
 	cut_overlays()
 	if(bin_pen)
-		add_overlay(image(icon=bin_pen.icon,icon_state=bin_pen.icon_state))
+		add_overlay(mutable_appearance(bin_pen.icon, bin_pen.icon_state))
 
 /obj/item/weapon/paper_bin/construction
 	name = "construction paper bin"

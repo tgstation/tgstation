@@ -24,7 +24,8 @@
 							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(prob(damage))
 			for(var/mob/living/N in buckled_mobs)
@@ -44,7 +45,6 @@
 				adjustCloneLoss(damage)
 			if(STAMINA)
 				adjustStaminaLoss(damage)
-		updatehealth()
 
 /mob/living/silicon/attack_paw(mob/living/user)
 	return attack_hand(user)
@@ -90,8 +90,8 @@
 			src.take_bodypart_damage(20)
 		if(2)
 			src.take_bodypart_damage(10)
-	src << "<span class='userdanger'>*BZZZT*</span>"
-	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
+	to_chat(src, "<span class='userdanger'>*BZZZT*</span>")
+	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
 	for(var/mob/living/M in buckled_mobs)
 		if(prob(severity*50))
 			unbuckle_mob(M)

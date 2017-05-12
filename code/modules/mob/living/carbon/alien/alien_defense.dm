@@ -15,7 +15,7 @@ In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	switch(M.a_intent)
@@ -41,7 +41,7 @@ In all, this is a lot like the monkey code. /N
 				add_logs(M, src, "attacked")
 				updatehealth()
 			else
-				M << "<span class='warning'>[name] is too injured for that.</span>"
+				to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
 
 
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)
@@ -74,7 +74,8 @@ In all, this is a lot like the monkey code. /N
 
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		switch(M.melee_damage_type)
 			if(BRUTE)
@@ -89,7 +90,6 @@ In all, this is a lot like the monkey code. /N
 				adjustCloneLoss(damage)
 			if(STAMINA)
 				adjustStaminaLoss(damage)
-		updatehealth()
 
 /mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack

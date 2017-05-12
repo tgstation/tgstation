@@ -18,19 +18,16 @@
 
 /obj/item/weapon/gun/energy/pulse/prize/New()
 	. = ..()
-	poi_list |= src
-	var/msg = "A pulse rifle prize has been created at ([x],[y],[z] - (\
-	<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>\
-	JMP</a>)"
+	GLOB.poi_list |= src
+	var/msg = "A pulse rifle prize has been created at [ADMIN_COORDJMP(src)]"
 
 	message_admins(msg)
 	log_game(msg)
 
-	notify_ghosts("Someone won a pulse rifle as a prize!", source = src,
-		action = NOTIFY_ORBIT)
+	notify_ghosts("Someone won a pulse rifle as a prize!", source = src, action = NOTIFY_ORBIT)
 
 /obj/item/weapon/gun/energy/pulse/prize/Destroy()
-	poi_list -= src
+	GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/weapon/gun/energy/pulse/loyalpin
@@ -71,7 +68,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
 /obj/item/weapon/gun/energy/pulse/destroyer/attack_self(mob/living/user)
-	user << "<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>"
+	to_chat(user, "<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>")
 
 /obj/item/weapon/gun/energy/pulse/pistol/m1911
 	name = "\improper M1911-P"

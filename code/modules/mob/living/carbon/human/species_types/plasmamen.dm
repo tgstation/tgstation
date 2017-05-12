@@ -1,5 +1,3 @@
-var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
-
 /datum/species/plasmaman
 	name = "Plasmaman"
 	id = "plasmaman"
@@ -8,6 +6,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(NOBLOOD,RESISTCOLD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
 	mutantlungs = /obj/item/organ/lungs/plasmaman
+	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
 	burnmod = 1.5
@@ -52,7 +51,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	return 0
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
-	if(rank in security_positions)
+	if(rank in GLOB.security_positions)
 		return 0
 	if(rank == "Clown" || rank == "Mime")//No funny bussiness
 		return 0
