@@ -7,6 +7,8 @@
 
 	if(isnull(flame_range))
 		flame_range = light_impact_range
+	if(isnull(flash_range))
+		flash_range = devastation_range
 
 	// Archive the uncapped explosion for the doppler array
 	var/orig_dev_range = devastation_range
