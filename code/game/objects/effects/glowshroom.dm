@@ -61,7 +61,7 @@
 	max_integrity = myseed.endurance
 	if(myseed.get_gene(/datum/plant_gene/trait/glow))
 		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+		set_light(G.glow_range(myseed), G.glow_power(myseed))
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)
