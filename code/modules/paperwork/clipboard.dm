@@ -12,10 +12,14 @@
 	slot_flags = SLOT_BELT
 	resistance_flags = FLAMMABLE
 
-/obj/item/weapon/clipboard/New()
+/obj/item/weapon/clipboard/Initialize()
 	update_icon()
-	..()
+	. = ..()
 
+/obj/item/weapon/clipboard/Destroy()
+	QDEL_NULL(haspen)
+	QDEL_NULL(toppaper)	//let movable/Destroy handle the rest
+	return ..()
 
 /obj/item/weapon/clipboard/update_icon()
 	cut_overlays()
