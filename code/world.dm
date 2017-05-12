@@ -55,6 +55,9 @@
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
 
+	if(GLOB.round_id)
+		log_game("Round ID: [GLOB.round_id]")
+
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
