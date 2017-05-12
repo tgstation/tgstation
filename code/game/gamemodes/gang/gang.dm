@@ -204,7 +204,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 	if(!removed)
 		return 0
-	
+
 	gangster_mind.special_role = null
 	gangster_mind.gang_datum = null
 
@@ -251,18 +251,17 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 /datum/game_mode/proc/shuttle_check()
 	if(forced_shuttle)
 		return
-	var/normies = 0 
+	var/normies = 0
 	var/list/all_gangsters = get_all_gangsters()
 	for(var/mob/living/L in GLOB.player_list)
-   		if(L.stat != DEAD && !(L.mind in all_gangsters))
+		if(L.stat != DEAD && !(L.mind in all_gangsters))
 			normies++
 	if(normies < (GLOB.joined_player_list*0.35))
 		priority_announce("Catastrophic casualties detected: Critical shuttle protocols activated - jamming recall signals across all frequencies.")
 		forced_shuttle = TRUE
 		if(SSshuttle.emergency.timeLeft(1) < (SSshuttle.emergencyCallTime * 0.4))
 			SSshuttle.emergency.request(null, set_coefficient = 0.4)
-		
-		
+
 /proc/determine_domination_time(var/datum/gang/G)
 	return max(180,900 - (round((G.territory.len/start_state.num_territories)*100, 1) * 12))
 
@@ -321,7 +320,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(world.time > next_point_time)
 		next_point_time = world.time + next_point_interval
 		SSticker.mode.shuttle_check()
-	
+
 
 	if(winners.len)
 		if(winners.len > 1) //Edge Case: If more than one dominator complete at the same time
