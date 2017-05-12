@@ -28,7 +28,7 @@
 	return round(amount)
 
 /datum/export/material/get_cost(obj/O)
-	var/amount = get_amount(O, contr, emag)/MINERAL_MATERIAL_AMOUNT
+	var/amount = get_amount(O)/MINERAL_MATERIAL_AMOUNT
 	if(kelasticity!=0)
 		return round((cost/kelasticity) * (1 - GLOB.E**(-1 * kelasticity * amount)))	//anti-derivative of the marginal cost function
 	else
