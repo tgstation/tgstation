@@ -843,6 +843,7 @@
 #include "code\game\objects\items\weapons\storage\book.dm"
 #include "code\game\objects\items\weapons\storage\boxes.dm"
 #include "code\game\objects\items\weapons\storage\briefcase.dm"
+#include "code\game\objects\items\weapons\storage\dakis.dm"
 #include "code\game\objects\items\weapons\storage\fancy.dm"
 #include "code\game\objects\items\weapons\storage\firstaid.dm"
 #include "code\game\objects\items\weapons\storage\internal.dm"
