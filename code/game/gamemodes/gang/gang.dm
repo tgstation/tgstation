@@ -36,18 +36,32 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	<span class='notice'>Crew</span>: Prevent the gangs from expanding and initiating takeover."
 
 	var/area/ai_monitored/security/armory/target_armory
+	var/turf/target_armory
+	var/turf/target_equipment
 
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
+	//for blowing up the armory
 	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
 		if(A.z == ZLEVEL_STATION)
-			target_armory = A
-			break
-	if(!target_armory)
-		message_admins("No armory detected, unable to start gang!")
+			target_armory = pick(get_area_turfs(A))
+			if(target_armory)
+				break
+	
+	//also need to find 1 sec closet to hit the equipment room
+	for(var/area/security/main/A in GLOB.sortedAreas)
+		if(A.z == ZLEVEL_STATION)
+			var/obj/structure/closet/secure/secure_closet/security/C = locate() in A
+			if(C)
+				target_equipment = get_turf(C)
+				break
+
+	if(!target_armory || !target_equipment)
+		message_admins("No armory/equipment room detected, unable to start gang!")
 		return FALSE
+	
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -97,7 +111,8 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 
 	sleep(100)
 
-	explosion(pick(get_area_turfs(target_armory)), 7, 14, 28, 30, TRUE, TRUE)
+	explosion(target_armory, 7, 14, 28, 30, TRUE, TRUE)
+	explosion(target_equipment, 7, 14, 28, 30, TRUE, TRUE)
 
 	sleep(1200)
 
@@ -108,7 +123,16 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 			bosses += boss_mind
 	for(var/I in bosses)
 		var/datum/mind/boss_mind = I
-		to_chat(boss_mind.current, "<span class='danger'>You've decided to take charge of the situation and form a gang. X and Y are your ganghead rivals. [syndicate_name()] has offered an uplink to help you take over, it will be delivered in five minutes.</span>")
+		var/list/other_bosses = bosses.Copy() - boss_mind
+		var/msg = "<span class='danger'>You've decided to take charge of the situation and form a gang."
+		for(var/J in 1 to other_bosses.len)
+			var/datum/mind/other_mind = other_bosses[J]
+			if(J == other_bosses.len)
+				msg += " and"
+			msg += " J"
+			if(J != other_bosses.len)
+				msg += ","
+		to_chat(boss_mind.current, "[msg] are your ganghead rivals. [syndicate_name()] has offered an uplink to help you take over, it will be delivered in five minutes.</span>")
 	
 	sleep(3000)
 
