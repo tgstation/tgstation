@@ -241,7 +241,7 @@
 		return 1
 
 /mob/living/proc/InCritical()
-	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
+	return (health < 0 && health > -100 && stat == UNCONSCIOUS)
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage

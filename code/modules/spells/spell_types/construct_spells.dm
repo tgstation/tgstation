@@ -118,7 +118,7 @@
 	desc = "This spell allows you to pass through walls"
 
 	school = "transmutation"
-	charge_max = 200
+	charge_max = 250
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"

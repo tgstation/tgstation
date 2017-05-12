@@ -26,6 +26,11 @@
 		return
 	..()
 
+/obj/item/weapon/melee/cultblade/ghost
+	name = "eldritch sword"
+	force = 20
+	flags = NODROP|DROPDEL
+
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!iscultist(user))
@@ -100,11 +105,17 @@
 	icon_state = "cult_hoodalt"
 	item_state = "cult_hoodalt"
 
+/obj/item/clothing/head/culthood/alt/ghost
+	flags = NODROP|DROPDEL
+
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
 	desc = "An armored set of robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
+
+/obj/item/clothing/suit/cultrobes/alt/ghost
+	flags = NODROP|DROPDEL
 
 
 /obj/item/clothing/head/magus
