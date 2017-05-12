@@ -9,7 +9,6 @@ SUBSYSTEM_DEF(persistence)
 
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
-	var/savefile/chisel_messages_sav
 
 	var/savefile/trophy_sav
 	var/list/saved_trophies = list()
@@ -75,7 +74,7 @@ SUBSYSTEM_DEF(persistence)
 		break //Who's been duping the bird?!
 
 /datum/controller/subsystem/persistence/proc/LoadChiselMessages()
-	chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
+	var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
 	var/saved_json
 	chisel_messages_sav[SSmapping.config.map_name] >> saved_json
 
@@ -104,10 +103,8 @@ SUBSYSTEM_DEF(persistence)
 
 		var/obj/structure/chisel_message/M = new(T)
 
-		M.unpack(item)
-		if(!M.loc)
-			M.persists = FALSE
-			qdel(M)
+		if(!QDELETED(M))
+			M.unpack(item)
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
 	trophy_sav = new /savefile("data/npc_saves/TrophyItems.sav")
@@ -175,6 +172,11 @@ SUBSYSTEM_DEF(persistence)
 	secret_satchels[SSmapping.config.map_name] << old_secret_satchels
 
 /datum/controller/subsystem/persistence/proc/CollectChiselMessages()
+	var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
+
+	// For debugging purposes.
+	chisel_messages_sav.ExportText("/", "data/npc_saves/ChiselMessages.txt")
+
 	for(var/obj/structure/chisel_message/M in chisel_messages)
 		saved_messages += list(M.pack())
 
