@@ -194,5 +194,5 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(user, "<span class='notice'>[src] will now heal.</span>")
 	return
 
-/obj/item/bible/syndicate/add_blood(list/blood_dna)
+/obj/item/storage/book/bible/syndicate/add_blood(list/blood_dna)
 	return 0
