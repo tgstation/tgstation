@@ -3,7 +3,7 @@
 //////////////////////////////////
 
 /obj/item/weapon/storage/daki
-	name = "dakimakura"
+	name = "dakimakura" 
 	var/custom_name = null
 	desc = "A large pillow depicting a girl in a compromising position. Featuring as many dimensions as you."
 	icon = 'icons/obj/daki.dmi'
@@ -15,48 +15,23 @@
 	max_combined_w_class = 21
 	var/spam_flag = 0
 	var/cooldowntime = 20
+	var/static/list/dakimakura_options = list("Callie","Casca","Chaika","Elisabeth","Foxy Grandpa","Haruko","Holo","Ian","Jolyne","Kurisu","Marie","Mugi","Nar'Sie","Patchouli","Plutia","Rei","Reisen","Naga","Squid","Squigly","Tomoko","Toriel","Umaru","Yaranaika","Yoko") //Kurisu is the ideal girl." - Me, Logos.
 
 /obj/item/weapon/storage/daki/attack_self(mob/living/user)
 	var/body_choice
 	if(icon_state == "daki_base")
-		body_choice = input("Pick a body.") in list(
-		"Callie",
-		"Casca",
-		"Chaika",
-		"Elisabeth",
-		"Foxy Grandpa",
-		"Haruko",
-		"Holo",
-		"Ian",
-		"Jolyne",
-		"Kurisu", //Kurisu is the ideal girl." - Me, Logos.
-		"Marie",
-		"Mugi",
-		"Nar'Sie",
-		"Patchouli",
-		"Plutia",
-		"Rei",
-		"Reisen",
-		"Naga",
-		"Squid",
-		"Squigly",
-		"Tomoko",
-		"Toriel",
-		"Umaru",
-		"Yaranaika",
-		"Yoko")
-
+		body_choice = input("Pick a body.") in dakimakura_options
 		icon_state = "daki_[body_choice]"
 		custom_name = stripped_input(user, "What's her name?")
 		if(length(custom_name) > MAX_NAME_LEN)
 			user << "<span class='danger'>Name is too long!</span>"
 			return FALSE
 		if(custom_name)
-			name = custom_name + " " + name
+			name = custom_name
 			desc = "A large pillow depicting [custom_name] in a compromising position. Featuring as many dimensions as you."
 	else
 		if(!spam_flag)
-			spam_flag = 1
+			spam_flag = 0
 			if(user.a_intent == "help")
 				user.visible_message("<span class='notice'>[user] hugs the [name].</span>")
 				playsound(src.loc, "rustle", 50, 1, -5)
@@ -70,6 +45,6 @@
 				user.visible_message("<span class='danger'>[user] punches the [name]!</span>")
 				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			spawn(cooldowntime)
-				spam_flag = 0
+				spam_flag = 1
 
 ////////////////////////////
