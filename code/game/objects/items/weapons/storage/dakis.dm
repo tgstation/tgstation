@@ -27,7 +27,6 @@
 		"Foxy Grandpa",
 		"Haruko",
 		"Holo",
-		"Hotwheels",
 		"Ian",
 		"Jolyne",
 		"Kurisu", //Kurisu is the ideal girl." - Me, Logos.
