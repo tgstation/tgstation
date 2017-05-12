@@ -101,19 +101,24 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 
 	sleep(1200)
 
+	var/list/bosses = list()
+
 	for(var/datum/gang/G in gangs)
-		for(var/datum/mind/boss_mind in G.bosses)
-			to_chat(boss_mind.current, "<span class='danger'>You've decided to take charge of the situation and form a gang. X and Y are your ganghead friends [syndicate company] has offered an uplink to help you take over, it will be delivered in five minutes.</span>")
+		for(var/boss_mind in G.bosses)
+			bosses += boss_mind
+	for(var/I in bosses)
+		var/datum/mind/boss_mind = I
+		to_chat(boss_mind.current, "<span class='danger'>You've decided to take charge of the situation and form a gang. X and Y are your ganghead rivals. [syndicate_name()] has offered an uplink to help you take over, it will be delivered in five minutes.</span>")
 	
 	sleep(3000)
 
-	for(var/datum/gang/G in gangs)
-		for(var/datum/mind/boss_mind in G.bosses)
-			G.add_gang_hud(boss_mind)
-			forge_gang_objectives(boss_mind)
-			greet_gang(boss_mind)
-			equip_gang(boss_mind.current,G)
-			modePlayer += boss_mind
+	for(var/I in bosses)
+		var/datum/mind/boss_mind = I
+		G.add_gang_hud(boss_mind)
+		forge_gang_objectives(boss_mind)
+		greet_gang(boss_mind)
+		equip_gang(boss_mind.current,G)
+		modePlayer += boss_mind
 
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
