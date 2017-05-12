@@ -1,5 +1,5 @@
 #define DOM_BLOCKED_SPAM_CAP 6
-#define DOM_REQUIRED_TURFS 25
+#define DOM_REQUIRED_TURFS 30
 
 /obj/machinery/dominator
 	name = "dominator"
@@ -22,7 +22,7 @@
 
 /proc/dominator_excessive_walls(atom/A)
 	var/open = 0
-	for(var/turf/T in circleviewturfs(A, 3))
+	for(var/turf/T in view(3, A))
 		if(!isclosedturf(T))
 			open++
 	if(open < DOM_REQUIRED_TURFS)
