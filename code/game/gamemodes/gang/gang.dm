@@ -94,6 +94,7 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 		return 0
 
 	//turn off sec and captain
+	SSjob.DisableJob(/datum/job/captain)
 	SSjob.DisableJob(/datum/job/hos)
 	SSjob.DisableJob(/datum/job/warden)
 	SSjob.DisableJob(/datum/job/detective)

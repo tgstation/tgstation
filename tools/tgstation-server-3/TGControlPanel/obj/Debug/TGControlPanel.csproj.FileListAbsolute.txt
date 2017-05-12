@@ -1,0 +1,10 @@
+D:\tgstation\tools\tgstation-server-3\TGControlPanel\bin\Debug\TGControlPanel.exe.config
+D:\tgstation\tools\tgstation-server-3\TGControlPanel\bin\Debug\TGControlPanel.exe
+D:\tgstation\tools\tgstation-server-3\TGControlPanel\bin\Debug\TGControlPanel.pdb
+D:\tgstation\tools\tgstation-server-3\TGControlPanel\bin\Debug\TGServiceInterface.dll
+D:\tgstation\tools\tgstation-server-3\TGControlPanel\bin\Debug\TGServiceInterface.pdb
+D:\tgstation\tools\tgstation-server-3\TGControlPanel\obj\Debug\TGControlPanel.csprojResolveAssemblyReference.cache
+D:\tgstation\tools\tgstation-server-3\TGControlPanel\obj\Debug\TGControlPanel.Main.resources
+D:\tgstation\tools\tgstation-server-3\TGControlPanel\obj\Debug\TGControlPanel.csproj.GenerateResource.Cache
+D:\tgstation\tools\tgstation-server-3\TGControlPanel\obj\Debug\TGControlPanel.exe
+D:\tgstation\tools\tgstation-server-3\TGControlPanel\obj\Debug\TGControlPanel.pdb
