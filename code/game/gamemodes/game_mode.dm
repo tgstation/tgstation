@@ -44,6 +44,8 @@
 
 	var/list/datum/station_goal/station_goals = list()
 
+	var/force_report = FALSE //forces an intercept regardless of config
+
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
@@ -77,7 +79,7 @@
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
 	if(!report)
-		report = config.intercept
+		report = config.intercept || force_report
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
 	SSblackbox.set_details("round_start","[time2text(world.realtime)]")

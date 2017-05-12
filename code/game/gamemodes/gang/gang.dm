@@ -28,14 +28,13 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
-	report = TRUE
+	force_report = TRUE
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
 	<span class='danger'>Gangsters</span>: Take over the station with a dominator.\n\
 	<span class='notice'>Crew</span>: Prevent the gangs from expanding and initiating takeover."
 
-	var/area/ai_monitored/security/armory/target_armory
 	var/turf/target_armory
 	var/turf/target_equipment
 
@@ -53,7 +52,7 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	//also need to find 1 sec closet to hit the equipment room
 	for(var/area/security/main/A in GLOB.sortedAreas)
 		if(A.z == ZLEVEL_STATION)
-			var/obj/structure/closet/secure/secure_closet/security/C = locate() in A
+			var/obj/structure/closet/secure_closet/security/C = locate() in A
 			if(C)
 				target_equipment = get_turf(C)
 				break
@@ -119,8 +118,9 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	var/list/bosses = list()
 
 	for(var/datum/gang/G in gangs)
-		for(var/boss_mind in G.bosses)
+		for(var/datum/mind/boss_mind in G.bosses)
 			bosses += boss_mind
+
 	for(var/I in bosses)
 		var/datum/mind/boss_mind = I
 		var/list/other_bosses = bosses.Copy() - boss_mind
@@ -129,20 +129,20 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 			var/datum/mind/other_mind = other_bosses[J]
 			if(J == other_bosses.len)
 				msg += " and"
-			msg += " J"
+			msg += " [other_mind.current]"
 			if(J != other_bosses.len)
 				msg += ","
 		to_chat(boss_mind.current, "[msg] are your ganghead rivals. [syndicate_name()] has offered an uplink to help you take over, it will be delivered in five minutes.</span>")
 	
 	sleep(3000)
-
-	for(var/I in bosses)
-		var/datum/mind/boss_mind = I
-		G.add_gang_hud(boss_mind)
-		forge_gang_objectives(boss_mind)
-		greet_gang(boss_mind)
-		equip_gang(boss_mind.current,G)
-		modePlayer += boss_mind
+	
+	for(var/datum/gang/G in gangs)
+		for(var/datum/mind/boss_mind in G.bosses)
+			G.add_gang_hud(boss_mind)
+			forge_gang_objectives(boss_mind)
+			greet_gang(boss_mind)
+			equip_gang(boss_mind.current,G)
+			modePlayer += boss_mind
 
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
