@@ -144,7 +144,7 @@
 /obj/item/clothing/gloves/gang
 	name = "braggadocio's brass knuckles"
 	desc = "Purely decorative, don't find out the hard way."
-	icon_state = "glass_pipe"
+	icon_state = "knuckles_spiked"
 	w_class = 3
 
 /datum/gang_item/clothing/belt
