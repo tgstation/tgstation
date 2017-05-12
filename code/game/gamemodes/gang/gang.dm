@@ -28,16 +28,27 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
+	report = TRUE
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
 	<span class='danger'>Gangsters</span>: Take over the station with a dominator.\n\
 	<span class='notice'>Crew</span>: Prevent the gangs from expanding and initiating takeover."
 
+	var/area/ai_monitored/security/armory/target_armory
+
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
+	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
+		if(A.z == ZLEVEL_STATION)
+			target_armory = A
+			break
+	if(!target_armory)
+		message_admins("No armory detected, unable to start gang!")
+		return FALSE
+
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -69,13 +80,33 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	if(gangs.len < 2) //Need at least two gangs
 		return 0
 
+	//turn off sec and captain
+	SSjob.DisableJob(/datum/job/captain)
+	SSjob.DisableJob(/datum/job/hos)
+	SSjob.DisableJob(/datum/job/warden)
+	SSjob.DisableJob(/datum/job/detective)
+	SSjob.DisableJob(/datum/job/officer)
+
 	return 1
 
-
-/datum/game_mode/gang/post_setup()
+/datum/game_mode/gang/send_intercept()
 	set waitfor = FALSE
-	..()
-	sleep(rand(10,100))
+	..(FALSE, FALSE)
+
+	priority_announce("Incoming Bluespace Artillery Strike", "Target location: Security department. Evacuate immediately", 'sound/machines/Alarm.ogg')
+
+	sleep(100)
+
+	explosion(pick(get_area_turfs(target_armory)), 7, 14, 28, 30, TRUE, TRUE)
+
+	sleep(1200)
+
+	for(var/datum/gang/G in gangs)
+		for(var/datum/mind/boss_mind in G.bosses)
+			to_chat(boss_mind.current, "<span class='danger'>You've decided to take charge of the situation and form a gang. X and Y are your ganghead friends [syndicate company] has offered an uplink to help you take over, it will be delivered in five minutes.</span>")
+	
+	sleep(3000)
+
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
 			G.add_gang_hud(boss_mind)

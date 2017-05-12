@@ -266,23 +266,25 @@
 	return 0
 
 
-/datum/game_mode/proc/send_intercept()
+/datum/game_mode/proc/send_intercept(print_modes = TRUE, do_announce = TRUE)
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
-	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
-	likely threats to appear in your sector.</b>"
-	var/list/possible_modes = list()
-	possible_modes.Add("blob", "changeling", "clock_cult", "cult", "extended", "gang", "malf", "nuclear", "revolution", "traitor", "wizard")
-	possible_modes -= name //remove the current gamemode to prevent it from being randomly deleted, it will be readded later
 
-	for(var/i in 1 to 6) //Remove a few modes to leave four
-		possible_modes -= pick(possible_modes)
+	if(print_modes)
+		intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
+		likely threats to appear in your sector.</b>"
+		var/list/possible_modes = list()
+		possible_modes.Add("blob", "changeling", "clock_cult", "cult", "extended", "gang", "malf", "nuclear", "revolution", "traitor", "wizard")
+		possible_modes -= name //remove the current gamemode to prevent it from being randomly deleted, it will be readded later
 
-	possible_modes |= name //Re-add the actual gamemode - the intercept will thus always have the correct mode in its list
-	possible_modes = shuffle(possible_modes) //Meta prevention
+		for(var/i in 1 to 6) //Remove a few modes to leave four
+			possible_modes -= pick(possible_modes)
 
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/V in possible_modes)
-		intercepttext += i_text.build(V)
+		possible_modes |= name //Re-add the actual gamemode - the intercept will thus always have the correct mode in its list
+		possible_modes = shuffle(possible_modes) //Meta prevention
+
+		var/datum/intercept_text/i_text = new /datum/intercept_text
+		for(var/V in possible_modes)
+			intercepttext += i_text.build(V)
 
 	if(station_goals.len)
 		intercepttext += "<hr><b>Special Orders for [station_name()]:</b>"
@@ -291,7 +293,8 @@
 			intercepttext += G.get_report()
 
 	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
-	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
+	if(do_announce)
+		priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
 	if(GLOB.security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
