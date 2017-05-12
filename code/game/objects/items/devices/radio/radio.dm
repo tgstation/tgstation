@@ -296,7 +296,6 @@
 	// --- Cold, emotionless machines. ---
 	else if(isobj(M))
 		jobname = "Machine"
-		voice = capitalize(voice)
 
 	// --- Unidentifiable mob ---
 	else
