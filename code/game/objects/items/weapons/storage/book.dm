@@ -164,8 +164,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 
 /obj/item/weapon/storage/book/bible/syndicate
 	icon_state ="ebook"
-	desc += "\n<span class='notice'> Alt-click to toggle between healing and harming modes.</span>"
-	var/ordained = FALSE
 	deity_name = "The Syndiecult"
 	throw_speed = 2
 	throwforce = 18
@@ -176,6 +174,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	hitsound = 'sound/weapons/blade1.ogg'
 	name = "The Holy Book of The Syndiecult"
 	attack_verb = list("attacked", "slashed", "blessed", "sliced", "torn", "ripped", "diced", "cut")
+	var/ordained = FALSE
+
+/obj/item/weapon/storage/book/bible/syndicate/initialize()
+	desc +="\n<span class='notice'> Alt-click to toggle between healing and harming modes.</span>"
 	
 	
 /obj/item/weapon/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
@@ -195,4 +197,4 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	return
 
 /obj/item/storage/book/bible/syndicate/add_blood(list/blood_dna)
-	return 0
+	return FALSE
