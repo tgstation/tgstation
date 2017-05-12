@@ -131,7 +131,7 @@
 	id = "pistol_ammo"
 	cost = 10
 	item_path = /obj/item/ammo_box/magazine/m10mm
-	
+
 /datum/gang_item/weapon/sniper
 	name = ".50cal Sniper Rifle"
 	id = "sniper"
@@ -156,8 +156,8 @@
 	id = "uzi_ammo"
 	cost = 40
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
-	
-	
+
+
 ///////////////////
 //EQUIPMENT
 ///////////////////
@@ -171,7 +171,7 @@
 	id = "spraycan"
 	cost = 5
 	item_path = /obj/item/toy/crayon/spraycan/gang
-	
+
 /datum/gang_item/equipment/sharpener
 	name = "Sharpener"
 	id = "whetstone"
@@ -305,6 +305,10 @@
 		if(obj.density)
 			to_chat(user, "<span class='warning'>There's not enough room here!</span>")
 			return FALSE
+
+	if(dominator_excessive_walls(user))
+		to_chat(user, "span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires a sizable open space within three standard units so that walls do not interfere with the signal.</span>")
+		return FALSE
 
 	if(!(usrarea.type in gang.territory|gang.territory_new))
 		to_chat(user, "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>")
