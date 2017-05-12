@@ -35,44 +35,35 @@
     <Setting Name="ServerVisiblity" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
-    <Setting Name="IRCNick" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TGS3</Value>
-    </Setting>
-    <Setting Name="IRCIdentifyTarget" Type="System.String" Scope="User">
-      <Value Profile="(Default)">NickServ</Value>
-    </Setting>
-    <Setting Name="IRCServer" Type="System.String" Scope="User">
-      <Value Profile="(Default)">irc.rizon.net</Value>
-    </Setting>
-    <Setting Name="IRCPort" Type="System.UInt16" Scope="User">
-      <Value Profile="(Default)">6667</Value>
-    </Setting>
-    <Setting Name="IRCAdminChannel" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#botbus</Value>
-    </Setting>
-    <Setting Name="IRCEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="ChatEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="IRCIdentifyCommand" Type="System.String" Scope="User">
-      <Value Profile="(Default)">id hunter2</Value>
     </Setting>
     <Setting Name="DDAutoStart" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="IRCChannels" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="PythonPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Python27</Value>
+    </Setting>
+    <Setting Name="ChatProvider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ChatProviderData" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NEEDS INITIALIZING</Value>
+    </Setting>
+    <Setting Name="ChatAdmins" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;theghostofwhibyl1&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ChatChannels" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;#botbus&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="PythonPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Python27</Value>
-    </Setting>
-    <Setting Name="IRCAdmins" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;theghostofwhibyl1&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
+    <Setting Name="ChatAdminChannel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#botbus</Value>
     </Setting>
   </Settings>
 </SettingsFile>

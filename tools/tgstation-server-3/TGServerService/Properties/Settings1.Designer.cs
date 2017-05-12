@@ -157,85 +157,13 @@ namespace TGServerService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TGS3")]
-        public string IRCNick {
-            get {
-                return ((string)(this["IRCNick"]));
-            }
-            set {
-                this["IRCNick"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NickServ")]
-        public string IRCIdentifyTarget {
-            get {
-                return ((string)(this["IRCIdentifyTarget"]));
-            }
-            set {
-                this["IRCIdentifyTarget"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("irc.rizon.net")]
-        public string IRCServer {
-            get {
-                return ((string)(this["IRCServer"]));
-            }
-            set {
-                this["IRCServer"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6667")]
-        public ushort IRCPort {
-            get {
-                return ((ushort)(this["IRCPort"]));
-            }
-            set {
-                this["IRCPort"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#botbus")]
-        public string IRCAdminChannel {
-            get {
-                return ((string)(this["IRCAdminChannel"]));
-            }
-            set {
-                this["IRCAdminChannel"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IRCEnabled {
+        public bool ChatEnabled {
             get {
-                return ((bool)(this["IRCEnabled"]));
+                return ((bool)(this["ChatEnabled"]));
             }
             set {
-                this["IRCEnabled"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("id hunter2")]
-        public string IRCIdentifyCommand {
-            get {
-                return ((string)(this["IRCIdentifyCommand"]));
-            }
-            set {
-                this["IRCIdentifyCommand"] = value;
+                this["ChatEnabled"] = value;
             }
         }
         
@@ -253,20 +181,6 @@ namespace TGServerService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>#botbus</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection IRCChannels {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["IRCChannels"]));
-            }
-            set {
-                this["IRCChannels"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Python27")]
         public string PythonPath {
             get {
@@ -279,15 +193,64 @@ namespace TGServerService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public int ChatProvider {
+            get {
+                return ((int)(this["ChatProvider"]));
+            }
+            set {
+                this["ChatProvider"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NEEDS INITIALIZING")]
+        public string ChatProviderData {
+            get {
+                return ((string)(this["ChatProviderData"]));
+            }
+            set {
+                this["ChatProviderData"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
             "tring>theghostofwhibyl1</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection IRCAdmins {
+        public global::System.Collections.Specialized.StringCollection ChatAdmins {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["IRCAdmins"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["ChatAdmins"]));
             }
             set {
-                this["IRCAdmins"] = value;
+                this["ChatAdmins"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>#botbus</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection ChatChannels {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["ChatChannels"]));
+            }
+            set {
+                this["ChatChannels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#botbus")]
+        public string ChatAdminChannel {
+            get {
+                return ((string)(this["ChatAdminChannel"]));
+            }
+            set {
+                this["ChatAdminChannel"] = value;
             }
         }
     }

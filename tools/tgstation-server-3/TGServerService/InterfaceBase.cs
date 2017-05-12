@@ -16,7 +16,7 @@ namespace TGServerService
 		//called when the service is started
 		public TGStationServer()
 		{
-			InitIRC();
+			InitChat();
 			InitByond();
 			InitCompiler();
 			InitInterop();
@@ -30,6 +30,7 @@ namespace TGServerService
 			DisposeCompiler();
 			DisposeByond();
 			DisposeRepo();
+			DisposeChat();
 		}
 
 		//one stop update

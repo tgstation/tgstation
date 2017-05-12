@@ -11,6 +11,15 @@ namespace TGCommandLine
 			Keyword = "irc";
 			Children = new Command[] { new IRCNickCommand(), new IRCJoinCommand(), new IRCPartCommand(), new IRCAnnounceCommand(), new IRCStatusCommand(), new IRCAdminCommand(), new IRCEnableCommand(), new IRCDisableCommand(), new IRCReconnectCommand(), new IRCListAdminsCommand(), new IRCAddminCommand(), new IRCDeadminCommand(), new IRCAuthCommand(), new IRCDisableAuthCommand() };
 		}
+		public override ExitCode Run(IList<string> parameters)
+		{
+			if (Server.GetComponent<ITGChat>().ProviderInfo().Provider != TGChatProvider.IRC)
+			{
+				Console.WriteLine("The current provider is not IRC. Please switch providers first!");
+				return ExitCode.ServerError;
+			}
+			return base.Run(parameters);
+		}
 		protected override string GetHelpText()
 		{
 			return "Manages the IRC bot";
@@ -35,7 +44,11 @@ namespace TGCommandLine
 
 		public override ExitCode Run(IList<string> parameters)
 		{
-			Server.GetComponent<ITGIRC>().Setup(null, 0, parameters[0]);
+			var Chat = Server.GetComponent<ITGChat>();
+			Chat.SetProviderInfo(new TGIRCSetupInfo(Chat.ProviderInfo())
+			{
+				Nickname = parameters[0],
+			});
 			return ExitCode.Normal;
 		}
 	}
@@ -59,7 +72,7 @@ namespace TGCommandLine
 
 		public override ExitCode Run(IList<string> parameters)
 		{
-			var IRC = Server.GetComponent<ITGIRC>();
+			var IRC = Server.GetComponent<ITGChat>();
 			var channels = IRC.Channels();
 			var lowerParam = parameters[0].ToLower();
 			foreach (var I in channels)
@@ -72,7 +85,7 @@ namespace TGCommandLine
 			}
 			Array.Resize(ref channels, channels.Length + 1);
 			channels[channels.Length - 1] = parameters[0];
-			IRC.Setup(null, 0, null, channels);
+			IRC.SetChannels(channels, null);
 			return ExitCode.Normal;
 		}
 	}
@@ -95,7 +108,7 @@ namespace TGCommandLine
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
-			var IRC = Server.GetComponent<ITGIRC>();
+			var IRC = Server.GetComponent<ITGChat>();
 			var channels = IRC.Channels();
 			var lowerParam = parameters[0].ToLower();
 			var new_channels = new List<string>();
@@ -110,7 +123,7 @@ namespace TGCommandLine
 				Console.WriteLine("Error: Cannot part from the last channel!");
 				return ExitCode.BadCommand;
 			}
-			IRC.Setup(null, 0, null, new_channels.ToArray());
+			IRC.SetChannels(new_channels.ToArray(), null);
 			return ExitCode.Normal;
 		}
 	}
@@ -132,7 +145,7 @@ namespace TGCommandLine
 
 		public override ExitCode Run(IList<string> parameters)
 		{
-			var res = Server.GetComponent<ITGIRC>().SendMessage("SCP: " + parameters[0]);
+			var res = Server.GetComponent<ITGChat>().SendMessage("SCP: " + parameters[0]);
 			if (res != null)
 			{
 				Console.WriteLine("Error: " + res);
@@ -155,7 +168,7 @@ namespace TGCommandLine
 		
 		public override ExitCode Run(IList<string> parameters)
 		{
-			var res = Server.GetComponent<ITGIRC>().ListAdmins();
+			var res = Server.GetComponent<ITGChat>().ListAdmins();
 			foreach (var I in res)
 				Console.WriteLine(I);
 			return ExitCode.Normal;
@@ -175,7 +188,7 @@ namespace TGCommandLine
 
 		public override ExitCode Run(IList<string> parameters)
 		{
-			var res = Server.GetComponent<ITGIRC>().Reconnect();
+			var res = Server.GetComponent<ITGChat>().Reconnect();
 			if (res != null)
 			{
 				Console.WriteLine("Error: " + res);
@@ -202,7 +215,7 @@ namespace TGCommandLine
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
-			var IRC = Server.GetComponent<ITGIRC>();
+			var IRC = Server.GetComponent<ITGChat>();
 			var mins = new List<string>(IRC.ListAdmins());
 			var newmin = parameters[0];
 
@@ -235,7 +248,7 @@ namespace TGCommandLine
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
-			var IRC = Server.GetComponent<ITGIRC>();
+			var IRC = Server.GetComponent<ITGChat>();
 			var mins = new List<string>(IRC.ListAdmins());
 			var deadmin = parameters[0];
 
@@ -270,7 +283,12 @@ namespace TGCommandLine
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
-			Server.GetComponent<ITGIRC>().SetupAuth(parameters[0], parameters[1]);
+			var IRC = Server.GetComponent<ITGChat>();
+			IRC.SetProviderInfo(new TGIRCSetupInfo(IRC.ProviderInfo())
+			{
+				AuthTarget = parameters[0],
+				AuthMessage = parameters[1]
+			});
 			return ExitCode.Normal;
 		}
 	}
@@ -287,7 +305,12 @@ namespace TGCommandLine
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
-			Server.GetComponent<ITGIRC>().SetupAuth(null, null);
+			var IRC = Server.GetComponent<ITGChat>();
+			IRC.SetProviderInfo(new TGIRCSetupInfo(IRC.ProviderInfo())
+			{
+				AuthTarget = null,
+				AuthMessage = null,
+			});
 			return ExitCode.Normal;
 		}
 	}
@@ -304,7 +327,7 @@ namespace TGCommandLine
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
-			var IRC = Server.GetComponent<ITGIRC>();
+			var IRC = Server.GetComponent<ITGChat>();
 			Console.WriteLine("Currently configured channels:");
 			Console.WriteLine("\tAdmin Channel: " + IRC.AdminChannel());
 			foreach (var I in IRC.Channels())
@@ -330,7 +353,7 @@ namespace TGCommandLine
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
-			Server.GetComponent<ITGIRC>().Setup(null, 0, null, null, parameters[0]);
+			Server.GetComponent<ITGChat>().SetChannels(null, parameters[0]);
 			return ExitCode.Normal;
 		}
 	}
@@ -348,7 +371,7 @@ namespace TGCommandLine
 
 		public override ExitCode Run(IList<string> parameters)
 		{
-			Server.GetComponent<ITGIRC>().Setup(null, 0, null, null, null, TGIRCEnableType.Enable);
+			Server.GetComponent<ITGChat>().SetEnabled(true);
 			return ExitCode.Normal;
 		}
 	}
@@ -366,7 +389,7 @@ namespace TGCommandLine
 
 		public override ExitCode Run(IList<string> parameters)
 		{
-			Server.GetComponent<ITGIRC>().Setup(null, 0, null, null, null, TGIRCEnableType.Disable);
+			Server.GetComponent<ITGChat>().SetEnabled(true);
 			return ExitCode.Normal;
 		}
 	}

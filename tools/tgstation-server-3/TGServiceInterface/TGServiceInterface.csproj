@@ -42,7 +42,7 @@
     <Compile Include="Compiler.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DreamDaemon.cs" />
-    <Compile Include="IRC.cs" />
+    <Compile Include="Chat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Server.cs" />

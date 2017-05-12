@@ -45,7 +45,7 @@ namespace TGServerService
 				AddEndpoint<ITGCompiler>();
 				AddEndpoint<ITGDreamDaemon>();
 				AddEndpoint<ITGStatusCheck>();
-				AddEndpoint<ITGIRC>();
+				AddEndpoint<ITGChat>();
 				AddEndpoint<ITGConfig>();
 				AddEndpoint<ITGServerUpdater>();
 
