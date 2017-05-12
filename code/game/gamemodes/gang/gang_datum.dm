@@ -283,7 +283,7 @@
 	territory_lost = list()
 
 	var/control = round((territory.len/GLOB.start_state.num_territories)*100, 1)
-	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*"
+	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*<BR>"
 	message_gangtools(message)
 
 	if(is_dominating)
@@ -295,13 +295,14 @@
 		message += "<b>[seconds_remaining] seconds remain</b> in hostile takeover.<BR>"
 	else
 		for(var/obj/item/device/gangtool/G in gangtools)
+			var/pmessage = message
 			var/points_new = 0
 			if(istype(G, /obj/item/device/gangtool/soldier))
 				points_new = min(999,(max(0,(4 - G.points/10)) + (territory.len/2) + (LAZYLEN(G.tags)/2))) // Soldier points
-				message += "You have received a bonus of [LAZYLEN(G.tags)/2] influence for territories you have personally marked."
+				pmessage += "You have received a bonus of [LAZYLEN(G.tags)/2] influence for territories you have personally marked."
 			else
 				points_new = min(999,(max(0,(6 - G.points/10)) + territory.len)) // Boss points, more focused on big picture
-				message += "Your influence has increased by [points_new] from your gang holding [territory.len] territories<BR>"
+				pmessage += "Your influence has increased by [points_new] from your gang holding [territory.len] territories<BR>"
 			G.points += points_new
 			var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)
 			var/points_newer = 0
@@ -321,9 +322,9 @@
 								points_newer += 4
 			if(points_newer)
 				G.points += points_newer
-				message += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
+				pmessage += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
 			message += "You now have <b>[G.points] influence</b>.<BR>"
-			to_chat(ganger, "<span class='notice'>\icon[G] [message]</span>")
+			to_chat(ganger, "<span class='notice'>\icon[G] [pmessage]</span>")
 
 
 //Multiverse
