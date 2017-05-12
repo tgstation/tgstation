@@ -106,11 +106,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="TGServerService.cs">
+    <Compile Include="ServerService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TGServerService.Designer.cs">
-      <DependentUpon>TGServerService.cs</DependentUpon>
+    <Compile Include="ServerService.Designer.cs">
+      <DependentUpon>ServerService.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -129,8 +129,8 @@
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TGServerService.resx">
-      <DependentUpon>TGServerService.cs</DependentUpon>
+    <EmbeddedResource Include="ServerService.resx">
+      <DependentUpon>ServerService.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
