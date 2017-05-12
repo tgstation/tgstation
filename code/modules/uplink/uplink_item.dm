@@ -930,7 +930,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/ebook
-	name = "Syndicult Bible"
+	name = "Syndiecult Bible"
 	desc = "The Syndicate Religious Sciences institute have created these bibles \
 			for those of little faith. Even the most steadfast athiest will be able to heal\
 			their wounded allies with it. Additionally, it's hard-light bindings can become\
