@@ -307,7 +307,6 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	force = 1
 	throwforce = 2
 	origin_tech = "materials=1"
-	sheettype = "snow"
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \
 	new/datum/stack_recipe("Snow Wall",/turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
