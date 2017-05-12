@@ -44,7 +44,7 @@
 // Plasma. The oil of 26 century. The reason why you are here.
 /datum/export/material/plasma
 	cost = 500
-	kelasticity = 0
+	k_elasticity = 0
 	material_id = MAT_PLASMA
 	message = "cm3 of plasma"
 

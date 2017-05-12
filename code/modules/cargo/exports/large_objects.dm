@@ -3,7 +3,7 @@
 // Crates, boxes, lockers.
 /datum/export/large/crate
 	cost = 500
-	kelasticity = 0
+	k_elasticity = 0
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
 	exclude_types = list(/obj/structure/closet/crate/large)

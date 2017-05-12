@@ -3,7 +3,7 @@
 // Selling Syndicate docs to NT
 /datum/export/intel
 	cost = 25000
-	kelasticity = 0
+	k_elasticity = 0
 	unit_name = "original article"
 	message = "of enemy intelligence"
 	var/global/originals_recieved = list()
