@@ -18,7 +18,7 @@
 	owner = null
 	QDEL_NULL(language_menu)
 	languages.Cut()
-	showdow_languages.Cut()
+	shawdow_languages.Cut()
 	return ..()
 
 /datum/language_holder/proc/copy(newowner)
