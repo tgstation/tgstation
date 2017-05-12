@@ -70,9 +70,10 @@ namespace TGServerService
 		{
 			try
 			{
-				host.Close();	//where TGStationServer.Dispose() is called
+				host.Close();   //where TGStationServer.Dispose() is called
 				host = null;
 			}
+			catch { }
 			finally
 			{
 				Properties.Settings.Default.Save();
