@@ -6,14 +6,12 @@
 	var/category
 	var/id
 
+
 /datum/gang_item/proc/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool, check_canbuy = TRUE)
 	if(check_canbuy && !can_buy(user, gang, gangtool))
 		return FALSE
 	var/real_cost = get_cost(user, gang, gangtool)
-	if(gang && real_cost)
-		gang.message_gangtools("A [get_name_display(user, gang, gangtool)] was purchased by [user.real_name] for [real_cost] Influence.")
-		log_game("A [id] was purchased by [key_name(user)] ([gang.name] Gang) for [real_cost] Influence.")
-	gang.points -= real_cost
+	gangtool.points -= real_cost
 	spawn_item(user, gang, gangtool)
 	return TRUE
 
@@ -25,7 +23,7 @@
 		to_chat(user, spawn_msg)
 
 /datum/gang_item/proc/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	return gang && (gang.points >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
+	return gang && (gangtool.points >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
 
 /datum/gang_item/proc/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return TRUE
@@ -97,6 +95,72 @@
 			gangtool.outfits -= 1
 
 ///////////////////
+//CLOTHING
+///////////////////
+
+/datum/gang_item/clothing
+	category = "Purchase Influence-Enhancing Clothes:"
+
+/datum/gang_item/clothing/hat
+	name = "pimp hat"
+	id = "hat"
+	cost = 10
+	item_path = /obj/item/clothing/head/collectable/petehat/gang
+
+/obj/item/clothing/head/collectable/petehat/gang
+	name = "pimpin' hat"
+	desc = "The undisputed king of style."
+
+/datum/gang_item/clothing/shoes
+	name = "bling boots"
+	id = "boots"
+	cost = 25
+	item_path = /obj/item/clothing/shoes/gang
+
+/obj/item/clothing/shoes/gang
+	name = "blinged-out boots"
+	desc = "Stand aside peasants."
+	icon_state = "bling"
+
+/datum/gang_item/clothing/mask
+	name = "gloater's glass pipe"
+	id = "pipe"
+	cost = 20
+	item_path = /obj/item/clothing/mask/gangpipe
+
+
+/obj/item/clothing/mask/gangpipe
+	name = "gloater's glass pipe"
+	desc = "For anyone looking to go out in a blaze of glory."
+	icon_state = "glass_pipe"
+	w_class = 3
+
+/datum/gang_item/clothing/hands
+	name = "decorative brass knuckles"
+	id = "hand"
+	cost = 5
+	item_path = /obj/item/clothing/gloves/gang
+
+/obj/item/clothing/gloves/gang
+	name = "braggadocio's brass knuckles"
+	desc = "Purely decorative, don't find out the hard way."
+	icon_state = "glass_pipe"
+	w_class = 3
+
+/datum/gang_item/clothing/belt
+	name = "badass belt"
+	id = "belt"
+	cost = 15
+	item_path = /obj/item/weapon/storage/belt/military/gang
+
+/obj/item/weapon/storage/belt/military/gang
+	name = "badass belt"
+	desc = "The belt buckle simply reads 'BAMF'."
+	storage_slots = 1
+
+
+
+///////////////////
 //WEAPONS
 ///////////////////
 
@@ -131,7 +195,7 @@
 	id = "pistol_ammo"
 	cost = 10
 	item_path = /obj/item/ammo_box/magazine/m10mm
-	
+
 /datum/gang_item/weapon/sniper
 	name = ".50cal Sniper Rifle"
 	id = "sniper"
@@ -156,8 +220,8 @@
 	id = "uzi_ammo"
 	cost = 40
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
-	
-	
+
+
 ///////////////////
 //EQUIPMENT
 ///////////////////
@@ -171,7 +235,7 @@
 	id = "spraycan"
 	cost = 5
 	item_path = /obj/item/toy/crayon/spraycan/gang
-	
+
 /datum/gang_item/equipment/sharpener
 	name = "Sharpener"
 	id = "whetstone"
@@ -305,11 +369,11 @@
 		if(obj.density)
 			to_chat(user, "<span class='warning'>There's not enough room here!</span>")
 			return FALSE
-	
+
 	if(dominator_excessive_walls(user))
 		to_chat(user, "span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires an open space within three standard units so that walls do not interfere with the signal.</span>")
 		return FALSE
-		
+
 	if(!(usrarea.type in gang.territory|gang.territory_new))
 		to_chat(user, "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>")
 		return FALSE

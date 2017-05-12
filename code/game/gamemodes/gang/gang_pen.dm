@@ -26,6 +26,7 @@
 					var/recruitable = SSticker.mode.add_gangster(M.mind,G)
 					switch(recruitable)
 						if(2)
+							new /obj/item/device/gangtool/soldier(M)
 							M.Paralyse(5)
 							cooldown(G)
 						if(1)

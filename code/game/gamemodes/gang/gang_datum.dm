@@ -15,32 +15,74 @@
 	var/list/territory_lost = list()
 	var/recalls = 1
 	var/dom_attempts = 2
-	var/points = 15
 	var/datum/atom_hud/antag/gang/ganghud
 	var/is_deconvertible = TRUE //Can you deconvert normal gangsters from the gang
 
 	var/domination_timer
 	var/is_dominating
 
-	var/item_list
-	var/item_category_list
-	var/buyable_items = list(
+	var/boss_item_list
+	var/boss_category_list
+	var/static/list/boss_items = list(
 		/datum/gang_item/function/gang_ping,
 		/datum/gang_item/function/recall,
 		/datum/gang_item/function/outfit,
+		/datum/gang_item/clothing/hat,
+		/datum/gang_item/clothing/shoes,
+		/datum/gang_item/clothing/mask,
+		/datum/gang_item/clothing/hands,
+		/datum/gang_item/clothing/belt,
+		/datum/gang_item/weapon/shuriken,
 		/datum/gang_item/weapon/switchblade,
 		/datum/gang_item/weapon/pistol,
 		/datum/gang_item/weapon/ammo/pistol_ammo,
+		/datum/gang_item/weapon/sniper,
+		/datum/gang_item/weapon/ammo/sniper_ammo,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
+		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/spraycan,
 		/datum/gang_item/equipment/c4,
+		/datum/gang_item/equipment/emp,
+		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/implant_breaker,
+		/datum/gang_item/equipment/stimpack,
 		/datum/gang_item/equipment/pen,
-		/datum/gang_item/equipment/gangtool,
-		/datum/gang_item/equipment/necklace,
 		/datum/gang_item/equipment/dominator
 	)
+
+	var/reg_item_list
+	var/reg_category_list
+	var/static/list/soldier_items = list(
+		/datum/gang_item/clothing/hat,
+		/datum/gang_item/clothing/shoes,
+		/datum/gang_item/clothing/mask,
+		/datum/gang_item/clothing/hands,
+		/datum/gang_item/clothing/belt,
+		/datum/gang_item/weapon/shuriken,
+		/datum/gang_item/weapon/switchblade,
+		/datum/gang_item/weapon/pistol,
+		/datum/gang_item/weapon/ammo/pistol_ammo,
+		/datum/gang_item/weapon/sniper,
+		/datum/gang_item/weapon/ammo/sniper_ammo,
+		/datum/gang_item/weapon/uzi,
+		/datum/gang_item/weapon/ammo/uzi_ammo,
+		/datum/gang_item/equipment/sharpener,
+		/datum/gang_item/equipment/spraycan,
+		/datum/gang_item/equipment/c4,
+		/datum/gang_item/equipment/emp,
+		/datum/gang_item/equipment/frag,
+		/datum/gang_item/equipment/implant_breaker,
+		/datum/gang_item/equipment/stimpack,
+	)
+
+	var/static/list/clothes = list(            // Influential clothing
+		/obj/item/clothing/head/collectable/petehat/gang,
+		/obj/item/clothing/shoes/gang,
+		/obj/item/clothing/mask/gangpipe,
+		/obj/item/clothing/gloves/gang,
+		/obj/item/weapon/storage/belt/military/gang
+		)
 
 /datum/gang/New(loc,gangname)
 	if(!GLOB.gang_colors_pool.len)
@@ -73,16 +115,27 @@
 	build_item_list()
 
 /datum/gang/proc/build_item_list()
-	item_list = list()
-	item_category_list = list()
-	for(var/V in buyable_items)
-		var/datum/gang_item/G = new V()
-		item_list[G.id] = G
-		var/list/Cat = item_category_list[G.category]
+	boss_item_list = list()
+	boss_category_list = list()
+	for(var/B in boss_items)
+		var/datum/gang_item/G = new B()
+		boss_item_list[G.id] = G
+		var/list/Cat = boss_category_list[G.category]
 		if(Cat)
 			Cat += G
 		else
-			item_category_list[G.category] = list(G)
+			boss_category_list[G.category] = list(G)
+
+	reg_item_list = list()
+	reg_category_list = list()
+	for(var/S in soldier_items)
+		var/datum/gang_item/G = new S()
+		reg_item_list[G.id] = G
+		var/list/Cat = reg_category_list[G.category]
+		if(Cat)
+			Cat += G
+		else
+			reg_category_list[G.category] = list(G)
 
 /datum/gang/proc/add_gang_hud(datum/mind/recruit_mind)
 	ganghud.join_hud(recruit_mind.current)
@@ -205,27 +258,15 @@
 				outfit = gangster.wear_suit
 				if(outfit.gang == src)
 					gang_outfit = outfit
-
 			if(gang_outfit)
-				to_chat(gangster, "<span class='notice'>The [src] Gang's influence grows as you wear [gang_outfit].</span>")
+				to_chat(gangster, "<span class='notice'>Your influence grows as you wear [gang_outfit].</span>")
+				var/list/allcon = gangster.GetAllContents()
+				for(var/obj/item/device/gangtool/G in allcon)
+					G.points += 2
 				uniformed ++
 
 	//Calculate and report influence growth
 	var/message = "<b>[src] Gang Status Report:</b><BR>*---------*<br>"
-	if(is_dominating)
-		var/seconds_remaining = domination_time_remaining()
-		var/new_time = max(180, seconds_remaining - (uniformed * 4) - (territory.len * 2))
-		if(new_time < seconds_remaining)
-			message += "Takeover shortened by [seconds_remaining - new_time] seconds for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
-			set_domination_time(new_time)
-		message += "<b>[seconds_remaining] seconds remain</b> in hostile takeover.<BR>"
-	else
-		var/points_new = min(999,points + 15 + (uniformed * 2) + territory.len)
-		if(points_new != points)
-			message += "Gang influence has increased by [points_new - points] for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
-		points = points_new
-		message += "Your gang now has <b>[points] influence</b>.<BR>"
-
 	//Process new territories
 	for(var/area in territory_new)
 		if(added_names != "")
@@ -245,16 +286,50 @@
 	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*"
 	message_gangtools(message)
 
-	//Increase outfit stock
-	for(var/obj/item/device/gangtool/tool in gangtools)
-		tool.outfits = min(tool.outfits+1,5)
+	if(is_dominating)
+		var/seconds_remaining = domination_time_remaining()
+		var/new_time = max(180, seconds_remaining - (uniformed * 4) - (territory.len * 2))
+		if(new_time < seconds_remaining)
+			message += "Takeover shortened by [seconds_remaining - new_time] seconds for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
+			set_domination_time(new_time)
+		message += "<b>[seconds_remaining] seconds remain</b> in hostile takeover.<BR>"
+	else
+		for(var/obj/item/device/gangtool/G in gangtools)
+			var/points_new = 0
+			if(istype(G, /obj/item/device/gangtool/soldier))
+				points_new = min(999,(max(0,(4 - G.points/10)) + (territory.len/2) + (LAZYLEN(G.tags)/2))) // Soldier points
+				message += "You have received a bonus of [LAZYLEN(G.tags)/2] influence for territories you have personally marked."
+			else
+				points_new = min(999,(max(0,(6 - G.points/10)) + territory.len)) // Boss points, more focused on big picture
+				message += "Your influence has increased by [points_new] from your gang holding [territory.len] territories<BR>"
+			G.points += points_new
+			var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)
+			var/points_newer = 0
+			if(ishuman(ganger) && ganger.mind in (gangsters|bosses))
+				for(var/obj/C in ganger.contents)
+					if(C.type in clothes)
+						switch(C.type)
+							if(/obj/item/clothing/head/collectable/petehat/gang)
+								points_newer += 3
+							if(/obj/item/clothing/shoes/gang)
+								points_newer += 8
+							if(/obj/item/clothing/mask/gangpipe)
+								points_newer += 6
+							if(/obj/item/clothing/gloves/gang)
+								points_newer += 2
+							if(/obj/item/weapon/storage/belt/military/gang)
+								points_newer += 4
+			if(points_newer)
+				G.points += points_newer
+				message += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
+			message += "You now have <b>[G.points] influence</b>.<BR>"
+			to_chat(ganger, "<span class='notice'>\icon[G] [message]</span>")
 
 
 //Multiverse
 
 /datum/gang/multiverse
 	dom_attempts = 0
-	points = 0
 	fighting_style = "multiverse"
 	is_deconvertible = FALSE
 
