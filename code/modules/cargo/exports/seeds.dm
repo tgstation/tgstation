@@ -1,5 +1,6 @@
 /datum/export/seed
 	cost = 100 // Gets multiplied by potency
+	kelasticity = 1	//high price elasticity, only need to export a few samples
 	unit_name = "new plant species sample"
 	export_types = list(/obj/item/seeds)
 	var/needs_discovery = FALSE // Only for undiscovered species

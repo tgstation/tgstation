@@ -28,7 +28,11 @@
 	return round(amount)
 
 /datum/export/material/get_cost(obj/O)
-	return round(..() / MINERAL_MATERIAL_AMOUNT)
+	var/amount = get_amount(O, contr, emag)/MINERAL_MATERIAL_AMOUNT
+	if(kelasticity!=0)
+		return round((cost/kelasticity) * (1 - GLOB.E**(-1 * kelasticity * amount)))	//anti-derivative of the marginal cost function
+	else
+		return round(cost * GLOB.E**(-1 * kelasticity * amount) * amount)	//alternative form derived from L'Hopital to avoid division by 0
 
 // Materials. Nothing but plasma is really worth selling. Better leave it all to RnD and sell some plasma instead.
 
@@ -47,6 +51,7 @@
 // Plasma. The oil of 26 century. The reason why you are here.
 /datum/export/material/plasma
 	cost = 500
+	kelasticity = 0
 	material_id = MAT_PLASMA
 	message = "cm3 of plasma"
 
