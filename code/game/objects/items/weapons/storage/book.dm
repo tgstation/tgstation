@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	throw_range = 7
 	force = 18
 	hitsound = 'sound/weapons/sear.ogg'
-	damtype = 'fire'
+	damtype = BURN
 	name = "Syndicate Tome"
 	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
 	var/ordained = FALSE
