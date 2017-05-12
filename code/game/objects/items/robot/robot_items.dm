@@ -558,18 +558,15 @@ Each laser stays approximately 2 seconds in projectile field.
 	energy_recharge = 5000
 
 /obj/item/borg/projectile_dampen/Initialize()
-	..()
+	. = ..()
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
 	tracked = list()
 	icon_state = "shield0"
-
-/obj/item/borg/projectile_dampen/New()
-	..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/borg/projectile_dampen/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	..()
+	return ..()
 
 /obj/item/borg/projectile_dampen/attack_self(mob/user)
 	var/active = FALSE
@@ -623,12 +620,12 @@ Each laser stays approximately 2 seconds in projectile field.
 		energy += energy_recharge
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/item/projectile/P, track_projectile = TRUE)
-	if(P in tracked)
+	if(tracked[P])
 		return
 	if(!P.damage || P.nodamage)
 		return
 	if(track_projectile)
-		tracked += P
+		tracked[P] = TRUE
 		current_damage_dampening += P.damage
 	P.damage *= projectile_damage_coefficient
 	P.speed *= projectile_speed_coefficient
