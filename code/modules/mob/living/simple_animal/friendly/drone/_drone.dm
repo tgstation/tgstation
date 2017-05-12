@@ -1,3 +1,7 @@
+#define DRONE_NOT_PICKED "not_picked"
+#define DRONE_PICKED "picked"
+#define DRONE_PICK_RANDOM "pick_random"
+
 
 #define DRONE_HANDS_LAYER 1
 #define DRONE_HEAD_LAYER 2
@@ -49,7 +53,7 @@
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
-	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
+	var/picked = DRONE_NOT_PICKED //Have we picked our visual appearence (+ colour if applicable)
 	var/colour = "grey"	//Stored drone color, so we can go back when unhacked.
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
 	var/laws = \
@@ -66,6 +70,7 @@
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
+	var/can_detonate = TRUE
 	var/can_be_held = TRUE //if assholes can pick us up
 	var/flavortext = \
 	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
@@ -135,8 +140,11 @@
 
 	updateSeeStaticMobs()
 
-	if(!picked)
-		pickVisualAppearence()
+	switch(picked)
+		if(DRONE_NOT_PICKED)
+			pickVisualAppearence()
+		if(DRONE_PICK_RANDOM)
+			randomise_appearence()
 
 
 /mob/living/simple_animal/drone/death(gibbed)
@@ -285,3 +293,14 @@
 
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring
+
+/mob/living/simple_animal/drone/proc/randomise_appearence()
+	visualAppearence = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
+	if(visualAppearence == MAINTDRONE)
+		var/colour = pick("grey", "blue", "red", "green", "pink", "orange")
+		icon_state = "[visualAppearence]_[colour]"
+	else
+		icon_state = visualAppearence
+
+	icon_living = icon_state
+	icon_dead = "[visualAppearence]_dead"

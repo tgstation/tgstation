@@ -78,6 +78,8 @@
 	for(var/mob/living/simple_animal/drone/D in GLOB.mob_list)
 		if(D.hacked)
 			continue
+		if(!D.can_detonate)
+			continue
 		drones++
 		dat += "[D.name] |"
 		if(D.stat)
@@ -159,14 +161,15 @@
 	else if (href_list["killdrone"])
 		if(src.allowed(usr))
 			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"])
+			if(!D.can_detonate)
+				return
 			if(D.hacked)
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
 			else
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(3, 1, D)
 				s.start()
-				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
+				D.visible_message("<span class='danger'>[D] self destructs!</span>")
 				D.gib()
 
 	src.updateUsrDialog()
-	return

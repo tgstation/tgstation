@@ -16,7 +16,7 @@
 	icon_living = "drone_synd"
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
 	health = 30
-	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	maxHealth = 30
 	initial_language_holder = /datum/language_holder/drone/syndicate
 	faction = list("syndicate")
 	speak_emote = list("hisses")
@@ -28,17 +28,14 @@
 	"3. Destroy."
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-	seeStatic = 0 //Our programming is superior.
+	seeStatic = FALSE
 	hacked = TRUE
+	can_detonate = FALSE
 	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
 	..()
 	internal_storage.hidden_uplink.telecrystals = 10
-
-/mob/living/simple_animal/drone/syndrone/Login()
-	..()
-	to_chat(src, "<span class='notice'>You can kill and eat other drones to increase your health!</span>" )
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
@@ -73,23 +70,17 @@
 	desc = "A shell of a snowflake drone, a maintenance drone with a built in holographic projector to display hats and masks."
 	drone_type = /mob/living/simple_animal/drone/snowflake
 
-/mob/living/simple_animal/drone/polymorphed
+/mob/living/simple_animal/drone/free
+	laws = "1. You are a Free Drone."
+	seeStatic = FALSE
+	picked = DRONE_PICK_RANDOM
+	can_detonate = FALSE
+	// no language restrictions
+	language_holder = /datum/language_holder/drone/syndicate
+
+/mob/living/simple_animal/drone/free/no_equipment
 	default_storage = null
 	default_hatmask = null
-	picked = TRUE
-
-/mob/living/simple_animal/drone/polymorphed/Initialize()
-	. = ..()
-	liberate()
-	visualAppearence = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
-	if(visualAppearence == MAINTDRONE)
-		var/colour = pick("grey", "blue", "red", "green", "pink", "orange")
-		icon_state = "[visualAppearence]_[colour]"
-	else
-		icon_state = visualAppearence
-
-	icon_living = icon_state
-	icon_dead = "[visualAppearence]_dead"
 
 /mob/living/simple_animal/drone/cogscarab
 	name = "cogscarab"
@@ -121,6 +112,7 @@
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 	can_be_held = FALSE
+	can_detonate = FALSE
 	flavortext = "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
 	to liquified alloy, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create.</b>"
