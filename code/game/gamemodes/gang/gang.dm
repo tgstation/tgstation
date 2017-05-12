@@ -94,7 +94,6 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 		return 0
 
 	//turn off sec and captain
-	SSjob.DisableJob(/datum/job/captain)
 	SSjob.DisableJob(/datum/job/hos)
 	SSjob.DisableJob(/datum/job/warden)
 	SSjob.DisableJob(/datum/job/detective)
@@ -121,26 +120,26 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 		for(var/datum/mind/boss_mind in G.bosses)
 			bosses += boss_mind
 
-	for(var/I in bosses)
-		var/datum/mind/boss_mind = I
-		var/list/other_bosses = bosses.Copy() - boss_mind
-		var/msg = "<span class='danger'>You've decided to take charge of the situation and form a gang."
-		for(var/J in 1 to other_bosses.len)
-			var/datum/mind/other_mind = other_bosses[J]
-			if(J == other_bosses.len)
-				msg += " and"
-			msg += " [other_mind.current]"
-			if(J != other_bosses.len)
-				msg += ","
-		to_chat(boss_mind.current, "[msg] are your ganghead rivals. [syndicate_name()] has offered an uplink to help you take over, it will be delivered in five minutes.</span>")
+	for(var/datum/gang/G in gangs)
+		for(var/datum/mind/boss_mind in G.bosses)
+			var/list/other_bosses = bosses.Copy() - boss_mind
+			var/msg = "<span class='danger'>You've decided to take charge of the situation and form the [G.name] gang."
+			for(var/J in 1 to other_bosses.len)
+				var/datum/mind/other_mind = other_bosses[J]
+				if(J == other_bosses.len)
+					msg += " and"
+				msg += " [other_mind.current]"
+				if(J != other_bosses.len)
+					msg += ","
+			to_chat(boss_mind.current, "[msg] are your ganghead rivals. [syndicate_name()] has offered an uplink to help you take over, it will be delivered in five minutes.</span>")
+			forge_gang_objectives(boss_mind)
+			greet_gang(boss_mind)
 	
 	sleep(3000)
 	
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
 			G.add_gang_hud(boss_mind)
-			forge_gang_objectives(boss_mind)
-			greet_gang(boss_mind)
 			equip_gang(boss_mind.current,G)
 			modePlayer += boss_mind
 
