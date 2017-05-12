@@ -120,6 +120,30 @@
 	cost = 5
 	item_path = /obj/item/weapon/switchblade
 
+/datum/gang_item/weapon/surplus
+	name = "Surplus Rifle"
+	id = "surplus"
+	cost = 8
+	item_path = /obj/item/weapon/gun/ballistic/automatic/surplus
+
+/datum/gang_item/weapon/ammo/surplus_ammo
+	name = "Surplus Rifle Ammo"
+	id = "surplus_ammo"
+	cost = 5
+	item_path = /obj/item/ammo_box/magazine/m10mm/rifle
+
+/datum/gang_item/weapon/improvised
+	name = "Sawn-Off Improvised Shotgun"
+	id = "sawn"
+	cost = 6
+	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
+
+/datum/gang_item/weapon/ammo/improvised_ammo
+	name = "Box of Buckshot"
+	id = "buckshot"
+	cost = 5
+	item_path = /obj/item/weapon/storage/box/lethalshot
+
 /datum/gang_item/weapon/pistol
 	name = "10mm Pistol"
 	id = "pistol"
@@ -131,7 +155,7 @@
 	id = "pistol_ammo"
 	cost = 10
 	item_path = /obj/item/ammo_box/magazine/m10mm
-	
+
 /datum/gang_item/weapon/sniper
 	name = ".50cal Sniper Rifle"
 	id = "sniper"
@@ -144,20 +168,32 @@
 	cost = 15
 	item_path = /obj/item/ammo_box/magazine/sniper_rounds
 
+/datum/gang_item/weapon/MG
+	name = "Mounted Machine Gun"
+	id = "MG"
+	cost = 50
+	item_path = /obj/machinery/manned_turret
+
 /datum/gang_item/weapon/uzi
 	name = "Uzi SMG"
 	id = "uzi"
 	cost = 60
 	item_path = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
-	id = "uzi"
+
 
 /datum/gang_item/weapon/ammo/uzi_ammo
 	name = "Uzi Ammo"
 	id = "uzi_ammo"
 	cost = 40
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
-	
-	
+
+
+
+
+
+
+
+
 ///////////////////
 //EQUIPMENT
 ///////////////////
@@ -171,7 +207,7 @@
 	id = "spraycan"
 	cost = 5
 	item_path = /obj/item/toy/crayon/spraycan/gang
-	
+
 /datum/gang_item/equipment/sharpener
 	name = "Sharpener"
 	id = "whetstone"
@@ -206,7 +242,7 @@
 /datum/gang_item/equipment/stimpack
 	name = "Black Market Stimulants"
 	id = "stimpack"
-	cost = 15
+	cost = 12
 	item_path = /obj/item/weapon/reagent_containers/syringe/stimulants
 
 /datum/gang_item/equipment/implant_breaker
@@ -305,11 +341,11 @@
 		if(obj.density)
 			to_chat(user, "<span class='warning'>There's not enough room here!</span>")
 			return FALSE
-	
+
 	if(dominator_excessive_walls(user))
 		to_chat(user, "span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires an open space within three standard units so that walls do not interfere with the signal.</span>")
 		return FALSE
-		
+
 	if(!(usrarea.type in gang.territory|gang.territory_new))
 		to_chat(user, "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>")
 		return FALSE

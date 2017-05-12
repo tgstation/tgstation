@@ -28,13 +28,25 @@
 		/datum/gang_item/function/gang_ping,
 		/datum/gang_item/function/recall,
 		/datum/gang_item/function/outfit,
+		/datum/gang_item/weapon/shuriken
 		/datum/gang_item/weapon/switchblade,
+		/datum/gang_item/weapon/improvised,
+		/datum/gang_item/weapon/ammo/improvised_ammo,
+		/datum/gang_item/weapon/surplus,
+		/datum/gang_item/weapon/ammo/surplus_ammo,
 		/datum/gang_item/weapon/pistol,
 		/datum/gang_item/weapon/ammo/pistol_ammo,
+		/datum/gang_item/weapon/sniper
+		/datum/gang_item/weapon/ammo/sniper_ammo
+		/datum/gang_item/weapon/MG,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/spraycan,
+		/datum/gang_item/equipment/sharpener
+		/datum/gang_item/equipment/emp
 		/datum/gang_item/equipment/c4,
+		/datum/gang_item/equipment/frag
+		/datum/gang_item/equipment/stimpack
 		/datum/gang_item/equipment/implant_breaker,
 		/datum/gang_item/equipment/pen,
 		/datum/gang_item/equipment/gangtool,
