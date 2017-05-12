@@ -935,7 +935,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			for those of little faith. Even the most steadfast athiest will be able to heal\
 			their wounded allies with it. Additionally, it's hard-light bindings can become\
 			particularly sharp, allowing the user to harm as well as heal."
-	item = /obj/weapon/storage/book/bible/syndicate
+	item = /obj/item/weapon/storage/book/bible/syndicate
 	cost = 9
 
 /datum/uplink_item/device_tools/thermal
