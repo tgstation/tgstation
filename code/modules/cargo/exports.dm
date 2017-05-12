@@ -93,7 +93,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	if(k_elasticity!=0)
 		return round((cost/k_elasticity) * (1 - GLOB.E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
 	else
-		return round(cost * GLOB.E**(-1 * k_elasticity * amount) * amount)	//alternative form derived from L'Hopital to avoid division by 0
+		return round(cost * amount)	//alternative form derived from L'Hopital to avoid division by 0
 
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
