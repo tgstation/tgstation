@@ -24,7 +24,7 @@
 		icon_state = "daki_[body_choice]"
 		custom_name = stripped_input(user, "What's her name?")
 		if(length(custom_name) > MAX_NAME_LEN)
-			user << "<span class='danger'>Name is too long!</span>"
+			to_chat(user,"<span class='danger'>Name is too long!</span>")
 			return FALSE
 		if(custom_name)
 			name = custom_name
