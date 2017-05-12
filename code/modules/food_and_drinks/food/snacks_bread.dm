@@ -167,7 +167,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/butteredtoast
 	name = "buttered toast"
-	desc = "Butter lightly spread over a peice of toast."
+	desc = "Butter lightly spread over a piece of toast."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "butteredtoast"
 	bitesize = 3
