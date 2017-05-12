@@ -176,8 +176,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	attack_verb = list("attacked", "slashed", "blessed", "sliced", "torn", "ripped", "diced", "cut")
 	var/ordained = FALSE
 
-/obj/item/weapon/storage/book/bible/syndicate/initialize()
+/obj/item/weapon/storage/book/bible/syndicate/Initialize()
 	desc +="\n<span class='notice'> Alt-click to toggle between healing and harming modes.</span>"
+	. = ..()
 	
 	
 /obj/item/weapon/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
