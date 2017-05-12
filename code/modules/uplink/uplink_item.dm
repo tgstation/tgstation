@@ -929,12 +929,12 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/device_tools/ebook
-	name = "Syndiecult Bible"
-	desc = "The Syndicate Religious Sciences institute have created these bibles \
-			for those of little faith. Even the most steadfast athiest will be able to heal\
-			their wounded allies with it. Additionally, it's hard-light bindings can become\
-			particularly sharp, allowing the user to harm as well as heal."
+/datum/uplink_item/device_tools/syndietome
+	name = "Syndicate Tome"
+	desc = "Using rare artifacts acquired at great cost, the syndicate has reverse engineered \
+			the seemingly magical books of a certain cult. Though lacking the esoteric abilities\
+			of the originals, these inferior copies are still quite useful, being able to provide\
+			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
 	item = /obj/item/weapon/storage/book/bible/syndicate
 	cost = 9
 
