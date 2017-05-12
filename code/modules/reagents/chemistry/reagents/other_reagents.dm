@@ -1111,7 +1111,7 @@
 	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery."
 	reagent_state = LIQUID
 	color = "#808080"
-	taste_description = "numbness"
+	taste_description = "sweetness"
 
 /datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
@@ -1122,7 +1122,19 @@
 	if(istype(T))
 		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
 
-
+/datum/reagent/nitrous_oxide/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	if(method == VAPOR)
+		M.drowsyness += max(round(reac_volume, 1), 2)
+		
+/datum/reagent/nitrous_oxide/on_mob_life(mob/living/M)
+	M.drowsyness += 2
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.blood_volume -= 2.5
+	if(prob(20))
+		M.losebreath += 2
+		M.confused = min(M.confused + 2, 5)
+	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
