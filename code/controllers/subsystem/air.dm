@@ -278,6 +278,13 @@ var/datum/subsystem/air/SSair
 		add_to_active(T)
 	queued_for_activation.Cut()
 
+	//Recalculated, for Multi-Z (In an ideal world I'd move setup_allturfs() here
+	//but it's sadly not that simple)
+	for(var/t in block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz)))
+		var/turf/T = t
+		T.CalculateAdjacentTurfs()
+		CHECK_TICK
+
 /datum/subsystem/air/proc/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 	var/list/active_turfs = src.active_turfs

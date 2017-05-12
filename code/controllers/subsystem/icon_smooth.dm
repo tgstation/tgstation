@@ -32,6 +32,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 		if(!A || A.z <= 2)
 			continue
 		smooth_icon(A)
+		A.post_smooth()
 		CHECK_TICK
 
 	..()

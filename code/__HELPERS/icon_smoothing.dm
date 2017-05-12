@@ -259,7 +259,7 @@
 		A.cut_overlay(A.bottom_left_corner)
 		A.bottom_left_corner = se
 		LAZYADD(New, se)
-	
+
 	if(New)
 		A.add_overlay(New)
 
@@ -394,3 +394,10 @@
 	icon_state = "smooth"
 	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
 	canSmoothWith = null
+
+
+
+//Called by SSicon_smooth after this atom has smoothed
+/atom/proc/post_smooth()
+	if(zshadow)
+		zshadow.SyncAppearance()

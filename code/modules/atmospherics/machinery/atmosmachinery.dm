@@ -67,7 +67,7 @@ Pipelines + Other Objects -> Pipe network
 		node_connects.len = device_type
 
 		for(DEVICE_TYPE_LOOP)
-			for(var/D in cardinal)
+			for(var/D in ATMOS_DIRS)
 				if(D & GetInitDirections())
 					if(D in node_connects)
 						continue

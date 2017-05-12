@@ -14,18 +14,18 @@
 /turf/open/CanAtmosPass(turf/T)
 	var/R
 	if(blocks_air || T.blocks_air)
-		R = 1
+		R = TRUE
 
 	for(var/obj/O in contents+T.contents)
 		var/turf/other = (O.loc == src ? T : src)
 		if(!CANATMOSPASS(O, other))
-			R = 1
+			R = TRUE
 			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
 				var/D = get_dir(src, T)
 				atmos_supeconductivity |= D
 				D = get_dir(T, src)
 				T.atmos_supeconductivity |= D
-				return 0						//no need to keep going, we got all we asked
+				return FALSE						//no need to keep going, we got all we asked
 
 	atmos_supeconductivity &= ~get_dir(src, T)
 	T.atmos_supeconductivity &= ~get_dir(T, src)
@@ -39,10 +39,19 @@
 
 /turf/proc/CalculateAdjacentTurfs()
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
-	for(var/direction in cardinal)
+	for(var/direction in ATMOS_DIRS)
 		var/turf/T = get_step(src, direction)
 		if(!T)
 			continue
+
+		if(direction == UP)
+			if(!T.z_open)
+				continue
+
+		else if(direction == DOWN)
+			if(!z_open)
+				continue
+
 		if(CANATMOSPASS(T, src))
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(T.atmos_adjacent_turfs)
@@ -76,7 +85,7 @@
 		var/matchingDirections = 0
 		var/turf/S = get_step(curloc, direction)
 
-		for (var/checkDirection in cardinal)
+		for (var/checkDirection in ATMOS_DIRS)
 			var/turf/checkTurf = get_step(S, checkDirection)
 			if(!S.atmos_adjacent_turfs || !S.atmos_adjacent_turfs[checkTurf])
 				continue

@@ -1,3 +1,15 @@
+
+/*
+	Remie note:
+	I added proper multiZ, but this thing is ancient
+	I "updated" it, and it DOES work, but it's
+	not in RPDs, pipe dispensers etc and some of its
+	content (on/off, volume_rate) aren't implemented.
+
+	Use this for ruins and stuff I guess, or fix it up proper.
+*/
+
+
 /obj/machinery/zvent
 	name = "interfloor air transfer system"
 
@@ -21,9 +33,13 @@
 
 	//all this object does, is make its turf share air with the ones above and below it, if they have a vent too.
 	if(isturf(loc)) //if we're not on a valid turf, forget it
-		for (var/new_z in list(-1,1))  //change this list if a fancier system of z-levels gets implemented
-			var/turf/open/zturf_conn = locate(x,y,z+new_z)
+		var/turf/T = loc
+		for (var/ddir in list(DOWN,UP))  //change this list if a fancier system of z-levels gets implemented //meow
+			var/turf/open/zturf_conn = get_step(loc, ddir)
 			if (istype(zturf_conn))
+				if(!AreZsConnected(zturf_conn.z, T.z))
+					continue
+
 				var/obj/machinery/zvent/zvent_conn= locate(/obj/machinery/zvent) in zturf_conn
 				if (istype(zvent_conn))
 					//both floors have simulated turfs, share()
