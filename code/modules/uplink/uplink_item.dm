@@ -929,6 +929,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+/datum/uplink_item/device_tools/ebook
+	name = "Syndicult Bible"
+	desc = "The Syndicate Religious Sciences institute have created these bibles \
+			for those of little faith. Even the most steadfast athiest will be able to heal\
+			their wounded allies with it. Additionally, it's hard-light bindings can become\
+			particularly sharp, allowing the user to harm as well as heal."
+	item = /obj/weapon/storage/book/bible/syndicate
+	cost = 9
+
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
 	desc = "These goggles can be turned to resemble common eyewears throughout the station. \
