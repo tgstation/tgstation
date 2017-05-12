@@ -187,13 +187,6 @@
 	cost = 40
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
 
-
-
-
-
-
-
-
 ///////////////////
 //EQUIPMENT
 ///////////////////
@@ -343,7 +336,7 @@
 			return FALSE
 
 	if(dominator_excessive_walls(user))
-		to_chat(user, "span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires an open space within three standard units so that walls do not interfere with the signal.</span>")
+		to_chat(user, "span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires a sizable open space within three standard units so that walls do not interfere with the signal.</span>")
 		return FALSE
 
 	if(!(usrarea.type in gang.territory|gang.territory_new))
