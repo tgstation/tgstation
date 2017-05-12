@@ -12,7 +12,6 @@
 	w_class = 4
 	max_w_class = 3
 	max_combined_w_class = 21
-	var/spam_flag = FALSE
 	var/cooldowntime = 20
 	var/static/list/dakimakura_options = list("Callie","Casca","Chaika","Elisabeth","Foxy Grandpa","Haruko","Holo","Ian","Jolyne","Kurisu","Marie","Mugi","Nar'Sie","Patchouli","Plutia","Rei","Reisen","Naga","Squid","Squigly","Tomoko","Toriel","Umaru","Yaranaika","Yoko") //Kurisu is the ideal girl." - Me, Logos.
 
@@ -31,21 +30,19 @@
 			name = custom_name
 			desc = "A large pillow depicting [custom_name] in a compromising position. Featuring as many dimensions as you."
 	else
-		if(!spam_flag)
-			spam_flag = FALSE
-			if("help")
+		switch(user.a_intent)
+			if(INTENT_HELP)
 				user.visible_message("<span class='notice'>[user] hugs the [name].</span>")
 				playsound(src, "rustle", 50, 1, -5)
-			if("disarm")
+			if(INTENT_DISARM)
 				user.visible_message("<span class='notice'>[user] kisses the [name].</span>")
 				playsound(src, "rustle", 50, 1, -5)
-			if("grab")
+			if(INTENT_GRAB)
 				user.visible_message("<span class='warning'>[user] holds the [name]!</span>")
 				playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
-			if("harm")
+			if(INTENT_HARM)
 				user.visible_message("<span class='danger'>[user] punches the [name]!</span>")
 				playsound(src, 'sound/effects/shieldbash.ogg', 50, 1)
-			spawn(cooldowntime)
-				spam_flag = TRUE
+		user.changeNext_move(CLICK_CD_MELEE)
 
 ////////////////////////////
