@@ -111,10 +111,6 @@
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
 
-/datum/export/stack/cable/get_cost(O)
-	return round(..())
-
-
 // Weird Stuff
 
 // Alien Alloy. Like plasteel, but better.

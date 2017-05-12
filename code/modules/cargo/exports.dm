@@ -60,6 +60,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
 	var/message = ""
 	var/cost = 100					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
+	var/k_elasticity = 1/30			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
 	var/contraband = FALSE			// Export must be unlocked with multitool.
 	var/emagged = FALSE				// Export must be unlocked with emag.
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
@@ -82,14 +83,17 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 /datum/export/process()
 	..()
-	var/t = cost
-	cost += (t * 0.001)
+	cost *= GLOB.E**(k_elasticity * (1/30))
 	if(cost > init_cost)
 		cost = init_cost
 
 // Checks the cost. 0 cost items are skipped in export.
 /datum/export/proc/get_cost(obj/O, contr = 0, emag = 0)
-	return cost * get_amount(O, contr, emag)
+	var/amount = get_amount(O, contr, emag)
+	if(k_elasticity!=0)
+		return round((cost/k_elasticity) * (1 - GLOB.E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
+	else
+		return round(cost * amount)	//alternative form derived from L'Hopital to avoid division by 0
 
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
@@ -119,11 +123,12 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/the_cost = get_cost(O)
 	var/amount = get_amount(O)
 	total_cost += the_cost
-	total_amount += amount
+	if(istype(O,/datum/export/material))
+		total_amount += amount*MINERAL_MATERIAL_AMOUNT
+	else
+		total_amount += amount
 	
-	cost -= (the_cost * (0.01*amount))
-	if(cost < 1)
-		cost = 1
+	cost *= GLOB.E**(-1*k_elasticity*amount)		//marginal cost modifier
 	SSblackbox.add_details("export_sold_amount","[O.type]|[amount]")
 	SSblackbox.add_details("export_sold_cost","[O.type]|[the_cost]")
 
