@@ -25,7 +25,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	item_state = "bible"
 	var/mob/affecting = null
 	var/deity_name = "Christ"
-	var/heal_mode = TRUE
 
 /obj/item/weapon/storage/book/bible/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -86,7 +85,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		playsound(src.loc, "punch", 25, 1, -1)
 	return 1
 
-/obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user)
+/obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
 	
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -170,6 +169,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	throw_range = 7
 	force = 18
 	hitsound = 'sound/weapons/sear.ogg'
+	damntype = 'fire'
 	name = "Syndicate Tome"
 	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
 	var/ordained = FALSE
@@ -183,18 +183,18 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		H.mind.isholy = TRUE
 		ordained = TRUE
 		to_chat(H, "<span class='userdanger'>You try to open the book AND IT BITES YOU!</span>")
+		playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+		H.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
 		to_chat(H, "<span class='notice'>Your name appears on the inside cover, in blood./span>")
 		var/ownername = H.name
 		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
 	return
 
-/obj/item/weapon/storage/book/bible/syndicate/AltClick(mob/living/carbon/human/user)
-	if(heal_mode)
-		heal_mode = FALSE
-		to_chat(user, "<span class='notice'>[src] will now harm.</span>")
+/obj/item/weapon/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
+	if (user.a_intent == INTENT_HELP)
+		..()
 	else
-		heal_mode = TRUE
-		to_chat(user, "<span class='notice'>[src] will now heal.</span>")
+		..(M,user,heal_mode = FALSE)
 	return
 
 /obj/item/storage/book/bible/syndicate/add_blood(list/blood_dna)
