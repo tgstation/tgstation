@@ -1,5 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 11-05-2017 16:24 (UTC)
+//Model dictionary trimmed on: 12-05-2017 18:47 (UTC)
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -19230,10 +19230,10 @@
 	},
 /area/security/checkpoint/supply)
 "aJG" = (
-/obj/structure/closet/secure_closet/security/engine,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/security/cargo,
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
 	dir = 10;
@@ -67339,7 +67339,7 @@
 	},
 /area/teleporter)
 "cnb" = (
-/obj/structure/closet/secure_closet/security/engine,
+/obj/structure/closet/secure_closet/security,
 /turf/open/floor/plasteel/red/side{
 	tag = "icon-red (NORTHWEST)";
 	icon_state = "red";
