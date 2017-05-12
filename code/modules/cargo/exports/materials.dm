@@ -25,14 +25,7 @@
 	else if(istype(I, /obj/item/weapon/ore))
 		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
 
-	return round(amount)
-
-/datum/export/material/get_cost(obj/O)
-	var/amount = get_amount(O)/MINERAL_MATERIAL_AMOUNT
-	if(kelasticity!=0)
-		return round((cost/kelasticity) * (1 - GLOB.E**(-1 * kelasticity * amount)))	//anti-derivative of the marginal cost function
-	else
-		return round(cost * GLOB.E**(-1 * kelasticity * amount) * amount)	//alternative form derived from L'Hopital to avoid division by 0
+	return round(amount/MINERAL_MATERIAL_AMOUNT)
 
 // Materials. Nothing but plasma is really worth selling. Better leave it all to RnD and sell some plasma instead.
 
