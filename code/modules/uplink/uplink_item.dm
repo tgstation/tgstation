@@ -410,6 +410,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/stealthy_weapons/cqc2
+	name = "CQC Manual"
+	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
+	item = /obj/item/weapon/cqc_manual
+	exclude_modes = list(/datum/game_mode/nuclear)
+	cost = 20
+	surplus = 0
+
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
