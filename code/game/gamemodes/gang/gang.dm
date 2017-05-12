@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	set waitfor = FALSE
 	..(FALSE, FALSE)
 
-	priority_announce("Ballas Federation Announcement", "SECURITY SHOULD OF SIDED WITH THE BALLAS, SUCK MY DICK GROVE BITCHES", 'sound/machines/Alarm.ogg')
+	priority_announce("Ballas Federation Announcement", "SECURITY SHOULD OF SIDED WITH THE BALLAS!", 'sound/machines/Alarm.ogg')
 
 	sleep(100)
 
