@@ -62,6 +62,12 @@
 		body+= "<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'><font color=red>OOCBan</font></A> | "
 	else
 		body+= "<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'>OOCBan</A> | "
+
+	if(jobban_isbanned(M, "AHELP"))
+		body+= "<A href='?_src_=holder;jobban3=AHELP;jobban4=\ref[M]'><font color=red>AHELPBan</font></A> | "
+	else
+		body+= "<A href='?_src_=holder;jobban3=AHELP;jobban4=\ref[M]'>AHELPBan</A> | "
+
 	if(jobban_isbanned(M, "emote"))
 		body+= "<A href='?_src_=holder;jobban3=emote;jobban4=\ref[M]'><font color=red>EmoteBan</font></A> | "
 	else
