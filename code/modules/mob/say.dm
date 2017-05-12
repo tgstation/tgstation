@@ -31,12 +31,17 @@
 
 	usr.emote("me",1,message)
 
+GLOBAL_VAR_INIT(deadchat_disabled, FALSE)
 /mob/proc/say_dead(var/message)
 	var/name = real_name
 	var/alt_name = ""
 
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+
+	if(GLOB.deadchat_disabled)
+		to_chat(usr, "<span class='danger'>Deadchat is currently admin-disabled.</span>")
 		return
 
 	if(jobban_isbanned(src, "OOC"))
