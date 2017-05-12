@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 		H.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
 		to_chat(H, "<span class='notice'>Your name appears on the inside cover, in blood./span>")
-		var/ownername = H.name
+		var/ownername = H.real_name
 		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
 	return
 
