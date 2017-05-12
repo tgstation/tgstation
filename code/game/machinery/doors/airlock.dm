@@ -41,7 +41,6 @@
 #define ELECTRIFIED_PERMANENT -1
 
 
-var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock
 	name = "airlock"
@@ -93,13 +92,16 @@ var/list/airlock_overlays = list()
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
+	var/prying_so_hard = FALSE
+
+	var/static/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/Initialize()
 	..()
 	wires = new /datum/wires/airlock(src)
 	if(src.closeOtherId != null)
 		spawn (5)
-			for (var/obj/machinery/door/airlock/A in airlocks)
+			for (var/obj/machinery/door/airlock/A in GLOB.airlocks)
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
@@ -114,7 +116,7 @@ var/list/airlock_overlays = list()
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
@@ -177,18 +179,17 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/narsie_act()
 	var/turf/T = get_turf(src)
 	var/runed = prob(20)
-	if(prob(20))
-		if(glass)
-			if(runed)
-				new/obj/machinery/door/airlock/cult/glass(T)
-			else
-				new/obj/machinery/door/airlock/cult/unruned/glass(T)
+	if(glass)
+		if(runed)
+			new/obj/machinery/door/airlock/cult/glass(T)
 		else
-			if(runed)
-				new/obj/machinery/door/airlock/cult(T)
-			else
-				new/obj/machinery/door/airlock/cult/unruned(T)
-		qdel(src)
+			new/obj/machinery/door/airlock/cult/unruned/glass(T)
+	else
+		if(runed)
+			new/obj/machinery/door/airlock/cult(T)
+		else
+			new/obj/machinery/door/airlock/cult/unruned(T)
+	qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
 	if(glass)
@@ -211,7 +212,7 @@ var/list/airlock_overlays = list()
 			cyclelinkedairlock.cyclelinkedairlock = null
 		cyclelinkedairlock = null
 	if(id_tag)
-		for(var/obj/machinery/doorButtons/D in machines)
+		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
 	return ..()
 
@@ -337,9 +338,7 @@ var/list/airlock_overlays = list()
 		return FALSE	//Already shocked someone recently?
 	if(!prob(prb))
 		return FALSE //you lucked out, no shock for you
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start() //sparks always.
+	do_sparks(5, TRUE, src)
 	var/tmp/check_range = TRUE
 	if(electrocute_mob(user, get_area(src), src, 1, check_range))
 		hasShocked = TRUE
@@ -366,13 +365,13 @@ var/list/airlock_overlays = list()
 	set_airlock_overlays(state)
 
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
-	var/image/frame_overlay
-	var/image/filling_overlay
-	var/image/lights_overlay
-	var/image/panel_overlay
-	var/image/weld_overlay
-	var/image/damag_overlay
-	var/image/sparks_overlay
+	var/mutable_appearance/frame_overlay
+	var/mutable_appearance/filling_overlay
+	var/mutable_appearance/lights_overlay
+	var/mutable_appearance/panel_overlay
+	var/mutable_appearance/weld_overlay
+	var/mutable_appearance/damag_overlay
+	var/mutable_appearance/sparks_overlay
 
 	switch(state)
 		if(AIRLOCK_CLOSED)
@@ -490,11 +489,12 @@ var/list/airlock_overlays = list()
 	add_overlay(damag_overlay)
 
 /proc/get_airlock_overlay(icon_state, icon_file)
+	var/obj/machinery/door/airlock/A
+	pass(A)	//suppress unused warning
+	var/list/airlock_overlays = A.airlock_overlays
 	var/iconkey = "[icon_state][icon_file]"
-	if(airlock_overlays[iconkey])
-		return airlock_overlays[iconkey]
-	airlock_overlays[iconkey] = image(icon_file, icon_state)
-	return airlock_overlays[iconkey]
+	if((!(. = airlock_overlays[iconkey])))
+		. = airlock_overlays[iconkey] = mutable_appearance(icon_file, icon_state)
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
@@ -1128,8 +1128,8 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
 	if(!operating && density)
-		if(W.remove_fuel(0,user))
-			if(user.a_intent != INTENT_HELP)
+		if(user.a_intent != INTENT_HELP)
+			if(W.remove_fuel(0,user))
 				user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
 								"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 								"<span class='italics'>You hear welding.</span>")
@@ -1140,18 +1140,22 @@ var/list/airlock_overlays = list()
 					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
 										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
 					update_icon()
-			else if(obj_integrity < max_integrity)
-				user.visible_message("[user] is welding the airlock.", \
-								"<span class='notice'>You begin repairing the airlock...</span>", \
-								"<span class='italics'>You hear welding.</span>")
-				playsound(loc, W.usesound, 40, 1)
-				if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-					obj_integrity = max_integrity
-					stat &= ~BROKEN
-					user.visible_message("[user.name] has repaired [src].", \
-										"<span class='notice'>You finish repairing the airlock.</span>")
-					update_icon()
+		else
+			if(obj_integrity < max_integrity)
+				if(W.remove_fuel(0,user))
+					user.visible_message("[user] is welding the airlock.", \
+									"<span class='notice'>You begin repairing the airlock...</span>", \
+									"<span class='italics'>You hear welding.</span>")
+					playsound(loc, W.usesound, 40, 1)
+					if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
+						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+						obj_integrity = max_integrity
+						stat &= ~BROKEN
+						user.visible_message("[user.name] has repaired [src].", \
+											"<span class='notice'>You finish repairing the airlock.</span>")
+						update_icon()
+			else
+				to_chat(user, "<span class='notice'>The airlock doesn't need repairing.</span>")
 
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weapon/weldingtool/W, mob/user)
 	return !operating && density && user && W && W.isOn() && user.loc
@@ -1222,10 +1226,13 @@ var/list/airlock_overlays = list()
 			return
 
 		var/time_to_open = 5
-		if(hasPower())
+		if(hasPower() && !prying_so_hard)
 			time_to_open = 50
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg',100,1) //is it aliens or just the CE being a dick?
-			if(do_after(user, time_to_open,target = src))
+			prying_so_hard = TRUE
+			var/result = do_after(user, time_to_open,target = src)
+			prying_so_hard = FALSE
+			if(result)
 				open(2)
 				if(density && !open(2))
 					to_chat(user, "<span class='warning'>Despite your attempts, the [src] refuses to open.</span>")
@@ -1275,8 +1282,6 @@ var/list/airlock_overlays = list()
 
 	if(!density)
 		return 1
-	if(!ticker || !ticker.mode)
-		return 0
 	operating = 1
 	update_icon(AIRLOCK_OPENING, 1)
 	src.set_opacity(0)
@@ -1534,13 +1539,13 @@ var/list/airlock_overlays = list()
 				ae.loc = src.loc
 	qdel(src)
 
-/obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
 	return FALSE
 
-/obj/machinery/door/airlock/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/obj/machinery/door/airlock/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the airlock.</span>")

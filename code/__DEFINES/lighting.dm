@@ -4,9 +4,9 @@
 #define LIGHTING_FALLOFF        1 // type of falloff to use for lighting; 1 for circular, 2 for square
 #define LIGHTING_LAMBERTIAN     0 // use lambertian shading for light sources
 #define LIGHTING_HEIGHT         1 // height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone
-#define LIGHTING_ROUND_VALUE    1 / 128 //Value used to round lumcounts, values smaller than 1/255 don't matter (if they do, thanks sinking points), greater values will make lighting less precise, but in turn increase performance, VERY SLIGHTLY.
+#define LIGHTING_ROUND_VALUE    1 / 64 //Value used to round lumcounts, values smaller than 1/129 don't matter (if they do, thanks sinking points), greater values will make lighting less precise, but in turn increase performance, VERY SLIGHTLY.
 
-#define LIGHTING_ICON 'icons/effects/lighting_object.png' // icon used for lighting shading effects
+#define LIGHTING_ICON 'icons/effects/lighting_object.dmi' // icon used for lighting shading effects
 
 // If the max of the lighting lumcounts of each spectrum drops below this, disable luminosity on the lighting objects.
 // Set to zero to disable soft lighting. Luminosity changes then work if it's lit at all.
@@ -16,10 +16,10 @@
 #define LIGHTING_BASE_MATRIX \
 	list                     \
 	(                        \
-		LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, 0, \
-		LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, 0, \
-		LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, 0, \
-		LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, 0, \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
 		0, 0, 0, 1           \
 	)                        \
 
@@ -67,3 +67,22 @@
 #define LIGHT_COLOR_SLIME_LAMP "#AFC84B" //Weird color, between yellow and green, very slimy. rgb(175, 200, 75)
 #define LIGHT_COLOR_TUNGSTEN   "#FAE1AF" //Extremely diluted yellow, close to skin color (for some reason). rgb(250, 225, 175)
 #define LIGHT_COLOR_HALOGEN    "#F0FAFA" //Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
+
+#define LIGHTING_PLANE_ALPHA_VISIBLE 255
+#define LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE 192
+#define LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 128 //For lighting alpha, small amounts lead to big changes. even at 128 its hard to figure out what is dark and what is light, at 64 you almost can't even tell.
+#define LIGHTING_PLANE_ALPHA_INVISIBLE 0
+
+//lighting area defines
+#define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
+#define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
+#define DYNAMIC_LIGHTING_FORCED 2 //dynamic lighting enabled even if the area doesn't require power
+#define DYNAMIC_LIGHTING_IFSTARLIGHT 3 //dynamic lighting enabled only if starlight is.
+#define IS_DYNAMIC_LIGHTING(A) A.dynamic_lighting
+
+
+//code assumes higher numbers override lower numbers.
+#define LIGHTING_NO_UPDATE 0
+#define LIGHTING_VIS_UPDATE 1
+#define LIGHTING_CHECK_UPDATE 2
+#define LIGHTING_FORCE_UPDATE 3

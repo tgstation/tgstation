@@ -23,10 +23,10 @@
 	else
 		return ..()
 
-/obj/structure/reagent_dispensers/New()
+/obj/structure/reagent_dispensers/Initialize()
 	create_reagents(tank_volume)
 	reagents.add_reagent(reagent_id, tank_volume)
-	..()
+	. = ..()
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
@@ -87,7 +87,7 @@
 	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
 		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
 			var/boom_message = "[key_name_admin(P.firer)] triggered a fueltank explosion via projectile."
-			bombers += boom_message
+			GLOB.bombers += boom_message
 			message_admins(boom_message)
 			var/log_message = "triggered a fueltank explosion via projectile."
 			P.firer.log_message(log_message, INDIVIDUAL_ATTACK_LOG)
@@ -111,7 +111,7 @@
 		else
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
-			bombers += message_admins
+			GLOB.bombers += message_admins
 			message_admins(message_admins)
 			var/message_log = "triggered a fueltank explosion via welding tool."
 			user.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
@@ -129,8 +129,8 @@
 	density = 0
 	reagent_id = "condensedcapsaicin"
 
-/obj/structure/reagent_dispensers/peppertank/New()
-	..()
+/obj/structure/reagent_dispensers/peppertank/Initialize()
+	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
 

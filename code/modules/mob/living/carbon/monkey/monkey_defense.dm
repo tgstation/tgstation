@@ -138,11 +138,12 @@
 
 
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
-			return 1
+			return TRUE
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart("chest")

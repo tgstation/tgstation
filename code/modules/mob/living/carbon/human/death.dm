@@ -32,10 +32,10 @@
 
 	dna.species.spec_death(gibbed, src)
 
-	if(ticker && ticker.mode)
-		sql_report_death(src)
-	if(mind && mind.devilinfo)
-		INVOKE_ASYNC(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src)
+	if(SSticker.HasRoundStarted())
+		SSblackbox.ReportDeath(src)
+	if(is_devil(src))
+		INVOKE_ASYNC(is_devil(src), /datum/antagonist/devil.proc/beginResurrectionCheck, src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED

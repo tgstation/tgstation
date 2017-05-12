@@ -58,9 +58,8 @@
 	AM.loc = T
 	AM.newtonian_move(dir)
 
-//Overwrite because we dont want people building rods
-/turf/open/space/transit/attackby(obj/item/C, mob/user, params)
-	..(C, user, params, /area/shuttle)
+/turf/open/space/transit/CanBuildHere()
+	return istype(get_area(src), /area/shuttle)
 
 /turf/open/space/transit/Initialize()
 	..()

@@ -227,7 +227,6 @@
 	layer = MOB_LAYER
 	var/obj/item/clothing/mask/facehugger/child
 
-
 /obj/structure/alien/egg/Initialize(mapload)
 	..()
 	update_icon()
@@ -235,14 +234,9 @@
 		child = new(src)
 	if(status == GROWING)
 		addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
-	if(status == GROWN)
-		add_to_proximity_list(src, 1)
+	proximity_monitor = new(src, status == GROWN ? 1 : 0)
 	if(status == BURST)
 		obj_integrity = integrity_failure
-
-/obj/structure/alien/egg/Destroy()
-	remove_from_proximity_list(src, 1)
-	. = ..()
 
 /obj/structure/alien/egg/update_icon()
 	..()
@@ -283,12 +277,12 @@
 /obj/structure/alien/egg/proc/Grow()
 	status = GROWN
 	update_icon()
-	add_to_proximity_list(src, 1)
+	proximity_monitor.SetRange(1)
 
 //drops and kills the hugger if any is remaining
 /obj/structure/alien/egg/proc/Burst(kill = TRUE)
 	if(status == GROWN || status == GROWING)
-		remove_from_proximity_list(src, 1)
+		proximity_monitor.SetRange(0)
 		status = BURST
 		update_icon()
 		flick("egg_opening", src)
@@ -304,14 +298,8 @@
 			else
 				for(var/mob/M in range(1,src))
 					if(CanHug(M))
-						child.Attach(M)
+						child.Leap(M)
 						break
-
-/obj/structure/alien/egg/Moved(oldloc)
-	remove_from_proximity_list(oldloc, 1)
-	if(status == GROWN)
-		add_to_proximity_list(src, 1)
-	return ..()
 
 /obj/structure/alien/egg/obj_break(damage_flag)
 	if(!(flags & NODECONSTRUCT))

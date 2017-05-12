@@ -16,7 +16,6 @@
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
 	dna_cost = -1
-	genetic_damage = 1000
 
 	var/silent = FALSE
 	var/weapon_type
@@ -67,7 +66,6 @@
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
 	dna_cost = -1
-	genetic_damage = 1000
 
 	var/helmet_type = /obj/item
 	var/suit_type = /obj/item
@@ -89,7 +87,7 @@
 		return 1
 	var/mob/living/carbon/human/H = user
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
-		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
+		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple].</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
 		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
 		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_inv_wear_suit()
@@ -100,7 +98,6 @@
 			H.add_splatter_floor()
 			playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
 
-		changeling.geneticdamage += genetic_damage //Casting off a space suit leaves you weak for a few seconds.
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		return 1
 
@@ -126,7 +123,7 @@
 
 	var/datum/changeling/changeling = user.mind.changeling
 	changeling.chem_recharge_slowdown += recharge_slowdown
-	return 1
+	return TRUE
 
 
 //fancy headers yo
@@ -139,9 +136,7 @@
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
 	chemical_cost = 20
 	dna_cost = 2
-	genetic_damage = 10
 	req_human = 1
-	max_genetic_damage = 20
 	weapon_type = /obj/item/weapon/melee/arm_blade
 	weapon_name_simple = "blade"
 
@@ -162,8 +157,8 @@
 	sharpness = IS_SHARP
 	var/can_drop = FALSE
 
-/obj/item/weapon/melee/arm_blade/New(location,silent,synthetic)
-	..()
+/obj/item/weapon/melee/arm_blade/Initialize(mapload,silent,synthetic)
+	. = ..()
 	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	if(synthetic)
@@ -217,9 +212,7 @@
 	and Harm will stun it, and stab it if we're also holding a sharp weapon. Cannot be used while in lesser form."
 	chemical_cost = 10
 	dna_cost = 2
-	genetic_damage = 5
 	req_human = 1
-	max_genetic_damage = 10
 	weapon_type = /obj/item/weapon/gun/magic/tentacle
 	weapon_name_simple = "tentacle"
 	silent = TRUE
@@ -240,8 +233,8 @@
 	throw_range = 0
 	throw_speed = 0
 
-/obj/item/weapon/gun/magic/tentacle/New(location,silent)
-	..()
+/obj/item/weapon/gun/magic/tentacle/Initialize(mapload, silent)
+	. = ..()
 	if(ismob(loc))
 		if(!silent)
 			loc.visible_message("<span class='warning'>[loc.name]\'s arm starts stretching inhumanly!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a tentacle.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
@@ -266,9 +259,9 @@
 	firing_effect_type = null
 	var/obj/item/weapon/gun/magic/tentacle/gun //the item that shot it
 
-/obj/item/ammo_casing/magic/tentacle/New(obj/item/weapon/gun/magic/tentacle/tentacle_gun)
-	gun = tentacle_gun
-	..()
+/obj/item/ammo_casing/magic/tentacle/Initialize()
+	gun = loc
+	. = ..()
 
 /obj/item/ammo_casing/magic/tentacle/Destroy()
 	gun = null
@@ -285,9 +278,9 @@
 	var/chain
 	var/obj/item/ammo_casing/magic/tentacle/source //the item that shot it
 
-/obj/item/projectile/tentacle/New(obj/item/ammo_casing/magic/tentacle/tentacle_casing)
-	source = tentacle_casing
-	..()
+/obj/item/projectile/tentacle/Initialize()
+	source = loc
+	. = ..()
 
 /obj/item/projectile/tentacle/fire(setAngle)
 	if(firer)
@@ -381,9 +374,7 @@
 	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
 	chemical_cost = 20
 	dna_cost = 1
-	genetic_damage = 12
 	req_human = 1
-	max_genetic_damage = 20
 
 	weapon_type = /obj/item/weapon/shield/changeling
 	weapon_name_simple = "shield"
@@ -395,7 +386,7 @@
 
 	var/obj/item/weapon/shield/changeling/S = ..(user)
 	S.remaining_uses = round(changeling.absorbedcount * 3)
-	return 1
+	return TRUE
 
 /obj/item/weapon/shield/changeling
 	name = "shield-like mass"
@@ -407,8 +398,8 @@
 
 	var/remaining_uses //Set by the changeling ability.
 
-/obj/item/weapon/shield/changeling/New()
-	..()
+/obj/item/weapon/shield/changeling/Initialize()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
@@ -430,12 +421,10 @@
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
 	desc = "We grow an organic suit to protect ourselves from space exposure."
-	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Retreating the suit damages our genomes. Cannot be used in lesser form."
+	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Cannot be used in lesser form."
 	chemical_cost = 20
 	dna_cost = 2
-	genetic_damage = 8
 	req_human = 1
-	max_genetic_damage = 20
 
 	suit_type = /obj/item/clothing/suit/space/changeling
 	helmet_type = /obj/item/clothing/head/helmet/space/changeling
@@ -452,8 +441,8 @@
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/tank/internals/oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90) //No armor at all.
 
-/obj/item/clothing/suit/space/changeling/New()
-	..()
+/obj/item/clothing/suit/space/changeling/Initialize()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
@@ -477,12 +466,10 @@
 /obj/effect/proc_holder/changeling/suit/armor
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage."
-	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
+	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form."
 	chemical_cost = 20
 	dna_cost = 1
-	genetic_damage = 11
 	req_human = 1
-	max_genetic_damage = 20
 	recharge_slowdown = 0.25
 
 	suit_type = /obj/item/clothing/suit/armor/changeling
@@ -501,8 +488,8 @@
 	cold_protection = 0
 	heat_protection = 0
 
-/obj/item/clothing/suit/armor/changeling/New()
-	..()
+/obj/item/clothing/suit/armor/changeling/Initialize()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 

@@ -146,6 +146,7 @@ Remember, this tradeoff makes sense in many cases but not all, you should think 
 
 ### Prefer `Initialize` over `New` for atoms
 Our game controller is pretty good at handling long operations and lag. But, it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/master/code/game/atoms.dm#L49
+While we normally encourage (and in some cases, even require) bringing out of date code up to date when you make unrelated changes near the out of date code, that is not the case for `New` -> `Initialize` conversions. These systems are generally more dependant on parent and children procs so unrelated random conversions of existing things can cause bugs that take months to figure out.
 
 ### No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.
@@ -208,6 +209,8 @@ This prevents nesting levels from getting deeper then they need to be.
 * You are expected to help maintain the code that you add, meaning if there is a problem then you are likely to be approached in order to fix any issues, runtimes or bugs.
 
 * Do not divide when you can easily convert it to a multiplication. (ie `4/2` should be done as `4*0.5`)
+
+* Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
 
 #### Enforced not enforced
 The following different coding styles are not only not enforced, but it is generally frowned upon to change them over from one to the other for little reason:
@@ -275,6 +278,22 @@ H.gib()
 ```
 however DM also has a dot variable, accessed just as ```.``` on it's own, defaulting to a value of null, now what's special about the dot operator is that it is automatically returned (as in the ```return``` statment) at the end of a proc, provided the proc does not already manually return (```return count``` for example). Why is this special? well the ```return``` statement should ideally be free from overhead (functionally free, of course nothing's free) but DM fails to fulfill this,  DM's return statement is actually fairly costly for what it does and for what it's used for.
 With ```.``` being everpresent in every proc can we use it as a temporary variable? Of course we can! However the ```.``` operator cannot replace a typecasted variable, it can hold data any other var in DM can, it just can't be accessed as one, however the ```.``` operator is compatible with a few operators that look weird but work perfectly fine, such as: ```.++``` for incrementing ```.'s``` value, or ```.[1]``` for accessing the first element of ```.``` (provided it's a list).
+
+## Globals versus Static
+
+Byond has a var keyword, called global. This var keyword is for vars inside of types. IE:
+
+```
+mob
+    var
+        global
+            thing = 1
+```
+It DOES NOT mean that you can access it everywhere like a global var, instead It means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs, ie its shared across everything in it's type. (much more like the keyword static in other languages like php/c++/c#/java)
+
+Isn't that confusing? 
+
+There is also an undocumented keyword static, that has the same behaviour as global but more correctly describes byond's behaviour. Therefore we always use static instead of global where we need it as it reduces suprise when reading byond code.
 
 ## Pull Request Process
 

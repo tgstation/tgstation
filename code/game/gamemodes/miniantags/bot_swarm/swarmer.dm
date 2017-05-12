@@ -62,6 +62,7 @@
 	icon = 'icons/mob/swarmer.dmi'
 	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
+	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
 	health = 40
 	maxHealth = 40
@@ -81,8 +82,6 @@
 	melee_damage_type = STAMINA
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
-	languages_spoken = SWARMER
-	languages_understood = SWARMER
 	obj_damage = 0
 	environment_smash = 0
 	attacktext = "shocks"
@@ -121,7 +120,7 @@
 /mob/living/simple_animal/hostile/swarmer/Initialize()
 	..()
 	verbs -= /mob/living/verb/pulled
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
 
@@ -168,9 +167,9 @@
 ////CTRL CLICK FOR SWARMERS AND SWARMER_ACT()'S////
 /mob/living/simple_animal/hostile/swarmer/AttackingTarget()
 	if(!isliving(target))
-		target.swarmer_act(src)
+		return target.swarmer_act(src)
 	else
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/swarmer/CtrlClickOn(atom/A)
 	face_atom(A)
@@ -528,9 +527,9 @@
 	icon_state = "disintegrate"
 	duration = 10
 
-/obj/effect/overlay/temp/swarmer/disintegration/New()
-	playsound(src.loc, "sparks", 100, 1)
-	..()
+/obj/effect/overlay/temp/swarmer/disintegration/Initialize()
+	. = ..()
+	playsound(loc, "sparks", 100, 1)
 
 /obj/effect/overlay/temp/swarmer/dismantle
 	icon_state = "dismantle"
@@ -665,7 +664,7 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
 	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(isswarmer(M))
 			to_chat(M, rendered)
 		if(isobserver(M))

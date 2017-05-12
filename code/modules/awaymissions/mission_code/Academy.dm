@@ -47,7 +47,7 @@
 /obj/structure/academy_wizard_spawner/process()
 	if(next_check < world.time)
 		if(!current_wizard)
-			for(var/mob/living/L in player_list)
+			for(var/mob/living/L in GLOB.player_list)
 				if(L.z == src.z && L.stat != DEAD && !(faction in L.faction))
 					summon_wizard()
 					break
@@ -64,17 +64,18 @@
 		next_check = world.time + cooldown
 
 /obj/structure/academy_wizard_spawner/proc/give_control()
+	set waitfor = FALSE
+	
 	if(!current_wizard)
 		return
-	spawn(0)
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD, current_wizard)
-		var/mob/dead/observer/chosen = null
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, be_special_flag = ROLE_WIZARD, M = current_wizard)
+	var/mob/dead/observer/chosen = null
 
-		if(candidates.len)
-			chosen = pick(candidates)
-			message_admins("[key_name_admin(chosen)] was spawned as Wizard Academy Defender")
-			current_wizard.ghostize() // on the off chance braindead defender gets back in
-			current_wizard.key = chosen.key
+	if(candidates.len)
+		chosen = pick(candidates)
+		message_admins("[key_name_admin(chosen)] was spawned as Wizard Academy Defender")
+		current_wizard.ghostize() // on the off chance braindead defender gets back in
+		current_wizard.key = chosen.key
 
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
@@ -93,7 +94,7 @@
 	var/datum/objective/O = new("Protect Wizard Academy from the intruders")
 	wizmind.objectives += O
 	wizmind.transfer_to(wizbody)
-	ticker.mode.wizards |= wizmind
+	SSticker.mode.wizards |= wizmind
 
 	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt)
 	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile)
@@ -133,7 +134,7 @@
 /obj/item/weapon/dice/d20/fate/diceroll(mob/user)
 	..()
 	if(!used)
-		if(!ishuman(user) || !user.mind || (user.mind in ticker.mode.wizards))
+		if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
 			to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans!</span>")
 			return
 		if(rigged)
@@ -142,7 +143,7 @@
 			effect(user,result)
 
 /obj/item/weapon/dice/d20/fate/equipped(mob/user, slot)
-	if(!ishuman(user) || !user.mind || (user.mind in ticker.mode.wizards))
+	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
 		to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans! You should leave it alone.</span>")
 		user.drop_item()
 
@@ -160,7 +161,7 @@
 			user.death()
 		if(3)
 			//Swarm of creatures
-			for(var/direction in alldirs)
+			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_turf(src)
 				new /mob/living/simple_animal/hostile/creature(get_step(T,direction))
 		if(4)
@@ -180,7 +181,7 @@
 			//Throw
 			user.Stun(3)
 			user.adjustBruteLoss(50)
-			var/throw_dir = pick(cardinal)
+			var/throw_dir = pick(GLOB.cardinal)
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
 			user.throw_at(throw_target, 200, 4)
 		if(8)
@@ -203,7 +204,7 @@
 		if(13)
 			//Mad Dosh
 			var/turf/Start = get_turf(src)
-			for(var/direction in alldirs)
+			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_step(Start,direction)
 				if(rand(0,1))
 					new /obj/item/stack/spacecash/c1000(T)
@@ -284,7 +285,7 @@
 	if(!target_mob)
 		return
 	var/turf/Start = get_turf(user)
-	for(var/direction in alldirs)
+	for(var/direction in GLOB.alldirs)
 		var/turf/T = get_step(Start,direction)
 		if(!T.density)
 			target_mob.Move(T)
@@ -303,6 +304,6 @@
 	user.visible_message("[user] activates \the [src].","<span class='notice'>You activate \the [src].</span>")
 
 /obj/structure/ladder/can_use(mob/user)
-	if(user.mind in ticker.mode.wizards)
+	if(user.mind in SSticker.mode.wizards)
 		return 0
 	return 1

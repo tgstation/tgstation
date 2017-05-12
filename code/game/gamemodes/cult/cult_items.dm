@@ -26,6 +26,11 @@
 		return
 	..()
 
+/obj/item/weapon/melee/cultblade/ghost
+	name = "eldritch sword"
+	force = 20
+	flags = NODROP|DROPDEL
+
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!iscultist(user))
@@ -100,11 +105,17 @@
 	icon_state = "cult_hoodalt"
 	item_state = "cult_hoodalt"
 
+/obj/item/clothing/head/culthood/alt/ghost
+	flags = NODROP|DROPDEL
+
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
 	desc = "An armored set of robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
+
+/obj/item/clothing/suit/cultrobes/alt/ghost
+	flags = NODROP|DROPDEL
 
 
 /obj/item/clothing/head/magus
@@ -201,9 +212,9 @@
 	return 0
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
-    . = list()
-    if(!isinhands && current_charges)
-        . += image(layer = MOB_LAYER+0.01, icon = 'icons/effects/effects.dmi', icon_state = "shield-cult")
+	. = list()
+	if(!isinhands && current_charges)
+		. += mutable_appearance('icons/effects/effects.dmi', "shield-cult", MOB_LAYER + 0.01)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
@@ -213,7 +224,7 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
+	armor = list(melee = -50, bullet = -50, laser = -50,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
 	slowdown = -1
 	hoodtype = /obj/item/clothing/head/hooded/berserkerhood
 
@@ -281,6 +292,10 @@
 	if(curselimit > 1)
 		to_chat(user, "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>")
 		return
+	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
+		to_chat(user, "<span class='warning'>Nar-Sie is already on this plane, there is no delaying the end of all things.</span>")
+		return
+
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 		var/cursetime = 1800
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
@@ -328,7 +343,7 @@
 		return
 	if(!iscultist(user))
 		user.dropItemToGround(src, TRUE)
-		step(src, pick(alldirs))
+		step(src, pick(GLOB.alldirs))
 		to_chat(user, "<span class='warning'>\The [src] flickers out of your hands, your connection to this dimension is too strong!</span>")
 		return
 
@@ -375,7 +390,7 @@
 	if(istype(A, /obj/item))
 
 		var/list/cultists = list()
-		for(var/datum/mind/M in ticker.mode.cult)
+		for(var/datum/mind/M in SSticker.mode.cult)
 			if(M.current && M.current.stat != DEAD)
 				cultists |= M.current
 		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
@@ -403,5 +418,4 @@
 	else
 		..()
 		to_chat(user, "<span class='warning'>\The [src] can only transport items!</span>")
-		return
 

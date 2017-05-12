@@ -1,6 +1,7 @@
 /* In this file:
  * Wood floor
  * Grass floor
+ * Fake Basalt
  * Carpet floor
  * Fake pits
  * Fake space
@@ -67,6 +68,7 @@
 	broken_states = list("sand")
 	flags = NONE
 	var/ore_type = /obj/item/weapon/ore/glass
+	var/turfverb = "uproot"
 
 /turf/open/floor/grass/Initialize()
 	..()
@@ -76,7 +78,7 @@
 	if(istype(C, /obj/item/weapon/shovel) && params)
 		new ore_type(src)
 		new ore_type(src) //Make some sand if you shovel grass
-		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You uproot [src].</span>")
+		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You [src.turfverb] [src].</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		make_plating()
 	if(..())
@@ -92,7 +94,6 @@
 	floor_tile = null
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	slowdown = 2
-
 
 /turf/open/floor/grass/snow/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/crowbar))//You need to dig this turf out instead of crowbarring it
@@ -112,6 +113,24 @@
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
+
+
+/turf/open/floor/grass/fakebasalt //Heart is not a real planeteer power
+	name = "aesthetic volcanic flooring"
+	desc = "Safely recreated turf for your hellplanet-scaping"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "basalt"
+	floor_tile = /obj/item/stack/tile/basalt
+	ore_type = /obj/item/weapon/ore/glass/basalt
+	turfverb = "dig up"
+	slowdown = 0
+
+/turf/open/floor/grass/fakebasalt/Initialize()
+	..()
+	if(prob(15))
+		icon_state = "basalt[rand(0, 12)]"
+		set_basalt_light(src)
+
 
 /turf/open/floor/carpet
 	name = "carpet"
@@ -139,8 +158,14 @@
 		if(smooth)
 			queue_smooth_neighbors(src)
 
-/turf/open/floor/carpet/narsie_act()
-	return
+/turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
+	. = (prob(probability) || force)
+	for(var/I in src)
+		var/atom/A = I
+		if(ignore_mobs && ismob(A))
+			continue
+		if(ismob(A) || .)
+			A.narsie_act()
 
 /turf/open/floor/carpet/break_tile()
 	broken = 1

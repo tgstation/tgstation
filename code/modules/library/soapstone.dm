@@ -115,7 +115,7 @@
    as instructions and/or memes for the next generation of spessmen.
 
    Limited in location to station_z only. Can be smashed out or exploded,
-   but only permamently removed with the librarian's soapstone.
+   but only permamently removed with the curator's soapstone.
 */
 
 /obj/item/soapstone/infinite
@@ -229,7 +229,7 @@
 	SSpersistence.chisel_messages -= src
 	. = ..()
 
-/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = always_state)
+/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

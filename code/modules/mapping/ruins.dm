@@ -20,7 +20,7 @@
 		if(ruins && ruins.len)
 			ruin = ruins[pick(ruins)]
 		else
-			world.log << "Ruin loader had no ruins to pick from with [budget] left to spend."
+			log_world("Ruin loader had no ruins to pick from with [budget] left to spend.")
 			break
 		// Can we afford it
 		if(ruin.cost > budget)
@@ -32,8 +32,8 @@
 
 		while(sanity > 0)
 			sanity--
-			var/width_border = TRANSITIONEDGE + round(ruin.width / 2)
-			var/height_border = TRANSITIONEDGE + round(ruin.height / 2)
+			var/width_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(ruin.width / 2)
+			var/height_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(ruin.height / 2)
 			var/z_level = pick(z_levels)
 			var/turf/T = locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z_level)
 			var/valid = TRUE
@@ -47,7 +47,7 @@
 			if(!valid)
 				continue
 
-			world.log << "Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])"
+			log_world("Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])")
 
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
 			R.Load(ruins,ruin)
@@ -57,7 +57,7 @@
 			break
 
 	if(!overall_sanity)
-		world.log << "Ruin loader gave up with [budget] left to spend."
+		log_world("Ruin loader gave up with [budget] left to spend.")
 
 
 /obj/effect/ruin_loader

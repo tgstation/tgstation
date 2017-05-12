@@ -23,7 +23,7 @@
 	usr.name = O.name
 	usr.client.eye = O
 	usr.control_object = O
-	feedback_add_details("admin_verb","PO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Possess Object") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /proc/release(obj/O in world)
 	set name = "Release Obj"
@@ -41,12 +41,12 @@
 	usr.loc = O.loc
 	usr.client.eye = usr
 	usr.control_object = null
-	feedback_add_details("admin_verb","RO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Release Object") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/proc/givetestverbs(mob/M in mob_list)
+/proc/givetestverbs(mob/M in GLOB.mob_list)
 	set desc = "Give this guy possess/release verbs"
 	set category = "Debug"
 	set name = "Give Possessing Verbs"
 	M.verbs += /proc/possess
 	M.verbs += /proc/release
-	feedback_add_details("admin_verb","GPV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Give Possessing Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

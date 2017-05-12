@@ -7,7 +7,7 @@
 	det_time = 10
 	display_timer = 0
 	var/atom/target = null
-	var/image_overlay = null
+	var/mutable_appearance/plastic_overlay
 	var/obj/item/device/assembly_holder/nadeassembly = null
 	var/assemblyattacher
 	var/directional = FALSE
@@ -15,7 +15,7 @@
 	var/boom_sizes = list(0, 0, 3)
 
 /obj/item/weapon/grenade/plastic/New()
-	image_overlay = image('icons/obj/grenade.dmi', "[item_state]2")
+	plastic_overlay = mutable_appearance(icon, "[item_state]2")
 	..()
 
 /obj/item/weapon/grenade/plastic/Destroy()
@@ -50,7 +50,7 @@
 	if(target)
 		if(!QDELETED(target))
 			location = get_turf(target)
-			target.cut_overlay(image_overlay, TRUE)
+			target.cut_overlay(plastic_overlay, TRUE)
 	else
 		location = get_turf(src)
 	if(location)
@@ -96,7 +96,7 @@
 
 	to_chat(user, "<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>")
 
-	if(do_after(user, 50, target = AM))
+	if(do_after(user, 30, target = AM))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		src.target = AM
@@ -111,7 +111,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
 
-		target.add_overlay(image_overlay, 1)
+		target.add_overlay(plastic_overlay, 1)
 		if(!nadeassembly)
 			to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>")
 			addtimer(CALLBACK(src, .proc/prime), det_time*10)
@@ -119,8 +119,8 @@
 			qdel(src)	//How?
 
 /obj/item/weapon/grenade/plastic/suicide_act(mob/user)
-	message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) suicided with [src] at ([user.x],[user.y],[user.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)",0,1)
-	message_admins("[key_name(user)] suicided with [src] at ([user.x],[user.y],[user.z])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_COORDJMP(user)]",0,1)
+	log_game("[key_name(user)] suicided with [src] at [COORD(user)]")
 	user.visible_message("<span class='suicide'>[user] activates the [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
@@ -154,6 +154,115 @@
 /obj/item/weapon/grenade/plastic/c4
 	name = "C4"
 	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
+	gender = PLURAL
+	icon = 'icons/obj/grenade.dmi'
+	icon_state = "plastic-explosive0"
+	item_state = "plasticx"
+	flags = NOBLUDGEON
+	w_class = WEIGHT_CLASS_SMALL
+	origin_tech = "syndicate=1"
+	var/timer = 10
+	var/open_panel = 0
+
+/obj/item/weapon/grenade/plastic/c4/New()
+	wires = new /datum/wires/explosive/c4(src)
+	plastic_overlay = mutable_appearance(icon, "plastic-explosive2")
+	..()
+
+/obj/item/weapon/grenade/plastic/c4/Destroy()
+	qdel(wires)
+	wires = null
+	target = null
+	return ..()
+
+/obj/item/weapon/grenade/plastic/c4/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
+	var/message_say = "FOR NO RAISIN!"
+	if(user.mind)
+		if(user.mind.special_role)
+			var/role = lowertext(user.mind.special_role)
+			if(role == "traitor" || role == "syndicate")
+				message_say = "FOR THE SYNDICATE!"
+			else if(role == "changeling")
+				message_say = "FOR THE HIVE!"
+			else if(role == "cultist")
+				message_say = "FOR NAR-SIE!"
+			else if(role == "revolutionary" || role == "head revolutionary")
+				message_say = "VIVA LA REVOLUTION!"
+			else if(user.mind.gang_datum)
+				message_say = "[uppertext(user.mind.gang_datum.name)] RULES!"
+	user.say(message_say)
+	target = user
+	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)
+	message_admins("[key_name(user)] suicided with [name] at ([x],[y],[z])")
+	sleep(10)
+	explode(get_turf(user))
+	user.gib(1, 1)
+
+/obj/item/weapon/grenade/plastic/c4/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		open_panel = !open_panel
+		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
+	else if(is_wire_tool(I))
+		wires.interact(user)
+	else
+		return ..()
+
+/obj/item/weapon/grenade/plastic/c4/attack_self(mob/user)
+	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
+	if(user.get_active_held_item() == src)
+		newtime = Clamp(newtime, 10, 60000)
+		timer = newtime
+		to_chat(user, "Timer set for [timer] seconds.")
+
+/obj/item/weapon/grenade/plastic/c4/afterattack(atom/movable/AM, mob/user, flag)
+	if (!flag)
+		return
+	if (ismob(AM))
+		return
+	if(loc == AM)
+		return
+	if((istype(AM, /obj/item/weapon/storage/)) && !((istype(AM, /obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
+		return
+	if((istype(AM,/obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))
+		var/obj/item/weapon/storage/secure/S = AM
+		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
+			return
+
+	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
+
+	if(do_after(user, 50, target = AM))
+		if(!user.temporarilyRemoveItemFromInventory(src))
+			return
+		src.target = AM
+		forceMove(null)
+
+		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [timer] second fuse"
+		GLOB.bombers += message
+		message_admins(message,0,1)
+		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
+
+		target.add_overlay(plastic_overlay, 1)
+		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>")
+		addtimer(CALLBACK(src, .proc/explode), timer * 10)
+
+/obj/item/weapon/grenade/plastic/c4/proc/explode()
+	if(QDELETED(src))
+		return
+	var/turf/location
+	if(target)
+		if(!QDELETED(target))
+			location = get_turf(target)
+			target.cut_overlay(plastic_overlay, TRUE)
+	else
+		location = get_turf(src)
+	if(location)
+		location.ex_act(2, target)
+		explosion(location,0,0,3)
+	qdel(src)
+
+/obj/item/weapon/grenade/plastic/c4/attack(mob/M, mob/user, def_zone)
+	return
 
 // X4 is an upgraded directional variant of c4 which is relatively safe to be standing next to. And much less safe to be standing on the other side of.
 // C4 is intended to be used for infiltration, and destroying tech. X4 is intended to be used for heavy breaching and tight spaces.

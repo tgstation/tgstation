@@ -22,7 +22,7 @@
 /mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && toggle)
-		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(cardinal))
+		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(GLOB.cardinal))
 		if(namedatum)
 			I.color = namedatum.colour
 		flick_overlay_view(I, src, 5)
@@ -40,10 +40,10 @@
 		to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
 		toggle = FALSE
 	else
-		var/image/I = new('icons/effects/effects.dmi', "shield-grey")
+		var/mutable_appearance/shield_overlay = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
 		if(namedatum)
-			I.color = namedatum.colour
-		add_overlay(I)
+			shield_overlay.color = namedatum.colour
+		add_overlay(shield_overlay)
 		melee_damage_lower = 2
 		melee_damage_upper = 2
 		speed = 1

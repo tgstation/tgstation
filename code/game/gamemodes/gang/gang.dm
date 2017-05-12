@@ -1,8 +1,8 @@
 //gang.dm
 //Gang War Game Mode
 
-var/list/gang_name_pool = list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp")
-var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple")
+GLOBAL_LIST_INIT(gang_name_pool, list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp"))
+GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","purple"))
 
 /datum/game_mode
 	var/list/datum/gang/gangs = list()
@@ -74,15 +74,16 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 
 /datum/game_mode/gang/post_setup()
-	spawn(rand(10,100))
-		for(var/datum/gang/G in gangs)
-			for(var/datum/mind/boss_mind in G.bosses)
-				G.add_gang_hud(boss_mind)
-				forge_gang_objectives(boss_mind)
-				greet_gang(boss_mind)
-				equip_gang(boss_mind.current,G)
-				modePlayer += boss_mind
+	set waitfor = FALSE
 	..()
+	sleep(rand(10,100))
+	for(var/datum/gang/G in gangs)
+		for(var/datum/mind/boss_mind in G.bosses)
+			G.add_gang_hud(boss_mind)
+			forge_gang_objectives(boss_mind)
+			greet_gang(boss_mind)
+			equip_gang(boss_mind.current,G)
+			modePlayer += boss_mind
 
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
@@ -263,7 +264,8 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 			SSshuttle.emergency.request(null, set_coefficient = 0.4)
 
 /proc/determine_domination_time(var/datum/gang/G)
-	return max(180,900 - (round((G.territory.len/start_state.num_territories)*100, 1) * 12))
+	return max(180,480 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 9))
+
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//
@@ -274,17 +276,17 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		return
 	if(!winner)
 		to_chat(world, "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>")
-		feedback_set_details("round_end_result","loss - gangs failed takeover")
+		SSblackbox.set_details("round_end_result","loss - gangs failed takeover")
 
-		ticker.news_report = GANG_LOSS
+		SSticker.news_report = GANG_LOSS
 	else
 		to_chat(world, "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>")
-		feedback_set_details("round_end_result","win - gang domination complete")
+		SSblackbox.set_details("round_end_result","win - gang domination complete")
 
-		ticker.news_report = GANG_TAKEOVER
+		SSticker.news_report = GANG_TAKEOVER
 
 	for(var/datum/gang/G in gangs)
-		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
+		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/GLOB.start_state.num_territories)*100, 1)]% control of the station!</b>"
 		text += "<br>The [G.name] Gang Bosses were:"
 		for(var/datum/mind/boss in G.bosses)
 			text += printplayer(boss, 1)
@@ -309,7 +311,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 /datum/gang_points/process(seconds)
 	var/list/winners = list() //stores the winners if there are any
 
-	for(var/datum/gang/G in ticker.mode.gangs)
+	for(var/datum/gang/G in SSticker.mode.gangs)
 		if(world.time > next_point_time)
 			G.income()
 
@@ -328,7 +330,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 				G.domination(0.5)
 			priority_announce("Multiple station takeover attempts have made simultaneously. Conflicting takeover attempts appears to have restarted.","Network Alert")
 		else
-			ticker.mode.explosion_in_progress = 1
-			ticker.station_explosion_cinematic(1)
-			ticker.mode.explosion_in_progress = 0
-			ticker.force_ending = pick(winners)
+			var/datum/gang/G = winners[1]
+			G.is_dominating = FALSE
+			SSticker.mode.explosion_in_progress = 1
+			SSticker.station_explosion_cinematic(1,"gang war", null)
+			SSticker.mode.explosion_in_progress = 0
+			SSticker.force_ending = TRUE
+

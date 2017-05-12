@@ -49,13 +49,13 @@
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	cut_overlays()
 	if(grown_battery)
-		add_overlay(image('icons/obj/power.dmi', "grown_wires"))
+		add_overlay("grown_wires")
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
-		add_overlay(image('icons/obj/power.dmi', "cell-o2"))
+		add_overlay("cell-o2")
 	else
-		add_overlay(image('icons/obj/power.dmi', "cell-o1"))
+		add_overlay("cell-o1")
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100*charge/maxcharge
@@ -69,7 +69,7 @@
 		return 0
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
-		feedback_add_details("cell_used","[src.type]")
+		SSblackbox.add_details("cell_used","[src.type]")
 	return 1
 
 // recharge the cell

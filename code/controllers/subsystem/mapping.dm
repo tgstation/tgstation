@@ -1,14 +1,11 @@
-var/datum/controller/subsystem/mapping/SSmapping
-
-/datum/controller/subsystem/mapping
+SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
-	init_order = 12
+	init_order = INIT_ORDER_MAPPING
 	flags = SS_NO_FIRE
 
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
-	var/datum/map_config/previous_map_config
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
@@ -21,12 +18,9 @@ var/datum/controller/subsystem/mapping/SSmapping
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
-/datum/controller/subsystem/mapping/New()
-	NEW_SS_GLOBAL(SSmapping)
-	if(!previous_map_config)
-		previous_map_config = new("data/previous_map.json", delete_after = TRUE)
-		if(previous_map_config.defaulted)
-			previous_map_config = null
+	var/loading_ruins = FALSE
+
+/datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
 		config = new(FORCE_MAP)
@@ -40,13 +34,13 @@ var/datum/controller/subsystem/mapping/SSmapping
 	if(config.defaulted)
 		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
 	loadWorld()
-	SortAreas()
+	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
 	// Generate mining.
-
+	loading_ruins = TRUE
 	var/mining_type = config.minetype
 	if (mining_type == "lavaland")
 		seedRuins(list(5), global.config.lavaland_budget, /area/lavaland/surface/outdoors, lava_ruins_templates)
@@ -62,7 +56,8 @@ var/datum/controller/subsystem/mapping/SSmapping
 				space_zlevels += i
 
 	seedRuins(space_zlevels, global.config.space_budget, /area/space, space_ruins_templates)
-
+	loading_ruins = FALSE
+	repopulate_sorted_areas()
 	// Set up Z-level transistions.
 	setup_map_transitions()
 	..()
@@ -97,7 +92,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
 
-	previous_map_config = SSmapping.previous_map_config
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
@@ -125,6 +119,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
+	SSblackbox.add_details("map_name", config.map_name)
 
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
@@ -141,42 +136,46 @@ var/datum/controller/subsystem/mapping/SSmapping
 #undef INIT_ANNOUNCE
 
 /datum/controller/subsystem/mapping/proc/maprotate()
-	var/players = clients.len
+	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
 	//count votes
 	if(global.config.allow_map_voting)
-		for (var/client/c in clients)
+		for (var/client/c in GLOB.clients)
 			var/vote = c.prefs.preferred_map
 			if (!vote)
 				if (global.config.defaultmap)
 					mapvotes[global.config.defaultmap.map_name] += 1
 				continue
 			mapvotes[vote] += 1
+	else
+		for(var/M in global.config.maplist)
+			mapvotes[M] = 1
 
-		//filter votes
-		for (var/map in mapvotes)
-			if (!map)
-				mapvotes.Remove(map)
-			if (!(map in global.config.maplist))
-				mapvotes.Remove(map)
-				continue
-			var/datum/map_config/VM = global.config.maplist[map]
-			if (!VM)
-				mapvotes.Remove(map)
-				continue
-			if (VM.voteweight <= 0)
-				mapvotes.Remove(map)
-				continue
-			if (VM.config_min_users > 0 && players < VM.config_min_users)
-				mapvotes.Remove(map)
-				continue
-			if (VM.config_max_users > 0 && players > VM.config_max_users)
-				mapvotes.Remove(map)
-				continue
+	//filter votes
+	for (var/map in mapvotes)
+		if (!map)
+			mapvotes.Remove(map)
+		if (!(map in global.config.maplist))
+			mapvotes.Remove(map)
+			continue
+		var/datum/map_config/VM = global.config.maplist[map]
+		if (!VM)
+			mapvotes.Remove(map)
+			continue
+		if (VM.voteweight <= 0)
+			mapvotes.Remove(map)
+			continue
+		if (VM.config_min_users > 0 && players < VM.config_min_users)
+			mapvotes.Remove(map)
+			continue
+		if (VM.config_max_users > 0 && players > VM.config_max_users)
+			mapvotes.Remove(map)
+			continue
 
+		if(global.config.allow_map_voting)
 			mapvotes[map] = mapvotes[map]*VM.voteweight
 
-	var/pickedmap = global.config.allow_map_voting ? pickweight(mapvotes) : pick(global.config.maplist)
+	var/pickedmap = pickweight(mapvotes)
 	if (!pickedmap)
 		return
 	var/datum/map_config/VM = global.config.maplist[pickedmap]
@@ -193,10 +192,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 
 	next_map_config = VM
 	return TRUE
-
-/datum/controller/subsystem/mapping/Shutdown()
-	if(config)
-		config.MakePreviousMap()
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)

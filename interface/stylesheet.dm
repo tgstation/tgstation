@@ -66,6 +66,7 @@ h1.alert, h2.alert		{color: #000000;}
 .notice					{color: #000099;}
 .boldnotice				{color: #000099;	font-weight: bold;}
 .adminnotice			{color: #0000ff;}
+.adminhelp              {color: #ff0000;    font-weight: bold;}
 .unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
@@ -146,5 +147,9 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 .memo					{color: #638500;	text-align: center;}
 .memoedit				{text-align: center;	font-size: 2;}
 .abductor				{color: #800080; font-style: italic;}
-
+.slime					{color: #00CED1;}
+.drone					{color: #848482;}
+.monkey					{color: #975032;}
+.swarmer				{color: #2C75FF;}
+.resonate				{color: #298F85;}
 </style>"}

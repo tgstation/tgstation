@@ -13,13 +13,14 @@ This file contains the arcane tome files.
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/weapon/tome/New()
-	..()
-	if(!LAZYLEN(rune_types))
-		rune_types = list()
+/obj/item/weapon/tome/Initialize()
+	. = ..()
+	if(!LAZYLEN(GLOB.rune_types))
+		GLOB.rune_types = list()
+		var/static/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		for(var/i_can_do_loops_now_thanks_remie in non_revealed_runes)
 			var/obj/effect/rune/R = i_can_do_loops_now_thanks_remie
-			rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
+			GLOB.rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
 
 /obj/item/weapon/tome/examine(mob/user)
 	..()
@@ -132,7 +133,7 @@ This file contains the arcane tome files.
 	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Talisman of Arming will equip the user with armored robes, a backpack, an eldritch longsword, an empowered bola, and a pair of boots. Any items that cannot \
 	be equipped will not be summoned. Attacking a fellow cultist with it will instead equip them.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Horrors</b></font><br>The Talisman of Horror must be applied directly to the victim, it will shatter your victim's mind with visions of the endtimes that may incapitate them.<br><br>"
+	text += "<font color='red'><b>Talisman of Horrors</b></font><br>The Talisman of Horror, unlike other talismans, can be applied at range, without the victim noticing. It will cause the victim to have severe hallucinations after a short while.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Shackling</b></font><br>The Talisman of Shackling must be applied directly to the victim, it has 4 uses and cuffs victims with magic shackles that disappear when removed.<br><br>"
 
@@ -180,10 +181,10 @@ This file contains the arcane tome files.
 
 	if(!check_rune_turf(Turf, user))
 		return
-	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in rune_types
+	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in GLOB.rune_types
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
-	rune_to_scribe = rune_types[entered_rune_name]
+	rune_to_scribe = GLOB.rune_types[entered_rune_name]
 	if(!rune_to_scribe)
 		return
 	if(initial(rune_to_scribe.req_keyword))
@@ -196,35 +197,30 @@ This file contains the arcane tome files.
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
-		if(ticker.mode.name == "cult")
-			var/datum/game_mode/cult/cult_mode = ticker.mode
-			if(!("eldergod" in cult_mode.cult_objectives))
-				to_chat(user, "<span class='warning'>Nar-Sie does not wish to be summoned!</span>")
-				return
-			if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
-				to_chat(user, "<span class='warning'>The sacrifice is not complete. The portal would lack the power to open if you tried!</span>")
-				return
-			if(!cult_mode.eldergod)
-				to_chat(user, "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>")
-				return
-			if((loc.z && loc.z != ZLEVEL_STATION) || !A.blob_allowed)
-				to_chat(user, "<span class='warning'>The Geometer is not interested in lesser locations; the station is the prize!</span>")
-				return
-			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
-			if(confirm_final == "No")
-				to_chat(user, "<span class='cult'>You decide to prepare further before scribing the rune.</span>")
-				return
-			Turf = get_turf(user)
-			A = get_area(src)
-			if(!check_rune_turf(Turf, user) || (loc.z && loc.z != ZLEVEL_STATION)|| !A.blob_allowed)
-				return
-			priority_announce("Figments from an eldritch god are being summoned by [user] into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
-			for(var/B in spiral_range_turfs(1, user, 1))
-				var/obj/structure/emergency_shield/sanguine/N = new(B)
-				shields += N
-		else
+		if(!("eldergod" in SSticker.mode.cult_objectives))
 			to_chat(user, "<span class='warning'>Nar-Sie does not wish to be summoned!</span>")
 			return
+		if(!GLOB.sac_complete)
+			to_chat(user, "<span class='warning'>The sacrifice is not complete. The portal would lack the power to open if you tried!</span>")
+			return
+		if(!SSticker.mode.eldergod)
+			to_chat(user, "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>")
+			return
+		if((loc.z && loc.z != ZLEVEL_STATION) || !A.blob_allowed)
+			to_chat(user, "<span class='warning'>The Geometer is not interested in lesser locations; the station is the prize!</span>")
+			return
+		var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie; it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
+		if(confirm_final == "No")
+			to_chat(user, "<span class='cult'>You decide to prepare further before scribing the rune.</span>")
+			return
+		Turf = get_turf(user)
+		A = get_area(src)
+		if(!check_rune_turf(Turf, user) || (loc.z && loc.z != ZLEVEL_STATION)|| !A.blob_allowed)
+			return
+		priority_announce("Figments from an eldritch god are being summoned by [user] into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", 'sound/AI/spanomalies.ogg')
+		for(var/B in spiral_range_turfs(1, user, 1))
+			var/obj/structure/emergency_shield/sanguine/N = new(B)
+			shields += N
 	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open their arm and begins writing in their own blood":"begins sketching out a strange design"]!</span>", \
 						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
 	if(user.blood_volume)
@@ -244,8 +240,9 @@ This file contains the arcane tome files.
 		if(S && !QDELETED(S))
 			qdel(S)
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
+	R.add_mob_blood(user)
 	to_chat(user, "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>")
-	feedback_add_details("cult_runes_scribed", R.cultist_name)
+	SSblackbox.add_details("cult_runes_scribed", R.cultist_name)
 
 /obj/item/weapon/tome/proc/check_rune_turf(turf/T, mob/user)
 	var/area/A = get_area(T)

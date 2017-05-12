@@ -11,7 +11,6 @@
 
 /obj/item/weapon/gun/energy/e_gun/advtaser/mounted/dropped()//if somebody manages to drop this somehow...
 	..()
-	src.loc = null//send it to nullspace to get retrieved by the implant later on. gotta cover those edge cases.
 
 /obj/item/weapon/gun/energy/laser/mounted
 	name = "mounted laser"
@@ -25,4 +24,3 @@
 
 /obj/item/weapon/gun/energy/laser/mounted/dropped()
 	..()
-	src.loc = null
