@@ -164,20 +164,17 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 
 /obj/item/weapon/storage/book/bible/syndicate
 	icon_state ="ebook"
-	deity_name = "The Syndiecult"
+	deity_name = "The Syndicate"
 	throw_speed = 2
 	throwforce = 18
 	throw_range = 7
 	force = 18
-	armour_penetration = 35
-	sharpness = IS_SHARP
-	hitsound = 'sound/weapons/blade1.ogg'
-	name = "The Holy Book of The Syndiecult"
-	attack_verb = list("attacked", "slashed", "blessed", "sliced", "torn", "ripped", "diced", "cut")
+	hitsound = 'sound/weapons/sear.ogg'
+	name = "Syndicate Tome"
+	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
 	var/ordained = FALSE
 
 /obj/item/weapon/storage/book/bible/syndicate/Initialize()
-	desc +="\n<span class='notice'> Alt-click to toggle between healing and harming modes.</span>"
 	. = ..()
 	
 	
@@ -185,7 +182,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	if (!ordained)
 		H.mind.isholy = TRUE
 		ordained = TRUE
-		to_chat(H, "<span class='notice'>You commune with the book, becoming an ordained minister of The Syndiecult.</span>")
+		to_chat(H, "<span class='userdanger'>You try to open the book AND IT BITES YOU!</span>")
+		to_chat(H, "<span class='notice'>Your name appears on the inside cover, in blood./span>")
+		var/ownername = H.name
+		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
 	return
 
 /obj/item/weapon/storage/book/bible/syndicate/AltClick(mob/living/carbon/human/user)
