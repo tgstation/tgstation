@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	item_state = "bible"
 	var/mob/affecting = null
 	var/deity_name = "Christ"
+	var/heal_mode = TRUE
 
 /obj/item/weapon/storage/book/bible/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -86,7 +87,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	return 1
 
 /obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user)
-
+	
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -105,7 +106,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(user, "<span class='danger'>The book sizzles in your hands.</span>")
 		user.take_bodypart_damage(0,10)
 		return
-
+	
+	if (!heal_mode)
+		..()
+		return
+	
 	var/smack = 1
 
 	if (M.stat != DEAD)
@@ -156,3 +161,38 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 
 /obj/item/weapon/storage/book/bible/booze/PopulateContents()
 	new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
+
+/obj/item/weapon/storage/book/bible/syndicate
+	icon_state ="ebook"
+	desc += "\n<span class='notice'> Alt-click to toggle between healing and harming modes.</span>"
+	var/ordained = FALSE
+	deity_name = "The Syndiecult"
+	throw_speed = 2
+	throwforce = 18
+	throw_range = 7
+	force = 18
+	armour_penetration = 35
+	sharpness = IS_SHARP
+	hitsound = 'sound/weapons/blade1.ogg'
+	name = "The Holy Book of The Syndiecult"
+	attack_verb = list("attacked", "slashed", "blessed", "sliced", "torn", "ripped", "diced", "cut")
+	
+	
+/obj/item/weapon/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
+	if (!ordained)
+		H.mind.isholy = TRUE
+		ordained = TRUE
+		to_chat(H, "<span class='notice'>You commune with the book, becoming an ordained minister of The Syndiecult.</span>")
+	return
+
+/obj/item/weapon/storage/book/bible/syndicate/AltClick(mob/living/carbon/human/user)
+	if(heal_mode)
+		heal_mode = FALSE
+		to_chat(user, "<span class='notice'>[src] will now harm.</span>")
+	else
+		heal_mode = TRUE
+		to_chat(user, "<span class='notice'>[src] will now heal.</span>")
+	return
+
+/obj/item/bible/syndicate/add_blood(list/blood_dna)
+	return 0
