@@ -63,7 +63,7 @@
 		if(FIELD_SHAPE_RADIUS_SQUARE)
 			for(var/ix in -square_radius to square_radius)
 				for(var/iy in -square_radius to square_radius)
-					edge_checkers += new obj/effect/abstract/proximity_checker/advanced/inner(locate(center.x + ix, center.y + iy, center.z), _monitor = src)
+					edge_checkers += new /obj/effect/abstract/proximity_checker/advanced/inner(locate(center.x + ix, center.y + iy, center.z), _monitor = src)
 					CHECK_TICK
 		if(FIELD_SHAPE_CUSTOM_SQUARE)
 			for(var/ix in -square_width to square_width)
