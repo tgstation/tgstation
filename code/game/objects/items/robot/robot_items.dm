@@ -604,6 +604,8 @@ Each laser stays approximately 2 seconds in projectile field.
 /obj/item/borg/projectile_dampen/proc/process_usage()
 	var/usage = 0
 	for(var/I in tracked)
+		if(!tracked[I])	//No damage
+			continue
 		usage += projectile_tick_speed_ecost
 	usage += (current_damage_dampening * projectile_damage_tick_ecost_coefficient)
 	energy = Clamp(energy - usage, 0, maxenergy)
@@ -622,10 +624,8 @@ Each laser stays approximately 2 seconds in projectile field.
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/item/projectile/P, track_projectile = TRUE)
 	if(tracked[P])
 		return
-	if(!P.damage || P.nodamage)
-		return
 	if(track_projectile)
-		tracked[P] = TRUE
+		tracked[P] = P.damage
 		current_damage_dampening += P.damage
 	P.damage *= projectile_damage_coefficient
 	P.speed *= projectile_speed_coefficient
