@@ -592,14 +592,7 @@ Each laser stays approximately 2 seconds in projectile field.
 /obj/item/borg/projectile_dampen/process()
 	process_recharge()
 	process_usage()
-	update_location()
-
-/obj/item/borg/projectile_dampen/proc/update_location()
-	if(istype(dampening_field))
-		dampening_field.update_center(get_turf(src))
-	if(!istype(host))
-		if(iscyborg(loc))
-			host = loc
+	dampening_field.recalculate_field()
 
 /obj/item/borg/projectile_dampen/proc/process_usage()
 	var/usage = 0

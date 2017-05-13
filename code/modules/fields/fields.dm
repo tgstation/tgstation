@@ -63,7 +63,7 @@
 		if(FIELD_SHAPE_RADIUS_SQUARE)
 			for(var/ix in -square_radius to square_radius)
 				for(var/iy in -square_radius to square_radius)
-					edge_checkers += /obj/effect/abstract/proximity_checker/advanced/inner(locate(center.x + ix, center.y + iy, center.z), _monitor = src)
+					edge_checkers += new obj/effect/abstract/proximity_checker/advanced/inner(locate(center.x + ix, center.y + iy, center.z), _monitor = src)
 					CHECK_TICK
 		if(FIELD_SHAPE_CUSTOM_SQUARE)
 			for(var/ix in -square_width to square_width)
@@ -92,7 +92,6 @@
 		for(var/atom/i in needs_cleanup)
 			cleanup_field_turf(i.loc, i)
 		return
-	var/list/checkers_old = checkers.Copy()
 	var/list/turf/old_turfs = list()
 	for(var/atom/A in checkers)
 		old_turfs += A.loc
