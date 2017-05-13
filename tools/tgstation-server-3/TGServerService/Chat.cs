@@ -46,6 +46,7 @@ namespace TGServerService
 	partial class TGStationServer : ITGChat
 	{
 		ITGChatProvider ChatProvider;
+		TGChatProvider currentProvider;
 		object ChatLock = new object();
 
 		public void InitChat(TGChatSetupInfo info = null)
@@ -64,6 +65,7 @@ namespace TGServerService
 					TGServerService.ActiveService.EventLog.WriteEntry(String.Format("Invalid chat provider: {0}", info.Provider), EventLogEntryType.Error);
 					break;
 			}
+			currentProvider = info.Provider;
 			ChatProvider.OnChatMessage += ChatProvider_OnChatMessage;
 			if (Properties.Settings.Default.ChatEnabled)
 			{
@@ -157,12 +159,12 @@ namespace TGServerService
 			lock (ChatLock)
 			{
 				Properties.Settings.Default.ChatEnabled = enable;
+				if (!enable && Connected())
+					ChatProvider.Disconnect();
+				else if (enable && !Connected())
+					return ChatProvider.Connect();
+				return null;
 			}
-			if (!enable && Connected())
-				ChatProvider.Disconnect();
-			else if (enable && !Connected())
-				return ChatProvider.Connect();
-			return null;
 		}
 
 		//public api
@@ -174,7 +176,7 @@ namespace TGServerService
 			}
 		}
 		//public api
-		public string[] CollectionToArray(StringCollection sc)
+		string[] CollectionToArray(StringCollection sc)
 		{
 			string[] strArray = new string[sc.Count];
 			sc.CopyTo(strArray, 0);
@@ -247,7 +249,15 @@ namespace TGServerService
 				var Config = Properties.Settings.Default;
 				Config.ChatProvider = (int)info.Provider;
 				Config.ChatProviderData = rawdata;
-				return ChatProvider.SetProviderInfo(info);
+
+				if (info.Provider == currentProvider)
+					return ChatProvider.SetProviderInfo(info);
+				else
+				{
+					DisposeChat();
+					InitChat(info);
+					return null;
+				}
 			}
 		}
 
@@ -268,27 +278,36 @@ namespace TGServerService
 				}
 				if (adminchannel != null)
 					Config.ChatAdminChannel = adminchannel;
-			}
-			if (channels != null && Connected())
-				ChatProvider.SetChannels(channels, null);				
+				if (channels != null && Connected())
+					ChatProvider.SetChannels(channels, null);
+			}			
 		}
 	
 		//public api
 		public bool Connected()
 		{
-			return ChatProvider.Connected();
+			lock (ChatLock)
+			{
+				return ChatProvider.Connected();
+			}
 		}
 
 		//public api
 		public string Reconnect()
 		{
-			return ChatProvider.Reconnect();
+			lock (ChatLock)
+			{
+				return ChatProvider.Reconnect();
+			}
 		}
 
 		//public api
 		public string SendMessage(string msg, bool adminOnly = false)
 		{
-			return ChatProvider.SendMessage(msg, adminOnly);
+			lock (ChatLock)
+			{
+				return ChatProvider.SendMessage(msg, adminOnly);
+			}
 		}
 	}
 }
