@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Servant golems now follow the \"Material Golem (123)\" naming scheme."
