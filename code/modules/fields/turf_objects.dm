@@ -18,9 +18,9 @@
 	name = "energy field"
 	desc = "Get off my turf!"
 
-/atom/movable/field_object/field_turf/Cross(atom/movable/AM)
+/atom/movable/field_object/field_turf/CanPass(atom/movable/AM, turf/target, height)
 	if(parent)
-		return parent.field_turf_cross(AM, src)
+		return parent.field_turf_canpass(AM, src, target)
 	return TRUE
 
 /atom/movable/field_object/field_turf/Crossed(atom/movable/AM)
@@ -42,9 +42,9 @@
 	name = "energy field edge"
 	desc = "Edgy description here."
 
-/atom/movable/field_object/field_edge/Cross(atom/movable/AM)
+/atom/movable/field_object/field_edge/CanPass(atom/movable/AM, turf/target, height)
 	if(parent)
-		return parent.field_edge_cross(AM, src)
+		return parent.field_edge_canpass(AM, src, target)
 	return TRUE
 
 /atom/movable/field_object/field_edge/Crossed(atom/movable/AM)

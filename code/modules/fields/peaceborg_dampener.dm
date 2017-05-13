@@ -18,10 +18,13 @@
 	var/list/turf/turf_overlay_tracker
 	var/obj/item/borg/projectile_dampen/projector = null
 	var/list/obj/item/projectile/tracked
+	var/list/obj/item/projectile/staging
 
 /datum/field/peaceborg_dampener/New()
 	turf_overlay_tracker = list()
 	tracked = list()
+	staging = list()
+	..()
 
 /datum/field/peaceborg_dampener/process()
 	if(!istype(projector))
@@ -77,12 +80,10 @@
 	projector.dampen_projectile(P, track_projectile)
 	if(track_projectile)
 		tracked += P
-	world << "Captured [P] tracking [track_projectile]"
 
 /datum/field/peaceborg_dampener/proc/release_projectile(obj/item/projectile/P)
 	projector.restore_projectile(P)
 	tracked -= P
-	world << "Releasing [P]"
 
 /datum/field/peaceborg_dampener/field_edge_uncrossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
 	if(!is_turf_in_field(get_turf(AM), src))
@@ -94,6 +95,12 @@
 	return ..()
 
 /datum/field/peaceborg_dampener/field_edge_crossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
-	if(istype(AM, /obj/item/projectile) && !(AM in tracked))
+	if(istype(AM, /obj/item/projectile) && !(AM in tracked) && !is_turf_in_field(staging[AM]))
 		capture_projectile(AM)
+	staging -= AM
+	return ..()
+
+/datum/field/peaceborg_dampener/field_edge_canpass(atom/movable/AM, atom/movable/field_object/field_edge/F, turf/entering)
+	if(istype(AM, /obj/item/projectile) && entering == get_turf(F))
+		staging[AM] = get_turf(AM)
 	return ..()

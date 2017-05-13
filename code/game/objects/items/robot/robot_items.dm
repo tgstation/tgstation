@@ -617,7 +617,7 @@ Each laser stays approximately 2 seconds in projectile field.
 	if(!istype(host))
 		energy = Clamp(energy + energy_recharge, 0, maxenergy)
 		return
-	if(host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage))
+	if((host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
 		energy += energy_recharge
 

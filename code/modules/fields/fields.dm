@@ -118,7 +118,7 @@
 			setup_edge_turf(T)
 			CHECK_TICK
 
-/datum/field/proc/field_turf_cross(atom/movable/AM, atom/movable/field_object/field_turf/F)
+/datum/field/proc/field_turf_canpass(atom/movable/AM, atom/movable/field_object/field_turf/F, turf/entering)
 	return TRUE
 
 /datum/field/proc/field_turf_uncross(atom/movable/AM, atom/movable/field_object/field_turf/F)
@@ -130,7 +130,7 @@
 /datum/field/proc/field_turf_uncrossed(atom/movable/AM, atom/movable/field_object/field_turf/F)
 	return TRUE
 
-/datum/field/proc/field_edge_cross(atom/movable/AM, atom/movable/field_object/field_edge/F)
+/datum/field/proc/field_edge_canpass(atom/movable/AM, atom/movable/field_object/field_edge/F, turf/entering)
 	return TRUE
 
 /datum/field/proc/field_edge_uncross(atom/movable/AM, atom/movable/field_object/field_edge/F)
