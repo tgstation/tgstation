@@ -1,4 +1,3 @@
-
 //Movable and easily code-modified fields! Allows for custom AOE effects that affect movement and anything inside of them, and can do custom turf effects!
 //Supports automatic recalculation/reset on movement.
 //If there's any way to make this less CPU intensive than I've managed, gimme a call or do it yourself! - kevinz000
@@ -118,28 +117,28 @@
 			setup_edge_turf(T)
 			CHECK_TICK
 
-/datum/field/proc/field_turf_canpass(atom/movable/AM, atom/movable/field_object/field_turf/F, turf/entering)
+/datum/field/proc/field_turf_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F, turf/entering)
 	return TRUE
 
-/datum/field/proc/field_turf_uncross(atom/movable/AM, atom/movable/field_object/field_turf/F)
+/datum/field/proc/field_turf_uncross(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F)
 	return TRUE
 
-/datum/field/proc/field_turf_crossed(atom/movable/AM, atom/movable/field_object/field_turf/F)
+/datum/field/proc/field_turf_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F)
 	return TRUE
 
-/datum/field/proc/field_turf_uncrossed(atom/movable/AM, atom/movable/field_object/field_turf/F)
+/datum/field/proc/field_turf_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F)
 	return TRUE
 
-/datum/field/proc/field_edge_canpass(atom/movable/AM, atom/movable/field_object/field_edge/F, turf/entering)
+/datum/field/proc/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F, turf/entering)
 	return TRUE
 
-/datum/field/proc/field_edge_uncross(atom/movable/AM, atom/movable/field_object/field_edge/F)
+/datum/field/proc/field_edge_uncross(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
 	return TRUE
 
-/datum/field/proc/field_edge_crossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
+/datum/field/proc/field_edge_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
 	return TRUE
 
-/datum/field/proc/field_edge_uncrossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
+/datum/field/proc/field_edge_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
 	return TRUE
 
 /datum/field/proc/update_center(turf/T, recalculate_field = TRUE)
@@ -169,10 +168,10 @@
 	edge_turfs -= T
 
 /datum/field/proc/setup_field_turf(turf/T)
-	field_turfs[T] = new /atom/movable/field_object/field_turf(T, newparent = src)
+	field_turfs[T] = new /obj/effect/abstract/proximity_checker/advanced/inner(T, newparent = src)
 
 /datum/field/proc/setup_edge_turf(turf/T)
-	edge_turfs[T] = new /atom/movable/field_object/field_edge(T, newparent = src)
+	edge_turfs[T] = new /obj/effect/abstract/proximity_checker/advanced/edge(T, newparent = src)
 
 /datum/field/proc/update_new_turfs()
 	if(!istype(center))
