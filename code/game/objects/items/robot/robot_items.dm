@@ -595,7 +595,8 @@ Each laser stays approximately 2 seconds in projectile field.
 	update_location()
 
 /obj/item/borg/projectile_dampen/proc/update_location()
-	dampening_field.HandleMove()
+	if(dampening_field)
+		dampening_field.HandleMove()
 
 /obj/item/borg/projectile_dampen/proc/process_usage()
 	var/usage = 0

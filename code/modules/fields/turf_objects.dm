@@ -9,13 +9,8 @@
 	flags = ABSTRACT|ON_BORDER
 	var/datum/proximity_monitor/advanced/parent = null
 
-/obj/effect/abstract/proximity_checker/advanced/New(newparent = null)
-	if(!isnull(newparent))
-		parent = newparent
-	return ..()
-
-/obj/effect/abstract/proximity_checker/advanced/Initialize()
-	monitor = parent
+/obj/effect/abstract/proximity_checker/advanced/Initialize(_monitor = null)
+	parent = _monitor
 	return ..()
 
 /obj/effect/abstract/proximity_checker/advanced/center
