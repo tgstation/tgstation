@@ -10,7 +10,7 @@
 
 //Proc to make fields. make_field(field_type, field_params_in_associative_list)
 /proc/make_field(field_type, list/field_params, override_checks = FALSE, start_field = TRUE)
-	var/datum/field/F = new field_type()
+	var/datum/proximity_monitor/advanced/F = new field_type()
 	if(!F.assume_params(field_params) && !override_checks)
 		QDEL_NULL(F)
 	if(!F.check_variables() && !override_checks)
@@ -19,7 +19,7 @@
 		F.Initialize()
 	return F
 
-/datum/field
+/datum/proximity_monitor/advanced
 	var/name = "\improper Energy Field"
 	var/turf/center = null
 	var/last_x = 0
@@ -44,15 +44,15 @@
 	var/list/turf/field_turfs_new = list()
 	var/list/turf/edge_turfs_new = list()
 
-/datum/field/New()
+/datum/proximity_monitor/advanced/New()
 	SSfields.register_new_field(src)
 
-/datum/field/Destroy()
+/datum/proximity_monitor/advanced/Destroy()
 	SSfields.unregister_field(src)
 	full_cleanup()
 	return ..()
 
-/datum/field/proc/assume_params(list/field_params)
+/datum/proximity_monitor/advanced/proc/assume_params(list/field_params)
 	var/pass_check = TRUE
 	for(var/param in field_params)
 		if(vars[param] || isnull(vars[param]) || (param in vars))
@@ -61,7 +61,7 @@
 			pass_check = FALSE
 	return pass_check
 
-/datum/field/proc/check_variables()
+/datum/proximity_monitor/advanced/proc/check_variables()
 	var/pass = TRUE
 	if(field_shape == FIELD_NO_SHAPE)	//If you're going to make a manually updated field you shouldn't be using automatic checks so don't.
 		pass = FALSE
@@ -71,7 +71,7 @@
 		pass = FALSE
 	return pass
 
-/datum/field/process()
+/datum/proximity_monitor/advanced/process()
 	if(process_inner_turfs)
 		for(var/turf/T in field_turfs)
 			process_inner_turf(T)
@@ -81,21 +81,21 @@
 			process_edge_turf(T)
 			CHECK_TICK	//Same here.
 
-/datum/field/proc/process_inner_turf(turf/T)
+/datum/proximity_monitor/advanced/proc/process_inner_turf(turf/T)
 
-/datum/field/proc/process_edge_turf(turf/T)
+/datum/proximity_monitor/advanced/proc/process_edge_turf(turf/T)
 
-/datum/field/proc/Initialize()
+/datum/proximity_monitor/advanced/proc/Initialize()
 	setup_field()
 	post_setup_field()
 
-/datum/field/proc/full_cleanup()	 //Full cleanup for when you change something that would require complete resetting.
+/datum/proximity_monitor/advanced/proc/full_cleanup()	 //Full cleanup for when you change something that would require complete resetting.
 	for(var/turf/T in edge_turfs)
 		cleanup_edge_turf(T)
 	for(var/turf/T in field_turfs)
 		cleanup_field_turf(T)
 
-/datum/field/proc/recalculate_field(ignore_movement_check = FALSE)	//Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
+/datum/proximity_monitor/advanced/proc/recalculate_field(ignore_movement_check = FALSE)	//Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
 	if(!(ignore_movement_check || ((last_x != center.x || last_y != center.y || last_z != center.z) && (field_shape != FIELD_NO_SHAPE))))
 		return
 	update_new_turfs()
@@ -118,38 +118,38 @@
 			setup_edge_turf(T)
 			CHECK_TICK
 
-/datum/field/proc/field_turf_canpass(atom/movable/AM, atom/movable/field_object/field_turf/F, turf/entering)
+/datum/proximity_monitor/advanced/proc/field_turf_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F, turf/entering)
 	return TRUE
 
-/datum/field/proc/field_turf_uncross(atom/movable/AM, atom/movable/field_object/field_turf/F)
+/datum/proximity_monitor/advanced/proc/field_turf_uncross(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
 	return TRUE
 
-/datum/field/proc/field_turf_crossed(atom/movable/AM, atom/movable/field_object/field_turf/F)
+/datum/proximity_monitor/advanced/proc/field_turf_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
 	return TRUE
 
-/datum/field/proc/field_turf_uncrossed(atom/movable/AM, atom/movable/field_object/field_turf/F)
+/datum/proximity_monitor/advanced/proc/field_turf_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
 	return TRUE
 
-/datum/field/proc/field_edge_canpass(atom/movable/AM, atom/movable/field_object/field_edge/F, turf/entering)
+/datum/proximity_monitor/advanced/proc/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F, turf/entering)
 	return TRUE
 
-/datum/field/proc/field_edge_uncross(atom/movable/AM, atom/movable/field_object/field_edge/F)
+/datum/proximity_monitor/advanced/proc/field_edge_uncross(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
 	return TRUE
 
-/datum/field/proc/field_edge_crossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
+/datum/proximity_monitor/advanced/proc/field_edge_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
 	return TRUE
 
-/datum/field/proc/field_edge_uncrossed(atom/movable/AM, atom/movable/field_object/field_edge/F)
+/datum/proximity_monitor/advanced/proc/field_edge_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
 	return TRUE
 
-/datum/field/proc/update_center(turf/T, recalculate_field = TRUE)
+/datum/proximity_monitor/advanced/proc/update_center(turf/T, recalculate_field = TRUE)
 	center = T
 	if(recalculate_field)
 		recalculate_field()
 
-/datum/field/proc/post_setup_field()
+/datum/proximity_monitor/advanced/proc/post_setup_field()
 
-/datum/field/proc/setup_field()
+/datum/proximity_monitor/advanced/proc/setup_field()
 	update_new_turfs()
 	if(setup_field_turfs)
 		for(var/turf/T in field_turfs_new)
@@ -160,21 +160,21 @@
 			setup_edge_turf(T)
 			CHECK_TICK
 
-/datum/field/proc/cleanup_field_turf(turf/T)
+/datum/proximity_monitor/advanced/proc/cleanup_field_turf(turf/T)
 	qdel(field_turfs[T])
 	field_turfs -= T
 
-/datum/field/proc/cleanup_edge_turf(turf/T)
+/datum/proximity_monitor/advanced/proc/cleanup_edge_turf(turf/T)
 	qdel(edge_turfs[T])
 	edge_turfs -= T
 
-/datum/field/proc/setup_field_turf(turf/T)
-	field_turfs[T] = new /atom/movable/field_object/field_turf(T, newparent = src)
+/datum/proximity_monitor/advanced/proc/setup_field_turf(turf/T)
+	field_turfs[T] = new /obj/effect/abstract/proximity_checker/advanced/field_turf(T, newparent = src)
 
-/datum/field/proc/setup_edge_turf(turf/T)
-	edge_turfs[T] = new /atom/movable/field_object/field_edge(T, newparent = src)
+/datum/proximity_monitor/advanced/proc/setup_edge_turf(turf/T)
+	edge_turfs[T] = new /obj/effect/abstract/proximity_checker/advanced/field_edge(T, newparent = src)
 
-/datum/field/proc/update_new_turfs()
+/datum/proximity_monitor/advanced/proc/update_new_turfs()
 	if(!istype(center))
 		return FALSE
 	last_x = center.x
@@ -207,7 +207,7 @@
 					edge_turfs_new -= T
 
 //Gets edge direction/corner, only works with square radius/WDH fields!
-/datum/field/proc/get_edgeturf_direction(turf/T, turf/center_override = null)
+/datum/proximity_monitor/advanced/proc/get_edgeturf_direction(turf/T, turf/center_override = null)
 	var/turf/checking_from = center
 	if(istype(center_override))
 		checking_from = center_override
@@ -240,7 +240,7 @@
 				return NORTH
 
 //DEBUG FIELDS
-/datum/field/debug
+/datum/proximity_monitor/advanced/debug
 	name = "\improper Color Matrix Field"
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
 	square_radius = 5
@@ -249,27 +249,27 @@
 	setup_field_turfs = TRUE
 	setup_edge_turfs = TRUE
 
-/datum/field/debug/recalculate_field()
+/datum/proximity_monitor/advanced/debug/recalculate_field()
 	..()
 
-/datum/field/debug/post_setup_field()
+/datum/proximity_monitor/advanced/debug/post_setup_field()
 	..()
 
-/datum/field/debug/setup_edge_turf(turf/T)
+/datum/proximity_monitor/advanced/debug/setup_edge_turf(turf/T)
 	T.color = set_edgeturf_color
 	..()
 
-/datum/field/debug/cleanup_edge_turf(turf/T)
+/datum/proximity_monitor/advanced/debug/cleanup_edge_turf(turf/T)
 	T.color = initial(T.color)
 	..()
 	if(T in field_turfs)
 		T.color = set_fieldturf_color
 
-/datum/field/debug/setup_field_turf(turf/T)
+/datum/proximity_monitor/advanced/debug/setup_field_turf(turf/T)
 	T.color = set_fieldturf_color
 	..()
 
-/datum/field/debug/cleanup_field_turf(turf/T)
+/datum/proximity_monitor/advanced/debug/cleanup_field_turf(turf/T)
 	T.color = initial(T.color)
 	..()
 
@@ -278,9 +278,9 @@
 	name = "strange multitool"
 	desc = "Seems to project a colored field!"
 	var/list/field_params = list("field_shape" = FIELD_SHAPE_RADIUS_SQUARE, "square_radius" = 5, "set_fieldturf_color" = "#aaffff", "set_edgeturf_color" = "#ffaaff")
-	var/field_type = /datum/field/debug
+	var/field_type = /datum/proximity_monitor/advanced/debug
 	var/operating = FALSE
-	var/datum/field/current = null
+	var/datum/proximity_monitor/advanced/current = null
 	var/turf/center = null
 
 /obj/item/device/multitool/field_debug/New()
