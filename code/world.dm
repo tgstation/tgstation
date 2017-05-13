@@ -270,7 +270,12 @@
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
+		'sound/roundend/disappointed.ogg',
+		'sound/roundend/G@MEofW33D-MLGAirhornRemix.ogg',
+		'sound/roundend/Pokemon-MLGAirhornRemix.ogg',
+		'sound/roundend/Skyrim-MLGAirhornRemix.ogg',
+		'sound/roundend/SpookyScarySkeletons-MLGAirhornRemix.ogg',
+		'sound/roundend/StarWarsDueloftheFates-MLGAirhornRemix.ogg'\
 		)
 
 	for(var/thing in GLOB.clients)
