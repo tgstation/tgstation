@@ -14,6 +14,14 @@
 		parent = newparent
 	return ..()
 
+/obj/effect/abstract/proximity_checker/advanced/Initialize()
+	monitor = parent
+	return ..()
+
+/obj/effect/abstract/proximity_checker/advanced/center
+	name = "field anchor"
+	desc = "No."
+
 /obj/effect/abstract/proximity_checker/advanced/field_turf
 	name = "energy field"
 	desc = "Get off my turf!"

@@ -581,7 +581,7 @@ Each laser stays approximately 2 seconds in projectile field.
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
 	if(!istype(dampening_field))
-		dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("square_radius" = field_radius, "center" = get_turf(src), "projector" = src))
+		dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("current_range" = field_radius, "host" = src, "projector" = src))
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
@@ -595,11 +595,7 @@ Each laser stays approximately 2 seconds in projectile field.
 	update_location()
 
 /obj/item/borg/projectile_dampen/proc/update_location()
-	if(istype(dampening_field))
-		dampening_field.update_center(get_turf(src))
-	if(!istype(host))
-		if(iscyborg(loc))
-			host = loc
+	dampening_field.HandleMove()
 
 /obj/item/borg/projectile_dampen/proc/process_usage()
 	var/usage = 0

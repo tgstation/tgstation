@@ -5,7 +5,7 @@
 
 //Field shapes
 #define FIELD_NO_SHAPE 0		//Does not update turfs automatically
-#define FIELD_SHAPE_RADIUS_SQUARE 1	//Uses square_radius and square_depth_up/down
+#define FIELD_SHAPE_RADIUS_SQUARE 1	//Uses current_range and square_depth_up/down
 #define FIELD_SHAPE_CUSTOM_SQUARE 2	//Uses square_height and square_width and square_depth_up/down
 
 //Proc to make fields. make_field(field_type, field_params_in_associative_list)
@@ -21,13 +21,8 @@
 
 /datum/proximity_monitor/advanced
 	var/name = "\improper Energy Field"
-	var/turf/center = null
-	var/last_x = 0
-	var/last_y = 0
-	var/last_z = 0
 	//Field setup specifications
 	var/field_shape = FIELD_NO_SHAPE
-	var/square_radius = 0
 	var/square_height = 0
 	var/square_width = 0
 	var/square_depth_up = 0
@@ -65,9 +60,9 @@
 	var/pass = TRUE
 	if(field_shape == FIELD_NO_SHAPE)	//If you're going to make a manually updated field you shouldn't be using automatic checks so don't.
 		pass = FALSE
-	if(square_radius < 0 || square_height < 0 || square_width < 0 || square_depth_up < 0 || square_depth_down < 0)
+	if(current_range < 0 || square_height < 0 || square_width < 0 || square_depth_up < 0 || square_depth_down < 0)
 		pass = FALSE
-	if(!istype(center))
+	if(!istype(host))
 		pass = FALSE
 	return pass
 
@@ -96,7 +91,7 @@
 		cleanup_field_turf(T)
 
 /datum/proximity_monitor/advanced/proc/recalculate_field(ignore_movement_check = FALSE)	//Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
-	if(!(ignore_movement_check || ((last_x != center.x || last_y != center.y || last_z != center.z) && (field_shape != FIELD_NO_SHAPE))))
+	if(!(ignore_movement_check || ((host.loc != last_host_loc) && (field_shape != FIELD_NO_SHAPE))))
 		return
 	update_new_turfs()
 	var/list/turf/needs_setup = field_turfs_new.Copy()
@@ -142,9 +137,10 @@
 /datum/proximity_monitor/advanced/proc/field_edge_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
 	return TRUE
 
-/datum/proximity_monitor/advanced/proc/update_center(turf/T, recalculate_field = TRUE)
-	center = T
-	if(recalculate_field)
+/datum/proximity_monitor/advanced/HandleMove()
+	var/atom/_host = host
+	var/atom/new_host_loc = _host.loc
+	if(last_host_loc != new_host_loc)
 		recalculate_field()
 
 /datum/proximity_monitor/advanced/proc/post_setup_field()
@@ -175,23 +171,22 @@
 	edge_turfs[T] = new /obj/effect/abstract/proximity_checker/advanced/field_edge(T, newparent = src)
 
 /datum/proximity_monitor/advanced/proc/update_new_turfs()
-	if(!istype(center))
+	if(!istype(host))
 		return FALSE
-	last_x = center.x
-	last_y = center.y
-	last_z = center.z
+	last_host_loc = host.loc
+	var/turf/center = get_turf(host)
 	field_turfs_new = list()
 	edge_turfs_new = list()
 	switch(field_shape)
 		if(FIELD_NO_SHAPE)
 			return FALSE
 		if(FIELD_SHAPE_RADIUS_SQUARE)
-			for(var/turf/T in block(locate(center.x-square_radius,center.y-square_radius,center.z-square_depth_down),locate(center.x+square_radius, center.y+square_radius,center.z+square_depth_up)))
+			for(var/turf/T in block(locate(center.x-current_range,center.y-current_range,center.z-square_depth_down),locate(center.x+current_range, center.y+current_range,center.z+square_depth_up)))
 				field_turfs_new += T
 			edge_turfs_new = field_turfs_new.Copy()
-			if(square_radius >= 1)
+			if(current_range >= 1)
 				var/list/turf/center_turfs = list()
-				for(var/turf/T in block(locate(center.x-square_radius+1,center.y-square_radius+1,center.z-square_depth_down),locate(center.x+square_radius-1, center.y+square_radius-1,center.z+square_depth_up)))
+				for(var/turf/T in block(locate(center.x-current_range+1,center.y-current_range+1,center.z-square_depth_down),locate(center.x+current_range-1, center.y+current_range-1,center.z+square_depth_up)))
 					center_turfs += T
 				for(var/turf/T in center_turfs)
 					edge_turfs_new -= T
@@ -208,7 +203,7 @@
 
 //Gets edge direction/corner, only works with square radius/WDH fields!
 /datum/proximity_monitor/advanced/proc/get_edgeturf_direction(turf/T, turf/center_override = null)
-	var/turf/checking_from = center
+	var/turf/checking_from = get_turf(host)
 	if(istype(center_override))
 		checking_from = center_override
 	if(field_shape != FIELD_SHAPE_RADIUS_SQUARE && field_shape != FIELD_SHAPE_CUSTOM_SQUARE)
@@ -217,15 +212,15 @@
 		return
 	switch(field_shape)
 		if(FIELD_SHAPE_RADIUS_SQUARE)
-			if(((T.x == (checking_from.x + square_radius)) || (T.x == (checking_from.x - square_radius))) && ((T.y == (checking_from.y + square_radius)) || (T.y == (checking_from.y - square_radius))))
+			if(((T.x == (checking_from.x + current_range)) || (T.x == (checking_from.x - current_range))) && ((T.y == (checking_from.y + current_range)) || (T.y == (checking_from.y - current_range))))
 				return get_dir(checking_from, T)
-			if(T.x == (checking_from.x + square_radius))
+			if(T.x == (checking_from.x + current_range))
 				return EAST
-			if(T.x == (checking_from.x - square_radius))
+			if(T.x == (checking_from.x - current_range))
 				return WEST
-			if(T.y == (checking_from.y - square_radius))
+			if(T.y == (checking_from.y - current_range))
 				return SOUTH
-			if(T.y == (checking_from.y + square_radius))
+			if(T.y == (checking_from.y + current_range))
 				return NORTH
 		if(FIELD_SHAPE_CUSTOM_SQUARE)
 			if(((T.x == (checking_from.x + square_width)) || (T.x == (checking_from.x - square_width))) && ((T.y == (checking_from.y + square_height)) || (T.y == (checking_from.y - square_height))))
@@ -243,7 +238,7 @@
 /datum/proximity_monitor/advanced/debug
 	name = "\improper Color Matrix Field"
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
-	square_radius = 5
+	current_range = 5
 	var/set_fieldturf_color = "#aaffff"
 	var/set_edgeturf_color = "#ffaaff"
 	setup_field_turfs = TRUE
@@ -277,15 +272,13 @@
 /obj/item/device/multitool/field_debug
 	name = "strange multitool"
 	desc = "Seems to project a colored field!"
-	var/list/field_params = list("field_shape" = FIELD_SHAPE_RADIUS_SQUARE, "square_radius" = 5, "set_fieldturf_color" = "#aaffff", "set_edgeturf_color" = "#ffaaff")
+	var/list/field_params = list("field_shape" = FIELD_SHAPE_RADIUS_SQUARE, "current_range" = 5, "set_fieldturf_color" = "#aaffff", "set_edgeturf_color" = "#ffaaff")
 	var/field_type = /datum/proximity_monitor/advanced/debug
 	var/operating = FALSE
 	var/datum/proximity_monitor/advanced/current = null
-	var/turf/center = null
 
 /obj/item/device/multitool/field_debug/New()
 	START_PROCESSING(SSobj, src)
-	center = get_turf(src)
 	..()
 
 /obj/item/device/multitool/field_debug/Destroy()
@@ -295,7 +288,7 @@
 
 /obj/item/device/multitool/field_debug/proc/setup_debug_field()
 	var/list/new_params = field_params.Copy()
-	new_params["center"] = center
+	new_params["host"] = src
 	current = make_field(field_type, new_params)
 
 /obj/item/device/multitool/field_debug/attack_self(mob/user)
@@ -313,8 +306,4 @@
 	check_turf(get_turf(src))
 
 /obj/item/device/multitool/field_debug/proc/check_turf(turf/T)
-	if(!istype(T) || !istype(current))
-		return
-	if(T != center)
-		center = T
-	current.update_center(T)
+	current.HandleMove()
