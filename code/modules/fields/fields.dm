@@ -173,10 +173,10 @@
 	edge_turfs -= T
 
 /datum/proximity_monitor/advanced/proc/setup_field_turf(turf/T)
-	field_turfs[T] = new /obj/effect/abstract/proximity_checker/advanced/field_turf(T, newparent = src)
+	field_turfs[T] = new /obj/effect/abstract/proximity_checker/advanced/field_turf(T, _monitor = src)
 
 /datum/proximity_monitor/advanced/proc/setup_edge_turf(turf/T)
-	edge_turfs[T] = new /obj/effect/abstract/proximity_checker/advanced/field_edge(T, newparent = src)
+	edge_turfs[T] = new /obj/effect/abstract/proximity_checker/advanced/field_edge(T, _monitor = src)
 
 /datum/proximity_monitor/advanced/proc/update_new_turfs()
 	if(!istype(host))
