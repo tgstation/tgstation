@@ -319,8 +319,8 @@ SUBSYSTEM_DEF(job)
 						validjob = job
 
 						//Is the Job empty? Stop Looking Then!
-						if (job.current_positions == 0)
-							break;
+						if (!job.current_positions)
+							break
 
 			//Assign us the last job we found
 			if (validjob)
