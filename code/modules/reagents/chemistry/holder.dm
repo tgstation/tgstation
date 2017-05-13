@@ -161,6 +161,14 @@
 		if(preserve_data)
 			trans_data = copy_data(T)
 		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+		if(istype(T, /datum/reagent/consumable/ethanol/customizable))
+			var/datum/reagent/consumable/ethanol/customizable/ale = R.has_reagent("customizable_ale")
+			var/datum/reagent/consumable/ethanol/customizable/TA = T
+			if(ale)
+				for(var/datum/reagent/REA in TA.contained_reagents.reagent_list)
+					if(!is_type_in_list(REA, ale.contained_reagents.reagent_list))
+						ale.contained_reagents.add_reagent(REA.id, 1)
+						TA.contained_reagents.del_reagent(REA.id)
 		remove_reagent(T.id, transfer_amount)
 
 	update_total()
@@ -547,7 +555,7 @@
 			R.on_merge(data, amount)
 			if(!no_react)
 				handle_reactions()
-			return TRUE
+			return R
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
 	if(D)
@@ -565,7 +573,7 @@
 			my_atom.on_reagent_change()
 		if(!no_react)
 			handle_reactions()
-		return TRUE
+		return R
 
 	else
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
