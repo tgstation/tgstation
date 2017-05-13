@@ -626,6 +626,7 @@
 	duration = 25
 
 /obj/effect/overlay/temp/heart/Initialize(mapload)
+	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
 
