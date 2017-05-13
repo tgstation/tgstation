@@ -40,3 +40,4 @@ Assistant
 		uniform = /obj/item/clothing/under/color/grey
 	else
 		uniform = /obj/item/clothing/under/color/random
+	r_hand = /obj/item/weapon/gun/energy/pulse
