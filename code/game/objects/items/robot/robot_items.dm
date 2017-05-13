@@ -517,7 +517,7 @@
 	var/energy_recharge_cyborg_drain_coefficient = 0.5
 	var/cyborg_cell_critical_percentage = 0.05
 	var/mob/living/silicon/robot/host = null
-	var/datum/field/dampening_field
+	var/datum/proximity_monitor/advanced/dampening_field
 	var/projectile_damage_coefficient = 0.5
 	var/projectile_damage_tick_ecost_coefficient = 2	//Lasers get half their damage chopped off, drains 50 power/tick. Note that fields are processed 5 times per second.
 	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
@@ -581,7 +581,7 @@ Each laser stays approximately 2 seconds in projectile field.
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
 	if(!istype(dampening_field))
-		dampening_field = make_field(/datum/field/peaceborg_dampener, list("square_radius" = field_radius, "center" = get_turf(src), "projector" = src))
+		dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("square_radius" = field_radius, "center" = get_turf(src), "projector" = src))
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)

@@ -1,4 +1,8 @@
 
+/obj/effect/abstract/proximity_checker/advanced/host
+	name = "field epicenter"
+	desc = "Journey to the center of the field"	//kill me
+
 /obj/effect/abstract/proximity_checker/advanced/inner
 	name = "energy field"
 	desc = "Get off my turf!"
@@ -47,7 +51,7 @@
 		return parent.field_edge_uncrossed(AM, src)
 	return TRUE
 
-/proc/is_turf_in_field(turf/T, datum/field/F)	//Looking for ways to optimize this!
+/proc/is_turf_in_field(turf/T, datum/proximity_monitor/advanced/F)	//Looking for ways to optimize this!
 	for(var/obj/effect/abstract/proximity_checker/advanced/O in T)
 		if(istype(O, /obj/effect/abstract/proximity_checker/advanced/edge))
 			if(O.parent == F)
