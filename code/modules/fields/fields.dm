@@ -101,19 +101,6 @@
 		var/list/turf/turfs = block(locate(center.x-square_width, center.y-square_height, center.z-square_depth_down), locate(center.x+square_width, center.y+square_height, center.z+square_depth_up))
 		var/list/checkers_local = checkers
 		var/old_checkers_len = checkers_local.len
-		var/atom/_host = host
-		var/atom/loc_to_use = ignore_if_not_on_turf ? _host.loc : get_turf(_host)
-		if(!isturf(loc_to_use))	//only check the host's loc
-			if(range)
-				var/obj/effect/abstract/proximity_checker/pc
-				if(old_checkers_len)
-					pc = checkers_local[old_checkers_len]
-					--checkers_local.len
-					QDEL_LIST(checkers_local)
-				else
-					pc = new(loc_to_use, src)
-				checkers_local += pc	//only check the host's loc
-			return
 		var/turfs_len = turfs.len
 		var/old_checkers_used = min(turfs_len, old_checkers_len)
 		//reuse what we can
@@ -164,11 +151,6 @@
 
 /datum/proximity_monitor/proc/field_edge_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
 	return TRUE
-
-/datum/proximity_monitor/advanced/proc/update_center(turf/T, recalculate_field = TRUE)
-	center = T
-	if(recalculate_field)
-		recalculate_field()
 
 /datum/proximity_monitor/advanced/proc/post_setup_field()
 

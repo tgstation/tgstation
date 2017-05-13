@@ -28,12 +28,12 @@
 	if(!istype(projector))
 		qdel(src)
 	var/list/ranged = list()
-	for(var/obj/item/projectile/P in range(square_radius, center))
+	for(var/obj/item/projectile/P in range(square_radius, get_turf(host)))
 		ranged += P
 	for(var/obj/item/projectile/P in tracked)
 		if(!(P in ranged) || !P.loc)
 			release_projectile(P)
-	for(var/mob/living/silicon/robot/R in range(square_radius, center))
+	for(var/mob/living/silicon/robot/R in range(square_radius, get_turf(host)))
 		if(R.has_buckled_mobs())
 			for(var/mob/living/L in R.buckled_mobs)
 				L.visible_message("<span class='warning'>[L] is knocked off of [R] by the charge in [R]'s chassis induced by [name]!</span>")	//I know it's bad.
