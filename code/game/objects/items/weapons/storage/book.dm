@@ -172,16 +172,16 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	damtype = BURN
 	name = "Syndicate Tome"
 	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
-	var/ordained = FALSE
+	var/uses = 1
 
 /obj/item/weapon/storage/book/bible/syndicate/Initialize()
 	. = ..()
 	
 	
 /obj/item/weapon/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
-	if (!ordained)
+	if (uses)
 		H.mind.isholy = TRUE
-		ordained = TRUE
+		uses -= 1
 		to_chat(H, "<span class='userdanger'>You try to open the book AND IT BITES YOU!</span>")
 		playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 		H.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
