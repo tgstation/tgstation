@@ -735,6 +735,166 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		return 0
 	return 0
 
+/datum/objective/traitor_heist
+	explanation_text = "You shouldn't be seeing this"
+	dangerrating = 25
+	martyr_compatible = FALSE
+	var/heist_ID = null
+	var/progress = 0
+	var/quantity = 0
+	var/mission_accomplished = FALSE
+	var/payday = 20
+	var/list/heist_tools = list(/obj/item/device/encryptionkey/syndicate)
+
+/datum/objective/traitor_heist/New()
+	switch(rand(1,2))
+		if(1)
+			payday = 20
+			quantity = 4
+			heist_tools += /obj/item/device/camera/heist
+			heist_tools += /obj/item/clothing/mask/gas/clown_hat
+			heist_tools += /obj/item/clothing/under/rank/clown
+			heist_tools += /obj/item/clothing/shoes/clown_shoes
+			heist_ID = "Clown"
+			explanation_text = "Clowns have long been a potent force in galactic politics. Their collective might has toppled empires and crushed corporations. It is time to turn them against Nanotrasen."
+			explanation_text += "<br>We have provided you with a special camera that will upload photos directly to Nanotrasen's social media channels. We have provided you with the necessary clown apparel."
+			explanation_text += "<br>We require <b>[quantity]</b> photographs of crewmembers dressed as clowns (mask, shoes, and suit at a minimum), who are in some type of restraints, and are badly wounded."
+			explanation_text += "<br>Remember to make sure the photo is focused on the 'clown' and that the 'clown' is not dead or braindead. You will receive [payday] telecrystal and a Staff of Honk for completing this mission."
+		if(2)
+			payday = 30
+			quantity = 10000
+			heist_tools += /obj/item/weapon/storage/bag/money/heist
+			heist_ID = "Vault"
+			explanation_text = "This job is straightforward: Break into your station's vault, siphon the credits, and extract it via the provided duffelbag on a hacked shuttle escape pod."
+			explanation_text = "<br>We expect your team to bring in [quantity] credits from this heist, but if that kind of cash isn't available then stealing the full balance of the station's credit will suffice."
+			explanation_text += "<br>Your heist bag contains a device that can hijack and launch an escape pod of your choice to our designated rendevous location."
+			explanation_text += "<br>Be advised that the station's security algorithms are likely to detect that an escape pod is being hijacked. You will receive [payday] telecrystals for completing this heist."
+
+/datum/objective/traitor_heist/proc/Payday(var/obj/bonus)
+	for(var/datum/mind/M in ticker.mode.heisters)
+		to_chat(M,"<span class='notice'> The Great [heist_ID] Heist was a success! A [payday] telecrystal bonus has been added to your PDA.")
+		M << 'sound/effects/cha_ching.ogg'
+		var/obj/item/device/uplink/U = M.find_syndicate_uplink()
+		if(U)
+			U.telecrystals += payday
+			if(bonus)
+				spawn_atom_to_turf(bonus, get_turf(U), 1)
+
+/datum/objective/traitor_heist/check_completion()
+	if(mission_accomplished)
+		return TRUE
+	else
+		return FALSE
+
+/obj/item/device/camera/heist
+	name = "Modified Camera"
+	desc = "This camera sure seems to have a lot of communications equipment..."
+	var/list/subjects = list()
+
+/obj/item/device/camera/heist/captureimage(atom/target, mob/user, flag)
+	check_focus(target, user)
+	. = ..()
+
+/obj/item/device/camera/heist/proc/check_focus(atom/target, mob/owner)
+	if(!owner in ticker.mode.heisters)
+		return
+	if(!iscarbon(target))
+		to_chat(owner, "<span class='notice'>Upload Error: Target is not a carbon-based lifeform.")
+		return
+	var/mob/living/carbon/C = target
+	if(C.stat == DEAD)
+		to_chat(owner, "<span class='notice'>Upload Error: Target is dead.")
+		return
+	if(!C.client)
+		to_chat(owner, "<span class='notice'>Upload Error: Target is braindead.")
+		return
+	if(C.getBruteLoss() < 50)
+		to_chat(owner, "<span class='notice'>Upload Error: Target is not sufficiently brutalized.")
+		return
+	if(!C.restrained())
+		to_chat(owner, "<span class='notice'>Upload Error: Target is not restrained.")
+		return
+	if(!istype(C.get_item_by_slot(slot_wear_mask), /obj/item/clothing/mask/gas/clown_hat))
+		to_chat(owner, "<span class='notice'>Upload Error: Target is not wearing a clown mask.")
+		return
+	if(!istype(C.get_item_by_slot(slot_w_uniform), /obj/item/clothing/under/rank/clown))
+		to_chat(owner, "<span class='notice'>Upload Error: Target is not wearing a clown suit.")
+		return
+	if(!istype(C.get_item_by_slot(slot_shoes), /obj/item/clothing/shoes/clown_shoes))
+		to_chat(owner, "<span class='notice'>Upload Error: Target is not wearing clown shoes.")
+		return
+	if(C in subjects)
+		to_chat(owner, "<span class='notice'>Upload Error: You've already uploaded a photo of that person.")
+		return
+	ticker.mode.heist.progress += 1
+	subjects += target
+	to_chat(owner, "<span class='notice'>Upload Success! You have uploaded [ticker.mode.heist.progress] of the necessary [ticker.mode.heist.quantity] photos required")
+	if(ticker.mode.heist.progress == ticker.mode.heist.quantity)
+		ticker.mode.heist.mission_accomplished = TRUE
+		ticker.mode.heist.Payday(/obj/item/weapon/gun/magic/staff/honk)
+
+
+
+/obj/item/weapon/storage/bag/money/heist  // Used exclusively for the Vault Heist
+	name = "Heist Bag"
+	var/total_cash = 0
+	var/heist_cash = 0
+	var/goal = 0
+	var/launched = FALSE
+	var/datum/objective/traitor_heist/heist = null
+
+/obj/item/weapon/storage/bag/money/heist/Initialize(var/obj/item/weapon/storage/bag/money/heist/TH)
+	heist = TH
+	goal = heist.quantity
+	. = ..()
+
+/obj/item/weapon/storage/bag/money/heist/examine(mob/user)
+	. = ..()
+	check_value(user)
+
+/obj/item/weapon/storage/bag/money/heist/attack_self(mob/user)
+	check_value(user)
+	. =	..()
+
+/obj/item/weapon/storage/bag/money/heist/proc/check_value(var/mob/M)
+	total_cash = 0
+	for(var/obj/item/weapon/coin/C in contents)
+		total_cash += C.value
+	for(var/obj/item/stack/spacecash/S in contents)
+		total_cash += S.value * S.amount
+	if(M)
+		to_chat(M,"<span class='notice'>This container holds [total_cash] credits worth of space cash")
+		if(M.mind in ticker.mode.heisters)
+			to_chat(M,"<span class='notice'>Your employers expect to receive [goal] credits total from the heist")
+			if(total_cash > goal)
+				to_chat(M,"<span class='notice'>Connect the bag to an escape pod computer in order to have the pod automatically launch to your Syndicate handlers.")
+
+
+/obj/item/weapon/storage/bag/money/heist/afterattack(var/obj/machinery/computer/shuttle/target, mob/user, proximity)
+	if(istype(target,/obj/machinery/computer/shuttle/pod) && (user.mind in ticker.mode.heisters) && proximity)
+		visible_message("<span class='warning'>[user] is connecting the [src]'s secret connection port to the [target]!")
+		if(do_after(user, 50, target = target))
+			if(target)
+				target.emagged = TRUE
+				var/obj/docking_port/mobile/M = SSshuttle.getShuttle(target.shuttleId)
+				M.launch_status = NOLAUNCH
+				priority_announce("Unauthorized access detected in the escape pod authorization systems - please investigate the source of the breach.", "Station Alert")
+				sleep(600)
+				M.launch_status = UNLAUNCHED
+				launched = TRUE
+				M.request()
+				for(var/obj/item/weapon/storage/bag/money/heist/B in range(2,get_turf(target)))
+					B.check_value()
+					heist_cash += B.total_cash
+					if(heist_cash >= heist.quantity)
+						ticker.mode.heist.mission_accomplished = TRUE
+						ticker.mode.heist.Payday()
+						break
+
+
+
+
+
 
 ////////////////////////////////
 // Changeling team objectives //
