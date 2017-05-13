@@ -29,6 +29,7 @@
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
 	filling_color = "#00FF00"
+	booze_power = 5
 
 // Orange
 /obj/item/seeds/orange
@@ -55,6 +56,7 @@
 	desc = "It's an tangy fruit."
 	icon_state = "orange"
 	filling_color = "#FFA500"
+	booze_power = 15
 
 // Lemon
 /obj/item/seeds/lemon
@@ -74,12 +76,14 @@
 	mutatelist = list(/obj/item/seeds/firelemon)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
 	seed = /obj/item/seeds/lemon
 	name = "lemon"
 	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
 	filling_color = "#FFD700"
+	booze_power = 5
 
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon
