@@ -15,13 +15,11 @@
 	var/static/image/southwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southwest")
 	var/static/image/northeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast")
 	var/static/image/southeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
-	var/list/turf/turf_overlay_tracker
 	var/obj/item/borg/projectile_dampen/projector = null
 	var/list/obj/item/projectile/tracked
 	var/list/obj/item/projectile/staging
 
 /datum/field/peaceborg_dampener/New()
-	turf_overlay_tracker = list()
 	tracked = list()
 	staging = list()
 	..()
@@ -46,13 +44,12 @@
 
 /datum/field/peaceborg_dampener/setup_edge_turf(turf/T)
 	..()
-	var/dir_found = get_edgeturf_direction(T)
-	T.add_overlay(get_edgeturf_overlay(dir_found))
-	turf_overlay_tracker[T] = dir_found
+	var/image/I = get_edgeturf_overlay(get_edgeturf_direction(T))
+	var/atom/movable/field_object/F = edge_turfs[T]
+	F.appearance = I.appearance
+
 
 /datum/field/peaceborg_dampener/cleanup_edge_turf(turf/T)
-	T.cut_overlay(get_edgeturf_overlay(turf_overlay_tracker[T]))
-	turf_overlay_tracker -= T
 	..()
 
 /datum/field/peaceborg_dampener/proc/get_edgeturf_overlay(direction)
@@ -102,5 +99,6 @@
 
 /datum/field/peaceborg_dampener/field_edge_canpass(atom/movable/AM, atom/movable/field_object/field_edge/F, turf/entering)
 	if(istype(AM, /obj/item/projectile) && entering == get_turf(F))
+		world << "STAGING [AM]"
 		staging[AM] = get_turf(AM)
 	return ..()
