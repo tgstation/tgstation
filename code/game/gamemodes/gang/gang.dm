@@ -252,13 +252,12 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 /datum/game_mode/proc/shuttle_check()
 	if(forced_shuttle)
 		return
-	var/normies = 0
-	var/list/all_gangsters = get_all_gangsters()
+	var/alive = 0
 	for(var/mob/living/L in GLOB.player_list)
-		if(L.stat != DEAD && !(L.mind in all_gangsters))
-			normies++
-	if(normies < LAZYLEN(GLOB.joined_player_list) * 0.25)
-		priority_announce("Catastrophic casualties detected: Critical shuttle protocols activated - jamming recall signals across all frequencies.")
+		if(L.stat != DEAD)
+			alive++
+	if(alive < LAZYLEN(GLOB.joined_player_list) * 0.4)
+		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
 		forced_shuttle = TRUE
 		if(SSshuttle.emergency.timeLeft(1) < (SSshuttle.emergencyCallTime * 0.4))
 			SSshuttle.emergency.request(null, set_coefficient = 0.4)
