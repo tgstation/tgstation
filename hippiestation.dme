@@ -2127,6 +2127,7 @@
 #include "hippiestation\code\game\objects\items\weapons\storage\toolbox.dm"
 #include "hippiestation\code\game\objects\items\weapons\storage\uplink_kits.dm"
 #include "hippiestation\code\game\objects\structures\beds_chairs\chair.dm"
+#include "hippiestation\code\game\objects\structures\crates_lockers\closets\misc.dm"
 #include "hippiestation\code\game\objects\structures\crates_lockers\closets\syndicate.dm"
 #include "hippiestation\code\interface\skin.dmf"
 #include "hippiestation\code\modules\admin\holder2.dm"

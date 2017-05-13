@@ -17374,37 +17374,44 @@
 /area/hallway/primary/central)
 "aLZ" = (
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L3"
 	},
 /area/hallway/primary/central)
 "aMa" = (
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L1"
 	},
 /area/hallway/primary/central)
 "aMb" = (
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L7"
 	},
 /area/hallway/primary/central)
 "aMc" = (
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L5"
 	},
 /area/hallway/primary/central)
 "aMd" = (
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L11"
 	},
 /area/hallway/primary/central)
 "aMe" = (
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L9"
 	},
 /area/hallway/primary/central)
 "aMf" = (
 /turf/open/floor/plasteel{
 	desc = "";
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -17871,17 +17878,20 @@
 /area/crew_quarters/bar)
 "aNv" = (
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L4"
 	},
 /area/hallway/primary/central)
 "aNw" = (
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L2"
 	},
 /area/hallway/primary/central)
 "aNx" = (
 /obj/effect/landmark/observer_start,
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L8"
 	},
 /area/hallway/primary/central)
@@ -17891,11 +17901,13 @@
 	location = "EVA"
 	},
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L6"
 	},
 /area/hallway/primary/central)
 "aNz" = (
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L12"
 	},
 /area/hallway/primary/central)
@@ -17905,12 +17917,14 @@
 	location = "EVA2"
 	},
 /turf/open/floor/plasteel{
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L10"
 	},
 /area/hallway/primary/central)
 "aNB" = (
 /turf/open/floor/plasteel{
 	desc = "";
+	icon = 'hippiestation/icons/turf/floors.dmi';
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -22258,7 +22272,7 @@
 /area/security/vacantoffice)
 "aXY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/closet/secure_closet/freezer/cream_pie,
+/obj/structure/closet/secure_closet/clown,
 /turf/open/floor/plasteel/redyellow,
 /area/hippie/clown)
 "aXZ" = (
@@ -65498,6 +65512,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/structure/closet/secure_closet/mime,
 /turf/open/floor/plasteel/cafeteria,
 /area/hippie/mime)
 "cNT" = (
@@ -65574,6 +65589,22 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"cOc" = (
+/obj/machinery/computer{
+	name = "Mime Console"
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/hippie/mime)
+"cOd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream,
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream,
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream,
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream,
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream,
+/turf/open/floor/plasteel/redyellow,
+/area/hippie/clown)
 
 (1,1,1) = {"
 aaa
@@ -79064,7 +79095,7 @@ aUN
 baH
 aWi
 aXY
-aXY
+cOd
 cNY
 bbd
 beO
@@ -79831,13 +79862,13 @@ aLA
 aQD
 aSd
 cNF
-cNJ
+cNF
 aUW
 cNO
-cNQ
-baJ
-baJ
-cOb
+cNF
+cNF
+cNF
+cOa
 beO
 beU
 bgl
@@ -80093,7 +80124,7 @@ aUR
 aWs
 cNR
 cNW
-baJ
+cNF
 bbf
 beT
 beT
@@ -80601,13 +80632,13 @@ aLB
 aLB
 aQK
 aSe
-cNH
+cNG
 aUl
-aUl
+cOc
 aXN
 cNS
 cNX
-baJ
+cNF
 bcI
 aPz
 bdt
