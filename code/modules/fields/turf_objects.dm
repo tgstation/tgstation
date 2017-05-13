@@ -6,7 +6,7 @@
 	icon_state = null
 	alpha = 0
 	invisibility = INVISIBILITY_ABSTRACT
-	flags = ABSTRACT
+	flags = ABSTRACT|ON_BORDER
 	var/datum/field/parent = null
 
 /atom/movable/field_object/New(newparent = null)
