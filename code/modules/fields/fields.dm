@@ -41,9 +41,9 @@
 			process_edge_checker(C)
 			CHECK_TICK
 
-/datum/proximity_monitor/advanced/proc/process_inner_turf(obj/effect/abstract/proximity_checker/advanced/inner)
+/datum/proximity_monitor/advanced/proc/process_checker(obj/effect/abstract/proximity_checker/advanced/inner/F)
 
-/datum/proximity_monitor/advanced/proc/process_edge_turf(obj/effect/abstract/proximity_checker/advanced/edge)
+/datum/proximity_monitor/advanced/proc/process_edge_checker(obj/effect/abstract/proximity_checker/advanced/edge/F)
 
 /datum/proximity_monitor/advanced/proc/Initialize()
 	setup_field()
@@ -75,56 +75,94 @@
 /datum/proximity_monitor/advanced/proc/recalculate_field(ignore_movement_check = FALSE)	//Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
 	if((field_shape == FIELD_NO_SHAPE) || (!ignore_movement_check && (host.loc == last_host_loc)))
 		return
+	for(var/atom/I in edge_checkers)
+		cleanup_edge_turf(I.loc, I)
+	UpdateEdgeCheckers()
+	for(var/atom/I in edge_checkers)
+		setup_edge_turf(I.loc, I)
 	if(field_shape == FIELD_SHAPE_RADIUS_SQUARE)	//uses proxchecker code partially.
 		var/list/old = checkers.Copy()
 		SetRange(square_radius, TRUE)
-		UpdateEdgeCheckers()
-		for(var/I in edge_checkers)
-			setup_edge_checker(I)
 		var/list/needs_setup = checkers.Copy()
 		needs_setup -= old
 		var/list/needs_cleanup = old.Copy()
 		needs_cleanup -= checkers
-		for(var/i in needs_setup)
-			setup_checker(i.loc)
-		for(var/i in needs_cleanup)
-			cleanup_field_turf(i.loc)
+		for(var/atom/i in needs_setup)
+			setup_field_turf(i.loc, i)
+		for(var/atom/i in needs_cleanup)
+			cleanup_field_turf(i.loc, i)
 		return
-	update_new_turfs()
-	var/list/turf/needs_setup = checkers_new.Copy()
-	if(setup_checkers)
-		for(var/turf/T in checkers)
-			if(!(T in needs_setup))
-				cleanup_field_turf(T)
+	var/list/checkers_old = checkers.Copy()
+	var/list/turf/old_turfs = list()
+	for(var/atom/A in checkers)
+		old_turfs += A.loc
+	if(field_shape == FIELD_SHAPE_CUSTOM_SQUARE)
+		var/turf/center = get_turf(host)
+		var/list/turf/turfs = block(locate(center.x-square_width, center.y-square_height, center.z-square_depth_down), locate(center.x+square_width, center.y+square_height, center.z+square_depth_up))
+		var/list/checkers_local = checkers
+		var/old_checkers_len = checkers_local.len
+		var/atom/_host = host
+		var/atom/loc_to_use = ignore_if_not_on_turf ? _host.loc : get_turf(_host)
+		if(!isturf(loc_to_use))	//only check the host's loc
+			if(range)
+				var/obj/effect/abstract/proximity_checker/pc
+				if(old_checkers_len)
+					pc = checkers_local[old_checkers_len]
+					--checkers_local.len
+					QDEL_LIST(checkers_local)
+				else
+					pc = new(loc_to_use, src)
+				checkers_local += pc	//only check the host's loc
+			return
+		var/turfs_len = turfs.len
+		var/old_checkers_used = min(turfs_len, old_checkers_len)
+		//reuse what we can
+		for(var/I in 1 to old_checkers_len)
+			if(I <= old_checkers_used)
+				var/obj/effect/abstract/proximity_checker/pc = checkers_local[I]
+				pc.loc = turfs[I]
 			else
-				needs_setup -= T
-			CHECK_TICK
-		for(var/turf/T in needs_setup)
-			setup_field_turf(T)
-			CHECK_TICK
+				qdel(checkers_local[I])	//delete the leftovers
+		if(old_checkers_len < turfs_len)
+			//create what we lack
+			for(var/I in (old_checkers_used + 1) to turfs_len)
+				checkers_local += new /obj/effect/abstract/proximity_checker(turfs[I], src)
+		else
+			checkers_local.Cut(old_checkers_used + 1, old_checkers_len)
+	var/list/turf/new_turfs = list()
+	for(var/atom/A in checkers)
+		new_turfs += A.loc
+	var/list/turf/turfs_needing_setup = new_turfs.Copy()
+	turfs_needing_setup -= old_turfs
+	for(var/turf/T in turfs_needing_setup)
+		setup_field_turf(T)
+	var/list/turf/turfs_needing_cleanup = old_turfs.Copy()
+	turfs_needing_cleanup -= new_turfs
+	for(var/turf/T in turfs_needing_cleanup)
+		cleanup_field_turf(T)
 
-/datum/proximity_monitor/advanced/proc/field_turf_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F, turf/entering)
+/datum/proximity_monitor/proc/field_turf_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F, turf/entering)
 	return TRUE
 
-/datum/proximity_monitor/advanced/proc/field_turf_uncross(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F)
+/datum/proximity_monitor/proc/field_turf_uncross(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F)
 	return TRUE
 
-/datum/proximity_monitor/advanced/proc/field_turf_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F)
+/datum/proximity_monitor/proc/field_turf_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F)
 	return TRUE
 
-/datum/proximity_monitor/advanced/proc/field_turf_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F)
+/datum/proximity_monitor/proc/field_turf_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F)
 	return TRUE
 
-/datum/proximity_monitor/advanced/proc/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F, turf/entering)
+/datum/proximity_monitor/proc/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F, turf/entering)
 	return TRUE
 
-/datum/proximity_monitor/advanced/proc/field_edge_uncross(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
+/datum/proximity_monitor/proc/field_edge_uncross(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
 	return TRUE
 
-/datum/proximity_monitor/advanced/proc/field_edge_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
+/datum/proximity_monitor/proc/field_edge_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
 	return TRUE
 
-/datum/proximity_monitor/advanced/proc/field_edge_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
+/datum/proximity_monitor/proc/field_edge_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
 	return TRUE
 
 /datum/proximity_monitor/advanced/proc/update_center(turf/T, recalculate_field = TRUE)
@@ -177,83 +215,3 @@
 				return SOUTH
 			if(T.y == (checking_from.y + square_height))
 				return NORTH
-
-//DEBUG FIELDS
-/datum/proximity_monitor/advanced/debug
-	name = "\improper Color Matrix Field"
-	field_shape = FIELD_SHAPE_RADIUS_SQUARE
-	square_radius = 5
-	var/set_fieldturf_color = "#aaffff"
-	var/set_edgeturf_color = "#ffaaff"
-	setup_checkers = TRUE
-	setup_edge_checkers = TRUE
-
-/datum/proximity_monitor/advanced/debug/recalculate_field()
-	..()
-
-/datum/proximity_monitor/advanced/debug/post_setup_field()
-	..()
-
-/datum/proximity_monitor/advanced/debug/setup_edge_turf(turf/T)
-	T.color = set_edgeturf_color
-	..()
-
-/datum/proximity_monitor/advanced/debug/cleanup_edge_turf(turf/T)
-	T.color = initial(T.color)
-	..()
-	if(T in checkers)
-		T.color = set_fieldturf_color
-
-/datum/proximity_monitor/advanced/debug/setup_field_turf(turf/T)
-	T.color = set_fieldturf_color
-	..()
-
-/datum/proximity_monitor/advanced/debug/cleanup_field_turf(turf/T)
-	T.color = initial(T.color)
-	..()
-
-//DEBUG FIELD ITEM
-/obj/item/device/multitool/field_debug
-	name = "strange multitool"
-	desc = "Seems to project a colored field!"
-	var/list/field_params = list("field_shape" = FIELD_SHAPE_RADIUS_SQUARE, "square_radius" = 5, "set_fieldturf_color" = "#aaffff", "set_edgeturf_color" = "#ffaaff")
-	var/field_type = /datum/proximity_monitor/advanced/debug
-	var/operating = FALSE
-	var/datum/proximity_monitor/advanced/current = null
-	var/turf/center = null
-
-/obj/item/device/multitool/field_debug/New()
-	START_PROCESSING(SSobj, src)
-	center = get_turf(src)
-	..()
-
-/obj/item/device/multitool/field_debug/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(current)
-	..()
-
-/obj/item/device/multitool/field_debug/proc/setup_debug_field()
-	var/list/new_params = field_params.Copy()
-	new_params["center"] = center
-	current = make_field(field_type, new_params)
-
-/obj/item/device/multitool/field_debug/attack_self(mob/user)
-	operating = !operating
-	to_chat(user, "You turn the [src] [operating? "on":"off"].")
-	if(!istype(current) && operating)
-		setup_debug_field()
-	else if(!operating)
-		QDEL_NULL(current)
-
-/obj/item/device/multitool/field_debug/on_mob_move()
-	check_turf(get_turf(src))
-
-/obj/item/device/multitool/field_debug/process()
-	check_turf(get_turf(src))
-
-/obj/item/device/multitool/field_debug/proc/check_turf(turf/T)
-	if(!istype(T) || !istype(current))
-		return
-	if(T != center)
-		center = T
-	current.update_center(T)

@@ -44,7 +44,7 @@
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/setup_edge_turf(turf/T)
 	..()
-	var/image/I = get_edgeturf_overlay(get_edgeturf_direction(T))
+	var/image/I = get_edgeturf_overlay(get_edgechecker_direction(T))
 	var/obj/effect/abstract/proximity_checker/advanced/F = edge_checkers[T]
 	F.appearance = I.appearance
 
