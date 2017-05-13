@@ -164,9 +164,6 @@
 /obj/item/device/gangtool/proc/recall(mob/user)
 	if(!can_use(user))
 		return 0
-		
-	if(SSticker.mode.forced_shuttle)
-		return 0
 
 	if(recalling)
 		to_chat(usr, "<span class='warning'>Error: Recall already in progress.</span>")
