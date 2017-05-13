@@ -39,8 +39,7 @@
 
 /turf/proc/CalculateAdjacentTurfs()
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
-	for(var/direction in cardinal)
-	for(var/direction in atmos_dirs)
+	for(var/direction in GLOB.atmos_dirs)
 		var/turf/T = get_step(src, direction)
 		if(!T)
 			continue
@@ -86,7 +85,7 @@
 		var/matchingDirections = 0
 		var/turf/S = get_step(curloc, direction)
 
-		for (var/checkDirection in atmos_dirs)
+		for (var/checkDirection in GLOB.atmos_dirs)
 			var/turf/checkTurf = get_step(S, checkDirection)
 			if(!S.atmos_adjacent_turfs || !S.atmos_adjacent_turfs[checkTurf])
 				continue

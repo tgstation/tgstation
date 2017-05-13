@@ -6,8 +6,8 @@
 	var/atom/owner
 
 /atom/movable/zshadow/Initialize()
-	..()
-	LAZYADD(SSz.zshadows, src)
+	. = ..()
+	LAZYADD(SSz_levels.zshadows, src)
 
 /atom/movable/zshadow/Move() //loc = only bby.
 	return
@@ -15,10 +15,10 @@
 /atom/movable/zshadow/CanFallThroughZ() //amusing, but no
 	return
 
-/atom/movable/zshadow/Destroy()
-	if(!QDELETED(owner)) //Nothing destroys these if their owner exists, they *ARE* their owner as far as we're concerned
+/atom/movable/zshadow/Destroy(force)
+	if(!QDELETED(owner) && !force) //Nothing destroys these if their owner exists, they *ARE* their owner as far as we're concerned
 		return QDEL_HINT_LETMELIVE
-	LAZYREMOVE(SSz.zshadows, src)
+	LAZYREMOVE(SSz_levels.zshadows, src)
 	return ..()
 
 /atom/movable/zshadow/examine(mob/user)

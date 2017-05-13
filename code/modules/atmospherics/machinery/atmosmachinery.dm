@@ -65,7 +65,7 @@ Pipelines + Other Objects -> Pipe network
 	node_connects.len = device_type
 
 	for(DEVICE_TYPE_LOOP)
-		for(var/D in atmos_dirs)
+		for(var/D in GLOB.atmos_dirs)
 			if(D & GetInitDirections())
 				if(D in node_connects)
 					continue

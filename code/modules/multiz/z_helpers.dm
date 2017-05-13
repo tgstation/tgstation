@@ -1,26 +1,24 @@
 
-//Connects A and B (intended to be numbers, eg: 2, 3) inside SSz.vercial_connections
+//Connects A and B (intended to be numbers, eg: 2, 3) inside SSz_levels.vercial_connections
 //(Mentions vertical to avoid confusing with the existing z-transition system, which is """horizontal""")
 /proc/ConnectVerticalZs(A, B)
-	LAZYINITLIST(SSz.vertical_connections)
-	var/list/L = SSz.vertical_connections["[A]"]
-	if(!L)
-		L = list()
+	LAZYINITLIST(SSz_levels.vertical_connections)
+	var/list/L = SSz_levels.vertical_connections["[A]"]
+	LAZYINITLIST(L)
 	L["[B]"] = TRUE
-	SSz.vertical_connections["[A]"] = L
-	L = SSz.vertical_connections["[B]"]
-	if(!L)
-		L = list()
+	SSz_levels.vertical_connections["[A]"] = L
+	L = SSz_levels.vertical_connections["[B]"]
+	LAZYINITLIST(L)
 	L["[A]"] = TRUE
-	SSz.vertical_connections["[B]"] = L
+	SSz_levels.vertical_connections["[B]"] = L
 
 
 //Check A and B are connected, without the need for a turf or z_open hole
 //Used for sounds, explosions, etc.
 /proc/AreZsConnected(A, B)
-	if(!LAZYLEN(SSz.vertical_connections))
+	if(!LAZYLEN(SSz_levels.vertical_connections))
 		return FALSE
-	var/list/L = SSz.vertical_connections["[A]"] //only check one of the pairs, as it's a twoway thing A<->B so finding A->B is enough
+	var/list/L = SSz_levels.vertical_connections["[A]"] //only check one of the pairs, as it's a twoway thing A<->B so finding A->B is enough
 	if(L)
 		return L["[B]"]
 
