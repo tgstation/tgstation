@@ -422,7 +422,7 @@
 	raising = 1
 	if(cover)
 		flick("popup", cover)
-	sleep(10)
+	sleep(5)
 	raising = 0
 	if(cover)
 		cover.icon_state = "openTurretCover"
@@ -438,7 +438,7 @@
 	raising = 1
 	if(cover)
 		flick("popdown", cover)
-	sleep(10)
+	sleep(5)
 	raising = 0
 	if(cover)
 		cover.icon_state = "turretCover"
