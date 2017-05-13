@@ -25,7 +25,7 @@
 	cut_overlays()
 	if(toppaper)
 		add_overlay(toppaper.icon_state)
-		add_overlay(toppaper.overlays)
+		copy_overlays(toppaper)
 	if(haspen)
 		add_overlay("clipboard_pen")
 	add_overlay("clipboard_over")
