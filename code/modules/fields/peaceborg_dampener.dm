@@ -45,9 +45,9 @@
 /datum/proximity_monitor/advanced/peaceborg_dampener/setup_edge_turf(turf/T)
 	..()
 	var/image/I = get_edgeturf_overlay(get_edgechecker_direction(T))
-	var/obj/effect/abstract/proximity_checker/advanced/F = edge_checkers[T]
+	var/obj/effect/abstract/proximity_checker/advanced/F = locate(/obj/effect/abstract/proximity_checker/advanced/edge) in T
 	F.appearance = I.appearance
-
+	F.invisibility = INVISIBILITY_NONE
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/T)
 	..()
