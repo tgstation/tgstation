@@ -42,6 +42,8 @@
 
 
 /obj/item/weapon/pneumatic_cannon/attackby(obj/item/weapon/W, mob/user, params)
+	if(user.a_intent == INTENT_HARM)
+		return ..()
 	if(istype(W, /obj/item/weapon/tank/internals))
 		if(!tank)
 			var/obj/item/weapon/tank/internals/IT = W
@@ -69,22 +71,27 @@
 		var/obj/item/IW = W
 		load_item(IW, user)
 
-/obj/item/weapon/pneumatic_cannon/proc/load_item(obj/item/I, mob/user)
+/obj/item/weapon/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
 	if((loadedWeightClass + I.w_class) > maxWeightClass)	//Only make messages if there's a user
 		if(user)
 			to_chat(user, "<span class='warning'>\The [I] won't fit into \the [src]!</span>")
 		return FALSE
-	if(I.w_class > src.w_class)
+	if(I.w_class > w_class)
 		if(user)
 			to_chat(user, "<span class='warning'>\The [I] is too large to fit into \the [src]!</span>")
-			return FALSE
+		return FALSE
+	return TRUE
+
+/obj/item/weapon/pneumatic_cannon/proc/load_item(obj/item/I, mob/user)
+	if(!can_load_item(I, user))
+		return FALSE
 	if(user)		//Only use transfer proc if there's a user, otherwise just set loc.
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You load \the [I] into \the [src].</span>")
 	else
 		I.forceMove(src)
-	loadedItems.Add(I)
+	loadedItems += I
 	loadedWeightClass += I.w_class
 	return TRUE
 
@@ -143,18 +150,20 @@
 		for(var/i in 1 to throw_amount)
 			if(!loadedItems.len)
 				break
-			var/obj/item/I = loadedItems[1]
+			var/obj/item/I
 			if(fire_mode == PCANNON_FILO)
 				I = loadedItems[loadedItems.len]
+			else
+				I = loadedItems[1]
 			if(!throw_item(target, I, user))
 				break
 
 /obj/item/weapon/pneumatic_cannon/proc/throw_item(turf/target, obj/item/I, mob/user)
 	if(!istype(I))
 		return FALSE
-	loadedItems.Remove(I)
+	loadedItems -= I
 	loadedWeightClass -= I.w_class
-	I.loc = get_turf(src)
+	I.forceMove(get_turf(src))
 	I.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user)
 	return TRUE
 
@@ -215,10 +224,13 @@
 /obj/item/weapon/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj/item))
 		return FALSE
+	var/loaded = 0
 	for(var/i in 1 to amount)
 		var/obj/item/I = new type
 		if(!load_item(I, null))
-			return TRUE
+			qdel(I)
+			return loaded
+		loaded++
 
 /obj/item/weapon/pneumatic_cannon/pie
 	name = "pie cannon"
@@ -233,6 +245,8 @@
 	maxWeightClass = 100	//50 pies. :^)
 	clumsyCheck = FALSE
 
-/obj/item/weapon/pneumatic_cannon/pie/attackby(obj/item/I, mob/living/L)
+/obj/item/weapon/pneumatic_cannon/pie/can_load_item(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pie))
 		return ..()
+	to_chat(user, "<span class='warning'>[src] only accepts pies!</span>")
+	return FALSE
