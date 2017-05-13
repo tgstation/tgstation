@@ -15,8 +15,11 @@
 /datum/proximity_monitor/Destroy()
 	host = null
 	last_host_loc = null
-	QDEL_LIST(checkers)
+	full_cleanup()
 	return ..()
+
+/datum/proximity_monitor/proc/full_cleanup()
+	QDEL_LIST(checkers)
 
 /datum/proximity_monitor/proc/HandleMove()
 	var/atom/_host = host

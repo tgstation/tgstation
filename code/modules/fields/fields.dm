@@ -1,4 +1,8 @@
 
+#define FIELD_NO_SHAPE 0
+#define FIELD_SHAPE_RADIUS_SQUARE 1
+#define FIELD_SHAPE_CUSTOM_SQUARE 2
+
 /datum/proximity_monitor/advanced
 	var/name = "\improper Energy Field"
 	var/list/edge_checkers
@@ -27,51 +31,64 @@
 	full_cleanup()
 	return ..()
 
-/datum/proximity_monitor/advanced/proc/assume_params(list/field_params)
-	var/pass_check = TRUE
-	for(var/param in field_params)
-		if(vars[param] || isnull(vars[param]) || (param in vars))
-			vars[param] = field_params[param]
-		else
-			pass_check = FALSE
-	return pass_check
-
-/datum/proximity_monitor/advanced/proc/check_variables()
-	var/pass = TRUE
-	if(field_shape == FIELD_NO_SHAPE)	//If you're going to make a manually updated field you shouldn't be using automatic checks so don't.
-		pass = FALSE
-	if(square_radius < 0 || square_height < 0 || square_width < 0 || square_depth_up < 0 || square_depth_down < 0)
-		pass = FALSE
-	if(!istype(center))
-		pass = FALSE
-	return pass
-
 /datum/proximity_monitor/advanced/process()
-	if(process_inner_turfs)
-		for(var/turf/T in checkers)
-			process_inner_turf(T)
-			CHECK_TICK		//Really crappy lagchecks, needs improvement once someone starts using processed fields.
+	if(process_checkers)
+		for(var/C in checkers)
+			process_checker(C)
+			CHECK_TICK
 	if(process_edge_checkers)
-		for(var/turf/T in edge_checkers)
-			process_edge_turf(T)
-			CHECK_TICK	//Same here.
+		for(var/C in edge_checkers)
+			process_edge_checker(C)
+			CHECK_TICK
 
-/datum/proximity_monitor/advanced/proc/process_inner_turf(turf/T)
+/datum/proximity_monitor/advanced/proc/process_inner_turf(obj/effect/abstract/proximity_checker/advanced/inner)
 
-/datum/proximity_monitor/advanced/proc/process_edge_turf(turf/T)
+/datum/proximity_monitor/advanced/proc/process_edge_turf(obj/effect/abstract/proximity_checker/advanced/edge)
 
 /datum/proximity_monitor/advanced/proc/Initialize()
 	setup_field()
 	post_setup_field()
 
-/datum/proximity_monitor/advanced/proc/full_cleanup()	 //Full cleanup for when you change something that would require complete resetting.
-	for(var/turf/T in edge_checkers)
-		cleanup_edge_turf(T)
-	for(var/turf/T in checkers)
-		cleanup_field_turf(T)
+/datum/proximity_monitor/advanced/full_cleanup()
+	QDEL_LIST(edge_checkers)
+	..()
+
+/datum/proximity_monitor/advanced/proc/UpdateEdgeCheckers()
+	if(!field_shape)
+		return
+	var/turf/center = get_turf(host)
+	QDEL_LIST(edge_checkers)
+	edge_checkers = list()
+	switch(field_shape)
+		if(FIELD_SHAPE_RADIUS_SQUARE)
+			for(var/ix in -square_radius to square_radius)
+				for(var/iy in -square_radius to square_radius)
+					edge_checkers += /obj/effect/abstract/proximity_checker/advanced/inner(locate(center.x + ix, center.y + iy, center.z), _monitor = src)
+					CHECK_TICK
+		if(FIELD_SHAPE_CUSTOM_SQUARE)
+			for(var/ix in -square_width to square_width)
+				for(var/iy in -square_height to square_height)
+					for(var/iz in -square_depth_down to square_depth_up)
+						edge_checkers += new /obj/effect/abstract/proximity_checker/advanced/inner(locate(center.x + ix, center.y + iy, center.z + iz), _monitor = src)
+						CHECK_TICK
 
 /datum/proximity_monitor/advanced/proc/recalculate_field(ignore_movement_check = FALSE)	//Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
-	if(!(ignore_movement_check || ((last_x != center.x || last_y != center.y || last_z != center.z) && (field_shape != FIELD_NO_SHAPE))))
+	if((field_shape == FIELD_NO_SHAPE) || (!ignore_movement_check && (host.loc == last_host_loc)))
+		return
+	if(field_shape == FIELD_SHAPE_RADIUS_SQUARE)	//uses proxchecker code partially.
+		var/list/old = checkers.Copy()
+		SetRange(square_radius, TRUE)
+		UpdateEdgeCheckers()
+		for(var/I in edge_checkers)
+			setup_edge_checker(I)
+		var/list/needs_setup = checkers.Copy()
+		needs_setup -= old
+		var/list/needs_cleanup = old.Copy()
+		needs_cleanup -= checkers
+		for(var/i in needs_setup)
+			setup_checker(i.loc)
+		for(var/i in needs_cleanup)
+			cleanup_field_turf(i.loc)
 		return
 	update_new_turfs()
 	var/list/turf/needs_setup = checkers_new.Copy()
@@ -84,13 +101,6 @@
 			CHECK_TICK
 		for(var/turf/T in needs_setup)
 			setup_field_turf(T)
-			CHECK_TICK
-	if(setup_edge_checkers)
-		for(var/turf/T in edge_checkers)
-			cleanup_edge_turf(T)
-			CHECK_TICK
-		for(var/turf/T in edge_checkers_new)
-			setup_edge_turf(T)
 			CHECK_TICK
 
 /datum/proximity_monitor/advanced/proc/field_turf_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/inner/F, turf/entering)
@@ -125,71 +135,25 @@
 /datum/proximity_monitor/advanced/proc/post_setup_field()
 
 /datum/proximity_monitor/advanced/proc/setup_field()
-	update_new_turfs()
-	if(setup_checkers)
-		for(var/turf/T in checkers_new)
-			setup_field_turf(T)
-			CHECK_TICK
-	if(setup_edge_checkers)
-		for(var/turf/T in edge_checkers_new)
-			setup_edge_turf(T)
-			CHECK_TICK
 
 /datum/proximity_monitor/advanced/proc/cleanup_field_turf(turf/T)
-	qdel(checkers[T])
-	checkers -= T
 
 /datum/proximity_monitor/advanced/proc/cleanup_edge_turf(turf/T)
-	qdel(edge_checkers[T])
-	edge_checkers -= T
 
 /datum/proximity_monitor/advanced/proc/setup_field_turf(turf/T)
-	checkers[T] = new /obj/effect/abstract/proximity_checker/advanced/inner(T, newparent = src)
 
 /datum/proximity_monitor/advanced/proc/setup_edge_turf(turf/T)
-	edge_checkers[T] = new /obj/effect/abstract/proximity_checker/advanced/edge(T, newparent = src)
-
-/datum/proximity_monitor/advanced/proc/update_new_turfs()
-	if(!istype(center))
-		return FALSE
-	last_x = center.x
-	last_y = center.y
-	last_z = center.z
-	checkers_new = list()
-	edge_checkers_new = list()
-	switch(field_shape)
-		if(FIELD_NO_SHAPE)
-			return FALSE
-		if(FIELD_SHAPE_RADIUS_SQUARE)
-			for(var/turf/T in block(locate(center.x-square_radius,center.y-square_radius,center.z-square_depth_down),locate(center.x+square_radius, center.y+square_radius,center.z+square_depth_up)))
-				checkers_new += T
-			edge_checkers_new = checkers_new.Copy()
-			if(square_radius >= 1)
-				var/list/turf/center_turfs = list()
-				for(var/turf/T in block(locate(center.x-square_radius+1,center.y-square_radius+1,center.z-square_depth_down),locate(center.x+square_radius-1, center.y+square_radius-1,center.z+square_depth_up)))
-					center_turfs += T
-				for(var/turf/T in center_turfs)
-					edge_checkers_new -= T
-		if(FIELD_SHAPE_CUSTOM_SQUARE)
-			for(var/turf/T in block(locate(center.x-square_width,center.y-square_height,center.z-square_depth_down),locate(center.x+square_width, center.y+square_height,center.z+square_depth_up)))
-				checkers_new += T
-			edge_checkers_new = checkers_new.Copy()
-			if(square_height >= 1 && square_width >= 1)
-				var/list/turf/center_turfs = list()
-				for(var/turf/T in block(locate(center.x-square_width+1,center.y-square_height+1,center.z-square_depth_down),locate(center.x+square_width-1, center.y+square_height-1,center.z+square_depth_up)))
-					center_turfs += T
-				for(var/turf/T in center_turfs)
-					edge_checkers_new -= T
 
 //Gets edge direction/corner, only works with square radius/WDH fields!
-/datum/proximity_monitor/advanced/proc/get_edgeturf_direction(turf/T, turf/center_override = null)
-	var/turf/checking_from = center
+/datum/proximity_monitor/advanced/proc/get_edgechecker_direction(obj/effect/abstract/proximity_checker/advanced/edge/C, turf/center_override = null)
+	var/turf/checking_from = get_turf(host)
 	if(istype(center_override))
 		checking_from = center_override
 	if(field_shape != FIELD_SHAPE_RADIUS_SQUARE && field_shape != FIELD_SHAPE_CUSTOM_SQUARE)
 		return
-	if(!(T in edge_checkers))
+	if(!(C in edge_checkers))
 		return
+	var/turf/T = get_turf(C)
 	switch(field_shape)
 		if(FIELD_SHAPE_RADIUS_SQUARE)
 			if(((T.x == (checking_from.x + square_radius)) || (T.x == (checking_from.x - square_radius))) && ((T.y == (checking_from.y + square_radius)) || (T.y == (checking_from.y - square_radius))))
