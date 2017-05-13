@@ -7,6 +7,7 @@
 	desc = "An official document entrusting the governance of the station \
 		and surrounding space to the Captain. "
 	var/used = FALSE
+	var/name_type = "station"
 
 	var/unlimited_uses = FALSE
 	var/ignores_timeout = FALSE
@@ -33,10 +34,10 @@
 
 /obj/item/station_charter/attack_self(mob/living/user)
 	if(used)
-		to_chat(user, "This charter has already been used to name the station.")
+		to_chat(user, "The [name_type] has already been named.")
 		return
 	if(!ignores_timeout && (world.time-SSticker.round_start_time > STATION_RENAME_TIME_LIMIT)) //5 minutes
-		to_chat(user, "The crew has already settled into the shift. It probably wouldn't be good to rename the station right now.")
+		to_chat(user, "The crew has already settled into the shift. It probably wouldn't be good to rename the [name_type] right now.")
 		return
 	if(response_timer_id)
 		to_chat(user, "You're still waiting for approval from your employers about your proposed name change, it'd be best to wait for now.")
@@ -60,7 +61,7 @@
 	to_chat(user, "Your name has been sent to your employers for approval.")
 	// Autoapproves after a certain time
 	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
-	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]</span>")
+	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [new_name] (will autoapprove in [approval_time / 10] seconds). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]</span>")
 
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)
@@ -93,5 +94,28 @@
 /obj/item/station_charter/admin
 	unlimited_uses = TRUE
 	ignores_timeout = TRUE
+
+
+/obj/item/weapon/station_charter/flag
+	name = "nanotrasen banner"
+	icon = 'icons/obj/items.dmi'
+	var/name_type = "planet"
+	icon_state = "banner"
+	item_state = "banner"
+	desc = "A cunning device used to claim ownership of planets."
+	w_class = 5
+	force = 15
+
+/obj/item/station_charter/flag/rename_station(designation, uname, ureal_name, ukey)
+	set_station_name(designation)
+	minor_announce("[ureal_name] has designated the planet as [station_name()]", "Captain's Banner", 0)
+	log_game("[ukey] has renamed the planet as [station_name()].")
+	name = "banner of [station_name()]"
+	desc = "The banner bears the official coat of arms of Nanotrasen, signifying that [station_name()] has been claimed by Captain [uname] in the name of the company."
+	SSblackbox.set_details("station_renames","[station_name()]")
+	if(!unlimited_uses)
+		used = TRUE
+
+
 
 #undef STATION_RENAME_TIME_LIMIT
