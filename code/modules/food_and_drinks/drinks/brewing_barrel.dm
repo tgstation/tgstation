@@ -31,9 +31,7 @@
 		var/current_highest_boozepwr = list("prefix" = "fuck", "power" = 0)
 		for(var/A in brewables)
 			var/list/fuckshit = A["reagents"]
-			world << A
 			for(var/R in fuckshit)
-				world << R
 				if(!ale.contained_reagents.has_reagent(R))
 					ale.contained_reagents.add_reagent(R, 75)
 			ale.boozepwr += A["booze_power"]
