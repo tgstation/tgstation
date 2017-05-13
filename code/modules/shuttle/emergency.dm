@@ -104,12 +104,8 @@
 
 	authorized += ID
 
-	message_admins("[key_name_admin(user.client)] \
-		(<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) \
-		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) \
-		has authorized early shuttle launch", 0, 1)
-	log_game("[key_name(user)] has authorized early shuttle launch in \
-		([x],[y],[z])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has authorized early shuttle launch", 0, 1)
+	log_game("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
 	// Now check if we're on our way
 	. = TRUE
 	process()

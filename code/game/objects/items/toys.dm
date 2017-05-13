@@ -529,7 +529,7 @@
 		"<span class='notice'>You hear a soft click.</span>")
 
 /obj/item/toy/talking/codex_gigas/generate_messages()
-	var/datum/devilinfo/devil = randomDevilInfo()
+	var/datum/fakeDevil/devil = new
 	var/list/messages = list()
 	messages += "Some fun facts about: [devil.truename]"
 	messages += "[GLOB.lawlorify[LORE][devil.bane]]"
@@ -1218,9 +1218,9 @@
 	icon_state = "lawyer"
 	toysay = "My client is a dirty traitor!"
 
-/obj/item/toy/figure/librarian
-	name = "Librarian action figure"
-	icon_state = "librarian"
+/obj/item/toy/figure/curator
+	name = "Curator action figure"
+	icon_state = "curator"
 	toysay = "One day while..."
 
 /obj/item/toy/figure/md

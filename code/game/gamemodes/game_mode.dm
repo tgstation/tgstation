@@ -85,7 +85,6 @@
 		SSblackbox.set_details("game_mode","[SSticker.mode]")
 	if(GLOB.revdata.commit)
 		SSblackbox.set_details("revision","[GLOB.revdata.commit]")
-	SSblackbox.set_details("server_ip","[world.internet_address]:[world.port]")
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
@@ -258,6 +257,8 @@
 	if(escaped_total > 0)
 		SSblackbox.set_val("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
+	if(cult.len && !istype(SSticker.mode,/datum/game_mode/cult))
+		datum_cult_completion()
 	return 0
 
 

@@ -28,7 +28,7 @@
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0)
+	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0, 0)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
 	GLOB.ratvar_awakens--
@@ -77,7 +77,7 @@
 		if(!prey && LAZYLEN(meals))
 			prey = pick(meals)
 			to_chat(prey, "<span class='heavy_brass'><font size=5>\"You will do, heretic.\"</font></span>\n\
-			<span class='userdanger'You feel something massive turn its crushing focus to you...</span>")
+			<span class='userdanger'>You feel something massive turn its crushing focus to you...</span>")
 			prey << 'sound/effects/ratvar_reveal.ogg'
 	else
 		if((!istype(prey, /obj/singularity/narsie) && prob(10) && LAZYLEN(meals) > 1) || prey.z != z || !(prey in meals))
@@ -117,12 +117,10 @@
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#966400", flash_time=1)
 				shake_camera(M, 4, 3)
-		var/ratvar_chance = min(SSticker.mode.servants_of_ratvar.len, 50)
-		var/narsie_chance = SSticker.mode.cult.len
-		for(var/mob/living/simple_animal/hostile/construct/harvester/C in GLOB.player_list)
-			narsie_chance++
+		var/ratvar_chance = min(LAZYLEN(SSticker.mode.servants_of_ratvar), 50)
+		var/narsie_chance = min(LAZYLEN(SSticker.mode.cult), 50)
 		ratvar_chance = rand(base_victory_chance, ratvar_chance)
-		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
+		narsie_chance = rand(base_victory_chance, narsie_chance)
 		if(ratvar_chance > narsie_chance)
 			winner = "Ratvar"
 			break

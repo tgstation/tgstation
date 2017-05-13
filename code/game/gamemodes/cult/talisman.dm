@@ -28,7 +28,7 @@
 	. = successfuluse
 	if(successfuluse) //if the calling whatever says we succeed, do the fancy stuff
 		if(invocation)
-			user.whisper(invocation)
+			user.whisper(invocation, language = /datum/language/common)
 		if(health_cost && iscarbon(user))
 			var/mob/living/carbon/C = user
 			C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
@@ -147,9 +147,10 @@
 	if(is_blocked_turf(target, TRUE))
 		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 		return ..(user, 0)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear in a flash of red light!</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
+	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear with a sharp crack!</span>", \
+	"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
 	user.forceMove(target)
+	target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	return ..()
 
 
@@ -293,12 +294,12 @@
 	invocation = "Lo'Nab Na'Dm!"
 	creation_time = 80
 
-/obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
-	if(iscultist(user))
-		to_chat(user, "<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
+/obj/item/weapon/paper/talisman/horror/afterattack(mob/living/target, mob/living/user)
+	if(iscultist(user) && (get_dist(user, target) < 7))
+		to_chat(user, "<span class='cultitalic'>You disturb [target] with visions of madness!</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
-			H.reagents.add_reagent("mindbreaker", 25)
+			H.reagents.add_reagent("mindbreaker", 12)
 			if(is_servant_of_ratvar(target))
 				to_chat(target, "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>")
 				target.emote("scream")

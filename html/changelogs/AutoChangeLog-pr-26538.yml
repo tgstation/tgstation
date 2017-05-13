@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "The Bank Machine in the vault now uses the radio to announce
-unauthorized withdrawals, rather than an endless stream of
-loud announcements."

@@ -96,14 +96,13 @@
 /area/holodeck/rec_center/kobayashi
 	name = "Holodeck - Kobayashi Maru"
 
+/area/holodeck/rec_center/winterwonderland
+	name = "Holodeck - Winter Wonderland"
+
 // Bad programs
 
 /area/holodeck/rec_center/burn
 	name = "Holodeck - Atmospheric Burn Test"
-	restricted = 1
-
-/area/holodeck/rec_center/winterwonderland
-	name = "Holodeck - Winter Wonderland"
 	restricted = 1
 
 /area/holodeck/rec_center/wildlife

@@ -8,6 +8,6 @@
 			if(!IS_DYNAMIC_LIGHTING(T))
 				continue
 
-			new/atom/movable/lighting_object(T, TRUE)
+			new/atom/movable/lighting_object(T)
 			CHECK_TICK
 		CHECK_TICK

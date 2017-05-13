@@ -16,6 +16,9 @@
 	item_color = "black"
 	resistance_flags = 0
 
+/obj/item/clothing/under/color/black/ghost
+	flags = NODROP|DROPDEL
+
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
 	desc = "A tasteful grey jumpsuit that reminds you of the good old days."

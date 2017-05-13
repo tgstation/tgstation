@@ -16,6 +16,7 @@
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	owner.add_overlay(cube)
 	owner.update_canmove()
+	return ..()
 
 /datum/status_effect/freon/tick()
 	owner.update_canmove()

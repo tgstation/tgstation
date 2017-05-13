@@ -95,8 +95,8 @@
 				"[user] activates \the [src]!", \
 				"<span class='notice'>You activate \the [src].</span>",
 				"<span class='italics'>You hear a click.</span>")
-			message_admins("Power sink activated by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-			log_game("Power sink activated by [key_name(user)] at ([x],[y],[z])")
+			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(src)]")
+			log_game("Power sink activated by [key_name(user)] at [COORD(src)]")
 			set_mode(OPERATING)
 
 		if(OPERATING)

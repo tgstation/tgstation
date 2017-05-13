@@ -1910,8 +1910,8 @@
 /area/shuttle/pod_3)
 "adG" = (
 /obj/docking_port/stationary/random{
-	id = "pod_asteroid2";
-	name = "asteroid"
+	id = "pod_lavaland2";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -1927,7 +1927,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
-	possible_destinations = "pod_asteroid2";
+	possible_destinations = "pod_lavaland2";
 	shuttleId = "pod2"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -23696,7 +23696,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid3";
+	possible_destinations = "pod_lavaland3";
 	shuttleId = "pod3"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -27963,7 +27963,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -28813,7 +28812,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -34140,8 +34138,8 @@
 "bii" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid3";
-	name = "asteroid"
+	id = "pod_lavaland3";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -45372,12 +45370,12 @@
 	name = "Port Maintenance"
 	})
 "bBr" = (
-/obj/structure/table/wood,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23;
 	pixel_y = 0
 	},
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bBs" = (
@@ -47035,7 +47033,6 @@
 	name = "\improper Auxiliary Restrooms"
 	})
 "bEw" = (
-/obj/structure/table/wood,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32;
 	pixel_y = 0
@@ -47044,6 +47041,7 @@
 	dir = 4;
 	network = list("SS13")
 	},
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bEx" = (
@@ -53664,6 +53662,12 @@
 	pixel_x = 30;
 	pixel_y = 0
 	},
+/obj/structure/closet/crate,
+/obj/item/clothing/shoes/workboots/mining,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
+/obj/item/clothing/suit/curator,
+/obj/item/clothing/head/curator,
+/obj/item/weapon/storage/backpack/satchel/explorer,
 /turf/open/floor/engine/cult,
 /area/library)
 "bPY" = (
@@ -63158,7 +63162,7 @@
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "cfY" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/chemistry)
 "cfZ" = (
@@ -77226,7 +77230,7 @@
 	},
 /area/medical/virology)
 "cDH" = (
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/machinery/airalarm{
 	frequency = 1439;
 	pixel_y = 23
@@ -82483,7 +82487,7 @@
 /area/chapel/office)
 "cMa" = (
 /obj/structure/table/wood,
-/obj/item/weapon/spellbook/oneuse/smoke{
+/obj/item/weapon/spellbook/oneuse/smoke/lesser{
 	name = "mysterious old book of "
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
@@ -86084,8 +86088,8 @@
 /area/toxins/xenobiology)
 "cSP" = (
 /obj/docking_port/stationary/random{
-	id = "pod_asteroid1";
-	name = "asteroid"
+	id = "pod_lavaland1";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -86175,7 +86179,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
-	possible_destinations = "pod_asteroid1";
+	possible_destinations = "pod_lavaland1";
 	shuttleId = "pod1"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -86368,7 +86372,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid4";
+	possible_destinations = "pod_lavaland4";
 	shuttleId = "pod4"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -87162,8 +87166,8 @@
 "cUL" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid4";
-	name = "asteroid"
+	id = "pod_lavaland4";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -91075,7 +91079,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -95333,6 +95337,14 @@
 	icon_state = "xenomaint";
 	name = "Xeno Maintenance"
 	})
+"dmD" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
+"dmE" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
 
 (1,1,1) = {"
 aaa
@@ -114481,7 +114493,7 @@ bwa
 bxU
 bzD
 bBr
-bCT
+bSx
 bEw
 bzE
 bHR
@@ -114737,9 +114749,9 @@ bue
 bwb
 bxV
 bzE
-bBs
-bCU
-bBs
+dmD
+bzE
+dmD
 bzE
 bHR
 bJz
@@ -128192,7 +128204,7 @@ cRi
 cRi
 daP
 cLE
-cRi
+dlV
 aaa
 aaa
 aaf
@@ -128448,7 +128460,7 @@ daF
 daJ
 cRi
 bvT
-dlV
+cRi
 cRi
 cRi
 cRi
@@ -128705,7 +128717,7 @@ cSn
 cSn
 cRi
 dmq
-dlV
+cRi
 cZv
 cZv
 cRi
@@ -129733,7 +129745,7 @@ cSn
 daN
 cRi
 dmr
-dlV
+cRi
 cZv
 dbw
 cRi
@@ -129990,7 +130002,7 @@ daI
 daM
 cRi
 cTA
-dlV
+cRi
 cRi
 cRi
 cRi

@@ -251,6 +251,8 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 			var/mob/living/carbon/C = user
 			for(var/i=1 to 20)
 				C.vomit(0,1,0,4,0)
+				if(prob(20))
+					C.spew_organ()
 				sleep(5)
 			C.blood_volume = 0
 		return(OXYLOSS|BRUTELOSS)

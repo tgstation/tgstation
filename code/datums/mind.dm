@@ -44,9 +44,7 @@
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
-	var/list/datum/objective/special_verbs = list()
 
-	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
@@ -54,15 +52,17 @@
 	var/linglink
 
 	var/miming = 0 // Mime's vow of silence
+	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
-	var/datum/devilinfo/devilinfo //Information about the devil, if any.
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
+	var/hasSoul = TRUE // If false, renders the character unable to sell their soul.
 	var/isholy = FALSE //is this person a chaplain or admin role allowed to use bibles
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
+	var/datum/language_holder/language_holder
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -70,12 +70,29 @@
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	if(islist(antag_datums))
+		for(var/i in antag_datums)
+			var/datum/antagonist/antag_datum = i
+			if(antag_datum.delete_on_death)
+				qdel(i)
+		antag_datums = null
 	return ..()
+
+/datum/mind/proc/get_language_holder()
+	if(!language_holder)
+		var/datum/language_holder/L = current.get_language_holder(shadow=FALSE)
+		language_holder = L.copy(src)
+
+	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
+
+	if(!language_holder)
+		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
+		language_holder = mob_holder.copy(src)
 
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -86,13 +103,13 @@
 	if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
-	if(istype(current) && islist(current.antag_datums)) //wow apparently current isn't always living good fucking job SOMEONE
-		for(var/i in current.antag_datums)
-			var/datum/antagonist/D = i
-			D.transfer_to_new_body(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
+	var/mob/living/old_current = current
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
+	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
+		var/datum/antagonist/A = a
+		A.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
@@ -108,6 +125,41 @@
 /datum/mind/proc/wipe_memory()
 	memory = null
 
+// Datum antag mind procs
+/datum/mind/proc/add_antag_datum(datum_type)
+	if(!datum_type)
+		return
+	var/datum/antagonist/A = new datum_type(src)
+	if(!A.can_be_owned(src))
+		qdel(A)
+		return
+	LAZYADD(antag_datums, A)
+	A.on_gain()
+	return A
+
+/datum/mind/proc/remove_antag_datum(datum_type)
+	if(!datum_type)
+		return
+	var/datum/antagonist/A = has_antag_datum(datum_type)
+	if(A)
+		A.on_removal()
+		return TRUE
+
+/datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
+	for(var/a in antag_datums)
+		var/datum/antagonist/A = a
+		A.on_removal()
+
+/datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
+	if(!datum_type)
+		return
+	. = FALSE
+	for(var/a in antag_datums)
+		var/datum/antagonist/A = a
+		if(check_subtypes && istype(A, datum_type))
+			return A
+		else if(A.type == datum_type)
+			return A
 
 /*
 	Removes antag type's references from a mind.
@@ -234,7 +286,7 @@
 	creator.faction |= current.faction
 
 	if(creator.mind.special_role)
-		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
+		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
 		to_chat(current, "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>")
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
@@ -255,7 +307,7 @@
 		to_chat(recipient, "<i>[output]</i>")
 
 /datum/mind/proc/edit_memory()
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("Not before round-start!", "Alert")
 		return
 
@@ -273,7 +325,8 @@
 		"nuclear",
 		"traitor", // "traitorchan",
 		"monkey",
-		"clockcult"
+		"clockcult",
+		"devil"
 	)
 	var/text = ""
 
@@ -544,8 +597,9 @@
 	if(SSticker.mode.config_tag == "devil")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if(src in SSticker.mode.devils)
-		if(devilinfo && !devilinfo.ascendable)
+	var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
+	if(devilinfo)
+		if(!devilinfo.ascendable)
 			text += "<b>DEVIL</b>|<a href='?src=\ref[src];devil=ascendable_devil'>Ascendable Devil</a>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
 		else
 			text += "<a href='?src=\ref[src];devil=devil'>DEVIL</a>|<b>ASCENDABLE DEVIL</b>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
@@ -1105,34 +1159,14 @@
 				to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["devil"])
+		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
 		switch(href_list["devil"])
 			if("clear")
 				if(src in SSticker.mode.devils)
-					if(istype(current,/mob/living/carbon/true_devil/))
-						if(devilinfo)
-							devilinfo.regress_blood_lizard()
-						else
-							to_chat(usr, "<span class='warning'>Something went wrong with removing the devil, we were unable to find an attached devilinfo.</span>.")
-					SSticker.mode.devils -= src
-					special_role = null
-					to_chat(current, "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>")
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-					RemoveSpell(/obj/effect/proc_holder/spell/aimed/fireball/hellish)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/sintouch/ascended)
+					remove_devil(current)
 					message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
-					devilinfo = null
-					if(issilicon(current))
-						var/mob/living/silicon/S = current
-						S.clear_law_sixsixsix(current)
 					log_admin("[key_name(usr)] has de-devil'ed [current].")
-				else if(src in SSticker.mode.sintouched)
+				if(src in SSticker.mode.sintouched)
 					SSticker.mode.sintouched -= src
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
 					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
@@ -1145,12 +1179,7 @@
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
-				SSticker.mode.devils += src
-				special_role = "devil"
-				SSticker.mode.finalize_devil(src, FALSE)
-				SSticker.mode.add_devil_objectives(src, 2)
-				announceDevilLaws()
-				announce_objectives()
+				add_devil(current, FALSE)
 				message_admins("[key_name_admin(usr)] has devil'ed [current].")
 				log_admin("[key_name(usr)] has devil'ed [current].")
 			if("ascendable_devil")
@@ -1162,12 +1191,7 @@
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
 					return
-				SSticker.mode.devils += src
-				special_role = "devil"
-				SSticker.mode.finalize_devil(src, TRUE)
-				SSticker.mode.add_devil_objectives(src, 2)
-				announceDevilLaws()
-				announce_objectives()
+				add_devil(current, TRUE)
 				message_admins("[key_name_admin(usr)] has devil'ed [current].  The devil has been marked as ascendable.")
 				log_admin("[key_name(usr)] has devil'ed [current]. The devil has been marked as ascendable.")
 			if("sintouched")
@@ -1397,17 +1421,10 @@
 	if(!(src in SSticker.mode.cult))
 		SSticker.mode.add_cultist(src,FALSE)
 		special_role = "Cultist"
-		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
-		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-		var/datum/game_mode/cult/cult = SSticker.mode
-
-		if (istype(cult))
-			cult.memorize_cult_objectives(src)
-		else
-			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
-			to_chat(current, "<B>Objective #1</B>: [explanation]")
-			memory += "<B>Objective #1</B>: [explanation]<BR>"
-
+		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
+		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
+		var/datum/antagonist/cult/C
+		C.cult_memorization(src)
 	var/mob/living/carbon/human/H = current
 	if (!SSticker.mode.equip_cultist(current))
 		to_chat(H, "Spawning an amulet from your Master failed.")
@@ -1497,6 +1514,9 @@
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
 	S.action.Grant(current)
+
+/datum/mind/proc/owns_soul()
+	return soulOwner == src
 
 //To remove a specific spell from a mind
 /datum/mind/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)

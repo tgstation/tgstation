@@ -5,10 +5,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	rustle_jimmies = FALSE
 
-/obj/item/weapon/storage/internal/ClickAccessible(mob/user, depth=1)
-	if(loc)
-		return loc.ClickAccessible(user, depth)
-
 /obj/item/weapon/storage/internal/Adjacent(A)
 	if(loc)
 		return loc.Adjacent(A)
@@ -53,7 +49,7 @@
 		/obj/item/weapon/implanter, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool/mini,
 		/obj/item/device/firing_pin
 		)
-	//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
+	//can hold both regular pens and energy daggers. made for your every-day tactical curators/murderers.
 	priority = FALSE
 	quickdraw = TRUE
 	silent = TRUE

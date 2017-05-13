@@ -187,8 +187,9 @@ Difficulty: Medium
 	animate(src, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
 	for(var/i in 1 to 3)
 		sleep(1)
-		if(QDELETED(src)) //we got hit and died, rip us
+		if(QDELETED(src) || stat == DEAD) //we got hit and died, rip us
 			qdel(F)
+			swooping &= ~SWOOP_DAMAGEABLE
 			return
 	animate(src, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
