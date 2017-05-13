@@ -262,11 +262,11 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 	var/hacked = 0
-	var/brightness_on = 6//TWICE AS BRIGHT AS A REGULAR ESWORD
+	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
 /obj/item/weapon/twohanded/dualsaber/Initialize()
-	..()
+	. = ..()
 	if(LAZYLEN(possible_colors))
 		item_color = pick(possible_colors)
 		switch(item_color)
@@ -602,20 +602,19 @@
 	user.visible_message("<span class='suicide'>[user] impales [user.p_them()]self in [user.p_their()] abdomen with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
-	if(isliving(user))
+/obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/living/user)
+	if(isliving(user) && user.mind && user.owns_soul() && !is_devil(user))
 		var/mob/living/U = user
-		if(U.mind && !U.mind.devilinfo && (U.mind.soulOwner == U.mind)) //Burn hands unless they are a devil or have sold their soul
-			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
-				"<span class='warning'>\"As you pick up [src] your arms ignite, reminding you of all your past sins.\"</span>")
-			if(ishuman(U))
-				var/mob/living/carbon/human/H = U
-				H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
-			else
-				U.adjustFireLoss(rand(force/2,force))
+		U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
+			"<span class='warning'>\"As you pick up [src] your arms ignite, reminding you of all your past sins.\"</span>")
+		if(ishuman(U))
+			var/mob/living/carbon/human/H = U
+			H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+		else
+			U.adjustFireLoss(rand(force/2,force))
 
 /obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
-	if(user.mind && !user.mind.devilinfo && (user.mind.soulOwner != user.mind))
+	if(user.mind && user.owns_soul() && !is_devil(user))
 		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 	..()

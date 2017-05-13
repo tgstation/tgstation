@@ -92,8 +92,7 @@
 			new /obj/item/pizzabox/bomb
 
 		if("darklord") //20 tc + tk + summon item close enough for now
-			new /obj/item/weapon/melee/energy/sword/saber(src)
-			new /obj/item/weapon/melee/energy/sword/saber(src)
+			new /obj/item/weapon/twohanded/dualsaber(src)
 			new /obj/item/weapon/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/weapon/card/id/syndicate(src)

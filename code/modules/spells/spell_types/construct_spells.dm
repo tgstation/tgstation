@@ -9,6 +9,26 @@
 	cult_req = 1
 	charge_max = 2500
 
+
+/obj/effect/proc_holder/spell/aoe_turf/area_conversion
+	name = "Area Conversion"
+	desc = "This spell instantly converts a small area around you."
+
+	school = "transmutation"
+	charge_max = 50
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 2
+	action_icon_state = "areaconvert"
+	action_background_icon_state = "bg_cult"
+
+/obj/effect/proc_holder/spell/aoe_turf/area_conversion/cast(list/targets, mob/user = usr)
+	playsound(get_turf(user), 'sound/items/welder.ogg', 75, 1)
+	for(var/turf/T in targets)
+		T.narsie_act(FALSE, TRUE, 100 - (get_dist(user, T) * 25))
+
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
 	name = "Summon Cult Floor"
 	desc = "This spell constructs a cult floor"
@@ -98,7 +118,7 @@
 	desc = "This spell allows you to pass through walls"
 
 	school = "transmutation"
-	charge_max = 200
+	charge_max = 250
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"

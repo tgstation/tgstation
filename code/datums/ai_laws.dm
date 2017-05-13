@@ -420,7 +420,7 @@
 			return
 
 /datum/ai_laws/proc/clear_law_sixsixsix(force)
-	if(force || !(owner && owner.mind.devilinfo))
+	if(force || !is_devil(owner))
 		devillaws = null
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
