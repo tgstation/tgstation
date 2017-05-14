@@ -481,7 +481,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(src)
 		color = "#FF0000"
 	SSticker.mode.eldergod = FALSE
-	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
+	deltimer(GLOB.blood_target_reset_timer)
+	GLOB.blood_target = new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
+	for(var/datum/mind/cult_mind in SSticker.mode.cult)
+		if(isliving(cult_mind.current))
+			var/mob/living/L = cult_mind.current
+			L.narsie_act()
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))

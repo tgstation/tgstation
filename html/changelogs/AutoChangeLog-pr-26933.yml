@@ -1,5 +1,0 @@
-author: "QualityVan"
-delete-after: True
-changes: 
-  - rscadd: "Cargo can order restocking units for NanoMed vending machines"
-  - rscadd: "NanoMed vending machines can be build and unbuilt"
