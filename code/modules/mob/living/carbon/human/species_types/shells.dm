@@ -24,7 +24,7 @@
 	id = "shell"
 	limbs_id = "shell"
 	sexes = FALSE
-	species_traits = list(EYECOLOR,LIPS,NO_UNDERWEAR)
+	species_traits = list(EYECOLOR,LIPS,NO_UNDERWEAR,NOTRANSSTING)
 	blacklisted = TRUE
 	dangerous_existence = TRUE
 	exotic_blood = "shellblood" //blood is mildly poisonous to others
