@@ -106,7 +106,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!QDELETED(M))
 			M.unpack(item)
 
-	world.log << "Loaded [saved_messages.len] engraved messages on map [SSmapping.config.map_name]"
+	log_world("Loaded [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
 	trophy_sav = new /savefile("data/npc_saves/TrophyItems.sav")
@@ -182,7 +182,7 @@ SUBSYSTEM_DEF(persistence)
 	for(var/obj/structure/chisel_message/M in chisel_messages)
 		saved_messages += list(M.pack())
 
-	world.log << "Saved [saved_messages.len] engraved messages on map [SSmapping.config.map_name]"
+	log_world("Saved [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
 
 	chisel_messages_sav[SSmapping.config.map_name] << json_encode(saved_messages)
 
