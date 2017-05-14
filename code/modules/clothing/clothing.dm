@@ -381,6 +381,7 @@ BLIND     // can't see anything
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	var/chained = 0
+	slowdown = -1
 
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
