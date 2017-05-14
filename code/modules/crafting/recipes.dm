@@ -340,7 +340,7 @@
 	
 /datum/crafting_recipe/toysword
 	name = "Toy Sword" 
-	reqs[] = list(/obj/item/weapon/light/bulb= 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
+	reqs[] = list(/obj/item/weapon/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
 	result = /obj/item/toy/sword
 	category = CAT_MISC
 
