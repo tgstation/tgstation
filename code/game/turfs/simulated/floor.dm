@@ -188,8 +188,9 @@
 		else if(prob(50))
 			ReplaceWithLattice()
 
-/turf/open/floor/narsie_act()
-	if(prob(20))
+/turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/open/floor/engine/cult)
 
 /turf/open/floor/ratvar_act(force, ignore_mobs)

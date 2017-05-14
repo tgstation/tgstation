@@ -75,7 +75,7 @@ Credit where due:
 /proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
 	if(!L || !L.mind)
 		return
-	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(/datum/antagonist/clockcult)
+	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
 	if(!clock_datum)
 		return FALSE
 	clock_datum.silent = silent
@@ -146,6 +146,7 @@ Credit where due:
 	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
 	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
 	to_chat(M, greeting_text)
+	M.playsound_local('sound/ambience/antag/ClockCultAlr.ogg',100,0)
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component

@@ -16,7 +16,7 @@
 	var/brightness_on = 3
 
 /obj/item/weapon/melee/energy/Initialize()
-	..()
+	. = ..()
 	if(LAZYLEN(possible_colors))
 		item_color = pick(possible_colors)
 		switch(item_color)//Only run this check if the color was picked randomly, so that colors can be manually set for non-random colored energy weapons.
@@ -183,8 +183,8 @@
 	light_color = "#40ceff"
 	possible_colors = null
 
-/obj/item/weapon/melee/energy/sword/cyborg/saw/New()
-	..()
+/obj/item/weapon/melee/energy/sword/cyborg/saw/Initialize()
+	. = ..()
 	icon_state = "esaw_0"
 	item_color = null
 
@@ -207,19 +207,9 @@
 
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
-	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
-		to_chat(user, "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>")
-		var/obj/item/weapon/melee/energy/sword/saber/other_esword = W
-		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
-		if(hacked || other_esword.hacked)
-			newSaber.hacked = TRUE
-			newSaber.item_color = "rainbow"
-		qdel(W)
-		qdel(src)
-		user.put_in_hands(newSaber)
-	else if(istype(W, /obj/item/device/multitool))
-		if(hacked == 0)
-			hacked = 1
+	if(istype(W, /obj/item/device/multitool))
+		if(!hacked)
+			hacked = TRUE
 			item_color = "rainbow"
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
 
@@ -253,13 +243,11 @@
 	sharpness = IS_SHARP
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
-/obj/item/weapon/melee/energy/blade/New()
+/obj/item/weapon/melee/energy/blade/Initialize()
+	. = ..()
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-
-/obj/item/weapon/melee/energy/blade/dropped()
-	..()
 
 /obj/item/weapon/melee/energy/blade/attack_self(mob/user)
 	return

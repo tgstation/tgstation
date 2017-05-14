@@ -2,3 +2,4 @@
 #define ANTAG_DATUM_CULT_MASTER			/datum/antagonist/cult/master
 #define ANTAG_DATUM_CLOCKCULT			/datum/antagonist/clockcult
 #define ANTAG_DATUM_CLOCKCULT_SILENT	/datum/antagonist/clockcult/silent
+#define ANTAG_DATUM_DEVIL				/datum/antagonist/devil
