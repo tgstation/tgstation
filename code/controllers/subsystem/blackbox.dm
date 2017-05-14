@@ -54,7 +54,6 @@ SUBSYSTEM_DEF(blackbox)
 	return FALSE
 
 /datum/controller/subsystem/blackbox/Shutdown()
-	set_details("[feedback_c]","[feedback_r]")
 	set_val("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
 
 	var/pda_msg_amt = 0

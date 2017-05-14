@@ -214,73 +214,17 @@
 			C << "<span class='announce'>PR: [announcement]</span>"
 #undef CHAT_PULLR
 
-#define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
-
-/world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
-	if (reason == 1) //special reboot, do none of the normal stuff
+/world/Reboot(reason)
+	if (reason) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request</span>")
-		WORLD_REBOOT(1)
-	var/delay
-	if(time)
-		delay = time
 	else
-		delay = config.round_end_countdown * 10
-	if(SSticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
-		return
-	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
-	var/round_end_sound_sent = FALSE
-	if(SSticker.round_end_sound)
-		round_end_sound_sent = TRUE
-		for(var/thing in GLOB.clients)
-			var/client/C = thing
-			if (!C)
-				continue
-			C.Export("##action=load_rsc", SSticker.round_end_sound)
-	sleep(delay)
-	if(SSticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
-		return
-	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	WORLD_REBOOT(0)
-#undef WORLD_REBOOT
-
-/world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
-	RoundEndAnimation(round_end_sound_sent)
-	Master.Shutdown()	//run SS shutdowns
-
-/world/proc/RoundEndAnimation(round_end_sound_sent)
-	set waitfor = FALSE
-	var/round_end_sound
-	if(SSticker.round_end_sound)
-		round_end_sound = SSticker.round_end_sound
-		if (!round_end_sound_sent)
-			for(var/thing in GLOB.clients)
-				var/client/C = thing
-				if (!C)
-					continue
-				C.Export("##action=load_rsc", round_end_sound)
-	else
-		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
-		)
-
-	for(var/thing in GLOB.clients)
-		var/obj/screen/splash/S = new(thing, FALSE)
-		S.Fade(FALSE,FALSE)
-
-	world << sound(round_end_sound)
+		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
+		Master.Shutdown()	//run SS shutdowns
+	log_world("World rebooted at [time_stamp()]"); 
+	..()
 
 /world/proc/load_motd()
 	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
