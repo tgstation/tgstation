@@ -110,7 +110,7 @@ Jesus icons by rumpelgeist and FurryMcFlurry
 	desc = "Escape from danger by going up to the heavens and then coming back down in a safer area."
 	clothes_req = 0
 	panel = "Miracles"
-	charge_max = 600
+	charge_max = 1200
 	invocation_type = "none"
 	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "jesus_ascend"
