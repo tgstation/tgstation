@@ -56,6 +56,8 @@ SUBSYSTEM_DEF(title)
 		F << file_path
 
 	for(var/thing in GLOB.clients)
+		if(!thing)
+			continue
 		var/obj/screen/splash/S = new(thing, FALSE)
 		S.Fade(FALSE,FALSE)
 
