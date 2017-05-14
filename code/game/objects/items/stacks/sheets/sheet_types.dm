@@ -285,12 +285,15 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	..()
 
-/obj/item/stack/sheet/runed_metal/fifty
-	amount = 50
-
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes
 	return ..()
+
+/obj/item/stack/sheet/runed_metal/fifty
+	amount = 50
+
+/obj/item/stack/sheet/runed_metal/five
+	amount = 5
 
 /*
  * Brass
