@@ -199,11 +199,11 @@ Cook
 	var/datum/job/cook/J = SSjob.GetJobType(jobtype)
 	if(J) // Fix for runtime caused by invalid job being passed
 		if(J.cooks>0)//Cooks
-			r_arm = /obj/item/weapon/mounted_chainsaw
 			suit = /obj/item/clothing/suit/apron/chef
 			head = /obj/item/clothing/head/soft/mime
-		else
 			backpack_contents = list(/obj/item/weapon/sharpener = 1)
+		else
+			r_hand = /obj/item/weapon/mounted_chainsaw
 		if(!visualsOnly)
 			J.cooks++
 
