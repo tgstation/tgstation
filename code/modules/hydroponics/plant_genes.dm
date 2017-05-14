@@ -268,7 +268,6 @@
 	rate = 0.03
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
 	trait_id = "glow"
-	var/glow_color = "#AAD84B"
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/S)
 	return 1.4 + S.potency*rate
@@ -278,7 +277,7 @@
 
 /datum/plant_gene/trait/glow/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
 	..()
-	G.set_light(glow_range(G.seed), glow_power(G.seed), glow_color)
+	G.set_light(glow_range(G.seed), glow_power(G.seed))
 
 /datum/plant_gene/trait/glow/shadow
 	//makes plant emit slightly purple shadows
@@ -289,14 +288,9 @@
 /datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
 	return -max(S.potency*(rate*0.05), 0.075)
 
-/datum/plant_gene/trait/glow/red
-	name = "Red Electrical Glow"
-	glow_color = LIGHT_COLOR_RED
-
 /datum/plant_gene/trait/glow/berry
 	name = "Strong Bioluminescence"
 	rate = 0.05
-	glow_color = null
 
 
 /datum/plant_gene/trait/teleport
