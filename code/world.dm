@@ -280,7 +280,7 @@
 	world << sound(round_end_sound)
 
 /world/proc/load_mode()
-	var/mode = file2text("data/mode.txt")
+	var/mode = trim(file2text("data/mode.txt"))
 	if(mode)
 		GLOB.master_mode = mode
 	else
