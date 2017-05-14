@@ -39,8 +39,9 @@
 		var/obj/item/weapon/storage/book/bible/Y = locate() in get_turf(user.loc)
 		if(istype(Y))
 			playsound(Y,'hippiestation/sound/effects/thunder.ogg', 90, 1)
-			spawn(10)
-				user.gib()
+			var/turf/T = get_step(get_step(user, NORTH), NORTH)
+			T.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
+			addtimer(CALLBACK(user, /mob/proc/gib), 10)
 		var/obj/item/weapon/storage/internal/pocket/butt/theinv = B.inv
 		if(theinv.contents.len)
 			var/obj/item/O = pick(theinv.contents)
