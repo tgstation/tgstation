@@ -31,7 +31,7 @@
 	origin_tech = "programming=2;engineering=2;powerstorage=3"
 
 /obj/item/weapon/computer_hardware/recharger/APC/use_power(amount, charging=0)
-	if(istype(holder.physical, /obj/machinery))
+	if(holder && istype(holder.physical, /obj/machinery))
 		var/obj/machinery/M = holder.physical
 		if(M.powered())
 			M.use_power(amount)
