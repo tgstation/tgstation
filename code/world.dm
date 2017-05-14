@@ -24,6 +24,8 @@
 
 	config = new
 
+	SetRoundID()
+
 	SetupLogs()
 
 	GLOB.revdata.DownloadPRDetails()
@@ -52,8 +54,7 @@
 			external_rsc_urls.Cut(i,i+1)
 #endif
 
-/world/proc/SetupLogs()
-	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+/world/proc/SetRoundID()
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
@@ -66,7 +67,11 @@
 				GLOB.log_directory += "[GLOB.round_id]"
 		else
 			log_world("Your server failed to establish a connection with the database.")
-	if(!GLOB.round_id)
+
+/world/proc/SetupLogs()
+	if(GLOB.round_id)
+		GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+	else
 		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
 	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
