@@ -59,7 +59,8 @@
 	AM.newtonian_move(dir)
 
 /turf/open/space/transit/CanBuildHere()
-	return istype(get_area(src), /area/shuttle)
+	var/area/current = get_area(src)
+	return istype(current, /area/shuttle) && !istype(current,/area/shuttle/transit)
 
 /turf/open/space/transit/Initialize()
 	..()
