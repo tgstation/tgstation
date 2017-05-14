@@ -54,15 +54,7 @@
 
 //Override this to set your vehicle's various pixel offsets
 /datum/riding/proc/get_offsets(pass_index) // list(dir = x, y, layer)
-	switch(pass_index)
-		if(1)
-			return list("[NORTH]" = list(-10, -4), "[SOUTH]" = list(16, 3), "[EAST]" = list(-4, 30), "[WEST]" = list(4, -3))
-		if(2)
-			return list("[NORTH]" = list(19, -5, 4), "[SOUTH]" = list(-13, 3, 4), "[EAST]" = list(-4, -3, 4.1), "[WEST]" = list(4, 28, 3.9))
-		if(3)
-			return list("[NORTH]" = list(-10, -18, 4.2), "[SOUTH]" = list(16, 25, 3.9), "[EAST]" = list(-22, 30), "[WEST]" = list(22, -3, 4.1))
-		if(4)
-			return list("[NORTH]" = list(19, -18, 4.2), "[SOUTH]" = list(-13, 25, 3.9), "[EAST]" = list(-22, 3, 3.9), "[WEST]" = list(22, 28))
+	return list("[NORTH]" = list(0, 0), "[SOUTH]" = list(0, 0), "[EAST]" = list(0, 0), "[WEST]" = list(0, 0))
 
 //KEYS
 /datum/riding/proc/keycheck(mob/user)
@@ -245,6 +237,17 @@
 
 /datum/riding/space/speedwagon/handle_vehicle_layer()
 	ridden.layer = BELOW_MOB_LAYER
+
+/datum/riding/space/speedwagon/get_offsets(pass_index) // list(dir = x, y, layer)
+	switch(pass_index)
+		if(1)
+			return list("[NORTH]" = list(-10, -4), "[SOUTH]" = list(16, 3), "[EAST]" = list(-4, 30), "[WEST]" = list(4, -3))
+		if(2)
+			return list("[NORTH]" = list(19, -5, 4), "[SOUTH]" = list(-13, 3, 4), "[EAST]" = list(-4, -3, 4.1), "[WEST]" = list(4, 28, 3.9))
+		if(3)
+			return list("[NORTH]" = list(-10, -18, 4.2), "[SOUTH]" = list(16, 25, 3.9), "[EAST]" = list(-22, 30), "[WEST]" = list(22, -3, 4.1))
+		if(4)
+			return list("[NORTH]" = list(19, -18, 4.2), "[SOUTH]" = list(-13, 25, 3.9), "[EAST]" = list(-22, 3, 3.9), "[WEST]" = list(22, 28))
 
 ///////////////BOATS////////////
 /datum/riding/boat
