@@ -337,6 +337,12 @@
 		/obj/item/weapon/restraints/handcuffs/cable = 1
 	)
 	category = CAT_MISC
+	
+/datum/crafting_recipe/toysword
+	var/name = "Toy Sword" 
+	var/reqs[] = list(/obj/weapon/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/plastic = 4)
+	var/result = /obj/item/toy/sword
+	var/category = CAT_MISC
 
 /datum/crafting_recipe/chemical_payload
 	name = "Chemical Payload (C4)"
