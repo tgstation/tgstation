@@ -439,6 +439,14 @@
 	race = /datum/species/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
+/datum/reagent/stableslimetoxin/shell
+	name = "Shell Mutation Toxin"
+	id = "shellmutationtoxin"
+	description = "A shelling toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/shell
+	mutationtext = "<span class='danger'>The pain subsides. You feel... decayed.</span>"
+
 /datum/reagent/stableslimetoxin/pod
 	name = "Podperson Mutation Toxin"
 	id = "podmutationtoxin"

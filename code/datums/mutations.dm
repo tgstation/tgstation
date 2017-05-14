@@ -58,6 +58,8 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
 	if(!owner || !istype(owner) || owner.stat == DEAD || (src in owner.dna.mutations))
 		return 1
+	if(owner.dna.species.spec_mutation())
+		return 1
 	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
 		return 1
 	if(health_req && owner.health < health_req)

@@ -132,6 +132,15 @@
 		. = 1
 	..()
 
+/datum/reagent/toxin/shellblood
+	name = "Shell Blood"
+	id = "shellblood"
+	description = "Blood from a Shell, mildly toxic to everyone else."
+	color = "#21FF5C" // rgb: 33, 255, 92
+	taste_description = "acid"
+	taste_mult = 1.2
+	toxpwr = 0.5
+
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
 	id = "minttoxin"
