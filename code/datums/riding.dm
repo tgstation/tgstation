@@ -33,6 +33,7 @@
 	ridden.unbuckle_mob(M)
 
 /datum/riding/proc/handle_vehicle_offsets()
+	var/ridden_dir = "[ridden.dir]"
 	var/passindex = 0
 	if(ridden.has_buckled_mobs())
 		for(var/m in ridden.buckled_mobs)
@@ -41,7 +42,7 @@
 			var/list/offsets = get_offsets(passindex)
 			dir_loop:
 				for(var/offsetdir in offsets)
-					if(offsetdir == "[ridden.dir]")
+					if(offsetdir == ridden.dir)
 						var/list/diroffsets = offsets[offsetdir]
 						buckled_mob.pixel_x = diroffsets[1]
 						if(diroffsets.len == 2)
