@@ -1282,6 +1282,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 2
 	restricted_roles = list("Curator")
 	limited_stock = 1 // please don't spam deadchat
+	
+/datum/uplink_item/role_restricted/modified_syringe_gun
+	name = "Modified Syringe Gun"
+	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
+	item = /obj/item/weapon/gun/syringe/dna
+	cost = 5
+	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 // Pointless
 /datum/uplink_item/badass
