@@ -27,6 +27,7 @@
 		remove_ranged_ability(msg)
 	else
 		msg = "<span class='notice'>[active_msg]<B>Left-click to shoot it at a target!</B></span>"
+		world << "Setting current to [projectile_amount]"
 		current_amount = projectile_amount
 		add_ranged_ability(user, msg, TRUE)
 
@@ -40,7 +41,9 @@
 	if(..())
 		return FALSE
 	var/ran_out = (current_amount <= 0)
-	if(!cast_check(ran_out, ranged_ability_user))
+	world << "[ran_out] ran_out"
+	world << "[current_amount] current amount"
+	if(!cast_check(!ran_out, ranged_ability_user))
 		remove_ranged_ability()
 		return FALSE
 	var/list/targets = list(target)
@@ -57,10 +60,14 @@
 	user.newtonian_move(get_dir(U, T))
 	if(current_amount <= 0)
 		remove_ranged_ability() //Auto-disable the ability once you run out of bullets.
+		charge_counter = 0
+		start_recharge()
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/proc/fire_projectile(mob/living/user, atom/target)
+	world << "decrementing current_amount|currently at [current_amount]"
 	current_amount--
+	world << "current_amount == [current_amount]"
 	var/obj/item/projectile/P = new projectile_type(user.loc)
 	P.current = get_turf(user)
 	P.firer = user
