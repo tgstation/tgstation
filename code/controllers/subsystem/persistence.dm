@@ -176,9 +176,6 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/CollectChiselMessages()
 	var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
 
-	// For debugging purposes.
-	chisel_messages_sav.ExportText("/", "data/npc_saves/ChiselMessages.txt")
-
 	for(var/obj/structure/chisel_message/M in chisel_messages)
 		saved_messages += list(M.pack())
 
