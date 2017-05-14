@@ -52,14 +52,14 @@
 		M.visible_message("<span class='notice'>[user] is getting out the pool", \
 						"<span class='notice'>You start getting out of the pool.</span>")
 		if(do_mob(user, M, 20))
-			M.swimming = 0
+			M.swimming = FALSE
 			M.forceMove(src)
 			to_chat(user, "<span class='notice'>You get out of the pool.</span>")
 	else
 		user.visible_message("<span class='notice'>[M] is being pulled to the poolborder by [user].</span>", \
 						"<span class='notice'>You start getting [M] out of the pool.")
 		if(do_mob(user, M, 20))
-			M.swimming = 0
+			M.swimming = FALSE
 			M.forceMove(src)
 			to_chat(user, "<span class='notice'>You get [M] out of the pool.</span>")
 			return
@@ -162,7 +162,7 @@
 		return
 	if(user.stat || user.lying || !Adjacent(user) || !M.Adjacent(user)|| !iscarbon(M))
 		return
-	if(!ishuman(user)) // no silicons or drones in mechas.
+	if(!iscarbon(user)) // no silicons or drones in mechas.
 		return
 	if(M.swimming == 1) //can't lower yourself again
 		return
@@ -184,67 +184,70 @@
 				return
 
 //What happens if you don't drop in it like a good person would, you fool.
+/turf/open/pool/Exited(atom/A, turf/NL)
+	..()
+	if(ismob(A) && !istype(NL, /turf/open/pool))
+		var/mob/living/M = A
+		M.swimming = FALSE
+		M.pixel_y = initial(M.pixel_y)
+
 /turf/open/pool/Entered(atom/A, turf/OL)
 	..()
 	if(!has_gravity(src)) //Fairly important
 		return
-	if(!filled)
-		if(ishuman(A))
-			var/mob/living/carbon/human/H = A
-			if(H.swimming == 0)
-				if(locate(/obj/structure/pool/ladder) in H.loc)
-					H.swimming = 1
-			if(H.swimming == 0 && !istype(H.head, /obj/item/clothing/head/helmet))
-				if(prob(75))
-					H.visible_message("<span class='danger'>[H] falls in the drained pool!</span>",
-												"<span class='userdanger'>You fall in the drained pool!</span>")
-					H.adjustBruteLoss(7)
-					H.Weaken(4)
-					H.swimming = 1
-					playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
-				else
-					H.visible_message("<span class='danger'>[H] falls in the drained pool, and cracks his skull!</span>",
-												"<span class='userdanger'>You fall in the drained pool, and crack your skull!</span>")
-					H.apply_damage(15, BRUTE, "head")
-					H.Weaken(10) // This should hurt. And it does.
-					H.adjustBrainLoss(30) //herp
-					H.swimming = 1
-					playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
-					playsound(src, 'hippiestation/sound/misc/crack.ogg', 100, 1)
-			else if(H.swimming == 0)
-				H.visible_message("<span class='danger'>[H] falls in the drained pool, but had an helmet!</span>",
-									"<span class='userdanger'>You fall in the drained pool, but you had an helmet!</span>")
-				H.Weaken(2)
-				H.swimming = 1
-				playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
-	else
-		if(ishuman(A))
-			var/mob/living/carbon/human/H = A
-			H.adjustStaminaLoss(1)
-			wash_mob(H)
-			if(H.swimming == 1)
-				playsound(src, pick('hippiestation/sound/effects/water_wade1.ogg','hippiestation/sound/effects/water_wade2.ogg','hippiestation/sound/effects/water_wade3.ogg','hippiestation/sound/effects/water_wade4.ogg'), 20, 1)
+	if(ismob(A))
+		var/mob/living/M = A
+		src.filled ? wash_mob(M) : null
+		if(!M.swimming)
+			if(locate(/obj/structure/pool/ladder) in M.loc)
+				M.swimming = TRUE
 				return
-			if(H.swimming == 0)
-				if(locate(/obj/structure/pool/ladder) in H.loc)
-					H.swimming = 1
-					return
-				if (H.wear_mask && H.wear_mask.flags & MASKCOVERSMOUTH)
-					H.visible_message("<span class='danger'>[H] falls in the water!</span>",
-										"<span class='userdanger'>You fall in the water!</span>")
-					playsound(src, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
-					H.Weaken(1)
-					H.swimming = 1
-					return
+			if(iscarbon(M))
+				var/mob/living/carbon/H = M
+				if(filled)
+					if (H.wear_mask && H.wear_mask.flags & MASKCOVERSMOUTH)
+						H.visible_message("<span class='danger'>[H] falls in the water!</span>",
+											"<span class='userdanger'>You fall in the water!</span>")
+						playsound(src, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
+						H.Weaken(1)
+						H.swimming = 1
+						return
+					else
+						H.drop_item()
+						H.adjustOxyLoss(5)
+						H.emote("cough")
+						H.visible_message("<span class='danger'>[H] falls in and takes a drink!</span>",
+											"<span class='userdanger'>You fall in and swallow some water!</span>")
+						playsound(src, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
+						H.Weaken(3)
+						H.swimming = 1
+				else if(!istype(H.head, /obj/item/clothing/head/helmet))
+					if(prob(75))
+						H.visible_message("<span class='danger'>[H] falls in the drained pool!</span>",
+													"<span class='userdanger'>You fall in the drained pool!</span>")
+						H.adjustBruteLoss(7)
+						H.Weaken(4)
+						H.swimming = TRUE
+						playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
+					else
+						H.visible_message("<span class='danger'>[H] falls in the drained pool, and cracks his skull!</span>",
+													"<span class='userdanger'>You fall in the drained pool, and crack your skull!</span>")
+						H.apply_damage(15, BRUTE, "head")
+						H.Weaken(10) // This should hurt. And it does.
+						H.adjustBrainLoss(30) //herp
+						H.swimming = TRUE
+						playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
+						playsound(src, 'hippiestation/sound/misc/crack.ogg', 100, 1)
 				else
-					H.drop_item()
-					H.adjustOxyLoss(5)
-					H.emote("cough")
-					H.visible_message("<span class='danger'>[H] falls in and takes a drink!</span>",
-										"<span class='userdanger'>You fall in and swallow some water!</span>")
-					playsound(src, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
-					H.Weaken(3)
-					H.swimming = 1
+					H.visible_message("<span class='danger'>[H] falls in the drained pool, but had an helmet!</span>",
+										"<span class='userdanger'>You fall in the drained pool, but you had an helmet!</span>")
+					H.Weaken(2)
+					H.swimming = TRUE
+					playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
+		else if(filled)
+			M.adjustStaminaLoss(1)
+			playsound(src, pick('hippiestation/sound/effects/water_wade1.ogg','hippiestation/sound/effects/water_wade2.ogg','hippiestation/sound/effects/water_wade3.ogg','hippiestation/sound/effects/water_wade4.ogg'), 20, 1)
+			return
 
 /obj/structure/pool
 	name = "pool"
@@ -276,10 +279,10 @@
 
 /obj/structure/pool/Rboard/CheckExit(atom/movable/O as mob|obj, target as turf)
 	if(istype(O) && O.checkpass(PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/pool/Lboard
 	name = "JumpBoard"
@@ -287,23 +290,23 @@
 	desc = "Get on there to jump!"
 	layer = 5
 	dir = 8
-	var/jumping = 0
+	var/jumping = FALSE
 	var/timer
 
 /obj/structure/pool/Lboard/proc/backswim(obj/O as obj, mob/user as mob) //Puts the sprite back to it's maiden condition after a jump.
-	if(jumping == 1)
+	if(jumping)
 		for(var/mob/jumpee in src.loc) //hackzors.
 			playsound(jumpee, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
 			jumpee.layer = 4
 			jumpee.pixel_x = 0
 			jumpee.pixel_y = 0
 			jumpee.stunned = 1
-			jumpee.swimming = 1
+			jumpee.swimming = TRUE
 
 /obj/structure/pool/Lboard/attack_hand(mob/user as mob)
 	if(iscarbon(user))
 		var/mob/living/carbon/jumper = user
-		if(jumping == 1)
+		if(jumping)
 			to_chat(user, "<span class='notice'>Someone else is already making a jump!</span>")
 			return
 		var/turf/T = get_turf(src)
@@ -320,9 +323,9 @@
 			if(Adjacent(jumper))
 				jumper.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
 									 "<span class='notice'>You climb up \the [src] and prepares to jump!</span>")
-				jumper.canmove = 0
+				jumper.canmove = FALSE
 				jumper.stunned = 4
-				jumping = 1
+				jumping = TRUE
 				jumper.layer = 5.1
 				jumper.pixel_x = 3
 				jumper.pixel_y = 7
@@ -331,8 +334,7 @@
 					jumper.loc = T
 					jumper.stunned = 4
 					spawn(10)
-						var/randn = rand(1, 100)
-						switch(randn)
+						switch(rand(1, 100))
 							if(1 to 20)
 								jumper.visible_message("<span class='notice'>[user] goes for a small dive!</span>", \
 													 "<span class='notice'>You go for a small dive.</span>")
@@ -395,8 +397,9 @@
 										 "<span class='userdanger'>No one can stop you now!</span>")
 									var/atom/throw_target = get_edge_target_turf(src, dir)
 									jumper.throw_at(throw_target, 6, 1)
+						jumper.canmove = TRUE
 						spawn(35)
-							jumping = 0
+							jumping = FALSE
 			else
 				return
 
@@ -406,14 +409,14 @@
 			return
 		else
 			playsound(src, 'hippiestation/sound/effects/watersplash.ogg', 8, 1, 1)
-			src.splashed = 1
+			src.splashed = TRUE
 			var/obj/effect/splash/S = new /obj/effect/splash(user.loc)
 			animate(S, alpha = 0,  time = 8)
 			S.Move(src)
 			spawn(20)
 				qdel(S)
 				spawn(5)
-					src.splashed = 0 //Otherwise, infinite splash party.
+					src.splashed = FALSE //Otherwise, infinite splash party.
 
 			for(var/mob/living/carbon/human/L in src)
 				if(!L.wear_mask && !user.stat) //Do not affect those underwater or dying.
