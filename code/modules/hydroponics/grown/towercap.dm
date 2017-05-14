@@ -107,20 +107,44 @@
 	anchored = TRUE
 	buckle_lying = 0
 	var/burning = 0
+	var/grill = FALSE
 	var/fire_stack_strength = 5
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/rods) && !can_buckle)
+	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/R = W
-		R.use(1)
-		can_buckle = 1
-		buckle_requires_restraints = 1
-		to_chat(user, "<span class='italics'>You add a rod to [src].")
-		var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
-		rod_underlay.pixel_y = 16
-		underlays += rod_underlay
+		var/choice = input(user, "What would you like to construct?", "Bonfire") as null|anything in list("Stake","Grill")
+		if(choice == "Stake")
+			R.use(1)
+			can_buckle = 1
+			buckle_requires_restraints = 1
+			to_chat(user, "<span class='italics'>You add a rod to [src].")
+			var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
+			rod_underlay.pixel_y = 16
+			underlays += rod_underlay
+		if(choice == "Grill")
+			R.use(1)
+			grill = TRUE
+			to_chat(user, "<span class='italics'>You add a grill to [src].")
+			grill = 1
+			var/mutable_appearance/grill_overlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_grill")
+			overlays += grill_overlay
 	if(W.is_hot())
 		StartBurning()
+	if(grill)
+		if(user.a_intent != INTENT_HARM && !(W.flags & ABSTRACT))
+			if(user.drop_item())
+				W.Move(get_turf(src))
+				var/list/click_params = params2list(params)
+				//Center the icon where the user clicked.
+				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+					return
+				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+				W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				return 1
+		else
+			return ..()
 
 
 /obj/structure/bonfire/attack_hand(mob/user)
@@ -158,7 +182,7 @@
 	StartBurning()
 
 /obj/structure/bonfire/Crossed(atom/movable/AM)
-	if(burning)
+	if(burning & !grill)
 		Burn()
 
 /obj/structure/bonfire/proc/Burn()
@@ -175,11 +199,27 @@
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
 
+/obj/structure/bonfire/proc/Cook()
+	var/turf/current_location = get_turf(src)
+	for(var/A in current_location)
+		if(A == src)
+			continue
+		else if(isliving(A)) //It's still a fire, idiot.
+			var/mob/living/L = A
+			L.adjust_fire_stacks(fire_stack_strength)
+			L.IgniteMob()
+	for(var/obj/item/O in current_location)
+		if(prob(20)) //You're cooking with a fire - there's no telling how long you'll have before it overcooks.
+			O.microwave_act()
+
 /obj/structure/bonfire/process()
 	if(!CheckOxygen())
 		extinguish()
 		return
-	Burn()
+	if(!grill)
+		Burn()
+	else
+		Cook()
 
 /obj/structure/bonfire/extinguish()
 	if(burning)
