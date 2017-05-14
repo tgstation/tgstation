@@ -62,13 +62,13 @@
 			query_feedback_max_id.Execute()
 			if(query_feedback_max_id.NextRow())
 				GLOB.round_id = query_feedback_max_id.item[1]
-				GLOB.log_directory += "[GLOB.round_id]"
 		else
 			log_world("Your server failed to establish a connection with the database.")
 
 /world/proc/SetupLogs()
+	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
 	if(GLOB.round_id)
-		GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+		GLOB.log_directory += "[GLOB.round_id]"
 	else
 		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
