@@ -34,7 +34,7 @@ effective or pretty fucking useless.
 /obj/item/device/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!user) 	return
 	if(times_used >= max_uses)
-		user << "<span class='danger'>The mind batterer has been burnt out!</span>"
+		to_chat(user, "<span class='danger'>The mind batterer has been burnt out!</span>")
 		return
 
 	add_logs(user, null, "knocked down people in the area", src)
@@ -45,13 +45,13 @@ effective or pretty fucking useless.
 			M.Weaken(rand(10,20))
 			if(prob(25))
 				M.Stun(rand(5,10))
-			M << "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>"
+			to_chat(M, "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
 
 		else
-			M << "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>"
+			to_chat(M, "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>")
 
 	playsound(src.loc, 'sound/misc/interference.ogg', 50, 1)
-	user << "<span class='notice'>You trigger [src].</span>"
+	to_chat(user, "<span class='notice'>You trigger [src].</span>")
 	times_used += 1
 	if(times_used >= max_uses)
 		icon_state = "battererburnt"
@@ -86,14 +86,14 @@ effective or pretty fucking useless.
 		used = 1
 		icon_state = "health1"
 		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
-		user << "<span class='warning'>Successfully irradiated [M].</span>"
+		to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)
 					M.apply_effect(round(intensity/1.5), PARALYZE)
 				M.rad_act(intensity*10)
 	else
-		user << "<span class='warning'>The radioactive microlaser is still recharging.</span>"
+		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
 
 /obj/item/device/healthanalyzer/rad_laser/proc/handle_cooldown(cooldown)
 	spawn(cooldown)
@@ -192,14 +192,14 @@ effective or pretty fucking useless.
 /obj/item/device/shadowcloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)
 		return
-	user << "<span class='notice'>You activate [src].</span>"
+	to_chat(user, "<span class='notice'>You activate [src].</span>")
 	src.user = user
 	START_PROCESSING(SSobj, src)
 	old_alpha = user.alpha
 	on = 1
 
 /obj/item/device/shadowcloak/proc/Deactivate()
-	user << "<span class='notice'>You deactivate [src].</span>"
+	to_chat(user, "<span class='notice'>You deactivate [src].</span>")
 	STOP_PROCESSING(SSobj, src)
 	if(user)
 		user.alpha = old_alpha
@@ -218,8 +218,27 @@ effective or pretty fucking useless.
 	var/turf/T = get_turf(src)
 	if(on)
 		var/lumcount = T.get_lumcount()
-		if(lumcount > 3)
+		if(lumcount > 0.3)
 			charge = max(0,charge - 25)//Quick decrease in light
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
 		animate(user,alpha = Clamp(255 - charge,0,255),time = 10)
+
+
+/obj/item/device/jammer
+	name = "radio jammer"
+	desc = "Device used to disrupt nearby radio communication."
+	icon_state = "jammer"
+	var/active = FALSE
+	var/range = 12
+
+/obj/item/device/jammer/attack_self(mob/user)
+	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] the [src]<span>") 
+	active = !active
+	if(active)
+		GLOB.active_jammers |= src
+	else
+		GLOB.active_jammers -= src
+	update_icon()
+
+	

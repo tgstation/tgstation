@@ -29,7 +29,7 @@
 	..()
 
 /obj/item/weapon/circuitboard/machine/microwave
-	name = "circuit board (Microwave)"
+	name = "Microwave (Machine Board)"
 	build_path = /obj/machinery/microwave
 	origin_tech = "programming=2;magnets=2"
 	req_components = list(
@@ -92,10 +92,10 @@
 				src.icon_state = "mw"
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
-				src.flags = OPENCONTAINER
+				src.container_type = OPENCONTAINER
 				return 0 //to use some fuel
 		else
-			user << "<span class='warning'>It's broken!</span>"
+			to_chat(user, "<span class='warning'>It's broken!</span>")
 			return 1
 	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
@@ -109,11 +109,11 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.flags = OPENCONTAINER
+			src.container_type = OPENCONTAINER
 			src.updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
-			user << "<span class='warning'>You need more space cleaner!<span>"
+			to_chat(user, "<span class='warning'>You need more space cleaner!<span>")
 			return 1
 
 	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
@@ -130,10 +130,10 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.flags = OPENCONTAINER
+			src.container_type = OPENCONTAINER
 
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
-		user << "<span class='warning'>It's dirty!</span>"
+		to_chat(user, "<span class='warning'>It's dirty!</span>")
 		return 1
 
 	else if(istype(O, /obj/item/weapon/storage/bag/tray))
@@ -141,22 +141,22 @@
 		var/loaded = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
 			if (contents.len>=max_n_of_items)
-				user << "<span class='warning'>[src] is full, you can't put anything in!</span>"
+				to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 				return 1
 			T.remove_from_storage(S, src)
 			loaded++
 
 		if(loaded)
-			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
+			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
 
 
 	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O,/obj/item/weapon/storage) && user.a_intent == INTENT_HELP)
 		if (contents.len>=max_n_of_items)
-			user << "<span class='warning'>[src] is full, you can't put anything in!</span>"
+			to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 			return 1
 		else
 			if(!user.drop_item())
-				user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
+				to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return 0
 
 			O.loc = src
@@ -296,7 +296,7 @@
 /obj/machinery/microwave/proc/dispose()
 	for (var/obj/O in contents)
 		O.loc = src.loc
-	usr << "<span class='notice'>You dispose of the microwave contents.</span>"
+	to_chat(usr, "<span class='notice'>You dispose of the microwave contents.</span>")
 	updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()

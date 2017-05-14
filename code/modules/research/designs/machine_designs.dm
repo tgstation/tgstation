@@ -90,12 +90,20 @@
 	build_path = /obj/item/weapon/circuitboard/machine/quantumpad
 	category = list ("Teleportation Machinery")
 
-/datum/design/board/telepad
-	name = "Machine Design (Telepad Board)"
-	desc = "The circuit board for a telescience telepad."
-	id = "telepad"
-	req_tech = list("programming" = 4, "bluespace" = 5, "plasmatech" = 4, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/machine/telesci_pad
+/datum/design/board/launchpad
+	name = "Machine Design (Bluespace Launchpad Board)"
+	desc = "The circuit board for a bluespace Launchpad."
+	id = "launchpad"
+	req_tech = list("programming" = 3, "bluespace" = 3, "plasmatech" = 2, "engineering" = 3)
+	build_path = /obj/item/weapon/circuitboard/machine/launchpad
+	category = list ("Teleportation Machinery")
+
+/datum/design/board/launchpad_console
+	name = "Machine Design (Bluespace Launchpad Console Board)"
+	desc = "The circuit board for a bluespace launchpad Console."
+	id = "launchpad_console"
+	req_tech = list("programming" = 4, "bluespace" = 3, "plasmatech" = 3)
+	build_path = /obj/item/weapon/circuitboard/computer/launchpad_console
 	category = list ("Teleportation Machinery")
 
 /datum/design/board/teleconsole
@@ -104,14 +112,6 @@
 	id = "teleconsole"
 	req_tech = list("programming" = 3, "bluespace" = 3, "plasmatech" = 4)
 	build_path = /obj/item/weapon/circuitboard/computer/teleporter
-	category = list("Teleportation Machinery")
-
-/datum/design/board/telesci_console
-	name = "Computer Design (Telepad Control Console Board)"
-	desc = "Allows for the construction of circuit boards used to build a telescience console."
-	id = "telesci_console"
-	req_tech = list("programming" = 3, "bluespace" = 3, "plasmatech" = 4)
-	build_path = /obj/item/weapon/circuitboard/computer/telesci_console
 	category = list("Teleportation Machinery")
 
 /datum/design/board/sleeper
@@ -293,7 +293,7 @@
 /datum/design/board/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
 	desc = "The circuit board for a monkey recycler."
-	id = "smartfridge"
+	id = "monkey_recycler"
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/weapon/circuitboard/machine/monkey_recycler
 	category = list ("Misc. Machinery")
@@ -410,3 +410,11 @@
 	req_tech = list("programming" = 3, "biotech" = 2)
 	build_path = /obj/item/weapon/circuitboard/machine/limbgrower
 	category = list("Medical Machinery")
+
+/datum/design/board/deepfryer
+	name = "Machine Design (Deep Fryer)"
+	desc = "The circuit board for a Deep Fryer."
+	id = "deepfryer"
+	req_tech = list("programming" = 1)
+	build_path = /obj/item/weapon/circuitboard/machine/deep_fryer
+	category = list ("Misc. Machinery")

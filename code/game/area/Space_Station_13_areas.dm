@@ -4,10 +4,10 @@
 
 /area/CATEGORY/OR/DESCRIPTOR/NAME 	(you can make as many subdivisions as you want)
 	name = "NICE NAME" 				(not required but makes things really nice)
-	icon = "ICON FILENAME" 			(defaults to areas.dmi)
+	icon = 'ICON FILENAME' 			(defaults to 'icons/turf/areas.dmi')
 	icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
 	requires_power = 0 				(defaults to 1)
-	music = "music/music.ogg"		(defaults to "music/music.ogg")
+	music = null					(defaults to nothing, look in sound/ambience for music)
 
 NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
 
@@ -16,7 +16,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /*-----------------------------------------------------------------------------*/
 
-/area/engine
+/area/engine/supermatter
+	name = "Supermatter Engine"
+	icon_state = "engine_sm"
 
 /area/ai_monitored	//stub defined ai_monitored.dm
 
@@ -37,7 +39,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
@@ -48,14 +50,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/space/nearstation
 	icon_state = "space_near"
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/start
 	name = "start area"
 	icon_state = "start"
 	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
 
 
@@ -79,9 +80,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Asteroid - Artifact"
 	icon_state = "cave"
 
-/area/asteroid/artifactroom/New()
-	..()
-	SetDynamicLighting()
+/area/asteroid/artifactroom/Initialize()
+	. = ..()
+	set_dynamic_lighting()
 
 /area/planet/clown
 	name = "Clown Planet"
@@ -125,6 +126,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Arrivals North Maintenance"
 	icon_state = "fpmaint"
 
+/area/maintenance/fpmaint2/port_maintenance
+	name = "Port Maintenance"
+	icon_state = "fpmaint"
+
+/area/maintenance/fpmaint2/fore_port_maintenance
+	name = "Arrivals North Maintenance"
+	icon_state = "fpmaint"
+
+/area/maintenance/fpmaint2/aft_port_maintenance
+	name = "Aft Port Maintenance"
+	icon_state = "fpmaint"
+
 /area/maintenance/fsmaint
 	name = "Dormitory Maintenance"
 	icon_state = "fsmaint"
@@ -157,12 +170,24 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Starboard Maintenance"
 	icon_state = "smaint"
 
+/area/maintenance/starboard/aft_starboard_maintenance
+	name = "Aft Starboard Maintenance"
+	icon_state = "smaint"
+
+/area/maintenance/starboard/fore_starboard_maintenance
+	name = "Fore Starboard Maintenance"
+	icon_state = "smaint"
+
 /area/maintenance/port
 	name = "Locker Room Maintenance"
 	icon_state = "pmaint"
 
 /area/maintenance/aft
 	name = "Engineering Maintenance"
+	icon_state = "amaint"
+
+/area/maintenance/aft/Aft_Maintenance
+	name = "Aft Maintenance"
 	icon_state = "amaint"
 
 /area/maintenance/storage
@@ -180,6 +205,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/electrical
 	name = "Electrical Maintenance"
 	icon_state = "yellow"
+
 
 //Hallway
 
@@ -229,6 +255,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/crew_quarters/captain
 	name = "Captain's Office"
+	icon_state = "captain"
+
+/area/crew_quarters/captain/captains_quarters
+	name = "Captain's Quarters"
 	icon_state = "captain"
 
 /area/crew_quarters/courtroom
@@ -314,12 +344,29 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Bar"
 	icon_state = "bar"
 
+/area/crew_quarters/bar/atrium
+	name = "Atrium"
+	icon_state = "bar"
+
+/area/crew_quarters/electronic_marketing_den
+	name = "Electronic Marketing Den"
+	icon_state = "bar"
+
+/area/crew_quarters/abandoned_gambling_den
+	name = "Abandoned Gambling Den"
+	icon_state = "bar"
+
 /area/crew_quarters/theatre
 	name = "Theatre"
 	icon_state = "Theatre"
 
 /area/library
  	name = "Library"
+ 	icon_state = "library"
+ 	flags = NONE
+
+/area/library/abandoned_library
+ 	name = "Abandoned Library"
  	icon_state = "library"
  	flags = NONE
 
@@ -372,8 +419,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/solar
 	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
 	blob_allowed = FALSE
 	flags = NONE
@@ -441,7 +487,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Teleporter
 
 /area/teleporter
-	name = "Teleporter"
+	name = "Teleporter Room"
 	icon_state = "teleporter"
 	music = "signal"
 
@@ -453,7 +499,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //MedBay
 
 /area/medical/medbay
-	name = "Medbay"
+	name = "Medbay Central"
+	icon_state = "medbay"
+	music = 'sound/ambience/signal.ogg'
+
+/area/medical/medbay/front_office
+	name = "Medbay Front Office"
+	icon_state = "medbay"
+	music = 'sound/ambience/signal.ogg'
+
+/area/medical/medbay/lobby
+	name = "Medbay Lobby"
 	icon_state = "medbay"
 	music = 'sound/ambience/signal.ogg'
 
@@ -463,8 +519,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "medbay2"
 	music = 'sound/ambience/signal.ogg'
 
+/area/medical/medbay2/medbay_storage
+	name = "Medbay Storage"
+	icon_state = "medbay2"
+	music = 'sound/ambience/signal.ogg'
+
 /area/medical/medbay3
 	name = "Medbay"
+	icon_state = "medbay3"
+	music = 'sound/ambience/signal.ogg'
+
+/area/medical/abandoned_medbay
+	name = "Abandoned Medbay"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
@@ -481,7 +547,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "medresearch"
 
 /area/medical/research
-	name = "Medical Research"
+	name = "Research Division"
+	icon_state = "medresearch"
+
+/area/medical/research/research_lobby
+	name = "Research Division Lobby"
+	icon_state = "medresearch"
+
+/area/medical/research/abandoned_research_lab
+	name = "Abandoned Research Lab"
 	icon_state = "medresearch"
 
 /area/medical/virology
@@ -557,6 +631,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "detective"
 	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
 
+/area/security/detectives_office/private_investigators_office
+	name = "Private Investigator's Office"
+	icon_state = "detective"
+	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
+
 /area/security/range
 	name = "Firing Range"
 	icon_state = "firingrange"
@@ -616,6 +695,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Delivery Office"
 	icon_state = "quartstorage"
 
+/area/quartermaster/warehouse
+	name = "Warehouse"
+	icon_state = "quartstorage"
+
 ////////////WORK IN PROGRESS//////////
 
 /area/quartermaster/office
@@ -634,9 +717,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Mining Dock"
 	icon_state = "mining"
 
+/area/quartermaster/miningoffice
+	name = "Mining Office"
+	icon_state = "mining"
+
 /area/quartermaster/miningstorage
 	name = "Mining Storage"
-	icon_state = "green"
+	icon_state = "mining"
 
 /area/quartermaster/mechbay
 	name = "Mech Bay"
@@ -649,6 +736,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/hydroponics
 	name = "Hydroponics"
+	icon_state = "hydro"
+
+/area/hydroponics/Abandoned_Garden
+	name = "Abandoned Garden"
 	icon_state = "hydro"
 
 //Toxins
@@ -675,7 +766,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "toxtest"
 
 /area/toxins/mixing
-	name = "Toxins Mixing Room"
+	name = "Toxins Mixing Lab"
 	icon_state = "toxmix"
 
 /area/toxins/misc_lab
@@ -683,7 +774,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "toxmisc"
 
 /area/toxins/server
-	name = "Server Room"
+	name = "Research Division Server Room"
 	icon_state = "server"
 
 /area/toxins/explab
@@ -742,6 +833,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/construction
 	name = "Construction Area"
+	icon_state = "yellow"
+
+/area/construction/minisat_exterior
+	name = "Minisat Exterior"
 	icon_state = "yellow"
 
 /area/mining_construction
@@ -828,26 +923,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/turret_protected/AIsatextFP
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/AIsatextFS
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/AIsatextAS
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/ai_monitored/turret_protected/NewAIMain
 	name = "AI Main New"
@@ -900,7 +987,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
+/area/chapel/asteroid
+	name = "Chapel Asteroid"
+	icon_state = "explored"
 
+/area/chapel/dock
+	name = "Chapel Dock"
+	icon_state = "construction"
 
 /////////////////////////////////////////////////////////////////////
 /*
@@ -909,7 +1002,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 */
 
 //SPACE STATION 13
-var/list/the_station_areas = list (
+GLOBAL_LIST_INIT(the_station_areas, list (
 	/area/atmos,
 	/area/maintenance,
 	/area/hallway,
@@ -938,4 +1031,4 @@ var/list/the_station_areas = list (
 	/area/ai_monitored/turret_protected/ai_upload, //do not try to simplify to "/area/ai_monitored/turret_protected" --rastaf0
 	/area/ai_monitored/turret_protected/ai_upload_foyer,
 	/area/ai_monitored/turret_protected/ai,
-)
+))

@@ -8,7 +8,7 @@
 
 /obj/structure/chair/e_chair/New()
 	..()
-	add_overlay(image('icons/obj/chairs.dmi', src, "echair_over", MOB_LAYER + 1))
+	add_overlay(mutable_appearance('icons/obj/chairs.dmi', "echair_over", MOB_LAYER + 1))
 
 /obj/structure/chair/e_chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -41,7 +41,6 @@
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.electrocute_act(85, src, 1)
-			buckled_mob << "<span class='userdanger'>You feel a deep shock course through your body!</span>"
-			spawn(1)
-				buckled_mob.electrocute_act(85, src, 1)
+			to_chat(buckled_mob, "<span class='userdanger'>You feel a deep shock course through your body!</span>")
+			addtimer(CALLBACK(buckled_mob, /mob/living.proc/electrocute_act, 85, src, 1), 1)
 	visible_message("<span class='danger'>The electric chair went off!</span>", "<span class='italics'>You hear a deep sharp shock!</span>")

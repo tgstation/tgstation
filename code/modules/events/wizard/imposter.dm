@@ -7,7 +7,7 @@
 
 /datum/round_event/wizard/imposter/start()
 
-	for(var/datum/mind/M in ticker.mode.wizards)
+	for(var/datum/mind/M in SSticker.mode.wizards)
 		if(!ishuman(M.current))
 			continue
 		var/mob/living/carbon/human/W = M.current
@@ -16,7 +16,7 @@
 			return //Sad Trombone
 		var/client/C = pick(candidates)
 
-		PoolOrNew(/obj/effect/particle_effect/smoke, W.loc)
+		new /obj/effect/particle_effect/smoke(W.loc)
 
 		var/mob/living/carbon/human/I = new /mob/living/carbon/human(W.loc)
 		W.dna.transfer_identity(I, transfer_SE=1)
@@ -43,7 +43,7 @@
 		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
-		ticker.mode.apprentices += I.mind
+		SSticker.mode.apprentices += I.mind
 		I.mind.special_role = "imposter"
 
 		var/datum/objective/protect/protect_objective = new /datum/objective/protect
@@ -51,8 +51,8 @@
 		protect_objective.target = W.mind
 		protect_objective.explanation_text = "Protect [W.real_name], the wizard."
 		I.mind.objectives += protect_objective
-		ticker.mode.update_wiz_icons_added(I.mind)
+		SSticker.mode.update_wiz_icons_added(I.mind)
 
-		I.attack_log += "\[[time_stamp()]\] <font color='red'>Is an imposter!</font>"
-		I << "<B>You are an imposter! Trick and confuse the crew to misdirect malice from your handsome original!</B>"
+		I.log_message("<font color='red'>Is an imposter!</font>", INDIVIDUAL_ATTACK_LOG)
+		to_chat(I, "<B>You are an imposter! Trick and confuse the crew to misdirect malice from your handsome original!</B>")
 		I << sound('sound/effects/magic.ogg')

@@ -16,7 +16,7 @@
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
 	var/admin = 0
 	var/ckey = ckey(key)
-	if((ckey in admin_datums) || (ckey in deadmins))
+	if((ckey in GLOB.admin_datums) || (ckey in GLOB.deadmins))
 		admin = 1
 
 	//Whitelist
@@ -32,10 +32,10 @@
 
 	//Guest Checking
 	if(IsGuestKey(key))
-		if (!guests_allowed)
+		if (!GLOB.guests_allowed)
 			log_access("Failed Login: [key] - Guests not allowed")
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
-		if (config.panic_bunker && dbcon && dbcon.IsConnected())
+		if (config.panic_bunker && SSdbcore && SSdbcore.IsConnected())
 			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
 			return list("reason"="guest", "desc"="\nReason: Sorry but the server is currently not accepting connections from never before seen players or guests. If you have played on this server with a byond account before, please log in to the byond account you have played from.")
 
@@ -61,33 +61,31 @@
 
 		var/ckeytext = ckey(key)
 
-		if(!establish_db_connection())
-			world.log << "Ban database connection failure. Key [ckeytext] not checked"
-			diary << "Ban database connection failure. Key [ckeytext] not checked"
+		if(!SSdbcore.Connect())
+			var/msg = "Ban database connection failure. Key [ckeytext] not checked"
+			log_world(msg)
+			message_admins(msg)
 			return
 
 		var/ipquery = ""
 		var/cidquery = ""
 		if(address)
-			ipquery = " OR ip = '[address]' "
+			ipquery = " OR ip = INET_ATON('[address]') "
 
 		if(computer_id)
 			cidquery = " OR computerid = '[computer_id]' "
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
-
-		query.Execute()
-
-		while(query.NextRow())
-			var/pckey = query.item[1]
-			//var/pip = query.item[2]
-			//var/pcid = query.item[3]
-			var/ackey = query.item[4]
-			var/reason = query.item[5]
-			var/expiration = query.item[6]
-			var/duration = query.item[7]
-			var/bantime = query.item[8]
-			var/bantype = query.item[9]
+		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
+		if(!query_ban_check.Execute())
+			return
+		while(query_ban_check.NextRow())
+			var/pckey = query_ban_check.item[1]
+			var/ackey = query_ban_check.item[2]
+			var/reason = query_ban_check.item[3]
+			var/expiration = query_ban_check.item[4]
+			var/duration = query_ban_check.item[5]
+			var/bantime = query_ban_check.item[6]
+			var/bantype = query_ban_check.item[7]
 			if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
 				//admin bans MUST match on ckey to prevent cid-spoofing attacks
 				//	as well as dynamic ip abuse
@@ -123,7 +121,7 @@
 			bannedckey = ban["ckey"]
 
 		var/newmatch = FALSE
-		var/client/C = directory[ckey]
+		var/client/C = GLOB.directory[ckey]
 		var/cachedban = SSstickyban.cache[bannedckey]
 
 		//rogue ban in the process of being reverted.
@@ -184,7 +182,7 @@
 			return null
 
 		if (C) //user is already connected!.
-			C << "You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was reversed."
+			to_chat(C, "You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was reversed.")
 
 		var/desc = "\nReason:(StickyBan) You, or another user of this computer or connection ([bannedckey]) is banned from playing here. The ban reason is:\n[ban["message"]]\nThis ban was applied by [ban["admin"]]\nThis is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
 		. = list("reason" = "Stickyban", "desc" = desc)

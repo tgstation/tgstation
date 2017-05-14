@@ -4,21 +4,19 @@
 	activated = 0
 	origin_tech = "materials=2;magnets=2;programming=2;biotech=2"
 
-
 /obj/item/weapon/implant/tracking/New()
 	..()
-	tracked_implants += src
+	GLOB.tracked_implants += src
 
 /obj/item/weapon/implant/tracking/Destroy()
-	..()
-	tracked_implants -= src
+	. = ..()
+	GLOB.tracked_implants -= src
 
-/obj/item/weapon/implanter/tracking/New()
-	imp = new /obj/item/weapon/implant/tracking( src )
-	..()
-/obj/item/weapon/implanter/tracking/gps/New()
-	imp = new /obj/item/device/gps/mining/internal( src )
-	..()
+/obj/item/weapon/implanter/tracking
+	imp_type = /obj/item/weapon/implant/tracking
+
+/obj/item/weapon/implanter/tracking/gps
+	imp_type = /obj/item/device/gps/mining/internal
 
 /obj/item/weapon/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>

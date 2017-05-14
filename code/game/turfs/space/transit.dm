@@ -30,8 +30,9 @@
 
 	var/list/possible_transtitons = list()
 	var/k = 1
-	for(var/a in map_transition_config)
-		if(map_transition_config[a] == CROSSLINKED) // Only pick z-levels connected to station space
+	var/list/config_list = SSmapping.config.transition_config
+	for(var/a in config_list)
+		if(config_list[a] == CROSSLINKED) // Only pick z-levels connected to station space
 			possible_transtitons += k
 		k++
 	var/_z = pick(possible_transtitons)
@@ -57,17 +58,14 @@
 	AM.loc = T
 	AM.newtonian_move(dir)
 
-//Overwrite because we dont want people building rods in space.
-/turf/open/space/transit/attackby()
-	return
+/turf/open/space/transit/CanBuildHere()
+	return istype(get_area(src), /area/shuttle)
 
-/turf/open/space/transit/New()
+/turf/open/space/transit/Initialize()
 	..()
 	update_icon()
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)
-
-
 
 /turf/open/space/transit/proc/update_icon()
 	var/p = 9

@@ -15,7 +15,7 @@
 	smoke.start()
 	visible_message("<span class='boldannounce'>The [src] warps in!</span>")
 	playsound(src.loc, 'sound/effects/EMPulse.ogg', 25, 1)
-	addtimer(src, "warpbots", rand(10, 600))
+	addtimer(CALLBACK(src, .proc/warpbots), rand(10, 600))
 
 /obj/structure/hivebot_beacon/proc/warpbots()
 	icon_state = "def_radar"

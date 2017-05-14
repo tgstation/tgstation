@@ -7,7 +7,7 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 1000
-	req_access = list(access_robotics)
+	req_access = list(GLOB.access_robotics)
 	var/recharge_speed
 	var/repairs
 	state_open = 1
@@ -19,7 +19,7 @@
 	update_icon()
 
 /obj/item/weapon/circuitboard/machine/cyborgrecharger
-	name = "circuit board (Cyborg Recharger)"
+	name = "Cyborg Recharger (Machine Board)"
 	build_path = /obj/machinery/recharge_station
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(

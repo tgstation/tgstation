@@ -24,7 +24,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/thermomachine
-	name = "circuit board (Thermomachine)"
+	name = "Thermomachine (Machine Board)"
 	desc = "You can use a screwdriver to switch between heater and freezer."
 	origin_tech = "programming=3;plasmatech=3"
 	req_components = list(
@@ -32,6 +32,15 @@
 							/obj/item/weapon/stock_parts/micro_laser = 2,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
+
+/obj/item/weapon/circuitboard/machine/thermomachine/New()
+	..()
+	if(prob(50))
+		name = "Freezer (Machine Board)"
+		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+	else
+		name = "Heater (Machine Board)"
+		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
 
 /obj/item/weapon/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
 	var/obj/item/weapon/circuitboard/machine/freezer = /obj/item/weapon/circuitboard/machine/thermomachine/freezer
@@ -48,7 +57,7 @@
 			newtype = heater
 		name = initial(newtype.name)
 		build_path = initial(newtype.build_path)
-		user << "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>"
+		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
 	else
 		return ..()
 
@@ -137,7 +146,7 @@
 	return UI_CLOSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "thermomachine", name, 400, 240, master_ui, state)
@@ -199,7 +208,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/thermomachine/freezer
-	name = "circuit board (Freezer)"
+	name = "Freezer (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
@@ -224,7 +233,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/thermomachine/heater
-	name = "circuit board (Heater)"
+	name = "Heater (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()

@@ -31,9 +31,9 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(2,3)
-				M << "<span class='warning'>[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>"
+				to_chat(M, "<span class='warning'>[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>")
 			if(4,5)
-				M << "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>"
+				to_chat(M, "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
 				Flesheat(M, A)
 	return
 
@@ -75,9 +75,9 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(2,3)
-				M << "<span class='warning'>[pick("You feel your body break apart.", "Your skin rubs off like dust.")]</span>"
+				to_chat(M, "<span class='warning'>[pick("You feel your body break apart.", "Your skin rubs off like dust.")]</span>")
 			if(4,5)
-				M << "<span class='userdanger'>[pick("You feel your muscles weakening.", "Your skin begins detaching itself.", "You feel sandy.")]</span>"
+				to_chat(M, "<span class='userdanger'>[pick("You feel your muscles weakening.", "Your skin begins detaching itself.", "You feel sandy.")]</span>")
 				Flesh_death(M, A)
 	return
 

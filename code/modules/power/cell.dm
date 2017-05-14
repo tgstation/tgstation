@@ -49,13 +49,13 @@
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	cut_overlays()
 	if(grown_battery)
-		add_overlay(image('icons/obj/power.dmi', "grown_wires"))
+		add_overlay("grown_wires")
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
-		add_overlay(image('icons/obj/power.dmi', "cell-o2"))
+		add_overlay("cell-o2")
 	else
-		add_overlay(image('icons/obj/power.dmi', "cell-o1"))
+		add_overlay("cell-o1")
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100*charge/maxcharge
@@ -69,7 +69,7 @@
 		return 0
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
-		feedback_add_details("cell_used","[src.type]")
+		SSblackbox.add_details("cell_used","[src.type]")
 	return 1
 
 // recharge the cell
@@ -86,9 +86,9 @@
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
 	if(rigged)
-		user << "<span class='danger'>This power cell seems to be faulty!</span>"
+		to_chat(user, "<span class='danger'>This power cell seems to be faulty!</span>")
 	else
-		user << "The charge meter reads [round(src.percent() )]%."
+		to_chat(user, "The charge meter reads [round(src.percent() )]%.")
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -98,7 +98,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
-		user << "<span class='notice'>You inject the solution into the power cell.</span>"
+		to_chat(user, "<span class='notice'>You inject the solution into the power cell.</span>")
 		if(S.reagents.has_reagent("plasma", 5))
 			rigged = 1
 		S.reagents.clear_reagents()
@@ -140,7 +140,7 @@
 
 /obj/item/weapon/stock_parts/cell/ex_act(severity, target)
 	..()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		switch(severity)
 			if(2)
 				if(prob(50))
