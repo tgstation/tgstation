@@ -44,7 +44,7 @@
 		remove_ranged_ability()
 		return FALSE
 	var/list/targets = list(target)
-	perform(targets,user = ranged_ability_user, ran_out)
+	perform(targets, ran_out, user = ranged_ability_user)
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/cast(list/targets, mob/living/user)

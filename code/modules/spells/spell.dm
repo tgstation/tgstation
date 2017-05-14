@@ -254,12 +254,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(action)
 		action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr, recharge_spell = TRUE) //if recharge is started is important for the trigger spells
+/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation(user)
 	if(user && user.ckey)
 		user.log_message("<span class='danger'>cast the spell [name].</span>", INDIVIDUAL_ATTACK_LOG)
-	if(recharge_spell)
+	if(recharge)
 		spawn(0)
 			if(charge_type == "recharge" && recharge)
 				start_recharge()
