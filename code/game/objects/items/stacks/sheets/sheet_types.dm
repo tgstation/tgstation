@@ -365,8 +365,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40), \
 	new /datum/stack_recipe("water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/empty), \
 	new /datum/stack_recipe("large water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
-	new /datum/stack_recipe("wet floor sign", /obj/item/weapon/caution, 2), \
-	new /datum/stack_recipe("toy sword", /obj/item/toy/sword, 4)))
+	new /datum/stack_recipe("wet floor sign", /obj/item/weapon/caution, 2)))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"
