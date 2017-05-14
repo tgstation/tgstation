@@ -41,7 +41,7 @@
 			var/list/offsets = get_offsets(passindex)
 			dir_loop:
 				for(var/offsetdir in offsets)
-					if(offsetdir == ridden.dir)
+					if(offsetdir == "[ridden.dir]")
 						var/list/diroffsets = offsets[offsetdir]
 						buckled_mob.pixel_x = diroffsets[1]
 						if(diroffsets.len == 2)
