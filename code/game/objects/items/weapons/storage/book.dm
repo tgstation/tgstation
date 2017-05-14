@@ -107,8 +107,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		return
 	
 	if (!heal_mode)
-		..()
-		return
+		return ..()
 	
 	var/smack = 1
 
