@@ -240,7 +240,24 @@
 		nodamage = 1
 	. = ..() // Execute the rest of the code.
 
-
+/obj/item/projectile/bullet/dnainjector
+	name = "\improper DNA injector"
+	icon_state = "syringeproj"
+	var/obj/item/weapon/dnainjector/injector
+	
+/obj/item/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0)
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		if(blocked != 100)
+			if(M.can_inject(null, 0, def_zone, 0))
+				injector.inject(M, firer)
+				qdel(injector)
+				return 1
+			else
+				blocked = 100
+				target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
+									   "<span class='userdanger'>You were protected against the [name]!</span>")
+	return ..()
 
 //// SNIPER BULLETS
 
