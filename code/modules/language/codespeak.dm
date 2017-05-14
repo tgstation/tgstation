@@ -39,11 +39,15 @@
 	to_chat(user, "<span class='boldannounce'>You start skimming through [src], and suddenly your mind is filled with codewords and responses.</span>")
 	user.grant_language(/datum/language/common/codespeak)
 
-	use_charge()
+	use_charge(user)
 
 /obj/item/weapon/codespeak_manual/attack(mob/living/M, mob/living/user)
 	if(!istype(M) || !istype(user))
 		return
+	if(M == user)
+		attack_self(user)
+		return
+
 	playsound(loc, "punch", 25, 1, -1)
 
 	if(M.stat == DEAD)
@@ -53,21 +57,17 @@
 	else
 		M.visible_message("<span class='notice'>[user] teaches [M] by beating them over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], codewords and responses flow through your mind.</span>", "<span class='italics'>You hear smacking.</span>")
 		M.grant_language(/datum/language/common/codespeak)
-		use_charge()
+		use_charge(user)
 
-/obj/item/weapon/codespeak_manual/proc/use_charge()
+/obj/item/weapon/codespeak_manual/proc/use_charge(mob/user)
 	charges--
 	if(!charges)
-		say("Automatic data erasure in progress!")
-		visible_message("<span class='warning'>The cover and contents of [src] start shifting and changing!</span>")
+		var/turf/T = get_turf(src)
+		T.visible_message("<span class='warning'>The cover and contents of [src] start shifting and changing!</span>")
 
-		var/obj/item/weapon/book/random/newbook = new(get_turf(src))
 		qdel(src)
-
-		if(ismob(loc))
-			var/mob/M = loc
-			if(M.is_holding(src))
-				M.put_in_active_hand(newbook)
+		var/obj/item/weapon/book/manual/random/book = new(T)
+		user.put_in_active_hand(book)
 
 /obj/item/weapon/codespeak_manual/unlimited
 	name = "deluxe codespeak manual"
