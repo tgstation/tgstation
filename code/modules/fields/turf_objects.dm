@@ -9,8 +9,9 @@
 	flags = ABSTRACT|ON_BORDER
 	var/datum/proximity_monitor/advanced/parent = null
 
-/obj/effect/abstract/proximity_checker/advanced/Initialize(_monitor = null)
-	parent = _monitor
+/obj/effect/abstract/proximity_checker/advanced/Initialize(mapload, _monitor)
+	if(_monitor)
+		parent = _monitor
 	return ..()
 
 /obj/effect/abstract/proximity_checker/advanced/center
