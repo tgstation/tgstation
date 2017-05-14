@@ -215,8 +215,8 @@
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
 
-/world/Reboot(reason)
-	if (reason) //special reboot, do none of the normal stuff
+/world/Reboot(reason = 0, fast_track = FALSE)
+	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")

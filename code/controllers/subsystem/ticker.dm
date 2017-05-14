@@ -810,7 +810,7 @@ SUBSYSTEM_DEF(ticker)
 
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 
-	world.Reboot(0)
+	world.Reboot()
 
 /datum/controller/subsystem/ticker/Shutdown()
 	if(!round_end_sound)
