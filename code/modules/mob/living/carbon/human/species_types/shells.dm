@@ -25,10 +25,10 @@
 	limbs_id = "shell"
 	sexes = FALSE
 	species_traits = list(EYECOLOR,LIPS,NO_UNDERWEAR,NOTRANSSTING)
+	mutant_organs = list(/obj/item/organ/brain/shell)
 	blacklisted = TRUE
 	dangerous_existence = TRUE
 	exotic_blood = "shellblood" //blood is mildly poisonous to others
-	var/decay_countdown = 60 //ticks until the body dies beyond repair, destroying the brain
 
 /datum/species/shell/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
@@ -43,19 +43,11 @@
 
 /datum/species/shell/spec_life(mob/living/carbon/human/H)
 	..()
-	if(H.stat != DEAD)
-		decay_countdown = min(decay_countdown + 2, 60)
-		if(H.health < 0)
+	if(H.stat != DEAD && H.health < 0)
 			H.adjustToxLoss(-1)
 			H.adjustBruteLoss(-1)
 			H.adjustFireLoss(-1)
 			H.adjustOxyLoss(-3)
-	else
-		decay_countdown = max(decay_countdown - 1, 0)
-		if(decay_countdown <= 0)
-			var/obj/item/organ/brain/brain = H.getorganslot("brain")
-			if(brain && brain.brainmob)
-				brain.brainmob.death()
 
 /datum/species/shell/spec_mutation(mob/living/carbon/human/H)
 	to_chat(H, "<span class='userdanger'>Your unstable genes collapse while mutating! Your flesh is [pick("melting","falling off","withering","rotting")]!</span>")
