@@ -114,6 +114,8 @@
 	var/config_hallucination_power = 0.1
 
 	var/obj/item/device/radio/radio
+	var/radio_key = /obj/item/device/encryptionkey/headset_eng
+	var/radio_channel = "Engineering"
 
 	//for logging
 	var/has_been_powered = 0
@@ -134,7 +136,9 @@
 	countdown.start()
 	GLOB.poi_list |= src
 	radio = new(src)
+	radio.keyslot = new radio_key
 	radio.listening = 0
+	radio.recalculateChannels()
 	investigate_log("has been created.", "supermatter")
 
 
@@ -341,26 +345,27 @@
 
 			if(damage > emergency_point)
 				SPEAK("[emergency_alert] Instability: [stability]%")
+				SPEAK("[emergency_alert] Instability: [stability]%", radio_channel)
 				lastwarning = REALTIMEOFDAY
 				if(!has_reached_emergency)
 					investigate_log("has reached the emergency point for the first time.", "supermatter")
 					message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 					has_reached_emergency = 1
 			else if(damage >= damage_archived) // The damage is still going up
-				SPEAK("[warning_alert] Instability: [stability]%")
+				SPEAK("[warning_alert] Instability: [stability]%", radio_channel)
 				lastwarning = REALTIMEOFDAY - (WARNING_DELAY * 5)
 
 			else                                                 // Phew, we're safe
-				SPEAK("[safe_alert] Instability: [stability]%")
+				SPEAK("[safe_alert] Instability: [stability]%", radio_channel)
 				lastwarning = REALTIMEOFDAY
 
 			if(power > POWER_PENALTY_THRESHOLD)
-				SPEAK("Warning: Hyperstructure has reached dangerous power level.")
+				SPEAK("Warning: Hyperstructure has reached dangerous power level.", radio_channel)
 				if(powerloss_inhibitor < 0.5)
-					SPEAK("DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.")
+					SPEAK("DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.", radio_channel)
 
 			if(combined_gas > MOLE_PENALTY_THRESHOLD)
-				SPEAK("Warning: Critical coolant mass reached.")
+				SPEAK("Warning: Critical coolant mass reached.", radio_channel)
 
 		if(damage > explosion_point)
 			for(var/mob in GLOB.living_mob_list)
