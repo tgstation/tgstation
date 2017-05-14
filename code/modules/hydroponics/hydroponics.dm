@@ -331,6 +331,9 @@
 	if(!self_sustaining)
 		to_chat(user, "<span class='info'>Water: [waterlevel]/[maxwater]</span>")
 		to_chat(user, "<span class='info'>Nutrient: [nutrilevel]/[maxnutri]</span>")
+		if(self_sufficiency_progress > 0)
+			var/percent_progress = round(self_sufficiency_progress * 100 / self_sufficiency_req)
+			to_chat(user, "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>")
 	else
 		to_chat(user, "<span class='info'>It doesn't require any water or nutrients.</span>")
 
@@ -510,7 +513,10 @@
 	// Ambrosia Gaia produces earthsblood.
 	if(S.has_reagent("earthsblood"))
 		self_sufficiency_progress += S.get_reagent_amount("earthsblood")
-		//if(self_sufficiency_progress >= self_sufficiency_req)
+		if(self_sufficiency_progress >= self_sufficiency_req)
+			become_self_sufficient()
+		else if(!self_sustaining)
+			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
 	if(S.has_reagent("charcoal", 1))
@@ -911,6 +917,10 @@
 	var/mob/living/simple_animal/hostile/C = new chosen
 	C.faction = list("plants")
 
+/obj/machinery/hydroponics/proc/become_self_sufficient() // Ambrosia Gaia effect
+	visible_message("<span class='boldnotice'>[src] begins to glow with a beautiful light!</span>")
+	self_sustaining = TRUE
+	update_icon()
 
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
