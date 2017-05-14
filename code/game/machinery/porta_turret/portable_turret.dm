@@ -944,13 +944,13 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(world.view)
+			buckled_mob.reset_perspective()
 	. = ..()
 
 /obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/living/carbon/user)
 	if(user.incapacitated() || !istype(user))
 		return
-	M.loc = get_turf(src)
+	M.forceMove(get_turf(src))
 	..()
 	for(var/V in M.held_items)
 		var/obj/item/I = V
@@ -1018,7 +1018,7 @@
 
 /obj/machinery/manned_turret/proc/checkfire(atom/targeted_atom, mob/user)
 	if(world.time < cooldown)
-		playsound(src.loc, 'sound/weapons/sear.ogg', 100, 1)
+		playsound(src, 'sound/weapons/sear.ogg', 100, 1)
 		to_chat(user, "<span class='warning'>Turret must cool off between volleys!</span>")
 		return
 	else
@@ -1038,7 +1038,7 @@
 		P.starting = targets_from
 		P.firer = src
 		P.original = targeted_atom
-		playsound(src.loc, 'sound/weapons/Gunshot_smg.ogg', 50, 1)
+		playsound(src, 'sound/weapons/Gunshot_smg.ogg', 50, 1)
 		P.yo = targeted_atom.y - targets_from.y + rand(-1,1)
 		P.xo = targeted_atom.x - targets_from.x + rand(-1,1)
 		P.fire()
