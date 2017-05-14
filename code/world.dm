@@ -208,11 +208,9 @@
 		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
 			return
 
-#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
+	var/final_composed = "<span class='announce'>PR: [announcement]</span>"
 	for(var/client/C in GLOB.clients)
-		if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-			C << "<span class='announce'>PR: [announcement]</span>"
-#undef CHAT_PULLR
+		C.AnnouncePR(final_composed)
 
 /world/Reboot(reason)
 	if (reason) //special reboot, do none of the normal stuff
