@@ -167,7 +167,7 @@ namespace TGServerService
 							if (retries == 0)
 							{
 								SendMessage("DD: DEFCON 0: Watchdog unable to restart server!");
-								TGServerService.ActiveService.EventLog.WriteEntry("Watchdog failed to restart server! Shutting down!", EventLogEntryType.Error);
+								TGServerService.WriteLog("Watchdog failed to restart server! Shutting down!", EventLogEntryType.Error);
 								return;
 							}
 
@@ -201,7 +201,7 @@ namespace TGServerService
 			catch (Exception e)
 			{
 				SendMessage("DD: Watchdog thread crashed!");
-				TGServerService.ActiveService.EventLog.WriteEntry("Watch dog thread crashed! Exception: " + e.ToString(), EventLogEntryType.Error);
+				TGServerService.WriteLog("Watch dog thread crashed! Exception: " + e.ToString(), EventLogEntryType.Error);
 			}
 			finally
 			{

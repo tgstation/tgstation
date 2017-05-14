@@ -478,7 +478,7 @@ namespace TGServerService
 			catch (Exception e)
 			{
 				SendMessage("DM: Compiler thread crashed!");
-				TGServerService.ActiveService.EventLog.WriteEntry("Compile manager errror: " + e.ToString(), EventLogEntryType.Error);
+				TGServerService.WriteLog("Compile manager errror: " + e.ToString(), EventLogEntryType.Error);
 				lock (CompilerLock)
 				{
 					lastCompilerError = e.ToString();

@@ -503,7 +503,7 @@ namespace TGServerService
 										}
 									}
 									Config.ServerDirectory = new_location;
-									TGServerService.ActiveService.EventLog.WriteEntry("Server moved to: " + new_location);
+									TGServerService.WriteLog("Server moved to: " + new_location);
 									return null;
 								}
 							}

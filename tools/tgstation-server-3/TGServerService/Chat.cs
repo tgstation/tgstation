@@ -64,7 +64,7 @@ namespace TGServerService
 					ChatProvider = new TGIRCChatProvider(info);
 					break;
 				default:
-					TGServerService.ActiveService.EventLog.WriteEntry(String.Format("Invalid chat provider: {0}", info.Provider), EventLogEntryType.Error);
+					TGServerService.WriteLog(String.Format("Invalid chat provider: {0}", info.Provider), EventLogEntryType.Error);
 					break;
 			}
 			currentProvider = info.Provider;
@@ -73,7 +73,7 @@ namespace TGServerService
 			{
 				var res = ChatProvider.Connect();
 				if (res != null)
-					TGServerService.ActiveService.EventLog.WriteEntry(String.Format("Unable to connect to chat! Provider {0}, Error: {1}", ChatProvider.GetType().ToString(), res));
+					TGServerService.WriteLog(String.Format("Unable to connect to chat! Provider {0}, Error: {1}", ChatProvider.GetType().ToString(), res));
 			}
 		}
 
@@ -122,7 +122,7 @@ namespace TGServerService
 		//Do stuff with words that were spoken to us
 		string ChatCommand(string command, string speaker, string channel, IList<string> parameters)
 		{
-			TGServerService.ActiveService.EventLog.WriteEntry(String.Format("IRC Command from {0}: {1} {2}", speaker, command, String.Join(" ", parameters)));
+			TGServerService.WriteLog(String.Format("IRC Command from {0}: {1} {2}", speaker, command, String.Join(" ", parameters)));
 			switch (command)
 			{
 				case "check":
@@ -237,7 +237,7 @@ namespace TGServerService
 						case TGChatProvider.IRC:
 							return new TGIRCSetupInfo();
 						default:
-							TGServerService.ActiveService.EventLog.WriteEntry("Invalid chat provider: " + Config.ChatProvider.ToString());
+							TGServerService.WriteLog("Invalid chat provider: " + Config.ChatProvider.ToString());
 							return null;
 					}
 

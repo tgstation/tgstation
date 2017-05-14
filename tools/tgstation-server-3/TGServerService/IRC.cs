@@ -36,7 +36,7 @@ namespace TGServerService
 				{
 					irc.SendMessage(SendType.Message, channel, message);
 				}
-				TGServerService.ActiveService.EventLog.WriteEntry(String.Format("IRC Send ({0}): {1}", channel, message));
+				TGServerService.WriteLog(String.Format("IRC Send ({0}): {1}", channel, message));
 				return null;
 			}
 			catch (Exception e)
@@ -207,7 +207,7 @@ namespace TGServerService
 						foreach (var I in Config.ChatChannels)
 							irc.SendMessage(SendType.Message, I, message);
 				}
-				TGServerService.ActiveService.EventLog.WriteEntry(String.Format("IRC Send{0}: {1}", adminOnly ? " (ADMIN)" : "", message));
+				TGServerService.WriteLog(String.Format("IRC Send{0}: {1}", adminOnly ? " (ADMIN)" : "", message));
 				return null;
 			}
 			catch (Exception e)

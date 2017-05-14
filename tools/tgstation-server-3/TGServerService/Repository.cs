@@ -152,7 +152,7 @@ namespace TGServerService
 
 			{
 				SendMessage("REPO: Setup failed!");
-				TGServerService.ActiveService.EventLog.WriteEntry("Clone error: " + e.ToString(), EventLogEntryType.Error);
+				TGServerService.WriteLog("Clone error: " + e.ToString(), EventLogEntryType.Error);
 			}
 			finally
 			{

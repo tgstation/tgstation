@@ -137,7 +137,7 @@ namespace TGServerService
 					{
 						SendMessage("BYOND: Update download failed. Does the specified version exist?");
 						lastError = String.Format("Download of BYOND version {0}.{1} failed! Does it exist?", vi.major, vi.minor);
-						TGServerService.ActiveService.EventLog.WriteEntry(String.Format("Failed to update BYOND to version {0}.{1}!", vi.major, vi.minor), EventLogEntryType.Warning);
+						TGServerService.WriteLog(String.Format("Failed to update BYOND to version {0}.{1}!", vi.major, vi.minor), EventLogEntryType.Warning);
 						lock (ByondLock)
 						{
 							updateStat = TGByondStatus.Idle;
@@ -176,7 +176,7 @@ namespace TGServerService
 						RequestRestart();
 						lastError = "Update staged. Awaiting server restart...";
 						SendMessage(String.Format("BYOND: Staging complete. Awaiting server restart...", vi.major, vi.minor));
-						TGServerService.ActiveService.EventLog.WriteEntry(String.Format("BYOND update {0}.{1} staged", vi.major, vi.minor));
+						TGServerService.WriteLog(String.Format("BYOND update {0}.{1} staged", vi.major, vi.minor));
 						break;
 				}
 			}
@@ -186,7 +186,7 @@ namespace TGServerService
 			}
 			catch (Exception e)
 			{
-				TGServerService.ActiveService.EventLog.WriteEntry("Revision staging errror: " + e.ToString(), EventLogEntryType.Error);
+				TGServerService.WriteLog("Revision staging errror: " + e.ToString(), EventLogEntryType.Error);
 				lock (ByondLock)
 				{
 					updateStat = TGByondStatus.Idle;

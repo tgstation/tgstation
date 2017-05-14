@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.ServiceModel;
 using System.ServiceProcess;
-using System.Threading;
 using TGServiceInterface;
 
 namespace TGServerService
 {
 	public partial class TGServerService : ServiceBase
 	{
-		public static TGServerService ActiveService;	//So everyone else can write to our eventlog
+		static TGServerService ActiveService;	//So everyone else can write to our eventlog
+
+		public static void WriteLog(string message, EventLogEntryType type = EventLogEntryType.Information)
+		{
+			ActiveService.EventLog.WriteEntry(message, type);
+		}
 
 		ServiceHost host;	//the WCF host
 		
