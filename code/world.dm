@@ -251,16 +251,9 @@
 
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	SSblackbox.set_details("[feedback_c]","[feedback_r]")
-	SSblackbox.set_val("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
-	Master.Shutdown()	//run SS shutdowns
-	RoundEndAnimation(round_end_sound_sent)
-	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
 	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
-	for(var/thing in GLOB.clients)
-		var/client/C = thing
-		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
-			C << link("byond://[config.server]")
+	RoundEndAnimation(round_end_sound_sent)
+	Master.Shutdown()	//run SS shutdowns
 
 /world/proc/RoundEndAnimation(round_end_sound_sent)
 	set waitfor = FALSE
