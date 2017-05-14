@@ -42,7 +42,7 @@
 			var/list/offsets = get_offsets(passindex)
 			dir_loop:
 				for(var/offsetdir in offsets)
-					if(offsetdir == ridden.dir)
+					if(offsetdir == ridden_dir)
 						var/list/diroffsets = offsets[offsetdir]
 						buckled_mob.pixel_x = diroffsets[1]
 						if(diroffsets.len == 2)
@@ -122,9 +122,7 @@
 	vehicle_move_delay = 1
 
 /datum/riding/atv/get_offsets(pass_index) // list(dir = x, y, layer)
-	switch(pass_index)
-		if(1)
-			return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(0, 4), "[WEST]" = list( 0, 4))
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(0, 4), "[WEST]" = list( 0, 4))
 
 
 /datum/riding/atv/handle_vehicle_layer()
@@ -174,9 +172,7 @@
 
 
 /datum/riding/janicart/get_offsets(pass_index) // list(dir = x, y, layer)
-	switch(pass_index)
-		if(1)
-			return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(-12, 7), "[EAST]" = list(0, 7), "[WEST]" = list( 12, 7))
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(-12, 7), "[EAST]" = list(0, 7), "[WEST]" = list( 12, 7))
 
 //scooter
 /datum/riding/scooter/handle_vehicle_layer()
@@ -186,9 +182,7 @@
 		ridden.layer = OBJ_LAYER
 
 /datum/riding/scooter/get_offsets(pass_index) // list(dir = x, y, layer)
-	switch(pass_index)
-		if(1)
-			return list("[NORTH]" = list(0), "[SOUTH]" = list(-2), "[EAST]" = list(0), "[WEST]" = list( 2))
+	return list("[NORTH]" = list(0), "[SOUTH]" = list(-2), "[EAST]" = list(0), "[WEST]" = list( 2))
 
 /datum/riding/scooter/handle_vehicle_offsets()
 	..()
@@ -217,9 +211,7 @@
 	keytype = /obj/item/key/security
 
 /datum/riding/secway/get_offsets(pass_index) // list(dir = x, y, layer)
-	switch(pass_index)
-		if(1)
-			return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(0, 4), "[WEST]" = list( 0, 4))
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(0, 4), "[WEST]" = list( 0, 4))
 
 //i want to ride my
 /datum/riding/bicycle
@@ -227,9 +219,7 @@
 	vehicle_move_delay = 0
 
 /datum/riding/bicycle/get_offsets(pass_index) // list(dir = x, y, layer)
-	switch(pass_index)
-		if(1)
-			return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(0, 4), "[WEST]" = list( 0, 4))
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(0, 4), "[WEST]" = list( 0, 4))
 
 //speedbike
 /datum/riding/space/speedbike
@@ -246,9 +236,7 @@
 			ridden.pixel_y = 0
 
 /datum/riding/space/speedbike/get_offsets(pass_index) // list(dir = x, y, layer)
-	switch(pass_index)
-		if(1)
-			return list("[NORTH]" = list(0, -8), "[SOUTH]" = list(0, 4), "[EAST]" = list(-10, 5), "[WEST]" = list( 10, 5))
+	return list("[NORTH]" = list(0, -8), "[SOUTH]" = list(0, 4), "[EAST]" = list(-10, 5), "[WEST]" = list( 10, 5))
 
 //SPEEDUWAGON
 
@@ -277,9 +265,7 @@
 	vehicle_move_delay = 1
 
 /datum/riding/boat/dragon/get_offsets(pass_index) // list(dir = x, y, layer)
-	switch(pass_index)
-		if(1)
-			return list("[NORTH]" = list(1, 2), "[SOUTH]" = list(1, 2), "[EAST]" = list(1, 2), "[WEST]" = list( 1, 2))
+	return list("[NORTH]" = list(1, 2), "[SOUTH]" = list(1, 2), "[EAST]" = list(1, 2), "[WEST]" = list( 1, 2))
 
 ///////////////ANIMALS////////////
 //general animals
@@ -323,9 +309,7 @@
 		H.stop_pulling()
 
 /datum/riding/human/get_offsets(pass_index) // list(dir = x, y, layer)
-	switch(pass_index)
-		if(1)
-			return list("[NORTH]" = list(0, 6), "[SOUTH]" = list(0, 6), "[EAST]" = list(-6, 4), "[WEST]" = list( 6, 4))
+	return list("[NORTH]" = list(0, 6), "[SOUTH]" = list(0, 6), "[EAST]" = list(-6, 4), "[WEST]" = list( 6, 4))
 
 
 /datum/riding/human/handle_vehicle_layer()
@@ -374,9 +358,7 @@
 		ridden.layer = MOB_LAYER
 
 /datum/riding/cyborg/get_offsets(pass_index) // list(dir = x, y, layer)
-	switch(pass_index)
-		if(1)
-			return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(-6, 3), "[WEST]" = list( 6, 3))
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 4), "[EAST]" = list(-6, 3), "[WEST]" = list( 6, 3))
 
 /datum/riding/cyborg/handle_vehicle_offsets()
 	if(ridden.has_buckled_mobs())
