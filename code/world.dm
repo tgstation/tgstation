@@ -16,6 +16,33 @@
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
+	SetupExternalRSC()
+
+	GLOB.config_error_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+
+	config = new
+
+	SetupLogs()
+
+	GLOB.revdata.DownloadPRDetails()
+
+	load_mode()
+	load_motd()
+	load_admins()
+	load_menu()
+	if(config.usewhitelist)
+		load_whitelist()
+	LoadBans()
+
+	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
+
+	GLOB.data_core = new /datum/datacore()
+
+	Master.Initialize(10, FALSE)
+
+/world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
@@ -25,9 +52,8 @@
 		else
 			external_rsc_urls.Cut(i,i+1)
 #endif
-	GLOB.config_error_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-	config = new
+
+/world/proc/SetupLogs()
 	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
@@ -57,21 +83,6 @@
 	
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
-
-	GLOB.revdata.DownloadPRDetails()
-	load_mode()
-	load_motd()
-	load_admins()
-	load_menu()
-	if(config.usewhitelist)
-		load_whitelist()
-	LoadBans()
-
-	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
-
-	GLOB.data_core = new /datum/datacore()
-
-	Master.Initialize(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
@@ -239,8 +250,8 @@
 #undef WORLD_REBOOT
 
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	SSblackbox.set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
+	SSblackbox.set_details("[feedback_c]","[feedback_r]")
 	SSblackbox.set_val("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
 	Master.Shutdown()	//run SS shutdowns
 	RoundEndAnimation(round_end_sound_sent)
