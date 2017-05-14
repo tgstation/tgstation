@@ -45,6 +45,7 @@
 	icon_state = "speedwagon"
 	layer = LYING_MOB_LAYER
 	overlay_state = "speedwagon_cover"
+	max_buckled_mobs = 4
 	var/crash_all = FALSE //CHAOS
 	pixel_y = -48 //to fix the offset when Initialized()
 	pixel_x = -48
