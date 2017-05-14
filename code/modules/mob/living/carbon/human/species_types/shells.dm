@@ -24,7 +24,7 @@
 	id = "shell"
 	limbs_id = "shell"
 	sexes = FALSE
-	species_traits = list(EYECOLOR,LIPS,NO_UNDERWEAR,NOTRANSSTING)
+	species_traits = list(EYECOLOR,LIPS,NO_UNDERWEAR,NOTRANSSTING,NOCRITDAMAGE)
 	mutant_organs = list(/obj/item/organ/brain/shell)
 	blacklisted = TRUE
 	dangerous_existence = TRUE
@@ -47,7 +47,7 @@
 		H.adjustToxLoss(-1)
 		H.adjustBruteLoss(-1)
 		H.adjustFireLoss(-1)
-		H.adjustOxyLoss(-3)
+		H.adjustOxyLoss(-1)
 
 /datum/species/shell/spec_mutation(mob/living/carbon/human/H)
 	to_chat(H, "<span class='userdanger'>Your unstable genes collapse while mutating! Your flesh is [pick("melting","falling off","withering","rotting")]!</span>")
