@@ -28,7 +28,6 @@
 
 	GLOB.revdata.DownloadPRDetails()
 
-	load_mode()
 	load_motd()
 	load_admins()
 	load_menu()
@@ -282,18 +281,6 @@
 		S.Fade(FALSE,FALSE)
 
 	world << sound(round_end_sound)
-
-/world/proc/load_mode()
-	var/list/Lines = world.file2list("data/mode.txt")
-	if(Lines.len)
-		if(Lines[1])
-			GLOB.master_mode = Lines[1]
-			GLOB.world_game_log << "Saved mode is '[GLOB.master_mode]'"
-
-/world/proc/save_mode(the_mode)
-	var/F = file("data/mode.txt")
-	fdel(F)
-	F << the_mode
 
 /world/proc/load_motd()
 	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()

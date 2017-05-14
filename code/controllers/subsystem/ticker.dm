@@ -60,6 +60,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/round_start_events
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
+	load_mode()
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
@@ -758,3 +759,15 @@ SUBSYSTEM_DEF(ticker)
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
+
+/datum/controller/subsystem/ticker/proc/load_mode()
+	var/list/Lines = world.file2list("data/mode.txt")
+	if(Lines.len)
+		if(Lines[1])
+			GLOB.master_mode = Lines[1]
+			GLOB.world_game_log << "Saved mode is '[GLOB.master_mode]'"
+
+/datum/controller/subsystem/ticker/proc/save_mode(the_mode)
+	var/F = file("data/mode.txt")
+	fdel(F)
+	F << the_mode
