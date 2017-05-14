@@ -682,33 +682,7 @@
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/gaia)) //Checked early on so it doesn't have to deal with composting checks
-		if(self_sustaining)
-			to_chat(user, "<span class='warning'>This [name] is already self-sustaining!</span>")
-			return
-		if(myseed || weedlevel)
-			to_chat(user, "<span class='warning'>[src] needs to be clear of plants and weeds!</span>")
-			return
-		if(alert(user, "This will make [src] self-sustaining but consume [O] forever. Are you sure?", "[name]", "I'm Sure", "Abort") == "Abort" || !user)
-			return
-		if(!O || QDELETED(O))
-			return
-		if(!Adjacent(user))
-			return
-		if(self_sustaining)
-			to_chat(user, "<span class='warning'>This [name] is already self-sustaining!</span>")
-			return
-		if(myseed || weedlevel)
-			to_chat(user, "<span class='warning'>[src] needs to be clear of plants and weeds!</span>")
-			return
-		user.visible_message("<span class='notice'>[user] gently pulls open the soil for [O] and places it inside.</span>", "<span class='notice'>You tenderly root [O] into [src].</span>")
-		user.drop_item()
-		qdel(O)
-		visible_message("<span class='boldnotice'>[src] begins to glow with a beautiful light!</span>")
-		self_sustaining = TRUE
-		update_icon()
-
-	else if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
+	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/weapon/reagent_containers/reagent_source = O
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
