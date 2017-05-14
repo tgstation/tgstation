@@ -1287,7 +1287,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Modified Syringe Gun"
 	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/weapon/gun/syringe/dna
-	cost = 5
+	cost = 7
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 // Pointless
