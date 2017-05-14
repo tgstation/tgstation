@@ -42,7 +42,7 @@
 	icon_state = "cecloak"
 
 /obj/item/clothing/neck/cloak/rd
-	name = "research director's cloak."
+	name = "research director's cloak"
 	desc = "Worn by Sciencia, thaumaturges and researchers of the universe. It's slightly shielded from contaminants."
 	icon_state = "rdcloak"
 
@@ -52,7 +52,7 @@
 	icon_state = "capcloak"
 	
 /obj/item/clothing/neck/cloak/hop
-	name = "head of personnel's cloak."
+	name = "head of personnel's cloak"
 	desc = "Worn by the Head of Personnel. It smells faintly of bureaucracy."
 	icon_state = "hopcloak"
 

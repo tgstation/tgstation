@@ -12,6 +12,7 @@
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
 	desc = "Death to Nanotrasen."
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "syndicate"
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"

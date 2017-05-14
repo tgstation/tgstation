@@ -13,12 +13,12 @@
 	action_icon_state = "knock"
 
 /obj/effect/proc_holder/spell/aoe_turf/knock/cast(list/targets,mob/user = usr)
-	user << sound("sound/magic/Knock.ogg")
+	user << sound('sound/magic/Knock.ogg')
 	for(var/turf/T in targets)
 		for(var/obj/machinery/door/door in T.contents)
-			addtimer(CALLBACK(src, .proc/open_door, door), 0)
+			INVOKE_ASYNC(src, .proc/open_door, door)
 		for(var/obj/structure/closet/C in T.contents)
-			addtimer(CALLBACK(src, .proc/open_closet, C), 0)
+			INVOKE_ASYNC(src, .proc/open_closet, C)
 
 /obj/effect/proc_holder/spell/aoe_turf/knock/proc/open_door(var/obj/machinery/door/door)
 	if(istype(door, /obj/machinery/door/airlock))

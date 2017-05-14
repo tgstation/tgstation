@@ -20,15 +20,16 @@
 	var/oxy_damage = 0
 	density = 1
 	anchored = 1
+	var/banType = "lavaland"
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
-	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
+	if(!SSticker.HasRoundStarted() || !loc)
 		return
 	if(!uses)
-		user << "<span class='warning'>This spawner is out of charges!</span>"
+		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
 		return
-	if(jobban_isbanned(user, "lavaland"))
-		user << "<span class='warning'>You are jobanned!</span>"
+	if(jobban_isbanned(user, banType))
+		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
@@ -36,31 +37,15 @@
 	log_game("[user.ckey] became [mob_name]")
 	create(ckey = user.ckey)
 
-/obj/effect/mob_spawn/spawn_atom_to_world()
-	//We no longer need to spawn mobs, deregister ourself
-	SSobj.atom_spawners -= src
-	if(roundstart)
-		create()
-	else
-		poi_list |= src
-
-/obj/effect/mob_spawn/New()
+/obj/effect/mob_spawn/Initialize(mapload)
 	..()
-	if(roundstart)
-		if(ticker && ticker.current_state > GAME_STATE_SETTING_UP)
-			// The game has already initialised, just spawn it.
-			create()
-		else
-			//Add to the atom spawners register for roundstart atom spawning
-			SSobj.atom_spawners += src
-
-	if(instant)
+	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
 	else
-		poi_list |= src
+		GLOB.poi_list |= src
 
 /obj/effect/mob_spawn/Destroy()
-	poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	. = ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
@@ -69,7 +54,7 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey)
+/obj/effect/mob_spawn/proc/create(ckey, flavour = TRUE, name)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
@@ -87,12 +72,13 @@
 
 	if(ckey)
 		M.ckey = ckey
-		M << "[flavour_text]"
+		if(flavour)
+			to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
 		if(objectives)
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
-		special(M)
+		special(M, name)
 		MM.name = M.real_name
 	if(uses > 0)
 		uses--
@@ -274,7 +260,7 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Operative"
-	id_access_list = list(access_syndicate)
+	id_access_list = list(GLOB.access_syndicate)
 
 /obj/effect/mob_spawn/human/syndicatecommando
 	name = "Syndicate Commando"
@@ -288,7 +274,7 @@
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	has_id = 1
 	id_job = "Operative"
-	id_access_list = list(access_syndicate)
+	id_access_list = list(GLOB.access_syndicate)
 
 ///////////Civilians//////////////////////
 
@@ -365,7 +351,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	has_id = 1
 	id_job = "Bartender"
-	id_access = "Bartender"
+	id_access_list = list(GLOB.access_bar)
 
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
@@ -402,7 +388,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	has_id = 1
 	id_job = "Bridge Officer"
-	id_access = "Captain"
+	id_access_list = list(GLOB.access_cent_captain)
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
@@ -417,7 +403,7 @@
 	pocket1 = /obj/item/weapon/lighter
 	has_id = 1
 	id_job = "Commander"
-	id_access = "Captain"
+	id_access_list = list(GLOB.access_cent_captain)
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
@@ -430,7 +416,7 @@
 	back = /obj/item/weapon/storage/backpack/security
 	has_id = 1
 	id_job = "Private Security Force"
-	id_access = "Security Officer"
+	id_access_list = list(GLOB.access_cent_specops)
 
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE

@@ -18,23 +18,21 @@
 /obj/item/device/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/weapon/tank))
 		if(tank_one && tank_two)
-			user << "<span class='warning'>There are already two tanks attached, remove one first!</span>"
+			to_chat(user, "<span class='warning'>There are already two tanks attached, remove one first!</span>")
 			return
 
 		if(!tank_one)
-			if(!user.unEquip(item))
+			if(!user.transferItemToLoc(item, src))
 				return
 			tank_one = item
-			item.loc = src
-			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
+			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 			if(item.w_class > w_class)
 				w_class = item.w_class
 		else if(!tank_two)
-			if(!user.unEquip(item))
+			if(!user.transferItemToLoc(item, src))
 				return
 			tank_two = item
-			item.loc = src
-			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
+			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 			if(item.w_class > w_class)
 				w_class = item.w_class
 
@@ -43,19 +41,19 @@
 	else if(isassembly(item))
 		var/obj/item/device/assembly/A = item
 		if(A.secured)
-			user << "<span class='notice'>The device is secured.</span>"
+			to_chat(user, "<span class='notice'>The device is secured.</span>")
 			return
 		if(attached_device)
-			user << "<span class='warning'>There is already a device attached to the valve, remove it first!</span>"
+			to_chat(user, "<span class='warning'>There is already a device attached to the valve, remove it first!</span>")
 			return
-		user.remove_from_mob(item)
+		if(!user.transferItemToLoc(item, src))
+			return
 		attached_device = A
-		A.loc = src
-		user << "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>"
+		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
 		A.holder = src
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 
-		bombers += "[key_name(user)] attached a [item] to a transfer valve."
+		GLOB.bombers += "[key_name(user)] attached a [item] to a transfer valve."
 		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
 		log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
 		attacher = user
@@ -180,21 +178,21 @@
 
 		var/log_attacher = ""
 		if(attacher)
-			log_attacher = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[attacher]'>FLW</A>)"
+			log_attacher = "[ADMIN_QUE(attacher)] [ADMIN_FLW(attacher)]"
 
 		var/mob/mob = get_mob_by_key(src.fingerprintslast)
 		var/last_touch_info = ""
 		if(mob)
-			last_touch_info = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[mob]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>)"
+			last_touch_info = "[ADMIN_QUE(mob)] [ADMIN_FLW(mob)]"
 
 		var/log_str3 = " Last touched by: [key_name_admin(mob)]"
 
-		var/bomb_message = "[log_str1] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a>  [log_str2][log_attacher] [log_str3][last_touch_info]"
+		var/bomb_message = "[log_str1] [A.name][ADMIN_JMP(bombturf)] [log_str2][log_attacher] [log_str3][last_touch_info]"
 
-		bombers += bomb_message
+		GLOB.bombers += bomb_message
 
 		message_admins(bomb_message, 0, 1)
-		log_game("[log_str1] [A.name]([A.x],[A.y],[A.z]) [log_str2] [log_str3]")
+		log_game("[log_str1] [A.name][COORD(bombturf)] [log_str2] [log_str3]")
 		merge_gases()
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)

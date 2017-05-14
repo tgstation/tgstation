@@ -50,13 +50,13 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		usr << "<span class='danger'>This mob type cannot throw items.</span>"
+		to_chat(usr, "<span class='danger'>This mob type cannot throw items.</span>")
 	return
 
 
 /client/Northwest()
 	if(!usr.get_active_held_item())
-		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
+		to_chat(usr, "<span class='warning'>You have nothing to drop in your hand!</span>")
 		return
 	usr.drop_item()
 
@@ -65,7 +65,7 @@
 	set hidden = 1
 
 	if(!usr.pulling)
-		usr << "<span class='notice'>You are not pulling anything.</span>"
+		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
 		return
 	usr.stop_pulling()
 
@@ -163,7 +163,7 @@
 
 	if(mob.confused)
 		if(mob.confused > 40)
-			step(mob, pick(cardinal))
+			step(mob, pick(GLOB.cardinal))
 		else if(prob(mob.confused * 1.5))
 			step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
 		else if(prob(mob.confused * 3))
@@ -175,7 +175,8 @@
 
 	moving = 0
 	if(mob && .)
-		mob.throwing = 0
+		if(mob.throwing)
+			mob.throwing.finalize(FALSE)
 
 	for(var/obj/O in mob)
 		O.on_mob_move(direct, src)
@@ -193,7 +194,7 @@
 			return 1
 		else if(mob.restrained(ignore_grab = 1))
 			move_delay = world.time + 10
-			src << "<span class='warning'>You're restrained! You can't move!</span>"
+			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
 			return 1
 		else
 			return mob.resist_grab(1)
@@ -252,14 +253,14 @@
 		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
-				L << "<span class='warning'>[S] bars your passage!</span>"
+				to_chat(L, "<span class='warning'>[S] bars your passage!</span>")
 				if(isrevenant(L))
 					var/mob/living/simple_animal/revenant/R = L
 					R.reveal(20)
 					R.stun(20)
 				return
 			if(stepTurf.flags & NOJAUNT)
-				L << "<span class='warning'>Holy energies block your path.</span>"
+				to_chat(L, "<span class='warning'>Holy energies block your path.</span>")
 			else
 				L.loc = get_step(L, direct)
 				L.setDir(direct)
@@ -277,7 +278,7 @@
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-				src << "<span class='info'>You push off of [backup] to propel yourself.</span>"
+				to_chat(src, "<span class='info'>You push off of [backup] to propel yourself.</span>")
 		return 1
 	return 0
 
@@ -423,7 +424,8 @@
 
 /client/verb/toggle_walk_run()
 	set name = "toggle-walk-run"
-	set hidden = 1
+	set hidden = TRUE
+	set instant = TRUE
 	if(mob)
 		mob.toggle_move_intent()
 

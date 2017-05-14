@@ -100,10 +100,21 @@
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/Laser.ogg'
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
+	equip_cooldown = 35
+	name = "\improper MKI Tesla Cannon"
+	desc = "A weapon for combat exosuits. Fires bolts of electricity similar to the experimental tesla engine"
+	icon_state = "mecha_ion"
+	origin_tech = "materials=4;engineering=4;combat=6;magnets=6"
+	energy_drain = 500
+	projectile = /obj/item/projectile/energy/tesla/cannon
+	fire_sound = 'sound/magic/lightningbolt.ogg'
+
+
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
 	name = "eZ-13 MK2 heavy pulse rifle"
-	desc = "A weapon for combat exosuits. Shoots powerful destructive blasts capable of demloishing obstacles."
+	desc = "A weapon for combat exosuits. Shoots powerful destructive blasts capable of demolishing obstacles."
 	icon_state = "mecha_pulse"
 	energy_drain = 120
 	origin_tech = "materials=3;combat=6;powerstorage=4"
@@ -113,7 +124,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
 	equip_cooldown = 10
 	name = "217-D Heavy Plasma Cutter"
-	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demloishing solid obstacles."
+	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demolishing solid obstacles."
 	icon_state = "mecha_plasmacutter"
 	item_state = "plasmacutter"
 	energy_drain = 30
@@ -163,7 +174,7 @@
 			var/mob/living/carbon/human/H = M
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue
-		M << "<font color='red' size='7'>HONK</font>"
+		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.stuttering += 20
 		M.adjustEarDamage(0, 30)
@@ -237,15 +248,15 @@
 	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
 	icon_state = "mecha_carbine"
 	origin_tech = "materials=4;combat=4"
-	equip_cooldown = 5
-	projectile = /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
+	equip_cooldown = 10
+	projectile = /obj/item/projectile/bullet/incendiary/shell
 	projectiles = 24
 	projectile_energy_cost = 15
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
 	desc = "A weapon for combat exosuits. A mime invention, field tests have shown that targets cannot even scream before going down."
-	fire_sound = "sound/weapons/Gunshot_silenced.ogg"
+	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 	icon_state = "mecha_mime"
 	equip_cooldown = 30
 	projectile = /obj/item/projectile/bullet/mime
@@ -278,9 +289,22 @@
 	randomspread = 1
 	projectile_delay = 2
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	name = "\improper SRM-8 missile rack"
+	desc = "A weapon for combat exosuits. Shoots light explosive missiles."
+	icon_state = "mecha_missilerack"
+	origin_tech = "combat=5;materials=4;engineering=4"
+	projectile = /obj/item/projectile/bullet/srmrocket
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 8
+	projectile_energy_cost = 1000
+	equip_cooldown = 60
+
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher
 	var/missile_speed = 2
 	var/missile_range = 30
+	var/diags_first = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/action(target)
 	if(!action_checks(target))
@@ -290,42 +314,13 @@
 	log_message("Launched a [O.name] from [name], targeting [target].")
 	projectiles--
 	proj_init(O)
-	O.throw_at(target, missile_range, missile_speed, spin = 0)
+	O.throw_at(target, missile_range, missile_speed, spin = 0, diagonals_first = diags_first)
 	return 1
 
 //used for projectile initilisation (priming flashbang) and additional logging
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/proc/proj_init(var/obj/O)
 	return
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack
-	name = "\improper SRM-8 missile rack"
-	desc = "A weapon for combat exosuits. Shoots light explosive missiles."
-	icon_state = "mecha_missilerack"
-	origin_tech = "combat=5;materials=4;engineering=4"
-	projectile = /obj/item/missile
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
-	projectiles = 8
-	projectile_energy_cost = 1000
-	equip_cooldown = 60
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack/proj_init(var/obj/item/missile/M)
-	M.primed = 1
-	var/turf/T = get_turf(src)
-	message_admins("[ADMIN_LOOKUP(chassis.occupant)] fired a [src] in [ADMIN_COORDJMP(T)]",0,1)
-	log_game("[key_name(chassis.occupant)] fired a [src] [COORD(T)]")
-
-/obj/item/missile
-	icon = 'icons/obj/grenade.dmi'
-	icon_state = "missile"
-	var/primed = null
-	throwforce = 15
-
-/obj/item/missile/throw_impact(atom/hit_atom)
-	if(primed)
-		explosion(hit_atom, 0, 0, 2, 4, 0)
-		qdel(src)
-	else
-		..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
 	name = "\improper SGL-6 grenade launcher"
@@ -342,8 +337,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/weapon/grenade/flashbang/F)
 	var/turf/T = get_turf(src)
-	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
-	log_game("[key_name(chassis.occupant)] fired a [src] ([T.x],[T.y],[T.z])")
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_COORDJMP(T)]",0,1)
+	log_game("[key_name(chassis.occupant)] fired a [src] [COORD(T)]")
 	addtimer(CALLBACK(F, /obj/item/weapon/grenade/flashbang.proc/prime), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
@@ -391,3 +386,50 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/device/assembly/mousetrap/armed/M)
 	M.secured = 1
+
+
+//Classic extending punching glove, but weaponised!
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
+	name = "\improper Oingo Boingo Punch-face"
+	desc = "Equipment for clown exosuits. Delivers fun right to your face!"
+	icon_state = "mecha_punching_glove"
+	energy_drain = 250
+	equip_cooldown = 20
+	range = MELEE|RANGED
+	missile_range = 5
+	projectile = /obj/item/punching_glove
+	fire_sound = 'sound/items/bikehorn.ogg'
+	projectiles = 10
+	projectile_energy_cost = 500
+	diags_first = TRUE
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/mecha/combat/honker/M)
+	if(..())
+		if(istype(M))
+			return 1
+	return 0
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(target)
+	. = ..()
+	if(.)
+		chassis.occupant_message("<font color='red' size='5'>HONK</font>")
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/proj_init(obj/item/punching_glove/PG)
+	if(!istype(PG))
+		return
+	 //has to be low sleep or it looks weird, the beam doesn't exist for very long so it's a non-issue
+	chassis.Beam(PG, icon_state = "chain", time = missile_range * 20, maxdistance = missile_range + 2, beam_sleep_time = 1)
+
+/obj/item/punching_glove
+	name = "punching glove"
+	desc = "INCOMING HONKS"
+	throwforce = 35
+	icon_state = "punching_glove"
+
+/obj/item/punching_glove/throw_impact(atom/hit_atom)
+	if(!..())
+		if(istype(hit_atom, /atom/movable))
+			var/atom/movable/AM = hit_atom
+			AM.throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
+		qdel(src)
+

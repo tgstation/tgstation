@@ -26,17 +26,16 @@
 /obj/structure/noticeboard/attackby(obj/item/weapon/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo))
 		if(!allowed(user))
-			user << "<span class='info'>You are not authorized to add notices</span>"
+			to_chat(user, "<span class='info'>You are not authorized to add notices</span>")
 			return
 		if(notices < 5)
-			if(!user.unEquip(O))
+			if(!user.transferItemToLoc(O, src))
 				return
-			O.loc = src
 			notices++
 			icon_state = "nboard0[notices]"
-			user << "<span class='notice'>You pin the [O] to the noticeboard.</span>"
+			to_chat(user, "<span class='notice'>You pin the [O] to the noticeboard.</span>")
 		else
-			user << "<span class='notice'>The notice board is full</span>"
+			to_chat(user, "<span class='notice'>The notice board is full</span>")
 	else
 		return ..()
 
@@ -74,7 +73,7 @@
 				add_fingerprint(usr)
 				P.attackby(I, usr)
 			else
-				usr << "<span class='notice'>You'll need something to write with!</span>"
+				to_chat(usr, "<span class='notice'>You'll need something to write with!</span>")
 
 	if(href_list["read"])
 		var/obj/item/I = locate(href_list["read"]) in contents
@@ -91,39 +90,39 @@
 /obj/structure/noticeboard/captain
 	name = "Captain's Notice Board"
 	desc = "Important notices from the Captain."
-	req_access = list(access_captain)
+	req_access = list(GLOB.access_captain)
 
 /obj/structure/noticeboard/hop
 	name = "Head of Personnel's Notice Board"
 	desc = "Important notices from the Head of Personnel."
-	req_access = list(access_hop)
+	req_access = list(GLOB.access_hop)
 
 /obj/structure/noticeboard/ce
 	name = "Chief Engineer's Notice Board"
 	desc = "Important notices from the Chief Engineer."
-	req_access = list(access_ce)
+	req_access = list(GLOB.access_ce)
 
 /obj/structure/noticeboard/hos
 	name = "Head of Security's Notice Board"
 	desc = "Important notices from the Head of Security."
-	req_access = list(access_hos)
+	req_access = list(GLOB.access_hos)
 
 /obj/structure/noticeboard/cmo
 	name = "Chief Medical Officer's Notice Board"
 	desc = "Important notices from the Chief Medical Officer."
-	req_access = list(access_cmo)
+	req_access = list(GLOB.access_cmo)
 
 /obj/structure/noticeboard/rd
 	name = "Research Director's Notice Board"
 	desc = "Important notices from the Research Director."
-	req_access = list(access_rd)
+	req_access = list(GLOB.access_rd)
 
 /obj/structure/noticeboard/qm
 	name = "Quartermaster's Notice Board"
 	desc = "Important notices from the Quartermaster."
-	req_access = list(access_qm)
+	req_access = list(GLOB.access_qm)
 
 /obj/structure/noticeboard/staff
 	name = "Staff Notice Board"
 	desc = "Important notices from the heads of staff."
-	req_access = list(access_heads)
+	req_access = list(GLOB.access_heads)

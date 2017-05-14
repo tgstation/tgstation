@@ -29,7 +29,7 @@
 
 /obj/item/device/instrument/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 	interact(user)
 

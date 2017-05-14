@@ -1,4 +1,4 @@
-var/list/announcement_systems = list()
+GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system
 	density = 1
@@ -27,7 +27,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/New()
 	..()
-	announcement_systems += src
+	GLOB.announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)
 
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/announcement_system(null)
@@ -53,22 +53,16 @@ var/list/announcement_systems = list()
 	cut_overlays()
 	if(arrivalToggle)
 		add_overlay(greenlight)
-	else
-		overlays -= greenlight
 
 	if(newheadToggle)
 		add_overlay(pinklight)
-	else
-		overlays -= pinklight
 
 	if(stat & BROKEN)
 		add_overlay(errorlight)
-	else
-		overlays -= errorlight
 
 /obj/machinery/announcement_system/Destroy()
-	qdel(radio)
-	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
+	QDEL_NULL(radio)
+	GLOB.announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 
 /obj/machinery/announcement_system/power_change()
@@ -79,12 +73,12 @@ var/list/announcement_systems = list()
 	if(istype(P, /obj/item/weapon/screwdriver))
 		playsound(src.loc, P.usesound, 50, 1)
 		panel_open = !panel_open
-		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
+		to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
 		update_icon()
 	else if(default_deconstruction_crowbar(P))
 		return
 	else if(istype(P, /obj/item/device/multitool) && panel_open && (stat & BROKEN))
-		user << "<span class='notice'>You reset [src]'s firmware.</span>"
+		to_chat(user, "<span class='notice'>You reset [src]'s firmware.</span>")
 		stat &= ~BROKEN
 		update_icon()
 	else
@@ -103,15 +97,16 @@ var/list/announcement_systems = list()
 
 	if(message_type == "ARRIVAL" && arrivalToggle)
 		message = CompileText(arrival, user, rank)
-
 	else if(message_type == "NEWHEAD" && newheadToggle)
 		message = CompileText(newhead, user, rank)
+	else if(message_type == "ARRIVALS_BROKEN")
+		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
 	if(channels.len == 0)
-		radio.talk_into(src, message, null, list(SPAN_ROBOT))
+		radio.talk_into(src, message, null, list(SPAN_ROBOT), get_default_language())
 	else
 		for(var/channel in channels)
-			radio.talk_into(src, message, channel, list(SPAN_ROBOT))
+			radio.talk_into(src, message, channel, list(SPAN_ROBOT), get_default_language())
 
 //config stuff
 
@@ -137,13 +132,13 @@ var/list/announcement_systems = list()
 
 	if(href_list["ArrivalTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival)
-		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
 			return
 		if(NewMessage)
 			arrival = NewMessage
 	else if(href_list["NewheadTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
-		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
 			return
 		if(NewMessage)
 			newhead = NewMessage
@@ -158,11 +153,14 @@ var/list/announcement_systems = list()
 	add_fingerprint(usr)
 	interact(usr)
 
-/obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
-	if(!isAI(user))
+/obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
+	. = attack_ai(user)
+
+/obj/machinery/announcement_system/attack_ai(mob/user)
+	if(!issilicon(user) && !IsAdminGhost(user))
 		return
 	if(stat & BROKEN)
-		user << "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>"
+		to_chat(user, "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")
 		return
 	interact(user)
 

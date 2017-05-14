@@ -83,11 +83,11 @@
 /obj/item/weapon/gun/examine(mob/user)
 	..()
 	if(pin)
-		user << "It has [pin] installed."
+		to_chat(user, "It has [pin] installed.")
 	else
-		user << "It doesn't have a firing pin installed, and won't fire."
+		to_chat(user, "It doesn't have a firing pin installed, and won't fire.")
 	if(unique_reskin && !current_skin)
-		user << "<span class='notice'>Alt-click it to reskin it.</span>"
+		to_chat(user, "<span class='notice'>Alt-click it to reskin it.</span>")
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/weapon/gun/proc/process_chamber()
@@ -101,7 +101,7 @@
 
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	user << "<span class='danger'>*click*</span>"
+	to_chat(user, "<span class='danger'>*click*</span>")
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 
 
@@ -154,14 +154,14 @@
 	if(clumsy_check)
 		if(istype(user))
 			if (user.disabilities & CLUMSY && prob(40))
-				user << "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>"
+				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
 				var/shot_leg = pick("l_leg", "r_leg")
 				process_fire(user,user,0,params, zone_override = shot_leg)
 				user.drop_item()
 				return
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
-		user << "<span class='userdanger'>You need both hands free to fire [src]!</span>"
+		to_chat(user, "<span class='userdanger'>You need both hands free to fire [src]!</span>")
 		return
 
 	//DUAL (or more!) WIELDING
@@ -175,8 +175,7 @@
 			else if(G.can_trigger_gun(user))
 				bonus_spread += 24 * G.weapon_weight
 				loop_counter++
-				spawn(loop_counter)
-					G.process_fire(target,user,1,params, null, bonus_spread)
+				addtimer(CALLBACK(G, /obj/item/weapon/gun.proc/process_fire, target, user, 1, params, null, bonus_spread), loop_counter)
 
 	process_fire(target,user,1,params, null, bonus_spread)
 
@@ -197,7 +196,7 @@
 			pin.auth_fail(user)
 			return 0
 	else
-		user << "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
+		to_chat(user, "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>")
 	return 0
 
 /obj/item/weapon/gun/proc/recharge_newshot()
@@ -266,7 +265,8 @@
 
 	if(user)
 		user.update_inv_hands()
-	feedback_add_details("gun_fired","[src.type]")
+	SSblackbox.add_details("gun_fired","[src.type]")
+	return 1
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == INTENT_HARM) //Flogging
@@ -279,13 +279,12 @@
 		if(istype(I, /obj/item/device/flashlight/seclite))
 			var/obj/item/device/flashlight/seclite/S = I
 			if(!gun_light)
-				if(!user.unEquip(I))
+				if(!user.transferItemToLoc(I, src))
 					return
-				user << "<span class='notice'>You click [S] into place on [src].</span>"
+				to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 				if(S.on)
-					SetLuminosity(0)
+					set_light(0)
 				gun_light = S
-				I.loc = src
 				update_icon()
 				update_gunlight(user)
 				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
@@ -296,7 +295,7 @@
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(gun_light)
 				for(var/obj/item/device/flashlight/seclite/S in src)
-					user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+					to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
 					gun_light = null
 					S.forceMove(get_turf(user))
 					update_gunlight(user)
@@ -320,7 +319,7 @@
 
 	var/mob/living/carbon/human/user = usr
 	gun_light.on = !gun_light.on
-	user << "<span class='notice'>You toggle the gunlight [gun_light.on ? "on":"off"].</span>"
+	to_chat(user, "<span class='notice'>You toggle the gunlight [gun_light.on ? "on":"off"].</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_gunlight(user)
@@ -329,21 +328,12 @@
 /obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
 	if(gun_light)
 		if(gun_light.on)
-			if(loc == user)
-				user.AddLuminosity(gun_light.brightness_on)
-			else if(isturf(loc))
-				SetLuminosity(gun_light.brightness_on)
+			set_light(gun_light.brightness_on)
 		else
-			if(loc == user)
-				user.AddLuminosity(-gun_light.brightness_on)
-			else if(isturf(loc))
-				SetLuminosity(0)
+			set_light(0)
 		update_icon()
 	else
-		if(loc == user)
-			user.AddLuminosity(-5)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -351,19 +341,11 @@
 
 /obj/item/weapon/gun/pickup(mob/user)
 	..()
-	if(gun_light)
-		if(gun_light.on)
-			user.AddLuminosity(gun_light.brightness_on)
-			SetLuminosity(0)
 	if(azoom)
 		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
 	..()
-	if(gun_light)
-		if(gun_light.on)
-			user.AddLuminosity(-gun_light.brightness_on)
-			SetLuminosity(gun_light.brightness_on)
 	zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)
@@ -372,7 +354,7 @@
 /obj/item/weapon/gun/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(unique_reskin && !current_skin && loc == user)
 		reskin_gun(user)
@@ -385,7 +367,7 @@
 		if(options[choice] == null)
 			return
 		current_skin = options[choice]
-		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
+		to_chat(M, "Your gun is now skinned as [choice]. Say hello to your new friend.")
 		update_icon()
 
 
@@ -493,4 +475,3 @@
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
-

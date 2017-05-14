@@ -23,7 +23,7 @@
 	player_mind.active = 1
 
 	var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/L in landmarks_list)
+	for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
 			switch(L.name)
 				if("carpspawn")
@@ -39,9 +39,9 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Slaughter Demon"
 	player_mind.special_role = "Slaughter Demon"
-	ticker.mode.traitors |= player_mind
-	S << S.playstyle_string
-	S << "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>"
+	SSticker.mode.traitors |= player_mind
+	to_chat(S, S.playstyle_string)
+	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>")
 	S << 'sound/magic/demon_dies.ogg'
 	message_admins("[key_name_admin(S)] has been made into a slaughter demon by an event.")
 	log_game("[key_name(S)] was spawned as a slaughter demon by an event.")

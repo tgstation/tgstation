@@ -6,7 +6,7 @@
 
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
+			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
 			return
 		if(client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -21,14 +21,14 @@
 			return say_dead(message)
 
 		var/mob/living/simple_animal/borer/B = loc
-		src << "<i><span class='alien'>You whisper silently, \"[message]\"</span></i>"
-		B.victim << "<i><span class='alien'>The captive mind of [src] whispers, \"[message]\"</span></i>"
+		to_chat(src, "<i><span class='alien'>You whisper silently, \"[message]\"</span></i>")
+		to_chat(B.victim, "<i><span class='alien'>The captive mind of [src] whispers, \"[message]\"</span></i>")
 
-		for (var/mob/M in player_list)
+		for (var/mob/M in GLOB.player_list)
 			if(isnewplayer(M))
 				continue
 			else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
-				M << "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [message]</i>"
+				to_chat(M, "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [message]</i>")
 
 /mob/living/captive_brain/emote(var/message)
 	return
@@ -37,8 +37,8 @@
 
 	var/mob/living/simple_animal/borer/B = loc
 
-	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 40 seconds).</span>"
-	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
+	to_chat(src, "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 40 seconds).</span>")
+	to_chat(B.victim, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
 
 	var/delay = rand(150,250) + B.victim.brainloss
 	addtimer(CALLBACK(src, .proc/return_control, src.loc), delay)
@@ -48,12 +48,12 @@
         return
 
     B.victim.adjustBrainLoss(rand(5,10))
-    src << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
-    B.victim << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
+    to_chat(src, "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>")
+    to_chat(B.victim, "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>")
     B.detatch()
 
-var/list/mob/living/simple_animal/borer/borers = list()
-var/total_borer_hosts_needed = 10
+GLOBAL_LIST_EMPTY(borers)
+GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 /mob/living/simple_animal/borer
 	name = "cortical borer"
@@ -110,8 +110,8 @@ var/total_borer_hosts_needed = 10
 	var/datum/action/innate/borer/punish_victim/punish_victim_action = new
 	var/datum/action/innate/borer/jumpstart_host/jumpstart_host_action = new
 
-/mob/living/simple_animal/borer/New(atom/newloc, var/gen=1)
-	..(newloc)
+/mob/living/simple_animal/borer/Initialize(mapload, gen=1)
+	..()
 	generation = gen
 	notify_ghosts("A cortical borer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	real_name = "Cortical Borer [rand(1000,9999)]"
@@ -129,9 +129,31 @@ var/total_borer_hosts_needed = 10
 	borer_chems += /datum/borer_chem/ethanol
 	borer_chems += /datum/borer_chem/rezadone
 
-	borers += src
+	GLOB.borers += src
 
 	GrantBorerActions()
+
+/mob/living/simple_animal/borer/Destroy()
+	GLOB.borers -= src
+
+	host_brain = null
+	victim = null
+	
+	QDEL_NULL(talk_to_host_action)
+	QDEL_NULL(infest_host_action)
+	QDEL_NULL(toggle_hide_action)
+	QDEL_NULL(talk_to_borer_action)
+	QDEL_NULL(talk_to_brain_action)
+	QDEL_NULL(take_control_action)
+	QDEL_NULL(give_back_control_action)
+	QDEL_NULL(leave_body_action)
+	QDEL_NULL(make_chems_action)
+	QDEL_NULL(make_larvae_action)
+	QDEL_NULL(freeze_victim_action)
+	QDEL_NULL(punish_victim_action)
+	QDEL_NULL(jumpstart_host_action)
+	
+	return ..()
 
 /mob/living/simple_animal/borer/Topic(href, href_list)//not entirely sure if this is even required
 	if(href_list["ghostjoin"])
@@ -147,7 +169,7 @@ var/total_borer_hosts_needed = 10
 	if(stat != CONSCIOUS)
 		return
 	var/be_borer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_borer == "No" || !src || qdeleted(src))
+	if(be_borer == "No" || !src || QDELETED(src))
 		return
 	if(key)
 		return
@@ -167,28 +189,28 @@ var/total_borer_hosts_needed = 10
 	set desc = "Send a silent message to your host."
 
 	if(!victim)
-		src << "You do not have a host to communicate with!"
+		to_chat(src, "You do not have a host to communicate with!")
 		return
 
 	if(stat)
-		src << "You cannot do that in your current state."
+		to_chat(src, "You cannot do that in your current state.")
 		return
 
 	var/input = stripped_input(src, "Please enter a message to tell your host.", "Borer", null)
 	if(!input)
 		return
 
-	if(src && !qdeleted(src) && !qdeleted(victim))
+	if(src && !QDELETED(src) && !QDELETED(victim))
 		var/say_string = (docile) ? "slurs" :"states"
 		if(victim)
-			victim << "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>"
+			to_chat(victim, "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>")
 			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [input]")
-			for(var/M in dead_mob_list)
+			for(var/M in GLOB.dead_mob_list)
 				if(isobserver(M))
 					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[truename]</b> : [input]</i>"
 					var/link = FOLLOW_LINK(M, src)
-					M << "[link] [rendered]"
-		src << "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>"
+					to_chat(M, "[link] [rendered]")
+		to_chat(src, "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>")
 		victim.verbs += /mob/living/proc/borer_comm
 		talk_to_borer_action.Grant(victim)
 
@@ -206,15 +228,15 @@ var/total_borer_hosts_needed = 10
 	if(!input)
 		return
 
-	B << "<span class='changeling'><i>[src] says:</i> [input]</span>"
+	to_chat(B, "<span class='changeling'><i>[src] says:</i> [input]</span>")
 	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [input]")
 
-	for(var/M in dead_mob_list)
+	for(var/M in GLOB.dead_mob_list)
 		if(isobserver(M))
 			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src]</b> : [input]</i>"
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
-	src << "<span class='changeling'><i>[src] says:</i> [input]</span>"
+			to_chat(M, "[link] [rendered]")
+	to_chat(src, "<span class='changeling'><i>[src] says:</i> [input]</span>")
 
 /mob/living/proc/trapped_mind_comm()
 	set name = "Converse with Trapped Mind"
@@ -230,15 +252,15 @@ var/total_borer_hosts_needed = 10
 	if(!input)
 		return
 
-	CB << "<span class='changeling'><i>[B.truename] says:</i> [input]</span>"
+	to_chat(CB, "<span class='changeling'><i>[B.truename] says:</i> [input]</span>")
 	log_say("Borer Communication: [key_name(B)] -> [key_name(CB)] : [input]")
 
-	for(var/M in dead_mob_list)
+	for(var/M in GLOB.dead_mob_list)
 		if(isobserver(M))
 			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[B]</b> : [input]</i>"
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
-	src << "<span class='changeling'><i>[B.truename] says:</i> [input]</span>"
+			to_chat(M, "[link] [rendered]")
+	to_chat(src, "<span class='changeling'><i>[B.truename] says:</i> [input]</span>")
 
 /mob/living/simple_animal/borer/Life()
 
@@ -258,9 +280,9 @@ var/total_borer_hosts_needed = 10
 			if(victim.reagents.has_reagent("sugar"))
 				if(!docile || waketimerid)
 					if(controlling)
-						victim << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
+						to_chat(victim, "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 					else
-						src << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
+						to_chat(src, "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 					if(waketimerid)
 						deltimer(waketimerid)
 						waketimerid = null
@@ -268,15 +290,15 @@ var/total_borer_hosts_needed = 10
 			else
 				if(docile && !waketimerid)
 					if(controlling)
-						victim << "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>"
+						to_chat(victim, "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>")
 					else
-						src << "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>"
+						to_chat(src, "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>")
 
 					waketimerid = addtimer(CALLBACK(src, "wakeup"), 10, TIMER_STOPPABLE)
 			if(controlling)
 
 				if(docile)
-					victim << "<span class='warning'>You are feeling far too docile to continue controlling your host...</span>"
+					to_chat(victim, "<span class='warning'>You are feeling far too docile to continue controlling your host...</span>")
 					victim.release_control()
 					return
 
@@ -288,9 +310,9 @@ var/total_borer_hosts_needed = 10
 
 /mob/living/simple_animal/borer/proc/wakeup()
 	if(controlling)
-		victim << "<span class='warning'>You finish shaking off your lethargy.</span>"
+		to_chat(victim, "<span class='warning'>You finish shaking off your lethargy.</span>")
 	else
-		src << "<span class='warning'>You finish shaking off your lethargy.</span>"
+		to_chat(src, "<span class='warning'>You finish shaking off your lethargy.</span>")
 	docile = FALSE
 	if(waketimerid)
 		waketimerid = null
@@ -298,21 +320,21 @@ var/total_borer_hosts_needed = 10
 /mob/living/simple_animal/borer/say(message)
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
-		for(var/borer in borers)
-			borer << "<span class='borer'>Cortical Link: [truename] sings, \"[message]\""
-		for(var/mob/dead in dead_mob_list)
-			dead << "<span class='borer'>Cortical Link: [truename] sings, \"[message]\""
+		for(var/borer in GLOB.borers)
+			to_chat(borer, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
+		for(var/mob/D in GLOB.dead_mob_list)
+			to_chat(D, "<span class='borer'>Cortical Link: [truename] sings, \"[message]\"")
 		return
 	if(!victim)
-		src << "<span class='warning'>You cannot speak without a host!</span>"
+		to_chat(src, "<span class='warning'>You cannot speak without a host!</span>")
 		return
 	if(message == "")
 		return
 
-/mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
-	healthscan(usr, M)
-	chemscan(usr, M)
-	return
+/mob/living/simple_animal/borer/UnarmedAttack(atom/A)
+	if(isliving(A))
+		healthscan(usr, A)
+		chemscan(usr, A)
 
 /mob/living/simple_animal/borer/ex_act()
 	if(victim)
@@ -326,7 +348,7 @@ var/total_borer_hosts_needed = 10
 	set desc = "Infest a suitable humanoid host."
 
 	if(victim)
-		src << "<span class='warning'>You are already within a host.</span>"
+		to_chat(src, "<span class='warning'>You are already within a host.</span>")
 
 	if(stat == DEAD)
 		return
@@ -336,7 +358,9 @@ var/total_borer_hosts_needed = 10
 		if(H!=src && Adjacent(H))
 			choices += H
 
-	var/mob/living/carbon/H = input(src,"Who do you wish to infest?") in null|choices
+	if(!choices.len)
+		return
+	var/mob/living/carbon/H = choices.len > 1 ? input(src,"Who do you wish to infest?") in null|choices : choices[1]
 	if(!H || !src)
 		return
 
@@ -344,16 +368,16 @@ var/total_borer_hosts_needed = 10
 		return FALSE
 
 	if(stat != CONSCIOUS)
-		src << "<span class='warning'>You cannot do that in your current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot do that in your current state.</span>")
 		return FALSE
 
 	if(H.has_brain_worms())
-		src << "<span class='warning'>[victim] is already infested!</span>"
+		to_chat(src, "<span class='warning'>[victim] is already infested!</span>")
 		return
 
-	src << "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>"
+	to_chat(src, "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>")
 	if(!do_mob(src, H, 30))
-		src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
+		to_chat(src, "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>")
 		return
 
 	if(!H || !src)
@@ -367,15 +391,15 @@ var/total_borer_hosts_needed = 10
 		return
 
 	if(C.has_brain_worms())
-		src << "<span class='warning'>[C] is already infested!</span>"
+		to_chat(src, "<span class='warning'>[C] is already infested!</span>")
 		return
 
 	if(!C.key || !C.mind)
-		src << "<span class='warning'>[C]'s mind seems unresponsive. Try someone else!</span>"
+		to_chat(src, "<span class='warning'>[C]'s mind seems unresponsive. Try someone else!</span>")
 		return
 
 	if(C && C.dna && istype(C.dna.species, /datum/species/skeleton))
-		src << "<span class='warning'>[C] does not possess the vital systems needed to support us.</span>"
+		to_chat(src, "<span class='warning'>[C] does not possess the vital systems needed to support us.</span>")
 		return
 
 	victim = C
@@ -392,14 +416,14 @@ var/total_borer_hosts_needed = 10
 	set desc = "Push some chemicals into your host's bloodstream."
 
 	if(!victim)
-		src << "<span class='warning'>You are not inside a host body.</span>"
+		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
 
 	if(stat != CONSCIOUS)
-		src << "<span class='warning'>You cannot secrete chemicals in your current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot secrete chemicals in your current state.</span>")
 
 	if(docile)
-		src << "<span class='warning'>You are feeling far too docile to do that.</span>"
+		to_chat(src, "<span class='warning'>You are feeling far too docile to do that.</span>")
 		return
 
 	var content = ""
@@ -427,7 +451,7 @@ var/total_borer_hosts_needed = 10
 	set desc = "Become invisible to the common eye."
 
 	if(victim)
-		src << "<span class='warning'>You cannot do this while you're inside a host.</span>"
+		to_chat(src, "<span class='warning'>You cannot do this while you're inside a host.</span>")
 
 	if(stat != CONSCIOUS)
 		return
@@ -449,38 +473,40 @@ var/total_borer_hosts_needed = 10
 	set desc = "Freeze the limbs of a potential host with supernatural fear."
 
 	if(world.time - used_dominate < 150)
-		src << "<span class='warning'>You cannot use that ability again so soon.</span>"
+		to_chat(src, "<span class='warning'>You cannot use that ability again so soon.</span>")
 		return
 
 	if(victim)
-		src << "<span class='warning'>You cannot do that from within a host body.</span>"
+		to_chat(src, "<span class='warning'>You cannot do that from within a host body.</span>")
 		return
 
 	if(stat != CONSCIOUS)
-		src << "<span class='warning'>You cannot do that in your current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot do that in your current state.</span>")
 		return
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
 			choices += C
+			
+	if(!choices.len)
+		return
+	var/mob/living/carbon/M = choices.len > 1 ? input(src,"Who do you wish to dominate?") in null|choices : choices[1]
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
 
-
-	if(!M || !src)
+	if(!M || !src || stat != CONSCIOUS || victim || (world.time - used_dominate < 150))
 		return
 	if(!Adjacent(M))
 		return
 
 	if(M.has_brain_worms())
-		src << "<span class='warning'>You cannot paralyze someone who is already infested!</span>"
+		to_chat(src, "<span class='warning'>You cannot paralyze someone who is already infested!</span>")
 		return
 
 	layer = MOB_LAYER
 
-	src << "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>"
-	M << "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>"
+	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
+	to_chat(M, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
 	M.Stun(3)
 
 	used_dominate = world.time
@@ -491,28 +517,28 @@ var/total_borer_hosts_needed = 10
 	set desc = "Slither out of your host."
 
 	if(!victim)
-		src << "<span class='userdanger'>You are not inside a host body.</span>"
+		to_chat(src, "<span class='userdanger'>You are not inside a host body.</span>")
 		return
 
 	if(stat != CONSCIOUS)
-		src << "<span class='userdanger'>You cannot leave your host in your current state.</span>"
+		to_chat(src, "<span class='userdanger'>You cannot leave your host in your current state.</span>")
 
 	if(leaving)
 		leaving = FALSE
-		src << "<span class='userdanger'>You decide against leaving your host.</span>"
+		to_chat(src, "<span class='userdanger'>You decide against leaving your host.</span>")
 		return
 
-	src << "<span class='userdanger'>You begin disconnecting from [victim]'s synapses and prodding at their internal ear canal.</span>"
+	to_chat(src, "<span class='userdanger'>You begin disconnecting from [victim]'s synapses and prodding at their internal ear canal.</span>")
 
 	if(victim.stat != DEAD)
-		victim << "<span class='userdanger'>An odd, uncomfortable pressure begins to build inside your skull, behind your ear...</span>"
+		to_chat(victim, "<span class='userdanger'>An odd, uncomfortable pressure begins to build inside your skull, behind your ear...</span>")
 
 	leaving = TRUE
 
 	addtimer(CALLBACK(src, .proc/release_host), 100)
 
 /mob/living/simple_animal/borer/proc/release_host()
-	if(!victim || !src || qdeleted(victim) || qdeleted(src))
+	if(!victim || !src || QDELETED(victim) || QDELETED(src))
 		return
 	if(!leaving)
 		return
@@ -520,13 +546,13 @@ var/total_borer_hosts_needed = 10
 		return
 
 	if(stat != CONSCIOUS)
-		src << "<span class='userdanger'>You cannot release your host in your current state.</span>"
+		to_chat(src, "<span class='userdanger'>You cannot release your host in your current state.</span>")
 		return
 
-	src << "<span class='userdanger'>You wiggle out of [victim]'s ear and plop to the ground.</span>"
+	to_chat(src, "<span class='userdanger'>You wiggle out of [victim]'s ear and plop to the ground.</span>")
 	if(victim.mind)
-		victim << "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>"
-		victim << "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>"
+		to_chat(victim, "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>")
+		to_chat(victim, "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>")
 
 	leaving = FALSE
 
@@ -562,19 +588,19 @@ var/total_borer_hosts_needed = 10
 	set desc = "Bring your host back to life."
 
 	if(!victim)
-		src << "<span class='warning'>You need a host to be able to use this.</span>"
+		to_chat(src, "<span class='warning'>You need a host to be able to use this.</span>")
 		return
 
 	if(docile)
-		src << "<span class='warning'>You are feeling too docile to use this!</span>"
+		to_chat(src, "<span class='warning'>You are feeling too docile to use this!</span>")
 		return
 
 	if(victim.stat != DEAD)
-		src << "<span class='warning'>Your host is already alive!</span>"
+		to_chat(src, "<span class='warning'>Your host is already alive!</span>")
 		return
 
 	if(chemicals < 250)
-		src << "<span class='warning'>You need 250 chemicals to use this!</span>"
+		to_chat(src, "<span class='warning'>You need 250 chemicals to use this!</span>")
 		return
 
 	if(victim.stat == DEAD)
@@ -595,9 +621,9 @@ var/total_borer_hosts_needed = 10
 		victim.revive()
 		log_game("[src]/([src.ckey]) has revived [victim]/([victim.ckey]")
 		chemicals -= 250
-		src << "<span class='notice'>You send a jolt of energy to your host, reviving them!</span>"
+		to_chat(src, "<span class='notice'>You send a jolt of energy to your host, reviving them!</span>")
 		victim.grab_ghost(force = TRUE) //brings the host back, no eggscape
-		victim <<"<span class='notice'>You bolt upright, gasping for breath!</span>"
+		to_chat(victim, "<span class='notice'>You bolt upright, gasping for breath!</span>")
 
 /mob/living/simple_animal/borer/verb/bond_brain()
 	set category = "Borer"
@@ -605,29 +631,29 @@ var/total_borer_hosts_needed = 10
 	set desc = "Fully connect to the brain of your host."
 
 	if(!victim)
-		src << "<span class='warning'>You are not inside a host body.</span>"
+		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
 
 	if(stat != CONSCIOUS)
-		src << "You cannot do that in your current state."
+		to_chat(src, "You cannot do that in your current state.")
 		return
 
 	if(docile)
-		src << "<span class='warning'>You are feeling far too docile to do that.</span>"
+		to_chat(src, "<span class='warning'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(victim.stat == DEAD)
-		src << "<span class='warning'>This host lacks enough brain function to control.</span>"
+		to_chat(src, "<span class='warning'>This host lacks enough brain function to control.</span>")
 		return
 
 	if(bonding)
 		bonding = FALSE
-		src << "<span class='userdanger'>You stop attempting to take control of your host.</span>"
+		to_chat(src, "<span class='userdanger'>You stop attempting to take control of your host.</span>")
 		return
 
-	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
+	to_chat(src, "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>")
 
-	if(qdeleted(src) || qdeleted(victim))
+	if(QDELETED(src) || QDELETED(victim))
 		return
 
 	bonding = TRUE
@@ -641,17 +667,17 @@ var/total_borer_hosts_needed = 10
 	if(!bonding)
 		return
 	if(docile)
-		src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
+		to_chat(src, "<span class='warning'>You are feeling far too docile to do that.</span>")
 		return
 	if(is_servant_of_ratvar(victim) || iscultist(victim) || victim.isloyal())
-		src << "<span class='warning'>[victim]'s mind seems to be blocked by some unknown force!</span>"
+		to_chat(src, "<span class='warning'>[victim]'s mind seems to be blocked by some unknown force!</span>")
 		return
 
 	else
 
 		log_game("[src]/([src.ckey]) assumed control of [victim]/([victim.ckey] with borer powers.")
-		src << "<span class='warning'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>"
-		victim << "<span class='userdanger'>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</span>"
+		to_chat(src, "<span class='warning'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>")
+		to_chat(victim, "<span class='userdanger'>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</span>")
 
 		// host -> brain
 		var/h2b_id = victim.computer_id
@@ -675,7 +701,7 @@ var/total_borer_hosts_needed = 10
 		if(!host_brain.lastKnownIP)
 			host_brain.lastKnownIP = h2b_ip
 
-		host_brain << "You are trapped in your own mind. You feel that there must be a way to resist!"
+		to_chat(host_brain, "You are trapped in your own mind. You feel that there must be a way to resist!")
 
 		// self -> host
 		var/s2h_id = src.computer_id
@@ -710,19 +736,19 @@ var/total_borer_hosts_needed = 10
 	set desc = "Punish your victim."
 
 	if(!victim)
-		src << "<span class='warning'>You are not inside a host body.</span>"
+		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
 
 	if(stat != CONSCIOUS)
-		src << "You cannot do that in your current state."
+		to_chat(src, "You cannot do that in your current state.")
 		return
 
 	if(docile)
-		src << "<span class='warning'>You are feeling far too docile to do that.</span>"
+		to_chat(src, "<span class='warning'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(chemicals < 75)
-		src << "<span class='warning'>You need 75 chems to punish your host.</span>"
+		to_chat(src, "<span class='warning'>You need 75 chems to punish your host.</span>")
 		return
 
 	var/punishment = input("Select a punishment:.", "Punish") as null|anything in list("Blindness","Deafness","Stun")
@@ -731,14 +757,14 @@ var/total_borer_hosts_needed = 10
 		return
 
 	if(chemicals < 75)
-		src << "<span class='warning'>You need 75 chems to punish your host.</span>"
+		to_chat(src, "<span class='warning'>You need 75 chems to punish your host.</span>")
 		return
 
 	switch(punishment) //Hardcoding this stuff.
 		if("Blindness")
 			victim.blind_eyes(2)
 		if("Deafness")
-			victim.ear_deaf = 20
+			victim.minimumDeafTicks(20)
 		if("Stun")
 			victim.Weaken(10)
 
@@ -755,7 +781,7 @@ var/total_borer_hosts_needed = 10
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 	if(B && B.host_brain)
-		src << "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain]</span>"
+		to_chat(src, "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain]</span>")
 
 		B.detatch()
 
@@ -776,7 +802,7 @@ var/total_borer_hosts_needed = 10
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 
 	if(isbrain(src))
-		src << "<span class='usernotice'>You need a mouth to be able to do this.</span>"
+		to_chat(src, "<span class='usernotice'>You need a mouth to be able to do this.</span>")
 		return
 	if(!B)
 		return
@@ -790,7 +816,7 @@ var/total_borer_hosts_needed = 10
 		new /mob/living/simple_animal/borer(get_turf(src), B.generation + 1)
 		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
 	else
-		src << "<span class='warning'>You need 200 chemicals stored to reproduce.</span>"
+		to_chat(src, "<span class='warning'>You need 200 chemicals stored to reproduce.</span>")
 		return
 
 
@@ -798,7 +824,7 @@ var/total_borer_hosts_needed = 10
 	if(!candidate || !candidate.mob)
 		return
 
-	if(!qdeleted(candidate) || !qdeleted(candidate.mob))
+	if(!QDELETED(candidate) || !QDELETED(candidate.mob))
 		var/datum/mind/M = create_borer_mind(candidate.ckey)
 		M.transfer_to(src)
 
@@ -806,13 +832,13 @@ var/total_borer_hosts_needed = 10
 		ckey = candidate.ckey
 
 		if(mind)
-			mind.store_memory("You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle.")
+			mind.store_memory("You must escape with at least [GLOB.total_borer_hosts_needed] borers with hosts on the shuttle.")
 
-		src << "<span class='notice'>You are a cortical borer!</span>"
-		src << "You are a brain slug that worms its way into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, your host and your eventual spawn safe and warm."
-		src << "Sugar nullifies your abilities, avoid it at all costs!"
-		src << "You can speak to your fellow borers by prefixing your messages with ';'. Check out your Borer tab to see your abilities."
-		src << "You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle. To reproduce you must have 100 chemicals and be controlling a host."
+		to_chat(src, "<span class='notice'>You are a cortical borer!</span>")
+		to_chat(src, "You are a brain slug that worms its way into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, your host and your eventual spawn safe and warm.")
+		to_chat(src, "Sugar nullifies your abilities, avoid it at all costs!")
+		to_chat(src, "You can speak to your fellow borers by prefixing your messages with ';'. Check out your Borer tab to see your abilities.")
+		to_chat(src, "You must escape with at least [GLOB.total_borer_hosts_needed] borers with hosts on the shuttle. To reproduce you must have 100 chemicals and be controlling a host.")
 
 /mob/living/simple_animal/borer/proc/detatch()
 	if(!victim || !controlling)

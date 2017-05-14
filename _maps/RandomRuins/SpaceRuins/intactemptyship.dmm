@@ -1,21 +1,19 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
 /area/ruin/powered/authorship)
 "c" = (
-/turf/closed/wall/shuttle{
-	icon_state = "wall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/authorship)
 "d" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -23,11 +21,11 @@
 /area/ruin/powered/authorship)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (EAST)";
+	dir = 8;
 	icon_state = "propulsion";
-	dir = 4
+	tag = "icon-propulsion (EAST)"
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/authorship)
 "f" = (
 /obj/structure/window/reinforced{
@@ -43,10 +41,10 @@
 "g" = (
 /obj/structure/table/wood,
 /obj/item/clothing/under/shorts/black,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "h" = (
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "i" = (
 /obj/structure/table,
@@ -54,35 +52,35 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "j" = (
 /obj/structure/closet,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "k" = (
 /obj/machinery/vending/assist,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "l" = (
 /obj/structure/table/wood,
 /obj/item/clothing/shoes/sandal,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "m" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "n" = (
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "o" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "p" = (
 /obj/structure/window/reinforced/fulltile,
@@ -98,7 +96,7 @@
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "s" = (
 /obj/machinery/door/poddoor{
@@ -109,48 +107,48 @@
 	name = "Strange Ship Door Button";
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "t" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "u" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "v" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "w" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "x" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "y" = (
 /mob/living/simple_animal/bot/medbot,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "z" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/ruin/powered/authorship)
 "A" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 "B" = (
-/turf/open/space,
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -159,7 +157,7 @@
 "C" = (
 /obj/machinery/light,
 /obj/structure/bed,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/authorship)
 
 (1,1,1) = {"

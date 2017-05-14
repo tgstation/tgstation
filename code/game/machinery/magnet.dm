@@ -37,7 +37,7 @@
 
 	spawn(10)	// must wait for map loading to finish
 		if(SSradio)
-			SSradio.add_object(src, freq, RADIO_MAGNETS)
+			SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
 
 	spawn()
 		magnetic_process()
@@ -134,7 +134,7 @@
 				on = !on
 
 				if(on)
-					addtimer(CALLBACK(src, .proc/magnetic_process), 0)
+					INVOKE_ASYNC(src, .proc/magnetic_process)
 
 
 
@@ -233,14 +233,14 @@
 	..()
 
 	if(autolink)
-		for(var/obj/machinery/magnetic_module/M in machines)
+		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
 
 	spawn(45)	// must wait for map loading to finish
 		if(SSradio)
-			radio_connection = SSradio.add_object(src, frequency, RADIO_MAGNETS)
+			radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
 
 
 	if(path) // check for default path
@@ -255,7 +255,7 @@
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)
-		for(var/obj/machinery/magnetic_module/M in machines)
+		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
@@ -323,7 +323,7 @@
 
 		// Broadcast the signal
 
-		radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
+		radio_connection.post_signal(src, signal, filter = GLOB.RADIO_MAGNETS)
 
 		spawn(1)
 			updateUsrDialog() // pretty sure this increases responsiveness
@@ -390,7 +390,7 @@
 
 		// Broadcast the signal
 		spawn()
-			radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
+			radio_connection.post_signal(src, signal, filter = GLOB.RADIO_MAGNETS)
 
 		if(speed == 10)
 			sleep(1)

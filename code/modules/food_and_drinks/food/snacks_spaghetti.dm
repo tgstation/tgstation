@@ -7,6 +7,7 @@
 	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 	filling_color = "#F0E68C"
+	tastes = list("pasta" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 	name = "boiled spaghetti"
@@ -18,6 +19,7 @@
 	list_reagents = list("nutriment" = 2, "vitamin" = 1)
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
 	filling_color = "#F0E68C"
+	tastes = list("pasta" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 	name = "spaghetti"
@@ -29,6 +31,7 @@
 	bonus_reagents = list("nutriment" = 1, "tomatojuice" = 10, "vitamin" = 4)
 	list_reagents = list("nutriment" = 6, "tomatojuice" = 10, "vitamin" = 4)
 	filling_color = "#DC143C"
+	tastes = list("pasta" = 1, "tomato" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/copypasta
 	name = "copypasta"
@@ -40,6 +43,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 12, "tomatojuice" = 20, "vitamin" = 8)
 	filling_color = "#DC143C"
+	tastes = list("pasta" = 1, "tomato" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
 	name = "spaghetti and meatballs"
@@ -50,6 +54,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 8, "vitamin" = 4)
 	filling_color = "#F0E68C"
+	tastes = list("pasta" = 1, "tomato" = 1, "meat" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	name = "spesslaw"
@@ -60,6 +65,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
 	list_reagents = list("nutriment" = 8, "vitamin" = 6)
 	filling_color = "#F0E68C"
+	tastes = list("pasta" = 1, "tomato" = 1, "meat" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/chowmein
 	name = "chow mein"
@@ -69,6 +75,7 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 4)
 	list_reagents = list("nutriment" = 7, "vitamin" = 6)
+	tastes = list("noodle" = 1, "tomato" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/beefnoodle
 	name = "beef noodle"
@@ -76,4 +83,14 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "beefnoodle"
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 6)
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 6, "liquidgibs" = 3)
+	tastes = list("noodle" = 1, "meat" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/butternoodles
+	name = "butter noodles"
+	desc = "Noodles covered in savory butter. Simple and slippery, but delicious."
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+	icon_state = "butternoodles"
+	trash = /obj/item/trash/plate
+	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)
+	tastes = list("noodle" = 1, "butter" = 1)

@@ -35,4 +35,4 @@
 #define MONKEY_HUNT_FRUSTRATION_LIMIT 		8	// Chase after an enemy before giving up
 #define MONKEY_DISPOSE_FRUSTRATION_LIMIT 	16 	// Dispose of a body before giving up
 
-#define MONKEY_AGGRESSIVE_MVM_PROB			1	// If you mass edit monkies to be aggressive. there is a small chance of in-fighting
+#define MONKEY_AGGRESSIVE_MVM_PROB			0	// If you mass edit monkies to be aggressive. there is a small chance of in-fighting

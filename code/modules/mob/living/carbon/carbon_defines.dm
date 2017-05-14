@@ -1,6 +1,7 @@
 /mob/living/carbon
 	gender = MALE
 	pressure_resistance = 15
+	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	var/list/stomach_contents		= list()
 	var/list/internal_organs		= list()	//List of /obj/item/organ in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/internal_organs_slot	= list()	//Same as above, but stores "slot ID" - "organ" pairs for easy access.
@@ -44,3 +45,6 @@
 	//Gets filled up in create_bodyparts()
 
 	var/list/hand_bodyparts = list() //a collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
+	
+	var/icon_render_key = ""
+	var/static/list/limb_icon_cache = list()

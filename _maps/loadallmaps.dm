@@ -1,53 +1,20 @@
-#define TRAVIS_MASS_MAP_BUILD
-#define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
+#ifdef ALL_MAPS
+#include "map_files\debug\runtimestation.dmm"
+#include "map_files\Deltastation\DeltaStation2.dmm"
+#include "map_files\MetaStation\MetaStation.dmm"
+#include "map_files\OmegaStation\OmegaStation.dmm"
+#include "map_files\PubbyStation\PubbyStation.dmm"
+#include "map_files\TgStation\tgstation.2.1.3.dmm"
+#include "map_files\Cerestation\cerestation.dmm"
 
-#include "birdstation.dm"
-#ifdef MAP_OVERRIDE_FILES
-	#undef MAP_OVERRIDE_FILES
-#endif
+#include "map_files\generic\Centcomm.dmm"
+#include "map_files\generic\SpaceStation.dmm"
+#include "map_files\generic\Space.dmm"
+#include "map_files\generic\SpaceDock.dmm"
 
-#include "deltastation.dm"
-#ifdef MAP_OVERRIDE_FILES
-	#undef MAP_OVERRIDE_FILES
-#endif
-
-#include "metastation.dm"
-#ifdef MAP_OVERRIDE_FILES
-	#undef MAP_OVERRIDE_FILES
-#endif
-
-#include "omegastation.dm"
-#ifdef MAP_OVERRIDE_FILES
-	#undef MAP_OVERRIDE_FILES
-#endif
-
-#include "pubbystation.dm"
-#ifdef MAP_OVERRIDE_FILES
-	#undef MAP_OVERRIDE_FILES
-#endif
-
-#include "tgstation2.dm"
-#ifdef MAP_OVERRIDE_FILES
-	#undef MAP_OVERRIDE_FILES
-#endif
-
-#include "map_files\generic\z2.dmm"
-#include "map_files\generic\z3.dmm"
-#include "map_files\generic\z4.dmm"
-#include "map_files\generic\lavaland.dmm"
-#include "map_files\generic\z6.dmm"
-#include "map_files\generic\z7.dmm"
-#include "map_files\generic\z8.dmm"
-#include "map_files\generic\z9.dmm"
-#include "map_files\generic\z10.dmm"
-#include "map_files\generic\z11.dmm"
-
-#undef TRAVIS_MASS_MAP_BUILD
+#include "map_files\Mining\Lavaland.dmm"
 
 #ifdef TRAVISBUILDING
 #include "templates.dm"
 #endif
-
-#include "runtimestation.dm"
-
-#define BYOND_WHY_YOU_NO_ALLOW_INCLUDE_LAST_LINE //because byond fails to compile if the last thing in a file is an include.
+#endif

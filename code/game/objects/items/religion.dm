@@ -10,11 +10,11 @@
 /obj/item/weapon/banner/attack_self(mob/living/carbon/human/user)
 	if(moralecooldown + moralewait > world.time)
 		return
-	user << "<span class='notice'>You increase the morale of your fellows!</span>"
+	to_chat(user, "<span class='notice'>You increase the morale of your fellows!</span>")
 	moralecooldown = world.time
 
 	for(var/mob/living/carbon/human/H in range(4,get_turf(src)))
-		H << "<span class='notice'>Your morale is increased by [user]'s banner!</span>"
+		to_chat(H, "<span class='notice'>Your morale is increased by [user]'s banner!</span>")
 		H.adjustBruteLoss(-15)
 		H.adjustFireLoss(-15)
 		H.AdjustStunned(-2)

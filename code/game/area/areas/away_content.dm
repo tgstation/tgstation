@@ -21,16 +21,14 @@
 /area/awaymission/beach
 	name = "Beach"
 	icon_state = "away"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
 	has_gravity = 1
 	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')
 
 /area/awaymission/errorroom
 	name = "Super Secret Room"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
 
 
@@ -39,8 +37,7 @@
 /area/awaymission/research
 	name = "Research Outpost"
 	icon_state = "away"
-	luminosity = 0
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/research/interior
 	name = "Research Inside"
@@ -126,32 +123,32 @@
 
 /area/awaymission/centcomAway/general
 	name = "XCC-P5831"
-	music = "music/ambigen3.ogg"
+	music = 'sound/ambience/ambigen3.ogg'
 
 /area/awaymission/centcomAway/maint
 	name = "XCC-P5831 Maintenance"
 	icon_state = "away1"
-	music = "music/ambisin1.ogg"
+	music = 'sound/ambience/ambisin1.ogg'
 
 /area/awaymission/centcomAway/thunderdome
 	name = "XCC-P5831 Thunderdome"
 	icon_state = "away2"
-	music = "music/ambisin2.ogg"
+	music = 'sound/ambience/ambisin2.ogg'
 
 /area/awaymission/centcomAway/cafe
 	name = "XCC-P5831 Kitchen Arena"
 	icon_state = "away3"
-	music = "music/ambisin3.ogg"
+	music = 'sound/ambience/ambisin3.ogg'
 
 /area/awaymission/centcomAway/courtroom
 	name = "XCC-P5831 Courtroom"
 	icon_state = "away4"
-	music = "music/ambisin4.ogg"
+	music = 'sound/ambience/ambisin4.ogg'
 
 /area/awaymission/centcomAway/hangar
 	name = "XCC-P5831 Hangars"
 	icon_state = "away4"
-	music = "music/ambigen5.ogg"
+	music = 'sound/ambience/ambigen5.ogg'
 
 
 /*Cabin areas*/
@@ -159,15 +156,13 @@
 	name = "Snow Forest"
 	icon_state = "away"
 	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/cabin
 	name = "Cabin"
 	icon_state = "away2"
 	requires_power = 1
-	luminosity = 0
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/snowforest/lumbermill
 	name = "Lumbermill"
@@ -178,7 +173,6 @@
 /area/awaymission/BMPship
 	name = "BMP Asteroids"
 	icon_state = "away"
-	luminosity = 0
 
 
 /area/awaymission/BMPship/Aft
@@ -234,31 +228,26 @@
 /area/awaymission/wwmines
 	name = "Wild West Mines"
 	icon_state = "away1"
-	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwgov
 	name = "Wild West Mansion"
 	icon_state = "away2"
-	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwrefine
 	name = "Wild West Refinery"
 	icon_state = "away3"
-	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwvault
 	name = "Wild West Vault"
 	icon_state = "away3"
-	luminosity = 0
 
 /area/awaymission/wwvaultdoors
 	name = "Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
 	icon_state = "away2"
 	requires_power = 0
-	luminosity = 0
 
 
 /*
@@ -327,8 +316,7 @@
 	name = "Snowdin Tundra Plains"
 	icon_state = "away"
 	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/snowdin/post
 	name = "Snowdin Outpost"
@@ -341,7 +329,6 @@
 /area/awaymission/snowdin/cave
 	name = "Snowdin Caves"
 	icon_state = "away2"
-	luminosity = 0
 
 /area/awaymission/snowdin/base
 	name = "Snowdin Main Base"
@@ -351,7 +338,6 @@
 /area/awaymission/snowdin/dungeon1
 	name = "Snowdin Depths"
 	icon_state = "away2"
-	luminosity = 0
 
 /area/awaymission/snowdin/sekret
 	name = "Snowdin Operations"

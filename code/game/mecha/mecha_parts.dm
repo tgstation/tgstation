@@ -114,7 +114,7 @@
 
 /obj/item/mecha_parts/part/gygax_head
 	name = "\improper Gygax head"
-	desc = "A Gygax head. Houses advanced surveilance and targeting sensors."
+	desc = "A Gygax head. Houses advanced surveillance and targeting sensors."
 	icon_state = "gygax_head"
 	origin_tech = "programming=2;materials=4;magnets=3;engineering=3"
 
@@ -167,7 +167,7 @@
 
 /obj/item/mecha_parts/part/durand_head
 	name = "\improper Durand head"
-	desc = "A Durand head. Houses advanced surveilance and targeting sensors."
+	desc = "A Durand head. Houses advanced surveillance and targeting sensors."
 	icon_state = "durand_head"
 	origin_tech = "programming=2;materials=3;magnets=3;engineering=3"
 
@@ -243,12 +243,12 @@
 
 /obj/item/mecha_parts/part/honker_left_leg
 	name = "\improper H.O.N.K left leg"
-	desc = "A H.O.N.K left leg. The foot appears just large enough to fully accomodate a clown shoe."
+	desc = "A H.O.N.K left leg. The foot appears just large enough to fully accommodate a clown shoe."
 	icon_state = "honker_l_leg"
 
 /obj/item/mecha_parts/part/honker_right_leg
 	name = "\improper H.O.N.K right leg"
-	desc = "A H.O.N.K right leg. The foot appears just large enough to fully accomodate a clown shoe."
+	desc = "A H.O.N.K right leg. The foot appears just large enough to fully accommodate a clown shoe."
 	icon_state = "honker_r_leg"
 
 

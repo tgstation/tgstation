@@ -1,5 +1,3 @@
-
-
 /obj/machinery/implantchair
 	name = "mindshield implanter"
 	desc = "Used to implant occupants with mindshield implants."
@@ -29,7 +27,7 @@
 
 
 /obj/machinery/implantchair/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -44,8 +42,9 @@
 
 	data["occupant"] = list()
 	if(occupant)
-		data["occupant"]["name"] = occupant.name
-		data["occupant"]["stat"] = occupant.stat
+		var/mob/living/mob_occupant = occupant
+		data["occupant"]["name"] = mob_occupant.name
+		data["occupant"]["stat"] = mob_occupant.stat
 
 	data["special_name"] = special ? special_name : null
 	data["ready_implants"]  = ready_implants
@@ -119,14 +118,14 @@
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about about a minute.)</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about about a minute.)</span>")
 	audible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>",hearing_distance = 2)
 
 	if(do_after(user, 600, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
 		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
 /obj/machinery/implantchair/relaymove(mob/user)

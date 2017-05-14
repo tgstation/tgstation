@@ -24,14 +24,14 @@ Borg Hypospray
 	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "antitoxin", "epinephrine", "spaceacillin")
+	var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "antitoxin", "epinephrine", "spaceacillin", "salglu_solution")
 	var/accepts_reagent_upgrades = TRUE //If upgrades can increase number of reagents dispensed.
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
 
 
-/obj/item/weapon/reagent_containers/borghypo/New()
-	..()
+/obj/item/weapon/reagent_containers/borghypo/Initialize()
+	. = ..()
 
 	for(var/R in reagent_ids)
 		add_reagent(R)
@@ -86,18 +86,18 @@ Borg Hypospray
 /obj/item/weapon/reagent_containers/borghypo/attack(mob/living/carbon/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
-		user << "<span class='notice'>The injector is empty.</span>"
+		to_chat(user, "<span class='notice'>The injector is empty.</span>")
 		return
 	if(!istype(M))
 		return
 	if(R.total_volume && M.can_inject(user, 1, user.zone_selected,bypass_protection))
-		M << "<span class='warning'>You feel a tiny prick!</span>"
-		user << "<span class='notice'>You inject [M] with the injector.</span>"
+		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
+		to_chat(user, "<span class='notice'>You inject [M] with the injector.</span>")
 		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
 		R.reaction(M, INJECT, fraction)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
-			user << "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>"
+			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>")
 
 	var/list/injected = list()
 	for(var/datum/reagent/RG in R.reagent_list)
@@ -110,8 +110,8 @@ Borg Hypospray
 		return
 	mode = chosen_reagent
 	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
-	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
+	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent_ids[mode]]
+	to_chat(user, "<span class='notice'>[src] is now dispensing '[R.name]'.</span>")
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/examine(mob/user)
@@ -125,11 +125,11 @@ Borg Hypospray
 	for(var/datum/reagents/RS in reagent_list)
 		var/datum/reagent/R = locate() in RS.reagent_list
 		if(R)
-			usr << "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>"
+			to_chat(usr, "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>")
 			empty = 0
 
 	if(empty)
-		usr << "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>"
+		to_chat(usr, "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>")
 
 /obj/item/weapon/reagent_containers/borghypo/hacked
 	icon_state = "borghypo_s"
@@ -181,15 +181,15 @@ Borg Shaker
 	else if(target.is_open_container() && target.reagents)
 		var/datum/reagents/R = reagent_list[mode]
 		if(!R.total_volume)
-			user << "<span class='warning'>[src] is currently out of this ingredient! Please allow some time for the synthesizer to produce more.</span>"
+			to_chat(user, "<span class='warning'>[src] is currently out of this ingredient! Please allow some time for the synthesizer to produce more.</span>")
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='notice'>[target] is full.</span>"
+			to_chat(user, "<span class='notice'>[target] is full.</span>")
 			return
 
 		var/trans = R.trans_to(target, amount_per_transfer_from_this)
-		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
+		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/DescribeContents()
 	var/empty = 1
@@ -197,11 +197,11 @@ Borg Shaker
 	var/datum/reagents/RS = reagent_list[mode]
 	var/datum/reagent/R = locate() in RS.reagent_list
 	if(R)
-		usr << "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>"
+		to_chat(usr, "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>")
 		empty = 0
 
 	if(empty)
-		usr << "<span class='warning'>It is currently empty! Please allow some time for the synthesizer to produce more.</span>"
+		to_chat(usr, "<span class='warning'>It is currently empty! Please allow some time for the synthesizer to produce more.</span>")
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked
 	..()

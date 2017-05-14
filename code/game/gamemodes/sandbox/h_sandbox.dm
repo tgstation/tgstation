@@ -1,6 +1,6 @@
 
 
-var/hsboxspawn = 1
+GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /mob
 	var/datum/hSB/sandbox = null
@@ -28,7 +28,7 @@ var/hsboxspawn = 1
 	var/global/list/spawn_forbidden = list(
 		/obj/item/tk_grab, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly,/obj/item/device/onetankbomb, /obj/item/radio, /obj/item/device/pda/ai,
-		/obj/item/device/uplink, /obj/item/smallDelivery, /obj/item/missile,/obj/item/projectile,
+		/obj/item/device/uplink, /obj/item/smallDelivery, /obj/item/projectile,
 		/obj/item/borg/sight,/obj/item/borg/stun,/obj/item/weapon/robot_module)
 
 /datum/hSB/proc/update()
@@ -113,13 +113,13 @@ var/hsboxspawn = 1
 			//
 			if("hsbtobj")
 				if(!admin) return
-				if(hsboxspawn)
-					world << "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>"
-					hsboxspawn = 0
+				if(GLOB.hsboxspawn)
+					to_chat(world, "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>")
+					GLOB.hsboxspawn = FALSE
 					return
 				else
-					world << "<span class='boldnotice'>Sandbox:</span> <b>\black[usr.key] has enabled object spawning!</b>"
-					hsboxspawn = 1
+					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black[usr.key] has enabled object spawning!</b>")
+					GLOB.hsboxspawn = TRUE
 					return
 			//
 			// Admin: Toggle auto-close
@@ -127,10 +127,10 @@ var/hsboxspawn = 1
 			if("hsbtac")
 				if(!admin) return
 				if(config.sandbox_autoclose)
-					world << "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>"
+					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
 					config.sandbox_autoclose = 0
 				else
-					world << "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>"
+					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
 					config.sandbox_autoclose = 1
 				return
 			//
@@ -216,9 +216,9 @@ var/hsboxspawn = 1
 			// Spawn check due to grief potential (destroying floors, walls, etc)
 			//
 			if("hsbrcd")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
-				new/obj/item/weapon/rcd/combat(usr.loc)
+				new/obj/item/weapon/construction/rcd/combat(usr.loc)
 
 			//
 			// New sandbox airlock maker
@@ -232,7 +232,7 @@ var/hsboxspawn = 1
 
 			// Clothing
 			if("hsbcloth")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
 				if(!clothinfo)
 					clothinfo = "<b>Clothing</b> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
@@ -246,7 +246,7 @@ var/hsboxspawn = 1
 
 			// Reagent containers
 			if("hsbreag")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
 				if(!reaginfo)
 					reaginfo = "<b>Reagent Containers</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
@@ -260,7 +260,7 @@ var/hsboxspawn = 1
 
 			// Other items
 			if("hsbobj")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
 				if(!objinfo)
 					objinfo = "<b>Other Items</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
@@ -277,13 +277,13 @@ var/hsboxspawn = 1
 			// Safespawn checks to see if spawning is disabled.
 			//
 			if("hsb_safespawn")
-				if(!hsboxspawn)
+				if(!GLOB.hsboxspawn)
 					usr << browse(null,"window=sandbox")
 					return
 
 				var/typepath = text2path(href_list["path"])
 				if(!typepath)
-					usr << "Bad path: \"[href_list["path"]]\""
+					to_chat(usr, "Bad path: \"[href_list["path"]]\"")
 					return
 				new typepath(usr.loc)
 
@@ -295,7 +295,7 @@ var/hsboxspawn = 1
 			if("hsbspawn")
 				var/typepath = text2path(href_list["path"])
 				if(!typepath)
-					usr << "Bad path: \"[href_list["path"]]\""
+					to_chat(usr, "Bad path: \"[href_list["path"]]\"")
 					return
 				new typepath(usr.loc)
 

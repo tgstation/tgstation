@@ -73,19 +73,19 @@
 				valid_items += rand(1,max(2,35-probWeight))
 				valid_items += I
 
-		if(ispath(I,/obj/item/weapon/rcd) || ispath(I,/obj/item/weapon/grenade) || ispath(I,/obj/item/device/aicard) || ispath(I,/obj/item/weapon/storage/backpack/holding) || ispath(I,/obj/item/slime_extract) || ispath(I,/obj/item/device/onetankbomb) || ispath(I,/obj/item/device/transfer_valve))
+		if(ispath(I,/obj/item/weapon/construction/rcd) || ispath(I,/obj/item/weapon/grenade) || ispath(I,/obj/item/device/aicard) || ispath(I,/obj/item/weapon/storage/backpack/holding) || ispath(I,/obj/item/slime_extract) || ispath(I,/obj/item/device/onetankbomb) || ispath(I,/obj/item/device/transfer_valve))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null)
 				critical_items += I
 
 
-/obj/machinery/r_n_d/experimentor/New()
-	..()
+/obj/machinery/r_n_d/experimentor/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/experimentor(null)
 	B.apply_default_parts(src)
 
-	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in mob_list
-	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in mob_list
+	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_list
+	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_list
 	SetTypeReactions()
 
 /obj/item/weapon/circuitboard/machine/experimentor
@@ -120,20 +120,20 @@
 		if(!is_insertion_ready(user))
 			return
 		if(!checkCircumstances(O))
-			user << "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>"
+			to_chat(user, "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>")
 			return
 		if(!O.origin_tech)
-			user << "<span class='warning'>This doesn't seem to have a tech origin!</span>"
+			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
-			user << "<span class='warning'>You cannot experiment on this item!</span>"
+			to_chat(user, "<span class='warning'>You cannot experiment on this item!</span>")
 			return
 		if(!user.drop_item())
 			return
 		loaded_item = O
 		O.loc = src
-		user << "<span class='notice'>You add the [O.name] to the machine.</span>"
+		to_chat(user, "<span class='notice'>You add the [O.name] to the machine.</span>")
 		flick("h_lathe_load", src)
 
 
@@ -237,7 +237,7 @@
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions and destroys [exp_on], lashing its arms out at nearby people!</span>")
 			for(var/mob/living/m in oview(1, src))
-				m.apply_damage(15,"brute",pick("head","chest","groin"))
+				m.apply_damage(15, BRUTE, pick("head","chest","groin"))
 				investigate_log("Experimentor dealt minor brute to [m].", "experimentor")
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
@@ -344,7 +344,7 @@
 			if(MT)
 				visible_message("<span class='danger'>[src] dangerously overheats, launching a flaming fuel orb!</span>")
 				investigate_log("Experimentor has launched a <font color='red'>fireball</font> at [M]!", "experimentor")
-				var/obj/item/projectile/magic/fireball/FB = new /obj/item/projectile/magic/fireball(start)
+				var/obj/item/projectile/magic/aoe/fireball/FB = new /obj/item/projectile/magic/aoe/fireball(start)
 				FB.original = MT
 				FB.current = start
 				FB.yo = MT.y - start.y
@@ -373,7 +373,7 @@
 			visible_message("<span class='warning'>[src] malfunctions, activating its emergency coolant systems!</span>")
 			throwSmoke(src.loc)
 			for(var/mob/living/m in oview(1, src))
-				m.apply_damage(5,"burn",pick("head","chest","groin"))
+				m.apply_damage(5, BURN, pick("head","chest","groin"))
 				investigate_log("Experimentor has dealt minor burn damage to [m]", "experimentor")
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -484,8 +484,8 @@
 		if(globalMalf > 36 && globalMalf < 50)
 			visible_message("<span class='warning'>Experimentor draws the life essence of those nearby!</span>")
 			for(var/mob/living/m in view(4,src))
-				m << "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [src]!</span>"
-				m.apply_damage(50,"brute","chest")
+				to_chat(m, "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [src]!</span>")
+				m.apply_damage(50, BRUTE, "chest")
 				investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", "experimentor")
 		if(globalMalf > 51 && globalMalf < 75)
 			visible_message("<span class='warning'>[src] encounters a run-time error!</span>")
@@ -528,15 +528,15 @@
 		src.updateUsrDialog()
 	else
 		if(recentlyExperimented)
-			usr << "<span class='warning'>[src] has been used too recently!</span>"
+			to_chat(usr, "<span class='warning'>[src] has been used too recently!</span>")
 			return
 		else if(!loaded_item)
 			updateUsrDialog() //Set the interface to unloaded mode
-			usr << "<span class='warning'>[src] is not currently loaded!</span>"
+			to_chat(usr, "<span class='warning'>[src] is not currently loaded!</span>")
 			return
 		else if(!process || process != loaded_item) //Interface exploit protection (such as hrefs or swapping items with interface set to old item)
 			updateUsrDialog() //Refresh interface to update interface hrefs
-			usr << "<span class='danger'>Interface failure detected in [src]. Please try again.</span>"
+			to_chat(usr, "<span class='danger'>Interface failure detected in [src]. Please try again.</span>")
 			return
 		var/dotype
 		if(text2num(scantype) == SCANTYPE_DISCOVER)
@@ -556,7 +556,7 @@
 //~~~~~~~~Admin logging proc, aka the Powergamer Alarm~~~~~~~~
 /obj/machinery/r_n_d/experimentor/proc/warn_admins(mob/user, ReactionName)
 	var/turf/T = get_turf(src)
-	message_admins("Experimentor reaction: [ReactionName] generated by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+	message_admins("Experimentor reaction: [ReactionName] generated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)]",0,1)
 	log_game("Experimentor reaction: [ReactionName] generated by [key_name(user)] in ([T.x],[T.y],[T.z])")
 
 #undef SCANTYPE_POKE
@@ -589,8 +589,8 @@
 	var/cooldownMax = 60
 	var/cooldown
 
-/obj/item/weapon/relic/New()
-	..()
+/obj/item/weapon/relic/Initialize()
+	. = ..()
 	icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
 	realName = "[pick("broken","twisted","spun","improved","silly","regular","badly made")] [pick("device","object","toy","illegal tech","weapon")]"
 
@@ -607,7 +607,7 @@
 /obj/item/weapon/relic/attack_self(mob/user)
 	if(revealed)
 		if(cooldown)
-			user << "<span class='warning'>[src] does not react!</span>"
+			to_chat(user, "<span class='warning'>[src] does not react!</span>")
 			return
 		else if(src.loc == user)
 			cooldown = TRUE
@@ -615,7 +615,7 @@
 			spawn(cooldownMax)
 				cooldown = FALSE
 	else
-		user << "<span class='notice'>You aren't quite sure what to do with this yet.</span>"
+		to_chat(user, "<span class='notice'>You aren't quite sure what to do with this yet.</span>")
 
 //////////////// RELIC PROCS /////////////////////////////
 
@@ -638,14 +638,14 @@
 
 /obj/item/weapon/relic/proc/flash(mob/user)
 	playsound(src.loc, "sparks", rand(25,50), 1)
-	var/obj/item/weapon/grenade/flashbang/CB = new/obj/item/weapon/grenade/flashbang(get_turf(user))
+	var/obj/item/weapon/grenade/flashbang/CB = new/obj/item/weapon/grenade/flashbang(user.loc)
 	CB.prime()
 	warn_admins(user, "Flash")
 
 /obj/item/weapon/relic/proc/petSpray(mob/user)
 	var/message = "<span class='danger'>[src] begans to shake, and in the distance the sound of rampaging animals arises!</span>"
 	visible_message(message)
-	user << message
+	to_chat(user, message)
 	var/animals = rand(1,25)
 	var/counter
 	var/list/valid_animals = list(/mob/living/simple_animal/parrot,/mob/living/simple_animal/butterfly,/mob/living/simple_animal/pet/cat,/mob/living/simple_animal/pet/dog/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/pet/fox,/mob/living/simple_animal/hostile/lizard,/mob/living/simple_animal/mouse,/mob/living/simple_animal/pet/dog/pug,/mob/living/simple_animal/hostile/bear,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/carp)
@@ -654,7 +654,7 @@
 		new mobType(get_turf(src))
 	warn_admins(user, "Mass Mob Spawn")
 	if(prob(60))
-		user << "<span class='warning'>[src] falls apart!</span>"
+		to_chat(user, "<span class='warning'>[src] falls apart!</span>")
 		qdel(src)
 
 /obj/item/weapon/relic/proc/rapidDupe(mob/user)
@@ -679,7 +679,7 @@
 	warn_admins(user, "Rapid duplicator", 0)
 
 /obj/item/weapon/relic/proc/explode(mob/user)
-	user << "<span class='danger'>[src] begins to heat up!</span>"
+	to_chat(user, "<span class='danger'>[src] begins to heat up!</span>")
 	spawn(rand(35,100))
 		if(src.loc == user)
 			visible_message("<span class='notice'>The [src]'s top opens, releasing a powerful blast!</span>")
@@ -688,7 +688,7 @@
 			qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
 /obj/item/weapon/relic/proc/teleport(mob/user)
-	user << "<span class='notice'>The [src] begins to vibrate!</span>"
+	to_chat(user, "<span class='notice'>The [src] begins to vibrate!</span>")
 	spawn(rand(10,30))
 		var/turf/userturf = get_turf(user)
 		if(src.loc == user && userturf.z != ZLEVEL_CENTCOM) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
@@ -703,6 +703,6 @@
 	var/turf/T = get_turf(src)
 	var/log_msg = "[RelicType] relic used by [key_name(user)] in ([T.x],[T.y],[T.z])"
 	if(priority) //For truly dangerous relics that may need an admin's attention. BWOINK!
-		message_admins("[RelicType] relic activated by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+		message_admins("[RelicType] relic activated by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
 	log_game(log_msg)
 	investigate_log(log_msg, "experimentor")

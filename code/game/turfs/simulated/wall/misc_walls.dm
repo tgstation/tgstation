@@ -4,19 +4,27 @@
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
 	canSmoothWith = null
+	smooth = SMOOTH_MORE
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult
 
-/turf/closed/wall/mineral/cult/New()
+/turf/closed/wall/mineral/cult/Initialize()
 	new /obj/effect/overlay/temp/cult/turf(src)
-	..()
+	. = ..()
 
 /turf/closed/wall/mineral/cult/devastate_wall()
 	new sheet_type(get_turf(src), sheet_amount)
 
-/turf/closed/wall/mineral/cult/narsie_act()
-	return
+/turf/closed/wall/mineral/cult/Exited(atom/movable/AM, atom/newloc)
+	. = ..()
+	if(istype(AM, /mob/living/simple_animal/hostile/construct/harvester)) //harvesters can go through cult walls, dragging something with
+		var/mob/living/simple_animal/hostile/construct/harvester/H = AM
+		var/atom/movable/stored_pulling = H.pulling
+		if(stored_pulling)
+			stored_pulling.setDir(get_dir(stored_pulling.loc, newloc))
+			stored_pulling.forceMove(src)
+			H.start_pulling(stored_pulling, TRUE)
 
 /turf/closed/wall/mineral/cult/ratvar_act()
 	. = ..()
@@ -43,14 +51,14 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	hardness = 10
-	slicing_duration = 120
+	slicing_duration = 80
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
 	var/obj/effect/clockwork/overlay/wall/realappearence
 	var/obj/structure/destructible/clockwork/cache/linkedcache
 
-/turf/closed/wall/clockwork/New()
+/turf/closed/wall/clockwork/Initialize()
 	..()
 	new /obj/effect/overlay/temp/ratvar/wall(src)
 	new /obj/effect/overlay/temp/ratvar/beam(src)
@@ -61,7 +69,7 @@
 /turf/closed/wall/clockwork/examine(mob/user)
 	..()
 	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
-		user << "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>"
+		to_chat(user, "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>")
 
 /turf/closed/wall/clockwork/Destroy()
 	if(linkedcache)

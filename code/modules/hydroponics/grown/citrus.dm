@@ -109,7 +109,7 @@
 	var/area/A = get_area(user)
 	user.visible_message("<span class='warning'>[user] primes the [src]!</span>", "<span class='userdanger'>You prime the [src]!</span>")
 	var/message = "[ADMIN_LOOKUPFLW(user)] primed a combustible lemon for detonation at [A] [ADMIN_COORDJMP(user)]"
-	bombers += message
+	GLOB.bombers += message
 	message_admins(message)
 	log_game("[key_name(user)] primed a combustible lemon for detonation at [A] [COORD(user)].")
 	if(iscarbon(user))
@@ -126,7 +126,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/proc/update_mob()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.unEquip(src)
+		M.dropItemToGround(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion

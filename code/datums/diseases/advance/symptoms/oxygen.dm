@@ -34,5 +34,5 @@ Bonus
 				M.losebreath -= 2
 		else
 			if(prob(SYMPTOM_ACTIVATION_PROB * 3))
-				M << "<span class='notice'>[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]</span>"
+				to_chat(M, "<span class='notice'>[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]</span>")
 	return

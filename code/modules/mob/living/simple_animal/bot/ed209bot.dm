@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/ed209
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot.  He looks less than thrilled."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "ed2090"
 	density = 1
 	anchored = 0
@@ -42,7 +42,7 @@
 	var/shoot_sound = 'sound/weapons/Taser.ogg'
 
 
-/mob/living/simple_animal/bot/ed209/New(loc,created_name,created_lasercolor)
+/mob/living/simple_animal/bot/ed209/Initialize(mapload,created_name,created_lasercolor)
 	..()
 	if(created_name)
 		name = created_name
@@ -59,7 +59,7 @@
 			shot_delay = 6//Longer shot delay because JESUS CHRIST
 			check_records = 0//Don't actively target people set to arrest
 			arrest_type = 1//Don't even try to cuff
-			bot_core.req_access = list(access_maint_tunnels, access_theatre)
+			bot_core.req_access = list(GLOB.access_maint_tunnels, GLOB.access_theatre)
 			arrest_type = 1
 			if((lasercolor == "b") && (name == "\improper ED-209 Security Robot"))//Picks a name if there isn't already a custome one
 				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
@@ -67,7 +67,7 @@
 				name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
 
 	//SECHUD
-	var/datum/atom_hud/secsensor = huds[DATA_HUD_SECURITY_ADVANCED]
+	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	secsensor.add_hud_to(src)
 
 /mob/living/simple_animal/bot/ed209/turn_on()
@@ -178,7 +178,7 @@ Auto Patrol[]"},
 	..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
+			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = 0
@@ -306,13 +306,13 @@ Auto Patrol[]"},
 	target = null
 	last_found = world.time
 	frustration = 0
-	addtimer(CALLBACK(src, .proc/handle_automated_action), 0) //ensure bot quickly responds
+	INVOKE_ASYNC(src, .proc/handle_automated_action) //ensure bot quickly responds
 
 /mob/living/simple_animal/bot/ed209/proc/back_to_hunt()
 	anchored = 0
 	frustration = 0
 	mode = BOT_HUNT
-	addtimer(CALLBACK(src, .proc/handle_automated_action), 0) //ensure bot quickly responds
+	INVOKE_ASYNC(src, .proc/handle_automated_action) //ensure bot quickly responds
 
 // look for a criminal in view of the bot
 
@@ -358,7 +358,7 @@ Auto Patrol[]"},
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.add_overlay(image('icons/obj/aibots.dmi', "hs_hole"))
+	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -390,9 +390,7 @@ Auto Patrol[]"},
 			if(lasercolor == "r")
 				new /obj/item/clothing/suit/redtag(Tsec)
 
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
+	do_sparks(3, TRUE, src)
 
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()

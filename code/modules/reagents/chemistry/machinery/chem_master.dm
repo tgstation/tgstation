@@ -15,13 +15,14 @@
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
+	layer = BELOW_OBJ_LAYER
 
-/obj/machinery/chem_master/New()
+/obj/machinery/chem_master/Initialize()
 	create_reagents(100)
 	add_overlay("waitlight")
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_master(null)
 	B.apply_default_parts(src)
-	..()
+	. = ..()
 
 /obj/item/weapon/circuitboard/machine/chem_master
 	name = "ChemMaster 3000 (Machine Board)"
@@ -43,7 +44,7 @@
 
 		build_path = new_path
 		name = "[new_name] 3000 (Machine Board)"
-		user << "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>"
+		to_chat(user, "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>")
 	else
 		return ..()
 
@@ -106,37 +107,37 @@
 	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
 		. = 1 // no afterattack
 		if(panel_open)
-			user << "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>"
+			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
 		if(beaker)
-			user << "<span class='warning'>A container is already loaded in the machine!</span>"
+			to_chat(user, "<span class='warning'>A container is already loaded in the machine!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		beaker = I
 		beaker.loc = src
-		user << "<span class='notice'>You add the beaker to the machine.</span>"
+		to_chat(user, "<span class='notice'>You add the beaker to the machine.</span>")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
 	else if(!condi && istype(I, /obj/item/weapon/storage/pill_bottle))
 		if(bottle)
-			user << "<span class='warning'>A pill bottle is already loaded into the machine!</span>"
+			to_chat(user, "<span class='warning'>A pill bottle is already loaded into the machine!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		bottle = I
 		bottle.loc = src
-		user << "<span class='notice'>You add the pill bottle into the dispenser slot.</span>"
+		to_chat(user, "<span class='notice'>You add the pill bottle into the dispenser slot.</span>")
 		src.updateUsrDialog()
 	else
 		return ..()
 
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
@@ -233,7 +234,7 @@
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 				var/obj/item/weapon/reagent_containers/pill/P
 
@@ -248,7 +249,7 @@
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
 
@@ -270,7 +271,7 @@
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 				return
 			var/obj/item/weapon/reagent_containers/pill/P
 
@@ -289,7 +290,7 @@
 
 			if(condi)
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new(src.loc)
 				P.originalname = name
@@ -302,7 +303,7 @@
 					amount_full = round(reagents.total_volume / 30)
 					vol_part = reagents.total_volume % 30
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 
 				var/obj/item/weapon/reagent_containers/glass/bottle/P
@@ -320,7 +321,7 @@
 			. = TRUE
 
 		if("analyze")
-			var/datum/reagent/R = chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)

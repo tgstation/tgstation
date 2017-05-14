@@ -1,7 +1,7 @@
 /datum/status_effect/freon
 	id = "frozen"
-	duration = 10
-	unique = TRUE
+	duration = 100
+	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /obj/screen/alert/status_effect/freon
 	var/icon/cube
 
@@ -12,10 +12,11 @@
 
 /datum/status_effect/freon/on_apply()
 	if(!owner.stat)
-		owner << "You become frozen in a cube!"
+		to_chat(owner, "<span class='userdanger'>You become frozen in a cube!</span>")
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
-	owner.overlays += cube
+	owner.add_overlay(cube)
 	owner.update_canmove()
+	return ..()
 
 /datum/status_effect/freon/tick()
 	owner.update_canmove()
@@ -24,7 +25,7 @@
 
 /datum/status_effect/freon/on_remove()
 	if(!owner.stat)
-		owner << "The cube melts!"
-	owner.overlays -= cube
+		to_chat(owner, "The cube melts!")
+	owner.cut_overlay(cube)
 	owner.bodytemperature += 100
 	owner.update_canmove()

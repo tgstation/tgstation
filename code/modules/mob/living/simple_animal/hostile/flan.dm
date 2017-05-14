@@ -34,7 +34,7 @@
 	var/spelldamage = 15
 	var/spellcasttime = 15							//if you varedit this also varedit ranged_cooldown_time else the mob will attack again before the spell hits, looking weird but still working
 
-/mob/living/simple_animal/hostile/flan/New()		//Required for the inheritance of casting animations.
+/mob/living/simple_animal/hostile/flan/Initialize()		//Required for the inheritance of casting animations.
 	..()
 	casting = 0
 	icon_state = "[initial(icon_state)][casting]"
@@ -48,7 +48,7 @@
 		casting = 1
 		icon_state = "[initial(icon_state)][casting]"
 		if(do_after_mob(src, A, spellcasttime, uninterruptible = 1, progress = 0))		//Break LOS to dodge.
-			if(qdeleted(src))
+			if(QDELETED(src))
 				return
 			if((A in view(src)))
 				A.do_attack_animation(A, spellanimation)
