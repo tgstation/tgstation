@@ -222,6 +222,7 @@
 	duration = 20
 
 /obj/effect/overlay/temp/cult
+	icon = 'icons/effects/cult_effects.dmi'
 	randomdir = 0
 	duration = 10
 
@@ -267,6 +268,34 @@
 	icon_state = "floorglow"
 	duration = 5
 
+/obj/effect/overlay/temp/cult/rune_spawn
+	icon_state = "runeouter"
+	alpha = 0
+	var/turnedness = 179 //179 turns counterclockwise, 181 turns clockwise
+
+/obj/effect/overlay/temp/cult/rune_spawn/inner
+	icon_state = "runeinner"
+
+/obj/effect/overlay/temp/cult/rune_spawn/Initialize(mapload, set_duration, set_color)
+	if(isnum(set_duration))
+		duration = set_duration
+	if(set_color)
+		add_atom_colour(set_color, FIXED_COLOUR_PRIORITY)
+	. = ..()
+	var/oldtransform = transform
+	transform = matrix()*2
+	var/matrix/M = transform
+	M.Turn(turnedness)
+	transform = M
+	animate(src, alpha = 255, time = duration, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	animate(src, transform = oldtransform, time = duration, flags = ANIMATION_PARALLEL)
+
+/obj/effect/overlay/temp/cult/rune_spawn/rune2 //todo: edit the rest of the runes into this format
+	icon_state = "runewords2"
+	turnedness = 181
+
+/obj/effect/overlay/temp/cult/rune_spawn/rune2/center
+	icon_state = "runecenter2"
 
 /obj/effect/overlay/temp/ratvar
 	name = "ratvar's light"
@@ -549,9 +578,9 @@
 	icon_state = "heal"
 	duration = 15
 
-/obj/effect/overlay/temp/heal/Initialize(mapload, colour)
-	if(colour)
-		color = colour
+/obj/effect/overlay/temp/heal/Initialize(mapload, set_color)
+	if(set_color)
+		add_atom_colour(set_color, FIXED_COLOUR_PRIORITY)
 	. = ..()
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
