@@ -39,8 +39,6 @@
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
-	GLOB.data_core = new /datum/datacore()
-
 	Master.Initialize(10, FALSE)
 
 /world/proc/SetupExternalRSC()
