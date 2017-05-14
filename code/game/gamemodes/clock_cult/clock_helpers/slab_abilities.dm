@@ -26,7 +26,7 @@
 	ranged_mousepointer = 'icons/effects/geis_target.dmi'
 
 /obj/effect/proc_holder/slab/geis/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(target == slab || ..())
+	if(..())
 		return TRUE
 
 	var/turf/T = ranged_ability_user.loc
