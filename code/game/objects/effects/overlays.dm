@@ -273,9 +273,6 @@
 	alpha = 0
 	var/turnedness = 179 //179 turns counterclockwise, 181 turns clockwise
 
-/obj/effect/overlay/temp/cult/rune_spawn/inner
-	icon_state = "runeinner"
-
 /obj/effect/overlay/temp/cult/rune_spawn/Initialize(mapload, set_duration, set_color)
 	if(isnum(set_duration))
 		duration = set_duration
@@ -293,6 +290,10 @@
 /obj/effect/overlay/temp/cult/rune_spawn/rune2 //todo: edit the rest of the runes into this format
 	icon_state = "runewords2"
 	turnedness = 181
+
+/obj/effect/overlay/temp/cult/rune_spawn/rune2/inner
+	icon_state = "runeinner2"
+	turnedness = 179
 
 /obj/effect/overlay/temp/cult/rune_spawn/rune2/center
 	icon_state = "runecenter2"

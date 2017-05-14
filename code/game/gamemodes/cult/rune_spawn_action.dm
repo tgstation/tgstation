@@ -8,6 +8,7 @@
 	var/damage_interrupt = TRUE
 	var/action_interrupt = TRUE
 	var/obj/effect/overlay/temp/cult/rune_spawn/rune_word_type
+	var/obj/effect/overlay/temp/cult/rune_spawn/rune_innerring_type
 	var/obj/effect/overlay/temp/cult/rune_spawn/rune_center_type
 	var/rune_color
 
@@ -25,12 +26,15 @@
 		chosen_keyword = stripped_input(owner, "Enter a keyword for the new rune.", "Words of Power")
 		if(!chosen_keyword)
 			return
-
+//the outer ring is always the same across all runes
 	var/obj/effect/overlay/temp/cult/rune_spawn/R1 = new(owner.loc, scribe_time, rune_color)
-	var/obj/effect/overlay/temp/cult/rune_spawn/inner/R2 = new(owner.loc, scribe_time, rune_color)
-	var/obj/effect/overlay/temp/cult/rune_spawn/R3
+//the rest are not always the same, so we need types for em
+	var/obj/effect/overlay/temp/cult/rune_spawn/R2
 	if(rune_word_type)
-		R3 = new rune_word_type(owner.loc, scribe_time, rune_color)
+		R2 = new rune_word_type(owner.loc, scribe_time, rune_color)
+	var/obj/effect/overlay/temp/cult/rune_spawn/R3
+	if(rune_innerring_type)
+		R3 = new rune_innerring_type(owner.loc, scribe_time, rune_color)
 	var/obj/effect/overlay/temp/cult/rune_spawn/R4
 	if(rune_center_type)
 		R4 = new rune_center_type(owner.loc, scribe_time, rune_color)
@@ -47,7 +51,8 @@
 		rune.keyword = chosen_keyword
 	else
 		qdel(R1)
-		qdel(R2)
+		if(R2)
+			qdel(R2)
 		if(R3)
 			qdel(R3)
 		if(R4)
@@ -60,5 +65,6 @@
 	button_icon_state = "telerune"
 	rune_type = /obj/effect/rune/teleport
 	rune_word_type = /obj/effect/overlay/temp/cult/rune_spawn/rune2
+	rune_innerring_type = /obj/effect/overlay/temp/cult/rune_spawn/rune2/inner
 	rune_center_type = /obj/effect/overlay/temp/cult/rune_spawn/rune2/center
 	rune_color = RUNE_COLOR_TELEPORT
