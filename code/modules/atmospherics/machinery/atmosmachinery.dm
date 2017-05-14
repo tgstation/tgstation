@@ -65,7 +65,7 @@ Pipelines + Other Objects -> Pipe network
 	node_connects.len = device_type
 
 	for(DEVICE_TYPE_LOOP)
-		for(var/D in GLOB.cardinal)
+		for(var/D in GLOB.atmos_dirs)
 			if(D & GetInitDirections())
 				if(D in node_connects)
 					continue
@@ -78,6 +78,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
 	if(!node_connects) //for pipes where order of nodes doesn't matter
 		node_connects = getNodeConnects()
+
 
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))

@@ -398,3 +398,10 @@
 	icon_state = "smooth"
 	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
 	canSmoothWith = null
+
+
+
+//Called by SSicon_smooth after this atom has smoothed
+/atom/proc/post_smooth()
+	if(zshadow)
+		zshadow.SyncAppearance()

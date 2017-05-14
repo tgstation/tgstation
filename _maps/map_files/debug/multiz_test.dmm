@@ -1,0 +1,209 @@
+"aa" = (/turf/open/space,/area/arrival/start)
+"ab" = (/turf/closed/wall,/area/arrival/start)
+"ac" = (/turf/open/floor/plasteel,/area/arrival/start)
+"ad" = (/obj/machinery/light{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/turf/open/floor/plasteel,/area/arrival/start)
+"ae" = (/obj/machinery/light{tag = "icon-tube1 (WEST)"; icon_state = "tube1"; dir = 8},/turf/open/floor/plasteel,/area/arrival/start)
+"af" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (NORTHEAST)"; icon_state = "conveyor0"; dir = 5},/obj/vehicle/janicart,/turf/open/floor/plasteel,/area/arrival/start)
+"ag" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (EAST)"; icon_state = "conveyor0"; dir = 4},/turf/open/floor/plasteel,/area/arrival/start)
+"ah" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (EAST)"; icon_state = "conveyor0"; dir = 4},/obj/item/target/clown,/turf/open/floor/plasteel,/area/arrival/start)
+"ai" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (EAST)"; icon_state = "conveyor0"; dir = 4},/obj/vehicle/janicart,/turf/open/floor/plasteel,/area/arrival/start)
+"aj" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (SOUTHEAST)"; icon_state = "conveyor0"; dir = 6},/turf/open/floor/plasteel,/area/arrival/start)
+"ak" = (/obj/machinery/light{tag = "icon-tube1 (EAST)"; icon_state = "tube1"; dir = 4},/turf/open/floor/plasteel,/area/arrival/start)
+"al" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (NORTH)"; icon_state = "conveyor0"; dir = 1},/turf/open/floor/plasteel,/area/arrival/start)
+"am" = (/obj/machinery/conveyor/auto,/obj/vehicle/janicart,/turf/open/floor/plasteel,/area/arrival/start)
+"an" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (NORTH)"; icon_state = "conveyor0"; dir = 1},/obj/item/target/clown,/turf/open/floor/plasteel,/area/arrival/start)
+"ao" = (/obj/machinery/light/small,/turf/open/floor/plasteel,/area/arrival/start)
+"ap" = (/obj/machinery/conveyor/auto,/turf/open/floor/plasteel,/area/arrival/start)
+"aq" = (/obj/machinery/light/small{tag = "icon-bulb1 (EAST)"; icon_state = "bulb1"; dir = 4},/turf/open/floor/plasteel,/area/arrival/start)
+"ar" = (/obj/machinery/light/small{tag = "icon-bulb1 (WEST)"; icon_state = "bulb1"; dir = 8},/turf/open/floor/plasteel,/area/arrival/start)
+"as" = (/obj/machinery/conveyor/auto,/obj/item/target/clown,/turf/open/floor/plasteel,/area/arrival/start)
+"at" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (NORTH)"; icon_state = "conveyor0"; dir = 1},/obj/vehicle/janicart,/turf/open/floor/plasteel,/area/arrival/start)
+"au" = (/obj/machinery/light/small{tag = "icon-bulb1 (NORTH)"; icon_state = "bulb1"; dir = 1},/turf/open/floor/plasteel,/area/arrival/start)
+"av" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (NORTHWEST)"; icon_state = "conveyor0"; dir = 9},/turf/open/floor/plasteel,/area/arrival/start)
+"aw" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (WEST)"; icon_state = "conveyor0"; dir = 8},/obj/vehicle/janicart,/turf/open/floor/plasteel,/area/arrival/start)
+"ax" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (WEST)"; icon_state = "conveyor0"; dir = 8},/turf/open/floor/plasteel,/area/arrival/start)
+"ay" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (WEST)"; icon_state = "conveyor0"; dir = 8},/obj/item/target/clown,/turf/open/floor/plasteel,/area/arrival/start)
+"az" = (/obj/machinery/conveyor/auto{tag = "icon-conveyor0 (SOUTHWEST)"; icon_state = "conveyor0"; dir = 10},/obj/item/target/clown,/turf/open/floor/plasteel,/area/arrival/start)
+"aA" = (/obj/effect/step_trigger/teleporter{teleport_x = 3; teleport_y = 6; teleport_z = 2},/turf/open/floor/plasteel/stairs,/area/arrival/start)
+"aB" = (/obj/effect/landmark/latejoin,/turf/open/floor/plasteel,/area/arrival/start)
+"aC" = (/obj/machinery/power/smes/magical,/turf/open/floor/plasteel,/area/arrival/start)
+"aD" = (/turf/open/floor/plasteel/stairs,/area/arrival/start)
+"aE" = (/obj/machinery/power/terminal{tag = "icon-term (NORTH)"; icon_state = "term"; dir = 1},/obj/structure/cable{tag = "icon-0-4"; icon_state = "0-4"},/turf/open/floor/plasteel,/area/arrival/start)
+"aF" = (/obj/structure/cable{tag = "icon-2-8"; icon_state = "2-8"},/turf/open/floor/plasteel,/area/arrival/start)
+"aG" = (/obj/machinery/light,/turf/open/floor/plasteel,/area/arrival/start)
+"aH" = (/obj/machinery/power/terminal,/obj/machinery/power/apc{pixel_y = -24},/obj/structure/cable,/turf/open/floor/plasteel,/area/arrival/start)
+"aI" = (/obj/machinery/gravity_generator/main/station,/turf/open/space,/area/arrival/start)
+"aJ" = (/obj/effect/step_trigger/teleporter{teleport_x = 4; teleport_y = 18; teleport_z = 3},/turf/open/floor/plasteel/stairs,/area/arrival/start)
+"aK" = (/turf/open/open_z,/area/arrival/start)
+"aL" = (/obj/effect/step_trigger/teleporter{teleport_x = 3; teleport_y = 5; teleport_z = 1},/turf/open/floor/plasteel/stairs,/area/arrival/start)
+"aM" = (/obj/effect/step_trigger/teleporter{teleport_x = 4; teleport_y = 18; teleport_z = 2},/turf/open/floor/plasteel/stairs,/area/arrival/start)
+"aN" = (/obj/effect/step_trigger/teleporter{teleport_x = 4; teleport_y = 17; teleport_z = 4},/turf/open/floor/plasteel/stairs,/area/arrival/start)
+"aO" = (/turf/open/floor/plasteel/black,/area/arrival/start)
+"aP" = (/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (WEST)"; icon_state = "warningline"; dir = 8},/turf/open/floor/plasteel/black,/area/arrival/start)
+"aQ" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel/black,/area/arrival/start)
+"aR" = (/obj/effect/turf_decal/stripes/corner{tag = "icon-warninglinecorner (NORTH)"; icon_state = "warninglinecorner"; dir = 1},/obj/effect/turf_decal/stripes/corner{tag = "icon-warninglinecorner (WEST)"; icon_state = "warninglinecorner"; dir = 8},/turf/open/floor/plasteel/black,/area/arrival/start)
+"aS" = (/obj/effect/turf_decal/bot,/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (NORTH)"; icon_state = "warningline"; dir = 1},/turf/open/floor/plasteel/black,/area/arrival/start)
+"aT" = (/obj/effect/turf_decal/stripes/corner{tag = "icon-warninglinecorner (EAST)"; icon_state = "warninglinecorner"; dir = 4},/turf/open/floor/plasteel/black,/area/arrival/start)
+"aU" = (/obj/machinery/autolathe,/turf/open/floor/plasteel/black,/area/arrival/start)
+"aV" = (/obj/machinery/atmospherics/components/unary/vent_pump,/turf/open/floor/plasteel/black,/area/arrival/start)
+"aW" = (/obj/machinery/atmospherics/components/unary/vent_scrubber,/turf/open/floor/plasteel/black,/area/arrival/start)
+"aX" = (/turf/open/floor/plasteel/darkpurple/corner,/area/arrival/start)
+"aY" = (/obj/structure/table,/obj/item/stack/cable_coil,/turf/open/floor/plasteel/black,/area/arrival/start)
+"aZ" = (/obj/structure/table,/turf/open/floor/plasteel/black,/area/arrival/start)
+"ba" = (/obj/machinery/pipedispenser,/turf/open/floor/plasteel/black,/area/arrival/start)
+"bb" = (/turf/open/floor/plasteel/darkpurple/side{tag = "icon-darkpurple (EAST)"; icon_state = "darkpurple"; dir = 4},/area/arrival/start)
+"bc" = (/obj/structure/table,/obj/item/stack/sheet/glass,/obj/item/stack/sheet/metal,/turf/open/floor/plasteel/black,/area/arrival/start)
+"bd" = (/obj/machinery/holopad,/turf/open/floor/plasteel/black,/area/arrival/start)
+"be" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/plasteel/black,/area/arrival/start)
+"bf" = (/obj/machinery/droneDispenser,/turf/open/floor/plasteel/black,/area/arrival/start)
+"bg" = (/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (WEST)"; icon_state = "warningline"; dir = 8},/obj/machinery/atmospherics/components/unary/vent_pump,/turf/open/floor/plasteel/black,/area/arrival/start)
+"bh" = (/obj/structure/table,/obj/machinery/cell_charger,/turf/open/floor/plasteel/black,/area/arrival/start)
+"bi" = (/obj/structure/table,/obj/item/weapon/stock_parts/cell,/obj/item/stack/cable_coil{pixel_y = 2},/obj/item/stack/cable_coil,/turf/open/floor/plasteel/black,/area/arrival/start)
+"bj" = (/obj/structure/table,/obj/item/weapon/storage/belt/utility,/obj/item/weapon/crowbar,/obj/item/clothing/glasses/welding,/turf/open/floor/plasteel/black,/area/arrival/start)
+"bk" = (/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (NORTH)"; icon_state = "warningline"; dir = 1},/obj/machinery/vending/assist,/turf/open/floor/plasteel/darkpurple,/area/arrival/start)
+"bl" = (/turf/open/floor/plasteel/darkpurple/corner{tag = "icon-darkpurplecorners (EAST)"; icon_state = "darkpurplecorners"; dir = 4},/area/arrival/start)
+"bm" = (/turf/open/floor/plasteel/darkpurple/side{tag = "icon-darkpurple (NORTH)"; icon_state = "darkpurple"; dir = 1},/area/arrival/start)
+"bn" = (/obj/machinery/vending/tool,/turf/open/floor/plasteel/darkpurple,/area/arrival/start)
+"bo" = (/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (WEST)"; icon_state = "whitepurple"; dir = 8},/area/arrival/start)
+"bp" = (/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (EAST)"; icon_state = "whitepurple"; dir = 4},/area/arrival/start)
+"bq" = (/obj/effect/step_trigger/teleporter{teleport_x = 4; teleport_y = 17; teleport_z = 3},/turf/open/floor/plasteel/stairs,/area/arrival/start)
+"br" = (/obj/machinery/modular_computer/console,/turf/open/floor/plasteel/whitepurple,/area/arrival/start)
+"bs" = (/obj/machinery/atmospherics/components/unary/vent_pump,/obj/structure/chair/office/light{tag = "icon-officechair_white (WEST)"; icon_state = "officechair_white"; dir = 8},/turf/open/floor/plasteel/white,/area/arrival/start)
+"bt" = (/turf/open/floor/plasteel/whitepurple/corner{tag = "icon-whitepurplecorner (EAST)"; icon_state = "whitepurplecorner"; dir = 4},/area/arrival/start)
+"bu" = (/turf/open/floor/plasteel/whitepurple,/area/arrival/start)
+"bv" = (/obj/machinery/portable_atmospherics/canister/nitrogen,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel/whitepurple,/area/arrival/start)
+"bw" = (/obj/structure/table,/obj/machinery/camera{tag = "icon-camera (EAST)"; icon_state = "camera"; dir = 4},/turf/open/floor/plasteel/whitepurple,/area/arrival/start)
+"bx" = (/obj/machinery/atmospherics/components/unary/vent_scrubber,/turf/open/floor/plasteel/whitepurple/side,/area/arrival/start)
+"by" = (/turf/open/floor/plasteel/whitepurple/side,/area/arrival/start)
+"bz" = (/turf/open/floor/plasteel/white,/area/arrival/start)
+"bA" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plating,/area/arrival/start)
+"bB" = (/obj/machinery/door/airlock/science,/turf/open/floor/plasteel/white,/area/arrival/start)
+"bC" = (/obj/machinery/airalarm,/turf/closed/wall,/area/arrival/start)
+"bD" = (/obj/machinery/camera{tag = "icon-camera (EAST)"; icon_state = "camera"; dir = 4},/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (WEST)"; icon_state = "whitepurple"; dir = 8},/area/arrival/start)
+"bE" = (/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (NORTHWEST)"; icon_state = "whitepurple"; dir = 9},/area/arrival/start)
+"bF" = (/obj/structure/closet/wardrobe/science_white,/turf/open/floor/plasteel/whitepurple,/area/arrival/start)
+"bG" = (/obj/structure/extinguisher_cabinet,/turf/closed/wall,/area/arrival/start)
+"bH" = (/obj/machinery/light{tag = "icon-tube1 (WEST)"; icon_state = "tube1"; dir = 8},/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (WEST)"; icon_state = "whitepurple"; dir = 8},/area/arrival/start)
+"bI" = (/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (EAST)"; icon_state = "warningline"; dir = 4},/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (NORTHEAST)"; icon_state = "whitepurple"; dir = 5},/area/arrival/start)
+"bJ" = (/obj/structure/lattice,/turf/open/open_z,/area/arrival/start)
+"bK" = (/obj/machinery/light{tag = "icon-tube1 (EAST)"; icon_state = "tube1"; dir = 4},/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (EAST)"; icon_state = "whitepurple"; dir = 4},/area/arrival/start)
+"bL" = (/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (EAST)"; icon_state = "warningline"; dir = 4},/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (EAST)"; icon_state = "whitepurple"; dir = 4},/area/arrival/start)
+"bM" = (/obj/machinery/atmospherics/components/unary/vent_pump,/turf/open/floor/plasteel/white,/area/arrival/start)
+"bN" = (/obj/structure/window{tag = "icon-window (NORTH)"; icon_state = "window"; dir = 1},/obj/machinery/portable_atmospherics/scrubber,/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (EAST)"; icon_state = "whitepurple"; dir = 4},/area/arrival/start)
+"bO" = (/obj/machinery/light{tag = "icon-tube1 (EAST)"; icon_state = "tube1"; dir = 4},/turf/open/open_z,/area/arrival/start)
+"bP" = (/obj/effect/turf_decal/stripes/corner{tag = "icon-warninglinecorner (NORTH)"; icon_state = "warninglinecorner"; dir = 1},/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (WEST)"; icon_state = "whitepurple"; dir = 8},/area/arrival/start)
+"bQ" = (/obj/structure/window,/obj/machinery/portable_atmospherics/canister/bz,/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (EAST)"; icon_state = "whitepurple"; dir = 4},/area/arrival/start)
+"bR" = (/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (EAST)"; icon_state = "warningline"; dir = 4},/turf/open/floor/plasteel/whitepurple/corner{tag = "icon-whitepurplecorner (EAST)"; icon_state = "whitepurplecorner"; dir = 4},/area/arrival/start)
+"bS" = (/obj/structure/lattice/catwalk,/turf/open/open_z,/area/arrival/start)
+"bT" = (/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (WEST)"; icon_state = "warningline"; dir = 8},/turf/open/floor/plasteel/whitepurple/corner{tag = "icon-whitepurplecorner (NORTH)"; icon_state = "whitepurplecorner"; dir = 1},/area/arrival/start)
+"bU" = (/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (EAST)"; icon_state = "warningline"; dir = 4},/turf/open/floor/plasteel/whitepurple/corner,/area/arrival/start)
+"bV" = (/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (WEST)"; icon_state = "warningline"; dir = 8},/turf/open/floor/plasteel/whitepurple/corner{tag = "icon-whitepurplecorner (WEST)"; icon_state = "whitepurplecorner"; dir = 8},/area/arrival/start)
+"bW" = (/obj/machinery/camera{tag = "icon-camera (WEST)"; icon_state = "camera"; dir = 8},/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (EAST)"; icon_state = "whitepurple"; dir = 4},/area/arrival/start)
+"bX" = (/obj/machinery/atmospherics/components/unary/vent_scrubber,/turf/open/floor/plasteel/white,/area/arrival/start)
+"bY" = (/obj/effect/turf_decal/stripes/corner{tag = "icon-warninglinecorner (EAST)"; icon_state = "warninglinecorner"; dir = 4},/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (WEST)"; icon_state = "whitepurple"; dir = 8},/area/arrival/start)
+"bZ" = (/obj/structure/table,/obj/item/weapon/hand_labeler,/obj/item/stack/cable_coil,/obj/item/stack/cable_coil{pixel_y = 2},/turf/open/floor/plasteel/whitepurple,/area/arrival/start)
+"ca" = (/obj/structure/table,/obj/machinery/cell_charger,/obj/machinery/light{tag = "icon-tube1 (EAST)"; icon_state = "tube1"; dir = 4},/turf/open/floor/plasteel/whitepurple,/area/arrival/start)
+"cb" = (/turf/open/floor/plasteel/whitepurple/corner,/area/arrival/start)
+"cc" = (/obj/effect/turf_decal/stripes/line{tag = "icon-warningline (EAST)"; icon_state = "warningline"; dir = 4},/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (SOUTHEAST)"; icon_state = "whitepurple"; dir = 6},/area/arrival/start)
+"cd" = (/turf/open/floor/plasteel/whitepurple/side{tag = "icon-whitepurple (SOUTHWEST)"; icon_state = "whitepurple"; dir = 10},/area/arrival/start)
+"ce" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/plasteel/whitepurple,/area/arrival/start)
+"cf" = (/obj/structure/table,/obj/item/weapon/storage/belt/utility,/turf/open/floor/plasteel/whitepurple,/area/arrival/start)
+"cg" = (/obj/structure/table,/obj/item/device/radio,/turf/open/floor/plasteel/whitepurple,/area/arrival/start)
+"ch" = (/obj/machinery/modular_computer/console,/turf/open/floor/carpet,/area/arrival/start)
+"ci" = (/turf/open/floor/plasteel/barber,/area/arrival/start)
+"cj" = (/obj/item/weapon/twohanded/required/kirbyplants,/turf/open/floor/plasteel/barber,/area/arrival/start)
+"ck" = (/turf/open/floor/carpet,/area/arrival/start)
+"cl" = (/obj/structure/table,/turf/open/floor/carpet,/area/arrival/start)
+"cm" = (/obj/structure/chair/office/light{tag = "icon-officechair_white (WEST)"; icon_state = "officechair_white"; dir = 8},/turf/open/floor/plasteel/barber,/area/arrival/start)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaababababababababababababababababababaa
+aaabacacacacadacacacacacacadacacacacabaa
+aaabacacacacacacacacacacacacacacacacabaa
+aaabacacacacacacacacacacacacacacacacabaa
+aaabaeacacacafagahagaiagahajacacacakabaa
+aaabacacacacalacacacacacacamacacacacabaa
+aaabacacacacanacacaoaoacacapacacacacabaa
+aaabacacacacalacaqababaracasacacacacabaa
+aaabacacacacatacaqababaracapacacacacabaa
+aaabacacacacalacacauauacacamacacacacabaa
+aaabacacacacanacacacacacacapacacacacabaa
+aaabaeacacacavawaxayaxawaxazacacacakabaa
+aaabacacacacacacacacacacacacacacacacabaa
+aaabababacacacacacacacacacacacacacacabaa
+aaabaAabacacacacacaBacacacacaCacacacabaa
+aaabaDabacacacacacacacacacacaEaFacacabaa
+aaabaDacacacaGacacacacacacaGacaHacacabaa
+aaababababababababababababababababababaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaI
+"}
+
+(1,1,2) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaababababababababababababababababababaa
+aaabaJacacacacacacacacacacacacacacacabaa
+aaabacaKaKaKaKaKaKaKaKaKaKaKaKaKaKacabaa
+aaabacaKaKaKaKaKaKaKaKaKaKaKaKaKaKacabaa
+aaabacaKaKaKaKaKaKaKaKaKaKaKaKaKaKacabaa
+aaabacaKaKaKaKaKaKaKaKaKaKaKaKaKaKacabaa
+aaabacaKaKaKaKaKaKaKaKaKaKaKaKaKaKacabaa
+aaabacaKaKaKaKaKaKaKaKaKaKaKaKaKaKacabaa
+aaabacaKaKaKaKaKaKaKaKaKaKaKaKaKaKacabaa
+aaabacaKaKaKaKaKaKaKaKaKaKaKaKaKaKacabaa
+aaabacaKaKaKaKaKaKaKaKaKaKaKaKaKaKacabaa
+aaabacaKaKaKaKaKaKaKaKaKaKaKaKaKaKacabaa
+aaabacacacaKaKaKaKaKaKaKaKaKaKaKaKacabab
+aaabacabacaKaKaKaKaKaKaKaKaKaKaKaKacacab
+aaabaDabacaKaKaKaKaKaKaKaKaKaKaKaKaCacab
+aaabaLabacaKaKaKaKaKaKaKaKaKaKaKaKaEaFab
+aaabaDabacacacacacacacacacacacacacacaHab
+aaababababababababababababababababababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaI
+"}
+
+(1,1,3) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaMacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaNacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaababacababababaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaabacacacacabababababaaaaaaaaaaaaaaaa
+aaaaababababacabaOaOaPabaaaaaaaaaaaaaaaa
+aaaaaaaaabaQaRaSaSaSaTabaaaaaaaaaaaaaaaa
+aaaaaaaaabaUaPaOaOaOaOabaaaaaaaaaaaaaaaa
+aaaaaaaaabaOaPaOaVaOaWabaaaaaaaaaaaaaaaa
+aaaaaaaaabaOaPaXaYaOaZabaaaaaaaaaaaaaaaa
+aaaaaaaaabbaaPbbbcbdbeababababaaaaaaaaaa
+aaaaaaaaabbfbgbbbhbibjabaCacabaaaaaaaaaa
+aaaaaaaaabbkaTblbmbmbmabaEaFabaaaaaaaaaa
+aaaaaaaaabbnaOaOaOaOaOabacaHabaaaaaaaaaa
+aaaaaaaaabababababababababababaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaI
+"}
+
+(1,1,4) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabbobpabaaaaabababababababaaaaaaaaaaaa
+aaabbqbpabaaaaabbrbsbtbubvabaaaaaaaaaaaa
+aaabbobpabaaaaabbwbxbybybzabaaaaaaaaaaaa
+aaabbobpabaaaaabbAbAbAabbBbCbAbAabaaaaaa
+aaabbDbpbCabababaKaKaKbAbEbFbFbFabaaaaaa
+aabGbHbtbIaKaKbJaKaKaKbAbobzbzbKabaaaaaa
+aaabbobzbLaKaKbJaKaKaKbAbobzbMbNabaaaaaa
+aaabbobMbLaKaKbJaKaKbOabbPbzbzbQabaaaaaa
+aabBbobzbRbSbSbSbSbSbSbBbTbzbzbpabaaaaaa
+aabBbobzbUbSbSbSbSbSbSbBbVbzbzbWabaaaaaa
+aaabbobXbLaKaKbJaKaKbOabbYbzbXbZabaaaaaa
+aabGbobzbLaKaKbJaKaKaKbAbobzbzcaabaaaaaa
+aaabbHcbccaKaKbJaKaKaKbAcdcecfcgabaaaaaa
+aaabababababababbAbAbAabbBababababaaaaaa
+aaaaaaaaabaCacabchchchcicicjabaaaaaaaaaa
+aaaaaaaaabaEaFabckckclcmciciabaaaaaaaaaa
+aaaaaaaaabacaHababababababababaaaaaaaaaa
+aaaaaaaaababababaaaaaaaaaaaaaaaaaaaaaaaI
+"}
