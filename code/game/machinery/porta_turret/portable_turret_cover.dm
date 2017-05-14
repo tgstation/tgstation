@@ -56,7 +56,9 @@
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			parent_turret.invisibility = INVISIBILITY_MAXIMUM
 			parent_turret.update_icon()
+			qdel(parent_turret.underbase)
 			qdel(src)
+
 
 	else if(I.GetID())
 		if(parent_turret.allowed(user))
