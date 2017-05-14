@@ -9,17 +9,18 @@
 "i" = (/turf/open/indestructible/necropolis,/area/ruin)
 "j" = (/turf/closed/indestructible/necropolis,/area/ruin)
 "k" = (/turf/closed/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin)
-"l" = (/obj/structure/glowshroom/single,/turf/open/indestructible/necropolis,/area/ruin)
-"m" = (/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; name = "sand"},/area/ruin)
+"l" = (/obj/machinery/brewing_barrel,/turf/open/indestructible/necropolis,/area/ruin)
+"m" = (/obj/structure/glowshroom/single,/turf/open/indestructible/necropolis,/area/ruin)
 "n" = (/obj/structure/table/wood,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/glowshroom,/obj/item/seeds/glowshroom,/turf/open/indestructible/necropolis,/area/ruin)
-"o" = (/obj/structure/table/wood,/obj/item/weapon/cultivator,/obj/item/weapon/cultivator,/obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/indestructible/necropolis,/area/ruin)
-"p" = (/obj/machinery/migrant_spawner,/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; name = "sand"},/area/ruin)
-"q" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
-"r" = (/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/turf/open/indestructible/necropolis,/area/ruin)
+"o" = (/obj/structure/table/wood,/obj/item/weapon/cultivator,/obj/item/weapon/cultivator,/obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/turf/open/indestructible/necropolis,/area/ruin)
+"p" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"q" = (/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/turf/open/indestructible/necropolis,/area/ruin)
+"r" = (/obj/machinery/migrant_spawner,/turf/open/indestructible/necropolis,/area/ruin)
 "s" = (/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/turf/open/indestructible/necropolis,/area/ruin)
-"t" = (/obj/structure/sink/puddle,/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; name = "sand"},/area/ruin)
-"u" = (/turf/closed/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/lavaland/surface/outdoors)
-"v" = (/obj/structure/glowshroom/single,/turf/open/indestructible/necropolis,/area/lavaland/surface/outdoors)
+"t" = (/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; name = "sand"},/area/ruin)
+"u" = (/obj/structure/sink/puddle{name = "magic puddle"},/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; name = "sand"},/area/ruin)
+"v" = (/turf/closed/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/lavaland/surface/outdoors)
+"w" = (/obj/structure/glowshroom/single,/turf/open/indestructible/necropolis,/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aaaaaaaaaaabcbaaaaaaaaaaa
@@ -31,14 +32,14 @@ aaaaeeeggeebbheeheebbbbba
 aaadeeeggggiiggghebceecba
 aaeeeeggggggigggiebbbeebb
 baeeeegggjjkfkjiggbebbbcd
-aeeebhijiiilmnojggeeeeebb
-aeebbbijiimmpmqrjgeebeeaa
-aeebccgjiiimmiisjeeeeeaaa
-aabbbeggkgjfmmflkgebeeaba
-bbcbeeegkgjfmtjikgebeeaaa
-bdbeeeegkiiifmkggeeeeadaa
-abbeebeggfljijkggeeeeaaaa
-abeeeeeebbuubdveeeeabaaaa
+aeeebhijillminojggeeeeebb
+aeebbbijiiiiiipqjgeebeeaa
+aeebccgjiiiriiisjeeeeeaaa
+aabbbeggkgjiitfmkgebeeaba
+bbcbeeegkgjftujikgebeeaaa
+bdbeeeegkiiiftkggeeeeadaa
+abbeebeggfmjijkggeeeeaaaa
+abeeeeeebbvvbdweeeeabaaaa
 aaeebeeebbhhbbeeeeeaaaaaa
 aaeeeebbbbeebbeeebaaaaaba
 aabeeebcbeeeeebcbaaaaaaaa

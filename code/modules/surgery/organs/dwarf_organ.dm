@@ -1,7 +1,7 @@
 /obj/item/organ/alcoholvessel //essentially the opposite of the xeno's plasmavessel, but with alcohol
-	name = "alcoholvessel"
+	name = "alcohol vessel"
 	icon_state = "plasma"
-	origin_tech = "biotech=5;plasmatech=4"
+	origin_tech = "biotech=5"
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
 	slot = "dwarf_organ"
@@ -12,7 +12,7 @@
 
 /obj/item/organ/alcoholvessel/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("ethonal", stored_alcohol/10)
+	S.reagents.add_reagent("ethanol", stored_alcohol/10)
 	return S
 
 

@@ -11,6 +11,7 @@
 	hair_y_offset = -4
 	use_skintones = 1
 	speedmod = 1
+	damage_overlay_type = "monkey" //fits surprisngly well, so why add more icons?
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	brutemod = 0.9
 	coldmod = 0.85
@@ -30,12 +31,6 @@
 	if(!dwarf)
 		dwarf = new()
 		dwarf.Insert(H)
-
-
-/*datum/species/dwarf/on_species_loss(mob/living/carbon/C, datum/species/old_species)
-	..()
-	var/mob/living/carbon/human/H = C
-*/
 
 /datum/species/dwarf/random_name(gender,unique,lastname)
 	var/randname = dwarf_name()

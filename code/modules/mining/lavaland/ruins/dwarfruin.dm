@@ -1,4 +1,4 @@
-#define DEFAULT_RESPAWN 10000 //10 minutes
+#define DWARF_COOLDOWN 6000 //10 minutes
 
 /*Dwarf Spawner*/
 /obj/machinery/migrant_spawner
@@ -6,32 +6,29 @@
 	desc = "A strange portal that actas a gateway between this world and another. Strange pixelated images fade in and out inside the frame."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "dorfportal"
-	anchored = 1
-	resistance_flags = INDESTRUCTIBLE
-	var/respawn_cooldown = DEFAULT_RESPAWN
+	anchored = TRUE
+	var/respawn_cooldown = DWARF_COOLDOWN
 	var/list/spawned_dorfs = list()
 	var/list/spawned_mobs = list()
 	var/list/recently_dead_ckeys = list()
 	var/dorf_gear = /datum/outfit/dorf
 
-	var/static/ctf_object_typecache
-
 /obj/machinery/migrant_spawner/Initialize()
 	..()
-	GLOB.poi_list |= src
+	GLOB.poi_list += src
 
 /obj/machinery/migrant_spawner/Destroy()
 	GLOB.poi_list.Remove(src)
 	..()
 
+
 /obj/machinery/migrant_spawner/process()
 	for(var/i in spawned_mobs)
 		if(!i)
-			spawned_mobs -= i
+			LAZYREMOVE(spawned_mobs, i)
 			continue
-		// Anyone in crit, automatically reap
 		var/mob/living/M = i
-		if(M.stat == DEAD) //prevent dorf body build-up
+		if(M.stat == DEAD) //adding timer to dead dwarfs
 			add_dorf_timer(M)
 
 /obj/machinery/migrant_spawner/attack_ghost(mob/user)
@@ -39,7 +36,7 @@
 		return
 	if(user.ckey in spawned_dorfs)
 		if(user.ckey in recently_dead_ckeys)
-			to_chat(user, "It must be more than [respawn_cooldown/100] minutes from your last death to respawn!")
+			to_chat(user, "It must be more than [respawn_cooldown/600] minutes from your last death to respawn!")
 			return
 		var/client/new_dorf = user.client
 		if(user.mind && user.mind.current)
@@ -47,7 +44,7 @@
 		spawn_dorf(new_dorf)
 		return
 
-	spawned_dorfs |= user.ckey
+	spawned_dorfs += user.ckey
 	var/client/new_dorf = user.client
 	if(user.mind && user.mind.current)
 		add_dorf_timer(user.mind.current)
@@ -55,11 +52,11 @@
 
 /obj/machinery/migrant_spawner/proc/add_dorf_timer(mob/living/body)
 	if(isliving(body))
-		recently_dead_ckeys += body.ckey
+		LAZYADD(recently_dead_ckeys, body.ckey)
 		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 
 /obj/machinery/migrant_spawner/proc/clear_cooldown(var/ckey)
-	recently_dead_ckeys -= ckey
+	LAZYREMOVE(recently_dead_ckeys, ckey)
 
 /obj/machinery/migrant_spawner/proc/spawn_dorf(client/new_dorf)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
@@ -75,7 +72,7 @@
 	M.mind.special_role = "Dwarf"
 	var/datum/objective/O = new("Make claim to these hellish lands, constructing a great fortress and mining the rock for its precious metals, in the name of the Dwarven people!")
 	M.mind.objectives += O
-	spawned_mobs += M
+	LAZYADD(spawned_mobs, M)
 
 /datum/outfit/dorf
 	name = "Dwarf Standard"
@@ -115,5 +112,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=90)
 
+/*Misc Items*/
+/obj/item/weapon/reagent_containers/food/drinks/wooden_mug
+	name = "wooden mug"
+	desc = "A mug for serving hearty brews."
+	icon_state = "manlydorfglass"
+	item_state = "coffee"
+	spillable = 1
 
-#undef DEFAULT_RESPAWN
+
+#undef DWARF_COOLDOWN
