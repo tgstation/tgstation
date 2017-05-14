@@ -15,6 +15,8 @@
 	var/list/territory_lost = list()
 	var/recalls = 1
 	var/dom_attempts = 2
+	var/inner_outfit
+	var/outer_outfit
 	var/datum/atom_hud/antag/gang/ganghud
 	var/is_deconvertible = TRUE //Can you deconvert normal gangsters from the gang
 
@@ -26,8 +28,10 @@
 	var/static/list/boss_items = list(
 		/datum/gang_item/function/gang_ping,
 		/datum/gang_item/function/recall,
-		/datum/gang_item/function/outfit,
+		/datum/gang_item/clothing/under,
+		/datum/gang_item/clothing/suit,
 		/datum/gang_item/clothing/hat,
+		/datum/gang_item/clothing/neck,
 		/datum/gang_item/clothing/shoes,
 		/datum/gang_item/clothing/mask,
 		/datum/gang_item/clothing/hands,
@@ -54,7 +58,10 @@
 	var/reg_item_list
 	var/reg_category_list
 	var/static/list/soldier_items = list(
+		/datum/gang_item/clothing/under,
+		/datum/gang_item/clothing/suit,
 		/datum/gang_item/clothing/hat,
+		/datum/gang_item/clothing/neck,
 		/datum/gang_item/clothing/shoes,
 		/datum/gang_item/clothing/mask,
 		/datum/gang_item/clothing/hands,
@@ -76,14 +83,6 @@
 		/datum/gang_item/equipment/stimpack,
 	)
 
-	var/static/list/clothes = list(            // Influential clothing
-		/obj/item/clothing/head/collectable/petehat/gang,
-		/obj/item/clothing/shoes/gang,
-		/obj/item/clothing/mask/gangpipe,
-		/obj/item/clothing/gloves/gang,
-		/obj/item/weapon/storage/belt/military/gang
-		)
-
 /datum/gang/New(loc,gangname)
 	if(!GLOB.gang_colors_pool.len)
 		message_admins("WARNING: Maximum number of gangs have been exceeded!")
@@ -95,20 +94,29 @@
 		switch(color)
 			if("red")
 				color_hex = "#DA0000"
+				inner_outfit = pick(text2path("/obj/item/clothing/under/color/[color]"),/obj/item/clothing/under/lawyer/red)
 			if("orange")
 				color_hex = "#FF9300"
+				inner_outfit = pick(text2path("/obj/item/clothing/under/color/[color]"),/obj/item/clothing/under/geisha)
 			if("yellow")
 				color_hex = "#FFF200"
+				inner_outfit = pick(text2path("/obj/item/clothing/under/color/[color]"),/obj/item/clothing/under/burial)
 			if("green")
 				color_hex = "#A8E61D"
+				inner_outfit = pick(text2path("/obj/item/clothing/under/color/[color]"),/obj/item/clothing/under/syndicate/camo ,/obj/item/clothing/under/suit_jacket/tan)
 			if("blue")
 				color_hex = "#00B7EF"
+				inner_outfit = pick(text2path("/obj/item/clothing/under/color/[color]"),/obj/item/clothing/under/suit_jacket/navy)
 			if("purple")
 				color_hex = "#DA00FF"
+				inner_outfit = pick(text2path("/obj/item/clothing/under/color/lightpurple"),/obj/item/clothing/under/lawyer/purpsuit)
+			if("white")
+				color_hex = "#FFFFFF"
+				inner_outfit = pick(text2path("/obj/item/clothing/under/color/[color]"),/obj/item/clothing/under/suit_jacket/white)
 
 	name = (gangname ? gangname : pick(GLOB.gang_name_pool))
 	GLOB.gang_name_pool -= name
-
+	outer_outfit = pick(GLOB.gang_outfit_pool)
 	ganghud = new()
 	ganghud.color = color_hex
 	log_game("The [name] Gang has been created. Their gang color is [color].")
@@ -156,51 +164,6 @@
 /datum/gang/proc/domination_time_remaining()
 	var/diff = domination_timer - world.time
 	return diff / 10
-//////////////////////////////////////////// OUTFITS
-
-
-//Used by recallers when purchasing a gang outfit. First time a gang outfit is purchased the buyer decides a gang style which is stored so gang outfits are uniform
-/datum/gang/proc/gang_outfit(mob/living/carbon/user,obj/item/device/gangtool/gangtool)
-	if(!user || !gangtool)
-		return 0
-	if(!gangtool.can_use(user))
-		return 0
-
-	var/gang_style_list = list("Gang Colors","Black Suits","White Suits","Leather Jackets","Leather Overcoats","Puffer Jackets","Military Jackets","Tactical Turtlenecks","Soviet Uniforms")
-	if(!style && (user.mind in SSticker.mode.get_gang_bosses()))	//Only the boss gets to pick a style
-		style = input("Pick an outfit style.", "Pick Style") as null|anything in gang_style_list
-
-	if(gangtool.can_use(user) && (gangtool.outfits >= 1))
-		var/outfit_path
-		switch(style)
-			if(null || "Gang Colors")
-				outfit_path = text2path("/obj/item/clothing/under/color/[color]")
-			if("Black Suits")
-				outfit_path = /obj/item/clothing/under/suit_jacket/charcoal
-			if("White Suits")
-				outfit_path = /obj/item/clothing/under/suit_jacket/white
-			if("Puffer Jackets")
-				outfit_path = /obj/item/clothing/suit/jacket/puffer
-			if("Leather Jackets")
-				outfit_path = /obj/item/clothing/suit/jacket/leather
-			if("Leather Overcoats")
-				outfit_path = /obj/item/clothing/suit/jacket/leather/overcoat
-			if("Military Jackets")
-				outfit_path = /obj/item/clothing/suit/jacket/miljacket
-			if("Soviet Uniforms")
-				outfit_path = /obj/item/clothing/under/soviet
-			if("Tactical Turtlenecks")
-				outfit_path = /obj/item/clothing/under/syndicate
-
-		if(outfit_path)
-			var/obj/item/clothing/outfit = new outfit_path(user.loc)
-			outfit.armor = list(melee = 20, bullet = 30, laser = 10, energy = 10, bomb = 20, bio = 0, rad = 0, fire = 30, acid = 30)
-			outfit.desc += " Tailored for the [name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
-			outfit.gang = src
-			user.put_in_hands(outfit)
-			return 1
-
-	return 0
 
 
 //////////////////////////////////////////// MESSAGING
@@ -239,32 +202,6 @@
 		lost_names += "[territory_lost[area]]"
 		territory -= area
 
-	//Count uniformed gangsters
-	var/uniformed = 0
-	for(var/datum/mind/gangmind in (gangsters|bosses))
-		if(ishuman(gangmind.current))
-			var/mob/living/carbon/human/gangster = gangmind.current
-			//Gangster must be alive and on station
-			if((gangster.stat == DEAD) || (gangster.z > ZLEVEL_STATION))
-				continue
-
-			var/obj/item/clothing/outfit
-			var/obj/item/clothing/gang_outfit
-			if(gangster.w_uniform)
-				outfit = gangster.w_uniform
-				if(outfit.gang == src)
-					gang_outfit = outfit
-			if(gangster.wear_suit)
-				outfit = gangster.wear_suit
-				if(outfit.gang == src)
-					gang_outfit = outfit
-			if(gang_outfit)
-				to_chat(gangster, "<span class='notice'>Your influence grows as you wear [gang_outfit].</span>")
-				var/list/allcon = gangster.GetAllContents()
-				for(var/obj/item/device/gangtool/G in allcon)
-					G.points += 2
-				uniformed ++
-
 	//Calculate and report influence growth
 	var/message = "<b>[src] Gang Status Report:</b><BR>*---------*<br>"
 	//Process new territories
@@ -277,20 +214,17 @@
 	//Report territory changes
 	message += "<b>[territory_new.len] new territories:</b><br><i>[added_names]</i><br>"
 	message += "<b>[territory_lost.len] territories lost:</b><br><i>[lost_names]</i><br>"
-
 	//Clear the lists
 	territory_new = list()
 	territory_lost = list()
 
 	var/control = round((territory.len/GLOB.start_state.num_territories)*100, 1)
 	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*<BR>"
-	message_gangtools(message)
-
 	if(is_dominating)
 		var/seconds_remaining = domination_time_remaining()
-		var/new_time = max(180, seconds_remaining - (uniformed * 4) - (territory.len * 2))
+		var/new_time = max(180, seconds_remaining - (territory.len * 2))
 		if(new_time < seconds_remaining)
-			message += "Takeover shortened by [seconds_remaining - new_time] seconds for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
+			message += "Takeover shortened by [seconds_remaining - new_time] seconds for defending [territory.len] territories.<BR>"
 			set_domination_time(new_time)
 		message += "<b>[seconds_remaining] seconds remain</b> in hostile takeover.<BR>"
 	else
@@ -298,28 +232,37 @@
 			var/pmessage = message
 			var/points_new = 0
 			if(istype(G, /obj/item/device/gangtool/soldier))
-				points_new = min(999,(max(0,(4 - G.points/10)) + (territory.len/2) + (LAZYLEN(G.tags)/2))) // Soldier points
-				pmessage += "You have received a bonus of [LAZYLEN(G.tags)/2] influence for territories you have personally marked."
+				points_new = min(999,(max(0,round(2 - G.points/10)) + (territory.len/2) + (LAZYLEN(G.tags)/2))) // Soldier points
+				pmessage += "Your influence has increased by [(territory.len/2)] from your gang holding [territory.len] territories, and a bonus of [(LAZYLEN(G.tags)/2)] for territories you have personally marked and kept intact.<BR>"
 			else
-				points_new = min(999,(max(0,(6 - G.points/10)) + territory.len)) // Boss points, more focused on big picture
+				points_new = min(999,(max(0,round(5 - G.points/10)) + territory.len)) // Boss points, more focused on big picture
 				pmessage += "Your influence has increased by [points_new] from your gang holding [territory.len] territories<BR>"
 			G.points += points_new
 			var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)
 			var/points_newer = 0
+			var/static/inner = inner_outfit
+			var/static/outer = outer_outfit
 			if(ishuman(ganger) && ganger.mind in (gangsters|bosses))
 				for(var/obj/C in ganger.contents)
-					if(C.type in clothes)
-						switch(C.type)
-							if(/obj/item/clothing/head/collectable/petehat/gang)
-								points_newer += 3
-							if(/obj/item/clothing/shoes/gang)
-								points_newer += 8
-							if(/obj/item/clothing/mask/gangpipe)
-								points_newer += 6
-							if(/obj/item/clothing/gloves/gang)
-								points_newer += 2
-							if(/obj/item/weapon/storage/belt/military/gang)
-								points_newer += 4
+					if(C.type == inner_outfit)
+						points_newer += 1
+						continue
+					if(C.type == outer_outfit)
+						points_newer += 1
+						continue
+					switch(C.type)
+						if(/obj/item/clothing/neck/necklace/dope)
+							points_newer += 3
+						if(/obj/item/clothing/head/collectable/petehat/gang)
+							points_newer += 3
+						if(/obj/item/clothing/shoes/gang)
+							points_newer += 8
+						if(/obj/item/clothing/mask/gskull)
+							points_newer += 6
+						if(/obj/item/clothing/gloves/gang)
+							points_newer += 2
+						if(/obj/item/weapon/storage/belt/military/gang)
+							points_newer += 4
 			if(points_newer)
 				G.points += points_newer
 				pmessage += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"

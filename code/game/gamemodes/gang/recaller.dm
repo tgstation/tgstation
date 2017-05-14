@@ -12,7 +12,7 @@
 	origin_tech = "programming=5;bluespace=2;syndicate=5"
 	var/datum/gang/gang //Which gang uses this?
 	var/recalling = 0
-	var/outfits = 3
+	var/outfits = 2
 	var/free_pen = 0
 	var/promotable = 0
 	var/points = 15
