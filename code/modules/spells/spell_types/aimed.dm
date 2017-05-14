@@ -63,7 +63,6 @@
 
 /obj/effect/proc_holder/spell/aimed/proc/fire_projectile(mob/living/user, atom/target)
 	current_amount--
-	world << "current_amount == [current_amount]"
 	var/obj/item/projectile/P = new projectile_type(user.loc)
 	P.current = get_turf(user)
 	P.firer = user
