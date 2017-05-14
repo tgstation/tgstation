@@ -206,6 +206,7 @@
 	if(issilicon(traitor.current))
 		add_law_zero(traitor.current)
 		traitor.current.playsound_local('sound/ambience/antag/Malf.ogg',100,0)
+		traitor.current.grant_language(/datum/language/common/codespeak)
 	else
 		equip_traitor(traitor.current)
 		traitor.current.playsound_local('sound/ambience/antag/TatorAlert.ogg',100,0)
