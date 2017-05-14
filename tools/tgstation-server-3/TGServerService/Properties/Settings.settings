@@ -65,5 +65,8 @@
     <Setting Name="ChatAdminChannel" Type="System.String" Scope="User">
       <Value Profile="(Default)">#botbus</Value>
     </Setting>
+    <Setting Name="ChatProviderEntropy" Type="System.String" Scope="User">
+      <Value Profile="(Default)">John Madden</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

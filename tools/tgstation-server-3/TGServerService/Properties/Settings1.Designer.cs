@@ -253,5 +253,17 @@ namespace TGServerService.Properties {
                 this["ChatAdminChannel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("John Madden")]
+        public string ChatProviderEntropy {
+            get {
+                return ((string)(this["ChatProviderEntropy"]));
+            }
+            set {
+                this["ChatProviderEntropy"] = value;
+            }
+        }
     }
 }

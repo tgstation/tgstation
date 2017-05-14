@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Script.Serialization;
 using TGServiceInterface;
 
@@ -223,20 +225,37 @@ namespace TGServerService
 		//public api
 		public TGChatSetupInfo ProviderInfo()
 		{
-			var Config = Properties.Settings.Default;
-			var rawdata = Config.ChatProviderData;
-			if (rawdata == "NEEDS INITIALIZING")
-				return new TGIRCSetupInfo()
-				{
-					Nickname = "TGS3",
-					URL = "irc.rizon.net",
-					Port = 6667
-				};
-			var Deserializer = new JavaScriptSerializer();
 			lock (ChatLock)
 			{
-				return new TGChatSetupInfo(Deserializer.Deserialize<List<string>>(rawdata), (TGChatProvider)Config.ChatProvider);
+				var Config = Properties.Settings.Default;
+				var rawdata = Config.ChatProviderData;
+				if (rawdata == "NEEDS INITIALIZING")
+					switch ((TGChatProvider)Config.ChatProvider)
+					{
+						case TGChatProvider.Discord:
+							return new TGDiscordSetupInfo();
+						case TGChatProvider.IRC:
+							return new TGIRCSetupInfo();
+						default:
+							TGServerService.ActiveService.EventLog.WriteEntry("Invalid chat provider: " + Config.ChatProvider.ToString());
+							return null;
+					}
+
+				byte[] plaintext;
+				try
+				{
+					plaintext = ProtectedData.Unprotect(Convert.FromBase64String(Config.ChatProviderData), Convert.FromBase64String(Config.ChatProviderEntropy), DataProtectionScope.CurrentUser);
+
+					var Deserializer = new JavaScriptSerializer();
+					return new TGChatSetupInfo(Deserializer.Deserialize<List<string>>(Encoding.UTF8.GetString(plaintext)), (TGChatProvider)Config.ChatProvider);
+				}
+				catch
+				{
+					Config.ChatProviderData = "NEEDS INITIALIZING";
+				}
 			}
+			//if we get here we want to retry
+			return ProviderInfo();
 		}
 
 		//public api
@@ -249,7 +268,21 @@ namespace TGServerService
 				var Config = Properties.Settings.Default;
 				Config.ChatProvider = (int)info.Provider;
 				Config.ChatProviderData = rawdata;
+				
+				byte[] plaintext = Encoding.UTF8.GetBytes(rawdata);
 
+				// Generate additional entropy (will be used as the Initialization vector)
+				byte[] entropy = new byte[20];
+				using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+				{
+					rng.GetBytes(entropy);
+				}
+
+				byte[] ciphertext = ProtectedData.Protect(plaintext, entropy, DataProtectionScope.CurrentUser);
+				
+				Config.ChatProviderEntropy = Convert.ToBase64String(entropy, 0, entropy.Length);
+				Config.ChatProviderData = Convert.ToBase64String(ciphertext, 0, ciphertext.Length);
+				
 				if (info.Provider == currentProvider)
 					return ChatProvider.SetProviderInfo(info);
 				else

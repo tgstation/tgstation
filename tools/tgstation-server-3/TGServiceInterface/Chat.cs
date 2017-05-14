@@ -74,6 +74,12 @@ namespace TGServiceInterface
 		public TGIRCSetupInfo(TGChatSetupInfo baseInfo = null) : base(baseInfo, FieldsLen)
 		{
 			Provider = TGChatProvider.IRC;
+			if (baseInfo == null)
+			{
+				Nickname = "TGS3";
+				URL = "irc.rizon.net";
+				Port = 6667;
+			}
 		}
 		/// <summary>
 		/// The port of the IRC server
@@ -124,7 +130,6 @@ namespace TGServiceInterface
 		{
 			Provider = TGChatProvider.IRC;
 		}
-		public string Nickname { get; set; }
 	}
 
 	/// <summary>
