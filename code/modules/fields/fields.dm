@@ -114,35 +114,27 @@
 			CHECK_TICK
 
 /datum/proximity_monitor/advanced/proc/field_turf_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F, turf/entering)
-	world << "DEBUG: field turf canpass"
 	return TRUE
 
 /datum/proximity_monitor/advanced/proc/field_turf_uncross(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
-	world << "DEBUG: field turf uncross"
 	return TRUE
 
 /datum/proximity_monitor/advanced/proc/field_turf_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
-	world << "DEBUG: field turf crossed"
 	return TRUE
 
 /datum/proximity_monitor/advanced/proc/field_turf_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
-	world << "DEBUG: field turf uncrossed"
 	return TRUE
 
 /datum/proximity_monitor/advanced/proc/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F, turf/entering)
-	world << "DEBUG: field edge canpass"
 	return TRUE
 
 /datum/proximity_monitor/advanced/proc/field_edge_uncross(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
-	world << "DEBUG: field edge uncross"
 	return TRUE
 
 /datum/proximity_monitor/advanced/proc/field_edge_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
-	world << "DEBUG: field edge crossed"
 	return TRUE
 
 /datum/proximity_monitor/advanced/proc/field_edge_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
-	world << "DEBUG: field edge uncrossed"
 	return TRUE
 
 /datum/proximity_monitor/advanced/HandleMove()
