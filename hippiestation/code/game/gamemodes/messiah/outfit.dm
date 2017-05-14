@@ -22,7 +22,16 @@
 	if(visualsOnly)
 		return
 
+	//Conversion preventative measures
+	var/obj/item/weapon/implant/mindshield/imp = new(H)
+	H.implants += imp
+	imp.imp_in = H
+	H.sec_hud_set_implants()
+	H.mind.isholy = TRUE // Ability to use Chaplain stuff, like the Bible
+	H.mind.hasSoul = FALSE //Removes the ability to sell one's soul to a devil
+
 	H.grant_all_languages(omnitongue=TRUE)
+
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/jesus_btw(null))
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock/jesus(null))
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/jesus_ascend(null))
