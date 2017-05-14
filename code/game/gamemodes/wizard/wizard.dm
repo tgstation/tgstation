@@ -110,6 +110,10 @@
 		wizard_mob.name = newname
 		if(wizard_mob.mind)
 			wizard_mob.mind.name = newname
+
+		/* Wizards are at least 30 years old */
+		if(wizard_mob.age < 30)
+			wizard_mob.age = 30
 	return
 
 
