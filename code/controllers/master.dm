@@ -421,26 +421,31 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			else
 				tick_precentage = tick_remaining
 
-			GLOB.CURRENT_TICKLIMIT = world.tick_usage + tick_precentage
+			tick_precentage = max(tick_precentage*0.5, tick_precentage-queue_node.tick_overrun)
+
+			GLOB.CURRENT_TICKLIMIT = round(world.tick_usage + tick_precentage)
 
 			if (!(queue_node_flags & SS_TICKER))
 				ran_non_ticker = TRUE
 			ran = TRUE
-			tick_usage = world.tick_usage
+
 			queue_node_paused = (queue_node.state == SS_PAUSED || queue_node.state == SS_PAUSING)
 			last_type_processed = queue_node
 
 			queue_node.state = SS_RUNNING
 
+			tick_usage = world.tick_usage
 			var/state = queue_node.ignite(queue_node_paused)
+			tick_usage = world.tick_usage - tick_usage
+
 			if (state == SS_RUNNING)
 				state = SS_IDLE
 			current_tick_budget -= queue_node_priority
-			tick_usage = world.tick_usage - tick_usage
+
 
 			if (tick_usage < 0)
 				tick_usage = 0
-
+			queue_node.tick_overrun = max(0, MC_AVG_FAST_UP_SLOW_DOWN(queue_node.tick_overrun, tick_usage-tick_precentage))
 			queue_node.state = state
 
 			if (state == SS_PAUSED)
@@ -467,13 +472,13 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			queue_node.times_fired++
 
 			if (queue_node_flags & SS_TICKER)
-				queue_node.next_fire = world.time + (world.tick_lag * queue_node.wait)
+				queue_node.next_fire = world.time + (world.tick_lag * (queue_node.wait + (queue_node.tick_overrun/100)))
 			else if (queue_node_flags & SS_POST_FIRE_TIMING)
-				queue_node.next_fire = world.time + queue_node.wait
+				queue_node.next_fire = world.time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
 			else if (queue_node_flags & SS_KEEP_TIMING)
 				queue_node.next_fire += queue_node.wait
 			else
-				queue_node.next_fire = queue_node.queued_time + queue_node.wait
+				queue_node.next_fire = queue_node.queued_time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
 
 			queue_node.queued_time = 0
 
