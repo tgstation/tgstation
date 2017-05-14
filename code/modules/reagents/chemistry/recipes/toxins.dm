@@ -6,6 +6,12 @@
 	required_reagents = list("ethanol" = 1, "oxygen" = 1, "silver" = 1)
 	required_temp = 420
 
+/datum/chemical_reaction/shellblood
+	name = "shell blood"
+	id = "shell_blood"
+	results = list("shellblood" = 10)
+	required_reagents = list("sacid" = 1, "iron" = 2, "radium" = 1, "water" = 1)
+
 /datum/chemical_reaction/neurotoxin2
 	name = "neurotoxin2"
 	id = "neurotoxin2"
