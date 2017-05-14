@@ -11779,7 +11779,6 @@
 "axN" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/meter,
 /turf/open/floor/plasteel/neutral,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -112338,6 +112337,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
