@@ -990,7 +990,7 @@
 	turret = MT
 
 /obj/item/gun_control/CanItemAutoclick()
-	return TRUE
+	return 1
 
 /obj/item/gun_control/afterattack(atom/targeted_atom, mob/user)
 	..()
@@ -1037,7 +1037,7 @@
 	if(target == user || target == get_turf(src))
 		return
 	if(world.time < cooldown)
-		if(!warned && world.time < (cooldown - rate_of_fire*number_of_shots)) // To capture the window where one is done firing
+		if(!warned && world.time > (cooldown - cooldown_duration + rate_of_fire*number_of_shots)) // To capture the window where one is done firing
 			warned = TRUE
 			playsound(src, 'sound/weapons/sear.ogg', 100, 1)
 		return
@@ -1052,7 +1052,7 @@
 		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, target_turf), i*rate_of_fire)
 
 
-obj/machinery/manned_turret/proc/fire_helper(var/target_turf)
+/obj/machinery/manned_turret/proc/fire_helper(var/target_turf)
 	if(!src)
 		return
 	var/turf/targets_from = get_turf(src)
@@ -1067,3 +1067,16 @@ obj/machinery/manned_turret/proc/fire_helper(var/target_turf)
 	P.yo = target.y - targets_from.y + rand(-1,1)
 	P.xo = target.x - targets_from.x + rand(-1,1)
 	P.fire()
+
+/obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
+	name = "Infinity Gun"
+	view_range = 12
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
+
+/obj/machinery/manned_turret/ultimate/checkfire(atom/targeted_atom, mob/user)
+	target = targeted_atom
+	if(target == user || target == get_turf(src))
+		return
+	target_turf = get_turf(target)
+	fire_helper(target_turf)

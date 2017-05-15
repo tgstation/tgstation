@@ -147,7 +147,7 @@
 /datum/gang_item/weapon/pistol
 	name = "10mm Pistol"
 	id = "pistol"
-	cost = 25
+	cost = 30
 	item_path = /obj/item/weapon/gun/ballistic/automatic/pistol
 
 /datum/gang_item/weapon/ammo/pistol_ammo
