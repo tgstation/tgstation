@@ -113,7 +113,7 @@
 						R.ResetSecurityCodes()
 					else
 						var/turf/T = get_turf(R)
-						message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] detonated [key_name(R, R.client)][ADMIN_JMP(T)]!</span>")
+						message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(R)][ADMIN_JMP(T)]!</span>")
 						log_game("\<span class='notice'>[key_name(usr)] detonated [key_name(R)]!</span>")
 						if(R.connected_ai)
 							to_chat(R.connected_ai, "<br><br><span class='alert'>ALERT - Cyborg detonation detected: [R.name]</span><br>")
@@ -168,7 +168,7 @@
 				D.visible_message("<span class='danger'>[D] shuts down!</span>", "<span class='userdanger'>Your body automatically shuts down, in response to a kill code.</span>")
 				D.death()
 
-				message_admins("[ADMIN_LOOKUPFLW(usr)] shut down [key_name(D, D.client)][ADMIN_JMP(T)]!")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] shut down [key_name_admin(D)][ADMIN_JMP(T)]!")
 				log_game("[key_name(usr)] shut down [key_name(D)]!")
 
 	src.updateUsrDialog()
