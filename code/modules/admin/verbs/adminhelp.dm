@@ -459,7 +459,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	set name = "Adminhelp"
 
 	if(jobban_isbanned(src, "AHELP"))
-		src << "<span class='danger'>You have been banned from adminhelping. You will have to appeal this ban on the forums.</span>"
+		to_chat(src, "<span class='danger'>You have been banned from adminhelping. You will have to appeal this ban on the forums.</span>")
 		return
 
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
