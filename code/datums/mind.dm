@@ -94,6 +94,8 @@
 		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
 		language_holder = mob_holder.copy(src)
 
+		if(isliving(current))
+			remove_old_implants(current)
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
 			new_character.ghostize(1)						//we'll need to ghostize so that key isn't mobless.
@@ -115,6 +117,7 @@
 		C.last_mind = src
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
+	inherit_new_implants(new_character)
 
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
@@ -1560,6 +1563,14 @@
 	. = G
 	if(G)
 		G.reenter_corpse()
+
+/datum/mind/proc/remove_old_implants(var/mob/living/old_character)
+	for(var/obj/item/weapon/implant/I in old_character)
+		I.removed(old_character) //Should not delete the implant
+
+/datum/mind/proc/inherit_new_implants(var/mob/living/new_character)
+	for(var/obj/item/weapon/implant/I in new_character)
+		I.implant(new_character)
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
