@@ -179,15 +179,7 @@ namespace TGServerService
 					//because of a bug in smart irc this takes forever and there's nothing we can really do about it 
 					//If you want it fixed, get this damn pull request through https://github.com/meebey/SmartIrc4net/pull/31
 					if (irc.IsConnected)
-					{
-						var psrt = irc.SocketReceiveTimeout;
-						var psst = irc.SocketSendTimeout;
-						irc.SocketReceiveTimeout = 0;
-						irc.SocketSendTimeout = 0;
 						irc.Disconnect();
-						irc.SocketReceiveTimeout = psrt;
-						irc.SocketSendTimeout = psst;
-					}
 				}
 			}
 			catch
