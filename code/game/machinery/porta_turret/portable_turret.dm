@@ -924,27 +924,36 @@
 	name = "machine gun turret"
 	desc = "A mounted gun that, while antiquated, has been a black market staple for centuries."
 	icon = 'icons/obj/turrets.dmi'
-	icon_state = "protoemitter"
+	icon_state = "machinegun"
 	can_buckle = TRUE
 	density = TRUE
+	max_integrity = 100
+	obj_integrity = 100
 	buckle_lying = 0
 	layer = 4.2
 	var/view_range = 10
 	var/cooldown = 0
 	var/projectile_type = /obj/item/projectile/bullet/weakbullet3
+	var/rate_of_fire = 1
+	var/number_of_shots = 40
+	var/cooldown_duration = 90
+	var/atom/target
+	var/target_turf
+	var/warned = FALSE
 
 //BUCKLE HOOKS
 
 /obj/machinery/manned_turret/unbuckle_mob(mob/living/buckled_mob,force = 0)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
 	for(var/obj/item/I in buckled_mob.held_items)
-		if(istype(I, /obj/item/weapon/turret_control))
+		if(istype(I, /obj/item/gun_control))
 			qdel(I)
 	if(istype(buckled_mob))
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.reset_perspective()
+			buckled_mob.client.change_view(world.view)
+	anchored = FALSE
 	. = ..()
 
 /obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/living/carbon/user)
@@ -956,90 +965,105 @@
 		var/obj/item/I = V
 		if(istype(I))
 			if(M.dropItemToGround(I))
-				var/obj/item/weapon/turret_control/TC = new /obj/item/weapon/turret_control()
+				var/obj/item/gun_control/TC = new /obj/item/gun_control(src)
 				M.put_in_hands(TC)
 		else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-			var/obj/item/weapon/turret_control/TC = new /obj/item/weapon/turret_control()
+			var/obj/item/gun_control/TC = new /obj/item/gun_control(src)
 			M.put_in_hands(TC)
 	M.pixel_y = 14
 	layer = 4.1
 	setDir(SOUTH)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+	anchored = TRUE
 	if(user.client)
 		user.client.change_view(view_range)
 
-/obj/item/weapon/turret_control
+/obj/item/gun_control
 	name = "turret controls"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	flags = ABSTRACT | NODROP
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | NOBLUDGEON
+	var/obj/machinery/manned_turret/turret
 
+/obj/item/gun_control/New(var/obj/machinery/manned_turret/MT)
+	turret = MT
 
-/obj/item/weapon/turret_control/afterattack(atom/targeted_atom, mob/user)
+/obj/item/gun_control/CanItemAutoclick()
+	return TRUE
+
+/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user)
 	..()
 	var/obj/machinery/manned_turret/E = user.buckled
 	E.setDir(get_dir(E,targeted_atom))
 	user.setDir(E.dir)
 	switch(E.dir)
 		if(NORTH)
-			E.layer = 3.9
+			E.layer = BELOW_MOB_LAYER
 			user.pixel_x = 0
 			user.pixel_y = -14
 		if(NORTHEAST)
-			E.layer = 3.9
+			E.layer = BELOW_MOB_LAYER
 			user.pixel_x = -8
-			user.pixel_y = -12
+			user.pixel_y = -4
 		if(EAST)
-			E.layer = 4.1
+			E.layer = ABOVE_MOB_LAYER
 			user.pixel_x = -14
 			user.pixel_y = 0
 		if(SOUTHEAST)
-			E.layer = 3.9
+			E.layer = BELOW_MOB_LAYER
 			user.pixel_x = -8
-			user.pixel_y = 12
+			user.pixel_y = 4
 		if(SOUTH)
-			E.layer = 4.1
+			E.layer = ABOVE_MOB_LAYER
 			user.pixel_x = 0
 			user.pixel_y = 14
 		if(SOUTHWEST)
-			E.layer = 3.9
+			E.layer = BELOW_MOB_LAYER
 			user.pixel_x = 8
-			user.pixel_y = 12
+			user.pixel_y = 4
 		if(WEST)
-			E.layer = 4.1
+			E.layer = ABOVE_MOB_LAYER
 			user.pixel_x = 14
 			user.pixel_y = 0
 		if(NORTHWEST)
-			E.layer = 3.9
+			E.layer = BELOW_MOB_LAYER
 			user.pixel_x = 8
-			user.pixel_y = -12
+			user.pixel_y = -4
 	E.checkfire(targeted_atom, user)
 
 /obj/machinery/manned_turret/proc/checkfire(atom/targeted_atom, mob/user)
+	target = targeted_atom
+	if(target == user || target == get_turf(src))
+		return
 	if(world.time < cooldown)
-		playsound(src, 'sound/weapons/sear.ogg', 100, 1)
-		to_chat(user, "<span class='warning'>Turret must cool off between volleys!</span>")
+		if(!warned && world.time < (cooldown - rate_of_fire*number_of_shots)) // To capture the window where one is done firing
+			warned = TRUE
+			playsound(src, 'sound/weapons/sear.ogg', 100, 1)
 		return
 	else
-		cooldown = world.time+45
-		INVOKE_ASYNC(src, .proc/shoot, targeted_atom, user)
+		cooldown = world.time + cooldown_duration
+		warned = FALSE
+		INVOKE_ASYNC(src, /obj/machinery/manned_turret/.proc/volley)
 
-/obj/machinery/manned_turret/proc/shoot(atom/targeted_atom, mob/user)
-	var/turf/targets_from = get_turf(src)
-	var/target_turf = get_turf(targeted_atom)
-	if(targeted_atom == user || targeted_atom == targets_from)
+/obj/machinery/manned_turret/proc/volley()
+	target_turf = get_turf(target)
+	for(var/i in 1 to number_of_shots)
+		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, target_turf), i*rate_of_fire)
+
+
+obj/machinery/manned_turret/proc/fire_helper(var/target_turf)
+	if(!src)
 		return
-	for(var/i in 1 to 10)
-		if(targeted_atom == null)
-			targeted_atom = target_turf
-		var/obj/item/projectile/P = new projectile_type(targets_from)
-		P.current = targets_from
-		P.starting = targets_from
-		P.firer = src
-		P.original = targeted_atom
-		playsound(src, 'sound/weapons/Gunshot_smg.ogg', 50, 1)
-		P.yo = targeted_atom.y - targets_from.y + rand(-1,1)
-		P.xo = targeted_atom.x - targets_from.x + rand(-1,1)
-		P.fire()
-		sleep(2)
+	var/turf/targets_from = get_turf(src)
+	if(QDELETED(target))
+		target = target_turf
+	var/obj/item/projectile/P = new projectile_type(targets_from)
+	P.current = targets_from
+	P.starting = targets_from
+	P.firer = src
+	P.original = target
+	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
+	P.yo = target.y - targets_from.y + rand(-1,1)
+	P.xo = target.x - targets_from.x + rand(-1,1)
+	P.fire()
