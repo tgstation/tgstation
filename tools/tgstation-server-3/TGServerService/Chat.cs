@@ -333,6 +333,8 @@ namespace TGServerService
 		{
 			lock (ChatLock)
 			{
+				if (!Properties.Settings.Default.ChatEnabled)
+					return "Chat is disabled!";
 				return ChatProvider.Reconnect();
 			}
 		}
