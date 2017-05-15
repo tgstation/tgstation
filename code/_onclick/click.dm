@@ -154,7 +154,7 @@
 			return TRUE
 	return FALSE
 
-/turf/proc/IsObscured()
+/turf/IsObscured()
 	for(var/atom/movable/AM in src)
 		if(AM.flags & PREVENT_CLICK_UNDER)
 			return TRUE
