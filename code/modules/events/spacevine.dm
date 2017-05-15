@@ -362,8 +362,6 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.on_eat(src, eater)
 	if(!override)
-		if(prob(10))
-			eater.say("Nom")
 		qdel(src)
 
 /obj/structure/spacevine/attackby(obj/item/weapon/W, mob/user, params)

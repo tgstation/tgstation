@@ -54,6 +54,9 @@
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
+	
+	if(GLOB.round_id)
+		log_game("Round ID: [GLOB.round_id]")
 
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
@@ -277,11 +280,12 @@
 	world << sound(round_end_sound)
 
 /world/proc/load_mode()
-	var/list/Lines = world.file2list("data/mode.txt")
-	if(Lines.len)
-		if(Lines[1])
-			GLOB.master_mode = Lines[1]
-			GLOB.world_game_log << "Saved mode is '[GLOB.master_mode]'"
+	var/mode = trim(file2text("data/mode.txt"))
+	if(mode)
+		GLOB.master_mode = mode
+	else
+		GLOB.master_mode = "extended"
+	log_game("Saved mode is '[GLOB.master_mode]'")	
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
@@ -341,7 +345,3 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
-
-
-/world/proc/has_round_started()
-	return SSticker.HasRoundStarted()

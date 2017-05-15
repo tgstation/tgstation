@@ -215,7 +215,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD)
-				flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", ABOVE_MOB_LAYER), list(M.client), 20)
+				new /obj/effect/overlay/temp/heart(loc)
 				emote("me", 1, "purrs!")
 		else
 			if(M && stat != DEAD)

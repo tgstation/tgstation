@@ -1,4 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - tweak: "Dominators now require a significant amount of open (non-walled) space around them in order to operate."

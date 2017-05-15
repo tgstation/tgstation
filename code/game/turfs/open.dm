@@ -30,7 +30,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 
 /turf/open/indestructible/necropolis/Initialize()
-	..()
+	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 

@@ -438,6 +438,7 @@
 #include "code\game\gamemodes\cult\cult_structures.dm"
 #include "code\game\gamemodes\cult\ritual.dm"
 #include "code\game\gamemodes\cult\runes.dm"
+#include "code\game\gamemodes\cult\supply.dm"
 #include "code\game\gamemodes\cult\talisman.dm"
 #include "code\game\gamemodes\devil\devil.dm"
 #include "code\game\gamemodes\devil\devil_game_mode.dm"
