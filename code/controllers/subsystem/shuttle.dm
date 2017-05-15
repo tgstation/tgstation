@@ -261,9 +261,7 @@ SUBSYSTEM_DEF(shuttle)
 	. = FALSE
 	message_admins("Emergency shuttle legitimacy checks follow:")
 
-	for(var/i in SSshuttle.horrible_things)
-		if(!i)
-			SSshuttle.horrible_things -= i
+	listclearnulls(SSshuttle.horrible_things)
 	var/num_things = SSshuttle.horrible_things.len
 	message_admins("[num_things] horrible things on station[num_things ? ":[english_list(SSshuttle.horrible_things)]" : ""]")
 
