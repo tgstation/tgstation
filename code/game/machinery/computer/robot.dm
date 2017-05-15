@@ -1,6 +1,3 @@
-
-
-
 /obj/machinery/computer/robotics
 	name = "robotics control console"
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
@@ -166,10 +163,8 @@
 			if(D.hacked)
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
 			else
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(3, 1, D)
-				s.start()
-				D.visible_message("<span class='danger'>[D] self destructs!</span>")
-				D.gib()
+				do_sparks(3, TRUE, D)
+				D.visible_message("<span class='danger'>[D] shuts down!</span>", "<span class='userdanger'>Your body automatically shuts down, in response to a kill code.</span>")
+				D.death()
 
 	src.updateUsrDialog()

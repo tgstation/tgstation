@@ -74,7 +74,6 @@
 	laws = "1. You are a Free Drone."
 	seeStatic = FALSE
 	picked = DRONE_PICK_RANDOM
-	can_detonate = FALSE
 	// no language restrictions
 	language_holder = /datum/language_holder/drone/syndicate
 
