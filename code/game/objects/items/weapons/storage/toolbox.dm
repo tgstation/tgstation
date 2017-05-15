@@ -21,8 +21,8 @@
 	if(has_latches)
 		if(prob(10))
 			latches = "double_latch"
-		else if(prob(1))
-			latches = "triple_latch"
+			if(prob(1))
+				latches = "triple_latch"
 	update_icon()
 
 /obj/item/weapon/storage/toolbox/update_icon()
