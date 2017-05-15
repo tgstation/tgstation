@@ -29,6 +29,32 @@ namespace TGControlPanel
 				ChangeList.Add(Setting);
 		}
 	}
+	class JobNumeric : NumericUpDown
+	{
+		IList<JobSetting> ChangeList;
+		JobSetting Setting;
+		bool spawn;
+		public JobNumeric(JobSetting c, IList<JobSetting> cl, bool s)
+		{
+			spawn = s;
+			Setting = c;
+			ChangeList = cl;
+			Minimum = -1;
+			Maximum = 10000;
+			Value = spawn ? c.SpawnPositions : c.TotalPositions;
+			ValueChanged += JobTextBox_ValueChanged;
+		}
+
+		private void JobTextBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (spawn)
+				Setting.SpawnPositions = (int)Value;
+			else
+				Setting.TotalPositions = (int)Value;
+			if (!ChangeList.Contains(Setting))
+				ChangeList.Add(Setting);
+		}
+	}
 
 	class ConfigCheckBox : CheckBox
 	{

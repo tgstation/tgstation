@@ -13,10 +13,12 @@ namespace TGControlPanel
 		const int ConfigConfig = 0;
 		const int DatabaseConfig = 1;
 		const int GameConfig = 2;
+		const int JobsConfig = 3;
 
-		List<ConfigSetting> GeneralChangelist, DatabaseChangelist, GameChangelist;
+		IList<ConfigSetting> GeneralChangelist, DatabaseChangelist, GameChangelist;
+		IList<JobSetting> JobsChangelist;
 
-		FlowLayoutPanel ConfigConfigFlow, DatabaseConfigFlow, GameConfigFlow;
+		FlowLayoutPanel ConfigConfigFlow, DatabaseConfigFlow, GameConfigFlow, JobsConfigFlow;
 
 		FlowLayoutPanel CreateFLP(Control parent)
 		{
@@ -47,6 +49,10 @@ namespace TGControlPanel
 			GameChangelist = new List<ConfigSetting>();
 			LoadGenericConfig(TGConfigType.Game);
 
+			JobsConfigFlow = CreateFLP(JobsConfigPanel);
+			JobsChangelist =  new List<JobSetting>();
+			LoadJobsConfig();
+
 			Resize += ReadjustFlow;
 		}
 
@@ -55,12 +61,13 @@ namespace TGControlPanel
 			AdjustFlow(ConfigConfigFlow, ConfigConfigPanel);
 			AdjustFlow(GameConfigFlow, GameConfigPanel);
 			AdjustFlow(DatabaseConfigFlow, DatabaseConfigPanel);
+			AdjustFlow(JobsConfigFlow, JobsConfigPanel);
 		}
 
 		void LoadGenericConfig(TGConfigType type)
 		{
 			FlowLayoutPanel flow;
-			List<ConfigSetting> changeList;
+			IList<ConfigSetting> changeList;
 			switch (type)
 			{
 				case TGConfigType.Database:
@@ -112,25 +119,99 @@ namespace TGControlPanel
 					break;
 			}
 		}
-
-		void ConfigApply_Click(object sender, System.EventArgs e)
+		void ApplyGenericConfig(IList<ConfigSetting> changelist, TGConfigType type)
 		{
 			var Config = Server.GetComponent<ITGConfig>();
+			foreach (var I in changelist)
+			{
+				var error = Config.SetItem(type, I);
+				if (error != null)
+				{
+					MessageBox.Show("An error occurred: {1}" + error);
+					break;
+				}
+			}
+			RefreshCurrentPage();
+		}
+
+		void ConfigApply_Click(object sender, EventArgs e)
+		{
 			switch (ConfigPanels.SelectedIndex)
 			{
 				case ConfigConfig:
-					for(var I = 0; I < GeneralChangelist.Count; ++I)
-					{
-						var error = Config.SetItem(TGConfigType.General, GeneralChangelist[I]);
-						if (error != null)
-						{
-							MessageBox.Show("An error occurred: {1}" + error);
-							break;
-						}
-					}
+					ApplyGenericConfig(GeneralChangelist, TGConfigType.General);
+					break;
+				case DatabaseConfig:
+					ApplyGenericConfig(DatabaseChangelist, TGConfigType.Database);
+					break;
+				case GameConfig:
+					ApplyGenericConfig(GameChangelist, TGConfigType.Game);
+					break;
+				case JobsConfig:
+					var Config = Server.GetComponent<ITGConfig>();
+					foreach (var I in JobsChangelist)
+						Config.SetJob(I);
 					RefreshCurrentPage();
 					break;
 			}
+		}
+
+		void LoadJobsConfig()
+		{
+			JobsConfigFlow.Controls.Clear();
+			var Jobs = Server.GetComponent<ITGConfig>().Jobs(out string error);
+
+			if(Jobs == null)
+			{
+				JobsConfigFlow.Controls.Add(new Label()
+				{
+					Text = "Error: " + error,
+					AutoSize = true,
+					Font = new Font("Verdana", 10.0f),
+					ForeColor = Color.FromArgb(248, 248, 242)
+				});
+				return;
+			}
+			JobsConfigFlow.SuspendLayout();
+			JobsConfigFlow.Controls.Add(new Label()
+			{
+				Text = "Set a value to -1 for infinite positions",
+				AutoSize = true,
+				Font = new Font("Verdana", 10.0f),
+				ForeColor = Color.FromArgb(248, 248, 242)
+			});
+			JobsConfigFlow.Controls.Add(new Label());
+			foreach (var J in Jobs)
+			{
+				JobsConfigFlow.Controls.Add(new Label()
+				{
+					Text = J.Name,
+					AutoSize = true,
+					Font = new Font("Verdana", 10.0f),
+					ForeColor = Color.FromArgb(248, 248, 242)
+				});
+				var p = new FlowLayoutPanel() { FlowDirection = FlowDirection.LeftToRight };
+				p.AutoSize = true;
+				p.Controls.Add(new Label()
+				{
+					Text = "Total Positions:",
+					AutoSize = true,
+					Font = new Font("Verdana", 10.0f),
+					ForeColor = Color.FromArgb(248, 248, 242)
+				});
+				p.Controls.Add(new JobNumeric(J, JobsChangelist, false));
+				p.Controls.Add(new Label()
+				{
+					Text = "Spawn Positions:",
+					AutoSize = true,
+					Font = new Font("Verdana", 10.0f),
+					ForeColor = Color.FromArgb(248, 248, 242)
+				});
+				p.Controls.Add(new JobNumeric(J, JobsChangelist, true));
+				JobsConfigFlow.Controls.Add(p);
+				JobsConfigFlow.Controls.Add(new Label()); //line break
+			}
+			JobsConfigFlow.ResumeLayout();
 		}
 
 		void ConfigUpload_Click(object sender, EventArgs eva)

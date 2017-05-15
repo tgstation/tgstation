@@ -144,6 +144,7 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
+            this.JobsConfigPanel = new System.Windows.Forms.TabPage();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -1485,6 +1486,7 @@
             this.ConfigPanels.Controls.Add(this.ConfigConfigPanel);
             this.ConfigPanels.Controls.Add(this.DatabaseConfigPanel);
             this.ConfigPanels.Controls.Add(this.GameConfigPanel);
+            this.ConfigPanels.Controls.Add(this.JobsConfigPanel);
             this.ConfigPanels.Location = new System.Drawing.Point(-4, 0);
             this.ConfigPanels.Name = "ConfigPanels";
             this.ConfigPanels.SelectedIndex = 0;
@@ -1553,6 +1555,17 @@
             // FullUpdateWorker
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
+            // 
+            // JobsConfigPanel
+            // 
+            this.JobsConfigPanel.AutoScroll = true;
+            this.JobsConfigPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.JobsConfigPanel.Location = new System.Drawing.Point(4, 22);
+            this.JobsConfigPanel.Name = "JobsConfigPanel";
+            this.JobsConfigPanel.Padding = new System.Windows.Forms.Padding(3);
+            this.JobsConfigPanel.Size = new System.Drawing.Size(868, 344);
+            this.JobsConfigPanel.TabIndex = 3;
+            this.JobsConfigPanel.Text = "Jobs";
             // 
             // Main
             // 
@@ -1703,6 +1716,7 @@
 		private System.Windows.Forms.TextBox ChatNicknameText;
 		private System.Windows.Forms.Label ChatNicknameTitle;
 		private System.Windows.Forms.Button ChatRefreshButton;
+		private System.Windows.Forms.TabPage JobsConfigPanel;
 	}
 }
 
