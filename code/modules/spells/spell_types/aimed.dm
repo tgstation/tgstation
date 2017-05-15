@@ -45,8 +45,12 @@
 /obj/effect/proc_holder/spell/aimed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return FALSE
+	var/ran_out = (current_amount <= 0)
+	if(!cast_check(!ran_out, ranged_ability_user))
+		remove_ranged_ability()
+		return FALSE
 	var/list/targets = list(target)
-	perform(targets, FALSE, user = ranged_ability_user)
+	perform(targets, ran_out, user = ranged_ability_user)
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/cast(list/targets, mob/living/user)
