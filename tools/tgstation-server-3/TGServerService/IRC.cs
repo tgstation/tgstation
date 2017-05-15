@@ -9,7 +9,7 @@ namespace TGServerService
 {
 	class TGIRCChatProvider : ITGChatProvider
 	{
-		IrcClient irc;
+		IrcFeatures irc;
 		int reconnectAttempt = 0;
 
 		object IRCLock = new object();
@@ -21,8 +21,9 @@ namespace TGServerService
 		public TGIRCChatProvider(TGChatSetupInfo info)
 		{
 			IRCConfig = new TGIRCSetupInfo(info);
-			irc = new IrcClient() { SupportNonRfc = true };
+			irc = new IrcFeatures() { SupportNonRfc = true };
 			irc.OnChannelMessage += Irc_OnChannelMessage;
+			irc.CtcpUserInfo = "/tg/station 13 Server Service " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion;
 		}
 		
 		//public api
