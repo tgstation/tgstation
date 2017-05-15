@@ -60,12 +60,21 @@ namespace TGServerService
 
 		public void SetChannels(string[] channels = null, string adminchannel = null)
 		{
-			throw new NotImplementedException();
+			lock (IRCLock) {
+				var channelsList = new List<string>(channels);
+				var Config = Properties.Settings.Default;
+				foreach (var I in irc.JoinedChannels)
+					if (channelsList.Contains(I))
+						irc.RfcPart(I);
+				foreach (var I in channelsList)
+					if (!irc.JoinedChannels.Contains(I))
+						irc.RfcJoin(I);
+			}
 		}
 
 		private void Irc_OnChannelMessage(object sender, IrcEventArgs e)
 		{
-			var formattedMessage = e.Data.Message;
+			var formattedMessage = e.Data.Message.Trim();
 
 			var splits = new List<string>(formattedMessage.Split(' '));
 			var tagged = splits[0].ToLower() == irc.Nickname.ToLower();

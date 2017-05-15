@@ -14,7 +14,7 @@ namespace TGCommandLine
 		public RootCommand()
 		{
 			if (IsRealRoot())	//stack overflows
-				Children = new Command[] { new UpdateCommand(), new TestmergeCommand(), new IRCCommand(), new RepoCommand(), new BYONDCommand(), new DMCommand(), new DDCommand(), new ConfigCommand() };
+				Children = new Command[] { new UpdateCommand(), new TestmergeCommand(), new IRCCommand(), new RepoCommand(), new BYONDCommand(), new DMCommand(), new DDCommand(), new ConfigCommand(), new ChatCommand() };
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{

@@ -125,10 +125,19 @@ namespace TGServiceInterface
 	[DataContract]
 	public class TGDiscordSetupInfo : TGChatSetupInfo
 	{
-		const int FieldsLen = 0;
+		const int BotTokenIndex = 0;
+		const int FieldsLen = 1;
 		public TGDiscordSetupInfo(TGChatSetupInfo baseInfo = null) : base(baseInfo, FieldsLen)
 		{
-			Provider = TGChatProvider.IRC;
+			Provider = TGChatProvider.Discord;
+			if (baseInfo == null)
+				BotToken = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";	//needless to say, this is fake
+		}
+
+		public string BotToken
+		{
+			get { return DataFields[BotTokenIndex]; }
+			set { DataFields[BotTokenIndex] = value; }
 		}
 	}
 

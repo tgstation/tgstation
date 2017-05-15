@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Discord;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TGServiceInterface;
 
 namespace TGServerService
@@ -6,45 +9,169 @@ namespace TGServerService
 	class TGDiscordChatProvider : ITGChatProvider
 	{
 		public event OnChatMessage OnChatMessage;
+		DiscordClient client;
+		TGDiscordSetupInfo DiscordConfig;
+		object DiscordLock = new object();
+
+		IDictionary<string, Channel> SeenPrivateChannels = new Dictionary<string, Channel>();
 
 		public TGDiscordChatProvider(TGChatSetupInfo info)
 		{
-			throw new NotImplementedException();
+			Init(info);
+		}
+
+		void Init(TGChatSetupInfo info)
+		{
+			DiscordConfig = new TGDiscordSetupInfo(info);
+			client = new DiscordClient();
+			client.MessageReceived += Client_MessageReceived;
+		}
+
+		private void Client_MessageReceived(object sender, MessageEventArgs e)
+		{
+			var splits = new List<string>(e.Message.Text.Trim().Split(' '));
+			var tagged = e.Channel.IsPrivate && e.User.Name != client.CurrentUser.Name;
+			if (tagged && !SeenPrivateChannels.ContainsKey(e.Channel.Name))
+				SeenPrivateChannels.Add(e.Channel.Name, e.Channel);
+			if (splits[0] == "@" + client.CurrentUser.Name)
+			{
+				splits.RemoveAt(0);
+				tagged = true;
+			}
+			OnChatMessage(e.User.Name, e.Channel.Name, String.Join(" ", splits), tagged);
+		}
+
+		public string Connect()
+		{
+			try
+			{
+				lock (DiscordLock)
+				{
+					SeenPrivateChannels.Clear();
+					client.Connect(DiscordConfig.BotToken, TokenType.Bot).Wait();
+				}
+				return !Connected() ? "Connection failed!" : null;
+			}
+			catch (Exception e)
+			{
+				return e.ToString();
+			}
 		}
 
 		public bool Connected()
 		{
-			throw new NotImplementedException();
+			lock (DiscordLock)
+			{
+				return client.State == ConnectionState.Connected;
+			}
+		}
+
+		public void Disconnect()
+		{
+			try
+			{
+				if (!Connected())
+					return;
+				lock (DiscordLock)
+				{
+					SeenPrivateChannels.Clear();
+					client.Disconnect().Wait();
+				}
+			}
+			catch { }
 		}
 
 		public string Reconnect()
 		{
-			throw new NotImplementedException();
+			try
+			{
+				lock (DiscordLock)
+				{
+					SeenPrivateChannels.Clear();
+					if (client.State == ConnectionState.Connected)
+						client.Disconnect().Wait();
+					client.Connect(DiscordConfig.BotToken, TokenType.Bot).Wait();
+				}
+				return !Connected() ? "Connection failed!" : null;
+			}
+			catch (Exception e)
+			{
+				return e.ToString();
+			}
 		}
 
 		public string SendMessage(string msg, bool adminOnly = false)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				lock (DiscordLock)
+				{
+					var tasks = new List<Task>();
+					var Config = Properties.Settings.Default;
+					foreach (var I in client.Servers)
+						foreach (var J in I.TextChannels)
+						{
+							var SendToThisChannel = adminOnly ? J.Name == Config.ChatAdminChannel : Config.ChatChannels.Contains(J.Name);
+							if (SendToThisChannel)
+								tasks.Add(J.SendMessage(msg));
+						}
+					foreach (var I in tasks)
+						I.Wait();
+					return null;
+				}
+			}
+			catch (Exception e)
+			{
+				return e.ToString();
+			}
 		}
 
 		public string SendMessageDirect(string message, string channel)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				lock (DiscordLock)
+				{
+					var tasks = new List<Task>();
+					var Config = Properties.Settings.Default;
+					if (SeenPrivateChannels.ContainsKey(channel))
+						SeenPrivateChannels[channel].SendMessage(message).Wait();
+					else
+						foreach (var I in client.Servers)
+							foreach (var J in I.TextChannels)
+								if (J.Name == channel)
+									J.SendMessage(message).Wait();
+					return null;
+				}
+			}
+			catch (Exception e)
+			{
+				return e.ToString();
+			}
 		}
 
 		public void SetChannels(string[] channels = null, string adminchannel = null)
 		{
-			throw new NotImplementedException();
+			//noop
 		}
 
 		public string SetProviderInfo(TGChatSetupInfo info)
 		{
-			throw new NotImplementedException();
-		}
-		
-		public TGChatSetupInfo Shutdown()
-		{
-			throw new NotImplementedException();
+			try
+			{
+				lock (DiscordLock)
+				{
+					client.Dispose();
+					Init(info);
+					if(Properties.Settings.Default.ChatEnabled)
+						Connect();
+				}
+				return null;
+			}
+			catch (Exception e)
+			{
+				return e.ToString();
+			}
 		}
 
 		#region IDisposable Support
@@ -56,6 +183,7 @@ namespace TGServerService
 			{
 				if (disposing)
 				{
+					client.Dispose();
 					// TODO: dispose managed state (managed objects).
 				}
 
@@ -79,16 +207,6 @@ namespace TGServerService
 			Dispose(true);
 			// TODO: uncomment the following line if the finalizer is overridden above.
 			// GC.SuppressFinalize(this);
-		}
-
-		public string Connect()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void Disconnect()
-		{
-			throw new NotImplementedException();
 		}
 		#endregion
 	}

@@ -45,7 +45,7 @@
       <Value Profile="(Default)">C:\Python27</Value>
     </Setting>
     <Setting Name="ChatProvider" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="ChatProviderData" Type="System.String" Scope="User">
       <Value Profile="(Default)">NEEDS INITIALIZING</Value>

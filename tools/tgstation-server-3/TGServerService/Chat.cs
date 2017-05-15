@@ -79,7 +79,7 @@ namespace TGServerService
 
 		private void ChatProvider_OnChatMessage(string speaker, string channel, string message, bool tagged)
 		{
-			var splits = message.Split(' ');
+			var splits = message.Trim().Split(' ');
 
 			var s0l = splits[0].ToLower();
 
@@ -94,7 +94,7 @@ namespace TGServerService
 
 			if (splits.Length == 1 && splits[0] == "")
 			{
-				ChatProvider.SendMessage("Hi!");
+				ChatProvider.SendMessageDirect("Hi!", channel);
 				return;
 			}
 

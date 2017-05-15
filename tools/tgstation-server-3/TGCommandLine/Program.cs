@@ -59,7 +59,8 @@ namespace TGCommandLine
 				Console.WriteLine("Unable to connect to service!");
 				return ExitCode.ConnectionError;
 			}
-			try {
+			try
+			{
 				return new RootCommand().Run(argsAsList);
 			}
 			catch
@@ -94,7 +95,7 @@ namespace TGCommandLine
 			}
 			return result;
 		}
-		
+
 		static int Main(string[] args)
 		{
 			if (args.Length != 0)
