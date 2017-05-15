@@ -45,14 +45,8 @@ namespace TGServerService
 					CloseTimeout = new TimeSpan(0, 0, 5)
 				}; //construction runs here
 
-				AddEndpoint<ITGRepository>();
-				AddEndpoint<ITGByond>();
-				AddEndpoint<ITGCompiler>();
-				AddEndpoint<ITGDreamDaemon>();
-				AddEndpoint<ITGStatusCheck>();
-				AddEndpoint<ITGChat>();
-				AddEndpoint<ITGConfig>();
-				AddEndpoint<ITGServerUpdater>();
+				foreach (var I in Server.ValidInterfaces)
+					AddEndpoint(I);
 
 				host.Open();	//...or maybe here, doesn't really matter
 			}
@@ -64,9 +58,8 @@ namespace TGServerService
 		}
 
 		//shorthand for adding the WCF endpoint
-		void AddEndpoint<T>()
+		void AddEndpoint(Type typetype)
 		{
-			var typetype = typeof(T);
 			host.AddServiceEndpoint(typetype, new NetNamedPipeBinding(), Server.MasterPipeName + "/" + typetype.Name);
 		}
 

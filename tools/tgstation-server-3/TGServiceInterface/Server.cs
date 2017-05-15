@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 namespace TGServiceInterface
 {
 	public class Server
 	{
+		/// <summary>
+		/// List of types that can be used with GetComponen
+		/// </summary>
+		public static readonly IList<Type> ValidInterfaces = new List<Type> { typeof(ITGByond), typeof(ITGChat), typeof(ITGCompiler), typeof(ITGConfig), typeof(ITGDreamDaemon), typeof(ITGRepository), typeof(ITGServerUpdater), typeof(ITGStatusCheck) };
+
 		/// <summary>
 		/// Base name of the communication pipe
 		/// they are formatted as MasterPipeName/ComponentName
@@ -17,6 +23,10 @@ namespace TGServiceInterface
 		/// <returns></returns>
 		public static T GetComponent<T>()
 		{
+			var ToT = typeof(T);
+			if (!ValidInterfaces.Contains(ToT))
+				throw new Exception("Invalid type!");
+
 			return new ChannelFactory<T>(new NetNamedPipeBinding { SendTimeout = new TimeSpan(0, 10, 0) }, new EndpointAddress(String.Format("net.pipe://localhost/{0}/{1}", MasterPipeName, typeof(T).Name))).CreateChannel();
 		}
 		
