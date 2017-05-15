@@ -61,6 +61,8 @@
             this.RepoProgressBarLabel = new System.Windows.Forms.Label();
             this.RepoProgressBar = new System.Windows.Forms.ProgressBar();
             this.BYONDPanel = new System.Windows.Forms.TabPage();
+            this.LatestVersionLabel = new System.Windows.Forms.Label();
+            this.LatestVersionTitle = new System.Windows.Forms.Label();
             this.StagedVersionLabel = new System.Windows.Forms.Label();
             this.StagedVersionTitle = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.Label();
@@ -99,7 +101,33 @@
             this.compilerProgressBar = new System.Windows.Forms.ProgressBar();
             this.ServerStatusLabel = new System.Windows.Forms.Label();
             this.ServerStatusTitle = new System.Windows.Forms.Label();
-            this.IRCPanel = new System.Windows.Forms.TabPage();
+            this.ChatPanel = new System.Windows.Forms.TabPage();
+            this.ChatRefreshButton = new System.Windows.Forms.Button();
+            this.ChatNicknameText = new System.Windows.Forms.TextBox();
+            this.ChatNicknameTitle = new System.Windows.Forms.Label();
+            this.ChatPortSelector = new System.Windows.Forms.NumericUpDown();
+            this.ChatPortTitle = new System.Windows.Forms.Label();
+            this.ChatServerText = new System.Windows.Forms.TextBox();
+            this.ChatServerTitle = new System.Windows.Forms.Label();
+            this.ChatApplyButton = new System.Windows.Forms.Button();
+            this.AuthField2Title = new System.Windows.Forms.Label();
+            this.AuthField1Title = new System.Windows.Forms.Label();
+            this.AuthField2 = new System.Windows.Forms.TextBox();
+            this.AuthField1 = new System.Windows.Forms.TextBox();
+            this.AdminChannelTitle = new System.Windows.Forms.Label();
+            this.AdminChannelText = new System.Windows.Forms.TextBox();
+            this.ChatReconnectButton = new System.Windows.Forms.Button();
+            this.ChatStatusLabel = new System.Windows.Forms.Label();
+            this.ChatStatusTitle = new System.Windows.Forms.Label();
+            this.ChatEnabledCheckbox = new System.Windows.Forms.CheckBox();
+            this.ChatProviderSelectorPanel = new System.Windows.Forms.Panel();
+            this.DiscordProviderSwitch = new System.Windows.Forms.RadioButton();
+            this.IRCProviderSwitch = new System.Windows.Forms.RadioButton();
+            this.ChatProviderTitle = new System.Windows.Forms.Label();
+            this.ChannelsTitle = new System.Windows.Forms.Label();
+            this.ChatAdminsTextBox = new System.Windows.Forms.TextBox();
+            this.ChatAdminsTitle = new System.Windows.Forms.Label();
+            this.ChatChannelsTextBox = new System.Windows.Forms.TextBox();
             this.ConfigPanel = new System.Windows.Forms.TabPage();
             this.ConfigDownloadRepo = new System.Windows.Forms.Button();
             this.ConfigUpload = new System.Windows.Forms.Button();
@@ -116,8 +144,6 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
-            this.LatestVersionTitle = new System.Windows.Forms.Label();
-            this.LatestVersionLabel = new System.Windows.Forms.Label();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -127,6 +153,9 @@
             this.ServerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PortSelector)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ServerTestmergeInput)).BeginInit();
+            this.ChatPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ChatPortSelector)).BeginInit();
+            this.ChatProviderSelectorPanel.SuspendLayout();
             this.ConfigPanel.SuspendLayout();
             this.ConfigPanels.SuspendLayout();
             this.SuspendLayout();
@@ -139,7 +168,7 @@
             this.Panels.Controls.Add(this.RepoPanel);
             this.Panels.Controls.Add(this.BYONDPanel);
             this.Panels.Controls.Add(this.ServerPanel);
-            this.Panels.Controls.Add(this.IRCPanel);
+            this.Panels.Controls.Add(this.ChatPanel);
             this.Panels.Controls.Add(this.ConfigPanel);
             this.Panels.Location = new System.Drawing.Point(12, 12);
             this.Panels.Name = "Panels";
@@ -544,6 +573,30 @@
             this.BYONDPanel.Size = new System.Drawing.Size(868, 366);
             this.BYONDPanel.TabIndex = 1;
             this.BYONDPanel.Text = "BYOND";
+            // 
+            // LatestVersionLabel
+            // 
+            this.LatestVersionLabel.AutoSize = true;
+            this.LatestVersionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LatestVersionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.LatestVersionLabel.Location = new System.Drawing.Point(425, 93);
+            this.LatestVersionLabel.Name = "LatestVersionLabel";
+            this.LatestVersionLabel.Size = new System.Drawing.Size(82, 18);
+            this.LatestVersionLabel.TabIndex = 13;
+            this.LatestVersionLabel.Text = "Unknown";
+            this.LatestVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // LatestVersionTitle
+            // 
+            this.LatestVersionTitle.AutoSize = true;
+            this.LatestVersionTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LatestVersionTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.LatestVersionTitle.Location = new System.Drawing.Point(286, 93);
+            this.LatestVersionTitle.Name = "LatestVersionTitle";
+            this.LatestVersionTitle.Size = new System.Drawing.Size(133, 18);
+            this.LatestVersionTitle.TabIndex = 12;
+            this.LatestVersionTitle.Text = "Latest Version:";
+            this.LatestVersionTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // StagedVersionLabel
             // 
@@ -1032,15 +1085,324 @@
             this.ServerStatusTitle.Text = "Server Status:";
             this.ServerStatusTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // IRCPanel
+            // ChatPanel
             // 
-            this.IRCPanel.Location = new System.Drawing.Point(4, 22);
-            this.IRCPanel.Name = "IRCPanel";
-            this.IRCPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.IRCPanel.Size = new System.Drawing.Size(868, 366);
-            this.IRCPanel.TabIndex = 4;
-            this.IRCPanel.Text = "IRC";
-            this.IRCPanel.UseVisualStyleBackColor = true;
+            this.ChatPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.ChatPanel.Controls.Add(this.ChatRefreshButton);
+            this.ChatPanel.Controls.Add(this.ChatNicknameText);
+            this.ChatPanel.Controls.Add(this.ChatNicknameTitle);
+            this.ChatPanel.Controls.Add(this.ChatPortSelector);
+            this.ChatPanel.Controls.Add(this.ChatPortTitle);
+            this.ChatPanel.Controls.Add(this.ChatServerText);
+            this.ChatPanel.Controls.Add(this.ChatServerTitle);
+            this.ChatPanel.Controls.Add(this.ChatApplyButton);
+            this.ChatPanel.Controls.Add(this.AuthField2Title);
+            this.ChatPanel.Controls.Add(this.AuthField1Title);
+            this.ChatPanel.Controls.Add(this.AuthField2);
+            this.ChatPanel.Controls.Add(this.AuthField1);
+            this.ChatPanel.Controls.Add(this.AdminChannelTitle);
+            this.ChatPanel.Controls.Add(this.AdminChannelText);
+            this.ChatPanel.Controls.Add(this.ChatReconnectButton);
+            this.ChatPanel.Controls.Add(this.ChatStatusLabel);
+            this.ChatPanel.Controls.Add(this.ChatStatusTitle);
+            this.ChatPanel.Controls.Add(this.ChatEnabledCheckbox);
+            this.ChatPanel.Controls.Add(this.ChatProviderSelectorPanel);
+            this.ChatPanel.Controls.Add(this.ChatProviderTitle);
+            this.ChatPanel.Controls.Add(this.ChannelsTitle);
+            this.ChatPanel.Controls.Add(this.ChatAdminsTextBox);
+            this.ChatPanel.Controls.Add(this.ChatAdminsTitle);
+            this.ChatPanel.Controls.Add(this.ChatChannelsTextBox);
+            this.ChatPanel.Location = new System.Drawing.Point(4, 22);
+            this.ChatPanel.Name = "ChatPanel";
+            this.ChatPanel.Padding = new System.Windows.Forms.Padding(3);
+            this.ChatPanel.Size = new System.Drawing.Size(868, 366);
+            this.ChatPanel.TabIndex = 4;
+            this.ChatPanel.Text = "Chat";
+            // 
+            // ChatRefreshButton
+            // 
+            this.ChatRefreshButton.Location = new System.Drawing.Point(174, 335);
+            this.ChatRefreshButton.Name = "ChatRefreshButton";
+            this.ChatRefreshButton.Size = new System.Drawing.Size(112, 25);
+            this.ChatRefreshButton.TabIndex = 32;
+            this.ChatRefreshButton.Text = "Refresh";
+            this.ChatRefreshButton.UseVisualStyleBackColor = true;
+            this.ChatRefreshButton.Click += new System.EventHandler(this.ChatRefreshButton_Click);
+            // 
+            // ChatNicknameText
+            // 
+            this.ChatNicknameText.Location = new System.Drawing.Point(174, 251);
+            this.ChatNicknameText.Name = "ChatNicknameText";
+            this.ChatNicknameText.Size = new System.Drawing.Size(151, 20);
+            this.ChatNicknameText.TabIndex = 31;
+            // 
+            // ChatNicknameTitle
+            // 
+            this.ChatNicknameTitle.AutoSize = true;
+            this.ChatNicknameTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChatNicknameTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ChatNicknameTitle.Location = new System.Drawing.Point(30, 250);
+            this.ChatNicknameTitle.Name = "ChatNicknameTitle";
+            this.ChatNicknameTitle.Size = new System.Drawing.Size(94, 18);
+            this.ChatNicknameTitle.TabIndex = 30;
+            this.ChatNicknameTitle.Text = "Nickname:";
+            this.ChatNicknameTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ChatPortSelector
+            // 
+            this.ChatPortSelector.Location = new System.Drawing.Point(174, 225);
+            this.ChatPortSelector.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.ChatPortSelector.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ChatPortSelector.Name = "ChatPortSelector";
+            this.ChatPortSelector.Size = new System.Drawing.Size(151, 20);
+            this.ChatPortSelector.TabIndex = 29;
+            this.ChatPortSelector.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // ChatPortTitle
+            // 
+            this.ChatPortTitle.AutoSize = true;
+            this.ChatPortTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChatPortTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ChatPortTitle.Location = new System.Drawing.Point(30, 227);
+            this.ChatPortTitle.Name = "ChatPortTitle";
+            this.ChatPortTitle.Size = new System.Drawing.Size(48, 18);
+            this.ChatPortTitle.TabIndex = 28;
+            this.ChatPortTitle.Text = "Port:";
+            this.ChatPortTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ChatServerText
+            // 
+            this.ChatServerText.Location = new System.Drawing.Point(174, 199);
+            this.ChatServerText.Name = "ChatServerText";
+            this.ChatServerText.Size = new System.Drawing.Size(151, 20);
+            this.ChatServerText.TabIndex = 27;
+            // 
+            // ChatServerTitle
+            // 
+            this.ChatServerTitle.AutoSize = true;
+            this.ChatServerTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChatServerTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ChatServerTitle.Location = new System.Drawing.Point(30, 201);
+            this.ChatServerTitle.Name = "ChatServerTitle";
+            this.ChatServerTitle.Size = new System.Drawing.Size(66, 18);
+            this.ChatServerTitle.TabIndex = 26;
+            this.ChatServerTitle.Text = "Server:";
+            this.ChatServerTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ChatApplyButton
+            // 
+            this.ChatApplyButton.Location = new System.Drawing.Point(56, 335);
+            this.ChatApplyButton.Name = "ChatApplyButton";
+            this.ChatApplyButton.Size = new System.Drawing.Size(112, 25);
+            this.ChatApplyButton.TabIndex = 25;
+            this.ChatApplyButton.Text = "Apply";
+            this.ChatApplyButton.UseVisualStyleBackColor = true;
+            this.ChatApplyButton.Click += new System.EventHandler(this.ChatApplyButton_Click);
+            // 
+            // AuthField2Title
+            // 
+            this.AuthField2Title.AutoSize = true;
+            this.AuthField2Title.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AuthField2Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.AuthField2Title.Location = new System.Drawing.Point(30, 311);
+            this.AuthField2Title.Name = "AuthField2Title";
+            this.AuthField2Title.Size = new System.Drawing.Size(45, 18);
+            this.AuthField2Title.TabIndex = 24;
+            this.AuthField2Title.Text = "AF2:";
+            this.AuthField2Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // AuthField1Title
+            // 
+            this.AuthField1Title.AutoSize = true;
+            this.AuthField1Title.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AuthField1Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.AuthField1Title.Location = new System.Drawing.Point(30, 285);
+            this.AuthField1Title.Name = "AuthField1Title";
+            this.AuthField1Title.Size = new System.Drawing.Size(45, 18);
+            this.AuthField1Title.TabIndex = 23;
+            this.AuthField1Title.Text = "AF1:";
+            this.AuthField1Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // AuthField2
+            // 
+            this.AuthField2.Location = new System.Drawing.Point(174, 309);
+            this.AuthField2.Name = "AuthField2";
+            this.AuthField2.Size = new System.Drawing.Size(151, 20);
+            this.AuthField2.TabIndex = 22;
+            this.AuthField2.UseSystemPasswordChar = true;
+            // 
+            // AuthField1
+            // 
+            this.AuthField1.Location = new System.Drawing.Point(174, 283);
+            this.AuthField1.Name = "AuthField1";
+            this.AuthField1.Size = new System.Drawing.Size(151, 20);
+            this.AuthField1.TabIndex = 21;
+            this.AuthField1.UseSystemPasswordChar = true;
+            // 
+            // AdminChannelTitle
+            // 
+            this.AdminChannelTitle.AutoSize = true;
+            this.AdminChannelTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AdminChannelTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.AdminChannelTitle.Location = new System.Drawing.Point(30, 174);
+            this.AdminChannelTitle.Name = "AdminChannelTitle";
+            this.AdminChannelTitle.Size = new System.Drawing.Size(138, 18);
+            this.AdminChannelTitle.TabIndex = 20;
+            this.AdminChannelTitle.Text = "Admin Channel:";
+            this.AdminChannelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // AdminChannelText
+            // 
+            this.AdminChannelText.Location = new System.Drawing.Point(174, 172);
+            this.AdminChannelText.Name = "AdminChannelText";
+            this.AdminChannelText.Size = new System.Drawing.Size(149, 20);
+            this.AdminChannelText.TabIndex = 19;
+            // 
+            // ChatReconnectButton
+            // 
+            this.ChatReconnectButton.Enabled = false;
+            this.ChatReconnectButton.Location = new System.Drawing.Point(174, 141);
+            this.ChatReconnectButton.Name = "ChatReconnectButton";
+            this.ChatReconnectButton.Size = new System.Drawing.Size(112, 25);
+            this.ChatReconnectButton.TabIndex = 18;
+            this.ChatReconnectButton.Text = "Reconnect";
+            this.ChatReconnectButton.UseVisualStyleBackColor = true;
+            this.ChatReconnectButton.Click += new System.EventHandler(this.ChatReconnectButton_Click);
+            // 
+            // ChatStatusLabel
+            // 
+            this.ChatStatusLabel.AutoSize = true;
+            this.ChatStatusLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChatStatusLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ChatStatusLabel.Location = new System.Drawing.Point(171, 113);
+            this.ChatStatusLabel.Name = "ChatStatusLabel";
+            this.ChatStatusLabel.Size = new System.Drawing.Size(82, 18);
+            this.ChatStatusLabel.TabIndex = 17;
+            this.ChatStatusLabel.Text = "Unknown";
+            this.ChatStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ChatStatusTitle
+            // 
+            this.ChatStatusTitle.AutoSize = true;
+            this.ChatStatusTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChatStatusTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ChatStatusTitle.Location = new System.Drawing.Point(30, 113);
+            this.ChatStatusTitle.Name = "ChatStatusTitle";
+            this.ChatStatusTitle.Size = new System.Drawing.Size(112, 18);
+            this.ChatStatusTitle.TabIndex = 16;
+            this.ChatStatusTitle.Text = "Chat Status:";
+            this.ChatStatusTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ChatEnabledCheckbox
+            // 
+            this.ChatEnabledCheckbox.AutoSize = true;
+            this.ChatEnabledCheckbox.Font = new System.Drawing.Font("Verdana", 12F);
+            this.ChatEnabledCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ChatEnabledCheckbox.Location = new System.Drawing.Point(32, 142);
+            this.ChatEnabledCheckbox.Name = "ChatEnabledCheckbox";
+            this.ChatEnabledCheckbox.Size = new System.Drawing.Size(136, 22);
+            this.ChatEnabledCheckbox.TabIndex = 15;
+            this.ChatEnabledCheckbox.Text = "Chat Enabled";
+            this.ChatEnabledCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // ChatProviderSelectorPanel
+            // 
+            this.ChatProviderSelectorPanel.Controls.Add(this.DiscordProviderSwitch);
+            this.ChatProviderSelectorPanel.Controls.Add(this.IRCProviderSwitch);
+            this.ChatProviderSelectorPanel.Location = new System.Drawing.Point(23, 49);
+            this.ChatProviderSelectorPanel.Name = "ChatProviderSelectorPanel";
+            this.ChatProviderSelectorPanel.Size = new System.Drawing.Size(302, 50);
+            this.ChatProviderSelectorPanel.TabIndex = 14;
+            // 
+            // DiscordProviderSwitch
+            // 
+            this.DiscordProviderSwitch.AutoSize = true;
+            this.DiscordProviderSwitch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.DiscordProviderSwitch.Location = new System.Drawing.Point(220, 17);
+            this.DiscordProviderSwitch.Name = "DiscordProviderSwitch";
+            this.DiscordProviderSwitch.Size = new System.Drawing.Size(61, 17);
+            this.DiscordProviderSwitch.TabIndex = 13;
+            this.DiscordProviderSwitch.TabStop = true;
+            this.DiscordProviderSwitch.Text = "Discord";
+            this.DiscordProviderSwitch.UseVisualStyleBackColor = true;
+            // 
+            // IRCProviderSwitch
+            // 
+            this.IRCProviderSwitch.AutoSize = true;
+            this.IRCProviderSwitch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.IRCProviderSwitch.Location = new System.Drawing.Point(14, 17);
+            this.IRCProviderSwitch.Name = "IRCProviderSwitch";
+            this.IRCProviderSwitch.Size = new System.Drawing.Size(116, 17);
+            this.IRCProviderSwitch.TabIndex = 12;
+            this.IRCProviderSwitch.TabStop = true;
+            this.IRCProviderSwitch.Text = "Internet Relay Chat";
+            this.IRCProviderSwitch.UseVisualStyleBackColor = true;
+            // 
+            // ChatProviderTitle
+            // 
+            this.ChatProviderTitle.AutoSize = true;
+            this.ChatProviderTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChatProviderTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ChatProviderTitle.Location = new System.Drawing.Point(20, 15);
+            this.ChatProviderTitle.Name = "ChatProviderTitle";
+            this.ChatProviderTitle.Size = new System.Drawing.Size(125, 18);
+            this.ChatProviderTitle.TabIndex = 13;
+            this.ChatProviderTitle.Text = "Chat Provider:";
+            this.ChatProviderTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ChannelsTitle
+            // 
+            this.ChannelsTitle.AutoSize = true;
+            this.ChannelsTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChannelsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ChannelsTitle.Location = new System.Drawing.Point(628, 15);
+            this.ChannelsTitle.Name = "ChannelsTitle";
+            this.ChannelsTitle.Size = new System.Drawing.Size(234, 18);
+            this.ChannelsTitle.TabIndex = 11;
+            this.ChannelsTitle.Text = "Listen/Broadcast Channels:";
+            this.ChannelsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ChatAdminsTextBox
+            // 
+            this.ChatAdminsTextBox.Location = new System.Drawing.Point(369, 49);
+            this.ChatAdminsTextBox.Multiline = true;
+            this.ChatAdminsTextBox.Name = "ChatAdminsTextBox";
+            this.ChatAdminsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.ChatAdminsTextBox.Size = new System.Drawing.Size(231, 311);
+            this.ChatAdminsTextBox.TabIndex = 10;
+            // 
+            // ChatAdminsTitle
+            // 
+            this.ChatAdminsTitle.AutoSize = true;
+            this.ChatAdminsTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChatAdminsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ChatAdminsTitle.Location = new System.Drawing.Point(366, 15);
+            this.ChatAdminsTitle.Name = "ChatAdminsTitle";
+            this.ChatAdminsTitle.Size = new System.Drawing.Size(75, 18);
+            this.ChatAdminsTitle.TabIndex = 9;
+            this.ChatAdminsTitle.Text = "Admins:";
+            this.ChatAdminsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ChatChannelsTextBox
+            // 
+            this.ChatChannelsTextBox.Location = new System.Drawing.Point(631, 49);
+            this.ChatChannelsTextBox.Multiline = true;
+            this.ChatChannelsTextBox.Name = "ChatChannelsTextBox";
+            this.ChatChannelsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.ChatChannelsTextBox.Size = new System.Drawing.Size(231, 311);
+            this.ChatChannelsTextBox.TabIndex = 0;
             // 
             // ConfigPanel
             // 
@@ -1190,30 +1552,6 @@
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
             // 
-            // LatestVersionTitle
-            // 
-            this.LatestVersionTitle.AutoSize = true;
-            this.LatestVersionTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LatestVersionTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.LatestVersionTitle.Location = new System.Drawing.Point(286, 93);
-            this.LatestVersionTitle.Name = "LatestVersionTitle";
-            this.LatestVersionTitle.Size = new System.Drawing.Size(133, 18);
-            this.LatestVersionTitle.TabIndex = 12;
-            this.LatestVersionTitle.Text = "Latest Version:";
-            this.LatestVersionTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LatestVersionLabel
-            // 
-            this.LatestVersionLabel.AutoSize = true;
-            this.LatestVersionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LatestVersionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.LatestVersionLabel.Location = new System.Drawing.Point(425, 93);
-            this.LatestVersionLabel.Name = "LatestVersionLabel";
-            this.LatestVersionLabel.Size = new System.Drawing.Size(82, 18);
-            this.LatestVersionLabel.TabIndex = 13;
-            this.LatestVersionLabel.Text = "Unknown";
-            this.LatestVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1237,6 +1575,11 @@
             this.ServerPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PortSelector)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ServerTestmergeInput)).EndInit();
+            this.ChatPanel.ResumeLayout(false);
+            this.ChatPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ChatPortSelector)).EndInit();
+            this.ChatProviderSelectorPanel.ResumeLayout(false);
+            this.ChatProviderSelectorPanel.PerformLayout();
             this.ConfigPanel.ResumeLayout(false);
             this.ConfigPanels.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1281,7 +1624,7 @@
 		private System.Windows.Forms.Timer BYONDTimer;
 		private System.Windows.Forms.Label StagedVersionLabel;
 		private System.Windows.Forms.Label StagedVersionTitle;
-		private System.Windows.Forms.TabPage IRCPanel;
+		private System.Windows.Forms.TabPage ChatPanel;
 		private System.Windows.Forms.TabPage ConfigPanel;
 		private System.Windows.Forms.NumericUpDown TestmergeSelector;
 		private System.Windows.Forms.Label ServerStatusTitle;
@@ -1332,6 +1675,32 @@
 		private System.Windows.Forms.TextBox ServerPathTextbox;
 		private System.Windows.Forms.Label LatestVersionLabel;
 		private System.Windows.Forms.Label LatestVersionTitle;
+		private System.Windows.Forms.TextBox ChatChannelsTextBox;
+		private System.Windows.Forms.Label ChannelsTitle;
+		private System.Windows.Forms.TextBox ChatAdminsTextBox;
+		private System.Windows.Forms.Label ChatAdminsTitle;
+		private System.Windows.Forms.Label ChatStatusLabel;
+		private System.Windows.Forms.Label ChatStatusTitle;
+		private System.Windows.Forms.CheckBox ChatEnabledCheckbox;
+		private System.Windows.Forms.Panel ChatProviderSelectorPanel;
+		private System.Windows.Forms.RadioButton DiscordProviderSwitch;
+		private System.Windows.Forms.RadioButton IRCProviderSwitch;
+		private System.Windows.Forms.Label ChatProviderTitle;
+		private System.Windows.Forms.Button ChatReconnectButton;
+		private System.Windows.Forms.Label AdminChannelTitle;
+		private System.Windows.Forms.TextBox AdminChannelText;
+		private System.Windows.Forms.Label AuthField2Title;
+		private System.Windows.Forms.Label AuthField1Title;
+		private System.Windows.Forms.TextBox AuthField2;
+		private System.Windows.Forms.TextBox AuthField1;
+		private System.Windows.Forms.Button ChatApplyButton;
+		private System.Windows.Forms.NumericUpDown ChatPortSelector;
+		private System.Windows.Forms.Label ChatPortTitle;
+		private System.Windows.Forms.TextBox ChatServerText;
+		private System.Windows.Forms.Label ChatServerTitle;
+		private System.Windows.Forms.TextBox ChatNicknameText;
+		private System.Windows.Forms.Label ChatNicknameTitle;
+		private System.Windows.Forms.Button ChatRefreshButton;
 	}
 }
 

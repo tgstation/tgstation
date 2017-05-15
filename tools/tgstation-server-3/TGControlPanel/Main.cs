@@ -11,11 +11,10 @@ namespace TGControlPanel
 			InitializeComponent();
 			Panels.SelectedIndexChanged += Panels_SelectedIndexChanged;
 			Panels.SelectedIndex += Properties.Settings.Default.LastPageIndex;
-			//Resize += Main_Resize;
-			//Main_Resize(null, null);
 			InitRepoPage();
 			InitBYONDPage();
 			InitServerPage();
+			InitChatPage();
 			LoadConfig();
 		}
 

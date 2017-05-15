@@ -48,6 +48,9 @@
     <Compile Include="ByondPage.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Chat.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ConfigHelperControls.cs">
       <SubType>Component</SubType>
     </Compile>
