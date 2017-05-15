@@ -140,3 +140,10 @@
 	var/datum/antagonist/ninja/datum = H.mind.has_antag_datum(type)
 	datum.on_removal()
 	return TRUE
+
+/datum/antagonist/ninja/greet()
+	owner.current << sound('sound/effects/ninja_greeting.ogg')
+	to_chat(owner.current, "I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
+	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
+	to_chat(owner.current, "Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
+	return

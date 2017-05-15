@@ -68,15 +68,16 @@ Contents:
 	//spawn the ninja and assign the candidate
 	var/mob/living/carbon/human/Ninja = create_space_ninja(spawn_loc)
 	Mind.transfer_to(Ninja)
+	var/datum/antagonist/ninja/ninjadatum = add_ninja(Ninja)
+	ninjadatum.equip_space_ninja()
 
 	Ninja.internal = Ninja.s_store
 	Ninja.update_internals_hud_icon(1)
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
 		throw EXCEPTION("Ninja created with incorrect mind")
-		return
 
-	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
+
 	SSticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja
 	message_admins("[key_name_admin(Ninja)] has been made into a ninja by an event.")
