@@ -1,5 +1,6 @@
 //gang.dm
 //Gang War Game Mode
+// pointless commit so I can open a new PR
 
 GLOBAL_LIST_INIT(gang_name_pool, list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp"))
 GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","purple"))
