@@ -109,7 +109,7 @@
 /datum/gang_item/clothing/hat
 	name = "Pimp Hat"
 	id = "hat"
-	cost = 10
+	cost = 18
 	item_path = /obj/item/clothing/head/collectable/petehat/gang
 
 /obj/item/clothing/head/collectable/petehat/gang
@@ -117,9 +117,9 @@
 	desc = "The undisputed king of style."
 
 /datum/gang_item/clothing/mask
-	name = "Gold Death Mask"
+	name = "Golden Death Mask"
 	id = "mask"
-	cost = 10
+	cost = 20
 	item_path = /obj/item/clothing/mask/gskull
 
 /obj/item/clothing/mask/gskull
@@ -147,9 +147,9 @@
 
 
 /datum/gang_item/clothing/hands
-	name = "decorative brass knuckles"
+	name = "Decorative Brass Knuckles"
 	id = "hand"
-	cost = 5
+	cost = 12
 	item_path = /obj/item/clothing/gloves/gang
 
 /obj/item/clothing/gloves/gang
