@@ -1,0 +1,5 @@
+author: "Penguaro"
+delete-after: True
+changes: 
+  - bugfix: "Centcom Engineering has reviewed the plans for the Box series station and has addressed some concerns related to some APCs not affecting their designated section. APCs for the Detective's Office, Cargobay, and Gateway, now control those rooms. The Bridge Maintenance APC has been removed from future construction as it serves no purpose and thus is an unnecessary construction cost."
+  - bugfix: "The pipe from the station to the AI Satellite has been completed."
