@@ -23,11 +23,14 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	name = "gang war"
 	config_tag = "gang"
 	antag_flag = ROLE_GANG
+	disabled_jobs = list("Security Officer", "Warden", "Detective", "Head of Security")
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
+
+	var/disable_security = FALSE
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
@@ -38,6 +41,7 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
+	. = ..()
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -47,7 +51,7 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	//Spawn more bosses depending on server population
 	var/gangs_to_create = 2
 	if(prob(num_players() * 2))
-		gangs_to_create ++
+		gangs_to_create++
 
 	for(var/i=1 to gangs_to_create)
 		if(!antag_candidates.len)
@@ -65,6 +69,13 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 		boss.special_role = "[G.name] Gang Boss"
 		boss.restricted_roles = restricted_jobs
 		log_game("[boss.key] has been selected as the Boss for the [G.name] Gang")
+
+	if(config.gamemode_disable_jobs) // It deletes all guns from armory
+		var/area/A = locate(/area/ai_monitored/security/armory)
+		for(var/i in A.contents)
+			if(istype(i, /obj/item))
+				var/obj/item/I = i
+				qdel(I)
 
 	if(gangs.len < 2) //Need at least two gangs
 		return 0

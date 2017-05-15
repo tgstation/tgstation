@@ -22,6 +22,7 @@
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/modePlayer = new
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
+	var/list/disabled_jobs = list()		// Jobs that are ddisabled in that gamemode
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
 	var/required_players = 0
@@ -71,6 +72,10 @@
 
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
+	if(disabled_jobs && config.gamemode_disable_jobs)
+		for(var/datum/job/job in SSjob.occupations)
+			if(job.title in disabled_jobs)
+				SSjob.occupations -= job
 	return 1
 
 

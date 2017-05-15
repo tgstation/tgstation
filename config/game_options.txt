@@ -221,6 +221,9 @@ TRAITOR_OBJECTIVES_AMOUNT 2
 ## implants from being most antagonists.
 #PROTECT_ROLES_FROM_ANTAGONIST
 
+## Uncomment to enable gamemodes disabling certain jobs
+#GAMEMODE_DISABLE_JOBS
+
 ## Uncomment to prohibit assistants from becoming most antagonists.
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
 

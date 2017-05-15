@@ -73,6 +73,7 @@
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above.
 	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
+	var/gamemode_disable_jobs = 0 		//Disables job if the gamemode supports
 
 	var/server
 	var/banappeals
@@ -670,6 +671,8 @@
 					else
 						GLOB.config_error_log << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
 
+				if("gamemode_disable_jobs")
+					config.gamemode_disable_jobs		= 1
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
 				if("protect_assistant_from_antagonist")
