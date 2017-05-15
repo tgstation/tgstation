@@ -25,6 +25,13 @@
 					var/datum/gang/G = user.mind.gang_datum
 					var/recruitable = SSticker.mode.add_gangster(M.mind,G)
 					switch(recruitable)
+						if(3)
+							for(var/obj/O in ganger.contents)
+								if(istype(O, /obj/item/device/gangtool/soldier))
+									to_chat(user, "<span class='warning'>This gangster already has an uplink!</span>")
+									return
+							new /obj/item/device/gangtool/soldier(M)
+							cooldown(G)
 						if(2)
 							new /obj/item/device/gangtool/soldier(M)
 							M.Paralyse(5)
