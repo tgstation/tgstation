@@ -219,7 +219,8 @@
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>")
 		BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
-	BS.Cviewer = newstruct
+	if(BS)
+		BS.Cviewer = newstruct
 	newstruct.cancel_camera()
 
 
