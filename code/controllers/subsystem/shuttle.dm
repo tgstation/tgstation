@@ -231,7 +231,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/time_to_recall = rand(600, 1500)
 	recall_timer_id = addtimer(CALLBACK(src, .proc/recall_illegitimate, emergency.timer), time_to_recall, TIMER_STOPPABLE)
 	if(!annoyed_admiral_message)
-		annoyed_admiral_message = pick("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>")
+		annoyed_admiral_message = pick("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>", "It's a good day to die!")
 
 	message_admins("Shuttle will recall automatically. (<A HREF='?_src_=holder;stop_autorecall=\ref[usr]'>STOP AUTORECALL</A>) (<A HREF='?_src_=holder;set_annoyed_admiral_message=1'>SET ANNOYED ADMIRAL MESSAGE</A>)")
 
