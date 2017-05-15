@@ -1,4 +1,4 @@
-/datum/language/common/codespeak
+/datum/language/codespeak
 	name = "Codespeak"
 	desc = "Syndicate operatives can use a series of codewords to convey complex information, while sounding like random concepts and drinks to anyone listening in."
 	key = "t"
@@ -6,7 +6,7 @@
 	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	icon_state = "codespeak"
 
-/datum/language/common/codespeak/scramble(input)
+/datum/language/codespeak/scramble(input)
 	var/lookup = check_cache(input)
 	if(lookup)
 		return lookup
@@ -18,6 +18,10 @@
 		. = jointext(words, ", ")
 
 	. = capitalize(.)
+
+	var/input_ending = copytext(input, length(input))
+	if(input_ending in list("!","?","."))
+		. += input_ending
 
 	add_to_cache(input, .)
 
@@ -32,12 +36,12 @@
 	if(!isliving(user))
 		return
 
-	if(user.has_language(/datum/language/common/codespeak))
+	if(user.has_language(/datum/language/codespeak))
 		to_chat(user, "<span class='boldannounce'>You start skimming through [src], but you already know Codespeak.</span>")
 		return
 
 	to_chat(user, "<span class='boldannounce'>You start skimming through [src], and suddenly your mind is filled with codewords and responses.</span>")
-	user.grant_language(/datum/language/common/codespeak)
+	user.grant_language(/datum/language/codespeak)
 
 	use_charge(user)
 
@@ -52,11 +56,11 @@
 
 	if(M.stat == DEAD)
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>", "<span class='userdanger'>[user] smacks your lifeless corpse with [src].</span>", "<span class='italics'>You hear smacking.</span>")
-	else if(M.has_language(/datum/language/common/codespeak))
+	else if(M.has_language(/datum/language/codespeak))
 		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", "<span class='userdanger'>[user] beats you over the head with [src]!</span>", "<span class='italics'>You hear smacking.</span>")
 	else
 		M.visible_message("<span class='notice'>[user] teaches [M] by beating them over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], codewords and responses flow through your mind.</span>", "<span class='italics'>You hear smacking.</span>")
-		M.grant_language(/datum/language/common/codespeak)
+		M.grant_language(/datum/language/codespeak)
 		use_charge(user)
 
 /obj/item/weapon/codespeak_manual/proc/use_charge(mob/user)
