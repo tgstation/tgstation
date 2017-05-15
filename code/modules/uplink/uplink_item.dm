@@ -1282,6 +1282,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 2
 	restricted_roles = list("Curator")
 	limited_stock = 1 // please don't spam deadchat
+	surplus = 100
 
 // Pointless
 /datum/uplink_item/badass
