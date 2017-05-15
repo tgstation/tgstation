@@ -22,14 +22,15 @@
 	dat += "<HR>"
 	for(var/s in possible_summons)
 		var/datum/cult_supply/S = s
-		dat += "<a href='?src=\ref[src];id=[initial(S.id)]>[initial(S.invocation)]</a> - [initial(S.desc)]<br>"
+		dat += "<a href='?src=\ref[src];id=[initial(S.id)]'>[initial(S.invocation)]</a> - [initial(S.desc)]<br>"
 	var/datum/browser/popup = new(user, "talisman", "", 400, 400)
 	popup.set_content(dat.Join(""))
 	popup.open()
 	return 0
 
 /obj/item/weapon/paper/talisman/supply/Topic(href, href_list)
-	if(QDELETED(src) || !usr.incapacitated() || !in_range(src, usr))
+	world.log << "[usr], [href], [href_list]"
+	if(QDELETED(src) || usr.incapacitated() || !in_range(src, usr))
 		return
 
 	var/id = href_list["id"]
@@ -42,7 +43,7 @@
 			break
 
 	if(!match)
-		visible_message("<span class='userdanger'>The fabric of reality quivers in agony.</span>")
+		to_chat(usr, "<span class='userdanger'>The fabric of reality quivers in agony.</span>")
 		return
 
 	var/turf/T = get_turf(src)
@@ -55,7 +56,7 @@
 
 	uses--
 	if(uses <= 0)
-		visible_message("<span class='warning'>[src] crumbles to dust.</span>")
+		to_chat(usr, "<span class='warning'>[src] crumbles to dust.</span>")
 		burn()
 
 /obj/item/weapon/paper/talisman/supply/weak
