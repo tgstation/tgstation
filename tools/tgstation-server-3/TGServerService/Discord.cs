@@ -117,6 +117,7 @@ namespace TGServerService
 						}
 					foreach (var I in tasks)
 						I.Wait();
+					TGServerService.WriteLog(String.Format("Discord Send ({0}): {1}", adminOnly ? "Broadcast" : "Admin", msg));
 					return null;
 				}
 			}
@@ -141,6 +142,7 @@ namespace TGServerService
 							foreach (var J in I.TextChannels)
 								if (J.Name == channel)
 									J.SendMessage(message).Wait();
+					TGServerService.WriteLog(String.Format("Discord Send ({0}): {1}", channel, message));
 					return null;
 				}
 			}

@@ -9,6 +9,7 @@ namespace TGServerService
 {
 	class TGIRCChatProvider : ITGChatProvider
 	{
+		const string PrivateMessageMarker = "---PRIVATE-MSG---";
 		IrcFeatures irc;
 		int reconnectAttempt = 0;
 
@@ -23,9 +24,10 @@ namespace TGServerService
 			IRCConfig = new TGIRCSetupInfo(info);
 			irc = new IrcFeatures() { SupportNonRfc = true };
 			irc.OnChannelMessage += Irc_OnChannelMessage;
+			irc.OnQueryMessage += Irc_OnQueryMessage;
 			irc.CtcpUserInfo = "/tg/station 13 Server Service " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion;
 		}
-		
+
 		//public api
 		public string SendMessageDirect(string message, string channel)
 		{
@@ -35,6 +37,8 @@ namespace TGServerService
 					return "Disconnected.";
 				lock (IRCLock)
 				{
+					if (channel.Contains(PrivateMessageMarker))
+						channel = channel.Replace(PrivateMessageMarker, "");
 					irc.SendMessage(SendType.Message, channel, message);
 				}
 				TGServerService.WriteLog(String.Format("IRC Send ({0}): {1}", channel, message));
@@ -71,6 +75,12 @@ namespace TGServerService
 					if (!irc.JoinedChannels.Contains(I))
 						irc.RfcJoin(I);
 			}
+		}
+
+		//private message
+		private void Irc_OnQueryMessage(object sender, IrcEventArgs e)
+		{
+			OnChatMessage(e.Data.Nick, e.Data.Nick + PrivateMessageMarker, e.Data.Message, true);
 		}
 
 		private void Irc_OnChannelMessage(object sender, IrcEventArgs e)
