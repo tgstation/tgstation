@@ -34,5 +34,17 @@ namespace TGControlPanel.Properties {
                 this["LastPageIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LastConfigPageIndex {
+            get {
+                return ((int)(this["LastConfigPageIndex"]));
+            }
+            set {
+                this["LastConfigPageIndex"] = value;
+            }
+        }
     }
 }

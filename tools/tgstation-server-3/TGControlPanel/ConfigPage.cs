@@ -59,7 +59,15 @@ namespace TGControlPanel
 			MapsChangelist = new List<MapSetting>();
 			LoadMapsConfig();
 
+			ConfigPanels.SelectedIndex = Properties.Settings.Default.LastConfigPageIndex;
+			ConfigPanels.SelectedIndexChanged += ConfigPanels_SelectedIndexChanged;
+
 			Resize += ReadjustFlow;
+		}
+
+		private void ConfigPanels_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			Properties.Settings.Default.LastConfigPageIndex = Panels.SelectedIndex;
 		}
 
 		void ReadjustFlow(object sender, EventArgs e)
