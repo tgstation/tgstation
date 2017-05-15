@@ -619,6 +619,18 @@
 	icon_state = "shieldsparkles"
 	duration = 6
 
+/obj/effect/overlay/temp/heart
+	name = "heart"
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "heart"
+	duration = 25
+
+/obj/effect/overlay/temp/heart/Initialize(mapload)
+	. = ..()
+	pixel_x = rand(-4,4)
+	pixel_y = rand(-4,4)
+
+	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"
