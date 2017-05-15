@@ -5,10 +5,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	rustle_jimmies = FALSE
 
-/obj/item/weapon/storage/internal/ClickAccessible(mob/user, depth=1)
-	if(loc)
-		return loc.ClickAccessible(user, depth)
-
 /obj/item/weapon/storage/internal/Adjacent(A)
 	if(loc)
 		return loc.Adjacent(A)

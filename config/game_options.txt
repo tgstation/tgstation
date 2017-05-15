@@ -6,10 +6,10 @@ DAMAGE_MULTIPLIER 1
 ### REVIVAL ###
 
 # whether pod plants work or not
-REVIVAL_POD_PLANTS 1
+REVIVAL_POD_PLANTS
 
 # whether cloning tubes work or not
-REVIVAL_CLONING 1
+REVIVAL_CLONING
 
 # amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
@@ -81,6 +81,7 @@ PROBABILITY TRAITORCHAN 4
 PROBABILITY INTERNAL_AFFAIRS 3
 PROBABILITY NUCLEAR 2
 PROBABILITY REVOLUTION 2
+PROBABILITY GANG 2
 PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
@@ -105,6 +106,7 @@ CONTINUOUS TRAITORCHAN
 CONTINUOUS DOUBLE_AGENTS
 #CONTINUOUS NUCLEAR
 #CONTINUOUS REVOLUTION
+CONTINUOUS GANG
 CONTINUOUS CULT
 CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
@@ -129,6 +131,7 @@ MIDROUND_ANTAG TRAITORCHAN
 MIDROUND_ANTAG DOUBLE_AGENTS
 #MIDROUND_ANTAG  NUCLEAR
 #MIDROUND_ANTAG  REVOLUTION
+#MIDROUND_ANTAG  GANG
 MIDROUND_ANTAG CULT
 MIDROUND_ANTAG CLOCKWORK_CULT
 MIDROUND_ANTAG CHANGELING
@@ -171,6 +174,9 @@ SHUTTLE_INFRASTRUCTURE_CHECK 0.7
 
 #MIN_POP REVOLUTION 20
 #MAX_POP REVOLUTION -1
+
+#MIN_POP GANG 20
+#MAX_POP GANG -1
 
 #MIN_POP CULT 24
 #MAX_POP CULT -1
@@ -488,8 +494,8 @@ Space_Budget 16
 #Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
 ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
-#Set this to 1 to prevent late join players from spawning if the arrivals shuttle is depressurized
-ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN 0
+#Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
+#ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
 
 # How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
 

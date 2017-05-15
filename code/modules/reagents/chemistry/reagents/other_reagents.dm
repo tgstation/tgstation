@@ -189,7 +189,7 @@
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
 	if(!data) data = 1
 	data++
-	M.jitteriness = max(M.jitteriness-5,0)
+	M.jitteriness = min(M.jitteriness+4,10)
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
@@ -212,9 +212,9 @@
 				SSticker.mode.remove_cultist(M.mind, 1, 1)
 			else if(is_servant_of_ratvar(M))
 				remove_servant_of_ratvar(M)
-			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
 			M.stuttering = 0
+			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			return
 	holder.remove_reagent(id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
@@ -1110,8 +1110,9 @@
 	id = "nitrous_oxide"
 	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery."
 	reagent_state = LIQUID
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	color = "#808080"
-	taste_description = "numbness"
+	taste_description = "sweetness"
 
 /datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
@@ -1122,7 +1123,19 @@
 	if(istype(T))
 		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
 
-
+/datum/reagent/nitrous_oxide/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	if(method == VAPOR)
+		M.drowsyness += max(round(reac_volume, 1), 2)
+		
+/datum/reagent/nitrous_oxide/on_mob_life(mob/living/M)
+	M.drowsyness += 2
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.blood_volume = max(H.blood_volume - 2.5, 0)
+	if(prob(20))
+		M.losebreath += 2
+		M.confused = min(M.confused + 2, 5)
+	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
@@ -1569,6 +1582,13 @@
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
+
+/datum/reagent/plastic_polymers
+	name = "plastic polymers"
+	id = "plastic_polymers"
+	description = "the petroleum based components of plastic."
+	color = "#f7eded"
+	taste_description = "plastic"
 
 /datum/reagent/glitter
 	name = "generic glitter"

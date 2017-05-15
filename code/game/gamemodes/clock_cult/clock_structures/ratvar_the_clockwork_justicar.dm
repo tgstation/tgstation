@@ -29,7 +29,7 @@
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	SSshuttle.horrible_things += src
-	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0)
+	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0, 0)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
 	GLOB.ratvar_awakens--
@@ -119,12 +119,10 @@
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#966400", flash_time=1)
 				shake_camera(M, 4, 3)
-		var/ratvar_chance = min(SSticker.mode.servants_of_ratvar.len, 50)
-		var/narsie_chance = SSticker.mode.cult.len
-		for(var/mob/living/simple_animal/hostile/construct/harvester/C in GLOB.player_list)
-			narsie_chance++
+		var/ratvar_chance = min(LAZYLEN(SSticker.mode.servants_of_ratvar), 50)
+		var/narsie_chance = min(LAZYLEN(SSticker.mode.cult), 50)
 		ratvar_chance = rand(base_victory_chance, ratvar_chance)
-		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
+		narsie_chance = rand(base_victory_chance, narsie_chance)
 		if(ratvar_chance > narsie_chance)
 			winner = "Ratvar"
 			break

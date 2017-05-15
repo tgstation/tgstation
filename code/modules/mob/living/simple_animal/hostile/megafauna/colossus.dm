@@ -401,7 +401,7 @@ Difficulty: Very Hard
 		to_chat(user, observer_desc)
 		to_chat(user, "It is activated by [activation_method].")
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -647,8 +647,7 @@ Difficulty: Very Hard
 	verb_ask = "floats inquisitively"
 	verb_exclaim = "zaps"
 	verb_yell = "bangs"
-	initial_languages = list(/datum/language/common, /datum/language/slime)
-	only_speaks_language = /datum/language/slime
+	initial_language_holder = /datum/language_holder/lightbringer
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	light_range = 4
 	faction = list("neutral")

@@ -1,4 +1,4 @@
-atom/proc/investigate_log(message, subject)
+/atom/proc/investigate_log(message, subject)
 	if(!message || !subject)
 		return
 	var/F = file("[GLOB.log_directory]/[subject].html")

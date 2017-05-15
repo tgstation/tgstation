@@ -375,6 +375,15 @@
 			A.ex_act(severity, target)
 			CHECK_TICK
 
+/turf/narsie_act(force, ignore_mobs, probability = 20)
+	. = (prob(probability) || force)
+	for(var/I in src)
+		var/atom/A = I
+		if(ignore_mobs && ismob(A))
+			continue
+		if(ismob(A) || .)
+			A.narsie_act()
+
 /turf/ratvar_act(force, ignore_mobs, probability = 40)
 	. = (prob(probability) || force)
 	for(var/I in src)
@@ -455,6 +464,8 @@
 			O = new()
 			O.underlays.Add(T)
 		T.ChangeTurf(type)
+		for(var/group in decals)
+			T.add_decal(decals[group],group)
 		if(underlays.len)
 			T.underlays = O.underlays
 	if(T.icon_state != icon_state)

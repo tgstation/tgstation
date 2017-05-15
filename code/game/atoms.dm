@@ -43,7 +43,7 @@
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
-	
+
 	var/list/created = SSatoms.created_atoms
 	if(created)
 		created += src
@@ -274,6 +274,7 @@
 	return
 
 /atom/proc/ex_act(severity, target)
+	set waitfor = FALSE
 	contents_explosion(severity, target)
 
 /atom/proc/blob_act(obj/structure/blob/B)

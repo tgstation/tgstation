@@ -159,3 +159,4 @@
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
+	pockets = /obj/item/weapon/storage/internal/pocket/small
