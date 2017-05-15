@@ -17,10 +17,11 @@
 	return ..()
 
 /datum/riding/proc/handle_vehicle_layer()
-	if(ridden.dir != NORTH)
-		ridden.layer = ABOVE_MOB_LAYER
-	else
-		ridden.layer = OBJ_LAYER
+	if(ridden)
+		if(ridden.dir != NORTH)
+			ridden.layer = ABOVE_MOB_LAYER
+		else
+			ridden.layer = OBJ_LAYER
 
 /datum/riding/proc/on_vehicle_move()
 	for(var/mob/living/M in ridden.buckled_mobs)
@@ -38,7 +39,7 @@
 //if they differ between directions, otherwise use the
 //generic variables
 /datum/riding/proc/handle_vehicle_offsets()
-	if(ridden.has_buckled_mobs())
+	if(ridden && ridden.has_buckled_mobs())
 		for(var/m in ridden.buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.setDir(ridden.dir)
