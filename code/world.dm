@@ -280,11 +280,12 @@
 	world << sound(round_end_sound)
 
 /world/proc/load_mode()
-	var/list/Lines = world.file2list("data/mode.txt")
-	if(Lines.len)
-		if(Lines[1])
-			GLOB.master_mode = Lines[1]
-			GLOB.world_game_log << "Saved mode is '[GLOB.master_mode]'"
+	var/mode = trim(file2text("data/mode.txt"))
+	if(mode)
+		GLOB.master_mode = mode
+	else
+		GLOB.master_mode = "extended"
+	log_game("Saved mode is '[GLOB.master_mode]'")	
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
