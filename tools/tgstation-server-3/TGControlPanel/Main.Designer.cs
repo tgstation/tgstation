@@ -75,6 +75,8 @@
             this.MajorVersionNumeric = new System.Windows.Forms.NumericUpDown();
             this.UpdateProgressBar = new System.Windows.Forms.ProgressBar();
             this.ServerPanel = new System.Windows.Forms.TabPage();
+            this.NudgePortSelector = new System.Windows.Forms.NumericUpDown();
+            this.NudgePortLabel = new System.Windows.Forms.Label();
             this.ServerPathLabel = new System.Windows.Forms.Label();
             this.ServerPathTextbox = new System.Windows.Forms.TextBox();
             this.CompileCancelButton = new System.Windows.Forms.Button();
@@ -138,13 +140,14 @@
             this.ConfigConfigPanel = new System.Windows.Forms.TabPage();
             this.DatabaseConfigPanel = new System.Windows.Forms.TabPage();
             this.GameConfigPanel = new System.Windows.Forms.TabPage();
+            this.JobsConfigPanel = new System.Windows.Forms.TabPage();
             this.RepoBGW = new System.ComponentModel.BackgroundWorker();
             this.BYONDTimer = new System.Windows.Forms.Timer(this.components);
             this.ServerTimer = new System.Windows.Forms.Timer(this.components);
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
-            this.JobsConfigPanel = new System.Windows.Forms.TabPage();
+            this.MapsConfigPanel = new System.Windows.Forms.TabPage();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -152,6 +155,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.MinorVersionNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MajorVersionNumeric)).BeginInit();
             this.ServerPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudgePortSelector)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PortSelector)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ServerTestmergeInput)).BeginInit();
             this.ChatPanel.SuspendLayout();
@@ -739,6 +743,8 @@
             // ServerPanel
             // 
             this.ServerPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.ServerPanel.Controls.Add(this.NudgePortSelector);
+            this.ServerPanel.Controls.Add(this.NudgePortLabel);
             this.ServerPanel.Controls.Add(this.ServerPathLabel);
             this.ServerPanel.Controls.Add(this.ServerPathTextbox);
             this.ServerPanel.Controls.Add(this.CompileCancelButton);
@@ -771,6 +777,42 @@
             this.ServerPanel.Size = new System.Drawing.Size(868, 366);
             this.ServerPanel.TabIndex = 2;
             this.ServerPanel.Text = "Server";
+            // 
+            // NudgePortSelector
+            // 
+            this.NudgePortSelector.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudgePortSelector.Location = new System.Drawing.Point(806, 60);
+            this.NudgePortSelector.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.NudgePortSelector.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NudgePortSelector.Name = "NudgePortSelector";
+            this.NudgePortSelector.Size = new System.Drawing.Size(62, 20);
+            this.NudgePortSelector.TabIndex = 34;
+            this.NudgePortSelector.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NudgePortSelector.ValueChanged += new System.EventHandler(this.NudgePortSelector_ValueChanged);
+            // 
+            // NudgePortLabel
+            // 
+            this.NudgePortLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudgePortLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NudgePortLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.NudgePortLabel.Location = new System.Drawing.Point(745, 45);
+            this.NudgePortLabel.Name = "NudgePortLabel";
+            this.NudgePortLabel.Size = new System.Drawing.Size(61, 44);
+            this.NudgePortLabel.TabIndex = 35;
+            this.NudgePortLabel.Text = "Nudge Port:";
+            this.NudgePortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ServerPathLabel
             // 
@@ -1487,6 +1529,7 @@
             this.ConfigPanels.Controls.Add(this.DatabaseConfigPanel);
             this.ConfigPanels.Controls.Add(this.GameConfigPanel);
             this.ConfigPanels.Controls.Add(this.JobsConfigPanel);
+            this.ConfigPanels.Controls.Add(this.MapsConfigPanel);
             this.ConfigPanels.Location = new System.Drawing.Point(-4, 0);
             this.ConfigPanels.Name = "ConfigPanels";
             this.ConfigPanels.SelectedIndex = 0;
@@ -1526,6 +1569,17 @@
             this.GameConfigPanel.TabIndex = 2;
             this.GameConfigPanel.Text = "Game";
             // 
+            // JobsConfigPanel
+            // 
+            this.JobsConfigPanel.AutoScroll = true;
+            this.JobsConfigPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.JobsConfigPanel.Location = new System.Drawing.Point(4, 22);
+            this.JobsConfigPanel.Name = "JobsConfigPanel";
+            this.JobsConfigPanel.Padding = new System.Windows.Forms.Padding(3);
+            this.JobsConfigPanel.Size = new System.Drawing.Size(868, 344);
+            this.JobsConfigPanel.TabIndex = 3;
+            this.JobsConfigPanel.Text = "Jobs";
+            // 
             // RepoBGW
             // 
             this.RepoBGW.WorkerReportsProgress = true;
@@ -1556,16 +1610,16 @@
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
             // 
-            // JobsConfigPanel
+            // MapsConfigPanel
             // 
-            this.JobsConfigPanel.AutoScroll = true;
-            this.JobsConfigPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
-            this.JobsConfigPanel.Location = new System.Drawing.Point(4, 22);
-            this.JobsConfigPanel.Name = "JobsConfigPanel";
-            this.JobsConfigPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.JobsConfigPanel.Size = new System.Drawing.Size(868, 344);
-            this.JobsConfigPanel.TabIndex = 3;
-            this.JobsConfigPanel.Text = "Jobs";
+            this.MapsConfigPanel.AutoScroll = true;
+            this.MapsConfigPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.MapsConfigPanel.Location = new System.Drawing.Point(4, 22);
+            this.MapsConfigPanel.Name = "MapsConfigPanel";
+            this.MapsConfigPanel.Padding = new System.Windows.Forms.Padding(3);
+            this.MapsConfigPanel.Size = new System.Drawing.Size(868, 344);
+            this.MapsConfigPanel.TabIndex = 4;
+            this.MapsConfigPanel.Text = "Maps";
             // 
             // Main
             // 
@@ -1588,6 +1642,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.MajorVersionNumeric)).EndInit();
             this.ServerPanel.ResumeLayout(false);
             this.ServerPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudgePortSelector)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PortSelector)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ServerTestmergeInput)).EndInit();
             this.ChatPanel.ResumeLayout(false);
@@ -1717,6 +1772,9 @@
 		private System.Windows.Forms.Label ChatNicknameTitle;
 		private System.Windows.Forms.Button ChatRefreshButton;
 		private System.Windows.Forms.TabPage JobsConfigPanel;
+		private System.Windows.Forms.NumericUpDown NudgePortSelector;
+		private System.Windows.Forms.Label NudgePortLabel;
+		private System.Windows.Forms.TabPage MapsConfigPanel;
 	}
 }
 

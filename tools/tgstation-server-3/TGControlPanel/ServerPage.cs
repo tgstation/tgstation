@@ -72,7 +72,9 @@ namespace TGControlPanel
 		{
 			var DM = Server.GetComponent<ITGCompiler>();
 			var DD = Server.GetComponent<ITGDreamDaemon>();
-
+			var Config = Server.GetComponent<ITGConfig>();
+			if (updatingFields)
+				return;
 			updatingFields = true;
 			AutostartCheckbox.Checked = DD.Autostart();
 			if(!PortSelector.Focused)
@@ -80,7 +82,10 @@ namespace TGControlPanel
 			if(!projectNameText.Focused)
 				projectNameText.Text = DM.ProjectName();
 			if(!ServerPathTextbox.Focused)
-				ServerPathTextbox.Text = Server.GetComponent<ITGConfig>().ServerDirectory();
+				ServerPathTextbox.Text = Config.ServerDirectory();
+			NudgePortSelector.Value = Config.NudgePort(out string error);
+			if (error != null)
+				MessageBox.Show("Error: " + error);
 			updatingFields = false;
 
 			switch (DM.GetStatus())
@@ -121,7 +126,7 @@ namespace TGControlPanel
 					CompileCancelButton.Enabled = true;
 					break;
 			}
-			var error = DM.CompileError();
+			error = DM.CompileError();
 			if (error != null)
 				MessageBox.Show("Error: " + error);
 		}
@@ -281,6 +286,12 @@ namespace TGControlPanel
 		private void TestmergeButton_Click(object sender, System.EventArgs e)
 		{
 			RunServerUpdate(FullUpdateAction.Testmerge, (int)TestmergeSelector.Value);
+		}
+
+		private void NudgePortSelector_ValueChanged(object sender, EventArgs e)
+		{
+			if (!updatingFields)
+				Server.GetComponent<ITGConfig>().SetNudgePort((ushort)NudgePortSelector.Value);
 		}
 	}
 }

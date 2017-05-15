@@ -914,7 +914,9 @@ namespace TGServerService
 							lastDefaultMap = currentMap;
 							break;
 						case "disabled":
-							currentMap = null;
+							if (currentMap == null)
+								continue;
+							currentMap.Enabled = false;
 							break;
 					}
 				}
@@ -941,18 +943,18 @@ namespace TGServerService
 				{
 					var entryToUse = I.Name == newSetting.Name ? newSetting : I;
 
-					asStrings.Add("map " + entryToUse.Name + "\r\n");
+					asStrings.Add("map " + entryToUse.Name);
 					if (!entryToUse.Enabled)
-						asStrings.Add("\tdisabled\r\n");
+						asStrings.Add("\tdisabled");
 					if (entryToUse.MinPlayers > 0)
-						asStrings.Add(String.Format("\tminplayers {0}\r\n", entryToUse.MinPlayers));
+						asStrings.Add(String.Format("\tminplayers {0}", entryToUse.MinPlayers));
 					if (entryToUse.MaxPlayers > 0)
-						asStrings.Add(String.Format("\tmaxplayers {0}\r\n", entryToUse.MaxPlayers));
+						asStrings.Add(String.Format("\tmaxplayers {0}", entryToUse.MaxPlayers));
 					if (entryToUse.VoteWeight != 1)
-						asStrings.Add(String.Format("\tvoteweight {0}\r\n", entryToUse.VoteWeight));
+						asStrings.Add(String.Format("\tvoteweight {0}", entryToUse.VoteWeight));
 					if (entryToUse.Default)
-						asStrings.Add("\tdefault\r\n");
-					asStrings.Add("endmap\r\n\r\n");
+						asStrings.Add("\tdefault");
+					asStrings.Add("endmap");
 				}
 
 				lock (configLock)

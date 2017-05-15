@@ -14,11 +14,13 @@ namespace TGControlPanel
 		const int DatabaseConfig = 1;
 		const int GameConfig = 2;
 		const int JobsConfig = 3;
+		const int MapsConfig = 4;
 
 		IList<ConfigSetting> GeneralChangelist, DatabaseChangelist, GameChangelist;
 		IList<JobSetting> JobsChangelist;
+		IList<MapSetting> MapsChangelist;
 
-		FlowLayoutPanel ConfigConfigFlow, DatabaseConfigFlow, GameConfigFlow, JobsConfigFlow;
+		FlowLayoutPanel ConfigConfigFlow, DatabaseConfigFlow, GameConfigFlow, JobsConfigFlow, MapsConfigFlow;
 
 		FlowLayoutPanel CreateFLP(Control parent)
 		{
@@ -50,8 +52,12 @@ namespace TGControlPanel
 			LoadGenericConfig(TGConfigType.Game);
 
 			JobsConfigFlow = CreateFLP(JobsConfigPanel);
-			JobsChangelist =  new List<JobSetting>();
+			JobsChangelist = new List<JobSetting>();
 			LoadJobsConfig();
+
+			MapsConfigFlow = CreateFLP(MapsConfigPanel);
+			MapsChangelist = new List<MapSetting>();
+			LoadMapsConfig();
 
 			Resize += ReadjustFlow;
 		}
@@ -62,6 +68,7 @@ namespace TGControlPanel
 			AdjustFlow(GameConfigFlow, GameConfigPanel);
 			AdjustFlow(DatabaseConfigFlow, DatabaseConfigPanel);
 			AdjustFlow(JobsConfigFlow, JobsConfigPanel);
+			AdjustFlow(MapsConfigFlow, MapsConfigPanel);
 		}
 
 		void LoadGenericConfig(TGConfigType type)
@@ -117,6 +124,12 @@ namespace TGControlPanel
 				case GameConfig:
 					LoadGenericConfig(TGConfigType.Game);
 					break;
+				case JobsConfig:
+					LoadJobsConfig();
+					break;
+				case MapsConfig:
+					LoadMapsConfig();
+					break;
 			}
 		}
 		void ApplyGenericConfig(IList<ConfigSetting> changelist, TGConfigType type)
@@ -131,7 +144,6 @@ namespace TGControlPanel
 					break;
 				}
 			}
-			RefreshCurrentPage();
 		}
 
 		void ConfigApply_Click(object sender, EventArgs e)
@@ -151,9 +163,84 @@ namespace TGControlPanel
 					var Config = Server.GetComponent<ITGConfig>();
 					foreach (var I in JobsChangelist)
 						Config.SetJob(I);
-					RefreshCurrentPage();
+					break;
+				case MapsConfig:
+					Config = Server.GetComponent<ITGConfig>();
+					foreach (var I in MapsChangelist)
+						Config.SetMapSettings(I);
 					break;
 			}
+			RefreshCurrentPage();
+		}
+
+		void LoadMapsConfig()
+		{
+			MapsConfigFlow.Controls.Clear();
+			var Maps = Server.GetComponent<ITGConfig>().MapSettings(out string error);
+			if (Maps == null)
+			{
+				MapsConfigFlow.Controls.Add(new Label()
+				{
+					Text = "Error: " + error,
+					AutoSize = true,
+					Font = new Font("Verdana", 10.0f),
+					ForeColor = Color.FromArgb(248, 248, 242)
+				});
+				return;
+			}
+
+			MapsConfigFlow.SuspendLayout();
+			MapsConfigFlow.Controls.Add(new Label()
+			{
+				Text = "Set a player limit to 0 for it to be ignored",
+				AutoSize = true,
+				Font = new Font("Verdana", 10.0f),
+				ForeColor = Color.FromArgb(248, 248, 242)
+			});
+			MapsConfigFlow.Controls.Add(new Label());
+			var mapRadios = new List<MapRadioButton>();
+			foreach(var M in Maps)
+			{
+				var p = new FlowLayoutPanel() { FlowDirection = FlowDirection.LeftToRight, AutoSize = true };
+				p.Controls.Add(new Label()
+				{
+					Text = M.Name + ":",
+					AutoSize = true,
+					Font = new Font("Verdana", 10.0f),
+					ForeColor = Color.FromArgb(248, 248, 242)
+				});
+				p.Controls.Add(new MapCheckBox(M, MapsChangelist));
+				p.Controls.Add(new MapRadioButton(M, MapsChangelist, mapRadios));
+				MapsConfigFlow.Controls.Add(p);
+				p = new FlowLayoutPanel() { FlowDirection = FlowDirection.LeftToRight, AutoSize = true };
+				p.Controls.Add(new Label()
+				{
+					Text = "Min Players:",
+					AutoSize = true,
+					Font = new Font("Verdana", 10.0f),
+					ForeColor = Color.FromArgb(248, 248, 242)
+				});
+				p.Controls.Add(new MapNumeric(M, MapsChangelist, MapNumType.MinPlayers));
+				p.Controls.Add(new Label()
+				{
+					Text = "Max Players:",
+					AutoSize = true,
+					Font = new Font("Verdana", 10.0f),
+					ForeColor = Color.FromArgb(248, 248, 242)
+				});
+				p.Controls.Add(new MapNumeric(M, MapsChangelist, MapNumType.MaxPlayers));
+				p.Controls.Add(new Label()
+				{
+					Text = "Vote Weight:",
+					AutoSize = true,
+					Font = new Font("Verdana", 10.0f),
+					ForeColor = Color.FromArgb(248, 248, 242)
+				});
+				p.Controls.Add(new MapNumeric(M, MapsChangelist, MapNumType.VoteWeight));
+				MapsConfigFlow.Controls.Add(p);
+				MapsConfigFlow.Controls.Add(new Label()); //line break
+			}
+			MapsConfigFlow.ResumeLayout();
 		}
 
 		void LoadJobsConfig()
@@ -185,13 +272,12 @@ namespace TGControlPanel
 			{
 				JobsConfigFlow.Controls.Add(new Label()
 				{
-					Text = J.Name,
+					Text = J.Name + ":",
 					AutoSize = true,
 					Font = new Font("Verdana", 10.0f),
 					ForeColor = Color.FromArgb(248, 248, 242)
 				});
-				var p = new FlowLayoutPanel() { FlowDirection = FlowDirection.LeftToRight };
-				p.AutoSize = true;
+				var p = new FlowLayoutPanel() { FlowDirection = FlowDirection.LeftToRight, AutoSize = true };
 				p.Controls.Add(new Label()
 				{
 					Text = "Total Positions:",
