@@ -1,4 +1,56 @@
-/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range, silent = 0, smoke = 1)
+/proc/explosion(turf/hypocenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range, silent = 0, smoke = 1)
+	set waitfor = 0
+	src = null
+	var/start = world.timeofday
+	var/turf/epicenter = hypocenter
+	var/orig_dev_range = devastation_range
+	var/orig_heavy_range = heavy_impact_range
+	var/orig_light_range = light_impact_range
+	if(!ignorecap && hypocenter.z != ZLEVEL_MINING)
+		//Clamp all values to MAX_EXPLOSION_RANGE
+		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE, devastation_range)
+		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE, heavy_impact_range)
+		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE, light_impact_range)
+		flash_range = min(GLOB.MAX_EX_FLASH_RANGE, flash_range)
+		flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
+	var/range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
+	if(adminlog)
+		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [get_area(epicenter)] [ADMIN_COORDJMP(epicenter)]")
+		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
+	flat_explosion(hypocenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, ignorecap, flame_range, silent, smoke)
+	var/z_range = round(range / 2)
+	var/counter = 1
+	var/z_scale
+	while(counter < z_range)
+		if(!AreZsConnected(epicenter.z, epicenter.z + 1))
+			break
+		z_scale = cos(arcsin(counter / z_range))
+		epicenter = get_step(epicenter, UP)
+		flat_explosion(epicenter, round(devastation_range * z_scale), round(heavy_impact_range * z_scale), round(light_impact_range * z_scale), round(flash_range * z_scale), ignorecap, round(flame_range * z_scale), silent, smoke)
+		counter++
+	counter = 1
+	epicenter = hypocenter
+	while(counter < z_range)
+		if(!AreZsConnected(epicenter.z, epicenter.z - 1))
+			break
+		z_scale = cos(arcsin(counter / z_range))
+		epicenter = get_step(epicenter, DOWN)
+		flat_explosion(epicenter, round(devastation_range * z_scale), round(heavy_impact_range * z_scale), round(light_impact_range * z_scale), round(flash_range * z_scale), ignorecap, round(flame_range * z_scale), silent, smoke)
+		counter++
+
+	var/took = (world.timeofday-start)/10
+	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
+	if(GLOB.Debug2)
+		log_world("## DEBUG: Explosion([hypocenter.x],[hypocenter.y],[hypocenter.z])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
+
+	//Machines which report explosions.
+	for(var/array in GLOB.doppler_arrays)
+		var/obj/machinery/doppler_array/A = array
+		A.sense_explosion(epicenter,devastation_range,heavy_impact_range,light_impact_range,took,orig_dev_range,orig_heavy_range,orig_light_range)
+
+	return 1
+
+/proc/flat_explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, ignorecap = 0, flame_range, silent = 0, smoke = 1)
 	set waitfor = 0
 	src = null //so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
@@ -9,19 +61,6 @@
 		flame_range = light_impact_range
 	if(isnull(flash_range))
 		flash_range = devastation_range
-
-	// Archive the uncapped explosion for the doppler array
-	var/orig_dev_range = devastation_range
-	var/orig_heavy_range = heavy_impact_range
-	var/orig_light_range = light_impact_range
-
-	if(!ignorecap && epicenter.z != ZLEVEL_MINING)
-		//Clamp all values to MAX_EXPLOSION_RANGE
-		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE, devastation_range)
-		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE, heavy_impact_range)
-		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE, light_impact_range)
-		flash_range = min(GLOB.MAX_EX_FLASH_RANGE, flash_range)
-		flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
 
 	//DO NOT REMOVE THIS SLEEP, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
@@ -34,14 +73,9 @@
 
 	var/static/explosionid = 1
 	var/id = explosionid++
-	var/start = world.timeofday
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	var/list/cached_exp_block = list()
-
-	if(adminlog)
-		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [get_area(epicenter)] [ADMIN_COORDJMP(epicenter)]")
-		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
 
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
 	// Stereo users will also hear the direction of the explosion!
@@ -88,7 +122,6 @@
 
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
-	var/z0 = epicenter.z
 
 	var/list/affected_turfs = spiral_range_turfs(max_range, epicenter)
 
@@ -181,20 +214,6 @@
 		var/turf/UnexplodeT = Unexplode
 		UnexplodeT.explosion_level = 0
 	exploded_this_tick.Cut()
-
-	var/took = (world.timeofday-start)/10
-	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
-	if(GLOB.Debug2)
-		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
-
-	//Machines which report explosions.
-	for(var/array in GLOB.doppler_arrays)
-		var/obj/machinery/doppler_array/A = array
-		A.sense_explosion(epicenter,devastation_range,heavy_impact_range,light_impact_range,took,orig_dev_range,orig_heavy_range,orig_light_range)
-
-	return 1
-
-
 
 /proc/secondaryexplosion(turf/epicenter, range)
 	for(var/turf/tile in spiral_range_turfs(range, epicenter))
