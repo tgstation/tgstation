@@ -943,6 +943,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	new_human.apply_status_effect(STATUS_EFFECT_SUMMONEDGHOST) //ghosts can't summon more ghosts
 	..()
 	ghosts++
+	playsound(src, 'sound/magic/exit_blood.ogg', 50, 1)
+	user.apply_damage(10, BRUTE)
 	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
 	to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 	var/turf/T = get_turf(src)
