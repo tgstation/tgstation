@@ -11,6 +11,7 @@ namespace TGControlPanel
 	partial class Main
 	{
 		TGChatProvider modifyingProvider;
+		bool updatingChat = false;
 
 		void InitChatPage()
 		{
@@ -20,6 +21,7 @@ namespace TGControlPanel
 		}
 		void LoadChatPage()
 		{
+			updatingChat = true;
 			var Chat = Server.GetComponent<ITGChat>();
 			var PI = Chat.ProviderInfo();
 			modifyingProvider = PI.Provider;
@@ -60,7 +62,7 @@ namespace TGControlPanel
 					break;
 				default:
 					MessageBox.Show("This is a bug, I'll try and recover. Provider was " + modifyingProvider.ToString());
-					Chat.SetProviderInfo(new TGIRCSetupInfo());
+					MessageBox.Show(Chat.SetProviderInfo(new TGIRCSetupInfo()) ?? "Success!");
 					LoadChatPage();
 					return;
 			}
@@ -84,6 +86,7 @@ namespace TGControlPanel
 			ChatChannelsTextBox.Text = "";
 			foreach (var I in Chat.Channels())
 				ChatChannelsTextBox.Text += I + "\r\n";
+			updatingChat = false;
 		}
 
 		private void ChatRefreshButton_Click(object sender, EventArgs e)
@@ -110,6 +113,26 @@ namespace TGControlPanel
 			return finalChannels.ToArray();
 		}
 
+		private void DiscordProviderSwitch_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!updatingChat && DiscordProviderSwitch.Checked)
+			{
+				var res = Server.GetComponent<ITGChat>().SetProviderInfo(new TGDiscordSetupInfo());
+				if (res != null)
+					MessageBox.Show(res);
+			}
+		}
+
+		private void IRCProviderSwitch_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!updatingChat && IRCProviderSwitch.Checked)
+			{
+				var res = Server.GetComponent<ITGChat>().SetProviderInfo(new TGIRCSetupInfo());
+				if (res != null)
+					MessageBox.Show(res);
+			}
+		}
+
 		private void ChatApplyButton_Click(object sender, EventArgs e)
 		{
 			var Chat = Server.GetComponent<ITGChat>();
@@ -118,13 +141,14 @@ namespace TGControlPanel
 			Chat.SetAdmins(SplitByLine(ChatAdminsTextBox));
 			Chat.SetEnabled(ChatEnabledCheckbox.Checked);
 
+			string res;
 			switch (modifyingProvider)
 			{
 				case TGChatProvider.Discord:
-					Chat.SetProviderInfo(new TGDiscordSetupInfo() { BotToken = AuthField1.Text });
+					res = Chat.SetProviderInfo(new TGDiscordSetupInfo() { BotToken = AuthField1.Text });
 					break;
 				case TGChatProvider.IRC:
-					Chat.SetProviderInfo(new TGIRCSetupInfo() {
+					res = Chat.SetProviderInfo(new TGIRCSetupInfo() {
 						AuthMessage = AuthField2.Text,
 						AuthTarget = AuthField1.Text,
 						Nickname = ChatNicknameText.Text,
@@ -133,10 +157,13 @@ namespace TGControlPanel
 					});
 					break;
 				default:
-					MessageBox.Show("You really shouldn't be able to read this.");
+					res = "You really shouldn't be able to read this.";
 					break;
 			}
-				
+
+			if (res != null)
+				MessageBox.Show(res);
+
 			LoadChatPage();
 		}
 	}

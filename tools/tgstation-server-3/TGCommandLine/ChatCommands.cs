@@ -60,7 +60,7 @@ namespace TGCommandLine
 		public IRCCommand()
 		{
 			Keyword = "irc";
-			Children = new Command[] { new IRCNickCommand(), new IRCAuthCommand(), new IRCDisableAuthCommand() };
+			Children = new Command[] { new IRCNickCommand(), new IRCAuthCommand(), new IRCDisableAuthCommand(), new IRCServerCommand() };
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
@@ -457,5 +457,51 @@ namespace TGCommandLine
 			Server.GetComponent<ITGChat>().SetEnabled(true);
 			return ExitCode.Normal;
 		}
+	}
+
+	class IRCServerCommand : Command
+	{
+		public IRCServerCommand()
+		{
+			Keyword = "set-server";
+			RequiredParameters = 1;
+		}
+		protected override string GetArgumentString()
+		{
+			return "<url>:<port>";
+		}
+		protected override string GetHelpText()
+		{
+			return "Sets the IRC server";
+		}
+
+		public override ExitCode Run(IList<string> parameters)
+		{
+			var splits = parameters[0].Split(':');
+			if(splits.Length < 2)
+			{
+				Console.WriteLine("Invalid parameter!");
+				return ExitCode.BadCommand;
+			}
+			var Chat = Server.GetComponent<ITGChat>();
+			var PI = new TGIRCSetupInfo(Chat.ProviderInfo())
+			{
+				URL = splits[0]
+			};
+			try
+			{
+				PI.Port = Convert.ToUInt16(splits[1]);
+			}
+			catch
+			{
+				Console.WriteLine("Invalid port number!");
+				return ExitCode.BadCommand;
+			}
+
+			var res = Chat.SetProviderInfo(PI);
+			Console.WriteLine(res ?? "Success");
+			return res == null ? ExitCode.Normal : ExitCode.ServerError;
+		}
+
 	}
 }

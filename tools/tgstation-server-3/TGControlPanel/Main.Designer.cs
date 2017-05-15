@@ -1337,6 +1337,7 @@
             this.DiscordProviderSwitch.TabStop = true;
             this.DiscordProviderSwitch.Text = "Discord";
             this.DiscordProviderSwitch.UseVisualStyleBackColor = true;
+            this.DiscordProviderSwitch.CheckedChanged += new System.EventHandler(this.DiscordProviderSwitch_CheckedChanged);
             // 
             // IRCProviderSwitch
             // 
@@ -1349,6 +1350,7 @@
             this.IRCProviderSwitch.TabStop = true;
             this.IRCProviderSwitch.Text = "Internet Relay Chat";
             this.IRCProviderSwitch.UseVisualStyleBackColor = true;
+            this.IRCProviderSwitch.CheckedChanged += new System.EventHandler(this.IRCProviderSwitch_CheckedChanged);
             // 
             // ChatProviderTitle
             // 
