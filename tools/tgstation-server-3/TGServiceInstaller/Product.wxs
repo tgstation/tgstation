@@ -58,17 +58,38 @@
 								/>
         <ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="TG Station Server" Wait="yes" />
       </Component>
+      <Component Id="DiscordNet">
+        <File Source="$(var.TGServerService.TargetDir)/Discord.Net.dll" />
+      </Component>
       <Component Id="LibGit2Sharp">
         <File Source="$(var.TGServerService.TargetDir)/LibGit2Sharp.dll" />
       </Component>
       <Component Id="log4net">
         <File Source="$(var.TGServerService.TargetDir)/log4net.dll" />
       </Component>
-      <Component Id="SmartIrc4net">
+      <Component Id="MeebeySmartIrc4net">
         <File Source="$(var.TGServerService.TargetDir)/Meebey.SmartIrc4net.dll" />
+      </Component>
+      <Component Id="NewtonsoftJson">
+        <File Source="$(var.TGServerService.TargetDir)/Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="NitoAsyncConc">
+        <File Source="$(var.TGServerService.TargetDir)/Nito.AsyncEx.Concurrent.dll" />
+      </Component>
+      <Component Id="NitoAsync">
+        <File Source="$(var.TGServerService.TargetDir)/Nito.AsyncEx.dll" />
+      </Component>
+      <Component Id="NitoAsyncEnlight">
+        <File Source="$(var.TGServerService.TargetDir)/Nito.AsyncEx.Enlightenment.dll" />
+      </Component>
+      <Component Id="RestSharp">
+        <File Source="$(var.TGServerService.TargetDir)/RestSharp.dll" />
       </Component>
       <Component Id="StarkSoftProxy">
         <File Source="$(var.TGServerService.TargetDir)/StarkSoftProxy.dll" />
+      </Component>
+      <Component Id="WebSock">
+        <File Source="$(var.TGServerService.TargetDir)/WebSocket4Net.dll" />
       </Component>
       <Component Id="TGControlPanel">
         <File Source="$(var.TGControlPanel.TargetPath)" KeyPath="yes">
