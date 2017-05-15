@@ -28,7 +28,7 @@
 
 /obj/item/weapon/melee/cultblade/ghost
 	name = "eldritch sword"
-	force = 20
+	force = 19 //can't break normal airlocks
 	flags = NODROP|DROPDEL
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)

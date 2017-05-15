@@ -117,6 +117,7 @@
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname
+	M.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
 	M.dna.update_dna_identity()
 
 /obj/item/weapon/antag_spawner/contract/equip_antag(mob/target)

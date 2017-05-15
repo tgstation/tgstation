@@ -51,14 +51,12 @@
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
-		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
-		if(SV)
-			SV.eat(src)
+		eat_plants()
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
 				var/step = get_step(src, direction)
 				if(step)
-					if(locate(/obj/structure/spacevine) in step)
+					if(locate(/obj/structure/spacevine) in step || locate(/obj/structure/glowshroom) in step)
 						Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
@@ -68,9 +66,22 @@
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
 	if(!stat)
-		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
-		if(SV)
-			SV.eat(src)
+		eat_plants()
+
+/mob/living/simple_animal/hostile/retaliate/goat/proc/eat_plants()
+	var/eaten = FALSE
+	var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+	if(SV)
+		SV.eat(src)
+		eaten = TRUE
+
+	var/obj/structure/glowshroom/GS = locate(/obj/structure/glowshroom) in loc
+	if(GS)
+		qdel(GS)
+		eaten = TRUE
+
+	if(eaten && prob(10))
+		say("Nom")
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))

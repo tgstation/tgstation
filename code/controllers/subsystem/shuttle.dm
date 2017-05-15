@@ -504,3 +504,13 @@ SUBSYSTEM_DEF(shuttle)
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
 	points = SSshuttle.points
+
+
+/datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)
+	var/area/current = get_area(A)
+	if(istype(current, /area/shuttle) && !istype(current,/area/shuttle/transit))
+		return TRUE
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(M.is_in_shuttle_bounds(A))
+			return TRUE
+		
