@@ -327,11 +327,29 @@
 	max_integrity = 50
 	var/energy = 0
 	var/datum/spacevine_controller/master = null
-	var/list/mutations = list()
+	var/list/mutations
+	var/list/spread_flags
 
 /obj/structure/spacevine/Initialize()
 	..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
+	mutations = list()
+	spread_flags = list()
+	if(AreZsConnected(src.z, src.z + 1))
+		spread_flags["[UP]"] = TRUE
+	if(AreZsConnected(src.z, src.z - 1))
+		spread_flags["[DOWN]"] = TRUE
+
+/obj/structure/spacevine/Move()
+	..()
+	if(AreZsConnected(src.z, src.z + 1))
+		spread_flags["[UP]"] = TRUE
+	else
+		spread_flags.Remove("[UP]")
+	if(AreZsConnected(src.z, src.z - 1))
+		spread_flags["[DOWN]"] = TRUE
+	else
+		spread_flags.Remove("[DOWN]")
 
 /obj/structure/spacevine/examine(mob/user)
 	..()
@@ -525,7 +543,7 @@
 		else
 			SV.entangle_mob()
 
-		SV.spread(GLOB.atmos_dirs)
+		SV.spread()
 		if(i >= length)
 			break
 
@@ -560,7 +578,11 @@
 		to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 		buckle_mob(V, 1)
 
-/obj/structure/spacevine/proc/spread(list/dirs)
+/obj/structure/spacevine/proc/spread(var/list/dirs)
+	if(!dirs)
+		dirs = GLOB.cardinal
+		for(var/A in spread_flags)
+			dirs += text2num(A)
 	var/direction = pick(dirs)
 	var/turf/stepturf = get_step(src,direction)
 	if(stepturf)
