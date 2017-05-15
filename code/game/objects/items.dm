@@ -105,6 +105,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/datum/rpg_loot/rpg_loot = null
 
+	var/datum/reagent/smelted_material = null
+	var/starting_material = null
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
@@ -115,6 +118,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(GLOB.rpg_loot_items)
 		rpg_loot = new(src)
+	if(starting_material)
+		smelted_material = new starting_material()
+		smelted_material.volume = 30
 
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
