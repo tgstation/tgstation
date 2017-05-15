@@ -1,16 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.ServiceProcess;
 
 namespace TGServerService
 {
 	public static class Program
 	{
-		static void Main()
-		{
-			ServiceBase.Run(new TGServerService());	//wondows
-		}
+		static void Main() => new TGServerService();	//wondows
+		
 		//Everything in this file is just generic helpers
 
 		//http://stackoverflow.com/questions/1701457/directory-delete-doesnt-work-access-denied-error-but-under-windows-explorer-it

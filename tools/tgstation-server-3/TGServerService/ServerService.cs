@@ -18,12 +18,12 @@ namespace TGServerService
 
 		ServiceHost host;	//the WCF host
 		
-		//I'm entirely not sure what this is for
-		//but you should seriously not add anything here
+		//you should seriously not add anything here
 		//Use OnStart instead
 		public TGServerService()
 		{
 			InitializeComponent();
+			Run(this);
 		}
 
 		//when babby is formed
