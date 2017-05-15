@@ -45,13 +45,6 @@
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
 
-/obj/item/device/radio/New()
-	wires = new /datum/wires/radio(src)
-	if(prison_radio)
-		wires.cut(WIRE_TX) // OH GOD WHY
-	secure_radio_connections = new
-	..()
-
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
 	translate_binary = 0
@@ -92,7 +85,11 @@
 	return ..()
 
 /obj/item/device/radio/Initialize()
-	..()
+	wires = new /datum/wires/radio(src)
+	if(prison_radio)
+		wires.cut(WIRE_TX) // OH GOD WHY
+	secure_radio_connections = new
+	. = ..()
 	frequency = sanitize_frequency(frequency, freerange)
 	set_frequency(frequency)
 

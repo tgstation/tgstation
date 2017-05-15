@@ -155,6 +155,12 @@
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
 
+/obj/item/weapon/reagent_containers/glass/beaker/jar
+	name = "honey jar"
+	desc = "A jar for honey. It can hold up to 50 units of sweet delight."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "vapour"
+
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
