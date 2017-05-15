@@ -203,7 +203,6 @@ research holder datum.
 	var/level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
 	var/rare = 1						//How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
 	var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
-	var/exported_level = 0
 
 
 //Trunk Technologies (don't require any other techs and you start knowning them).
@@ -307,10 +306,6 @@ research holder datum.
 
 	if(current_level >= level)
 		return 0
-		
-	if(exported_level == level)
-		return 0
-	exported_level = level
 
 	var/cost = 0
 	for(var/i=current_level+1, i<=level, i++)
