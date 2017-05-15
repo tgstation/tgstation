@@ -26,12 +26,18 @@ namespace TGCommandLine
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
-			Console.WriteLine(Server.GetComponent<ITGByond>().GetVersion(parameters.Count > 0 && parameters[0] == "--staged") ?? "Unistalled");
+			var type = TGByondVersion.Installed;
+			if (parameters.Count > 0)
+				if (parameters[0].ToLower() == "--staged")
+					type = TGByondVersion.Staged;
+				else if (parameters[0].ToLower() == "--latest")
+					type = TGByondVersion.Latest;
+			Console.WriteLine(Server.GetComponent<ITGByond>().GetVersion(type) ?? "Unistalled");
 			return ExitCode.Normal;
 		}
 		protected override string GetArgumentString()
 		{
-			return "[--staged]";
+			return "[--staged|--latest]";
 		}
 
 		protected override string GetHelpText()

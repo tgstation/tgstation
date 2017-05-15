@@ -35,7 +35,7 @@ namespace TGCommandLine
 				return ExitCode.ServerError;
 			}
 
-			if (Server.GetComponent<ITGByond>().GetVersion(false) == null)
+			if (Server.GetComponent<ITGByond>().GetVersion(TGByondVersion.Installed) == null)
 			{
 				Console.Write("Error: BYOND is not installed!");
 				return ExitCode.ServerError;

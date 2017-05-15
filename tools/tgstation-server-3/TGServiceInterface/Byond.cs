@@ -16,6 +16,16 @@ namespace TGServiceInterface
 	}
 
 	/// <summary>
+	/// Type of byond version
+	/// </summary>
+	public enum TGByondVersion
+	{
+		Latest, //The highest version from http://www.byond.com/download/build/LATEST/
+		Staged,	//The version in the staging directory
+		Installed,	//The installed version
+	}
+
+	/// <summary>
 	/// For managing the BYOND installation the server runs
 	/// </summary>
 	[ServiceContract]
@@ -51,9 +61,9 @@ namespace TGServiceInterface
 		/// <summary>
 		/// Get the currently installed version as a string formatted as Major.Minor
 		/// </summary>
-		/// <param name="staged">If true, will check the verision of the staged update</param>
+		/// <param name="type">The type of version to retrieve</param>
 		/// <returns>null if no version is detected, the version string otherwise</returns>
 		[OperationContract]
-		string GetVersion(bool staged);
+		string GetVersion(TGByondVersion type);
 	}
 }

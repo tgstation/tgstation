@@ -10,9 +10,9 @@ namespace TGControlPanel
 		void InitBYONDPage()
 		{
 			var BYOND = Server.GetComponent<ITGByond>();
-			var CV = BYOND.GetVersion(false);
+			var CV = BYOND.GetVersion(TGByondVersion.Installed);
 			if (CV == null)
-				CV = BYOND.GetVersion(true);
+				CV = BYOND.GetVersion(TGByondVersion.Staged);
 			if (CV != null)
 			{
 				var splits = CV.Split('.');
@@ -29,6 +29,18 @@ namespace TGControlPanel
 				}
 			}
 
+			var latestVer = Server.GetComponent<ITGByond>().GetVersion(TGByondVersion.Latest);
+			LatestVersionLabel.Text = latestVer;
+
+			try
+			{
+				var splits = latestVer.Split('.');
+				var maj = Convert.ToInt32(splits[0]);
+				MinorVersionNumeric.Value = Convert.ToInt32(splits[1]);
+				MajorVersionNumeric.Value = maj;
+			}
+			catch { }
+
 			UpdateBYONDButtons();
 			BYONDTimer.Start();
 		}
@@ -43,7 +55,7 @@ namespace TGControlPanel
 		{
 			var BYOND = Server.GetComponent<ITGByond>();
 
-			VersionLabel.Text = BYOND.GetVersion(false) ?? "Not Installed";
+			VersionLabel.Text = BYOND.GetVersion(TGByondVersion.Installed) ?? "Not Installed";
 
 			StagedVersionTitle.Visible = false;
 			StagedVersionLabel.Visible = false;
@@ -71,7 +83,7 @@ namespace TGControlPanel
 				case TGByondStatus.Staged:
 					StagedVersionTitle.Visible = true;
 					StagedVersionLabel.Visible = true;
-					StagedVersionLabel.Text = BYOND.GetVersion(true) ?? "Unknown";
+					StagedVersionLabel.Text = BYOND.GetVersion(TGByondVersion.Staged) ?? "Unknown";
 					if (UpdateProgressBar.Style != ProgressBarStyle.Marquee || UpdateProgressBar.MarqueeAnimationSpeed != 50)						
 					{
 						UpdateProgressBar.Style = ProgressBarStyle.Marquee;

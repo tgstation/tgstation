@@ -221,7 +221,7 @@ namespace TGServerService
 		{
 			lock (watchdogLock)
 			{
-				if (GetVersion(false) == null)
+				if (GetVersion(TGByondVersion.Installed) == null)
 					return "Byond is not installed!";
 				var DMB = GameDirLive + "/" + Properties.Settings.Default.ProjectName + ".dmb";
 				if (!File.Exists(DMB))

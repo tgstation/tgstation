@@ -128,9 +128,12 @@ namespace TGServerService
 				case "check":
 					return StatusString(HasChatAdmin(speaker, channel) == null);
 				case "byond":
-					if (parameters.Count > 0 && parameters[0].ToLower() == "--staged")
-						return GetVersion(true) ?? "None";
-					return GetVersion(false) ?? "Uninstalled";
+					if (parameters.Count > 0)
+						if (parameters[0].ToLower() == "--staged")
+							return GetVersion(TGByondVersion.Staged) ?? "None";
+						else if (parameters[0].ToLower() == "--latest")
+							return GetVersion(TGByondVersion.Latest) ?? "Unknown";
+					return GetVersion(TGByondVersion.Staged) ?? "Uninstalled";
 				case "status":
 					return HasChatAdmin(speaker, channel) ?? SendCommand(SCIRCStatus);
 				case "adminwho":

@@ -116,6 +116,8 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
+            this.LatestVersionTitle = new System.Windows.Forms.Label();
+            this.LatestVersionLabel = new System.Windows.Forms.Label();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -524,6 +526,8 @@
             // BYONDPanel
             // 
             this.BYONDPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.BYONDPanel.Controls.Add(this.LatestVersionLabel);
+            this.BYONDPanel.Controls.Add(this.LatestVersionTitle);
             this.BYONDPanel.Controls.Add(this.StagedVersionLabel);
             this.BYONDPanel.Controls.Add(this.StagedVersionTitle);
             this.BYONDPanel.Controls.Add(this.StatusLabel);
@@ -546,7 +550,7 @@
             this.StagedVersionLabel.AutoSize = true;
             this.StagedVersionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StagedVersionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.StagedVersionLabel.Location = new System.Drawing.Point(425, 112);
+            this.StagedVersionLabel.Location = new System.Drawing.Point(425, 131);
             this.StagedVersionLabel.Name = "StagedVersionLabel";
             this.StagedVersionLabel.Size = new System.Drawing.Size(82, 18);
             this.StagedVersionLabel.TabIndex = 11;
@@ -559,11 +563,11 @@
             this.StagedVersionTitle.AutoSize = true;
             this.StagedVersionTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StagedVersionTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.StagedVersionTitle.Location = new System.Drawing.Point(214, 112);
+            this.StagedVersionTitle.Location = new System.Drawing.Point(282, 131);
             this.StagedVersionTitle.Name = "StagedVersionTitle";
-            this.StagedVersionTitle.Size = new System.Drawing.Size(202, 18);
+            this.StagedVersionTitle.Size = new System.Drawing.Size(137, 18);
             this.StagedVersionTitle.TabIndex = 10;
-            this.StagedVersionTitle.Text = "Current staged version:";
+            this.StagedVersionTitle.Text = "Staged version:";
             this.StagedVersionTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.StagedVersionTitle.Visible = false;
             // 
@@ -583,7 +587,7 @@
             this.VersionLabel.AutoSize = true;
             this.VersionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.VersionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.VersionLabel.Location = new System.Drawing.Point(425, 74);
+            this.VersionLabel.Location = new System.Drawing.Point(425, 56);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.Size = new System.Drawing.Size(82, 18);
             this.VersionLabel.TabIndex = 8;
@@ -595,11 +599,11 @@
             this.VersionTitle.AutoSize = true;
             this.VersionTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.VersionTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.VersionTitle.Location = new System.Drawing.Point(214, 74);
+            this.VersionTitle.Location = new System.Drawing.Point(265, 56);
             this.VersionTitle.Name = "VersionTitle";
-            this.VersionTitle.Size = new System.Drawing.Size(205, 18);
+            this.VersionTitle.Size = new System.Drawing.Size(154, 18);
             this.VersionTitle.TabIndex = 7;
-            this.VersionTitle.Text = "Current BYOND version:";
+            this.VersionTitle.Text = "Installed Version:";
             this.VersionTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MinorVersionLabel
@@ -1186,6 +1190,30 @@
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
             // 
+            // LatestVersionTitle
+            // 
+            this.LatestVersionTitle.AutoSize = true;
+            this.LatestVersionTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LatestVersionTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.LatestVersionTitle.Location = new System.Drawing.Point(286, 93);
+            this.LatestVersionTitle.Name = "LatestVersionTitle";
+            this.LatestVersionTitle.Size = new System.Drawing.Size(133, 18);
+            this.LatestVersionTitle.TabIndex = 12;
+            this.LatestVersionTitle.Text = "Latest Version:";
+            this.LatestVersionTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // LatestVersionLabel
+            // 
+            this.LatestVersionLabel.AutoSize = true;
+            this.LatestVersionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LatestVersionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.LatestVersionLabel.Location = new System.Drawing.Point(425, 93);
+            this.LatestVersionLabel.Name = "LatestVersionLabel";
+            this.LatestVersionLabel.Size = new System.Drawing.Size(82, 18);
+            this.LatestVersionLabel.TabIndex = 13;
+            this.LatestVersionLabel.Text = "Unknown";
+            this.LatestVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1302,6 +1330,8 @@
 		private System.Windows.Forms.Button CompileCancelButton;
 		private System.Windows.Forms.Label ServerPathLabel;
 		private System.Windows.Forms.TextBox ServerPathTextbox;
+		private System.Windows.Forms.Label LatestVersionLabel;
+		private System.Windows.Forms.Label LatestVersionTitle;
 	}
 }
 

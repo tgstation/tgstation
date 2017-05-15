@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading;
 using TGServiceInterface;
 
@@ -16,6 +18,7 @@ namespace TGServerService
 		const string RevisionDownloadPath = "BYONDRevision.zip";
 		const string VersionFile = "/byond_version.dat";
 		const string ByondRevisionsURL = "https://secure.byond.com/download/build/{0}/{0}.{1}_byond.zip";
+		const string ByondLatestURL = "https://secure.byond.com/download/build/LATEST/";
 
 		const string ByondConfigDir = "/BYOND/cfg";
 		const string ByondDDConfig = "/daemon.txt";
@@ -85,15 +88,40 @@ namespace TGServerService
 		}
 
 		//public api
-		public string GetVersion(bool staged)
+		public string GetVersion(TGByondVersion type)
 		{
 			lock (ByondLock)
 			{
-				string DirToUse = staged ? StagingDirectoryInner : ByondDirectory;
-				if (Directory.Exists(DirToUse)) {
-					string file = DirToUse + VersionFile;
-					if(File.Exists(file))
-						return File.ReadAllText(file);
+				if (type == TGByondVersion.Latest)
+				{
+					HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ByondLatestURL);
+					var results = new List<string>();
+					using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+					{
+						using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+						{
+							string html = reader.ReadToEnd();
+
+							Regex regex = new Regex("\\\"([^\"]*)\\\"");
+							MatchCollection matches = regex.Matches(html);
+							foreach (Match match in matches)
+								if (match.Success && match.Value.Contains("_byond.exe"))
+									results.Add(match.Value.Replace("\"", "").Replace("_byond.exe", ""));
+						}
+					}
+					results.Sort();
+					results.Reverse();
+					return results.Count > 0 ? results[0] : null;
+				}
+				else
+				{
+					string DirToUse = type == TGByondVersion.Staged ? StagingDirectoryInner : ByondDirectory;
+					if (Directory.Exists(DirToUse))
+					{
+						string file = DirToUse + VersionFile;
+						if (File.Exists(file))
+							return File.ReadAllText(file);
+					}
 				}
 				return null;
 			}

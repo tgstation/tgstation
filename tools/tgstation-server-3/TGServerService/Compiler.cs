@@ -305,7 +305,7 @@ namespace TGServerService
 		{
 			try
 			{
-				if (GetVersion(false) == null)
+				if (GetVersion(TGByondVersion.Installed) == null)
 				{
 					lastCompilerError = "BYOND not installed!";
 					compilerCurrentStatus = TGCompilerStatus.Initialized;
