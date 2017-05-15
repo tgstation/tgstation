@@ -1,6 +1,0 @@
-author: "ma44"
-delete-after: True
-changes: 
-  - tweak: "Seed vault remapped"
-  - tweak: "The seed vault random seed spawner can now spawn cherry bombs instead of regular cherry seeds"
-  - rscadd: "BEES to plant vault"

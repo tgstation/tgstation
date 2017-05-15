@@ -1,4 +1,0 @@
-author: "McBawbaggings"
-delete-after: True
-changes: 
-  - tweak: "SMES units will now accept charge from the power network even if the available load is less than the input rate. Credit to Zaers for the original code."
