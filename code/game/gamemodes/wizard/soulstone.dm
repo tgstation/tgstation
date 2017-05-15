@@ -216,9 +216,8 @@
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>")
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>")
-		newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
-	var/obj/screen/alert/bloodsense/BS = newstruct.alerts["bloodsense"]
-	BS.Cviewer = newstruct
+		var/obj/screen/alert/bloodsense/BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+		BS.Cviewer = newstruct
 	newstruct.cancel_camera()
 
 
