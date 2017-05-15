@@ -9,7 +9,7 @@ namespace TGCommandLine
 		public ChatCommand()
 		{
 			Keyword = "chat";
-			Children = new Command[] { new ChatAnnounceCommand(), new ChatStatusCommand(), new ChatSetAdminChannelCommand(), new ChatEnableCommand(), new ChatDisableCommand(), new ChatReconnectCommand(), new ChatListAdminsCommand(), new ChatAddminCommand(), new ChatDeadminCommand(), new ChatSetProviderCommand() };
+			Children = new Command[] { new ChatAnnounceCommand(), new ChatStatusCommand(), new ChatSetAdminChannelCommand(), new ChatEnableCommand(), new ChatDisableCommand(), new ChatReconnectCommand(), new ChatListAdminsCommand(), new ChatAddminCommand(), new ChatDeadminCommand(), new ChatSetProviderCommand(), new ChatJoinCommand(), new ChatPartCommand() };
 		}
 		protected override string GetHelpText()
 		{
@@ -60,7 +60,7 @@ namespace TGCommandLine
 		public IRCCommand()
 		{
 			Keyword = "irc";
-			Children = new Command[] { new IRCNickCommand(), new IRCJoinCommand(), new IRCPartCommand(), new IRCAuthCommand(), new IRCDisableAuthCommand() };
+			Children = new Command[] { new IRCNickCommand(), new IRCAuthCommand(), new IRCDisableAuthCommand() };
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
@@ -104,9 +104,9 @@ namespace TGCommandLine
 		}
 	}
 
-	class IRCJoinCommand : Command
+	class ChatJoinCommand : Command
 	{
-		public IRCJoinCommand()
+		public ChatJoinCommand()
 		{
 			Keyword = "join";
 			RequiredParameters = 1;
@@ -118,7 +118,7 @@ namespace TGCommandLine
 		}
 		protected override string GetHelpText()
 		{
-			return "Joins a channel";
+			return "Joins a channel for listening and broadcasting";
 		}
 
 		public override ExitCode Run(IList<string> parameters)
@@ -141,9 +141,9 @@ namespace TGCommandLine
 		}
 	}
 
-	class IRCPartCommand : Command
+	class ChatPartCommand : Command
 	{
-		public IRCPartCommand()
+		public ChatPartCommand()
 		{
 			Keyword = "part";
 			RequiredParameters = 1;
@@ -155,7 +155,7 @@ namespace TGCommandLine
 		}
 		protected override string GetHelpText()
 		{
-			return "Leaves a channel";
+			return "Stops listening and broadcasting on a channel";
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
