@@ -54,7 +54,7 @@ namespace TGServerService
 				return "Repository does not exist";
 			try
 			{
-				Repo = new LibGit2Sharp.Repository(RepoPath);
+				Repo = new Repository(RepoPath);
 			}
 			catch (Exception e)
 			{
