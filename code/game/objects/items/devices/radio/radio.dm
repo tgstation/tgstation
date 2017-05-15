@@ -557,8 +557,8 @@
 	syndie = 1
 	keyslot = new /obj/item/device/encryptionkey/syndicate
 
-/obj/item/device/radio/borg/syndicate/New()
-	..()
+/obj/item/device/radio/borg/syndicate/Initialize()
+	. = ..()
 	set_frequency(GLOB.SYND_FREQ)
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)
