@@ -1170,6 +1170,19 @@
 					/obj/item/seeds/random)
 	crate_name = "exotic seeds crate"
 
+/datum/supply_pack/organic/hydroponics/recreationalseeds
+	name = "Recreational Seeds Crate"
+	cost = 1500
+	contraband = TRUE
+	contains = list(/obj/item/seeds/ambrosia,
+					/obj/item/seeds/ambrosia,
+					/obj/item/seeds/cannabis,
+					/obj/item/seeds/cannabis,
+					/obj/item/seeds/liberty,
+					/obj/item/seeds/liberty,
+					/obj/item/weapon/storage/fancy/rollingpapers)
+	crate_name = "recreational seeds crate"
+
 /datum/supply_pack/organic/hydroponics/beekeeping_fullkit
 	name = "Beekeeping Starter Crate"
 	cost = 1500
