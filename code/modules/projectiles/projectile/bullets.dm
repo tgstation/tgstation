@@ -250,9 +250,9 @@
 		var/mob/living/carbon/M = target
 		if(blocked != 100)
 			if(M.can_inject(null, FALSE, def_zone, FALSE))
-				injector.inject(M, firer)
-				QDEL_NULL(injector)
-				return TRUE
+				if(injector.inject(M, firer))
+					QDEL_NULL(injector)
+					return TRUE
 			else
 				blocked = 100
 				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \
