@@ -603,7 +603,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Martial Arts Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
-			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
+			deflecting all ranged weapon fire and learning several fighting techniques, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/weapon/sleeping_carp_scroll
 	cost = 17
 	surplus = 0
@@ -658,8 +658,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
-	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. \
-			You can also drop it underfoot to slip people."
+	desc = "A sinister-looking surfactant that cleans up clean blood stains and remove DNA evidence much more faser than regular soup.\
+			Use this to hide murder and make forensics useless or drop it to make people slip."
+
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
 	surplus = 50
@@ -915,7 +916,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"
-	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
+	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment. Does not contain anything"
 	item = /obj/item/weapon/storage/belt/military
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
