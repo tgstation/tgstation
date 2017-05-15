@@ -60,7 +60,10 @@
 	return
 
 /datum/spacevine_mutation/proc/on_spread(obj/structure/spacevine/holder, turf/target)
-	return
+	var/turf/T = get_turf(holder)
+	if(((T.z > target.z) && !(T.z_open)) || ((T.z < target.z) && !(target.z_open)))
+		holder.spread(GLOB.cardinal) //adding 3rd dimention means there is now 1 in 3 chance to try and spread into ceiling or floor so to prevent the 33% spread slow on failed attempt to grow up or down it will try to spread in the same plane
+		. = TRUE
 
 /datum/spacevine_mutation/proc/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
 	return
@@ -169,6 +172,8 @@
 	quality = MINOR_NEGATIVE
 
 /datum/spacevine_mutation/vine_eating/on_spread(obj/structure/spacevine/holder, turf/target)
+	if(..())
+		return
 	var/obj/structure/spacevine/prey = locate() in target
 	if(prey && !prey.mutations.Find(src))  //Eat all vines that are not of the same origin
 		qdel(prey)
@@ -180,6 +185,8 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/structure/spacevine/holder, turf/target)
+	if(..())
+		return
 	target.ex_act(severity, null, src) // vine immunity handled at /mob/ex_act
 
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
@@ -446,7 +453,7 @@
 /datum/spacevine_controller/Topic(href, href_list)
 	if(..() || !check_rights(R_ADMIN, FALSE))
 		return
-	
+
 	if(href_list["purge_vines"])
 		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") != "Yes")
 			return
@@ -512,14 +519,13 @@
 		growth_queue -= SV
 		for(var/datum/spacevine_mutation/SM in SV.mutations)
 			SM.process_mutation(SV)
-		if(SV.energy < 2) //If tile isn't fully grown
+		if(SV.energy < 2)
 			if(prob(20))
 				SV.grow()
-		else //If tile is fully grown
+		else
 			SV.entangle_mob()
 
-		//if(prob(25))
-		SV.spread()
+		SV.spread(GLOB.atmos_dirs)
 		if(i >= length)
 			break
 
@@ -554,24 +560,24 @@
 		to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 		buckle_mob(V, 1)
 
-/obj/structure/spacevine/proc/spread()
-	var/direction = pick(GLOB.cardinal)
+/obj/structure/spacevine/proc/spread(list/dirs)
+	var/direction = pick(dirs)
 	var/turf/stepturf = get_step(src,direction)
-	for(var/datum/spacevine_mutation/SM in mutations)
-		SM.on_spread(src, stepturf)
-		stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
-	if(!locate(/obj/structure/spacevine, stepturf))
-		if(stepturf.Enter(src))
-			if(master)
-				master.spawn_spacevine_piece(stepturf, src)
+	if(stepturf)
+		for(var/datum/spacevine_mutation/SM in mutations)
+			SM.on_spread(src, stepturf)
+			stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
+		if(!locate(/obj/structure/spacevine, stepturf))
+			if(stepturf.Enter(src))
+				if(master)
+					master.spawn_spacevine_piece(stepturf, src)
 
 /obj/structure/spacevine/ex_act(severity, target)
 	if(istype(target, type)) //if its agressive spread vine dont do anything
 		return
-	var/i
 	for(var/datum/spacevine_mutation/SM in mutations)
-		i += SM.on_explosion(severity, target, src)
-	if(!i && prob(100/severity))
+		. += SM.on_explosion(severity, target, src)
+	if(!. && prob(100/severity))
 		qdel(src)
 
 /obj/structure/spacevine/temperature_expose(null, temp, volume)
