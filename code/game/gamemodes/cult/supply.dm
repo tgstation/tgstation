@@ -16,19 +16,20 @@
 	)
 
 /obj/item/weapon/paper/talisman/supply/invoke(mob/living/user, successfuluse = 1)
-	var/dat = "<B>There are [uses] bloody runes on the parchment.</B><BR>"
+	var/list/dat = list()
+	dat += "<B>There are [uses] bloody runes on the parchment.</B><BR>"
 	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
 	dat += "<HR>"
 	for(var/s in possible_summons)
 		var/datum/cult_supply/S = s
 		dat += "<a href='?src=\ref[src];id=[initial(S.id)]>[initial(S.invocation)]</a> - [initial(S.desc)]<br>"
 	var/datum/browser/popup = new(user, "talisman", "", 400, 400)
-	popup.set_content(dat)
+	popup.set_content(dat.Join(""))
 	popup.open()
 	return 0
 
 /obj/item/weapon/paper/talisman/supply/Topic(href, href_list)
-	if(QDELETED(src) || usr.stat != CONSCIOUS || usr.restrained() || !in_range(src, usr))
+	if(QDELETED(src) || !usr.incapacitated() || !in_range(src, usr))
 		return
 
 	var/id = href_list["id"]
@@ -67,7 +68,7 @@
 	possible_summons -= /datum/cult_supply/metal
 
 /datum/cult_supply
-	var/id
+	var/id = "used_popcorn"
 	var/invocation = "Pla'ceho'lder."
 	var/desc = "Summons a generic supply item, to aid the cult."
 	var/summon_type = /obj/item/trash/popcorn // wait this isn't useful
