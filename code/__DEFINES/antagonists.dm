@@ -5,4 +5,4 @@
 #define ANTAG_DATUM_DEVIL				/datum/antagonist/devil
 #define ANTAG_DATUM_NINJA				/datum/antagonist/ninja
 #define ANTAG_DATUM_NINJA_FRIENDLY		/datum/antagonist/ninja/friendly
-#define ANGAG_DATUM_NINJA_RANDOM		/datum/antagonist/ninja/randomAllegiance/
+#define ANTAG_DATUM_NINJA_RANDOM		/datum/antagonist/ninja/randomAllegiance/

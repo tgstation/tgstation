@@ -125,3 +125,18 @@
 		var/datum/objective/O = new /datum/objective/survive()
 		O.owner = owner
 		owner.objectives += O
+
+
+/proc/remove_ninja(mob/living/L)
+	if(!L || !L.mind)
+		return FALSE
+	var/datum/antagonist/datum = L.mind.has_antag_datum(ANTAG_DATUM_NINJA)
+	datum.on_removal()
+	return TRUE
+
+/proc/add_ninja(mob/living/carbon/human/H, type = ANTAG_DATUM_NINJA_RANDOM)
+	if(!H || !H.mind)
+		return FALSE
+	var/datum/antagonist/ninja/datum = H.mind.has_antag_datum(type)
+	datum.on_removal()
+	return TRUE
