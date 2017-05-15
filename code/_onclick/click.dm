@@ -149,7 +149,7 @@
 	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
 		return FALSE
 	var/turf/T = loc
-	for(var/atom/movable/AM in src)
+	for(var/atom/movable/AM in T)
 		if(AM.flags & PREVENT_CLICK_UNDER && AM.layer > layer)
 			return TRUE
 	return FALSE
