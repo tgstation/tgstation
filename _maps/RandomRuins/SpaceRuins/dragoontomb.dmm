@@ -7,7 +7,7 @@
 /area/ruin/unpowered/no_grav)
 "c" = (
 /turf/closed/mineral/volcanic/lava_land_surface{
-	baseturf = /turf/open/space
+	baseturf = /turf/open/floor/plating/asteroid
 	},
 /area/ruin/unpowered/no_grav)
 "d" = (
