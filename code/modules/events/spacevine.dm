@@ -556,7 +556,7 @@
 	var/direction = pick(GLOB.cardinal)
 	var/turf/stepturf = get_step(src,direction)
 
-	if(istype(/turf/open/space/transit, stepturf))
+	if(istype(stepturf, /turf/open/space/transit))
 		return
 
 	for(var/datum/spacevine_mutation/SM in mutations)
