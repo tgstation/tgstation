@@ -754,4 +754,16 @@
 		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
 			playsound(E, s, 100, FALSE, max(width, height) - world.view)
 
+/obj/docking_port/mobile/proc/is_in_shuttle_bounds(atom/A)
+	var/turf/T = get_turf(A)
+	if(T.z != z)
+		return FALSE
+	var/list/bounds= return_coords()
+	var/turf/T0 = locate(bounds[1],bounds[2],z)
+	var/turf/T1 = locate(bounds[3],bounds[4],z)
+	if(T in block(T0,T1))
+		return TRUE
+	return FALSE
+	
+
 #undef DOCKING_PORT_HIGHLIGHT
