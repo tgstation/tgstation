@@ -141,7 +141,7 @@ namespace TGServerService
 					{
 						Program.CopyDirectory(RepoConfig, StaticConfigDir);
 					}
-					Program.CopyDirectory(RepoData, StaticDataDir);
+					Program.CopyDirectory(RepoData, StaticDataDir, null, true);
 
 					//give everyone read permissions for the static data directory
 					DirectorySecurity sec = Directory.GetAccessControl(StaticDataDir);
