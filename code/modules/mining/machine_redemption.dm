@@ -73,11 +73,11 @@
 	if(!material_amount)
 		qdel(O) //no materials, incinerate it
 
-	else if(!materials.has_space(material_amount)) //if there is no space, eject it
+	else if(!materials.has_space(material_amount * sheet_per_ore)) //if there is no space, eject it
 		unload_mineral(O)
 
 	else
-		materials.insert_item(O) //insert it
+		materials.insert_item(O, sheet_per_ore) //insert it
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
