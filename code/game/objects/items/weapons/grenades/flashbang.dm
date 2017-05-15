@@ -19,7 +19,7 @@
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
-	if(M.stat == DEAD)	//They're dead!
+	if(M.stat == DEAD || !M.get_bodypart("head"))	//WHERE'S YOUR HEAD AT!
 		return
 	M.show_message("<span class='warning'>BANG</span>", 2)
 	playsound(loc, 'sound/weapons/flashbang.ogg', 100, 1)
