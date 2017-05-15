@@ -440,7 +440,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	glass_amount = 2
@@ -454,7 +454,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
@@ -467,7 +467,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 1000
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
@@ -481,7 +481,7 @@
 	icon_state = "tinted_window"
 	dir = FULLTILE_WINDOW_DIR
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
 	level = 3
@@ -504,7 +504,7 @@
 	max_integrity = 100
 	wtype = "shuttle"
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	reinf = 1
 	heat_resistance = 1600
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
@@ -583,7 +583,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 120
 	level = 3
