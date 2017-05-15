@@ -178,11 +178,13 @@ namespace TGControlPanel
 		{
 			if (!Server.GetComponent<ITGCompiler>().Initialize())
 				MessageBox.Show("Unable to start initialization!");
+			LoadServerPage();
 		}
 		private void CompileButton_Click(object sender, EventArgs e)
 		{
 			if(!Server.GetComponent<ITGCompiler>().Compile())
 				MessageBox.Show("Unable to start compilation!");
+			LoadServerPage();
 		}
 		//because of lol byond this can take some time...
 		private void WorldStatusChecker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
