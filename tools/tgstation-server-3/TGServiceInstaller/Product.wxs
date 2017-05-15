@@ -64,9 +64,6 @@
       <Component Id="LibGit2Sharp">
         <File Source="$(var.TGServerService.TargetDir)/LibGit2Sharp.dll" />
       </Component>
-      <Component Id="log4net">
-        <File Source="$(var.TGServerService.TargetDir)/log4net.dll" />
-      </Component>
       <Component Id="MeebeySmartIrc4net">
         <File Source="$(var.TGServerService.TargetDir)/Meebey.SmartIrc4net.dll" />
       </Component>
