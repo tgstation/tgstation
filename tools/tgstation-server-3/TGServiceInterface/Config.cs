@@ -291,33 +291,6 @@ namespace TGServiceInterface
 		string SetNudgePort(ushort port);
 
 		/// <summary>
-        /// Get the entries of a per line string config
-        /// </summary>
-        /// <param name="type">The config file to get</param>
-        /// <param name="error">null on success, error message on failure</param>
-        /// <returns>A list of entries</returns>
-		[OperationContract]
-		IList<string> GetEntries(TGStringConfig type, out string error);
-
-		/// <summary>
-        /// Add a line entry to a config
-        /// </summary>
-        /// <param name="type">The config file to add to</param>
-        /// <param name="entry">The entry add</param>
-        /// <returns>null on success, error message on failure</returns>
-		[OperationContract]
-		string AddEntry(TGStringConfig type, string entry);
-
-		/// <summary>
-		/// Remove a line entry from a config
-		/// </summary>
-		/// <param name="type">The config file to remove from</param>
-		/// <param name="entry">The entry to remove</param>
-		/// <returns>null on success, error message on failure</returns>
-		[OperationContract]
-		string RemoveEntry(TGStringConfig type, string entry);
-
-		/// <summary>
 		/// Return the directory of the server on the host machine
 		/// </summary>
 		/// <returns>The path to the directory on success, null on failure</returns>

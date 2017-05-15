@@ -24,69 +24,6 @@ namespace TGServerService
 
 		object configLock = new object();	//for atomic reads/writes
 
-		//public api
-		public string AddEntry(TGStringConfig type, string entry)
-		{
-			var currentEntries = GetEntries(type, out string error);
-			if (currentEntries == null)
-				return error;
-
-			if (currentEntries.Contains(entry))
-				return null;
-
-			lock (configLock) {
-				try
-				{
-					using (var f = File.AppendText(StringConfigToPath(type)))
-					{
-						f.WriteLine(entry);
-					}
-					return null;
-				}
-				catch (Exception e)
-				{
-					return e.ToString();
-				}
-			}
-		}
-
-		//Enum to string file
-		string StringConfigToPath(TGStringConfig type)
-		{
-			var result = StaticConfigDir + "/";
-			switch (type)
-			{
-				case TGStringConfig.Admin_NickNames:
-					result += "Admin_NickNames";
-					break;
-				case TGStringConfig.Silicon_Laws:
-					result += "Silicon_Laws";
-					break;
-				case TGStringConfig.SillyTips:
-					result += "SillyTips";
-					break;
-				case TGStringConfig.Whitelist:
-					result += "Whitelist";
-					break;
-				case TGStringConfig.AwayMissions:
-					result += "awaymissionconfig";
-					break;
-				case TGStringConfig.LavaRuinBlacklist:
-					result += "LavaRuinBlacklist";
-					break;
-				case TGStringConfig.SpaceRuinBlacklist:
-					result += "SpaceRuinBlacklist";
-					break;
-				case TGStringConfig.ShuttleBlacklist:
-					result += "unbuyableshuttles";
-					break;
-				case TGStringConfig.ExternalRSCURLs:
-					result += "external_rsc_urls";
-					break;
-			}
-			return result + ".txt";
-		}
-
 		//Write out the admin assoiciations to admins.txt
 		string WriteMins(IDictionary<string, string> current_mins)
 		{ 
@@ -338,29 +275,7 @@ namespace TGServerService
 			}
 			return error;
 		}
-
-		//public api
-		public IList<string> GetEntries(TGStringConfig type, out string error)
-		{
-			try
-			{
-				IList<string> result;
-				lock (configLock)
-				{
-					result = new List<string>(File.ReadAllLines(StringConfigToPath(type)));
-				}
-				result = result.Select(x => x.Trim()).ToList();
-				result.Remove(result.Single(x => x.Length == 0 || x[0] == '#'));
-				error = null;
-				return result;
-			}
-			catch (Exception e)
-			{
-				error = e.ToString();
-				return null;
-			}
-		}
-
+		
 		//public api
 		public IList<JobSetting> Jobs(out string error)
 		{
@@ -544,29 +459,6 @@ namespace TGServerService
 			{
 				error = e.ToString();
 				return 0;
-			}
-		}
-
-		//public api
-		public string RemoveEntry(TGStringConfig type, string entry)
-		{
-			var entries = GetEntries(type, out string error);
-			if (entries == null)
-				return error;
-			if (!entries.Remove(entry))
-				return null;
-
-			lock (configLock)
-			{
-				try
-				{
-					File.WriteAllLines(StringConfigToPath(type), entries.ToArray());
-					return null;
-				}
-				catch (Exception e)
-				{
-					return e.ToString();
-				}
 			}
 		}
 
