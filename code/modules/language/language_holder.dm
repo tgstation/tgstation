@@ -17,6 +17,9 @@
 /datum/language_holder/Destroy()
 	owner = null
 	QDEL_NULL(language_menu)
+	languages.Cut()
+	shadow_languages.Cut()
+	return ..()
 
 /datum/language_holder/proc/copy(newowner)
 	var/datum/language_holder/copy = new(newowner)
