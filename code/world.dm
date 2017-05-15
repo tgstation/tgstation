@@ -345,7 +345,3 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
-
-
-/world/proc/has_round_started()
-	return SSticker.HasRoundStarted()
