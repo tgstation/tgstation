@@ -114,27 +114,29 @@
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/R = W
 		var/choice = input(user, "What would you like to construct?", "Bonfire") as null|anything in list("Stake","Grill")
-		if(choice == "Stake")
-			R.use(1)
-			can_buckle = 1
-			buckle_requires_restraints = 1
-			to_chat(user, "<span class='italics'>You add a rod to [src].")
-			var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
-			rod_underlay.pixel_y = 16
-			underlays += rod_underlay
-		if(choice == "Grill")
-			R.use(1)
-			grill = TRUE
-			to_chat(user, "<span class='italics'>You add a grill to [src].")
-			grill = 1
-			var/mutable_appearance/grill_overlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_grill")
-			overlays += grill_overlay
+		switch(choice)
+			if("Stake")
+				R.use(1)
+				can_buckle = TRUE
+				buckle_requires_restraints = TRUE
+				to_chat(user, "<span class='italics'>You add a rod to \the [src].")
+				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
+				rod_underlay.pixel_y = 16
+				underlays += rod_underlay
+			if("Grill")
+				R.use(1)
+				grill = TRUE
+				to_chat(user, "<span class='italics'>You add a grill to \the [src].")
+				var/mutable_appearance/grill_overlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_grill")
+				overlays += grill_overlay
+			else
+				return ..()
 	if(W.is_hot())
 		StartBurning()
 	if(grill)
 		if(user.a_intent != INTENT_HARM && !(W.flags & ABSTRACT))
-			if(user.drop_item())
-				W.Move(get_turf(src))
+			if(user.temporarilyRemoveItemFromInventory(W))
+				W.forceMove(get_turf(src))
 				var/list/click_params = params2list(params)
 				//Center the icon where the user clicked.
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
@@ -142,7 +144,6 @@
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
 				W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
 				W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				return 1
 		else
 			return ..()
 
@@ -208,8 +209,8 @@
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
-	for(var/obj/item/O in current_location)
-		if(prob(20)) //You're cooking with a fire - there's no telling how long you'll have before it overcooks.
+		else if(istype(A, /obj/item) && prob(20))
+			var/obj/item/O = A
 			O.microwave_act()
 
 /obj/structure/bonfire/process()
