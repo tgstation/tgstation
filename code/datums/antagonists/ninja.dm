@@ -56,7 +56,7 @@
 	owner.store_memory("Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	owner.store_memory("Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
 
-/datum/antagonist/ninja/proc/addObjectives()
+/datum/antagonist/ninja/proc/addObjectives(quantity = 6)
 	var/list/possible_targets = list()
 	for(var/datum/mind/M in SSticker.minds)
 		if(M.current && M.current.stat != DEAD)
@@ -67,7 +67,7 @@
 					possible_targets[M] = 1						//good-guy
 
 	var/list/objectives = list(1,2,3,4)
-	while(give_objectives && owner.objectives.len < 6)
+	while(give_objectives && owner.objectives.len < quantity)
 		switch(pick_n_take(objectives))
 			if(1)	//research
 				var/datum/objective/download/O = new /datum/objective/download()
