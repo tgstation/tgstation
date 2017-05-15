@@ -137,9 +137,11 @@
 /proc/add_ninja(mob/living/carbon/human/H, type = ANTAG_DATUM_NINJA_RANDOM)
 	if(!H || !H.mind)
 		return FALSE
-	var/datum/antagonist/ninja/datum = H.mind.has_antag_datum(type)
-	datum.on_removal()
-	return TRUE
+	return H.mind.add_antag_datum(type)
+
+/proc/is_ninja(mob/living/M)
+	return M && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_NINJA)
+
 
 /datum/antagonist/ninja/greet()
 	owner.current << sound('sound/effects/ninja_greeting.ogg')
