@@ -163,8 +163,12 @@
 			if(D.hacked)
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
 			else
+				var/turf/T = get_turf(D)
 				do_sparks(3, TRUE, D)
 				D.visible_message("<span class='danger'>[D] shuts down!</span>", "<span class='userdanger'>Your body automatically shuts down, in response to a kill code.</span>")
 				D.death()
+
+				message_admins("[ADMIN_LOOKUPFLW(usr)] shut down [key_name(D, D.client)][ADMIN_JMP(T)]!")
+				log_game("[key_name(usr)] shut down [key_name(D)]!")
 
 	src.updateUsrDialog()
