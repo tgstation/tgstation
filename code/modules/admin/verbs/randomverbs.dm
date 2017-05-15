@@ -386,9 +386,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 				if(L.name=="carpspawn")
 					ninja_spawn += L
-			new_character.equip_space_ninja()
-			new_character.internal = new_character.s_store
-			new_character.update_internals_hud_icon(1)
+			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(ANTAG_DATUM_NINJA)
+			ninjadatum.equip_space_ninja()
 			if(ninja_spawn.len)
 				var/obj/effect/landmark/ninja_spawn_here = pick(ninja_spawn)
 				new_character.loc = ninja_spawn_here.loc

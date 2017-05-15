@@ -1,21 +1,25 @@
 /datum/antagonist/ninja
-	name = "Ninja"	
+	name = "Ninja"
 	var/team
 	var/helping_station = 0
+	var/give_objectives = TRUE
 
 /datum/antagonist/ninja/friendly
 	helping_station = 1
 
-/datum/antagonist/ninja/new(datum/mind/new_owner)
-	if(new_owner && !ishuman(new_owner.current)//It's fine if we aren't passed a mind, but if we are, they have to be human.
-		throw EXCEPTION("Only humans/humanoids may be ninja'ed")
+/datum/antagonist/ninja/friendly/noobjective
+	give_objectives = FALSE
+
+/datum/antagonist/ninja/New(datum/mind/new_owner)
+	if(new_owner && !ishuman(new_owner.current))//It's fine if we aren't passed a mind, but if we are, they have to be human.
+		throw EXCEPTION("Only humans and/or humanoids may be ninja'ed")
 	..(new_owner)
 
-/datum/antagonist/ninja/randomAllegiance/new(datum/mind/new_owner)
+/datum/antagonist/ninja/randomAllegiance/New(datum/mind/new_owner)
 	..(new_owner)
 	helping_station = rand(0,1)
 
-/datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H, safety=0)//Safety in case you need to unequip stuff for existing characters.
+/datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current, safety=0)//Safety in case you need to unequip stuff for existing characters.
 	if(safety)
 		qdel(H.w_uniform)
 		qdel(H.wear_suit)
@@ -41,6 +45,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/grenade/plastic/x4(H), slot_l_store)
 	H.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen(H), slot_s_store)
 	H.equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(H), slot_back)
+	theSuit.randomize_param()
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(H)
 	E.implant(H)
@@ -119,4 +124,4 @@
 	if(give_objectives)
 		var/datum/objective/O = new /datum/objective/survive()
 		O.owner = owner
-		Mind.objectives += O
+		owner.objectives += O

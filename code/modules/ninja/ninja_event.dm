@@ -63,17 +63,11 @@ Contents:
 	Mind.active = 1
 
 	//generate objectives - You'll generally get 6 objectives (Ninja is meant to be hardmode!)
-	
+
 
 	//spawn the ninja and assign the candidate
 	var/mob/living/carbon/human/Ninja = create_space_ninja(spawn_loc)
 	Mind.transfer_to(Ninja)
-
-	//initialise equipment
-	if(istype(Ninja.wear_suit,/obj/item/clothing/suit/space/space_ninja))
-		//Should be true but we have to check these things.
-		var/obj/item/clothing/suit/space/space_ninja/N = Ninja.wear_suit
-		N.randomize_param()
 
 	Ninja.internal = Ninja.s_store
 	Ninja.update_internals_hud_icon(1)
@@ -99,7 +93,6 @@ Contents:
 	A.real_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
 	A.copy_to(new_ninja)
 	new_ninja.dna.update_dna_identity()
-	new_ninja.equip_space_ninja()
 	return new_ninja
 
 
