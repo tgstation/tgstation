@@ -245,8 +245,6 @@ This file contains the arcane tome files.
 	SSblackbox.add_details("cult_runes_scribed", R.cultist_name)
 
 /obj/item/weapon/tome/proc/check_rune_turf(turf/T, mob/user)
-	var/area/A = get_area(T)
-
 	if(isspaceturf(T))
 		to_chat(user, "<span class='warning'>You cannot scribe runes in space!</span>")
 		return FALSE
@@ -257,10 +255,6 @@ This file contains the arcane tome files.
 
 	if(T.z != ZLEVEL_STATION && T.z != ZLEVEL_MINING)
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.")
-		return FALSE
-
-	if(istype(A, /area/shuttle))
-		to_chat(user, "<span class='warning'>Interference from hyperspace engines disrupts the Geometer's power on shuttles.</span>")
 		return FALSE
 
 	return TRUE
