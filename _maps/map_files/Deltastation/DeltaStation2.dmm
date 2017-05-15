@@ -12425,7 +12425,7 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	filter_type = "n2";
 	name = "nitrogen filter";
-	on = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/gravity_generator{
