@@ -300,6 +300,23 @@
 	volume = 100
 	amount_per_transfer_from_this = 20
 
+/obj/item/weapon/reagent_containers/glass/mold
+	name = "mold"
+	desc = "A mold."
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "mold1"
+	volume = 25
+	amount_per_transfer_from_this = 25
+	flags = OPENCONTAINER
+	var/obj/produce_type = null
 
+/obj/item/weapon/reagent_containers/glass/mold/sword
+	name = "sword mold"
+	produce_type = /obj/item/weapon/smith_sword
 
+/obj/item/weapon/reagent_containers/glass/mold/pickaxe
+	name = "pickaxe mold"
+	produce_type = /obj/item/weapon/pickaxe/smithing
 
+/obj/item/weapon/reagent_containers/glass/mold/bar
+	name = "bar mold"
