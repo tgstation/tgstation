@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	if (user.a_intent == INTENT_HELP)
 		return ..()
 	else
-		..(M,user,heal_mode = FALSE)
+		return ..(M,user,heal_mode = FALSE)
 
 /obj/item/storage/book/bible/syndicate/add_blood(list/blood_dna)
 	return FALSE
