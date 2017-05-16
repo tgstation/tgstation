@@ -176,3 +176,24 @@ Contents:
 	if(istype(action, /datum/action/item_action/initialize_ninja_suit))
 		toggle_on_off()
 		return TRUE
+	if(istype(action, /datum/action/item_action/ninjajaunt))
+		ninjajaunt()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninjasmoke))
+		ninjasmoke()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninjaboost))
+		ninjaboost()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninjapulse))
+		ninjapulse()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninjastar))
+		ninjastar()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninjanet))
+		ninjanet()
+		return TRUE
+	if(istype(action, /datum/action/item_action/ninja_sword_recall))
+		ninja_sword_recall()
+		return TRUE

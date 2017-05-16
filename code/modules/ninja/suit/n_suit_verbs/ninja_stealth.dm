@@ -21,7 +21,6 @@ Contents:
 		animate(U, alpha = 50,time = 15)
 		U.visible_message("<span class='warning'>[U.name] vanishes into thin air!</span>", \
 						"<span class='notice'>You are now mostly invisible to normal detection.</span>")
-	return
 
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
@@ -46,4 +45,3 @@ Contents:
 		toggle_stealth()
 	else
 		to_chat(affecting, "<span class='danger'>Stealth does not appear to work!</span>")
-
