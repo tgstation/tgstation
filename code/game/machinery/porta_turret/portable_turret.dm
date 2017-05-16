@@ -87,6 +87,7 @@
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
+		underlays += image('icons/obj/turrets.dmi',icon_state = "basedark")
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
