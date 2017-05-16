@@ -1,3 +1,13 @@
+/mob/living/carbon/human/proc/wrestling_help()
+	set name = "Recall Teachings"
+	set desc = "Remember how to wrestle."
+	set category = "Wrestling"
+
+	to_chat(usr, "<b><i>You flex your muscles and have a revelation...</i></b>")
+	to_chat(usr, "<span class='notice'>Clinch</span>: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful.")
+	to_chat(usr, "<span class='notice'>Suplex</span>: Disarm someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor.")
+	to_chat(usr, "<span class='notice'>Advanced grab</span>: Grab. Passively causes stamina damage when grabbing someone.")
+
 /datum/martial_art/wrestling
 	name = "Wrestling"
 	var/datum/action/slam/slam = new/datum/action/slam()
@@ -430,3 +440,23 @@
 	D.Stun(rand(3,5))
 	add_logs(A, D, "cinched")
 	return 1
+
+/obj/item/weapon/storage/belt/champion/wrestling
+	name = "Wrestling Belt"
+	var/datum/martial_art/wrestling/style = new
+
+/obj/item/weapon/storage/belt/champion/wrestling/equipped(mob/user, slot)
+	if(!ishuman(user))
+		return
+	if(slot == slot_belt)
+		var/mob/living/carbon/human/H = user
+		style.teach(H,1)
+	return
+
+/obj/item/weapon/storage/belt/champion/wrestling/dropped(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(slot_belt) == src)
+		style.remove(H)
+	return

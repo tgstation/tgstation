@@ -41,6 +41,7 @@
 
 	var/datum/martial_art/martial_art = null
 	var/static/default_martial_art = new/datum/martial_art
+	var/datum/mind/martial_art_owner = null //Anti-piracy system
 
 	var/name_override //For temporary visible name changes
 

@@ -44,7 +44,7 @@
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
-
+	var/datum/martial_art/stored_martial_art = null
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
