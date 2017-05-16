@@ -39,7 +39,7 @@
 	if(!blocks_air)
 		air = new
 		air.copy_from_turf(src)
-	..()
+	. = ..()
 
 /turf/open/Destroy()
 	if(active_hotspot)

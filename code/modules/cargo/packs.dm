@@ -1688,15 +1688,6 @@
 					/obj/item/toy/crayon/rainbow)
 	crate_name = "art supply crate"
 
-/datum/supply_pack/misc/soapstone
-	name = "Curator Engraving/Scribbling Crate"
-	crate_name = "curator engraving/scribbling crate"
-	cost = 3000
-	contains = list(/obj/item/soapstone)
-	access = GLOB.access_library
-	crate_type = /obj/structure/closet/crate/secure
-
-
 /datum/supply_pack/misc/bsa
 	name = "Bluespace Artillery Parts"
 	cost = 15000

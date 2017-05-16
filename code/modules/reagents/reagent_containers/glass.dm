@@ -155,6 +155,12 @@
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
 
+/obj/item/weapon/reagent_containers/glass/beaker/jar
+	name = "honey jar"
+	desc = "A jar for honey. It can hold up to 50 units of sweet delight."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "vapour"
+
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
@@ -292,6 +298,9 @@
 	amount_per_transfer_from_this = 10
 	origin_tech = null
 
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/empty
+	list_reagents = list()
+
 /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
@@ -299,6 +308,9 @@
 	list_reagents = list("water" = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
+
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty
+	list_reagents = list()
 
 
 
