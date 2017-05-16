@@ -1,6 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - rscadd: "Summoning Nar'Sie now triggers a different ending. No shuttle is coming! Survivors must escape on a pod or survive the Red Harvest for 3 minutes. If Nar'Sie acquires enough souls, the round ends immediately with a **special ending**."
-  - rscadd: "New Harvester Sprite"
-  - rscadd: "Harvesters can now track a random survivor on the station, then switch back to tracking Nar'Sie, via a new action button."

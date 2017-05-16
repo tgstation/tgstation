@@ -1,5 +1,0 @@
-author: "Moonlighting Mac says"
-delete-after: True
-changes: 
-  - rscadd: "Starthistles now return seeds when they are harvested, amongst having a overhaul of description, alteration of statistics & a mutational path into harebells. These seeds have been supplied into the hydroponics seed vendor."
-  - imageadd: "Starthistle tray sprites have been restructured & also fixed from a issue of them being broken and not appearing in trays. In addition there are new sprites for its seeds."
