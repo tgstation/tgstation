@@ -45,6 +45,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	var/sleep_delta
 
 	var/make_runtime = 0
+	var/make_softreset = 0
 
 	var/initializations_finished_with_no_players_logged_in	//I wonder what this could be?
 
@@ -132,7 +133,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 				msg = "The [BadBoy.name] subsystem seems to be destabilizing the MC and will be offlined."
 				BadBoy.flags |= SS_NO_FIRE
 		if(msg)
-			to_chat(GLOB.admins, "<span class='boldannounce'>[msg]</span>")				
+			to_chat(GLOB.admins, "<span class='boldannounce'>[msg]</span>")
 			log_world(msg)
 
 	if (istype(Master.subsystems))
@@ -189,9 +190,15 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	// Loop.
 	Master.StartProcessing(0)
 
-/datum/controller/master/proc/SetRunLevel(runlevel)
-	testing("MC: Runlevel changed from [isnull(current_runlevel) ? "NULL" : current_runlevel] to [runlevel]")
-	current_runlevel = runlevel
+/datum/controller/master/proc/SetRunLevel(new_runlevel)
+	var/old_runlevel = current_runlevel
+	if(isnull(old_runlevel))
+		old_runlevel = "NULL"
+
+	testing("MC: Runlevel changed from [old_runlevel] to [runlevel]")
+	current_runlevel = log(2, new_runlevel) + 1
+	if(current_runlevel < 1)
+		CRASH("Attempted to set invalid runlevel: [new_runlevel]")
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.
 /datum/controller/master/proc/StartProcessing(delay)
@@ -233,7 +240,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			timer += world.tick_lag * rand(1, 5)
 			SS.next_fire = timer
 			continue
-		
+
 		var/ss_runlevels = SS.runlevels
 		var/added_to_any = FALSE
 		for(var/I in 1 to GLOB.bitflags.len)
@@ -253,7 +260,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	for(var/I in runlevel_sorted_subsystems)
 		sortTim(runlevel_sorted_subsystems, /proc/cmp_subsystem_priority)
 		I += tickersubsystems
-	
+
 	var/cached_runlevel = current_runlevel
 	var/list/current_runlevel_subsystems = runlevel_sorted_subsystems[cached_runlevel]
 
@@ -307,7 +314,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			subsystems_to_check = current_runlevel_subsystems
 		else
 			subsystems_to_check = tickersubsystems
-		if (CheckQueue(subsystems_to_check) <= 0)
+		if (make_softreset || CheckQueue(subsystems_to_check) <= 0)
 			if (!SoftReset(tickersubsystems, runlevel_sorted_subsystems))
 				log_world("MC: SoftReset() failed, crashing")
 				return
@@ -498,6 +505,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 //	called if any mc's queue procs runtime or exit improperly.
 /datum/controller/master/proc/SoftReset(list/ticker_SS, list/runlevel_SS)
 	. = 0
+	make_softreset = FALSE
 	log_world("MC: SoftReset called, resetting MC queue state.")
 	if (!istype(subsystems) || !istype(ticker_SS) || !istype(runlevel_SS))
 		log_world("MC: SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[runlevel_SS]'")
