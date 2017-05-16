@@ -828,6 +828,14 @@
 					/obj/item/weapon/defibrillator/loaded)
 	crate_name = "defibrillator crate"
 
+/datum/supply_pack/medical/vending
+	name = "Medical Vending Crate"
+	cost = 2000
+	contains = list(/obj/item/weapon/vending_refill/medical,
+					/obj/item/weapon/vending_refill/medical,
+					/obj/item/weapon/vending_refill/medical)
+	crate_name = "medical vending crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1679,15 +1687,6 @@
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
 	crate_name = "art supply crate"
-
-/datum/supply_pack/misc/soapstone
-	name = "Librarian Engraving/Scribbling Crate"
-	crate_name = "librarian engraving/scribbling crate"
-	cost = 3000
-	contains = list(/obj/item/soapstone)
-	access = GLOB.access_library
-	crate_type = /obj/structure/closet/crate/secure
-
 
 /datum/supply_pack/misc/bsa
 	name = "Bluespace Artillery Parts"

@@ -1,6 +1,6 @@
 /datum/computer_file/program/ntnetdownload
 	filename = "ntndownloader"
-	filedesc = "NTNet Software Download Tool"
+	filedesc = "Software Download Tool"
 	program_icon_state = "generic"
 	extended_desc = "This program allows downloads of software from official NT repositories"
 	unsendable = 1
@@ -10,6 +10,8 @@
 	requires_ntnet_feature = NTNET_SOFTWAREDOWNLOAD
 	available_on_ntnet = 0
 	ui_header = "downloader_finished.gif"
+	tgui_id = "ntos_net_downloader"
+
 	var/datum/computer_file/program/downloaded_file = null
 	var/hacked_download = 0
 	var/download_completion = 0 //GQ of downloaded data.
@@ -102,17 +104,6 @@
 				downloaderror = ""
 			return 1
 	return 0
-
-/datum/computer_file/program/ntnetdownload/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "ntnet_downloader", "NTNet Download Program", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
 	my_computer = computer

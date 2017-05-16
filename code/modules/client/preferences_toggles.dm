@@ -1,162 +1,249 @@
+//this works as is to create a single checked item, but has no back end code for toggleing the check yet
+#define TOGGLE_CHECKBOX(PARENT, CHILD) PARENT/CHILD/abstract = TRUE;PARENT/CHILD/checkbox = CHECKBOX_TOGGLE;PARENT/CHILD/verb/CHILD
+
+//Example usage TOGGLE_CHECKBOX(datum/menu/Settings/Ghost/chatterbox, toggle_ghost_ears)()
+
+//override because we don't want to save preferences twice.
+/datum/menu/Settings/Set_checked(client/C, verbpath)
+	if (checkbox == CHECKBOX_GROUP)
+		C.prefs.menuoptions[type] = verbpath
+	else if (checkbox == CHECKBOX_TOGGLE)
+		var/checked = Get_checked(C)
+		C.prefs.menuoptions[type] = !checked
+		winset(C, "[verbpath]", "is-checked = [!checked]")
+
+/datum/menu/Settings/verb/setup_character()
+	set name = "Game Preferences"
+	set category = "Preferences"
+	set desc = "Open Game Preferences Window"
+	usr.client.prefs.current_tab = 1
+	usr.client.prefs.ShowChoices(usr)
+
 //toggles
-/client/verb/toggle_ghost_ears()
+/datum/menu/Settings/Ghost/chatterbox
+	name = "Chat Box Spam"
+
+TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_ears)()
 	set name = "Show/Hide GhostEars"
 	set category = "Preferences"
-	set desc = ".Toggle Between seeing all mob speech, and only speech of nearby mobs"
-	prefs.chat_toggles ^= CHAT_GHOSTEARS
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"].")
-	prefs.save_preferences()
-	SSblackbox.add_details("preferences_verb","Toggle Ghost Ears|[prefs.chat_toggles & CHAT_GHOSTEARS]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	set desc = "See All Speech"
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTEARS
+	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"].")
+	usr.client.prefs.save_preferences()
+	SSblackbox.add_details("preferences_verb","Toggle Ghost Ears|[usr.client.prefs.chat_toggles & CHAT_GHOSTEARS]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Ghost/chatterbox/toggle_ghost_ears/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_GHOSTEARS
 
-/client/verb/toggle_ghost_sight()
+TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_sight)()
 	set name = "Show/Hide GhostSight"
 	set category = "Preferences"
-	set desc = ".Toggle Between seeing all mob emotes, and only emotes of nearby mobs"
-	prefs.chat_toggles ^= CHAT_GHOSTSIGHT
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"].")
-	prefs.save_preferences()
-	SSblackbox.add_details("preferences_verb","Toggle Ghost Sight|[prefs.chat_toggles & CHAT_GHOSTSIGHT]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	set desc = "See All Emotes"
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTSIGHT
+	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"].")
+	usr.client.prefs.save_preferences()
+	SSblackbox.add_details("preferences_verb","Toggle Ghost Sight|[usr.client.prefs.chat_toggles & CHAT_GHOSTSIGHT]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Ghost/chatterbox/toggle_ghost_sight/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_GHOSTSIGHT
 
-/client/verb/toggle_ghost_whispers()
+TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_whispers)()
 	set name = "Show/Hide GhostWhispers"
 	set category = "Preferences"
-	set desc = ".Toggle between hearing all whispers, and only whispers of nearby mobs"
-	prefs.chat_toggles ^= CHAT_GHOSTWHISPER
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"].")
-	prefs.save_preferences()
-	SSblackbox.add_details("preferences_verb","Toggle Ghost Whispers|[prefs.chat_toggles & CHAT_GHOSTWHISPER]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	set desc = "See All Whispers"
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTWHISPER
+	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"].")
+	usr.client.prefs.save_preferences()
+	SSblackbox.add_details("preferences_verb","Toggle Ghost Whispers|[usr.client.prefs.chat_toggles & CHAT_GHOSTWHISPER]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Ghost/chatterbox/toggle_ghost_whispers/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_GHOSTWHISPER
 
-/client/verb/toggle_ghost_radio()
+TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_radio)()
 	set name = "Show/Hide GhostRadio"
 	set category = "Preferences"
-	set desc = ".Enable or disable hearing radio chatter as a ghost"
-	prefs.chat_toggles ^= CHAT_GHOSTRADIO
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTRADIO) ? "see radio chatter" : "not see radio chatter"].")
-	prefs.save_preferences()
-	SSblackbox.add_details("preferences_verb","Toggle Ghost Radio|[prefs.chat_toggles & CHAT_GHOSTRADIO]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc! //social experiment, increase the generation whenever you copypaste this shamelessly GENERATION 1
+	set desc = "See All Radio Chatter"
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTRADIO
+	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTRADIO) ? "see radio chatter" : "not see radio chatter"].")
+	usr.client.prefs.save_preferences()
+	SSblackbox.add_details("preferences_verb","Toggle Ghost Radio|[usr.client.prefs.chat_toggles & CHAT_GHOSTRADIO]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc! //social experiment, increase the generation whenever you copypaste this shamelessly GENERATION 1
+/datum/menu/Settings/Ghost/chatterbox/toggle_ghost_radio/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_GHOSTRADIO
 
-/client/verb/toggle_ghost_pda()
+TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox, toggle_ghost_pda)()
 	set name = "Show/Hide GhostPDA"
 	set category = "Preferences"
-	set desc = ".Toggle Between seeing all mob pda messages, and only pda messages of nearby mobs"
-	prefs.chat_toggles ^= CHAT_GHOSTPDA
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"].")
-	prefs.save_preferences()
-	SSblackbox.add_details("preferences_verb","Toggle Ghost PDA|[prefs.chat_toggles & CHAT_GHOSTPDA]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	set desc = "See All PDA Messages"
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTPDA
+	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"].")
+	usr.client.prefs.save_preferences()
+	SSblackbox.add_details("preferences_verb","Toggle Ghost PDA|[usr.client.prefs.chat_toggles & CHAT_GHOSTPDA]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Ghost/chatterbox/toggle_ghost_pda/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_GHOSTPDA
+
+/datum/menu/Settings/Ghost/chatterbox/Events
+	name = "Events"
 
 //please be aware that the following two verbs have inverted stat output, so that "Toggle Deathrattle|1" still means you activated it
-/client/verb/toggle_deathrattle()
+TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox/Events, toggle_deathrattle)()
 	set name = "Toggle Deathrattle"
 	set category = "Preferences"
-	set desc = "Toggle recieving a message in deadchat when sentient mobs die."
-	prefs.toggles ^= DISABLE_DEATHRATTLE
-	prefs.save_preferences()
-	to_chat(usr, "You will [(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get messages when a sentient mob dies.")
-	SSblackbox.add_details("preferences_verb", "Toggle Deathrattle|[!(prefs.toggles & DISABLE_DEATHRATTLE)]") //If you are copy-pasting this, maybe you should spend some time reading the comments.
+	set desc = "Death"
+	usr.client.prefs.toggles ^= DISABLE_DEATHRATTLE
+	usr.client.prefs.save_preferences()
+	to_chat(usr, "You will [(usr.client.prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get messages when a sentient mob dies.")
+	SSblackbox.add_details("preferences_verb", "Toggle Deathrattle|[!(usr.client.prefs.toggles & DISABLE_DEATHRATTLE)]") //If you are copy-pasting this, maybe you should spend some time reading the comments.
+/datum/menu/Settings/Ghost/chatterbox/Events/toggle_deathrattle/Get_checked(client/C)
+	return !(C.prefs.toggles & DISABLE_DEATHRATTLE)
 
-/client/verb/toggle_arrivalrattle()
+TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost/chatterbox/Events, toggle_arrivalrattle)()
 	set name = "Toggle Arrivalrattle"
 	set category = "Preferences"
-	set desc = "Toggle recieving a message in deadchat when someone joins the station."
-	prefs.toggles ^= DISABLE_ARRIVALRATTLE
-	to_chat(usr, "You will [(prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get messages when someone joins the station.")
-	prefs.save_preferences()
-	SSblackbox.add_details("preferences_verb", "Toggle Arrivalrattle|[!(prefs.toggles & DISABLE_ARRIVALRATTLE)]") //If you are copy-pasting this, maybe you should rethink where your life went so wrong.
+	set desc = "New Player Arrival"
+	usr.client.prefs.toggles ^= DISABLE_ARRIVALRATTLE
+	to_chat(usr, "You will [(usr.client.prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get messages when someone joins the station.")
+	usr.client.prefs.save_preferences()
+	SSblackbox.add_details("preferences_verb", "Toggle Arrivalrattle|[!(usr.client.prefs.toggles & DISABLE_ARRIVALRATTLE)]") //If you are copy-pasting this, maybe you should rethink where your life went so wrong.
+/datum/menu/Settings/Ghost/chatterbox/Events/toggle_arrivalrattle/Get_checked(client/C)
+	return !(C.prefs.toggles & DISABLE_ARRIVALRATTLE)
 
-/client/verb/togglemidroundantag()
+TOGGLE_CHECKBOX(/datum/menu/Settings/Ghost, togglemidroundantag)()
 	set name = "Toggle Midround Antagonist"
 	set category = "Preferences"
-	set desc = "Toggles whether or not you will be considered for antagonist status given during a round."
-	prefs.toggles ^= MIDROUND_ANTAG
-	prefs.save_preferences()
-	to_chat(src, "You will [(prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions.")
-	SSblackbox.add_details("preferences_verb","Toggle Midround Antag|[prefs.toggles & MIDROUND_ANTAG]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	set desc = "Midround Antagonist"
+	usr.client.prefs.toggles ^= MIDROUND_ANTAG
+	usr.client.prefs.save_preferences()
+	to_chat(usr, "You will [(usr.client.prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions.")
+	SSblackbox.add_details("preferences_verb","Toggle Midround Antag|[usr.client.prefs.toggles & MIDROUND_ANTAG]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Ghost/togglemidroundantag/Get_checked(client/C)
+	return C.prefs.toggles & MIDROUND_ANTAG
 
-/client/verb/toggletitlemusic()
+TOGGLE_CHECKBOX(/datum/menu/Settings/Sound, toggletitlemusic)()
 	set name = "Hear/Silence LobbyMusic"
 	set category = "Preferences"
-	set desc = "Toggles hearing the GameLobby music"
-	prefs.toggles ^= SOUND_LOBBY
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_LOBBY)
-		to_chat(src, "You will now hear music in the game lobby.")
-		if(isnewplayer(mob))
-			playtitlemusic()
+	set desc = "Hear Music In Lobby"
+	usr.client.prefs.toggles ^= SOUND_LOBBY
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_LOBBY)
+		to_chat(usr, "You will now hear music in the game lobby.")
+		if(isnewplayer(usr))
+			usr.client.playtitlemusic()
 	else
-		to_chat(src, "You will no longer hear music in the game lobby.")
-		mob.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-	SSblackbox.add_details("preferences_verb","Toggle Lobby Music|[prefs.toggles & SOUND_LOBBY]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		to_chat(usr, "You will no longer hear music in the game lobby.")
+		usr.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+	SSblackbox.add_details("preferences_verb","Toggle Lobby Music|[usr.client.prefs.toggles & SOUND_LOBBY]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Sound/toggletitlemusic/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_LOBBY
 
-/client/verb/togglemidis()
+
+TOGGLE_CHECKBOX(/datum/menu/Settings/Sound, togglemidis)()
 	set name = "Hear/Silence Midis"
 	set category = "Preferences"
-	set desc = "Toggles hearing sounds uploaded by admins"
-	prefs.toggles ^= SOUND_MIDI
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_MIDI)
-		to_chat(src, "You will now hear any sounds uploaded by admins.")
+	set desc = "Hear Admin Triggered Sounds (Midis)"
+	usr.client.prefs.toggles ^= SOUND_MIDI
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_MIDI)
+		to_chat(usr, "You will now hear any sounds uploaded by admins.")
 	else
-		to_chat(src, "You will no longer hear sounds uploaded by admins")
-		mob.stop_sound_channel(CHANNEL_ADMIN)
-	SSblackbox.add_details("preferences_verb","Toggle Hearing Midis|[prefs.toggles & SOUND_MIDI]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		to_chat(usr, "You will no longer hear sounds uploaded by admins")
+		usr.stop_sound_channel(CHANNEL_ADMIN)
+	SSblackbox.add_details("preferences_verb","Toggle Hearing Midis|[usr.client.prefs.toggles & SOUND_MIDI]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Sound/togglemidis/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_MIDI
 
-/client/verb/stop_client_sounds()
-	set name = "Stop Sounds"
-	set category = "Preferences"
-	set desc = "Kills all currently playing sounds, use if admin taste in midis a shite"
-	src << sound(null)
-	SSblackbox.add_details("preferences_verb","Stop Self Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/listen_ooc()
-	set name = "Show/Hide OOC"
-	set category = "Preferences"
-	set desc = "Toggles seeing OutOfCharacter chat"
-	prefs.chat_toggles ^= CHAT_OOC
-	prefs.save_preferences()
-	to_chat(src, "You will [(prefs.chat_toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel.")
-	SSblackbox.add_details("preferences_verb","Toggle Seeing OOC|[prefs.chat_toggles & CHAT_OOC]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful
-	set name = "Hear/Silence Ambience"
-	set category = "Preferences"
-	set desc = "Toggles hearing ambient sound effects"
-	prefs.toggles ^= SOUND_AMBIENCE
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_AMBIENCE)
-		to_chat(src, "You will now hear ambient sounds.")
-	else
-		to_chat(src, "You will no longer hear ambient sounds.")
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
-	SSblackbox.add_details("preferences_verb","Toggle Ambience|[prefs.toggles & SOUND_AMBIENCE]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-// This needs a toggle because you people are awful and spammed terrible music
-/client/verb/toggle_instruments()
+TOGGLE_CHECKBOX(/datum/menu/Settings/Sound, toggle_instruments)()
 	set name = "Hear/Silence Instruments"
 	set category = "Preferences"
-	set desc = "Toggles hearing musical instruments like the violin and piano"
-	prefs.toggles ^= SOUND_INSTRUMENTS
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_INSTRUMENTS)
-		to_chat(src, "You will now hear people playing musical instruments.")
+	set desc = "Hear In-game Instruments"
+	usr.client.prefs.toggles ^= SOUND_INSTRUMENTS
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_INSTRUMENTS)
+		to_chat(usr, "You will now hear people playing musical instruments.")
 	else
-		to_chat(src, "You will no longer hear musical instruments.")
-	SSblackbox.add_details("preferences_verb","Toggle Instruments|[prefs.toggles & SOUND_INSTRUMENTS]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		to_chat(usr, "You will no longer hear musical instruments.")
+	SSblackbox.add_details("preferences_verb","Toggle Instruments|[usr.client.prefs.toggles & SOUND_INSTRUMENTS]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Sound/toggle_instruments/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_INSTRUMENTS
 
-//Lots of people get headaches from the normal ship ambience, this is to prevent that
-/client/verb/toggle_ship_ambience()
+
+TOGGLE_CHECKBOX(/datum/menu/Settings/Sound, Toggle_Soundscape)()
+	set name = "Hear/Silence Ambience"
+	set category = "Preferences"
+	set desc = "Hear Ambient Sound Effects"
+	usr.client.prefs.toggles ^= SOUND_AMBIENCE
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_AMBIENCE)
+		to_chat(usr, "You will now hear ambient sounds.")
+	else
+		to_chat(usr, "You will no longer hear ambient sounds.")
+		usr << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
+		usr << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
+	SSblackbox.add_details("preferences_verb","Toggle Ambience|[usr.client.prefs.toggles & SOUND_AMBIENCE]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Sound/Toggle_Soundscape/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_AMBIENCE
+
+
+TOGGLE_CHECKBOX(/datum/menu/Settings/Sound, toggle_ship_ambience)()
 	set name = "Hear/Silence Ship Ambience"
 	set category = "Preferences"
-	set desc = "Toggles hearing generalized ship ambience, no matter your area."
-	prefs.toggles ^= SOUND_SHIP_AMBIENCE
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_SHIP_AMBIENCE)
-		to_chat(src, "You will now hear ship ambience.")
+	set desc = "Hear Ship Ambience Roar"
+	usr.client.prefs.toggles ^= SOUND_SHIP_AMBIENCE
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
+		to_chat(usr, "You will now hear ship ambience.")
 	else
-		to_chat(src, "You will no longer hear ship ambience.")
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
-		src.ambience_playing = 0
-	SSblackbox.add_details("preferences_verb", "Toggle Ship Ambience|[prefs.toggles & SOUND_SHIP_AMBIENCE]") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
+		to_chat(usr, "You will no longer hear ship ambience.")
+		usr << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
+		usr.client.ambience_playing = 0
+	SSblackbox.add_details("preferences_verb", "Toggle Ship Ambience|[usr.client.prefs.toggles & SOUND_SHIP_AMBIENCE]") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
+/datum/menu/Settings/Sound/toggle_ship_ambience/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_SHIP_AMBIENCE
+
+
+TOGGLE_CHECKBOX(/datum/menu/Settings/Sound, toggle_announcement_sound)()
+	set name = "Hear/Silence Announcements"
+	set category = "Preferences"
+	set desc = "Hear Announcement Sound"
+	usr.client.prefs.toggles ^= SOUND_ANNOUNCEMENTS
+	to_chat(usr, "You will now [(usr.client.prefs.toggles & SOUND_ANNOUNCEMENTS) ? "hear announcement sounds" : "no longer hear announcements"].")
+	usr.client.prefs.save_preferences()
+	SSblackbox.add_details("preferences_verb","Toggle Announcement Sound|[usr.client.prefs.toggles & SOUND_ANNOUNCEMENTS]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/Sound/toggle_announcement_sound/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_ANNOUNCEMENTS
+
+
+TOGGLE_CHECKBOX(/datum/menu/Settings/Sound, toggleprayersounds)()
+	set name = "Hear/Silence Prayer Sounds"
+	set category = "Preferences"
+	set desc = "Hear Prayer Sounds"
+	usr.client.prefs.toggles ^= SOUND_PRAYERS
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_PRAYERS)
+		to_chat(usr, "You will now hear prayer sounds.")
+	else
+		to_chat(usr, "You will no longer prayer sounds.")
+	SSblackbox.add_details("admin_toggle", "Toggle Prayer Sounds|[usr.client.prefs.toggles & SOUND_PRAYERS]")
+/datum/menu/Settings/Sound/toggleprayersounds/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_PRAYERS
+
+
+/datum/menu/Settings/Sound/verb/stop_client_sounds()
+	set name = "Stop Sounds"
+	set category = "Preferences"
+	set desc = "Stop Current Sounds"
+	usr << sound(null)
+	SSblackbox.add_details("preferences_verb","Stop Self Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+TOGGLE_CHECKBOX(/datum/menu/Settings, listen_ooc)()
+	set name = "Show/Hide OOC"
+	set category = "Preferences"
+	set desc = "Show OOC Chat"
+	usr.client.prefs.chat_toggles ^= CHAT_OOC
+	usr.client.prefs.save_preferences()
+	to_chat(usr, "You will [(usr.client.prefs.chat_toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel.")
+	SSblackbox.add_details("preferences_verb","Toggle Seeing OOC|[usr.client.prefs.chat_toggles & CHAT_OOC]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/menu/Settings/listen_ooc/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_OOC
+
 
 GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
@@ -246,13 +333,6 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	SSblackbox.add_details("preferences_verb","Toggle Intent Selection|[prefs.toggles & INTENT_STYLE]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/setup_character()
-	set name = "Game Preferences"
-	set category = "Preferences"
-	set desc = "Allows you to access the Setup Character screen. Changes to your character won't take effect until next round, but other changes will."
-	prefs.current_tab = 1
-	prefs.ShowChoices(usr)
-
 /client/verb/toggle_ghost_hud_pref()
 	set name = "Toggle Ghost HUD"
 	set category = "Preferences"
@@ -277,15 +357,6 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	else
 		to_chat(src, "<span class='notice'>You will no longer examine things you click on.</span>")
 	SSblackbox.add_details("preferences_verb","Toggle Ghost Inquisitiveness|[prefs.inquisitive_ghost]")
-
-/client/verb/toggle_announcement_sound()
-	set name = "Hear/Silence Announcements"
-	set category = "Preferences"
-	set desc = ".Toggles hearing Central Command, Captain, VOX, and other announcement sounds"
-	prefs.toggles ^= SOUND_ANNOUNCEMENTS
-	to_chat(src, "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "hear announcement sounds" : "no longer hear announcements"].")
-	prefs.save_preferences()
-	SSblackbox.add_details("preferences_verb","Toggle Announcement Sound|[prefs.toggles & SOUND_ANNOUNCEMENTS]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 //Admin Preferences
 /client/proc/toggleadminhelpsound()
@@ -338,14 +409,3 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat.")
 	SSblackbox.add_details("admin_toggle","Toggle Prayer Visibility|[prefs.chat_toggles & CHAT_PRAYER]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/toggleprayersounds()
-	set name = "Hear/Silence Prayer Sounds"
-	set category = "Preferences"
-	set desc = "Toggles hearing pray sounds."
-	prefs.toggles ^= SOUND_PRAYERS
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_PRAYERS)
-		to_chat(src, "You will now hear prayer sounds.")
-	else
-		to_chat(src, "You will no longer prayer sounds.")
-	SSblackbox.add_details("admin_toggle", "Toggle Prayer Sounds|[prefs.toggles & SOUND_PRAYERS]")

@@ -117,6 +117,7 @@
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname
+	M.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
 	M.dna.update_dna_identity()
 
 /obj/item/weapon/antag_spawner/contract/equip_antag(mob/target)
@@ -155,7 +156,8 @@
 	if(!(check_usability(user)))
 		return
 
-	var/list/nuke_candidates = pollCandidatesForMob("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, src)
+	to_chat(user, "<span class='notice'>You activate [src] and wait for confirmation.</span>")
+	var/list/nuke_candidates = pollCandidatesForMob("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE, src)
 	if(nuke_candidates.len)
 		if(!(check_usability(user)))
 			return

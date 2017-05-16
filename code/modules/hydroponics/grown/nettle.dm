@@ -50,17 +50,22 @@
 /obj/item/weapon/grown/nettle/pickup(mob/living/user)
 	..()
 	if(!iscarbon(user))
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = user
 	if(C.gloves)
-		return 0
+		return FALSE
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(H.dna && H.dna.species)
+			if(PIERCEIMMUNE in H.dna.species.species_traits)
+				return FALSE
 	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
 	if(affecting)
 		if(affecting.receive_damage(0, force))
 			C.update_damage_overlays()
 	to_chat(C, "<span class='userdanger'>The nettle burns your bare hand!</span>")
-	return 1
+	return TRUE
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
 	if(!proximity) return

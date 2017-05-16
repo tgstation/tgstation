@@ -142,15 +142,15 @@
 /area/solar/auxstarboard)
 "aap" = (
 /obj/docking_port/stationary/random{
-	id = "pod_asteroid1";
-	name = "asteroid"
+	id = "pod_lavaland1";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
 "aaq" = (
 /obj/docking_port/stationary/random{
-	id = "pod_asteroid2";
-	name = "asteroid"
+	id = "pod_lavaland2";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -203,7 +203,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
-	possible_destinations = "pod_asteroid1";
+	possible_destinations = "pod_lavaland1";
 	shuttleId = "pod1"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -226,7 +226,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
-	possible_destinations = "pod_asteroid2";
+	possible_destinations = "pod_lavaland2";
 	shuttleId = "pod2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10134,14 +10134,11 @@
 /turf/open/space,
 /area/space)
 "aux" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/bot,
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -10753,7 +10750,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/storage)
@@ -10777,24 +10774,27 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "avM" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 4;
-	on = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/bot,
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
 	})
 "avN" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	icon_state = "manifold";
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	icon_state = "pump_map";
+	name = "Thermo to Gas"
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator{
@@ -11240,7 +11240,7 @@
 /area/quartermaster/storage)
 "awJ" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/storage)
@@ -11296,10 +11296,6 @@
 /turf/open/space,
 /area/space)
 "awR" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	icon_state = "freezer";
-	dir = 4
-	},
 /obj/structure/sign/securearea{
 	pixel_x = -32
 	},
@@ -11311,6 +11307,10 @@
 	network = list("SS13","Engine")
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/components/unary/thermomachine/heater{
+	dir = 4;
+	on = 1
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -11765,11 +11765,12 @@
 	name = "Atmospherics Engine"
 	})
 "axM" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	icon_state = "manifold";
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator{
@@ -11778,11 +11779,6 @@
 "axN" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
-	dir = 4
-	},
-/obj/machinery/meter,
 /turf/open/floor/plasteel/neutral,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -11793,9 +11789,6 @@
 	d2 = 2;
 	icon_state = "1-2";
 	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -12429,11 +12422,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/supply)
 "aza" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
+/obj/machinery/atmospherics/components/trinary/filter/flipped{
 	filter_type = "n2";
-	name = "nitogren filter";
-	on = 1
+	name = "nitrogen filter"
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/gravity_generator{
@@ -25977,7 +25968,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid3";
+	possible_destinations = "pod_lavaland3";
 	shuttleId = "pod3"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -25996,8 +25987,8 @@
 "aXK" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid4";
-	name = "asteroid"
+	id = "pod_lavaland4";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -31236,7 +31227,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/miningdock{
@@ -34793,7 +34784,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -52476,7 +52466,7 @@
 	name = "Queue Shutters"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -62918,7 +62908,7 @@
 "cpl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/clipboard,
-/obj/item/toy/figure/librarian,
+/obj/item/toy/figure/curator,
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
@@ -63736,7 +63726,7 @@
 /area/library)
 "cqF" = (
 /obj/machinery/door/morgue{
-	name = "Librarian's Study";
+	name = "Curator's Study";
 	req_access_txt = "37"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -64356,10 +64346,12 @@
 /turf/open/floor/plasteel/black,
 /area/library)
 "crP" = (
-/obj/structure/dresser,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -32
-	},
+/obj/structure/closet/crate,
+/obj/item/clothing/shoes/workboots/mining,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
+/obj/item/clothing/suit/curator,
+/obj/item/clothing/head/curator,
+/obj/item/weapon/storage/backpack/satchel/explorer,
 /turf/open/floor/plasteel/black,
 /area/library)
 "crQ" = (
@@ -67498,7 +67490,7 @@
 	desc = "This looks awfully familiar...";
 	icon_state = "curator"
 	},
-/obj/item/clothing/under/rank/librarian/curator,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
 /turf/open/floor/carpet,
 /area/crew_quarters/sleep)
 "cxC" = (
@@ -70986,7 +70978,6 @@
 "cDW" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -79512,8 +79503,13 @@
 	name = "Medbay Central"
 	})
 "cUf" = (
-/obj/machinery/smartfridge/chemistry,
-/turf/closed/wall,
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemisttop";
+	name = "Chemisty Lobby Shutters"
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
 /area/medical/medbay{
 	name = "Medbay Central"
 	})
@@ -79536,14 +79532,9 @@
 	name = "Medbay Central"
 	})
 "cUh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chemisttop";
-	name = "Chemisty Lobby Shutters"
-	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/closed/wall,
 /area/medical/medbay{
 	name = "Medbay Central"
 	})
@@ -81189,7 +81180,7 @@
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "cXc" = (
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /obj/machinery/light_switch{
 	pixel_x = -26
 	},
@@ -82189,6 +82180,7 @@
 /obj/item/weapon/grenade/chem_grenade,
 /obj/item/weapon/grenade/chem_grenade,
 /obj/item/weapon/grenade/chem_grenade,
+/obj/item/weapon/screwdriver,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	icon_state = "whiteyellowcorner";
 	dir = 8
@@ -84273,7 +84265,7 @@
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
 "ddg" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/chemistry)
 "ddh" = (
@@ -96353,7 +96345,6 @@
 	},
 /area/medical/morgue)
 "dAn" = (
-/turf/open/floor/plating,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	icon_state = "manifold";
@@ -104160,7 +104151,7 @@
 	name = "emergency shower"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -104905,7 +104896,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -105516,7 +105507,7 @@
 /area/library/abandoned_library)
 "dSu" = (
 /obj/structure/table/wood,
-/obj/item/clothing/under/rank/librarian,
+/obj/item/clothing/under/rank/curator,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
@@ -108176,7 +108167,7 @@
 /area/maintenance/fpmaint2/aft_port_maintenance)
 "dXu" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/spellbook/oneuse/smoke,
+/obj/item/weapon/spellbook/oneuse/smoke/lesser,
 /obj/item/weapon/nullrod,
 /obj/item/organ/heart,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
@@ -112311,6 +112302,45 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/atmos)
+"ehO" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
+"ehP" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
+"ehQ" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
+"ehR" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
+"ehS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	icon_state = "freezer";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator{
+	name = "Atmospherics Engine"
+	})
+"ehT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/obj/machinery/meter,
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator{
+	name = "Atmospherics Engine"
+	})
 
 (1,1,1) = {"
 aaa
@@ -136033,11 +136063,11 @@ aiW
 apF
 aqY
 asd
-ati
+axL
 aux
 avM
 awR
-axL
+ehS
 axL
 axL
 asd
@@ -136295,7 +136325,7 @@ auy
 avN
 awS
 axM
-aqZ
+ehT
 azZ
 aAV
 aCc
@@ -136553,7 +136583,7 @@ ato
 awT
 axN
 aza
-aAa
+ato
 aAW
 aCd
 aDD
@@ -136809,7 +136839,7 @@ ebT
 avO
 auA
 axO
-azb
+atk
 atk
 aAX
 aCe
@@ -143544,7 +143574,7 @@ cbA
 cdn
 ceS
 cgp
-chQ
+ehO
 cjl
 ckP
 cjl
@@ -143801,7 +143831,7 @@ cbB
 cdo
 ceS
 cgq
-chQ
+ehO
 cjl
 ckP
 cjl
@@ -144315,7 +144345,7 @@ bWi
 cdq
 ceS
 cgp
-chQ
+ehO
 cjm
 ckP
 cmk
@@ -144572,7 +144602,7 @@ cbC
 cdr
 ceT
 cgp
-chQ
+ehO
 cjn
 ckP
 cmk

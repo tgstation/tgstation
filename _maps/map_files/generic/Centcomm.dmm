@@ -5586,7 +5586,7 @@
 /area/centcom/ferry)
 "ot" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/under/rank/librarian/curator,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
 /obj/item/clothing/under/skirt/black,
 /obj/item/clothing/under/shorts/black,
 /obj/item/clothing/under/pants/track,
@@ -8913,10 +8913,10 @@
 /area/centcom/ferry)
 "vZ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = 6
 	},
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = -4
 	},
 /obj/machinery/firealarm{

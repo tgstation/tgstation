@@ -1,6 +1,9 @@
 #define TURRET_STUN 0
 #define TURRET_LETHAL 1
 
+#define POPUP_ANIM_TIME 5
+#define POPDOWN_ANIM_TIME 5 //Be sure to change the icon animation at the same time or it'll look bad
+
 /obj/machinery/porta_turret
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
@@ -84,6 +87,7 @@
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
+		underlays += image('icons/obj/turrets.dmi',icon_state = "basedark")
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
@@ -364,6 +368,10 @@
 	var/list/targets = list()
 	var/turretview = view(scan_range, base)
 	for(var/A in turretview)
+		var/atom/AA = A
+		if(AA.invisibility>SEE_INVISIBLE_LIVING)
+			continue
+
 		if(check_anomalies)//if it's set to check for simple animals
 			if(istype(A, /mob/living/simple_animal))
 				var/mob/living/simple_animal/SA = A
@@ -418,7 +426,7 @@
 	raising = 1
 	if(cover)
 		flick("popup", cover)
-	sleep(10)
+	sleep(POPUP_ANIM_TIME)
 	raising = 0
 	if(cover)
 		cover.icon_state = "openTurretCover"
@@ -434,7 +442,7 @@
 	raising = 1
 	if(cover)
 		flick("popdown", cover)
-	sleep(10)
+	sleep(POPDOWN_ANIM_TIME)
 	raising = 0
 	if(cover)
 		cover.icon_state = "turretCover"

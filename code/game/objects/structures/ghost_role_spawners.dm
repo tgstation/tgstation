@@ -48,6 +48,11 @@
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
 	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>")
+
+	new_spawn.grant_language(/datum/language/draconic)
+	var/datum/language_holder/holder = new_spawn.get_language_holder()
+	holder.selected_default_language = /datum/language/draconic
+
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
@@ -91,7 +96,7 @@
 
 //Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
 /obj/effect/mob_spawn/human/golem
-	name = "inert golem shell"
+	name = "inert free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
 	icon = 'icons/obj/wizard.dmi'
@@ -101,12 +106,14 @@
 	death = FALSE
 	anchored = 0
 	density = 0
+	var/has_owner = FALSE
+	var/can_transfer = TRUE //if golems can switch bodies to this new shell
 	var/mob/living/owner = null //golem's owner if it has one
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
 
-/obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
+/obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
 	..()
 	if(species)
 		name += " ([initial(species.prefix)])"
@@ -119,7 +126,7 @@
 		Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost."
 		owner = creator
 
-/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
+/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn, name)
 	var/datum/species/golem/X = mob_species
 	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)
@@ -132,14 +139,36 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
-		H.real_name = H.dna.species.random_name()
+		if(!name)
+			if(has_owner)
+				H.real_name = "[initial(X.prefix)] Golem ([rand(1,999)])"
+			else
+				H.real_name = H.dna.species.random_name()
+		else
+			H.real_name = name
+
+/obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
+	if(isgolem(user) && can_transfer)
+		var/transfer = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
+		if(!transfer)
+			return
+		log_game("[user.ckey] golem-swapped into [src]")
+		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
+		create(ckey = user.ckey, flavour = FALSE, name = user.real_name)
+		user.death()
+		return
+	..()
+
+/obj/effect/mob_spawn/human/golem/servant
+	has_owner = TRUE
+	name = "inert servant golem shell"
+
 
 /obj/effect/mob_spawn/human/golem/adamantine
-	name = "dust-caked golem shell"
+	name = "dust-caked free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
-	anchored = 1
-	density = 1
+	can_transfer = FALSE
 	mob_species = /datum/species/golem/adamantine
 
 //Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland. Ghosts become hermits with knowledge of how they got to where they are now.
@@ -269,3 +298,52 @@
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
+
+/obj/effect/mob_spawn/human/demonic_friend
+	name = "Essence of friendship"
+	desc = "Oh boy! Oh boy! A friend!"
+	mob_name = "Demonic friend"
+	icon = 'icons/obj/cardboard_cutout.dmi'
+	icon_state = "cutout_basic"
+	uniform = /obj/item/clothing/under/assistantformal
+	shoes = /obj/item/clothing/shoes/laceup
+	pocket1 = /obj/item/device/radio/off
+	back = /obj/item/weapon/storage/backpack
+	implants = list(/obj/item/weapon/implant/mindshield) //No revolutionaries, he's MY friend.
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	has_id = TRUE
+	id_job = "SuperFriend"
+	id_access = "assistant"
+	var/obj/effect/proc_holder/spell/targeted/summon_friend/spell
+	var/datum/mind/owner
+
+/obj/effect/mob_spawn/human/demonic_friend/Initialize(mapload, datum/mind/owner_mind, obj/effect/proc_holder/spell/targeted/summon_friend/summoning_spell)
+	..()
+	owner = owner_mind
+	flavour_text = "You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for their short mortal coil.  Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought.  [owner.name]'s death will also return you to hell."
+	var/area/A = get_area(src)
+	if(!mapload && A)
+		notify_ghosts("\A friendship shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+	objectives = "Be [owner.name]'s friend, and keep [owner.name] alive, so you don't get sent back to hell."
+	spell = summoning_spell
+
+
+/obj/effect/mob_spawn/human/demonic_friend/special(mob/living/L)
+	if(!QDELETED(owner.current) && owner.current.stat != DEAD)
+		L.real_name = "[owner.name]'s best friend"
+		L.name = L.real_name
+		soullink(/datum/soullink/oneway, owner.current, L)
+		spell.friend = L
+		spell.charge_counter = spell.charge_max
+		L.mind.hasSoul = FALSE
+		var/mob/living/carbon/human/H = L
+		var/obj/item/worn = H.wear_id
+		var/obj/item/weapon/card/id/id = worn.GetID()
+		id.registered_name = L.real_name
+		id.update_label()
+	else
+		to_chat(L, "<span class='userdanger'>Your owner is already dead!  You will soon perish.</span>")
+		addtimer(CALLBACK(L, /mob.proc/dust, 150)) //Give em a few seconds as a mercy.
+

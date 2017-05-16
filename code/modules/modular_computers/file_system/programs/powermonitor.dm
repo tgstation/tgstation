@@ -1,8 +1,6 @@
-
-
 /datum/computer_file/program/power_monitor
 	filename = "powermonitor"
-	filedesc = "Power Monitoring"
+	filedesc = "Power Monitor"
 	program_icon_state = "power_monitor"
 	extended_desc = "This program connects to sensors around the station to provide information about electrical systems"
 	ui_header = "power_norm.gif"
@@ -11,14 +9,16 @@
 	requires_ntnet = 0
 	network_destination = "power monitoring system"
 	size = 9
+	tgui_id = "ntos_power_monitor"
+	ui_x = 1200
+	ui_y = 1000
+
 	var/has_alert = 0
 	var/obj/structure/cable/attached
 	var/list/history = list()
 	var/record_size = 60
 	var/record_interval = 50
 	var/next_record = 0
-
-
 
 
 /datum/computer_file/program/power_monitor/run_program(mob/living/user)
@@ -51,18 +51,6 @@
 		demand += attached.powernet.viewload
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
-
-/datum/computer_file/program/power_monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-
-		ui = new(user, src, ui_key, "power_monitor_prog", "Power Monitoring", 1200, 1000, master_ui, state)
-		ui.open()
 
 /datum/computer_file/program/power_monitor/ui_data()
 	var/list/data = get_header_data()

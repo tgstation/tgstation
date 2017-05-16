@@ -7303,7 +7303,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central{
@@ -9155,7 +9154,7 @@
 	},
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/miningdock)
@@ -14512,14 +14511,6 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/structure/cable/white{
-	tag = "icon-2-4";
-	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	tag = "icon-2-8";
-	icon_state = "2-8"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -14894,11 +14885,6 @@
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/machinery/light,
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Bar APC";
-	pixel_y = -26
-	},
 /obj/structure/cable/white,
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/bar)
@@ -16523,6 +16509,9 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aAb" = (
@@ -16558,6 +16547,9 @@
 "aAf" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/fancy/donut_box,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -24133,6 +24125,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aME" = (
@@ -24186,6 +24181,9 @@
 /obj/structure/table/reinforced,
 /obj/machinery/status_display{
 	pixel_x = 32
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 5
@@ -25964,7 +25962,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -27024,7 +27021,7 @@
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "aRh" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/chemistry)
 "aRi" = (
@@ -30548,7 +30545,7 @@
 /area/maintenance/starboard)
 "aXL" = (
 /obj/machinery/door/morgue{
-	name = "Librarian's Study";
+	name = "Curator's Study";
 	req_access_txt = "37"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -37361,7 +37358,7 @@
 /turf/open/floor/plasteel,
 /area/toxins/xenobiology)
 "bjb" = (
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -41920,6 +41917,294 @@
 /area/ruin/unpowered{
 	name = "Asteroid"
 	})
+"bvO" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 1
+	},
+/area/shuttle/escape)
+"bvP" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bvQ" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bvR" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/neutral/side,
+/area/shuttle/escape)
+"bvS" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bvT" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"bvU" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bvV" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bvW" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"bvX" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bvY" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bvZ" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"bwa" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bwb" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion_l"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"bwc" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"bwd" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bwe" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bwf" = (
+/obj/structure/chair,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"bwg" = (
+/obj/structure/chair,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"bwh" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwi" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwj" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwk" = (
+/obj/structure/chair,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"bwl" = (
+/obj/structure/chair,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"bwm" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"bwn" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion_l"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"bwo" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"bwp" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwq" = (
+/obj/machinery/light/small,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwr" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bws" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwt" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwu" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwv" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"bww" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwx" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwy" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwz" = (
+/obj/machinery/door/airlock/titanium,
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 2;
+	height = 13;
+	id = "ferry";
+	name = "ferry shuttle";
+	port_angle = 0;
+	preferred_direction = 4;
+	roundstart_move = "ferry_away";
+	width = 5
+	},
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 2;
+	height = 13;
+	id = "ferry_home";
+	name = "port bay 2";
+	turf_type = /turf/open/space;
+	width = 5
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwA" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion_l"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"bwB" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"bwC" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bwD" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bwE" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"bwF" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"bwG" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwH" = (
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwI" = (
+/obj/machinery/light,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwJ" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"bwK" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/transport)
+"bwL" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"bwM" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bwN" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"bwO" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bwP" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bwQ" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/pod/light,
+/area/shuttle/transport)
+"bwR" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bwS" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"bwT" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"bwU" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
 
 (1,1,1) = {"
 aaa
@@ -77290,7 +77575,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bwb
 aaa
 aaa
 aaa
@@ -77546,9 +77831,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+bwb
+bwo
+bwb
 aaa
 aaa
 aaa
@@ -77803,9 +78088,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+bwc
+bwi
+bwB
 aaa
 aaa
 aaa
@@ -78060,9 +78345,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+bvS
+bwq
+bvS
 aaa
 aaa
 aaa
@@ -78316,11 +78601,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bvS
+bvS
+bwr
+bvS
+bvS
 aaa
 aaa
 aaa
@@ -78573,11 +78858,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bvT
+bwf
+bwi
+bwE
+bvT
 aaa
 aaa
 aaa
@@ -78830,11 +79115,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bvS
+bwf
+bwi
+bwE
+bvS
 aaa
 aaa
 aaa
@@ -79087,11 +79372,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bvS
+bwh
+bwi
+bwi
+bvS
 aaa
 aaa
 aaa
@@ -79344,11 +79629,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bvW
+bwi
+bwv
+bwi
+bwQ
 aaa
 aaa
 aaa
@@ -79601,11 +79886,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bvS
+bwi
+bwi
+bwI
+bvS
 aaa
 aaa
 aaa
@@ -79858,11 +80143,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bvS
+bwf
+bwi
+bwE
+bvS
 aaa
 aaa
 aaa
@@ -80115,11 +80400,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bvT
+bwf
+bwi
+bwE
+bvT
 aaa
 aaa
 aaa
@@ -80372,11 +80657,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bvS
+bvT
+bwz
+bvT
+bvS
 aaa
 aaa
 aaa
@@ -94203,7 +94488,7 @@ aAb
 axY
 aDl
 aEi
-aEi
+bvP
 aEi
 aEi
 aEi
@@ -94715,13 +95000,13 @@ axY
 aAc
 axY
 aCp
-aDl
+bvO
 aEk
 aEj
 aGd
 aEl
 aEk
-aJf
+bvR
 aKn
 aLz
 axY
@@ -95231,7 +95516,7 @@ aAd
 aCq
 aDl
 aEm
-aEm
+bvQ
 aEm
 aEm
 aEm

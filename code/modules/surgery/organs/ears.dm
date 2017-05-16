@@ -4,6 +4,7 @@
 	desc = "There are three parts to the ear. Inner, middle and outer. Only one of these parts should be normally visible."
 	zone = "head"
 	slot = "ears"
+	gender = PLURAL
 
 	// `deaf` measures "ticks" of deafness. While > 0, the person is unable
 	// to hear anything.
@@ -13,6 +14,8 @@
 	// the person will not have either `deaf` or `ear_damage` decrease
 	// without external aid (earmuffs, drugs)
 	var/ear_damage = 0
+
+	var/bang_protect = 0	//Resistance against loud noises
 
 /obj/item/organ/ears/on_life()
 	if(!iscarbon(owner))

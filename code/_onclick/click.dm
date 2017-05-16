@@ -107,64 +107,112 @@
 
 	var/obj/item/W = get_active_held_item()
 
-
 	if(W == A)
 		W.attack_self(src)
 		update_inv_hands()
 		return
-
-	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
-	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
-		// No adjacency needed
+	
+	//These are always reachable.
+	//User itself, current loc, and user inventory
+	if(DirectAccess(A))
 		if(W)
-			melee_item_attack_chain(src, W, A, params)
+			melee_item_attack_chain(src,W,A,params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
 		return
-
-	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
+	
+	//Can't reach anything else in lockers or other weirdness
+	if(!loc.AllowClick())
 		return
 
-	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
-	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		if(Adjacent(A) || (W && CheckReach(src, A, W.reach))) //Adjacent or reaching attacks
-			if(W)
-				melee_item_attack_chain(src, W, A, params)
-			else
-				if(ismob(A))
-					changeNext_move(CLICK_CD_MELEE)
-				UnarmedAttack(A, 1)
-			return
-		else // non-adjacent click
-			if(W)
-				W.afterattack(A,src,0,params) // 0: not Adjacent
-			else
-				RangedAttack(A, params)
+	//Standard reach turf to turf or reaching inside storage
+	if(CanReach(A,W))
+		if(W)
+			melee_item_attack_chain(src,W,A,params)
+		else
+			if(ismob(A))
+				changeNext_move(CLICK_CD_MELEE)
+			UnarmedAttack(A,1)
+	else
+		if(W)
+			W.afterattack(A,src,0,params)
+		else
+			RangedAttack(A,params)
 
-/proc/CheckReach(atom/movable/here, atom/movable/there, reach)
+/atom/movable/proc/CanReach(atom/target,obj/item/tool,view_only = FALSE)
+	if(isturf(target) || isturf(target.loc) || DirectAccess(target)) //Directly accessible atoms
+		if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
+			return TRUE
+	else
+		//Things inside storage insde another storage
+		//Eg Contents of a box in a backpack
+		var/atom/outer_storage = get_atom_on_turf(target)
+		if(outer_storage == target) //whatever that is we don't want infinite loop.
+			return FALSE
+		if(outer_storage && CanReach(outer_storage,tool) && outer_storage.CanReachStorage(target,src,view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH))
+			return TRUE
+	return FALSE
+
+//Can [target] in this container be reached by [user], can't be more than [depth] levels deep
+/atom/proc/CanReachStorage(atom/target,user,depth)
+	return FALSE
+
+/obj/item/weapon/storage/CanReachStorage(atom/target,user,depth)
+	while(target && depth > 0)
+		target = target.loc
+		depth--
+		if(target == src)
+			return TRUE
+	return FALSE
+
+/atom/movable/proc/DirectAccess(atom/target)
+	if(target == src)
+		return TRUE
+	if(target == loc)
+		return TRUE
+
+/mob/DirectAccess(atom/target)
+	if(..())
+		return TRUE
+	if(target in contents) //This could probably use moving down and restricting to inventory only
+		return TRUE
+	return FALSE
+
+/mob/living/DirectAccess(atom/target)
+	if(..()) //Lightweight checks first
+		return TRUE
+	if(target in GetAllContents())
+		return TRUE
+
+/atom/proc/AllowClick()
+	return FALSE
+
+/turf/AllowClick()
+	return TRUE
+
+/proc/CheckToolReach(atom/movable/here, atom/movable/there, reach)
 	if(!here || !there)
 		return
 	switch(reach)
 		if(0)
-			return here.loc == there.loc
+			return FALSE
 		if(1)
-			return here.Adjacent(there)
+			return FALSE //here.Adjacent(there)
 		if(2 to INFINITY)
-			var/obj/dummy = new(get_turf(here)) //We'll try to move this every tick, failing if we can't
+			var/obj/dummy = new(get_turf(here))
 			dummy.pass_flags |= PASSTABLE
+			dummy.invisibility = INVISIBILITY_ABSTRACT
 			for(var/i in 1 to reach) //Limit it to that many tries
 				var/turf/T = get_step(dummy, get_dir(dummy, there))
-				if(dummy.loc == there.loc)
+				if(dummy.CanReach(there))
 					qdel(dummy)
-					return 1
-				if(there.density && dummy in range(1, there)) //For windows and suchlike
-					qdel(dummy)
-					return 1
+					return TRUE
 				if(!dummy.Move(T)) //we're blocked!
 					qdel(dummy)
 					return
+			qdel(dummy)
 
 // Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
 /mob/proc/DblClickOn(atom/A, params)
@@ -303,21 +351,6 @@
 
 /atom/proc/CtrlShiftClick(mob/user)
 	return
-
-/*
-	Helper to check can the mob click/access an item.
-	Used by mob inventory and storage items.
-*/
-/atom/proc/ClickAccessible(mob/user, depth=1)
-	if(src == user.loc || (src in user.contents))
-		return TRUE
-
-	if(loc && depth > 1)
-		return loc.ClickAccessible(user, depth-1)
-
-/turf/ClickAccessible(mob/user, depth=1)
-	return
-
 
 /*
 	Misc helpers
