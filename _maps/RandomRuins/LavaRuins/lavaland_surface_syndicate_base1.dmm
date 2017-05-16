@@ -730,7 +730,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bN" = (
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plasteel/podhatch{
 	tag = "icon-podhatch (EAST)";
 	icon_state = "podhatch";
