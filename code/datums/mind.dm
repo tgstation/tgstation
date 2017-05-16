@@ -1330,7 +1330,7 @@
 		obj_count++
 
 /datum/mind/proc/find_syndicate_uplink()
-	var/list/L = current.get_contents()
+	var/list/L = current.GetAllContents()
 	for (var/obj/item/I in L)
 		if (I.hidden_uplink)
 			return I.hidden_uplink
