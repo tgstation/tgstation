@@ -179,8 +179,8 @@
 	name = "dusty radio"
 	desc = "A dusty looking radio."
 
-/obj/item/device/radio/uplink/old/New()
-	..()
+/obj/item/device/radio/uplink/old/Initialize()
+	. = ..()
 	hidden_uplink.name = "dusty radio"
 	hidden_uplink.telecrystals = 10
 

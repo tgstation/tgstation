@@ -47,8 +47,6 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	var/make_runtime = 0
 
 	var/initializations_finished_with_no_players_logged_in	//I wonder what this could be?
-	// Has round started? (So we know what subsystems to run)
-	var/local_round_started = FALSE	//Don't read this var, use SSticker.HasRoundStarted() instead
 
 	// The type of the last subsystem to be process()'d.
 	var/last_type_processed
@@ -58,6 +56,8 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	var/queue_priority_count = 0 //Running total so that we don't have to loop thru the queue each run to split up the tick
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 	var/map_loading = FALSE	//Are we loading in a new map?
+
+	var/current_runlevel	//for scheduling different subsystems for different stages of the round
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -176,6 +176,8 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	to_chat(world, "<span class='boldannounce'>[msg]</span>")
 	log_world(msg)
 
+	SetRunLevel(1)
+
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
 	// Set world options.
@@ -187,16 +189,9 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	// Loop.
 	Master.StartProcessing(0)
 
-// Notify the MC that the round has started.
-/datum/controller/master/proc/RoundStart()
-	local_round_started = TRUE
-	var/timer = world.time
-	for (var/datum/controller/subsystem/SS in subsystems)
-		if (SS.flags & SS_FIRE_IN_LOBBY || SS.flags & SS_TICKER)
-			continue //already firing
-		// Stagger subsystems.
-		timer += world.tick_lag * rand(1, 5)
-		SS.next_fire = timer
+/datum/controller/master/proc/SetRunLevel(runlevel)
+	testing("MC: Runlevel changed from [isnull(current_runlevel) ? "NULL" : current_runlevel] to [runlevel]")
+	current_runlevel = runlevel
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.
 /datum/controller/master/proc/StartProcessing(delay)
@@ -221,12 +216,9 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	//Prep the loop (most of this is because we want MC restarts to reset as much state as we can, and because
 	//	local vars rock
 
-	// Schedule the first run of the Subsystems.
-	local_round_started = world.has_round_started()
 	//all this shit is here so that flag edits can be refreshed by restarting the MC. (and for speed)
 	var/list/tickersubsystems = list()
-	var/list/normalsubsystems = list()
-	var/list/lobbysubsystems = list()
+	var/list/runlevel_sorted_subsystems = list(list())	//ensure we always have at least one runlevel
 	var/timer = world.time
 	for (var/thing in subsystems)
 		var/datum/controller/subsystem/SS = thing
@@ -241,25 +233,29 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			timer += world.tick_lag * rand(1, 5)
 			SS.next_fire = timer
 			continue
-		if (SS.flags & SS_FIRE_IN_LOBBY)
-			lobbysubsystems += SS
-			timer += world.tick_lag * rand(1, 5)
-			SS.next_fire = timer
-		else if (local_round_started)
-			timer += world.tick_lag * rand(1, 5)
-			SS.next_fire = timer
-		normalsubsystems += SS
+		
+		var/ss_runlevels = SS.runlevels
+		var/added_to_any = FALSE
+		for(var/I in 1 to GLOB.bitflags.len)
+			if(ss_runlevels & GLOB.bitflags[I])
+				while(runlevel_sorted_subsystems.len < I)
+					runlevel_sorted_subsystems += list(list())
+				runlevel_sorted_subsystems[I] += SS
+				added_to_any = TRUE
+		if(!added_to_any)
+			WARNING("[SS.name] subsystem is not SS_NO_FIRE but also does not have any runlevels set!")
 
 	queue_head = null
 	queue_tail = null
 	//these sort by lower priorities first to reduce the number of loops needed to add subsequent SS's to the queue
 	//(higher subsystems will be sooner in the queue, adding them later in the loop means we don't have to loop thru them next queue add)
 	sortTim(tickersubsystems, /proc/cmp_subsystem_priority)
-	sortTim(normalsubsystems, /proc/cmp_subsystem_priority)
-	sortTim(lobbysubsystems, /proc/cmp_subsystem_priority)
-
-	normalsubsystems += tickersubsystems
-	lobbysubsystems += tickersubsystems
+	for(var/I in runlevel_sorted_subsystems)
+		sortTim(runlevel_sorted_subsystems, /proc/cmp_subsystem_priority)
+		I += tickersubsystems
+	
+	var/cached_runlevel = current_runlevel
+	var/list/current_runlevel_subsystems = runlevel_sorted_subsystems[cached_runlevel]
 
 	init_timeofday = REALTIMEOFDAY
 	init_time = world.time
@@ -296,14 +292,23 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		if (!Failsafe || (Failsafe.processing_interval > 0 && (Failsafe.lasttick+(Failsafe.processing_interval*5)) < world.time))
 			new/datum/controller/failsafe() // (re)Start the failsafe.
 		if (!queue_head || !(iteration % 3))
-			if (local_round_started)
-				subsystems_to_check = normalsubsystems
-			else
-				subsystems_to_check = lobbysubsystems
+			var/checking_runlevel = current_runlevel
+			if(cached_runlevel != checking_runlevel)
+				//resechedule subsystems
+				cached_runlevel = checking_runlevel
+				current_runlevel_subsystems = runlevel_sorted_subsystems[cached_runlevel]
+				var/stagger = world.time
+				for(var/I in current_runlevel_subsystems)
+					var/datum/controller/subsystem/SS = I
+					if(SS.next_fire <= world.time)
+						stagger += world.tick_lag * rand(1, 5)
+						SS.next_fire = stagger
+
+			subsystems_to_check = current_runlevel_subsystems
 		else
 			subsystems_to_check = tickersubsystems
 		if (CheckQueue(subsystems_to_check) <= 0)
-			if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
+			if (!SoftReset(tickersubsystems, runlevel_sorted_subsystems))
 				log_world("MC: SoftReset() failed, crashing")
 				return
 			if (!error_level)
@@ -315,7 +320,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 
 		if (queue_head)
 			if (RunQueue() <= 0)
-				if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
+				if (!SoftReset(tickersubsystems, runlevel_sorted_subsystems))
 					log_world("MC: SoftReset() failed, crashing")
 					return
 				if (!error_level)
@@ -491,13 +496,15 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 
 //resets the queue, and all subsystems, while filtering out the subsystem lists
 //	called if any mc's queue procs runtime or exit improperly.
-/datum/controller/master/proc/SoftReset(list/ticker_SS, list/normal_SS, list/lobby_SS)
+/datum/controller/master/proc/SoftReset(list/ticker_SS, list/runlevel_SS)
 	. = 0
 	log_world("MC: SoftReset called, resetting MC queue state.")
-	if (!istype(subsystems) || !istype(ticker_SS) || !istype(normal_SS) || !istype(lobby_SS))
-		log_world("MC: SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[normal_SS]' '[lobby_SS]' Crashing!")
+	if (!istype(subsystems) || !istype(ticker_SS) || !istype(runlevel_SS))
+		log_world("MC: SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[runlevel_SS]'")
 		return
-	var/subsystemstocheck = subsystems + ticker_SS + normal_SS + lobby_SS
+	var/subsystemstocheck = subsystems + ticker_SS
+	for(var/I in runlevel_SS)
+		subsystemstocheck |= I
 
 	for (var/thing in subsystemstocheck)
 		var/datum/controller/subsystem/SS = thing
@@ -505,8 +512,8 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			//list(SS) is so if a list makes it in the subsystem list, we remove the list, not the contents
 			subsystems -= list(SS)
 			ticker_SS -= list(SS)
-			normal_SS -= list(SS)
-			lobby_SS -= list(SS)
+			for(var/I in runlevel_SS)
+				I -= list(SS)
 			log_world("MC: SoftReset: Found bad entry in subsystem list, '[SS]'")
 			continue
 		if (SS.queue_next && !istype(SS.queue_next))
