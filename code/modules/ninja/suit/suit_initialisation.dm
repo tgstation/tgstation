@@ -1,36 +1,18 @@
-
-//Verbs link to procs because verb-like procs have a bug which prevents their use if the arguments are not readily referenced.
-//^ Old coder words may be false these days, Not taking the risk for now.
-
-/obj/item/clothing/suit/space/space_ninja/proc/init()
-	set name = "Initialize Suit"
-	set desc = "Initializes the suit for field operation."
-	set category = "Ninja Equip"
-
-	ninitialize()
-
-/obj/item/clothing/suit/space/space_ninja/proc/deinit()
-	set name = "De-Initialize Suit"
-	set desc = "Begins procedure to remove the suit."
-	set category = "Ninja Equip"
-
-	if(!s_busy)
+/obj/item/clothing/suit/space/space_ninja/proc/toggle_on_off()
+	if(s_busy)
+		to_chat(loc, "<span class='userdanger'>ERROR</span>: You cannot use this function at this time.")
+		return FALSE
+	if(s_initialized)
 		deinitialize()
 	else
-		to_chat(affecting, "<span class='danger'>The function did not trigger!</span>")
-
+		ninitialize()
+	. = TRUE
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/U = loc)
 	if(!U.mind)
 		return FALSE //Not sure how this could happen.
 	if(!is_ninja(U))
 		to_chat(U, "You do not understand how this suit functions. Where the heck did it even come from?")
-		return FALSE
-	if(s_initialized)
-		to_chat(U, "<span class='danger'>The suit is already functioning.</span> Please report this bug.")
-		return FALSE
-	if(s_busy)
-		to_chat(U, "<span class='userdanger'>ERROR</span>: You cannot use this function at this time.")
 		return FALSE
 	s_busy = TRUE
 	to_chat(U, "<span class='notice'>Now initializing...</span>")
@@ -64,12 +46,6 @@
 
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize(delay = s_delay)
-	if(!s_initialized)
-		to_chat(U, "<span class='danger'>The suit is not initialized.</span> Please report this bug.")
-		return
-	if(s_busy)
-		to_chat(U, "<span class='userdanger'>ERROR</span>: You cannot use this function at this time.")
-		return
 	if(affecting==loc)
 		var/mob/living/carbon/human/U = affecting
 		if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")

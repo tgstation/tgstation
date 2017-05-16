@@ -358,6 +358,9 @@
 		active = FALSE
 	..()
 
+/datum/action/item_action/initialize_ninja_suit
+	name = "Toggle ninja suit"
+
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
 

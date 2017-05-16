@@ -22,6 +22,8 @@ Contents:
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
 	strip_delay = 12
 
+	actions_types = list(/datum/action/item_action/initialize_ninja_suit)
+
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -57,7 +59,6 @@ Contents:
 
 /obj/item/clothing/suit/space/space_ninja/New()
 	..()
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
 
 	//Spark Init
 	spark_system = new()
@@ -137,7 +138,7 @@ Contents:
 	n_gloves.flags |= NODROP
 	return TRUE
 
-/obj/item/clothing/suit/space/space_ninja/lockIcons(mob/living/carbon/human/H)
+/obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/H)
 	icon_state = H.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 	H.gloves.icon_state = "s-ninjan"
 	H.gloves.item_state = "s-ninjan"
@@ -170,3 +171,8 @@ Contents:
 			to_chat(user, "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>.")
 			to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
 			to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")
+
+/obj/item/clothing/suit/space/space_ninja/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/initialize_ninja_suit))
+		toggle_on_off()
+		return TRUE
