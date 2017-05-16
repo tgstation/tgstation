@@ -203,6 +203,7 @@
 		/obj/item/organ/hivelord_core,
 		/obj/item/device/wormhole_jaunter,
 		/obj/item/weapon/storage/bag/plants,
+		/obj/item/weapon/reagent_containers/food/snacks,
 
 		)
 
