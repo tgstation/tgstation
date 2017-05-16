@@ -25,13 +25,6 @@ Contents:
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_ninja_verbs()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninja_sword_recall
 
 	s_initialized=1
 	slowdown=0
@@ -39,10 +32,3 @@ Contents:
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_ninja_verbs()
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninja_sword_recall
