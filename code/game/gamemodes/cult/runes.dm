@@ -148,8 +148,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
-	visible_message("<span class='warning'>The markings pulse with a \
-		small flash of red light, then fall dark.</span>")
+	visible_message("<span class='warning'>The markings pulse with a small flash of red light, then fall dark.</span>")
 	var/oldcolor = color
 	color = rgb(255, 0, 0)
 	animate(src, color = oldcolor, time = 5)
@@ -307,10 +306,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 			A.forceMove(target)
 	if(movedsomething)
 		..()
-		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>")
+		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
 		to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
 		if(moveuserlater)
 			user.forceMove(target)
+		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 
@@ -478,10 +478,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	send_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/T = get_turf(src)
 	sleep(40)
+	SSticker.mode.eldergod = FALSE
 	if(src)
 		color = "#FF0000"
-	SSticker.mode.eldergod = FALSE
-	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
+	deltimer(GLOB.blood_target_reset_timer)
+	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn and makes it the blood target even if the rune has been removed
+
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
@@ -890,9 +892,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "6"
 	construct_invoke = 0
 	color = "#C80000"
+	var/ghost_limit = 5
+	var/ghosts = 0
 
-/obj/effect/rune/manifest/New(loc)
-	..()
+/obj/effect/rune/manifest/Initialize()
+	. = ..()
 	notify_ghosts("Manifest rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
@@ -900,6 +904,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(user, "<span class='cultitalic'>You must be standing on [src]!</span>")
 		fail_invoke()
 		log_game("Manifest rune failed - user not standing on rune")
+		return list()
+	if(user.has_status_effect(STATUS_EFFECT_SUMMONEDGHOST))
+		to_chat(user, "<span class='cultitalic'>Ghosts can't summon more ghosts!</span>")
+		fail_invoke()
+		log_game("Manifest rune failed - user is a ghost")
+		return list()
+	if(ghosts >= ghost_limit)
+		to_chat(user, "<span class='cultitalic'>You are sustaining too many ghosts to summon more!</span>")
+		fail_invoke()
+		log_game("Manifest rune failed - too many summoned ghosts")
 		return list()
 	var/list/ghosts_on_rune = list()
 	for(var/mob/dead/observer/O in get_turf(src))
@@ -922,8 +936,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/carbon/human/new_human = new(get_turf(src))
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent
+	new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
+	new_human.apply_status_effect(STATUS_EFFECT_SUMMONEDGHOST) //ghosts can't summon more ghosts
 	..()
-	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
+	ghosts++
+	playsound(src, 'sound/magic/exit_blood.ogg', 50, 1)
+	user.apply_damage(10, BRUTE)
+	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
 	to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 	var/turf/T = get_turf(src)
 	var/obj/structure/emergency_shield/invoker/N = new(T)
@@ -932,16 +951,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 	SSticker.mode.add_cultist(new_human.mind, 0)
 	to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>")
 
-	while(user in T)
-		if(user.stat)
+	while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
+		if(user.stat || new_human.InCritical())
 			break
 		user.apply_damage(0.1, BRUTE)
-		sleep(3)
+		sleep(1)
 
 	qdel(N)
+	ghosts--
 	if(new_human)
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 								  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
 		for(var/obj/I in new_human)
-			new_human.dropItemToGround(I)
+			new_human.dropItemToGround(I, TRUE)
 		new_human.dust()

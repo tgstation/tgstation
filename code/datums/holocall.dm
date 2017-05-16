@@ -35,6 +35,7 @@
 	if(!dialed_holopads.len)
 		calling_pad.say("Connection failure.")
 		qdel(src)
+		return
 	
 	testing("Holocall started")
 
@@ -104,18 +105,17 @@
 	if(connected_holopad)
 		CRASH("Multi-connection holocall")
 
-	connected_holopad = H
 	for(var/I in dialed_holopads)
 		if(I == H)
 			continue
-		var/obj/machinery/holopad/Holo = I
-		LAZYREMOVE(Holo.holo_calls, src)
-		dialed_holopads -= Holo
+		Disconnect(I)
 	
 	for(var/I in H.holo_calls)
 		var/datum/holocall/HC = I
 		if(HC != src)
 			HC.Disconnect(H)
+
+	connected_holopad = H
 
 	if(!Check())
 		return

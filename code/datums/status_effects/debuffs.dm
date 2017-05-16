@@ -162,3 +162,8 @@
 				owner.confused = min(owner.confused + round(severity * 0.025, 1), 25) //2.5% of severity per second above 20 severity
 			owner.adjustToxLoss(severity * 0.02, TRUE, TRUE) //2% of severity per second
 		severity--
+
+/datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
+	id = "cult_ghost"
+	duration = -1
+	alert_type = null

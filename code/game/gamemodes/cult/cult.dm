@@ -106,6 +106,7 @@
 		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		to_chat(cult_mind.current, "<span class='userdanger'>You are a member of the cult!</span>")
+		cult_mind.current.playsound_local('sound/ambience/antag/bloodcult.ogg',100,0)//subject to change
 		add_cultist(cult_mind, 0)
 	..()
 
@@ -279,12 +280,13 @@
 			var/explanation
 			switch(cult_objectives[obj_count])
 				if("sacrifice")
-					if(GLOB.sac_complete)
-						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
-					else
-						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
+					if(GLOB.sac_mind)
+						if(GLOB.sac_complete)
+							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
+							SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
+						else
+							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
+							SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
 				if("eldergod")
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"

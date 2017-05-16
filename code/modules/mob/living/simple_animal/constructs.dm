@@ -34,19 +34,14 @@
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
 	var/seeking = FALSE
-
+	var/can_repair_constructs = FALSE
+	var/can_repair_self = FALSE
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	update_health_hud()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
-
-/mob/living/simple_animal/hostile/construct/Destroy()
-	for(var/X in actions)
-		var/datum/action/A = X
-		qdel(A)
-	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -69,7 +64,10 @@
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+	if(isconstruct(M)) //is it a construct?
+		var/mob/living/simple_animal/hostile/construct/C = M
+		if(!C.can_repair_constructs || (C == src && !C.can_repair_self))
+			return
 		if(health < maxHealth)
 			adjustHealth(-5)
 			if(src != M)
@@ -173,7 +171,30 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
-	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</b>"
+	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
+	var/attack_refund = 10 //1 second per attack
+	var/crit_refund = 50 //5 seconds when putting a target into critical
+	var/kill_refund = 250 //full refund on kills
+
+/mob/living/simple_animal/hostile/construct/wraith/AttackingTarget() //refund jaunt cooldown when attacking living targets
+	var/prev_stat
+	if(isliving(target) && !iscultist(target))
+		var/mob/living/L = target
+		prev_stat = L.stat
+
+	. = ..()
+
+	if(. && isnum(prev_stat))
+		var/mob/living/L = target
+		var/refund = 0
+		if(QDELETED(L) || (L.stat == DEAD && prev_stat != DEAD)) //they're dead, you killed them
+			refund += kill_refund
+		else if(L.InCritical() && prev_stat == CONSCIOUS) //you knocked them into critical
+			refund += crit_refund
+		if(L.stat != DEAD && prev_stat != DEAD)
+			refund += attack_refund
+		for(var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/S in mob_spell_list)
+			S.charge_counter = min(S.charge_counter + refund, S.charge_max)
 
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
@@ -208,6 +229,8 @@
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
+	can_repair_constructs = TRUE
+	can_repair_self = TRUE
 
 /mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
 	if(isconstruct(A)) //is it a construct?
@@ -265,26 +288,63 @@
 	name = "Harvester"
 	real_name = "Harvester"
 	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
-	icon_state = "harvester"
-	icon_living = "harvester"
+	icon_state = "chosen"
+	icon_living = "chosen"
 	maxHealth = 60
 	health = 60
-	melee_damage_lower = 1
-	melee_damage_upper = 5
-	retreat_distance = 2 //AI harvesters will move in and out of combat, like wraiths, but shittier
-	attacktext = "prods"
-	environment_smash = 3
-	attack_sound = 'sound/weapons/tap.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/targeted/smoke/disable)
-	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
-						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
+	sight = SEE_MOBS
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	attacktext = "butchers"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
+	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
+						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</B>"
+	can_repair_constructs = TRUE
 
-/mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
-	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
 
+/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
+	. = ..()
+	if(istype(AM, /turf/closed/wall/mineral/cult) && AM != loc) //we can go through cult walls
+		var/atom/movable/stored_pulling = pulling
+		if(stored_pulling)
+			stored_pulling.setDir(get_dir(stored_pulling.loc, loc))
+			stored_pulling.forceMove(loc)
+		forceMove(AM)
+		if(stored_pulling)
+			start_pulling(stored_pulling, TRUE) //drag anything we're pulling through the wall with us by magic
+
+/mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		var/list/parts = list()
+		var/undismembermerable_limbs = 0
+		for(var/X in C.bodyparts)
+			var/obj/item/bodypart/BP = X
+			if(BP.body_part != HEAD && BP.body_part != CHEST)
+				if(BP.dismemberable)
+					parts += BP
+				else
+					undismembermerable_limbs++
+		if(!LAZYLEN(parts))
+			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
+				return ..()
+			C.Weaken(30)
+			visible_message("<span class='danger'>[src] paralyzes [C]!</span>")
+			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
+			return FALSE
+		do_attack_animation(C)
+		var/obj/item/bodypart/BP = pick(parts)
+		BP.dismember()
+		return FALSE
+	. = ..()
+
+/mob/living/simple_animal/hostile/construct/harvester/Initialize()
+	. = ..()
+	var/datum/action/innate/seek_prey/seek = new()
+	seek.Grant(src)
+	seek.Activate()
 
 ///////////////////////Master-Tracker///////////////////////
 
@@ -297,11 +357,14 @@
 	var/tracking = FALSE
 	var/mob/living/simple_animal/hostile/construct/the_construct
 
+
 /datum/action/innate/seek_master/Grant(var/mob/living/C)
 	the_construct = C
 	..()
 
 /datum/action/innate/seek_master/Activate()
+	if(!SSticker.mode.eldergod)
+		the_construct.master = GLOB.blood_target
 	if(!the_construct.master)
 		to_chat(the_construct, "<span class='cultitalic'>You have no master to seek!</span>")
 		the_construct.seeking = FALSE
@@ -315,6 +378,43 @@
 		tracking = TRUE
 		the_construct.seeking = TRUE
 		to_chat(the_construct, "<span class='cultitalic'>You are now tracking your master.</span>")
+
+
+/datum/action/innate/seek_prey
+	name = "Seek the Harvest"
+	desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+	button_icon_state = "cult_mark"
+	var/tracking = FALSE
+	var/mob/living/simple_animal/hostile/construct/harvester/the_construct
+
+/datum/action/innate/seek_prey/Grant(var/mob/living/C)
+	the_construct = C
+	..()
+
+/datum/action/innate/seek_prey/Activate()
+	if(GLOB.cult_narsie == null)
+		return
+	if(tracking)
+		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
+		button_icon_state = "cult_mark"
+		tracking = FALSE
+		the_construct.seeking = FALSE
+		the_construct.master = GLOB.cult_narsie
+		to_chat(the_construct, "<span class='cultitalic'>You are now tracking Nar'Sie, return to reap the harvest!</span>")
+		return
+	else
+		if(LAZYLEN(GLOB.cult_narsie.souls_needed))
+			the_construct.master = pick(GLOB.cult_narsie.souls_needed)
+			to_chat(the_construct, "<span class='cultitalic'>You are now tracking your prey, [the_construct.master] - harvest them!</span>")
+		else
+			to_chat(the_construct, "<span class='cultitalic'>Nar'Sie has completed her harvest!</span>")
+			return
+		desc = "Activate to track Nar'Sie!"
+		button_icon_state = "sintouch"
+		tracking = TRUE
+		the_construct.seeking = TRUE
 
 
 /////////////////////////////ui stuff/////////////////////////////

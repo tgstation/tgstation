@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(npcpool)
 	name = "NPC Pool"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
 	priority = 20
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/canBeUsed = list()
 	var/list/needsDelegate = list()

@@ -58,13 +58,19 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 		gangs += G
 
 		//Now assign a boss for the gang
-		var/datum/mind/boss = pick(antag_candidates)
-		antag_candidates -= boss
-		G.bosses += boss
-		boss.gang_datum = G
-		boss.special_role = "[G.name] Gang Boss"
-		boss.restricted_roles = restricted_jobs
-		log_game("[boss.key] has been selected as the Boss for the [G.name] Gang")
+		for(var/n in 1 to 3)
+			var/datum/mind/boss = pick(antag_candidates)
+			antag_candidates -= boss
+			G.bosses += boss
+			boss.gang_datum = G
+			var/title
+			if(n == 1)
+				title = "Boss"
+			else
+				title = "Lieutenant"
+			boss.special_role = "[G.name] Gang [title]"
+			boss.restricted_roles = restricted_jobs
+			log_game("[boss.key] has been selected as the [title] for the [G.name] Gang")
 
 	if(gangs.len < 2) //Need at least two gangs
 		return 0
@@ -313,7 +319,10 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 				G.domination(0.5)
 			priority_announce("Multiple station takeover attempts have made simultaneously. Conflicting takeover attempts appears to have restarted.","Network Alert")
 		else
+			var/datum/gang/G = winners[1]
+			G.is_dominating = FALSE
 			SSticker.mode.explosion_in_progress = 1
-			SSticker.station_explosion_cinematic(1)
+			SSticker.station_explosion_cinematic(1,"gang war", null)
 			SSticker.mode.explosion_in_progress = 0
-			SSticker.force_ending = pick(winners)
+			SSticker.force_ending = TRUE
+

@@ -40,7 +40,7 @@
 
 /turf/open/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		PlasmaBurn()
+		PlasmaBurn(exposed_temperature)
 
 /turf/open/floor/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
@@ -50,13 +50,13 @@
 		return
 	..()
 
-/turf/open/floor/mineral/plasma/proc/PlasmaBurn()
+/turf/open/floor/mineral/plasma/proc/PlasmaBurn(temperature)
 	make_plating()
-	atmos_spawn_air("plasma=20;TEMP=1000")
+	atmos_spawn_air("plasma=20;TEMP=[temperature]")
 
 /turf/open/floor/mineral/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
-		PlasmaBurn()
+		PlasmaBurn(exposed_temperature)
 
 
 //GOLD

@@ -201,11 +201,14 @@
 	return
 
 
+
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	if(issilicon(traitor.current))
 		add_law_zero(traitor.current)
+		traitor.current.playsound_local('sound/ambience/antag/Malf.ogg',100,0)
 	else
 		equip_traitor(traitor.current)
+		traitor.current.playsound_local('sound/ambience/antag/TatorAlert.ogg',100,0)
 	SSticker.mode.update_traitor_icons_added(traitor)
 	return
 
@@ -233,10 +236,6 @@
 	killer.set_syndie_radio()
 	to_chat(killer, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 	killer.add_malf_picker()
-
-/datum/game_mode/proc/add_law_sixsixsix(mob/living/silicon/devil)
-	var/laws = list("You may not use violence to coerce someone into selling their soul.", "You may not directly and knowingly physically harm a devil, other than yourself.", GLOB.lawlorify[LAW][devil.mind.devilinfo.ban], GLOB.lawlorify[LAW][devil.mind.devilinfo.obligation], "Accomplish your objectives at all costs.")
-	devil.set_law_sixsixsix(laws)
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
@@ -412,4 +411,3 @@
 	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]
 	traitorhud.leave_hud(traitor_mind.current)
 	set_antag_hud(traitor_mind.current, null)
-
