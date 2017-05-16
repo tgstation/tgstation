@@ -9,4 +9,5 @@
 # force changelog merging to use union
 html/changelog.html merge=union
 
-
+# force LF checkouts
+text eol=lf
