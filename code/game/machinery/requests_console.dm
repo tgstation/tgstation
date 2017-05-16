@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	if(..())
 		return
 	var/dat = ""
-	if(department in list("Security","Bridge","Head of Security's Desk","Captain's Desk") && !(world.time > GLOB.distress_cooldown))
+	if(department == "Security" && (world.time > GLOB.distress_cooldown))
 		distress_helper()
 	if(!open)
 		switch(screen)
@@ -248,7 +248,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				dat += "<A href='?src=\ref[src];setScreen=1'>Request Assistance</A><BR>"
 				dat += "<A href='?src=\ref[src];setScreen=2'>Request Supplies</A><BR>"
 				dat += "<A href='?src=\ref[src];setScreen=3'>Relay Anonymous Information</A><BR><BR>"
-				if(distress_state>0 && department in list("Security","Bridge","Head of Security's Desk","Captain's Desk"))
+				if(distress_state>0)
 					if(distress_state == 1)
 						dat += "<A href='?src=\ref[src];distress=1'><font color='red'>Transmit Distress Signal</font></B></A><BR><BR>"
 					else
@@ -341,18 +341,22 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				addtimer(CALLBACK(src, .proc/clear_emergency), 3000)
 
 	if(href_list["distress"])
-		if(distress_state == 1)
+		if(distress == 1)
 			if(world.time > GLOB.distress_cooldown)
-				var/confirm = alert(usr, "Do you wish to send a distress signal to Centcom? For transparency and security purposes, the crew will be notified.", "Yes", "No")
+				if(SSshuttle.emergency.mode == SHUTTLE_CALL)
+					to_chat(usr, "<span class='notice'>Error: All communications arrays are currently directed towards the emergency shuttle.")
+					return
+				var/confirm = alert(usr, "Do you wish to send a distress signal to Centcom?", "For transparency and security purposes, the crew will be notified.", "Yes", "No")
 				if(confirm == "No")
 					return
+				announcementConsole = TRUE
 				GLOB.news_network.SubmitArticle("Distress signal activation key has been confirmed via this console. Compiling encrypted distress signal, ETA: 75 seconds", department, "Security Failsafe Protocols", null)
 				distress_state = 2
 				distress_ETA = world.time + 750
 				START_PROCESSING(SSobj, src)
 			else
 				to_chat(usr, "<span class='notice'>Distress signal transponders are currently offline.")
-		if(distress_state == 2)
+		if(distress == 2)
 			GLOB.news_network.SubmitArticle("Distress signal has been terminated.", department, "Security Failsafe Protocols", null)
 			distress_state = 0
 			GLOB.distress_cooldown = world.time + 1200
@@ -477,7 +481,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/list/living_crew_bodies = list()
 	var/list/living_crew_minds = list()
 	for(var/mob/Player in GLOB.mob_list)
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player))
 			living_crew_bodies += Player
 			living_crew_minds += Player.mind
 	var/list/antagonist_crew_minds = list()
@@ -487,7 +491,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			antagonist_crew_minds += M
 		if(M.assigned_role in list("Security Officer", "Detective", "Warden", "Captain", "Head of Security"))
 			loyal_crew_minds += M
-	if(!loyal_crew_minds.len)
+	if(LAZYLEN(loyal_crew_minds) == 0)
 		distress_state = 1
 		return
 	var/antag_ratio = antagonist_crew_minds.len / loyal_crew_minds.len
