@@ -226,7 +226,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/check_call_legitimacy()
 	if(station_in_trouble())
-		message_admins("Shuttle call is legitimate by the listed metrics.")
+		msglog_admins("Shuttle call is legitimate by the listed metrics.")
 		return
 
 	var/time_to_recall = rand(600, 1500)
@@ -241,8 +241,7 @@ SUBSYSTEM_DEF(shuttle)
 		return
 
 	emergency.cancel(/area/centcom)
-	message_admins("Shuttle has been automatically recalled.")
-	log_game("Shuttle has been automatically recalled.")
+	msglog_admins("Shuttle has been automatically recalled.")
 
 	sleep(50)
 	var/intercepttext = "<FONT size = 3><b>NanoTrasen Update</b>: Request For Shuttle.</FONT><HR>\
@@ -261,16 +260,16 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/station_in_trouble() //Checks are sorted in rough order of processing cost
 	. = FALSE
-	message_admins("Emergency shuttle legitimacy checks follow:")
+	msglog_admins("Emergency shuttle legitimacy checks follow:")
 
 	listclearnulls(SSshuttle.horrible_things)
 	var/num_things = SSshuttle.horrible_things.len
-	message_admins("[num_things] horrible things on station[num_things ? ":[english_list(SSshuttle.horrible_things)]" : ""]")
+	msglog_admins("[num_things] horrible things on station[num_things ? ":[english_list(SSshuttle.horrible_things)]" : ""]")
 
 	if(num_things)
 		. = TRUE
 
-	message_admins("Round length is [round(world.time / 600)] minutes, boredom threshold is set to [config.shuttle_boredom_check] minutes.")
+	msglog_admins("Round length is [round(world.time / 600)] minutes, boredom threshold is set to [config.shuttle_boredom_check] minutes.")
 	if(world.time >= (config.shuttle_boredom_check * 600)) //Extended mercy and/or boring/ineffective antags
 		. = TRUE
 
@@ -298,7 +297,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/antag_ratio = antagonist_crew_minds.len / living_crew_minds.len
 	if(antag_ratio >= config.shuttle_antag_overrun) //Station ruled by antags
 		. = TRUE
-	message_admins("[antag_ratio*100]% living minds are special roles, minimum to call is [config.shuttle_antag_overrun*100]%")
+	msglog_admins("[antag_ratio*100]% living minds are special roles, minimum to call is [config.shuttle_antag_overrun*100]%")
 
 	var/datum/station_state/current_state = new /datum/station_state()
 	current_state.count()
@@ -306,7 +305,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(score < config.shuttle_infrastructure_check) //Station bombed to hell/singulo'd
 		. = TRUE
 
-	message_admins("Station integrity is [score*100]%, shuttle can be called if [config.shuttle_infrastructure_check*100]% or lower.")
+	msglog_admins("Station integrity is [score*100]%, shuttle can be called if [config.shuttle_infrastructure_check*100]% or lower.")
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention

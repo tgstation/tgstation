@@ -1416,3 +1416,7 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 		mob_occupant = brain.brainmob
 
 	return mob_occupant
+
+/proc/msglog_admins(text)
+	message_admins(text)
+	log_admin(text)
