@@ -481,12 +481,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(src)
 		color = RUNE_COLOR_RED
 	SSticker.mode.eldergod = FALSE
-	deltimer(GLOB.blood_target_reset_timer)
-	GLOB.blood_target = new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
-	for(var/datum/mind/cult_mind in SSticker.mode.cult)
-		if(isliving(cult_mind.current))
-			var/mob/living/L = cult_mind.current
-			L.narsie_act()
+	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
@@ -943,6 +938,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	new_human.apply_status_effect(STATUS_EFFECT_SUMMONEDGHOST) //ghosts can't summon more ghosts
 	..()
 	ghosts++
+	playsound(src, 'sound/magic/exit_blood.ogg', 50, 1)
+	user.apply_damage(10, BRUTE)
 	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
 	to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 	var/turf/T = get_turf(src)

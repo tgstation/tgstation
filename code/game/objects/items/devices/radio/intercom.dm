@@ -11,8 +11,8 @@
 	var/last_tick //used to delay the powercheck
 	dog_fashion = null
 
-/obj/item/device/radio/intercom/New()
-	..()
+/obj/item/device/radio/intercom/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/radio/intercom/Destroy()
