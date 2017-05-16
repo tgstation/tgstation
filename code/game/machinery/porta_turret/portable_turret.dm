@@ -73,6 +73,9 @@
 
 	var/obj/machinery/turretid/cp = null
 
+	var/obj/structure/turretbase/underbase = null
+
+
 /obj/machinery/porta_turret/New(loc)
 	..()
 	if(!base)
@@ -87,6 +90,8 @@
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
+		underbase = new /obj/structure/turretbase(loc)
+		underbase.parent_turret = src
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
@@ -144,6 +149,8 @@
 	if(cover)
 		qdel(cover)
 		cover = null
+	if(underbase)
+		underbase.parent_turret = null
 	base = null
 	if(cp)
 		cp.turrets -= src
@@ -259,6 +266,8 @@
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 				cover.parent_turret = src //make the cover's parent src
+				underbase = new /obj/structure/turretbase(loc)
+				underbase.parent_turret = src
 		else if(anchored)
 			anchored = 0
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
@@ -920,3 +929,42 @@
 				on = 0
 				spawn(100)
 					on = 1
+
+//---------------turret bases -------------
+
+/obj/structure/turretbase
+	name = "recessed turret bay"
+	desc = "A wonder of modern science, the BS-43 Portable Turret Hole allows for easy portability of pop-up shielded turrets."
+	icon = 'icons/obj/turrets.dmi'
+	flags = INDESTRUCTIBLE
+	icon_state = "basedark"
+	anchored = 1
+	layer = LOW_OBJ_LAYER
+	var/obj/machinery/porta_turret/parent_turret = null
+
+/obj/structure/turretbase/attackby(obj/item/I, mob/user, params)
+	if(!parent_turret)
+		if(istype(I,/obj/item/stack/tile))
+			var/obj/item/stack/tile/T = I
+			if(!T.use(1))
+				return
+			else
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				src.Destroy()
+				to_chat(user, "<span class='notice'>You tile over [src]. You see nothing wrong with this.</span>")
+
+	//It doesn't return parent call because it's a hole, it doesn't make any sense for it to be damageable
+
+/obj/structure/turretbase/ex_act(severity)
+	if((severity=1)&&(!parent_turret))
+		qdel(src)
+
+/obj/structure/turretbase/attack_alien()
+	return
+
+/obj/structure/turretbase/attack_hulk()
+	return
+
+/obj/structure/turretbase/attack_animal()
+	return
+
