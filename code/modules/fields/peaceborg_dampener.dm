@@ -47,7 +47,8 @@
 	var/image/I = get_edgeturf_overlay(get_edgeturf_direction(T))
 	var/obj/effect/abstract/proximity_checker/advanced/F = edge_turfs[T]
 	F.appearance = I.appearance
-
+	F.invisibility = 0
+	F.layer = 5
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/T)
 	..()
@@ -92,13 +93,14 @@
 	return ..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
-	if(istype(AM, /obj/item/projectile) && !(AM in tracked) && !is_turf_in_field(staging[AM]))
+	if(istype(AM, /obj/item/projectile) && !(AM in tracked) && staging[AM] && !is_turf_in_field(staging[AM], src))
 		capture_projectile(AM)
 	staging -= AM
 	return ..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F, turf/entering)
 	if(istype(AM, /obj/item/projectile))
-		world << "STAGING [AM]"
 		staging[AM] = get_turf(AM)
-	return ..()
+	. = ..()
+	if(!.)
+		staging -= AM	//This one ain't goin' through.
