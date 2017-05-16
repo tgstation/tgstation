@@ -109,40 +109,38 @@ Contents:
 
 
 //This proc prevents the suit from being taken off.
-/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/H, checkIcons = 0)
+/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/H)
 	if(!istype(H))
 		return 0
-	if(checkIcons)
-		icon_state = H.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
-		H.gloves.icon_state = "s-ninjan"
-		H.gloves.item_state = "s-ninjan"
-	else
-		if(!is_ninja(H))
-			to_chat(H, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...")
-			H.gib()
-			return 0
-		if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
-			to_chat(H, "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING...")
-			return 0
-		if(!istype(H.shoes, /obj/item/clothing/shoes/space_ninja))
-			to_chat(H, "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING...")
-			return 0
-		if(!istype(H.gloves, /obj/item/clothing/gloves/space_ninja))
-			to_chat(H, "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
-			return 0
+	if(!is_ninja(H))
+		to_chat(H, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...")
+		H.gib()
+		return FALSE
+	if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
+		to_chat(H, "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING...")
+		return FALSE
+	if(!istype(H.shoes, /obj/item/clothing/shoes/space_ninja))
+		to_chat(H, "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING...")
+		return FALSE
+	if(!istype(H.gloves, /obj/item/clothing/gloves/space_ninja))
+		to_chat(H, "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
+		return FALSE
+	affecting = H
+	flags |= NODROP //colons make me go all |=
+	slowdown = FALSE
+	n_hood = H.head
+	n_hood.flags |= NODROP
+	n_shoes = H.shoes
+	n_shoes.flags |= NODROP
+	n_shoes.slowdown--
+	n_gloves = H.gloves
+	n_gloves.flags |= NODROP
+	return TRUE
 
-		affecting = H
-		flags |= NODROP //colons make me go all |=
-		slowdown = 0
-		n_hood = H.head
-		n_hood.flags |= NODROP
-		n_shoes = H.shoes
-		n_shoes.flags |= NODROP
-		n_shoes.slowdown--
-		n_gloves = H.gloves
-		n_gloves.flags |= NODROP
-
-	return 1
+/obj/item/clothing/suit/space/space_ninja/lockIcons(mob/living/carbon/human/H)
+	icon_state = H.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+	H.gloves.icon_state = "s-ninjan"
+	H.gloves.item_state = "s-ninjan"
 
 
 //This proc allows the suit to be taken off.
