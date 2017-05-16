@@ -67,7 +67,7 @@
 					possible_targets[M] = 1						//good-guy
 
 	var/list/objectives = list(1,2,3,4)
-	while(give_objectives && owner.objectives.len < quantity)
+	while(owner.objectives.len < quantity)
 		switch(pick_n_take(objectives))
 			if(1)	//research
 				var/datum/objective/download/O = new /datum/objective/download()
@@ -119,12 +119,9 @@
 					owner.objectives += O
 			else
 				break
-
-	//Add a survival objective since it's usually broad enough for any round type.
-	if(give_objectives)
-		var/datum/objective/O = new /datum/objective/survive()
-		O.owner = owner
-		owner.objectives += O
+	var/datum/objective/O = new /datum/objective/survive()
+	O.owner = owner
+	owner.objectives += O
 
 
 /proc/remove_ninja(mob/living/L)
@@ -149,3 +146,8 @@
 	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	to_chat(owner.current, "Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
 	return
+
+/datum/antagonist/ninja/on_gain()
+	if(give_objectives)
+		addObjectives()
+	addMemories()
