@@ -432,7 +432,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 	return TRUE
 
-/proc/offer_control(mob/M)
+/proc/offer_control(mob/M, var/custom_message, var/custom_warning)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
@@ -442,6 +442,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
 	if(M.mind && M.mind.special_role)
 		poll_message = "[poll_message] Status:[M.mind.special_role]."
+	if(custom_message)
+		poll_message = custom_message
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, "pAI", null, FALSE, 100, M)
 	var/mob/dead/observer/theghost = null
 
@@ -451,6 +453,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
 		M.ghostize(0)
 		M.key = theghost.key
+		if(custom_warning)
+			to_chat(M, custom_warning)
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")
