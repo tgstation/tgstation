@@ -2,7 +2,7 @@
 	name = "magic casing"
 	desc = "I didn't even know magic needed ammo..."
 	projectile_type = /obj/item/projectile/magic
-	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect/magic
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/magic
 
 /obj/item/ammo_casing/magic/change
 	projectile_type = /obj/item/projectile/magic/change
@@ -70,4 +70,4 @@
 	select_name = "spraydown"
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	e_cost = 20
-	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
