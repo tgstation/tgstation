@@ -9,14 +9,14 @@ Contents:
 */
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_equip_verbs()
-	n_gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/toggled
+	n_gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/toggledrain
 
 	s_initialized = 1
 
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_equip_verbs()
 	if(n_gloves)
-		n_gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
+		n_gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggledrain
 
 	s_initialized = 0
 

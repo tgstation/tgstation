@@ -379,20 +379,19 @@
 /datum/action/item_action/ninjapulse
 	name = "EM Burst (25E)"
 	desc = "Disable any nearby technology with a electro-magnetic pulse."
-	icon_icon = 'icons/effects/effects.dmi'
-	button_icon_state = "energynet"
+	button_icon_state = "Sentinel's Compromise"
 
 /datum/action/item_action/ninjastar
 	name = "Create Throwing Stars (1E)"
 	desc = "Creates some throwing stars"
-	button_icon_state = "energynet"
+	button_icon_state = "throwingstar"
 	icon_icon = 'icons/obj/weapons.dmi'
 
 /datum/action/item_action/ninjanet
 	name = "Energy Net (20E)"
 	desc = "Captures a fallen opponent in a net of energy. Will teleport them to a holding facility after 30 seconds."
-	button_icon_state = "throwingstar"
-	icon_icon = 'icons/obj/weapons.dmi'
+	button_icon_state = "energynet"
+	icon_icon = 'icons/effects/effects.dmi'
 
 /datum/action/item_action/ninja_sword_recall
 	name = "Recall Energy Katana (Variable Cost)"
@@ -403,7 +402,12 @@
 /datum/action/item_action/ninja_stealth
 	name = "Toggle Stealth"
 	desc = "Toggles stealth mode on and off."
-	icon_icon = "beam_up"
+	button_icon_state = "beam_up"
+
+/datum/action/item_action/toggle_glove
+	name = "Toggle interaction"
+	desc = "Switch between normal interaction and drain mode."
+	button_icon_state = "lightning"
 
 
 /datum/action/item_action/organ_action

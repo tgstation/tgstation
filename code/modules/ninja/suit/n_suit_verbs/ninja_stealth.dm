@@ -40,8 +40,8 @@ Contents:
 	if(!s_busy)
 		toggle_stealth()
 		if(s_active)
-			action.icon_icon = "beam_down"
+			action.button_icon_state = "beam_down"
 		else
-			action.icon_icon = "beam_up"
+			action.button_icon_state = "beam_up"
 	else
 		to_chat(affecting, "<span class='danger'>Stealth does not appear to work!</span>")
