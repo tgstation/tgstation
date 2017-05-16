@@ -45,7 +45,6 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	var/sleep_delta
 
 	var/make_runtime = 0
-	var/make_softreset = 0
 
 	var/initializations_finished_with_no_players_logged_in	//I wonder what this could be?
 
@@ -314,7 +313,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 			subsystems_to_check = current_runlevel_subsystems
 		else
 			subsystems_to_check = tickersubsystems
-		if (make_softreset || CheckQueue(subsystems_to_check) <= 0)
+		if (CheckQueue(subsystems_to_check) <= 0)
 			if (!SoftReset(tickersubsystems, runlevel_sorted_subsystems))
 				log_world("MC: SoftReset() failed, crashing")
 				return
@@ -505,7 +504,6 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 //	called if any mc's queue procs runtime or exit improperly.
 /datum/controller/master/proc/SoftReset(list/ticker_SS, list/runlevel_SS)
 	. = 0
-	make_softreset = FALSE
 	log_world("MC: SoftReset called, resetting MC queue state.")
 	if (!istype(subsystems) || !istype(ticker_SS) || !istype(runlevel_SS))
 		log_world("MC: SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[runlevel_SS]'")
