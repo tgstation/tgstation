@@ -26,7 +26,7 @@
 					var/recruitable = SSticker.mode.add_gangster(M.mind,G)
 					switch(recruitable)
 						if(3)
-							for(var/obj/O in gangster.contents)
+							for(var/obj/O in M.contents)
 								if(istype(O, /obj/item/device/gangtool/soldier))
 									to_chat(user, "<span class='warning'>This gangster already has an uplink!</span>")
 									return
