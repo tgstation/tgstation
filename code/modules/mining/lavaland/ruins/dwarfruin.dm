@@ -21,7 +21,6 @@
 	GLOB.poi_list.Remove(src)
 	..()
 
-
 /obj/machinery/migrant_spawner/process()
 	for(var/i in spawned_mobs)
 		if(!i)
@@ -85,14 +84,22 @@
 /obj/structure/blacksmith_anvil
 	name = "anvil"
 	desc = "A sturdy anvil made of forged steel, used for crafting various weapons, tools, or armor."
+	icon = 'icons/obj/blacksmith/blacksmithingx32.dmi'
+	icon_state = "anvil"
 
 /obj/structure/blacksmith_forge
 	name = "forge"
 	desc = "A pit of magma burning hot, meant to heat metals for shaping and tempering."
+	icon = 'icons/obj/blacksmith/blacksmithingx64.dmi'
+	icon_state = "forge"
+	pixel_x = -16
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/blacksmith_hammer
 	name = "blacksmithing hammer"
 	desc = "A sturdy hammer meant to help shape the metals heated in a forge."
+	icon = 'icons/obj/blacksmith/blacksmithingx32.dmi'
+	icon_state = "hammer"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 9
@@ -104,6 +111,8 @@
 /obj/item/weapon/blacksmith_tongs
 	name = "blacksmithing tongs"
 	desc = "A sturdy set of tongs meant to help hold hot metal while working."
+	icon = 'icons/obj/blacksmith/blacksmithingx32.dmi'
+	icon_state = "tongs"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 8
@@ -112,12 +121,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=90)
 
-/*Misc Items*/
+/*Misc Items + Crafting Parts*/
 /obj/item/weapon/reagent_containers/food/drinks/wooden_mug
 	name = "wooden mug"
 	desc = "A mug for serving hearty brews."
+	icon = 'icons/obj/drinks.dmi'
+	item_state = "manlydorfglass"
 	icon_state = "manlydorfglass"
-	item_state = "coffee"
 	spillable = 1
 
 
