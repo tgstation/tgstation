@@ -377,8 +377,7 @@
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer, silent, power_amount)
 	if(!power_amount)
 		power_amount = -POWER_STANDARD
-	if(!proselytizer.can_use_power(power_amount) || proselytizer.stored_power - power_amount > proselytizer.max_power);
-	else
+	if(proselytizer.can_use_power(power_amount))
 		var/obj/effect/overlay/temp/ratvar/beam/itemconsume/B = new /obj/effect/overlay/temp/ratvar/beam/itemconsume(get_turf(src))
 		B.pixel_x = pixel_x
 		B.pixel_y = pixel_y
