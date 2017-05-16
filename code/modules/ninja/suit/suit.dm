@@ -197,3 +197,6 @@ Contents:
 	if(istype(action, /datum/action/item_action/ninja_sword_recall))
 		ninja_sword_recall()
 		return TRUE
+	if(istype(action, /datum/action/item_action/ninja_stealth))
+		stealth(action)
+		return TRUE

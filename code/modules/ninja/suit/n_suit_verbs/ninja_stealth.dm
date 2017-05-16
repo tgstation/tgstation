@@ -36,12 +36,12 @@ Contents:
 	return 0
 
 
-/obj/item/clothing/suit/space/space_ninja/proc/stealth()
-	set name = "Toggle Stealth"
-	set desc = "Utilize the internal CLOAK-tech device to activate or deactivate stealth-camo."
-	set category = "Ninja Equip"
-
+/obj/item/clothing/suit/space/space_ninja/proc/stealth(datum/action/item_action/ninja_stealth/action)
 	if(!s_busy)
 		toggle_stealth()
+		if(s_active)
+			action.icon_icon = "beam_down"
+		else
+			action.icon_icon = "beam_up"
 	else
 		to_chat(affecting, "<span class='danger'>Stealth does not appear to work!</span>")

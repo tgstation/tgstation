@@ -400,6 +400,11 @@
 	button_icon_state = "energy_katana"
 	icon_icon = 'icons/obj/weapons.dmi'
 
+/datum/action/item_action/ninja_stealth
+	name = "Toggle Stealth"
+	desc = "Toggles stealth mode on and off."
+	icon_icon = "beam_up"
+
 
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
