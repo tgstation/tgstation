@@ -116,7 +116,7 @@
 	attack_amt = smelted_material.attack_force
 	force = smelted_material.attack_force * 0.6 //stabbing people with the resulting piece, build the full tool for full force
 	desc += "[smelted_material.name]."
-	if(mold_type = "digging")
+	if(mold_type == "digging")
 		pickaxe_speed = smelted_material.pick_speed
 
 
