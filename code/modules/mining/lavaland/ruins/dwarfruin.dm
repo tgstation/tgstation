@@ -3,7 +3,7 @@
 /*Dwarf Spawner*/
 /obj/machinery/migrant_spawner
 	name = "strange portal"
-	desc = "A strange portal that actas a gateway between this world and another. Strange pixelated images fade in and out inside the frame."
+	desc = "A strange portal that acts as a gateway between this world and another. Strange pixelated images fade in and out inside the frame."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "dorfportal"
 	anchored = TRUE
@@ -14,12 +14,12 @@
 	var/dorf_gear = /datum/outfit/dorf
 
 /obj/machinery/migrant_spawner/Initialize()
-	..()
+	. = ..()
 	GLOB.poi_list += src
 
 /obj/machinery/migrant_spawner/Destroy()
 	GLOB.poi_list.Remove(src)
-	..()
+	return ..()
 
 /obj/machinery/migrant_spawner/process()
 	for(var/i in spawned_mobs)
@@ -64,10 +64,8 @@
 	M.key = new_dorf.key
 	M.equipOutfit(dorf_gear)
 	M.real_name = M.dna.species.random_name()
-	to_chat(M, "<span class='notice'>While traveling in the caravan in search of prosperous lands for a new fortress, your group stumbled upon \
-		an ancient portal, humming with ancient runic magic. One brave dwarf stepped through unknowing of what was beyond, surprisngly coming back to report\
-		 a hellscape riche in precious metals far beyond what they've ever seen. Your caravan travels through, deciding to take claim to this \
-		foriegn world and mark a great beginning for dwarves and future migrants in these lands.</span>")
+	to_chat(M, "<span class='notice'>You have arrived. After a journey from The Mountainhomes into the forbidding beyond.\
+	 Your harsh trek has finally ended. A new chapter of Dorven history begins at this place 'Koganusan' -Boatmurdered- Strike the Earth.</span>")
 	M.mind.special_role = "Dwarf"
 	var/datum/objective/O = new("Make claim to these hellish lands, constructing a great fortress and mining the rock for its precious metals, in the name of the Dwarven people!")
 	M.mind.objectives += O
@@ -79,48 +77,6 @@
 	shoes = /obj/item/clothing/shoes/combat
 	back = /obj/item/weapon/storage/backpack
 
-
-/*Anvil + Blacksmith Tools*/
-/obj/structure/blacksmith_anvil
-	name = "anvil"
-	desc = "A sturdy anvil made of forged steel, used for crafting various weapons, tools, or armor."
-	icon = 'icons/obj/blacksmith/blacksmithingx32.dmi'
-	icon_state = "anvil"
-
-/obj/structure/blacksmith_forge
-	name = "forge"
-	desc = "A pit of magma burning hot, meant to heat metals for shaping and tempering."
-	icon = 'icons/obj/blacksmith/blacksmithingx64.dmi'
-	icon_state = "forge"
-	pixel_x = -16
-	resistance_flags = FIRE_PROOF
-
-/obj/item/weapon/blacksmith_hammer
-	name = "blacksmithing hammer"
-	desc = "A sturdy hammer meant to help shape the metals heated in a forge."
-	icon = 'icons/obj/blacksmith/blacksmithingx32.dmi'
-	icon_state = "hammer"
-	flags = CONDUCT
-	slot_flags = SLOT_BELT
-	force = 9
-	throw_speed = 3
-	throw_range = 7
-	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=120)
-
-/obj/item/weapon/blacksmith_tongs
-	name = "blacksmithing tongs"
-	desc = "A sturdy set of tongs meant to help hold hot metal while working."
-	icon = 'icons/obj/blacksmith/blacksmithingx32.dmi'
-	icon_state = "tongs"
-	flags = CONDUCT
-	slot_flags = SLOT_BELT
-	force = 8
-	throw_speed = 3
-	throw_range = 7
-	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=90)
-
 /*Misc Items + Crafting Parts*/
 /obj/item/weapon/reagent_containers/food/drinks/wooden_mug
 	name = "wooden mug"
@@ -129,6 +85,10 @@
 	item_state = "manlydorfglass"
 	icon_state = "manlydorfglass"
 	spillable = 1
+
+/obj/item/weapon/sword_hilt
+	name = "leather hilt"
+	desc = "A handle made of leather, meant as base for a sword."
 
 
 #undef DWARF_COOLDOWN

@@ -159,18 +159,6 @@
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
 
-/obj/item/weapon/pickaxe/smithing
-	desc = "Strike the earth!"
-	icon = 'icons/obj/blacksmithing.dmi'
-	icon_state = "pickaxe_base"
-
-/obj/item/weapon/pickaxe/smithing/post_smithing()
-	name = "[smelted_material.name] pickaxe"
-	var/image/I = image('icons/obj/blacksmithing.dmi', "pickaxe_head")
-	I.color = smelted_material.color
-	add_overlay(I)
-	force = smelted_material.attack_force
-	digspeed = smelted_material.pick_speed
 /*****************************Shovel********************************/
 
 /obj/item/weapon/shovel

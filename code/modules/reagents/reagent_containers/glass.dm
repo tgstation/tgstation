@@ -302,7 +302,7 @@
 
 /obj/item/weapon/reagent_containers/glass/mold
 	name = "mold"
-	desc = "A mold."
+	desc = "A clay mold."
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "mold1"
 	volume = 25
@@ -312,11 +312,22 @@
 
 /obj/item/weapon/reagent_containers/glass/mold/sword
 	name = "sword mold"
-	produce_type = /obj/item/weapon/smith_sword
+	desc = "A clay mold of a sword blade."
+	icon_state = "mold_blade"
+	produce_type = /obj/item/weapon/mold_result/blade
 
 /obj/item/weapon/reagent_containers/glass/mold/pickaxe
 	name = "pickaxe mold"
-	produce_type = /obj/item/weapon/pickaxe/smithing
+	desc = "A clay mold of a pickaxe head."
+	icon_state = "mold_pickaxe"
+	produce_type = /obj/item/weapon/mold_result/pickaxe_head
+
+/obj/item/weapon/reagent_containers/glass/mold/shovel
+	name = "shovel mold"
+	desc = "A clay mold of a shovel head."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/shovel_head
 
 /obj/item/weapon/reagent_containers/glass/mold/bar
 	name = "bar mold"
+	desc = "A clay mold of a bar."

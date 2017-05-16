@@ -71,8 +71,7 @@ obj/screen/dwarf
 	name = "alcohol stored"
 	screen_loc = ui_alcohol_amount
 
-/obj/screen/dwarf/alcohol_display/proc/update(mob/living/carbon/human/usr)
-	var/mob/living/carbon/human/H = usr
+/obj/screen/dwarf/alcohol_display/proc/update(mob/living/carbon/human/H)
 	var/obj/item/organ/alcoholvessel/dwarf
 	dwarf = H.getorganslot("dwarf_organ")
 	if(dwarf)

@@ -42,8 +42,11 @@
 				my_mold = mutable_appearance('icons/obj/blacksmithing.dmi', M.icon_state)
 				add_overlay(my_mold)
 				return
+		if(R && R.volume)
+			to_chat(user, "There's not enough in [current_mold] to make a full cast!")
+			return
 		else
-			to_chat(user, "The mold is empty, dipshit.")
+			to_chat(user, "There's nothing in [current_mold]!")
 			return
 	if(istype(W, /obj/item/weapon/smith_hammer))
 		if(current_mold)
@@ -63,7 +66,7 @@
 			current_mold = null
 			return
 		else
-			to_chat(user, "There's nothing to smith, retard.")
+			to_chat(user, "There's nothing in [current_mold]!")
 			return
 
 /obj/item/weapon/smith_hammer
@@ -74,15 +77,108 @@
 	force = 10
 	w_class = 1
 
-/obj/item/weapon/smith_sword
-	name = "sword"
-	desc = "Vanquish thy foes!"
+/obj/item/weapon/mold_result
+	name = "molten blob"
+	desc = "A hardened blob of ore. You shouldn't be seeing this."
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "blob_base"
+	var/material_type = "unobtanium" //these are mostly for the smelt-crafting and whatever custom shenanigans for var-editing
+	var/mold_type = "blob" //determines what the resulting item is used for and gives appropriate stats
+	var/pickaxe_speed = 0
+	var/metal_force = 0
+	var/attack_amt = 0
+
+/obj/item/weapon/mold_result/blade
+	name = "blade"
+	desc = "A blade made of "
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "sword_blade"
+	mold_type = "offensive"
+
+/obj/item/weapon/mold_result/pickaxe_head
+	name = "pickaxe head"
+	desc = "A pickaxe head made of "
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "pickaxe_head"
+	mold_type = "digging"
+
+/obj/item/weapon/mold_result/shovel_head
+	name = "shovel head"
+	desc = "A shovel head made of "
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "pickaxe_head"
+	mold_type = "digging"
+
+/obj/item/weapon/mold_result/post_smithing()
+	name = "[smelted_material.name] [name]"
+	material_type = "[smelted_material.name]"
+	color = smelted_material.color
+	attack_amt = smelted_material.attack_force
+	force = smelted_material.attack_force * 0.6 //stabbing people with the resulting piece, build the full tool for full force
+	desc += "[smelted_material.name]."
+	if(mold_type = "digging")
+		pickaxe_speed = smelted_material.pick_speed
+
+
+////////////////////////// Smithed Items///////////////////////
+/*Sword*/
+/obj/item/weapon/smithed_sword
+	name = "unobtanium broadsword"
+	desc = "A broadsword made of unobtanium, you probably shouldn't be seeing this."
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "sword_base"
 
-/obj/item/weapon/smith_sword/post_smithing()
-	name = "[smelted_material.name] sword"
-	var/image/I = image('icons/obj/blacksmithing.dmi', "sword_blade")
-	I.color = smelted_material.color
-	add_overlay(I)
-	force = smelted_material.attack_force
+/obj/item/weapon/smithed_sword/CheckParts(list/parts_list)
+	..()
+	var/obj/item/weapon/mold_result/blade/B = locate() in contents
+	if(B)
+		var/image/I = image('icons/obj/blacksmithing.dmi', "sword_blade")
+		I.color = B.color
+		smelted_material = new B.smelted_material.type()
+		add_overlay(I)
+		name = "[B.material_type] broadsword"
+		force = B.attack_amt * 2 //stabby stab
+		desc = "A broadsword made of [B.material_type]."
+
+/*Pickaxe*/
+/obj/item/weapon/pickaxe/smithed_pickaxe
+	name = "unobtanium pickaxe"
+	desc = "A pickaxe made of unobtanium, you probably shouldn't be seeing this."
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "pickaxe_base"
+
+/obj/item/weapon/pickaxe/smithed_pickaxe/CheckParts(list/parts_list)
+	..()
+	var/obj/item/weapon/mold_result/pickaxe_head/P = locate() in contents
+	if(P)
+		var/image/O = image('icons/obj/blacksmithing.dmi', "pickaxe_head")
+		O.color = P.color
+		add_overlay(O)
+		smelted_material = new P.smelted_material.type()
+		name = "[P.material_type] pickaxe"
+		force = P.attack_amt
+		digspeed = P.pickaxe_speed
+		desc = "A pickaxe with a [P.material_type] head."
+
+/*Shovel*/
+/obj/item/weapon/shovel/smithed_shovel
+	name = "unobtanium shovel"
+	desc = "A shovel made of unobtanium, you probably shouldn't be seeing this."
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "pickaxe_base"
+
+/obj/item/weapon/shovel/smithed_shovel/CheckParts(list/parts_list)
+	..()
+	var/obj/item/weapon/mold_result/shovel_head/S = locate() in contents
+	if(S)
+		var/image/Q = image('icons/obj/blacksmithing.dmi', "shovel_head")
+		Q.color = S.color
+		add_overlay(Q)
+		smelted_material = new S.smelted_material.type()
+		name = "[S.material_type] shovel"
+		force = S.attack_amt * 0.8 //probably not the best idea for a weapon but it'd probably still work
+		digspeed = S.pickaxe_speed
+		desc = "A shovel with a [S.material_type] head."
+
+
+

@@ -3,18 +3,18 @@
 	desc = "You feel like entering a fey mood."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "still"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	var/list/brewables = list()
 	var/list/already_brewing = list()
 
 /obj/machinery/brewing_barrel/attackby(obj/item/weapon/W, mob/user, params)
 	if(is_type_in_list(W, already_brewing))
 		to_chat(user, "You're already brewing that!")
-		return
+		return FALSE
 	var/brewing_result = W.on_brew() // list("reagents" = list("reagent1", "reagent2"), "booze_power" = 420, "prefix" = "arse")
 	if(istype(W, /obj/item/weapon/reagent_containers) && !brewing_result)
-		return 0
+		return FALSE
 	if(!brewing_result)
 		return ..()
 	if(user.drop_item())
