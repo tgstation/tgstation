@@ -173,9 +173,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
 	var/uses = 1
 
-/obj/item/weapon/storage/book/bible/syndicate/Initialize()
-	. = ..()
-	
+
 	
 /obj/item/weapon/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)
@@ -187,11 +185,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(H, "<span class='notice'>Your name appears on the inside cover, in blood.</span>")
 		var/ownername = H.real_name
 		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
-	return
 
 /obj/item/weapon/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
 	if (user.a_intent == INTENT_HELP)
-		..()
+		 return ..()
 	else
 		..(M,user,heal_mode = FALSE)
 
