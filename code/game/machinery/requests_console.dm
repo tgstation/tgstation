@@ -341,7 +341,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				addtimer(CALLBACK(src, .proc/clear_emergency), 3000)
 
 	if(href_list["distress"])
-		if(distress == 1)
+		if(href_list["distress"] == 1)
 			if(world.time > GLOB.distress_cooldown)
 				if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 					to_chat(usr, "<span class='notice'>Error: All communications arrays are currently directed towards the emergency shuttle.")
@@ -356,7 +356,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				START_PROCESSING(SSobj, src)
 			else
 				to_chat(usr, "<span class='notice'>Distress signal transponders are currently offline.")
-		if(distress == 2)
+		if(href_list["distress"] == 2)
 			GLOB.news_network.SubmitArticle("Distress signal has been terminated.", department, "Security Failsafe Protocols", null)
 			distress_state = 0
 			GLOB.distress_cooldown = world.time + 1200
