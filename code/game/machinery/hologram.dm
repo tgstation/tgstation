@@ -26,8 +26,6 @@ Possible to do for anyone motivated enough:
 
 #define HOLOPAD_PASSIVE_POWER_USAGE 1
 #define HOLOGRAM_POWER_USAGE 2
-
-GLOBAL_LIST_EMPTY(holopads)
 #define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
@@ -262,8 +260,7 @@ GLOBAL_LIST_EMPTY(holopads)
 	if(outgoing_call)
 		outgoing_call.Check()
 
-	for(var/I in holo_calls)
-		var/datum/holocall/HC = I
+	for(var/datum/holocall/HC in holo_calls)
 		if(HC.connected_holopad != src)
 			if(force_answer_call && world.time > (HC.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
 				HC.Answer(src)

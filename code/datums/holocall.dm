@@ -41,12 +41,16 @@
 
 //cleans up ALL references :)
 /datum/holocall/Destroy()
-	QDEL_NULL(eye)
-
 	user.reset_perspective()
+	if(user.client)
+		for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
+			user.client.images -= chunk.obscured
+	user.remote_control = null
+	QDEL_NULL(eye)
 	
 	user = null
-	hologram.HC = null
+	if(hologram)
+		hologram.HC = null
 	hologram = null
 	calling_holopad.outgoing_call = null
 
