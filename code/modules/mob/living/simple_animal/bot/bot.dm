@@ -797,7 +797,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/mob/living/simple_animal/bot/owner = null
 
 /obj/machinery/bot_core/Initialize()
-	..()
+	. = ..()
 	owner = loc
 	if(!istype(owner))
 		qdel(src)

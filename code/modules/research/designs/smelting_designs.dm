@@ -6,7 +6,7 @@
 	build_type = SMELTER
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT / 2, MAT_PLASMA = MINERAL_MATERIAL_AMOUNT / 2)
 	build_path = /obj/item/stack/sheet/plasteel
-	category = list("initial","Alloys")
+	category = list("initial")
 
 
 /datum/design/plastitanium_alloy
@@ -15,4 +15,14 @@
 	build_type = SMELTER
 	materials = list(MAT_TITANIUM = MINERAL_MATERIAL_AMOUNT / 2, MAT_PLASMA = MINERAL_MATERIAL_AMOUNT / 2)
 	build_path = /obj/item/stack/sheet/mineral/plastitanium
-	category = list("initial","Alloys")
+	category = list("initial")
+
+/datum/design/alienalloy
+	name = "Alien Alloy"
+	desc = "A sheet of reverse-engineered alien alloy."
+	id = "alienalloy"
+	req_tech = list("abductor" = 1, "materials" = 7, "plasmatech" = 2)
+	build_type = PROTOLATHE | SMELTER
+	materials = list(MAT_METAL = 4000, MAT_PLASMA = 4000)
+	build_path = /obj/item/stack/sheet/mineral/abductor
+	category = list("Stock Parts")

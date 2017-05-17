@@ -59,7 +59,7 @@
 	species = "ambrosia_gaia"
 	plantname = "Ambrosia Gaia"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/gaia
-	mutatelist = list()
+	mutatelist = list(/obj/item/seeds/ambrosia/deus)
 	reagents_add = list("earthsblood" = 0.05, "nutriment" = 0.06, "vitamin" = 0.05)
 	rarity = 30 //These are some pretty good plants right here
 	genes = list()

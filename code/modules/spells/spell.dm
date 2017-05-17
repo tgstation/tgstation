@@ -83,6 +83,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
 	var/still_recharging_msg = "<span class='notice'>The spell is still recharging.</span>"
+	var/recharging = TRUE
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
@@ -226,11 +227,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/Initialize()
 	. = ..()
 	action = new(src)
+	START_PROCESSING(SSfastprocess, src)
 
 	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
 	charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
 	qdel(action)
 	return ..()
 
@@ -248,20 +251,24 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/start_recharge()
 	if(action)
 		action.UpdateButtonIcon()
-	while(charge_counter < charge_max && !QDELETED(src))
-		sleep(1)
-		charge_counter++
+	recharging = TRUE
 	if(action)
 		action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
+/obj/effect/proc_holder/spell/process()
+	if(recharging && charge_type == "recharge" && (charge_counter < charge_max))
+		charge_counter += 2	//processes 5 times per second instead of 10.
+		if(charge_counter >= charge_max)
+			charge_counter = charge_max
+			recharging = FALSE
+
+/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation(user)
 	if(user && user.ckey)
 		user.log_message("<span class='danger'>cast the spell [name].</span>", INDIVIDUAL_ATTACK_LOG)
-	spawn(0)
-		if(charge_type == "recharge" && recharge)
-			start_recharge()
+	if(recharge)
+		recharging = TRUE
 	if(sound)
 		playMagSound()
 	if(prob(critfailchance))

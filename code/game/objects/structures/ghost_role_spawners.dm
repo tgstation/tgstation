@@ -140,7 +140,10 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
 		if(!name)
-			H.real_name = H.dna.species.random_name()
+			if(has_owner)
+				H.real_name = "[initial(X.prefix)] Golem ([rand(1,999)])"
+			else
+				H.real_name = H.dna.species.random_name()
 		else
 			H.real_name = name
 

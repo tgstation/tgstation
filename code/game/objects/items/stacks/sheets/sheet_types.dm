@@ -285,12 +285,15 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	..()
 
-/obj/item/stack/sheet/runed_metal/fifty
-	amount = 50
-
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes
 	return ..()
+
+/obj/item/stack/sheet/runed_metal/fifty
+	amount = 50
+
+/obj/item/stack/sheet/runed_metal/five
+	amount = 5
 
 /*
  * Brass
@@ -362,7 +365,10 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	origin_tech = "materials=2;biotech=2"
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
-	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40)))
+	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40), \
+	new /datum/stack_recipe("water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/empty), \
+	new /datum/stack_recipe("large water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
+	new /datum/stack_recipe("wet floor sign", /obj/item/weapon/caution, 2)))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"
