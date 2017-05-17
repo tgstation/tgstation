@@ -260,7 +260,8 @@ Possible to do for anyone motivated enough:
 	if(outgoing_call)
 		outgoing_call.Check()
 
-	for(var/datum/holocall/HC in holo_calls)
+	for(var/I in holo_calls)
+		var/datum/holocall/HC = I
 		if(HC.connected_holopad != src)
 			if(force_answer_call && world.time > (HC.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
 				HC.Answer(src)
