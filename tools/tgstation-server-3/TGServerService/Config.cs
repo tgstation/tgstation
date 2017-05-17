@@ -15,6 +15,7 @@ namespace TGServerService
 		const string GameConfigPostfix = "/game_options.txt";
 
 		const string AdminRanksConfig = StaticConfigDir + "/admin_ranks.txt";
+		const string AdminRanksRepo = RepoConfig + "/admin_ranks.txt";
 		const string AdminConfig = StaticConfigDir + "/admins.txt";
 		const string NudgeConfig = StaticConfigDir + "/nudge_port.txt";
 		const string MapConfig = StaticConfigDir + "/maps.txt";
@@ -67,7 +68,7 @@ namespace TGServerService
 		}
 
 		//public api
-		public IDictionary<string, IList<TGPermissions>> AdminRanks(out string error)
+		public IDictionary<string, IList<string>> AdminRanks(out string error)
 		{
 
 			List<string> fileLines;
@@ -84,8 +85,8 @@ namespace TGServerService
 				}
 			}
 
-			var result = new Dictionary<string, IList<TGPermissions>>();
-			IList<TGPermissions> previousPermissions = new List<TGPermissions>();
+			var result = new Dictionary<string, IList<string>>();
+			IList<string> previousPermissions = new List<string>();
 			foreach (var L in fileLines)
 			{
 				if (L.Length > 0 && L[0] == '#')
@@ -97,6 +98,10 @@ namespace TGServerService
 					continue;
 
 				var rank = splits[0].Trim();
+
+				var tmp = new List<string>(splits);
+				tmp.RemoveAt(0);
+				splits = String.Join(" ", tmp).Split(' ');
 
 				var asList = new List<string>(splits);
 				asList.RemoveAt(0);
@@ -110,9 +115,9 @@ namespace TGServerService
 		}
 
 		//same thing the proc in admin_ranks.dm does, properly calculates string permission sets and returns them as an enum
-		IList<TGPermissions> ProcessPermissions(IList<string> text, IList<TGPermissions> previousPermissions)
+		IList<string> ProcessPermissions(IList<string> text, IList<string> previousPermissions)
 		{
-			IList<TGPermissions> permissions = new List<TGPermissions>();
+			IList<string> permissions = new List<string>();
 			foreach(var E in text)
 			{
 				var trimmed = E.Trim();
@@ -127,7 +132,7 @@ namespace TGServerService
 						removing = false;
 						break;
 				}
-				trimmed = trimmed.Substring(1).ToLower();
+				trimmed = trimmed.Substring(1);
 
 				if (trimmed.Length == 0)
 					continue;
@@ -148,80 +153,16 @@ namespace TGServerService
 		}
 
 		//basic conversion
-		IList<TGPermissions> StringToPermission(string permstring, IList<TGPermissions> oldpermissions)
+		IList<string> StringToPermission(string permstring, IList<string> oldpermissions)
 		{
-			TGPermissions perm;
-			switch (permstring)
+			switch (permstring.Trim().ToUpper())
 			{
 				case "@":
-				case "prev":
+				case "PREV":
 					return oldpermissions;
-				case "buildmode":
-				case "build":
-					perm = TGPermissions.BUILD;
-					break;
-				case "admin":
-					perm = TGPermissions.ADMIN;
-					break;
-				case "ban":
-					perm = TGPermissions.BAN;
-					break;
-				case "fun":
-					perm = TGPermissions.FUN;
-					break;
-				case "server":
-					perm = TGPermissions.SERVER;
-					break;
-				case "debug":
-					perm = TGPermissions.DEBUG;
-					break;
-				case "permissions":
-				case "rights":
-					perm = TGPermissions.RIGHTS;
-					break;
-				case "possess":
-					perm = TGPermissions.POSSESS;
-					break;
-				case "stealth":
-					perm = TGPermissions.STEALTH;
-					break;
-				case "rejuv":
-				case "rejuvinate":
-					perm = TGPermissions.REJUV;
-					break;
-				case "varedit":
-					perm = TGPermissions.VAREDIT;
-					break;
-				case "everything":
-				case "host":
-				case "all":
-					return new List<TGPermissions> {
-						TGPermissions.ADMIN,
-						TGPermissions.SPAWN,
-						TGPermissions.FUN,
-						TGPermissions.BAN,
-						TGPermissions.STEALTH,
-						TGPermissions.POSSESS,
-						TGPermissions.REJUV,
-						TGPermissions.BUILD,
-						TGPermissions.SERVER,
-						TGPermissions.DEBUG,
-						TGPermissions.VAREDIT,
-						TGPermissions.RIGHTS,
-						TGPermissions.SOUND,
-					};
-				case "sound":
-				case "sounds":
-					perm = TGPermissions.SOUND;
-					break;
-				case "spawn":
-				case "create":
-					perm = TGPermissions.SPAWN;
-					break;
 				default:
-					return null;
+					return new List<string> { permstring };
 			}
-			return new List<TGPermissions> { perm };
 		}
 
 		//public api
@@ -952,6 +893,101 @@ namespace TGServerService
 			{
 				return e.ToString();
 			}
+		}
+
+		public IDictionary<string, string> ListPermissions(out string error)
+		{
+			try
+			{
+				IList<string> lines;
+				lock (configLock)
+				{
+					lines = new List<string>(File.ReadAllLines(AdminRanksRepo));
+				}
+				IDictionary<string, string> res = new Dictionary<string, string>();
+
+				var inKeywordsBlock = false;
+				foreach(var I in lines)
+				{
+					var trimmed = I.Trim();
+					if (trimmed.Length == 0 || trimmed[0] != '#')
+						continue;
+					
+					var splits = trimmed.Substring(1).Trim().Split(' ');
+
+					if (splits[0] == "BEGIN_KEYWORDS")
+						inKeywordsBlock = true;
+					else if (splits[0] == "END_KEYWORDS")
+						inKeywordsBlock = false;
+					else if (inKeywordsBlock)
+					{
+						var key = splits[0];
+						if (key.Length < 2 || key[0] != '+')  //bad format
+							continue;
+						key = key.Substring(1);
+
+						string description = "";
+						bool found = false;
+						foreach (var J in splits)
+							if (found)
+								description += J + " ";
+							else if (J.Length == 1 && J[0] == '=')
+								found = true;
+						res.Add(key, description);
+					}
+				}
+				error = null;
+				return res;
+			}
+			catch (Exception e)
+			{
+				error = e.ToString();
+				return null;
+			}
+		}
+		string WriteAdminRanks(IDictionary<string, IList<string>> ranks)
+		{
+			try
+			{
+				var lines = new List<string>();
+ 				foreach (var I in ranks)
+				{
+					var line = I.Key + " =";
+					foreach (var J in I.Value)
+						line += " " + J;
+					lines.Add(line);
+				}
+				lock (configLock)
+				{
+					File.WriteAllLines(AdminRanksConfig, lines);
+				}
+				return null;
+			}
+			catch (Exception e)
+			{
+				return e.ToString();
+			}
+		}
+		public string RemoveAdminRank(string rank)
+		{
+			var ranks = AdminRanks(out string error);
+			if (ranks == null)
+				return error;
+			if (!ranks.ContainsKey(rank))
+				return "Given rank does not exist!";
+			ranks.Remove(rank);
+			return WriteAdminRanks(ranks);
+		}
+		public string SetAdminRank(string rankName, IList<string> permissions)
+		{
+			var ranks = AdminRanks(out string error);
+			if (ranks == null)
+				return error;
+			if (ranks.ContainsKey(rankName))
+				ranks[rankName] = permissions;
+			else
+				ranks.Add(rankName, permissions);
+			return WriteAdminRanks(ranks);
 		}
 	}
 }

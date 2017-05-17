@@ -30,26 +30,6 @@ namespace TGServiceInterface
 	}
 
 	/// <summary>
-	/// Admin permission sets
-	/// </summary>
-	public enum TGPermissions
-	{
-		ADMIN,
-		SPAWN,
-		FUN,
-		BAN,
-		STEALTH,
-		POSSESS,
-		REJUV,
-		BUILD,
-		SERVER,
-		DEBUG,
-		VAREDIT,
-		RIGHTS,
-		SOUND,
-	}
-
-	/// <summary>
 	/// Map configuration settings
 	/// </summary>
 	[DataContract]
@@ -210,12 +190,37 @@ namespace TGServiceInterface
 		string SetItem(TGConfigType type, ConfigSetting newSetting);
 
 		/// <summary>
+		/// List the permissions as defined in the repo's admin_ranks.txt
+		/// </summary>
+		/// <param name="error">null on success, error message on failure</param>
+		/// <returns>Dictionary of permission strings -> description on success, null on failure</returns>
+		[OperationContract]
+		IDictionary<string, string> ListPermissions(out string error);
+
+		/// <summary>
 		/// Get the configured admin ranks
 		/// </summary>
 		/// <param name="error">null on success, error message on failure</param>
 		/// <returns>A dictionary of rank -> permissions on success, null on failure</returns>
 		[OperationContract]
-		IDictionary<string, IList<TGPermissions>> AdminRanks(out string error);
+		IDictionary<string, IList<string>> AdminRanks(out string error);
+
+		/// <summary>
+		/// Deletes the given admin rank
+		/// </summary>
+		/// <param name="rank">The rank to delete</param>
+		/// <returns>null on success, error message on failure</returns>
+		[OperationContract]
+		string RemoveAdminRank(string rank);
+
+		/// <summary>
+		/// Adds or update an admin rank
+		/// </summary>
+		/// <param name="rankName">The name of the added rank</param>
+		/// <param name="permissions">The permissions of the added rank</param>
+		/// <returns>null on success, error message on failure</returns>
+		[OperationContract]
+		string SetAdminRank(string rankName, IList<string> permissions);
 
 		/// <summary>
 		/// List the admins
