@@ -704,21 +704,23 @@ namespace TGServerService
 			}
 		}
 
-		//public api
-		public string SetNudgePort(ushort port)
-		{
-			try
-			{
-				lock (configLock) {
-					File.WriteAllText(NudgeConfig, port.ToString());
-				}
-				InitInterop();
-				return null;
-			}catch(Exception e)
-			{
-				return e.ToString();
-			}
-		}
+        //public api
+        public string SetNudgePort(ushort port)
+        {
+            try
+            {
+                lock (configLock)
+                {
+                    File.WriteAllText(NudgeConfig, port.ToString());
+                }
+                InitInterop();
+                return null;
+            }
+            catch (Exception e)
+            {
+                return e.ToString();
+            }
+        }
 
 		public IList<MapSetting> MapSettings(out string error)
 		{
