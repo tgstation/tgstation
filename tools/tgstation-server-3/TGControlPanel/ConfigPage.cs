@@ -10,17 +10,23 @@ namespace TGControlPanel
 
 	partial class Main
 	{
-		const int ConfigConfig = 0;
-		const int DatabaseConfig = 1;
-		const int GameConfig = 2;
-		const int JobsConfig = 3;
-		const int MapsConfig = 4;
+		enum ConfigIndex
+		{
+			Config = 0,
+			Database = 1,
+			Game = 2,
+			Jobs = 3,
+			Maps = 4,
+			Admins = 5,
+		}
 
 		IList<ConfigSetting> GeneralChangelist, DatabaseChangelist, GameChangelist;
 		IList<JobSetting> JobsChangelist;
 		IList<MapSetting> MapsChangelist;
 
 		FlowLayoutPanel ConfigConfigFlow, DatabaseConfigFlow, GameConfigFlow, JobsConfigFlow, MapsConfigFlow;
+
+		bool updatingAdminPerms = false;
 
 		FlowLayoutPanel CreateFLP(Control parent)
 		{
@@ -59,15 +65,146 @@ namespace TGControlPanel
 			MapsChangelist = new List<MapSetting>();
 			LoadMapsConfig();
 
-			ConfigPanels.SelectedIndex = Properties.Settings.Default.LastConfigPageIndex;
+			AdminRanksListBox.SelectedIndexChanged += AdminRanksListBox_SelectedIndexChanged;
+			PermissionsListBox.ItemCheck += AdjustCurrentRankPermissions;
+			NegativePermissions.ItemCheck += AdjustCurrentRankPermissions;
+
+			LoadAdminsConfig();
+
 			ConfigPanels.SelectedIndexChanged += ConfigPanels_SelectedIndexChanged;
+			ConfigPanels.SelectedIndex = Properties.Settings.Default.LastConfigPageIndex;
 
 			Resize += ReadjustFlow;
 		}
 
+		private void RemoveRankButton_Click(object sender, EventArgs e)
+		{
+			var rank = (string)AdminRanksListBox.SelectedItem;
+			var result = Server.GetComponent<ITGConfig>().RemoveAdminRank(rank);
+			if (result != null)
+				MessageBox.Show("Error: " + result);
+			LoadRanksList();
+		}
+
+		private void AddRankButton_Click(object sender, EventArgs e)
+		{
+			var result = Server.GetComponent<ITGConfig>().SetAdminRank(AddRankTextBox.Text, new Dictionary<string, bool>());
+			if (result != null)
+				MessageBox.Show("Error: " + result);
+			else
+				AddRankTextBox.Text = "";
+			LoadRanksList();
+		}
+
+		private void ApplyAdminRankButton_Click(object sender, EventArgs e)
+		{
+			var rank = (string)AdminRanksListBox.SelectedItem;
+			var admin = (string)AdminsListBox.SelectedItem;
+			if(rank == null || admin == null)
+			{
+				MessageBox.Show("Please select a rank and admin!");
+				return;
+			}
+			admin = admin.Split(' ')[0];
+			var result = Server.GetComponent<ITGConfig>().Addmin(admin, rank);
+			if (result != null)
+				MessageBox.Show("Error: " + result);
+			LoadAdminsList();
+		}
+
+		private void DeadminButton_Click(object sender, EventArgs e)
+		{
+			var selectedAdmin = (string)AdminsListBox.SelectedItem;
+			if(selectedAdmin == null)
+			{
+				MessageBox.Show("You must select an admin first!");
+				return;
+			}
+			var result = Server.GetComponent<ITGConfig>().Deadmin(selectedAdmin.Split(' ')[0]);
+			if (result != null)
+				MessageBox.Show("Error: " + result);
+			LoadAdminsList();
+		}
+
+		private void AddminButton_Click(object sender, EventArgs e)
+		{
+			var rank = (string)AdminRanksListBox.SelectedItem;
+			if(rank == null)
+			{
+				MessageBox.Show("You must select a rank first!");
+				return;
+			}
+			var result = Server.GetComponent<ITGConfig>().Addmin(AddminTextBox.Text, rank);
+			if (result != null)
+				MessageBox.Show("Error: " + result);
+			else
+				AddminTextBox.Text = "";
+			LoadAdminsList();
+		}
+		private void AdjustCurrentRankPermissions(object sender, ItemCheckEventArgs e)
+		{
+			if (updatingAdminPerms)
+				return;
+			if (AdminRanksListBox.SelectedIndex == -1)
+			{
+				MessageBox.Show("No admin rank selected!");
+				return;
+			}
+			var perms = new Dictionary<string, bool>();
+			for (var I = 0; I < PermissionsListBox.Items.Count; ++I)
+			{
+				var negChecked = NegativePermissions.GetItemChecked(I) || (sender == NegativePermissions && e.Index == I && e.NewValue == CheckState.Checked);
+				var posChecked = PermissionsListBox.GetItemChecked(I) || (sender == PermissionsListBox && e.Index == I && e.NewValue == CheckState.Checked);
+				var perm = ((string)PermissionsListBox.Items[I]).Split(' ')[0];
+				if (posChecked ^ negChecked)
+					perms.Add(perm, posChecked);
+			}
+
+			var result = Server.GetComponent<ITGConfig>().SetAdminRank((string)AdminRanksListBox.SelectedItem, perms);
+			if (result != null)
+				MessageBox.Show("Error: " + result);
+			UpdatePermissionsDisplay();
+		}
+
+		private void AdminRanksListBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			UpdatePermissionsDisplay();
+		}
+		void UpdatePermissionsDisplay() { 
+			var rank = (string)AdminRanksListBox.SelectedItem;
+			var ranks = Server.GetComponent<ITGConfig>().AdminRanks(out string error);
+			if (ranks != null && !ranks.ContainsKey(rank))
+				error = "Could not find rank: " + rank + "!";
+			if (error != null)
+			{
+				MessageBox.Show("Error: " + error);
+				return;
+			}
+			var ourRank = ranks[rank];
+			updatingAdminPerms = true;
+			for (var I = 0; I < PermissionsListBox.Items.Count; ++I)
+			{
+				PermissionsListBox.SetItemChecked(I, false);
+				NegativePermissions.SetItemChecked(I, false);
+			}
+			foreach (var I in ourRank)
+				if (I.Value)
+				{
+					for (var J = 0; J < PermissionsListBox.Items.Count; ++J)
+						if (((string)PermissionsListBox.Items[J]).Split(' ')[0] == I.Key)
+							PermissionsListBox.SetItemChecked(J, true);
+				}
+				else
+					for (var J = 0; J < PermissionsListBox.Items.Count; ++J)
+						if (((string)NegativePermissions.Items[J]).Split(' ')[0] == I.Key)
+							NegativePermissions.SetItemChecked(J, false);
+			updatingAdminPerms = false;
+		}
+
 		private void ConfigPanels_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Properties.Settings.Default.LastConfigPageIndex = Panels.SelectedIndex;
+			ConfigApply.Enabled = (ConfigIndex)ConfigPanels.SelectedIndex != ConfigIndex.Admins;
+			Properties.Settings.Default.LastConfigPageIndex = ConfigPanels.SelectedIndex;
 		}
 
 		void ReadjustFlow(object sender, EventArgs e)
@@ -121,25 +258,81 @@ namespace TGControlPanel
 
 		public void RefreshCurrentPage()
 		{
-			switch (ConfigPanels.SelectedIndex)
+			switch ((ConfigIndex)ConfigPanels.SelectedIndex)
 			{
-				case ConfigConfig:
+				case ConfigIndex.Config:
 					LoadGenericConfig(TGConfigType.General);
 					break;
-				case DatabaseConfig:
+				case ConfigIndex.Database:
 					LoadGenericConfig(TGConfigType.Database);
 					break;
-				case GameConfig:
+				case ConfigIndex.Game:
 					LoadGenericConfig(TGConfigType.Game);
 					break;
-				case JobsConfig:
+				case ConfigIndex.Jobs:
 					LoadJobsConfig();
 					break;
-				case MapsConfig:
+				case ConfigIndex.Maps:
 					LoadMapsConfig();
+					break;
+				case ConfigIndex.Admins:
+					LoadAdminsConfig();
 					break;
 			}
 		}
+
+		void LoadRanksList()
+		{
+			var ranks = Server.GetComponent<ITGConfig>().AdminRanks(out string error);
+			AdminRanksListBox.Items.Clear();
+			if (ranks == null)
+				MessageBox.Show("Error: " + error);
+			else
+				foreach (var I in ranks)
+					AdminRanksListBox.Items.Add(I.Key);
+			if (AdminRanksListBox.Items.Count > 0 && AdminRanksListBox.SelectedIndex == -1)
+			{
+				AdminRanksListBox.SelectedIndex = 0;
+				RemoveRankButton.Enabled = true;
+			}
+			else
+				RemoveRankButton.Enabled = false;
+		}
+
+		void LoadAdminsList()
+		{
+			var admins = Server.GetComponent<ITGConfig>().Admins(out string error);
+			AdminsListBox.Items.Clear();
+			if (admins == null)
+				MessageBox.Show("Error: " + error);
+			else
+				foreach (var I in admins)
+					AdminsListBox.Items.Add(String.Format("{0} ({1})", I.Key, I.Value));
+			if(AdminsListBox.Items.Count > 0 && AdminsListBox.SelectedIndex == -1) { 
+				AdminsListBox.SelectedIndex = 0;
+				DeadminButton.Enabled = true;
+			}
+			else
+				DeadminButton.Enabled = false;
+		}
+
+		void LoadAdminsConfig()
+		{
+			var perms = Server.GetComponent<ITGConfig>().ListPermissions(out string error);
+			PermissionsListBox.Items.Clear();
+			if (perms == null)
+				MessageBox.Show("Error: " + error);
+			else
+				foreach (var I in perms)
+				{
+					var formattedDisplay = String.Format("{0} ({1})", I.Key, I.Value);
+					PermissionsListBox.Items.Add(formattedDisplay);
+					NegativePermissions.Items.Add(formattedDisplay);
+				}
+			LoadRanksList();
+			LoadAdminsList();
+		}
+
 		void ApplyGenericConfig(IList<ConfigSetting> changelist, TGConfigType type)
 		{
 			var Config = Server.GetComponent<ITGConfig>();
@@ -156,26 +349,29 @@ namespace TGControlPanel
 
 		void ConfigApply_Click(object sender, EventArgs e)
 		{
-			switch (ConfigPanels.SelectedIndex)
+			switch ((ConfigIndex)ConfigPanels.SelectedIndex)
 			{
-				case ConfigConfig:
+				case ConfigIndex.Config:
 					ApplyGenericConfig(GeneralChangelist, TGConfigType.General);
 					break;
-				case DatabaseConfig:
+				case ConfigIndex.Database:
 					ApplyGenericConfig(DatabaseChangelist, TGConfigType.Database);
 					break;
-				case GameConfig:
+				case ConfigIndex.Game:
 					ApplyGenericConfig(GameChangelist, TGConfigType.Game);
 					break;
-				case JobsConfig:
+				case ConfigIndex.Jobs:
 					var Config = Server.GetComponent<ITGConfig>();
 					foreach (var I in JobsChangelist)
 						Config.SetJob(I);
 					break;
-				case MapsConfig:
+				case ConfigIndex.Maps:
 					Config = Server.GetComponent<ITGConfig>();
 					foreach (var I in MapsChangelist)
 						Config.SetMapSettings(I);
+					break;
+				case ConfigIndex.Admins:
+					MessageBox.Show("How were you able to click that???");
 					break;
 			}
 			RefreshCurrentPage();

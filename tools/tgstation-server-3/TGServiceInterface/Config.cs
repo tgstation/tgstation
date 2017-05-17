@@ -201,9 +201,9 @@ namespace TGServiceInterface
 		/// Get the configured admin ranks
 		/// </summary>
 		/// <param name="error">null on success, error message on failure</param>
-		/// <returns>A dictionary of rank -> permissions on success, null on failure</returns>
+		/// <returns>A dictionary of rank -> permissions -> +/- on success, null on failure</returns>
 		[OperationContract]
-		IDictionary<string, IList<string>> AdminRanks(out string error);
+		IDictionary<string, IDictionary<string, bool>> AdminRanks(out string error);
 
 		/// <summary>
 		/// Deletes the given admin rank
@@ -220,7 +220,7 @@ namespace TGServiceInterface
 		/// <param name="permissions">The permissions of the added rank</param>
 		/// <returns>null on success, error message on failure</returns>
 		[OperationContract]
-		string SetAdminRank(string rankName, IList<string> permissions);
+		string SetAdminRank(string rankName, IDictionary<string, bool> permissions);
 
 		/// <summary>
 		/// List the admins

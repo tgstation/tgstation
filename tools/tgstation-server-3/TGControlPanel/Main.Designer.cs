@@ -143,6 +143,7 @@
             this.JobsConfigPanel = new System.Windows.Forms.TabPage();
             this.MapsConfigPanel = new System.Windows.Forms.TabPage();
             this.AdminsPanel = new System.Windows.Forms.TabPage();
+            this.NegativePermissionsTitle = new System.Windows.Forms.Label();
             this.NegativePermissions = new System.Windows.Forms.CheckedListBox();
             this.ApplyAdminRankButton = new System.Windows.Forms.Button();
             this.PermissionsListBox = new System.Windows.Forms.CheckedListBox();
@@ -163,7 +164,6 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
-            this.NegativePermissionsTitle = new System.Windows.Forms.Label();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -1634,9 +1634,22 @@
             this.AdminsPanel.TabIndex = 5;
             this.AdminsPanel.Text = "Admins";
             // 
+            // NegativePermissionsTitle
+            // 
+            this.NegativePermissionsTitle.AutoSize = true;
+            this.NegativePermissionsTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NegativePermissionsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.NegativePermissionsTitle.Location = new System.Drawing.Point(269, 151);
+            this.NegativePermissionsTitle.Name = "NegativePermissionsTitle";
+            this.NegativePermissionsTitle.Size = new System.Drawing.Size(192, 18);
+            this.NegativePermissionsTitle.TabIndex = 31;
+            this.NegativePermissionsTitle.Text = "Negative Permissions:";
+            this.NegativePermissionsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // NegativePermissions
             // 
             this.NegativePermissions.FormattingEnabled = true;
+            this.NegativePermissions.HorizontalScrollbar = true;
             this.NegativePermissions.Location = new System.Drawing.Point(272, 172);
             this.NegativePermissions.Name = "NegativePermissions";
             this.NegativePermissions.Size = new System.Drawing.Size(240, 109);
@@ -1644,17 +1657,18 @@
             // 
             // ApplyAdminRankButton
             // 
-            this.ApplyAdminRankButton.Enabled = false;
             this.ApplyAdminRankButton.Location = new System.Drawing.Point(272, 292);
             this.ApplyAdminRankButton.Name = "ApplyAdminRankButton";
             this.ApplyAdminRankButton.Size = new System.Drawing.Size(240, 46);
             this.ApplyAdminRankButton.TabIndex = 29;
             this.ApplyAdminRankButton.Text = "Apply Selected Rank to Selected Admin";
             this.ApplyAdminRankButton.UseVisualStyleBackColor = true;
+            this.ApplyAdminRankButton.Click += new System.EventHandler(this.ApplyAdminRankButton_Click);
             // 
             // PermissionsListBox
             // 
             this.PermissionsListBox.FormattingEnabled = true;
+            this.PermissionsListBox.HorizontalScrollbar = true;
             this.PermissionsListBox.Location = new System.Drawing.Point(272, 29);
             this.PermissionsListBox.Name = "PermissionsListBox";
             this.PermissionsListBox.Size = new System.Drawing.Size(240, 109);
@@ -1674,13 +1688,13 @@
             // 
             // RemoveRankButton
             // 
-            this.RemoveRankButton.Enabled = false;
             this.RemoveRankButton.Location = new System.Drawing.Point(9, 292);
             this.RemoveRankButton.Name = "RemoveRankButton";
             this.RemoveRankButton.Size = new System.Drawing.Size(240, 20);
             this.RemoveRankButton.TabIndex = 26;
             this.RemoveRankButton.Text = "Remove Selected";
             this.RemoveRankButton.UseVisualStyleBackColor = true;
+            this.RemoveRankButton.Click += new System.EventHandler(this.RemoveRankButton_Click);
             // 
             // AddRankTextBox
             // 
@@ -1691,13 +1705,13 @@
             // 
             // AddRankButton
             // 
-            this.AddRankButton.Enabled = false;
             this.AddRankButton.Location = new System.Drawing.Point(199, 318);
             this.AddRankButton.Name = "AddRankButton";
             this.AddRankButton.Size = new System.Drawing.Size(50, 20);
             this.AddRankButton.TabIndex = 24;
             this.AddRankButton.Text = "Add";
             this.AddRankButton.UseVisualStyleBackColor = true;
+            this.AddRankButton.Click += new System.EventHandler(this.AddRankButton_Click);
             // 
             // AdminRanksListBox
             // 
@@ -1721,13 +1735,13 @@
             // 
             // DeadminButton
             // 
-            this.DeadminButton.Enabled = false;
             this.DeadminButton.Location = new System.Drawing.Point(536, 292);
             this.DeadminButton.Name = "DeadminButton";
             this.DeadminButton.Size = new System.Drawing.Size(240, 20);
             this.DeadminButton.TabIndex = 21;
             this.DeadminButton.Text = "Remove Selected";
             this.DeadminButton.UseVisualStyleBackColor = true;
+            this.DeadminButton.Click += new System.EventHandler(this.DeadminButton_Click);
             // 
             // AddminTextBox
             // 
@@ -1738,13 +1752,13 @@
             // 
             // AddminButton
             // 
-            this.AddminButton.Enabled = false;
             this.AddminButton.Location = new System.Drawing.Point(726, 318);
             this.AddminButton.Name = "AddminButton";
             this.AddminButton.Size = new System.Drawing.Size(50, 20);
             this.AddminButton.TabIndex = 19;
             this.AddminButton.Text = "Add";
             this.AddminButton.UseVisualStyleBackColor = true;
+            this.AddminButton.Click += new System.EventHandler(this.AddminButton_Click);
             // 
             // AdminsListBox
             // 
@@ -1795,18 +1809,6 @@
             // FullUpdateWorker
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
-            // 
-            // NegativePermissionsTitle
-            // 
-            this.NegativePermissionsTitle.AutoSize = true;
-            this.NegativePermissionsTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NegativePermissionsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.NegativePermissionsTitle.Location = new System.Drawing.Point(269, 151);
-            this.NegativePermissionsTitle.Name = "NegativePermissionsTitle";
-            this.NegativePermissionsTitle.Size = new System.Drawing.Size(192, 18);
-            this.NegativePermissionsTitle.TabIndex = 31;
-            this.NegativePermissionsTitle.Text = "Negative Permissions:";
-            this.NegativePermissionsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Main
             // 

@@ -68,84 +68,97 @@ namespace TGServerService
 		}
 
 		//public api
-		public IDictionary<string, IList<string>> AdminRanks(out string error)
+		public IDictionary<string, IDictionary<string, bool>> AdminRanks(out string error)
 		{
 
-			List<string> fileLines;
-			lock (configLock)
+			try
 			{
-				try
+				List<string> fileLines;
+				lock (configLock)
 				{
 					fileLines = new List<string>(File.ReadAllLines(AdminRanksConfig));
 				}
-				catch (Exception e)
+
+				var result = new Dictionary<string, IDictionary<string, bool>>();
+				IDictionary<string, bool> previousPermissions = new Dictionary<string, bool>();
+				foreach (var L in fileLines)
 				{
-					error = e.ToString();
-					return null;
+					if (L.Length > 0 && L[0] == '#')
+						continue;
+
+					var splits = L.Split('=');
+
+					if (splits.Length < 2)  //???
+						continue;
+
+					var rank = splits[0].Trim();
+
+					var tmp = new List<string>(splits);
+					tmp.RemoveAt(0);
+					splits = String.Join(" ", tmp).Split(' ');
+
+					var asList = new List<string>(splits);
+					asList.RemoveAt(0);
+
+					var perms = ProcessPermissions(asList, previousPermissions);
+					result.Add(rank, perms);
+					previousPermissions = perms;
 				}
+				error = null;
+				return result;
 			}
-
-			var result = new Dictionary<string, IList<string>>();
-			IList<string> previousPermissions = new List<string>();
-			foreach (var L in fileLines)
+			catch (Exception e)
 			{
-				if (L.Length > 0 && L[0] == '#')
-					continue;
-
-				var splits = L.Split('=');
-
-				if (splits.Length < 2)  //???
-					continue;
-
-				var rank = splits[0].Trim();
-
-				var tmp = new List<string>(splits);
-				tmp.RemoveAt(0);
-				splits = String.Join(" ", tmp).Split(' ');
-
-				var asList = new List<string>(splits);
-				asList.RemoveAt(0);
-
-				var perms = ProcessPermissions(asList, previousPermissions);
-				result.Add(rank, perms);
-				previousPermissions = perms;
+				error = e.ToString();
+				return null;
 			}
-			error = null;
-			return result;
 		}
 
 		//same thing the proc in admin_ranks.dm does, properly calculates string permission sets and returns them as an enum
-		IList<string> ProcessPermissions(IList<string> text, IList<string> previousPermissions)
+		IDictionary<string, bool> ProcessPermissions(IList<string> text, IDictionary<string, bool> previousPermissions)
 		{
-			IList<string> permissions = new List<string>();
+			IDictionary<string, bool> permissions = new Dictionary<string, bool>();
 			foreach(var E in text)
 			{
 				var trimmed = E.Trim();
-				bool removing;
-				switch (trimmed[0])
-				{
-					case '-':
-						removing = true;
-						break;
-					case '+':
-					default:
-						removing = false;
-						break;
-				}
-				trimmed = trimmed.Substring(1);
 
 				if (trimmed.Length == 0)
 					continue;
 
-				var perms = StringToPermission(trimmed, previousPermissions);
+				bool adding;
+				switch (trimmed[0])
+				{
+					case '-':
+						adding = false;
+						trimmed = trimmed.Substring(1);
+						break;
+					case '+':
+						adding = true;
+						trimmed = trimmed.Substring(1);
+						break;
+					default:
+						adding = true;
+						break;
+				}
+
+				if (trimmed.Length == 0)
+					continue;
+
+				var perms = StringToPermission(trimmed, previousPermissions, adding);
 
 				if(perms != null)
 					foreach(var perm in perms)
 					{
-						if (removing)
-							permissions.Remove(perm);
-						else if (!permissions.Contains(perm))
+						if(!permissions.ContainsKey(perm.Key))
 							permissions.Add(perm);
+						else
+						{
+							var wasAdded = permissions[perm.Key];
+							if (wasAdded == perm.Value)
+								continue;
+							//cancel each other out
+							permissions.Remove(perm.Key);
+						}
 					}
 
 			}
@@ -153,7 +166,7 @@ namespace TGServerService
 		}
 
 		//basic conversion
-		IList<string> StringToPermission(string permstring, IList<string> oldpermissions)
+		IDictionary<string, bool> StringToPermission(string permstring, IDictionary<string, bool> oldpermissions, bool adding)
 		{
 			switch (permstring.Trim().ToUpper())
 			{
@@ -161,44 +174,45 @@ namespace TGServerService
 				case "PREV":
 					return oldpermissions;
 				default:
-					return new List<string> { permstring };
+					return new Dictionary<string, bool> { { permstring, adding } };
 			}
 		}
 
 		//public api
 		public IDictionary<string, string> Admins(out string error)
 		{
-
-			List<string> fileLines;
-			lock (configLock)
+			try
 			{
-				try
+				List<string> fileLines;
+				lock (configLock)
 				{
 					fileLines = new List<string>(File.ReadAllLines(AdminConfig));
 				}
-				catch (Exception e)
+
+				var mins = new Dictionary<string, string>();
+				foreach (var L in fileLines)
 				{
-					error = e.ToString();
-					return null;
+					var trimmed = L.Trim();
+					if (L.Length == 0 || L[0] == '#')
+						continue;
+
+					var splits = L.Split('=');
+
+					if (splits.Length != 2)
+						continue;
+					var key = splits[0].Trim();
+					if (!mins.ContainsKey(key))
+						mins.Add(key, splits[1].Trim());
+					//don't care about dupes
 				}
+				error = null;
+				return mins;
 			}
-
-			var mins = new Dictionary<string, string>();
-			foreach(var L in fileLines)
+			catch (Exception e)
 			{
-				var trimmed = L.Trim();
-				if (L.Length == 0 || L[0] == '#')
-					continue;
-
-				var splits = L.Split('=');
-
-				if (splits.Length != 2)
-					continue;
-
-				mins.Add(splits[0].Trim(), splits[1].Trim());
+				error = e.ToString();
+				return null;
 			}
-			error = null;
-			return mins;
 		}
 
 		//public api
@@ -945,7 +959,7 @@ namespace TGServerService
 				return null;
 			}
 		}
-		string WriteAdminRanks(IDictionary<string, IList<string>> ranks)
+		string WriteAdminRanks(IDictionary<string, IDictionary<string, bool>> ranks)
 		{
 			try
 			{
@@ -954,7 +968,7 @@ namespace TGServerService
 				{
 					var line = I.Key + " =";
 					foreach (var J in I.Value)
-						line += " " + J;
+						line += " " + (J.Value ? "+" : "-") + J.Key;
 					lines.Add(line);
 				}
 				lock (configLock)
@@ -978,7 +992,7 @@ namespace TGServerService
 			ranks.Remove(rank);
 			return WriteAdminRanks(ranks);
 		}
-		public string SetAdminRank(string rankName, IList<string> permissions)
+		public string SetAdminRank(string rankName, IDictionary<string, bool> permissions)
 		{
 			var ranks = AdminRanks(out string error);
 			if (ranks == null)
