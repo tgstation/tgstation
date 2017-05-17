@@ -97,6 +97,7 @@ namespace TGControlPanel
 		private void ChatReconnectButton_Click(object sender, EventArgs e)
 		{
 			Server.GetComponent<ITGChat>().Reconnect();
+			LoadChatPage();
 		}
 
 		static string[] SplitByLine(TextBox t)
