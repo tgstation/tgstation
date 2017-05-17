@@ -141,6 +141,7 @@
 	slot_flags = SLOT_BELT
 	force = 5
 	volume = 3
+	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
 
 /obj/item/weapon/tank/internals/plasmaman/belt/full/New()
 	..()
