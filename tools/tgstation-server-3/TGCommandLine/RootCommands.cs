@@ -57,7 +57,7 @@ namespace TGCommandLine
 		public override void PrintHelp()
 		{
 			Console.WriteLine("/tg/station 13 Server Command Line");
-			Console.WriteLine("Avaiable commands (type '?' or 'help' after command for more info):");
+			Console.WriteLine("Available commands (type '?' or 'help' after command for more info):");
 			Console.WriteLine();
 			base.PrintHelp();
 		}
