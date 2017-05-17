@@ -140,6 +140,7 @@
 	item_state = "plasmaman_tank_belt"
 	slot_flags = SLOT_BELT
 	force = 5
+	volume = 3
 
 /obj/item/weapon/tank/internals/plasmaman/belt/full/New()
 	..()
