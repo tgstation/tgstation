@@ -17,7 +17,7 @@ namespace TGControlPanel
 		FullUpdateAction fuAction;
 		int testmergePR;
 		string updateError;
-		bool updatingFields = true;
+		bool updatingFields = false;
 
 		string DDStatusString = null;
 		void InitServerPage()
@@ -83,9 +83,13 @@ namespace TGControlPanel
 				projectNameText.Text = DM.ProjectName();
 			if(!ServerPathTextbox.Focused)
 				ServerPathTextbox.Text = Config.ServerDirectory();
-			NudgePortSelector.Value = Config.NudgePort(out string error);
+			var val = Config.NudgePort(out string error);
 			if (error != null)
+			{
 				MessageBox.Show("Error: " + error);
+				val = 1;
+			}
+			NudgePortSelector.Value = val;
 			updatingFields = false;
 
 			switch (DM.GetStatus())
