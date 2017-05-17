@@ -14,7 +14,7 @@ namespace TGControlPanel
 			InitRepoPage();
 			InitBYONDPage();
 			InitServerPage();
-			InitChatPage();
+			LoadChatPage();
 			LoadConfig();
 		}
 

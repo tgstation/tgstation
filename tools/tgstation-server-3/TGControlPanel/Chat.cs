@@ -12,13 +12,7 @@ namespace TGControlPanel
 	{
 		TGChatProvider modifyingProvider;
 		bool updatingChat = false;
-
-		void InitChatPage()
-		{
-			new ToolTip().SetToolTip(DiscordProviderSwitch, "Due to a bug with the IRC implementation, switching to this may take upwards of a minute.");
-			new ToolTip().SetToolTip(ChatReconnectButton, "Due to a bug with the IRC implementation, reconnecting in IRC mode may take upwards of a minute.");
-			LoadChatPage();
-		}
+		
 		void LoadChatPage()
 		{
 			updatingChat = true;
