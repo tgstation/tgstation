@@ -92079,7 +92079,8 @@
 	frequency = 1441;
 	id = "n2_in"
 	},
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
 /area/maintenance/maintcentral{
 	name = "Central Asteroid Maintenance"
 	})
@@ -117328,8 +117329,8 @@ aaa
 aaa
 aaa
 deP
-aaa
-aaa
+abC
+abC
 abC
 aaa
 aaa
