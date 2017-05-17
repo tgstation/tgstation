@@ -141,13 +141,27 @@
             this.DatabaseConfigPanel = new System.Windows.Forms.TabPage();
             this.GameConfigPanel = new System.Windows.Forms.TabPage();
             this.JobsConfigPanel = new System.Windows.Forms.TabPage();
+            this.MapsConfigPanel = new System.Windows.Forms.TabPage();
+            this.AdminsPanel = new System.Windows.Forms.TabPage();
+            this.ApplyAdminRankButton = new System.Windows.Forms.Button();
+            this.PermissionsListBox = new System.Windows.Forms.CheckedListBox();
+            this.PermissionsTItle = new System.Windows.Forms.Label();
+            this.RemoveRankButton = new System.Windows.Forms.Button();
+            this.AddRankTextBox = new System.Windows.Forms.TextBox();
+            this.AddRankButton = new System.Windows.Forms.Button();
+            this.AdminRanksListBox = new System.Windows.Forms.ListBox();
+            this.RanksTitle = new System.Windows.Forms.Label();
+            this.DeadminButton = new System.Windows.Forms.Button();
+            this.AddminTextBox = new System.Windows.Forms.TextBox();
+            this.AddminButton = new System.Windows.Forms.Button();
+            this.AdminsListBox = new System.Windows.Forms.ListBox();
+            this.AdminsTitle = new System.Windows.Forms.Label();
             this.RepoBGW = new System.ComponentModel.BackgroundWorker();
             this.BYONDTimer = new System.Windows.Forms.Timer(this.components);
             this.ServerTimer = new System.Windows.Forms.Timer(this.components);
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
-            this.MapsConfigPanel = new System.Windows.Forms.TabPage();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -163,6 +177,7 @@
             this.ChatProviderSelectorPanel.SuspendLayout();
             this.ConfigPanel.SuspendLayout();
             this.ConfigPanels.SuspendLayout();
+            this.AdminsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Panels
@@ -1530,6 +1545,7 @@
             this.ConfigPanels.Controls.Add(this.GameConfigPanel);
             this.ConfigPanels.Controls.Add(this.JobsConfigPanel);
             this.ConfigPanels.Controls.Add(this.MapsConfigPanel);
+            this.ConfigPanels.Controls.Add(this.AdminsPanel);
             this.ConfigPanels.Location = new System.Drawing.Point(-4, 0);
             this.ConfigPanels.Name = "ConfigPanels";
             this.ConfigPanels.SelectedIndex = 0;
@@ -1580,6 +1596,164 @@
             this.JobsConfigPanel.TabIndex = 3;
             this.JobsConfigPanel.Text = "Jobs";
             // 
+            // MapsConfigPanel
+            // 
+            this.MapsConfigPanel.AutoScroll = true;
+            this.MapsConfigPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.MapsConfigPanel.Location = new System.Drawing.Point(4, 22);
+            this.MapsConfigPanel.Name = "MapsConfigPanel";
+            this.MapsConfigPanel.Padding = new System.Windows.Forms.Padding(3);
+            this.MapsConfigPanel.Size = new System.Drawing.Size(868, 344);
+            this.MapsConfigPanel.TabIndex = 4;
+            this.MapsConfigPanel.Text = "Maps";
+            // 
+            // AdminsPanel
+            // 
+            this.AdminsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.AdminsPanel.Controls.Add(this.ApplyAdminRankButton);
+            this.AdminsPanel.Controls.Add(this.PermissionsListBox);
+            this.AdminsPanel.Controls.Add(this.PermissionsTItle);
+            this.AdminsPanel.Controls.Add(this.RemoveRankButton);
+            this.AdminsPanel.Controls.Add(this.AddRankTextBox);
+            this.AdminsPanel.Controls.Add(this.AddRankButton);
+            this.AdminsPanel.Controls.Add(this.AdminRanksListBox);
+            this.AdminsPanel.Controls.Add(this.RanksTitle);
+            this.AdminsPanel.Controls.Add(this.DeadminButton);
+            this.AdminsPanel.Controls.Add(this.AddminTextBox);
+            this.AdminsPanel.Controls.Add(this.AddminButton);
+            this.AdminsPanel.Controls.Add(this.AdminsListBox);
+            this.AdminsPanel.Controls.Add(this.AdminsTitle);
+            this.AdminsPanel.Location = new System.Drawing.Point(4, 22);
+            this.AdminsPanel.Name = "AdminsPanel";
+            this.AdminsPanel.Padding = new System.Windows.Forms.Padding(3);
+            this.AdminsPanel.Size = new System.Drawing.Size(868, 344);
+            this.AdminsPanel.TabIndex = 5;
+            this.AdminsPanel.Text = "Admins";
+            // 
+            // ApplyAdminRankButton
+            // 
+            this.ApplyAdminRankButton.Enabled = false;
+            this.ApplyAdminRankButton.Location = new System.Drawing.Point(272, 292);
+            this.ApplyAdminRankButton.Name = "ApplyAdminRankButton";
+            this.ApplyAdminRankButton.Size = new System.Drawing.Size(240, 46);
+            this.ApplyAdminRankButton.TabIndex = 29;
+            this.ApplyAdminRankButton.Text = "Apply Selected Rank to Selected Admin";
+            this.ApplyAdminRankButton.UseVisualStyleBackColor = true;
+            // 
+            // PermissionsListBox
+            // 
+            this.PermissionsListBox.FormattingEnabled = true;
+            this.PermissionsListBox.Location = new System.Drawing.Point(272, 29);
+            this.PermissionsListBox.Name = "PermissionsListBox";
+            this.PermissionsListBox.Size = new System.Drawing.Size(240, 259);
+            this.PermissionsListBox.TabIndex = 28;
+            // 
+            // PermissionsTItle
+            // 
+            this.PermissionsTItle.AutoSize = true;
+            this.PermissionsTItle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PermissionsTItle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.PermissionsTItle.Location = new System.Drawing.Point(269, 8);
+            this.PermissionsTItle.Name = "PermissionsTItle";
+            this.PermissionsTItle.Size = new System.Drawing.Size(113, 18);
+            this.PermissionsTItle.TabIndex = 27;
+            this.PermissionsTItle.Text = "Permissions:";
+            this.PermissionsTItle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // RemoveRankButton
+            // 
+            this.RemoveRankButton.Enabled = false;
+            this.RemoveRankButton.Location = new System.Drawing.Point(9, 292);
+            this.RemoveRankButton.Name = "RemoveRankButton";
+            this.RemoveRankButton.Size = new System.Drawing.Size(240, 20);
+            this.RemoveRankButton.TabIndex = 26;
+            this.RemoveRankButton.Text = "Remove Selected";
+            this.RemoveRankButton.UseVisualStyleBackColor = true;
+            // 
+            // AddRankTextBox
+            // 
+            this.AddRankTextBox.Location = new System.Drawing.Point(9, 318);
+            this.AddRankTextBox.Name = "AddRankTextBox";
+            this.AddRankTextBox.Size = new System.Drawing.Size(184, 20);
+            this.AddRankTextBox.TabIndex = 25;
+            // 
+            // AddRankButton
+            // 
+            this.AddRankButton.Enabled = false;
+            this.AddRankButton.Location = new System.Drawing.Point(199, 318);
+            this.AddRankButton.Name = "AddRankButton";
+            this.AddRankButton.Size = new System.Drawing.Size(50, 20);
+            this.AddRankButton.TabIndex = 24;
+            this.AddRankButton.Text = "Add";
+            this.AddRankButton.UseVisualStyleBackColor = true;
+            // 
+            // AdminRanksListBox
+            // 
+            this.AdminRanksListBox.FormattingEnabled = true;
+            this.AdminRanksListBox.Location = new System.Drawing.Point(9, 30);
+            this.AdminRanksListBox.Name = "AdminRanksListBox";
+            this.AdminRanksListBox.Size = new System.Drawing.Size(240, 251);
+            this.AdminRanksListBox.TabIndex = 23;
+            // 
+            // RanksTitle
+            // 
+            this.RanksTitle.AutoSize = true;
+            this.RanksTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RanksTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.RanksTitle.Location = new System.Drawing.Point(6, 8);
+            this.RanksTitle.Name = "RanksTitle";
+            this.RanksTitle.Size = new System.Drawing.Size(64, 18);
+            this.RanksTitle.TabIndex = 22;
+            this.RanksTitle.Text = "Ranks:";
+            this.RanksTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // DeadminButton
+            // 
+            this.DeadminButton.Enabled = false;
+            this.DeadminButton.Location = new System.Drawing.Point(536, 292);
+            this.DeadminButton.Name = "DeadminButton";
+            this.DeadminButton.Size = new System.Drawing.Size(240, 20);
+            this.DeadminButton.TabIndex = 21;
+            this.DeadminButton.Text = "Remove Selected";
+            this.DeadminButton.UseVisualStyleBackColor = true;
+            // 
+            // AddminTextBox
+            // 
+            this.AddminTextBox.Location = new System.Drawing.Point(536, 318);
+            this.AddminTextBox.Name = "AddminTextBox";
+            this.AddminTextBox.Size = new System.Drawing.Size(184, 20);
+            this.AddminTextBox.TabIndex = 20;
+            // 
+            // AddminButton
+            // 
+            this.AddminButton.Enabled = false;
+            this.AddminButton.Location = new System.Drawing.Point(726, 318);
+            this.AddminButton.Name = "AddminButton";
+            this.AddminButton.Size = new System.Drawing.Size(50, 20);
+            this.AddminButton.TabIndex = 19;
+            this.AddminButton.Text = "Add";
+            this.AddminButton.UseVisualStyleBackColor = true;
+            // 
+            // AdminsListBox
+            // 
+            this.AdminsListBox.FormattingEnabled = true;
+            this.AdminsListBox.Location = new System.Drawing.Point(536, 30);
+            this.AdminsListBox.Name = "AdminsListBox";
+            this.AdminsListBox.Size = new System.Drawing.Size(240, 251);
+            this.AdminsListBox.TabIndex = 13;
+            // 
+            // AdminsTitle
+            // 
+            this.AdminsTitle.AutoSize = true;
+            this.AdminsTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AdminsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.AdminsTitle.Location = new System.Drawing.Point(533, 8);
+            this.AdminsTitle.Name = "AdminsTitle";
+            this.AdminsTitle.Size = new System.Drawing.Size(75, 18);
+            this.AdminsTitle.TabIndex = 12;
+            this.AdminsTitle.Text = "Admins:";
+            this.AdminsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // RepoBGW
             // 
             this.RepoBGW.WorkerReportsProgress = true;
@@ -1609,17 +1783,6 @@
             // FullUpdateWorker
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
-            // 
-            // MapsConfigPanel
-            // 
-            this.MapsConfigPanel.AutoScroll = true;
-            this.MapsConfigPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
-            this.MapsConfigPanel.Location = new System.Drawing.Point(4, 22);
-            this.MapsConfigPanel.Name = "MapsConfigPanel";
-            this.MapsConfigPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.MapsConfigPanel.Size = new System.Drawing.Size(868, 344);
-            this.MapsConfigPanel.TabIndex = 4;
-            this.MapsConfigPanel.Text = "Maps";
             // 
             // Main
             // 
@@ -1652,6 +1815,8 @@
             this.ChatProviderSelectorPanel.PerformLayout();
             this.ConfigPanel.ResumeLayout(false);
             this.ConfigPanels.ResumeLayout(false);
+            this.AdminsPanel.ResumeLayout(false);
+            this.AdminsPanel.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -1775,6 +1940,20 @@
 		private System.Windows.Forms.NumericUpDown NudgePortSelector;
 		private System.Windows.Forms.Label NudgePortLabel;
 		private System.Windows.Forms.TabPage MapsConfigPanel;
+		private System.Windows.Forms.TabPage AdminsPanel;
+		private System.Windows.Forms.TextBox AddminTextBox;
+		private System.Windows.Forms.Button AddminButton;
+		private System.Windows.Forms.ListBox AdminsListBox;
+		private System.Windows.Forms.Label AdminsTitle;
+		private System.Windows.Forms.Button DeadminButton;
+		private System.Windows.Forms.ListBox AdminRanksListBox;
+		private System.Windows.Forms.Label RanksTitle;
+		private System.Windows.Forms.Button RemoveRankButton;
+		private System.Windows.Forms.TextBox AddRankTextBox;
+		private System.Windows.Forms.Button AddRankButton;
+		private System.Windows.Forms.Button ApplyAdminRankButton;
+		private System.Windows.Forms.CheckedListBox PermissionsListBox;
+		private System.Windows.Forms.Label PermissionsTItle;
 	}
 }
 
