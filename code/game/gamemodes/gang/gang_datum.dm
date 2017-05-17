@@ -38,7 +38,7 @@
 		/datum/gang_item/weapon/ammo/pistol_ammo,
 		/datum/gang_item/weapon/sniper,
 		/datum/gang_item/weapon/ammo/sniper_ammo,
-		/datum/gang_item/weapon/MG,
+		/datum/gang_item/weapon/machinegun,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/spraycan,
