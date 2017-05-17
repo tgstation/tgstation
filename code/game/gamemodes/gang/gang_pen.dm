@@ -31,6 +31,7 @@
 									to_chat(user, "<span class='warning'>This gangster already has an uplink!</span>")
 									return
 							new /obj/item/device/gangtool/soldier(M)
+							to_chat(user, "<span class='warning'>You inject [M] with a new gangtool!</span>")
 							cooldown(G)
 						if(2)
 							new /obj/item/device/gangtool/soldier(M)

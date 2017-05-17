@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 ///////////////////////////////////////////
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
 	if(!G || (gangster_mind in get_all_gangsters()) || (gangster_mind.enslaved_to && !is_gangster(gangster_mind.enslaved_to)))
-		if(is_in_gang(gangster_mind.current, G.name))
+		if(is_in_gang(gangster_mind.current, G.name) && !(gangster_mind in get_gang_bosses()))
 			return 3
 		return 0
 	if(check && gangster_mind.current.isloyal()) //Check to see if the potential gangster is implanted
@@ -190,6 +190,10 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 ////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, remove_bosses=0)
 	var/datum/gang/gang = gangster_mind.gang_datum
+	for(var/obj/O in gangster_mind.current.contents)
+		if(istype(O, /obj/item/device/gangtool/soldier))
+			qdel(O)
+
 	if(!gang)
 		return 0
 

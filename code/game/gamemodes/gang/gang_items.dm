@@ -168,7 +168,7 @@
 
 /obj/item/weapon/storage/belt/military/gang
 	name = "badass belt"
-	icon_state = "championbelt"
+	icon_state = "gangbelt"
 	item_state = "gang"
 	desc = "The belt buckle simply reads 'BAMF'."
 	storage_slots = 1

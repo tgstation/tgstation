@@ -94,25 +94,25 @@
 		switch(color)
 			if("red")
 				color_hex = "#DA0000"
-				inner_outfit = /obj/item/clothing/under/color/red, /obj/item/clothing/under/lawyer/red)
+				inner_outfit = pick(/obj/item/clothing/under/color/red, /obj/item/clothing/under/lawyer/red)
 			if("orange")
 				color_hex = "#FF9300"
-				inner_outfit = /obj/item/clothing/under/color/orange, /obj/item/clothing/under/geisha)
+				inner_outfit = pick(/obj/item/clothing/under/color/orange, /obj/item/clothing/under/geisha)
 			if("yellow")
 				color_hex = "#FFF200"
-				inner_outfit = obj/item/clothing/under/color/yellow, /obj/item/clothing/under/burial)
+				inner_outfit = pick(/obj/item/clothing/under/color/yellow, /obj/item/clothing/under/burial, /obj/item/clothing/under/suit_jacket/tan)
 			if("green")
 				color_hex = "#A8E61D"
-				inner_outfit = /obj/item/clothing/under/color/green, /obj/item/clothing/under/syndicate/camo, /obj/item/clothing/under/suit_jacket/tan)
+				inner_outfit = pick(/obj/item/clothing/under/color/green, /obj/item/clothing/under/syndicate/camo, /obj/item/clothing/under/suit_jacket/green)
 			if("blue")
 				color_hex = "#00B7EF"
-				inner_outfit = /obj/item/clothing/under/color/blue, /obj/item/clothing/under/suit_jacket/navy)
+				inner_outfit = pick(/obj/item/clothing/under/color/blue, /obj/item/clothing/under/suit_jacket/navy)
 			if("purple")
 				color_hex = "#DA00FF"
-				inner_outfit = /obj/item/clothing/under/color/lightpurple, /obj/item/clothing/under/lawyer/purpsuit)
+				inner_outfit = pick(/obj/item/clothing/under/color/lightpurple, /obj/item/clothing/under/lawyer/purpsuit)
 			if("white")
 				color_hex = "#FFFFFF"
-				inner_outfit = /obj/item/clothing/under/color/white, /obj/item/clothing/under/suit_jacket/white)
+				inner_outfit = pick(/obj/item/clothing/under/color/white, /obj/item/clothing/under/suit_jacket/white)
 
 	name = (gangname ? gangname : pick(GLOB.gang_name_pool))
 	GLOB.gang_name_pool -= name
@@ -218,8 +218,8 @@
 	//Clear the lists
 	territory_new = list()
 	territory_lost = list()
-
 	var/control = round((territory.len/GLOB.start_state.num_territories)*100, 1)
+	var/sbonus = sqrt(LAZYLEN(territory))  // Bonus given to soldier's for the gang's total territory
 	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*<BR>"
 	if(is_dominating)
 		var/seconds_remaining = domination_time_remaining()
@@ -233,11 +233,11 @@
 			var/pmessage = message
 			var/points_new = 0
 			if(istype(G, /obj/item/device/gangtool/soldier))
-				points_new = max(0,round(2 - G.points/10)) + (LAZYLEN(territory)/2) + (LAZYLEN(G.tags)/2) // Soldier points
-				pmessage += "Your influence has increased by [round(territory.len/2)] from your gang holding [territory.len] territories, and a bonus of [round(LAZYLEN(G.tags)/2)] for territories you have personally marked and kept intact.<BR>"
+				points_new = max(0,round(3 - G.points/10)) + (sbonus) + (LAZYLEN(G.tags)/2) // Soldier points
+				pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [round(LAZYLEN(G.tags)/2)] for territories you have personally marked and kept intact.<BR>"
 			else
 				points_new = max(0,round(5 - G.points/10)) + LAZYLEN(territory) // Boss points, more focused on big picture
-				pmessage += "Your influence has increased by [points_new] from your gang holding [territory.len] territories<BR>"
+				pmessage += "Your influence has increased by [round(points_new)] from your gang holding [territory.len] territories<BR>"
 			G.points += points_new
 			var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)
 			var/points_newer = 0
