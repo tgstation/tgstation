@@ -444,7 +444,7 @@
 /datum/spacevine_controller/Topic(href, href_list)
 	if(..() || !check_rights(R_ADMIN, FALSE))
 		return
-	
+
 	if(href_list["purge_vines"])
 		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") != "Yes")
 			return
@@ -476,6 +476,7 @@
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
 		SM.on_birth(SV)
+	location.Entered(SV)
 
 /datum/spacevine_controller/proc/VineDestroyed(obj/structure/spacevine/S)
 	S.master = null
@@ -555,10 +556,6 @@
 /obj/structure/spacevine/proc/spread()
 	var/direction = pick(GLOB.cardinal)
 	var/turf/stepturf = get_step(src,direction)
-
-	if(istype(stepturf, /turf/open/space/transit))
-		return
-
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_spread(src, stepturf)
 		stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
