@@ -92211,14 +92211,10 @@
 	},
 /area/atmos)
 "dfd" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 2;
-	name = "Waste To Filter";
-	on = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (SOUTHWEST)";
 	icon_state = "yellow";
