@@ -364,7 +364,8 @@
 /datum/action/item_action/ninjajaunt
 	name = "Phase Jaunt (10E)"
 	desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
-	button_icon_state = "jaunt"
+	button_icon_state = "phasein"
+	icon_icon = 'icons/mob/mob.dmi'
 
 /datum/action/item_action/ninjasmoke
 	name = "Smoke Bomb"
@@ -379,7 +380,8 @@
 /datum/action/item_action/ninjapulse
 	name = "EM Burst (25E)"
 	desc = "Disable any nearby technology with a electro-magnetic pulse."
-	button_icon_state = "Sentinel's Compromise"
+	button_icon_state = "emppulse"
+	icon_icon = 'icons/effects/effects.dmi'
 
 /datum/action/item_action/ninjastar
 	name = "Create Throwing Stars (1E)"
@@ -402,12 +404,13 @@
 /datum/action/item_action/ninja_stealth
 	name = "Toggle Stealth"
 	desc = "Toggles stealth mode on and off."
-	button_icon_state = "beam_up"
+	button_icon_state = "ninja_cloak"
 
 /datum/action/item_action/toggle_glove
 	name = "Toggle interaction"
 	desc = "Switch between normal interaction and drain mode."
-	button_icon_state = "lightning"
+	button_icon_state = "s-ninjan"
+	icon_icon = 'icons\obj\clothing\gloves\gloves.dmi'
 
 
 /datum/action/item_action/organ_action

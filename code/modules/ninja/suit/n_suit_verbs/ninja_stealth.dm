@@ -36,12 +36,8 @@ Contents:
 	return 0
 
 
-/obj/item/clothing/suit/space/space_ninja/proc/stealth(datum/action/item_action/ninja_stealth/action)
+/obj/item/clothing/suit/space/space_ninja/proc/stealth()
 	if(!s_busy)
 		toggle_stealth()
-		if(s_active)
-			action.button_icon_state = "beam_down"
-		else
-			action.button_icon_state = "beam_up"
 	else
 		to_chat(affecting, "<span class='danger'>Stealth does not appear to work!</span>")
