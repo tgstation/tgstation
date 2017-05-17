@@ -92,8 +92,8 @@
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	 if(A.IsObscured())
-	 	return
+	if(A.IsObscured())
+		return
 
 	if(istype(loc,/obj/mecha))
 		var/obj/mecha/M = loc
