@@ -20,7 +20,12 @@
 	. = capitalize(.)
 
 	var/input_ending = copytext(input, length(input))
-	if(input_ending in list("!","?","."))
+
+	var/static/list/endings
+	if(!endings)
+		endings = list("!", "?", ".")
+
+	if(input_ending in endings)
 		. += input_ending
 
 	add_to_cache(input, .)
