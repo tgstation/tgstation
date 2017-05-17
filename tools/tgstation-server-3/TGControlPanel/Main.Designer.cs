@@ -143,6 +143,7 @@
             this.JobsConfigPanel = new System.Windows.Forms.TabPage();
             this.MapsConfigPanel = new System.Windows.Forms.TabPage();
             this.AdminsPanel = new System.Windows.Forms.TabPage();
+            this.NegativePermissions = new System.Windows.Forms.CheckedListBox();
             this.ApplyAdminRankButton = new System.Windows.Forms.Button();
             this.PermissionsListBox = new System.Windows.Forms.CheckedListBox();
             this.PermissionsTItle = new System.Windows.Forms.Label();
@@ -162,6 +163,7 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
+            this.NegativePermissionsTitle = new System.Windows.Forms.Label();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -1610,6 +1612,8 @@
             // AdminsPanel
             // 
             this.AdminsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.AdminsPanel.Controls.Add(this.NegativePermissionsTitle);
+            this.AdminsPanel.Controls.Add(this.NegativePermissions);
             this.AdminsPanel.Controls.Add(this.ApplyAdminRankButton);
             this.AdminsPanel.Controls.Add(this.PermissionsListBox);
             this.AdminsPanel.Controls.Add(this.PermissionsTItle);
@@ -1630,6 +1634,14 @@
             this.AdminsPanel.TabIndex = 5;
             this.AdminsPanel.Text = "Admins";
             // 
+            // NegativePermissions
+            // 
+            this.NegativePermissions.FormattingEnabled = true;
+            this.NegativePermissions.Location = new System.Drawing.Point(272, 172);
+            this.NegativePermissions.Name = "NegativePermissions";
+            this.NegativePermissions.Size = new System.Drawing.Size(240, 109);
+            this.NegativePermissions.TabIndex = 30;
+            // 
             // ApplyAdminRankButton
             // 
             this.ApplyAdminRankButton.Enabled = false;
@@ -1645,7 +1657,7 @@
             this.PermissionsListBox.FormattingEnabled = true;
             this.PermissionsListBox.Location = new System.Drawing.Point(272, 29);
             this.PermissionsListBox.Name = "PermissionsListBox";
-            this.PermissionsListBox.Size = new System.Drawing.Size(240, 259);
+            this.PermissionsListBox.Size = new System.Drawing.Size(240, 109);
             this.PermissionsListBox.TabIndex = 28;
             // 
             // PermissionsTItle
@@ -1783,6 +1795,18 @@
             // FullUpdateWorker
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
+            // 
+            // NegativePermissionsTitle
+            // 
+            this.NegativePermissionsTitle.AutoSize = true;
+            this.NegativePermissionsTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NegativePermissionsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.NegativePermissionsTitle.Location = new System.Drawing.Point(269, 151);
+            this.NegativePermissionsTitle.Name = "NegativePermissionsTitle";
+            this.NegativePermissionsTitle.Size = new System.Drawing.Size(192, 18);
+            this.NegativePermissionsTitle.TabIndex = 31;
+            this.NegativePermissionsTitle.Text = "Negative Permissions:";
+            this.NegativePermissionsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Main
             // 
@@ -1954,6 +1978,8 @@
 		private System.Windows.Forms.Button ApplyAdminRankButton;
 		private System.Windows.Forms.CheckedListBox PermissionsListBox;
 		private System.Windows.Forms.Label PermissionsTItle;
+		private System.Windows.Forms.CheckedListBox NegativePermissions;
+		private System.Windows.Forms.Label NegativePermissionsTitle;
 	}
 }
 
