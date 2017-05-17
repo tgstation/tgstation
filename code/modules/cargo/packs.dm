@@ -1608,7 +1608,7 @@
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
 	                /obj/item/toy/redbutton,
-					/obj/item/toy/eightball
+					/obj/item/toy/eightball,
 					/obj/item/weapon/fidgetspinner)
 	crate_name = "toy crate"
 
