@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 12-05-2017 18:47 (UTC)
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -51266,9 +51265,10 @@
 	},
 /area/atmos)
 "bKH" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 10;
 	icon_state = "intact";
-	dir = 10
+	tag = "icon-intact (SOUTHEAST)"
 	},
 /turf/open/floor/plasteel/yellow/corner{
 	tag = "icon-yellowcorner (WEST)";
@@ -57592,7 +57592,7 @@
 /area/atmos)
 "bVC" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	dir = 2;
+	dir = 4;
 	filter_type = "n2";
 	name = "nitogren filter";
 	on = 1
@@ -107243,7 +107243,7 @@ btk
 btk
 btk
 ddI
-cJW
+ddI
 btk
 btk
 btk
@@ -108016,7 +108016,7 @@ bxl
 ddJ
 ddX
 bte
-bBF
+dem
 cHi
 bDU
 bte
@@ -108273,7 +108273,7 @@ bte
 byn
 bzm
 bte
-bBF
+dem
 bCC
 bDO
 bte
@@ -109041,10 +109041,10 @@ bzr
 ddn
 bwc
 ddB
-ddL
+ddv
 dea
 bAq
-dep
+ddo
 dey
 deE
 bzr
@@ -109297,12 +109297,12 @@ brI
 btj
 ddo
 bwc
-ddC
-ddM
-deb
+ddB
+ddv
+dea
 dej
-deq
-dez
+ddo
+dey
 cUI
 bzr
 bGC
@@ -109559,7 +109559,7 @@ ddN
 bzn
 bAr
 buB
-bzo
+ddY
 bDP
 bzr
 bGD
@@ -109809,14 +109809,14 @@ boR
 aYW
 brI
 btj
-ddp
+ddo
 ddv
-ddE
-ddO
-dec
+ddB
+ddv
+dea
 bwc
-der
-deA
+ddo
+dey
 bDQ
 bzr
 bGE
@@ -110066,14 +110066,14 @@ boR
 aYW
 brJ
 bzr
-ddq
-ddw
-ddF
-ddP
-ded
+ddn
+ddv
+ddB
+ddv
+dea
 bwc
-des
-deB
+ddo
+dey
 bDR
 bzr
 bGF
@@ -110327,7 +110327,7 @@ byq
 bwd
 bxn
 ddQ
-bzo
+ddY
 byp
 det
 bzm
@@ -110581,7 +110581,7 @@ bqm
 brL
 bzr
 ddr
-ddx
+ddr
 bxo
 ddR
 dee
@@ -111098,10 +111098,10 @@ buC
 ddy
 bxq
 ddT
-def
+ddV
 bAu
-deu
-bCF
+ddG
+ddV
 bDT
 bzr
 bGJ
@@ -111359,7 +111359,7 @@ bzp
 dek
 bBG
 bwg
-deG
+ddG
 bzr
 bGK
 bIk
@@ -111612,11 +111612,11 @@ buE
 ddz
 ddG
 ddV
-deg
+ddG
 del
-dev
+ddV
 deC
-bCF
+ddV
 bzr
 bQB
 bGL
@@ -111875,7 +111875,7 @@ btk
 btk
 btk
 bEX
-deI
+dei
 bTq
 aXZ
 bCG
