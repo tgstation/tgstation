@@ -931,7 +931,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/security/pre_throw(obj/item/I)
 	if(istype(I, /obj/item/weapon/grenade))
 		var/obj/item/weapon/grenade/G = I
-		G.prime()
+		G.preprime()
 	else if(istype(I, /obj/item/device/flashlight))
 		var/obj/item/device/flashlight/F = I
 		F.on = TRUE
