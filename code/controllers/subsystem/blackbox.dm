@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/sqlrowlist = list()
 
 	for (var/datum/feedback_variable/FV in feedback)
-		sqlrowlist += list("time" = "Now()", "round_id" = GLOB.round_id, "var_name" =  "'[sanitizeSQL(FV.get_variable())]'", "var_value" = FV.get_value(), "details" = "'[sanitizeSQL(FV.get_details())]'")
+		sqlrowlist += list(list("time" = "Now()", "round_id" = GLOB.round_id, "var_name" =  "'[sanitizeSQL(FV.get_variable())]'", "var_value" = FV.get_value(), "details" = "'[sanitizeSQL(FV.get_details())]'"))
 
 	if (!length(sqlrowlist))
 		return
