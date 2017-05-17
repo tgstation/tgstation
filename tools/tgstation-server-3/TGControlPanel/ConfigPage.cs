@@ -71,8 +71,9 @@ namespace TGControlPanel
 
 			LoadAdminsConfig();
 
-			ConfigPanels.SelectedIndexChanged += ConfigPanels_SelectedIndexChanged;
 			ConfigPanels.SelectedIndex = Properties.Settings.Default.LastConfigPageIndex;
+			ConfigApply.Enabled = (ConfigIndex)ConfigPanels.SelectedIndex != ConfigIndex.Admins;
+			ConfigPanels.SelectedIndexChanged += ConfigPanels_SelectedIndexChanged;
 
 			Resize += ReadjustFlow;
 		}
