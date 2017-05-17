@@ -75,6 +75,7 @@
 			handle_spin(user)
 			
 /obj/item/weapon/fidgetspinner/syndicatespinner
+	name = "syndi-spinner"
 	desc = "It's a Donk Co. branded Syndi-Spinner. Instead of having thick, dull blades like fidget spinners typically do, this one has thin, sharp blades."
 	syndispinner = 1
 	icon_state = "syndifidget"
