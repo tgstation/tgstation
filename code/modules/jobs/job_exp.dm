@@ -170,9 +170,10 @@ GLOBAL_PROTECT(exp_to_update)
 	for(var/client/L in GLOB.clients)
 		if(L.inactivity >= 6000)
 			continue
-		addtimer(CALLBACK(L,/client/proc/update_exp_client,mins,ann),10)
+		addtimer(CALLBACK(L,/client/proc/update_exp_list,mins,ann),10)
 		CHECK_TICK
-	update_exp_db()
+	SSdbcore.MassInsert(format_table_name("role_time"),GLOB.exp_to_update,TRUE)
+	LAZYCLEARLIST(GLOB.exp_to_update)
 
 //Manual incrementing/updating
 /client/proc/update_exp_client(var/minutes, var/announce_changes = 0)
@@ -303,26 +304,10 @@ GLOBAL_PROTECT(exp_to_update)
 
 	for(var/jtype in play_records)
 		if(play_records[jtype] != old_records[jtype])
-			LAZYINITLIST(GLOB.exp_to_update[ckey])
-			LAZYINITLIST(GLOB.exp_to_update[ckey][jtype])
-			GLOB.exp_to_update[ckey][jtype] = play_records[jtype]
+			LAZYINITLIST(GLOB.exp_to_update)
+			GLOB.exp_to_update.Add(list(list(
+				"job" = jtype,
+				"ckey" = sanitizeSQL(ckey),
+				"minutes" = play_records[jtype])))
+
 	prefs.exp = play_records
-
-
-//writes everything in the exp_to_update list to the db
-/proc/update_exp_db()
-	if(!config.use_exp_tracking)
-		return
-	if(!SSdbcore.Connect())
-		return -1
-	for(var/keys in GLOB.exp_to_update)
-		var/keyname = keys
-		for(var/jtype in GLOB.exp_to_update[keyname])
-			var jobname = jtype
-			var time = GLOB.exp_to_update[keyname][jtype]
-			var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(keyname)]', '[sanitizeSQL(jobname)]', '[sanitizeSQL(time)]') ON DUPLICATE KEY UPDATE minutes = VALUES('[sanitizeSQL(time)]')")
-			if(!update_query.Execute())
-				var/err = update_query.ErrorMsg()
-				log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
-				message_admins("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
-				return
