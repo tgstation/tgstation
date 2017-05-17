@@ -192,44 +192,17 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 
-//Dual Feed Shotgun
+//Security Auto Shotgun
 
 /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube
 	name = "cycler shotgun"
-	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
+	desc = "An advanced automatic shotgun used by high ranking security personal, uses lethal buckshot as standard issue with a six-shell capacity"
 	icon_state = "cycler"
 	origin_tech = "combat=4;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
-	w_class = WEIGHT_CLASS_HUGE
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
+	w_class = WEIGHT_CLASS_BULKY
 	var/toggled = 0
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
-
-/obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/New()
-	..()
-	if (!alternate_magazine)
-		alternate_magazine = new mag_type(src)
-
-/obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
-	if(!chambered && magazine.contents.len)
-		pump()
-	else
-		toggle_tube(user)
-
-/obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/proc/toggle_tube(mob/living/user)
-	var/current_mag = magazine
-	var/alt_mag = alternate_magazine
-	magazine = alt_mag
-	alternate_magazine = current_mag
-	toggled = !toggled
-	if(toggled)
-		to_chat(user, "You switch to tube B.")
-	else
-		to_chat(user, "You switch to tube A.")
-
-/obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(user.incapacitated() || !Adjacent(user) || !istype(user))
-		return
-	pump()
 
 
 // DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm
