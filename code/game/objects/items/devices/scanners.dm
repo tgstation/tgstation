@@ -25,7 +25,7 @@ MASS SPECTROMETER
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
-		START_PROCESSING(SSobj, src)
+		START_PROCESSING(SSfastprocess, src)
 
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	if(ismob(loc))
@@ -39,7 +39,7 @@ MASS SPECTROMETER
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		STOP_PROCESSING(SSobj, src)
+		STOP_PROCESSING(SSfastprocess, src)
 		return null
 	scan()
 
