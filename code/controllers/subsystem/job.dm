@@ -287,8 +287,6 @@ SUBSYSTEM_DEF(job)
 			if(PopcapReached())
 				RejectPlayer(player)
 
-			var/datum/job/validjob
-
 			// Loop through all jobs
 			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
 				if(!job)
@@ -315,19 +313,11 @@ SUBSYSTEM_DEF(job)
 
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
+						Debug("DO pass, Player: [player], Level:[level], Job:[job.title]")
+						AssignRole(player, job.title)
+						unassigned -= player
+						break
 
-						validjob = job
-
-						//Is the Job empty? Stop Looking Then!
-						if (!job.current_positions)
-							break
-
-			//Assign us the last job we found
-			if (validjob)
-				Debug("DO pass, Player: [player], Level:[level], Job:[validjob.title]")
-				AssignRole(player, validjob.title)
-				unassigned -= player
-				break
 
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct

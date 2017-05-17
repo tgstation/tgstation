@@ -287,9 +287,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			GLOB.blood_target = null
 		else
 			blood_target = GLOB.blood_target
-	if(Cviewer)
-		if(Cviewer.seeking && Cviewer.master)
-			blood_target = Cviewer.master
+	if(Cviewer && Cviewer.seeking && Cviewer.master)
+		blood_target = Cviewer.master
+		desc = "Your blood sense is leading you to [Cviewer.master]"
 	if(!blood_target)
 		if(!GLOB.sac_complete)
 			if(icon_state == "runed_sense0")
@@ -301,22 +301,21 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			desc = "Nar-Sie demands that [GLOB.sac_mind] be sacrificed before the summoning ritual can begin."
 			add_overlay(GLOB.sac_image)
 		else
-			if(SSticker.mode.eldergod)
-				desc = "The sacrifice is complete, prepare to summon Nar-Sie!"
-			else
-				desc = "The summoning is complete, glory to Nar-Sie!"
 			if(icon_state == "runed_sense1")
 				return
 			animate(src, transform = null, time = 1, loop = 0)
 			angle = 0
 			cut_overlays()
 			icon_state = "runed_sense1"
+			desc = "The sacrifice is complete, bring the wrath of Nar-Sie upon the crew!"
 			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)
 	var/turf/Q = get_turf(mob_viewer)
 	var/area/A = get_area(P)
 	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
+		icon_state = "runed_sense2"
+		desc = "[blood_target] is no longer in your sector, you cannot sense its presence here."
 		return
 	desc = "You are currently tracking [blood_target] in [A.name]."
 	var/target_angle = Get_Angle(Q, P)

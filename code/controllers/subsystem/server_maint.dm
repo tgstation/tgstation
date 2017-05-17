@@ -3,9 +3,10 @@
 SUBSYSTEM_DEF(server_maint)
 	name = "Server Tasks"
 	wait = 6
-	flags = SS_POST_FIRE_TIMING|SS_FIRE_IN_LOBBY
+	flags = SS_POST_FIRE_TIMING
 	priority = 10
 	init_order = INIT_ORDER_SERVER_MAINT
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
