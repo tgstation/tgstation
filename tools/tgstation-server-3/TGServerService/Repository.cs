@@ -7,9 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Security.AccessControl;
 using System.Security.Cryptography;
-using System.Security.Principal;
 using System.Web.Script.Serialization;
 using TGServiceInterface;
 
@@ -118,7 +116,7 @@ namespace TGServerService
 				{
 					DisposeRepo();
 					Program.DeleteDirectory(RepoPath);
-					Program.DeleteDirectory(StaticBackupDir);   //you had your chance
+					Program.DeleteDirectory(StaticBackupDir);	//you had your chance
 					DeletePRList();
 					lock (configLock)
 					{
@@ -142,14 +140,6 @@ namespace TGServerService
 						Program.CopyDirectory(RepoConfig, StaticConfigDir);
 					}
 					Program.CopyDirectory(RepoData, StaticDataDir, null, true);
-
-					//give everyone read permissions for the static data directory
-					DirectorySecurity sec = Directory.GetAccessControl(StaticDataDir);
-					// Using this instead of the "Everyone" string means we work on non-English systems.
-					SecurityIdentifier everyone = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
-					sec.AddAccessRule(new FileSystemAccessRule(everyone, FileSystemRights.Read | FileSystemRights.Synchronize, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
-					Directory.SetAccessControl(StaticDataDir, sec);
-
 					File.Copy(RepoPath + LibMySQLFile, StaticDirs + LibMySQLFile, true);
 					SendMessage("REPO: Clone complete!");
 				}
