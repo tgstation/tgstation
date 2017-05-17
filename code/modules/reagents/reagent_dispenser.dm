@@ -65,6 +65,12 @@
 	icon_state = "fuel"
 	reagent_id = "welding_fuel"
 
+/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/user, params, prevent_warning = 0)
+	if((istype(I, /obj/item/weapon/weldingtool) || /obj/item/weapon/weldingtool/largetank || /obj/item/weapon/weldingtool/largetank/cyborg || /obj/item/weapon/weldingtool/mini || /obj/item/weapon/weldingtool/hugetank || /obj/item/weapon/weldingtool/experimental || /obj/item/weapon/weldingtool/experimental/brass) || I.welding = 1
+		var/safety = alert(user, "Attacking a fuel tank with a lit welding tool suddenly seems like a very bad idea...", "Proceed", "Abort")
+		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
+			return
+
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
 	qdel(src)
