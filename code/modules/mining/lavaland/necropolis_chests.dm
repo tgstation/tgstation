@@ -1,8 +1,5 @@
 //The chests dropped by mob spawner tendrils. Also contains associated loot.
 
-test
-test
-
 
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
