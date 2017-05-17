@@ -1,4 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "revenant respawning will not spam up deadchat so much, and is less likely to break."
