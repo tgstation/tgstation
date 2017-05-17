@@ -602,6 +602,10 @@
 	var/datum/language_holder/H = get_language_holder()
 	. = H.has_language(dt)
 
+/atom/movable/proc/copy_known_languages_from(thing, replace=FALSE)
+	var/datum/language_holder/H = get_language_holder()
+	. = H.copy_known_languages_from(thing, replace)
+
 // Whether an AM can speak in a language or not, independent of whether
 // it KNOWS the language
 /atom/movable/proc/could_speak_in_language(datum/language/dt)
