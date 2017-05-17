@@ -286,6 +286,7 @@
 	item_state = "artistic_toolbox"
 	var/active = FALSE
 	icon = 'icons/obj/weapons.dmi'
+	attack_verb = list("robusted")
 
 /obj/item/toy/windupToolbox/attack_self(mob/user)
 	if(!active)
