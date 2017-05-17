@@ -13,8 +13,6 @@
 	var/list/rangers = list()
 	var/charge = 35
 	var/stop = 0
-	var/list/available = list()
-	var/list/select_name = list()
 	var/list/spotlights = list()
 	var/list/sparkles = list()
 	var/static/list/songs = list(
@@ -30,12 +28,26 @@
 	var/song_path = null
 	var/song_length = 0
 	var/song_beat = 0
+	var/GBP_required = 0
 
 /datum/track/New(name, path, length, beat)
 	song_name = name
 	song_path = path
 	song_length = length
 	song_beat = beat
+
+/obj/machinery/disco/proc/add_track(file, name, length, beat)
+	var/sound/S = file
+	if(!istype(S))
+		return
+	if(!name)
+		name = "[file]"
+	if(!beat)
+		beat = 5
+	if(!length)
+		length = 2400 //Unless there's a way to discern via BYOND.
+	var/datum/track/T = new /datum/track(name, file, length, beat)
+	songs += T
 
 /obj/machinery/disco/Initialize()
 	..()
@@ -73,7 +85,7 @@
 		return
 	if(!allowed(user))
 		to_chat(user,"<span class='warning'>Error: Access Denied - Message: Only the engineering department can be trusted with this kind of power.</span>")
-		playsound_local(src,'sound/misc/compiler-failure.ogg', 25, 1)
+		user.playsound_local(src,'sound/misc/compiler-failure.ogg', 25, 1)
 		return
 	if(!Adjacent(user) && !isAI(user))
 		return
@@ -126,14 +138,14 @@
 			if(active)
 				to_chat(usr, "<span class='warning'>Error: You cannot change the song until the current one is over.</span>")
 				return
-			check_GBP()
-			select_name = input(usr, "Choose your song", "Track:") as null|anything in available
-			if (QDELETED(src))
-				return
+
+			var/list/available = list()
 			for(var/datum/track/S in songs)
-				if(select_name == S.song_name)
-					selection = S
-					break
+				available[S.song_name] = S
+			var/selected = input(usr, "Choose your song", "Track:") as null|anything in available
+			if(QDELETED(src) || !selected || !istype(available[selected], /datum/track))
+				return
+			selection = available[selected]
 			updateUsrDialog()
 		if("horn")
 			deejay('sound/items/AirHorn2.ogg')
@@ -158,13 +170,6 @@
 		return
 	charge -= 5
 	playsound(src, S,300,1)
-
-/obj/machinery/disco/proc/check_GBP()
-	available |= "Engineering's Basic Beat"
-	available |= "Engineering's Domination Dance"
-	available |= "Engineering's Superiority Shimmy"
-	available |= "Engineering's Ultimate High-Energy Hustle"
-
 
 /obj/machinery/disco/proc/dance_setup()
 	stop = world.time + selection.song_length

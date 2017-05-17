@@ -175,6 +175,21 @@ research holder datum.
 		return
 	..()
 
+//Smelter files
+/datum/research/smelter/New()
+	for(var/T in (subtypesof(/datum/tech)))
+		possible_tech += new T(src)
+	for(var/path in subtypesof(/datum/design))
+		var/datum/design/D = new path(src)
+		possible_designs += D
+		if((D.build_type & SMELTER) && ("initial" in D.category))
+			AddDesign2Known(D)
+
+/datum/research/smelter/AddDesign2Known(datum/design/D)
+	if(!(D.build_type & SMELTER))
+		return
+	..()
+
 
 /***************************************************************
 **						Technology Datums					  **

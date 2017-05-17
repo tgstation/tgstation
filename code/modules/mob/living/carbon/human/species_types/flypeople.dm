@@ -2,7 +2,7 @@
 	name = "Flyperson"
 	id = "fly"
 	say_mod = "buzzes"
-	mutant_organs = list(/obj/item/organ/tongue/fly)
+	mutanttongue = /obj/item/organ/tongue/fly
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)

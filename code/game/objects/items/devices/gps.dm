@@ -7,6 +7,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;magnets=1;bluespace=2"
+	unique_rename = TRUE
 	var/gpstag = "COM0"
 	var/emped = FALSE
 	var/turf/locked_location
@@ -117,9 +118,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	switch(action)
 		if("rename")
 			var/a = input("Please enter desired tag.", name, gpstag) as text
-			a = uppertext(copytext(sanitize(a), 1, 5))
+			a = copytext(sanitize(a), 1, 20)
 			gpstag = a
-			name = "global positioning system ([gpstag])"
 			. = TRUE
 		if("power")
 			toggletracking(usr)

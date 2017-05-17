@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/disable_communication,
 	/client/proc/print_pointers,
 	/client/proc/cmd_show_at_list,
-	/client/proc/cmd_show_at_list,
+	/client/proc/cmd_show_at_markers,
 	/client/proc/manipulate_organs
 ))
 
@@ -154,13 +154,34 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
 	 <br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
 
-	for(var/i=1; i<=GLOB.active_turfs_startlist.len; i++)
-		dat += GLOB.active_turfs_startlist[i]
+	for(var/t in GLOB.active_turfs_startlist)
+		var/turf/T = t
+		dat += "[ADMIN_COORDJMP(T)]\n"
 		dat += "<br>"
 
 	usr << browse(dat, "window=at_list")
 
 	SSblackbox.add_details("admin_verb","Show Roundstart Active Turfs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_show_at_markers()
+	set category = "Mapping"
+	set name = "Show roundstart AT markers"
+	set desc = "Places a marker on all active-at-roundstart turfs"
+
+	var/count = 0
+	for(var/obj/effect/abstract/marker/at/AT in GLOB.all_abstract_markers)
+		qdel(AT)
+		count++
+
+	if(count)
+		to_chat(usr, "[count] AT markers removed.")
+	else
+		for(var/t in GLOB.active_turfs_startlist)
+			new /obj/effect/abstract/marker/at(t)
+			count++
+		to_chat(usr, "[count] AT markers placed.")
+
+	SSblackbox.add_details("admin_verb","Show Roundstart Active Turf Markers")
 
 /client/proc/enable_debug_verbs()
 	set category = "Debug"

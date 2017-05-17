@@ -1,4 +1,3 @@
-
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
 	name = "Xenobiological Jelly Entity"
@@ -325,4 +324,4 @@
 	M.transfer_to(dupe)
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",
-		"<span class='notice'>and start moving this one!</span>")
+		"<span class='notice'>...and move this one instead.</span>")

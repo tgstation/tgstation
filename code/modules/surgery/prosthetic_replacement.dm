@@ -16,11 +16,20 @@
 
 /datum/surgery_step/add_prosthetic
 	name = "add prosthetic"
-	implements = list(/obj/item/bodypart = 100, /obj/item/weapon/twohanded/required/chainsaw = 100, /obj/item/weapon/melee/synthetic_arm_blade = 100)
+	implements = list(/obj/item/bodypart = 100, /obj/item/weapon/organ_storage = 100, /obj/item/weapon/twohanded/required/chainsaw = 100, /obj/item/weapon/melee/synthetic_arm_blade = 100)
 	time = 32
 	var/organ_rejection_dam = 0
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(istype(tool, /obj/item/weapon/organ_storage))
+		if(!tool.contents.len)
+			to_chat(user, "<span class='notice'>There is nothing inside [tool]!</span>")
+			return -1
+		var/obj/item/I = tool.contents[1]
+		if(!isbodypart(I))
+			to_chat(user, "<span class='notice'>[I] cannot be attached!</span>")
+			return -1
+		tool = I
 	if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/BP = tool
 		if(ismonkey(target))// monkey patient only accept organic monkey limbs
@@ -49,6 +58,11 @@
 		return -1
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(istype(tool, /obj/item/weapon/organ_storage))
+		tool.icon_state = "evidenceobj"
+		tool.desc = "A container for holding body parts."
+		tool.cut_overlays()
+		tool = tool.contents[1]
 	if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/L = tool
 		user.drop_item()
@@ -58,9 +72,9 @@
 		user.visible_message("[user] successfully replaces [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You succeed in replacing [target]'s [parse_zone(target_zone)].</span>")
 		return 1
 	else
-		target.regenerate_limb(target_zone)
-		var/obj/item/bodypart/L = target.get_bodypart(target_zone)
+		var/obj/item/bodypart/L = target.newBodyPart(target_zone, FALSE, FALSE)
 		L.is_pseudopart = TRUE
+		L.attach_limb(target)
 		user.visible_message("[user] finishes attaching [tool]!", "<span class='notice'>You attach [tool].</span>")
 		qdel(tool)
 		if(istype(tool, /obj/item/weapon/twohanded/required/chainsaw))

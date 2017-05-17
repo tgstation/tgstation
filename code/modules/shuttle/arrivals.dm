@@ -1,4 +1,3 @@
-
 /obj/docking_port/mobile/arrivals
 	name = "arrivals shuttle"
 	id = "arrivals"
@@ -175,7 +174,7 @@
 
 	Launch(TRUE)
 
-	user << "<span class='notice'>Calling your shuttle. One moment...</span>"
+	to_chat(user, "<span class='notice'>Calling your shuttle. One moment...</span>")
 	while(mode != SHUTTLE_CALL && !damaged)
 		stoplag()
 

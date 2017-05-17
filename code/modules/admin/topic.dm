@@ -8,7 +8,7 @@
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN))
 			return
-		
+
 		var/ahelp_ref = href_list["ahelp"]
 		var/datum/admin_help/AH = locate(ahelp_ref)
 		if(AH)
@@ -94,13 +94,6 @@
 				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				new/datum/round_event/ghost_role/blob(TRUE, strength)
-			if("gangs")
-				if(src.makeGangsters())
-					message_admins("[key_name(usr)] created gangs.")
-					log_admin("[key_name(usr)] created gangs.")
-				else
-					message_admins("[key_name(usr)] tried to create gangs. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed create gangs.")
 			if("centcom")
 				message_admins("[key_name(usr)] is creating a Centcom response team...")
 				if(src.makeEmergencyresponseteam())
@@ -1170,7 +1163,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		var/dat = {"<B>What mode do you wish to play?</B><HR>"}
 		for(var/mode in config.modes)
@@ -1184,7 +1177,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1199,7 +1192,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if (SSticker && SSticker.mode)
+		if (SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		GLOB.master_mode = href_list["c_mode2"]
 		log_admin("[key_name(usr)] set the mode as [GLOB.master_mode].")
@@ -1213,7 +1206,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1511,17 +1504,6 @@
 
 		usr.client.cmd_admin_animalize(M)
 
-	else if(href_list["gangpoints"])
-		var/datum/gang/G = locate(href_list["gangpoints"]) in SSticker.mode.gangs
-		if(G)
-			var/newpoints = input("Set [G.name ] Gang's influence.","Set Influence",G.points) as null|num
-			if(!newpoints)
-				return
-			message_admins("[key_name_admin(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
-			log_admin("[key_name(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
-			G.points = newpoints
-			G.message_gangtools("Your gang now has [G.points] influence.")
-
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
@@ -1810,7 +1792,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!SSticker || !SSticker.mode)
+		if(!SSticker.HasRoundStarted())
 			alert("The game hasn't started yet!")
 			return
 

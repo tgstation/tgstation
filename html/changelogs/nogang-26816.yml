@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes:
+  - rscdel: "Gang game mode was removed"

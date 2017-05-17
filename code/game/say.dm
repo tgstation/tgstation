@@ -56,10 +56,16 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
 	//End name span.
 	var/endspanpart = "</span>"
-	//Message
-	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
+	//Message
+	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans)]</span></span>"
+
+	var/languageicon = ""
+	var/datum/language/D = get_language_instance(message_language)
+	if(D.display_icon(src))
+		languageicon = "[D.get_icon()] "
+
+	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
@@ -67,33 +73,37 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
 
-/atom/movable/proc/say_quote(input, list/spans=list(), message_mode)
-	if(!input)
-		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+/atom/movable/proc/say_mod(input, message_mode)
 	var/ending = copytext(input, length(input))
 	if(copytext(input, length(input) - 1) == "!!")
-		spans |= SPAN_YELL
-		return "[verb_yell], \"[attach_spans(input, spans)]\""
-	input = attach_spans(input, spans)
-	if(ending == "?")
-		return "[verb_ask], \"[input]\""
-	if(ending == "!")
-		return "[verb_exclaim], \"[input]\""
+		return verb_yell
+	else if(ending == "?")
+		return verb_ask
+	else if(ending == "!")
+		return verb_exclaim
+	else
+		return verb_say
 
-	return "[verb_say], \"[input]\""
+/atom/movable/proc/say_quote(input, list/spans=list(), message_mode)
+	if(!input)
+		input = "..."
+
+	if(copytext(input, length(input) - 1) == "!!")
+		spans |= SPAN_YELL
+
+	var/spanned = attach_spans(input, spans)
+	return "[say_mod(input, message_mode)], \"[spanned]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
 	if(has_language(language))
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
-			if(AM.verb_say != speaker.verb_say || AM.verb_ask != speaker.verb_ask || AM.verb_exclaim != speaker.verb_exclaim || AM.verb_yell != speaker.verb_yell) //If the saymod was changed
-				return speaker.say_quote(raw_message, spans, message_mode)
 			return AM.say_quote(raw_message, spans, message_mode)
 		else
 			return speaker.say_quote(raw_message, spans, message_mode)
 	else if(language)
 		var/atom/movable/AM = speaker.GetSource()
-		var/datum/language/D = new language
+		var/datum/language/D = get_language_instance(language)
 		raw_message = D.scramble(raw_message)
 		if(AM)
 			return AM.say_quote(raw_message, spans, message_mode)

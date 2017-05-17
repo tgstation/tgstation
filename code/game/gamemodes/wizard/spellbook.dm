@@ -253,7 +253,7 @@
 /datum/spellbook_entry/the_traps
 	name = "The Traps!"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
-	category = "Offensive"
+	category = "Defensive"
 	cost = 1
 
 
