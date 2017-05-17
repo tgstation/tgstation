@@ -596,8 +596,6 @@ Difficulty: Hard
 		var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor)
-		if(ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid))
-			L.adjustBruteLoss(damage)
 		add_logs(caster, L, "struck with a [name]")
 	for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
 		hit_things += M

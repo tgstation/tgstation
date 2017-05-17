@@ -942,10 +942,10 @@
 		new /obj/effect/overlay/temp/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/overlay/temp/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
-			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, friendly_fire_check)
+			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, TRUE) //No friendly fire, this is a utility tool
 			B.damage = 30
 		for(var/t in RANGE_TURFS(1, source))
-			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, friendly_fire_check)
+			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, TRUE)
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user) //regardless, take all mobs near us along
