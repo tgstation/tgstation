@@ -1019,4 +1019,4 @@
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/overlay/temp/hierophant/blast/B = new(t, user, friendly_fire_check)
-		B.damage = 30
+		B.damage = 15
