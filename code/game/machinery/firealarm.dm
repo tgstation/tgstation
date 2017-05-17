@@ -1,10 +1,10 @@
 /obj/item/weapon/electronics/firealarm
 	name = "fire alarm electronics"
-	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
+	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
 
 /obj/item/wallframe/firealarm
 	name = "fire alarm frame"
-	desc = "Used for building Fire Alarms"
+	desc = "Used for building fire alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
@@ -63,7 +63,7 @@
 			return
 
 		if(src.z == ZLEVEL_STATION)
-			add_overlay("overlay_[security_level]")
+			add_overlay("overlay_[GLOB.security_level]")
 		else
 			//var/green = SEC_LEVEL_GREEN
 			add_overlay("overlay_[SEC_LEVEL_GREEN]")
@@ -111,7 +111,7 @@
 	addtimer(CALLBACK(src, .proc/reset), time)
 
 /obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "firealarm", name, 300, 150, master_ui, state)
@@ -153,6 +153,21 @@
 		return
 
 	if(panel_open)
+
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(obj_integrity < max_integrity)
+				if(WT.remove_fuel(0,user))
+					to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+					playsound(loc, WT.usesound, 40, 1)
+					if(do_after(user, 40*WT.toolspeed, target = src))
+						obj_integrity = max_integrity
+						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+						to_chat(user, "<span class='notice'>You repair [src].</span>")
+			else
+				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+			return
+
 		switch(buildstage)
 			if(2)
 				if(istype(W, /obj/item/device/multitool))
@@ -190,6 +205,7 @@
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								to_chat(user, "<span class='notice'>You remove the destroyed circuit.</span>")
+								stat &= ~BROKEN
 							else
 								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
 								new /obj/item/weapon/electronics/firealarm(user.loc)
@@ -230,9 +246,10 @@
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 1)
-		var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
-		if(!disassembled)
-			I.obj_integrity = I.max_integrity * 0.5
+		if(!(stat & BROKEN))
+			var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
+			if(!disassembled)
+				I.obj_integrity = I.max_integrity * 0.5
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 

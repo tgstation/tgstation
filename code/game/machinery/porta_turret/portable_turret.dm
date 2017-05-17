@@ -1,6 +1,9 @@
 #define TURRET_STUN 0
 #define TURRET_LETHAL 1
 
+#define POPUP_ANIM_TIME 5
+#define POPDOWN_ANIM_TIME 5 //Be sure to change the icon animation at the same time or it'll look bad
+
 /obj/machinery/porta_turret
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
@@ -12,7 +15,7 @@
 	use_power = 1				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "standard"
@@ -84,8 +87,9 @@
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
+		underlays += image('icons/obj/turrets.dmi',icon_state = "basedark")
 	if(!has_cover)
-		popUp()
+		INVOKE_ASYNC(src, .proc/popUp)
 
 /obj/machinery/porta_turret/update_icon()
 	cut_overlays()
@@ -311,9 +315,11 @@
 		if(prob(30))
 			spark_system.start()
 		if(on && !attacked && !emagged)
-			attacked = 1
-			spawn(60)
-				attacked = 0
+			attacked = TRUE
+			addtimer(CALLBACK(src, .proc/reset_attacked), 60)
+
+/obj/machinery/porta_turret/proc/reset_attacked()
+	attacked = FALSE
 
 /obj/machinery/porta_turret/deconstruct(disassembled = TRUE)
 	qdel(src)
@@ -362,6 +368,10 @@
 	var/list/targets = list()
 	var/turretview = view(scan_range, base)
 	for(var/A in turretview)
+		var/atom/AA = A
+		if(AA.invisibility>SEE_INVISIBLE_LIVING)
+			continue
+
 		if(check_anomalies)//if it's set to check for simple animals
 			if(istype(A, /mob/living/simple_animal))
 				var/mob/living/simple_animal/SA = A
@@ -416,7 +426,7 @@
 	raising = 1
 	if(cover)
 		flick("popup", cover)
-	sleep(10)
+	sleep(POPUP_ANIM_TIME)
 	raising = 0
 	if(cover)
 		cover.icon_state = "openTurretCover"
@@ -432,7 +442,7 @@
 	raising = 1
 	if(cover)
 		flick("popdown", cover)
-	sleep(10)
+	sleep(POPDOWN_ANIM_TIME)
 	raising = 0
 	if(cover)
 		cover.icon_state = "turretCover"
@@ -465,7 +475,7 @@
 
 	if(check_records)	//if the turret can check the records, check if they are set to *Arrest* on records
 		var/perpname = perp.get_face_name(perp.get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(!R || (R.fields["criminal"] == "*Arrest*"))
 			threatcount += 4
 
@@ -632,7 +642,7 @@
 	var/locked = 1
 	var/control_area = null //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
-	req_access = list(access_ai_upload)
+	req_access = list(GLOB.access_ai_upload)
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -654,7 +664,7 @@
 	if(!mapload)
 		return
 	if(control_area && istext(control_area))
-		for(var/V in sortedAreas)
+		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
 			if(A.name == control_area)
 				control_area = A
@@ -782,8 +792,7 @@
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
 	desc = "Used for building turret control panels"
-	icon = 'icons/obj/apc_repair.dmi'
-	icon_state = "apc_frame"
+	icon_state = "apc"
 	result_path = /obj/machinery/turretid
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 
@@ -843,7 +852,7 @@
 	. = ..()
 
 /obj/machinery/porta_turret/lasertag
-	req_access = list(access_maint_tunnels, access_theatre)
+	req_access = list(GLOB.access_maint_tunnels, GLOB.access_theatre)
 	check_records = 0
 	criminals = 0
 	auth_weapons = 1

@@ -513,7 +513,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -1040,7 +1040,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
+	dir = 1
 	},
 /area/mine/living_quarters)
 "cg" = (
@@ -1074,7 +1074,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1497,9 +1497,20 @@
 /area/mine/living_quarters)
 "dd" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
+/obj/item/weapon/reagent_containers/food/drinks/beer{
+	pixel_x = 7;
+	pixel_y = 5
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
+	},
+/obj/item/weapon/reagent_containers/food/drinks/beer{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/obj/item/weapon/reagent_containers/food/drinks/beer{
+	pixel_x = -8;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1771,6 +1782,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
 	pixel_y = 30
+	},
+/obj/machinery/shower{
+	dir = 8
 	},
 /turf/open/floor/plasteel/purple/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -2192,7 +2206,7 @@
 	},
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 8;
+	dir = 8
 	},
 /area/mine/maintenance)
 "ez" = (
@@ -2214,13 +2228,13 @@
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
+	dir = 1
 	},
 /area/mine/living_quarters)
 "eB" = (
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
+	dir = 1
 	},
 /area/mine/living_quarters)
 "eC" = (
@@ -2231,7 +2245,7 @@
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 5;
+	dir = 5
 	},
 /area/mine/living_quarters)
 "eD" = (
@@ -2398,7 +2412,7 @@
 /obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4;
+	dir = 4
 	},
 /area/mine/living_quarters)
 "eU" = (
@@ -2512,6 +2526,7 @@
 	dir = 2;
 	network = list("MINE")
 	},
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 5
@@ -2520,7 +2535,7 @@
 "fe" = (
 /turf/open/floor/plasteel/brown/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
+	dir = 1
 	},
 /area/mine/production)
 "ff" = (
@@ -2578,7 +2593,7 @@
 	},
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
+	dir = 1
 	},
 /area/mine/living_quarters)
 "fm" = (
@@ -2600,7 +2615,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
+	dir = 1
 	},
 /area/mine/living_quarters)
 "fp" = (
@@ -2674,7 +2689,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -2711,6 +2726,10 @@
 "fB" = (
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
 	},
 /turf/open/floor/plasteel/purple/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -2794,6 +2813,41 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/riveted,
 /area/space)
+"fQ" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
+"fR" = (
+/obj/structure/sink/kitchen{
+	dir = 4;
+	icon_state = "sink_alt";
+	pixel_x = -13;
+	tag = "icon-sink_alt (EAST)"
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"fS" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plasteel/purple/corner{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/production)
+"fT" = (
+/obj/structure/sink{
+	dir = 4;
+	icon_state = "sink";
+	pixel_x = 11;
+	tag = "icon-sink (EAST)"
+	},
+/turf/open/floor/plasteel/bar{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/living_quarters)
 
 (1,1,1) = {"
 aa
@@ -8919,7 +8973,7 @@ aA
 at
 at
 at
-at
+fR
 at
 au
 fH
@@ -9175,7 +9229,7 @@ an
 an
 at
 at
-at
+fQ
 at
 dr
 an
@@ -14594,8 +14648,8 @@ fj
 ee
 cT
 cZ
-dg
 dk
+fT
 ee
 al
 al
@@ -18433,7 +18487,7 @@ af
 ab
 ab
 dx
-dC
+fS
 dK
 bI
 bS

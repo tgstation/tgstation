@@ -1,16 +1,11 @@
-var/datum/controller/subsystem/minimap/SSminimap
-
-/datum/controller/subsystem/minimap
+SUBSYSTEM_DEF(minimap)
 	name = "Minimap"
-	init_order = -2
+	init_order = INIT_ORDER_MINIMAP
 	flags = SS_NO_FIRE
 	var/const/MINIMAP_SIZE = 2048
 	var/const/TILE_SIZE = 8
 
 	var/list/z_levels = list(ZLEVEL_STATION)
-
-/datum/controller/subsystem/minimap/New()
-	NEW_SS_GLOBAL(SSminimap)
 
 /datum/controller/subsystem/minimap/Initialize(timeofday)
 	var/hash = md5(SSmapping.config.GetFullMapPath())

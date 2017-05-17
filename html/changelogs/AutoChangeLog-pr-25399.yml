@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - bugfix: "Fixes structures being unable to go through spatial gateways."

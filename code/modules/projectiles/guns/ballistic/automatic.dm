@@ -127,7 +127,7 @@
 	icon_state = "wt550[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"
 
 /obj/item/weapon/gun/ballistic/automatic/mini_uzi
-	name = "\improper 'Type U3' Uzi"
+	name = "\improper Type U3 Uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
 	icon_state = "mini-uzi"
 	origin_tech = "combat=4;materials=2;syndicate=4"
@@ -240,7 +240,7 @@
 // Bulldog shotgun //
 
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog
-	name = "\improper 'Bulldog' Shotgun"
+	name = "\improper Bulldog Shotgun"
 	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
@@ -278,13 +278,13 @@
 
 /obj/item/weapon/gun/ballistic/automatic/l6_saw
 	name = "\improper L6 SAW"
-	desc = "A heavily modified 5.56x45mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	desc = "A heavily modified 1.95x129mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
 	origin_tech = "combat=6;engineering=3;syndicate=6"
-	mag_type = /obj/item/ammo_box/magazine/mm556x45
+	mag_type = /obj/item/ammo_box/magazine/mm195x129
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0
@@ -333,10 +333,7 @@
 
 
 /obj/item/weapon/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
-	. = ..()
-	if(.)
-		return
-	if(!cover_open)
+	if(!cover_open && istype(A, mag_type))
 		to_chat(user, "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>")
 		return
 	..()

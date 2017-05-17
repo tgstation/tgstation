@@ -21,14 +21,14 @@
 			return
 		T = get_turf(T)
 		loc = T
-		cameranet.visibility(src)
+		GLOB.cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
 		update_parallax_contents()
 		//Holopad
 		if(istype(ai.current, /obj/machinery/holopad))
 			var/obj/machinery/holopad/H = ai.current
-			H.move_hologram(ai)
+			H.move_hologram(ai, T)
 
 /mob/camera/aiEye/Move()
 	return 0
@@ -104,6 +104,6 @@
 	acceleration = !acceleration
 	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
 
-/mob/camera/aiEye/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/mob/camera/aiEye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
-		ai.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)
+		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)

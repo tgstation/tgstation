@@ -11,8 +11,8 @@
 	var/last_tick //used to delay the powercheck
 	dog_fashion = null
 
-/obj/item/device/radio/intercom/New()
-	..()
+/obj/item/device/radio/intercom/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/radio/intercom/Destroy()
@@ -27,7 +27,7 @@
 
 /obj/item/device/radio/intercom/interact(mob/user)
 	..()
-	ui_interact(user, state = default_state)
+	ui_interact(user, state = GLOB.default_state)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)
 	if(!on)
@@ -40,14 +40,14 @@
 			return -1
 	if(!src.listening)
 		return -1
-	if(freq == SYND_FREQ)
+	if(freq == GLOB.SYND_FREQ)
 		if(!(src.syndie))
 			return -1//Prevents broadcast of messages over devices lacking the encryption
 
 	return canhear_range
 
 
-/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
 	if(!anyai && !(speaker in ai))
 		return
 	..()

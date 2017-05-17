@@ -1,5 +1,3 @@
-
-
 /obj/item/device/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
@@ -33,13 +31,10 @@
 	else
 		icon_state = "mmi_empty"
 
-/obj/item/device/mmi/New()
-	..()
+/obj/item/device/mmi/Initialize()
+	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-
-/obj/item/device/mmi/Initialize()
-	..()
 	laws.set_laws_config()
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
@@ -66,8 +61,8 @@
 		brainmob.container = src
 		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
-			dead_mob_list -= brainmob
-			living_mob_list += brainmob
+			GLOB.dead_mob_list -= brainmob
+			GLOB.living_mob_list += brainmob
 
 		brainmob.reset_perspective()
 		brain = newbrain
@@ -75,7 +70,7 @@
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
 
-		feedback_inc("cyborg_mmis_filled",1)
+		SSblackbox.inc("cyborg_mmis_filled",1)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
@@ -99,8 +94,8 @@
 	brainmob.stat = DEAD
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-	living_mob_list -= brainmob //Get outta here
-	dead_mob_list += brainmob
+	GLOB.living_mob_list -= brainmob //Get outta here
+	GLOB.dead_mob_list += brainmob
 	brain.brainmob = brainmob //Set the brain to use the brainmob
 	brainmob = null //Set mmi brainmob var to null
 	if(user)

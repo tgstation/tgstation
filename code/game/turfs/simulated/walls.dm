@@ -50,7 +50,8 @@
 
 /turf/closed/wall/proc/devastate_wall()
 	new sheet_type(src, sheet_amount)
-	new /obj/item/stack/sheet/metal(src)
+	if(girder_type)
+		new /obj/item/stack/sheet/metal(src)
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
@@ -238,8 +239,9 @@
 		if(prob(30))
 			dismantle_wall()
 
-/turf/closed/wall/narsie_act()
-	if(prob(20))
+/turf/closed/wall/narsie_act(force, ignore_mobs, probability = 20)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
 /turf/closed/wall/ratvar_act(force, ignore_mobs)
@@ -258,13 +260,13 @@
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
 
-/turf/closed/wall/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/turf/closed/wall/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
 	return FALSE
 
-/turf/closed/wall/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/turf/closed/wall/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the wall.</span>")

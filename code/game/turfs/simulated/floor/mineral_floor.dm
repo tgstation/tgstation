@@ -40,23 +40,23 @@
 
 /turf/open/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		PlasmaBurn()
+		PlasmaBurn(exposed_temperature)
 
 /turf/open/floor/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma flooring was ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma flooring was ignited by [key_name(user)] in ([x],[y],[z])")
+		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
+		log_game("Plasma flooring was ignited by [key_name(user)] in [COORD(src)]")
 		ignite(W.is_hot())
 		return
 	..()
 
-/turf/open/floor/mineral/plasma/proc/PlasmaBurn()
+/turf/open/floor/mineral/plasma/proc/PlasmaBurn(temperature)
 	make_plating()
-	atmos_spawn_air("plasma=20;TEMP=1000")
+	atmos_spawn_air("plasma=20;TEMP=[temperature]")
 
 /turf/open/floor/mineral/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
-		PlasmaBurn()
+		PlasmaBurn(exposed_temperature)
 
 
 //GOLD
@@ -113,6 +113,9 @@
 	icon_state = "shuttlefloor4"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 	icons = list("shuttlefloor4","shuttlefloor4_dam")
+
+/turf/open/floor/mineral/plastitanium/airless
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/mineral/plastitanium/brig
 	name = "Brig floor"

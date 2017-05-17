@@ -1,38 +1,38 @@
 // How much "space" we give the edge of the map
-var/global/list/potentialRandomZlevels = generateMapList(filename = "config/awaymissionconfig.txt")
+GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "config/awaymissionconfig.txt"))
 
 /proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+	if(GLOB.awaydestinations.len)	//crude, but it saves another var!
 		return
 
-	if(potentialRandomZlevels && potentialRandomZlevels.len)
+	if(GLOB.potentialRandomZlevels && GLOB.potentialRandomZlevels.len)
 		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
-		var/map = pick(potentialRandomZlevels)
+		var/map = pick(GLOB.potentialRandomZlevels)
 		load_new_z_level(map)
 		to_chat(world, "<span class='boldannounce'>Away mission loaded.</span>")
 
 /proc/reset_gateway_spawns(reset = FALSE)
 	for(var/obj/machinery/gateway/G in world)
 		if(reset)
-			G.randomspawns = awaydestinations
+			G.randomspawns = GLOB.awaydestinations
 		else
-			G.randomspawns.Add(awaydestinations)
+			G.randomspawns.Add(GLOB.awaydestinations)
 
 /obj/effect/landmark/awaystart
 	name = "away mission spawn"
 	desc = "Randomly picked away mission spawn points"
 
 /obj/effect/landmark/awaystart/New()
-	awaydestinations += src
+	GLOB.awaydestinations += src
 	..()
 
 /obj/effect/landmark/awaystart/Destroy()
-	awaydestinations -= src
+	GLOB.awaydestinations -= src
 	return ..()
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
-	var/list/Lines = file2list(filename)
+	var/list/Lines = world.file2list(filename)
 
 	if(!Lines.len)
 		return

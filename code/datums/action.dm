@@ -40,6 +40,7 @@
 		if(owner)
 			if(owner == M)
 				return
+			Remove(owner)
 		owner = M
 		M.actions += src
 		if(M.client)
@@ -109,12 +110,8 @@
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
 	if(icon_icon && button_icon_state && current_button.button_icon_state != button_icon_state)
-		var/image/img
-		img = image(icon_icon, current_button, button_icon_state)
-		img.pixel_x = 0
-		img.pixel_y = 0
 		current_button.cut_overlays(TRUE)
-		current_button.add_overlay(img)
+		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
 
@@ -197,6 +194,9 @@
 			var/mob/living/carbon/C = owner
 			if(target == C.internal)
 				button.icon_state = "template_active"
+
+/datum/action/item_action/pick_color
+	name = "Choose A Color"
 
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"
@@ -472,3 +472,17 @@
 	name = "Activate Jump Boots"
 	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
 	button_icon_state = "jetboot"
+
+/datum/action/language_menu
+	name = "Language Menu"
+	desc = "Open the language menu to review your languages, their keys, and select your default language."
+	button_icon_state = "language_menu"
+	check_flags = 0
+
+/datum/action/language_menu/Trigger()
+	if(!..())
+		return FALSE
+	if(ismob(owner))
+		var/mob/M = owner
+		var/datum/language_holder/H = M.get_language_holder()
+		H.open_language_menu(usr)

@@ -79,47 +79,42 @@
 	if(button)
 		button.name = "Change [chameleon_name] Appearance"
 
-
 	chameleon_blacklist |= typecacheof(target.type)
 	for(var/V in typesof(chameleon_type))
-		if(ispath(V, /obj/item))
+		if(ispath(V) && ispath(V, /obj/item))
 			var/obj/item/I = V
 			if(chameleon_blacklist[V] || (initial(I.flags) & ABSTRACT))
 				continue
-			chameleon_list += I
+			if(!initial(I.icon_state) || !initial(I.item_state))
+				continue
+			var/chameleon_item_name = "[initial(I.name)] ([initial(I.icon_state)])"
+			chameleon_list[chameleon_item_name] = I
+
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
-	var/list/item_names = list()
 	var/obj/item/picked_item
-	for(var/U in chameleon_list)
-		var/obj/item/I = U
-		item_names += initial(I.name)
 	var/picked_name
-	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) in item_names
+	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) as null|anything in chameleon_list
 	if(!picked_name)
 		return
-	for(var/V in chameleon_list)
-		var/obj/item/I = V
-		if(initial(I.name) == picked_name)
-			picked_item = V
-			break
+	picked_item = chameleon_list[picked_name]
 	if(!picked_item)
 		return
 	update_look(user, picked_item)
 
 /datum/action/item_action/chameleon/change/proc/random_look(mob/user)
-	var/picked_item = pick(chameleon_list)
+	var/picked_name = pick(chameleon_list)
 	// If a user is provided, then this item is in use, and we
 	// need to update our icons and stuff
 
 	if(user)
-		update_look(user, picked_item)
+		update_look(user, chameleon_list[picked_name])
 
 	// Otherwise, it's likely a random initialisation, so we
 	// don't have to worry
 
 	else
-		update_item(picked_item)
+		update_item(chameleon_list[picked_name])
 
 /datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
 	if(istype(target, /obj/item/weapon/gun/energy/laser/chameleon))
@@ -207,7 +202,7 @@
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	origin_tech = "syndicate=2"
-	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
+	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0
 	resistance_flags = 0
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
@@ -423,6 +418,7 @@
 	var/list/ammo_copy_vars
 	var/list/gun_copy_vars
 	var/badmin_mode = FALSE
+	var/static/list/blacklisted_vars = list("locs", "loc", "contents", "x", "y", "z")
 
 /obj/item/weapon/gun/energy/laser/chameleon/New()
 	..()
@@ -440,6 +436,7 @@
 	chameleon_gun_vars = list()
 	ammo_copy_vars = list("firing_effect_type")
 	chameleon_ammo_vars = list()
+	recharge_newshot()
 	get_chameleon_projectile(/obj/item/weapon/gun/energy/laser)
 
 /obj/item/weapon/gun/energy/laser/chameleon/emp_act(severity)
@@ -449,13 +446,17 @@
 	chameleon_ammo_vars = list()
 	chameleon_gun_vars = list()
 	chameleon_projectile_vars = list()
-	for(var/V in chambered.vars)
-		chambered.vars[V] = initial(chambered.vars[V])
-	qdel(chambered.BB)
+	if(chambered)
+		for(var/v in ammo_copy_vars)
+			if(v in blacklisted_vars)	//Just in case admins go crazy.
+				continue
+			chambered.vars[v] = initial(chambered.vars[v])
+	for(var/v in gun_copy_vars)
+		if(v in blacklisted_vars)
+			continue
+		vars[v] = initial(vars[v])
+	QDEL_NULL(chambered.BB)
 	chambered.newshot()
-	for(var/V in vars)
-		vars[V] = initial(vars[V])
-
 
 /obj/item/weapon/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/AC, passthrough = TRUE, reset = FALSE)
 	if(!istype(AC))
@@ -464,7 +465,7 @@
 	for(var/V in ammo_copy_vars)
 		if(AC.vars[V])
 			chameleon_ammo_vars[V] = AC.vars[V]
-			if(chambered.vars[V])
+			if(chambered && chambered.vars[V])
 				chambered.vars[V] = AC.vars[V]
 	if(passthrough)
 		var/obj/item/projectile/P = AC.BB
@@ -474,7 +475,7 @@
 	if(!istype(P))
 		CRASH("[P] is not /obj/item/projectile!")
 		return FALSE
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
+	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser", "nodamage" = TRUE)
 	for(var/V in projectile_copy_vars)
 		if(P.vars[V])
 			chameleon_projectile_vars[V] = P.vars[V]
@@ -557,8 +558,8 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/radio/headset/chameleon/New()
-	..()
+/obj/item/device/radio/headset/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/radio/headset
 	chameleon_action.chameleon_name = "Headset"

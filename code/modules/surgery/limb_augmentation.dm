@@ -43,16 +43,19 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/saw, /datum/surgery_step/add_limb)
 	species = list(/mob/living/carbon/human)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
+	requires_real_bodypart = TRUE
 
 //SURGERY STEP SUCCESSES
 
-/datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery)
 	if(L)
 		user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
-		L.change_bodypart_status(BODYPART_ROBOTIC, 1)
+		L.change_bodypart_status(BODYPART_ROBOTIC, TRUE)
+		L.icon = tool.icon
+		L.max_damage = tool.max_damage
 		user.drop_item()
 		qdel(tool)
-		target.update_damage_overlays()
+		target.update_body_parts()
 		target.updatehealth()
 		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else

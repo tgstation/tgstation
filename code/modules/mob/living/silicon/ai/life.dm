@@ -65,6 +65,7 @@
 	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss() - getFireLoss()
 	update_stat()
 	diag_hud_set_health()
+	disconnect_shell()
 
 /mob/living/silicon/ai/update_stat()
 	if(status_flags & GODMODE)
@@ -90,6 +91,7 @@
 
 	if(see_override)
 		see_invisible = see_override
+	sync_lighting_plane_alpha()
 
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
@@ -146,7 +148,7 @@
 				to_chat(src, "Receiving control information from APC.")
 				sleep(2)
 				apc_override = 1
-				theAPC.ui_interact(src, state = conscious_state)
+				theAPC.ui_interact(src, state = GLOB.conscious_state)
 				apc_override = 0
 				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
 		sleep(50)
@@ -163,6 +165,7 @@
 		update_sight()
 
 /mob/living/silicon/ai/proc/ai_lose_power()
+	disconnect_shell()
 	aiRestorePowerRoutine = POWER_RESTORATION_START
 	blind_eyes(1)
 	update_sight()

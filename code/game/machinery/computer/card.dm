@@ -2,14 +2,14 @@
 
 //Keeps track of the time for the ID console. Having it as a global variable prevents people from dismantling/reassembling it to
 //increase the slots of many jobs.
-var/time_last_changed_position = 0
+GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card
 	name = "identification console"
 	desc = "You can use this to manage jobs and ID access."
 	icon_screen = "id"
 	icon_keyboard = "id_key"
-	req_one_access = list(access_heads, access_change_ids)
+	req_one_access = list(GLOB.access_heads, GLOB.access_change_ids)
 	circuit = /obj/item/weapon/circuitboard/computer/card
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
@@ -107,8 +107,8 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card/proc/can_open_job(datum/job/job)
 	if(job)
 		if(!job_blacklisted(job.title))
-			if((job.total_positions <= player_list.len * (max_relative_positions / 100)))
-				var/delta = (world.time / 10) - time_last_changed_position
+			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
+				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
 					return 1
 				return -2
@@ -120,7 +120,7 @@ var/time_last_changed_position = 0
 	if(job)
 		if(!job_blacklisted(job.title))
 			if(job.total_positions > job.current_positions)
-				var/delta = (world.time / 10) - time_last_changed_position
+				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
 					return 1
 				return -2
@@ -133,11 +133,11 @@ var/time_last_changed_position = 0
 
 	user.set_machine(src)
 	var/dat
-	if(!ticker)
+	if(!SSticker)
 		return
 	if (mode == 1) // accessing crew manifest
 		var/crew = ""
-		for(var/datum/data/record/t in sortRecord(data_core.general))
+		for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 			crew += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 
@@ -154,7 +154,7 @@ var/time_last_changed_position = 0
 		dat += "<table>"
 		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b><td style='width:25%'><b>Prioritize</b></td></td></tr>"
 		var/ID
-		if(scan && (access_change_ids in scan.access) && !target_dept)
+		if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 			ID = 1
 		else
 			ID = 0
@@ -174,7 +174,7 @@ var/time_last_changed_position = 0
 				if(-1)
 					dat += "Denied"
 				if(-2)
-					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
+					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - GLOB.time_last_changed_position), 1)
 					var/mins = round(time_to_wait / 60)
 					var/seconds = time_to_wait - (60*mins)
 					dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
@@ -190,7 +190,7 @@ var/time_last_changed_position = 0
 				if(-1)
 					dat += "Denied"
 				if(-2)
-					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
+					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - GLOB.time_last_changed_position), 1)
 					var/mins = round(time_to_wait / 60)
 					var/seconds = time_to_wait - (60*mins)
 					dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
@@ -350,7 +350,7 @@ var/time_last_changed_position = 0
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)
-				data_core.manifest_modify(modify.registered_name, modify.assignment)
+				GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.update_label()
 				modify.loc = loc
 				modify.verb_pickup()
@@ -388,7 +388,7 @@ var/time_last_changed_position = 0
 				if (check_access(scan))
 					region_access = list()
 					head_subordinates = list()
-					if(access_change_ids in scan.access)
+					if(GLOB.access_change_ids in scan.access)
 						if(target_dept)
 							head_subordinates = get_all_jobs()
 							region_access |= target_dept
@@ -398,20 +398,20 @@ var/time_last_changed_position = 0
 						playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 
 					else
-						if((access_hop in scan.access) && ((target_dept==1) || !target_dept))
+						if((GLOB.access_hop in scan.access) && ((target_dept==1) || !target_dept))
 							region_access |= 1
 							region_access |= 6
 							get_subordinates("Head of Personnel")
-						if((access_hos in scan.access) && ((target_dept==2) || !target_dept))
+						if((GLOB.access_hos in scan.access) && ((target_dept==2) || !target_dept))
 							region_access |= 2
 							get_subordinates("Head of Security")
-						if((access_cmo in scan.access) && ((target_dept==3) || !target_dept))
+						if((GLOB.access_cmo in scan.access) && ((target_dept==3) || !target_dept))
 							region_access |= 3
 							get_subordinates("Chief Medical Officer")
-						if((access_rd in scan.access) && ((target_dept==4) || !target_dept))
+						if((GLOB.access_rd in scan.access) && ((target_dept==4) || !target_dept))
 							region_access |= 4
 							get_subordinates("Research Director")
-						if((access_ce in scan.access) && ((target_dept==5) || !target_dept))
+						if((GLOB.access_ce in scan.access) && ((target_dept==5) || !target_dept))
 							region_access |= 5
 							get_subordinates("Chief Engineer")
 						if(region_access)
@@ -488,7 +488,7 @@ var/time_last_changed_position = 0
 
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
-			if(scan && (access_change_ids in scan.access) && !target_dept)
+			if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -496,14 +496,14 @@ var/time_last_changed_position = 0
 				if(can_open_job(j) != 1)
 					return 0
 				if(opened_positions[edit_job_target] >= 0)
-					time_last_changed_position = world.time / 10
+					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions++
 				opened_positions[edit_job_target]++
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 		if("make_job_unavailable")
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
-			if(scan && (access_change_ids in scan.access) && !target_dept)
+			if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -512,14 +512,14 @@ var/time_last_changed_position = 0
 					return 0
 				//Allow instant closing without cooldown if a position has been opened before
 				if(opened_positions[edit_job_target] <= 0)
-					time_last_changed_position = world.time / 10
+					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions--
 				opened_positions[edit_job_target]--
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 		if ("prioritize_job")
 			// TOGGLE WHETHER JOB APPEARS AS PRIORITIZED IN THE LOBBY
-			if(scan && (access_change_ids in scan.access) && !target_dept)
+			if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 				var/priority_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
@@ -532,7 +532,7 @@ var/time_last_changed_position = 0
 				else
 					SSjob.prioritized_jobs += j
 					prioritycount++
-				usr << "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>"
+				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 		if ("print")
@@ -541,7 +541,7 @@ var/time_last_changed_position = 0
 				sleep(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 				var/t1 = "<B>Crew Manifest:</B><BR>"
-				for(var/datum/data/record/t in sortRecord(data_core.general))
+				for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 					t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
@@ -560,7 +560,7 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card/centcom
 	name = "\improper Centcom identification console"
 	circuit = /obj/item/weapon/circuitboard/computer/card/centcom
-	req_access = list(access_cent_captain)
+	req_access = list(GLOB.access_cent_captain)
 
 /obj/machinery/computer/card/minor
 	name = "department management console"

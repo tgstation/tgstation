@@ -122,7 +122,7 @@
 	IgniteMob()
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src || anchored)
+	if(user == src || anchored || !isturf(user.loc))
 		return 0
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message)
@@ -172,7 +172,7 @@
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
-	if(!ticker || !ticker.mode)
+	if(!SSticker.HasRoundStarted())
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
@@ -244,10 +244,6 @@
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return 0
-
 	switch(M.a_intent)
 		if ("help")
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
@@ -275,7 +271,7 @@
 	return 1
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && tesla_ignore)
+	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
 		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
@@ -309,18 +305,25 @@
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
 		return FALSE
+	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
+		GLOB.cult_narsie.resize(1.1)
+		GLOB.cult_narsie.souls_needed -= src
+		GLOB.cult_narsie.souls += 1
+		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
+			GLOB.cult_narsie.resolved = TRUE
+			world << sound('sound/machines/Alarm.ogg')
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
 	else
-		switch(rand(1, 10))
+		switch(rand(1, 6))
 			if(1)
 				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
 			if(2)
 				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
 			if(3 to 6)
 				new /mob/living/simple_animal/hostile/construct/builder/hostile(get_turf(src))
-			if(6 to 10)
-				new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 	return TRUE

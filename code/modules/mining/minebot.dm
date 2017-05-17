@@ -130,13 +130,13 @@
 	if(istype(target, /obj/item/weapon/ore) && mode ==  MINEDRONE_COLLECT)
 		CollectOre()
 		return
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
 	var/obj/item/weapon/ore/O
 	for(O in src.loc)
 		O.loc = src
-	for(var/dir in alldirs)
+	for(var/dir in GLOB.alldirs)
 		var/turf/T = get_step(src,dir)
 		for(O in T)
 			O.loc = src
@@ -195,13 +195,14 @@
 
 /datum/action/innate/minedrone/toggle_meson_vision/Activate()
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-
 	if(user.sight & SEE_TURFS)
 		user.sight &= ~SEE_TURFS
-		user.see_invisible = SEE_INVISIBLE_LIVING
+		user.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	else
 		user.sight |= SEE_TURFS
-		user.see_invisible = SEE_INVISIBLE_MINIMUM
+		user.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+
+	user.sync_lighting_plane_alpha()
 
 	to_chat(user, "<span class='notice'>You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"].</span>")
 

@@ -107,7 +107,7 @@
 	icon_state = "mecha_ion"
 	origin_tech = "materials=4;engineering=4;combat=6;magnets=6"
 	energy_drain = 500
-	projectile = /obj/item/projectile/energy/tesla_cannon
+	projectile = /obj/item/projectile/energy/tesla/cannon
 	fire_sound = 'sound/magic/lightningbolt.ogg'
 
 
@@ -337,8 +337,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/weapon/grenade/flashbang/F)
 	var/turf/T = get_turf(src)
-	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
-	log_game("[key_name(chassis.occupant)] fired a [src] ([T.x],[T.y],[T.z])")
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_COORDJMP(T)]",0,1)
+	log_game("[key_name(chassis.occupant)] fired a [src] [COORD(T)]")
 	addtimer(CALLBACK(F, /obj/item/weapon/grenade/flashbang.proc/prime), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze

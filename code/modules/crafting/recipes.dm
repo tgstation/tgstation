@@ -254,7 +254,7 @@
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/weaponcrafting/reciever = 1,
+	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
@@ -336,6 +336,12 @@
 		/obj/item/device/flashlight = 2,
 		/obj/item/weapon/restraints/handcuffs/cable = 1
 	)
+	category = CAT_MISC
+	
+/datum/crafting_recipe/toysword
+	name = "Toy Sword" 
+	reqs = list(/obj/item/weapon/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
+	result = /obj/item/toy/sword
 	category = CAT_MISC
 
 /datum/crafting_recipe/chemical_payload

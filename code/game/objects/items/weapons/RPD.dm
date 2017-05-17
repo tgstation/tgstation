@@ -31,7 +31,7 @@ RPD
 
 /datum/pipe_info/New(pid,direction,dt)
 	src.id=pid
-	src.icon_state=pipeID2State["[pid]"]
+	src.icon_state=GLOB.pipeID2State["[pid]"]
 	src.dir = direction
 	src.dirtype=dt
 
@@ -48,7 +48,7 @@ RPD
 /datum/pipe_info/meter/Render(dispenser,label)
 	return "<li><a href='?src=\ref[dispenser];makemeter=1;type=[dirtype]'>[label]</a></li>" //hardcoding is no
 
-var/global/list/disposalpipeID2State=list(
+GLOBAL_LIST_INIT(disposalpipeID2State, list(
 	"pipe-s",
 	"pipe-c",
 	"pipe-j1",
@@ -59,8 +59,7 @@ var/global/list/disposalpipeID2State=list(
 	"outlet",
 	"intake",
 	"pipe-j1s",
-	"pipe-j2s"
-)
+	"pipe-j2s"))
 
 /datum/pipe_info/disposal
 	categoryId = CATEGORY_DISPOSALS
@@ -69,7 +68,7 @@ var/global/list/disposalpipeID2State=list(
 
 /datum/pipe_info/disposal/New(var/pid,var/dt)
 	src.id=pid
-	src.icon_state=disposalpipeID2State[pid+1]
+	src.icon_state=GLOB.disposalpipeID2State[pid+1]
 	src.dir = SOUTH
 	src.dirtype=dt
 	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)
@@ -79,7 +78,7 @@ var/global/list/disposalpipeID2State=list(
 	return "<li><a href='?src=\ref[dispenser];dmake=[id];type=[dirtype]'>[label]</a></li>" //avoid hardcoding.
 
 //find these defines in code\game\machinery\pipe\consruction.dm
-var/global/list/RPD_recipes=list(
+GLOBAL_LIST_INIT(RPD_recipes, list(
 	"Regular Pipes" = list(
 		"Pipe"           = new /datum/pipe_info(PIPE_SIMPLE,			1, PIPE_BENDABLE),
 		//"Bent Pipe"      = new /datum/pipe_info(PIPE_SIMPLE,	 		5, PIPE_BENT),
@@ -95,10 +94,10 @@ var/global/list/RPD_recipes=list(
 		"Passive Gate"   = new /datum/pipe_info(PIPE_PASSIVE_GATE,		1, PIPE_UNARY),
 		"Volume Pump"    = new /datum/pipe_info(PIPE_VOLUME_PUMP,		1, PIPE_UNARY),
 		"Scrubber"       = new /datum/pipe_info(PIPE_SCRUBBER,			1, PIPE_UNARY),
+		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     		1, PIPE_UNARY),
 		"Meter"          = new /datum/pipe_info/meter(),
 		"Gas Filter"     = new /datum/pipe_info(PIPE_GAS_FILTER,		1, PIPE_TRIN_M),
 		"Gas Mixer"      = new /datum/pipe_info(PIPE_GAS_MIXER,			1, PIPE_TRIN_M),
-//		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     		1, PIPE_UNARY),
 	),
 	"Heat Exchange" = list(
 		"Pipe"           = new /datum/pipe_info(PIPE_HE,				1, PIPE_BENDABLE),
@@ -119,7 +118,7 @@ var/global/list/RPD_recipes=list(
 		"Chute"         = new /datum/pipe_info/disposal(DISP_END_CHUTE,		PIPE_UNARY),
 		"Sort Junction" = new /datum/pipe_info/disposal(DISP_SORTJUNCTION,	PIPE_TRINARY),
 	)
-)
+))
 /obj/item/weapon/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
 	desc = "A device used to rapidly pipe things."
@@ -205,8 +204,8 @@ var/global/list/RPD_recipes=list(
 
 	var/icon/preview=null
 	var/datbuild = ""
-	for(var/category in RPD_recipes)
-		var/list/cat=RPD_recipes[category]
+	for(var/category in GLOB.RPD_recipes)
+		var/list/cat = GLOB.RPD_recipes[category]
 		for(var/label in cat)
 			var/datum/pipe_info/I = cat[label]
 			var/found=0

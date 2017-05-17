@@ -92,7 +92,7 @@
 /area/shuttle/supply)
 "m" = (
 /turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle/interior{
+/turf/closed/wall/mineral/titanium/interior{
 	icon_state = "swall_f6"
 	},
 /area/shuttle/supply)

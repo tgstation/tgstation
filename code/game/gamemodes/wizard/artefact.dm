@@ -195,7 +195,6 @@
 
 
 /////////////////////Multiverse Blade////////////////////
-var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword
 	name = "multiverse sword"
@@ -214,10 +213,11 @@ var/global/list/multiverse = list()
 	var/faction = list("unassigned")
 	var/cooldown = 0
 	var/assigned = "unassigned"
+	var/static/list/multiverse = list()
 
 /obj/item/weapon/multisword/New()
 	..()
-	multiverse |= src
+	multiverse += src
 
 
 /obj/item/weapon/multisword/Destroy()
@@ -241,7 +241,7 @@ var/global/list/multiverse = list()
 			to_chat(user, "You bind the sword to yourself. You can now use it to summon help.")
 			if(!is_gangster(user))
 				var/datum/gang/multiverse/G = new(src, "[user.real_name]")
-				ticker.mode.gangs += G
+				SSticker.mode.gangs += G
 				G.bosses += user.mind
 				G.add_gang_hud(user.mind)
 				user.mind.gang_datum = G
@@ -251,7 +251,7 @@ var/global/list/multiverse = list()
 				user.mind.objectives += hijack_objective
 				hijack_objective.explanation_text = "Ensure only [user.real_name] and their copies are on the shuttle!"
 				to_chat(user, "<B>Objective #[1]</B>: [hijack_objective.explanation_text]")
-				ticker.mode.traitors += user.mind
+				SSticker.mode.traitors += user.mind
 				user.mind.special_role = "[user.real_name] Prime"
 		else
 			var/list/candidates = get_candidates(ROLE_WIZARD)
@@ -276,15 +276,15 @@ var/global/list/multiverse = list()
 	M.key = C.key
 	M.mind.name = user.real_name
 	to_chat(M, "<B>You are an alternate version of [user.real_name] from another universe! Help them accomplish their goals at all costs.</B>")
-	ticker.mode.add_gangster(M.mind, user.mind.gang_datum, FALSE)
+	SSticker.mode.add_gangster(M.mind, user.mind.gang_datum, FALSE)
 	M.real_name = user.real_name
 	M.name = user.real_name
 	M.faction = list("[user.real_name]")
 	if(prob(50))
 		var/list/all_species = list()
 		for(var/speciestype in subtypesof(/datum/species))
-			var/datum/species/S = new speciestype()
-			if(!S.dangerous_existence)
+			var/datum/species/S = speciestype
+			if(!initial(S.dangerous_existence))
 				all_species += speciestype
 		M.set_species(pick(all_species), icon_update=0)
 	M.update_body()
@@ -329,7 +329,7 @@ var/global/list/multiverse = list()
 		if("cyborg")
 			for(var/X in M.bodyparts)
 				var/obj/item/bodypart/affecting = X
-				affecting.change_bodypart_status(BODYPART_ROBOTIC)
+				affecting.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.put_in_hands_or_del(sword)
 
@@ -436,7 +436,7 @@ var/global/list/multiverse = list()
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
-	W.access += access_maint_tunnels
+	W.access += GLOB.access_maint_tunnels
 	W.assignment = "Multiverse Traveller"
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
@@ -517,7 +517,7 @@ var/global/list/multiverse = list()
 					user.unset_machine()
 			if("r_leg","l_leg")
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
-				var/turf/T = get_step(target,pick(cardinal))
+				var/turf/T = get_step(target,pick(GLOB.cardinal))
 				target.Move(T)
 			if("r_arm","l_arm")
 				target.click_random_mob()
@@ -533,7 +533,7 @@ var/global/list/multiverse = list()
 	possible = list()
 	if(!link)
 		return
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		if(md5(H.dna.uni_identity) in link.fingerprints)
 			possible |= H
 
@@ -630,6 +630,6 @@ var/global/list/multiverse = list()
 	duration = 40
 	pixel_x = 500
 
-/obj/effect/overlay/temp/tornado/New(loc)
-	..()
+/obj/effect/overlay/temp/tornado/Initialize()
+	. = ..()
 	animate(src, pixel_x = -500, time = 40)

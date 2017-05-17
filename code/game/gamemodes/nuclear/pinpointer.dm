@@ -17,16 +17,17 @@
 	var/atom/movable/constant_target = null //The thing we're always focused on, if we're in the right mode
 	var/target_x = 0 //The target coordinates if we're tracking those
 	var/target_y = 0
+	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
 	var/nuke_warning = FALSE // If we've set off a miniature alarm about an armed nuke
 	var/mode = TRACK_NUKE_DISK //What are we looking for?
 
 /obj/item/weapon/pinpointer/New()
 	..()
-	pinpointer_list += src
+	GLOB.pinpointer_list += src
 
 /obj/item/weapon/pinpointer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	pinpointer_list -= src
+	GLOB.pinpointer_list -= src
 	return ..()
 
 /obj/item/weapon/pinpointer/attack_self(mob/living/user)
@@ -66,7 +67,7 @@
 		else
 			msg = "Its tracking indicator is blank."
 	to_chat(user, msg)
-	for(var/obj/machinery/nuclearbomb/bomb in machines)
+	for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 		if(bomb.timing)
 			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]")
 
@@ -91,11 +92,11 @@
 			var/obj/item/weapon/disk/nuclear/N = locate()
 			target = N
 		if(TRACK_MALF_AI)
-			for(var/V in ai_list)
+			for(var/V in GLOB.ai_list)
 				var/mob/living/silicon/ai/A = V
 				if(A.nuking)
 					target = A
-			for(var/V in apcs_list)
+			for(var/V in GLOB.apcs_list)
 				var/obj/machinery/power/apc/A = V
 				if(A.malfhack && A.occupier)
 					target = A
@@ -104,7 +105,7 @@
 		if(TRACK_OPERATIVES)
 			var/list/possible_targets = list()
 			var/turf/here = get_turf(src)
-			for(var/V in ticker.mode.syndicates)
+			for(var/V in SSticker.mode.syndicates)
 				var/datum/mind/M = V
 				if(M.current && M.current.stat != DEAD)
 					possible_targets |= M.current
@@ -129,7 +130,7 @@
 	if(here.z != there.z)
 		icon_state = "pinon[nuke_warning ? "alert" : ""]null"
 		return
-	if(here == there)
+	if(get_dist_euclidian(here,there)<=minimum_range)
 		icon_state = "pinon[nuke_warning ? "alert" : ""]direct"
 	else
 		setDir(get_dir(here, there))
@@ -142,7 +143,7 @@
 				icon_state = "pinon[nuke_warning ? "alert" : "far"]"
 
 /obj/item/weapon/pinpointer/proc/my_god_jc_a_bomb() //If we should get the hell back to the ship
-	for(var/obj/machinery/nuclearbomb/bomb in nuke_list)
+	for(var/obj/machinery/nuclearbomb/bomb in GLOB.nuke_list)
 		if(bomb.timing)
 			if(!nuke_warning)
 				nuke_warning = TRUE
@@ -171,3 +172,6 @@
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
 	mode = TRACK_OPERATIVES
 	flags = NODROP
+
+
+

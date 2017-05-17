@@ -49,15 +49,15 @@
 	timeofdeath = world.time
 	tod = worldtime2text()
 	var/turf/T = get_turf(src)
+	var/area/A = get_area(T)
 	if(mind && mind.name && mind.active && (!(T.flags & NO_DEATHRATTLE)))
-		var/area/A = get_area(T)
 		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[A.name]</b>.</span>"
 		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	living_mob_list -= src
+	GLOB.living_mob_list -= src
 	if(!gibbed)
-		dead_mob_list += src
+		GLOB.dead_mob_list += src
 	paralysis = 0
 	stunned = 0
 	weakened = 0

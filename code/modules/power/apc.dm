@@ -93,12 +93,6 @@
 	var/force_update = 0
 	var/update_state = -1
 	var/update_overlay = -1
-	var/global/status_overlays = 0
-	var/global/list/status_overlays_lock
-	var/global/list/status_overlays_charging
-	var/global/list/status_overlays_equipment
-	var/global/list/status_overlays_lighting
-	var/global/list/status_overlays_environ
 
 
 /obj/machinery/power/apc/connect_to_network()
@@ -111,11 +105,11 @@
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	if (!req_access)
-		req_access = list(access_engine_equip)
+		req_access = list(GLOB.access_engine_equip)
 	if (!armor)
 		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	..()
-	apcs_list += src
+	GLOB.apcs_list += src
 
 	wires = new /datum/wires/apc(src)
 	// offset 24 pixels in direction of dir
@@ -140,7 +134,7 @@
 		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
-	apcs_list -= src
+	GLOB.apcs_list -= src
 
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
@@ -172,7 +166,7 @@
 	terminal.master = src
 
 /obj/machinery/power/apc/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 	has_electronics = 2 //installed and secured
@@ -218,35 +212,6 @@
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
-	if (!status_overlays)
-		status_overlays = 1
-		status_overlays_lock = new(2)
-		status_overlays_charging = new(3)
-		status_overlays_equipment = new(4)
-		status_overlays_lighting = new(4)
-		status_overlays_environ = new(4)
-
-		status_overlays_lock[1] = image(icon, "apcox-0")    // 0=blue 1=red
-		status_overlays_lock[2] = image(icon, "apcox-1")
-
-		status_overlays_charging[1] = image(icon, "apco3-0")
-		status_overlays_charging[2] = image(icon, "apco3-1")
-		status_overlays_charging[3] = image(icon, "apco3-2")
-
-		status_overlays_equipment[1] = image(icon, "apco0-0")
-		status_overlays_equipment[2] = image(icon, "apco0-1")
-		status_overlays_equipment[3] = image(icon, "apco0-2")
-		status_overlays_equipment[4] = image(icon, "apco0-3")
-
-		status_overlays_lighting[1] = image(icon, "apco1-0")
-		status_overlays_lighting[2] = image(icon, "apco1-1")
-		status_overlays_lighting[3] = image(icon, "apco1-2")
-		status_overlays_lighting[4] = image(icon, "apco1-3")
-
-		status_overlays_environ[1] = image(icon, "apco2-0")
-		status_overlays_environ[2] = image(icon, "apco2-1")
-		status_overlays_environ[3] = image(icon, "apco2-2")
-		status_overlays_environ[4] = image(icon, "apco2-3")
 
 	var/update = check_updates() 		//returns 0 if no need to update icons.
 						// 1 if we need to update the icon_state
@@ -283,12 +248,12 @@
 		cut_overlays()
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
 			var/list/O = list(
-				status_overlays_lock[locked+1],
-				status_overlays_charging[charging+1])
+				"apcox-[locked]",
+				"apco3-[charging]")
 			if(operating)
-				O += status_overlays_equipment[equipment+1]
-				O += status_overlays_lighting[lighting+1]
-				O += status_overlays_environ[environ+1]
+				O += "apco0-[equipment]"
+				O += "apco1-[lighting]"
+				O += "apco2-[environ]"
 			add_overlay(O)
 
 	// And now, seperately for cleanness, the lighting changing
@@ -404,7 +369,7 @@
 								"<span class='notice'>You break the charred power control board and remove the remains.</span>",
 								"<span class='italics'>You hear a crack.</span>")
 							return
-							//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
+							//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 						else if (emagged) // We emag board, not APC's frame
 							emagged = 0
 							user.visible_message(\
@@ -532,9 +497,7 @@
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
 				if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
-					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-					s.set_up(5, 1, src)
-					s.start()
+					do_sparks(5, TRUE, src)
 					return
 				C.use(10)
 				to_chat(user, "<span class='notice'>You add cables to the APC frame.</span>")
@@ -671,13 +634,8 @@
 		return
 	..()
 
-/obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(malfhack)
-		return
-	..()
-
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
@@ -904,7 +862,7 @@
 			occupier.loc = src.loc
 			occupier.death()
 			occupier.gib()
-			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+			for(var/obj/item/weapon/pinpointer/P in GLOB.pinpointer_list)
 				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
 				P.nuke_warning = FALSE
 
@@ -1030,18 +988,18 @@
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, GLOB.CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
 		if(excess > lastused_total)		// if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
+			add_load(cellused/GLOB.CELLRATE)		// add the load used to recharge the cell
 
 
 		else		// no excess, and not enough per-apc
-			if((cell.charge/CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * excess)	//recharge with what we can
+			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
+				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess)	//recharge with what we can
 				add_load(excess)		// so draw what we can from the grid
 				charging = 0
 
@@ -1089,8 +1047,8 @@
 		if(chargemode && charging == 1 && operating)
 			if(excess > 0)		// check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
-				var/ch = min(excess*CELLRATE, cell.maxcharge*CHARGELEVEL)
-				add_load(ch/CELLRATE) // Removes the power we're taking from the grid
+				var/ch = min(excess*GLOB.CELLRATE, cell.maxcharge*GLOB.CHARGELEVEL)
+				add_load(ch/GLOB.CELLRATE) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
 			else
@@ -1104,7 +1062,7 @@
 
 		if(chargemode)
 			if(!charging)
-				if(excess > cell.maxcharge*CHARGELEVEL)
+				if(excess > cell.maxcharge*GLOB.CHARGELEVEL)
 					chargecount++
 				else
 					chargecount = 0
@@ -1221,9 +1179,7 @@
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))
 		return 0
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
+	do_sparks(5, TRUE, src)
 	if(isalien(user))
 		return 0
 	if(electrocute_mob(user, src, src, 1, TRUE))
@@ -1244,13 +1200,39 @@
 	for(var/obj/machinery/M in area.contents)
 		if(M.critical_machine)
 			return
-	for(var/A in ai_list)
+	for(var/A in GLOB.ai_list)
 		var/mob/living/silicon/ai/I = A
 		if(get_area(I) == area)
 			return
 
 	failure_timer = max(failure_timer, round(duration))
 
+#undef UPSTATE_CELL_IN
+#undef UPSTATE_OPENED1
+#undef UPSTATE_OPENED2
+#undef UPSTATE_MAINT
+#undef UPSTATE_BROKE
+#undef UPSTATE_BLUESCREEN
+#undef UPSTATE_WIREEXP
+#undef UPSTATE_ALLGOOD
+
+#undef APC_RESET_EMP
+
+//update_overlay
+#undef APC_UPOVERLAY_CHARGEING0
+#undef APC_UPOVERLAY_CHARGEING1
+#undef APC_UPOVERLAY_CHARGEING2
+#undef APC_UPOVERLAY_EQUIPMENT0
+#undef APC_UPOVERLAY_EQUIPMENT1
+#undef APC_UPOVERLAY_EQUIPMENT2
+#undef APC_UPOVERLAY_LIGHTING0
+#undef APC_UPOVERLAY_LIGHTING1
+#undef APC_UPOVERLAY_LIGHTING2
+#undef APC_UPOVERLAY_ENVIRON0
+#undef APC_UPOVERLAY_ENVIRON1
+#undef APC_UPOVERLAY_ENVIRON2
+#undef APC_UPOVERLAY_LOCKED
+#undef APC_UPOVERLAY_OPERATING
 
 #undef APC_UPDATE_ICON_COOLDOWN
 

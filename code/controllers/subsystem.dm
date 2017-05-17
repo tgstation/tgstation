@@ -1,9 +1,8 @@
 
-
 /datum/controller/subsystem
 	// Metadata; you should define these.
 	name = "fire coderbus" //name of the subsystem
-	var/init_order = 0		//order of initialization. Higher numbers are initialized first, lower numbers later. Can be decimal and negative values.
+	var/init_order = INIT_ORDER_DEFAULT		//order of initialization. Higher numbers are initialized first, lower numbers later. Use defines in __DEFINES/subsystems.dm for easy understanding of order.
 	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
 	var/priority = 50		//When mutiple subsystems need to run in the same tick, higher priority subsystems will run first and be given a higher share of the tick before MC_TICK_CHECK triggers a sleep
 
@@ -18,6 +17,7 @@
 	var/next_fire = 0		//scheduled world.time for next fire()
 	var/cost = 0			//average time to execute
 	var/tick_usage = 0		//average tick usage
+	var/tick_overrun = 0	//average tick overrun
 	var/state = SS_IDLE		//tracks the current state of the ss, running, paused, etc.
 	var/paused_ticks = 0	//ticks this ss is taking to run right now.
 	var/paused_tick_usage	//total tick_usage of all of our runs while pausing this run
@@ -29,8 +29,19 @@
 	var/datum/controller/subsystem/queue_next
 	var/datum/controller/subsystem/queue_prev
 
-// Used to initialize the subsystem BEFORE the map has loaded
+	var/runlevels = RUNLEVELS_DEFAULT	//points of the game at which the SS can fire
+
+	var/static/failure_strikes = 0 //How many times we suspect this subsystem has crashed the MC, 3 strikes and you're out!
+
+//Do not override
 /datum/controller/subsystem/New()
+	return
+
+// Used to initialize the subsystem BEFORE the map has loaded
+// Called AFTER Recover if that is called
+// Prefer to use Initialize if possible
+/datum/controller/subsystem/proc/PreInit()
+	return
 
 //This is used so the mc knows when the subsystem sleeps. do not override.
 /datum/controller/subsystem/proc/ignite(resumed = 0)
@@ -137,10 +148,11 @@
 
 /datum/controller/subsystem/proc/pause()
 	. = 1
-	if (state == SS_RUNNING)
-		state = SS_PAUSED
-	else if (state == SS_SLEEPING)
-		state = SS_PAUSING
+	switch(state)
+		if(SS_RUNNING)
+			state = SS_PAUSED
+		if(SS_SLEEPING)
+			state = SS_PAUSING
 
 
 //used to initialize the subsystem AFTER the map has loaded
@@ -159,7 +171,7 @@
 
 
 	if(can_fire && !(SS_NO_FIRE in flags))
-		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%|[round(ticks,0.1)]\t[msg]"
+		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"
 

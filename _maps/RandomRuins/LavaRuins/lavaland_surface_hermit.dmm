@@ -84,6 +84,7 @@
 /area/ruin/powered)
 "p" = (
 /obj/structure/rack,
+/obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/item/weapon/storage/bag/ore,
 /obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plating/asteroid/basalt,
@@ -104,7 +105,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "t" = (
-/turf/closed/wall/shuttle/survival/pod{
+/turf/closed/wall/mineral/titanium/survival/pod{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)

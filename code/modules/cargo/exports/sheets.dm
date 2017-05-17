@@ -79,9 +79,16 @@
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
+// Bluespace Polycrystals. About as common on the asteroid as
+
+/datum/export/stack/bscrystal
+	cost = 750
+	message = "of bluespace crystals"
+	export_types = list(/obj/item/stack/sheet/bluespace_crystal)
+
 // Wood. Quite expensive in the grim and dark 26 century.
 /datum/export/stack/wood
-	cost = 25
+	cost = 50
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
 
@@ -103,10 +110,6 @@
 	cost = 0.2
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
-
-/datum/export/stack/cable/get_cost(O)
-	return round(..())
-
 
 // Weird Stuff
 
