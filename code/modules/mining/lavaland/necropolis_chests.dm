@@ -1,5 +1,9 @@
 //The chests dropped by mob spawner tendrils. Also contains associated loot.
 
+test
+test
+
+
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
 	desc = "It's watching you closely."
@@ -820,7 +824,8 @@
 			timer = world.time + cooldown_time
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
-				new /obj/effect/overlay/temp/hierophant/chaser(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+				var/obj/effect/overlay/temp/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+				C.damage = 30
 				add_logs(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
@@ -940,10 +945,10 @@
 		new /obj/effect/overlay/temp/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/overlay/temp/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
-			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, TRUE) //blasts produced will not hurt allies
+			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, friendly_fire_check)
 			B.damage = 30
 		for(var/t in RANGE_TURFS(1, source))
-			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, TRUE) //but absolutely will hurt enemies
+			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, friendly_fire_check)
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user) //regardless, take all mobs near us along
@@ -1004,7 +1009,8 @@
 	for(var/i in 1 to range)
 		if(!J)
 			return
-		new /obj/effect/overlay/temp/hierophant/blast(J, user, friendly_fire_check)
+		var/obj/effect/overlay/temp/hierophant/blast/B = new(J, user, friendly_fire_check)
+		B.damage = 30
 		previousturf = J
 		J = get_step(previousturf, dir)
 
@@ -1015,4 +1021,5 @@
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
-		new /obj/effect/overlay/temp/hierophant/blast(t, user, friendly_fire_check)
+		var/obj/effect/overlay/temp/hierophant/blast/B = new(t, user, friendly_fire_check)
+		B.damage = 30

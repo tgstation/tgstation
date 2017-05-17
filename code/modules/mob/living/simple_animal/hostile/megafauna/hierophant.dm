@@ -478,6 +478,7 @@ Difficulty: Hard
 	var/speed = 3 //how many deciseconds between each step
 	var/currently_seeking = FALSE
 	var/friendly_fire_check = FALSE //if blasts produced apply friendly fire
+	var/damage = 10 
 
 /obj/effect/overlay/temp/hierophant/chaser/Initialize(mapload, new_caster, new_target, new_speed, is_friendly_fire)
 	. = ..()
@@ -521,9 +522,9 @@ Difficulty: Hard
 				moving--
 				sleep(speed)
 			targetturf = get_turf(target)
-
 /obj/effect/overlay/temp/hierophant/chaser/proc/make_blast()
-	new /obj/effect/overlay/temp/hierophant/blast(loc, caster, friendly_fire_check)
+	var/obj/effect/overlay/temp/hierophant/blast/B = new(loc, caster, friendly_fire_check)
+	B.damage = damage
 
 /obj/effect/overlay/temp/hierophant/telegraph
 	icon = 'icons/effects/96x96.dmi'
