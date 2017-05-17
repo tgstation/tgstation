@@ -25,7 +25,7 @@
 
 	if(is_freq_listening(signal))
 		if(change_frequency)
-			if(signal.frequency != SYND_FREQ)
+			if(signal.frequency != GLOB.SYND_FREQ)
 				signal.frequency = change_frequency
 
 		if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready (stupid assuming machine), let's send it
@@ -55,7 +55,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telecomms/bus
-	name = "circuit board (Bus Mainframe)"
+	name = "Bus Mainframe (Machine Board)"
 	build_path = /obj/machinery/telecomms/bus
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -72,25 +72,25 @@
 /obj/machinery/telecomms/bus/preset_one
 	id = "Bus 1"
 	network = "tcommsat"
-	freq_listening = list(SCI_FREQ, MED_FREQ)
+	freq_listening = list(GLOB.SCI_FREQ, GLOB.MED_FREQ)
 	autolinkers = list("processor1", "science", "medical")
 
 /obj/machinery/telecomms/bus/preset_two
 	id = "Bus 2"
 	network = "tcommsat"
-	freq_listening = list(SUPP_FREQ,SERV_FREQ)
+	freq_listening = list(GLOB.SUPP_FREQ,GLOB.SERV_FREQ)
 	autolinkers = list("processor2", "supply", "service")
 
 /obj/machinery/telecomms/bus/preset_three
 	id = "Bus 3"
 	network = "tcommsat"
-	freq_listening = list(SEC_FREQ, COMM_FREQ)
+	freq_listening = list(GLOB.SEC_FREQ, GLOB.COMM_FREQ)
 	autolinkers = list("processor3", "security", "command")
 
 /obj/machinery/telecomms/bus/preset_four
 	id = "Bus 4"
 	network = "tcommsat"
-	freq_listening = list(ENG_FREQ)
+	freq_listening = list(GLOB.ENG_FREQ)
 	autolinkers = list("processor4", "engineering", "common")
 
 /obj/machinery/telecomms/bus/preset_four/New()

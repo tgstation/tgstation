@@ -11,8 +11,8 @@
 	var/obj/item/device/encryptionkey/keyslot2 = null
 	dog_fashion = null
 
-/obj/item/device/radio/headset/New()
-	..()
+/obj/item/device/radio/headset/Initialize()
+	. = ..()
 	recalculateChannels()
 
 /obj/item/device/radio/headset/Destroy()
@@ -22,7 +22,7 @@
 	keyslot2 = null
 	return ..()
 
-/obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
+/obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans,datum/language/language)
 	if (!listening)
 		return ITALICS | REDUCE_RANGE
 	return ..()
@@ -42,23 +42,26 @@
 /obj/item/device/radio/headset/syndicate/alt //undisguised bowman with flash protection
 	name = "syndicate headset"
 	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs. \nTo access the syndicate channel, use ; before speaking."
-	flags = EARBANGPROTECT
 	origin_tech = "syndicate=3"
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
+
+/obj/item/device/radio/headset/syndicate/alt/Initialize(mapload)
+	. = ..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
 	command = TRUE
 
-/obj/item/device/radio/headset/syndicate/New()
-	..()
+/obj/item/device/radio/headset/syndicate/Initialize()
+	. = ..()
 	make_syndie()
 
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
-/obj/item/device/radio/headset/binary/New()
-	..()
+/obj/item/device/radio/headset/binary/Initialize()
+	. = ..()
 	qdel(keyslot)
 	keyslot = new /obj/item/device/encryptionkey/binary
 	recalculateChannels()
@@ -72,9 +75,12 @@
 /obj/item/device/radio/headset/headset_sec/alt
 	name = "security bowman headset"
 	desc = "This is used by your elite security force. Protects ears from flashbangs. \nTo access the security channel, use :s."
-	flags = EARBANGPROTECT
 	icon_state = "sec_headset_alt"
 	item_state = "sec_headset_alt"
+
+/obj/item/device/radio/headset/headset_sec/alt/Initialize(mapload)
+	. = ..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -124,9 +130,12 @@
 /obj/item/device/radio/headset/heads/captain/alt
 	name = "\proper the captain's bowman headset"
 	desc = "The headset of the boss. Protects ears from flashbangs. \nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
-	flags = EARBANGPROTECT
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
+
+/obj/item/device/radio/headset/heads/captain/alt/Initialize(mapload)
+	. = ..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -143,9 +152,12 @@
 /obj/item/device/radio/headset/heads/hos/alt
 	name = "\proper the head of security's bowman headset"
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs. \nTo access the security channel, use :s. For command, use :c."
-	flags = EARBANGPROTECT
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
+
+/obj/item/device/radio/headset/heads/hos/alt/Initialize(mapload)
+	. = ..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -196,10 +208,13 @@
 /obj/item/device/radio/headset/headset_cent/alt
 	name = "\improper Centcom bowman headset"
 	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs. \nTo access the centcom channel, use :y."
-	flags = EARBANGPROTECT
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
 	keyslot = null
+
+/obj/item/device/radio/headset/headset_cent/alt/Initialize(mapload)
+	. = ..()
+	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
@@ -216,7 +231,7 @@
 
 
 			for(var/ch_name in channels)
-				SSradio.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 
@@ -235,26 +250,24 @@
 					keyslot2 = null
 
 			recalculateChannels()
-			user << "<span class='notice'>You pop out the encryption keys in the headset.</span>"
+			to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset.</span>")
 
 		else
-			user << "<span class='warning'>This headset doesn't have any unique encryption keys!  How useless...</span>"
+			to_chat(user, "<span class='warning'>This headset doesn't have any unique encryption keys!  How useless...</span>")
 
 	else if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot && keyslot2)
-			user << "<span class='warning'>The headset can't hold another key!</span>"
+			to_chat(user, "<span class='warning'>The headset can't hold another key!</span>")
 			return
 
 		if(!keyslot)
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			keyslot = W
 
 		else
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			keyslot2 = W
 
 
@@ -275,17 +288,21 @@
 		if(keyslot2.translate_binary)
 			src.translate_binary = 1
 
-		if(keyslot2.translate_hive)
-			src.translate_hive = 1
-
 		if(keyslot2.syndie)
 			src.syndie = 1
 
-		if (keyslot2.centcom)
-			centcom = 1
+		if (keyslot2.independent)
+			independent = TRUE
 
 
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 	return
+
+/obj/item/device/radio/headset/AltClick(mob/living/user)
+	if(!istype(user) || !Adjacent(user) || user.incapacitated())
+		return
+	if (command)
+		use_command = !use_command
+		to_chat(user, "<span class='notice'>You toggle high-volume mode [use_command ? "on" : "off"].</span>")

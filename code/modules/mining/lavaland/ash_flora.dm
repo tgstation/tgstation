@@ -39,14 +39,14 @@
 					msg = harvest_message_low
 				else if(rand_harvested == harvest_amount_high)
 					msg = harvest_message_high
-				user << "<span class='notice'>[msg]</span>"
+				to_chat(user, "<span class='notice'>[msg]</span>")
 			for(var/i in 1 to rand_harvested)
 				new harvest(get_turf(src))
 	icon_state = "[base_icon]p"
 	name = harvested_name
 	desc = harvested_desc
 	harvested = TRUE
-	addtimer(src, "regrow", rand(regrowth_time_low, regrowth_time_high))
+	addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
 	return 1
 
 /obj/structure/flora/ash/proc/regrow()
@@ -99,7 +99,7 @@
 	harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap
 	harvest_amount_high = 4
 	harvest_time = 50
-	harvest_message_low = "You slice the cap off of a mushroom."
+	harvest_message_low = "You slice the cap off a mushroom."
 	harvest_message_med = "You slice off a few conks from the larger mushrooms."
 	harvest_message_high = "You slice off a number of caps and conks from these mushrooms."
 	regrowth_time_low = 3000
@@ -115,7 +115,7 @@
 	harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem
 	harvest_amount_high = 4
 	harvest_time = 40
-	harvest_message_low = "You pick and slice the cap off of a mushroom, leaving the stem."
+	harvest_message_low = "You pick and slice the cap off a mushroom, leaving the stem."
 	harvest_message_med = "You pick and decapitate several mushrooms for their stems."
 	harvest_message_high = "You acquire a number of stems from these mushrooms."
 	regrowth_time_low = 3000

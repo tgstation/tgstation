@@ -1,4 +1,4 @@
-var/list/blacklisted_cargo_types = typecacheof(list(
+GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/mob/living,
 		/obj/structure/blob,
 		/obj/effect/rune,
@@ -9,11 +9,15 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		/obj/singularity,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
-		/obj/machinery/telepad,
 		/obj/machinery/quantumpad,
 		/obj/machinery/clonepod,
-		/obj/effect/mob_spawn
-	))
+		/obj/effect/mob_spawn,
+		/obj/effect/hierophant,
+		/obj/structure/recieving_pad,
+		/obj/effect/clockwork/spatial_gateway,
+		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
+		/obj/item/device/warp_cube
+	)))
 
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
@@ -44,7 +48,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 	for(var/trf in areaInstance)
 		var/turf/T = trf
 		for(var/a in T.GetAllContents())
-			if(is_type_in_typecache(a, blacklisted_cargo_types))
+			if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
 				return FALSE
 	return TRUE
 
@@ -67,7 +71,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 
 	var/list/empty_turfs = list()
 	for(var/turf/open/floor/T in areaInstance)
-		if(T.density || T.contents.len)
+		if(is_blocked_turf(T))
 			continue
 		empty_turfs += T
 
@@ -85,7 +89,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		SSshuttle.orderhistory += SO
 
 		SO.generate(pick_n_take(empty_turfs))
-		feedback_add_details("cargo_imports",
+		SSblackbox.add_details("cargo_imports",
 			"[SO.pack.type]|[SO.pack.name]|[SO.pack.cost]")
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", "cargo")
 		if(SO.pack.dangerous)
@@ -97,7 +101,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 /obj/docking_port/mobile/supply/proc/sell()
 	var/presale_points = SSshuttle.points
 
-	if(!exports_list.len) // No exports list? Generate it!
+	if(!GLOB.exports_list.len) // No exports list? Generate it!
 		setupExports()
 
 	var/msg = ""
@@ -111,7 +115,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 	if(sold_atoms)
 		sold_atoms += "."
 
-	for(var/a in exports_list)
+	for(var/a in GLOB.exports_list)
 		var/datum/export/E = a
 		var/export_text = E.total_printout()
 		if(!export_text)

@@ -26,6 +26,9 @@
 	if(modifiers["shift"] && modifiers["middle"])
 		ShiftMiddleClickOn(A)
 		return
+	if(modifiers["shift"] && modifiers["ctrl"])
+		CtrlShiftClickOn(A)
+		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
 		return
@@ -71,13 +74,13 @@
 	if(awaygate)
 		user.forceMove(awaygate.loc)
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 /obj/machinery/gateway/centeraway/attack_ghost(mob/user)
 	if(stationgate)
 		user.forceMove(stationgate.loc)
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 /obj/item/weapon/storage/attack_ghost(mob/user)
 	orient2hud(user)

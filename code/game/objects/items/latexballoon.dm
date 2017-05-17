@@ -17,7 +17,7 @@
 	icon_state = "latexballon_blow"
 	item_state = "latexballon"
 	user.update_inv_hands()
-	user << "<span class='notice'>You blow up [src] with [tank].</span>"
+	to_chat(user, "<span class='notice'>You blow up [src] with [tank].</span>")
 	air_contents = tank.remove_air_volume(3)
 
 /obj/item/latexballon/proc/burst()

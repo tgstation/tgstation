@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -84,6 +84,7 @@
 /area/ruin/powered)
 "p" = (
 /obj/structure/rack,
+/obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/item/weapon/storage/bag/ore,
 /obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plating/asteroid/basalt,
@@ -104,7 +105,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "t" = (
-/turf/closed/wall/shuttle/survival/pod{
+/turf/closed/wall/mineral/titanium/survival/pod{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -186,7 +187,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/interior{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface

@@ -16,8 +16,7 @@
 /obj/effect/clockwork/overlay/Destroy()
 	if(linked)
 		linked = null
-	..()
-	return QDEL_HINT_PUTINPOOL
+	. = ..()
 
 /obj/effect/clockwork/overlay/wall
 	name = "clockwork wall"
@@ -27,15 +26,14 @@
 	smooth = SMOOTH_TRUE
 	layer = CLOSED_TURF_LAYER
 
-/obj/effect/clockwork/overlay/wall/New()
-	..()
+/obj/effect/clockwork/overlay/wall/Initialize()
+	. = ..()
 	queue_smooth_neighbors(src)
-	addtimer(GLOBAL_PROC, "queue_smooth", 1, TIMER_NORMAL, src)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/queue_smooth, src), 1)
 
 /obj/effect/clockwork/overlay/wall/Destroy()
 	queue_smooth_neighbors(src)
-	..()
-	return QDEL_HINT_QUEUE
+	return ..()
 
 /obj/effect/clockwork/overlay/floor
 	icon = 'icons/turf/floors.dmi'

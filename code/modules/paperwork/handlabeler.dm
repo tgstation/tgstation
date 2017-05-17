@@ -41,19 +41,16 @@
 		return
 
 	if(!labels_left)
-		user << "<span class='warning'>No labels left!</span>"
+		to_chat(user, "<span class='warning'>No labels left!</span>")
 		return
 	if(!label || !length(label))
-		user << "<span class='warning'>No text set!</span>"
+		to_chat(user, "<span class='warning'>No text set!</span>")
 		return
 	if(length(A.name) + length(label) > 64)
-		user << "<span class='warning'>Label too big!</span>"
+		to_chat(user, "<span class='warning'>Label too big!</span>")
 		return
-	if(ishuman(A))
-		user << "<span class='warning'>You can't label humans!</span>"
-		return
-	if(issilicon(A))
-		user << "<span class='warning'>You can't label cyborgs!</span>"
+	if(ismob(A))
+		to_chat(user, "<span class='warning'>You can't label creatures!</span>") // use a collar
 		return
 
 	user.visible_message("[user] labels [A] as [label].", \
@@ -64,31 +61,28 @@
 
 /obj/item/weapon/hand_labeler/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to use [src]!</span>")
 		return
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
-		user << "<span class='notice'>You turn on [src].</span>"
+		to_chat(user, "<span class='notice'>You turn on [src].</span>")
 		//Now let them chose the text.
 		var/str = copytext(reject_bad_text(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='warning'>Invalid text!</span>"
+			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
 		label = str
-		user << "<span class='notice'>You set the text to '[str]'.</span>"
+		to_chat(user, "<span class='notice'>You set the text to '[str]'.</span>")
 	else
-		user << "<span class='notice'>You turn off [src].</span>"
+		to_chat(user, "<span class='notice'>You turn off [src].</span>")
 
 /obj/item/weapon/hand_labeler/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
-		if(!user.unEquip(I))
-			return
-		user << "<span class='notice'>You insert [I] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		qdel(I)
-		labels_left = initial(labels_left)
-		return
+		labels_left = initial(labels_left)	//Yes, it's capped at its initial value
 
 /obj/item/weapon/hand_labeler/borg
 	name = "cyborg-hand labeler"

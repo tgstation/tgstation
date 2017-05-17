@@ -1,22 +1,17 @@
-var/datum/subsystem/acid/SSacid
-
-/datum/subsystem/acid
+SUBSYSTEM_DEF(acid)
 	name = "Acid"
 	priority = 40
 	flags = SS_NO_INIT|SS_BACKGROUND
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/subsystem/acid/New()
-	NEW_SS_GLOBAL(SSacid)
-
-
-/datum/subsystem/acid/stat_entry()
+/datum/controller/subsystem/acid/stat_entry()
 	..("P:[processing.len]")
 
 
-/datum/subsystem/acid/fire(resumed = 0)
+/datum/controller/subsystem/acid/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 
@@ -26,7 +21,7 @@ var/datum/subsystem/acid/SSacid
 	while (currentrun.len)
 		var/obj/O = currentrun[currentrun.len]
 		currentrun.len--
-		if (!O || qdeleted(O))
+		if (!O || QDELETED(O))
 			processing -= O
 			if (MC_TICK_CHECK)
 				return
@@ -34,8 +29,7 @@ var/datum/subsystem/acid/SSacid
 
 		if(O.acid_level && O.acid_processing())
 		else
-			O.overlays -= acid_overlay
-			O.priority_overlays -= acid_overlay
+			O.cut_overlay(GLOB.acid_overlay, TRUE)
 			processing -= O
 
 		if (MC_TICK_CHECK)

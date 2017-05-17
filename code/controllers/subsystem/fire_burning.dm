@@ -1,22 +1,17 @@
-var/datum/subsystem/fire_burning/SSfire_burning
-
-/datum/subsystem/fire_burning
+SUBSYSTEM_DEF(fire_burning)
 	name = "Fire Burning"
 	priority = 40
 	flags = SS_NO_INIT|SS_BACKGROUND
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/subsystem/fire_burning/New()
-	NEW_SS_GLOBAL(SSfire_burning)
-
-
-/datum/subsystem/fire_burning/stat_entry()
+/datum/controller/subsystem/fire_burning/stat_entry()
 	..("P:[processing.len]")
 
 
-/datum/subsystem/fire_burning/fire(resumed = 0)
+/datum/controller/subsystem/fire_burning/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 
@@ -26,7 +21,7 @@ var/datum/subsystem/fire_burning/SSfire_burning
 	while(currentrun.len)
 		var/obj/O = currentrun[currentrun.len]
 		currentrun.len--
-		if (!O || qdeleted(O))
+		if (!O || QDELETED(O))
 			processing -= O
 			if (MC_TICK_CHECK)
 				return

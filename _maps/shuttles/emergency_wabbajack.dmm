@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -41,16 +41,16 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "al" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "am" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "an" = (
 /obj/structure/table/wood,
@@ -96,7 +96,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "au" = (
 /obj/structure/chair/wood,
@@ -142,7 +142,7 @@
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aC" = (
 /obj/machinery/door/airlock/titanium,
@@ -159,7 +159,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aE" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aF" = (
 /obj/machinery/door/window/eastleft,
@@ -210,6 +210,9 @@
 /area/shuttle/escape)
 "aM" = (
 /obj/machinery/chem_dispenser,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aN" = (
@@ -254,7 +257,7 @@
 /area/shuttle/escape)
 "aU" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aV" = (
 /obj/machinery/door/airlock/titanium{
@@ -263,32 +266,28 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aW" = (
-/turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTH)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/yellow,
 /area/shuttle/escape)
 "aX" = (
-/turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTHEAST)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel/yellow,
 /area/shuttle/escape)
 "aY" = (
-/turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTHWEST)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel/whitered,
 /area/shuttle/escape)
 "aZ" = (
-/turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTH)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel/whitered,
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/destructible/cult/forge{
@@ -298,18 +297,16 @@
 /turf/open/floor/plasteel/yellow,
 /area/shuttle/escape)
 "bb" = (
-/turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (EAST)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel/yellow,
 /area/shuttle/escape)
 "bc" = (
-/turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (WEST)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel/whitered,
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/destructible/cult/forge{
@@ -334,6 +331,59 @@
 /area/shuttle/escape)
 "bh" = (
 /turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/escape)
+"bi" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/escape)
+"bj" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"bk" = (
+/obj/structure/chair/wood,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/cult,
+/area/shuttle/escape)
+"bl" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bm" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bn" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bo" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bp" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -371,13 +421,13 @@ at
 al
 as
 aE
-aI
+bm
 aI
 aI
 aE
 ab
 aE
-aI
+bo
 aW
 ba
 be
@@ -390,7 +440,7 @@ ab
 ag
 ae
 ab
-al
+bj
 al
 al
 aB
@@ -460,17 +510,17 @@ bg
 ac
 af
 ad
-ae
+bi
 ai
 an
-au
+bk
 ay
 ab
+bl
 aq
 aq
 aq
-aq
-aq
+bn
 aH
 ab
 ab
@@ -569,7 +619,7 @@ aR
 aT
 as
 av
-aE
+bp
 aZ
 bd
 be

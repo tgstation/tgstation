@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -148,10 +148,8 @@
 /area/ruin/powered/golem_ship)
 "u" = (
 /obj/structure/table/wood,
-/obj/item/weapon/bedsheet/rd{
-	desc = "Majestic.";
+/obj/item/weapon/bedsheet/rd/royal_cape{
 	layer = 3;
-	name = "Royal Cape of the Liberator";
 	pixel_x = 5;
 	pixel_y = 9
 	},

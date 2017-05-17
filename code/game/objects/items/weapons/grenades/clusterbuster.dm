@@ -43,7 +43,7 @@
 	payload = payload_type
 	active = 1
 	walk_away(src,loc,rand(1,4))
-	addtimer(src, "prime", rand(15,60))
+	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
 /obj/item/weapon/grenade/clusterbuster/segment/prime()
 
@@ -64,7 +64,7 @@
 		walk_away(P,loc,rand(1,4))
 
 		spawn(rand(15,60))
-			if(P && !qdeleted(P))
+			if(P && !QDELETED(P))
 				P.prime()
 			qdel(src)
 

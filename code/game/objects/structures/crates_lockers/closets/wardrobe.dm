@@ -3,7 +3,7 @@
 	desc = "It's a storage unit for standard-issue Nanotrasen attire."
 	icon_door = "blue"
 
-/obj/structure/closet/wardrobe/New()
+/obj/structure/closet/wardrobe/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/color/blue(src)
@@ -15,9 +15,7 @@
 	name = "pink wardrobe"
 	icon_door = "pink"
 
-/obj/structure/closet/wardrobe/pink/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/pink/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/color/pink(src)
 	for(var/i in 1 to 3)
@@ -28,9 +26,7 @@
 	name = "black wardrobe"
 	icon_door = "black"
 
-/obj/structure/closet/wardrobe/black/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/black/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/color/black(src)
 	if(prob(25))
@@ -54,10 +50,8 @@
 	name = "green wardrobe"
 	icon_door = "green"
 
-/obj/structure/closet/wardrobe/green/New()
-	..()
-	contents = list()
-	for(var/i in 1 to 3)		
+/obj/structure/closet/wardrobe/green/PopulateContents()
+	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/color/green(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/black(src)
@@ -71,9 +65,7 @@
 	desc = "It's a storage unit for Nanotrasen-regulation prisoner attire."
 	icon_door = "orange"
 
-/obj/structure/closet/wardrobe/orange/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/orange/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/prisoner(src)
 	for(var/i in 1 to 3)
@@ -85,9 +77,7 @@
 	name = "yellow wardrobe"
 	icon_door = "yellow"
 
-/obj/structure/closet/wardrobe/yellow/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/yellow/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/color/yellow(src)
 	for(var/i in 1 to 3)
@@ -101,9 +91,7 @@
 	name = "white wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/white/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/white/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/color/white(src)
 	for(var/i in 1 to 3)
@@ -116,9 +104,7 @@
 	name = "pajama wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/pjs/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/pjs/PopulateContents()
 	new /obj/item/clothing/under/pj/red(src)
 	new /obj/item/clothing/under/pj/red(src)
 	new /obj/item/clothing/under/pj/blue(src)
@@ -132,9 +118,7 @@
 	name = "grey wardrobe"
 	icon_door = "grey"
 
-/obj/structure/closet/wardrobe/grey/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/grey/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/color/grey(src)
 	for(var/i in 1 to 3)
@@ -160,9 +144,7 @@
 	name = "mixed wardrobe"
 	icon_door = "mixed"
 
-/obj/structure/closet/wardrobe/mixed/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/mixed/PopulateContents()
 	if(prob(40))
 		new /obj/item/clothing/suit/jacket(src)
 	if(prob(40))
@@ -174,14 +156,10 @@
 	new /obj/item/clothing/under/color/orange(src)
 	new /obj/item/clothing/under/color/pink(src)
 	new /obj/item/clothing/under/color/red(src)
-	new /obj/item/clothing/under/color/lightblue(src)
-	new /obj/item/clothing/under/color/aqua(src)
-	new /obj/item/clothing/under/color/purple(src)
-	new /obj/item/clothing/under/color/lightpurple(src)
-	new /obj/item/clothing/under/color/lightgreen(src)
 	new /obj/item/clothing/under/color/darkblue(src)
-	new /obj/item/clothing/under/color/darkred(src)
-	new /obj/item/clothing/under/color/lightred(src)
+	new /obj/item/clothing/under/color/teal(src)
+	new /obj/item/clothing/under/color/lightpurple(src)
+	new /obj/item/clothing/under/color/green(src)
 	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/mask/bandana/blue(src)

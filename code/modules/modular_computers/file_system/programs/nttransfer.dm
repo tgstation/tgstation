@@ -1,8 +1,6 @@
-var/global/nttransfer_uid = 0
-
 /datum/computer_file/program/nttransfer
 	filename = "nttransfer"
-	filedesc = "NTNet P2P Transfer Client"
+	filedesc = "P2P Transfer Client"
 	extended_desc = "This program allows for simple file transfer via direct peer to peer connection."
 	program_icon_state = "comm_logs"
 	size = 7
@@ -10,6 +8,7 @@ var/global/nttransfer_uid = 0
 	requires_ntnet_feature = NTNET_PEERTOPEER
 	network_destination = "other device via P2P tunnel"
 	available_on_ntnet = 1
+	tgui_id = "ntos_net_transfer"
 
 	var/error = ""										// Error screen
 	var/server_password = ""							// Optional password to download the file.
@@ -22,10 +21,10 @@ var/global/nttransfer_uid = 0
 	var/actual_netspeed = 0								// Displayed in the UI, this is the actual transfer speed.
 	var/unique_token 									// UID of this program
 	var/upload_menu = 0									// Whether we show the program list and upload menu
+	var/static/nttransfer_uid = 0
 
 /datum/computer_file/program/nttransfer/New()
-	unique_token = nttransfer_uid
-	nttransfer_uid++
+	unique_token = nttransfer_uid++
 	..()
 
 /datum/computer_file/program/nttransfer/process_tick()
@@ -84,26 +83,12 @@ var/global/nttransfer_uid = 0
 	remote = null
 	download_completion = 0
 
-
-/datum/computer_file/program/nttransfer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-
-		ui = new(user, src, ui_key, "ntnet_transfer", "NTNet P2P Transfer Client", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
-
 /datum/computer_file/program/nttransfer/ui_act(action, params)
 	if(..())
 		return 1
 	switch(action)
 		if("PRG_downloadfile")
-			for(var/datum/computer_file/program/nttransfer/P in ntnet_global.fileservers)
+			for(var/datum/computer_file/program/nttransfer/P in GLOB.ntnet_global.fileservers)
 				if("[P.unique_token]" == params["id"])
 					remote = P
 					break
@@ -121,8 +106,8 @@ var/global/nttransfer_uid = 0
 			error = ""
 			upload_menu = 0
 			finalize_download()
-			if(src in ntnet_global.fileservers)
-				ntnet_global.fileservers.Remove(src)
+			if(src in GLOB.ntnet_global.fileservers)
+				GLOB.ntnet_global.fileservers.Remove(src)
 			for(var/datum/computer_file/program/nttransfer/T in connected_clients)
 				T.crash_download("Remote server has forcibly closed the connection")
 			provided_file = null
@@ -148,7 +133,7 @@ var/global/nttransfer_uid = 0
 						if(!P.can_run(usr,transfer = 1))
 							error = "Access Error: Insufficient rights to upload file."
 					provided_file = F
-					ntnet_global.fileservers.Add(src)
+					GLOB.ntnet_global.fileservers.Add(src)
 					return
 			error = "I/O Error: Unable to locate file on hard drive."
 			return 1
@@ -186,7 +171,7 @@ var/global/nttransfer_uid = 0
 		data["upload_filelist"] = all_files
 	else
 		var/list/all_servers[0]
-		for(var/datum/computer_file/program/nttransfer/P in ntnet_global.fileservers)
+		for(var/datum/computer_file/program/nttransfer/P in GLOB.ntnet_global.fileservers)
 			all_servers.Add(list(list(
 			"uid" = P.unique_token,
 			"filename" = "[P.provided_file.filename].[P.provided_file.filetype]",

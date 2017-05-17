@@ -23,3 +23,30 @@
 	var/master = null
 
 	var/list/container = list(  )
+
+//Makes a tile fully lit no matter what
+/obj/effect/fullbright
+	icon = 'icons/effects/alphacolors.dmi'
+	icon_state = "white"
+	plane = LIGHTING_PLANE
+	layer = LIGHTING_LAYER
+	blend_mode = BLEND_ADD
+
+/obj/effect/abstract/marker
+	name = "marker"
+	icon = 'icons/effects/effects.dmi'
+	anchored = TRUE
+	icon_state = "wave3"
+	layer = RIPPLE_LAYER
+
+/obj/effect/abstract/marker/Initialize(mapload)
+	. = ..()
+	GLOB.all_abstract_markers += src
+
+/obj/effect/abstract/marker/Destroy()
+	GLOB.all_abstract_markers -= src
+	. = ..()
+
+/obj/effect/abstract/marker/at
+	name = "active turf marker"
+

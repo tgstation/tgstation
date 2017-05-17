@@ -19,12 +19,6 @@
 		if(legcuffed)
 			. += legcuffed.slowdown
 
-
-var/const/NO_SLIP_WHEN_WALKING = 1
-var/const/SLIDE = 2
-var/const/GALOSHES_DONT_HELP = 4
-var/const/SLIDE_ICE = 8
-
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
 	if(movement_type & FLYING)
 		return 0
@@ -54,7 +48,7 @@ var/const/SLIDE_ICE = 8
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
-	if(.)
+	if(. && mob_has_gravity()) //floating is easy
 		if(dna && dna.species && (NOHUNGER in dna.species.species_traits))
 			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)

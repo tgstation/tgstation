@@ -1,11 +1,3 @@
-
-/mob/living/carbon/monkey/get_eye_protection()
-	var/number = ..()
-	if(istype(src.wear_mask, /obj/item/clothing/mask))
-		var/obj/item/clothing/mask/MFP = src.wear_mask
-		number += MFP.flash_protect
-	return number
-
 /mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
 	if(health < 0 && ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -117,26 +109,33 @@
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>", null, COMBAT_MESSAGE_RANGE)
+
 		if (M.a_intent == INTENT_DISARM)
+			var/obj/item/I = null
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(prob(95))
 				Weaken(10)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
 						"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			else
+				I = get_active_held_item()
 				if(drop_item())
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
-			add_logs(M, src, "disarmed")
+				else
+					I = null//did not manage to actually disarm the item, gross but no time to refactor
+
+			add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			updatehealth()
 
 
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
-			return 1
+			return TRUE
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart("chest")
@@ -167,13 +166,13 @@
 			if(!(wear_mask.resistance_flags & UNACIDABLE))
 				wear_mask.acid_act(acidpwr)
 			else
-				src << "<span class='warning'>Your mask protects you from the acid.</span>"
+				to_chat(src, "<span class='warning'>Your mask protects you from the acid.</span>")
 			return
 		if(head)
 			if(!(head.resistance_flags & UNACIDABLE))
 				head.acid_act(acidpwr)
 			else
-				src << "<span class='warning'>Your hat protects you from the acid.</span>"
+				to_chat(src, "<span class='warning'>Your hat protects you from the acid.</span>")
 			return
 	take_bodypart_damage(acidpwr * min(0.6, acid_volume*0.1))
 

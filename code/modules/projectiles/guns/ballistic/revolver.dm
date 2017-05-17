@@ -27,7 +27,7 @@
 		return
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>"
+		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
 		A.update_icon()
 		update_icon()
 		chamber_round(0)
@@ -44,9 +44,9 @@
 			CB.update_icon()
 			num_unloaded++
 	if (num_unloaded)
-		user << "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>"
+		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
 	else
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 /obj/item/weapon/gun/ballistic/revolver/verb/spin()
 	set name = "Spin Chamber"
@@ -83,7 +83,7 @@
 
 /obj/item/weapon/gun/ballistic/revolver/examine(mob/user)
 	..()
-	user << "[get_ammo(0,0)] of those are live rounds."
+	to_chat(user, "[get_ammo(0,0)] of those are live rounds.")
 
 /obj/item/weapon/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
@@ -106,9 +106,9 @@
 	if(magazine.caliber != initial(magazine.caliber))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
-			user << "<span class='userdanger'>[src] blows up in your face!</span>"
+			to_chat(user, "<span class='userdanger'>[src] blows up in your face!</span>")
 			user.take_bodypart_damage(0,20)
-			user.unEquip(src)
+			user.dropItemToGround(src)
 			return 0
 	..()
 
@@ -116,31 +116,31 @@
 	..()
 	if(istype(A, /obj/item/weapon/screwdriver))
 		if(magazine.caliber == "38")
-			user << "<span class='notice'>You begin to reinforce the barrel of [src]...</span>"
+			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
 			if(magazine.ammo_count())
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
 				return
 			if(do_after(user, 30*A.toolspeed, target = src))
 				if(magazine.ammo_count())
-					user << "<span class='warning'>You can't modify it!</span>"
+					to_chat(user, "<span class='warning'>You can't modify it!</span>")
 					return
 				magazine.caliber = "357"
 				desc = "The barrel and chamber assembly seems to have been modified."
-				user << "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>"
+				to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
 		else
-			user << "<span class='notice'>You begin to revert the modifications to [src]...</span>"
+			to_chat(user, "<span class='notice'>You begin to revert the modifications to [src]...</span>")
 			if(magazine.ammo_count())
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
 				return
 			if(do_after(user, 30*A.toolspeed, target = src))
 				if(magazine.ammo_count())
-					user << "<span class='warning'>You can't modify it!</span>"
+					to_chat(user, "<span class='warning'>You can't modify it!</span>")
 					return
 				magazine.caliber = "38"
 				desc = initial(desc)
-				user << "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>"
+				to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
 
 
 /obj/item/weapon/gun/ballistic/revolver/mateba
@@ -208,13 +208,13 @@
 			return
 	if(target != user)
 		if(ismob(target))
-			user << "<span class='warning'>A mechanism prevents you from shooting anyone but yourself!</span>"
+			to_chat(user, "<span class='warning'>A mechanism prevents you from shooting anyone but yourself!</span>")
 		return
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!spun)
-			user << "<span class='warning'>You need to spin the revolver's chamber first!</span>"
+			to_chat(user, "<span class='warning'>You need to spin the revolver's chamber first!</span>")
 			return
 
 		spun = FALSE
@@ -300,9 +300,9 @@
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
-		user << "<span class='notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
+		to_chat(user, "<span class='notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>")
 	else
-		user << "<span class='warning'>[src] is empty!</span>"
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 // IMPROVISED SHOTGUN //
 
@@ -326,11 +326,11 @@
 		var/obj/item/stack/cable_coil/C = A
 		if(C.use(10))
 			slot_flags = SLOT_BACK
-			user << "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>"
+			to_chat(user, "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>")
 			slung = 1
 			update_icon()
 		else
-			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>"
+			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
 
 /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/update_icon()
 	..()
@@ -343,3 +343,15 @@
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
 		slung = 0
 		update_icon()
+
+/obj/item/weapon/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
+	clumsy_check = 0
+
+/obj/item/weapon/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
+	if((user.disabilities & CLUMSY) || (user.mind && user.mind.assigned_role == "Clown"))
+		return ..()
+	if(process_fire(user, user, 0, zone_override = "head"))
+		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")
+		user.emote("scream")
+		user.drop_item()
+		user.Weaken(4)

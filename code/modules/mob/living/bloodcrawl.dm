@@ -19,9 +19,6 @@
 /obj/effect/dummy/slaughter/singularity_act()
 	return
 
-/obj/effect/dummy/slaughter/Destroy()
-	..()
-	return QDEL_HINT_PUTINPOOL
 
 
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
@@ -31,7 +28,7 @@
 			//TODO make it toggleable to either forcedrop the items, or deny
 			//entry when holding them
 			// literally only an option for carbons though
-			C << "<span class='warning'>You may not hold items while blood crawling!</span>"
+			to_chat(C, "<span class='warning'>You may not hold items while blood crawling!</span>")
 			return 0
 		var/obj/item/weapon/bloodcrawl/B1 = new(C)
 		var/obj/item/weapon/bloodcrawl/B2 = new(C)
@@ -53,7 +50,7 @@
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
-	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
+	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(mobloc)
 	src.ExtinguishMob()
 
 	// Keep a reference to whatever we're pulling, because forceMove()
@@ -87,11 +84,11 @@
 	if(kidnapped)
 		var/success = bloodcrawl_consume(victim)
 		if(!success)
-			src << "<span class='danger'>You happily devour... nothing? Your meal vanished at some point!</span>"
+			to_chat(src, "<span class='danger'>You happily devour... nothing? Your meal vanished at some point!</span>")
 	return 1
 
 /mob/living/proc/bloodcrawl_consume(mob/living/victim)
-	src << "<span class='danger'>You begin to feast on [victim]. You can not move while you are doing this.</span>"
+	to_chat(src, "<span class='danger'>You begin to feast on [victim]. You can not move while you are doing this.</span>")
 
 	var/sound
 	if(istype(src, /mob/living/simple_animal/slaughter))
@@ -108,7 +105,7 @@
 		return FALSE
 
 	if(victim.reagents && victim.reagents.has_reagent("devilskiss"))
-		src << "<span class='warning'><b>AAH! THEIR FLESH! IT BURNS!</b></span>"
+		to_chat(src, "<span class='warning'><b>AAH! THEIR FLESH! IT BURNS!</b></span>")
 		adjustBruteLoss(25) //I can't use adjustHealth() here because bloodcrawl affects /mob/living and adjustHealth() only affects simple mobs
 		var/found_bloodpool = FALSE
 		for(var/obj/effect/decal/cleanable/target in range(1,get_turf(victim)))
@@ -125,7 +122,7 @@
 			victim.exit_blood_effect()
 		return TRUE
 
-	src << "<span class='danger'>You devour [victim]. Your health is fully restored.</span>"
+	to_chat(src, "<span class='danger'>You devour [victim]. Your health is fully restored.</span>")
 	src.revive(full_heal = 1)
 
 	// No defib possible after laughter
@@ -156,7 +153,7 @@
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.notransform)
-		src << "<span class='warning'>Finish eating first!</span>"
+		to_chat(src, "<span class='warning'>Finish eating first!</span>")
 		return 0
 	B.visible_message("<span class='warning'>[B] starts to bubble...</span>")
 	if(!do_after(src, 20, target = B))
@@ -171,7 +168,6 @@
 		var/mob/living/carbon/C = src
 		for(var/obj/item/weapon/bloodcrawl/BC in C)
 			BC.flags = null
-			C.unEquip(BC)
 			qdel(BC)
 	qdel(src.holder)
 	src.holder = null

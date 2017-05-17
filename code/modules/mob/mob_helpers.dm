@@ -269,10 +269,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/findname(msg)
 	if(!istext(msg))
 		msg = "[msg]"
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(M.real_name == msg)
 			return M
 	return 0
+
+/mob/proc/first_name()
+	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
+	firstname.Find(real_name)
+	return firstname.match
 
 /mob/proc/abiotic(full_body = 0)
 	for(var/obj/item/I in held_items)
@@ -285,49 +290,34 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(src) || isalienadult(src) || isbrain(src))
-		switch(input)
-			if(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
-				a_intent = input
-			if(INTENT_HOTKEY_RIGHT)
-				switch (a_intent)
-					if(INTENT_HELP)
-						a_intent = INTENT_DISARM
-					if(INTENT_DISARM)
-						a_intent = INTENT_GRAB
-					if(INTENT_GRAB)
-						a_intent = INTENT_HARM
-					if(INTENT_HARM)
-						a_intent = INTENT_HELP
-			if(INTENT_HOTKEY_LEFT)
-				switch (a_intent)
-					if(INTENT_HELP)
-						a_intent = INTENT_HARM
-					if(INTENT_DISARM)
-						a_intent = INTENT_HELP
-					if(INTENT_GRAB)
-						a_intent = INTENT_DISARM
-					if(INTENT_HARM)
-						a_intent = INTENT_GRAB
+	if(!possible_a_intents || !possible_a_intents.len)
+		return
 
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "[a_intent]"
+	if(input in possible_a_intents)
+		a_intent = input
+	else
+		var/current_intent = possible_a_intents.Find(a_intent)
 
-	else if(iscyborg(src) || ismonkey(src) || islarva(src))
-		switch(input)
-			if(INTENT_HELP)
-				a_intent = INTENT_HELP
-			if(INTENT_HARM)
-				a_intent = INTENT_HARM
-			if(INTENT_HOTKEY_RIGHT, INTENT_HOTKEY_LEFT)
-				switch (a_intent)
-					if(INTENT_HELP)
-						a_intent = INTENT_HARM
-					if(INTENT_HARM)
-						a_intent = INTENT_HELP
+		if(!current_intent)
+			// Failsafe. Just in case some badmin was playing with VV.
+			current_intent = 1
 
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "[a_intent]"
+		if(input == INTENT_HOTKEY_RIGHT)
+			current_intent += 1
+		if(input == INTENT_HOTKEY_LEFT)
+			current_intent -= 1
+
+		// Handle looping
+		if(current_intent < 1)
+			current_intent = possible_a_intents.len
+		if(current_intent > possible_a_intents.len)
+			current_intent = 1
+
+		a_intent = possible_a_intents[current_intent]
+
+	if(hud_used && hud_used.action_intent)
+		hud_used.action_intent.icon_state = "[a_intent]"
+
 
 /proc/is_blind(A)
 	if(ismob(A))
@@ -336,7 +326,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return 0
 
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
-	if(!ticker || !ticker.mode)
+	if(!SSticker.HasRoundStarted())
 		return 0
 	if(!istype(M))
 		return 0
@@ -356,30 +346,30 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				return 1
 		return 0
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
-		switch(ticker.mode.config_tag)
+		switch(SSticker.mode.config_tag)
 			if("revolution")
-				if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
+				if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
 					return 2
 			if("cult")
-				if(M.mind in ticker.mode.cult)
+				if(M.mind in SSticker.mode.cult)
 					return 2
 			if("nuclear")
-				if(M.mind in ticker.mode.syndicates)
+				if(M.mind in SSticker.mode.syndicates)
 					return 2
 			if("changeling")
-				if(M.mind in ticker.mode.changelings)
+				if(M.mind in SSticker.mode.changelings)
 					return 2
 			if("wizard")
-				if(M.mind in ticker.mode.wizards)
+				if(M.mind in SSticker.mode.wizards)
 					return 2
 			if("apprentice")
-				if(M.mind in ticker.mode.apprentices)
+				if(M.mind in SSticker.mode.apprentices)
 					return 2
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
 			if("abductor")
-				if(M.mind in ticker.mode.abductors)
+				if(M.mind in SSticker.mode.abductors)
 					return 2
 		return 1
 	return 0
@@ -387,12 +377,16 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP) //Easy notification of ghosts.
-	for(var/mob/dead/observer/O in player_list)
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
+	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
+		return
+	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.client)
-			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
+			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
 			if(ghost_sound)
 				O << sound(ghost_sound)
+			if(flashwindow)
+				window_flash(O.client)
 			if(source)
 				var/obj/screen/alert/notify_action/A = O.throw_alert("\ref[source]_notify_action", /obj/screen/alert/notify_action)
 				if(A)
@@ -402,17 +396,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					A.action = action
 					A.target = source
 					if(!alert_overlay)
-						var/old_layer = source.layer
-						var/old_plane = source.plane
-						source.layer = FLOAT_LAYER
-						source.plane = FLOAT_PLANE
-						A.add_overlay(source)
-						source.layer = old_layer
-						source.plane = old_plane
-					else
-						alert_overlay.layer = FLOAT_LAYER
-						alert_overlay.plane = FLOAT_PLANE
-						A.add_overlay(alert_overlay)
+						alert_overlay = new(source)
+					alert_overlay.layer = FLOAT_LAYER
+					alert_overlay.plane = FLOAT_PLANE
+					A.add_overlay(alert_overlay)
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
@@ -425,10 +412,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
 			if(affecting.heal_damage(brute_heal, burn_heal, 1, 0))
 				H.update_damage_overlays()
-			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
+			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
+			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>")
 			return 1 //successful heal
 		else
-			user << "<span class='warning'>[H]'s [affecting] is already in good condition!</span>"
+			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
 
 
 /proc/IsAdminGhost(var/mob/user)
@@ -445,7 +433,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return TRUE
 
 /proc/offer_control(mob/M)
-	M << "Control of your mob has been offered to dead players."
+	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
@@ -459,29 +447,41 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	if(candidates.len)
 		theghost = pick(candidates)
-		M << "Your mob has been taken over by a ghost!"
+		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
 		M.ghostize(0)
 		M.key = theghost.key
 		return TRUE
 	else
-		M << "There were no ghosts willing to take control."
+		to_chat(M, "There were no ghosts willing to take control.")
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
-
-//toggles the talk wheel
-/mob/verb/toggle_talk_wheel()
-	set name = "talk-wheel"
-	set hidden = 1
-
-	if(isliving(src))
-		var/mob/living/L = src
-		if(L.hud_used)
-			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
-				TW.Click()
 
 /mob/proc/is_flying(mob/M = src)
 	if(M.movement_type & FLYING)
 		return 1
 	else
 		return 0
+
+/mob/proc/click_random_mob()
+	var/list/nearby_mobs = list()
+	for(var/mob/living/L in range(1, src))
+		if(L!=src)
+			nearby_mobs |= L
+	if(nearby_mobs.len)
+		var/mob/living/T = pick(nearby_mobs)
+		ClickOn(T)
+
+/mob/proc/log_message(message, message_type)
+	if(!LAZYLEN(message) || !message_type)
+		return
+
+	if(!islist(logging[message_type]))
+		logging[message_type] = list()
+
+	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [key_name(src)]" = message)
+
+	logging[message_type] += timestamped_message
+
+/mob/proc/can_hear()
+	. = TRUE

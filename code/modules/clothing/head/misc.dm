@@ -21,10 +21,11 @@
 	icon_state = "tophat"
 	item_state = "that"
 	dog_fashion = /datum/dog_fashion/head
+	throwforce = 1
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	desc = "it smells like fresh donut holes / <i>il sent comme des trous de beignets frais</i>"
 	icon_state = "canada"
 	item_state = "canada"
 

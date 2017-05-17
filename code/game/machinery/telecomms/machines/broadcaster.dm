@@ -5,8 +5,8 @@
 	They receive their message from a server after the message has been logged.
 */
 
-var/list/recentmessages = list() // global list of recent messages broadcasted : used to circumvent massive radio spam
-var/message_delay = 0 // To make sure restarting the recentmessages list is kept in sync
+GLOBAL_LIST_EMPTY(recentmessages) // global list of recent messages broadcasted : used to circumvent massive radio spam
+GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages list is kept in sync
 
 /obj/machinery/telecomms/broadcaster
 	name = "subspace broadcaster"
@@ -38,9 +38,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			original.data["level"] = signal.data["level"]
 
 		var/signal_message = "[signal.frequency]:[signal.data["message"]]:[signal.data["realname"]]"
-		if(signal_message in recentmessages)
+		if(signal_message in GLOB.recentmessages)
 			return
-		recentmessages.Add(signal_message)
+		GLOB.recentmessages.Add(signal_message)
 
 		if(signal.data["slow"] > 0)
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
@@ -56,17 +56,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["vmask"], signal.data["radio"],
 							  signal.data["message"], signal.data["name"], signal.data["job"], signal.data["realname"],
 							  0, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
-							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
-
-
-	   /** #### - Simple Broadcast - #### **/
-
-		if(signal.data["type"] == 1)
-
-			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_SimpleMessage(signal.data["name"], signal.frequency,
-								  signal.data["message"],null, null,
-								  signal.data["compression"], listening_level)
+							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"], signal.data["language"])
 
 
 	   /** #### - Artificial Broadcast - #### **/
@@ -81,13 +71,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
 							  signal.data["realname"], 4, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
-							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
+							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"], signal.data["language"])
 
-		if(!message_delay)
-			message_delay = 1
+		if(!GLOB.message_delay)
+			GLOB.message_delay = 1
 			spawn(10)
-				message_delay = 0
-				recentmessages = list()
+				GLOB.message_delay = 0
+				GLOB.recentmessages = list()
 
 		/* --- Do a snazzy animation! --- */
 		flick("broadcaster_send", src)
@@ -98,7 +88,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telecomms/broadcaster
-	name = "circuit board (Subspace Broadcaster)"
+	name = "Subspace Broadcaster (Machine Board)"
 	build_path = /obj/machinery/telecomms/broadcaster
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
@@ -110,8 +100,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 /obj/machinery/telecomms/broadcaster/Destroy()
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
-	if(message_delay)
-		message_delay = 0
+	if(GLOB.message_delay)
+		GLOB.message_delay = 0
 	return ..()
 
 

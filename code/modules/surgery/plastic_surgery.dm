@@ -20,7 +20,7 @@
 		var/oldname = target.real_name
 		target.real_name = target.dna.species.random_name(target.gender,1)
 		var/newname = target.real_name	//something about how the code handles names required that I use this instead of target.real_name
-		user.visible_message("[user] alters [oldname]'s appearance completely, [target.p_they()] are now [newname]!", "<span class='notice'>You alter [oldname]'s appearance completely, [target.p_they()] are now [newname].</span>")
+		user.visible_message("[user] alters [oldname]'s appearance completely, [target.p_they()] is now [newname]!", "<span class='notice'>You alter [oldname]'s appearance completely, [target.p_they()] is now [newname].</span>")
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.sec_hud_set_ID()

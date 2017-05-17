@@ -21,11 +21,19 @@
 
 
 /datum/design/board/seccamera
-	name = "Computer Design (Security)"
+	name = "Computer Design (Security Camera)"
 	desc = "Allows for the construction of circuit boards used to build security camera computers."
 	id = "seccamera"
 	req_tech = list("programming" = 2, "combat" = 2)
 	build_path = /obj/item/weapon/circuitboard/computer/security
+	category = list("Computer Boards")
+
+/datum/design/board/xenobiocamera
+	name = "Computer Design (Xenobiology Console)"
+	desc = "Allows for the construction of circuit boards used to build xenobiology camera computers."
+	id = "xenobioconsole"
+	req_tech = list("programming" = 3, "biotech" = 3)
+	build_path = /obj/item/weapon/circuitboard/computer/xenobiology
 	category = list("Computer Boards")
 
 /datum/design/board/aiupload
@@ -204,6 +212,14 @@
 	build_path = /obj/item/weapon/circuitboard/computer/cargo/request
 	category = list("Computer Boards")
 
+/datum/design/board/stockexchange
+	name = "Computer Design (Stock Exchange Console)"
+	desc = "Allows for the construction of circuit boards used to build a Stock Exchange Console."
+	id = "stockexchange"
+	req_tech = list("programming" = 3)
+	build_path = /obj/item/weapon/circuitboard/computer/stockexchange
+	category = list("Computer Boards")
+
 /datum/design/board/mining
 	name = "Computer Design (Outpost Status Display)"
 	desc = "Allows for the construction of circuit boards used to build an outpost status display console."
@@ -250,4 +266,12 @@
 	id = "libraryconsole"
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/weapon/circuitboard/computer/libraryconsole
+	category = list("Computer Boards")
+
+/datum/design/board/apc_control
+	name = "Computer Design (APC Control)"
+	desc = "Allows for the construction of circuit boards used to build a new APC control console."
+	id = "apc_control"
+	req_tech = list("programming" = 4, "engineering" = 4, "powerstorage" = 5)
+	build_path = /obj/item/weapon/circuitboard/computer/apc_control
 	category = list("Computer Boards")

@@ -9,11 +9,11 @@
 	var/range = 4
 
 
-/obj/machinery/computer/pod/initialize()
+/obj/machinery/computer/pod/Initialize()
+	..()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			connected = M
-	..()
 
 
 /obj/machinery/computer/pod/proc/alarm()
@@ -130,11 +130,11 @@
 	name = "\improper ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
-	req_access = list(access_syndicate)
+	req_access = list(GLOB.access_syndicate)
 
 /obj/machinery/computer/pod/old/syndicate/attack_hand(mob/user)
 	if(!allowed(user))
-		user << "<span class='notice'>Access denied.</span>"
+		to_chat(user, "<span class='notice'>Access denied.</span>")
 		return
 	else
 		..()

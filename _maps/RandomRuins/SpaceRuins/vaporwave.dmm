@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/space,
 /area/space)
@@ -153,9 +153,10 @@
 	},
 /area/ruin/unpowered/no_grav)
 "G" = (
-/turf/open/floor/plating/astplate/warning{
+/turf/open/floor/plating/astplate{
 	initial_gas_mix = "TEMP=2.7"
 	},
+/obj/effect/turf_decal/stripes/asteroid/line,
 /area/ruin/unpowered/no_grav)
 "H" = (
 /obj/effect/overlay/palmtree_l,

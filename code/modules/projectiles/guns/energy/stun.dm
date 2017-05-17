@@ -37,7 +37,8 @@
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
-	item_state = "combat=3"
+	item_state = "disabler"
+	origin_tech = "combat=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 3
 

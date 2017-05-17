@@ -27,14 +27,14 @@
 			else if(prob(5))
 				affected_mob.emote("gasp")
 			if(prob(10))
-				affected_mob << "<span class='danger'>You're starting to feel very weak...</span>"
+				to_chat(affected_mob, "<span class='danger'>You're starting to feel very weak...</span>")
 		if(4)
 			if(prob(10))
 				affected_mob.emote("cough")
 			affected_mob.adjustToxLoss(5)
 			affected_mob.updatehealth()
 		if(5)
-			affected_mob << "<span class='danger'>Your body feels as if it's trying to rip itself open...</span>"
+			to_chat(affected_mob, "<span class='danger'>Your body feels as if it's trying to rip itself open...</span>")
 			if(prob(50))
 				affected_mob.gib()
 		else

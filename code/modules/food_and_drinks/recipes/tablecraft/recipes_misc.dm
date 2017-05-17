@@ -264,7 +264,7 @@
 	time = 40
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath = 1,
-		/obj/item/weapon/legion_skull = 1,
+		/obj/item/organ/hivelord_core/legion = 1,
 		/datum/reagent/consumable/ketchup = 2,
 		/datum/reagent/consumable/capsaicin = 2
 	)
@@ -315,4 +315,13 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/taco/plain
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/branrequests
+	name = "Bran Requests Cereal"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/branrequests
 	category = CAT_MISCFOOD
