@@ -1264,6 +1264,7 @@
 #include "code\modules\events\wizard\rpgloot.dm"
 #include "code\modules\events\wizard\shuffle.dm"
 #include "code\modules\events\wizard\summons.dm"
+#include "code\modules\events\wizard\wabbajack_storm.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
 #include "code\modules\flufftext\TextFilters.dm"
