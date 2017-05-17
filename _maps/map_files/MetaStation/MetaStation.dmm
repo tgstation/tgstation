@@ -1910,8 +1910,8 @@
 /area/shuttle/pod_3)
 "adG" = (
 /obj/docking_port/stationary/random{
-	id = "pod_asteroid2";
-	name = "asteroid"
+	id = "pod_lavaland2";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -1927,7 +1927,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
-	possible_destinations = "pod_asteroid2";
+	possible_destinations = "pod_lavaland2";
 	shuttleId = "pod2"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -23696,7 +23696,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid3";
+	possible_destinations = "pod_lavaland3";
 	shuttleId = "pod3"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -27963,7 +27963,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -28813,7 +28812,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -34140,8 +34138,8 @@
 "bii" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid3";
-	name = "asteroid"
+	id = "pod_lavaland3";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -56827,7 +56825,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -57519,7 +57516,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -63164,7 +63160,7 @@
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "cfY" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/chemistry)
 "cfZ" = (
@@ -77232,7 +77228,7 @@
 	},
 /area/medical/virology)
 "cDH" = (
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/machinery/airalarm{
 	frequency = 1439;
 	pixel_y = 23
@@ -82489,7 +82485,7 @@
 /area/chapel/office)
 "cMa" = (
 /obj/structure/table/wood,
-/obj/item/weapon/spellbook/oneuse/smoke{
+/obj/item/weapon/spellbook/oneuse/smoke/lesser{
 	name = "mysterious old book of "
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
@@ -86090,8 +86086,8 @@
 /area/toxins/xenobiology)
 "cSP" = (
 /obj/docking_port/stationary/random{
-	id = "pod_asteroid1";
-	name = "asteroid"
+	id = "pod_lavaland1";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -86181,7 +86177,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
-	possible_destinations = "pod_asteroid1";
+	possible_destinations = "pod_lavaland1";
 	shuttleId = "pod1"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -86374,7 +86370,7 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid4";
+	possible_destinations = "pod_lavaland4";
 	shuttleId = "pod4"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -87168,8 +87164,8 @@
 "cUL" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid4";
-	name = "asteroid"
+	id = "pod_lavaland4";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -91081,7 +91077,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -128206,7 +128202,7 @@ cRi
 cRi
 daP
 cLE
-cRi
+dlV
 aaa
 aaa
 aaf
@@ -128462,7 +128458,7 @@ daF
 daJ
 cRi
 bvT
-dlV
+cRi
 cRi
 cRi
 cRi
@@ -128719,7 +128715,7 @@ cSn
 cSn
 cRi
 dmq
-dlV
+cRi
 cZv
 cZv
 cRi
@@ -129747,7 +129743,7 @@ cSn
 daN
 cRi
 dmr
-dlV
+cRi
 cZv
 dbw
 cRi
@@ -130004,7 +130000,7 @@ daI
 daM
 cRi
 cTA
-dlV
+cRi
 cRi
 cRi
 cRi

@@ -47,7 +47,7 @@ other types of metals and chemistry for reagents).
 ////////////////////////////////////////
 
 /obj/item/weapon/disk/design_disk
-	name = "component design disk"
+	name = "Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes."
 	icon_state = "datadisk1"
 	materials = list(MAT_METAL=300, MAT_GLASS=100)
@@ -62,7 +62,7 @@ other types of metals and chemistry for reagents).
 		blueprints += null
 
 /obj/item/weapon/disk/design_disk/adv
-	name = "advanced component design disk"
+	name = "Advanced Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes. This one has extra storage space."
 	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER = 50)
 	max_blueprints = 5
@@ -587,7 +587,7 @@ other types of metals and chemistry for reagents).
 	category = list("Equipment")
 
 /datum/design/diskplantgene
-	name = "Plant data disk"
+	name = "Plant Data Disk"
 	desc = "A disk for storing plant genetic data."
 	id = "diskplantgene"
 	req_tech = list("programming" = 4, "biotech" = 3)
@@ -653,14 +653,3 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")
-
-
-/datum/design/alienalloy
-	name = "Alien Alloy"
-	desc = "A sheet of reverse-engineered alien alloy."
-	id = "alienalloy"
-	req_tech = list("abductor" = 1, "materials" = 7, "plasmatech" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_PLASMA = 4000)
-	build_path = /obj/item/stack/sheet/mineral/abductor
-	category = list("Stock Parts")

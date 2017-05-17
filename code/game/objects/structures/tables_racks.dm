@@ -47,8 +47,7 @@
 		queue_smooth_neighbors(src)
 
 /obj/structure/table/narsie_act()
-	if(prob(20))
-		new /obj/structure/table/wood(src.loc)
+	new /obj/structure/table/wood(src.loc)
 
 /obj/structure/table/ratvar_act()
 	new /obj/structure/table/reinforced/brass(src.loc)

@@ -26,6 +26,11 @@
 		return
 	..()
 
+/obj/item/weapon/melee/cultblade/ghost
+	name = "eldritch sword"
+	force = 19 //can't break normal airlocks
+	flags = NODROP|DROPDEL
+
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!iscultist(user))
@@ -100,11 +105,17 @@
 	icon_state = "cult_hoodalt"
 	item_state = "cult_hoodalt"
 
+/obj/item/clothing/head/culthood/alt/ghost
+	flags = NODROP|DROPDEL
+
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
 	desc = "An armored set of robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
+
+/obj/item/clothing/suit/cultrobes/alt/ghost
+	flags = NODROP|DROPDEL
 
 
 /obj/item/clothing/head/magus
@@ -203,7 +214,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
 	. = list()
 	if(!isinhands && current_charges)
-		. += mutable_appearance('icons/effects/effects.dmi', "shield-cult", MOB_LAYER + 0.01)
+		. += mutable_appearance('icons/effects/cult_effects.dmi', "shield-cult", MOB_LAYER + 0.01)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
@@ -213,7 +224,7 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
+	armor = list(melee = -50, bullet = -50, laser = -50,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
 	slowdown = -1
 	hoodtype = /obj/item/clothing/head/hooded/berserkerhood
 

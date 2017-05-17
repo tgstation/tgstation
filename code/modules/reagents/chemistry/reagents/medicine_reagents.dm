@@ -347,10 +347,9 @@
 /datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
-			M.Stun(4)
-			M.Weaken(4)
+			M.nutrition -= 5
 			if(show_message)
-				to_chat(M, "<span class='warning'>Your stomach agonizingly cramps!</span>")
+				to_chat(M, "<span class='warning'>Your stomach feels empty and cramps!</span>")
 		else
 			var/mob/living/carbon/C = M
 			for(var/s in C.surgeries)
@@ -962,8 +961,7 @@
 /datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
-		if(R != src)
-			M.reagents.remove_reagent(R.id,1)
+		M.reagents.remove_reagent(R.id,1)
 	..()
 	. = 1
 

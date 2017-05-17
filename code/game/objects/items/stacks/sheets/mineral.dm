@@ -158,12 +158,12 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 		var/turf/T = get_turf(src)
 		message_admins("Plasma sheets ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
 		log_game("Plasma sheets ignited by [key_name(user)] in [COORD(T)]")
-		fire_act()
+		fire_act(W.is_hot())
 	else
 		return ..()
 
 /obj/item/stack/sheet/mineral/plasma/fire_act(exposed_temperature, exposed_volume)
-	atmos_spawn_air("plasma=[amount*10];TEMP=1000")
+	atmos_spawn_air("plasma=[amount*10];TEMP=[exposed_temperature]")
 	qdel(src)
 
 /*
@@ -307,7 +307,6 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	force = 1
 	throwforce = 2
 	origin_tech = "materials=1"
-	sheettype = "snow"
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \
 	new/datum/stack_recipe("Snow Wall",/turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
@@ -336,11 +335,19 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 /*
  * Adamantine
  */
+GLOBAL_LIST_INIT(adamantine_recipes, list(
+	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=1, res_amount=1),
+	))
+
 /obj/item/stack/sheet/mineral/adamantine
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
 	singular_name = "adamantine sheet"
 	origin_tech = "materials=4"
+
+/obj/item/stack/sheet/mineral/adamantine/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.adamantine_recipes
+	..()
 
 /*
  * Mythril

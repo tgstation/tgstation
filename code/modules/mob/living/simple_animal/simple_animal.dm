@@ -7,9 +7,6 @@
 
 	status_flags = CANPUSH
 
-	// goats bray, cows go moo, and the fox says Geckers
-	initial_languages = list(/datum/language/common)
-
 	var/icon_living = ""
 	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
@@ -89,7 +86,7 @@
 	var/tame = 0
 
 /mob/living/simple_animal/Initialize()
-	..()
+	. = ..()
 	GLOB.simple_animals += src
 	handcrafting = new()
 	if(gender == PLURAL)

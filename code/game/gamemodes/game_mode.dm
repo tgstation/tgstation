@@ -257,6 +257,8 @@
 	if(escaped_total > 0)
 		SSblackbox.set_val("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
+	if(cult.len && !istype(SSticker.mode,/datum/game_mode/cult))
+		datum_cult_completion()
 	return 0
 
 
@@ -538,6 +540,7 @@
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
 	SSticker.mode.remove_cultist(newborgie, 0, 0)
 	SSticker.mode.remove_revolutionary(newborgie, 0)
+	SSticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()

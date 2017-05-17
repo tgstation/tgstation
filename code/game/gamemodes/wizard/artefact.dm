@@ -239,14 +239,20 @@
 			assigned = "[user.real_name]"
 			user.faction = list("[user.real_name]")
 			to_chat(user, "You bind the sword to yourself. You can now use it to summon help.")
-			to_chat(user, "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>")
-			var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
-			hijack_objective.owner = user.mind
-			user.mind.objectives += hijack_objective
-			hijack_objective.explanation_text = "Ensure only [user.real_name] and their copies are on the shuttle!"
-			to_chat(user, "<B>Objective #[1]</B>: [hijack_objective.explanation_text]")
-			SSticker.mode.traitors += user.mind
-			user.mind.special_role = "[user.real_name] Prime"
+			if(!is_gangster(user))
+				var/datum/gang/multiverse/G = new(src, "[user.real_name]")
+				SSticker.mode.gangs += G
+				G.bosses += user.mind
+				G.add_gang_hud(user.mind)
+				user.mind.gang_datum = G
+				to_chat(user, "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>")
+				var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
+				hijack_objective.owner = user.mind
+				user.mind.objectives += hijack_objective
+				hijack_objective.explanation_text = "Ensure only [user.real_name] and their copies are on the shuttle!"
+				to_chat(user, "<B>Objective #[1]</B>: [hijack_objective.explanation_text]")
+				SSticker.mode.traitors += user.mind
+				user.mind.special_role = "[user.real_name] Prime"
 		else
 			var/list/candidates = get_candidates(ROLE_WIZARD)
 			if(candidates.len)
@@ -270,6 +276,7 @@
 	M.key = C.key
 	M.mind.name = user.real_name
 	to_chat(M, "<B>You are an alternate version of [user.real_name] from another universe! Help them accomplish their goals at all costs.</B>")
+	SSticker.mode.add_gangster(M.mind, user.mind.gang_datum, FALSE)
 	M.real_name = user.real_name
 	M.name = user.real_name
 	M.faction = list("[user.real_name]")

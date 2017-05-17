@@ -56,6 +56,7 @@
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
+	var/refill_count = 3		//The number of canisters the vending machine uses
 
 /obj/machinery/vending/Initialize()
 	..()
@@ -88,7 +89,9 @@
 							/obj/machinery/vending/cola = "Robust Softdrinks",
 							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
 							/obj/machinery/vending/autodrobe = "AutoDrobe",
-							/obj/machinery/vending/clothing = "ClothesMate")
+							/obj/machinery/vending/clothing = "ClothesMate",
+							/obj/machinery/vending/medical = "NanoMed Plus",
+							/obj/machinery/vending/wallmed = "NanoMed")
 
 /obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -104,7 +107,7 @@
 /obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
 	build_path = typepath
 	name = "[names_paths[build_path]] Vendor (Machine Board)"
-	req_components = list(initial(typepath.refill_canister) = 3)
+	req_components = list(initial(typepath.refill_canister) = initial(typepath.refill_count))
 
 /obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
 	for(var/typepath in names_paths)
@@ -112,7 +115,6 @@
 			set_type(typepath)
 			break
 	..()
-
 
 /obj/machinery/vending/Destroy()
 	qdel(wires)
@@ -307,7 +309,10 @@
 		if(panel_open)
 			attack_hand(user)
 		return
-	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
+	else if(istype(W, /obj/item/weapon/coin))
+		if(!premium.len)
+			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
+			return
 		if(!user.drop_item())
 			return
 		W.loc = src
@@ -874,6 +879,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list(/obj/item/weapon/storage/box/hug/medical = 1,/obj/item/weapon/reagent_containers/hypospray/medipen = 3, /obj/item/weapon/storage/belt/medical = 3, /obj/item/weapon/wrench/medical = 1)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/weapon/vending_refill/medical
 
 //This one's from bay12
 /obj/machinery/vending/plasmaresearch
@@ -896,6 +902,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 2,/obj/item/weapon/reagent_containers/pill/morphine = 2)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/weapon/vending_refill/medical
+	refill_count = 1
 
 /obj/machinery/vending/security
 	name = "\improper SecTech"
@@ -939,7 +947,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						/obj/item/seeds/tea = 3,/obj/item/seeds/tobacco = 3,/obj/item/seeds/tomato = 3,
 						/obj/item/seeds/tower = 3,/obj/item/seeds/watermelon = 3,/obj/item/seeds/wheat = 3,/obj/item/seeds/whitebeet = 3)
 	contraband = list(/obj/item/seeds/amanita = 2,/obj/item/seeds/glowshroom = 2,/obj/item/seeds/liberty = 2,/obj/item/seeds/nettle = 2,
-						/obj/item/seeds/plump = 2,/obj/item/seeds/reishi = 2,/obj/item/seeds/cannabis = 3, /obj/item/seeds/random = 2)
+						/obj/item/seeds/plump = 2,/obj/item/seeds/reishi = 2,/obj/item/seeds/cannabis = 3,/obj/item/seeds/starthistle = 2,
+						/obj/item/seeds/random = 2)
 	premium = list(/obj/item/weapon/reagent_containers/spray/waterflower = 1)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF

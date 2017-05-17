@@ -32,7 +32,7 @@
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_feedback_create_round = SSdbcore.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), MAX(round_id)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
+			var/datum/DBQuery/query_feedback_create_round = SSdbcore.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), IFNULL(MAX(round_id),0)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
 			query_feedback_create_round.Execute()
 			var/datum/DBQuery/query_feedback_max_id = SSdbcore.NewQuery("SELECT MAX(round_id) FROM [format_table_name("feedback")]")
 			query_feedback_max_id.Execute()
@@ -42,7 +42,7 @@
 		else
 			log_world("Your server failed to establish a connection with the database.")
 	if(!GLOB.round_id)
-		GLOB.log_directory += "[time_stamp()]"
+		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
 	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
 	GLOB.world_runtime_log = file("[GLOB.log_directory]/runtime.log")
@@ -54,11 +54,15 @@
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
+	
+	if(GLOB.round_id)
+		log_game("Round ID: [GLOB.round_id]")
 
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
 	load_admins()
+	load_menu()
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -250,7 +254,7 @@
 /world/proc/RoundEndAnimation(round_end_sound_sent)
 	set waitfor = FALSE
 	var/round_end_sound
-	if(!SSticker && SSticker.round_end_sound)
+	if(SSticker.round_end_sound)
 		round_end_sound = SSticker.round_end_sound
 		if (!round_end_sound_sent)
 			for(var/thing in GLOB.clients)
@@ -276,11 +280,12 @@
 	world << sound(round_end_sound)
 
 /world/proc/load_mode()
-	var/list/Lines = world.file2list("data/mode.txt")
-	if(Lines.len)
-		if(Lines[1])
-			GLOB.master_mode = Lines[1]
-			GLOB.world_game_log << "Saved mode is '[GLOB.master_mode]'"
+	var/mode = trim(file2text("data/mode.txt"))
+	if(mode)
+		GLOB.master_mode = mode
+	else
+		GLOB.master_mode = "extended"
+	log_game("Saved mode is '[GLOB.master_mode]'")	
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
@@ -340,6 +345,3 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
-
-/world/proc/has_round_started()
-	return SSticker.HasRoundStarted()
