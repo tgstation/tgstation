@@ -152,7 +152,7 @@
 	return TRUE
 
 /datum/action/innate/cult/master/IsAvailable()
-	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
+	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER) || GLOB.cult_narsie)
 		return 0
 	return ..()
 

@@ -210,13 +210,16 @@
 		var/datum/action/innate/seek_master/SM = new()
 		SM.Grant(newstruct)
 	newstruct.key = target.key
+	var/obj/screen/alert/bloodsense/BS
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
+		BS = newstruct.alerts.Find("bloodsense")
 	if(iscultist(stoner) || cultoverride)
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>")
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>")
-		var/obj/screen/alert/bloodsense/BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+		BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+	if(BS)
 		BS.Cviewer = newstruct
 	newstruct.cancel_camera()
 
