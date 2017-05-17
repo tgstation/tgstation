@@ -823,6 +823,7 @@
 				chaser_timer = world.time + chaser_cooldown
 				var/obj/effect/overlay/temp/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
 				C.damage = 30
+				C.monster_damage_boost = FALSE
 				add_logs(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
@@ -1008,6 +1009,7 @@
 			return
 		var/obj/effect/overlay/temp/hierophant/blast/B = new(J, user, friendly_fire_check)
 		B.damage = 30
+		B.monster_damage_boost = FALSE
 		previousturf = J
 		J = get_step(previousturf, dir)
 
@@ -1019,4 +1021,4 @@
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/overlay/temp/hierophant/blast/B = new(t, user, friendly_fire_check)
-		B.damage = 15
+		B.damage = 15 //keeps monster damage boost due to lower damage

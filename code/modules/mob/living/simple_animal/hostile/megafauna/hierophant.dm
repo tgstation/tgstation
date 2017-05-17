@@ -478,6 +478,7 @@ Difficulty: Hard
 	var/speed = 3 //how many deciseconds between each step
 	var/currently_seeking = FALSE
 	var/friendly_fire_check = FALSE //if blasts produced apply friendly fire
+	var/monster_damage_boost = TRUE
 	var/damage = 10 
 
 /obj/effect/overlay/temp/hierophant/chaser/Initialize(mapload, new_caster, new_target, new_speed, is_friendly_fire)
@@ -525,6 +526,7 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/chaser/proc/make_blast()
 	var/obj/effect/overlay/temp/hierophant/blast/B = new(loc, caster, friendly_fire_check)
 	B.damage = damage
+	B.monster_damage_boost = monster_damage_boost
 
 /obj/effect/overlay/temp/hierophant/telegraph
 	icon = 'icons/effects/96x96.dmi'
@@ -554,6 +556,7 @@ Difficulty: Hard
 	desc = "Get out of the way!"
 	duration = 9
 	var/damage = 10 //how much damage do we do?
+	var/monster_damage_boost = TRUE //do we deal extra damage to monsters? Used by the boss
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
@@ -596,6 +599,8 @@ Difficulty: Hard
 		var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor)
+		if(monster_damage_boost && (ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid)))
+			L.adjustBruteLoss(damage)
 		add_logs(caster, L, "struck with a [name]")
 	for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
 		hit_things += M
