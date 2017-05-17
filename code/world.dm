@@ -32,7 +32,7 @@
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_feedback_create_round = SSdbcore.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), MAX(round_id)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
+			var/datum/DBQuery/query_feedback_create_round = SSdbcore.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), IFNULL(MAX(round_id),0)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
 			query_feedback_create_round.Execute()
 			var/datum/DBQuery/query_feedback_max_id = SSdbcore.NewQuery("SELECT MAX(round_id) FROM [format_table_name("feedback")]")
 			query_feedback_max_id.Execute()
@@ -280,11 +280,12 @@
 	world << sound(round_end_sound)
 
 /world/proc/load_mode()
-	var/list/Lines = world.file2list("data/mode.txt")
-	if(Lines.len)
-		if(Lines[1])
-			GLOB.master_mode = Lines[1]
-			GLOB.world_game_log << "Saved mode is '[GLOB.master_mode]'"
+	var/mode = trim(file2text("data/mode.txt"))
+	if(mode)
+		GLOB.master_mode = mode
+	else
+		GLOB.master_mode = "extended"
+	log_game("Saved mode is '[GLOB.master_mode]'")	
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
@@ -344,7 +345,3 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
-
-
-/world/proc/has_round_started()
-	return SSticker.HasRoundStarted()

@@ -31,25 +31,6 @@
 				protection += C.armor[d_type]
 	return protection
 
-///checkeyeprot()
-///Returns a number between -1 to 2
-/mob/living/carbon/human/get_eye_protection()
-	var/number = ..()
-	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
-		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
-		number += HFP.flash_protect
-	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
-		var/obj/item/clothing/glasses/GFP = src.glasses
-		number += GFP.flash_protect
-	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
-		var/obj/item/clothing/mask/MFP = src.wear_mask
-		number += MFP.flash_protect
-	return number
-
-/mob/living/carbon/human/get_ear_protection()
-	if((ears && HAS_SECONDARY_FLAG(ears, BANG_PROTECT)) || (head && HAS_SECONDARY_FLAG(head, BANG_PROTECT)))
-		return 1
-
 /mob/living/carbon/human/on_hit(obj/item/projectile/P)
 	dna.species.on_hit(P, src)
 

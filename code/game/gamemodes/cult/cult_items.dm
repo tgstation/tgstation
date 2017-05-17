@@ -28,7 +28,7 @@
 
 /obj/item/weapon/melee/cultblade/ghost
 	name = "eldritch sword"
-	force = 20
+	force = 19 //can't break normal airlocks
 	flags = NODROP|DROPDEL
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
@@ -214,7 +214,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
 	. = list()
 	if(!isinhands && current_charges)
-		. += mutable_appearance('icons/effects/effects.dmi', "shield-cult", MOB_LAYER + 0.01)
+		. += mutable_appearance('icons/effects/cult_effects.dmi', "shield-cult", MOB_LAYER + 0.01)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
