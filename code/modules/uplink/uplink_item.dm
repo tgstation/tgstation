@@ -1323,7 +1323,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/badass/syndiespinner
 	name = "Syndicate Fidget Spinner"
 	desc = "This fidget spinner is designed to be a little more robust than others like it. \
-			Its bearings are much smoother to allow for faster spinning, and its blades are actual blades."
+			Its bearing is much smoother to allow for faster spinning, and its blades are actually sharp."
 	item = /obj/item/weapon/fidgetspinner/syndicatespinner
 	cost = 1
 
