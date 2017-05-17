@@ -30,6 +30,7 @@
 		var/obj/machinery/holopad/H = I
 		if(!QDELETED(H) && H.is_operational())
 			dialed_holopads += H
+			H.say("Incoming call.")
 			LAZYADD(H.holo_calls, src)
 
 	if(!dialed_holopads.len)
