@@ -133,3 +133,45 @@
 /datum/language_holder/universal/New()
 	..()
 	grant_all_languages(omnitongue=TRUE)
+
+// ANIMAL HOLDERS
+
+/datum/language_holder/dog
+	languages = list(/datum/language/animal/dog)
+	only_speaks_language = /datum/language/animal/dog
+
+/datum/language_holder/mouse
+	languages = list(/datum/language/animal/mouse)
+	only_speaks_language = /datum/language/animal/mouse
+
+/datum/language_holder/cat
+	languages = list(/datum/language/animal/cat)
+	only_speaks_language = /datum/language/animal/cat
+
+/datum/language_holder/goat
+	languages = list(/datum/language/animal/goat)
+	only_speaks_language = /datum/language/animal/goat
+
+/datum/language_holder/cow
+	languages = list(/datum/language/animal/cow)
+	only_speaks_language = /datum/language/animal/cow
+
+/datum/language_holder/chick
+	languages = list(/datum/language/animal/chick, /datum/language/animal/chicken)
+	only_speaks_language = /datum/language/animal/chick
+
+/datum/language_holder/chicken
+	languages = list(/datum/language/animal/chick, /datum/language/animal/chicken)
+	only_speaks_language = /datum/language/animal/chicken
+
+/datum/language_holder/pig
+	languages = list(/datum/language/animal/pig)
+	only_speaks_language = /datum/language/animal/pig
+
+/datum/language_holder/horse
+	languages = list(/datum/language/animal/horse)
+	only_speaks_language = /datum/language/animal/horse
+
+/datum/language_holder/fox
+	languages = list(/datum/language/animal/fox)
+	only_speaks_language = /datum/language/animal/fox

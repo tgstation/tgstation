@@ -11,6 +11,7 @@
 	speak_emote = list("purrs", "meows")
 	emote_hear = list("meows", "mews")
 	emote_see = list("shakes its head", "shivers")
+	initial_language_holder = /datum/language_holder/cat
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6

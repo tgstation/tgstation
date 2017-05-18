@@ -8,6 +8,7 @@
 	speak_emote = list("squeeks")
 	emote_hear = list("squeeks.")
 	emote_see = list("runs in a circle.", "shakes.")
+	initial_language_holder = /datum/language_holder/mouse
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6

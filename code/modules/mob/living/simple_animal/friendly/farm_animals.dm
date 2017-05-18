@@ -6,6 +6,7 @@
 	icon_living = "goat"
 	icon_dead = "goat_dead"
 	speak = list("EHEHEHEHEH","eh?")
+	initial_language_holder = /datum/language_holder/goat
 	speak_emote = list("brays")
 	emote_hear = list("brays.")
 	emote_see = list("shakes its head.", "stamps a foot.", "glares around.")
@@ -103,6 +104,7 @@
 	speak_emote = list("moos","moos hauntingly")
 	emote_hear = list("brays.")
 	emote_see = list("shakes its head.")
+	initial_language_holder = /datum/language_holder/cow
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -177,6 +179,7 @@
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps.")
 	emote_see = list("pecks at the ground.","flaps its tiny wings.")
+	initial_language_holder = /datum/language_holder/chick
 	density = 0
 	speak_chance = 2
 	turns_per_move = 2
@@ -223,6 +226,7 @@
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks.")
 	emote_see = list("pecks at the ground.","flaps its wings viciously.")
+	initial_language_holder = /datum/language_holder/chicken
 	density = 0
 	speak_chance = 2
 	turns_per_move = 3
