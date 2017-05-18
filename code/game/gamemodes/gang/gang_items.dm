@@ -252,6 +252,18 @@
 		user.put_in_hands(O)
 	if(spawn_msg)
 		to_chat(user, spawn_msg)
+		
+/datum/gang_item/equipment/wetwork_boots
+	name = "Wetwork boots"
+	id = "wetwork"
+	cost = 20
+	item_path = /obj/item/clothing/shoes/combat/gang
+	
+/obj/item/clothing/shoes/combat/gang
+	name = "Wetwork boots"
+	desc = "A gang's best hitmen are prepared for anything."
+	permeability_coefficient = 0.01
+	flags = NOSLIP
 
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"
