@@ -48,6 +48,7 @@
 		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/stimpack,
 		/datum/gang_item/equipment/implant_breaker,
+		/datum/gang_item/equipment/wetwork_boots,
 		/datum/gang_item/equipment/pen,
 		/datum/gang_item/equipment/gangtool,
 		/datum/gang_item/equipment/necklace,
