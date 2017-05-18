@@ -169,4 +169,13 @@
 		var/turf/T = loc
 		T.Entered(src)
 
+/datum/emote/living/carbon/human/inhale
+	key = "inhale"
+	message = "inhales"
+
+/datum/emote/living/carbon/human/exhale
+	key = "exhale"
+	message = "exhales"
+
+
 //Ayy lmao
