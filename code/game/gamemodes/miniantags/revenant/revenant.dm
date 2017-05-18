@@ -14,7 +14,7 @@
 	var/icon_reveal = "revenant_revealed"
 	var/icon_stun = "revenant_stun"
 	var/icon_drain = "revenant_draining"
-	var/stasis = 0
+	var/stasis = FALSE
 	incorporeal_move = 3
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
@@ -205,6 +205,7 @@
 /mob/living/simple_animal/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
 		return 0
+	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = TRUE
 	revealed = TRUE
@@ -222,8 +223,7 @@
 	R.client_to_revive = client //If the essence reforms, the old revenant is put back in the body
 	R.revenant = src
 	invisibility = INVISIBILITY_ABSTRACT 
-	revealed = 0
-	stasis = 1
+	revealed = FALSE
 	ghostize(0)//Don't re-enter invisible corpse
 	return
 
@@ -317,7 +317,7 @@
 	incorporeal_move = 3
 	invisibility = INVISIBILITY_REVENANT
 	alpha=255
-	stasis = 0
+	stasis = FALSE
 
 
 //reforming
