@@ -242,7 +242,13 @@
 
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
-
+var/list/blacklisted_reagents = typecacheof(list(
+		/datum/reagent/gluttonytoxin,
+		/datum/reagent/nanites,
+		/datum/reagent/xenomicrobes,
+		/datum/reagent/medicine/adminordrazine,
+		/datum/reagent/medicine/adminordrazine/nanites
+	))
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
 	name = "exosuit syringe gun"
@@ -488,6 +494,9 @@
 		return 0
 	occupant_message("Analyzing reagents...")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
+		if(is_type_in_typecache(R, blacklisted_reagents))
+			occupant_message("Error. Unable to analyze reagent. Unable to add it to database.")
+			return 0
 		if(R.can_synth && add_known_reagent(R.id,R.name))
 			occupant_message("Reagent analyzed, identified as [R.name] and added to database.")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
