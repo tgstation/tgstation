@@ -6,3 +6,5 @@ $destination = $Env:APPVEYOR_BUILD_FOLDER + "\TGS3.zip"
 Add-Type -assembly "system.io.compression.filesystem"
 
 [io.compression.zipfile]::CreateFromDirectory($src, $destination) 
+
+& fciv -both $destination

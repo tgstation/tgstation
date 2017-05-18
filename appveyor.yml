@@ -17,7 +17,7 @@ after_build:
   - ps: "tools/appveyor/ZipTGS3Release.ps1"
 deploy:
   release: $(APPVEYOR_REPO_TAG_NAME)
-  description: 'The /tg/station server suite'
+  description: 'The /tg/station server suite. Find MD5/SHA1 at https://ci.appveyor.com/project/Cyberboss/tgstation/$($env:APPVEYOR_BUILD_VERSION)'
   provider: GitHub
   auth_token:
     secure: 9Yf+FtoE7nf36V3dyVRANkNZ7og4dp/0uojCS51vrvIeNOTIM8Nq24lylgVBOhSL
