@@ -4,6 +4,9 @@
 	if(!check_rights(R_SOUNDS))
 		return
 
+	if(ckey == "kevinz000")
+		return
+
 	var/freq = 1
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
@@ -17,7 +20,7 @@
 	admin_sound.wait = 1
 	admin_sound.repeat = 0
 	admin_sound.status = SOUND_STREAM
-		
+
 	var/res = alert(usr, "Show the title of this song to the players?",, "No", "Yes", "Cancel")
 	switch(res)
 		if("Yes")
@@ -41,6 +44,9 @@
 	if(!check_rights(R_SOUNDS))
 		return
 
+	if(ckey == "kevinz000")
+		return
+
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
 	playsound(get_turf(src.mob), S, 50, 0, 0)
@@ -50,6 +56,9 @@
 	set category = "Fun"
 	set name = "Set Round End Sound"
 	if(!check_rights(R_SOUNDS))
+		return
+
+	if(ckey == "kevinz000")
 		return
 
 	if(SSticker)
