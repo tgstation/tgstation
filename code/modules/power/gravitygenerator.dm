@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator
 	name = "gravitational generator"
-	desc = "A device which produces a gravaton field when set up."
+	desc = "A device which produces a graviton field when set up."
 	icon = 'icons/obj/machines/gravity_generator.dmi'
 	anchored = 1
 	density = 1

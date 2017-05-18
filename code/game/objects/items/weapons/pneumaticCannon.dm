@@ -231,6 +231,7 @@
 			qdel(I)
 			return loaded
 		loaded++
+		CHECK_TICK
 
 /obj/item/weapon/pneumatic_cannon/pie
 	name = "pie cannon"

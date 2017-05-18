@@ -35,6 +35,7 @@
 //MINOR TWEAKS/MISC
 #define AGE_MIN				17	//youngest a character can be
 #define AGE_MAX				85	//oldest a character can be
+#define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
 #define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you

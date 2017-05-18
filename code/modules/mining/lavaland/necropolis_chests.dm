@@ -672,7 +672,7 @@
 		if(!istype(T))
 			return
 		if(!istype(T, turf_type))
-			var/obj/effect/overlay/temp/lavastaff/L = new /obj/effect/overlay/temp/lavastaff(T)
+			var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
 			L.alpha = 0
 			animate(L, alpha = 255, time = create_delay)
 			user.visible_message("<span class='danger'>[user] points [src] at [T]!</span>")
@@ -695,7 +695,7 @@
 				timer = world.time + reset_cooldown
 				playsound(T,'sound/magic/Fireball.ogg', 200, 1)
 
-/obj/effect/overlay/temp/lavastaff
+/obj/effect/temp_visual/lavastaff
 	icon_state = "lavastaff_warn"
 	duration = 50
 
@@ -820,7 +820,7 @@
 			timer = world.time + cooldown_time
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
-				new /obj/effect/overlay/temp/hierophant/chaser(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+				new /obj/effect/temp_visual/hierophant/chaser(get_turf(user), user, target, chaser_speed, friendly_fire_check)
 				add_logs(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
@@ -875,7 +875,7 @@
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
 				playsound(T,'sound/magic/Blind.ogg', 200, 1, -4)
-				new /obj/effect/overlay/temp/hierophant/telegraph/teleport(T, user)
+				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 				beacon = new/obj/effect/hierophant(T)
 				user.update_action_buttons_icon()
 				user.visible_message("<span class='hierophant_warning'>[user] places a strange machine beneath [user.p_their()] feet!</span>", \
@@ -902,8 +902,8 @@
 	timer = world.time + 50
 	INVOKE_ASYNC(src, .proc/prepare_icon_update)
 	beacon.icon_state = "hierophant_tele_on"
-	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE1 = new /obj/effect/overlay/temp/hierophant/telegraph/edge(user.loc)
-	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE2 = new /obj/effect/overlay/temp/hierophant/telegraph/edge(beacon.loc)
+	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE1 = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
+	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE2 = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
 	if(do_after(user, 40, target = user) && user && beacon)
 		var/turf/T = get_turf(beacon)
 		var/turf/source = get_turf(user)
@@ -915,8 +915,8 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		new /obj/effect/overlay/temp/hierophant/telegraph(T, user)
-		new /obj/effect/overlay/temp/hierophant/telegraph(source, user)
+		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
+		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
 		playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
 		playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
 		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
@@ -937,13 +937,13 @@
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		add_logs(user, beacon, "teleported self from ([source.x],[source.y],[source.z]) to")
-		new /obj/effect/overlay/temp/hierophant/telegraph/teleport(T, user)
-		new /obj/effect/overlay/temp/hierophant/telegraph/teleport(source, user)
+		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
+		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
-			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, TRUE) //blasts produced will not hurt allies
+			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //blasts produced will not hurt allies
 			B.damage = 30
 		for(var/t in RANGE_TURFS(1, source))
-			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, TRUE) //but absolutely will hurt enemies
+			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //but absolutely will hurt enemies
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user) //regardless, take all mobs near us along
@@ -988,10 +988,10 @@
 /obj/item/weapon/hierophant_club/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
 	if(!T)
 		return
-	new /obj/effect/overlay/temp/hierophant/telegraph/cardinal(T, user)
+	new /obj/effect/temp_visual/hierophant/telegraph/cardinal(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
-	new /obj/effect/overlay/temp/hierophant/blast(T, user, friendly_fire_check)
+	new /obj/effect/temp_visual/hierophant/blast(T, user, friendly_fire_check)
 	for(var/d in GLOB.cardinal)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
@@ -1004,15 +1004,15 @@
 	for(var/i in 1 to range)
 		if(!J)
 			return
-		new /obj/effect/overlay/temp/hierophant/blast(J, user, friendly_fire_check)
+		new /obj/effect/temp_visual/hierophant/blast(J, user, friendly_fire_check)
 		previousturf = J
 		J = get_step(previousturf, dir)
 
 /obj/item/weapon/hierophant_club/proc/aoe_burst(turf/T, mob/living/user) //make a 3x3 blast around a target
 	if(!T)
 		return
-	new /obj/effect/overlay/temp/hierophant/telegraph(T, user)
+	new /obj/effect/temp_visual/hierophant/telegraph(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
-		new /obj/effect/overlay/temp/hierophant/blast(t, user, friendly_fire_check)
+		new /obj/effect/temp_visual/hierophant/blast(t, user, friendly_fire_check)
