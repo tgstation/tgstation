@@ -170,7 +170,7 @@
 
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
-	duration = 600 //if you leave for a minute you lose the mark, deal with it
+	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay

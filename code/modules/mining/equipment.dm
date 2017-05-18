@@ -524,15 +524,14 @@
 	log_override = TRUE
 
 /obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
-	if(hammer_synced)
-		if(isliving(target))
-			var/mob/living/L = target
-			L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
-		var/target_turf = get_turf(target)
-		if(ismineralturf(target_turf))
-			var/turf/closed/mineral/M = target_turf
-			new /obj/effect/overlay/temp/kinetic_blast(M)
-			M.gets_drilled(firer)
+	if(isliving(target))
+		var/mob/living/L = target
+		L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
+	var/target_turf = get_turf(target)
+	if(ismineralturf(target_turf))
+		var/turf/closed/mineral/M = target_turf
+		new /obj/effect/overlay/temp/kinetic_blast(M)
+		M.gets_drilled(firer)
 	..()
 
 /obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
