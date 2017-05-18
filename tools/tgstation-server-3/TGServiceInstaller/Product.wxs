@@ -82,9 +82,6 @@
       <Component Id="RestSharp">
         <File Source="$(var.TGServerService.TargetDir)/RestSharp.dll" />
       </Component>
-      <Component Id="StarkSoftProxy">
-        <File Source="$(var.TGServerService.TargetDir)/StarkSoftProxy.dll" />
-      </Component>
       <Component Id="WebSock">
         <File Source="$(var.TGServerService.TargetDir)/WebSocket4Net.dll" />
       </Component>
