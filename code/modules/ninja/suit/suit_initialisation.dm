@@ -16,7 +16,7 @@
 		return
 	s_busy = TRUE
 	to_chat(U, "<span class='notice'>Now initializing...</span>")
-	addtimer(CALLBACK(src, .proc/ninitalize_two, delay, U), delay)
+	addtimer(CALLBACK(src, .proc/ninitialize_two, delay, U), delay)
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize_two(delay, mob/living/carbon/human/U)
 	if(!lock_suit(U))//To lock the suit onto wearer.
