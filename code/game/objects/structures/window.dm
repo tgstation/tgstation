@@ -545,7 +545,7 @@
 		qdel(I)
 	var/amount_of_gears = 2
 	if(fulltile)
-		new /obj/effect/overlay/temp/ratvar/window(get_turf(src))
+		new /obj/effect/temp_visual/ratvar/window(get_turf(src))
 		amount_of_gears = 4
 	for(var/i in 1 to amount_of_gears)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
@@ -553,7 +553,7 @@
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/window/single(get_turf(src))
+		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/window/single(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()

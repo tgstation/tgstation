@@ -114,7 +114,7 @@
 				for(var/i in 1 to heal_attempts)
 					if(S.health < S.maxHealth)
 						S.adjustHealth(-heal_amount)
-						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
+						new /obj/effect/temp_visual/heal(T, "#1E8CE1")
 						if(i == heal_attempts && S.health >= S.maxHealth) //we finished healing on the last tick, give them the message
 							to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 							break
@@ -129,7 +129,7 @@
 				for(var/i in 1 to heal_attempts)
 					if(S.health < S.maxHealth)
 						S.heal_ordered_damage(heal_amount, damage_heal_order)
-						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
+						new /obj/effect/temp_visual/heal(T, "#1E8CE1")
 						if(i == heal_attempts && S.health >= S.maxHealth)
 							to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 							break
@@ -158,7 +158,7 @@
 					for(var/i in 1 to heal_ticks)
 						if(H.health < H.maxHealth)
 							H.heal_ordered_damage(heal_amount, damage_heal_order)
-							new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
+							new /obj/effect/temp_visual/heal(T, "#1E8CE1")
 							if(i == heal_ticks && H.health >= H.maxHealth)
 								to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
 								break
@@ -174,10 +174,10 @@
 				if(C.obj_integrity < C.max_integrity)
 					C.obj_integrity = min(C.obj_integrity + 5, C.max_integrity)
 					C.update_icon()
-					new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
+					new /obj/effect/temp_visual/heal(T, "#1E8CE1")
 				else
 					break
-	new /obj/effect/overlay/temp/ratvar/mending_mantra(get_turf(invoker))
+	new /obj/effect/temp_visual/ratvar/mending_mantra(get_turf(invoker))
 	return TRUE
 
 
@@ -389,7 +389,7 @@
 						usable_power = min(Floor(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), 1000) - prev_power
 						if(usable_power > 0 && C.cell.use(usable_power))
 							multiplier += (usable_power * 0.0005)
-				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = new /obj/effect/overlay/temp/ratvar/volt_hit(get_turf(invoker), null, multiplier)
+				var/obj/effect/temp_visual/ratvar/volt_hit/VH = new /obj/effect/temp_visual/ratvar/volt_hit(get_turf(invoker), null, multiplier)
 				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
 				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
 				playsound(invoker, 'sound/machines/defib_zap.ogg', VH.damage, 1, -1)
