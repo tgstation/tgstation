@@ -215,7 +215,32 @@ SUBSYSTEM_DEF(shuttle)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.")
+	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+
+/datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, annoyed_admiral_message)
+	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
+		return
+
+	emergency.cancel(/area/centcom)
+	msglog_admins("Shuttle has been recalled from Centcom.")
+
+	addtimer(CALLBACK(src, .proc/centcom_recall2, annoyed_admiral_message), 50)
+
+/datum/controller/subsystem/shuttle/proc/centcom_recall2(annoyed_admiral_message)
+	if(!annoyed_admiral_message)
+		annoyed_admiral_message = pick(GLOB.annoyed_admiral_messages)
+	var/intercepttext = "<FONT size = 3><b>NanoTrasen Update</b>: Request For Shuttle.</FONT><HR>\
+						To whom it may concern:<BR><BR>\
+						We have taken note of the situation upon [station_name()] and have come to the \
+						conclusion that it does not warrant the abandonment of the station.<BR>\
+						If you do not agree with our opinion we suggest that you open a direct \
+						line with us and explain the nature of your crisis.<BR><BR>\
+						<i>This message has been automatically generated based upon readings from long \
+						range diagnostic tools. To assure the quality of your request every finalized report \
+						is reviewed by an on-call rear admiral.<BR>\
+						<b>Rear Admiral's Notes:</b> \
+						[annoyed_admiral_message]"
+	print_command_report(intercepttext, announce=TRUE)
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
@@ -514,4 +539,4 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.is_in_shuttle_bounds(A))
 			return TRUE
-		
+
