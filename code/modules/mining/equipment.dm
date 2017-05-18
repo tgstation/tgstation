@@ -180,7 +180,8 @@
 
 /obj/item/weapon/resonator/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Striking a resonance field that was recently crossed will immediately detonate it and do <b>[100*quick_burst_mod]%</b> damage.</span>")
+	to_chat(user, "<span class='notice'>Resonance fields will expand quickly if crossed or when created on a mob or rock wall.</span>")
+	to_chat(user, "<span class='notice'>Striking an expanding resonance field will immediately detonate it and do <b>[100*quick_burst_mod]%</b> damage.</span>")
 
 /obj/item/weapon/resonator/upgraded
 	name = "upgraded resonator"
@@ -202,11 +203,8 @@
 			user.changeNext_move(CLICK_CD_MELEE)
 		return
 	if(LAZYLEN(fields) < fieldlimit)
-		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
 		var/obj/effect/temp_visual/resonance/RE = new(T, user, src)
-		if(ismineralturf(T))
-			INVOKE_ASYNC(RE, /obj/effect/temp_visual/resonance.proc/crossed_burst)
-		else
+		if(!ismineralturf(T))
 			user.changeNext_move(CLICK_CD_MELEE)
 
 /obj/item/weapon/resonator/pre_attackby(atom/target, mob/living/user, params)
@@ -232,12 +230,15 @@
 	res = set_resonator
 	if(res)
 		res.fields += src
+	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
 	transform = matrix()*0.75
 	deltimer(timerid)
 	timerid = addtimer(CALLBACK(src, .proc/burst), duration, TIMER_STOPPABLE)
-	for(var/mob/living/L in T)
+	for(var/mob/living/L in loc) //mob here, expand!
 		INVOKE_ASYNC(src, .proc/crossed_burst)
-		break
+		return
+	if(ismineralturf(loc)) //mineral turf, expand!
+		INVOKE_ASYNC(src, .proc/crossed_burst)
 
 /obj/effect/temp_visual/resonance/Destroy()
 	if(res)
