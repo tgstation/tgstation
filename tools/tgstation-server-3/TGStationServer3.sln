@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TGServerService", "TGServerService\TGServerService.csproj", "{F32EDA25-0855-411C-AF5E-F0D042917E2D}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TGServiceInterface", "TGServiceInterface\TGServiceInterface.csproj", "{AC4E7E8B-F83A-481C-A8B0-8FA4E8AE59AB}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "TGServiceInstaller", "TGServiceInstaller\TGServiceInstaller.wixproj", "{154435F6-0890-42D4-9AEC-B743D4FBC1CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TGSharedFunctions", "TGSharedFunctions\TGSharedFunctions.csproj", "{515AEFCD-984C-40DC-992A-E5E9D2F812B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +62,14 @@ Global
 		{154435F6-0890-42D4-9AEC-B743D4FBC1CB}.Release|Any CPU.Build.0 = Release|x86
 		{154435F6-0890-42D4-9AEC-B743D4FBC1CB}.Release|x86.ActiveCfg = Release|x86
 		{154435F6-0890-42D4-9AEC-B743D4FBC1CB}.Release|x86.Build.0 = Release|x86
+		{515AEFCD-984C-40DC-992A-E5E9D2F812B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{515AEFCD-984C-40DC-992A-E5E9D2F812B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{515AEFCD-984C-40DC-992A-E5E9D2F812B3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{515AEFCD-984C-40DC-992A-E5E9D2F812B3}.Debug|x86.Build.0 = Debug|Any CPU
+		{515AEFCD-984C-40DC-992A-E5E9D2F812B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{515AEFCD-984C-40DC-992A-E5E9D2F812B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{515AEFCD-984C-40DC-992A-E5E9D2F812B3}.Release|x86.ActiveCfg = Release|Any CPU
+		{515AEFCD-984C-40DC-992A-E5E9D2F812B3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,73 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using TGServiceInterface;
+using TGSharedFunctions;
 
 namespace TGCommandLine
 {
-
-	class RootCommand : Command
+	class ConsoleCommand : RootCommand
 	{
-		bool IsRealRoot()
+		public ConsoleCommand()
 		{
-			return !GetType().IsSubclassOf(typeof(RootCommand));
+			Children = new Command[] { new UpdateCommand(), new TestmergeCommand(), new IRCCommand(), new RepoCommand(), new BYONDCommand(), new DMCommand(), new DDCommand(), new ConfigCommand(), new ChatCommand() };
 		}
-		public RootCommand()
-		{
-			if (IsRealRoot())	//stack overflows
-				Children = new Command[] { new UpdateCommand(), new TestmergeCommand(), new IRCCommand(), new RepoCommand(), new BYONDCommand(), new DMCommand(), new DDCommand(), new ConfigCommand(), new ChatCommand() };
-		}
-		public override ExitCode Run(IList<string> parameters)
-		{
-			if (parameters.Count > 0)
-			{
-				var LocalKeyword = parameters[0].Trim().ToLower();
-				parameters.RemoveAt(0);
-
-				switch (LocalKeyword)
-				{
-					case "help":
-					case "?":
-						if (!IsRealRoot())
-						{
-							Console.WriteLine(Keyword + " commands:");
-							Console.WriteLine();
-						}
-						PrintHelp();
-						return ExitCode.Normal;
-					default:
-						foreach (var c in Children)
-							if (c.Keyword == LocalKeyword)
-							{
-								if (parameters.Count < c.RequiredParameters)
-								{
-									Console.WriteLine("Not enough parameters!");
-									return ExitCode.BadCommand;
-								}
-								return c.Run(parameters);
-							}
-						parameters.Insert(0, LocalKeyword);
-						break;
-				}
-			}
-			Console.WriteLine(String.Format("Invalid command: {0} {1}", Keyword, String.Join(" ", parameters)));
-			Console.WriteLine(String.Format("Type '{0}?' or '{0}help' for available commands.", Keyword != null ? Keyword + " " : ""));
-			return ExitCode.BadCommand;
-		}
-
 		public override void PrintHelp()
 		{
-			Console.WriteLine("/tg/station 13 Server Command Line");
-			Console.WriteLine("Available commands (type '?' or 'help' after command for more info):");
-			Console.WriteLine();
+			OutputProc("/tg/station 13 Server");
 			base.PrintHelp();
 		}
-
-		protected override string GetHelpText()
-		{
-			throw new NotImplementedException();
-		}
 	}
-
 	class UpdateCommand : Command
 	{
 		public UpdateCommand()

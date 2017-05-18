@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TGServiceInterface;
+using TGSharedFunctions;
 
 namespace TGCommandLine
 {
