@@ -16,6 +16,7 @@
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
 	dangerous_possession = TRUE
+	gender = PLURAL
 
 /obj/structure/destructible/clockwork/massive/ratvar/Initialize()
 	. = ..()
@@ -29,6 +30,9 @@
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0, 0)
+	var/chance = 1 // one chance
+	if(prob(chance))
+		gender = MALE
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
 	GLOB.ratvar_awakens--
