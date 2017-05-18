@@ -504,6 +504,141 @@
 		S.change_head_color(color2)
 		dropped = TRUE
 
+//Peacekeeper Cyborg Projectile Dampenening Field
+/obj/item/borg/projectile_dampen
+	name = "Hyperkinetic Dampening projector"
+	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second \
+		while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "shield"
+	var/maxenergy = 1500
+	var/energy = 1500
+	var/energy_recharge = 15
+	var/energy_recharge_cyborg_drain_coefficient = 0.5
+	var/cyborg_cell_critical_percentage = 0.05
+	var/mob/living/silicon/robot/host = null
+	var/datum/field/dampening_field
+	var/projectile_damage_coefficient = 0.5
+	var/projectile_damage_tick_ecost_coefficient = 2	//Lasers get half their damage chopped off, drains 50 power/tick. Note that fields are processed 5 times per second.
+	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
+	var/projectile_tick_speed_ecost = 10
+	var/current_damage_dampening = 0
+	var/list/obj/item/projectile/tracked
+	var/image/projectile_effect
+	var/field_radius = 3
+
+/* Calculations
+Ticking at fastprocess = 5 ticks/second
+
+Recharge = 15/tick. 15*5 = 75 energy/second recharge.
+75*cell_drain_coefficient(0.5) = 37.5
+Draining 37.5 from cyborg cell per second.
+
+1500 maxenergy
+takes 20 seconds to fully recharge projectile field
+
+Regular laser: 20 damage burn energy beam
+coeff = 0.5 || 20 damage --> 10 damage
+10 damage drained, damage tick coefficient = 2.
+20 energy/tick drain on projector
+tick speed ecost = 10
+10 energy/tick
+Draining: 20*5 + 10*5 = 150 energy/second.
+
+@ 150 energy/second: 10 seconds to fully drain projectile field without recharging.
+20 seconds to fully drain projectile field with recharging.
+Each laser stays approximately 2 seconds in projectile field.
+10 lasers fully drain cyborg.
+
+*/
+
+/obj/item/borg/projectile_dampen/debug
+	maxenergy = 50000
+	energy = 50000
+	energy_recharge = 5000
+
+/obj/item/borg/projectile_dampen/Initialize()
+	. = ..()
+	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
+	tracked = list()
+	icon_state = "shield0"
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/borg/projectile_dampen/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/item/borg/projectile_dampen/attack_self(mob/user)
+	var/active = FALSE
+	if(!istype(dampening_field))
+		activate_field()
+		active = TRUE
+	else
+		deactivate_field()
+		active = FALSE
+	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] the [src].</span>")
+	icon_state = "[initial(icon_state)][active]"
+
+/obj/item/borg/projectile_dampen/proc/activate_field()
+	if(!istype(dampening_field))
+		dampening_field = make_field(/datum/field/peaceborg_dampener, list("square_radius" = field_radius, "center" = get_turf(src), "projector" = src))
+
+/obj/item/borg/projectile_dampen/proc/deactivate_field()
+	QDEL_NULL(dampening_field)
+	visible_message("<span class='warning'>The [src] shuts off!</span>")
+	for(var/obj/item/projectile/P in tracked)
+		restore_projectile(P)
+
+/obj/item/borg/projectile_dampen/process()
+	process_recharge()
+	process_usage()
+	update_location()
+
+/obj/item/borg/projectile_dampen/proc/update_location()
+	if(istype(dampening_field))
+		dampening_field.update_center(get_turf(src))
+	if(!istype(host))
+		if(iscyborg(loc))
+			host = loc
+
+/obj/item/borg/projectile_dampen/proc/process_usage()
+	var/usage = 0
+	for(var/I in tracked)
+		if(!tracked[I])	//No damage
+			continue
+		usage += projectile_tick_speed_ecost
+	usage += (current_damage_dampening * projectile_damage_tick_ecost_coefficient)
+	energy = Clamp(energy - usage, 0, maxenergy)
+	if(energy <= 0)
+		deactivate_field()
+		visible_message("<span class='warning'>The [src] blinks \"ENERGY DEPLETED\"</span>")
+
+/obj/item/borg/projectile_dampen/proc/process_recharge()
+	if(!istype(host))
+		energy = Clamp(energy + energy_recharge, 0, maxenergy)
+		return
+	if((host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
+		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
+		energy += energy_recharge
+
+/obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/item/projectile/P, track_projectile = TRUE)
+	if(tracked[P])
+		return
+	if(track_projectile)
+		tracked[P] = P.damage
+		current_damage_dampening += P.damage
+	P.damage *= projectile_damage_coefficient
+	P.speed *= projectile_speed_coefficient
+	P.add_overlay(projectile_effect)
+
+/obj/item/borg/projectile_dampen/proc/restore_projectile(obj/item/projectile/P)
+	tracked -= P
+	P.damage *= (1/projectile_damage_coefficient)
+	P.speed *= (1/projectile_speed_coefficient)
+	P.cut_overlay(projectile_effect)
+	current_damage_dampening -= P.damage
+
+
 /**********************************************************************
 						HUD/SIGHT things
 ***********************************************************************/
