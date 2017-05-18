@@ -25,6 +25,7 @@
 #define BLOCK_GAS_SMOKE_EFFECT 4096	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
 #define DROPDEL			16384 // When dropped, it calls qdel on itself
+#define PREVENT_CLICK_UNDER 32768 //Prevent clicking things below it on the same turf eg. doors/ fulltile windows
 
 /* Secondary atom flags, access using the SECONDARY_FLAG macros */
 
