@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - balance: "Plastic explosives can no longer be detonated by EMPs."
