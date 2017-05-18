@@ -61,6 +61,7 @@
 	for(var/A in get_modkits())
 		var/obj/item/borg/upgrade/modkit/M = A
 		M.modify_projectile(K)
+		K.kinetic_modules += M //do something special on-hit, easy!
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg
 	holds_charge = TRUE
@@ -165,9 +166,11 @@
 	log_override = TRUE
 
 	var/pressure_decrease = 0.25
-	var/turf_aoe = FALSE
-	var/mob_aoe = 0
-	var/list/hit_overlays = list()
+	var/list/kinetic_modules = list()
+
+/obj/item/projectile/kinetic/Destroy()
+	QDEL_NULL(kinetic_modules)
+	return ..()
 
 /obj/item/projectile/kinetic/prehit(atom/target)
 	var/turf/target_turf = get_turf(target)
@@ -197,18 +200,10 @@
 		M.gets_drilled(firer)
 	var/obj/effect/overlay/temp/kinetic_blast/K = new /obj/effect/overlay/temp/kinetic_blast(target_turf)
 	K.color = color
-	for(var/type in hit_overlays)
-		new type(target_turf)
-	if(turf_aoe)
-		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
-			if(ismineralturf(T))
-				var/turf/closed/mineral/M = T
-				M.gets_drilled(firer)
-	if(mob_aoe)
-		for(var/mob/living/L in range(1, target_turf) - firer - target)
-			var/armor = L.run_armor_check(def_zone, flag, "", "", armour_penetration)
-			L.apply_damage(damage*mob_aoe, damage_type, def_zone, armor)
-			to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
+	for(var/obj/item/borg/upgrade/modkit/M in kinetic_modules)
+		if(QDELETED(M)) //whoever shot this was very, very unfortunate.
+			continue
+		M.projectile_strike(src, target_turf, target)
 
 
 //Modkits
@@ -266,14 +261,13 @@
 		to_chat(user, "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>")
 		. = FALSE
 
-
-
 /obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	forceMove(get_turf(KA))
 	KA.modkits -= src
 
 /obj/item/borg/upgrade/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
 
+/obj/item/borg/upgrade/modkit/proc/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target)
 
 //Range
 /obj/item/borg/upgrade/modkit/range
@@ -315,21 +309,30 @@
 //AoE blasts
 /obj/item/borg/upgrade/modkit/aoe
 	modifier = 0
+	var/turf_aoe = FALSE
 
 /obj/item/borg/upgrade/modkit/aoe/modify_projectile(obj/item/projectile/kinetic/K)
 	K.name = "kinetic explosion"
-	if(!K.turf_aoe && !K.mob_aoe)
-		K.hit_overlays += /obj/effect/overlay/temp/explosion/fast
-	K.mob_aoe += modifier
+
+/obj/item/borg/upgrade/modkit/aoe/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target)
+	new /obj/effect/overlay/temp/explosion/fast(target_turf)
+	if(turf_aoe)
+		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
+			if(ismineralturf(T))
+				var/turf/closed/mineral/M = T
+				M.gets_drilled(firer)
+	if(modifier)
+		for(var/mob/living/L in range(1, target_turf) - K.firer - target)
+			var/armor = L.run_armor_check(def_zone, flag, "", "", armour_penetration)
+			L.apply_damage(damage*modifier, damage_type, def_zone, armor)
+			to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
+
 
 /obj/item/borg/upgrade/modkit/aoe/turfs
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
 	denied_type = /obj/item/borg/upgrade/modkit/aoe/turfs
-
-/obj/item/borg/upgrade/modkit/aoe/turfs/modify_projectile(obj/item/projectile/kinetic/K)
-	..()
-	K.turf_aoe = TRUE
+	turf_aoe = TRUE
 
 /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
 	name = "offensive mining explosion"
