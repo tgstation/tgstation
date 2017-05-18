@@ -1,8 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Various vending machines, when shooting their inventory at nearby
-people, will \"demonstrate their products features\". This means that if a
-cigarette vending machine throws a lighter at you, it will be on.
-Vending machines also choose random products when throwing, rather than
-the first available one."
