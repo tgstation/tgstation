@@ -90,7 +90,7 @@
 			no_delete = TRUE
 			use(amount_temp)
 		amount_temp *= 12.5 //each tile is 12.5 power so this is 2 tiles to 25 power
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -amount_temp, "spawn_dir" = SOUTH, "no_target_deletion" = no_delete)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -amount_temp, "spawn_dir" = SOUTH, "no_target_deletion" = no_delete)
 	if(amount_temp >= 20)
 		var/sheets_to_make = round(amount_temp * 0.05) //and 20 to 1 brass
 		var/used = sheets_to_make * 20
@@ -108,7 +108,7 @@
 	if(source)
 		return FALSE
 	if(proselytizer.metal_to_power)
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_ROD), "spawn_dir" = SOUTH)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_ROD), "spawn_dir" = SOUTH)
 	if(get_amount() >= 10)
 		var/sheets_to_make = round(get_amount() * 0.1)
 		var/used = sheets_to_make * 10
@@ -126,7 +126,7 @@
 	if(source)
 		return FALSE
 	if(proselytizer.metal_to_power)
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_METAL), "spawn_dir" = SOUTH)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_METAL), "spawn_dir" = SOUTH)
 	if(get_amount() >= 5)
 		var/sheets_to_make = round(get_amount() * 0.2)
 		var/used = sheets_to_make * 5
@@ -144,7 +144,7 @@
 	if(source)
 		return FALSE
 	if(proselytizer.metal_to_power)
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_PLASTEEL), "spawn_dir" = SOUTH)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_PLASTEEL), "spawn_dir" = SOUTH)
 	if(get_amount() >= 2)
 		var/sheets_to_make = round(get_amount() * 0.5)
 		var/used = sheets_to_make * 2
@@ -162,7 +162,7 @@
 /obj/item/stack/tile/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer, silent)
 	if(source)
 		return FALSE
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_FLOOR), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_FLOOR), "spawn_dir" = SOUTH)
 
 //Airlock conversion
 /obj/machinery/door/airlock/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer, silent)
@@ -378,7 +378,7 @@
 	if(!power_amount)
 		power_amount = -POWER_STANDARD
 	if(proselytizer.can_use_power(power_amount))
-		var/obj/effect/overlay/temp/ratvar/beam/itemconsume/B = new /obj/effect/overlay/temp/ratvar/beam/itemconsume(get_turf(src))
+		var/obj/effect/temp_visual/ratvar/beam/itemconsume/B = new /obj/effect/temp_visual/ratvar/beam/itemconsume(get_turf(src))
 		B.pixel_x = pixel_x
 		B.pixel_y = pixel_y
 	if(!silent) //looper no looping

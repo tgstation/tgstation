@@ -298,7 +298,7 @@
 	var/initial_volume = reac_volume
 	reac_volume = ..()
 	if(reac_volume >= 10) //if it's not a spore cloud, bad time incoming
-		var/obj/effect/overlay/temp/explosion/fast/E = new /obj/effect/overlay/temp/explosion/fast(get_turf(M))
+		var/obj/effect/temp_visual/explosion/fast/E = new /obj/effect/temp_visual/explosion/fast(get_turf(M))
 		E.alpha = 150
 		for(var/mob/living/L in orange(get_turf(M), 1))
 			if("blob" in L.faction) //no friendly fire

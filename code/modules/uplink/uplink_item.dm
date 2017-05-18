@@ -929,6 +929,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+/datum/uplink_item/device_tools/syndietome
+	name = "Syndicate Tome"
+	desc = "Using rare artifacts acquired at great cost, the syndicate has reverse engineered \
+			the seemingly magical books of a certain cult. Though lacking the esoteric abilities \
+			of the originals, these inferior copies are still quite useful, being able to provide \
+			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
+	item = /obj/item/weapon/storage/book/bible/syndicate
+	cost = 9
+
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
 	desc = "These goggles can be turned to resemble common eyewears throughout the station. \
@@ -1126,6 +1135,19 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "This device will disrupt any nearby outgoing radio communication when activated."
 	item = /obj/item/device/jammer
 	cost = 5
+
+/datum/uplink_item/device_tools/codespeak_manual
+	name = "Codespeak Manual"
+	desc = "Syndicate agents can be trained to use a series of codewords to comvey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
+	item = /obj/item/weapon/codespeak_manual
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/device_tools/codespeak_manual_deluxe
+	name = "Deluxe Codespeak Manual"
+	desc = "Syndicate agents can be trained to use a series of codewords to comvey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses."
+	cost = 8
+	include_modes = list(/datum/game_mode/nuclear)
 
 // Implants
 /datum/uplink_item/implants

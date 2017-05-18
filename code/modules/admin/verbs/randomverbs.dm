@@ -586,7 +586,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 		empulse(O, heavy, light)
 		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
-		message_admins("[key_name_admin(usr)] created an EM PUlse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
+		message_admins("[key_name_admin(usr)] created an EM Pulse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
 		SSblackbox.add_details("admin_verb","EM Pulse") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 		return
