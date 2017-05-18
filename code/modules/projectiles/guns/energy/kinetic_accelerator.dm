@@ -208,7 +208,7 @@
 
 //Modkits
 /obj/item/borg/upgrade/modkit
-	name = "modification kit"
+	name = "kinetic accelerator modification kit"
 	desc = "An upgrade for kinetic accelerators."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "modkit"
@@ -310,11 +310,54 @@
 /obj/item/borg/upgrade/modkit/aoe
 	modifier = 0
 	var/turf_aoe = FALSE
+	var/stats_stolen = FALSE
+
+/obj/item/borg/upgrade/modkit/aoe/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
+	. = ..()
+	if(.)
+		for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits) //make sure only one of the aoe modules has values if somebody has multiple
+			if(AOE.stats_stolen)
+				continue
+			modifier += AOE.modifier //take its modifiers
+			AOE.modifier = 0
+			turf_aoe += AOE.turf_aoe
+			AOE.turf_aoe = FALSE
+			AOE.stats_stolen = TRUE
+
+/obj/item/borg/upgrade/modkit/aoe/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	..()
+	modifier = initial(modifier) //get our modifiers back
+	turf_aoe = initial(turf_aoe)
+	if(stats_stolen) //if we had our stats stolen, find the stealer and take them from it
+		for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits)
+			if(AOE.stats_stolen)
+				continue
+			AOE.modifier -= modifier
+			AOE.turf_aoe -= turf_aoe
+	else //otherwise, reset the stolen stats and have it recalculate
+		var/obj/item/borg/upgrade/modkit/aoe/new_stealer
+		for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits)
+			if(!new_stealer)
+				new_stealer = AOE //just make the first one a stealer
+			AOE.modifier = initial(AOE.modifier)
+			AOE.turf_aoe = initial(AOE.turf_aoe)
+			AOE.stats_stolen = FALSE
+		if(new_stealer) //if there's no stealer, then there's no other aoe modkits
+			for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits)
+				if(AOE != new_stealer)
+					new_stealer.modifier += AOE.modifier
+					AOE.modifier = 0
+					new_stealer.turf_aoe += AOE.turf_aoe
+					AOE.turf_aoe = FALSE
+					AOE.stats_stolen = TRUE
+	stats_stolen = FALSE
 
 /obj/item/borg/upgrade/modkit/aoe/modify_projectile(obj/item/projectile/kinetic/K)
 	K.name = "kinetic explosion"
 
 /obj/item/borg/upgrade/modkit/aoe/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target)
+	if(stats_stolen)
+		return
 	new /obj/effect/overlay/temp/explosion/fast(target_turf)
 	if(turf_aoe)
 		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
@@ -323,8 +366,9 @@
 				M.gets_drilled(firer)
 	if(modifier)
 		for(var/mob/living/L in range(1, target_turf) - K.firer - target)
-			var/armor = L.run_armor_check(def_zone, flag, "", "", armour_penetration)
-			L.apply_damage(damage*modifier, damage_type, def_zone, armor)
+			var/armor = L.run_armor_check(K.def_zone, K.flag, "", "", K.armour_penetration)
+			L.apply_damage(K.damage*modifier, K.damage_type, K.def_zone, armor)
+			to_chat(L, "<span class='userdanger'>You're struck by a [K.name]!</span>")
 
 
 /obj/item/borg/upgrade/modkit/aoe/turfs
