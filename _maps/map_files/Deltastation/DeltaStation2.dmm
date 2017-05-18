@@ -63624,6 +63624,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqt" = (
