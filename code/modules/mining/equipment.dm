@@ -510,36 +510,24 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
 	sharpness = IS_SHARP
-	var/charged = 1
-	var/charge_time = 16
-	var/atom/mark = null
-	var/mutable_appearance/marked_underlay
+	var/charged = TRUE
+	var/charge_time = 14
 
 /obj/item/projectile/destabilizer
 	name = "destabilizing force"
 	icon_state = "pulse1"
+	nodamage = TRUE
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 6
-	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced =  null
 	log_override = TRUE
 
 /obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
 	if(hammer_synced)
-		if(hammer_synced.mark == target)
-			return ..()
 		if(isliving(target))
-			if(hammer_synced.mark && hammer_synced.marked_underlay)
-				hammer_synced.mark.underlays -= hammer_synced.marked_underlay
-				hammer_synced.marked_underlay = null
 			var/mob/living/L = target
-			if(L.mob_size >= MOB_SIZE_LARGE)
-				hammer_synced.mark = L
-				hammer_synced.marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
-				hammer_synced.marked_underlay.pixel_x = -L.pixel_x
-				hammer_synced.marked_underlay.pixel_y = -L.pixel_y
-				L.underlays += hammer_synced.marked_underlay
+			L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
 		var/target_turf = get_turf(target)
 		if(ismineralturf(target_turf))
 			var/turf/closed/mineral/M = target_turf
@@ -549,40 +537,32 @@
 
 /obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
-		var/turf/proj_turf = get_turf(src)
+		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))
 			return
-		var/datum/gas_mixture/environment = proj_turf.return_air()
-		var/pressure = environment.return_pressure()
-		if(pressure > 50)
-			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-			return
-		var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(user.loc)
-		D.preparePixelProjectile(target,get_turf(target), user)
-		D.hammer_synced = src
+		var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(proj_turf)
+		D.preparePixelProjectile(target, get_turf(target), user)
 		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, 1)
 		D.fire()
-		charged = 0
+		charged = FALSE
 		icon_state = "mining_hammer1_uncharged"
 		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
-	if(proximity_flag && target == mark && isliving(target))
+	if(proximity_flag && isliving(target))
 		var/mob/living/L = target
+		if(!L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))
+			return
 		new /obj/effect/overlay/temp/kinetic_blast(get_turf(L))
-		mark = 0
-		if(L.mob_size >= MOB_SIZE_LARGE)
-			L.underlays -= marked_underlay
-			QDEL_NULL(marked_underlay)
-			var/backstab_dir = get_dir(user, L)
-			var/def_check = L.getarmor(type = "bomb")
-			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
-				L.apply_damage(80, BRUTE, blocked = def_check)
-				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
-			else
-				L.apply_damage(50, BRUTE, blocked = def_check)
+		var/backstab_dir = get_dir(user, L)
+		var/def_check = L.getarmor(type = "bomb")
+		if((user.dir & backstab_dir) && (L.dir & backstab_dir))
+			L.apply_damage(80, BRUTE, blocked = def_check)
+			playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
+		else
+			L.apply_damage(50, BRUTE, blocked = def_check)
 
 /obj/item/weapon/twohanded/required/mining_hammer/proc/Recharge()
 	if(!charged)
-		charged = 1
+		charged = TRUE
 		icon_state = "mining_hammer1"
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)

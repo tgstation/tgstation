@@ -167,3 +167,28 @@
 	id = "cult_ghost"
 	duration = -1
 	alert_type = null
+
+/datum/status_effect/crusher_mark
+	id = "crusher_mark"
+	duration = 600 //if you leave for a minute you lose the mark, deal with it
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	var/mutable_appearance/marked_underlay
+
+/datum/status_effect/crusher_mark/on_apply()
+	if(owner.mob_size > = MOB_SIZE_LARGE)
+		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+		marked_underlay.pixel_x = -owner.pixel_x
+		marked_underlay.pixel_y = -owner.pixel_y
+		owner.underlays += marked_underlay
+	return FALSE
+
+/datum/status_effect/crusher_mark/Destroy()
+	if(owner)
+		owner.underlays -= marked_underlay
+	QDEL_NULL(marked_underlay)
+	return ..()
+
+/datum/status_effect/crusher_mark/be_replaced()
+	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
+	..()
