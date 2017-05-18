@@ -14,7 +14,7 @@ GLOBAL_PROTECT(exp_to_update)
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
 
-/datum/admins/proc/cmd_show_exp_panel(var/client/C)
+/datum/admins/proc/cmd_show_exp_panel(client/C)
 	if(!C)
 		to_chat(usr, "ERROR: Client not found.")
 		return
@@ -28,7 +28,7 @@ GLOBAL_PROTECT(exp_to_update)
 	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
 
 
-/datum/admins/proc/toggle_exempt_status(var/client/C)
+/datum/admins/proc/toggle_exempt_status(client/C)
 	if(!C)
 		to_chat(usr, "ERROR: Client not found.")
 		return
@@ -80,10 +80,10 @@ GLOBAL_PROTECT(exp_to_update)
 
 /proc/job_is_xp_locked(jobtitle)
 	if(!config.use_exp_restrictions_heads && jobtitle in GLOB.command_positions)
-		return 0
+		return FALSE
 	if(!config.use_exp_restrictions_other && !(jobtitle in GLOB.command_positions))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /proc/calc_exp_type(client/C,exptype)
 	var/list/explist = C.prefs.exp.Copy()
@@ -156,7 +156,7 @@ GLOBAL_PROTECT(exp_to_update)
 	var/exp_living = text2num(prefs.exp[EXP_TYPE_LIVING])
 	return get_exp_format(exp_living)
 
-/proc/get_exp_format(var/expnum)
+/proc/get_exp_format(expnum)
 	if(expnum > 60)
 		return num2text(round(expnum / 60)) + "h"
 	else if(expnum > 0)
@@ -164,19 +164,21 @@ GLOBAL_PROTECT(exp_to_update)
 	else
 		return "0h"
 
-/proc/update_exp(var/mins, var/ann = 0)
+/proc/update_exp(mins, ann = FALSE)
 	if(!SSdbcore.Connect())
 		return -1
 	for(var/client/L in GLOB.clients)
-		if(L.inactivity >= 6000)
+		if(L.is_afk())
 			continue
 		addtimer(CALLBACK(L,/client/proc/update_exp_list,mins,ann),10)
 		CHECK_TICK
+
+/proc/update_exp_db()
 	SSdbcore.MassInsert(format_table_name("role_time"),GLOB.exp_to_update,TRUE)
 	LAZYCLEARLIST(GLOB.exp_to_update)
 
 //Manual incrementing/updating
-/client/proc/update_exp_client(var/minutes, var/announce_changes = 0)
+/client/proc/update_exp_client(minutes, announce_changes = FALSE)
 	if(!src ||!ckey || !config.use_exp_tracking)
 		return
 	if(!SSdbcore.Connect())
@@ -186,7 +188,7 @@ GLOBAL_PROTECT(exp_to_update)
 		var/err = exp_read.ErrorMsg()
 		log_game("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
 		message_admins("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
-		return
+		return -1
 	var/list/play_records = list()
 	while(exp_read.NextRow())
 		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
@@ -257,7 +259,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 
 //toggles exempt status in the db
-/proc/update_exempt_db(var/client/C, var/exempt = 0)
+/proc/update_exempt_db(client/C, exempt = 0)
 	if(!config.use_exp_tracking)
 		return
 	if(!SSdbcore.Connect())
@@ -270,27 +272,37 @@ GLOBAL_PROTECT(exp_to_update)
 		message_admins("SQL ERROR during exp_exempt. Error : \[[err]\]\n")
 		return
 
-
-/client/proc/update_exp_list(var/minutes, var/announce_changes = 0)
+/client/proc/update_exp_list(minutes, announce_changes = FALSE)
 	if(!src ||!ckey || !config.use_exp_tracking)
 		return
+	if(!SSdbcore.Connect())
+		return -1
+	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
+	if(!exp_read.Execute())
+		var/err = exp_read.ErrorMsg()
+		log_game("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
+		message_admins("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
+		return -1
+	var/list/play_records = list()
+	while(exp_read.NextRow())
+		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
 
-	var/list/play_records = prefs.exp
-	var/list/old_records = prefs.exp.Copy()
-
-	for(var/rtype in GLOB.exp_jobsmap)
+	for(var/rtype in SSjob.name_occupations)
 		if(!play_records[rtype])
 			play_records[rtype] = 0
+	for(var/rtype in GLOB.exp_specialmap)
+		if(!play_records[rtype])
+			play_records[rtype] = 0
+	var/list/old_records = play_records.Copy()
 	if(mob.stat == CONSCIOUS && mob.mind.assigned_role)
 		play_records[EXP_TYPE_LIVING] += minutes
 		if(announce_changes)
 			to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!")
-		for(var/category in GLOB.exp_jobsmap)
-			if(GLOB.exp_jobsmap[category]["titles"])
-				if(mob.mind.assigned_role in GLOB.exp_jobsmap[category]["titles"])
-					play_records[category] += minutes
-					if(announce_changes)
-						to_chat(mob,"<span class='notice'>You got: [minutes] [category] EXP!")
+		for(var/job in SSjob.name_occupations)
+			if(mob.mind.assigned_role == job)
+				play_records[job] += minutes
+				if(announce_changes)
+					to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!")
 		if(mob.mind.special_role)
 			play_records[EXP_TYPE_SPECIAL] += minutes
 			if(announce_changes)
@@ -301,13 +313,13 @@ GLOBAL_PROTECT(exp_to_update)
 			to_chat(mob,"<span class='notice'>You got: [minutes] Ghost EXP!")
 	else if(minutes)	//Let "refresh" checks go through
 		return
+	prefs.exp = play_records
 
 	for(var/jtype in play_records)
 		if(play_records[jtype] != old_records[jtype])
 			LAZYINITLIST(GLOB.exp_to_update)
 			GLOB.exp_to_update.Add(list(list(
-				"job" = jtype,
-				"ckey" = sanitizeSQL(ckey),
+				"job" = "'[jtype]'",
+				"ckey" = "'[sanitizeSQL(ckey)]'",
 				"minutes" = play_records[jtype])))
-
-	prefs.exp = play_records
+	addtimer(CALLBACK(GLOBAL_PROC,.proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
