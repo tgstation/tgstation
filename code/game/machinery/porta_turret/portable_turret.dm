@@ -926,7 +926,7 @@
 
 /obj/machinery/manned_turret
 	name = "machine gun turret"
-	desc = "A mounted gun that, while antiquated, has been a black market staple for centuries."
+	desc = "While the trigger is held down, this gun will redistribute recoil to allow its user to easily shift targets."
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "machinegun"
 	can_buckle = TRUE
