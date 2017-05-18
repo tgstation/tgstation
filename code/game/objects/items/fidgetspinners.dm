@@ -116,8 +116,8 @@
 				return
 			else
 				L.apply_damage(throwforce,BRUTE,hitzone)
-				L.Stun(15)
-				L.Weaken(15)
+				L.Stun(6)
+				L.Weaken(6)
 				L.visible_message("<span class='danger'>[L] trips over the [src].</span>", "<span class='userdanger'>You trip over the [src]!</span>")
 				stop_spin(L)
 				
