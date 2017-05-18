@@ -99,9 +99,6 @@
       <Component Id="TGServiceInterface">
         <File Source="$(var.TGServiceInterface.TargetPath)" />
       </Component>
-      <Component Id="TGSharedFunctions">
-        <File Source="$(var.TGSharedFunctions.TargetPath)" />
-      </Component>
     </ComponentGroup>
     <ComponentGroup Id="Gitx86Components" Directory="x86Folder">
 

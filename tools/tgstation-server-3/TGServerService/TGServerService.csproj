@@ -138,10 +138,6 @@
       <Project>{ac4e7e8b-f83a-481c-a8b0-8fa4e8ae59ab}</Project>
       <Name>TGServiceInterface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TGSharedFunctions\TGSharedFunctions.csproj">
-      <Project>{515aefcd-984c-40dc-992a-e5e9d2f812b3}</Project>
-      <Name>TGSharedFunctions</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="LockDependancies.txt" />

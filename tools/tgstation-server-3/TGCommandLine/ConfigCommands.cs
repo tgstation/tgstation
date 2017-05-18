@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using TGServiceInterface;
-using TGSharedFunctions;
 
 namespace TGCommandLine
 {
