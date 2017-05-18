@@ -78,8 +78,8 @@
 	name = "folder- 'TOP SECRET'"
 	desc = "A folder stamped \"Top Secret - Property of Nanotrasen Corporation. Unauthorized distribution is punishable by death.\""
 
-/obj/item/weapon/folder/documents/New()
-	..()
+/obj/item/weapon/folder/documents/Initialize()
+	. = ..()
 	new /obj/item/documents/nanotrasen(src)
 	update_icon()
 
