@@ -1,0 +1,104 @@
+
+//Projectile dampening field that slows projectiles and lowers their damage for an energy cost deducted every 1/5 second.
+//Only use square radius for this!
+/datum/proximity_monitor/advanced/peaceborg_dampener
+	name = "\improper Hyperkinetic Dampener Field"
+	requires_processing = TRUE
+	setup_edge_checkers = TRUE
+	setup_checkers = TRUE
+	field_shape = FIELD_SHAPE_RADIUS_SQUARE
+	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
+	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
+	var/static/image/edgeturf_west = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west")
+	var/static/image/edgeturf_east = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_east")
+	var/static/image/northwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northwest")
+	var/static/image/southwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southwest")
+	var/static/image/northeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast")
+	var/static/image/southeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
+	var/obj/item/borg/projectile_dampen/projector = null
+	var/list/obj/item/projectile/tracked
+	var/list/obj/item/projectile/staging
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/New()
+	tracked = list()
+	staging = list()
+	..()
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/process()
+	if(!istype(projector))
+		qdel(src)
+	var/list/ranged = list()
+	for(var/obj/item/projectile/P in range(square_radius, get_turf(host)))
+		ranged += P
+	for(var/obj/item/projectile/P in tracked)
+		if(!(P in ranged) || !P.loc)
+			release_projectile(P)
+	for(var/mob/living/silicon/robot/R in range(square_radius, get_turf(host)))
+		if(R.has_buckled_mobs())
+			for(var/mob/living/L in R.buckled_mobs)
+				L.visible_message("<span class='warning'>[L] is knocked off of [R] by the charge in [R]'s chassis induced by [name]!</span>")	//I know it's bad.
+				L.Weaken(3)
+				R.unbuckle_mob(L)
+				do_sparks(5, 0, L)
+	..()
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/setup_edge_turf(turf/T)
+	..()
+	var/image/I = get_edgeturf_overlay(get_edgechecker_direction(T))
+	var/obj/effect/abstract/proximity_checker/advanced/F = locate(/obj/effect/abstract/proximity_checker/advanced/edge) in T
+	F.appearance = I.appearance
+	F.invisibility = INVISIBILITY_NONE
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/T)
+	..()
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/proc/get_edgeturf_overlay(direction)
+	switch(direction)
+		if(NORTH)
+			return edgeturf_north
+		if(SOUTH)
+			return edgeturf_south
+		if(EAST)
+			return edgeturf_east
+		if(WEST)
+			return edgeturf_west
+		if(NORTHEAST)
+			return northeast_corner
+		if(NORTHWEST)
+			return northwest_corner
+		if(SOUTHEAST)
+			return southeast_corner
+		if(SOUTHWEST)
+			return southwest_corner
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/proc/capture_projectile(obj/item/projectile/P, track_projectile = TRUE)
+	if(P in tracked)
+		return
+	projector.dampen_projectile(P, track_projectile)
+	if(track_projectile)
+		tracked += P
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/proc/release_projectile(obj/item/projectile/P)
+	projector.restore_projectile(P)
+	tracked -= P
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
+	if(!is_turf_in_field(get_turf(AM), src))
+		if(istype(AM, /obj/item/projectile))
+			if(AM in tracked)
+				release_projectile(AM)
+			else
+				capture_projectile(AM, FALSE)
+	return ..()
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F)
+	if(istype(AM, /obj/item/projectile) && !(AM in tracked) && !is_turf_in_field(staging[AM]))
+		capture_projectile(AM)
+	staging -= AM
+	return ..()
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/edge/F, turf/entering)
+	if(istype(AM, /obj/item/projectile) && entering == get_turf(F))
+		world << "STAGING [AM]"
+		staging[AM] = get_turf(AM)
+	return ..()
