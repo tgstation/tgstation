@@ -84,6 +84,7 @@
 	item_state = "claymore"
 	name = "holy claymore"
 	desc = "A weapon fit for a crusade!"
+	flags = CONDUCT
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = SLOT_BACK|SLOT_BELT
 	block_chance = 30
@@ -185,6 +186,7 @@
 	item_state = "hfrequency1"
 	name = "high frequency blade"
 	desc = "Bad references are the DNA of the soul."
+	flags = CONDUCT
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
@@ -252,6 +254,7 @@
 /obj/item/weapon/nullrod/chainsaw
 	name = "chainsaw hand"
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
+	flags = CONDUCT
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
 	w_class = WEIGHT_CLASS_HUGE
@@ -340,6 +343,7 @@
 	name = "arrhythmic knife"
 	w_class = WEIGHT_CLASS_HUGE
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
+	flags = CONDUCT
 	sharpness = IS_SHARP
 	slot_flags = null
 	hitsound = 'sound/weapons/bladeslice.ogg'
