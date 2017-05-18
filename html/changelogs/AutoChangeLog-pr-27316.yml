@@ -1,0 +1,4 @@
+author: "Lordpidey"
+delete-after: True
+changes: 
+  - tweak: "Space ninjas now use action buttons instead of verbs for a more consistent user experience."
