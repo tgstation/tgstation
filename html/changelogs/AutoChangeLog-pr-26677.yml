@@ -1,9 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Syndicate agents can purchase a \"codespeak manual\", that teaches
-them a language that sounds like a series of codewords. You can also hit
-other people with the manual to teach them. One use per manual."
-  - rscadd: "Nuclear operatives have access to a deluxe manual that is more
-expensive but has unlimited uses."
-  - rscadd: "Syndicate AIs know Codespeak for free."
