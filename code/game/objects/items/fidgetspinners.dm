@@ -15,24 +15,26 @@
 	var/spinning = FALSE
 	
 /obj/item/weapon/fidgetspinner/proc/handle_spin(mob/user)
+	update_icon()
 	if(spinning) //LET IT RIP
 		force = force_spinning
 		throwforce = throwforce_spinning
-		if(iscarbon(user) && user.disabilities)
-			var/mob/living/carbon/C = user
-			C.adjustBrainLoss(-1)
+		if(user) //Juuuuuuuuuuuuuuuuuuuust in case
+			if(iscarbon(user) && user.disabilities)
+				var/mob/living/carbon/C = user
+				C.adjustBrainLoss(-1)
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/tap.ogg', 50, 1)
-		user.visible_message("[src] stops spinning...", "<span class='warning'>Oh no! [src] stopped spinning!</span>")
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			if(C.getBrainLoss()<=30)
-				C.adjustBrainLoss(3)
-			else
-				C.adjustBrainLoss(1)
-	update_icon()
+		if(user) //Explosions made this godawful creation runtime
+			user.visible_message("[src] stops spinning...", "<span class='warning'>Oh no! [src] stopped spinning!</span>")
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				if(C.getBrainLoss()<=30)
+					C.adjustBrainLoss(3)
+				else
+					C.adjustBrainLoss(1)
 	
 /obj/item/weapon/fidgetspinner/proc/stop_spin(mob/user)
 	if(spinning)
