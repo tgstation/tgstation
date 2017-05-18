@@ -318,7 +318,9 @@
 /datum/action/innate/gang/tool
 	name = "Personal Gang Tool"
 	desc = "An implanted gang tool that lets you purchase gear"
+	background_icon_state = "
 	button_icon_state = "bolt_action"
+	color = G.color
 	var/obj/item/device/gangtool/soldier/GT
 
 /datum/action/innate/gang/tool/Grant(mob/user, var/obj/reg)
