@@ -325,7 +325,6 @@
 		for(var/mob/living/L in range(1, target_turf) - K.firer - target)
 			var/armor = L.run_armor_check(def_zone, flag, "", "", armour_penetration)
 			L.apply_damage(damage*modifier, damage_type, def_zone, armor)
-			to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
 
 
 /obj/item/borg/upgrade/modkit/aoe/turfs
