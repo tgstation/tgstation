@@ -44,13 +44,14 @@
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
-	var/datum/martial_art/stored_martial_art = null
+
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 	var/linglink
-
+	var/datum/martial_art/martial_art = null
+	var/static/default_martial_art = new/datum/martial_art
 	var/miming = 0 // Mime's vow of silence
 	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state

@@ -50,7 +50,7 @@
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to BODY SLAM!</span>", "<b><i>Your next attack will be a BODY SLAM.</i></b>")
 	var/mob/living/carbon/human/H = owner
-	H.martial_art.streak = "slam"
+	H.mind.martial_art.streak = "slam"
 
 /datum/action/throw_wrassle
 	name = "Throw (Cinch) - Spin a cinched opponent around and throw them."
@@ -62,7 +62,7 @@
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to THROW!</span>", "<b><i>Your next attack will be a THROW.</i></b>")
 	var/mob/living/carbon/human/H = owner
-	H.martial_art.streak = "throw"
+	H.mind.martial_art.streak = "throw"
 
 /datum/action/kick
 	name = "Kick - A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
@@ -74,7 +74,7 @@
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to KICK!</span>", "<b><i>Your next attack will be a KICK.</i></b>")
 	var/mob/living/carbon/human/H = owner
-	H.martial_art.streak = "kick"
+	H.mind.martial_art.streak = "kick"
 
 /datum/action/strike
 	name = "Strike - Hit a neaby opponent with a quick attack."
@@ -86,7 +86,7 @@
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to STRIKE!</span>", "<b><i>Your next attack will be a STRIKE.</i></b>")
 	var/mob/living/carbon/human/H = owner
-	H.martial_art.streak = "strike"
+	H.mind.martial_art.streak = "strike"
 
 /datum/action/drop
 	name = "Drop - Smash down onto an opponent."
@@ -98,7 +98,7 @@
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to LEG DROP!</span>", "<b><i>Your next attack will be a LEG DROP.</i></b>")
 	var/mob/living/carbon/human/H = owner
-	H.martial_art.streak = "drop"
+	H.mind.martial_art.streak = "drop"
 
 /datum/martial_art/wrestling/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
 	..()

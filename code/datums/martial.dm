@@ -79,23 +79,17 @@
 /datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(make_temporary)
 		temporary = 1
-	else
-		H.martial_art_owner = H.mind
-		H.mind.stored_martial_art = src
-	if(temporary && H.martial_art)
-		if(!H.martial_art.allow_temp_override)
+	if(temporary && H.mind.martial_art)
+		if(!H.mind.martial_art.allow_temp_override)
 			return
-		base = H.martial_art
+		base = H.mind.martial_art
 	if(help_verb)
 		H.verbs += help_verb
-	H.martial_art = src
+	H.mind.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
-	if(H.martial_art != src)
+	if(H.mind.martial_art != src)
 		return
-	if(!temporary)
-		H.mind.stored_martial_art = null
-		H.martial_art_owner = null
-	H.martial_art = base
+	H.mind.martial_art = base
 	if(help_verb)
 		H.verbs -= help_verb

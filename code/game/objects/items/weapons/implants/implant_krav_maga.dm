@@ -19,7 +19,7 @@
 	var/mob/living/carbon/human/H = imp_in
 	if(!ishuman(H))
 		return
-	if(istype(H.martial_art, /datum/martial_art/krav_maga))
+	if(istype(H.mind.martial_art, /datum/martial_art/krav_maga))
 		style.remove(H)
 	else
 		style.teach(H,1)
