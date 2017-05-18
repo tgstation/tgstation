@@ -447,10 +447,10 @@
 			minerals += M
 	if(minerals.len)
 		for(var/turf/closed/mineral/M in minerals)
-			var/obj/effect/overlay/temp/mining_overlay/C = new /obj/effect/overlay/temp/mining_overlay(M)
+			var/obj/effect/temp_visual/mining_overlay/C = new /obj/effect/temp_visual/mining_overlay(M)
 			C.icon_state = M.scan_state
 
-/obj/effect/overlay/temp/mining_overlay
+/obj/effect/temp_visual/mining_overlay
 	layer = FLASH_LAYER
 	icon = 'icons/turf/smoothrocks.dmi'
 	anchored = 1
@@ -530,7 +530,7 @@
 	var/target_turf = get_turf(target)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
-		new /obj/effect/overlay/temp/kinetic_blast(M)
+		new /obj/effect/temp_visual/kinetic_blast(M)
 		M.gets_drilled(firer)
 	..()
 
@@ -551,7 +551,7 @@
 		var/mob/living/L = target
 		if(!L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))
 			return
-		new /obj/effect/overlay/temp/kinetic_blast(get_turf(L))
+		new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
 		var/backstab_dir = get_dir(user, L)
 		var/def_check = L.getarmor(type = "bomb")
 		if((user.dir & backstab_dir) && (L.dir & backstab_dir))

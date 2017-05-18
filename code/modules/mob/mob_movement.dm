@@ -242,12 +242,12 @@
 				L.loc = locate(locx,locy,mobloc.z)
 				var/limit = 2//For only two trailing shadows.
 				for(var/turf/T in getline(mobloc, L.loc))
-					new /obj/effect/overlay/temp/dir_setting/ninja/shadow(T, L.dir)
+					new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
 					limit--
 					if(limit<=0)
 						break
 			else
-				new /obj/effect/overlay/temp/dir_setting/ninja/shadow(mobloc, L.dir)
+				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
 		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.

@@ -215,7 +215,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD)
-				new /obj/effect/overlay/temp/heart(loc)
+				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "purrs!")
 		else
 			if(M && stat != DEAD)
