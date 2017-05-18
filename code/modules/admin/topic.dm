@@ -1206,7 +1206,7 @@
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the mode as [GLOB.master_mode].</span>")
 		to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>")
 		Game() // updates the main game menu
-		world.save_mode(GLOB.master_mode)
+		SSticker.save_mode(GLOB.master_mode)
 		.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])

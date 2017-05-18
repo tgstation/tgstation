@@ -113,7 +113,7 @@
 
 /obj/item/weapon/gun/medbeam/proc/on_beam_tick(var/mob/living/target)
 	if(target.health != target.maxHealth)
-		new /obj/effect/overlay/temp/heal(get_turf(target), "#80F5FF")
+		new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 	target.adjustBruteLoss(-4)
 	target.adjustFireLoss(-4)
 	return

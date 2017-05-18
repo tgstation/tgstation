@@ -440,7 +440,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	glass_amount = 2
@@ -454,7 +454,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
@@ -467,7 +467,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 1000
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
@@ -481,7 +481,7 @@
 	icon_state = "tinted_window"
 	dir = FULLTILE_WINDOW_DIR
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
 	level = 3
@@ -504,7 +504,7 @@
 	max_integrity = 100
 	wtype = "shuttle"
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	reinf = 1
 	heat_resistance = 1600
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
@@ -545,7 +545,7 @@
 		qdel(I)
 	var/amount_of_gears = 2
 	if(fulltile)
-		new /obj/effect/overlay/temp/ratvar/window(get_turf(src))
+		new /obj/effect/temp_visual/ratvar/window(get_turf(src))
 		amount_of_gears = 4
 	for(var/i in 1 to amount_of_gears)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
@@ -553,7 +553,7 @@
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/window/single(get_turf(src))
+		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/window/single(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
@@ -583,7 +583,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 120
 	level = 3

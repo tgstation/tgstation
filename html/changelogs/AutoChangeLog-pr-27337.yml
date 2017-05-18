@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Proselytizing alloy shards will now proselytize all the shards in the tile, instead of requiring you to proselytize each one at a time."
