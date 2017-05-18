@@ -203,7 +203,7 @@
 			user.changeNext_move(CLICK_CD_MELEE)
 		return
 	if(LAZYLEN(fields) < fieldlimit)
-		var/obj/effect/temp_visual/resonance/RE = new(T, user, src)
+		new /obj/effect/temp_visual/resonance(T, user, src)
 		if(!ismineralturf(T))
 			user.changeNext_move(CLICK_CD_MELEE)
 
