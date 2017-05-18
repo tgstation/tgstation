@@ -7,4 +7,6 @@ Add-Type -assembly "system.io.compression.filesystem"
 
 [io.compression.zipfile]::CreateFromDirectory($src, $destination) 
 
-& fciv -both $destination
+$destination_md5sha = $Env:APPVEYOR_BUILD_FOLDER + "\MD5-SHA1.txt"
+
+& fciv -both $destination > $destination_md5sha

@@ -69,7 +69,7 @@ namespace TGServerService
 				var channelsList = new List<string>(channels);
 				var Config = Properties.Settings.Default;
 				foreach (var I in irc.JoinedChannels)
-					if (channelsList.Contains(I))
+					if (!channelsList.Contains(I))
 						irc.RfcPart(I);
 				foreach (var I in channelsList)
 					if (!irc.JoinedChannels.Contains(I))
@@ -164,7 +164,7 @@ namespace TGServerService
 		//This is the thread that listens for irc messages
 		void IRCListen()
 		{
-			while (Connected())
+			while (irc != null && Connected())
 				try
 				{
 					irc.Listen();

@@ -162,6 +162,8 @@ namespace TGCommandLine
 			var IRC = Server.GetComponent<ITGChat>();
 			var channels = IRC.Channels();
 			var lowerParam = parameters[0].ToLower();
+			if (lowerParam[0] != '#')
+				lowerParam = "#" + lowerParam;
 			var new_channels = new List<string>();
 			foreach (var I in channels)
 			{

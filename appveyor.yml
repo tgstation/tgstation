@@ -7,6 +7,8 @@ clone_depth: 1
 artifacts:
 - path: TGS3.zip
   name: TGS3
+- path: MD5-SHA1.txt
+  name: MD5SHA1
 install:
   - choco install fciv
 before_build:
@@ -19,11 +21,11 @@ after_build:
   - ps: "tools/appveyor/ZipTGS3Release.ps1"
 deploy:
   release: $(APPVEYOR_REPO_TAG_NAME)
-  description: 'The /tg/station server suite. Find MD5/SHA1 at https://ci.appveyor.com/project/Cyberboss/tgstation/$($env:APPVEYOR_BUILD_VERSION)'
+  description: 'The /tg/station server suite'
   provider: GitHub
   auth_token:
     secure: 9Yf+FtoE7nf36V3dyVRANkNZ7og4dp/0uojCS51vrvIeNOTIM8Nq24lylgVBOhSL
-  artifact: TGS3
+  artifact: TGS3,MD5SHA1
   draft: false
   prerelease: false
   on:

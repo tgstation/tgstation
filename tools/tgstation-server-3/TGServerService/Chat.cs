@@ -323,7 +323,7 @@ namespace TGServerService
 				if (adminchannel != null)
 					Config.ChatAdminChannel = adminchannel;
 				if (channels != null && Connected())
-					ChatProvider.SetChannels(channels, null);
+					ChatProvider.SetChannels(CollectionToArray(Config.ChatChannels), null);
 			}			
 		}
 	
