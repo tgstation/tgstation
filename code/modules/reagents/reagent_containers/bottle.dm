@@ -106,6 +106,12 @@
 	desc = "A small bottle of ammonia."
 	icon_state = "bottle20"
 	list_reagents = list("ammonia" = 30)
+	
+/obj/item/weapon/reagent_containers/glass/bottle/nanites
+	name = "nanites bottle"
+	desc = "Nanomachines son.
+	icon_state = "bottle16"
+	list_reagents = list("nanomachines" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/diethylamine
 	name = "diethylamine bottle"
