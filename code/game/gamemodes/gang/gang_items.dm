@@ -95,7 +95,7 @@
 		to_chat(user, "<span class='notice'> This is your gang's official uniform, wearing it will increase your influence")
 
 /datum/gang_item/clothing/suit
-	name = "Gang Outerwear"
+	name = "Gang Armored Outerwear"
 	id = "suit"
 	cost = 1
 
