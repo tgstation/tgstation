@@ -43,7 +43,7 @@
             Directory="DesktopFolder"
             Name="TG Command Line"
             WorkingDirectory="INSTALLFOLDER" 
-            Advertise="yes"
+            Advertise="no"
 						Icon="tgs.ico"/>
       </Component>
       <Component Id="TGServerService">
@@ -92,7 +92,7 @@
             Directory="DesktopFolder"
             Name="TG Control Panel"
             WorkingDirectory="INSTALLFOLDER" 
-            Advertise="yes"
+            Advertise="no"
 						Icon="tgs.ico"/>
         </File>
       </Component>
