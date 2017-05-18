@@ -173,7 +173,7 @@
 	id = "MG"
 	cost = 50
 	item_path = /obj/machinery/manned_turret
-	spawn_msg = "<span class='notice'>The mounted machine gun features enhanced responsiveness. Hold down on the trigger while firing to control where you're shooting."
+	spawn_msg = "<span class='notice'>The mounted machine gun features enhanced responsiveness. Hold down on the trigger while firing to control where you're shooting.</span>"
 
 /datum/gang_item/weapon/uzi
 	name = "Uzi SMG"
