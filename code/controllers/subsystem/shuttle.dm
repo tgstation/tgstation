@@ -25,7 +25,10 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/emergencyLastCallLoc
 	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
 	var/emergencyNoEscape
+	var/list/horrible_things = list()
+	var/recall_timer_id
 	var/list/hostileEnvironments = list()
+	var/annoyed_admiral_message
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -160,7 +163,7 @@ SUBSYSTEM_DEF(shuttle)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
-/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
+/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason, legitimacy_check=TRUE)
 	if(!emergency)
 		WARNING("requestEvac(): There is no emergency shuttle, but the \
 			shuttle was called. Using the backup shuttle instead.")
@@ -216,6 +219,93 @@ SUBSYSTEM_DEF(shuttle)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")
+
+	if(legitimacy_check)
+		check_call_legitimacy()
+
+
+/datum/controller/subsystem/shuttle/proc/check_call_legitimacy()
+	if(station_in_trouble())
+		msglog_admins("Shuttle call is legitimate by the listed metrics.")
+		return
+
+	var/time_to_recall = rand(600, 1500)
+	recall_timer_id = addtimer(CALLBACK(src, .proc/recall_illegitimate, emergency.timer), time_to_recall, TIMER_STOPPABLE)
+	if(!annoyed_admiral_message)
+		annoyed_admiral_message = pick("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>", "It's a good day to die!")
+
+	message_admins("Shuttle will recall automatically. (<A HREF='?_src_=holder;stop_autorecall=\ref[usr]'>STOP AUTORECALL</A>) (<A HREF='?_src_=holder;set_annoyed_admiral_message=1'>SET ANNOYED ADMIRAL MESSAGE</A>)")
+
+/datum/controller/subsystem/shuttle/proc/recall_illegitimate(old_timer)
+	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
+		return
+
+	emergency.cancel(/area/centcom)
+	msglog_admins("Shuttle has been automatically recalled.")
+
+	sleep(50)
+	var/intercepttext = "<FONT size = 3><b>NanoTrasen Update</b>: Request For Shuttle.</FONT><HR>\
+						To whom it may concern:<BR><BR>\
+						We have taken note of the situation upon [station_name()] and have come to the \
+						conclusion that it does not warrant the abandonment of the station.<BR>\
+						If you do not agree with our opinion we suggest that you open a direct \
+						line with us and explain the nature of your crisis.<BR><BR>\
+						<i>This message has been automatically generated based upon readings from long \
+						range diagnostic tools. To assure the quality of your request every finalized report \
+						is reviewed by an on-call rear admiral.<BR>\
+						<b>Rear Admiral's Notes:</b> \
+						[annoyed_admiral_message]"
+	annoyed_admiral_message = null
+	print_command_report(intercepttext, announce=TRUE)
+
+/datum/controller/subsystem/shuttle/proc/station_in_trouble() //Checks are sorted in rough order of processing cost
+	. = FALSE
+	msglog_admins("Emergency shuttle legitimacy checks follow:")
+
+	listclearnulls(SSshuttle.horrible_things)
+	var/num_things = SSshuttle.horrible_things.len
+	msglog_admins("[num_things] horrible things on station[num_things ? ":[english_list(SSshuttle.horrible_things)]" : ""]")
+
+	if(num_things)
+		. = TRUE
+
+	msglog_admins("Round length is [round(world.time / 600)] minutes, boredom threshold is set to [config.shuttle_boredom_check] minutes.")
+	if(world.time >= (config.shuttle_boredom_check * 600)) //Extended mercy and/or boring/ineffective antags
+		. = TRUE
+
+	var/list/living_crew_bodies = list()
+	var/list/living_crew_minds	= list()
+	for(var/mob/Player in GLOB.mob_list)
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+			living_crew_bodies += Player
+			living_crew_minds += Player.mind
+
+	var/living_ratio
+	if(!GLOB.joined_player_list.len)
+		living_ratio = INFINITY
+	else
+		living_ratio = living_crew_bodies.len / GLOB.joined_player_list.len
+	message_admins("[living_ratio*100]% of all joined crew are alive, minimum is [config.shuttle_life_check*100]%.")
+	if(living_ratio <= config.shuttle_life_check) //Dead people everywhere
+		. = TRUE
+
+	var/list/antagonist_crew_minds = list()
+	for(var/datum/mind/M in living_crew_minds)
+		if(M.special_role)
+			antagonist_crew_minds += M
+
+	var/antag_ratio = antagonist_crew_minds.len / living_crew_minds.len
+	if(antag_ratio >= config.shuttle_antag_overrun) //Station ruled by antags
+		. = TRUE
+	msglog_admins("[antag_ratio*100]% living minds are special roles, minimum to call is [config.shuttle_antag_overrun*100]%")
+
+	var/datum/station_state/current_state = new /datum/station_state()
+	current_state.count()
+	var/score = GLOB.start_state.score(current_state)
+	if(score < config.shuttle_infrastructure_check) //Station bombed to hell/singulo'd
+		. = TRUE
+
+	msglog_admins("Station integrity is [score*100]%, shuttle can be called if [config.shuttle_infrastructure_check*100]% or lower.")
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
@@ -514,4 +604,3 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.is_in_shuttle_bounds(A))
 			return TRUE
-		

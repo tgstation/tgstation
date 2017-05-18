@@ -282,6 +282,24 @@
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
 		href_list["secrets"] = "check_antagonist"
 
+	else if(href_list["stop_autorecall"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		deltimer(SSshuttle.recall_timer_id)
+		log_admin("[key_name(usr)] stopped the autorecall of the Emergency Shuttle.")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] stopped the autorecall of the Emergency Shuttle.</span>")
+	else if(href_list["set_annoyed_admiral_message"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/message = input("Enter message from the on-call admiral to be put in the command report.", "Annoyed Admiral Message", SSshuttle.annoyed_admiral_message) as text|null
+		if(!message)
+			return
+
+		SSshuttle.annoyed_admiral_message = message
+		message_admins("[key_name_admin(usr)] set the annoyed admiral message to: [message]")
+
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
 			return

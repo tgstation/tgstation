@@ -672,10 +672,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	SSshuttle.emergency.request()
+	// doesn't autorecall because calling proc on shuttle directly.
 	SSblackbox.add_details("admin_verb","Call Shuttle") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] admin-called the emergency shuttle.</span>")
-	return
 
 /client/proc/admin_cancel_shuttle()
 	set category = "Admin"
