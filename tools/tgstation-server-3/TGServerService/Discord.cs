@@ -29,10 +29,15 @@ namespace TGServerService
 
 		private void Client_MessageReceived(object sender, MessageEventArgs e)
 		{
-			var splits = new List<string>(e.Message.Text.Trim().Split(' '));
+			var isValidChannel = Properties.Settings.Default.ChatChannels.Contains("#" + e.Channel.Name) || e.Channel.IsPrivate;
+			if (!isValidChannel)
+				return;
+
 			var tagged = e.Channel.IsPrivate && e.User.Name != client.CurrentUser.Name;
 			if (tagged && !SeenPrivateChannels.ContainsKey(e.Channel.Name))
 				SeenPrivateChannels.Add(e.Channel.Name, e.Channel);
+
+			var splits = new List<string>(e.Message.Text.Trim().Split(' '));
 			if (splits[0] == "@" + client.CurrentUser.Name)
 			{
 				splits.RemoveAt(0);
