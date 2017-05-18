@@ -198,7 +198,7 @@
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
-	var/obj/effect/overlay/temp/kinetic_blast/K = new /obj/effect/overlay/temp/kinetic_blast(target_turf)
+	var/obj/effect/temp_visual/kinetic_blast/K = new /obj/effect/temp_visual/kinetic_blast(target_turf)
 	K.color = color
 	for(var/obj/item/borg/upgrade/modkit/M in kinetic_modules)
 		if(QDELETED(M)) //whoever shot this was very, very unfortunate.
@@ -358,7 +358,7 @@
 /obj/item/borg/upgrade/modkit/aoe/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target)
 	if(stats_stolen)
 		return
-	new /obj/effect/overlay/temp/explosion/fast(target_turf)
+	new /obj/effect/temp_visual/explosion/fast(target_turf)
 	if(turf_aoe)
 		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
 			if(ismineralturf(T))
