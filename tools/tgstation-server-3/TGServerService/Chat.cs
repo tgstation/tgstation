@@ -307,7 +307,15 @@ namespace TGServerService
 				{
 					var oldchannels = Config.ChatChannels;
 					var si = new StringCollection();
-					si.AddRange(channels);
+					foreach(var c in channels)
+					{
+						var working = c.Trim();
+						if (working.Length == 0)
+							continue;
+						if (working[0] != '#')
+							working = "#" + working;
+						si.Add(working);
+					}
 					if (!si.Contains(Config.ChatAdminChannel))
 						si.Add(Config.ChatAdminChannel);
 					Config.ChatChannels = si;

@@ -111,7 +111,7 @@ namespace TGServerService
 					foreach (var I in client.Servers)
 						foreach (var J in I.TextChannels)
 						{
-							var SendToThisChannel = adminOnly ? J.Name == Config.ChatAdminChannel : Config.ChatChannels.Contains(J.Name);
+							var SendToThisChannel = adminOnly ? J.Name == Config.ChatAdminChannel : Config.ChatChannels.Contains("#" + J.Name);
 							if (SendToThisChannel)
 								tasks.Add(J.SendMessage(msg));
 						}

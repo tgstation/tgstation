@@ -244,8 +244,6 @@ namespace TGServerService
 				
 				IList<JobSetting> results = new List<JobSetting>();
 
-				//TODO
-
 				foreach (var L in lines)
 				{
 					var trimmed = L.Trim();
