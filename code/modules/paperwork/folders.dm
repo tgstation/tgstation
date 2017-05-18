@@ -91,20 +91,20 @@
 /obj/item/weapon/folder/syndicate/red
 	icon_state = "folder_sred"
 
-/obj/item/weapon/folder/syndicate/red/New()
-	..()
+/obj/item/weapon/folder/syndicate/red/Initialize()
+	. = ..()
 	new /obj/item/documents/syndicate/red(src)
 	update_icon()
 
 /obj/item/weapon/folder/syndicate/blue
 	icon_state = "folder_sblue"
 
-/obj/item/weapon/folder/syndicate/blue/New()
-	..()
+/obj/item/weapon/folder/syndicate/blue/Initialize()
+	. = ..()
 	new /obj/item/documents/syndicate/blue(src)
 	update_icon()
 
-/obj/item/weapon/folder/syndicate/mining/New()
-	..()
+/obj/item/weapon/folder/syndicate/mining/Initialize()
+	. = ..()
 	new /obj/item/documents/syndicate/mining(src)
 	update_icon()
